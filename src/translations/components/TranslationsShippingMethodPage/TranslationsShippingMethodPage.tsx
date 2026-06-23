@@ -47,7 +47,7 @@ export const TranslationsShippingMethodPage = ({
   const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "shipping-method",
-    shippingMethodId: data?.shippingMethod?.id,
+    shippingMethodId: data?.shippingMethodId ?? data?.shippingMethod?.id,
     translationLanguage: languageCode,
   });
   const sections = useMemo(
@@ -102,7 +102,7 @@ export const TranslationsShippingMethodPage = ({
               onClick={extension => {
                 extension.onSelect({
                   translationContext: "shipping-method",
-                  shippingMethodId: data?.shippingMethod?.id,
+                  shippingMethodId: data?.shippingMethodId ?? data?.shippingMethod?.id,
                   translationLanguage: languageCode,
                 });
               }}

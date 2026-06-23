@@ -20,7 +20,6 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
-import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type Option } from "@saleor/macaw-ui-next";
@@ -104,10 +103,14 @@ const ShippingZoneDetailsPage = ({
   allChannels,
 }: ShippingZoneDetailsPageProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const { lastUsedLocaleOrFallback } = useCachedLocales();
-  const navigate = useNavigator();
+  const getRateTranslationHref = canTranslate
+    ? (rateId: string) =>
+        languageEntityUrl(lastUsedLocaleOrFallback, TranslatableEntities.shippingMethods, rateId)
+    : undefined;
   const initialForm = getInitialFormData(shippingZone);
   const warehouseChoices = warehouses.map(warehouseToChoice);
   const zoneChannels =
@@ -116,7 +119,6 @@ const ShippingZoneDetailsPage = ({
       name: channel.name,
       currencyCode: channel.currencyCode,
     })) ?? [];
-
   const shippingZonesListBackLink = useBackLinkWithState({
     path: shippingZonesListPath,
   });
@@ -137,19 +139,6 @@ const ShippingZoneDetailsPage = ({
                   id: "6YUTdO",
                 })}
               />
-              {canTranslate && (
-                <TranslationsButton
-                  onClick={() =>
-                    navigate(
-                      languageEntityUrl(
-                        lastUsedLocaleOrFallback,
-                        TranslatableEntities.shippingMethods,
-                        shippingZone?.id,
-                      ),
-                    )
-                  }
-                />
-              )}
             </TopNav>
             <DetailPageLayout.Content paddingBottom={10}>
               <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
@@ -171,6 +160,7 @@ const ShippingZoneDetailsPage = ({
                 onRateAdd={onPriceRateAdd}
                 getRateEditHref={getPriceRateEditHref}
                 getRateChannelSetupHref={getRateChannelSetupHref}
+                getRateTranslationHref={getRateTranslationHref}
                 onRateRemove={onRateRemove}
                 rates={shippingZone?.shippingMethods?.filter(
                   method => method.type === ShippingMethodTypeEnum.PRICE,
@@ -185,6 +175,7 @@ const ShippingZoneDetailsPage = ({
                 onRateAdd={onWeightRateAdd}
                 getRateEditHref={getWeightRateEditHref}
                 getRateChannelSetupHref={getRateChannelSetupHref}
+                getRateTranslationHref={getRateTranslationHref}
                 onRateRemove={onRateRemove}
                 rates={shippingZone?.shippingMethods?.filter(
                   method => method.type === ShippingMethodTypeEnum.WEIGHT,

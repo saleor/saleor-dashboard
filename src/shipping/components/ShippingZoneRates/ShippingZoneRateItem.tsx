@@ -5,7 +5,9 @@ import { Title2 } from "@dashboard/components/Title2/Title2";
 import WeightRange from "@dashboard/components/WeightRange";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { buttonMessages } from "@dashboard/intl";
+import { translationsButtonMessages } from "@dashboard/translations/components/TranslationsButton/messages";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Pencil, Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,6 +28,7 @@ interface ShippingZoneRateItemProps {
   disabled: boolean;
   getRateEditHref: (id: string) => string;
   getRateChannelSetupHref: (rateId: string, channelId: string) => string;
+  getRateTranslationHref?: (id: string) => string;
   onRateRemove: (id: string) => void;
 }
 
@@ -39,6 +42,7 @@ export const ShippingZoneRateItem = ({
   disabled,
   getRateEditHref,
   getRateChannelSetupHref,
+  getRateTranslationHref,
   onRateRemove,
 }: ShippingZoneRateItemProps) => {
   const intl = useIntl();
@@ -94,6 +98,19 @@ export const ShippingZoneRateItem = ({
             </Text>
           )}
           <Box display="flex" gap={1} alignItems="center" __marginRight="-8px">
+            {getRateTranslationHref && (
+              <Button
+                disabled={disabled}
+                variant="tertiary"
+                icon={<TranslationsIcon />}
+                onClick={event => {
+                  event.stopPropagation();
+                  navigate(getRateTranslationHref(rate.id));
+                }}
+                data-test-id="translate-button"
+                title={intl.formatMessage(translationsButtonMessages.openTranslations)}
+              />
+            )}
             <Button
               disabled={disabled}
               variant="tertiary"

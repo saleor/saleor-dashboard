@@ -3707,6 +3707,7 @@ export const ShippingMethodTranslationFragmentDoc = gql`
   id
   name
   description
+  shippingMethodId
   shippingMethod {
     id
   }

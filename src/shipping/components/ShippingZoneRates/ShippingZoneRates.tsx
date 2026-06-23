@@ -20,6 +20,7 @@ interface ShippingZoneRatesProps {
   onRateAdd: () => void;
   getRateEditHref: (id: string) => string;
   getRateChannelSetupHref: (rateId: string, channelId: string) => string;
+  getRateTranslationHref?: (id: string) => string;
   onRateRemove: (id: string) => void;
 }
 
@@ -28,6 +29,7 @@ export const ShippingZoneRates = ({
   onRateAdd,
   getRateEditHref,
   getRateChannelSetupHref,
+  getRateTranslationHref,
   onRateRemove,
   rates,
   zoneChannels,
@@ -73,6 +75,7 @@ export const ShippingZoneRates = ({
                     disabled={disabled}
                     getRateEditHref={getRateEditHref}
                     getRateChannelSetupHref={getRateChannelSetupHref}
+                    getRateTranslationHref={getRateTranslationHref}
                     onRateRemove={onRateRemove}
                   />
                 ),

@@ -1,3 +1,5 @@
+import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelShippingData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -29,6 +31,9 @@ import PricingCard from "@dashboard/shipping/components/PricingCard";
 import ShippingMethodProducts from "@dashboard/shipping/components/ShippingMethodProducts";
 import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
+import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -103,6 +108,9 @@ const ShippingZoneRatesPage = ({
 }: ShippingZoneRatesPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: Omit<ShippingZoneRateUpdateFormData, "description"> = useMemo(
     () => ({
@@ -166,7 +174,21 @@ const ShippingZoneRatesPage = ({
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
         <DetailPageLayout>
-          <TopNav href={backHref} title={rate?.name} />
+          <TopNav href={backHref} title={rate?.name}>
+            {canTranslate && rate?.id && (
+              <TranslationsButton
+                onClick={() =>
+                  navigate(
+                    languageEntityUrl(
+                      lastUsedLocaleOrFallback,
+                      TranslatableEntities.shippingMethods,
+                      rate.id,
+                    ),
+                  )
+                }
+              />
+            )}
+          </TopNav>
           <DetailPageLayout.Content>
             <ShippingRateInfo data={data} disabled={disabled} errors={errors} onChange={change} />
             <CardSpacer />
