@@ -1,5 +1,40 @@
 # Changelog
 
+## 3.23.10
+
+### Patch Changes
+
+- [#6659](https://github.com/saleor/saleor-dashboard/pull/6659) [`a2b5196`](https://github.com/saleor/saleor-dashboard/commit/a2b51965a7a9e479a99f6e545c6c892e745d2e21) Thanks [@mirekm](https://github.com/mirekm)! - **Attribute detail page – Save fixes**
+  - Saving an attribute no longer leaves the form in a "dirty" state, so the "you have unsaved changes" warning is no longer shown after a successful save.
+  - The Save button now disables immediately on the first click, preventing accidental double submits.
+  - The Save button keeps its primary appearance while saving and while showing the success checkmark (no more switching to the disabled/grey look on hover), and can no longer be clicked again until it returns to its idle state.
+
+- [#6645](https://github.com/saleor/saleor-dashboard/pull/6645) [`30a7ddf`](https://github.com/saleor/saleor-dashboard/commit/30a7ddfcafef53226effa8ff7c8518fe58a02b45) Thanks [@mirekm](https://github.com/mirekm)! - **Attributes list**
+  - New **Input type** and **Attribute class** columns with icons
+  - Built-in filter presets for product and model attributes
+  - Column order and widths are saved between visits
+
+  **Attribute detail page**
+  - Attribute class shown beside the title, with a link to the filtered list
+  - Metadata edited from a header button and dialog
+  - Clearer properties sidebar layout
+  - Numeric attributes: working "Select unit" checkbox with helper text; ruler icon and unit name in tooltips when a unit is set
+
+  **Configuration**
+  - Separate **Product Settings** and **Model Settings** sections, each with its own attributes entry
+
+  **Across the dashboard**
+  - Input type icons in attribute pickers, assignment dialogs, product and model forms, and filters
+  - Attribute rows show input type in a tooltip (and unit for numeric attributes)
+
+- [#6664](https://github.com/saleor/saleor-dashboard/pull/6664) [`6747d7c`](https://github.com/saleor/saleor-dashboard/commit/6747d7c2a998fa12c1087ce2c58905b42008fb8f) Thanks [@mirekm](https://github.com/mirekm)! - Compact app widget chrome on detail pages and the home dashboard. Widget headers now show a single line with the app logo and extension name (instead of stacking the app name and extension label), and the header links to the app page. App name is available via tooltip on hover.
+
+- [#6656](https://github.com/saleor/saleor-dashboard/pull/6656) [`28e8ba7`](https://github.com/saleor/saleor-dashboard/commit/28e8ba71d084decc60cd2f90bd92f1f320b5b196) Thanks [@mirekm](https://github.com/mirekm)! - Model type tabs can group related types by splitting names at configurable separators. The settings popover accepts a comma-separated list (default: `—`, `:`, and `-`), matches the leftmost separator, and ignores letter case when bucketing prefixes.
+
+- [#6660](https://github.com/saleor/saleor-dashboard/pull/6660) [`345ca0c`](https://github.com/saleor/saleor-dashboard/commit/345ca0cee90769c40102c9f7e945196ff5500508) Thanks [@mirekm](https://github.com/mirekm)! - **Fix spurious "Leave without saving changes?" prompt when assigning reference attribute values**
+
+  Assigning a value to a reference attribute (e.g. choosing a Collection, Category, Product or Model) on a detail page with unsaved changes no longer triggers the "Leave without saving changes?" exit prompt. Opening and closing URL-driven dialogs (such as the "Assign Collection" modal) is now correctly treated as part of editing the form rather than navigating away from it, so the modal closes cleanly and your changes stay ready to save. This also fixes the same prompt appearing for other URL-driven modals (metadata, remove confirmations, etc.) across Models, Products, Orders and similar detail pages.
+
 ## 3.23.9
 
 ### Patch Changes
