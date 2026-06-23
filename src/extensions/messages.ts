@@ -633,6 +633,19 @@ export const appMessages = defineMessages({
   },
 });
 
+export const widgetMessages = defineMessages({
+  headerAriaLabel: {
+    defaultMessage: "{extensionLabel} — {appName}",
+    id: "iSpMDE",
+    description: "accessible label for app widget card header link",
+  },
+  fallbackTitle: {
+    defaultMessage: "App",
+    id: "MDLYPO",
+    description: "fallback widget title when extension label and app name are missing",
+  },
+});
+
 export const extensionActions = defineMessages({
   redirectToAppPage: {
     defaultMessage: "Redirect to the App Page",
