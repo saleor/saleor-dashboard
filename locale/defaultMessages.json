@@ -3,10 +3,6 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
-  "+0+RJj": {
-    "context": "shipping method types help example row one result",
-    "string": "Both methods"
-  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -728,6 +724,10 @@
     "context": "structures section name",
     "string": "Structures"
   },
+  "22gNDo": {
+    "context": "shipping method types help example row two result",
+    "string": "Weight only"
+  },
   "22x9tu": {
     "context": "header",
     "string": "Translation Product \"{productName}\" - {languageCode}"
@@ -1007,10 +1007,6 @@
   "3fgyFh": {
     "context": "order history message",
     "string": "Payment was refunded"
-  },
-  "3jnyYs": {
-    "context": "shipping method types help example price method",
-    "string": "\"Free over $100\" (price-based, minimum order value $100)"
   },
   "3kVRE2": {
     "context": "Checkbox label for setting publication date",
@@ -3079,6 +3075,10 @@
     "context": "transaction reference",
     "string": "Transaction reference"
   },
+  "EbwsDr": {
+    "context": "shipping method types help example table result column",
+    "string": "Shown"
+  },
   "EcglP9": {
     "string": "Key"
   },
@@ -3150,10 +3150,6 @@
   "F0BhK/": {
     "context": "Status when product is visible and purchasable",
     "string": "Live"
-  },
-  "F1f4+A": {
-    "context": "shipping method types help example row two result",
-    "string": "Weight-based only"
   },
   "F2Ng8N": {
     "context": "note about standalone tabs in model type tab grouping help",
@@ -3378,10 +3374,6 @@
   "G0+gAp": {
     "context": "shipping section header",
     "string": "Shipping"
-  },
-  "G0QhNI": {
-    "context": "shipping method types help example title",
-    "string": "Example"
   },
   "G2WJ1J": {
     "context": "order header date, less than an hour ago",
@@ -3864,6 +3856,10 @@
     "context": "switch button",
     "string": "Is this product shippable?"
   },
+  "ICJ3mp": {
+    "context": "shipping method types help example setup",
+    "string": "Example — zone with \"Free over $100\" (price) and \"Heavy parcel 5–20 kg\" (weight):"
+  },
   "ICeshC": {
     "context": "product type",
     "string": "Shippable"
@@ -4218,6 +4214,10 @@
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
   },
+  "K+QQU5": {
+    "context": "shipping method types help example row one result",
+    "string": "Both"
+  },
   "K+vjtE": {
     "string": "Search Variants"
   },
@@ -4465,10 +4465,6 @@
   "LYKO9m": {
     "context": "Section heading for issues that affect order fulfillment (shipping zones, shipping methods)",
     "string": "Shipping"
-  },
-  "LZ//yK": {
-    "context": "shipping method types help example row three result",
-    "string": "Price-based only"
   },
   "La3xKC": {
     "context": "Description of public API verification feature",
@@ -4774,6 +4770,10 @@
   "N7tQ9P": {
     "context": "dialog header",
     "string": "Unassign attribute from model type"
+  },
+  "NA7KFR": {
+    "context": "shipping method types help weight-based bullet",
+    "string": "<strong>Weight-based</strong> — total weight within min/max limits."
   },
   "NBP8uu": {
     "context": "page header",
@@ -6754,6 +6754,10 @@
     "context": "order transaction refund summary label",
     "string": "Total:"
   },
+  "XhvMVe": {
+    "context": "shipping method types help tooltip intro",
+    "string": "Each method applies by order value or weight—not both."
+  },
   "XitW/z": {
     "string": "Translation Category \"{categoryName}\" - {languageCode}"
   },
@@ -7684,6 +7688,10 @@
     "context": "attribute position in storefront filters",
     "string": "Position in faceted navigation"
   },
+  "cJbx/i": {
+    "context": "shipping method types help checkout note",
+    "string": "All matching methods appear at checkout; neither type takes priority over the other."
+  },
   "cKCfSW": {
     "context": "dialog header",
     "string": "Unassign Products From Voucher"
@@ -8106,6 +8114,10 @@
     "context": "dialog header",
     "string": "Delete Customer"
   },
+  "eyrUob": {
+    "context": "shipping method types help price-based bullet",
+    "string": "<strong>Price-based</strong> — subtotal within the channel min/max order value."
+  },
   "ez6WHE": {
     "context": "translation progress count",
     "string": "{completed} of {total} fields translated"
@@ -8371,10 +8383,6 @@
   "gMwpNC": {
     "context": "page content",
     "string": "Content"
-  },
-  "gNDlQY": {
-    "context": "shipping method types help price-based bullet",
-    "string": "<strong>Price-based</strong> — shown when the order subtotal is between your minimum and maximum order value for that channel."
   },
   "gNm1li": {
     "context": "Refunded transaction amount, data display header",
@@ -8819,10 +8827,6 @@
   "imYtnq": {
     "string": "Selected {number, plural, one {# item} other {# items}}"
   },
-  "imwdWo": {
-    "context": "shipping method types help example table result column",
-    "string": "Methods shown"
-  },
   "inWs4U": {
     "context": "attribute visibility in storefront",
     "string": "Visible in storefront"
@@ -8948,10 +8952,6 @@
   },
   "jd/LWa": {
     "string": "Voucher applies to all countries"
-  },
-  "jfJnP7": {
-    "context": "shipping method types help checkout note",
-    "string": "If several methods match the same cart, the customer sees all of them and picks one. Saleor does not hide price-based methods in favor of weight-based ones, or the other way around."
   },
   "jg1Kcw": {
     "context": "aria label for unpinning a tab",
@@ -9846,6 +9846,10 @@
   "nudPsY": {
     "context": "metadata field name, header",
     "string": "Field"
+  },
+  "nvpGUR": {
+    "context": "shipping method types help example row three result",
+    "string": "Price only"
   },
   "nwcJVT": {
     "context": "When enabled, all transactions would require an additional step to be charged.",
@@ -10804,10 +10808,6 @@
   "swOKYO": {
     "string": "Discover the latest enhancements, new features, fixes, and performance improvements that make your dashboard experience even better."
   },
-  "sxpMt3": {
-    "context": "shipping method types help tooltip intro",
-    "string": "When you add a shipping method, choose whether it applies based on order value or order weight. One method cannot use both."
-  },
   "sy+pv5": {
     "string": "Email"
   },
@@ -11083,10 +11083,6 @@
   },
   "uOC/uQ": {
     "string": "Image updated"
-  },
-  "uOmlLG": {
-    "context": "shipping method types help example weight method",
-    "string": "\"Heavy parcel 5–20 kg\" (weight-based)"
   },
   "uQNm59": {
     "context": "add header,button",
@@ -11822,10 +11818,6 @@
     "context": "dialog header",
     "string": "Assign Products"
   },
-  "xbnx+m": {
-    "context": "shipping method types help weight-based bullet",
-    "string": "<strong>Weight-based</strong> — shown when the total order weight is between your minimum and maximum weight limits."
-  },
   "xeMcID": {
     "string": "Warehouse created"
   },
@@ -12038,10 +12030,6 @@
   "ytKTTO": {
     "context": "draft orders section name",
     "string": "Drafts"
-  },
-  "yveiQA": {
-    "context": "shipping method types help example setup",
-    "string": "Your zone includes:"
   },
   "ywLJ93": {
     "context": "attribute translation section subtitle",

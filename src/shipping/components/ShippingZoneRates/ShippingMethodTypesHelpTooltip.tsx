@@ -62,24 +62,9 @@ export const ShippingMethodTypesHelpTooltip = () => {
           <Text size={2}>
             <FormattedMessage {...shippingMethodTypesHelpMessages.tooltipCheckoutNote} />
           </Text>
-          <Text size={2} fontWeight="bold">
-            <FormattedMessage {...shippingMethodTypesHelpMessages.exampleTitle} />
-          </Text>
           <Text size={2}>
             <FormattedMessage {...shippingMethodTypesHelpMessages.exampleSetup} />
           </Text>
-          <ul className={styles.list}>
-            <li>
-              <Text size={2}>
-                <FormattedMessage {...shippingMethodTypesHelpMessages.examplePriceMethod} />
-              </Text>
-            </li>
-            <li>
-              <Text size={2}>
-                <FormattedMessage {...shippingMethodTypesHelpMessages.exampleWeightMethod} />
-              </Text>
-            </li>
-          </ul>
           <table className={styles.table}>
             <thead>
               <tr>
