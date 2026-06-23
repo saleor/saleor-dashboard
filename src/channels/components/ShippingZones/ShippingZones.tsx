@@ -2,6 +2,7 @@ import { type ChannelShippingZones } from "@dashboard/channels/pages/ChannelDeta
 import { DashboardCard } from "@dashboard/components/Card";
 import { type SearchShippingZonesQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { shippingZoneUrl } from "@dashboard/shipping/urls";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -53,6 +54,7 @@ export const ShippingZones = (props: ShippingZonesProps) => {
         dataTestId="shipping"
         inputName="shippingZone"
         itemsName={intl.formatMessage(sectionNames.shippingZones)}
+        getItemHref={({ id }) => shippingZoneUrl(id)}
       />
     </DashboardCard>
   );

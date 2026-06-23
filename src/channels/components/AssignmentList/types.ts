@@ -18,4 +18,5 @@ export interface AssignmentListProps {
   removeItem: (id: string) => void;
   reorderItem?: ReorderAction;
   searchItems: (searchPhrase: string) => void;
+  getItemHref?: (item: AssignItem) => string | undefined;
 }
