@@ -46,6 +46,8 @@ interface TransactionSubmitCardProps {
   refundReason: string;
   refundReasonReference: string;
   refundReasonReferenceTypeId: string;
+  refundReasonError?: boolean;
+  onClearRefundReasonError?: () => void;
 }
 
 export const TransactionSubmitCard = ({
@@ -68,6 +70,8 @@ export const TransactionSubmitCard = ({
   refundReason,
   refundReasonReference,
   refundReasonReferenceTypeId,
+  refundReasonError,
+  onClearRefundReasonError,
 }: TransactionSubmitCardProps) => {
   const intl = useIntl();
   const canSendRefund = canSendRefundDuringReturn({
@@ -137,7 +141,9 @@ export const TransactionSubmitCard = ({
               refundReasonReference={refundReasonReference}
               refundReasonReferenceTypeId={refundReasonReferenceTypeId}
               disabled={disabled}
+              error={refundReasonError}
               onChange={onChange}
+              onClearError={onClearRefundReasonError}
             />
           )}
           <ConfirmButton

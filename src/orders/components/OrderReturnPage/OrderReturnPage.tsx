@@ -63,19 +63,22 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
   // When a return reason type is configured, selecting a reason is required.
   // Track whether a submit was attempted while the required reason was missing.
   const [showReasonError, setShowReasonError] = useState(false);
+  // Same for the refund reason when granting a refund during the return.
+  const [showRefundReasonError, setShowRefundReasonError] = useState(false);
 
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => {
         const isReasonMissing = !!reasonReferenceTypeId && !data.reasonReference;
+        const isRefundReasonMissing =
+          data.autoGrantRefund && !!refundReasonReferenceTypeId && !data.refundReasonReference;
         const handleValidatedSubmit = () => {
-          if (isReasonMissing) {
-            setShowReasonError(true);
+          setShowReasonError(isReasonMissing);
+          setShowRefundReasonError(isRefundReasonMissing);
 
+          if (isReasonMissing || isRefundReasonMissing) {
             return;
           }
-
-          setShowReasonError(false);
 
           return submit();
         };
@@ -187,6 +190,8 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                   refundReason={data.refundReason}
                   refundReasonReference={data.refundReasonReference}
                   refundReasonReferenceTypeId={refundReasonReferenceTypeId}
+                  refundReasonError={showRefundReasonError}
+                  onClearRefundReasonError={() => setShowRefundReasonError(false)}
                 />
               ) : (
                 <PaymentSubmitCard

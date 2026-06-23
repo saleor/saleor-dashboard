@@ -66,8 +66,8 @@ export const submitCardMessages = defineMessages({
     description: "grant refund within return, reason textarea label",
   },
   refundReasonNone: {
-    defaultMessage: "None",
-    id: "yH5odt",
+    defaultMessage: "Select a reason type",
+    id: "0f1wQb",
     description: "grant refund within return, empty structured reason option",
   },
 });

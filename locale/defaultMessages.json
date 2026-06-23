@@ -499,6 +499,10 @@
     "context": "ProductTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those products types and assigned products"
   },
+  "0f1wQb": {
+    "context": "grant refund within return, empty structured reason option",
+    "string": "Select a reason type"
+  },
   "0f6YvV": {
     "context": "dialog title",
     "string": "Capture Payment"
@@ -11926,10 +11930,6 @@
   },
   "yH56V+": {
     "string": "Ooops!..."
-  },
-  "yH5odt": {
-    "context": "grant refund within return, empty structured reason option",
-    "string": "None"
   },
   "yHeZRQ": {
     "string": "Product Export Failed"

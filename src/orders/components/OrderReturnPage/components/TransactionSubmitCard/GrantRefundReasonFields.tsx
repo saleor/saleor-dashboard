@@ -13,7 +13,11 @@ interface GrantRefundReasonFieldsProps {
   /** Configured refund reason Model (Page) Type id; empty when not configured. */
   refundReasonReferenceTypeId: string;
   disabled?: boolean;
+  /** Marks the refund reason select as errored (e.g. required but not selected on submit). */
+  error?: boolean;
   onChange: FormChange;
+  /** Called when the user picks a reference, used to clear the required error. */
+  onClearError?: () => void;
 }
 
 export const GrantRefundReasonFields = ({
@@ -21,13 +25,20 @@ export const GrantRefundReasonFields = ({
   refundReasonReference,
   refundReasonReferenceTypeId,
   disabled,
+  error,
   onChange,
+  onClearError,
 }: GrantRefundReasonFieldsProps) => {
   const intl = useIntl();
   const { data, loading } = useModelsOfTypeQuery({
     variables: { pageTypeId: refundReasonReferenceTypeId },
     skip: !refundReasonReferenceTypeId,
   });
+
+  // The refund reason reference is configured only when a reason reference type is set.
+  // Without it the reference select is shown but disabled, while the free-text reason note stays enabled.
+  const isConfigured = !!refundReasonReferenceTypeId;
+  const referenceDisabled = disabled || !isConfigured;
 
   const referenceOptions = useMemo(
     () => [
@@ -41,27 +52,27 @@ export const GrantRefundReasonFields = ({
 
   return (
     <Box display="flex" flexDirection="column" gap={4} width="100%">
-      {!!refundReasonReferenceTypeId && (
-        <Box display="flex" flexDirection="column" gap={1}>
-          <Text fontWeight="medium" size={3}>
-            {intl.formatMessage(submitCardMessages.refundReasonReferenceLabel)}
-          </Text>
-          <Select
-            data-test-id="grantRefundReasonReferenceSelect"
-            disabled={disabled || loading}
-            options={referenceOptions}
-            value={refundReasonReference}
-            onChange={value =>
-              onChange({
-                target: {
-                  name: "refundReasonReference" satisfies keyof OrderReturnData,
-                  value: value as string,
-                },
-              })
-            }
-          />
-        </Box>
-      )}
+      <Box display="flex" flexDirection="column" gap={1}>
+        <Text fontWeight="medium" size={3}>
+          {intl.formatMessage(submitCardMessages.refundReasonReferenceLabel)}
+        </Text>
+        <Select
+          data-test-id="grantRefundReasonReferenceSelect"
+          disabled={referenceDisabled || loading}
+          error={error}
+          options={referenceOptions}
+          value={refundReasonReference}
+          onChange={value => {
+            onClearError?.();
+            onChange({
+              target: {
+                name: "refundReasonReference" satisfies keyof OrderReturnData,
+                value: value as string,
+              },
+            });
+          }}
+        />
+      </Box>
       <Box display="flex" flexDirection="column" gap={1}>
         <Text fontWeight="medium" size={3}>
           {intl.formatMessage(submitCardMessages.refundReasonLabel)}
