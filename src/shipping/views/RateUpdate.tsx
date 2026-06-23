@@ -55,6 +55,7 @@ import {
   filterPostalCodes,
   getPostalCodeRuleByMinMax,
   getRuleObject,
+  mapPostalCodeRulesInclusionType,
 } from "@dashboard/shipping/views/utils";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type MinMax } from "@dashboard/types";
@@ -214,10 +215,9 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
 
   const onPostalCodeInclusionChange = (inclusion: PostalCodeRuleInclusionTypeEnum) => {
     dispatch({
-      codesToDelete: rate?.postalCodeRules?.map(code => code.id),
       havePostalCodesChanged: true,
       inclusionType: inclusion,
-      postalCodeRules: [],
+      postalCodeRules: mapPostalCodeRulesInclusionType(state.postalCodeRules, inclusion),
     });
   };
   const updateData = async (
@@ -234,6 +234,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         rateId,
         state?.postalCodeRules!,
         state?.codesToDelete!,
+        state.inclusionType,
       ),
     });
 
@@ -421,6 +422,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         onPostalCodeAssign={() => openModal("add-range")}
         onPostalCodeUnassign={onPostalCodeUnassign}
+        postalCodeInclusionType={state.inclusionType}
         postalCodeRules={state.postalCodeRules!}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}

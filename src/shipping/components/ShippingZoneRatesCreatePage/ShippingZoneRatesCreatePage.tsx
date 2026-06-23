@@ -41,6 +41,7 @@ interface ShippingZoneRatesCreatePageProps extends WithFormId {
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
   postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
+  postalCodeInclusionType?: PostalCodeRuleInclusionTypeEnum;
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -74,6 +75,7 @@ const ShippingZoneRatesCreatePage = ({
   saveButtonBarState,
   variant,
   postalCodes,
+  postalCodeInclusionType,
   formId,
   taxClasses,
   fetchMoreTaxClasses,
@@ -179,6 +181,7 @@ const ShippingZoneRatesCreatePage = ({
             <CardSpacer />
             <ShippingZonePostalCodes
               disabled={disabled}
+              inclusionType={postalCodeInclusionType}
               onPostalCodeDelete={onPostalCodeUnassign}
               onPostalCodeInclusionChange={onPostalCodeInclusionChange}
               onPostalCodeRangeAdd={onPostalCodeAssign}

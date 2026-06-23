@@ -13,6 +13,7 @@ interface DetailGroupBoxProps {
   children: React.ReactNode;
   defaultExpanded?: boolean;
   dataTestId?: string;
+  marginTop?: 0 | 1 | 2 | 3 | 4;
 }
 
 export const DetailGroupBox = ({
@@ -22,13 +23,14 @@ export const DetailGroupBox = ({
   children,
   defaultExpanded = false,
   dataTestId,
+  marginTop = 4,
 }: DetailGroupBoxProps) => {
   const [expanded, setExpanded] = useState<string | undefined>(
     defaultExpanded ? groupId : undefined,
   );
 
   return (
-    <Box marginTop={4} data-test-id={dataTestId}>
+    <Box marginTop={marginTop} data-test-id={dataTestId}>
       <Accordion value={expanded} onValueChange={setExpanded}>
         <Accordion.Item value={groupId}>
           <Box

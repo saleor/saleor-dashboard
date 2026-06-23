@@ -60,6 +60,7 @@ interface ShippingZoneRatesPageProps
   postalCodeRules: NonNullable<
     NonNullable<ShippingZoneQuery["shippingZone"]>["shippingMethods"]
   >[number]["postalCodeRules"];
+  postalCodeInclusionType?: PostalCodeRuleInclusionTypeEnum;
   backHref: string;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
@@ -100,6 +101,7 @@ const ShippingZoneRatesPage = ({
   rate,
   saveButtonBarState,
   postalCodeRules,
+  postalCodeInclusionType,
   variant,
   formId,
   taxClasses,
@@ -219,6 +221,7 @@ const ShippingZoneRatesPage = ({
             <CardSpacer />
             <ShippingZonePostalCodes
               disabled={disabled}
+              inclusionType={postalCodeInclusionType}
               onPostalCodeDelete={onPostalCodeUnassign}
               onPostalCodeInclusionChange={onPostalCodeInclusionChange}
               onPostalCodeRangeAdd={onPostalCodeAssign}

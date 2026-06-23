@@ -126,12 +126,19 @@ function getCreateShippingWeightRateVariables(
   };
 }
 
+const resolvePostalCodeInclusionType = (
+  postalCodeRules: ShippingMethodTypeFragment["postalCodeRules"] | undefined,
+  inclusionType?: PostalCodeRuleInclusionTypeEnum,
+): PostalCodeRuleInclusionTypeEnum =>
+  postalCodeRules?.[0]?.inclusionType ?? inclusionType ?? PostalCodeRuleInclusionTypeEnum.EXCLUDE;
+
 export function getUpdateShippingPriceRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
   rateId: string,
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   deletePostalCodeRules: string[],
+  inclusionType?: PostalCodeRuleInclusionTypeEnum,
 ): UpdateShippingRateMutationVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
@@ -142,8 +149,7 @@ export function getUpdateShippingPriceRateVariables(
     input: {
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
-      inclusionType:
-        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+      inclusionType: resolvePostalCodeInclusionType(addPostalCodeRules, inclusionType),
       maximumDeliveryDays: parsedMaxDays,
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
@@ -161,6 +167,7 @@ export function getUpdateShippingWeightRateVariables(
   rateId: string,
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   deletePostalCodeRules: string[],
+  inclusionType?: PostalCodeRuleInclusionTypeEnum,
 ): UpdateShippingRateMutationVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
@@ -171,8 +178,7 @@ export function getUpdateShippingWeightRateVariables(
     input: {
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
-      inclusionType:
-        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+      inclusionType: resolvePostalCodeInclusionType(addPostalCodeRules, inclusionType),
       maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: parseOptionalOrderWeight(data.maxValue),
       minimumDeliveryDays: parsedMinDays,

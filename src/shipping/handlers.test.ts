@@ -1,4 +1,4 @@
-import { ShippingMethodTypeEnum } from "@dashboard/graphql";
+import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum } from "@dashboard/graphql";
 
 import { type ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
 import {
@@ -107,6 +107,21 @@ describe("shipping handlers", () => {
       // Assert
       expect(variables.input.minimumOrderWeight).toBe(1);
       expect(variables.input.maximumOrderWeight).toBe(10);
+    });
+
+    it("uses inclusion type fallback when no postal code rules exist", () => {
+      // Act
+      const variables = getUpdateShippingWeightRateVariables(
+        baseWeightFormData,
+        "zone-id",
+        "rate-id",
+        [],
+        [],
+        PostalCodeRuleInclusionTypeEnum.INCLUDE,
+      );
+
+      // Assert
+      expect(variables.input.inclusionType).toBe(PostalCodeRuleInclusionTypeEnum.INCLUDE);
     });
   });
 });

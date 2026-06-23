@@ -9,35 +9,15 @@ import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type ShippingZoneQuery } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { type ListActions, type ListProps, type RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell } from "@material-ui/core";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    colAction: {
-      "&:last-child": {
-        paddingRight: theme.spacing(3),
-      },
-      textAlign: "right",
-      width: 100,
-    },
-    colName: {
-      width: "auto",
-    },
-    colProductName: {
-      paddingLeft: 0,
-    },
-    table: {
-      tableLayout: "fixed",
-    },
-  }),
-  { name: "ShippingMethodProducts" },
-);
+import styles from "./ShippingMethodProducts.module.css";
 
 interface ShippingMethodProductsProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
@@ -62,7 +42,6 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
     toggleAll,
     toolbar,
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
 
   return (
@@ -93,65 +72,71 @@ const ShippingMethodProducts = (props: ShippingMethodProductsProps) => {
             <FormattedMessage id="Gg4+K7" defaultMessage="No Products" />
           </Placeholder>
         ) : (
-          <ResponsiveTable
-            className={classes.table}
-            footer={<TablePaginationWithContext disabled={disabled} />}
-          >
-            <TableHead
-              colSpan={numberOfColumns}
-              selected={selected}
-              disabled={disabled}
-              items={products}
-              toggleAll={toggleAll}
-              toolbar={toolbar}
-            >
-              <TableCell className={classes.colProductName}>
-                <FormattedMessage id="ZIc5lM" defaultMessage="Product Name" />
-              </TableCell>
-              <TableCell />
-            </TableHead>
-            <TableBody>
-              {renderCollection(products, product => {
-                const isSelected = product ? isChecked(product.id) : false;
+          <>
+            <ResponsiveTable className={styles.excludedProductsTable}>
+              <TableHead
+                colSpan={numberOfColumns}
+                selected={selected}
+                disabled={disabled}
+                items={products}
+                toggleAll={toggleAll}
+                toolbar={toolbar}
+              >
+                <TableCell className={styles.productCell}>
+                  <Text size={2} color="default2">
+                    <FormattedMessage id="ZIc5lM" defaultMessage="Product Name" />
+                  </Text>
+                </TableCell>
+                <TableCell />
+              </TableHead>
+              <TableBody>
+                {renderCollection(products, product => {
+                  const isSelected = product ? isChecked(product.id) : false;
 
-                return (
-                  <TableRowLink
-                    data-test-id="excluded-products-rows"
-                    key={product ? product.id : "skeleton"}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(product.id)}
-                      />
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.colName}
-                      thumbnail={product?.thumbnail?.url}
+                  return (
+                    <TableRowLink
+                      data-test-id="excluded-products-rows"
+                      key={product ? product.id : "skeleton"}
                     >
-                      {product?.name ? (
-                        <Text size={3} fontWeight="regular">
-                          {product.name}
-                        </Text>
-                      ) : (
-                        <Skeleton />
-                      )}
-                    </TableCellAvatar>
-                    <TableCell className={classes.colAction}>
-                      <IconButton
-                        variant="secondary"
-                        onClick={() => onProductUnassign([product.id])}
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isSelected}
+                          disabled={disabled}
+                          disableClickPropagation
+                          onChange={() => toggle(product.id)}
+                        />
+                      </TableCell>
+                      <TableCellAvatar
+                        className={styles.productCell}
+                        thumbnail={product?.thumbnail?.url}
                       >
-                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRowLink>
-                );
-              })}
-            </TableBody>
-          </ResponsiveTable>
+                        {product?.name ? <Text size={2}>{product.name}</Text> : <Skeleton />}
+                      </TableCellAvatar>
+                      <TableCell>
+                        <Box display="flex" justifyContent="flex-end">
+                          <Button
+                            disabled={disabled}
+                            variant="tertiary"
+                            icon={
+                              <Trash2
+                                size={iconSize.small}
+                                strokeWidth={iconStrokeWidthBySize.small}
+                              />
+                            }
+                            onClick={() => onProductUnassign([product.id])}
+                            title={intl.formatMessage(buttonMessages.delete)}
+                          />
+                        </Box>
+                      </TableCell>
+                    </TableRowLink>
+                  );
+                })}
+              </TableBody>
+            </ResponsiveTable>
+            <Box display="flex" justifyContent="flex-end" paddingTop={2}>
+              <TablePaginationWithContext disabled={disabled} />
+            </Box>
+          </>
         )}
       </DashboardCard.Content>
     </DashboardCard>
