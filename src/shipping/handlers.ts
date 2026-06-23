@@ -47,6 +47,22 @@ export const createChannelsChangeHandler =
     triggerChange();
   };
 
+const parseOptionalOrderPrice = (value: string): string | null => {
+  const trimmed = value.trim();
+
+  return trimmed ? trimmed : null;
+};
+
+const parseOptionalOrderWeight = (value: string): number | null => {
+  if (!value.trim()) {
+    return null;
+  }
+
+  const parsed = parseFloat(value);
+
+  return Number.isNaN(parsed) ? null : parsed;
+};
+
 const getPostalCodeRulesToAdd = (rules: ShippingMethodTypeFragment["postalCodeRules"]) =>
   rules
     .filter(code => !code.id || code.id === "0")
@@ -89,11 +105,8 @@ function getCreateShippingWeightRateVariables(
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   inclusionType: PostalCodeRuleInclusionTypeEnum,
 ): CreateShippingRateMutationVariables {
-  const parsedMinValue = parseFloat(data.minValue);
-  const parsedMaxValue = parseFloat(data.maxValue);
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
-  const isWeightSet = data.orderValueRestricted;
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
 
   return {
@@ -101,9 +114,9 @@ function getCreateShippingWeightRateVariables(
       addPostalCodeRules: postalCodeRules,
       inclusionType,
       maximumDeliveryDays: parsedMaxDays,
-      maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
+      maximumOrderWeight: parseOptionalOrderWeight(data.maxValue),
       minimumDeliveryDays: parsedMinDays,
-      minimumOrderWeight: isWeightSet ? parsedMinValue : null,
+      minimumOrderWeight: parseOptionalOrderWeight(data.minValue),
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
@@ -149,11 +162,8 @@ export function getUpdateShippingWeightRateVariables(
   addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   deletePostalCodeRules: string[],
 ): UpdateShippingRateMutationVariables {
-  const parsedMinValue = parseFloat(data.minValue);
-  const parsedMaxValue = parseFloat(data.maxValue);
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
-  const isWeightSet = data.orderValueRestricted;
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
 
   return {
@@ -164,9 +174,9 @@ export function getUpdateShippingWeightRateVariables(
       inclusionType:
         addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       maximumDeliveryDays: parsedMaxDays,
-      maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
+      maximumOrderWeight: parseOptionalOrderWeight(data.maxValue),
       minimumDeliveryDays: parsedMinDays,
-      minimumOrderWeight: isWeightSet ? parsedMinValue : null,
+      minimumOrderWeight: parseOptionalOrderWeight(data.minValue),
       name: data.name,
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
@@ -177,7 +187,6 @@ export function getUpdateShippingWeightRateVariables(
 }
 export function getShippingMethodChannelVariables(
   id: string,
-  orderValueRestricted: boolean,
   formChannels: ChannelShippingData[],
   prevChannels?: ChannelShippingData[],
 ): ShippingMethodChannelListingUpdateMutationVariables {
@@ -191,8 +200,8 @@ export function getShippingMethodChannelVariables(
       addChannels:
         formChannels?.map(channel => ({
           channelId: channel.id,
-          maximumOrderPrice: channel.maxValue && orderValueRestricted ? channel.maxValue : null,
-          minimumOrderPrice: channel.minValue && orderValueRestricted ? channel.minValue : null,
+          maximumOrderPrice: parseOptionalOrderPrice(channel.maxValue),
+          minimumOrderPrice: parseOptionalOrderPrice(channel.minValue),
           price: channel.price,
         })) || [],
       removeChannels,
@@ -230,11 +239,7 @@ export function useShippingRateCreator(
     const rateId = response.data.shippingPriceCreate.shippingMethod.id;
     const errors = await extractMutationErrors(
       updateShippingMethodChannelListing({
-        variables: getShippingMethodChannelVariables(
-          rateId,
-          data.orderValueRestricted,
-          data.channelListings,
-        ),
+        variables: getShippingMethodChannelVariables(rateId, data.channelListings),
       }),
     );
 

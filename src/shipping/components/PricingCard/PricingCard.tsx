@@ -9,10 +9,12 @@ import { type ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TableBody, TableCell } from "@material-ui/core";
-import { sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import shippingPriceTableStyles from "../ShippingPriceTable.module.css";
 import { useStyles } from "./styles";
 
 interface Value {
@@ -110,7 +112,9 @@ const PricingCard = ({
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.pricingContent}>
-        <ResponsiveTable className={classes.table}>
+        <ResponsiveTable
+          className={clsx(classes.table, shippingPriceTableStyles.shippingPriceTable)}
+        >
           <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
             <TableCell className={classes.colName}>
               <span>
@@ -144,7 +148,6 @@ const PricingCard = ({
                   <TableCell>
                     <PriceField
                       ref={shouldFocusChannel ? focusInputRef : undefined}
-                      className={sprinkles({ marginY: 2 })}
                       data-test-id="price-input"
                       disabled={disabled}
                       error={!!error}

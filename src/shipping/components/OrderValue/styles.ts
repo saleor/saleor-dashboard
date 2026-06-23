@@ -8,13 +8,10 @@ export const useStyles = makeStyles(
     },
     colType: {
       fontSize: 14,
-      textAlign: "right",
-      width: 250,
-    },
-    info: {
-      fontSize: 14,
+      width: 220,
     },
     price: {
+      textAlign: "right",
       verticalAlign: "top",
     },
     table: {

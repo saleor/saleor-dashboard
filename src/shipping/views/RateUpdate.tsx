@@ -247,7 +247,6 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
-          formData.orderValueRestricted,
           formData.channelListings,
           shippingChannels,
         ),

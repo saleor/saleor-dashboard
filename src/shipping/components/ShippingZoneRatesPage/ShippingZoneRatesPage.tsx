@@ -121,7 +121,6 @@ const ShippingZoneRatesPage = ({
       minDays: rate?.minimumDeliveryDays?.toString() || "",
       minValue: rate?.minimumOrderWeight?.value.toString() || "",
       name: rate?.name || "",
-      orderValueRestricted: !!rate?.channelListings?.length,
       privateMetadata: rate?.privateMetadata.map(mapMetadataItemToInput),
       type: rate?.type || null,
       taxClassId: rate?.taxClass?.id || "",
@@ -196,14 +195,11 @@ const ShippingZoneRatesPage = ({
               <OrderValue
                 channels={data.channelListings}
                 errors={channelErrors}
-                orderValueRestricted={data.orderValueRestricted}
                 disabled={disabled}
-                onChange={change}
                 onChannelsChange={handleChannelsChange}
               />
             ) : (
               <OrderWeight
-                orderValueRestricted={data.orderValueRestricted}
                 disabled={disabled}
                 minValue={data.minValue}
                 maxValue={data.maxValue}

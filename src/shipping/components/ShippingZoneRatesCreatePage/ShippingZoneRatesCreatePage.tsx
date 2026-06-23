@@ -89,7 +89,6 @@ const ShippingZoneRatesCreatePage = ({
     minValue: "",
     name: "",
     description: null,
-    orderValueRestricted: true,
     type: null,
     taxClassId: "",
   };
@@ -158,14 +157,11 @@ const ShippingZoneRatesCreatePage = ({
               <OrderValue
                 channels={data.channelListings}
                 errors={channelErrors}
-                orderValueRestricted={data.orderValueRestricted}
                 disabled={disabled}
-                onChange={change}
                 onChannelsChange={handleChannelsChange}
               />
             ) : (
               <OrderWeight
-                orderValueRestricted={data.orderValueRestricted}
                 disabled={disabled}
                 minValue={data.minValue}
                 maxValue={data.maxValue}
