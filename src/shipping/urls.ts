@@ -31,7 +31,8 @@ export type ShippingZoneUrlDialog =
   | "edit-rate"
   | "remove"
   | "remove-rate"
-  | "unassign-country";
+  | "unassign-country"
+  | "view-metadata";
 
 type ShippingMethodActions = "assign-product" | "unassign-product";
 

@@ -11,8 +11,6 @@ import {
   useDeleteShippingZoneMutation,
   useShippingZoneQuery,
   useShopCountriesQuery,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
   useUpdateShippingZoneMutation,
   useWarehouseCreateMutation,
 } from "@dashboard/graphql";
@@ -30,9 +28,9 @@ import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
 import ShippingZoneAddWarehouseDialog from "@dashboard/shipping/components/ShippingZoneAddWarehouseDialog";
 import ShippingZoneCountriesAssignDialog from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog";
+import { ShippingZoneMetadataDialog } from "@dashboard/shipping/components/ShippingZoneMetadataDialog/ShippingZoneMetadataDialog";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapCountriesToCountriesCodes, mapEdgesToItems } from "@dashboard/utils/maps";
 import { diff } from "fast-array-diff";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -122,7 +120,11 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
             defaultMessage: "Shipping zone updated",
           }),
         });
-        closeModal();
+
+        if (params.action === "assign-country" || params.action === "unassign-country") {
+          closeModal();
+        }
+
         refetchRestWorldCountries();
       }
     },
@@ -141,8 +143,6 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
       }
     },
   });
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const getParsedUpdateInput = (
     submitData: ShippingZoneUpdateFormData,
   ): ShippingZoneUpdateInput => {
@@ -173,12 +173,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         },
       }),
     );
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.shippingZone,
-    updateData,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+  const handleSubmit = updateData;
 
   if (data?.shippingZone === null) {
     return <NotFoundPage onBack={() => navigate(shippingZonesListUrl())} />;
@@ -196,6 +191,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
           })
         }
         onDelete={() => openModal("remove")}
+        onShowMetadata={() => openModal("view-metadata")}
         onPriceRateAdd={() =>
           navigate(shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.PRICE }))
         }
@@ -222,6 +218,11 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
         onSearchChange={search}
+      />
+      <ShippingZoneMetadataDialog
+        open={params.action === "view-metadata" && !!data?.shippingZone}
+        onClose={closeModal}
+        shippingZone={data?.shippingZone}
       />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}

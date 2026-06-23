@@ -1547,6 +1547,10 @@
   "6Y1YDn": {
     "string": "Updated extension permissions"
   },
+  "6YUTdO": {
+    "context": "shipping zone detail page, top-bar metadata button tooltip",
+    "string": "Edit shipping zone metadata"
+  },
   "6ZnMfQ": {
     "context": "card header and checkbox label",
     "string": "Use legacy shipping zone stock availability"
@@ -5528,6 +5532,10 @@
   "QslFl8": {
     "context": "add new refund button",
     "string": "New refund"
+  },
+  "R+owWj": {
+    "context": "shipping zone metadata dialog header",
+    "string": "Shipping Zone Metadata"
   },
   "R/YHMH": {
     "context": "label for amount already captured from this transaction",
