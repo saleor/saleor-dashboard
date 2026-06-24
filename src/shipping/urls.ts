@@ -26,7 +26,6 @@ export const shippingZonesListUrl = (params?: ShippingZonesListUrlQueryParams) =
 export const shippingZonePath = (id: string) => urlJoin(shippingZonesListPath, id);
 export type ShippingZoneUrlDialog =
   | "add-rate"
-  | "add-warehouse"
   | "assign-country"
   | "edit-rate"
   | "remove"

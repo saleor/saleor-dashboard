@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { type TaxClassBaseFragment } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
@@ -6,9 +7,8 @@ import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxClassesListUrl } from "@dashboard/taxes/urls";
 import { type FetchMoreProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, DynamicCombobox, Text } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
 interface ShippingMethodTaxesProps {
   value: string;
@@ -71,25 +71,22 @@ export const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
           }
         />
         <Box marginTop={2}>
-          <Text size={2} color="default2" data-test-id="tax-class-create-hint">
+          <DashboardCard.Subtitle
+            fontSize={3}
+            color="default2"
+            data-test-id="tax-class-create-hint"
+          >
             <FormattedMessage
               {...taxesMessages.createTaxClassHint}
               values={{
                 taxSettingsLink: (
-                  <Link to={taxClassesListUrl()} style={{ textDecoration: "none" }}>
-                    <Text
-                      as="span"
-                      size={2}
-                      color="default2"
-                      textDecoration={{ hover: "underline" }}
-                    >
-                      {intl.formatMessage(taxesMessages.taxSettingsLink)}
-                    </Text>
-                  </Link>
+                  <MicrocopyLink to={taxClassesListUrl()}>
+                    {intl.formatMessage(taxesMessages.taxSettingsLink)}
+                  </MicrocopyLink>
                 ),
               }}
             />
-          </Text>
+          </DashboardCard.Subtitle>
         </Box>
       </DashboardCard.Content>
     </DashboardCard>

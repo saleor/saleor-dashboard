@@ -11,3 +11,4 @@ Improve channels and shipping zones management:
 - The shipping rate Save button now reflects whether there are real unsaved changes, and leaving the page with unsaved changes (including postal code edits) now correctly shows the "leave without saving" warning.
 - Fixed changing a shipping rate's postal code mode (include/exclude) not being saved.
 - Fixed shipping zone detail page dirty state: Save stays disabled until name, description, warehouses, or channels are actually changed, and the leave-without-saving prompt no longer fires incorrectly after load.
+- Replaced the "Add New Warehouse" button on shipping zone settings with guidance and a link to Warehouses configuration, including a hint that warehouses must share a channel with the shipping zone.

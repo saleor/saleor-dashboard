@@ -69,7 +69,6 @@ interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps {
   getRateChannelSetupHref: (rateId: string, channelId: string) => string;
   onRateRemove: (rateId: string) => void;
   onSubmit: (data: ShippingZoneUpdateFormData) => SubmitPromise;
-  onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   getWeightRateEditHref: (id: string) => string;
   allChannels?: ChannelFragment[];
@@ -82,7 +81,7 @@ function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
   };
 }
 
-const ShippingZoneDetailsPage = ({
+export const ShippingZoneDetailsPage = ({
   zoneLoading = false,
   disabled,
   errors,
@@ -99,7 +98,6 @@ const ShippingZoneDetailsPage = ({
   onRateRemove,
   onSearchChange,
   onSubmit,
-  onWarehouseAdd,
   onWeightRateAdd,
   getWeightRateEditHref,
   saveButtonBarState,
@@ -126,7 +124,14 @@ const ShippingZoneDetailsPage = ({
     formData: data,
     initialFormData: initialForm,
   });
-  const warehouseChoices = warehouses.map(warehouseToChoice);
+  const warehouseChoices = useMemo(() => {
+    const searchChoices = warehouses.map(warehouseToChoice);
+    const selectedNotInSearch = data.warehouses.filter(
+      selectedWarehouse => !searchChoices.some(choice => choice.value === selectedWarehouse.value),
+    );
+
+    return [...searchChoices, ...selectedNotInSearch];
+  }, [data.warehouses, warehouses]);
   const zoneChannels =
     shippingZone?.channels.map(channel => ({
       id: channel.id,
@@ -218,7 +223,6 @@ const ShippingZoneDetailsPage = ({
           onWarehouseChange={change}
           onFetchMoreWarehouses={onFetchMore}
           onWarehousesSearchChange={onSearchChange}
-          onWarehouseAdd={onWarehouseAdd}
           warehousesChoices={warehouseChoices}
           allChannels={allChannels}
           onChannelChange={change}
@@ -239,4 +243,3 @@ const ShippingZoneDetailsPage = ({
 };
 
 ShippingZoneDetailsPage.displayName = "ShippingZoneDetailsPage";
-export default ShippingZoneDetailsPage;

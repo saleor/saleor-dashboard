@@ -4,7 +4,6 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
-  CountryCode,
   ShippingMethodTypeEnum,
   type ShippingZoneUpdateInput,
   useDeleteShippingRateMutation,
@@ -12,21 +11,14 @@ import {
   useShippingZoneQuery,
   useShopCountriesQuery,
   useUpdateShippingZoneMutation,
-  useWarehouseCreateMutation,
 } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import {
-  extractMutationErrors,
-  findValueInEnum,
-  getById,
-  getStringOrPlaceholder,
-} from "@dashboard/misc";
+import { extractMutationErrors, getById, getStringOrPlaceholder } from "@dashboard/misc";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
-import ShippingZoneAddWarehouseDialog from "@dashboard/shipping/components/ShippingZoneAddWarehouseDialog";
 import ShippingZoneCountriesAssignDialog from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog";
 import { ShippingZoneMetadataDialog } from "@dashboard/shipping/components/ShippingZoneMetadataDialog/ShippingZoneMetadataDialog";
 import { arrayDiff } from "@dashboard/utils/arrays";
@@ -35,7 +27,7 @@ import { mapCountriesToCountriesCodes, mapEdgesToItems } from "@dashboard/utils/
 import { diff } from "fast-array-diff";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
+import { ShippingZoneDetailsPage } from "../../components/ShippingZoneDetailsPage/ShippingZoneDetailsPage";
 import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import {
   shippingRateChannelSetupUrl,
@@ -129,20 +121,6 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
       }
     },
   });
-  const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation({
-    onCompleted: data => {
-      if (data.createWarehouse.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "xeMcID",
-            defaultMessage: "Warehouse created",
-          }),
-        });
-        closeModal();
-      }
-    },
-  });
   const getParsedUpdateInput = (
     submitData: ShippingZoneUpdateFormData,
   ): ShippingZoneUpdateInput => {
@@ -207,7 +185,6 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
         }
         onSubmit={handleSubmit}
         allChannels={availableChannels}
-        onWarehouseAdd={() => openModal("add-warehouse")}
         onWeightRateAdd={() =>
           navigate(shippingRateCreateUrl(id, { type: ShippingMethodTypeEnum.WEIGHT }))
         }
@@ -327,34 +304,6 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
           }}
         />
       </ActionDialog>
-      <ShippingZoneAddWarehouseDialog
-        countries={shop?.countries || []}
-        disabled={createWarehouseOpts.loading}
-        open={params.action === "add-warehouse"}
-        confirmButtonState={createWarehouseOpts.status}
-        errors={createWarehouseOpts.data?.createWarehouse.errors || []}
-        onClose={closeModal}
-        onSubmit={data =>
-          createWarehouse({
-            variables: {
-              input: {
-                address: {
-                  companyName: data.companyName,
-                  city: data.city,
-                  cityArea: data.cityArea,
-                  country: findValueInEnum(data.country, CountryCode),
-                  countryArea: data.countryArea,
-                  phone: data.phone,
-                  postalCode: data.postalCode,
-                  streetAddress1: data.streetAddress1,
-                  streetAddress2: data.streetAddress2,
-                },
-                name: data.name,
-              },
-            },
-          })
-        }
-      />
     </>
   );
 };
