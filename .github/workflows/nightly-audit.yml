@@ -1,0 +1,40 @@
+name: Nightly dependency audit
+
+# Audits `main` for known vulnerabilities and fails (red) when any moderate+
+# advisory is present, so the recurring failure surfaces them. The full report
+# is written to the job summary. PRs are gated separately by `audit-lock` in
+# `main.yml`, which only fails on vulnerabilities a PR *introduces*; this job is
+# the dedicated place where pre-existing `main` vulnerabilities stay visible.
+permissions:
+  contents: read
+
+on:
+  schedule:
+    # 04:30 UTC daily - off the top of the hour to dodge scheduler congestion.
+    - cron: "30 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  audit-main:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: "package.json"
+          # Don't cache in this job as we don't install dependencies
+
+      # `pnpm audit` exits non-zero whenever it finds anything; the report
+      # script owns the pass/fail decision instead.
+      - name: Audit dependencies
+        run: pnpm audit --json > main-audit.json || true
+
+      # No --fail-open: this job is the backstop, so an unreadable audit should
+      # fail loudly rather than hide a problem.
+      - name: Report vulnerabilities
+        run: >-
+          node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/audit-diff.ts report
+          --input main-audit.json --level moderate

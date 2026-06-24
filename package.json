@@ -56,7 +56,7 @@
     "test-storybook:coverage": "vitest --project=storybook --coverage",
     "test:ci": "CI=true jest --coverage --silent && pnpm run test:lint-rules",
     "test:debug": "DEBUG_PRINT_LIMIT=20000 jest",
-    "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-changesets.test.ts",
+    "test:lint-rules": "node lint/rules/named-styles.test.mjs && node lint/rules/named-effects.test.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-changesets.test.ts && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/audit-diff.test.ts",
     "test:quiet": "jest --silent",
     "test:watch": "jest --watch",
     "update-payment-assets": "node scripts/update-payment-assets.cjs"

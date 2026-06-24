@@ -13,8 +13,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-lock:
+  # Runs `pnpm audit` on both the PR and `main`, then fails ONLY on advisories
+  # the PR introduces. Pre-existing vulnerabilities on `main` no longer turn
+  # every PR red - those are tracked by the nightly `nightly-audit.yml` instead.
+  audit-lock:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      pull-requests: write # for the sticky PR comment (same-repo PRs only)
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -25,8 +31,56 @@ jobs:
           node-version-file: "package.json"
           # Don't cache in this job as we don't install dependencies
 
-      - name: Audit dependencies
-        run: pnpm audit --audit-level moderate
+      # `pnpm audit` exits non-zero whenever it finds anything, so swallow the
+      # exit code here (`|| true`) and let the diff script own the pass/fail.
+      - name: Audit PR dependencies
+        run: pnpm audit --json > pr-audit.json || true
+
+      - name: Check out main's lockfile as the baseline
+        run: |
+          git fetch --depth=1 origin main
+          # Restore the consistent trio so the lockfile is not out of sync.
+          git checkout FETCH_HEAD -- pnpm-lock.yaml package.json pnpm-workspace.yaml
+
+      - name: Audit main (baseline) dependencies
+        run: pnpm audit --json > main-audit.json || true
+
+      - name: Diff audits
+        id: diff
+        # `--fail-open` keeps registry/network hiccups from blocking PRs; the
+        # nightly audit (fail-closed) is the backstop. Don't fail the step here -
+        # the explicit "Fail" step below gates on the `introduced` output.
+        continue-on-error: true
+        run: >-
+          node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/audit-diff.ts diff
+          --base main-audit.json --head pr-audit.json --level moderate --fail-open
+          --comment-file audit-comment.md
+
+      - name: Comment on PR with introduced vulnerabilities
+        if: >-
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          steps.diff.outputs.introduced == 'true'
+        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
+        with:
+          header: audit-lock
+          path: audit-comment.md
+
+      - name: Remove stale audit comment when resolved
+        if: >-
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          steps.diff.outputs.introduced != 'true'
+        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # v3.0.4
+        with:
+          header: audit-lock
+          delete: true
+
+      - name: Fail if the PR introduces new vulnerabilities
+        if: steps.diff.outputs.introduced == 'true'
+        run: |
+          echo "::error::This PR introduces new moderate+ vulnerabilities. See the job summary."
+          exit 1
 
   tsc-and-linters:
     runs-on: ubuntu-22.04
