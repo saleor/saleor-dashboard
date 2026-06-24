@@ -1,5 +1,5 @@
 import { type ChannelShippingData } from "@dashboard/channels/utils";
-import { validatePrice } from "@dashboard/products/utils/validation";
+import { isMissingPriceValue } from "@dashboard/products/utils/validation";
 import isEqual from "lodash/isEqual";
 
 export type ChannelPriceValue = {
@@ -36,12 +36,12 @@ export function normalizeComparableNumericString(
 
 export function getChannelIdsWithPrice(channels: ChannelShippingData[]): Set<string> {
   return new Set(
-    channels.filter(channel => !validatePrice(channel.price)).map(channel => channel.id),
+    channels.filter(channel => !isMissingPriceValue(channel.price)).map(channel => channel.id),
   );
 }
 
 export function hasMissingChannelPrices(channels: ChannelShippingData[]): boolean {
-  return channels.some(channel => validatePrice(channel.price));
+  return channels.some(channel => isMissingPriceValue(channel.price));
 }
 
 export function getComparableChannelListings(channels: ChannelShippingData[]) {

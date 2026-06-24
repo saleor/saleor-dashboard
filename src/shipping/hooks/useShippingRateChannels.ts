@@ -1,5 +1,5 @@
 import { type ChannelShippingData } from "@dashboard/channels/utils";
-import { validatePrice } from "@dashboard/products/utils/validation";
+import { isMissingPriceValue } from "@dashboard/products/utils/validation";
 import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
 import {
   type ChannelPriceValue,
@@ -45,7 +45,7 @@ export function useShippingRateChannels({
 
   const handleChannelsChange = useCallback(
     (channelId: string, value: ChannelPriceValue) => {
-      if (!validatePrice(value.price)) {
+      if (!isMissingPriceValue(value.price)) {
         setPricedChannelIds(prev => new Set(prev).add(channelId));
       }
 
