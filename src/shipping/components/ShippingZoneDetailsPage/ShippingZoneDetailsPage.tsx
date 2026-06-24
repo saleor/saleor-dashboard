@@ -5,7 +5,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { CountryList } from "@dashboard/components/CountryList";
-import Form from "@dashboard/components/Form";
+import { useExitFormDialog } from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -17,12 +17,14 @@ import {
   type ShippingZoneQuery,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useShippingZoneEditChanges } from "@dashboard/shipping/hooks/useShippingZoneEditChanges";
 import { shippingZonesListPath } from "@dashboard/shipping/urls";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type Option } from "@saleor/macaw-ui-next";
+import { useLayoutEffect, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
@@ -114,7 +116,16 @@ const ShippingZoneDetailsPage = ({
     ? (rateId: string) =>
         languageEntityUrl(lastUsedLocaleOrFallback, TranslatableEntities.shippingMethods, rateId)
     : undefined;
-  const initialForm = getInitialFormData(shippingZone);
+  const initialForm = useMemo(() => getInitialFormData(shippingZone), [shippingZone]);
+  const { change, data, formId, setIsSubmitDisabled, submit } = useForm(initialForm, onSubmit, {
+    confirmLeave: true,
+    disabled,
+  });
+  const { setIsDirty } = useExitFormDialog({ formId });
+  const hasChanges = useShippingZoneEditChanges({
+    formData: data,
+    initialFormData: initialForm,
+  });
   const warehouseChoices = warehouses.map(warehouseToChoice);
   const zoneChannels =
     shippingZone?.channels.map(channel => ({
@@ -125,101 +136,105 @@ const ShippingZoneDetailsPage = ({
   const shippingZonesListBackLink = useBackLinkWithState({
     path: shippingZonesListPath,
   });
+  const isSaveDisabled = disabled || !hasChanges;
+
+  // Keep exit-dialog dirty state aligned with hasChanges. useForm.triggerChange can set
+  // isDirty independently; re-sync every render so a stale true (e.g. multiselect blur
+  // without edits) does not block navigation.
+  useLayoutEffect(() => {
+    setIsDirty(hasChanges);
+  });
+
+  setIsSubmitDisabled(isSaveDisabled);
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit }) => {
-        return (
-          <DetailPageLayout>
-            <TopNav
-              href={shippingZonesListBackLink}
-              title={<ShippingZoneDetailsTitle name={shippingZone?.name} loading={zoneLoading} />}
-              actionsGap={3}
-            >
-              <TopNav.MetadataButton
-                onClick={onShowMetadata}
-                disabled={!shippingZone}
-                data-test-id="show-shipping-zone-metadata"
-                title={intl.formatMessage({
-                  defaultMessage: "Edit shipping zone metadata",
-                  description: "shipping zone detail page, top-bar metadata button tooltip",
-                  id: "6YUTdO",
-                })}
-              />
-            </TopNav>
-            <DetailPageLayout.Content paddingBottom={10}>
-              <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
-              <CardSpacer />
-              <CountryList
-                countries={zoneLoading ? undefined : shippingZone?.countries}
-                disabled={disabled}
-                emptyText={getStringOrPlaceholder(
-                  shippingZone && intl.formatMessage(messages.noCountriesAssigned),
-                )}
-                summaryContext="shipping-zone"
-                onCountryAssign={onCountryAdd}
-                onCountryUnassign={onCountryRemove}
-                title={intl.formatMessage(messages.countries)}
-              />
-              <CardSpacer />
-              <ShippingZoneRates
-                disabled={disabled}
-                onRateAdd={onPriceRateAdd}
-                getRateEditHref={getPriceRateEditHref}
-                getRateChannelSetupHref={getRateChannelSetupHref}
-                getRateTranslationHref={getRateTranslationHref}
-                onRateRemove={onRateRemove}
-                rates={shippingZone?.shippingMethods?.filter(
-                  method => method.type === ShippingMethodTypeEnum.PRICE,
-                )}
-                variant="price"
-                zoneChannels={zoneChannels}
-                testId="add-price-rate"
-              />
-              <CardSpacer />
-              <ShippingZoneRates
-                disabled={disabled}
-                onRateAdd={onWeightRateAdd}
-                getRateEditHref={getWeightRateEditHref}
-                getRateChannelSetupHref={getRateChannelSetupHref}
-                getRateTranslationHref={getRateTranslationHref}
-                onRateRemove={onRateRemove}
-                rates={shippingZone?.shippingMethods?.filter(
-                  method => method.type === ShippingMethodTypeEnum.WEIGHT,
-                )}
-                variant="weight"
-                zoneChannels={zoneChannels}
-                testId="add-weight-rate"
-              />
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <ShippingZoneSettingsCard
-                formData={data}
-                hasMoreWarehouses={hasMore}
-                loading={loading}
-                onWarehouseChange={change}
-                onFetchMoreWarehouses={onFetchMore}
-                onWarehousesSearchChange={onSearchChange}
-                onWarehouseAdd={onWarehouseAdd}
-                warehousesChoices={warehouseChoices}
-                allChannels={allChannels}
-                onChannelChange={change}
-              />
-            </DetailPageLayout.RightSidebar>
-            <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} />
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(shippingZonesListBackLink)} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBarState}
-                onClick={submit}
-                disabled={isSaveDisabled}
-              />
-            </Savebar>
-          </DetailPageLayout>
-        );
-      }}
-    </Form>
+    <DetailPageLayout>
+      <TopNav
+        href={shippingZonesListBackLink}
+        title={<ShippingZoneDetailsTitle name={shippingZone?.name} loading={zoneLoading} />}
+        actionsGap={3}
+      >
+        <TopNav.MetadataButton
+          onClick={onShowMetadata}
+          disabled={!shippingZone}
+          data-test-id="show-shipping-zone-metadata"
+          title={intl.formatMessage({
+            defaultMessage: "Edit shipping zone metadata",
+            description: "shipping zone detail page, top-bar metadata button tooltip",
+            id: "6YUTdO",
+          })}
+        />
+      </TopNav>
+      <DetailPageLayout.Content paddingBottom={10}>
+        <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
+        <CardSpacer />
+        <CountryList
+          countries={zoneLoading ? undefined : shippingZone?.countries}
+          disabled={disabled}
+          emptyText={getStringOrPlaceholder(
+            shippingZone && intl.formatMessage(messages.noCountriesAssigned),
+          )}
+          summaryContext="shipping-zone"
+          onCountryAssign={onCountryAdd}
+          onCountryUnassign={onCountryRemove}
+          title={intl.formatMessage(messages.countries)}
+        />
+        <CardSpacer />
+        <ShippingZoneRates
+          disabled={disabled}
+          onRateAdd={onPriceRateAdd}
+          getRateEditHref={getPriceRateEditHref}
+          getRateChannelSetupHref={getRateChannelSetupHref}
+          getRateTranslationHref={getRateTranslationHref}
+          onRateRemove={onRateRemove}
+          rates={shippingZone?.shippingMethods?.filter(
+            method => method.type === ShippingMethodTypeEnum.PRICE,
+          )}
+          variant="price"
+          zoneChannels={zoneChannels}
+          testId="add-price-rate"
+        />
+        <CardSpacer />
+        <ShippingZoneRates
+          disabled={disabled}
+          onRateAdd={onWeightRateAdd}
+          getRateEditHref={getWeightRateEditHref}
+          getRateChannelSetupHref={getRateChannelSetupHref}
+          getRateTranslationHref={getRateTranslationHref}
+          onRateRemove={onRateRemove}
+          rates={shippingZone?.shippingMethods?.filter(
+            method => method.type === ShippingMethodTypeEnum.WEIGHT,
+          )}
+          variant="weight"
+          zoneChannels={zoneChannels}
+          testId="add-weight-rate"
+        />
+      </DetailPageLayout.Content>
+      <DetailPageLayout.RightSidebar>
+        <ShippingZoneSettingsCard
+          formData={data}
+          hasMoreWarehouses={hasMore}
+          loading={loading}
+          onWarehouseChange={change}
+          onFetchMoreWarehouses={onFetchMore}
+          onWarehousesSearchChange={onSearchChange}
+          onWarehouseAdd={onWarehouseAdd}
+          warehousesChoices={warehouseChoices}
+          allChannels={allChannels}
+          onChannelChange={change}
+        />
+      </DetailPageLayout.RightSidebar>
+      <Savebar>
+        <Savebar.DeleteButton onClick={onDelete} />
+        <Savebar.Spacer />
+        <Savebar.CancelButton onClick={() => navigate(shippingZonesListBackLink)} />
+        <Savebar.ConfirmButton
+          transitionState={saveButtonBarState}
+          onClick={submit}
+          disabled={isSaveDisabled}
+        />
+      </Savebar>
+    </DetailPageLayout>
   );
 };
 
