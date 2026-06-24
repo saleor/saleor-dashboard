@@ -32,11 +32,7 @@ export const RippleGlobalDescription = ({ content }: { content: ReactNode }) => 
     });
   }
 
-  return (
-    <Text {...rippleDescriptionTextProps} as="div">
-      {content}
-    </Text>
-  );
+  return <Box {...rippleDescriptionTextProps}>{content}</Box>;
 };
 
 interface RippleEntry {
