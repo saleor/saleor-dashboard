@@ -155,6 +155,7 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
         saveButtonBarState={status}
         onSubmit={createShippingRate}
         backUrl={shippingZoneUrl(id)}
+        shippingZoneName={zoneName}
         errors={errors}
         channelErrors={channelErrors}
         postalCodes={state.postalCodeRules}

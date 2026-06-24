@@ -37,6 +37,7 @@ import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboar
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type FormEventHandler, useLayoutEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -64,6 +65,7 @@ interface ShippingZoneRatesPageProps
   >[number]["postalCodeRules"];
   postalCodeInclusionType?: PostalCodeRuleInclusionTypeEnum;
   backHref: string;
+  shippingZoneName?: string;
   onDelete?: () => void;
   onShowMetadata: () => void;
   onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
@@ -93,6 +95,7 @@ const ShippingZoneRatesPage = ({
   disabled,
   errors,
   backHref,
+  shippingZoneName,
   onDelete,
   onShowMetadata,
   onSubmit,
@@ -203,7 +206,31 @@ const ShippingZoneRatesPage = ({
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
         <DetailPageLayout>
-          <TopNav href={backHref} title={rate?.name} actionsGap={3}>
+          <TopNav
+            href={backHref}
+            title={
+              disabled && !rate?.name ? (
+                <Skeleton __width="200px" />
+              ) : (
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Text
+                    size={6}
+                    color="default2"
+                    ellipsis
+                    __maxWidth="200px"
+                    title={shippingZoneName}
+                  >
+                    {shippingZoneName}
+                  </Text>
+                  <Text size={6} color="default2">
+                    /
+                  </Text>
+                  <Text size={6}>{rate?.name}</Text>
+                </Box>
+              )
+            }
+            actionsGap={3}
+          >
             <TopNav.MetadataButton
               onClick={onShowMetadata}
               disabled={!rate}

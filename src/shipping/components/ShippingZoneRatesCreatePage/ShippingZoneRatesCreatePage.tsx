@@ -29,7 +29,8 @@ import { useShippingRateEditChanges } from "@dashboard/shipping/hooks/useShippin
 import { type FetchMoreProps } from "@dashboard/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { type FormEventHandler, useLayoutEffect, useState } from "react";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { type FormEventHandler, useLayoutEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ShippingMethodChannelAvailabilityCard } from "../ShippingMethodChannelAvailabilityCard/ShippingMethodChannelAvailabilityCard";
@@ -48,6 +49,7 @@ interface ShippingZoneRatesCreatePageProps extends WithFormId {
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   backUrl: string;
+  shippingZoneName?: string;
   onDelete?: () => void;
   onSubmit: (data: ShippingZoneRateCommonFormData) => SubmitPromise;
   onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
@@ -68,6 +70,7 @@ const ShippingZoneRatesCreatePage = ({
   disabled,
   errors,
   backUrl,
+  shippingZoneName,
   onDelete,
   onSubmit,
   onPostalCodeInclusionChange,
@@ -160,6 +163,21 @@ const ShippingZoneRatesCreatePage = ({
   );
 
   const isSaveDisabled = disabled || !hasValidChannelPrices;
+  const pageTitle = useMemo(
+    () =>
+      isPriceVariant
+        ? intl.formatMessage({
+            id: "RXPGi/",
+            defaultMessage: "Price Rate Create",
+            description: "page title",
+          })
+        : intl.formatMessage({
+            id: "NDm2Fe",
+            defaultMessage: "Weight Rate Create",
+            description: "page title",
+          }),
+    [intl, isPriceVariant],
+  );
 
   setIsSubmitDisabled(isSaveDisabled);
 
@@ -170,17 +188,25 @@ const ShippingZoneRatesCreatePage = ({
           <TopNav
             href={backUrl}
             title={
-              isPriceVariant
-                ? intl.formatMessage({
-                    id: "RXPGi/",
-                    defaultMessage: "Price Rate Create",
-                    description: "page title",
-                  })
-                : intl.formatMessage({
-                    id: "NDm2Fe",
-                    defaultMessage: "Weight Rate Create",
-                    description: "page title",
-                  })
+              !shippingZoneName ? (
+                <Skeleton __width="200px" />
+              ) : (
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Text
+                    size={6}
+                    color="default2"
+                    ellipsis
+                    __maxWidth="200px"
+                    title={shippingZoneName}
+                  >
+                    {shippingZoneName}
+                  </Text>
+                  <Text size={6} color="default2">
+                    /
+                  </Text>
+                  <Text size={6}>{pageTitle}</Text>
+                </Box>
+              )
             }
           />
           <DetailPageLayout.Content>

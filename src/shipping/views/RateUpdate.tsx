@@ -457,6 +457,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         saveButtonBarState={saveButtonBarState}
         onDelete={() => openModal("remove")}
         backHref={shippingZoneUrl(id)}
+        shippingZoneName={zoneName}
         onSubmit={updateData}
         onShowMetadata={() => openModal("view-metadata")}
         rate={rate!}
