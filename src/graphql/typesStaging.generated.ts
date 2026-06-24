@@ -7328,6 +7328,18 @@ export type ProductVariantWhereInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by product SKU. */
   sku?: InputMaybe<StringFilterInput>;
+  /**
+   * Filter by variants having a specific stock status in the given channel.
+   *
+   * Added in Saleor 3.24.
+   */
+  stockAvailability?: InputMaybe<StockAvailability>;
+  /**
+   * Filter by stock of the variant.
+   *
+   * Added in Saleor 3.24.
+   */
+  stocks?: InputMaybe<ProductStockFilterInput>;
   /** Filter by when was the most recent update. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
