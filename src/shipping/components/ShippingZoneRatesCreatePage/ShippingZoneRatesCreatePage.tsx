@@ -4,6 +4,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type WithFormId } from "@dashboard/components/Form";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -24,10 +25,11 @@ import OrderWeight from "@dashboard/shipping/components/OrderWeight";
 import PricingCard from "@dashboard/shipping/components/PricingCard";
 import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
 import { useShippingRateChannels } from "@dashboard/shipping/hooks/useShippingRateChannels";
+import { useShippingRateEditChanges } from "@dashboard/shipping/hooks/useShippingRateEditChanges";
 import { type FetchMoreProps } from "@dashboard/types";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { type FormEventHandler, useState } from "react";
+import { type FormEventHandler, useLayoutEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ShippingMethodChannelAvailabilityCard } from "../ShippingMethodChannelAvailabilityCard/ShippingMethodChannelAvailabilityCard";
@@ -38,6 +40,7 @@ import { type ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/ty
 interface ShippingZoneRatesCreatePageProps extends WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
+  hasPostalCodeChanges?: boolean;
   disabled: boolean;
   postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
   postalCodeInclusionType?: PostalCodeRuleInclusionTypeEnum;
@@ -60,6 +63,7 @@ interface ShippingZoneRatesCreatePageProps extends WithFormId {
 const ShippingZoneRatesCreatePage = ({
   allChannelsCount,
   shippingChannels,
+  hasPostalCodeChanges = false,
   channelErrors,
   disabled,
   errors,
@@ -100,6 +104,7 @@ const ShippingZoneRatesCreatePage = ({
     setIsSubmitDisabled,
     triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
+  const { setExitDialogSubmitRef, setIsDirty } = useExitFormDialog({ formId });
   const { handleChannelsChange, hasValidChannelPrices, pricedChannelIdsList } =
     useShippingRateChannels({
       shippingChannels,
@@ -115,6 +120,16 @@ const ShippingZoneRatesCreatePage = ({
     initial: null,
     triggerChange,
   });
+
+  const hasChanges = useShippingRateEditChanges({
+    formData,
+    initialFormData: initialForm,
+    shippingChannels,
+    savedShippingChannels: [],
+    hasPostalCodeChanges,
+    isDescriptionDirty: richText.isDirty,
+  });
+
   const data: ShippingZoneRateCommonFormData = {
     ...formData,
     description: null,
@@ -129,6 +144,21 @@ const ShippingZoneRatesCreatePage = ({
     handleFormSubmit(await getData());
   };
   const handleSubmit = async () => handleFormSubmit(await getData());
+
+  useLayoutEffect(
+    function registerExitDialogSubmit() {
+      setExitDialogSubmitRef(handleSubmit);
+    },
+    [handleSubmit, setExitDialogSubmitRef],
+  );
+
+  useLayoutEffect(
+    function syncExitDialogDirtyState() {
+      setIsDirty(hasChanges);
+    },
+    [hasChanges, setIsDirty],
+  );
+
   const isSaveDisabled = disabled || !hasValidChannelPrices;
 
   setIsSubmitDisabled(isSaveDisabled);

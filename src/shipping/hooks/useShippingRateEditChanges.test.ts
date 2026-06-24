@@ -26,9 +26,6 @@ describe("useShippingRateEditChanges", () => {
   ];
 
   it("reports no changes on initial load", () => {
-    // Arrange
-    const triggerChange = jest.fn();
-
     // Act
     const { result } = renderHook(() =>
       useShippingRateEditChanges({
@@ -36,19 +33,14 @@ describe("useShippingRateEditChanges", () => {
         initialFormData,
         shippingChannels: savedChannels,
         savedShippingChannels: savedChannels,
-        triggerChange,
       }),
     );
 
     // Assert
     expect(result.current).toBe(false);
-    expect(triggerChange).toHaveBeenCalledWith(false);
   });
 
   it("reports changes when a channel price is edited", () => {
-    // Arrange
-    const triggerChange = jest.fn();
-
     // Act
     const { result } = renderHook(() =>
       useShippingRateEditChanges({
@@ -56,12 +48,26 @@ describe("useShippingRateEditChanges", () => {
         initialFormData,
         shippingChannels: [{ ...savedChannels[0], price: "12" }],
         savedShippingChannels: savedChannels,
-        triggerChange,
       }),
     );
 
     // Assert
     expect(result.current).toBe(true);
-    expect(triggerChange).toHaveBeenCalledWith(true);
+  });
+
+  it("reports changes when postal codes are edited", () => {
+    // Act
+    const { result } = renderHook(() =>
+      useShippingRateEditChanges({
+        formData: initialFormData,
+        initialFormData,
+        shippingChannels: savedChannels,
+        savedShippingChannels: savedChannels,
+        hasPostalCodeChanges: true,
+      }),
+    );
+
+    // Assert
+    expect(result.current).toBe(true);
   });
 });

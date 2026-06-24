@@ -1,7 +1,7 @@
 import { type ChannelShippingData } from "@dashboard/channels/utils";
 import { type ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
 import { areChannelListingsEqual } from "@dashboard/shipping/utils/channelPricingState";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 const comparableFormFields = [
   "name",
@@ -19,7 +19,6 @@ interface UseShippingRateEditChangesOptions {
   savedShippingChannels: ChannelShippingData[];
   hasPostalCodeChanges?: boolean;
   isDescriptionDirty?: boolean;
-  triggerChange: (isDirty?: boolean) => void;
 }
 
 export function useShippingRateEditChanges({
@@ -29,7 +28,6 @@ export function useShippingRateEditChanges({
   savedShippingChannels,
   hasPostalCodeChanges = false,
   isDescriptionDirty = false,
-  triggerChange,
 }: UseShippingRateEditChangesOptions) {
   const hasFormFieldChanges = useMemo(
     () => comparableFormFields.some(field => formData[field] !== initialFormData[field]),
@@ -41,10 +39,6 @@ export function useShippingRateEditChanges({
   );
   const hasChanges =
     hasFormFieldChanges || hasChannelChanges || hasPostalCodeChanges || isDescriptionDirty;
-
-  useEffect(() => {
-    triggerChange(hasChanges);
-  }, [hasChanges, triggerChange]);
 
   return hasChanges;
 }

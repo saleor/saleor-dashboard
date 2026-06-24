@@ -16,6 +16,7 @@ import {
   type ShippingRateCreateUrlQueryParams,
   shippingZoneUrl,
 } from "@dashboard/shipping/urls";
+import { hasPostalCodeStateChanges } from "@dashboard/shipping/utils/postalCodeState";
 import postalCodesReducer from "@dashboard/shipping/views/reducer";
 import {
   filterPostalCodes,
@@ -26,7 +27,7 @@ import {
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { useReducer } from "react";
+import { useMemo, useReducer } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-create-form-id");
@@ -64,11 +65,30 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
   } = useChannels(allChannels, params?.action, { closeModal, openModal }, { formId: FORM_ID });
   const [state, dispatch] = useReducer(postalCodesReducer, {
     codesToDelete: [],
-    havePostalCodesChanged: false,
     inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
     originalCodes: [],
     postalCodeRules: [],
   });
+  const savedPostalCodeState = useMemo(
+    () => ({
+      codesToDelete: [],
+      inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+      postalCodeRules: [],
+    }),
+    [],
+  );
+  const hasPostalCodeChanges = useMemo(
+    () =>
+      hasPostalCodeStateChanges(
+        {
+          codesToDelete: state.codesToDelete,
+          inclusionType: state.inclusionType,
+          postalCodeRules: state.postalCodeRules,
+        },
+        savedPostalCodeState,
+      ),
+    [savedPostalCodeState, state.codesToDelete, state.inclusionType, state.postalCodeRules],
+  );
   const { channelErrors, createShippingRate, errors, status } = useShippingRateCreator(
     id,
     params.type,
@@ -85,21 +105,18 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
     const newCode = getRuleObject(rule, state.inclusionType);
 
     dispatch({
-      havePostalCodesChanged: true,
       postalCodeRules: [...state.postalCodeRules, newCode],
     });
     closeModal();
   };
   const onPostalCodeInclusionChange = (inclusion: PostalCodeRuleInclusionTypeEnum) => {
     dispatch({
-      havePostalCodesChanged: true,
       inclusionType: inclusion,
       postalCodeRules: mapPostalCodeRulesInclusionType(state.postalCodeRules, inclusion),
     });
   };
   const onPostalCodeUnassign = code => {
     dispatch({
-      havePostalCodesChanged: true,
       postalCodeRules: filterPostalCodes(state.postalCodeRules, code),
     });
   };
@@ -147,6 +164,7 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
         onPostalCodeAssign={() => openModal("add-range")}
         onPostalCodeUnassign={onPostalCodeUnassign}
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
+        hasPostalCodeChanges={hasPostalCodeChanges}
         variant={params.type}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}

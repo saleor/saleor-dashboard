@@ -49,6 +49,10 @@ import {
   type ShippingRateUrlQueryParams,
   shippingZoneUrl,
 } from "@dashboard/shipping/urls";
+import {
+  hasPostalCodeStateChanges,
+  resolvePostalCodeInclusionType,
+} from "@dashboard/shipping/utils/postalCodeState";
 import postalCodesReducer from "@dashboard/shipping/views/reducer";
 import {
   filterPostalCodes,
@@ -203,12 +207,31 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   });
   const [state, dispatch] = useReducer(postalCodesReducer, {
     codesToDelete: [],
-    havePostalCodesChanged: false,
     inclusionType:
       (rate?.postalCodeRules?.length && rate?.postalCodeRules[0].inclusionType) || undefined,
     originalCodes: [],
     postalCodeRules: rate?.postalCodeRules || [],
   });
+  const savedPostalCodeState = useMemo(
+    () => ({
+      postalCodeRules: rate?.postalCodeRules ?? [],
+      inclusionType: undefined,
+      codesToDelete: [],
+    }),
+    [rate?.postalCodeRules],
+  );
+  const hasPostalCodeChanges = useMemo(
+    () =>
+      hasPostalCodeStateChanges(
+        {
+          postalCodeRules: state.postalCodeRules,
+          inclusionType: state.inclusionType,
+          codesToDelete: state.codesToDelete,
+        },
+        savedPostalCodeState,
+      ),
+    [savedPostalCodeState, state.codesToDelete, state.inclusionType, state.postalCodeRules],
+  );
   const postalCodeRulesLoaded =
     !loading &&
     !state.postalCodeRules?.length &&
@@ -221,7 +244,6 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
 
   const onPostalCodeInclusionChange = (inclusion: PostalCodeRuleInclusionTypeEnum) => {
     dispatch({
-      havePostalCodesChanged: true,
       inclusionType: inclusion,
       postalCodeRules: mapPostalCodeRulesInclusionType(state.postalCodeRules, inclusion),
     });
@@ -233,13 +255,34 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
       rate?.type === ShippingMethodTypeEnum.PRICE
         ? getUpdateShippingPriceRateVariables
         : getUpdateShippingWeightRateVariables;
+
+    // Saleor stores inclusionType per postal-code rule, so flipping it for the
+    // whole method is not persisted by sending the new inclusionType alone -
+    // the existing rules must be deleted and re-created with it. When the
+    // inclusion type changed we strip ids from the current rules (so they are
+    // sent as new additions carrying the new inclusion) and queue every
+    // persisted rule id for deletion.
+    const savedRules = rate?.postalCodeRules ?? [];
+    const inclusionChanged =
+      savedRules.length > 0 &&
+      resolvePostalCodeInclusionType(state.postalCodeRules, state.inclusionType) !==
+        resolvePostalCodeInclusionType(savedRules);
+    const postalCodeRulesToSave = (
+      inclusionChanged
+        ? state.postalCodeRules!.map(rule => ({ ...rule, id: undefined }))
+        : state.postalCodeRules!
+    ) as ShippingMethodTypeFragment["postalCodeRules"];
+    const codesToDeleteToSave = inclusionChanged
+      ? Array.from(new Set<string>([...(state.codesToDelete ?? []), ...savedRules.map(r => r.id)]))
+      : state.codesToDelete!;
+
     const response = await updateShippingRate({
       variables: getUpdateVariables(
         formData,
         id,
         rateId,
-        state?.postalCodeRules!,
-        state?.codesToDelete!,
+        postalCodeRulesToSave,
+        codesToDeleteToSave,
         state.inclusionType,
       ),
     });
@@ -252,8 +295,6 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
       return errors;
     }
 
-    dispatch({ havePostalCodesChanged: false });
-
     const channelResponse = await updateShippingMethodChannelListing({
       variables: getShippingMethodChannelVariables(
         rateId,
@@ -265,7 +306,17 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
 
     if (channelErrors.length === 0) {
       handleSuccess();
-      refetch();
+
+      // Re-hydrate the local postal-code editor state from the authoritative
+      // server response. Locally added rules have no id until saved, so without
+      // this re-sync the editor state never matches the refetched rate and the
+      // form stays dirty after saving a mix of added/removed ranges.
+      const refetchResult = await refetch();
+      const refetchedRules =
+        refetchResult?.data?.shippingZone?.shippingMethods?.find(getById(rateId))
+          ?.postalCodeRules ?? [];
+
+      dispatch({ postalCodeRules: refetchedRules, originalCodes: [] });
     }
 
     return channelErrors;
@@ -302,7 +353,6 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     >[number];
 
     dispatch({
-      havePostalCodesChanged: true,
       postalCodeRules: [...state.postalCodeRules!, newCode],
     });
     closeModal();
@@ -311,12 +361,10 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     if (code.id !== undefined) {
       dispatch({
         codesToDelete: [...state.codesToDelete!, code.id],
-        havePostalCodesChanged: true,
         postalCodeRules: state.postalCodeRules!.filter(getByUnmatchingId(code.id)),
       });
     } else {
       dispatch({
-        havePostalCodesChanged: true,
         postalCodeRules: filterPostalCodes(state.postalCodeRules, code),
       });
     }
@@ -398,7 +446,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         shippingChannels={currentChannels as ChannelShippingData[]}
         savedChannelIds={savedChannelIds}
         savedShippingChannels={shippingChannels}
-        hasPostalCodeChanges={state.havePostalCodesChanged}
+        hasPostalCodeChanges={hasPostalCodeChanges}
         disabled={
           loading ||
           updateShippingRateOpts?.status === "loading" ||

@@ -5,6 +5,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type WithFormId } from "@dashboard/components/Form";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -36,7 +37,7 @@ import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboar
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { type FormEventHandler, useMemo } from "react";
+import { type FormEventHandler, useLayoutEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ShippingMethodChannelAvailabilityCard } from "../ShippingMethodChannelAvailabilityCard/ShippingMethodChannelAvailabilityCard";
@@ -139,6 +140,7 @@ const ShippingZoneRatesPage = ({
     setIsSubmitDisabled,
     triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
+  const { setExitDialogSubmitRef, setIsDirty } = useExitFormDialog({ formId });
   const [taxClassDisplayName, setTaxClassDisplayName] = useStateUpdate(rate?.taxClass?.name ?? "");
   const handleFormSubmit = useHandleFormSubmit({
     formId,
@@ -166,7 +168,6 @@ const ShippingZoneRatesPage = ({
     savedShippingChannels,
     hasPostalCodeChanges,
     isDescriptionDirty: richText.isDirty,
-    triggerChange,
   });
   // Prevents closing ref in submit functions
   const getData = async (): Promise<ShippingZoneRateUpdateFormData> => ({
@@ -179,6 +180,21 @@ const ShippingZoneRatesPage = ({
     handleFormSubmit(await getData());
   };
   const handleSubmit = async () => handleFormSubmit(await getData());
+
+  useLayoutEffect(
+    function registerExitDialogSubmit() {
+      setExitDialogSubmitRef(handleSubmit);
+    },
+    [handleSubmit, setExitDialogSubmitRef],
+  );
+
+  useLayoutEffect(
+    function syncExitDialogDirtyState() {
+      setIsDirty(hasChanges);
+    },
+    [hasChanges, setIsDirty],
+  );
+
   const isSaveDisabled = disabled || !hasValidChannelPrices || !hasChanges;
 
   setIsSubmitDisabled(isSaveDisabled);
