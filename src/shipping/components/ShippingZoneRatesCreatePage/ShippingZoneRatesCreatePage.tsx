@@ -155,12 +155,9 @@ const ShippingZoneRatesCreatePage = ({
     [handleSubmit, setExitDialogSubmitRef],
   );
 
-  useLayoutEffect(
-    function syncExitDialogDirtyState() {
-      setIsDirty(hasChanges);
-    },
-    [hasChanges, setIsDirty],
-  );
+  useLayoutEffect(() => {
+    setIsDirty(hasChanges);
+  });
 
   const isSaveDisabled = disabled || !hasValidChannelPrices;
   const pageTitle = useMemo(

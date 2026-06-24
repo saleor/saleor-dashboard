@@ -3,6 +3,7 @@ import { type Channel, sortChannelShippingDataByName } from "@dashboard/channels
 import { useExitFormDialog, type WithFormId } from "@dashboard/components/Form";
 import useListActions from "@dashboard/hooks/useListActions";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import isEqual from "lodash/isEqual";
 import { useCallback } from "react";
 
 interface Modal {
@@ -33,10 +34,15 @@ function useChannels<T extends Channel, A>(
   };
   const handleChannelsModalOpen = () => openModal("open-channels-picker");
   const handleChannelsConfirm = () => {
-    setCurrentChannels(sortChannelShippingDataByName(channelListElements));
-    // hack so channels also update exit form dalog provider
-    // despite not setting page's form data "changed" prop
-    setIsDirty(true);
+    const nextChannels = sortChannelShippingDataByName(channelListElements);
+
+    if (!isEqual(currentChannels, nextChannels)) {
+      setCurrentChannels(nextChannels);
+      // hack so channels also update exit form dialog provider
+      // despite not setting page's form data "changed" prop
+      setIsDirty(true);
+    }
+
     closeModal();
   };
   const toggleAllChannels = (items: T[], selected: number) => {

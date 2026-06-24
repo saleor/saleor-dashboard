@@ -191,12 +191,12 @@ const ShippingZoneRatesPage = ({
     [handleSubmit, setExitDialogSubmitRef],
   );
 
-  useLayoutEffect(
-    function syncExitDialogDirtyState() {
-      setIsDirty(hasChanges);
-    },
-    [hasChanges, setIsDirty],
-  );
+  // Keep exit-dialog dirty state aligned with hasChanges. useForm.triggerChange and
+  // useChannels can set isDirty independently; re-sync every render so a stale true
+  // (e.g. confirming the channel picker without edits) does not block navigation.
+  useLayoutEffect(() => {
+    setIsDirty(hasChanges);
+  });
 
   const isSaveDisabled = disabled || !hasValidChannelPrices || !hasChanges;
 

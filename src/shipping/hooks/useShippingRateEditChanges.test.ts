@@ -70,4 +70,27 @@ describe("useShippingRateEditChanges", () => {
     // Assert
     expect(result.current).toBe(true);
   });
+
+  it("does not report changes when numeric form fields only differ by formatting", () => {
+    // Act
+    const { result } = renderHook(() =>
+      useShippingRateEditChanges({
+        formData: {
+          ...initialFormData,
+          minValue: "5.00",
+          maxValue: "10.0",
+        },
+        initialFormData: {
+          ...initialFormData,
+          minValue: "5",
+          maxValue: "10",
+        },
+        shippingChannels: savedChannels,
+        savedShippingChannels: savedChannels,
+      }),
+    );
+
+    // Assert
+    expect(result.current).toBe(false);
+  });
 });

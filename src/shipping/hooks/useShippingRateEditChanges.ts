@@ -1,6 +1,9 @@
 import { type ChannelShippingData } from "@dashboard/channels/utils";
 import { type ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
-import { areChannelListingsEqual } from "@dashboard/shipping/utils/channelPricingState";
+import {
+  areChannelListingsEqual,
+  normalizeComparableNumericString,
+} from "@dashboard/shipping/utils/channelPricingState";
 import { useMemo } from "react";
 
 const comparableFormFields = [
@@ -11,6 +14,32 @@ const comparableFormFields = [
   "maxValue",
   "taxClassId",
 ] as const satisfies ReadonlyArray<keyof ShippingZoneRateUpdateFormData>;
+
+const numericFormFields = new Set<keyof ShippingZoneRateUpdateFormData>([
+  "minDays",
+  "maxDays",
+  "minValue",
+  "maxValue",
+]);
+
+function areFormFieldValuesEqual(
+  field: (typeof comparableFormFields)[number],
+  currentValue: string,
+  initialValue: string,
+): boolean {
+  if (currentValue === initialValue) {
+    return true;
+  }
+
+  if (!numericFormFields.has(field)) {
+    return false;
+  }
+
+  return (
+    normalizeComparableNumericString(currentValue) ===
+    normalizeComparableNumericString(initialValue)
+  );
+}
 
 interface UseShippingRateEditChangesOptions {
   formData: Omit<ShippingZoneRateUpdateFormData, "description">;
@@ -30,7 +59,10 @@ export function useShippingRateEditChanges({
   isDescriptionDirty = false,
 }: UseShippingRateEditChangesOptions) {
   const hasFormFieldChanges = useMemo(
-    () => comparableFormFields.some(field => formData[field] !== initialFormData[field]),
+    () =>
+      comparableFormFields.some(
+        field => !areFormFieldValuesEqual(field, formData[field], initialFormData[field]),
+      ),
     [formData, initialFormData],
   );
   const hasChannelChanges = useMemo(

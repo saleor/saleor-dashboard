@@ -101,6 +101,31 @@ describe("channelPricingState", () => {
       // Assert
       expect(areChannelListingsEqual(currentChannels, savedChannels)).toBe(false);
     });
+
+    it("treats numerically equivalent prices as equal", () => {
+      // Arrange
+      const savedChannels: ChannelShippingData[] = [
+        {
+          id: "ch-1",
+          name: "USD",
+          currency: "USD",
+          price: "10",
+          minValue: "5.00",
+          maxValue: "100.0",
+        },
+      ];
+      const currentChannels: ChannelShippingData[] = [
+        {
+          ...savedChannels[0],
+          price: "10.00",
+          minValue: "5",
+          maxValue: "100",
+        },
+      ];
+
+      // Assert
+      expect(areChannelListingsEqual(currentChannels, savedChannels)).toBe(true);
+    });
   });
 
   describe("isDraftShippingChannel", () => {

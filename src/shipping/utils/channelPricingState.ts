@@ -16,6 +16,24 @@ export function normalizeChannelPriceValue(price: string | number | null | undef
   return String(price);
 }
 
+export function normalizeComparableNumericString(
+  value: string | number | null | undefined,
+): string {
+  const normalized = normalizeChannelPriceValue(value);
+
+  if (normalized === "") {
+    return "";
+  }
+
+  const numericValue = Number(normalized);
+
+  if (!Number.isNaN(numericValue)) {
+    return numericValue.toString();
+  }
+
+  return normalized;
+}
+
 export function getChannelIdsWithPrice(channels: ChannelShippingData[]): Set<string> {
   return new Set(
     channels.filter(channel => !validatePrice(channel.price)).map(channel => channel.id),
@@ -31,9 +49,9 @@ export function getComparableChannelListings(channels: ChannelShippingData[]) {
     .sort((leftChannel, rightChannel) => leftChannel.name.localeCompare(rightChannel.name))
     .map(channel => ({
       id: channel.id,
-      maxValue: normalizeChannelPriceValue(channel.maxValue),
-      minValue: normalizeChannelPriceValue(channel.minValue),
-      price: normalizeChannelPriceValue(channel.price),
+      maxValue: normalizeComparableNumericString(channel.maxValue),
+      minValue: normalizeComparableNumericString(channel.minValue),
+      price: normalizeComparableNumericString(channel.price),
     }));
 }
 
