@@ -7,6 +7,23 @@ description: Triage `pnpm audit` security findings and propose batched, accept-f
 
 Goal: turn `pnpm audit` noise into a small set of **accept-first** batches the user can approve and merge independently. Do NOT apply fixes until the user accepts the proposal. NEVER fix everything in one commit.
 
+## Always install through Socket Firewall (sfw)
+
+When applying fixes you install dependencies — the exact moment a malicious or
+compromised package would land on the machine. **Never run a bare `pnpm install`
+in this workflow.** Wrap every install with [Socket Firewall Free](https://github.com/SocketDev/sfw-free),
+which scans dependencies in real time and blocks known-malicious ones before
+they reach disk:
+
+```bash
+sfw pnpm install                 # instead of `pnpm install`
+sfw pnpm install --frozen-lockfile
+```
+
+If `sfw` is missing, install it first with `npm i -g sfw` (binaries for
+macOS/Linux/Windows are on the releases page). Same pattern for any other
+manager: `sfw <package-manager> <command>`.
+
 ## How this repo fixes vulnerabilities
 
 Most findings are **transitive** (deep in the dep tree). This repo does NOT bump those individually — it pins them via **`pnpm-workspace.yaml` → `overrides:`** (the single source of truth; never use `package.json` → `pnpm.overrides`). Direct deps are bumped in `package.json`.
@@ -73,7 +90,7 @@ Present a report: per batch list package, current→target, severity/CVSS, dep p
 ### 5. After acceptance (per batch)
 
 1. Edit `pnpm-workspace.yaml` overrides (or `package.json` for direct deps).
-2. `pnpm install` to update `pnpm-lock.yaml`.
+2. `sfw pnpm install` to update `pnpm-lock.yaml` (always through Socket Firewall — see above).
 3. `pnpm audit` to confirm the targeted findings are gone and nothing regressed.
 4. For build/runtime-affecting deps (`vite`, etc.), run `pnpm run build` / relevant tests.
 5. One commit per batch. Skip changesets — dependency security bumps are internal (see `saleor-dashboard-changesets`).
