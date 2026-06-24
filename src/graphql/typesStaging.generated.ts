@@ -5534,6 +5534,7 @@ export enum OrderGrantRefundCreateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
   SHIPPING_COSTS_ALREADY_GRANTED = 'SHIPPING_COSTS_ALREADY_GRANTED'
@@ -5566,6 +5567,8 @@ export type OrderGrantRefundCreateInput = {
 
 export enum OrderGrantRefundCreateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   QUANTITY_GREATER_THAN_AVAILABLE = 'QUANTITY_GREATER_THAN_AVAILABLE'
 }
@@ -5577,12 +5580,19 @@ export type OrderGrantRefundCreateLineInput = {
   quantity: Scalars['Int']['input'];
   /** Reason of the granted refund for the line. */
   reason?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for the line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum OrderGrantRefundUpdateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
   SHIPPING_COSTS_ALREADY_GRANTED = 'SHIPPING_COSTS_ALREADY_GRANTED'
@@ -5622,10 +5632,18 @@ export type OrderGrantRefundUpdateLineAddInput = {
   quantity: Scalars['Int']['input'];
   /** Reason of the granted refund for the line. */
   reason?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for the line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export enum OrderGrantRefundUpdateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   QUANTITY_GREATER_THAN_AVAILABLE = 'QUANTITY_GREATER_THAN_AVAILABLE'
 }
@@ -5723,6 +5741,18 @@ export type OrderReturnFulfillmentLineInput = {
   fulfillmentLineId: Scalars['ID']['input'];
   /** The number of items to be returned. */
   quantity: Scalars['Int']['input'];
+  /**
+   * Reason for returning this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /** Determines, if the line should be added to replace order. */
   replace?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -5732,6 +5762,18 @@ export type OrderReturnLineInput = {
   orderLineId: Scalars['ID']['input'];
   /** The number of items to be returned. */
   quantity: Scalars['Int']['input'];
+  /**
+   * Reason for returning this line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /** Determines, if the line should be added to replace order. */
   replace?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -5745,6 +5787,18 @@ export type OrderReturnProductsInput = {
   includeShippingCosts?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of unfulfilled lines to return. */
   orderLines?: InputMaybe<Array<OrderReturnLineInput>>;
+  /**
+   * Reason for returning this order.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this return.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']['input']>;
   /** If true, Saleor will call refund action for all lines. */
   refund?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -7724,6 +7778,22 @@ export enum ReportingPeriod {
   TODAY = 'TODAY'
 }
 
+export enum ReturnSettingsErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
+export type ReturnSettingsUpdateInput = {
+  /**
+   * The ID of a model type, that will be used to reference return reasons. All models of this type will be accepted as return reasons.
+   *
+   * Added in Saleor 3.23.
+   */
+  returnReasonReferenceType: Scalars['ID']['input'];
+};
+
 export enum RewardTypeEnum {
   GIFT = 'GIFT',
   SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
@@ -9410,6 +9480,12 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
   /** A product metadata is updated. */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
+  /** A new product type is created. */
+  PRODUCT_TYPE_CREATED = 'PRODUCT_TYPE_CREATED',
+  /** A product type is deleted. */
+  PRODUCT_TYPE_DELETED = 'PRODUCT_TYPE_DELETED',
+  /** A product type is updated. */
+  PRODUCT_TYPE_UPDATED = 'PRODUCT_TYPE_UPDATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
@@ -9767,6 +9843,12 @@ export enum WebhookEventTypeEnum {
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
   /** A product metadata is updated. */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
+  /** A new product type is created. */
+  PRODUCT_TYPE_CREATED = 'PRODUCT_TYPE_CREATED',
+  /** A product type is deleted. */
+  PRODUCT_TYPE_DELETED = 'PRODUCT_TYPE_DELETED',
+  /** A product type is updated. */
+  PRODUCT_TYPE_UPDATED = 'PRODUCT_TYPE_UPDATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
@@ -10039,6 +10121,9 @@ export enum WebhookSampleEventTypeEnum {
   PRODUCT_MEDIA_DELETED = 'PRODUCT_MEDIA_DELETED',
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
+  PRODUCT_TYPE_CREATED = 'PRODUCT_TYPE_CREATED',
+  PRODUCT_TYPE_DELETED = 'PRODUCT_TYPE_DELETED',
+  PRODUCT_TYPE_UPDATED = 'PRODUCT_TYPE_UPDATED',
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
   PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
