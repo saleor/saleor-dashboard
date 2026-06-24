@@ -1,0 +1,25 @@
+.headerWrapper {
+  display: inline-flex;
+  width: fit-content;
+}
+
+.headerLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  width: fit-content;
+  text-decoration: none;
+  color: inherit;
+}
+
+.label {
+  min-width: 0;
+  color: var(--mu-colors-text-default2);
+  transition: color 0.15s ease-in-out;
+}
+
+.headerLink:hover .label,
+.headerLink:focus-visible .label {
+  color: var(--mu-colors-text-default1);
+}
