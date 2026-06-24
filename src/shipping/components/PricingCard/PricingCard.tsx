@@ -6,6 +6,8 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type ShippingChannelsErrorFragment } from "@dashboard/graphql";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { normalizeChannelPriceValue } from "@dashboard/shipping/utils/channelPricingState";
 import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
@@ -112,6 +114,9 @@ const PricingCard = ({
             description: "pricing card title",
           })}
         </DashboardCard.Title>
+        <DashboardCard.Toolbar>
+          <Ripple model={rippleShippingRateEditor} />
+        </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content className={classes.pricingContent}>
         <ResponsiveTable

@@ -2,6 +2,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { type ShippingZoneDetailsFragment } from "@dashboard/graphql";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -48,6 +50,7 @@ export const ShippingZoneRates = ({
         <Box display="flex" alignItems="center" gap={2}>
           <DashboardCard.Title>{sectionTitle}</DashboardCard.Title>
           {variant === "price" && <ShippingMethodTypesHelpTooltip />}
+          <Ripple model={rippleShippingRateEditor} />
         </Box>
         <DashboardCard.Toolbar>
           <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId} variant="secondary">
