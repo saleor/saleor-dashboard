@@ -1355,11 +1355,15 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
+      reason: null,
+      reasonReference: null,
       created: "2019-09-17T13:22:24.376193+00:00",
       lines: [
         {
           __typename: "FulfillmentLine",
           id: "RnVsZmlsbG1lbnRMaW5lOjM5",
+          reason: null,
+          reasonReference: null,
           orderLine: {
             __typename: "OrderLine",
             id: "T3JkZXJMaW5lOjIz",
@@ -1520,11 +1524,15 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 1,
       id: "RnVsZmlsbG1lbnQ6OQ==",
+      reason: null,
+      reasonReference: null,
       created: "2019-09-17T13:22:24.376193+00:00",
       lines: [
         {
           __typename: "FulfillmentLine",
           id: "RnVsZmlsbG1lbnRMaW5lOjE1",
+          reason: null,
+          reasonReference: null,
           orderLine: {
             __typename: "OrderLine",
             id: "T3JkZXJMaW5lOjIz",
@@ -3802,9 +3810,17 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
       {
         __typename: "OrderGrantedRefundLine" as const,
         id: "grantedRefund1",
+        reason: null,
+        reasonReference: null,
         orderLine: {
           __typename: "OrderLine" as const,
           id: "orderLine1",
+          productName: "Test product",
+          variantName: "Test variant",
+          thumbnail: {
+            __typename: "Image" as const,
+            url: "https://example.com/thumbnail.png",
+          },
         },
         quantity: 1,
       },
@@ -3833,9 +3849,17 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
       {
         __typename: "OrderGrantedRefundLine" as const,
         id: "grantedRefund2",
+        reason: null,
+        reasonReference: null,
         orderLine: {
           __typename: "OrderLine" as const,
           id: "orderLine1",
+          productName: "Test product",
+          variantName: "Test variant",
+          thumbnail: {
+            __typename: "Image" as const,
+            url: "https://example.com/thumbnail.png",
+          },
         },
         quantity: 1,
       },

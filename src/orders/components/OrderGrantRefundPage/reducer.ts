@@ -14,6 +14,8 @@ export interface ReducerOrderLine {
   initialQuantity?: number;
   unitPrice: number;
   isDirty: boolean;
+  reason?: string;
+  reasonReference?: string;
 }
 
 export interface GrantRefundState {
@@ -48,6 +50,12 @@ export type GrantRefundAction =
   | {
       type: "setRefundShipping";
       refundShipping: boolean;
+    }
+  | {
+      type: "setLineReason";
+      lineId: string;
+      reason: string;
+      reasonReference: string;
     };
 
 export const getGrantRefundReducerInitialState = (
@@ -128,6 +136,26 @@ export function grantRefundReducer(
         refundShipping: action.refundShipping,
       };
     }
+    case "setLineReason": {
+      const line = state.lines.get(action.lineId);
+
+      if (!line) {
+        return state;
+      }
+
+      const newLines = new Map(state.lines);
+
+      newLines.set(action.lineId, {
+        ...line,
+        reason: action.reason,
+        reasonReference: action.reasonReference,
+      });
+
+      return {
+        ...state,
+        lines: newLines,
+      };
+    }
 
     default:
       exhaustiveCheck(action);
@@ -143,14 +171,16 @@ function createToGrantRefundLineMap(
       | OrderDetailsGrantRefundFragment["lines"][0]
       | OrderDetailsGrantRefundFragment["fulfillments"][0]["lines"][0],
   ): GrantRefundLineKeyValue => {
-    const initialQuantity =
-      grantedRefund?.lines?.find(initLine => initLine.orderLine.id === line.id)?.quantity ?? 0;
+    const initialLine = grantedRefund?.lines?.find(initLine => initLine.orderLine.id === line.id);
+    const initialQuantity = initialLine?.quantity ?? 0;
 
     return [
       line.id,
       {
         orderLineId: "orderLine" in line ? line.orderLine.id : line.id,
         isDirty: false,
+        reason: initialLine?.reason ?? "",
+        reasonReference: initialLine?.reasonReference?.id ?? "",
         availableQuantity: getLineAvailableQuantity({
           lineId: line.id,
           lineQuntity: line.quantity,

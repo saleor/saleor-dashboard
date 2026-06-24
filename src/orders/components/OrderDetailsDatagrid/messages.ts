@@ -35,6 +35,11 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Is gift",
     description: "order line is gift",
   },
+  reason: {
+    id: "GY93MP",
+    defaultMessage: "Reason",
+    description: "order line return/refund reason",
+  },
 });
 
 export const messages = defineMessages({

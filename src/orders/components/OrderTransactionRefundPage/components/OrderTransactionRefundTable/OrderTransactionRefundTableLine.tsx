@@ -52,6 +52,7 @@ export const OrderTransactionRefundTableLine = ({
   const handleInputOnBlur = (event: React.FocusEvent<HTMLInputElement, Element>) =>
     refundFieldsUpdate(index, {
       reason: field.reason,
+      reasonReference: field.reasonReference,
       quantity: validateQty({
         order,
         draftRefund,
@@ -62,6 +63,7 @@ export const OrderTransactionRefundTableLine = ({
   const handleMaxRefund = () =>
     refundFieldsUpdate(index, {
       reason: field.reason,
+      reasonReference: field.reasonReference,
       quantity: maxQtyToRefund,
     });
 

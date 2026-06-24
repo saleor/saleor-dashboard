@@ -27,6 +27,7 @@ import {
   createGetCellContent,
   isLineDiscounted,
   isPriceBreakdownColumn,
+  type LineReasonDisplay,
   orderDetailsStaticColumnsAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
@@ -41,6 +42,8 @@ interface OrderDetailsDatagridProps {
    *  the strikethrough on the original price is the only visual affordance. */
   onShowLinePriceBreakdown?: (lineId: string) => void;
   datagridCustomTheme?: Partial<Theme>;
+  /** Per-line reasons aligned by index with `lines`; when set, a `reason` column is shown. */
+  lineReasons?: LineReasonDisplay[];
 }
 
 export const OrderDetailsDatagrid = ({
@@ -49,6 +52,7 @@ export const OrderDetailsDatagrid = ({
   onOrderLineShowMetadata,
   onShowLinePriceBreakdown,
   datagridCustomTheme = {},
+  lineReasons,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
@@ -57,8 +61,11 @@ export const OrderDetailsDatagrid = ({
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
   const emptyColumn = useEmptyColumn();
   const orderDetailsStaticColumns = useMemo(
-    () => orderDetailsStaticColumnsAdapter(intl, emptyColumn),
-    [intl, emptyColumn],
+    () =>
+      orderDetailsStaticColumnsAdapter(intl, emptyColumn, {
+        withReasonColumn: Boolean(lineReasons),
+      }),
+    [intl, emptyColumn, lineReasons],
   );
   const handleColumnChange = useCallback(
     (picked: string[]) => {
@@ -84,6 +91,7 @@ export const OrderDetailsDatagrid = ({
       intl,
       locale,
       interactivePricing: Boolean(onShowLinePriceBreakdown),
+      lineReasons,
     }),
     [
       visibleColumns,
@@ -93,6 +101,7 @@ export const OrderDetailsDatagrid = ({
       onOrderLineShowMetadata,
       locale,
       onShowLinePriceBreakdown,
+      lineReasons,
     ],
   );
   const getMenuItems = useCallback(

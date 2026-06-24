@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.23.10",
+  "version": "3.23.11",
   "repository": {
     "type": "git",
     "url": "git://github.com/saleor/saleor-dashboard.git"
@@ -189,8 +189,8 @@
     "@types/uuid": "^9.0.8",
     "@types/webappsec-credential-management": "^0.5.1",
     "@vitejs/plugin-react-swc": "^4.3.0",
-    "@vitest/browser-playwright": "^4.1.1",
-    "@vitest/coverage-v8": "^4.1.1",
+    "@vitest/browser-playwright": "4.1.8",
+    "@vitest/coverage-v8": "4.1.8",
     "chromatic": "^15.2.0",
     "code-inspector-plugin": "^0.6.5",
     "core-js": "^3.46.0",
@@ -207,7 +207,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-react-you-might-not-need-an-effect": "^0.5.6",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-storybook": "10.2.16",
+    "eslint-plugin-storybook": "10.2.19",
     "eslint-plugin-unicorn": "^61.0.2",
     "eslint-plugin-unused-imports": "^4.3.0",
     "front-matter": "^4.0.2",
@@ -222,13 +222,13 @@
     "playwright-ctrf-json-reporter": "0.0.26",
     "rollup-plugin-polyfill-node": "^0.11.0",
     "sort-package-json": "3.4.0",
-    "storybook": "10.2.16",
+    "storybook": "10.2.19",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.46.4",
     "typescript-strict-plugin": "^2.4.4",
-    "vite": "7.3.2",
+    "vite": "7.3.5",
     "vite-plugin-html": "^3.2.2",
-    "vitest": "^4.1.1"
+    "vitest": "4.1.8"
   },
   "optionalDependencies": {
     "@testing-library/jest-dom": "^5.17.0",

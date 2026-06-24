@@ -9,6 +9,7 @@ import { Code, EllipsisVertical } from "lucide-react";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
+import { ReasonDisplay } from "../ReasonDisplay/ReasonDisplay";
 import { ActionButtons } from "./ActionButtons";
 
 interface OrderFulfillmentCardProps {
@@ -60,13 +61,16 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     return null;
   }
 
-  const getLines = () => {
-    if (statusesToMergeLines.includes(fulfillment?.status)) {
-      return mergeRepeatedOrderLines(fulfillment.lines).map(fulfillmentLineToLine);
-    }
-
-    return fulfillment?.lines.map(fulfillmentLineToLine) || [];
-  };
+  const getFulfillmentLines = () =>
+    statusesToMergeLines.includes(fulfillment?.status)
+      ? mergeRepeatedOrderLines(fulfillment.lines)
+      : (fulfillment?.lines ?? []);
+  const getLines = () => getFulfillmentLines().map(fulfillmentLineToLine);
+  const lineReasons = getFulfillmentLines().map(line => ({
+    reason: line.reason ?? null,
+    reasonType: line.reasonReference?.title ?? null,
+  }));
+  const hasLineReasons = lineReasons.some(({ reason, reasonType }) => reason || reasonType);
 
   return (
     <Box data-test-id={dataTestId} backgroundColor={"default2"}>
@@ -136,9 +140,18 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           </Box>
         }
       />
+      {(fulfillment.reason || fulfillment.reasonReference) && (
+        <Box __paddingLeft="3.2rem" paddingTop={0} paddingBottom={4} backgroundColor="default2">
+          <ReasonDisplay
+            reasonReference={fulfillment.reasonReference?.title}
+            reason={fulfillment.reason}
+          />
+        </Box>
+      )}
       <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid
           lines={getLines()}
+          lineReasons={hasLineReasons ? lineReasons : undefined}
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
           onShowLinePriceBreakdown={onShowLinePriceBreakdown}

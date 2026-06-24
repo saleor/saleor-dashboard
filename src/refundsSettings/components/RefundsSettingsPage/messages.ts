@@ -2,33 +2,61 @@ import { defineMessages } from "react-intl";
 
 export const refundsSettingsPageMessages = defineMessages({
   pageTitle: {
-    defaultMessage: "Refunds settings",
-    id: "t1scMK",
+    defaultMessage: "Refunds & returns settings",
+    id: "CCjH3M",
   },
-  explainerTitle: {
+  // Refund section
+  refundExplainerTitle: {
     defaultMessage: "Refund reasons",
     id: "QpYazu",
   },
-  explainerContent: {
+  refundExplainerContent: {
     defaultMessage:
       "Select a Model Type. All Models extending the type will be available as refund reasons when issuing a refund.",
     id: "uGqPKY",
   },
-  selectLabel: {
+  refundSelectLabel: {
     defaultMessage: "Refunds Model Type",
     id: "e71euF",
   },
-  selectHelper: {
+  refundSelectHelper: {
     defaultMessage: "Choose the Model Type whose extended Models will serve as refund reasons.",
     id: "pepgIN",
+  },
+  refundPreviewTitle: {
+    defaultMessage: "Current refund reasons from",
+    id: "VSLrmT",
+  },
+  // Return section
+  returnExplainerTitle: {
+    defaultMessage: "Return reasons",
+    id: "ilTOqQ",
+  },
+  returnExplainerContent: {
+    defaultMessage:
+      "Select a Model Type. All Models extending the type will be available as return reasons when returning products.",
+    id: "wAgQU+",
+  },
+  returnSelectLabel: {
+    defaultMessage: "Returns Model Type",
+    id: "4Za2EN",
+  },
+  returnSelectHelper: {
+    defaultMessage: "Choose the Model Type whose extended Models will serve as return reasons.",
+    id: "Jk7dD2",
+  },
+  returnPreviewTitle: {
+    defaultMessage: "Current return reasons from",
+    id: "y7/amd",
+  },
+  // Shared
+  noneOption: {
+    defaultMessage: "Disabled",
+    id: "tthToS",
   },
   createModelTypeLink: {
     defaultMessage: "Create new Model Type",
     id: "4Rj36Y",
-  },
-  previewTitle: {
-    defaultMessage: "Current refund reasons from",
-    id: "VSLrmT",
   },
   emptyModels: {
     defaultMessage: "This Model Type does not have created models yet.",
