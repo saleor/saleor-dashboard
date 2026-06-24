@@ -3,7 +3,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type CountryFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { type ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,7 +16,7 @@ import { groupCountriesByStartingLetter } from "./utils";
 type CountryListSummaryContext = "shipping-zone" | "voucher";
 
 interface CountryListProps {
-  countries: CountryFragment[];
+  countries?: CountryFragment[] | null;
   disabled: boolean;
   emptyText: ReactNode;
   summaryContext: CountryListSummaryContext;
@@ -58,7 +58,8 @@ export const CountryList = ({
     [sortedCountries],
   );
   const sortedLetters = useMemo(() => Object.keys(groupedCountries).sort(), [groupedCountries]);
-  const hasCountriesToRender = sortedCountries.length > 0;
+  const isLoading = countries === undefined;
+  const hasCountriesToRender = !isLoading && sortedCountries.length > 0;
 
   return (
     <DashboardCard>
@@ -78,7 +79,9 @@ export const CountryList = ({
         )}
       </DashboardCard.Header>
       <DashboardCard.Content>
-        {hasCountriesToRender ? (
+        {isLoading ? (
+          <Skeleton data-test-id="country-list-skeleton" />
+        ) : hasCountriesToRender ? (
           <DetailGroupBox
             groupId="countries-list"
             dataTestId="countries-list"

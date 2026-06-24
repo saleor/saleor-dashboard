@@ -37,13 +37,13 @@ import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboar
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type FormEventHandler, useLayoutEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ShippingMethodChannelAvailabilityCard } from "../ShippingMethodChannelAvailabilityCard/ShippingMethodChannelAvailabilityCard";
 import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
+import { ShippingMethodDetailsTitle } from "./Title";
 import { type ShippingZoneRateUpdateFormData } from "./types";
 
 interface ShippingZoneRatesPageProps
@@ -55,12 +55,13 @@ interface ShippingZoneRatesPageProps
   savedChannelIds?: string[];
   savedShippingChannels?: ChannelShippingData[];
   hasPostalCodeChanges?: boolean;
+  loading?: boolean;
   disabled: boolean;
   rate: NonNullable<NonNullable<ShippingZoneQuery["shippingZone"]>["shippingMethods"]>[number];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  postalCodeRules: NonNullable<
+  postalCodeRules?: NonNullable<
     NonNullable<ShippingZoneQuery["shippingZone"]>["shippingMethods"]
   >[number]["postalCodeRules"];
   postalCodeInclusionType?: PostalCodeRuleInclusionTypeEnum;
@@ -91,6 +92,7 @@ const ShippingZoneRatesPage = ({
   savedChannelIds,
   savedShippingChannels = [],
   hasPostalCodeChanges = false,
+  loading = false,
   channelErrors,
   disabled,
   errors,
@@ -151,7 +153,7 @@ const ShippingZoneRatesPage = ({
   });
   const richText = useRichText({
     initial: rate?.description,
-    loading: !rate,
+    loading,
     triggerChange,
   });
   const data: ShippingZoneRateUpdateFormData = {
@@ -209,25 +211,11 @@ const ShippingZoneRatesPage = ({
           <TopNav
             href={backHref}
             title={
-              disabled && !rate?.name ? (
-                <Skeleton __width="200px" />
-              ) : (
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Text
-                    size={6}
-                    color="default2"
-                    ellipsis
-                    __maxWidth="200px"
-                    title={shippingZoneName}
-                  >
-                    {shippingZoneName}
-                  </Text>
-                  <Text size={6} color="default2">
-                    /
-                  </Text>
-                  <Text size={6}>{rate?.name}</Text>
-                </Box>
-              )
+              <ShippingMethodDetailsTitle
+                shippingZoneName={shippingZoneName}
+                rateName={rate?.name}
+                loading={loading}
+              />
             }
             actionsGap={3}
           >
@@ -294,7 +282,7 @@ const ShippingZoneRatesPage = ({
             />
             <CardSpacer />
             <ShippingMethodProducts
-              products={mapEdgesToItems(rate?.excludedProducts)!}
+              products={loading ? undefined : mapEdgesToItems(rate?.excludedProducts)}
               onProductAssign={onProductAssign}
               onProductUnassign={onProductUnassign}
               disabled={disabled}
@@ -308,6 +296,7 @@ const ShippingZoneRatesPage = ({
               pricedChannelIds={pricedChannelIdsList}
               totalChannelsCount={allChannelsCount ?? 0}
               errors={channelErrors}
+              isLoading={loading}
               managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
               onManageClick={openChannelsModal}
             />

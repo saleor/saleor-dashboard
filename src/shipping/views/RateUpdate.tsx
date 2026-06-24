@@ -447,6 +447,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         savedChannelIds={savedChannelIds}
         savedShippingChannels={shippingChannels}
         hasPostalCodeChanges={hasPostalCodeChanges}
+        loading={loading}
         disabled={
           loading ||
           updateShippingRateOpts?.status === "loading" ||
@@ -490,7 +491,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         onPostalCodeAssign={() => openModal("add-range")}
         onPostalCodeUnassign={onPostalCodeUnassign}
         postalCodeInclusionType={state.inclusionType}
-        postalCodeRules={state.postalCodeRules!}
+        postalCodeRules={loading ? undefined : (state.postalCodeRules ?? [])}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
       />

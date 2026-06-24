@@ -31,6 +31,7 @@ import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDe
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import { ShippingZoneRates } from "../ShippingZoneRates/ShippingZoneRates";
 import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard";
+import { ShippingZoneDetailsTitle } from "./Title";
 import { getInitialFormData } from "./utils";
 
 const messages = defineMessages({
@@ -51,6 +52,7 @@ const messages = defineMessages({
 });
 
 interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps {
+  zoneLoading?: boolean;
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -79,6 +81,7 @@ function warehouseToChoice(warehouse: Record<"id" | "name", string>): Option {
 }
 
 const ShippingZoneDetailsPage = ({
+  zoneLoading = false,
   disabled,
   errors,
   hasMore,
@@ -128,7 +131,11 @@ const ShippingZoneDetailsPage = ({
       {({ change, data, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={shippingZonesListBackLink} title={shippingZone?.name} actionsGap={3}>
+            <TopNav
+              href={shippingZonesListBackLink}
+              title={<ShippingZoneDetailsTitle name={shippingZone?.name} loading={zoneLoading} />}
+              actionsGap={3}
+            >
               <TopNav.MetadataButton
                 onClick={onShowMetadata}
                 disabled={!shippingZone}
@@ -144,7 +151,7 @@ const ShippingZoneDetailsPage = ({
               <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
               <CountryList
-                countries={shippingZone?.countries}
+                countries={zoneLoading ? undefined : shippingZone?.countries}
                 disabled={disabled}
                 emptyText={getStringOrPlaceholder(
                   shippingZone && intl.formatMessage(messages.noCountriesAssigned),

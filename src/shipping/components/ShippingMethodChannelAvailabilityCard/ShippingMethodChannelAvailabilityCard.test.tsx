@@ -173,4 +173,26 @@ describe("ShippingMethodChannelAvailabilityCard", () => {
     expect(screen.queryByText("Draft")).not.toBeInTheDocument();
     expect(screen.getByTestId("shipping-channel-missing-price-banner")).toBeInTheDocument();
   });
+
+  it("renders loading skeleton when isLoading is true", () => {
+    // Arrange // Act
+    render(
+      <ShippingMethodChannelAvailabilityCard
+        channels={[]}
+        totalChannelsCount={2}
+        errors={[]}
+        isLoading
+        managePermissions={[]}
+        onManageClick={jest.fn()}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.queryByTestId("channel-availability-subtitle")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("This shipping rate is not available in any channel"),
+    ).not.toBeInTheDocument();
+    expect(screen.getByTestId("availability-card")).toBeInTheDocument();
+  });
 });

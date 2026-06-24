@@ -182,6 +182,7 @@ const ShippingZoneDetails = ({ id, params }: ShippingZoneDetailsProps) => {
   return (
     <>
       <ShippingZoneDetailsPage
+        zoneLoading={loading}
         disabled={loading}
         errors={updateShippingZoneOpts.data?.shippingZoneUpdate.errors || []}
         onCountryAdd={() => openModal("assign-country")}
