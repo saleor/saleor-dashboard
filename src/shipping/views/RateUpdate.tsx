@@ -65,7 +65,7 @@ import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMor
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useMemo, useReducer } from "react";
+import { useCallback, useMemo, useReducer, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-details-form-id");
@@ -153,8 +153,20 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     { formId: FORM_ID },
   );
   const focusChannelId = params.channelId;
+  const [excludedFocusChannelId, setExcludedFocusChannelId] = useState<string | null>(null);
+  const clearFocusChannelFromUrl = useCallback(() => {
+    if (!params.channelId) {
+      return;
+    }
+
+    setExcludedFocusChannelId(params.channelId);
+
+    const { channelId: _channelId, ...paramsWithoutChannel } = params;
+
+    navigate(shippingRateEditUrl(id, rateId, paramsWithoutChannel), { replace: true });
+  }, [id, navigate, params, rateId]);
   const shippingChannelsWithFocusTarget = useMemo(() => {
-    if (!focusChannelId || !allChannels?.length) {
+    if (!focusChannelId || !allChannels?.length || excludedFocusChannelId === focusChannelId) {
       return currentChannels;
     }
 
@@ -169,7 +181,19 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     }
 
     return sortChannelShippingDataByName([...currentChannels, channelToFocus]);
-  }, [allChannels, currentChannels, focusChannelId]);
+  }, [allChannels, currentChannels, excludedFocusChannelId, focusChannelId]);
+
+  const handleChannelsConfirmWithFocus = () => {
+    const nextChannels = sortChannelShippingDataByName(channelListElements);
+    const removesFocusChannel =
+      focusChannelId != null && !nextChannels.some(channel => channel.id === focusChannelId);
+
+    if (removesFocusChannel) {
+      clearFocusChannelFromUrl();
+    }
+
+    handleChannelsConfirm();
+  };
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const [updateShippingRate, updateShippingRateOpts] = useUpdateShippingRateMutation({
     disableErrorHandling: true,
@@ -292,6 +316,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
 
     if (channelErrors.length === 0) {
       handleSuccess();
+      clearFocusChannelFromUrl();
 
       // Re-hydrate the local postal-code editor state from the authoritative
       // server response. Locally added rules have no id until saved, so without
@@ -384,7 +409,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
           }
           selected={channelListElements.length}
           confirmButtonState="default"
-          onConfirm={handleChannelsConfirm}
+          onConfirm={handleChannelsConfirmWithFocus}
           toggleAll={(items, selected) =>
             toggleAllChannels(items as ChannelShippingData[], selected)
           }
