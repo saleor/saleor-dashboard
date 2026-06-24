@@ -48,7 +48,7 @@ npm view <pkg> time --json   # find the patched version's publish date
 ```
 
 - **Age OK** → safe to pin/bump normally.
-- **Too new** → prefer the oldest age-OK version that still satisfies `patched_versions` (a partial fix that clears most advisories is fine — note what's left). Only bypass via `minimumReleaseAgeExclude` if severity **requires** it (critical, or production-path high with no age-OK fix). Document the bypass with a comment + advisory link.
+- **Too new** → prefer the oldest age-OK version that still satisfies `patched_versions` (a partial fix that clears most advisories is fine — note what's left). Only bypass via `minimumReleaseAgeExclude` if severity **requires** it (critical, or production-path high with no age-OK fix), and only after asking for authorization. Document the bypass with a comment + advisory link.
 
 ### 3. Prioritize (in order)
 
