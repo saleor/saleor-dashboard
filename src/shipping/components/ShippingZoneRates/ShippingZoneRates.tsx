@@ -50,7 +50,7 @@ export const ShippingZoneRates = ({
         <Box display="flex" alignItems="center" gap={2}>
           <DashboardCard.Title>{sectionTitle}</DashboardCard.Title>
           {variant === "price" && <ShippingMethodTypesHelpTooltip />}
-          <Ripple model={rippleShippingRateEditor} />
+          {variant === "price" && <Ripple model={rippleShippingRateEditor} />}
         </Box>
         <DashboardCard.Toolbar>
           <Button disabled={disabled} onClick={onRateAdd} data-test-id={testId} variant="secondary">

@@ -2,6 +2,7 @@ import { type ChannelShippingData } from "@dashboard/channels/utils";
 import { type ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
 import {
   areChannelListingsEqual,
+  isDraftShippingChannel,
   normalizeComparableNumericString,
 } from "@dashboard/shipping/utils/channelPricingState";
 import { useMemo } from "react";
@@ -41,11 +42,30 @@ function areFormFieldValuesEqual(
   );
 }
 
+function getChannelsForChangeComparison(
+  channels: ChannelShippingData[],
+  savedChannelIds?: string[],
+  pricedChannelIds?: string[],
+): ChannelShippingData[] {
+  if (!savedChannelIds || !pricedChannelIds) {
+    return channels;
+  }
+
+  const savedChannelIdSet = new Set(savedChannelIds);
+  const pricedChannelIdSet = new Set(pricedChannelIds);
+
+  return channels.filter(
+    channel => !isDraftShippingChannel(channel.id, savedChannelIdSet, pricedChannelIdSet),
+  );
+}
+
 interface UseShippingRateEditChangesOptions {
   formData: Omit<ShippingZoneRateUpdateFormData, "description">;
   initialFormData: Omit<ShippingZoneRateUpdateFormData, "description">;
   shippingChannels: ChannelShippingData[];
   savedShippingChannels: ChannelShippingData[];
+  savedChannelIds?: string[];
+  pricedChannelIds?: string[];
   hasPostalCodeChanges?: boolean;
   isDescriptionDirty?: boolean;
 }
@@ -55,6 +75,8 @@ export function useShippingRateEditChanges({
   initialFormData,
   shippingChannels,
   savedShippingChannels,
+  savedChannelIds,
+  pricedChannelIds,
   hasPostalCodeChanges = false,
   isDescriptionDirty = false,
 }: UseShippingRateEditChangesOptions) {
@@ -66,8 +88,12 @@ export function useShippingRateEditChanges({
     [formData, initialFormData],
   );
   const hasChannelChanges = useMemo(
-    () => !areChannelListingsEqual(shippingChannels, savedShippingChannels),
-    [savedShippingChannels, shippingChannels],
+    () =>
+      !areChannelListingsEqual(
+        getChannelsForChangeComparison(shippingChannels, savedChannelIds, pricedChannelIds),
+        savedShippingChannels,
+      ),
+    [pricedChannelIds, savedChannelIds, savedShippingChannels, shippingChannels],
   );
   const hasChanges =
     hasFormFieldChanges || hasChannelChanges || hasPostalCodeChanges || isDescriptionDirty;

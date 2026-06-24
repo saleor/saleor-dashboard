@@ -78,7 +78,6 @@ interface ShippingZoneRatesPageProps
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   focusChannelId?: string;
-  onFocusChannelHandled?: () => void;
   onProductAssign: () => void;
   onProductUnassign: (ids: string[]) => void;
   variant: ShippingMethodTypeEnum;
@@ -109,7 +108,6 @@ const ShippingZoneRatesPage = ({
   onProductUnassign,
   openChannelsModal,
   focusChannelId,
-  onFocusChannelHandled,
   rate,
   saveButtonBarState,
   postalCodeRules,
@@ -171,6 +169,8 @@ const ShippingZoneRatesPage = ({
     initialFormData: initialForm,
     shippingChannels,
     savedShippingChannels,
+    savedChannelIds,
+    pricedChannelIds: pricedChannelIdsList,
     hasPostalCodeChanges,
     isDescriptionDirty: richText.isDirty,
   });
@@ -252,7 +252,7 @@ const ShippingZoneRatesPage = ({
               disabled={disabled}
               errors={channelErrors}
               focusChannelId={focusChannelId}
-              onFocusChannelHandled={onFocusChannelHandled}
+              isFocusReady={!loading && richText.isReadyForMount}
             />
             <CardSpacer />
             {isPriceVariant ? (

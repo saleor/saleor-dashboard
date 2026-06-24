@@ -29,77 +29,57 @@ interface PricingCardProps {
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
   focusChannelId?: string;
+  /** When false, defers focusing until the page has finished loading (e.g. rich-text editor mounted). */
+  isFocusReady?: boolean;
   onChange: (channelId: string, value: Value) => void;
-  onFocusChannelHandled?: () => void;
 }
 
 const numberOfColumns = 2;
-const FOCUS_RETRY_INTERVAL_MS = 100;
-const FOCUS_RETRY_TIMEOUT_MS = 5000;
 
 const PricingCard = ({
   channels,
   disabled,
   errors,
   focusChannelId,
+  isFocusReady = true,
   onChange,
-  onFocusChannelHandled,
 }: PricingCardProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors);
   const sortedChannels = useMemo(() => sortChannelShippingDataByName(channels), [channels]);
   const focusInputRef = useRef<HTMLInputElement | null>(null);
-  const handledFocusChannelId = useRef<string | undefined>();
 
+  // useEffect (not useLayoutEffect) runs after child effects such as EditorJS
+  // initialization, which would otherwise replace inputs and drop focus.
   useEffect(
     function focusChannelPriceInput() {
-      if (!focusChannelId || handledFocusChannelId.current === focusChannelId) {
+      if (!focusChannelId || !isFocusReady || disabled) {
         return;
       }
 
-      let intervalId: number;
-      let timeoutId: number;
+      const input = focusInputRef.current;
 
-      const tryFocus = () => {
-        const priceInput = focusInputRef.current;
-
-        if (!priceInput || disabled || priceInput.disabled) {
-          return false;
-        }
-
-        priceInput.closest("tr")?.scrollIntoView({ behavior: "auto", block: "center" });
-        priceInput.focus({ preventScroll: true });
-
-        return document.activeElement === priceInput;
-      };
-
-      const completeFocus = () => {
-        handledFocusChannelId.current = focusChannelId;
-        onFocusChannelHandled?.();
-      };
-
-      if (tryFocus()) {
-        completeFocus();
-
+      if (!input || input.disabled) {
         return;
       }
 
-      intervalId = window.setInterval(() => {
-        if (tryFocus()) {
-          window.clearInterval(intervalId);
-          completeFocus();
-        }
-      }, FOCUS_RETRY_INTERVAL_MS);
+      const frameId = window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          if (!input.isConnected || input.disabled) {
+            return;
+          }
 
-      timeoutId = window.setTimeout(() => window.clearInterval(intervalId), FOCUS_RETRY_TIMEOUT_MS);
+          input.closest("tr")?.scrollIntoView({ behavior: "auto", block: "center" });
+          input.focus({ preventScroll: true });
+        });
+      });
 
       return () => {
-        window.clearInterval(intervalId);
-        window.clearTimeout(timeoutId);
+        window.cancelAnimationFrame(frameId);
       };
     },
-    [sortedChannels, disabled, focusChannelId, onFocusChannelHandled],
+    [disabled, focusChannelId, isFocusReady, sortedChannels],
   );
 
   return (
@@ -136,20 +116,16 @@ const PricingCard = ({
           <TableBody>
             {sortedChannels?.map(channel => {
               const error = getFormChannelError(formErrors.price, channel.id);
-              const shouldFocusChannel = channel.id === focusChannelId;
+              const isFocusTarget = channel.id === focusChannelId;
 
               return (
-                <TableRowLink
-                  key={channel.id}
-                  data-test-id={channel.name}
-                  data-pricing-channel-id={channel.id}
-                >
+                <TableRowLink key={channel.id} data-test-id={channel.name}>
                   <TableCell>
                     <Text>{channel.name}</Text>
                   </TableCell>
                   <TableCell className={shippingPriceTableStyles.shippingPriceTableInputCell}>
                     <PriceField
-                      ref={shouldFocusChannel ? focusInputRef : undefined}
+                      ref={isFocusTarget ? focusInputRef : undefined}
                       data-test-id="price-input"
                       disabled={disabled}
                       error={!!error}

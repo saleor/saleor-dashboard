@@ -10,9 +10,10 @@ import useRouter from "use-react-router";
 import { type ExitFormDialogData, type FormData, type FormsData } from "./types";
 
 // Query params used solely to drive URL-based dialogs/modals (see
-// `createDialogActionHandlers`). Toggling these opens/closes a modal on the
-// same page and must never trigger the "leave without saving" prompt.
-const DIALOG_QUERY_PARAMS = ["action", "id", "ids"];
+// `createDialogActionHandlers`) or other transient in-page UI (e.g. field focus).
+// Toggling these on the same pathname must never trigger the "leave without
+// saving" prompt.
+const DIALOG_QUERY_PARAMS = ["action", "id", "ids", "channelId"];
 
 // Stringifies with keys sorted so two equivalent query objects with different
 // key ordering produce the same string and compare equal.

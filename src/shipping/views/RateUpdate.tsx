@@ -3,6 +3,7 @@ import {
   type ChannelShippingData,
   createShippingChannelsFromRate,
   createSortedShippingChannels,
+  sortChannelShippingDataByName,
 } from "@dashboard/channels/utils";
 import { Button } from "@dashboard/components/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
@@ -64,7 +65,7 @@ import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMor
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
+import { useMemo, useReducer } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-details-form-id");
@@ -133,9 +134,8 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     () => shippingChannels.map(channel => channel.id),
     [shippingChannels],
   );
-  const allChannels = createSortedShippingChannels(channelsData);
+  const allChannels = useMemo(() => createSortedShippingChannels(channelsData), [channelsData]);
   const {
-    addChannel,
     channelListElements,
     channelsToggle,
     currentChannels,
@@ -153,37 +153,23 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     { formId: FORM_ID },
   );
   const focusChannelId = params.channelId;
-  const preparedFocusChannelId = useRef<string | undefined>();
-
-  useEffect(
-    function prepareFocusedChannel() {
-      if (
-        !focusChannelId ||
-        !allChannels?.length ||
-        preparedFocusChannelId.current === focusChannelId
-      ) {
-        return;
-      }
-
-      const channel = allChannels.find(zoneChannel => zoneChannel.id === focusChannelId);
-
-      if (channel) {
-        addChannel(channel);
-        preparedFocusChannelId.current = focusChannelId;
-      }
-    },
-    [addChannel, allChannels, focusChannelId],
-  );
-
-  const handleFocusChannelHandled = useCallback(() => {
-    if (!params.channelId) {
-      return;
+  const shippingChannelsWithFocusTarget = useMemo(() => {
+    if (!focusChannelId || !allChannels?.length) {
+      return currentChannels;
     }
 
-    const { channelId: _channelId, ...restParams } = params;
+    if (currentChannels.some(channel => channel.id === focusChannelId)) {
+      return currentChannels;
+    }
 
-    navigate(shippingRateEditUrl(id, rateId, restParams), { replace: true });
-  }, [id, navigate, params, rateId]);
+    const channelToFocus = allChannels.find(channel => channel.id === focusChannelId);
+
+    if (!channelToFocus) {
+      return currentChannels;
+    }
+
+    return sortChannelShippingDataByName([...currentChannels, channelToFocus]);
+  }, [allChannels, currentChannels, focusChannelId]);
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const [updateShippingRate, updateShippingRateOpts] = useUpdateShippingRateMutation({
     disableErrorHandling: true,
@@ -443,7 +429,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
       <ShippingZoneRatesPage
         formId={FORM_ID}
         allChannelsCount={allChannels?.length}
-        shippingChannels={currentChannels as ChannelShippingData[]}
+        shippingChannels={shippingChannelsWithFocusTarget as ChannelShippingData[]}
         savedChannelIds={savedChannelIds}
         savedShippingChannels={shippingChannels}
         hasPostalCodeChanges={hasPostalCodeChanges}
@@ -469,7 +455,6 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         }
         openChannelsModal={handleChannelsModalOpen}
         focusChannelId={focusChannelId}
-        onFocusChannelHandled={handleFocusChannelHandled}
         onChannelsChange={setCurrentChannels}
         onProductUnassign={handleProductUnassign}
         onProductAssign={() => openModal("assign-product")}

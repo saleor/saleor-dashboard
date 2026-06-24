@@ -93,4 +93,58 @@ describe("useShippingRateEditChanges", () => {
     // Assert
     expect(result.current).toBe(false);
   });
+
+  it("does not report changes when a draft channel is auto-added without a price", () => {
+    // Act
+    const { result } = renderHook(() =>
+      useShippingRateEditChanges({
+        formData: initialFormData,
+        initialFormData,
+        shippingChannels: [
+          ...savedChannels,
+          {
+            id: "ch-2",
+            name: "EUR",
+            currency: "EUR",
+            price: "",
+            minValue: "",
+            maxValue: "",
+          },
+        ],
+        savedShippingChannels: savedChannels,
+        savedChannelIds: ["ch-1"],
+        pricedChannelIds: ["ch-1"],
+      }),
+    );
+
+    // Assert
+    expect(result.current).toBe(false);
+  });
+
+  it("reports changes when a draft channel receives a price", () => {
+    // Act
+    const { result } = renderHook(() =>
+      useShippingRateEditChanges({
+        formData: initialFormData,
+        initialFormData,
+        shippingChannels: [
+          ...savedChannels,
+          {
+            id: "ch-2",
+            name: "EUR",
+            currency: "EUR",
+            price: "5",
+            minValue: "",
+            maxValue: "",
+          },
+        ],
+        savedShippingChannels: savedChannels,
+        savedChannelIds: ["ch-1"],
+        pricedChannelIds: ["ch-1", "ch-2"],
+      }),
+    );
+
+    // Assert
+    expect(result.current).toBe(true);
+  });
 });
