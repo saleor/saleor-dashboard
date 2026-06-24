@@ -1,5 +1,5 @@
 import { type ChannelsAction } from "@dashboard/channels/urls";
-import { type Channel } from "@dashboard/channels/utils";
+import { type Channel, sortChannelShippingDataByName } from "@dashboard/channels/utils";
 import { useExitFormDialog, type WithFormId } from "@dashboard/components/Form";
 import useListActions from "@dashboard/hooks/useListActions";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
@@ -33,11 +33,7 @@ function useChannels<T extends Channel, A>(
   };
   const handleChannelsModalOpen = () => openModal("open-channels-picker");
   const handleChannelsConfirm = () => {
-    const sortedChannelListElements = channelListElements.sort((channel, nextChannel) =>
-      channel.name.localeCompare(nextChannel.name),
-    );
-
-    setCurrentChannels(sortedChannelListElements);
+    setCurrentChannels(sortChannelShippingDataByName(channelListElements));
     // hack so channels also update exit form dalog provider
     // despite not setting page's form data "changed" prop
     setIsDirty(true);
@@ -56,11 +52,7 @@ function useChannels<T extends Channel, A>(
         return;
       }
 
-      setCurrentChannels(
-        [...currentChannels, channel].sort((firstChannel, secondChannel) =>
-          firstChannel.name.localeCompare(secondChannel.name),
-        ),
-      );
+      setCurrentChannels(sortChannelShippingDataByName([...currentChannels, channel]));
       setIsDirty(true);
     },
     [currentChannels, setCurrentChannels, setIsDirty],

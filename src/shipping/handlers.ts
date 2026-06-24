@@ -23,6 +23,7 @@ import { useIntl } from "react-intl";
 
 import { type ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
 import { shippingRateEditUrl } from "./urls";
+import { type ChannelPriceValue, normalizeChannelPriceValue } from "./utils/channelPricingState";
 
 export const createChannelsChangeHandler =
   (
@@ -30,20 +31,21 @@ export const createChannelsChangeHandler =
     setSelectedChannels: (channels: ChannelShippingData[]) => void,
     triggerChange: () => void,
   ) =>
-  (channelId: string, value: { maxValue: string; minValue: string; price: string }) => {
+  (channelId: string, value: ChannelPriceValue) => {
     const itemIndex = selectedChannels.findIndex(item => item.id === channelId);
     const channel = selectedChannels[itemIndex];
-
-    setSelectedChannels([
+    const updatedChannels = [
       ...selectedChannels.slice(0, itemIndex),
       {
         ...channel,
-        maxValue: value.maxValue,
-        minValue: value.minValue,
-        price: value.price,
+        maxValue: normalizeChannelPriceValue(value.maxValue),
+        minValue: normalizeChannelPriceValue(value.minValue),
+        price: normalizeChannelPriceValue(value.price),
       },
       ...selectedChannels.slice(itemIndex + 1),
-    ]);
+    ];
+
+    setSelectedChannels(updatedChannels);
     triggerChange();
   };
 
@@ -208,7 +210,7 @@ export function getShippingMethodChannelVariables(
           channelId: channel.id,
           maximumOrderPrice: parseOptionalOrderPrice(channel.maxValue),
           minimumOrderPrice: parseOptionalOrderPrice(channel.minValue),
-          price: channel.price,
+          price: normalizeChannelPriceValue(channel.price),
         })) || [],
       removeChannels,
     },
@@ -224,9 +226,11 @@ export function useShippingRateCreator(
   const intl = useIntl();
   const notify = useNotifier();
   const navigate = useNavigator();
-  const [createBaseShippingRate, createBaseShippingRateOpts] = useCreateShippingRateMutation({});
+  const [createBaseShippingRate, createBaseShippingRateOpts] = useCreateShippingRateMutation({
+    disableErrorHandling: true,
+  });
   const [updateShippingMethodChannelListing, updateShippingMethodChannelListingOpts] =
-    useShippingMethodChannelListingUpdateMutation({});
+    useShippingMethodChannelListingUpdateMutation({ disableErrorHandling: true });
   const [deleteShippingRate] = useDeleteShippingRateMutation({});
   const getVariables =
     type === ShippingMethodTypeEnum.PRICE

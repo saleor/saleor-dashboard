@@ -2,9 +2,11 @@ import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum } from "@dashbo
 
 import { type ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
 import {
+  createChannelsChangeHandler,
   getShippingMethodChannelVariables,
   getUpdateShippingWeightRateVariables,
 } from "./handlers";
+import { normalizeChannelPriceValue } from "./utils/channelPricingState";
 
 const baseWeightFormData: ShippingZoneRateCommonFormData = {
   channelListings: [],
@@ -68,6 +70,71 @@ describe("shipping handlers", () => {
         minimumOrderPrice: "5",
         maximumOrderPrice: "100",
       });
+    });
+    it("maps null price to empty string", () => {
+      // Arrange
+      const channels = [
+        {
+          id: "channel-1",
+          name: "USD",
+          currency: "USD",
+          price: null as unknown as string,
+          minValue: "",
+          maxValue: "",
+        },
+      ];
+
+      // Act
+      const variables = getShippingMethodChannelVariables("rate-id", channels);
+
+      // Assert
+      expect(variables.input.addChannels?.[0]?.price).toBe("");
+    });
+  });
+
+  describe("normalizeChannelPriceValue", () => {
+    it("normalizes null and empty values to empty string", () => {
+      // Assert
+      expect(normalizeChannelPriceValue(null)).toBe("");
+      expect(normalizeChannelPriceValue("")).toBe("");
+      expect(normalizeChannelPriceValue(10)).toBe("10");
+      expect(normalizeChannelPriceValue("15.5")).toBe("15.5");
+    });
+  });
+
+  describe("createChannelsChangeHandler", () => {
+    it("normalizes null price from price field to empty string", () => {
+      // Arrange
+      const setSelectedChannels = jest.fn();
+      const triggerChange = jest.fn();
+      const channels = [
+        {
+          id: "channel-1",
+          name: "USD",
+          currency: "USD",
+          price: "10",
+          minValue: "",
+          maxValue: "",
+        },
+      ];
+      const handleChange = createChannelsChangeHandler(
+        channels,
+        setSelectedChannels,
+        triggerChange,
+      );
+
+      // Act
+      handleChange("channel-1", {
+        maxValue: "",
+        minValue: "",
+        price: null as unknown as string,
+      });
+
+      // Assert
+      expect(setSelectedChannels).toHaveBeenCalledWith([
+        expect.objectContaining({ id: "channel-1", price: "" }),
+      ]);
+      expect(triggerChange).toHaveBeenCalled();
     });
   });
 

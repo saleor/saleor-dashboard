@@ -28,7 +28,7 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { sectionNames } from "@dashboard/intl";
 import { type ShippingMethodPostalCodeRule } from "@dashboard/legacy-sdk/apollo/types";
-import { getById, getByUnmatchingId } from "@dashboard/misc";
+import { getById, getByUnmatchingId, getMutationState } from "@dashboard/misc";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
 import { ShippingMethodMetadataDialog } from "@dashboard/shipping/components/ShippingMethodMetadataDialog/ShippingMethodMetadataDialog";
@@ -60,7 +60,7 @@ import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMor
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-details-form-id");
@@ -99,7 +99,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     paginationState,
   );
   const [updateShippingMethodChannelListing, updateShippingMethodChannelListingOpts] =
-    useShippingMethodChannelListingUpdateMutation({});
+    useShippingMethodChannelListingUpdateMutation({ disableErrorHandling: true });
   const [unassignProduct, unassignProductOpts] = useShippingPriceRemoveProductFromExcludeMutation({
     onCompleted: data => {
       if (data?.shippingPriceRemoveProductFromExclude?.errors.length === 0) {
@@ -118,8 +118,16 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
       }
     },
   });
-  const shippingChannels = createShippingChannelsFromRate(
-    rate?.channelListings as ShippingMethodTypeFragment["channelListings"],
+  const shippingChannels = useMemo(
+    () =>
+      createShippingChannelsFromRate(
+        rate?.channelListings as ShippingMethodTypeFragment["channelListings"],
+      ),
+    [rate?.channelListings],
+  );
+  const savedChannelIds = useMemo(
+    () => shippingChannels.map(channel => channel.id),
+    [shippingChannels],
   );
   const allChannels = createSortedShippingChannels(channelsData);
   const {
@@ -173,7 +181,9 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     navigate(shippingRateEditUrl(id, rateId, restParams), { replace: true });
   }, [id, navigate, params, rateId]);
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
-  const [updateShippingRate, updateShippingRateOpts] = useUpdateShippingRateMutation({});
+  const [updateShippingRate, updateShippingRateOpts] = useUpdateShippingRateMutation({
+    disableErrorHandling: true,
+  });
   const handleSuccess = () => {
     notify({
       status: "success",
@@ -238,20 +248,34 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
 
     const errors = response?.data?.shippingPriceUpdate?.errors;
 
-    if (errors?.length === 0) {
-      handleSuccess();
-      dispatch({ havePostalCodesChanged: false });
-      updateShippingMethodChannelListing({
-        variables: getShippingMethodChannelVariables(
-          rateId,
-          formData.channelListings,
-          shippingChannels,
-        ),
-      });
+    if (errors?.length) {
+      return errors;
     }
 
-    return errors;
+    dispatch({ havePostalCodesChanged: false });
+
+    const channelResponse = await updateShippingMethodChannelListing({
+      variables: getShippingMethodChannelVariables(
+        rateId,
+        formData.channelListings,
+        shippingChannels,
+      ),
+    });
+    const channelErrors = channelResponse?.data?.shippingMethodChannelListingUpdate?.errors ?? [];
+
+    if (channelErrors.length === 0) {
+      handleSuccess();
+      refetch();
+    }
+
+    return channelErrors;
   };
+  const saveButtonBarState = getMutationState(
+    updateShippingRateOpts.called || updateShippingMethodChannelListingOpts.called,
+    updateShippingRateOpts.loading || updateShippingMethodChannelListingOpts.loading,
+    updateShippingRateOpts.data?.shippingPriceUpdate?.errors ?? [],
+    updateShippingMethodChannelListingOpts.data?.shippingMethodChannelListingUpdate?.errors ?? [],
+  );
   const handleProductAssign = (ids: string[]) =>
     assignProduct({
       variables: { id: rateId, input: { products: ids } },
@@ -372,6 +396,9 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         formId={FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels as ChannelShippingData[]}
+        savedChannelIds={savedChannelIds}
+        savedShippingChannels={shippingChannels}
+        hasPostalCodeChanges={state.havePostalCodesChanged}
         disabled={
           loading ||
           updateShippingRateOpts?.status === "loading" ||
@@ -379,7 +406,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
           unassignProductOpts?.status === "loading" ||
           assignProductOpts?.status === "loading"
         }
-        saveButtonBarState={updateShippingRateOpts.status}
+        saveButtonBarState={saveButtonBarState}
         onDelete={() => openModal("remove")}
         backHref={shippingZoneUrl(id)}
         onSubmit={updateData}

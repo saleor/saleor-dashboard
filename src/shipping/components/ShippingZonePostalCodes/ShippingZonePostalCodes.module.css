@@ -2,10 +2,17 @@
   border-top: 1px solid var(--mu-colors-border-default1);
 }
 
-.radioOption + .radioOption {
-  margin-top: 16px;
+.radioGroup {
+  gap: 12px;
+}
+
+.radioGroup :global(.MuiFormControlLabel-root) {
+  margin-bottom: 0;
 }
 
 .radioOption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   max-width: 400px;
 }

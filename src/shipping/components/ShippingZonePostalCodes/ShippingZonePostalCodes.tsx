@@ -89,6 +89,7 @@ const ShippingZonePostalCodes = ({
       <DashboardCard.Content>
         <RadioGroupField
           alignTop
+          innerContainerClassName={styles.radioGroup}
           choices={[
             {
               label: (
@@ -138,7 +139,7 @@ const ShippingZonePostalCodes = ({
           onChange={onInclusionRadioChange}
         />
         {postalCodes === undefined ? (
-          <Box marginTop={2}>
+          <Box marginTop={4}>
             <Skeleton />
           </Box>
         ) : postalCodes.length === 0 ? (
@@ -155,7 +156,7 @@ const ShippingZonePostalCodes = ({
             groupId="postal-codes-list"
             dataTestId="postal-codes-list"
             defaultExpanded={initialExpanded}
-            marginTop={2}
+            marginTop={4}
             headerStart={
               <Title2>
                 {selectedInclusionType === PostalCodeRuleInclusionTypeEnum.INCLUDE ? (

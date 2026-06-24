@@ -1,10 +1,11 @@
-import { type ChannelShippingData } from "@dashboard/channels/utils";
+import { type ChannelShippingData, sortChannelShippingDataByName } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type ShippingChannelsErrorFragment } from "@dashboard/graphql";
+import { normalizeChannelPriceValue } from "@dashboard/shipping/utils/channelPricingState";
 import {
   type ChannelError,
   getFormChannelError,
@@ -14,6 +15,7 @@ import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TableBody, TableCell } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import shippingPriceTableStyles from "../ShippingPriceTable.module.css";
@@ -40,6 +42,7 @@ const OrderValue = ({ channels, errors, disabled, onChannelsChange }: OrderValue
     ["maximumOrderPrice", "minimumOrderPrice"],
     errors as ChannelError[],
   );
+  const sortedChannels = useMemo(() => sortChannelShippingDataByName(channels), [channels]);
 
   return (
     <DashboardCard data-test-id="order-value">
@@ -95,7 +98,7 @@ const OrderValue = ({ channels, errors, disabled, onChannelsChange }: OrderValue
             </TableCell>
           </TableHead>
           <TableBody>
-            {channels?.map(channel => {
+            {sortedChannels?.map(channel => {
               const minError = getFormChannelError(formErrors.minimumOrderPrice, channel.id);
               const maxError = getFormChannelError(formErrors.maximumOrderPrice, channel.id);
 
@@ -104,7 +107,12 @@ const OrderValue = ({ channels, errors, disabled, onChannelsChange }: OrderValue
                   <TableCell>
                     <Text>{channel.name}</Text>
                   </TableCell>
-                  <TableCell className={classes.price}>
+                  <TableCell
+                    className={clsx(
+                      classes.price,
+                      shippingPriceTableStyles.shippingPriceTableInputCell,
+                    )}
+                  >
                     <PriceField
                       data-test-id="min-value-price-input"
                       disabled={disabled}
@@ -118,14 +126,19 @@ const OrderValue = ({ channels, errors, disabled, onChannelsChange }: OrderValue
                       onChange={e =>
                         onChannelsChange(channel.id, {
                           ...channel,
-                          minValue: e.target.value,
+                          minValue: normalizeChannelPriceValue(e.target.value),
                         })
                       }
                       currencySymbol={channel.currency}
                       hint={minError && getShippingErrorMessage(minError, intl)}
                     />
                   </TableCell>
-                  <TableCell className={classes.price}>
+                  <TableCell
+                    className={clsx(
+                      classes.price,
+                      shippingPriceTableStyles.shippingPriceTableInputCell,
+                    )}
+                  >
                     <PriceField
                       data-test-id="max-value-price-input"
                       disabled={disabled}
@@ -140,7 +153,7 @@ const OrderValue = ({ channels, errors, disabled, onChannelsChange }: OrderValue
                       onChange={e =>
                         onChannelsChange(channel.id, {
                           ...channel,
-                          maxValue: e.target.value,
+                          maxValue: normalizeChannelPriceValue(e.target.value),
                         })
                       }
                       currencySymbol={channel.currency}

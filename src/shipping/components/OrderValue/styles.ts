@@ -12,7 +12,6 @@ export const useStyles = makeStyles(
     },
     price: {
       textAlign: "right",
-      verticalAlign: "top",
     },
     table: {
       tableLayout: "fixed",

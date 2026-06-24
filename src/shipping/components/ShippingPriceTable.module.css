@@ -8,6 +8,14 @@
   padding-bottom: 8px !important;
 }
 
+.shippingPriceTable.shippingPriceTable tbody td:first-child {
+  vertical-align: middle !important;
+}
+
+.shippingPriceTable.shippingPriceTable td.shippingPriceTableInputCell {
+  vertical-align: top !important;
+}
+
 .shippingPriceTable.shippingPriceTable th:first-child,
 .shippingPriceTable.shippingPriceTable td:first-child {
   padding-left: 16px !important;

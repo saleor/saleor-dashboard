@@ -207,4 +207,14 @@ export const taxesMessages = defineMessages({
     defaultMessage: "There are no tax classes",
     description: "tax classes menu label when there are no tax classes",
   },
+  createTaxClassHint: {
+    id: "m66R1V",
+    defaultMessage: "You can create new tax classes in {taxSettingsLink}.",
+    description: "hint below tax class selector",
+  },
+  taxSettingsLink: {
+    id: "X4+lB+",
+    defaultMessage: "Tax settings",
+    description: "link to tax classes settings",
+  },
 });

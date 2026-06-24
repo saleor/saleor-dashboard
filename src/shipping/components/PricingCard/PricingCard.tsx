@@ -1,17 +1,18 @@
 // @ts-strict-ignore
-import { type ChannelShippingData } from "@dashboard/channels/utils";
+import { type ChannelShippingData, sortChannelShippingDataByName } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import PriceField from "@dashboard/components/PriceField";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type ShippingChannelsErrorFragment } from "@dashboard/graphql";
+import { normalizeChannelPriceValue } from "@dashboard/shipping/utils/channelPricingState";
 import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TableBody, TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import shippingPriceTableStyles from "../ShippingPriceTable.module.css";
@@ -47,6 +48,7 @@ const PricingCard = ({
   const classes = useStyles({});
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price"], errors);
+  const sortedChannels = useMemo(() => sortChannelShippingDataByName(channels), [channels]);
   const focusInputRef = useRef<HTMLInputElement | null>(null);
   const handledFocusChannelId = useRef<string | undefined>();
 
@@ -97,7 +99,7 @@ const PricingCard = ({
         window.clearTimeout(timeoutId);
       };
     },
-    [channels, disabled, focusChannelId, onFocusChannelHandled],
+    [sortedChannels, disabled, focusChannelId, onFocusChannelHandled],
   );
 
   return (
@@ -132,7 +134,7 @@ const PricingCard = ({
             </TableCell>
           </TableHead>
           <TableBody>
-            {channels?.map(channel => {
+            {sortedChannels?.map(channel => {
               const error = getFormChannelError(formErrors.price, channel.id);
               const shouldFocusChannel = channel.id === focusChannelId;
 
@@ -145,7 +147,7 @@ const PricingCard = ({
                   <TableCell>
                     <Text>{channel.name}</Text>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={shippingPriceTableStyles.shippingPriceTableInputCell}>
                     <PriceField
                       ref={shouldFocusChannel ? focusInputRef : undefined}
                       data-test-id="price-input"
@@ -161,7 +163,7 @@ const PricingCard = ({
                       onChange={e =>
                         onChange(channel.id, {
                           ...channel,
-                          price: e.target.value,
+                          price: normalizeChannelPriceValue(e.target.value),
                         })
                       }
                       currencySymbol={channel.currency}

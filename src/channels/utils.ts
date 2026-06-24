@@ -161,14 +161,20 @@ const createShippingChannels = (
 export const createShippingChannelsFromRate = (
   data?: ShippingMethodTypeFragment["channelListings"],
 ): ChannelShippingData[] =>
-  data?.map(channelData => ({
-    currency: channelData.channel.currencyCode,
-    id: channelData.channel.id,
-    maxValue: channelData.maximumOrderPrice ? channelData.maximumOrderPrice.amount.toString() : "",
-    minValue: channelData.minimumOrderPrice ? channelData.minimumOrderPrice.amount.toString() : "",
-    name: channelData.channel.name,
-    price: channelData.price ? channelData.price.amount.toString() : "",
-  })) || [];
+  sortChannelShippingDataByName(
+    data?.map(channelData => ({
+      currency: channelData.channel.currencyCode,
+      id: channelData.channel.id,
+      maxValue: channelData.maximumOrderPrice
+        ? channelData.maximumOrderPrice.amount.toString()
+        : "",
+      minValue: channelData.minimumOrderPrice
+        ? channelData.minimumOrderPrice.amount.toString()
+        : "",
+      name: channelData.channel.name,
+      price: channelData.price ? channelData.price.amount.toString() : "",
+    })) || [],
+  );
 
 export const createCollectionChannelsData = (collectionData?: CollectionDetailsFragment) => {
   if (collectionData?.channelListings) {
@@ -191,6 +197,11 @@ export interface ChannelShippingData {
   maxValue: string;
   price: string;
 }
+
+export const sortChannelShippingDataByName = <T extends { name: string }>(channels: T[]): T[] =>
+  [...channels].sort((leftChannel, rightChannel) =>
+    leftChannel.name.localeCompare(rightChannel.name),
+  );
 
 const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragment) =>
   voucherData?.channelListings?.map(option => ({
