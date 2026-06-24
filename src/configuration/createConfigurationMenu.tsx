@@ -219,8 +219,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
-            id: "rUnw7n",
-            defaultMessage: "Configure refunds behavior",
+            id: "3fKAKV",
+            defaultMessage: "Configure refunds and returns behavior",
           }),
           icon: <CreditCard />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],

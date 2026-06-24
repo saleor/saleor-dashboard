@@ -9,6 +9,8 @@ interface GrantRefundContext {
   dispatch: React.Dispatch<GrantRefundAction>;
   form: Pick<UseFormResult<OrderGrantRefundFormData>, "set" | "data" | "change">;
   totalSelectedPrice: number;
+  /** Configured refund reason Model (Page) Type id; empty when not configured. */
+  reasonReferenceTypeId: string;
 }
 
 export const GrantRefundContext = createContext<GrantRefundContext | null>(null);

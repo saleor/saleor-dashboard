@@ -86,6 +86,7 @@ const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): Order
     type: "manual",
     id: "refund-1",
     reasonNote: null,
+    lines: [],
     user: {
       email: "staff@example.com",
       firstName: "Jane",

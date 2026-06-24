@@ -913,6 +913,12 @@ import type {
   ReorderInput,
   RequestEmailChange,
   RequestPasswordReset,
+  ReturnReasonReferenceTypeClear,
+  ReturnReasonReferenceTypeClearError,
+  ReturnSettings,
+  ReturnSettingsUpdate,
+  ReturnSettingsUpdateError,
+  ReturnSettingsUpdateInput,
   Sale,
   SaleAddCatalogues,
   SaleBulkDelete,
@@ -11814,6 +11820,18 @@ export type OptionalFulfillment = {
   privateMetafield?: Fulfillment['privateMetafield'] | undefined;
   /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
   privateMetafields?: Fulfillment['privateMetafields'] | undefined;
+  /**
+ * Reason for returning this fulfillment.
+ *
+ * Added in Saleor 3.23.
+ */
+  reason?: Fulfillment['reason'] | undefined;
+  /**
+ * Reason Model (Page) reference for this fulfillment.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: Maybe<OptionalPage> | undefined;
   /** Amount of refunded shipping price. */
   shippingRefundedAmount?: Maybe<OptionalMoney> | undefined;
   /** Status of fulfillment. */
@@ -12030,6 +12048,18 @@ export type OptionalFulfillmentLine = {
   orderLine?: Maybe<OptionalOrderLine> | undefined;
   /** The number of items included in the fulfillment line. */
   quantity?: FulfillmentLine['quantity'] | undefined;
+  /**
+ * Reason for returning this fulfillment line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reason?: FulfillmentLine['reason'] | undefined;
+  /**
+ * Reason Model (Page) reference for this fulfillment line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: Maybe<OptionalPage> | undefined;
 };
 
 /**
@@ -17090,6 +17120,22 @@ export type OptionalMutation = {
  */
   requestPasswordReset?: Maybe<OptionalRequestPasswordReset> | undefined;
   /**
+ * Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+  returnReasonReferenceClear?: Maybe<OptionalReturnReasonReferenceTypeClear> | undefined;
+  /**
+ * Update return settings across all channels.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+  returnSettingsUpdate?: Maybe<OptionalReturnSettingsUpdate> | undefined;
+  /**
  * Deletes sales.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
@@ -19418,6 +19464,12 @@ export type OptionalOrderGrantRefundCreateLineInput = {
   quantity?: OrderGrantRefundCreateLineInput['quantity'] | undefined;
   /** Reason of the granted refund for the line. */
   reason?: OrderGrantRefundCreateLineInput['reason'] | undefined;
+  /**
+ * ID of a `Page` (Model) to reference in reason for the line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: OrderGrantRefundCreateLineInput['reasonReference'] | undefined;
 };
 
 /**
@@ -19528,6 +19580,12 @@ export type OptionalOrderGrantRefundUpdateLineAddInput = {
   quantity?: OrderGrantRefundUpdateLineAddInput['quantity'] | undefined;
   /** Reason of the granted refund for the line. */
   reason?: OrderGrantRefundUpdateLineAddInput['reason'] | undefined;
+  /**
+ * ID of a `Page` (Model) to reference in reason for the line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: OrderGrantRefundUpdateLineAddInput['reasonReference'] | undefined;
 };
 
 /**
@@ -19635,6 +19693,12 @@ export type OptionalOrderGrantedRefundLine = {
   quantity?: OrderGrantedRefundLine['quantity'] | undefined;
   /** Reason for refunding the line. */
   reason?: OrderGrantedRefundLine['reason'] | undefined;
+  /**
+ * Reason Model (Page) reference for this refund line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: Maybe<OptionalPage> | undefined;
 };
 
 /**
@@ -20297,6 +20361,18 @@ export type OptionalOrderReturnFulfillmentLineInput = {
   fulfillmentLineId?: OrderReturnFulfillmentLineInput['fulfillmentLineId'] | undefined;
   /** The number of items to be returned. */
   quantity?: OrderReturnFulfillmentLineInput['quantity'] | undefined;
+  /**
+ * Reason for returning this fulfillment line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reason?: OrderReturnFulfillmentLineInput['reason'] | undefined;
+  /**
+ * ID of a `Page` (Model) to reference in reason for this fulfillment line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: OrderReturnFulfillmentLineInput['reasonReference'] | undefined;
   /** Determines, if the line should be added to replace order. */
   replace?: OrderReturnFulfillmentLineInput['replace'] | undefined;
 };
@@ -20318,6 +20394,18 @@ export type OptionalOrderReturnLineInput = {
   orderLineId?: OrderReturnLineInput['orderLineId'] | undefined;
   /** The number of items to be returned. */
   quantity?: OrderReturnLineInput['quantity'] | undefined;
+  /**
+ * Reason for returning this line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reason?: OrderReturnLineInput['reason'] | undefined;
+  /**
+ * ID of a `Page` (Model) to reference in reason for this line.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: OrderReturnLineInput['reasonReference'] | undefined;
   /** Determines, if the line should be added to replace order. */
   replace?: OrderReturnLineInput['replace'] | undefined;
 };
@@ -20343,6 +20431,18 @@ export type OptionalOrderReturnProductsInput = {
   includeShippingCosts?: OrderReturnProductsInput['includeShippingCosts'] | undefined;
   /** List of unfulfilled lines to return. */
   orderLines?: Maybe<OptionalOrderReturnLineInput[]> | undefined;
+  /**
+ * Reason for returning this order.
+ *
+ * Added in Saleor 3.23.
+ */
+  reason?: OrderReturnProductsInput['reason'] | undefined;
+  /**
+ * ID of a `Page` (Model) to reference in reason for this return.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReference?: OrderReturnProductsInput['reasonReference'] | undefined;
   /** If true, Saleor will call refund action for all lines. */
   refund?: OrderReturnProductsInput['refund'] | undefined;
 };
@@ -28934,6 +29034,8 @@ export type OptionalQuery = {
  * Requires one of the following permissions: MANAGE_PRODUCTS.
  */
   reportProductSales?: Maybe<OptionalProductVariantCountableConnection> | undefined;
+  /** Returns related settings. Returns `ReturnSettings` configuration, global for the entire shop. */
+  returnSettings?: OptionalReturnSettings | undefined;
   /**
  * Look up a sale by ID.
  *
@@ -29346,6 +29448,147 @@ export type OptionalRequestPasswordReset = {
  */
 export const defineRequestPasswordResetFactory: DefineTypeFactoryInterface<
   OptionalRequestPasswordReset,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+export type OptionalReturnReasonReferenceTypeClear = {
+  __typename?: 'ReturnReasonReferenceTypeClear';
+  errors?: OptionalReturnReasonReferenceTypeClearError[] | undefined;
+  /** Return settings. */
+  returnSettings?: Maybe<OptionalReturnSettings> | undefined;
+  returnSettingsErrors?: OptionalReturnReasonReferenceTypeClearError[] | undefined;
+};
+
+/**
+ * Define factory for {@link ReturnReasonReferenceTypeClear} model.
+ *
+ * @param options
+ * @returns factory {@link ReturnReasonReferenceTypeClearFactoryInterface}
+ */
+export const defineReturnReasonReferenceTypeClearFactory: DefineTypeFactoryInterface<
+  OptionalReturnReasonReferenceTypeClear,
+  {}
+> = defineTypeFactory;
+
+export type OptionalReturnReasonReferenceTypeClearError = {
+  __typename?: 'ReturnReasonReferenceTypeClearError';
+  /** Failed to clear return reason reference type */
+  code?: ReturnReasonReferenceTypeClearError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: ReturnReasonReferenceTypeClearError['field'] | undefined;
+  /** The error message. */
+  message?: ReturnReasonReferenceTypeClearError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link ReturnReasonReferenceTypeClearError} model.
+ *
+ * @param options
+ * @returns factory {@link ReturnReasonReferenceTypeClearErrorFactoryInterface}
+ */
+export const defineReturnReasonReferenceTypeClearErrorFactory: DefineTypeFactoryInterface<
+  OptionalReturnReasonReferenceTypeClearError,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Return related settings from site settings.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalReturnSettings = {
+  __typename?: 'ReturnSettings';
+  /**
+ * Model type used for return reasons.
+ *
+ * Added in Saleor 3.23.
+ */
+  reasonReferenceType?: Maybe<OptionalPageType> | undefined;
+};
+
+/**
+ * Define factory for {@link ReturnSettings} model.
+ *
+ * @param options
+ * @returns factory {@link ReturnSettingsFactoryInterface}
+ */
+export const defineReturnSettingsFactory: DefineTypeFactoryInterface<
+  OptionalReturnSettings,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Update return settings across all channels.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_SETTINGS.
+ */
+export type OptionalReturnSettingsUpdate = {
+  __typename?: 'ReturnSettingsUpdate';
+  errors?: OptionalReturnSettingsUpdateError[] | undefined;
+  /** Return settings. */
+  returnSettings?: Maybe<OptionalReturnSettings> | undefined;
+  returnSettingsErrors?: OptionalReturnSettingsUpdateError[] | undefined;
+};
+
+/**
+ * Define factory for {@link ReturnSettingsUpdate} model.
+ *
+ * @param options
+ * @returns factory {@link ReturnSettingsUpdateFactoryInterface}
+ */
+export const defineReturnSettingsUpdateFactory: DefineTypeFactoryInterface<
+  OptionalReturnSettingsUpdate,
+  {}
+> = defineTypeFactory;
+
+export type OptionalReturnSettingsUpdateError = {
+  __typename?: 'ReturnSettingsUpdateError';
+  /** Failed to update Return Settings */
+  code?: ReturnSettingsUpdateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: ReturnSettingsUpdateError['field'] | undefined;
+  /** The error message. */
+  message?: ReturnSettingsUpdateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link ReturnSettingsUpdateError} model.
+ *
+ * @param options
+ * @returns factory {@link ReturnSettingsUpdateErrorFactoryInterface}
+ */
+export const defineReturnSettingsUpdateErrorFactory: DefineTypeFactoryInterface<
+  OptionalReturnSettingsUpdateError,
+  {}
+> = defineTypeFactory;
+
+export type OptionalReturnSettingsUpdateInput = {
+  __typename?: 'ReturnSettingsUpdateInput';
+  /**
+ * The ID of a model type, that will be used to reference return reasons. All models of this type will be accepted as return reasons.
+ *
+ * Added in Saleor 3.23.
+ */
+  returnReasonReferenceType?: ReturnSettingsUpdateInput['returnReasonReferenceType'] | undefined;
+};
+
+/**
+ * Define factory for {@link ReturnSettingsUpdateInput} model.
+ *
+ * @param options
+ * @returns factory {@link ReturnSettingsUpdateInputFactoryInterface}
+ */
+export const defineReturnSettingsUpdateInputFactory: DefineTypeFactoryInterface<
+  OptionalReturnSettingsUpdateInput,
   {}
 > = defineTypeFactory;
 

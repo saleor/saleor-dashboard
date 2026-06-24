@@ -329,6 +329,11 @@ export const fulfillmentFragment = gql`
     lines {
       id
       quantity
+      reason
+      reasonReference {
+        id
+        title
+      }
       orderLine {
         ...OrderLine
       }
@@ -336,6 +341,11 @@ export const fulfillmentFragment = gql`
     fulfillmentOrder
     status
     trackingNumber
+    reason
+    reasonReference {
+      id
+      title
+    }
     warehouse {
       id
       name
@@ -845,8 +855,18 @@ export const fragmentOrderGrantedRefunds = gql`
     lines {
       id
       quantity
+      reason
+      reasonReference {
+        id
+        title
+      }
       orderLine {
         id
+        productName
+        variantName
+        thumbnail(size: 64) {
+          url
+        }
       }
     }
   }
@@ -890,6 +910,10 @@ export const orderDetailsGrantedRefund = gql`
       id
       quantity
       reason
+      reasonReference {
+        id
+        title
+      }
       orderLine {
         ...OrderLine
       }

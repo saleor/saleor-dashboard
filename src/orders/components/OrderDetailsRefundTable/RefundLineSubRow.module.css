@@ -1,0 +1,7 @@
+/* macaw-ui-next's `borderTopStyle` sprinkle only ships "none" | "solid",
+   so the dashed separator between the refund row and its line sub-rows
+   lives here. The `> td` child selector outranks the atomic class that
+   GridTable.Cell applies, so no !important is needed. */
+.dashedTop > td {
+  border-top-style: dashed;
+}
