@@ -817,6 +817,33 @@ export type AllocationStrategyEnum =
   | 'PRIORITIZE_HIGH_STOCK'
   | 'PRIORITIZE_SORTING_ORDER';
 
+/** Lists current announcements that the user should see. */
+export type Announcement = {
+  __typename: 'Announcement';
+  /** The date & time at which this announcement was created. */
+  createdAt: Scalars['DateTime'];
+  /** Additional information about this announcement. */
+  extra: Scalars['Metadata'];
+  /** Determine the how critical the announcement is. UNSET if no severity level was defined for this announcement. */
+  importance: AnnouncementImportanceEnum;
+  /** The announcement's description, may contain HTML formatting. */
+  messageHtml: Scalars['String'];
+  /** The announcement's title. */
+  title: Scalars['String'];
+  /** The announcement's type, for example "CUSTOM". Used to programatically distinguish between message types thus allowing to render the message differently, and allows to know the expected shape for the `extra` field. */
+  type: Scalars['String'];
+  /** The date & time at which this announcement was last updated. */
+  updatedAt: Scalars['DateTime'];
+};
+
+/** Defines a shop-level announcement's level/severity. */
+export type AnnouncementImportanceEnum =
+  | 'CRITICAL'
+  | 'HIGH'
+  | 'LOW'
+  | 'MODERATE'
+  | 'UNSET';
+
 /** Represents app data. */
 export type App = Node & ObjectWithMetadata & {
   __typename: 'App';
@@ -27450,6 +27477,12 @@ export type Shop = ObjectWithMetadata & {
    * Requires one of the following permissions: MANAGE_SETTINGS.
    */
   allowLoginWithoutConfirmation: Maybe<Scalars['Boolean']>;
+  /**
+   * List of announcements for this shop.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+   */
+  announcements: Array<Announcement>;
   /**
    * Enable automatic fulfillment for all digital products.
    *

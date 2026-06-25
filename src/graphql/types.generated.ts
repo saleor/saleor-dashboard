@@ -225,6 +225,15 @@ export enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER'
 }
 
+/** Defines a shop-level announcement's level/severity. */
+export enum AnnouncementImportanceEnum {
+  CRITICAL = 'CRITICAL',
+  HIGH = 'HIGH',
+  LOW = 'LOW',
+  MODERATE = 'MODERATE',
+  UNSET = 'UNSET'
+}
+
 export enum AppErrorCode {
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -10050,6 +10059,13 @@ export enum WeightUnitsEnum {
   OZ = 'OZ',
   TONNE = 'TONNE'
 }
+
+export type AnnouncementFragment = { __typename: 'Announcement', title: string, messageHtml: string, importance: AnnouncementImportanceEnum, type: string, createdAt: any, updatedAt: any, extra: any };
+
+export type AnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AnnouncementsQuery = { __typename: 'Query', shop: { __typename: 'Shop', announcements: Array<{ __typename: 'Announcement', title: string, messageHtml: string, importance: AnnouncementImportanceEnum, type: string, createdAt: any, updatedAt: any, extra: any }> } };
 
 export type AttributeBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
