@@ -1,4 +1,4 @@
-import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, TransactionEventTypeEnum } from "@dashboard/graphql";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /** How often the order is refetched while a transaction action is in flight. */
@@ -12,29 +12,57 @@ export const TRANSACTION_POLL_INTERVAL = 5000;
  */
 export const TRANSACTION_POLL_MAX_CYCLES = 24;
 
-type MaybeMoney = { amount: number } | null | undefined;
+/**
+ * Each async request action emits a REQUEST event immediately, then exactly one
+ * resolution event (SUCCESS or FAILURE) once the payment app reports back.
+ */
+const ACTION_EVENT_TYPES = [
+  {
+    request: TransactionEventTypeEnum.CHARGE_REQUEST,
+    resolutions: [TransactionEventTypeEnum.CHARGE_SUCCESS, TransactionEventTypeEnum.CHARGE_FAILURE],
+  },
+  {
+    request: TransactionEventTypeEnum.REFUND_REQUEST,
+    resolutions: [TransactionEventTypeEnum.REFUND_SUCCESS, TransactionEventTypeEnum.REFUND_FAILURE],
+  },
+  {
+    request: TransactionEventTypeEnum.CANCEL_REQUEST,
+    resolutions: [TransactionEventTypeEnum.CANCEL_SUCCESS, TransactionEventTypeEnum.CANCEL_FAILURE],
+  },
+];
 
-const hasPendingAmount = (money: MaybeMoney): boolean => (money?.amount ?? 0) > 0;
+type TransactionEvents = OrderDetailsFragment["transactions"][number]["events"];
 
-type OrderPendingFields = Pick<
-  OrderDetailsFragment,
-  "totalChargePending" | "totalRefundPending" | "totalCancelPending"
->;
+const transactionHasUnresolvedRequest = (events: TransactionEvents): boolean =>
+  ACTION_EVENT_TYPES.some(({ request, resolutions }) => {
+    const requestCount = events.filter(event => event.type === request).length;
+    const resolutionCount = events.filter(event =>
+      resolutions.some(resolution => resolution === event.type),
+    ).length;
+
+    return requestCount > resolutionCount;
+  });
 
 /**
- * An order has an async transaction action in flight when its charge, refund or
- * cancel pending total is positive. Saleor Core recomputes these from transaction
- * events and clears them once the app reports the request as successful OR failed.
+ * An order has an async transaction action in flight when one of its transactions
+ * has a charge/refund/cancel REQUEST event without a matching resolution yet.
  *
- * Authorize pending is deliberately excluded: it is not one of the request actions
- * we trigger (charge/refund/cancel), and Saleor Core does not clear it when an
- * AUTHORIZATION_ACTION_REQUIRED event arrives, so it can stay non-zero indefinitely
- * and would keep us polling forever.
+ * We deliberately key off events rather than the pending *amount* fields: Saleor
+ * Core creates the REQUEST event synchronously but only folds it into the pending
+ * amount once the app responds (include_in_calculations), so right after the user
+ * triggers an action the pending amount is still 0 — the event is the only signal
+ * available immediately. The marker clears once the app reports success OR failure,
+ * and survives a page reload.
+ *
+ * Authorize is excluded on purpose: it is not a request action we trigger, and its
+ * ACTION_REQUIRED events would otherwise keep it unresolved indefinitely.
  */
-export const orderHasPendingTransaction = (order: OrderPendingFields | null | undefined): boolean =>
-  hasPendingAmount(order?.totalChargePending) ||
-  hasPendingAmount(order?.totalRefundPending) ||
-  hasPendingAmount(order?.totalCancelPending);
+export const orderHasInFlightTransactionAction = (
+  order: Pick<OrderDetailsFragment, "transactions"> | null | undefined,
+): boolean =>
+  (order?.transactions ?? []).some(transaction =>
+    transactionHasUnresolvedRequest(transaction.events ?? []),
+  );
 
 interface UseOrderTransactionPollingParams {
   order: OrderDetailsFragment | null | undefined;
@@ -60,7 +88,7 @@ export const useOrderTransactionPolling = ({
   stopPolling,
   refetch,
 }: UseOrderTransactionPollingParams): { isPolling: boolean } => {
-  const hasPending = orderHasPendingTransaction(order);
+  const hasPending = orderHasInFlightTransactionAction(order);
   const [isPolling, setIsPolling] = useState(false);
 
   // Number of poll cycles consumed in the current pending episode.

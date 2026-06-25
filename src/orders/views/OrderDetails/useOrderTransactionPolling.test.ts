@@ -1,23 +1,21 @@
-import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, TransactionEventTypeEnum } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react";
 
 import {
-  orderHasPendingTransaction,
+  orderHasInFlightTransactionAction,
   TRANSACTION_POLL_INTERVAL,
   TRANSACTION_POLL_MAX_CYCLES,
   useOrderTransactionPolling,
 } from "./useOrderTransactionPolling";
 
-const money = (amount: number) => ({ __typename: "Money", amount, currency: "USD" });
-
-type PendingInput = Partial<Record<"authorize" | "charge" | "refund" | "cancel", number>>;
-
-const makeOrder = (pending: PendingInput = {}): OrderDetailsFragment => {
+const makeOrder = (eventTypes: TransactionEventTypeEnum[] = []): OrderDetailsFragment => {
   const order = {
-    totalAuthorizePending: money(pending.authorize ?? 0),
-    totalChargePending: money(pending.charge ?? 0),
-    totalRefundPending: money(pending.refund ?? 0),
-    totalCancelPending: money(pending.cancel ?? 0),
+    transactions: [
+      {
+        id: "tx-0",
+        events: eventTypes.map((type, index) => ({ id: `evt-${index}`, type })),
+      },
+    ],
   };
 
   return order as unknown as OrderDetailsFragment;
@@ -47,28 +45,57 @@ const renderPolling = (order: OrderDetailsFragment | null) => {
   return { ...utils, startPolling, stopPolling, refetch };
 };
 
-describe("orderHasPendingTransaction", () => {
+describe("orderHasInFlightTransactionAction", () => {
   it("returns false when no order", () => {
     // Arrange / Act / Assert
-    expect(orderHasPendingTransaction(null)).toBe(false);
+    expect(orderHasInFlightTransactionAction(null)).toBe(false);
   });
 
-  it("returns false when all pending amounts are zero", () => {
+  it("returns false when there are no events", () => {
     // Arrange / Act / Assert
-    expect(orderHasPendingTransaction(makeOrder({}))).toBe(false);
+    expect(orderHasInFlightTransactionAction(makeOrder([]))).toBe(false);
   });
 
-  it.each(["charge", "refund", "cancel"] as const)(
-    "returns true when %s pending amount is positive",
-    actionType => {
-      // Arrange / Act / Assert
-      expect(orderHasPendingTransaction(makeOrder({ [actionType]: 10 }))).toBe(true);
-    },
-  );
-
-  it("ignores authorize pending (it can stay stuck and is not a request action)", () => {
+  it.each([
+    ["charge", TransactionEventTypeEnum.CHARGE_REQUEST],
+    ["refund", TransactionEventTypeEnum.REFUND_REQUEST],
+    ["cancel", TransactionEventTypeEnum.CANCEL_REQUEST],
+  ])("returns true for an unresolved %s request", (_label, requestType) => {
     // Arrange / Act / Assert
-    expect(orderHasPendingTransaction(makeOrder({ authorize: 56.78 }))).toBe(false);
+    expect(orderHasInFlightTransactionAction(makeOrder([requestType]))).toBe(true);
+  });
+
+  it("returns false once a request is resolved by success", () => {
+    // Arrange / Act / Assert
+    expect(
+      orderHasInFlightTransactionAction(
+        makeOrder([
+          TransactionEventTypeEnum.CHARGE_REQUEST,
+          TransactionEventTypeEnum.CHARGE_SUCCESS,
+        ]),
+      ),
+    ).toBe(false);
+  });
+
+  it("returns false once a request is resolved by failure", () => {
+    // Arrange / Act / Assert
+    expect(
+      orderHasInFlightTransactionAction(
+        makeOrder([
+          TransactionEventTypeEnum.REFUND_REQUEST,
+          TransactionEventTypeEnum.REFUND_FAILURE,
+        ]),
+      ),
+    ).toBe(false);
+  });
+
+  it("ignores authorize events (not a request action we trigger)", () => {
+    // Arrange / Act / Assert
+    expect(
+      orderHasInFlightTransactionAction(
+        makeOrder([TransactionEventTypeEnum.AUTHORIZATION_REQUEST]),
+      ),
+    ).toBe(false);
   });
 });
 
@@ -83,21 +110,21 @@ describe("useOrderTransactionPolling", () => {
     jest.useRealTimers();
   });
 
-  it("does not start polling when nothing is pending", () => {
+  it("does not start polling when nothing is in flight", () => {
     // Arrange / Act
-    const { startPolling, result } = renderPolling(makeOrder({}));
+    const { startPolling, result } = renderPolling(makeOrder([]));
 
     // Assert
     expect(startPolling).not.toHaveBeenCalled();
     expect(result.current.isPolling).toBe(false);
   });
 
-  it("starts polling once when a transaction becomes pending", () => {
+  it("starts polling once when a request action is triggered", () => {
     // Arrange
-    const { startPolling, rerender, result } = renderPolling(makeOrder({}));
+    const { startPolling, rerender, result } = renderPolling(makeOrder([]));
 
     // Act
-    act(() => rerender({ order: makeOrder({ charge: 50 }) }));
+    act(() => rerender({ order: makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]) }));
 
     // Assert
     expect(startPolling).toHaveBeenCalledTimes(1);
@@ -105,22 +132,35 @@ describe("useOrderTransactionPolling", () => {
     expect(result.current.isPolling).toBe(true);
   });
 
-  it("stops polling when pending amounts clear", () => {
+  it("stops polling when the request resolves", () => {
     // Arrange
-    const { stopPolling, rerender, result } = renderPolling(makeOrder({ charge: 50 }));
+    const { stopPolling, rerender, result } = renderPolling(
+      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
+    );
 
     // Act
-    act(() => rerender({ order: makeOrder({}) }));
+    act(() =>
+      rerender({
+        order: makeOrder([
+          TransactionEventTypeEnum.CHARGE_REQUEST,
+          TransactionEventTypeEnum.CHARGE_SUCCESS,
+        ]),
+      }),
+    );
 
     // Assert
     expect(stopPolling).toHaveBeenCalled();
     expect(result.current.isPolling).toBe(false);
   });
 
-  it("starts a single poller when multiple action types are pending", () => {
+  it("starts a single poller when multiple action types are in flight", () => {
     // Arrange / Act
     const { startPolling, result } = renderPolling(
-      makeOrder({ charge: 50, refund: 10, cancel: 5 }),
+      makeOrder([
+        TransactionEventTypeEnum.CHARGE_REQUEST,
+        TransactionEventTypeEnum.REFUND_REQUEST,
+        TransactionEventTypeEnum.CANCEL_REQUEST,
+      ]),
     );
 
     // Assert
@@ -128,9 +168,11 @@ describe("useOrderTransactionPolling", () => {
     expect(result.current.isPolling).toBe(true);
   });
 
-  it("stops polling after the cap is reached while still pending", () => {
+  it("stops polling after the cap is reached while still in flight", () => {
     // Arrange
-    const { stopPolling, result } = renderPolling(makeOrder({ charge: 50 }));
+    const { stopPolling, result } = renderPolling(
+      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
+    );
 
     // Act
     act(() => {
@@ -142,18 +184,35 @@ describe("useOrderTransactionPolling", () => {
     expect(result.current.isPolling).toBe(false);
   });
 
-  it("resumes with a fresh window when a new pending episode starts after the cap", () => {
+  it("resumes with a fresh window when a new request starts after the cap", () => {
     // Arrange
-    const { startPolling, rerender, result } = renderPolling(makeOrder({ charge: 50 }));
+    const { startPolling, rerender, result } = renderPolling(
+      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
+    );
 
     act(() => {
       jest.advanceTimersByTime(TRANSACTION_POLL_INTERVAL * TRANSACTION_POLL_MAX_CYCLES);
     });
     expect(result.current.isPolling).toBe(false);
 
-    // Act: episode ends, then a new action makes it pending again
-    act(() => rerender({ order: makeOrder({}) }));
-    act(() => rerender({ order: makeOrder({ refund: 20 }) }));
+    // Act: previous request resolves, then a new action is triggered
+    act(() =>
+      rerender({
+        order: makeOrder([
+          TransactionEventTypeEnum.CHARGE_REQUEST,
+          TransactionEventTypeEnum.CHARGE_SUCCESS,
+        ]),
+      }),
+    );
+    act(() =>
+      rerender({
+        order: makeOrder([
+          TransactionEventTypeEnum.CHARGE_REQUEST,
+          TransactionEventTypeEnum.CHARGE_SUCCESS,
+          TransactionEventTypeEnum.REFUND_REQUEST,
+        ]),
+      }),
+    );
 
     // Assert: polled again (initial start + restart after the new rising edge)
     expect(startPolling).toHaveBeenCalledTimes(2);
@@ -162,7 +221,9 @@ describe("useOrderTransactionPolling", () => {
 
   it("pauses while the tab is hidden and catches up when it becomes visible", () => {
     // Arrange
-    const { startPolling, stopPolling, refetch, result } = renderPolling(makeOrder({ charge: 50 }));
+    const { startPolling, stopPolling, refetch, result } = renderPolling(
+      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
+    );
 
     expect(startPolling).toHaveBeenCalledTimes(1);
 
@@ -173,7 +234,7 @@ describe("useOrderTransactionPolling", () => {
     expect(stopPolling).toHaveBeenCalled();
     expect(result.current.isPolling).toBe(false);
 
-    // Act: tab returns to focus while still pending
+    // Act: tab returns to focus while still in flight
     setVisibility("visible");
 
     // Assert: immediate catch-up refetch + polling resumes
@@ -184,7 +245,9 @@ describe("useOrderTransactionPolling", () => {
 
   it("stops polling on unmount", () => {
     // Arrange
-    const { stopPolling, unmount } = renderPolling(makeOrder({ charge: 50 }));
+    const { stopPolling, unmount } = renderPolling(
+      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
+    );
 
     // Act
     unmount();

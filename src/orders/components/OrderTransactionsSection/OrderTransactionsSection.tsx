@@ -6,7 +6,7 @@ import {
   type OrderDetailsQuery,
   type TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
-import { orderHasPendingTransaction } from "@dashboard/orders/views/OrderDetails/useOrderTransactionPolling";
+import { orderHasInFlightTransactionAction } from "@dashboard/orders/views/OrderDetails/useOrderTransactionPolling";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
@@ -43,7 +43,7 @@ export const OrderTransactionsSection = ({
     arr => arr?.length > 0,
   );
 
-  const hasPendingTransaction = orderHasPendingTransaction(order);
+  const hasPendingTransaction = orderHasInFlightTransactionAction(order);
 
   return (
     <>
