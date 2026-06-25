@@ -44,7 +44,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <Sidebar />
         </Box>
         <Box height="100%" width="100%" overflow="hidden">
-          <AnnouncementsContainer />
+          <AnnouncementsContainer margin={4} />
           <Box as="main" width="100%" height="100%">
             {children}
           </Box>
