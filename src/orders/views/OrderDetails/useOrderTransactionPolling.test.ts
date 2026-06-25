@@ -8,18 +8,34 @@ import {
   useOrderTransactionPolling,
 } from "./useOrderTransactionPolling";
 
-const makeOrder = (eventTypes: TransactionEventTypeEnum[] = []): OrderDetailsFragment => {
+interface EventInput {
+  type: TransactionEventTypeEnum;
+  // Events sharing a pspReference belong to the same request/resolution group.
+  // When omitted each event gets a unique reference (its own group).
+  psp?: string;
+}
+
+const makeOrder = (events: EventInput[] = []): OrderDetailsFragment => {
   const order = {
     transactions: [
       {
         id: "tx-0",
-        events: eventTypes.map((type, index) => ({ id: `evt-${index}`, type })),
+        events: events.map((event, index) => ({
+          id: `evt-${index}`,
+          type: event.type,
+          pspReference: event.psp ?? `psp-${index}`,
+        })),
       },
     ],
   };
 
   return order as unknown as OrderDetailsFragment;
 };
+
+const chargeRequest = (psp?: string): EventInput => ({
+  type: TransactionEventTypeEnum.CHARGE_REQUEST,
+  psp,
+});
 
 const setVisibility = (state: "visible" | "hidden") => {
   Object.defineProperty(document, "visibilityState", {
@@ -62,38 +78,52 @@ describe("orderHasInFlightTransactionAction", () => {
     ["cancel", TransactionEventTypeEnum.CANCEL_REQUEST],
   ])("returns true for an unresolved %s request", (_label, requestType) => {
     // Arrange / Act / Assert
-    expect(orderHasInFlightTransactionAction(makeOrder([requestType]))).toBe(true);
+    expect(orderHasInFlightTransactionAction(makeOrder([{ type: requestType }]))).toBe(true);
   });
 
-  it("returns false once a request is resolved by success", () => {
+  it("returns false once a request is resolved by success (same pspReference)", () => {
     // Arrange / Act / Assert
     expect(
       orderHasInFlightTransactionAction(
         makeOrder([
-          TransactionEventTypeEnum.CHARGE_REQUEST,
-          TransactionEventTypeEnum.CHARGE_SUCCESS,
+          { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "a" },
+          { type: TransactionEventTypeEnum.CHARGE_SUCCESS, psp: "a" },
         ]),
       ),
     ).toBe(false);
   });
 
-  it("returns false once a request is resolved by failure", () => {
+  it("returns false once a request is resolved by failure (same pspReference)", () => {
     // Arrange / Act / Assert
     expect(
       orderHasInFlightTransactionAction(
         makeOrder([
-          TransactionEventTypeEnum.REFUND_REQUEST,
-          TransactionEventTypeEnum.REFUND_FAILURE,
+          { type: TransactionEventTypeEnum.REFUND_REQUEST, psp: "a" },
+          { type: TransactionEventTypeEnum.REFUND_FAILURE, psp: "a" },
         ]),
       ),
     ).toBe(false);
   });
 
-  it("ignores authorize events (not a request action we trigger)", () => {
+  it("treats a charge request resolved by an AUTHORIZATION_SUCCESS as settled", () => {
+    // Arrange: real-world settled transaction — one charge resolved by CHARGE_SUCCESS,
+    // another charge request resolved by an AUTHORIZATION_SUCCESS under the same psp.
+    const order = makeOrder([
+      { type: TransactionEventTypeEnum.CHARGE_SUCCESS, psp: "ref-1" },
+      { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "ref-1" },
+      { type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS, psp: "ref-2" },
+      { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "ref-2" },
+    ]);
+
+    // Act / Assert
+    expect(orderHasInFlightTransactionAction(order)).toBe(false);
+  });
+
+  it("ignores authorize requests (not a request action we trigger)", () => {
     // Arrange / Act / Assert
     expect(
       orderHasInFlightTransactionAction(
-        makeOrder([TransactionEventTypeEnum.AUTHORIZATION_REQUEST]),
+        makeOrder([{ type: TransactionEventTypeEnum.AUTHORIZATION_REQUEST }]),
       ),
     ).toBe(false);
   });
@@ -124,7 +154,7 @@ describe("useOrderTransactionPolling", () => {
     const { startPolling, rerender, result } = renderPolling(makeOrder([]));
 
     // Act
-    act(() => rerender({ order: makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]) }));
+    act(() => rerender({ order: makeOrder([chargeRequest()]) }));
 
     // Assert
     expect(startPolling).toHaveBeenCalledTimes(1);
@@ -134,16 +164,14 @@ describe("useOrderTransactionPolling", () => {
 
   it("stops polling when the request resolves", () => {
     // Arrange
-    const { stopPolling, rerender, result } = renderPolling(
-      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
-    );
+    const { stopPolling, rerender, result } = renderPolling(makeOrder([chargeRequest("a")]));
 
     // Act
     act(() =>
       rerender({
         order: makeOrder([
-          TransactionEventTypeEnum.CHARGE_REQUEST,
-          TransactionEventTypeEnum.CHARGE_SUCCESS,
+          { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "a" },
+          { type: TransactionEventTypeEnum.CHARGE_SUCCESS, psp: "a" },
         ]),
       }),
     );
@@ -157,9 +185,9 @@ describe("useOrderTransactionPolling", () => {
     // Arrange / Act
     const { startPolling, result } = renderPolling(
       makeOrder([
-        TransactionEventTypeEnum.CHARGE_REQUEST,
-        TransactionEventTypeEnum.REFUND_REQUEST,
-        TransactionEventTypeEnum.CANCEL_REQUEST,
+        { type: TransactionEventTypeEnum.CHARGE_REQUEST },
+        { type: TransactionEventTypeEnum.REFUND_REQUEST },
+        { type: TransactionEventTypeEnum.CANCEL_REQUEST },
       ]),
     );
 
@@ -170,9 +198,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("stops polling after the cap is reached while still in flight", () => {
     // Arrange
-    const { stopPolling, result } = renderPolling(
-      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
-    );
+    const { stopPolling, result } = renderPolling(makeOrder([chargeRequest()]));
 
     // Act
     act(() => {
@@ -186,9 +212,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("resumes with a fresh window when a new request starts after the cap", () => {
     // Arrange
-    const { startPolling, rerender, result } = renderPolling(
-      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
-    );
+    const { startPolling, rerender, result } = renderPolling(makeOrder([chargeRequest("a")]));
 
     act(() => {
       jest.advanceTimersByTime(TRANSACTION_POLL_INTERVAL * TRANSACTION_POLL_MAX_CYCLES);
@@ -199,17 +223,17 @@ describe("useOrderTransactionPolling", () => {
     act(() =>
       rerender({
         order: makeOrder([
-          TransactionEventTypeEnum.CHARGE_REQUEST,
-          TransactionEventTypeEnum.CHARGE_SUCCESS,
+          { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "a" },
+          { type: TransactionEventTypeEnum.CHARGE_SUCCESS, psp: "a" },
         ]),
       }),
     );
     act(() =>
       rerender({
         order: makeOrder([
-          TransactionEventTypeEnum.CHARGE_REQUEST,
-          TransactionEventTypeEnum.CHARGE_SUCCESS,
-          TransactionEventTypeEnum.REFUND_REQUEST,
+          { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "a" },
+          { type: TransactionEventTypeEnum.CHARGE_SUCCESS, psp: "a" },
+          { type: TransactionEventTypeEnum.REFUND_REQUEST, psp: "b" },
         ]),
       }),
     );
@@ -222,7 +246,7 @@ describe("useOrderTransactionPolling", () => {
   it("pauses while the tab is hidden and catches up when it becomes visible", () => {
     // Arrange
     const { startPolling, stopPolling, refetch, result } = renderPolling(
-      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
+      makeOrder([chargeRequest()]),
     );
 
     expect(startPolling).toHaveBeenCalledTimes(1);
@@ -245,9 +269,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("stops polling on unmount", () => {
     // Arrange
-    const { stopPolling, unmount } = renderPolling(
-      makeOrder([TransactionEventTypeEnum.CHARGE_REQUEST]),
-    );
+    const { stopPolling, unmount } = renderPolling(makeOrder([chargeRequest()]));
 
     // Act
     unmount();
