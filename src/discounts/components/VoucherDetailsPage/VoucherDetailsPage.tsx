@@ -6,7 +6,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import CountryList from "@dashboard/components/CountryList";
+import { CountryList } from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, type MetadataFormData } from "@dashboard/components/Metadata";
@@ -422,6 +422,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                     id: "jd/LWa",
                     defaultMessage: "Voucher applies to all countries",
                   })}
+                  summaryContext="voucher"
                   title={
                     <>
                       {intl.formatMessage({

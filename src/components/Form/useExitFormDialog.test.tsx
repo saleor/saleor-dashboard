@@ -164,6 +164,40 @@ describe("useExitFormDialog", () => {
     expect(result.current.exit.shouldBlockNavigation()).toBe(false);
     expect(result.current.history.location.search).toBe("");
   });
+  it("allows clearing channel focus param on same pathname when form is dirty", async () => {
+    // Given - start with channel focus from "Set up pricing"
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = renderHook(
+      () => {
+        const form = useForm({ field: "" }, submitFn, { confirmLeave: true });
+        const exit = useExitFormDialog();
+        const history = useHistory();
+
+        return { form, exit, history };
+      },
+      {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={[{ pathname: "/", search: "?channelId=ch-1" }]}>
+            <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
+          </MemoryRouter>
+        ),
+      },
+    );
+
+    // When - clearing the transient channelId param (e.g. from "Set up pricing")
+    act(() => {
+      result.current.form.change({
+        target: { name: "field", value: "something" },
+      });
+    });
+    act(() => {
+      result.current.history.replace("/");
+    });
+
+    // Then - URL updates without an exit prompt
+    expect(result.current.exit.shouldBlockNavigation()).toBe(false);
+    expect(result.current.history.location.search).toBe("");
+  });
   it("allows query navigation on same pathname when form is clean", async () => {
     // Given
     const submitFn = jest.fn(() => Promise.resolve([]));
@@ -388,6 +422,9 @@ describe("isDialogOnlyQueryChange", () => {
         "?action=assign-attribute-value&activeField=name",
       ),
     ).toBe(true);
+  });
+  it("treats clearing channel focus as a dialog-only change", () => {
+    expect(isDialogOnlyQueryChange("?channelId=ch-1", "")).toBe(true);
   });
   it("does not treat a bulk mode change as a dialog-only change", () => {
     expect(isDialogOnlyQueryChange("", "?bulk=1")).toBe(false);

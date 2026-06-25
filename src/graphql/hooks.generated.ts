@@ -3731,6 +3731,7 @@ export const ShippingMethodTranslationFragmentDoc = gql`
   id
   name
   description
+  shippingMethodId
   shippingMethod {
     id
   }
@@ -18454,6 +18455,7 @@ export const ShippingZoneChannelsDocument = gql`
     query ShippingZoneChannels($id: ID!) {
   shippingZone(id: $id) {
     id
+    name
     channels {
       id
       name

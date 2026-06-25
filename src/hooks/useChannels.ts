@@ -1,8 +1,9 @@
 import { type ChannelsAction } from "@dashboard/channels/urls";
-import { type Channel } from "@dashboard/channels/utils";
+import { type Channel, sortChannelShippingDataByName } from "@dashboard/channels/utils";
 import { useExitFormDialog, type WithFormId } from "@dashboard/components/Form";
 import useListActions from "@dashboard/hooks/useListActions";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import isEqual from "lodash/isEqual";
 
 interface Modal {
   openModal: (action: ChannelsAction) => void;
@@ -32,14 +33,15 @@ function useChannels<T extends Channel, A>(
   };
   const handleChannelsModalOpen = () => openModal("open-channels-picker");
   const handleChannelsConfirm = () => {
-    const sortedChannelListElements = channelListElements.sort((channel, nextChannel) =>
-      channel.name.localeCompare(nextChannel.name),
-    );
+    const nextChannels = sortChannelShippingDataByName(channelListElements);
 
-    setCurrentChannels(sortedChannelListElements);
-    // hack so channels also update exit form dalog provider
-    // despite not setting page's form data "changed" prop
-    setIsDirty(true);
+    if (!isEqual(currentChannels, nextChannels)) {
+      setCurrentChannels(nextChannels);
+      // hack so channels also update exit form dialog provider
+      // despite not setting page's form data "changed" prop
+      setIsDirty(true);
+    }
+
     closeModal();
   };
   const toggleAllChannels = (items: T[], selected: number) => {

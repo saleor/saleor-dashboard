@@ -38,6 +38,7 @@ const config = {
   },
   coverageDirectory: "<rootDir>/coverage/units",
   collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
+  coveragePathIgnorePatterns: ["<rootDir>/src/index\\.tsx"],
 };
 
 // eslint-disable-next-line no-undef

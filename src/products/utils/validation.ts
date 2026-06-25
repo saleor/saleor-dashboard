@@ -8,6 +8,9 @@ import { type ProductVariantUpdateSubmitData } from "../components/ProductVarian
 
 export const validatePrice = (price: string) => price === "" || parseInt(price, 10) < 0;
 
+export const isMissingPriceValue = (price: string | number | null | undefined) =>
+  price == null || price === "" || parseInt(String(price), 10) < 0;
+
 export const validateCostPrice = (price: string) => price !== "" && parseInt(price, 10) < 0;
 
 const toChannelPriceField = (id: string) => `${id}-channelListing-price`;

@@ -91,7 +91,7 @@ describe("mapTranslationsToEntities", () => {
     ]);
   });
 
-  it("should return empty string when no shipping method", () => {
+  it("skips items without a shipping method id", () => {
     // Arrange
     const data = {
       translations: {
@@ -116,14 +116,35 @@ describe("mapTranslationsToEntities", () => {
     const result = mapTranslationsToEntities(data);
 
     // Assert
+    expect(result).toEqual([]);
+  });
+
+  it("uses shippingMethodId when shippingMethod is unavailable", () => {
+    // Arrange
+    const data = {
+      translations: {
+        edges: [
+          {
+            node: {
+              __typename: "ShippingMethodTranslatableContent",
+              translation: null,
+              shippingMethodId: "method-id",
+              name: "Express",
+            },
+          },
+        ],
+      },
+    } as ShippingMethodTranslationsQuery;
+
+    // Act
+    const result = mapTranslationsToEntities(data);
+
+    // Assert
     expect(result).toEqual([
       {
-        completion: {
-          current: 2,
-          max: 2,
-        },
-        id: "",
-        name: "name",
+        completion: { current: 0, max: 2 },
+        id: "method-id",
+        name: "Express",
       },
     ]);
   });

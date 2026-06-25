@@ -20,7 +20,6 @@ const messages = defineMessages({
 interface ShippingZoneSettingsCardProps {
   formData: ShippingZoneUpdateFormData;
   warehousesChoices: Option[];
-  onWarehouseAdd: () => void;
   onWarehouseChange: FormChange;
   hasMoreWarehouses: boolean;
   onFetchMoreWarehouses: () => void;
@@ -37,7 +36,6 @@ const ShippingZoneSettingsCard = ({
   warehousesChoices,
   onFetchMoreWarehouses,
   onWarehousesSearchChange,
-  onWarehouseAdd,
   onWarehouseChange,
   allChannels,
   onChannelChange,
@@ -59,7 +57,6 @@ const ShippingZoneSettingsCard = ({
       <Divider />
       <DashboardCard.Content data-test-id="warehouse-section">
         <WarehousesSection
-          onAdd={onWarehouseAdd}
           onSearchChange={onWarehousesSearchChange}
           onChange={onWarehouseChange}
           onFetchMore={onFetchMoreWarehouses}

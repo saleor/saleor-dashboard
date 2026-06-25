@@ -13,6 +13,15 @@ export const useStyles = makeStyles(
       display: "flex",
       overflow: "auto",
     },
+    itemLink: {
+      color: "inherit",
+      textDecoration: "none",
+      borderRadius: 4,
+      "&:focus-visible": {
+        outline: "2px solid var(--mu-colors-border-info1)",
+        outlineOffset: 2,
+      },
+    },
     sortableHandle: {
       marginRight: theme.spacing(1),
     },

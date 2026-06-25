@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { Input, type InputProps, Text } from "@saleor/macaw-ui-next";
+import { forwardRef } from "react";
 
 import { usePriceField } from "./usePriceField";
 
@@ -17,7 +18,7 @@ export interface PriceFieldProps extends InputProps {
   onChange: (event: any) => any;
 }
 
-const PriceField = (props: PriceFieldProps) => {
+const PriceField = forwardRef<HTMLInputElement, PriceFieldProps>(function PriceField(props, ref) {
   const {
     className,
     disabled,
@@ -35,6 +36,7 @@ const PriceField = (props: PriceFieldProps) => {
 
   return (
     <Input
+      ref={ref}
       size="small"
       className={className}
       disabled={disabled}
@@ -58,7 +60,7 @@ const PriceField = (props: PriceFieldProps) => {
       {...inputProps}
     />
   );
-};
+});
 
 PriceField.defaultProps = {
   name: "price",

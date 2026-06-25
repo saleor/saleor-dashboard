@@ -99,9 +99,15 @@ export function mapTranslationsToEntities(
 
   return items.reduce((acc, node) => {
     if (node.__typename === "ShippingMethodTranslatableContent") {
+      const shippingMethodId = node.shippingMethodId ?? node.shippingMethod?.id;
+
+      if (!shippingMethodId) {
+        return acc;
+      }
+
       acc.push({
         completion: getNameDescriptionTranslationCompletion(node.translation),
-        id: node?.shippingMethod?.id ?? "",
+        id: shippingMethodId,
         name: node?.name,
       });
     }

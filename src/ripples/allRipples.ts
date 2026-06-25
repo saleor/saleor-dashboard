@@ -25,6 +25,7 @@ import { rippleProductVariantMetadata } from "@dashboard/products/ripples/produc
 import { rippleVariantGenerator } from "@dashboard/products/ripples/variantGenerator";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple } from "@dashboard/ripples/types";
+import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
 import { rippleTranslationDetailRefresh } from "@dashboard/translations/ripples/translationDetailRefresh";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
@@ -76,6 +77,9 @@ export const allRipples: Ripple[] = [
 
   // Channels
   checkoutAutocompleteSettings,
+
+  // Shipping
+  rippleShippingRateEditor,
 
   // Customers
   rippleNewCustomersView,
