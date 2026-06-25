@@ -12,13 +12,6 @@ export const TRANSACTION_POLL_INTERVAL = 5000;
  */
 export const TRANSACTION_POLL_MAX_CYCLES = 24;
 
-// Verbose, intentional logging so polling state transitions can be traced in the
-// browser console while debugging this feature.
-const log = (message: string, data?: Record<string, unknown>) => {
-  // eslint-disable-next-line no-console
-  console.log(`[OrderTransactionPolling] ${message}`, data ?? "");
-};
-
 const REQUEST_EVENT_TYPES: TransactionEventTypeEnum[] = [
   TransactionEventTypeEnum.CHARGE_REQUEST,
   TransactionEventTypeEnum.REFUND_REQUEST,
@@ -39,7 +32,7 @@ const isResolutionEvent = (type: TransactionEventTypeEnum | null): boolean =>
 type TransactionEvents = OrderDetailsFragment["transactions"][number]["events"];
 type TransactionEvent = TransactionEvents[number];
 
-const getUnresolvedRequestRefs = (events: TransactionEvents): string[] => {
+const transactionHasUnresolvedRequest = (events: TransactionEvents): boolean => {
   const byPspReference = new Map<string, TransactionEvent[]>();
 
   events.forEach(event => {
@@ -53,23 +46,22 @@ const getUnresolvedRequestRefs = (events: TransactionEvents): string[] => {
     }
   });
 
-  const unresolved: string[] = [];
-
-  byPspReference.forEach((group, pspReference) => {
+  for (const group of byPspReference.values()) {
     const hasRequest = group.some(event => isRequestEvent(event.type));
     const hasResolution = group.some(event => isResolutionEvent(event.type));
 
     if (hasRequest && !hasResolution) {
-      unresolved.push(pspReference || "(no psp reference)");
+      return true;
     }
-  });
+  }
 
-  return unresolved;
+  return false;
 };
 
 /**
- * pspReferences of charge/refund/cancel requests that have not yet been resolved by
- * a SUCCESS/FAILURE event. Empty array means nothing is in flight.
+ * An order has an async transaction action in flight when one of its transactions
+ * has a charge/refund/cancel REQUEST event not yet resolved by a SUCCESS/FAILURE
+ * event sharing its pspReference.
  *
  * We key off events rather than the pending *amount* fields: Saleor Core creates the
  * REQUEST event synchronously but only folds it into the pending amount once the app
@@ -82,16 +74,12 @@ const getUnresolvedRequestRefs = (events: TransactionEvents): string[] => {
  *
  * Authorize requests are excluded: authorization is not an action we trigger here.
  */
-export const getOrderInFlightTransactionRefs = (
-  order: Pick<OrderDetailsFragment, "transactions"> | null | undefined,
-): string[] =>
-  (order?.transactions ?? []).flatMap(transaction =>
-    getUnresolvedRequestRefs(transaction.events ?? []),
-  );
-
 export const orderHasInFlightTransactionAction = (
   order: Pick<OrderDetailsFragment, "transactions"> | null | undefined,
-): boolean => getOrderInFlightTransactionRefs(order).length > 0;
+): boolean =>
+  (order?.transactions ?? []).some(transaction =>
+    transactionHasUnresolvedRequest(transaction.events ?? []),
+  );
 
 interface UseOrderTransactionPollingParams {
   order: OrderDetailsFragment | null | undefined;
@@ -117,8 +105,7 @@ export const useOrderTransactionPolling = ({
   stopPolling,
   refetch,
 }: UseOrderTransactionPollingParams): { isPolling: boolean } => {
-  const inFlightRefs = getOrderInFlightTransactionRefs(order);
-  const hasPending = inFlightRefs.length > 0;
+  const hasPending = orderHasInFlightTransactionAction(order);
   const [isPolling, setIsPolling] = useState(false);
 
   // Number of poll cycles consumed in the current pending episode.
@@ -135,12 +122,8 @@ export const useOrderTransactionPolling = ({
   // Keep latest values in refs so the visibility listener (registered once) and
   // memoized callbacks never read stale closures.
   const hasPendingRef = useRef(hasPending);
-  const inFlightRefsRef = useRef(inFlightRefs);
-  const isPollingRef = useRef(isPolling);
 
   hasPendingRef.current = hasPending;
-  inFlightRefsRef.current = inFlightRefs;
-  isPollingRef.current = isPolling;
 
   const startPollingRef = useRef(startPolling);
   const stopPollingRef = useRef(stopPolling);
@@ -157,49 +140,29 @@ export const useOrderTransactionPolling = ({
     }
   }, []);
 
-  const pause = useCallback(
-    (reason: string) => {
-      if (counterIntervalRef.current || isPollingRef.current) {
-        log(`stop polling — ${reason}`);
+  const pause = useCallback(() => {
+    stopPollingRef.current();
+    stopCounting();
+    setIsPolling(false);
+  }, [stopCounting]);
+
+  const resume = useCallback(() => {
+    // Idempotent: don't restart the cadence if we're already counting.
+    if (counterIntervalRef.current) {
+      return;
+    }
+
+    startPollingRef.current(TRANSACTION_POLL_INTERVAL);
+    setIsPolling(true);
+    counterIntervalRef.current = setInterval(() => {
+      cyclesRef.current += 1;
+
+      if (cyclesRef.current >= TRANSACTION_POLL_MAX_CYCLES) {
+        capReachedRef.current = true;
+        pause();
       }
-
-      stopPollingRef.current();
-      stopCounting();
-      setIsPolling(false);
-    },
-    [stopCounting],
-  );
-
-  const resume = useCallback(
-    (reason: string) => {
-      // Idempotent: don't restart the cadence if we're already counting.
-      if (counterIntervalRef.current) {
-        return;
-      }
-
-      log(`start polling — ${reason}`, {
-        intervalMs: TRANSACTION_POLL_INTERVAL,
-        cyclesUsed: cyclesRef.current,
-        unresolvedRefs: inFlightRefsRef.current,
-      });
-
-      startPollingRef.current(TRANSACTION_POLL_INTERVAL);
-      setIsPolling(true);
-      counterIntervalRef.current = setInterval(() => {
-        cyclesRef.current += 1;
-
-        log(`poll cycle ${cyclesRef.current}/${TRANSACTION_POLL_MAX_CYCLES}`, {
-          unresolvedRefs: inFlightRefsRef.current,
-        });
-
-        if (cyclesRef.current >= TRANSACTION_POLL_MAX_CYCLES) {
-          capReachedRef.current = true;
-          pause(`reached ${TRANSACTION_POLL_MAX_CYCLES}-cycle cap while still in flight`);
-        }
-      }, TRANSACTION_POLL_INTERVAL);
-    },
-    [pause],
-  );
+    }, TRANSACTION_POLL_INTERVAL);
+  }, [pause]);
 
   // React to in-flight state changes. Runs only when `hasPending` flips value.
   useEffect(() => {
@@ -209,46 +172,29 @@ export const useOrderTransactionPolling = ({
 
     if (hasPending && !wasPending) {
       // Rising edge: a fresh pending episode, reset the cap budget.
-      log("in-flight episode started (rising edge) — resetting cap budget", {
-        unresolvedRefs: inFlightRefsRef.current,
-      });
       cyclesRef.current = 0;
       capReachedRef.current = false;
     }
 
     if (!hasPending) {
-      if (wasPending) {
-        log("all transaction requests resolved — no longer in flight");
-      }
-
-      pause("no in-flight transaction requests");
+      pause();
 
       return;
     }
 
     if (capReachedRef.current) {
-      log("still in flight but cap already reached this episode — not resuming");
-
       return;
     }
 
-    if (typeof document !== "undefined" && document.visibilityState === "hidden") {
-      log("in flight but tab is hidden — waiting for focus to start polling");
-
-      return;
+    if (typeof document === "undefined" || document.visibilityState === "visible") {
+      resume();
     }
-
-    resume("in-flight transaction request detected");
   }, [hasPending, pause, resume]);
 
   // Pause while the tab is hidden; catch up immediately when it returns.
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
-        if (counterIntervalRef.current) {
-          log("tab hidden — pausing polling (cap budget preserved)");
-        }
-
         stopPollingRef.current();
         stopCounting();
         setIsPolling(false);
@@ -257,9 +203,8 @@ export const useOrderTransactionPolling = ({
       }
 
       if (hasPendingRef.current && !capReachedRef.current) {
-        log("tab visible again while in flight — refetching to catch up, then resuming");
         refetchRef.current();
-        resume("tab regained focus while in flight");
+        resume();
       }
     };
 
@@ -271,7 +216,6 @@ export const useOrderTransactionPolling = ({
   // Ensure no interval or polling leaks past unmount.
   useEffect(
     () => () => {
-      log("unmounting — stopping polling");
       stopPollingRef.current();
       stopCounting();
     },
