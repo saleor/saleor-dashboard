@@ -16,22 +16,25 @@ type MaybeMoney = { amount: number } | null | undefined;
 
 const hasPendingAmount = (money: MaybeMoney): boolean => (money?.amount ?? 0) > 0;
 
+type OrderPendingFields = Pick<
+  OrderDetailsFragment,
+  "totalChargePending" | "totalRefundPending" | "totalCancelPending"
+>;
+
 /**
- * An order has an async transaction action in flight when any of its transactions
- * reports a pending amount on any action type. These fields are recomputed by
- * Saleor Core from transaction events and drop back to 0 once the app reports the
- * request as either successful or failed.
+ * An order has an async transaction action in flight when its charge, refund or
+ * cancel pending total is positive. Saleor Core recomputes these from transaction
+ * events and clears them once the app reports the request as successful OR failed.
+ *
+ * Authorize pending is deliberately excluded: it is not one of the request actions
+ * we trigger (charge/refund/cancel), and Saleor Core does not clear it when an
+ * AUTHORIZATION_ACTION_REQUIRED event arrives, so it can stay non-zero indefinitely
+ * and would keep us polling forever.
  */
-export const orderHasPendingTransaction = (
-  order: Pick<OrderDetailsFragment, "transactions"> | null | undefined,
-): boolean =>
-  (order?.transactions ?? []).some(
-    transaction =>
-      hasPendingAmount(transaction.authorizePendingAmount) ||
-      hasPendingAmount(transaction.chargePendingAmount) ||
-      hasPendingAmount(transaction.refundPendingAmount) ||
-      hasPendingAmount(transaction.cancelPendingAmount),
-  );
+export const orderHasPendingTransaction = (order: OrderPendingFields | null | undefined): boolean =>
+  hasPendingAmount(order?.totalChargePending) ||
+  hasPendingAmount(order?.totalRefundPending) ||
+  hasPendingAmount(order?.totalCancelPending);
 
 interface UseOrderTransactionPollingParams {
   order: OrderDetailsFragment | null | undefined;

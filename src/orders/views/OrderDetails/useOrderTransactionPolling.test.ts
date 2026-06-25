@@ -12,15 +12,12 @@ const money = (amount: number) => ({ __typename: "Money", amount, currency: "USD
 
 type PendingInput = Partial<Record<"authorize" | "charge" | "refund" | "cancel", number>>;
 
-const makeOrder = (pendingPerTransaction: PendingInput[]): OrderDetailsFragment => {
+const makeOrder = (pending: PendingInput = {}): OrderDetailsFragment => {
   const order = {
-    transactions: pendingPerTransaction.map((pending, index) => ({
-      id: `tx-${index}`,
-      authorizePendingAmount: money(pending.authorize ?? 0),
-      chargePendingAmount: money(pending.charge ?? 0),
-      refundPendingAmount: money(pending.refund ?? 0),
-      cancelPendingAmount: money(pending.cancel ?? 0),
-    })),
+    totalAuthorizePending: money(pending.authorize ?? 0),
+    totalChargePending: money(pending.charge ?? 0),
+    totalRefundPending: money(pending.refund ?? 0),
+    totalCancelPending: money(pending.cancel ?? 0),
   };
 
   return order as unknown as OrderDetailsFragment;
@@ -51,24 +48,28 @@ const renderPolling = (order: OrderDetailsFragment | null) => {
 };
 
 describe("orderHasPendingTransaction", () => {
-  it("returns false when no order or no transactions", () => {
+  it("returns false when no order", () => {
     // Arrange / Act / Assert
     expect(orderHasPendingTransaction(null)).toBe(false);
-    expect(orderHasPendingTransaction(makeOrder([]))).toBe(false);
   });
 
   it("returns false when all pending amounts are zero", () => {
     // Arrange / Act / Assert
-    expect(orderHasPendingTransaction(makeOrder([{}]))).toBe(false);
+    expect(orderHasPendingTransaction(makeOrder({}))).toBe(false);
   });
 
-  it.each(["authorize", "charge", "refund", "cancel"] as const)(
+  it.each(["charge", "refund", "cancel"] as const)(
     "returns true when %s pending amount is positive",
     actionType => {
       // Arrange / Act / Assert
-      expect(orderHasPendingTransaction(makeOrder([{ [actionType]: 10 }]))).toBe(true);
+      expect(orderHasPendingTransaction(makeOrder({ [actionType]: 10 }))).toBe(true);
     },
   );
+
+  it("ignores authorize pending (it can stay stuck and is not a request action)", () => {
+    // Arrange / Act / Assert
+    expect(orderHasPendingTransaction(makeOrder({ authorize: 56.78 }))).toBe(false);
+  });
 });
 
 describe("useOrderTransactionPolling", () => {
@@ -84,7 +85,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("does not start polling when nothing is pending", () => {
     // Arrange / Act
-    const { startPolling, result } = renderPolling(makeOrder([{}]));
+    const { startPolling, result } = renderPolling(makeOrder({}));
 
     // Assert
     expect(startPolling).not.toHaveBeenCalled();
@@ -93,10 +94,10 @@ describe("useOrderTransactionPolling", () => {
 
   it("starts polling once when a transaction becomes pending", () => {
     // Arrange
-    const { startPolling, rerender, result } = renderPolling(makeOrder([{}]));
+    const { startPolling, rerender, result } = renderPolling(makeOrder({}));
 
     // Act
-    act(() => rerender({ order: makeOrder([{ charge: 50 }]) }));
+    act(() => rerender({ order: makeOrder({ charge: 50 }) }));
 
     // Assert
     expect(startPolling).toHaveBeenCalledTimes(1);
@@ -106,20 +107,20 @@ describe("useOrderTransactionPolling", () => {
 
   it("stops polling when pending amounts clear", () => {
     // Arrange
-    const { stopPolling, rerender, result } = renderPolling(makeOrder([{ charge: 50 }]));
+    const { stopPolling, rerender, result } = renderPolling(makeOrder({ charge: 50 }));
 
     // Act
-    act(() => rerender({ order: makeOrder([{}]) }));
+    act(() => rerender({ order: makeOrder({}) }));
 
     // Assert
     expect(stopPolling).toHaveBeenCalled();
     expect(result.current.isPolling).toBe(false);
   });
 
-  it("starts a single poller for multiple pending transactions and actions", () => {
+  it("starts a single poller when multiple action types are pending", () => {
     // Arrange / Act
     const { startPolling, result } = renderPolling(
-      makeOrder([{ charge: 50 }, { refund: 10, cancel: 5 }]),
+      makeOrder({ charge: 50, refund: 10, cancel: 5 }),
     );
 
     // Assert
@@ -129,7 +130,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("stops polling after the cap is reached while still pending", () => {
     // Arrange
-    const { stopPolling, result } = renderPolling(makeOrder([{ charge: 50 }]));
+    const { stopPolling, result } = renderPolling(makeOrder({ charge: 50 }));
 
     // Act
     act(() => {
@@ -143,7 +144,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("resumes with a fresh window when a new pending episode starts after the cap", () => {
     // Arrange
-    const { startPolling, rerender, result } = renderPolling(makeOrder([{ charge: 50 }]));
+    const { startPolling, rerender, result } = renderPolling(makeOrder({ charge: 50 }));
 
     act(() => {
       jest.advanceTimersByTime(TRANSACTION_POLL_INTERVAL * TRANSACTION_POLL_MAX_CYCLES);
@@ -151,8 +152,8 @@ describe("useOrderTransactionPolling", () => {
     expect(result.current.isPolling).toBe(false);
 
     // Act: episode ends, then a new action makes it pending again
-    act(() => rerender({ order: makeOrder([{}]) }));
-    act(() => rerender({ order: makeOrder([{ refund: 20 }]) }));
+    act(() => rerender({ order: makeOrder({}) }));
+    act(() => rerender({ order: makeOrder({ refund: 20 }) }));
 
     // Assert: polled again (initial start + restart after the new rising edge)
     expect(startPolling).toHaveBeenCalledTimes(2);
@@ -161,9 +162,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("pauses while the tab is hidden and catches up when it becomes visible", () => {
     // Arrange
-    const { startPolling, stopPolling, refetch, result } = renderPolling(
-      makeOrder([{ charge: 50 }]),
-    );
+    const { startPolling, stopPolling, refetch, result } = renderPolling(makeOrder({ charge: 50 }));
 
     expect(startPolling).toHaveBeenCalledTimes(1);
 
@@ -185,7 +184,7 @@ describe("useOrderTransactionPolling", () => {
 
   it("stops polling on unmount", () => {
     // Arrange
-    const { stopPolling, unmount } = renderPolling(makeOrder([{ charge: 50 }]));
+    const { stopPolling, unmount } = renderPolling(makeOrder({ charge: 50 }));
 
     // Act
     unmount();
