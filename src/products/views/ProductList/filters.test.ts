@@ -109,6 +109,37 @@ describe("Parsing filter value", () => {
     expect(parsedValue1).toEqual(expectedValue1);
     expect(parsedValue2).toEqual(expectedValue2);
   });
+  it("should preserve zero when numeric attributes values passed", () => {
+    // Arrange
+    const params: ProductListUrlFilters = {
+      "numeric-attributes": {
+        "test-1": ["0"],
+        "test-2": ["0", "10"],
+      },
+    };
+    const type = ProductListUrlFiltersAsDictWithMultipleValues.numericAttributes;
+    // Act
+    const parsedValue1 = parseFilterValue(params, "test-1", type);
+    const parsedValue2 = parseFilterValue(params, "test-2", type);
+    // Assert
+    const expectedValue1: FilterParam = {
+      slug: "test-1",
+      valuesRange: {
+        gte: 0,
+        lte: 0,
+      },
+    };
+    const expectedValue2: FilterParam = {
+      slug: "test-2",
+      valuesRange: {
+        gte: 0,
+        lte: 10,
+      },
+    };
+
+    expect(parsedValue1).toEqual(expectedValue1);
+    expect(parsedValue2).toEqual(expectedValue2);
+  });
   it("should return string values when string attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
