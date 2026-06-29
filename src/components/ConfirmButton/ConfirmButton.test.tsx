@@ -31,6 +31,37 @@ describe("ConfirmButton", () => {
     expect(screen.getByRole("button")).toBeInTheDocument();
     expect(screen.getByTestId("button-progress")).toBeInTheDocument();
   });
+  it("should keep loading button enabled for primary styling and block interaction", () => {
+    render(<ConfirmButton noTransition transitionState="loading" onClick={jest.fn()} />);
+
+    const button = screen.getByRole("button");
+
+    expect(button).toBeEnabled();
+    expect(button).toHaveAttribute("aria-busy", "true");
+    fireEvent.click(button);
+    expect(button).not.toHaveAttribute("disabled");
+  });
+  it("should not call onClick while loading", () => {
+    const onClick = jest.fn();
+
+    render(<ConfirmButton noTransition transitionState="loading" onClick={onClick} />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(onClick).not.toHaveBeenCalled();
+  });
+  it("should not call onClick while success feedback is shown", () => {
+    const onClick = jest.fn();
+
+    render(<ConfirmButton noTransition transitionState="success" onClick={onClick} />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(onClick).not.toHaveBeenCalled();
+  });
+  it("should call onClick in error state so user can try again", () => {
+    const onClick = jest.fn();
+
+    render(<ConfirmButton noTransition transitionState="error" onClick={onClick} />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(onClick).toHaveBeenCalled();
+  });
   it("should render a button with success", () => {
     render(<ConfirmButton noTransition transitionState="success" />);
     expect(screen.getByRole("button")).toBeInTheDocument();

@@ -1,0 +1,21 @@
+.root {
+  width: 100%;
+}
+
+.channelTableScroll {
+  max-height: 300px;
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.priceCellContent {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.channelTableScroll th:last-child,
+.channelTableScroll td:last-child {
+  padding-right: 16px !important;
+}

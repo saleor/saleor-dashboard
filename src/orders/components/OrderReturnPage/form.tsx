@@ -36,6 +36,12 @@ export interface LineItemData {
 export type FormsetQuantityData = FormsetData<LineItemData, number>;
 export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 
+export interface LineReasonValue {
+  reason: string;
+  reasonReference: string;
+}
+export type FormsetLineReasonData = FormsetData<LineItemData, LineReasonValue>;
+
 export interface OrderReturnData {
   transactionId: string;
   amount: number;
@@ -43,6 +49,10 @@ export interface OrderReturnData {
   autoGrantRefund: boolean;
   autoSendRefund: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
+  reason: string;
+  reasonReference: string;
+  refundReason: string;
+  refundReasonReference: string;
 }
 
 interface OrderReturnHandlers {
@@ -50,6 +60,7 @@ interface OrderReturnHandlers {
   changeWaitingItemsQuantity: FormsetChange<number>;
   changeUnfulfiledItemsQuantity: FormsetChange<number>;
   changeItemsToBeReplaced: FormsetChange<boolean>;
+  changeLineReason: FormsetChange<LineReasonValue>;
   handleSetMaximalItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
   handleAmountChange: (value: number) => void;
@@ -60,6 +71,7 @@ export interface OrderReturnFormData extends OrderReturnData {
   fulfilledItemsQuantities: FormsetQuantityData;
   waitingItemsQuantities: FormsetQuantityData;
   unfulfilledItemsQuantities: FormsetQuantityData;
+  lineReasons: FormsetLineReasonData;
 }
 
 export type OrderRefundSubmitData = OrderReturnFormData;
@@ -82,6 +94,10 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   autoGrantRefund: false,
   autoSendRefund: false,
   transactionId: "",
+  reason: "",
+  reasonReference: "",
+  refundReason: "",
+  refundReasonReference: "",
 });
 
 function useOrderReturnForm(
@@ -144,6 +160,30 @@ function useOrderReturnForm(
     ];
   };
   const itemsToBeReplaced = useFormset<LineItemData, boolean>(getItemsToBeReplaced());
+  const getLineReasons = (): FormsetLineReasonData => {
+    const emptyReason: LineReasonValue = { reason: "", reasonReference: "" };
+
+    if (!order) {
+      return [];
+    }
+
+    const orderLinesItems = getOrderUnfulfilledLines(order).map(
+      getParsedLineData({ initialValue: emptyReason }),
+    );
+    const fulfillmentItems = [
+      FulfillmentStatus.REFUNDED,
+      FulfillmentStatus.FULFILLED,
+      FulfillmentStatus.WAITING_FOR_APPROVAL,
+    ].flatMap(status =>
+      getParsedLineDataForFulfillmentStatus(order, status, {
+        initialValue: emptyReason,
+        isFulfillment: true,
+      }),
+    );
+
+    return [...orderLinesItems, ...fulfillmentItems];
+  };
+  const lineReasons = useFormset<LineItemData, LineReasonValue>(getLineReasons());
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
     const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(({ id }) => {
       const line = order.lines.find(getById(id));
@@ -197,6 +237,7 @@ function useOrderReturnForm(
     waitingItemsQuantities: waitingItemsQuantities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
     unfulfilledItemsQuantities: unfulfiledItemsQuantites.data,
+    lineReasons: lineReasons.data,
     ...formData,
   };
   const handleFormSubmit = useHandleFormSubmit({
@@ -225,6 +266,7 @@ function useOrderReturnForm(
       changeFulfiledItemsQuantity: handleHandlerChange(fulfiledItemsQuatities.change),
       changeWaitingItemsQuantity: handleHandlerChange(waitingItemsQuantities.change),
       changeItemsToBeReplaced: handleHandlerChange(itemsToBeReplaced.change),
+      changeLineReason: handleHandlerChange(lineReasons.change),
       changeUnfulfiledItemsQuantity: handleHandlerChange(unfulfiledItemsQuantites.change),
       handleSetMaximalItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities,

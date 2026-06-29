@@ -9,23 +9,26 @@ import { sectionNames } from "@dashboard/intl";
 import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@dashboard/shipping/components/ShippingZoneRatesCreatePage";
 import { useShippingRateCreator } from "@dashboard/shipping/handlers";
+import { shippingMethodChannelsDialogMessages } from "@dashboard/shipping/messages/channelAvailabilityDialogMessages";
 import {
   shippingRateCreateUrl,
   type ShippingRateCreateUrlDialog,
   type ShippingRateCreateUrlQueryParams,
   shippingZoneUrl,
 } from "@dashboard/shipping/urls";
+import { hasPostalCodeStateChanges } from "@dashboard/shipping/utils/postalCodeState";
 import postalCodesReducer from "@dashboard/shipping/views/reducer";
 import {
   filterPostalCodes,
   getPostalCodeRuleByMinMax,
   getRuleObject,
+  mapPostalCodeRulesInclusionType,
 } from "@dashboard/shipping/views/utils";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { useReducer } from "react";
-import { useIntl } from "react-intl";
+import { useMemo, useReducer } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const FORM_ID = Symbol("shipping-zone-rates-create-form-id");
 
@@ -47,6 +50,7 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
   });
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const allChannels = createSortedShippingChannels(shippingZoneData?.shippingZone?.channels);
+  const zoneName = shippingZoneData?.shippingZone?.name;
   const {
     channelListElements,
     channelsToggle,
@@ -61,11 +65,30 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
   } = useChannels(allChannels, params?.action, { closeModal, openModal }, { formId: FORM_ID });
   const [state, dispatch] = useReducer(postalCodesReducer, {
     codesToDelete: [],
-    havePostalCodesChanged: false,
     inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
     originalCodes: [],
     postalCodeRules: [],
   });
+  const savedPostalCodeState = useMemo(
+    () => ({
+      codesToDelete: [],
+      inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+      postalCodeRules: [],
+    }),
+    [],
+  );
+  const hasPostalCodeChanges = useMemo(
+    () =>
+      hasPostalCodeStateChanges(
+        {
+          codesToDelete: state.codesToDelete,
+          inclusionType: state.inclusionType,
+          postalCodeRules: state.postalCodeRules,
+        },
+        savedPostalCodeState,
+      ),
+    [savedPostalCodeState, state.codesToDelete, state.inclusionType, state.postalCodeRules],
+  );
   const { channelErrors, createShippingRate, errors, status } = useShippingRateCreator(
     id,
     params.type,
@@ -82,7 +105,6 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
     const newCode = getRuleObject(rule, state.inclusionType);
 
     dispatch({
-      havePostalCodesChanged: true,
       postalCodeRules: [...state.postalCodeRules, newCode],
     });
     closeModal();
@@ -90,12 +112,11 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
   const onPostalCodeInclusionChange = (inclusion: PostalCodeRuleInclusionTypeEnum) => {
     dispatch({
       inclusionType: inclusion,
-      postalCodeRules: [],
+      postalCodeRules: mapPostalCodeRulesInclusionType(state.postalCodeRules, inclusion),
     });
   };
   const onPostalCodeUnassign = code => {
     dispatch({
-      havePostalCodesChanged: true,
       postalCodeRules: filterPostalCodes(state.postalCodeRules, code),
     });
   };
@@ -110,10 +131,15 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
-          title={intl.formatMessage({
-            id: "EM730i",
-            defaultMessage: "Manage Channel Availability",
-          })}
+          title={intl.formatMessage(shippingMethodChannelsDialogMessages.title)}
+          description={
+            zoneName ? (
+              <FormattedMessage
+                {...shippingMethodChannelsDialogMessages.description}
+                values={{ zoneName }}
+              />
+            ) : undefined
+          }
           confirmButtonState="default"
           selected={channelListElements.length}
           onConfirm={handleChannelsConfirm}
@@ -129,14 +155,17 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
         saveButtonBarState={status}
         onSubmit={createShippingRate}
         backUrl={shippingZoneUrl(id)}
+        shippingZoneName={zoneName}
         errors={errors}
         channelErrors={channelErrors}
         postalCodes={state.postalCodeRules}
+        postalCodeInclusionType={state.inclusionType}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onPostalCodeAssign={() => openModal("add-range")}
         onPostalCodeUnassign={onPostalCodeUnassign}
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
+        hasPostalCodeChanges={hasPostalCodeChanges}
         variant={params.type}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}

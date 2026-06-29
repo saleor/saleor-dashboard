@@ -1,6 +1,6 @@
 import { useModelsOfTypeQuery } from "@dashboard/graphql";
 import { Select } from "@saleor/macaw-ui-next";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import { type ControllerRenderProps } from "react-hook-form";
 
 interface ModelsPickerProps {
@@ -11,6 +11,8 @@ interface ModelsPickerProps {
   emptyOptionLabel: string;
   sortByName?: boolean;
   skip?: boolean;
+  error?: boolean;
+  helperText?: ReactNode;
 }
 
 export const ModelsPicker = ({
@@ -20,6 +22,8 @@ export const ModelsPicker = ({
   emptyOptionLabel,
   sortByName = false,
   skip = false,
+  error,
+  helperText,
 }: ModelsPickerProps) => {
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
@@ -44,5 +48,13 @@ export const ModelsPicker = ({
     ];
   }, [data, sortByName, emptyOptionLabel]);
 
-  return <Select disabled={disabled || loading} options={options} {...field} />;
+  return (
+    <Select
+      disabled={disabled || loading}
+      options={options}
+      error={error}
+      helperText={helperText}
+      {...field}
+    />
+  );
 };

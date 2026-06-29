@@ -13,14 +13,21 @@ import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
-import { Checkbox, Skeleton } from "@saleor/macaw-ui-next";
-import { type CSSProperties } from "react";
+import { Button, Checkbox, Skeleton } from "@saleor/macaw-ui-next";
+import { type CSSProperties, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { OrderCardTitle } from "../../OrderCardTitle/OrderCardTitle";
+import { ReasonReferenceModal } from "../../ReasonReferenceModal/ReasonReferenceModal";
 import { MaximalButton } from "../components/MaximalButton";
-import { type FormsetQuantityData, type FormsetReplacementData } from "../form";
+import {
+  type FormsetLineReasonData,
+  type FormsetQuantityData,
+  type FormsetReplacementData,
+  type LineReasonValue,
+} from "../form";
 import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
+import { returnItemsCardMessages } from "./messages";
 import ProductErrorCell from "./ProductErrorCell";
 
 const useStyles = makeStyles(
@@ -74,7 +81,10 @@ interface OrderReturnRefundLinesCardProps {
   order: OrderDetailsFragment;
   itemsSelections: FormsetReplacementData;
   itemsQuantities: FormsetQuantityData;
+  lineReasons: FormsetLineReasonData;
   onChangeSelected: FormsetChange<boolean>;
+  onChangeLineReason: FormsetChange<LineReasonValue>;
+  reasonReferenceTypeId: string;
   onSetMaxQuantity: () => any;
 }
 
@@ -85,13 +95,20 @@ const ItemsCard = ({
   onChangeSelected,
   itemsSelections,
   itemsQuantities,
+  lineReasons,
+  onChangeLineReason,
+  reasonReferenceTypeId,
   fulfilmentId,
   order,
 }: OrderReturnRefundLinesCardProps) => {
   const classes = useStyles({});
+  const [editedReasonLineId, setEditedReasonLineId] = useState<string | null>(null);
   const handleChangeQuantity = (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
     onChangeQuantity(id, parseInt(event.target.value, 10));
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
+  const editedLineReason = editedReasonLineId
+    ? lineReasons.find(getById(editedReasonLineId))?.value
+    : undefined;
 
   return (
     <DashboardCard>
@@ -130,6 +147,9 @@ const ItemsCard = ({
                 defaultMessage="Replace"
                 description="table column header"
               />
+            </TableCell>
+            <TableCell align="center">
+              <FormattedMessage {...returnItemsCardMessages.reasonColumn} />
             </TableCell>
           </TableRowLink>
         </TableHead>
@@ -196,6 +216,27 @@ const ItemsCard = ({
                       />
                     )}
                   </TableCell>
+                  <TableCell align="center">
+                    {isReturnable && (
+                      <Button
+                        variant="secondary"
+                        whiteSpace="nowrap"
+                        data-test-id={"lineReasonButton" + id}
+                        disabled={!currentQuantity}
+                        onClick={() => setEditedReasonLineId(id)}
+                      >
+                        <FormattedMessage
+                          {...(() => {
+                            const value = lineReasons.find(getById(id))?.value;
+
+                            return value?.reason || value?.reasonReference
+                              ? returnItemsCardMessages.editReason
+                              : returnItemsCardMessages.addReason;
+                          })()}
+                        />
+                      </Button>
+                    )}
+                  </TableCell>
                 </TableRowLink>
               );
             },
@@ -209,6 +250,18 @@ const ItemsCard = ({
           )}
         </TableBody>
       </ResponsiveTable>
+      <ReasonReferenceModal
+        open={editedReasonLineId !== null}
+        reason={editedLineReason?.reason ?? ""}
+        reasonReference={editedLineReason?.reasonReference ?? ""}
+        referenceModelTypeId={reasonReferenceTypeId}
+        onClose={() => setEditedReasonLineId(null)}
+        onConfirm={value => {
+          if (editedReasonLineId) {
+            onChangeLineReason(editedReasonLineId, value);
+          }
+        }}
+      />
     </DashboardCard>
   );
 };

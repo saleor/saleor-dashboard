@@ -16,16 +16,6 @@ export const refundTableMessages = defineMessages({
     defaultMessage: "of {value}",
     description: "input adornment helper text",
   },
-  addReason: {
-    id: "Fxahwt",
-    defaultMessage: "Add refund reason for this line",
-    description: "modal title",
-  },
-  editReason: {
-    id: "PALiyV",
-    defaultMessage: "Edit refund reason for this line",
-    description: "modal title",
-  },
   addReasonBtn: {
     id: "B1yzuX",
     defaultMessage: "Add reason",

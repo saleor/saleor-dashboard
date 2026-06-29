@@ -47,6 +47,7 @@ const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps)
   const handleSubmit = async ({
     amount,
     reason,
+    reasonReference,
     lines,
     grantRefundForShipping,
   }: OrderGrantRefundFormData) => {
@@ -72,12 +73,14 @@ const OrderEditGrantRefund = ({ orderId, grantRefundId }: OrderGrantRefundProps)
           refundId: grantRefundId,
           amount,
           reason,
+          reasonReferenceId: reasonReference || undefined,
           grantRefundForShipping,
           addLines: squashLines(
             lines.map(line => ({
               id: line.id,
               quantity: line.quantity,
               reason: line.reason ?? "",
+              reasonReference: line.reasonReference || undefined,
             })),
           ),
           removeLines: [],

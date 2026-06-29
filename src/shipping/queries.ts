@@ -45,6 +45,7 @@ export const shippingZoneChannels = gql`
   query ShippingZoneChannels($id: ID!) {
     shippingZone(id: $id) {
       id
+      name
       channels {
         id
         name

@@ -18,6 +18,7 @@ export interface ActionDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled?: boolean;
   title: string;
+  subtitle?: React.ReactNode;
   variant?: ActionDialogVariant;
   backButtonText?: string;
   onConfirm: () => any;
@@ -28,6 +29,7 @@ const ActionDialog = ({
   children,
   open,
   title,
+  subtitle,
   onClose,
   variant,
   confirmButtonState,
@@ -42,7 +44,7 @@ const ActionDialog = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size={size}>
-        <DashboardModal.Header>{title}</DashboardModal.Header>
+        <DashboardModal.Header subtitle={subtitle}>{title}</DashboardModal.Header>
         <Box fontSize={3}>{children}</Box>
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{backButtonText}</BackButton>

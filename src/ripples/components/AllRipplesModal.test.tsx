@@ -1,7 +1,9 @@
 import { type Ripple } from "@dashboard/ripples/types";
+import { Text } from "@saleor/macaw-ui-next";
+import { render, screen } from "@testing-library/react";
 import { defineMessage } from "react-intl";
 
-import { getRipplesSortedAndGroupedByMonths } from "./AllRipplesModal";
+import { getRipplesSortedAndGroupedByMonths, RippleGlobalDescription } from "./AllRipplesModal";
 
 const createMockRipple = (id: string, dateAdded: Date, overrides?: Partial<Ripple>): Ripple => ({
   type: "feature",
@@ -150,6 +152,26 @@ describe("getRipplesSortedAndGroupedByMonths", () => {
     result["2024 March"].forEach(item => {
       expect(item.dateDisplay).toBe("Mar 2024");
     });
+  });
+});
+
+describe("RippleGlobalDescription", () => {
+  it("renders string content", () => {
+    // Arrange
+    render(<RippleGlobalDescription content="Plain description text" />);
+
+    // Assert
+    expect(screen.getByText("Plain description text")).toBeInTheDocument();
+  });
+
+  it("renders nested Text content", () => {
+    // Arrange
+    render(
+      <RippleGlobalDescription content={<Text>Rich description with nested formatting</Text>} />,
+    );
+
+    // Assert
+    expect(screen.getByText("Rich description with nested formatting")).toBeInTheDocument();
   });
 });
 

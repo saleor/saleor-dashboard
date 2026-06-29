@@ -2,7 +2,7 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import CountryList from "@dashboard/components/CountryList";
+import { CountryList } from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -81,6 +81,7 @@ const ShippingZoneCreatePage = ({
                 )}
                 disabled={disabled}
                 emptyText={intl.formatMessage(messages.noCountriesAssigned)}
+                summaryContext="shipping-zone"
                 onCountryAssign={toggleModal}
                 onCountryUnassign={countryCode =>
                   change({

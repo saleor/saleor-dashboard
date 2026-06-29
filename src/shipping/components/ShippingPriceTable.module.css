@@ -1,0 +1,35 @@
+/*
+ * Uniform cell inset for shipping rate price/order-value tables.
+ * Beats ResponsiveTable.module.css asymmetric padding (specificity 0,2,1) via chained class (0,3,1).
+ */
+.shippingPriceTable.shippingPriceTable th,
+.shippingPriceTable.shippingPriceTable td {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.shippingPriceTable.shippingPriceTable tbody td:first-child {
+  vertical-align: middle !important;
+}
+
+.shippingPriceTable.shippingPriceTable td.shippingPriceTableInputCell {
+  vertical-align: top !important;
+}
+
+.shippingPriceTable.shippingPriceTable th:first-child,
+.shippingPriceTable.shippingPriceTable td:first-child {
+  padding-left: 16px !important;
+  padding-right: 4px !important;
+}
+
+.shippingPriceTable.shippingPriceTable th:not(:first-child):not(:last-child),
+.shippingPriceTable.shippingPriceTable td:not(:first-child):not(:last-child) {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+
+.shippingPriceTable.shippingPriceTable th:last-child:not(:first-child),
+.shippingPriceTable.shippingPriceTable td:last-child:not(:first-child) {
+  padding-left: 4px !important;
+  padding-right: 8px !important;
+}

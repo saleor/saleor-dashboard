@@ -19,3 +19,10 @@ export const getRuleObject = (rule: MinMax, inclusionType: PostalCodeRuleInclusi
   inclusionType,
   start: rule.min,
 });
+
+export const mapPostalCodeRulesInclusionType = <
+  TRule extends { inclusionType?: PostalCodeRuleInclusionTypeEnum | null },
+>(
+  rules: TRule[] | null | undefined,
+  inclusionType: PostalCodeRuleInclusionTypeEnum,
+): TRule[] => (rules ?? []).map(rule => ({ ...rule, inclusionType }));

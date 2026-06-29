@@ -1,0 +1,12 @@
+.countryRow + .countryRow {
+  border-top: 1px solid var(--mu-colors-border-default1);
+}
+
+.letterColumn {
+  flex-shrink: 0;
+  width: 1.5ch;
+}
+
+.emptyState {
+  border-style: dashed;
+}

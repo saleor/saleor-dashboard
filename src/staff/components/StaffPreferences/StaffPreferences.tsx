@@ -63,8 +63,8 @@ export const StaffPreferences = ({ locale, onLocaleChange }: StaffPreferencesPro
         <FormSpacer />
         <Text>
           <FormattedMessage
-            id="e822us"
-            defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
+            id="I06jIl"
+            defaultMessage="Note: some languages might have incomplete translations that will be displayed in English."
           />
         </Text>
       </DashboardCard.Content>

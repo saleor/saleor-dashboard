@@ -8,9 +8,32 @@ import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRi
 import { type Ripple, type RippleType } from "@dashboard/ripples/types";
 import { Box, Button, type ModalRootProps, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { cloneElement, isValidElement, type ReactNode, useEffect, useMemo, useState } from "react";
 import SVG from "react-inlinesvg";
 import { defineMessages, useIntl } from "react-intl";
+
+const rippleDescriptionTextProps = {
+  fontSize: 3 as const,
+  color: "default2" as const,
+  __lineHeight: "1.6" as const,
+};
+
+export const RippleGlobalDescription = ({ content }: { content: ReactNode }) => {
+  if (typeof content === "string") {
+    return <Text {...rippleDescriptionTextProps}>{content}</Text>;
+  }
+
+  if (isValidElement(content) && content.type === Text) {
+    return cloneElement(content, {
+      ...rippleDescriptionTextProps,
+      ...content.props,
+      color: content.props.color ?? rippleDescriptionTextProps.color,
+      fontSize: content.props.fontSize ?? rippleDescriptionTextProps.fontSize,
+    });
+  }
+
+  return <Box {...rippleDescriptionTextProps}>{content}</Box>;
+};
 
 interface RippleEntry {
   ripple: Ripple;
@@ -205,10 +228,8 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast }: RippleEntryRowProps) =>
           {ripple.content.oneLiner}
         </Text>
 
-        {/* Description - always use consistent color */}
-        <Text fontSize={3} color="default2" __lineHeight="1.6">
-          {ripple.content.global}
-        </Text>
+        {/* Description */}
+        <RippleGlobalDescription content={ripple.content.global} />
 
         {/* Actions - filter out actions marked as hideInModal */}
         {ripple.actions

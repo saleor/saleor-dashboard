@@ -32,6 +32,16 @@ export const refundGridMessages = defineMessages({
     id: "FZTrzW",
     defaultMessage: "Manual refund",
   },
+  showAllLines: {
+    id: "rTBpeo",
+    defaultMessage: "Show all {count} lines",
+    description: "expand refunded line sub-rows",
+  },
+  showLessLines: {
+    id: "XP/41+",
+    defaultMessage: "Show less",
+    description: "collapse refunded line sub-rows",
+  },
   noTransactionsToRefund: {
     id: "brkxbY",
     defaultMessage: "There are no transactions to refund",

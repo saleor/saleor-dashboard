@@ -23,6 +23,8 @@ interface UseReturnWithinReturnResult {
 export interface GrantRefundInputLine {
   id: string;
   quantity: number;
+  reason?: string | null;
+  reasonReference?: string | null;
 }
 
 export function useRefundWithinReturn({
@@ -38,7 +40,8 @@ export function useRefundWithinReturn({
             orderId,
             amount: formData.amount,
             transactionId: formData.transactionId,
-            reason: "",
+            reason: formData.refundReason,
+            reasonReferenceId: formData.refundReasonReference || undefined,
             lines: prepareGrantRefundLines(formData),
             grantRefundForShipping: formData.refundShipmentCosts,
           },

@@ -1,0 +1,34 @@
+/*
+ * Cell inset for excluded-products table — mirrors ShippingPriceTable.module.css
+ * with column widths for checkbox / product / action layout.
+ */
+.excludedProductsTable.excludedProductsTable th,
+.excludedProductsTable.excludedProductsTable td {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.excludedProductsTable.excludedProductsTable th:first-child,
+.excludedProductsTable.excludedProductsTable td:first-child {
+  padding-left: 16px !important;
+  padding-right: 4px !important;
+  width: 52px;
+}
+
+.excludedProductsTable.excludedProductsTable th:nth-child(2),
+.excludedProductsTable.excludedProductsTable td:nth-child(2) {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+
+.excludedProductsTable.excludedProductsTable th:last-child,
+.excludedProductsTable.excludedProductsTable td:last-child {
+  padding-left: 4px !important;
+  padding-right: 8px !important;
+  width: 48px;
+}
+
+.productCell {
+  padding-right: 4px !important;
+  width: auto !important;
+}

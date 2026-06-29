@@ -55,4 +55,19 @@ export const submitCardMessages = defineMessages({
     id: "K1ycaD",
     description: "input label",
   },
+  refundReasonReferenceLabel: {
+    defaultMessage: "Reason",
+    id: "02a84g",
+    description: "grant refund within return, structured reason select label",
+  },
+  refundReasonLabel: {
+    defaultMessage: "Reason note",
+    id: "9NKTJe",
+    description: "grant refund within return, reason textarea label",
+  },
+  refundReasonNone: {
+    defaultMessage: "Select a reason type",
+    id: "0f1wQb",
+    description: "grant refund within return, empty structured reason option",
+  },
 });

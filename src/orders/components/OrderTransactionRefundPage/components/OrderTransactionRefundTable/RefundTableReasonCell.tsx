@@ -26,7 +26,7 @@ export const RefundTableReasonCell = ({
         onClick={() => onEditReasonModal(index)}
         disabled={!field.quantity}
       >
-        {!field.reason ? (
+        {!field.reason && !field.reasonReference ? (
           <FormattedMessage {...refundTableMessages.addReasonBtn} />
         ) : (
           <FormattedMessage {...refundTableMessages.editReasonBtn} />

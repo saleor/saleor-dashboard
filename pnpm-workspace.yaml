@@ -65,6 +65,17 @@ overrides:
   "@tootallnate/once@<3.0.1": ">=3.0.1"
   "protobufjs@<7.5.6": ">=7.5.6 < 8"
   "flatted@<=3.4.1": ">=3.4.2"
+  # Critical: vitest browser mode RCE (CDP proxy / config overwrite) + XSS via
+  # otelCarrier query param. Transitive via @storybook/addon-vitest.
+  # Pinned to exactly 4.1.8 (not >=) because @vitest/browser declares an exact
+  # `vitest` peer; a floating range jumps to 4.1.9 and desyncs from the 4.1.8
+  # vitest core (breaks the Snapshots export). Keep in lockstep with the
+  # vitest / @vitest/* versions in package.json.
+  # https://github.com/advisories/GHSA-4x5r-pxfx-6jf8
+  "@vitest/browser": "4.1.8"
+  # Critical: shell-quote quote() does not escape newlines in object .op values.
+  # Transitive via @graphql-codegen/cli (build-time tooling).
+  "shell-quote@<1.8.4": ">=1.8.4"
 
 auditConfig:
   ignoreCves:

@@ -11,8 +11,8 @@ const messages = defineMessages({
     description: "error message",
   },
   lessThanMin: {
-    id: "AdmPca",
-    defaultMessage: "Max value cannot be less than min value",
+    id: "fQ910i",
+    defaultMessage: "Max value must be higher than min value",
     description: "error message",
   },
 });

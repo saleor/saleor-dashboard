@@ -104,7 +104,7 @@ const ChannelsAvailabilityContentWrapper = ({
     <div className={classes.content}>
       {!!contentType && (
         <Text className={classes.text} size={2} fontWeight="light">
-          <FormattedMessage {...messages.selectTitle} />
+          <FormattedMessage {...messages.selectTitle} values={{ contentType }} />
         </Text>
       )}
       <TextField
