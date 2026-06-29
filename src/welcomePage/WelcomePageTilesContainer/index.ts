@@ -1,1 +1,0 @@
-export { WelcomePageTilesContainer } from "./WelcomePageTilesContainer";

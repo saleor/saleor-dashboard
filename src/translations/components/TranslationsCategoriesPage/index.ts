@@ -1,1 +1,0 @@
-export { TranslationsCategoriesPage } from "./TranslationsCategoriesPage";
