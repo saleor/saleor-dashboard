@@ -24,9 +24,11 @@ export const attributeList = gql`
     $first: Int
     $last: Int
     $sort: AttributeSortingInput
+    $where: AttributeWhereInput
   ) {
     attributes(
       filter: $filter
+      where: $where
       before: $before
       after: $after
       first: $first

@@ -5,7 +5,10 @@ import {
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import {
+  createAttributesQueryVariables,
+  createAttributesWhereVariables,
+} from "@dashboard/components/ConditionalFilter/queryVariables";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
@@ -53,7 +56,14 @@ const AttributeList = ({ params }: AttributeListProps) => {
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_LIST);
   const { valueProvider } = useConditionalFilterContext();
-  const filters = createAttributesQueryVariables(valueProvider.value);
+  const filters = useMemo(
+    () => createAttributesQueryVariables(valueProvider.value),
+    [valueProvider.value],
+  );
+  const where = useMemo(
+    () => createAttributesWhereVariables(valueProvider.value),
+    [valueProvider.value],
+  );
 
   usePaginationReset(attributeListUrl, params, settings.rowNumber);
 
@@ -66,9 +76,10 @@ const AttributeList = ({ params }: AttributeListProps) => {
         ...filters,
         search: params.query,
       },
+      where,
       sort: getSortQueryVariables(params),
     }),
-    [filters, paginationState, params],
+    [filters, paginationState, params, where],
   );
   const { data, loading, refetch } = useAttributeListQuery({
     variables: newQueryVariables,

@@ -11,6 +11,7 @@ import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
   createAttributesQueryVariables,
+  createAttributesWhereVariables,
   createCategoryQueryVariables,
   createCustomerQueryVariables,
   createDraftOrderQueryVariables,
@@ -947,5 +948,60 @@ describe("ConditionalFilter / queryVariables / createAttributesQueryVariables", 
 
     // Assert
     expect(result).toEqual(expectedOutput);
+  });
+
+  it("should create where variables with selected input type filter", () => {
+    // Arrange
+    const inputTypeFilterElement = new FilterElement(
+      new ExpressionValue("inputType", "Input type", "inputType"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("inputType"),
+        new ConditionSelected(
+          AttributeInputTypeEnum.SWATCH,
+          { type: "select", label: "is", value: "input-1" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+    const filters: FilterContainer = [inputTypeFilterElement];
+    const expectedOutput = {
+      inputType: {
+        eq: AttributeInputTypeEnum.SWATCH,
+      },
+    };
+
+    // Act
+    const result = createAttributesWhereVariables(filters);
+
+    // Assert
+    expect(result).toEqual(expectedOutput);
+  });
+
+  it("should omit input type from legacy filter variables", () => {
+    // Arrange
+    const inputTypeFilterElement = new FilterElement(
+      new ExpressionValue("inputType", "Input type", "inputType"),
+      new Condition(
+        ConditionOptions.fromStaticElementName("inputType"),
+        new ConditionSelected(
+          AttributeInputTypeEnum.SWATCH,
+          { type: "select", label: "is", value: "input-1" },
+          [],
+          false,
+        ),
+        false,
+      ),
+      false,
+    );
+    const filters: FilterContainer = [inputTypeFilterElement];
+
+    // Act
+    const result = createAttributesQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual({});
   });
 });

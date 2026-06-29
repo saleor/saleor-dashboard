@@ -4299,9 +4299,10 @@ export type AttributeDetailsQueryHookResult = ReturnType<typeof useAttributeDeta
 export type AttributeDetailsLazyQueryHookResult = ReturnType<typeof useAttributeDetailsLazyQuery>;
 export type AttributeDetailsQueryResult = Apollo.QueryResult<Types.AttributeDetailsQuery, Types.AttributeDetailsQueryVariables>;
 export const AttributeListDocument = gql`
-    query AttributeList($filter: AttributeFilterInput, $before: String, $after: String, $first: Int, $last: Int, $sort: AttributeSortingInput) {
+    query AttributeList($filter: AttributeFilterInput, $before: String, $after: String, $first: Int, $last: Int, $sort: AttributeSortingInput, $where: AttributeWhereInput) {
   attributes(
     filter: $filter
+    where: $where
     before: $before
     after: $after
     first: $first
@@ -4339,6 +4340,7 @@ ${PageInfoFragmentDoc}`;
  *      first: // value for 'first'
  *      last: // value for 'last'
  *      sort: // value for 'sort'
+ *      where: // value for 'where'
  *   },
  * });
  */

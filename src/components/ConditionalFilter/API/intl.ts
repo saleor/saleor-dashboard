@@ -1,5 +1,7 @@
+import { getAttributeInputTypeLabel } from "@dashboard/attributes/utils/getAttributeInputTypeLabel";
 import { type LeftOperand } from "@dashboard/components/ConditionalFilter/LeftOperandsProvider";
 import {
+  type AttributeInputTypeEnum,
   AttributeTypeEnum,
   CollectionPublished,
   DiscountStatusEnum,
@@ -182,6 +184,8 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getStaffMemberStatusLabel(value as StaffMemberStatus, intl);
     case "attributeType":
       return getAttributeTypeLabel(value as AttributeTypeEnum, intl);
+    case "inputType":
+      return getAttributeInputTypeLabel(intl, value as AttributeInputTypeEnum);
     case "transactionsPaymentType":
       return getPaymentMethodTypeLabel(value as PaymentMethodTypeEnum, intl);
     case "fulfillmentStatus":
