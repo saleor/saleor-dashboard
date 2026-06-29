@@ -26,16 +26,6 @@ export const staffMemberUpdateMutation = gql`
   }
 `;
 
-export const userPassowrdChangeMutation = gql`
-  mutation UserPassowrdChange($newPassword: String!, $oldPassword: String!) {
-    passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
-      errors {
-        ...AccountError
-      }
-    }
-  }
-`;
-
 export const userAccountUpdateMutation = gql`
   mutation UserAccountUpdate($input: AccountInput!) {
     accountUpdate(input: $input) {

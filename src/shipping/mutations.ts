@@ -110,16 +110,6 @@ export const deleteShippingRate = gql`
   }
 `;
 
-export const bulkDeleteShippingRate = gql`
-  mutation BulkDeleteShippingRate($ids: [ID!]!) {
-    shippingPriceBulkDelete(ids: $ids) {
-      errors {
-        ...ShippingError
-      }
-    }
-  }
-`;
-
 export const shippingMethodChannelListingUpdate = gql`
   mutation ShippingMethodChannelListingUpdate(
     $id: ID!
