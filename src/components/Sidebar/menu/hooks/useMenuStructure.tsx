@@ -103,7 +103,7 @@ export function useMenuStructure() {
       icon: renderIcon(<HomeIcon />),
       label: intl.formatMessage(sectionNames.home),
       id: "home",
-      url: "/",
+      url: "/home",
       type: "item",
     },
     {
