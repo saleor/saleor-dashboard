@@ -50,7 +50,7 @@ export function getAttributeType(
   return attributeVariant?.inputType;
 }
 
-// Datagrid only support PLAIN_TEXT and DROPDOWN attribute types
+// Datagrid only supports PLAIN_TEXT, DROPDOWN and SWATCH attribute types
 function getDatagridAttributeInput(
   inputType: AttributeInputTypeEnum,
   value = "",
@@ -66,6 +66,14 @@ function getDatagridAttributeInput(
   if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
     return {
       plainText: value,
+    };
+  }
+
+  if (inputType === AttributeInputTypeEnum.SWATCH) {
+    return {
+      swatch: {
+        value,
+      },
     };
   }
 
