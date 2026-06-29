@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.23.12
+
+### Patch Changes
+
+- [#6672](https://github.com/saleor/saleor-dashboard/pull/6672) [`7f63506`](https://github.com/saleor/saleor-dashboard/commit/7f63506448a76907a31e0d92738a1534887f2993) Thanks [@mirekm](https://github.com/mirekm)! - Improve channels and shipping zones UX: clickable shipping zone links on channel details, redesigned countries sections, reworked shipping method page with inline channel pricing, and fixes for save/dirty-state, removing a channel while `channelId` is in the URL, and translation issues.
+
+- [#6658](https://github.com/saleor/saleor-dashboard/pull/6658) [`0cfae4c`](https://github.com/saleor/saleor-dashboard/commit/0cfae4c9759c7a9eb03d097a902ddd3eda58946a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The dashboard now opens on the Home page with widgets by default. Visiting the root URL (`/`) redirects to `/home` instead of showing the welcome page.
+
 ## 3.23.11
 
 ### Patch Changes
