@@ -1,3 +1,4 @@
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   AttributeInputTypeEnum,
@@ -9,6 +10,8 @@ import {
 import { getColumnAttribute, isCurrentRow } from "@dashboard/products/utils/datagrid";
 
 import { byAttributeName } from "../utils";
+
+type DatagridAttributeValue = string | number | typeof numberCellEmptyValue | null | undefined;
 
 export function getAttributeData(
   data: DatagridChange[],
@@ -36,7 +39,10 @@ function toAttributeData(variantAttributes: VariantAttributeFragment[]) {
 
     return {
       id: attributeId,
-      ...getDatagridAttributeInput(attributeType, change.data.value.value),
+      ...getDatagridAttributeInput(
+        attributeType,
+        getDatagridAttributeValue(attributeType, change.data),
+      ),
     };
   };
 }
@@ -50,27 +56,47 @@ export function getAttributeType(
   return attributeVariant?.inputType;
 }
 
-// Datagrid only support PLAIN_TEXT and DROPDOWN attribute types
+function getDatagridAttributeValue(
+  inputType: AttributeInputTypeEnum,
+  data: DatagridChange["data"],
+): DatagridAttributeValue {
+  if (inputType === AttributeInputTypeEnum.NUMERIC) {
+    return data.value;
+  }
+
+  return data.value?.value;
+}
+
+// Datagrid only support PLAIN_TEXT, DROPDOWN and NUMERIC attribute types
 function getDatagridAttributeInput(
   inputType: AttributeInputTypeEnum,
-  value = "",
+  value: DatagridAttributeValue = "",
 ): BulkAttributeValueInput {
+  if (inputType === AttributeInputTypeEnum.NUMERIC) {
+    return {
+      numeric:
+        value === numberCellEmptyValue || value === "" || value == null ? null : String(value),
+    };
+  }
+
+  const textValue = typeof value === "string" ? value : "";
+
   if (inputType === AttributeInputTypeEnum.DROPDOWN) {
     return {
       dropdown: {
-        value,
+        value: textValue,
       },
     };
   }
 
   if (inputType === AttributeInputTypeEnum.PLAIN_TEXT) {
     return {
-      plainText: value,
+      plainText: textValue,
     };
   }
 
   return {
-    values: [value],
+    values: [textValue],
   };
 }
 
