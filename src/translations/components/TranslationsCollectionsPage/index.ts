@@ -1,1 +1,0 @@
-export { TranslationsCollectionsPage } from "./TranslationsCollectionsPage";
