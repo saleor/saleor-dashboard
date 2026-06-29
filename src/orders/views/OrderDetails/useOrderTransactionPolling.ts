@@ -1,4 +1,5 @@
-import { type OrderDetailsFragment, TransactionEventTypeEnum } from "@dashboard/graphql";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { orderHasInFlightTransactionAction } from "@dashboard/orders/components/OrderTransaction/transactionInFlight";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /** How often the order is refetched while a transaction action is in flight. */
@@ -11,75 +12,6 @@ export const TRANSACTION_POLL_INTERVAL = 5000;
  * 24 cycles * 5s = 120s ≈ 2 minutes.
  */
 export const TRANSACTION_POLL_MAX_CYCLES = 24;
-
-const REQUEST_EVENT_TYPES: TransactionEventTypeEnum[] = [
-  TransactionEventTypeEnum.CHARGE_REQUEST,
-  TransactionEventTypeEnum.REFUND_REQUEST,
-  TransactionEventTypeEnum.CANCEL_REQUEST,
-];
-
-const isRequestEvent = (type: TransactionEventTypeEnum | null): boolean =>
-  !!type && REQUEST_EVENT_TYPES.includes(type);
-
-/**
- * Any SUCCESS/FAILURE event resolves the request sharing its pspReference — even
- * across action types. A CHARGE_REQUEST can legitimately be resolved by an
- * AUTHORIZATION_SUCCESS, so we must not look only for a same-action resolution.
- */
-const isResolutionEvent = (type: TransactionEventTypeEnum | null): boolean =>
-  !!type && (String(type).endsWith("_SUCCESS") || String(type).endsWith("_FAILURE"));
-
-type TransactionEvents = OrderDetailsFragment["transactions"][number]["events"];
-type TransactionEvent = TransactionEvents[number];
-
-const transactionHasUnresolvedRequest = (events: TransactionEvents): boolean => {
-  const byPspReference = new Map<string, TransactionEvent[]>();
-
-  events.forEach(event => {
-    const key = event.pspReference ?? "";
-    const group = byPspReference.get(key);
-
-    if (group) {
-      group.push(event);
-    } else {
-      byPspReference.set(key, [event]);
-    }
-  });
-
-  for (const group of byPspReference.values()) {
-    const hasRequest = group.some(event => isRequestEvent(event.type));
-    const hasResolution = group.some(event => isResolutionEvent(event.type));
-
-    if (hasRequest && !hasResolution) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-/**
- * An order has an async transaction action in flight when one of its transactions
- * has a charge/refund/cancel REQUEST event not yet resolved by a SUCCESS/FAILURE
- * event sharing its pspReference.
- *
- * We key off events rather than the pending *amount* fields: Saleor Core creates the
- * REQUEST event synchronously but only folds it into the pending amount once the app
- * responds (include_in_calculations), so right after the user triggers an action the
- * pending amount is still 0 — the event is the only signal available immediately.
- *
- * Resolution is matched per pspReference (not by counting event types), because a
- * request can be resolved by a different action's success event, and an order can
- * carry unrelated successes from earlier operations.
- *
- * Authorize requests are excluded: authorization is not an action we trigger here.
- */
-export const orderHasInFlightTransactionAction = (
-  order: Pick<OrderDetailsFragment, "transactions"> | null | undefined,
-): boolean =>
-  (order?.transactions ?? []).some(transaction =>
-    transactionHasUnresolvedRequest(transaction.events ?? []),
-  );
 
 interface UseOrderTransactionPollingParams {
   order: OrderDetailsFragment | null | undefined;

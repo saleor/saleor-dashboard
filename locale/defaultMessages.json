@@ -5230,6 +5230,10 @@
     "context": "select all model types preset label",
     "string": "All model types"
   },
+  "P94gV7": {
+    "context": "Transaction cancel action label while a cancel request is in flight",
+    "string": "Cancel in progress"
+  },
   "P98zBi": {
     "string": "Edit reason"
   },
@@ -6295,6 +6299,10 @@
   "UjsI4o": {
     "context": "date",
     "string": "since {date}"
+  },
+  "UjzI96": {
+    "context": "Transaction capture button label while a capture request is in flight",
+    "string": "Capture in progress"
   },
   "Um3g00": {
     "context": "send to customer selected label",

@@ -6,7 +6,7 @@ import {
   type OrderDetailsQuery,
   type TransactionActionEnum,
 } from "@dashboard/graphql/types.generated";
-import { orderHasInFlightTransactionAction } from "@dashboard/orders/views/OrderDetails/useOrderTransactionPolling";
+import { orderHasInFlightTransactionAction } from "@dashboard/orders/components/OrderTransaction/transactionInFlight";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";

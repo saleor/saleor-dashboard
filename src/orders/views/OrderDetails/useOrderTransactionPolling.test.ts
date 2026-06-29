@@ -2,7 +2,6 @@ import { type OrderDetailsFragment, TransactionEventTypeEnum } from "@dashboard/
 import { act, renderHook } from "@testing-library/react";
 
 import {
-  orderHasInFlightTransactionAction,
   TRANSACTION_POLL_INTERVAL,
   TRANSACTION_POLL_MAX_CYCLES,
   useOrderTransactionPolling,
@@ -60,74 +59,6 @@ const renderPolling = (order: OrderDetailsFragment | null) => {
 
   return { ...utils, startPolling, stopPolling, refetch };
 };
-
-describe("orderHasInFlightTransactionAction", () => {
-  it("returns false when no order", () => {
-    // Arrange / Act / Assert
-    expect(orderHasInFlightTransactionAction(null)).toBe(false);
-  });
-
-  it("returns false when there are no events", () => {
-    // Arrange / Act / Assert
-    expect(orderHasInFlightTransactionAction(makeOrder([]))).toBe(false);
-  });
-
-  it.each([
-    ["charge", TransactionEventTypeEnum.CHARGE_REQUEST],
-    ["refund", TransactionEventTypeEnum.REFUND_REQUEST],
-    ["cancel", TransactionEventTypeEnum.CANCEL_REQUEST],
-  ])("returns true for an unresolved %s request", (_label, requestType) => {
-    // Arrange / Act / Assert
-    expect(orderHasInFlightTransactionAction(makeOrder([{ type: requestType }]))).toBe(true);
-  });
-
-  it("returns false once a request is resolved by success (same pspReference)", () => {
-    // Arrange / Act / Assert
-    expect(
-      orderHasInFlightTransactionAction(
-        makeOrder([
-          { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "a" },
-          { type: TransactionEventTypeEnum.CHARGE_SUCCESS, psp: "a" },
-        ]),
-      ),
-    ).toBe(false);
-  });
-
-  it("returns false once a request is resolved by failure (same pspReference)", () => {
-    // Arrange / Act / Assert
-    expect(
-      orderHasInFlightTransactionAction(
-        makeOrder([
-          { type: TransactionEventTypeEnum.REFUND_REQUEST, psp: "a" },
-          { type: TransactionEventTypeEnum.REFUND_FAILURE, psp: "a" },
-        ]),
-      ),
-    ).toBe(false);
-  });
-
-  it("treats a charge request resolved by an AUTHORIZATION_SUCCESS as settled", () => {
-    // Arrange: real-world settled transaction — one charge resolved by CHARGE_SUCCESS,
-    // another charge request resolved by an AUTHORIZATION_SUCCESS under the same psp.
-    const order = makeOrder([
-      { type: TransactionEventTypeEnum.CHARGE_SUCCESS, psp: "ref-1" },
-      { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "ref-1" },
-      { type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS, psp: "ref-2" },
-      { type: TransactionEventTypeEnum.CHARGE_REQUEST, psp: "ref-2" },
-    ]);
-
-    // Act / Assert
-    expect(orderHasInFlightTransactionAction(order)).toBe(false);
-  });
-
-  it("ignores authorize requests (not a request action we trigger)", () => {
-    // Arrange / Act / Assert
-    expect(
-      orderHasInFlightTransactionAction(
-        makeOrder([{ type: TransactionEventTypeEnum.AUTHORIZATION_REQUEST }]),
-      ),
-    ).toBe(false);
-  });
-});
 
 describe("useOrderTransactionPolling", () => {
   beforeEach(() => {
