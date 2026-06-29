@@ -198,6 +198,12 @@ export function getData({
     const attributeValue = dataRow?.attributes.find(
       attribute => attribute.attribute.id === attributeId,
     )?.values?.[0];
+    if (attributeDefinition?.inputType === AttributeInputTypeEnum.NUMERIC) {
+      const value = change?.value ?? getNumericAttributeValue(attributeValue?.name);
+
+      return numberCell(value, { hasFloatingPoint: true });
+    }
+
     const initialValue: AttributeSearchOption = attributeValue
       ? isSwatchAttribute
         ? getSwatchAttributeOption(attributeValue)
@@ -219,4 +225,12 @@ export function getData({
       },
     });
   }
+}
+
+function getNumericAttributeValue(value: string | null | undefined) {
+  if (!value) {
+    return numberCellEmptyValue;
+  }
+
+  return Number(value);
 }

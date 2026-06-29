@@ -17,7 +17,8 @@ export const isVariantDatagridSupportedAttribute = (
 ) =>
   inputType === AttributeInputTypeEnum.DROPDOWN ||
   inputType === AttributeInputTypeEnum.PLAIN_TEXT ||
-  inputType === AttributeInputTypeEnum.SWATCH;
+  inputType === AttributeInputTypeEnum.SWATCH ||
+  inputType === AttributeInputTypeEnum.NUMERIC;
 
 export const variantsStaticColumnsAdapter = (intl: IntlShape) => [
   {
