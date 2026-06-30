@@ -3,12 +3,14 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Pill } from "@dashboard/components/Pill";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
+import { defaultGraphiQLQuery } from "@dashboard/customers/queries";
 import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -27,7 +29,7 @@ import { sectionNames } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Divider, Text } from "@saleor/macaw-ui-next";
-import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedDate, FormattedMessage, useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
 import { AccountStatusCard } from "../AccountStatusCard/AccountStatusCard";
@@ -36,6 +38,13 @@ import CustomerInfo from "../CustomerInfo";
 import CustomerOrders from "../CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
 import { ExternalReferenceCard } from "../ExternalReferenceCard/ExternalReferenceCard";
+
+const messages = defineMessages({
+  openGraphiQL: {
+    id: "oUkVpp",
+    defaultMessage: "Open this customer in GraphiQL",
+  },
+});
 
 export interface CustomerDetailsPageFormData {
   firstName: string;
@@ -84,6 +93,12 @@ const CustomerDetailsPage = ({
   // metadata view, since the server would deny it anyway.
   const canEditCustomers = useCanEditCustomers();
   const isReadOnly = !canEditCustomers;
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${customer?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
   const initialForm: CustomerDetailsPageFormData = {
     email: customer?.email || "",
     firstName: customer?.firstName || "",
@@ -139,6 +154,12 @@ const CustomerDetailsPage = ({
         ]
       : [];
   const menuItems = [...builtInMenuItems, ...extensionMenuItems];
+
+  menuItems.push({
+    label: intl.formatMessage(messages.openGraphiQL),
+    onSelect: openPlaygroundURL,
+    testId: "graphiql-redirect",
+  });
 
   const customerName = getUserName(customer, true);
   // Mirrors OrderDetailsPage's title layout: name (+ optional Staff pill) on
