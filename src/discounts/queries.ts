@@ -251,3 +251,13 @@ export const voucherGraphiQLQuery = `query VoucherDetails($id: ID!) {
     discountValueType
   }
 }`;
+
+export const promotionGraphiQLQuery = `query PromotionGraphiQLDetails($id: ID!) {
+  promotion(id: $id) {
+    id
+    name
+    type
+    startDate
+    endDate
+  }
+}`;

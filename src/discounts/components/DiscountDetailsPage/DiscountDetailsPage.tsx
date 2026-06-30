@@ -1,8 +1,10 @@
 import { TopNav } from "@dashboard/components/AppLayout";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type Rule } from "@dashboard/discounts/models";
+import { promotionGraphiQLQuery } from "@dashboard/discounts/queries";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForDiscountDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -16,7 +18,7 @@ import {
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { DiscountDatesWithController } from "../DiscountDates";
 import { DiscountDetailsForm } from "../DiscountDetailsForm";
@@ -24,6 +26,13 @@ import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar";
 import { DiscountDetailsTitle } from "./Title";
+
+const messages = defineMessages({
+  openGraphiQL: {
+    id: "xfvvg2",
+    defaultMessage: "Open this promotion in GraphiQL",
+  },
+});
 
 interface DiscountDetailsPageProps {
   channels: ChannelFragment[];
@@ -63,6 +72,13 @@ export const DiscountDetailsPage = ({
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(promotionGraphiQLQuery);
+    context.setVariables(`{ "id": "${data?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
+
   const { DISCOUNT_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.DISCOUNT_DETAILS);
   const extensionMenuItems = getExtensionsItemsForDiscountDetails(
     DISCOUNT_DETAILS_MORE_ACTIONS,
@@ -81,9 +97,17 @@ export const DiscountDetailsPage = ({
       {({ rulesErrors, rules, discountType, onDeleteRule, onRuleSubmit, onSubmit }) => (
         <DetailPageLayout testId="discount-form">
           <TopNav href={backLinkHref} title={<DiscountDetailsTitle data={data} />}>
-            {extensionMenuItems.length > 0 && (
-              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-            )}
+            <TopNav.Menu
+              items={[
+                ...extensionMenuItems,
+                {
+                  label: intl.formatMessage(messages.openGraphiQL),
+                  onSelect: openPlaygroundURL,
+                  testId: "graphiql-redirect",
+                },
+              ]}
+              dataTestId="menu"
+            />
           </TopNav>
 
           <DetailPageLayout.Content>
