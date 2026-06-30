@@ -34,6 +34,7 @@ import type {
   AddressUpdated,
   AddressValidationData,
   Allocation,
+  Announcement,
   App,
   AppActivate,
   AppBrand,
@@ -2185,6 +2186,36 @@ export type OptionalAllocation = {
  */
 export const defineAllocationFactory: DefineTypeFactoryInterface<
   OptionalAllocation,
+  {}
+> = defineTypeFactory;
+
+/** Lists current announcements that the user should see. */
+export type OptionalAnnouncement = {
+  __typename?: 'Announcement';
+  /** The date & time at which this announcement was created. */
+  createdAt?: Announcement['createdAt'] | undefined;
+  /** Additional information about this announcement. */
+  extra?: Announcement['extra'] | undefined;
+  /** Determine the how critical the announcement is. UNSET if no severity level was defined for this announcement. */
+  importance?: Announcement['importance'] | undefined;
+  /** The announcement's description, may contain HTML formatting. */
+  messageHtml?: Announcement['messageHtml'] | undefined;
+  /** The announcement's title. */
+  title?: Announcement['title'] | undefined;
+  /** The announcement's type, for example "CUSTOM". Used to programatically distinguish between message types thus allowing to render the message differently, and allows to know the expected shape for the `extra` field. */
+  type?: Announcement['type'] | undefined;
+  /** The date & time at which this announcement was last updated. */
+  updatedAt?: Announcement['updatedAt'] | undefined;
+};
+
+/**
+ * Define factory for {@link Announcement} model.
+ *
+ * @param options
+ * @returns factory {@link AnnouncementFactoryInterface}
+ */
+export const defineAnnouncementFactory: DefineTypeFactoryInterface<
+  OptionalAnnouncement,
   {}
 > = defineTypeFactory;
 
@@ -31488,6 +31519,12 @@ export type OptionalShop = {
  * Requires one of the following permissions: MANAGE_SETTINGS.
  */
   allowLoginWithoutConfirmation?: Shop['allowLoginWithoutConfirmation'] | undefined;
+  /**
+ * List of announcements for this shop.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+ */
+  announcements?: OptionalAnnouncement[] | undefined;
   /** List of available external authentications. */
   availableExternalAuthentications?: OptionalExternalAuthentication[] | undefined;
   /** List of available payment gateways. */
