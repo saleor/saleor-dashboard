@@ -36,3 +36,11 @@ export const pageTypeDetailsQuery = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query ModelTypeDetails($id: ID!) {
+  pageType(id: $id) {
+    id
+    name
+    slug
+  }
+}`;
