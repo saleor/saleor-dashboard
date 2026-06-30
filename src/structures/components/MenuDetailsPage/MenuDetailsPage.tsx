@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -10,8 +11,10 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { type MenuDetailsFragment, type MenuErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { defaultGraphiQLQuery } from "@dashboard/structures/queries";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { useState } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
 import { type MenuItemType } from "../MenuItemDialog";
 import MenuItems, { type TreeOperation } from "../MenuItems";
@@ -40,6 +43,13 @@ interface MenuDetailsPageProps {
   onSubmit: (data: MenuDetailsSubmitData) => SubmitPromise;
 }
 
+const messages = defineMessages({
+  openGraphiQL: {
+    id: "XL64mm",
+    defaultMessage: "Open this menu in GraphiQL",
+  },
+});
+
 const MenuDetailsPage = ({
   disabled,
   errors,
@@ -53,6 +63,13 @@ const MenuDetailsPage = ({
   onTranslate,
 }: MenuDetailsPageProps) => {
   const navigate = useNavigator();
+  const intl = useIntl();
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${menu?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
 
   const initialForm: MenuDetailsFormData = {
     name: menu?.name ?? "",
@@ -89,9 +106,17 @@ const MenuDetailsPage = ({
       {({ change, data, submit }) => (
         <DetailPageLayout>
           <TopNav href={menuListUrl()} title={menu?.name}>
-            {extensionMenuItems.length > 0 && (
-              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-            )}
+            <TopNav.Menu
+              items={[
+                ...extensionMenuItems,
+                {
+                  label: intl.formatMessage(messages.openGraphiQL),
+                  onSelect: openPlaygroundURL,
+                  testId: "graphiql-redirect",
+                },
+              ]}
+              dataTestId="menu"
+            />
           </TopNav>
           <DetailPageLayout.Content>
             <MenuItems
