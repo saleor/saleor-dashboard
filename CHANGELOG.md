@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.22.43
+
+### Patch Changes
+
+- [#6678](https://github.com/saleor/saleor-dashboard/pull/6678) [`bb57867`](https://github.com/saleor/saleor-dashboard/commit/bb57867eb6bf0527b9d0b1259f53478f40bf5e08) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added shop announcements to the Dashboard. Announcements configured on your Saleor instance are now shown at the top of every page, grouped by severity (critical, warning and informational) with the most important ones first.
+
+- [#6691](https://github.com/saleor/saleor-dashboard/pull/6691) [`50215ae`](https://github.com/saleor/saleor-dashboard/commit/50215aeee90d528b96a1e9b024c9683c8d39679a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed scheduling future publication of CMS pages (models). Previously, setting an availability date on a page sent `isPublished: false` to the API, so the page stayed hidden from storefront visitors even after the scheduled date passed. Now setting a publication date sends `isPublished: true` together with the date, so the page automatically becomes visible once the scheduled time is reached. Pages waiting for a future publication date are now also correctly shown as "Hidden" with the scheduled date in the visibility card.
+
 ## 3.22.42
 
 ### Patch Changes
