@@ -41,4 +41,8 @@ export const messages = defineMessages({
     defaultMessage: "Model type settings",
     description: "model detail page menu, opens model type configuration",
   },
+  openGraphiQL: {
+    id: "xEef/i",
+    defaultMessage: "Open this model in GraphiQL",
+  },
 });
