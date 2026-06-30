@@ -88,6 +88,7 @@ export enum AccountErrorCode {
   DELETE_SUPERUSER_ACCOUNT = 'DELETE_SUPERUSER_ACCOUNT',
   DISABLED_AUTHENTICATION_METHOD = 'DISABLED_AUTHENTICATION_METHOD',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INACTIVE = 'INACTIVE',
   INVALID = 'INVALID',
@@ -224,6 +225,15 @@ export enum AddressTypeEnum {
 export enum AllocationStrategyEnum {
   PRIORITIZE_HIGH_STOCK = 'PRIORITIZE_HIGH_STOCK',
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER'
+}
+
+/** Defines a shop-level announcement's level/severity. */
+export enum AnnouncementImportanceEnum {
+  CRITICAL = 'CRITICAL',
+  HIGH = 'HIGH',
+  LOW = 'LOW',
+  MODERATE = 'MODERATE',
+  UNSET = 'UNSET'
 }
 
 export enum AppErrorCode {
@@ -1506,8 +1516,10 @@ export type CollectionCreateInput = {
 };
 
 export enum CollectionErrorCode {
+  /** @deprecated Products without variants can now be assigned to collections. This error will never be returned. */
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
@@ -5529,6 +5541,7 @@ export enum OrderGrantRefundCreateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
   SHIPPING_COSTS_ALREADY_GRANTED = 'SHIPPING_COSTS_ALREADY_GRANTED'
@@ -5561,6 +5574,8 @@ export type OrderGrantRefundCreateInput = {
 
 export enum OrderGrantRefundCreateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   QUANTITY_GREATER_THAN_AVAILABLE = 'QUANTITY_GREATER_THAN_AVAILABLE'
 }
@@ -5572,12 +5587,19 @@ export type OrderGrantRefundCreateLineInput = {
   quantity: Scalars['Int'];
   /** Reason of the granted refund for the line. */
   reason?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for the line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']>;
 };
 
 export enum OrderGrantRefundUpdateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED',
   SHIPPING_COSTS_ALREADY_GRANTED = 'SHIPPING_COSTS_ALREADY_GRANTED'
@@ -5617,10 +5639,18 @@ export type OrderGrantRefundUpdateLineAddInput = {
   quantity: Scalars['Int'];
   /** Reason of the granted refund for the line. */
   reason?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for the line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']>;
 };
 
 export enum OrderGrantRefundUpdateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_CONFIGURED = 'NOT_CONFIGURED',
   NOT_FOUND = 'NOT_FOUND',
   QUANTITY_GREATER_THAN_AVAILABLE = 'QUANTITY_GREATER_THAN_AVAILABLE'
 }
@@ -5718,6 +5748,18 @@ export type OrderReturnFulfillmentLineInput = {
   fulfillmentLineId: Scalars['ID'];
   /** The number of items to be returned. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for returning this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this fulfillment line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']>;
   /** Determines, if the line should be added to replace order. */
   replace?: InputMaybe<Scalars['Boolean']>;
 };
@@ -5727,6 +5769,18 @@ export type OrderReturnLineInput = {
   orderLineId: Scalars['ID'];
   /** The number of items to be returned. */
   quantity: Scalars['Int'];
+  /**
+   * Reason for returning this line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this line.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']>;
   /** Determines, if the line should be added to replace order. */
   replace?: InputMaybe<Scalars['Boolean']>;
 };
@@ -5740,6 +5794,18 @@ export type OrderReturnProductsInput = {
   includeShippingCosts?: InputMaybe<Scalars['Boolean']>;
   /** List of unfulfilled lines to return. */
   orderLines?: InputMaybe<Array<OrderReturnLineInput>>;
+  /**
+   * Reason for returning this order.
+   *
+   * Added in Saleor 3.23.
+   */
+  reason?: InputMaybe<Scalars['String']>;
+  /**
+   * ID of a `Page` (Model) to reference in reason for this return.
+   *
+   * Added in Saleor 3.23.
+   */
+  reasonReference?: InputMaybe<Scalars['ID']>;
   /** If true, Saleor will call refund action for all lines. */
   refund?: InputMaybe<Scalars['Boolean']>;
 };
@@ -6576,6 +6642,7 @@ export enum ProductBulkCreateErrorCode {
   ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
   BLANK = 'BLANK',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_PRICE = 'INVALID_PRICE',
@@ -6769,6 +6836,7 @@ export enum ProductErrorCode {
   ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   INVALID_FILE_TYPE = 'INVALID_FILE_TYPE',
@@ -7321,6 +7389,18 @@ export type ProductVariantWhereInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by product SKU. */
   sku?: InputMaybe<StringFilterInput>;
+  /**
+   * Filter by variants having a specific stock status in the given channel.
+   *
+   * Added in Saleor 3.24.
+   */
+  stockAvailability?: InputMaybe<StockAvailability>;
+  /**
+   * Filter by stock of the variant.
+   *
+   * Added in Saleor 3.24.
+   */
+  stocks?: InputMaybe<ProductStockFilterInput>;
   /** Filter by when was the most recent update. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
@@ -7705,6 +7785,22 @@ export enum ReportingPeriod {
   TODAY = 'TODAY'
 }
 
+export enum ReturnSettingsErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
+export type ReturnSettingsUpdateInput = {
+  /**
+   * The ID of a model type, that will be used to reference return reasons. All models of this type will be accepted as return reasons.
+   *
+   * Added in Saleor 3.23.
+   */
+  returnReasonReferenceType: Scalars['ID'];
+};
+
 export enum RewardTypeEnum {
   GIFT = 'GIFT',
   SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
@@ -8011,6 +8107,12 @@ export type ShopSettingsInput = {
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+   *
+   * Added in Saleor 3.23.
+   */
+  useLegacyShippingZoneStockAvailability?: InputMaybe<Scalars['Boolean']>;
   /**
    * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
    *
@@ -9385,18 +9487,49 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
   /** A product metadata is updated. */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
+  /** A new product type is created. */
+  PRODUCT_TYPE_CREATED = 'PRODUCT_TYPE_CREATED',
+  /** A product type is deleted. */
+  PRODUCT_TYPE_DELETED = 'PRODUCT_TYPE_DELETED',
+  /** A product type is updated. */
+  PRODUCT_TYPE_UPDATED = 'PRODUCT_TYPE_UPDATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -9717,18 +9850,49 @@ export enum WebhookEventTypeEnum {
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
   /** A product metadata is updated. */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
+  /** A new product type is created. */
+  PRODUCT_TYPE_CREATED = 'PRODUCT_TYPE_CREATED',
+  /** A product type is deleted. */
+  PRODUCT_TYPE_DELETED = 'PRODUCT_TYPE_DELETED',
+  /** A product type is updated. */
+  PRODUCT_TYPE_UPDATED = 'PRODUCT_TYPE_UPDATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -9964,12 +10128,20 @@ export enum WebhookSampleEventTypeEnum {
   PRODUCT_MEDIA_DELETED = 'PRODUCT_MEDIA_DELETED',
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
+  PRODUCT_TYPE_CREATED = 'PRODUCT_TYPE_CREATED',
+  PRODUCT_TYPE_DELETED = 'PRODUCT_TYPE_DELETED',
+  PRODUCT_TYPE_UPDATED = 'PRODUCT_TYPE_UPDATED',
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
   PRODUCT_VARIANT_BACK_IN_STOCK = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   PRODUCT_VARIANT_STOCK_UPDATED = 'PRODUCT_VARIANT_STOCK_UPDATED',
   PRODUCT_VARIANT_UPDATED = 'PRODUCT_VARIANT_UPDATED',
   PROMOTION_CREATED = 'PROMOTION_CREATED',

@@ -1,0 +1,9 @@
+/* Keep server-provided HTML compact so each announcement stays a short, single row. */
+.message {
+  display: inline;
+}
+
+.message p {
+  display: inline;
+  margin: 0;
+}

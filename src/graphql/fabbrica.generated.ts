@@ -34,6 +34,7 @@ import type {
   AddressUpdated,
   AddressValidationData,
   Allocation,
+  Announcement,
   App,
   AppActivate,
   AppBrand,
@@ -830,6 +831,7 @@ import type {
   ProductVariantCreated,
   ProductVariantDelete,
   ProductVariantDeleted,
+  ProductVariantDiscountedPriceUpdated,
   ProductVariantFilterInput,
   ProductVariantInput,
   ProductVariantMetadataUpdated,
@@ -2176,6 +2178,36 @@ export type OptionalAllocation = {
  */
 export const defineAllocationFactory: DefineTypeFactoryInterface<
   OptionalAllocation,
+  {}
+> = defineTypeFactory;
+
+/** Lists current announcements that the user should see. */
+export type OptionalAnnouncement = {
+  __typename?: 'Announcement';
+  /** The date & time at which this announcement was created. */
+  createdAt?: Announcement['createdAt'] | undefined;
+  /** Additional information about this announcement. */
+  extra?: Announcement['extra'] | undefined;
+  /** Determine the how critical the announcement is. UNSET if no severity level was defined for this announcement. */
+  importance?: Announcement['importance'] | undefined;
+  /** The announcement's description, may contain HTML formatting. */
+  messageHtml?: Announcement['messageHtml'] | undefined;
+  /** The announcement's title. */
+  title?: Announcement['title'] | undefined;
+  /** The announcement's type, for example "CUSTOM". Used to programatically distinguish between message types thus allowing to render the message differently, and allows to know the expected shape for the `extra` field. */
+  type?: Announcement['type'] | undefined;
+  /** The date & time at which this announcement was last updated. */
+  updatedAt?: Announcement['updatedAt'] | undefined;
+};
+
+/**
+ * Define factory for {@link Announcement} model.
+ *
+ * @param options
+ * @returns factory {@link AnnouncementFactoryInterface}
+ */
+export const defineAnnouncementFactory: DefineTypeFactoryInterface<
+  OptionalAnnouncement,
   {}
 > = defineTypeFactory;
 
@@ -4164,6 +4196,12 @@ export type OptionalAssignedSwatchAttributeValue = {
   name?: AssignedSwatchAttributeValue['name'] | undefined;
   /** Slug of the selected swatch value. */
   slug?: AssignedSwatchAttributeValue['slug'] | undefined;
+  /**
+ * Translation of the name.
+ *
+ * Added in Saleor 3.22.
+ */
+  translation?: AssignedSwatchAttributeValue['translation'] | undefined;
 };
 
 /**
@@ -11134,7 +11172,7 @@ export const defineDraftOrderWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerMetadataUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
+export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerMetadataUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantDiscountedPriceUpdated | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
 
 /** Event delivery. */
 export type OptionalEventDelivery = {
@@ -26527,6 +26565,42 @@ export const defineProductVariantDeletedFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Event sent when product variant discounted price is recalculated.
+ *
+ * Added in Saleor 3.22.
+ */
+export type OptionalProductVariantDiscountedPriceUpdated = {
+  __typename?: 'ProductVariantDiscountedPriceUpdated';
+  /** The channel where the price changed. */
+  channel?: OptionalChannel | undefined;
+  /** Time of the event. */
+  issuedAt?: ProductVariantDiscountedPriceUpdated['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The new discounted price. */
+  newPrice?: OptionalMoney | undefined;
+  /** The previous discounted price. */
+  previousPrice?: OptionalMoney | undefined;
+  /** The product variant the event relates to. */
+  productVariant?: OptionalProductVariant | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: ProductVariantDiscountedPriceUpdated['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link ProductVariantDiscountedPriceUpdated} model.
+ *
+ * @param options
+ * @returns factory {@link ProductVariantDiscountedPriceUpdatedFactoryInterface}
+ */
+export const defineProductVariantDiscountedPriceUpdatedFactory: DefineTypeFactoryInterface<
+  OptionalProductVariantDiscountedPriceUpdated,
+  {}
+> = defineTypeFactory;
+
 export type OptionalProductVariantFilterInput = {
   __typename?: 'ProductVariantFilterInput';
   isPreorder?: ProductVariantFilterInput['isPreorder'] | undefined;
@@ -31104,6 +31178,12 @@ export type OptionalShop = {
  */
   allowLoginWithoutConfirmation?: Shop['allowLoginWithoutConfirmation'] | undefined;
   /**
+ * List of announcements for this shop.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+ */
+  announcements?: OptionalAnnouncement[] | undefined;
+  /**
  * Enable automatic fulfillment for all digital products.
  *
  * Requires one of the following permissions: MANAGE_SETTINGS.
@@ -32611,6 +32691,14 @@ export type OptionalSubscription = {
  * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  */
   orderUpdated?: Maybe<OptionalOrderUpdated> | undefined;
+  /**
+ * Event sent when product variant discounted price is recalculated.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+ */
+  productVariantDiscountedPriceUpdated?: Maybe<OptionalProductVariantDiscountedPriceUpdated> | undefined;
 };
 
 /**
