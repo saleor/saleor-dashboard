@@ -1,4 +1,4 @@
-import { type AnnouncementFragment, AnnouncementImportanceEnum } from "@dashboard/graphql/staging";
+import { type AnnouncementFragment, AnnouncementImportanceEnum } from "@dashboard/graphql";
 
 import { mapAnnouncement } from "./mappers";
 

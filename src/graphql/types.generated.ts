@@ -10210,6 +10210,13 @@ export enum WeightUnitsEnum {
   TONNE = 'TONNE'
 }
 
+export type AnnouncementFragment = { __typename: 'Announcement', title: string, messageHtml: string, importance: AnnouncementImportanceEnum, type: string, createdAt: any, updatedAt: any, extra: any };
+
+export type AnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AnnouncementsQuery = { __typename: 'Query', shop: { __typename: 'Shop', announcements: Array<{ __typename: 'Announcement', title: string, messageHtml: string, importance: AnnouncementImportanceEnum, type: string, createdAt: any, updatedAt: any, extra: any }> } };
+
 export type AttributeBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;

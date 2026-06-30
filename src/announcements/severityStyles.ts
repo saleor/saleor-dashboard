@@ -1,4 +1,4 @@
-import { AnnouncementImportanceEnum } from "@dashboard/graphql/staging";
+import { AnnouncementImportanceEnum } from "@dashboard/graphql";
 import { type BoxProps } from "@saleor/macaw-ui-next";
 
 interface AnnouncementSeverityStyle {

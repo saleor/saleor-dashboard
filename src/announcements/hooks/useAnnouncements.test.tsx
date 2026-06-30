@@ -1,23 +1,13 @@
 import { MockedProvider, type MockedResponse } from "@apollo/client/testing";
-import { PermissionEnum } from "@dashboard/graphql";
 import {
   AnnouncementImportanceEnum,
-  AnnouncementsStaging,
-  isStagingSchema,
-} from "@dashboard/graphql/staging";
+  AnnouncementsDocument,
+  PermissionEnum,
+} from "@dashboard/graphql";
 import { renderHook, waitFor } from "@testing-library/react";
 import { type ReactNode } from "react";
 
 import { useAnnouncements } from "./useAnnouncements";
-
-jest.mock("@dashboard/graphql/schemaVersion", () => ({
-  isStagingSchema: jest.fn(),
-  isMainSchema: jest.fn(),
-}));
-
-const setStagingSchema = (enabled: boolean) => {
-  (isStagingSchema as jest.Mock).mockReturnValue(enabled);
-};
 
 // The dashboard's custom `useQuery` (makeQuery.ts) injects every PERMISSION_*
 // flag (defaulting to false when there is no user) as a query variable, so the
@@ -28,7 +18,7 @@ const permissionVariables = Object.keys(PermissionEnum).reduce<Record<string, bo
 );
 
 const announcementsMock: MockedResponse = {
-  request: { query: AnnouncementsStaging, variables: permissionVariables },
+  request: { query: AnnouncementsDocument, variables: permissionVariables },
   result: {
     data: {
       shop: {
@@ -50,6 +40,11 @@ const announcementsMock: MockedResponse = {
   },
 };
 
+const announcementsErrorMock: MockedResponse = {
+  request: { query: AnnouncementsDocument, variables: permissionVariables },
+  error: new Error("Network error"),
+};
+
 const createWrapper = (mocks: MockedResponse[]) => {
   const Wrapper = ({ children }: { children: ReactNode }) => (
     <MockedProvider mocks={mocks} addTypename={false}>
@@ -63,14 +58,7 @@ const createWrapper = (mocks: MockedResponse[]) => {
 };
 
 describe("useAnnouncements", () => {
-  afterEach(() => {
-    setStagingSchema(false);
-  });
-
-  it("fetches and maps announcements when the staging schema is active", async () => {
-    // Arrange
-    setStagingSchema(true);
-
+  it("fetches and maps announcements", async () => {
     // Act
     const { result } = renderHook(() => useAnnouncements(), {
       wrapper: createWrapper([announcementsMock]),
@@ -84,17 +72,16 @@ describe("useAnnouncements", () => {
     expect(result.current.announcements[0].importance).toBe(AnnouncementImportanceEnum.CRITICAL);
   });
 
-  it("skips the query and returns an empty list on the main schema", async () => {
-    // Arrange
-    setStagingSchema(false);
-
+  it("fails silently to an empty list on error", async () => {
     // Act
     const { result } = renderHook(() => useAnnouncements(), {
-      wrapper: createWrapper([]),
+      wrapper: createWrapper([announcementsErrorMock]),
     });
 
     // Assert
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+    });
     expect(result.current.announcements).toEqual([]);
-    expect(result.current.loading).toBe(false);
   });
 });

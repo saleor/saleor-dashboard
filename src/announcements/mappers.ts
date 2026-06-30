@@ -1,4 +1,4 @@
-import { type AnnouncementFragment } from "@dashboard/graphql/staging";
+import { type AnnouncementFragment } from "@dashboard/graphql";
 
 import { type AnnouncementViewModel } from "./types";
 

@@ -1,4 +1,4 @@
-import { AnnouncementImportanceEnum } from "@dashboard/graphql/staging";
+import { AnnouncementImportanceEnum } from "@dashboard/graphql";
 
 import { type AnnouncementViewModel } from "./types";
 

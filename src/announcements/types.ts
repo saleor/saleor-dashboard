@@ -1,4 +1,4 @@
-import { type AnnouncementImportanceEnum } from "@dashboard/graphql/staging";
+import { type AnnouncementImportanceEnum } from "@dashboard/graphql";
 
 /**
  * Normalized, UI-facing representation of a shop announcement.
