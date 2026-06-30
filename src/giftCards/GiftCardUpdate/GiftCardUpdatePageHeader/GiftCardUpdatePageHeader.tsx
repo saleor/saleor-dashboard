@@ -1,9 +1,11 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForGiftCardDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
+import { defaultGraphiQLQuery } from "@dashboard/giftCards/GiftCardUpdate/queries";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { giftCardsListPath } from "@dashboard/giftCards/urls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
@@ -33,6 +35,12 @@ const GiftCardUpdatePageHeader = () => {
     GIFT_CARD_DETAILS_MORE_ACTIONS,
     giftCard?.id,
   );
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${giftCard?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
 
   if (!giftCard) {
     return <TopNav title={getStringOrPlaceholder(undefined)} />;
@@ -69,12 +77,18 @@ const GiftCardUpdatePageHeader = () => {
             {intl.formatMessage(messages.resendButtonLabel)}
           </Button>
         )}
-        {extensionMenuItems.length > 0 && (
-          <>
-            <HorizontalSpacer />
-            <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-          </>
-        )}
+        <HorizontalSpacer />
+        <TopNav.Menu
+          items={[
+            ...extensionMenuItems,
+            {
+              label: intl.formatMessage(messages.openGraphiQL),
+              onSelect: openPlaygroundURL,
+              testId: "graphiql-redirect",
+            },
+          ]}
+          dataTestId="menu"
+        />
       </TopNav>
     </>
   );
