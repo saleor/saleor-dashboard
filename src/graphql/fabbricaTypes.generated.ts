@@ -309,6 +309,7 @@ export type AccountErrorCode =
   | 'DELETE_STAFF_ACCOUNT'
   | 'DELETE_SUPERUSER_ACCOUNT'
   | 'DUPLICATED_INPUT_ITEM'
+  | 'FILE_SIZE_LIMIT_EXCEEDED'
   | 'GRAPHQL_ERROR'
   | 'INACTIVE'
   | 'INVALID'
@@ -2273,6 +2274,22 @@ export type AssignedSwatchAttributeValue = {
   name: Maybe<Scalars['String']>;
   /** Slug of the selected swatch value. */
   slug: Maybe<Scalars['String']>;
+  /**
+   * Translation of the name.
+   *
+   * Added in Saleor 3.22.
+   */
+  translation: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * Represents a single swatch value.
+ *
+ * Added in Saleor 3.22.
+ */
+export type AssignedSwatchAttributeValueTranslationArgs = {
+  languageCode: LanguageCodeEnum;
 };
 
 /**
@@ -5940,6 +5957,7 @@ export type CollectionError = {
 export type CollectionErrorCode =
   | 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT'
   | 'DUPLICATED_INPUT_ITEM'
+  | 'FILE_SIZE_LIMIT_EXCEEDED'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
   | 'NOT_FOUND'
@@ -21377,6 +21395,7 @@ export type ProductBulkCreateErrorCode =
   | 'ATTRIBUTE_VARIANTS_DISABLED'
   | 'BLANK'
   | 'DUPLICATED_INPUT_ITEM'
+  | 'FILE_SIZE_LIMIT_EXCEEDED'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
   | 'INVALID_PRICE'
@@ -21807,6 +21826,7 @@ export type ProductErrorCode =
   | 'ATTRIBUTE_VARIANTS_DISABLED'
   | 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT'
   | 'DUPLICATED_INPUT_ITEM'
+  | 'FILE_SIZE_LIMIT_EXCEEDED'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
   | 'INVALID_FILE_TYPE'
@@ -23341,6 +23361,31 @@ export type ProductVariantDeleted = Event & {
 /** Event sent when product variant is deleted. */
 export type ProductVariantDeletedProductVariantArgs = {
   channel: InputMaybe<Scalars['String']>;
+};
+
+/**
+ * Event sent when product variant discounted price is recalculated.
+ *
+ * Added in Saleor 3.22.
+ */
+export type ProductVariantDiscountedPriceUpdated = Event & {
+  __typename: 'ProductVariantDiscountedPriceUpdated';
+  /** The channel where the price changed. */
+  channel: Channel;
+  /** Time of the event. */
+  issuedAt: Maybe<Scalars['DateTime']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal: Maybe<IssuingPrincipal>;
+  /** The new discounted price. */
+  newPrice: Money;
+  /** The previous discounted price. */
+  previousPrice: Money;
+  /** The product variant the event relates to. */
+  productVariant: ProductVariant;
+  /** The application receiving the webhook. */
+  recipient: Maybe<App>;
+  /** Saleor version that triggered the event. */
+  version: Maybe<Scalars['String']>;
 };
 
 export type ProductVariantFilterInput = {
@@ -28632,6 +28677,14 @@ export type Subscription = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   orderUpdated: Maybe<OrderUpdated>;
+  /**
+   * Event sent when product variant discounted price is recalculated.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  productVariantDiscountedPriceUpdated: Maybe<ProductVariantDiscountedPriceUpdated>;
 };
 
 
@@ -28731,6 +28784,11 @@ export type SubscriptionOrderRefundedArgs = {
 
 
 export type SubscriptionOrderUpdatedArgs = {
+  channels: InputMaybe<Array<Scalars['String']>>;
+};
+
+
+export type SubscriptionProductVariantDiscountedPriceUpdatedArgs = {
   channels: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -32164,6 +32222,7 @@ export type WebhookEventTypeAsyncEnum =
   | 'PRODUCT_VARIANT_CREATED'
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   | 'PRODUCT_VARIANT_DELETED'
+  | 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED'
   /** A product variant metadata is updated. */
   | 'PRODUCT_VARIANT_METADATA_UPDATED'
   /** A product variant is out of stock. */
@@ -32489,6 +32548,7 @@ export type WebhookEventTypeEnum =
   | 'PRODUCT_VARIANT_CREATED'
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   | 'PRODUCT_VARIANT_DELETED'
+  | 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED'
   /** A product variant metadata is updated. */
   | 'PRODUCT_VARIANT_METADATA_UPDATED'
   /** A product variant is out of stock. */
@@ -32730,6 +32790,7 @@ export type WebhookSampleEventTypeEnum =
   | 'PRODUCT_VARIANT_BACK_IN_STOCK'
   | 'PRODUCT_VARIANT_CREATED'
   | 'PRODUCT_VARIANT_DELETED'
+  | 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED'
   | 'PRODUCT_VARIANT_METADATA_UPDATED'
   | 'PRODUCT_VARIANT_OUT_OF_STOCK'
   | 'PRODUCT_VARIANT_STOCK_UPDATED'

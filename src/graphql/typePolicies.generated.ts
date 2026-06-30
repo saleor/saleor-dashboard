@@ -658,12 +658,13 @@ export type AssignedSwatchAttributeFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	value?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AssignedSwatchAttributeValueKeySpecifier = ('file' | 'hexColor' | 'name' | 'slug' | AssignedSwatchAttributeValueKeySpecifier)[];
+export type AssignedSwatchAttributeValueKeySpecifier = ('file' | 'hexColor' | 'name' | 'slug' | 'translation' | AssignedSwatchAttributeValueKeySpecifier)[];
 export type AssignedSwatchAttributeValueFieldPolicy = {
 	file?: FieldPolicy<any> | FieldReadFunction<any>,
 	hexColor?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	slug?: FieldPolicy<any> | FieldReadFunction<any>
+	slug?: FieldPolicy<any> | FieldReadFunction<any>,
+	translation?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type AssignedTextAttributeKeySpecifier = ('attribute' | 'translation' | 'value' | AssignedTextAttributeKeySpecifier)[];
 export type AssignedTextAttributeFieldPolicy = {
@@ -5011,6 +5012,17 @@ export type ProductVariantDeletedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type ProductVariantDiscountedPriceUpdatedKeySpecifier = ('channel' | 'issuedAt' | 'issuingPrincipal' | 'newPrice' | 'previousPrice' | 'productVariant' | 'recipient' | 'version' | ProductVariantDiscountedPriceUpdatedKeySpecifier)[];
+export type ProductVariantDiscountedPriceUpdatedFieldPolicy = {
+	channel?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	newPrice?: FieldPolicy<any> | FieldReadFunction<any>,
+	previousPrice?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariant?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ProductVariantMetadataUpdatedKeySpecifier = ('issuedAt' | 'issuingPrincipal' | 'productVariant' | 'recipient' | 'version' | ProductVariantMetadataUpdatedKeySpecifier)[];
 export type ProductVariantMetadataUpdatedFieldPolicy = {
 	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6252,7 +6264,7 @@ export type StoredPaymentMethodRequestDeleteFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	result?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyAuthorized' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | SubscriptionKeySpecifier)[];
+export type SubscriptionKeySpecifier = ('checkoutCreated' | 'checkoutFullyAuthorized' | 'checkoutFullyPaid' | 'checkoutMetadataUpdated' | 'checkoutUpdated' | 'draftOrderCreated' | 'draftOrderDeleted' | 'draftOrderUpdated' | 'event' | 'orderBulkCreated' | 'orderCancelled' | 'orderConfirmed' | 'orderCreated' | 'orderExpired' | 'orderFulfilled' | 'orderFullyPaid' | 'orderFullyRefunded' | 'orderMetadataUpdated' | 'orderPaid' | 'orderRefunded' | 'orderUpdated' | 'productVariantDiscountedPriceUpdated' | SubscriptionKeySpecifier)[];
 export type SubscriptionFieldPolicy = {
 	checkoutCreated?: FieldPolicy<any> | FieldReadFunction<any>,
 	checkoutFullyAuthorized?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6274,7 +6286,8 @@ export type SubscriptionFieldPolicy = {
 	orderMetadataUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderPaid?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderRefunded?: FieldPolicy<any> | FieldReadFunction<any>,
-	orderUpdated?: FieldPolicy<any> | FieldReadFunction<any>
+	orderUpdated?: FieldPolicy<any> | FieldReadFunction<any>,
+	productVariantDiscountedPriceUpdated?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaxClassKeySpecifier = ('countries' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | TaxClassKeySpecifier)[];
 export type TaxClassFieldPolicy = {
@@ -9674,6 +9687,10 @@ export type StrictTypedTypePolicies = {
 	ProductVariantDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductVariantDeletedKeySpecifier | (() => undefined | ProductVariantDeletedKeySpecifier),
 		fields?: ProductVariantDeletedFieldPolicy,
+	},
+	ProductVariantDiscountedPriceUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | ProductVariantDiscountedPriceUpdatedKeySpecifier | (() => undefined | ProductVariantDiscountedPriceUpdatedKeySpecifier),
+		fields?: ProductVariantDiscountedPriceUpdatedFieldPolicy,
 	},
 	ProductVariantMetadataUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ProductVariantMetadataUpdatedKeySpecifier | (() => undefined | ProductVariantMetadataUpdatedKeySpecifier),

@@ -267,6 +267,11 @@ type Query {
   refundSettings: RefundSettings! @doc(category: "Shop")
 
   """
+  Returns related settings. Returns `ReturnSettings` configuration, global for the entire shop.
+  """
+  returnSettings: ReturnSettings! @doc(category: "Shop")
+
+  """
   Look up a shipping zone by ID.
   
   Requires one of the following permissions: MANAGE_SHIPPING.
@@ -2020,6 +2025,15 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
   """A product export is completed."""
   PRODUCT_EXPORT_COMPLETED
 
+  """A new product type is created."""
+  PRODUCT_TYPE_CREATED
+
+  """A product type is updated."""
+  PRODUCT_TYPE_UPDATED
+
+  """A product type is deleted."""
+  PRODUCT_TYPE_DELETED
+
   """A new product media is created."""
   PRODUCT_MEDIA_CREATED
 
@@ -2051,6 +2065,35 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
 
   """A product variant stock is updated"""
   PRODUCT_VARIANT_STOCK_UPDATED
+
+  """
+  A product variant becomes out of stock across all non click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL
+
+  """
+  A product variant becomes available again across non click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL
+
+  """
+  A product variant becomes out of stock across all click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT
+
+  """
+  A product variant becomes available again across click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED
 
   """A new checkout is created."""
   CHECKOUT_CREATED
@@ -2595,6 +2638,15 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
   """A product export is completed."""
   PRODUCT_EXPORT_COMPLETED
 
+  """A new product type is created."""
+  PRODUCT_TYPE_CREATED
+
+  """A product type is updated."""
+  PRODUCT_TYPE_UPDATED
+
+  """A product type is deleted."""
+  PRODUCT_TYPE_DELETED
+
   """A new product media is created."""
   PRODUCT_MEDIA_CREATED
 
@@ -2626,6 +2678,35 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
 
   """A product variant stock is updated"""
   PRODUCT_VARIANT_STOCK_UPDATED
+
+  """
+  A product variant becomes out of stock across all non click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL
+
+  """
+  A product variant becomes available again across non click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL
+
+  """
+  A product variant becomes out of stock across all click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT
+
+  """
+  A product variant becomes available again across click-and-collect warehouses in a channel. 
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  """
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED
 
   """A new checkout is created."""
   CHECKOUT_CREATED
@@ -6823,9 +6904,9 @@ type Product implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(ca
   """
   isAvailable(
     """
-    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration.
+    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration. When `Shop.useLegacyShippingZoneStockAvailability` is disabled, this argument is ignored — stock availability is determined by the direct warehouse-channel link instead of shipping zones.
     """
-    address: AddressInput
+    address: AddressInput @deprecated
   ): Boolean
 
   """A type of tax. Assigned by enabled tax gateway"""
@@ -8765,9 +8846,9 @@ type ProductVariant implements Node & ObjectWithMetadata & ObjectWithAttributes 
   """
   stocks(
     """
-    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration.
+    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration. When `Shop.useLegacyShippingZoneStockAvailability` is disabled, this argument is ignored — stock availability is determined by the direct warehouse-channel link instead of shipping zones.
     """
-    address: AddressInput
+    address: AddressInput @deprecated
 
     """Two-letter ISO 3166-1 country code."""
     countryCode: CountryCode @deprecated(reason: "Use `address` argument instead.")
@@ -8778,9 +8859,9 @@ type ProductVariant implements Node & ObjectWithMetadata & ObjectWithAttributes 
   """
   quantityAvailable(
     """
-    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration.
+    Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration. When `Shop.useLegacyShippingZoneStockAvailability` is disabled, this argument is ignored — stock availability is determined by the direct warehouse-channel link instead of shipping zones.
     """
-    address: AddressInput
+    address: AddressInput @deprecated
 
     """
     Two-letter ISO 3166-1 country code. When provided, the exact quantity from a warehouse operating in shipping zones that contain this country will be returned. Otherwise, it will return the maximum quantity from all shipping zones.
@@ -10077,6 +10158,20 @@ input ProductVariantWhereInput @doc(category: "Products") {
   Added in Saleor 3.22.
   """
   attributes: [AssignedAttributeWhereInput!]
+
+  """
+  Filter by variants having a specific stock status in the given channel.
+  
+  Added in Saleor 3.24.
+  """
+  stockAvailability: StockAvailability
+
+  """
+  Filter by stock of the variant.
+  
+  Added in Saleor 3.24.
+  """
+  stocks: ProductStockFilterInput
 
   """List of conditions that must be met."""
   AND: [ProductVariantWhereInput!]
@@ -12106,6 +12201,20 @@ type Fulfillment implements Node & ObjectWithMetadata @doc(category: "Orders") {
 
   """Total refunded amount assigned to this fulfillment."""
   totalRefundedAmount: Money
+
+  """
+  Reason for returning this fulfillment.
+  
+  Added in Saleor 3.23.
+  """
+  reason: String
+
+  """
+  Reason Model (Page) reference for this fulfillment.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: Page
 }
 
 enum FulfillmentStatus @doc(category: "Orders") {
@@ -12128,6 +12237,20 @@ type FulfillmentLine implements Node @doc(category: "Orders") {
 
   """The order line to which the fulfillment line is related."""
   orderLine: OrderLine
+
+  """
+  Reason for returning this fulfillment line.
+  
+  Added in Saleor 3.23.
+  """
+  reason: String
+
+  """
+  Reason Model (Page) reference for this fulfillment line.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: Page
 }
 
 """Represents order line of particular order."""
@@ -12370,6 +12493,215 @@ enum OrderDiscountType @doc(category: "Discounts") {
   MANUAL
   PROMOTION
   ORDER_PROMOTION
+}
+
+"""
+A static page that can be manually added by a shop operator through the dashboard.
+"""
+type Page implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(category: "Pages") {
+  """ID of the page."""
+  id: ID!
+
+  """List of private metadata items. Requires staff permissions to access."""
+  privateMetadata: [MetadataItem!]!
+
+  """
+  A single key from private metadata. Requires staff permissions to access.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  """
+  privateMetafield(key: String!): String
+
+  """
+  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
+  """
+  privateMetafields(keys: [String!]): Metadata
+
+  """List of public metadata items. Can be accessed without permissions."""
+  metadata: [MetadataItem!]!
+
+  """
+  A single key from public metadata.
+  
+  Tip: Use GraphQL aliases to fetch multiple keys.
+  """
+  metafield(key: String!): String
+
+  """
+  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
+  """
+  metafields(keys: [String!]): Metadata
+
+  """
+  Get a single attribute attached to page by attribute slug.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttribute(
+    """Slug of the attribute"""
+    slug: String!
+  ): AssignedAttribute
+
+  """
+  List of attributes assigned to this page.
+  
+  Added in Saleor 3.22.
+  """
+  assignedAttributes(
+    """Maximum number of attributes to return. Default is 100."""
+    limit: PositiveInt = 100
+  ): [AssignedAttribute!]!
+
+  """Title of the page for SEO."""
+  seoTitle: String
+
+  """Description of the page for SEO."""
+  seoDescription: String
+
+  """Title of the page."""
+  title: String!
+
+  """
+  Content of the page.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  content: JSONString
+  publicationDate: Date @deprecated(reason: "Use the `publishedAt` field to fetch the publication date.")
+
+  """The page publication date."""
+  publishedAt: DateTime
+
+  """Determines if the page is published."""
+  isPublished: Boolean!
+
+  """Slug of the page."""
+  slug: String!
+
+  """Determines the type of page"""
+  pageType: PageType!
+
+  """Date and time at which page was created."""
+  created: DateTime!
+
+  """
+  Content of the page.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  contentJson: JSONString! @deprecated(reason: "Use the `content` field instead.")
+
+  """Returns translated page fields for the given language code."""
+  translation(
+    """A language code to return the translation for page."""
+    languageCode: LanguageCodeEnum!
+  ): PageTranslation
+
+  """Get a single attribute attached to page by attribute slug."""
+  attribute(
+    """Slug of the attribute"""
+    slug: String!
+  ): SelectedAttribute @deprecated(reason: "Use `assignedAttribute` field instead.")
+
+  """List of attributes assigned to this page."""
+  attributes: [SelectedAttribute!]! @deprecated(reason: "Use `assignedAttributes` field instead.")
+}
+
+"""Represents page translations."""
+type PageTranslation implements Node @doc(category: "Pages") {
+  """The ID of the page translation."""
+  id: ID!
+
+  """Translation language."""
+  language: LanguageDisplay!
+
+  """Translated SEO title."""
+  seoTitle: String
+
+  """Translated SEO description."""
+  seoDescription: String
+
+  """
+  Translated page slug.
+  
+  Added in Saleor 3.21.
+  """
+  slug: String
+
+  """Translated page title."""
+  title: String
+
+  """
+  Translated content of the page.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  content: JSONString
+
+  """
+  Translated description of the page.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  contentJson: JSONString @deprecated(reason: "Use the `content` field instead.")
+
+  """Represents the page fields to translate."""
+  translatableContent: PageTranslatableContent
+}
+
+"""
+Represents page's original translatable fields and related translations.
+"""
+type PageTranslatableContent implements Node @doc(category: "Pages") {
+  """The ID of the page translatable content."""
+  id: ID!
+
+  """The ID of the page to translate."""
+  pageId: ID!
+
+  """SEO title to translate."""
+  seoTitle: String
+
+  """SEO description to translate."""
+  seoDescription: String
+
+  """
+  Slug to translate.
+  
+  Added in Saleor 3.21.
+  """
+  slug: String
+
+  """Page title to translate."""
+  title: String!
+
+  """
+  Content of the page to translate.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  content: JSONString
+
+  """
+  Content of the page.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  contentJson: JSONString @deprecated(reason: "Use the `content` field instead.")
+
+  """Returns translated page fields for the given language code."""
+  translation(
+    """A language code to return the translation for page."""
+    languageCode: LanguageCodeEnum!
+  ): PageTranslation
+
+  """
+  A static page that can be manually added by a shop operator through the dashboard.
+  """
+  page: Page @deprecated(reason: "Get model fields from the root level queries.")
+
+  """List of page content attribute values that can be translated."""
+  attributeValues: [AttributeValueTranslatableContent!]!
 }
 
 enum OrderAction @doc(category: "Payments") {
@@ -13060,215 +13392,6 @@ type OrderGrantedRefund @doc(category: "Orders") {
   transaction: TransactionItem
 }
 
-"""
-A static page that can be manually added by a shop operator through the dashboard.
-"""
-type Page implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(category: "Pages") {
-  """ID of the page."""
-  id: ID!
-
-  """List of private metadata items. Requires staff permissions to access."""
-  privateMetadata: [MetadataItem!]!
-
-  """
-  A single key from private metadata. Requires staff permissions to access.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  """
-  privateMetafield(key: String!): String
-
-  """
-  Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  privateMetafields(keys: [String!]): Metadata
-
-  """List of public metadata items. Can be accessed without permissions."""
-  metadata: [MetadataItem!]!
-
-  """
-  A single key from public metadata.
-  
-  Tip: Use GraphQL aliases to fetch multiple keys.
-  """
-  metafield(key: String!): String
-
-  """
-  Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
-  """
-  metafields(keys: [String!]): Metadata
-
-  """
-  Get a single attribute attached to page by attribute slug.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttribute(
-    """Slug of the attribute"""
-    slug: String!
-  ): AssignedAttribute
-
-  """
-  List of attributes assigned to this page.
-  
-  Added in Saleor 3.22.
-  """
-  assignedAttributes(
-    """Maximum number of attributes to return. Default is 100."""
-    limit: PositiveInt = 100
-  ): [AssignedAttribute!]!
-
-  """Title of the page for SEO."""
-  seoTitle: String
-
-  """Description of the page for SEO."""
-  seoDescription: String
-
-  """Title of the page."""
-  title: String!
-
-  """
-  Content of the page.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  content: JSONString
-  publicationDate: Date @deprecated(reason: "Use the `publishedAt` field to fetch the publication date.")
-
-  """The page publication date."""
-  publishedAt: DateTime
-
-  """Determines if the page is published."""
-  isPublished: Boolean!
-
-  """Slug of the page."""
-  slug: String!
-
-  """Determines the type of page"""
-  pageType: PageType!
-
-  """Date and time at which page was created."""
-  created: DateTime!
-
-  """
-  Content of the page.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  contentJson: JSONString! @deprecated(reason: "Use the `content` field instead.")
-
-  """Returns translated page fields for the given language code."""
-  translation(
-    """A language code to return the translation for page."""
-    languageCode: LanguageCodeEnum!
-  ): PageTranslation
-
-  """Get a single attribute attached to page by attribute slug."""
-  attribute(
-    """Slug of the attribute"""
-    slug: String!
-  ): SelectedAttribute @deprecated(reason: "Use `assignedAttribute` field instead.")
-
-  """List of attributes assigned to this page."""
-  attributes: [SelectedAttribute!]! @deprecated(reason: "Use `assignedAttributes` field instead.")
-}
-
-"""Represents page translations."""
-type PageTranslation implements Node @doc(category: "Pages") {
-  """The ID of the page translation."""
-  id: ID!
-
-  """Translation language."""
-  language: LanguageDisplay!
-
-  """Translated SEO title."""
-  seoTitle: String
-
-  """Translated SEO description."""
-  seoDescription: String
-
-  """
-  Translated page slug.
-  
-  Added in Saleor 3.21.
-  """
-  slug: String
-
-  """Translated page title."""
-  title: String
-
-  """
-  Translated content of the page.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  content: JSONString
-
-  """
-  Translated description of the page.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  contentJson: JSONString @deprecated(reason: "Use the `content` field instead.")
-
-  """Represents the page fields to translate."""
-  translatableContent: PageTranslatableContent
-}
-
-"""
-Represents page's original translatable fields and related translations.
-"""
-type PageTranslatableContent implements Node @doc(category: "Pages") {
-  """The ID of the page translatable content."""
-  id: ID!
-
-  """The ID of the page to translate."""
-  pageId: ID!
-
-  """SEO title to translate."""
-  seoTitle: String
-
-  """SEO description to translate."""
-  seoDescription: String
-
-  """
-  Slug to translate.
-  
-  Added in Saleor 3.21.
-  """
-  slug: String
-
-  """Page title to translate."""
-  title: String!
-
-  """
-  Content of the page to translate.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  content: JSONString
-
-  """
-  Content of the page.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  contentJson: JSONString @deprecated(reason: "Use the `content` field instead.")
-
-  """Returns translated page fields for the given language code."""
-  translation(
-    """A language code to return the translation for page."""
-    languageCode: LanguageCodeEnum!
-  ): PageTranslation
-
-  """
-  A static page that can be manually added by a shop operator through the dashboard.
-  """
-  page: Page @deprecated(reason: "Get model fields from the root level queries.")
-
-  """List of page content attribute values that can be translated."""
-  attributeValues: [AttributeValueTranslatableContent!]!
-}
-
 """Represents granted refund line."""
 type OrderGrantedRefundLine {
   id: ID!
@@ -13281,6 +13404,13 @@ type OrderGrantedRefundLine {
 
   """Reason for refunding the line."""
   reason: String
+
+  """
+  Reason Model (Page) reference for this refund line.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: Page
 }
 
 """
@@ -14135,6 +14265,9 @@ enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   PRODUCT_DELETED
   PRODUCT_METADATA_UPDATED
   PRODUCT_EXPORT_COMPLETED
+  PRODUCT_TYPE_CREATED
+  PRODUCT_TYPE_UPDATED
+  PRODUCT_TYPE_DELETED
   PRODUCT_MEDIA_CREATED
   PRODUCT_MEDIA_UPDATED
   PRODUCT_MEDIA_DELETED
@@ -14145,6 +14278,11 @@ enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   PRODUCT_VARIANT_OUT_OF_STOCK
   PRODUCT_VARIANT_BACK_IN_STOCK
   PRODUCT_VARIANT_STOCK_UPDATED
+  PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL
+  PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL
+  PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT
+  PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT
+  PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED
   CHECKOUT_CREATED
   CHECKOUT_UPDATED
   CHECKOUT_FULLY_AUTHORIZED
@@ -15022,6 +15160,13 @@ type Shop implements ObjectWithMetadata {
   limits: LimitInfo! @deprecated
 
   """
+  List of announcements for this shop.
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  """
+  announcements: [Announcement!]!
+
+  """
   Saleor API version.
   
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
@@ -15064,6 +15209,13 @@ type Shop implements ObjectWithMetadata {
 
   """Charge taxes on shipping."""
   chargeTaxesOnShipping: Boolean! @deprecated(reason: "Use `ShippingMethodType.taxClass` to determine whether taxes are calculated for shipping methods; if a tax class is set, the taxes will be calculated, otherwise no tax rate will be applied.")
+
+  """
+  When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+  
+  Added in Saleor 3.23.
+  """
+  useLegacyShippingZoneStockAvailability: Boolean!
 
   """
   Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
@@ -15159,6 +15311,43 @@ type Limits {
   warehouses: Int
 }
 
+"""Lists current announcements that the user should see."""
+type Announcement {
+  """The date & time at which this announcement was created."""
+  createdAt: DateTime!
+
+  """The date & time at which this announcement was last updated."""
+  updatedAt: DateTime!
+
+  """The announcement's title."""
+  title: String!
+
+  """The announcement's description, may contain HTML formatting."""
+  messageHtml: String!
+
+  """
+  Determine the how critical the announcement is. UNSET if no severity level was defined for this announcement.
+  """
+  importance: AnnouncementImportanceEnum!
+
+  """
+  The announcement's type, for example "CUSTOM". Used to programatically distinguish between message types thus allowing to render the message differently, and allows to know the expected shape for the `extra` field.
+  """
+  type: String!
+
+  """Additional information about this announcement."""
+  extra: Metadata!
+}
+
+"""Defines a shop-level announcement's level/severity."""
+enum AnnouncementImportanceEnum @doc(category: "Shop") {
+  CRITICAL
+  HIGH
+  MODERATE
+  LOW
+  UNSET
+}
+
 """
 Controls whether password-based authentication is allowed.
 
@@ -15210,6 +15399,20 @@ Added in Saleor 3.22.
 """
 type RefundSettings @doc(category: "Orders") {
   """Model type used for refund reasons."""
+  reasonReferenceType: PageType
+}
+
+"""
+Return related settings from site settings.
+
+Added in Saleor 3.23.
+"""
+type ReturnSettings @doc(category: "Orders") {
+  """
+  Model type used for return reasons.
+  
+  Added in Saleor 3.23.
+  """
   reasonReferenceType: PageType
 }
 
@@ -17468,11 +17671,21 @@ type Mutation {
   Deletes selected warehouse. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - WAREHOUSE_DELETED (async): A warehouse is deleted.
+  - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is removed together with the deleted warehouse.
+  - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
   """
   deleteWarehouse(
     """ID of a warehouse to delete."""
     id: ID!
-  ): WarehouseDelete @doc(category: "Products")
+  ): WarehouseDelete @doc(category: "Products") @webhookEventsInfo(asyncEvents: [WAREHOUSE_DELETED, PRODUCT_VARIANT_OUT_OF_STOCK, PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL, PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: [])
 
   """
   Add shipping zone to given warehouse. 
@@ -17728,6 +17941,27 @@ type Mutation {
   refundReasonReferenceClear: RefundReasonReferenceTypeClear @doc(category: "Orders")
 
   """
+  Update return settings across all channels.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  returnSettingsUpdate(
+    """Fields required to update return settings."""
+    input: ReturnSettingsUpdateInput!
+  ): ReturnSettingsUpdate @doc(category: "Shop")
+
+  """
+  Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  returnReasonReferenceClear: ReturnReasonReferenceTypeClear @doc(category: "Orders")
+
+  """
   Calculates available delivery options for a checkout.
   
   Added in Saleor 3.23.
@@ -17780,7 +18014,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_SHIPPING.
   """
   shippingPriceBulkDelete(
-    """List of shipping price IDs to delete."""
+    """
+    List of shipping price IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): ShippingPriceBulkDelete @doc(category: "Shipping")
 
@@ -17865,7 +18101,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_SHIPPING.
   """
   shippingZoneBulkDelete(
-    """List of shipping zone IDs to delete."""
+    """
+    List of shipping zone IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): ShippingZoneBulkDelete @doc(category: "Shipping")
 
@@ -17952,7 +18190,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   categoryBulkDelete(
-    """List of category IDs to delete."""
+    """
+    List of category IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): CategoryBulkDelete @doc(category: "Products")
 
@@ -18037,7 +18277,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   collectionBulkDelete(
-    """List of collection IDs to delete."""
+    """
+    List of collection IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): CollectionBulkDelete @doc(category: "Products")
 
@@ -18138,7 +18380,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productBulkDelete(
-    """List of product IDs to delete."""
+    """
+    List of product IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): ProductBulkDelete @doc(category: "Products")
 
@@ -18243,7 +18487,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productMediaBulkDelete(
-    """List of product media IDs to delete."""
+    """
+    List of product media IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): ProductMediaBulkDelete @doc(category: "Products")
 
@@ -18299,7 +18545,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
   productTypeBulkDelete(
-    """List of product type IDs to delete."""
+    """
+    List of product type IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): ProductTypeBulkDelete @doc(category: "Products")
 
@@ -18412,10 +18660,14 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantBulkDelete(
-    """List of product variant IDs to delete."""
+    """
+    List of product variant IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]
 
-    """List of product variant SKUs to delete."""
+    """
+    List of product variant SKUs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     skus: [String!]
   ): ProductVariantBulkDelete @doc(category: "Products")
 
@@ -18423,6 +18675,15 @@ type Mutation {
   Creates stocks for product variant. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock is created in a warehouse.
+  - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
   """
   productVariantStocksCreate(
     """Input list of stocks to create."""
@@ -18430,12 +18691,21 @@ type Mutation {
 
     """ID of a product variant for which stocks will be created."""
     variantId: ID!
-  ): ProductVariantStocksCreate @doc(category: "Products")
+  ): ProductVariantStocksCreate @doc(category: "Products") @webhookEventsInfo(asyncEvents: [PRODUCT_VARIANT_BACK_IN_STOCK, PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL, PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: [])
 
   """
   Deletes stocks from product variant. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is deleted from a warehouse.
+  - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
   """
   productVariantStocksDelete(
     """SKU of product variant for which stocks will be deleted."""
@@ -18446,12 +18716,29 @@ type Mutation {
 
     """Input list of warehouse IDs."""
     warehouseIds: [ID!]
-  ): ProductVariantStocksDelete @doc(category: "Products")
+  ): ProductVariantStocksDelete @doc(category: "Products") @webhookEventsInfo(asyncEvents: [PRODUCT_VARIANT_OUT_OF_STOCK, PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL, PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: [])
 
   """
   Updates stocks for product variant. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock is updated.
+  - PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock transitioned from no availability to available quantity.
+  - PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock transitioned from available quantity to no availability.
+  - PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  - PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  - PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  - PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+  
+  Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
   """
   productVariantStocksUpdate(
     """SKU of product variant for which stocks will be updated."""
@@ -18462,7 +18749,7 @@ type Mutation {
 
     """ID of a product variant for which stocks will be updated."""
     variantId: ID
-  ): ProductVariantStocksUpdate @doc(category: "Products")
+  ): ProductVariantStocksUpdate @doc(category: "Products") @webhookEventsInfo(asyncEvents: [PRODUCT_VARIANT_STOCK_UPDATED, PRODUCT_VARIANT_BACK_IN_STOCK, PRODUCT_VARIANT_OUT_OF_STOCK, PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL, PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL, PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT, PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: [])
 
   """
   Updates an existing variant for product. 
@@ -18991,7 +19278,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PAGES.
   """
   pageBulkDelete(
-    """List of page IDs to delete."""
+    """
+    List of page IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): PageBulkDelete @doc(category: "Pages")
 
@@ -19076,7 +19365,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
   """
   pageTypeBulkDelete(
-    """List of page type IDs to delete"""
+    """
+    List of page type IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): PageTypeBulkDelete @doc(category: "Pages")
 
@@ -19174,7 +19465,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   draftOrderBulkDelete(
-    """List of draft order IDs to delete."""
+    """
+    List of draft order IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): DraftOrderBulkDelete @doc(category: "Orders")
 
@@ -19184,7 +19477,9 @@ type Mutation {
   Requires one of the following permissions: MANAGE_ORDERS.
   """
   draftOrderLinesBulkDelete(
-    """List of order lines IDs to delete."""
+    """
+    List of order lines IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): DraftOrderLinesBulkDelete @doc(category: "Orders") @deprecated
 
@@ -19679,7 +19974,9 @@ type Mutation {
   - MENU_DELETED (async): A menu was deleted.
   """
   menuBulkDelete(
-    """List of menu IDs to delete."""
+    """
+    List of menu IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): MenuBulkDelete @doc(category: "Menu") @webhookEventsInfo(asyncEvents: [MENU_DELETED], syncEvents: [])
 
@@ -19736,7 +20033,9 @@ type Mutation {
   - MENU_ITEM_DELETED (async): A menu item was deleted.
   """
   menuItemBulkDelete(
-    """List of menu item IDs to delete."""
+    """
+    List of menu item IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): MenuItemBulkDelete @doc(category: "Menu") @webhookEventsInfo(asyncEvents: [MENU_ITEM_DELETED], syncEvents: [])
 
@@ -19990,7 +20289,9 @@ type Mutation {
   - GIFT_CARD_DELETED (async): A gift card was deleted.
   """
   giftCardBulkDelete(
-    """List of gift card IDs to delete."""
+    """
+    List of gift card IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): GiftCardBulkDelete @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [GIFT_CARD_DELETED], syncEvents: [])
 
@@ -20180,7 +20481,9 @@ type Mutation {
   - PROMOTION_DELETED (async): A promotion was deleted.
   """
   promotionBulkDelete(
-    """List of promotion IDs to delete."""
+    """
+    List of promotion IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): PromotionBulkDelete @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [PROMOTION_DELETED], syncEvents: [])
 
@@ -20219,7 +20522,9 @@ type Mutation {
   - SALE_DELETED (async): A sale was deleted.
   """
   saleBulkDelete(
-    """List of sale IDs to delete."""
+    """
+    List of sale IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): SaleBulkDelete @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [SALE_DELETED], syncEvents: [])
 
@@ -20337,7 +20642,9 @@ type Mutation {
   - VOUCHER_DELETED (async): A voucher was deleted.
   """
   voucherBulkDelete(
-    """List of voucher IDs to delete."""
+    """
+    List of voucher IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): VoucherBulkDelete @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_DELETED], syncEvents: [])
 
@@ -20520,9 +20827,6 @@ type Mutation {
     """The billing address of the checkout."""
     billingAddress: AddressInput!
 
-    """The ID of the checkout."""
-    checkoutId: ID @deprecated(reason: "Use `id` instead.")
-
     """The checkout's ID."""
     id: ID
 
@@ -20661,6 +20965,22 @@ type Mutation {
     """The checkout's ID."""
     id: ID!
   ): CheckoutCustomerNoteUpdate @doc(category: "Checkout") @webhookEventsInfo(asyncEvents: [CHECKOUT_UPDATED], syncEvents: [])
+
+  """
+  Deletes a checkout.
+  
+  Added in Saleor 3.23. 
+  
+  Requires one of the following permissions: MANAGE_CHECKOUTS.
+  """
+  checkoutDelete(
+    """
+    The checkout's ID.
+    
+    Added in Saleor 3.23.
+    """
+    id: ID!
+  ): CheckoutDelete @doc(category: "Checkout")
 
   """
   Updates email address in the existing checkout object.
@@ -20808,9 +21128,6 @@ type Mutation {
   - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutShippingAddressUpdate(
-    """The ID of the checkout."""
-    checkoutId: ID @deprecated(reason: "Use `id` instead.")
-
     """The checkout's ID."""
     id: ID
 
@@ -21137,7 +21454,9 @@ type Mutation {
   - ATTRIBUTE_DELETED (async): An attribute was deleted.
   """
   attributeBulkDelete(
-    """List of attribute IDs to delete."""
+    """
+    List of attribute IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): AttributeBulkDelete @doc(category: "Attributes") @webhookEventsInfo(asyncEvents: [ATTRIBUTE_DELETED], syncEvents: [])
 
@@ -21151,7 +21470,9 @@ type Mutation {
   - ATTRIBUTE_UPDATED (async): An attribute was updated.
   """
   attributeValueBulkDelete(
-    """List of attribute value IDs to delete."""
+    """
+    List of attribute value IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): AttributeValueBulkDelete @doc(category: "Attributes") @webhookEventsInfo(asyncEvents: [ATTRIBUTE_VALUE_DELETED, ATTRIBUTE_UPDATED], syncEvents: [])
 
@@ -21902,7 +22223,9 @@ type Mutation {
   - CUSTOMER_DELETED (async): A customer account was deleted.
   """
   customerBulkDelete(
-    """List of user IDs to delete."""
+    """
+    List of user IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): CustomerBulkDelete @doc(category: "Users") @webhookEventsInfo(asyncEvents: [CUSTOMER_DELETED], syncEvents: [])
 
@@ -21976,7 +22299,9 @@ type Mutation {
   - STAFF_DELETED (async): A staff account was deleted.
   """
   staffBulkDelete(
-    """List of user IDs to delete."""
+    """
+    List of user IDs to delete. The number of items is limited to 100 by default. Exceeding the limit returns an `INVALID` error.
+    """
     ids: [ID!]!
   ): StaffBulkDelete @doc(category: "Users") @webhookEventsInfo(asyncEvents: [STAFF_DELETED], syncEvents: [])
 
@@ -22359,8 +22684,18 @@ input WarehouseUpdateInput @doc(category: "Products") {
 Deletes selected warehouse. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- WAREHOUSE_DELETED (async): A warehouse is deleted.
+- PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is removed together with the deleted warehouse.
+- PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+- PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
 """
-type WarehouseDelete @doc(category: "Products") {
+type WarehouseDelete @doc(category: "Products") @webhookEventsInfo(asyncEvents: [WAREHOUSE_DELETED, PRODUCT_VARIANT_OUT_OF_STOCK, PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL, PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: []) {
   warehouseErrors: [WarehouseError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [WarehouseError!]!
   warehouse: Warehouse
@@ -22990,6 +23325,13 @@ input ShopSettingsInput {
   """
   passwordLoginMode: PasswordLoginModeEnum
 
+  """
+  When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+  
+  Added in Saleor 3.23.
+  """
+  useLegacyShippingZoneStockAvailability: Boolean
+
   """Include taxes in prices."""
   includeTaxesInPrices: Boolean @deprecated(reason: "Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.")
 
@@ -23165,7 +23507,7 @@ Requires one of the following permissions: MANAGE_SETTINGS.
 """
 type RefundSettingsUpdate @doc(category: "Shop") {
   """Refund settings."""
-  refundSettings: RefundSettings!
+  refundSettings: RefundSettings
   refundSettingsErrors: [RefundSettingsUpdateError!]! @deprecated(reason: "Use `errors` field instead.")
   errors: [RefundSettingsUpdateError!]!
 }
@@ -23223,6 +23565,76 @@ type RefundReasonReferenceTypeClearError @doc(category: "Shop") {
 
   """Failed to clear refund reason reference type"""
   code: RefundSettingsErrorCode!
+}
+
+"""
+Update return settings across all channels.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: MANAGE_SETTINGS.
+"""
+type ReturnSettingsUpdate @doc(category: "Shop") {
+  """Return settings."""
+  returnSettings: ReturnSettings
+  returnSettingsErrors: [ReturnSettingsUpdateError!]! @deprecated(reason: "Use `errors` field instead.")
+  errors: [ReturnSettingsUpdateError!]!
+}
+
+type ReturnSettingsUpdateError @doc(category: "Shop") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """Failed to update Return Settings"""
+  code: ReturnSettingsErrorCode!
+}
+
+enum ReturnSettingsErrorCode @doc(category: "Shop") {
+  INVALID
+  NOT_FOUND
+  REQUIRED
+  GRAPHQL_ERROR
+}
+
+input ReturnSettingsUpdateInput @doc(category: "Shop") {
+  """
+  The ID of a model type, that will be used to reference return reasons. All models of this type will be accepted as return reasons. 
+  
+  Added in Saleor 3.23.
+  """
+  returnReasonReferenceType: ID!
+}
+
+"""
+Updates ReturnSettings. The `Page` (Model) Type will be cleared from `reasonReferenceType`. When it's cleared, passing reason reference to return mutations is no longer accepted and will raise error.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: MANAGE_SETTINGS.
+"""
+type ReturnReasonReferenceTypeClear @doc(category: "Orders") {
+  """Return settings."""
+  returnSettings: ReturnSettings
+  returnSettingsErrors: [ReturnReasonReferenceTypeClearError!]! @deprecated(reason: "Use `errors` field instead.")
+  errors: [ReturnReasonReferenceTypeClearError!]!
+}
+
+type ReturnReasonReferenceTypeClearError @doc(category: "Shop") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """Failed to clear return reason reference type"""
+  code: ReturnSettingsErrorCode!
 }
 
 """
@@ -23625,6 +24037,7 @@ enum ProductErrorCode @doc(category: "Products") {
   PREORDER_VARIANT_CANNOT_BE_DEACTIVATED
   INVALID_FILE_TYPE
   UNSUPPORTED_MIME_TYPE
+  FILE_SIZE_LIMIT_EXCEEDED
 }
 
 input ProductAttributeAssignInput @doc(category: "Products") {
@@ -23835,7 +24248,8 @@ enum CollectionErrorCode @doc(category: "Products") {
   NOT_FOUND
   REQUIRED
   UNIQUE
-  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT
+  CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT @deprecated(reason: "Products without variants can now be assigned to collections. This error will never be returned.")
+  FILE_SIZE_LIMIT_EXCEEDED
 }
 
 """
@@ -24300,6 +24714,7 @@ enum ProductBulkCreateErrorCode @doc(category: "Products") {
   UNIQUE
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL
   UNSUPPORTED_MEDIA_PROVIDER
+  FILE_SIZE_LIMIT_EXCEEDED
 }
 
 input ProductBulkCreateInput @doc(category: "Products") {
@@ -25318,8 +25733,17 @@ type ProductVariantBulkDelete @doc(category: "Products") {
 Creates stocks for product variant. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock is created in a warehouse.
+- PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+- PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
 """
-type ProductVariantStocksCreate @doc(category: "Products") {
+type ProductVariantStocksCreate @doc(category: "Products") @webhookEventsInfo(asyncEvents: [PRODUCT_VARIANT_BACK_IN_STOCK, PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL, PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: []) {
   """Updated product variant."""
   productVariant: ProductVariant
   bulkStockErrors: [BulkStockError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -25352,8 +25776,17 @@ type BulkStockError @doc(category: "Products") {
 Deletes stocks from product variant. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock is deleted from a warehouse.
+- PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+- PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
 """
-type ProductVariantStocksDelete @doc(category: "Products") {
+type ProductVariantStocksDelete @doc(category: "Products") @webhookEventsInfo(asyncEvents: [PRODUCT_VARIANT_OUT_OF_STOCK, PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL, PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: []) {
   """Updated product variant."""
   productVariant: ProductVariant
   stockErrors: [StockError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -25386,8 +25819,25 @@ enum StockErrorCode @doc(category: "Products") {
 Updates stocks for product variant. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- PRODUCT_VARIANT_STOCK_UPDATED (async): A product variant stock is updated.
+- PRODUCT_VARIANT_BACK_IN_STOCK (async): A product variant stock transitioned from no availability to available quantity.
+- PRODUCT_VARIANT_OUT_OF_STOCK (async): A product variant stock transitioned from available quantity to no availability.
+- PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL (async): A product variant is back in stock in a channel (non click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+- PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL (async): A product variant is out of stock in a channel (non click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+- PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is back in stock in a channel (click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+- PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT (async): A product variant is out of stock in a channel (click-and-collect warehouses).
+
+Note: Triggered only when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
 """
-type ProductVariantStocksUpdate @doc(category: "Products") {
+type ProductVariantStocksUpdate @doc(category: "Products") @webhookEventsInfo(asyncEvents: [PRODUCT_VARIANT_STOCK_UPDATED, PRODUCT_VARIANT_BACK_IN_STOCK, PRODUCT_VARIANT_OUT_OF_STOCK, PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL, PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL, PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT, PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT], syncEvents: []) {
   """Updated product variant."""
   productVariant: ProductVariant
   bulkStockErrors: [BulkStockError!]! @deprecated(reason: "Use `errors` field instead.")
@@ -27245,6 +27695,20 @@ input OrderReturnProductsInput @doc(category: "Orders") {
 
   """If true, Saleor will call refund action for all lines."""
   refund: Boolean = false
+
+  """
+  Reason for returning this order.
+  
+  Added in Saleor 3.23.
+  """
+  reason: String
+
+  """
+  ID of a `Page` (Model) to reference in reason for this return.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: ID
 }
 
 input OrderReturnLineInput @doc(category: "Orders") {
@@ -27256,6 +27720,20 @@ input OrderReturnLineInput @doc(category: "Orders") {
 
   """Determines, if the line should be added to replace order."""
   replace: Boolean = false
+
+  """
+  Reason for returning this line.
+  
+  Added in Saleor 3.23.
+  """
+  reason: String
+
+  """
+  ID of a `Page` (Model) to reference in reason for this line.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: ID
 }
 
 input OrderReturnFulfillmentLineInput @doc(category: "Orders") {
@@ -27267,6 +27745,20 @@ input OrderReturnFulfillmentLineInput @doc(category: "Orders") {
 
   """Determines, if the line should be added to replace order."""
   replace: Boolean = false
+
+  """
+  Reason for returning this fulfillment line.
+  
+  Added in Saleor 3.23.
+  """
+  reason: String
+
+  """
+  ID of a `Page` (Model) to reference in reason for this fulfillment line.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: ID
 }
 
 """
@@ -27302,6 +27794,7 @@ type OrderGrantRefundCreateError @doc(category: "Orders") {
 enum OrderGrantRefundCreateErrorCode @doc(category: "Orders") {
   GRAPHQL_ERROR
   NOT_FOUND
+  NOT_CONFIGURED
   SHIPPING_COSTS_ALREADY_GRANTED
   AMOUNT_GREATER_THAN_AVAILABLE
   REQUIRED
@@ -27328,6 +27821,8 @@ enum OrderGrantRefundCreateLineErrorCode {
   GRAPHQL_ERROR
   NOT_FOUND
   QUANTITY_GREATER_THAN_AVAILABLE
+  INVALID
+  NOT_CONFIGURED
 }
 
 input OrderGrantRefundCreateInput @doc(category: "Orders") {
@@ -27371,6 +27866,13 @@ input OrderGrantRefundCreateLineInput @doc(category: "Orders") {
 
   """Reason of the granted refund for the line."""
   reason: String
+
+  """
+  ID of a `Page` (Model) to reference in reason for the line.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: ID
 }
 
 """
@@ -27409,6 +27911,7 @@ type OrderGrantRefundUpdateError @doc(category: "Orders") {
 enum OrderGrantRefundUpdateErrorCode @doc(category: "Orders") {
   GRAPHQL_ERROR
   NOT_FOUND
+  NOT_CONFIGURED
   REQUIRED
   INVALID
   AMOUNT_GREATER_THAN_AVAILABLE
@@ -27435,6 +27938,8 @@ enum OrderGrantRefundUpdateLineErrorCode {
   GRAPHQL_ERROR
   NOT_FOUND
   QUANTITY_GREATER_THAN_AVAILABLE
+  INVALID
+  NOT_CONFIGURED
 }
 
 input OrderGrantRefundUpdateInput @doc(category: "Orders") {
@@ -27481,6 +27986,13 @@ input OrderGrantRefundUpdateLineAddInput @doc(category: "Orders") {
 
   """Reason of the granted refund for the line."""
   reason: String
+
+  """
+  ID of a `Page` (Model) to reference in reason for the line.
+  
+  Added in Saleor 3.23.
+  """
+  reasonReference: ID
 }
 
 """
@@ -30622,6 +31134,30 @@ type CheckoutCustomerNoteUpdate @doc(category: "Checkout") @webhookEventsInfo(as
 }
 
 """
+Deletes a checkout.
+
+Added in Saleor 3.23. 
+
+Requires one of the following permissions: MANAGE_CHECKOUTS.
+"""
+type CheckoutDelete @doc(category: "Checkout") {
+  errors: [CheckoutDeleteError!]!
+}
+
+type CheckoutDeleteError @doc(category: "Checkout") {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: CheckoutErrorCode!
+}
+
+"""
 Updates email address in the existing checkout object.
 
 Triggers the following webhook events:
@@ -32437,6 +32973,7 @@ enum AccountErrorCode @doc(category: "Users") {
   LOGIN_ATTEMPT_DELAYED
   DISABLED_AUTHENTICATION_METHOD
   UNKNOWN_IP_ADDRESS
+  FILE_SIZE_LIMIT_EXCEEDED
 }
 
 """
@@ -33739,6 +34276,84 @@ type Subscription @doc(category: "Miscellaneous") {
     """
     channels: [String!]
   ): CheckoutMetadataUpdated @doc(category: "Checkout")
+
+  """
+  Event sent when product variant discounted price is recalculated.
+  
+  Added in Saleor 3.22.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  productVariantDiscountedPriceUpdated(
+    """
+    List of channel slugs. The event will be sent only if the object belongs to one of the provided channels. If the channel slug list is empty, objects that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): ProductVariantDiscountedPriceUpdated @doc(category: "Products")
+
+  """
+  Event sent when a product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  
+  Added in Saleor 3.23.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  productVariantOutOfStockInChannel(
+    """
+    List of channel slugs. The event will be sent only if the object belongs to one of the provided channels. If the channel slug list is empty, objects that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): ProductVariantOutOfStockInChannel @doc(category: "Products")
+
+  """
+  Event sent when a product variant becomes available again across non click-and-collect warehouses in a channel.
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  
+  Added in Saleor 3.23.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  productVariantBackInStockInChannel(
+    """
+    List of channel slugs. The event will be sent only if the object belongs to one of the provided channels. If the channel slug list is empty, objects that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): ProductVariantBackInStockInChannel @doc(category: "Products")
+
+  """
+  Event sent when a product variant becomes out of stock across all click-and-collect warehouses in a channel.
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  
+  Added in Saleor 3.23.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  productVariantOutOfStockForClickAndCollect(
+    """
+    List of channel slugs. The event will be sent only if the object belongs to one of the provided channels. If the channel slug list is empty, objects that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): ProductVariantOutOfStockForClickAndCollect @doc(category: "Products")
+
+  """
+  Event sent when a product variant becomes available again across click-and-collect warehouses in a channel.
+  
+  Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+  
+  Added in Saleor 3.23.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  productVariantBackInStockForClickAndCollect(
+    """
+    List of channel slugs. The event will be sent only if the object belongs to one of the provided channels. If the channel slug list is empty, objects that belong to any channel will be sent. Maximally 500 items.
+    """
+    channels: [String!]
+  ): ProductVariantBackInStockForClickAndCollect @doc(category: "Products")
 }
 
 interface Event {
@@ -34125,6 +34740,145 @@ type CheckoutMetadataUpdated implements Event @doc(category: "Checkout") {
 
   """The checkout the event relates to."""
   checkout: Checkout
+}
+
+"""
+Event sent when product variant discounted price is recalculated.
+
+Added in Saleor 3.22.
+"""
+type ProductVariantDiscountedPriceUpdated implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product variant the event relates to."""
+  productVariant: ProductVariant!
+
+  """The channel where the price changed."""
+  channel: Channel!
+
+  """The previous discounted price."""
+  previousPrice: Money!
+
+  """The new discounted price."""
+  newPrice: Money!
+}
+
+"""
+Event sent when a product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+
+Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+
+Added in Saleor 3.23.
+"""
+type ProductVariantOutOfStockInChannel implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product variant the event relates to."""
+  productVariant: ProductVariant!
+
+  """The channel the stock availability changed in."""
+  channel: Channel!
+}
+
+"""
+Event sent when a product variant becomes available again across non click-and-collect warehouses in a channel.
+
+Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+
+Added in Saleor 3.23.
+"""
+type ProductVariantBackInStockInChannel implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product variant the event relates to."""
+  productVariant: ProductVariant!
+
+  """The channel the stock availability changed in."""
+  channel: Channel!
+}
+
+"""
+Event sent when a product variant becomes out of stock across all click-and-collect warehouses in a channel.
+
+Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+
+Added in Saleor 3.23.
+"""
+type ProductVariantOutOfStockForClickAndCollect implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product variant the event relates to."""
+  productVariant: ProductVariant!
+
+  """The channel the stock availability changed in."""
+  channel: Channel!
+}
+
+"""
+Event sent when a product variant becomes available again across click-and-collect warehouses in a channel.
+
+Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+
+Added in Saleor 3.23.
+"""
+type ProductVariantBackInStockForClickAndCollect implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product variant the event relates to."""
+  productVariant: ProductVariant!
+
+  """The channel the stock availability changed in."""
+  channel: Channel!
 }
 
 enum DistanceUnitsEnum {
@@ -35133,6 +35887,72 @@ type ProductExportCompleted implements Event @doc(category: "Products") {
   export: ExportFile
 }
 
+"""
+Event sent when new product type is created.
+
+Added in Saleor 3.24.
+"""
+type ProductTypeCreated implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product type the event relates to."""
+  productType: ProductType
+}
+
+"""
+Event sent when product type is updated.
+
+Added in Saleor 3.24.
+"""
+type ProductTypeUpdated implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product type the event relates to."""
+  productType: ProductType
+}
+
+"""
+Event sent when product type is deleted.
+
+Added in Saleor 3.24.
+"""
+type ProductTypeDeleted implements Event @doc(category: "Products") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The product type the event relates to."""
+  productType: ProductType
+}
+
 """Event sent when new product media is created."""
 type ProductMediaCreated implements Event @doc(category: "Products") {
   """Time of the event."""
@@ -35781,6 +36601,28 @@ type CustomerCreated implements Event @doc(category: "Users") {
 
 """Event sent when customer user is updated."""
 type CustomerUpdated implements Event @doc(category: "Users") {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The user the event relates to."""
+  user: User
+}
+
+"""
+Event sent when customer user is deleted.
+
+Added in Saleor 3.23.
+"""
+type CustomerDeleted implements Event @doc(category: "Users") {
   """Time of the event."""
   issuedAt: DateTime
 
@@ -37444,6 +38286,13 @@ type AssignedSwatchAttributeValue @doc(category: "Attributes") {
 
   """File associated with the attribute."""
   file: File
+
+  """
+  Translation of the name.
+  
+  Added in Saleor 3.22.
+  """
+  translation(languageCode: LanguageCodeEnum!): String
 }
 
 """
