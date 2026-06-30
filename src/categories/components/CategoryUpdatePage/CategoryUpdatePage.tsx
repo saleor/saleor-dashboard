@@ -1,9 +1,11 @@
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
+import { defaultGraphiQLQuery } from "@dashboard/categories/queries";
 import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -27,7 +29,7 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Fragment } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { type ListProps, type ListViews, type RelayToFlat } from "../../../types";
@@ -63,6 +65,13 @@ interface CategoryUpdatePageProps
   onImageUpload: (file: File | null) => any;
   onDelete: () => any;
 }
+
+const messages = defineMessages({
+  openGraphiQL: {
+    id: "qNpzxl",
+    defaultMessage: "Open this category in GraphiQL",
+  },
+});
 
 const CategoriesTab = Tab(CategoryPageTab.categories);
 const ProductsTab = Tab(CategoryPageTab.products);
@@ -105,6 +114,12 @@ export const CategoryUpdatePage = ({
     CATEGORY_DETAILS_MORE_ACTIONS,
     categoryId,
   );
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${category?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
 
   const ancestors = mapEdgesToItems(category?.ancestors);
   const breadcrumb =
@@ -147,9 +162,17 @@ export const CategoryUpdatePage = ({
                 }
               />
             )}
-            {extensionMenuItems.length > 0 && (
-              <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-            )}
+            <TopNav.Menu
+              items={[
+                ...extensionMenuItems,
+                {
+                  label: intl.formatMessage(messages.openGraphiQL),
+                  onSelect: openPlaygroundURL,
+                  testId: "graphiql-redirect",
+                },
+              ]}
+              dataTestId="menu"
+            />
           </TopNav>
           <DetailPageLayout.Content>
             <CategoryDetailsForm

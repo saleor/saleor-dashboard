@@ -90,3 +90,12 @@ export const customerCreateData = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query CustomerDetails($id: ID!) {
+  user(id: $id) {
+    id
+    email
+    firstName
+    lastName
+  }
+}`;

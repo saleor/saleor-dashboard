@@ -30,3 +30,11 @@ export const giftCardDetails = gql`
 `;
 
 export const GIFT_CARD_DETAILS_QUERY = getOperationAST(giftCardDetails).name.value;
+
+export const defaultGraphiQLQuery = `query GiftCardDetails($id: ID!) {
+  giftCard(id: $id) {
+    id
+    displayCode
+    isActive
+  }
+}`;

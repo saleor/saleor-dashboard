@@ -57,6 +57,15 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 }));
 
 jest.mock("@dashboard/components/Savebar");
+// The "Open in GraphiQL" action reads the Dev Mode context, which is only
+// provided at the app root. Stub the hook so the page renders in isolation.
+jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
+  useDevModeContext: () => ({
+    setDevModeContent: jest.fn(),
+    setVariables: jest.fn(),
+    setDevModeVisibility: jest.fn(),
+  }),
+}));
 jest.mock("@dashboard/extensions/hooks/useExtensions", () => ({
   useExtensions: () => ({
     PAGE_DETAILS_MORE_ACTIONS: [],

@@ -28,3 +28,11 @@ export const menuDetails = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query MenuDetails($id: ID!) {
+  menu(id: $id) {
+    id
+    name
+    slug
+  }
+}`;

@@ -4447,6 +4447,9 @@
     "context": "dialog header",
     "string": "Delete Channel: {channelSlug}"
   },
+  "LCPfA9": {
+    "string": "Open this voucher in GraphiQL"
+  },
   "LCmiky": {
     "string": "Shipping zones deleted"
   },
@@ -5216,6 +5219,10 @@
   "P8vgix": {
     "context": "select all model types preset label",
     "string": "All model types"
+  },
+  "P94gV7": {
+    "context": "Transaction cancel action label while a cancel request is in flight",
+    "string": "Cancel in progress"
   },
   "P98zBi": {
     "string": "Edit reason"
@@ -6274,6 +6281,10 @@
     "context": "date",
     "string": "since {date}"
   },
+  "UjzI96": {
+    "context": "Transaction capture button label while a capture request is in flight",
+    "string": "Capture in progress"
+  },
   "Um3g00": {
     "context": "send to customer selected label",
     "string": "Send gift card to customer"
@@ -6738,6 +6749,9 @@
   "XJm60a": {
     "string": "Manually change permission for the extension."
   },
+  "XL64mm": {
+    "string": "Open this menu in GraphiQL"
+  },
   "XLBNT0": {
     "context": "Header description when product is hidden",
     "string": "Invisible via public API"
@@ -6968,6 +6982,9 @@
   "YNUHeb": {
     "context": "attribute metadata dialog header",
     "string": "Attribute Metadata"
+  },
+  "YNhhZh": {
+    "string": "Open this gift card in GraphiQL"
   },
   "YPCB7b": {
     "context": "label for fixed amount discount type",
@@ -7680,6 +7697,9 @@
   "bqSNm/": {
     "context": "success notification when product media is uploaded",
     "string": "Image added"
+  },
+  "br+OIS": {
+    "string": "Open this model type in GraphiQL"
   },
   "brkxbY": {
     "string": "There are no transactions to refund"
@@ -8850,6 +8870,9 @@
   "iPk640": {
     "context": "dialog header",
     "string": "Media Selection"
+  },
+  "iSnXTt": {
+    "string": "Open this collection in GraphiQL"
   },
   "iSp+AA": {
     "context": "field translation status",
@@ -10070,6 +10093,9 @@
     "context": "header",
     "string": "Translation Page \"{pageName}\" - {languageCode}"
   },
+  "oUkVpp": {
+    "string": "Open this customer in GraphiQL"
+  },
   "oWIL0E": {
     "context": "order header date, older than yesterday",
     "string": "Created {date}"
@@ -10436,6 +10462,9 @@
   "qNeXG1": {
     "context": "User registration",
     "string": "User registration"
+  },
+  "qNpzxl": {
+    "string": "Open this category in GraphiQL"
   },
   "qOXgxv": {
     "context": "gift card history message",
@@ -11890,6 +11919,9 @@
   "xBulM3": {
     "string": "Set reward and conditions for the selected channel"
   },
+  "xEef/i": {
+    "string": "Open this model in GraphiQL"
+  },
   "xFSJR1": {
     "context": "recent changes shortcut",
     "string": "What's New"
@@ -11954,6 +11986,9 @@
   "xfGZsi": {
     "context": "configuration section name",
     "string": "Configuration"
+  },
+  "xfvvg2": {
+    "string": "Open this promotion in GraphiQL"
   },
   "xfypNP": {
     "context": "tooltip for variant selection column header",

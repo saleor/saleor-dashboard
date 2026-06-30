@@ -1,4 +1,8 @@
-import { TransactionActionEnum, type TransactionItemFragment } from "@dashboard/graphql";
+import {
+  TransactionActionEnum,
+  TransactionEventTypeEnum,
+  type TransactionItemFragment,
+} from "@dashboard/graphql";
 import { prepareMoney, transactions } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
@@ -14,6 +18,15 @@ const createTransaction = (
   index: 0,
   ...overrides,
 });
+
+const unresolvedRequestEvent = (
+  type: TransactionEventTypeEnum,
+): TransactionItemFragment["events"][number] =>
+  ({
+    id: `evt-${type}`,
+    type,
+    pspReference: "in-flight-ref",
+  }) as TransactionItemFragment["events"][number];
 
 describe("OrderTransactionCardTitle", () => {
   describe("amounts display logic", () => {
@@ -241,6 +254,112 @@ describe("OrderTransactionCardTitle", () => {
 
       // Assert
       expect(onTransactionAction).toHaveBeenCalledWith("txn-abc-123", TransactionActionEnum.CHARGE);
+    });
+
+    it("disables the Capture button with an in-progress label while a charge is in flight", () => {
+      // Arrange
+      const transaction = createTransaction({
+        actions: [TransactionActionEnum.CHARGE],
+        events: [unresolvedRequestEvent(TransactionEventTypeEnum.CHARGE_REQUEST)],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={jest.fn()}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByTestId("transaction-action-charge-button")).toBeDisabled();
+      expect(screen.getByText("Capture in progress")).toBeInTheDocument();
+      expect(screen.queryByText("Capture")).not.toBeInTheDocument();
+    });
+
+    it("does not call onTransactionAction when the in-flight Capture button is clicked", async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const onTransactionAction = jest.fn();
+      const transaction = createTransaction({
+        actions: [TransactionActionEnum.CHARGE],
+        events: [unresolvedRequestEvent(TransactionEventTypeEnum.CHARGE_REQUEST)],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={onTransactionAction}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+      await user.click(screen.getByTestId("transaction-action-charge-button"));
+
+      // Assert
+      expect(onTransactionAction).not.toHaveBeenCalled();
+    });
+
+    it("keeps the Capture button enabled once the charge request is resolved", () => {
+      // Arrange - request resolved by success: not in flight anymore
+      const transaction = createTransaction({
+        actions: [TransactionActionEnum.CHARGE],
+        events: [
+          unresolvedRequestEvent(TransactionEventTypeEnum.CHARGE_REQUEST),
+          {
+            id: "resolution",
+            type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+            pspReference: "in-flight-ref",
+          } as TransactionItemFragment["events"][number],
+        ],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={jest.fn()}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByTestId("transaction-action-charge-button")).toBeEnabled();
+      expect(screen.getByText("Capture")).toBeInTheDocument();
+    });
+
+    it("disables the Cancel menu item with an in-progress label while a cancel is in flight", async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const onTransactionAction = jest.fn();
+      const transaction = createTransaction({
+        actions: [TransactionActionEnum.CANCEL],
+        events: [unresolvedRequestEvent(TransactionEventTypeEnum.CANCEL_REQUEST)],
+      });
+
+      // Act
+      render(
+        <Wrapper>
+          <OrderTransactionCardTitle
+            transaction={transaction}
+            onTransactionAction={onTransactionAction}
+            showActions={true}
+          />
+        </Wrapper>,
+      );
+      await user.click(screen.getByTestId("transaction-menu-button"));
+
+      // Assert
+      expect(screen.getByText("Cancel in progress")).toBeInTheDocument();
+      await user.click(screen.getByText("Cancel in progress"));
+      expect(onTransactionAction).not.toHaveBeenCalled();
     });
 
     it("calls onTransactionAction when clicking menu action", async () => {

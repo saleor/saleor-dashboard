@@ -1,3 +1,4 @@
+import { AnnouncementsContainer } from "@dashboard/announcements/components/AnnouncementsContainer/AnnouncementsContainer";
 import useAppState from "@dashboard/hooks/useAppState";
 import { LinearProgress } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
@@ -43,6 +44,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <Sidebar />
         </Box>
         <Box height="100%" width="100%" overflow="hidden">
+          <AnnouncementsContainer margin={4} />
           <Box as="main" width="100%" height="100%">
             {children}
           </Box>

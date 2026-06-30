@@ -12,6 +12,7 @@ import AssignAttributeValueDialog, {
 import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -35,6 +36,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { defaultGraphiQLQuery } from "@dashboard/modeling/queries";
 import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { modelingSection } from "@dashboard/modeling/urls";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
@@ -153,6 +155,13 @@ const PageDetailsPage = ({
     path: modelingSection,
   });
 
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${page?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
+
   const { PAGE_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.PAGE_DETAILS);
   const extensionMenuItems = getExtensionsItemForPageDetails(PAGE_DETAILS_MORE_ACTIONS, page?.id);
   const builtInMenuItems = useMemo(() => {
@@ -165,6 +174,12 @@ const PageDetailsPage = ({
         testId: "open-model-type-settings",
       });
     }
+
+    items.push({
+      label: intl.formatMessage(messages.openGraphiQL),
+      onSelect: openPlaygroundURL,
+      testId: "graphiql-redirect",
+    });
 
     return items;
   }, [canManageModelTypes, intl, navigate, page?.pageType?.id]);

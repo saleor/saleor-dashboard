@@ -13,6 +13,9 @@ describe("useOrderDetails", () => {
     (useOrderDetailsQuery as jest.Mock).mockReturnValue({
       data: mockData,
       loading: false,
+      refetch: jest.fn(),
+      startPolling: jest.fn(),
+      stopPolling: jest.fn(),
     });
 
     // Act
