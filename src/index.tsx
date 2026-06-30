@@ -84,7 +84,6 @@ const TaxesSection = lazy(() => import("./taxes"));
 const TranslationsSection = lazy(() => import("./translations"));
 const WarehouseSection = lazy(() => import("./warehouses"));
 const ConfigurationSection = lazy(() => import("./configuration"));
-const WelcomePage = lazy(() => import("./welcomePage").then(m => ({ default: m.WelcomePage })));
 const HomePage = lazy(() => import("./home/HomePage").then(m => ({ default: m.HomePage })));
 const RefundsSettingsRoute = lazy(() =>
   import("./refundsSettings/route").then(m => ({ default: m.RefundsSettingsRoute })),
@@ -191,7 +190,7 @@ const Routes = () => {
               <Suspense fallback={<LoginLoading />}>
                 <Switch>
                   {legacyRedirects}
-                  <SectionRoute exact path="/" component={WelcomePage} />
+                  <Redirect exact from="/" to="/home" />
                   <SectionRoute exact path="/home" component={HomePage} />
                   <SectionRoute exact path="/home/widget/:extensionId" component={HomePage} />
                   <SectionRoute exact path="/home/widgets" component={HomePage} />

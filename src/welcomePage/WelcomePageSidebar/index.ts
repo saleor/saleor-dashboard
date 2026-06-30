@@ -1,1 +1,0 @@
-export { WelcomePageSidebar } from "./WelcomePageSidebar";

@@ -12056,11 +12056,6 @@ export type GiftCardTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GiftCardTotalCountQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', totalCount: number | null } | null };
 
-export type GiftCardProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GiftCardProductsCountQuery = { __typename: 'Query', giftCardProductTypes: { __typename: 'ProductTypeCountableConnection', totalCount: number | null } | null };
-
 export type CustomerGiftCardListQueryVariables = Exact<{
   userId: Scalars['ID']['input'];
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -13116,14 +13111,6 @@ export type AvailableColumnAttributesQueryVariables = Exact<{
 
 export type AvailableColumnAttributesQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
-export type GridWarehousesQueryVariables = Exact<{
-  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
-  hasWarehouses: Scalars['Boolean']['input'];
-}>;
-
-
-export type GridWarehousesQuery = { __typename: 'Query', selectedWarehouses?: { __typename: 'WarehouseCountableConnection', edges: Array<{ __typename: 'WarehouseCountableEdge', node: { __typename: 'Warehouse', id: string, name: string } }> } | null };
-
 export type StockVisibilityModeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -13133,18 +13120,6 @@ export type ChannelDiagnosticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ChannelDiagnosticsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean }, channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string, isActive: boolean, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> }> | null, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } }> } | null };
-
-export type SetRefundReasonTypeMutationVariables = Exact<{
-  modelTypeId: Scalars['ID']['input'];
-}>;
-
-
-export type SetRefundReasonTypeMutation = { __typename: 'Mutation', refundSettingsUpdate: { __typename: 'RefundSettingsUpdate', errors: Array<{ __typename: 'RefundSettingsUpdateError', message: string | null, code: RefundSettingsErrorCode }> } | null };
-
-export type ClearRefundReasonTypeMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ClearRefundReasonTypeMutation = { __typename: 'Mutation', refundReasonReferenceClear: { __typename: 'RefundReasonReferenceTypeClear', errors: Array<{ __typename: 'RefundReasonReferenceTypeClearError', message: string | null, code: RefundSettingsErrorCode }> } | null };
 
 export type RefundsSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -13445,13 +13420,6 @@ export type DeleteShippingRateMutationVariables = Exact<{
 
 export type DeleteShippingRateMutation = { __typename: 'Mutation', shippingPriceDelete: { __typename: 'ShippingPriceDelete', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }>, shippingZone: { __typename: 'ShippingZone', id: string, name: string, description: string | null, shippingMethods: Array<{ __typename: 'ShippingMethodType', minimumDeliveryDays: number | null, maximumDeliveryDays: number | null, name: string, description: string | null, type: ShippingMethodTypeEnum | null, id: string, taxClass: { __typename: 'TaxClass', name: string, id: string } | null, minimumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, maximumOrderWeight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, channelListings: Array<{ __typename: 'ShippingMethodChannelListing', id: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, price: { __typename: 'Money', amount: number, currency: string } | null, minimumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null, maximumOrderPrice: { __typename: 'Money', amount: number, currency: string } | null }> | null, postalCodeRules: Array<{ __typename: 'ShippingMethodPostalCodeRule', id: string, inclusionType: PostalCodeRuleInclusionTypeEnum | null, start: string | null, end: string | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> | null, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', country: string, code: string }>, priceRange: { __typename: 'MoneyRange', start: { __typename: 'Money', amount: number, currency: string } | null, stop: { __typename: 'Money', amount: number, currency: string } | null } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
 
-export type BulkDeleteShippingRateMutationVariables = Exact<{
-  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
-}>;
-
-
-export type BulkDeleteShippingRateMutation = { __typename: 'Mutation', shippingPriceBulkDelete: { __typename: 'ShippingPriceBulkDelete', errors: Array<{ __typename: 'ShippingError', code: ShippingErrorCode, field: string | null, message: string | null }> } | null };
-
 export type ShippingMethodChannelListingUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   input: ShippingMethodChannelListingInput;
@@ -13568,14 +13536,6 @@ export type StaffMemberUpdateMutationVariables = Exact<{
 
 
 export type StaffMemberUpdateMutation = { __typename: 'Mutation', staffUpdate: { __typename: 'StaffUpdate', errors: Array<{ __typename: 'StaffError', code: AccountErrorCode, field: string | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, permissionGroups: Array<{ __typename: 'Group', id: string, name: string, userCanManage: boolean }> | null, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
-
-export type UserPassowrdChangeMutationVariables = Exact<{
-  newPassword: Scalars['String']['input'];
-  oldPassword: Scalars['String']['input'];
-}>;
-
-
-export type UserPassowrdChangeMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
 
 export type UserAccountUpdateMutationVariables = Exact<{
   input: AccountInput;

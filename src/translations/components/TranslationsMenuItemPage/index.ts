@@ -1,1 +1,0 @@
-export { TranslationsMenuItemPage } from "./TranslationsMenuItemPage";

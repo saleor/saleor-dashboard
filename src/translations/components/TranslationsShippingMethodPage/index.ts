@@ -1,1 +1,0 @@
-export { TranslationsShippingMethodPage } from "./TranslationsShippingMethodPage";
