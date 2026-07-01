@@ -386,9 +386,6 @@
     "context": "Suffix for show-more button when hidden problems include active ones",
     "string": ", including {active} active"
   },
-  "0+zatS": {
-    "string": "Hello {userName}, welcome to your Store Dashboard"
-  },
   "0/Y0nG": {
     "context": "date group header",
     "string": "Last 7 days"

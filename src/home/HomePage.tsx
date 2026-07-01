@@ -1,7 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
-import { getUserName } from "@dashboard/misc";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 import { useParams, useRouteMatch } from "react-router";
@@ -11,7 +9,6 @@ import { filterHomeExtensions } from "./filterHomeExtensions";
 import { HomeWidgetsGrid } from "./HomeWidgetsGrid";
 import { type HomeActiveTab, HomeWidgetTabs } from "./HomeWidgetTabs";
 import { HomeWidgetView } from "./HomeWidgetView";
-import { rippleHomeWidgets } from "./ripples/homeWidgets";
 import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
 
 const HOMEPAGE_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
@@ -108,22 +105,11 @@ export const HomePage = () => {
     activeTab = { kind: "extension", id: activeExtension.id };
   }
 
-  const userName = getUserName(user, true);
   const showWidgetsTab = widgets.length > 0;
 
   return (
     <Box display="flex" flexDirection="column" height="100%">
-      <Box paddingX={6} paddingTop={6} display="flex" alignItems="center" gap={4}>
-        <Text size={6} fontWeight="bold" as="h1" data-test-id="welcome-header">
-          <FormattedMessage
-            id="0+zatS"
-            defaultMessage="Hello {userName}, welcome to your Store Dashboard"
-            values={{ userName }}
-          />
-        </Text>
-        <Ripple model={rippleHomeWidgets} />
-      </Box>
-      <Box paddingX={6} paddingTop={4}>
+      <Box paddingX={6} paddingTop={6}>
         <HomeWidgetTabs
           fullscreenExtensions={fullscreen}
           showWidgetsTab={showWidgetsTab}

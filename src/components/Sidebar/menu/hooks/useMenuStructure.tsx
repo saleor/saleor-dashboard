@@ -19,6 +19,7 @@ import {
 } from "@dashboard/extensions/urls";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
+import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
 import { CustomersIcon } from "@dashboard/icons/Customers";
 import { DiscountsIcon } from "@dashboard/icons/Discounts";
@@ -105,6 +106,7 @@ export function useMenuStructure() {
       id: "home",
       url: "/home",
       type: "item",
+      endAdornment: <Ripple model={rippleHomeWidgets} />,
     },
     {
       icon: renderIcon(<Search {...navigationLucideIconProps} />),
