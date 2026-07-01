@@ -9,7 +9,7 @@ import { type ExtensionWithParams } from "@dashboard/extensions/types";
 import { type AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -61,6 +61,17 @@ export const AppWidgetExtensionItem = ({
           </Link>
         );
     }
+  }
+
+  if (extension.fromCache) {
+    // Snapshot extension has no real access token yet — show a loader and wait
+    // for the background revalidation. Mounting the iframe now would POST/handshake
+    // an empty token and crash the app with "Invalid JWT".
+    return (
+      <AppWidgetCard extension={extension}>
+        <Skeleton />
+      </AppWidgetCard>
+    );
   }
 
   const isIframePost = settings?.widgetTarget?.method === "POST";

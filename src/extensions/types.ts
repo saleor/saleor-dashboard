@@ -89,6 +89,13 @@ export interface Extension {
    * extension is mapped from the GraphQL response.
    */
   isSaleorOfficial: boolean;
+  /**
+   * True when this extension was reconstructed from the localStorage snapshot
+   * (background revalidation still in flight). Snapshot extensions have no real
+   * accessToken yet, so token-dependent actions (iframe POST/handshake, new-tab
+   * POST) must wait until this is false.
+   */
+  fromCache: boolean;
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {
