@@ -45,6 +45,9 @@ export interface CustomerOrderKpiMetrics {
 export const isCancelledOrderStatus = (status: string): boolean =>
   status === "CANCELED" || status === "CANCELLED";
 
+export const isExcludedFromCustomerOrderKpis = (status: string): boolean =>
+  isCancelledOrderStatus(status) || status === "DRAFT";
+
 export const filterOrdersByChannel = <T extends { channel?: ChannelFromOrder | null }>(
   orders: ReadonlyArray<T>,
   channelId: string,
@@ -55,21 +58,25 @@ export const selectRecentOrdersForKpis = <T extends { status: string; created: s
   windowSize = RECENT_ORDERS_WINDOW,
 ): T[] =>
   [...orders]
-    .filter(order => !isCancelledOrderStatus(order.status))
+    .filter(order => !isExcludedFromCustomerOrderKpis(order.status))
     .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
     .slice(0, windowSize);
 
 /**
  * Unique channels from order history, ordered by the customer's most recent
- * non-cancelled order in each channel (most recently shopped channel first).
+ * qualifying order in each channel (most recently shopped channel first).
  */
 export const extractChannelsFromOrders = (
-  orders: ReadonlyArray<CustomerOrderForKpi>,
+  orders: ReadonlyArray<{
+    status: string;
+    created: string;
+    channel?: ChannelFromOrder | null;
+  }>,
 ): ChannelFromOrder[] => {
   const latestOrderAtByChannel = new Map<string, { channel: ChannelFromOrder; created: string }>();
 
   for (const order of orders) {
-    if (!order.channel?.id || isCancelledOrderStatus(order.status)) {
+    if (!order.channel?.id || isExcludedFromCustomerOrderKpis(order.status)) {
       continue;
     }
 

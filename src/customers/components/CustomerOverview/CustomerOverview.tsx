@@ -13,7 +13,7 @@ import { type IMoney } from "@dashboard/utils/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Banknote, LogIn, Receipt, ShoppingCart } from "lucide-react";
-import { type ReactNode, useEffect, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./CustomerOverview.module.css";
@@ -22,8 +22,6 @@ import { CustomerOverviewMoneyBreakdownTooltip } from "./CustomerOverviewMoneyBr
 import {
   buildCustomerOrderKpiMetrics,
   type CustomerOrderKpiMetrics,
-  extractChannelsFromOrders,
-  filterOrdersByChannel,
   selectRecentOrdersForKpis,
 } from "./utils";
 
@@ -37,31 +35,22 @@ const EMPTY_VALUE = "—";
 export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Element => {
   const intl = useIntl();
   const { locale } = useLocale();
-  const { kpiChannelId, setKpiChannelId } = useCustomerDetails();
+  const { effectiveKpiChannelId, kpiChannels, setKpiChannelId } = useCustomerDetails();
   const loading = !customer;
 
-  const kpiOrders = useMemo(
-    () => mapEdgesToItems(customer?.kpiOrders) ?? [],
-    [customer?.kpiOrders],
-  );
+  const channelOrders = useMemo(() => {
+    if (!effectiveKpiChannelId || customer?.kpiOrders === undefined) {
+      return [];
+    }
 
-  const channels = useMemo(() => extractChannelsFromOrders(kpiOrders), [kpiOrders]);
+    const orders = mapEdgesToItems(customer.kpiOrders) ?? [];
 
-  const effectiveChannelId = kpiChannelId ?? channels[0]?.id;
+    if (orders.length > 0 && orders.some(order => order.channel?.id !== effectiveKpiChannelId)) {
+      return [];
+    }
 
-  useEffect(
-    function selectDefaultKpiChannel() {
-      if (channels.length > 0 && !kpiChannelId) {
-        setKpiChannelId(channels[0].id);
-      }
-    },
-    [channels, kpiChannelId, setKpiChannelId],
-  );
-
-  const channelOrders = useMemo(
-    () => (effectiveChannelId ? filterOrdersByChannel(kpiOrders, effectiveChannelId) : []),
-    [effectiveChannelId, kpiOrders],
-  );
+    return orders;
+  }, [customer?.kpiOrders, effectiveKpiChannelId]);
 
   const recentOrders = useMemo(() => selectRecentOrdersForKpis(channelOrders), [channelOrders]);
 
@@ -72,7 +61,8 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
 
   const totalOrders = customer?.kpiNonCancelledOrderCount?.totalCount;
   const totalOrdersLoading =
-    loading || (Boolean(effectiveChannelId) && customer?.kpiNonCancelledOrderCount === undefined);
+    loading ||
+    (Boolean(effectiveKpiChannelId) && customer?.kpiNonCancelledOrderCount === undefined);
 
   const renderMoneyValue = (money: IMoney): JSX.Element => (
     <>
@@ -83,19 +73,23 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
     </>
   );
 
+  const selectedChannelName = kpiChannels.find(
+    channel => channel.id === effectiveKpiChannelId,
+  )?.name;
+
   const renderRecentWindowSubtitle = (): JSX.Element | undefined => {
-    if (!metrics) {
+    if (!metrics || !selectedChannelName) {
       return undefined;
     }
 
     return (
       <FormattedMessage
-        defaultMessage="{count} of last {windowSize, plural, one {# order} other {# orders}} in {currency}"
+        defaultMessage="{count} of last {windowSize, plural, one {# order} other {# orders}} in {channelName}"
         description="customer overview, subtitle scoping recent money stats to the selected channel window"
-        id="TjB4Wn"
+        id="doQvFl"
         values={{
+          channelName: selectedChannelName,
           count: metrics.orderCount,
-          currency: metrics.currency,
           windowSize: metrics.windowSize,
         }}
       />
@@ -146,10 +140,10 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
     <DashboardCard data-test-id="customer-overview">
       <DashboardCard.Content paddingY={6}>
         <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-          {!loading && channels.length > 0 && (
+          {!loading && kpiChannels.length > 0 && (
             <CustomerOverviewChannelScope
-              channels={channels}
-              selectedChannelId={effectiveChannelId}
+              channels={kpiChannels}
+              selectedChannelId={effectiveKpiChannelId}
               onChannelChange={setKpiChannelId}
             />
           )}
@@ -175,9 +169,9 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                 }
                 tooltip={
                   <FormattedMessage
-                    defaultMessage="Number of orders placed by this customer in the selected channel. Cancelled orders are not counted."
+                    defaultMessage="Number of orders placed by this customer in the selected channel. Draft and cancelled orders are not counted."
                     description="customer overview, total orders tooltip"
-                    id="aIookg"
+                    id="xwXFUB"
                   />
                 }
                 value={totalOrdersLoading ? EMPTY_VALUE : (totalOrders ?? 0)}

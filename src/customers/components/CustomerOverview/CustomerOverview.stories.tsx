@@ -44,7 +44,17 @@ const kpiOrderNode = {
 
 const withKpiContext = (channelId = "Q2hhbm5lbDox") => ({
   customer: null,
+  effectiveKpiChannelId: channelId,
   kpiChannelId: channelId,
+  kpiChannels: [
+    {
+      id: "Q2hhbm5lbDox",
+      name: "United States",
+      slug: "us",
+      isActive: true,
+      currencyCode: "USD",
+    },
+  ],
   loading: false,
   setKpiChannelId: () => undefined,
 });
@@ -83,6 +93,10 @@ export const NoOrders: Story = {
       orders: {
         __typename: "OrderCountableConnection",
         totalCount: 0,
+        edges: [],
+      },
+      kpiOrderChannels: {
+        __typename: "OrderCountableConnection",
         edges: [],
       },
       kpiOrders: {
@@ -130,7 +144,27 @@ export const NetSalesVsCheckoutTotal: Story = {
 export const MultiChannelOrders: Story = {
   decorators: [
     (Story: FC) => (
-      <CustomerDetailsContext.Provider value={withKpiContext("Q2hhbm5lbDox")}>
+      <CustomerDetailsContext.Provider
+        value={{
+          ...withKpiContext("Q2hhbm5lbDox"),
+          kpiChannels: [
+            {
+              id: "Q2hhbm5lbDox",
+              name: "United States",
+              slug: "us",
+              isActive: true,
+              currencyCode: "USD",
+            },
+            {
+              id: "Q2hhbm5lbDoy",
+              name: "Europe",
+              slug: "eu",
+              isActive: true,
+              currencyCode: "EUR",
+            },
+          ],
+        }}
+      >
         <Story />
       </CustomerDetailsContext.Provider>
     ),
@@ -138,12 +172,14 @@ export const MultiChannelOrders: Story = {
   args: {
     customer: {
       ...customer,
-      kpiOrders: {
+      kpiOrderChannels: {
         __typename: "OrderCountableConnection",
         edges: [
           {
             __typename: "OrderCountableEdge",
-            node: kpiOrderNode,
+            node: {
+              ...kpiOrderNode,
+            },
           },
           {
             __typename: "OrderCountableEdge",
@@ -151,27 +187,6 @@ export const MultiChannelOrders: Story = {
               ...kpiOrderNode,
               id: "T3JkZXI6Mg==",
               created: "2026-02-10T08:00:00Z",
-              subtotal: {
-                __typename: "TaxedMoney",
-                net: {
-                  __typename: "Money",
-                  amount: 50,
-                  currency: "EUR",
-                },
-              },
-              shippingPrice: {
-                __typename: "TaxedMoney",
-                gross: {
-                  __typename: "Money",
-                  amount: 5,
-                  currency: "EUR",
-                },
-              },
-              totalRefunded: {
-                __typename: "Money",
-                amount: 10,
-                currency: "EUR",
-              },
               channel: {
                 __typename: "Channel",
                 id: "Q2hhbm5lbDoy",
@@ -181,6 +196,15 @@ export const MultiChannelOrders: Story = {
                 currencyCode: "EUR",
               },
             },
+          },
+        ],
+      },
+      kpiOrders: {
+        __typename: "OrderCountableConnection",
+        edges: [
+          {
+            __typename: "OrderCountableEdge",
+            node: kpiOrderNode,
           },
         ],
       },

@@ -66,11 +66,34 @@ export const customerDetails = gql`
                 amount
               }
             }
+            subtotal {
+              net {
+                currency
+                amount
+              }
+            }
             chargeStatus
           }
         }
       }
-      kpiOrders: orders(first: 50) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      kpiOrderChannels: orders(first: 50) @include(if: $PERMISSION_MANAGE_ORDERS) {
+        edges {
+          node {
+            id
+            status
+            created
+            channel {
+              id
+              name
+              slug
+              isActive
+              currencyCode
+            }
+          }
+        }
+      }
+      kpiOrders: orders(first: 50, where: { channelId: { eq: $kpiChannelId } })
+        @include(if: $includeKpiOrderCount) {
         edges {
           node {
             id
@@ -109,7 +132,6 @@ export const customerDetails = gql`
             {
               status: {
                 oneOf: [
-                  DRAFT
                   UNCONFIRMED
                   UNFULFILLED
                   PARTIALLY_FULFILLED

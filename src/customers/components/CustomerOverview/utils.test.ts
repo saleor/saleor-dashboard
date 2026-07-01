@@ -4,6 +4,7 @@ import {
   extractChannelsFromOrders,
   filterOrdersByChannel,
   isCancelledOrderStatus,
+  isExcludedFromCustomerOrderKpis,
   selectRecentOrdersForKpis,
 } from "./utils";
 
@@ -33,11 +34,21 @@ describe("isCancelledOrderStatus", () => {
   });
 });
 
+describe("isExcludedFromCustomerOrderKpis", () => {
+  it("excludes cancelled and draft orders", () => {
+    // Arrange / Act / Assert
+    expect(isExcludedFromCustomerOrderKpis("CANCELED")).toBe(true);
+    expect(isExcludedFromCustomerOrderKpis("DRAFT")).toBe(true);
+    expect(isExcludedFromCustomerOrderKpis("FULFILLED")).toBe(false);
+  });
+});
+
 describe("selectRecentOrdersForKpis", () => {
-  it("filters cancelled orders, sorts by created desc, and limits to the window", () => {
+  it("filters draft and cancelled orders, sorts by created desc, and limits to the window", () => {
     // Arrange
     const orders = [
-      order({ created: "2026-01-01T00:00:00Z", status: "CANCELED" }),
+      order({ created: "2026-01-01T00:00:00Z", status: "DRAFT" }),
+      order({ created: "2026-01-02T00:00:00Z", status: "CANCELED" }),
       order({
         created: "2026-02-01T00:00:00Z",
         subtotal: { net: { amount: 20, currency: "USD" } },
