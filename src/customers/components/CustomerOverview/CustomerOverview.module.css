@@ -3,3 +3,26 @@
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--mu-spacing-4);
 }
+
+.moneyTooltip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-2);
+  min-width: 11rem;
+}
+
+.moneyTooltipRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--mu-spacing-6);
+  align-items: baseline;
+}
+
+.moneyTooltipLabel {
+  white-space: nowrap;
+}
+
+.moneyTooltipValue {
+  text-align: right;
+  white-space: nowrap;
+}

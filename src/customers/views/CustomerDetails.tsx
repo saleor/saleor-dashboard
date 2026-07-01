@@ -257,7 +257,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
 };
 
 const CustomerDetailsView = ({ id, params }: CustomerDetailsViewProps) => (
-  <CustomerDetailsProvider id={id}>
+  <CustomerDetailsProvider key={id} id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>
 );

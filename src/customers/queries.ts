@@ -41,6 +41,8 @@ export const customerDetails = gql`
     $id: ID!
     $PERMISSION_MANAGE_ORDERS: Boolean!
     $PERMISSION_MANAGE_STAFF: Boolean!
+    $kpiChannelId: ID!
+    $includeKpiOrderCount: Boolean!
   ) {
     user(id: $id) {
       ...CustomerDetails
@@ -64,9 +66,87 @@ export const customerDetails = gql`
                 amount
               }
             }
+            subtotal {
+              net {
+                currency
+                amount
+              }
+            }
             chargeStatus
           }
         }
+      }
+      kpiOrderChannels: orders(first: 50) @include(if: $PERMISSION_MANAGE_ORDERS) {
+        edges {
+          node {
+            id
+            status
+            created
+            channel {
+              id
+              name
+              slug
+              isActive
+              currencyCode
+            }
+          }
+        }
+      }
+      kpiOrders: orders(first: 50, where: { channelId: { eq: $kpiChannelId } })
+        @include(if: $includeKpiOrderCount) {
+        edges {
+          node {
+            id
+            status
+            created
+            subtotal {
+              net {
+                amount
+                currency
+              }
+            }
+            shippingPrice {
+              gross {
+                amount
+                currency
+              }
+            }
+            totalRefunded {
+              amount
+              currency
+            }
+            channel {
+              id
+              name
+              slug
+              isActive
+              currencyCode
+            }
+          }
+        }
+      }
+      kpiNonCancelledOrderCount: orders(
+        first: 1
+        where: {
+          AND: [
+            {
+              status: {
+                oneOf: [
+                  UNCONFIRMED
+                  UNFULFILLED
+                  PARTIALLY_FULFILLED
+                  PARTIALLY_RETURNED
+                  RETURNED
+                  FULFILLED
+                  EXPIRED
+                ]
+              }
+            }
+            { channelId: { eq: $kpiChannelId } }
+          ]
+        }
+      ) @include(if: $includeKpiOrderCount) {
+        totalCount
       }
     }
   }
