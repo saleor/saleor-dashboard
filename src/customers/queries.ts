@@ -41,6 +41,8 @@ export const customerDetails = gql`
     $id: ID!
     $PERMISSION_MANAGE_ORDERS: Boolean!
     $PERMISSION_MANAGE_STAFF: Boolean!
+    $kpiChannelId: ID!
+    $includeKpiOrderCount: Boolean!
   ) {
     user(id: $id) {
       ...CustomerDetails
@@ -67,6 +69,62 @@ export const customerDetails = gql`
             chargeStatus
           }
         }
+      }
+      kpiOrders: orders(first: 50) @include(if: $PERMISSION_MANAGE_ORDERS) {
+        edges {
+          node {
+            id
+            status
+            created
+            subtotal {
+              net {
+                amount
+                currency
+              }
+            }
+            shippingPrice {
+              gross {
+                amount
+                currency
+              }
+            }
+            totalRefunded {
+              amount
+              currency
+            }
+            channel {
+              id
+              name
+              slug
+              isActive
+              currencyCode
+            }
+          }
+        }
+      }
+      kpiNonCancelledOrderCount: orders(
+        first: 1
+        where: {
+          AND: [
+            {
+              status: {
+                oneOf: [
+                  DRAFT
+                  UNCONFIRMED
+                  UNFULFILLED
+                  PARTIALLY_FULFILLED
+                  PARTIALLY_RETURNED
+                  RETURNED
+                  FULFILLED
+                  EXPIRED
+                ]
+              }
+            }
+            { channelId: { eq: $kpiChannelId } }
+          ]
+        }
+      ) @include(if: $includeKpiOrderCount) {
+        totalCount
       }
     }
   }

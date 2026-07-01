@@ -7525,7 +7525,7 @@ export type ListCustomersQueryHookResult = ReturnType<typeof useListCustomersQue
 export type ListCustomersLazyQueryHookResult = ReturnType<typeof useListCustomersLazyQuery>;
 export type ListCustomersQueryResult = Apollo.QueryResult<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>;
 export const CustomerDetailsDocument = gql`
-    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!) {
+    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!, $kpiChannelId: ID!, $includeKpiOrderCount: Boolean!) {
   user(id: $id) {
     ...CustomerDetails
     metadata {
@@ -7552,6 +7552,44 @@ export const CustomerDetailsDocument = gql`
         }
       }
     }
+    kpiOrders: orders(first: 50) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      edges {
+        node {
+          id
+          status
+          created
+          subtotal {
+            net {
+              amount
+              currency
+            }
+          }
+          shippingPrice {
+            gross {
+              amount
+              currency
+            }
+          }
+          totalRefunded {
+            amount
+            currency
+          }
+          channel {
+            id
+            name
+            slug
+            isActive
+            currencyCode
+          }
+        }
+      }
+    }
+    kpiNonCancelledOrderCount: orders(
+      first: 1
+      where: {AND: [{status: {oneOf: [DRAFT, UNCONFIRMED, UNFULFILLED, PARTIALLY_FULFILLED, PARTIALLY_RETURNED, RETURNED, FULFILLED, EXPIRED]}}, {channelId: {eq: $kpiChannelId}}]}
+    ) @include(if: $includeKpiOrderCount) {
+      totalCount
+    }
   }
 }
     ${CustomerDetailsFragmentDoc}
@@ -7572,6 +7610,8 @@ ${MetadataItemFragmentDoc}`;
  *      id: // value for 'id'
  *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
  *      PERMISSION_MANAGE_STAFF: // value for 'PERMISSION_MANAGE_STAFF'
+ *      kpiChannelId: // value for 'kpiChannelId'
+ *      includeKpiOrderCount: // value for 'includeKpiOrderCount'
  *   },
  * });
  */

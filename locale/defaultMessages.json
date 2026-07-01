@@ -1469,6 +1469,10 @@
     "context": "voucher is active from date",
     "string": "Starts"
   },
+  "5uJn4N": {
+    "context": "customer overview, AOV tooltip",
+    "string": "Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
+  },
   "5wktck": {
     "context": "Description for no variant in channel error",
     "string": "Variants exist but none are available in this channel. Add variant channel listings."
@@ -2323,10 +2327,6 @@
   "AJF7N5": {
     "context": "scope note for model type tab grouping help tooltip",
     "string": "Browser-only display — does not rename, merge, or change your model types or data."
-  },
-  "AJMlmz": {
-    "context": "customer overview stat label: sum of recent orders",
-    "string": "Recent orders total"
   },
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
@@ -6075,10 +6075,6 @@
     "context": "intro for model type tab grouping help tooltip",
     "string": "Each model type name is split at the first matching separator. The part before becomes the tab name; the part after appears in the tab menu."
   },
-  "TZq1Tm": {
-    "context": "customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency",
-    "string": "Across last {count, plural, one {# order} other {# orders}} in {currency}"
-  },
   "TZtvTG": {
     "context": "table header required stock label",
     "string": "Required"
@@ -6105,6 +6101,10 @@
   "TfzIXS": {
     "context": "tax classes card header",
     "string": "General information"
+  },
+  "TjB4Wn": {
+    "context": "customer overview, subtitle scoping recent money stats to the selected channel window",
+    "string": "{count} of last {windowSize, plural, one {# order} other {# orders}} in {currency}"
   },
   "TjGYna": {
     "context": "product inventory, checkbox",
@@ -7366,6 +7366,10 @@
   "aI80kg": {
     "string": "Properties"
   },
+  "aIookg": {
+    "context": "customer overview, total orders tooltip",
+    "string": "Number of orders placed by this customer in the selected channel. Cancelled orders are not counted."
+  },
   "aJm/by": {
     "context": "Taxes section title",
     "string": "Tax classes"
@@ -8131,10 +8135,6 @@
     "context": "product inventory, checkbox",
     "string": "Variant currently in preorder"
   },
-  "eAvs2Y": {
-    "context": "customer overview, subtitle scoping a money stat when only part of the fetched recent orders belong to this currency",
-    "string": "{count} of last {total, plural, one {# order} other {# orders}} in {currency}"
-  },
   "eB6oHa": {
     "context": "Message when product is not in any channel",
     "string": "Product is not listed in any channel"
@@ -8762,6 +8762,10 @@
   "ht9yOD": {
     "context": "table head",
     "string": "Collection Name"
+  },
+  "htV3fN": {
+    "context": "customer overview, prefix before channel name or channel selector",
+    "string": "Statistics from"
   },
   "htvX+Z": {
     "string": "Deny"
@@ -9700,9 +9704,17 @@
     "context": "button",
     "string": "Create shipping zone"
   },
+  "mKu838": {
+    "context": "customer overview, value tooltip heading for shipping and refund breakdown",
+    "string": "From these orders"
+  },
   "mLZMb6": {
     "context": "ChannelsSection select field label",
     "string": "Channel"
+  },
+  "mMEpFC": {
+    "context": "customer overview, refunded row label in value tooltip",
+    "string": "Refunded"
   },
   "mMOskm": {
     "string": "Open product detail"
@@ -9818,6 +9830,10 @@
   "n5vskv": {
     "context": "customer's address book, header",
     "string": "{fullName}'s Address Book"
+  },
+  "n8tEIV": {
+    "context": "customer overview, last login tooltip",
+    "string": "Most recent time this customer signed in to their account."
   },
   "n97Ii0": {
     "context": "export selected items to csv file",
@@ -10512,6 +10528,10 @@
     "context": "Badge label showing number of errors",
     "string": "{count, plural, one {{count} error} other {{count} errors}}"
   },
+  "qXjR1X": {
+    "context": "customer overview, shipping row label in value tooltip",
+    "string": "Shipping"
+  },
   "qYukJi": {
     "context": "Status when product is partially configured",
     "string": "Scheduled"
@@ -11020,6 +11040,10 @@
   },
   "tLM9Jr": {
     "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier. {docsLink} ({errorCode})"
+  },
+  "tQA//+": {
+    "context": "customer overview, recent net sales tooltip",
+    "string": "Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
   },
   "tQxBXs": {
     "context": "PageTypeDeleteWarningDialog single assigned items description",
@@ -11804,6 +11828,10 @@
     "context": "deactivate customer dialog, confirm button label",
     "string": "Deactivate"
   },
+  "wek82T": {
+    "context": "customer overview stat label: sum of recent orders net product sales",
+    "string": "Recent orders total"
+  },
   "werrDz": {
     "context": "refunded event title",
     "string": "Products were refunded"
@@ -12263,10 +12291,6 @@
   "zJpP1T": {
     "context": "create new structure, header",
     "string": "Add Item"
-  },
-  "zJuyv/": {
-    "context": "customer overview, AOV tooltip clarifying that the average is computed only over the fetched recent orders, not the customer's lifetime",
-    "string": "Sum of the recent orders shown divided by their count."
   },
   "zKEVOg": {
     "context": "error message when required attributes are not filled",

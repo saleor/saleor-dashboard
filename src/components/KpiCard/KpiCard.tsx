@@ -16,6 +16,7 @@ interface KpiCardProps {
   icon?: ReactNode;
   subtitle?: ReactNode;
   tooltip?: ReactNode;
+  valueTooltip?: ReactNode;
   delta?: KpiDelta;
   loading?: boolean;
   active?: boolean;
@@ -51,6 +52,7 @@ export const KpiCard = ({
   icon,
   subtitle,
   tooltip,
+  valueTooltip,
   delta,
   loading,
   active,
@@ -131,9 +133,11 @@ export const KpiCard = ({
                   <Info size={13} />
                 </Box>
               </Tooltip.Trigger>
-              <Tooltip.Content side="top">
+              <Tooltip.Content side="top" className={styles.tooltipContent}>
                 <Tooltip.Arrow />
-                {tooltip}
+                <Text size={2} color="default1">
+                  {tooltip}
+                </Text>
               </Tooltip.Content>
             </Tooltip>
           </Box>
@@ -141,9 +145,39 @@ export const KpiCard = ({
       </Box>
 
       <Box display="flex" flexDirection="column" gap={1}>
-        <Text size={7} fontWeight="bold" __lineHeight="1.1">
-          {value}
-        </Text>
+        {valueTooltip ? (
+          <Box
+            display="inline-flex"
+            alignSelf="start"
+            onClick={interactive ? stopEventPropagation : undefined}
+            onKeyDown={interactive ? stopEventPropagation : undefined}
+            onPointerDown={interactive ? stopEventPropagation : undefined}
+            data-test-id="kpi-value-tooltip-trigger"
+          >
+            <Tooltip>
+              <Tooltip.Trigger>
+                <Text
+                  size={7}
+                  fontWeight="bold"
+                  __lineHeight="1.1"
+                  className={styles.valueWithTooltip}
+                >
+                  {value}
+                </Text>
+              </Tooltip.Trigger>
+              <Tooltip.Content side="top" className={styles.tooltipContent}>
+                <Tooltip.Arrow />
+                <Text size={2} color="default1">
+                  {valueTooltip}
+                </Text>
+              </Tooltip.Content>
+            </Tooltip>
+          </Box>
+        ) : (
+          <Text size={7} fontWeight="bold" __lineHeight="1.1">
+            {value}
+          </Text>
+        )}
 
         <Box display="flex" alignItems="center" gap={1} className={styles.subtitleSlot}>
           {delta && (
