@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.13
+
+### Patch Changes
+
+- [#6677](https://github.com/saleor/saleor-dashboard/pull/6677) [`5e69e80`](https://github.com/saleor/saleor-dashboard/commit/5e69e808916da6a9186d5579e522546937409fdb) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added shop announcements to the Dashboard. Announcements configured on your Saleor instance are now shown at the top of every page, grouped by severity (critical, warning and informational) with the most important ones first.
+
+- [#6675](https://github.com/saleor/saleor-dashboard/pull/6675) [`7a5ed0b`](https://github.com/saleor/saleor-dashboard/commit/7a5ed0be45c71b2b72f6eea70f394a499c2ca8a2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - On the order page, a transaction's Capture and Cancel actions are now disabled while a previous capture or cancel request for that transaction is still being processed by the payment app. The button shows a spinner and an "in progress" label, and becomes available again once the action succeeds or fails. Previously you could trigger the same action multiple times before the first one resolved.
+
+- [#6692](https://github.com/saleor/saleor-dashboard/pull/6692) [`9bb132d`](https://github.com/saleor/saleor-dashboard/commit/9bb132d91efa20981c852535db1c9ad68e1b6b67) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed scheduling future publication of CMS pages (models). Previously, setting an availability date on a page sent `isPublished: false` to the API, so the page stayed hidden from storefront visitors even after the scheduled date passed. Now setting a publication date sends `isPublished: true` together with the date, so the page automatically becomes visible once the scheduled time is reached. Pages waiting for a future publication date are now also correctly shown as "Hidden" with the scheduled date in the visibility card.
+
+- [#6693](https://github.com/saleor/saleor-dashboard/pull/6693) [`26b080c`](https://github.com/saleor/saleor-dashboard/commit/26b080c518f67af90a29a0f5aee1c6e9abf63fc0) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added an "Open in GraphiQL" action to the kebab menu on more entity detail pages — categories, collections, customers, vouchers, promotions, gift cards, models, model types and menus. Selecting it opens the Dev Mode panel pre-filled with a starter query and the record's ID, matching the existing behaviour on order and product pages.
+
+- [#6675](https://github.com/saleor/saleor-dashboard/pull/6675) [`7a5ed0b`](https://github.com/saleor/saleor-dashboard/commit/7a5ed0be45c71b2b72f6eea70f394a499c2ca8a2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Order details now updates automatically while an async transaction action (charge, refund or cancel requested through a payment app) is being processed. Previously you had to refresh the page to see whether the action succeeded or failed. A spinner next to the Transactions header indicates that an action is still in progress, and the amounts and events update on their own once the payment app responds.
+
 ## 3.23.12
 
 ### Patch Changes
