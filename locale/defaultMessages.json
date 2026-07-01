@@ -398,6 +398,10 @@
     "context": "grant refund within return, structured reason select label",
     "string": "Reason"
   },
+  "02j7gU": {
+    "context": "customer recent orders table, net column tooltip aria label",
+    "string": "Net order value explanation"
+  },
   "033/zW": {
     "context": "explore extensions section name",
     "string": "Explore"
@@ -1465,10 +1469,6 @@
   "5u7b3V": {
     "context": "voucher is active from date",
     "string": "Starts"
-  },
-  "5uJn4N": {
-    "context": "customer overview, AOV tooltip",
-    "string": "Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
   },
   "5wktck": {
     "context": "Description for no variant in channel error",
@@ -2898,6 +2898,10 @@
   "DGWVA9": {
     "context": "variant created error message",
     "string": "Variant creation failed"
+  },
+  "DGgIIw": {
+    "context": "customer recent orders table column: checkout total including shipping and tax",
+    "string": "Gross"
   },
   "DILs4b": {
     "string": "Unsupported media provider or incorrect URL"
@@ -5543,6 +5547,10 @@
   "Qb2XN5": {
     "string": "\"Mark as paid\" feature creates a {link} - used by Payment Apps"
   },
+  "QcXdj6": {
+    "context": "customer recent orders table column: net product sales after discounts",
+    "string": "Net"
+  },
   "QclvqG": {
     "context": "input label",
     "string": "Checkout line limit"
@@ -6098,10 +6106,6 @@
   "TfzIXS": {
     "context": "tax classes card header",
     "string": "General information"
-  },
-  "TjB4Wn": {
-    "context": "customer overview, subtitle scoping recent money stats to the selected channel window",
-    "string": "{count} of last {windowSize, plural, one {# order} other {# orders}} in {currency}"
   },
   "TjGYna": {
     "context": "product inventory, checkbox",
@@ -7363,10 +7367,6 @@
   "aI80kg": {
     "string": "Properties"
   },
-  "aIookg": {
-    "context": "customer overview, total orders tooltip",
-    "string": "Number of orders placed by this customer in the selected channel. Cancelled orders are not counted."
-  },
   "aJm/by": {
     "context": "Taxes section title",
     "string": "Tax classes"
@@ -7551,6 +7551,10 @@
   },
   "bIAY+o": {
     "string": "Address updated"
+  },
+  "bIttOt": {
+    "context": "customer overview, AOV tooltip",
+    "string": "Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
   },
   "bKCoN5": {
     "context": "order line discount updated title",
@@ -8064,6 +8068,10 @@
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
+  },
+  "doQvFl": {
+    "context": "customer overview, subtitle scoping recent money stats to the selected channel window",
+    "string": "{count} of last {windowSize, plural, one {# order} other {# orders}} in {channelName}"
   },
   "dpXfQL": {
     "context": "channel link title and a11y label",
@@ -11092,10 +11100,6 @@
     "context": "variant stocks section subtitle",
     "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
   },
-  "taX/V3": {
-    "context": "order total amount",
-    "string": "Total"
-  },
   "tf+OkY": {
     "context": "link to edit variant metadata",
     "string": "Edit on variant page"
@@ -11776,6 +11780,10 @@
     "context": "relative time",
     "string": "just now"
   },
+  "wPhgkN": {
+    "context": "customer recent orders table, net column tooltip",
+    "string": "Product revenue after discounts. Excludes shipping and tax. Matches the net sales figures in the overview above."
+  },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
@@ -12067,6 +12075,10 @@
   "xvKNkf": {
     "context": "Info message when user sets a past publication date",
     "string": "This date is in the past. The product will be visible immediately when you save."
+  },
+  "xwXFUB": {
+    "context": "customer overview, total orders tooltip",
+    "string": "Number of orders placed by this customer in the selected channel. Draft and cancelled orders are not counted."
   },
   "xxQxLE": {
     "string": "Email Address"
