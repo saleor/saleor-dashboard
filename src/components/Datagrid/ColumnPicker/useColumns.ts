@@ -41,6 +41,7 @@ interface UseColumnsProps {
   columnCategories?: ColumnCategory[];
   selectedColumns: string[];
   onSave: (columns: string[]) => void;
+  mapColumnsOnSave?: (columns: string[]) => string[];
 }
 
 export const useColumns = ({
@@ -49,11 +50,16 @@ export const useColumns = ({
   selectedColumns: _selectedColumns,
   columnCategories,
   onSave: handleSave,
+  mapColumnsOnSave,
 }: UseColumnsProps) => {
   const [dynamicColumns, updateDynamicColumns] = useState<AvailableColumn[] | null>(null);
 
   const { columns: persistedColumns, update } = usePersistance(gridName);
-  const selectedColumns = selectedWithPersistance(_selectedColumns, persistedColumns);
+  const selectedColumns = useMemo(() => {
+    const columns = selectedWithPersistance(_selectedColumns, persistedColumns);
+
+    return mapColumnsOnSave ? mapColumnsOnSave(columns) : columns;
+  }, [_selectedColumns, persistedColumns, mapColumnsOnSave]);
 
   // Dynamic columns are loaded from the API, thus they need to be updated
   // after query resolves with data. Then we also sort them by order of addition
@@ -74,7 +80,8 @@ export const useColumns = ({
   const [visibleColumns, setVisibleColumns] = useStateFromProps(initialColumnsState);
 
   const onSave = (columnsIds: string[]) => {
-    const columns = columnsIds.map(columnId => {
+    const normalizedColumnIds = mapColumnsOnSave ? mapColumnsOnSave(columnsIds) : columnsIds;
+    const columns = normalizedColumnIds.map(columnId => {
       const persistentEquivalent = persistedColumns.find(
         persistedColumn => persistedColumn.identifier() === columnId,
       );
@@ -87,7 +94,7 @@ export const useColumns = ({
     });
 
     update(columns);
-    handleSave(columnsIds);
+    handleSave(normalizedColumnIds);
   };
 
   const handleVisibleColumnsChange = (currentColumns: (AvailableColumn | undefined)[]) => {

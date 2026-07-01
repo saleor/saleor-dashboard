@@ -78,6 +78,7 @@ describe("useGetCellContent", () => {
     { id: "customer", title: "Customer", width: 100 },
     { id: "payment", title: "Payment", width: 100 },
     { id: "status", title: "Status", width: 100 },
+    { id: "net", title: "Net", width: 100 },
     { id: "total", title: "Total", width: 100 },
   ];
 
@@ -91,6 +92,7 @@ describe("useGetCellContent", () => {
       paymentStatus: "PAID" as PaymentChargeStatusEnum,
       status: "FULFILLED" as OrderStatus,
       billingAddress: null,
+      subtotal: { net: { amount: 80, currency: "USD" } },
       total: { gross: { amount: 100, currency: "USD" } },
     },
   ] as RelayToFlat<NonNullable<OrderListQuery["orders"]>>;
@@ -158,6 +160,14 @@ describe("useGetCellContent", () => {
       readonly: false,
     });
     expect(getCellContent([5, 0], contentOpts)).toEqual({
+      allowOverlay: true,
+      copyData: "80",
+      cursor: "pointer",
+      data: { currency: "USD", kind: "money-cell", value: 80 },
+      kind: "custom",
+      readonly: false,
+    });
+    expect(getCellContent([6, 0], contentOpts)).toEqual({
       allowOverlay: true,
       copyData: "100",
       cursor: "pointer",

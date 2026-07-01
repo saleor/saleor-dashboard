@@ -10687,6 +10687,10 @@
     "context": "expand refunded line sub-rows",
     "string": "Show all {count} lines"
   },
+  "rU2b3o": {
+    "context": "orders list column: net product value (excludes tax and shipping)",
+    "string": "Net"
+  },
   "rVIlBs": {
     "context": "page header with order number",
     "string": "Order #{orderNumber}"

@@ -2,7 +2,12 @@ import { type OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { type RelayToFlat } from "@dashboard/types";
 
-import { canBeSorted, getColumnNameAndId, getOrdersRowsLength } from "./utils";
+import {
+  canBeSorted,
+  getColumnNameAndId,
+  getOrdersRowsLength,
+  orderOrderListColumns,
+} from "./utils";
 
 describe("OrderListDatagrid utils", () => {
   describe("getOrdersRowsLength", () => {
@@ -67,6 +72,58 @@ describe("OrderListDatagrid utils", () => {
     it("should return false when not sortable field", () => {
       expect(canBeSorted(OrderListUrlSortField.total)).toBe(false);
       expect(canBeSorted(OrderListUrlSortField.rank)).toBe(false);
+    });
+  });
+  describe("orderOrderListColumns", () => {
+    it("places net immediately before total when toggled on", () => {
+      // Arrange
+      const columns = [
+        "net",
+        "number",
+        "date",
+        "customer",
+        "payment",
+        "status",
+        "total",
+        "channel",
+      ];
+
+      // Act
+      const result = orderOrderListColumns(columns);
+
+      // Assert
+      expect(result).toEqual([
+        "number",
+        "date",
+        "customer",
+        "payment",
+        "status",
+        "net",
+        "total",
+        "channel",
+      ]);
+    });
+
+    it("places net before channel when total is hidden", () => {
+      // Arrange
+      const columns = ["net", "number", "date", "status", "channel"];
+
+      // Act
+      const result = orderOrderListColumns(columns);
+
+      // Assert
+      expect(result).toEqual(["number", "date", "status", "net", "channel"]);
+    });
+
+    it("returns columns unchanged when net is not selected", () => {
+      // Arrange
+      const columns = ["number", "date", "total", "channel"];
+
+      // Act
+      const result = orderOrderListColumns(columns);
+
+      // Assert
+      expect(result).toEqual(columns);
     });
   });
 });

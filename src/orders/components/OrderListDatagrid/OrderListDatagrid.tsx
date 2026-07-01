@@ -20,7 +20,12 @@ import { useLocation } from "react-router";
 
 import { orderListStaticColumnAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
-import { canBeSorted, getColumnNameAndId, getOrdersRowsLength } from "./utils";
+import {
+  canBeSorted,
+  getColumnNameAndId,
+  getOrdersRowsLength,
+  orderOrderListColumns,
+} from "./utils";
 
 interface OrderListDatagridProps extends ListProps, SortPage<OrderListUrlSortField> {
   orders: RelayToFlat<OrderListQuery["orders"]>;
@@ -59,6 +64,7 @@ export const OrderListDatagrid = ({
     gridName: "order_list",
     staticColumns: memoizedStaticColumns,
     selectedColumns: settings?.columns ?? [],
+    mapColumnsOnSave: orderOrderListColumns,
     onSave: handleColumnChange,
   });
   const handleHeaderClick = useCallback(

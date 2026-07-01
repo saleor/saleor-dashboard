@@ -9,6 +9,7 @@ import DataEditor, {
   type DataEditorRef,
   type DrawHeaderCallback,
   type EditableGridCell,
+  getMiddleCenterBias,
   type GridCell,
   type GridColumn,
   type GridSelection,
@@ -388,6 +389,8 @@ export const Datagrid = ({
   const drawHeader: DrawHeaderCallback = useCallback(
     args => {
       const { ctx, rect, isSelected, spriteManager, theme, column } = args;
+      const columnMeta = availableColumns.find(col => col.id === column.id);
+      const isRightAligned = columnMeta?.headerAlign === "right";
 
       if (isSelected) {
         ctx.fillStyle = themeValues.colors.background.default1;
@@ -403,9 +406,41 @@ export const Datagrid = ({
         spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
       }
 
+      if (isRightAligned && column.id !== "empty") {
+        const xPad = theme.cellHorizontalPadding;
+        const gripReserved = isSelected ? 24 : 0;
+        const drawX = rect.x + rect.width - xPad - gripReserved;
+        const font = `${theme.headerFontStyle} ${theme.fontFamily}`;
+
+        ctx.font = font;
+        ctx.fillStyle = isSelected ? theme.textHeaderSelected : theme.textHeader;
+
+        const textY = rect.y + rect.height / 2 + getMiddleCenterBias(ctx, font);
+
+        ctx.textAlign = "right";
+        ctx.fillText(column.title, drawX, textY);
+        ctx.textAlign = "left";
+
+        if (column.icon !== undefined) {
+          const headerSize = theme.headerIconSize;
+
+          spriteManager.drawSprite(
+            column.icon,
+            isSelected ? "selected" : "normal",
+            ctx,
+            rect.x + xPad,
+            rect.y + (rect.height - headerSize) / 2,
+            headerSize,
+            theme,
+          );
+        }
+
+        return true;
+      }
+
       return false;
     },
-    [themeValues],
+    [themeValues, availableColumns],
   );
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
