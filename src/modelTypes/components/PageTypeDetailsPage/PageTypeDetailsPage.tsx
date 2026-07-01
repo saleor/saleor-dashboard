@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
@@ -16,14 +17,23 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { defaultGraphiQLQuery } from "@dashboard/modelTypes/queries";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { type ListActions, type ReorderEvent } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { type Option } from "@saleor/macaw-ui-next";
+import { defineMessages, useIntl } from "react-intl";
 
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
+
+const messages = defineMessages({
+  openGraphiQL: {
+    id: "br+OIS",
+    defaultMessage: "Open this model type in GraphiQL",
+  },
+});
 
 export interface PageTypeForm extends MetadataFormData {
   name: string;
@@ -58,7 +68,14 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     onDelete,
     onSubmit,
   } = props;
+  const intl = useIntl();
   const navigate = useNavigator();
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${pageType?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -103,9 +120,17 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
         return (
           <DetailPageLayout>
             <TopNav href={pageTypeListBackLink} title={pageTitle}>
-              {extensionMenuItems.length > 0 && (
-                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-              )}
+              <TopNav.Menu
+                items={[
+                  ...extensionMenuItems,
+                  {
+                    label: intl.formatMessage(messages.openGraphiQL),
+                    onSelect: openPlaygroundURL,
+                    testId: "graphiql-redirect",
+                  },
+                ]}
+                dataTestId="menu"
+              />
             </TopNav>
             <DetailPageLayout.Content>
               <PageTypeAttributes

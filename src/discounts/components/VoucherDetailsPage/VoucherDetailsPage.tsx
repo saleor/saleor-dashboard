@@ -7,6 +7,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { CountryList } from "@dashboard/components/CountryList";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, type MetadataFormData } from "@dashboard/components/Metadata";
@@ -17,6 +18,7 @@ import {
   createDiscountTypeChangeHandler,
   createVoucherUpdateHandler,
 } from "@dashboard/discounts/handlers";
+import { voucherGraphiQLQuery } from "@dashboard/discounts/queries";
 import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { voucherListPath } from "@dashboard/discounts/urls";
@@ -43,7 +45,7 @@ import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Divider, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
 import { type ChannelProps, type ListProps, type TabListActions } from "../../../types";
@@ -135,6 +137,13 @@ interface VoucherDetailsPageProps
   voucherCodesSettings: UseListSettings["settings"];
 }
 
+const messages = defineMessages({
+  openGraphiQL: {
+    id: "LCPfA9",
+    defaultMessage: "Open this voucher in GraphiQL",
+  },
+});
+
 const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
 const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
 const ProductsTab = Tab(VoucherDetailsPageTab.products);
@@ -187,6 +196,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucherCodesSettings,
 }: VoucherDetailsPageProps) => {
   const intl = useIntl();
+  const context = useDevModeContext();
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(voucherGraphiQLQuery);
+    context.setVariables(`{ "id": "${voucher?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
   const { user } = useUser();
@@ -278,9 +293,17 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   }
                 />
               )}
-              {extensionMenuItems.length > 0 && (
-                <TopNav.Menu items={[...extensionMenuItems]} dataTestId="menu" />
-              )}
+              <TopNav.Menu
+                items={[
+                  ...extensionMenuItems,
+                  {
+                    label: intl.formatMessage(messages.openGraphiQL),
+                    onSelect: openPlaygroundURL,
+                    testId: "graphiql-redirect",
+                  },
+                ]}
+                dataTestId="menu"
+              />
             </TopNav>
             <DetailPageLayout.Content>
               <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} />

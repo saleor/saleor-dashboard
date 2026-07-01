@@ -113,6 +113,14 @@ const VisibilityCard = (props: VisibilityCardProps) => {
 
   const [isPublishedAt, setPublishedAt] = useState(!!publishedAt);
 
+  // A page scheduled for future publication is stored in Saleor Core as
+  // `isPublished: true` together with a future `publishedAt`. Core only exposes
+  // it to storefront visitors once that date passes. Such a page is therefore
+  // "published" but not yet visible, so we present it under the "Hidden" option
+  // with a "will be visible from {date}" hint rather than as "Visible".
+  const isPublishedInFuture = !!publishedAt && Date.parse(publishedAt) > dateNow;
+  const isVisibleNow = isPublished && !isPublishedInFuture;
+
   const hasAvailableProps =
     isAvailableForPurchase !== undefined && availableForPurchaseAt !== undefined;
   const visibleMessage = (date: string) =>
@@ -145,12 +153,15 @@ const VisibilityCard = (props: VisibilityCardProps) => {
         <RadioGroup
           disabled={disabled}
           name="isPublished"
-          value={String(isPublished)}
+          value={String(isVisibleNow)}
           onValueChange={value => {
+            // Selecting "Visible" publishes immediately, "Hidden" clears any
+            // scheduled date. Future-date scheduling is handled by the
+            // "Set availability date" controls below.
             onChange({
               target: {
                 name: "publishedAt",
-                value: value === "false" ? null : availableForPurchaseAt,
+                value: null,
               },
             });
             onChange({
@@ -181,7 +192,7 @@ const VisibilityCard = (props: VisibilityCardProps) => {
           <RadioGroup.Item id={`isPublished-false`} value="false">
             <Box display="flex" __alignItems="baseline" gap={2}>
               <Text>{messages.hiddenLabel}</Text>
-              {publishedAt && !isPublished && (
+              {publishedAt && !isVisibleNow && (
                 <Text size={2} color="default2">
                   {messages.hiddenSecondLabel}
                 </Text>
@@ -190,10 +201,19 @@ const VisibilityCard = (props: VisibilityCardProps) => {
           </RadioGroup.Item>
         </RadioGroup>
 
-        {!isPublished && (
+        {!isVisibleNow && (
           <Box display="flex" gap={1} flexDirection="column" alignItems="start" marginTop={2}>
             <Checkbox
-              onCheckedChange={(checked: boolean) => setPublishedAt(checked)}
+              onCheckedChange={(checked: boolean) => {
+                setPublishedAt(checked);
+
+                // Clearing the schedule returns the page to a plainly hidden
+                // state (isPublished=false, no publication date).
+                if (!checked) {
+                  onChange({ target: { name: "publishedAt", value: null } });
+                  onChange({ target: { name: "isPublished", value: false } });
+                }
+              }}
               checked={isPublishedAt}
             >
               {messages.setAvailabilityDateLabel}
@@ -205,14 +225,23 @@ const VisibilityCard = (props: VisibilityCardProps) => {
                 disabled={disabled}
                 name="publishedAt"
                 value={publishedAt || ""}
-                onChange={value =>
+                onChange={value => {
                   onChange({
                     target: {
                       name: "publishedAt",
                       value: value,
                     },
-                  })
-                }
+                  });
+                  // A scheduled publication date requires isPublished=true so
+                  // Saleor Core makes the page visible once the date passes.
+                  // Clearing the date reverts to a plainly hidden page.
+                  onChange({
+                    target: {
+                      name: "isPublished",
+                      value: Boolean(value),
+                    },
+                  });
+                }}
                 //eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore todo
                 error={getFieldError(errors, "isPublishedAt")}

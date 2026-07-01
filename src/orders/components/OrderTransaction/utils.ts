@@ -26,6 +26,14 @@ export const mapActionToMessage: Record<TransactionActionUnion, MessageDescripto
   REFUND: null,
 };
 
+// Label shown while the action's request is in flight (button disabled).
+export const mapActionToInProgressMessage: Record<TransactionActionUnion, MessageDescriptor> = {
+  CHARGE: transactionActionMessages.captureInProgress,
+  CANCEL: transactionActionMessages.cancelInProgress,
+  // refund is handled in "Send refund" view not in Transactions list
+  REFUND: null,
+};
+
 const typeMap: Record<TransactionEventTypeEnum, TransactionMappingResult> = {
   INFO: {
     type: "INFO",

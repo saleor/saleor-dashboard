@@ -34,6 +34,14 @@ export const orderListQuery = gql`
           number
           paymentStatus
           status
+          subtotal {
+            __typename
+            net {
+              __typename
+              amount
+              currency
+            }
+          }
           total {
             __typename
             gross {

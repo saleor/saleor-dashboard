@@ -229,6 +229,15 @@ export enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER'
 }
 
+/** Defines a shop-level announcement's level/severity. */
+export enum AnnouncementImportanceEnum {
+  CRITICAL = 'CRITICAL',
+  HIGH = 'HIGH',
+  LOW = 'LOW',
+  MODERATE = 'MODERATE',
+  UNSET = 'UNSET'
+}
+
 export enum AppErrorCode {
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -10201,6 +10210,13 @@ export enum WeightUnitsEnum {
   TONNE = 'TONNE'
 }
 
+export type AnnouncementFragment = { __typename: 'Announcement', title: string, messageHtml: string, importance: AnnouncementImportanceEnum, type: string, createdAt: any, updatedAt: any, extra: any };
+
+export type AnnouncementsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AnnouncementsQuery = { __typename: 'Query', shop: { __typename: 'Shop', announcements: Array<{ __typename: 'Announcement', title: string, messageHtml: string, importance: AnnouncementImportanceEnum, type: string, createdAt: any, updatedAt: any, extra: any }> } };
+
 export type AttributeBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
@@ -10873,10 +10889,12 @@ export type CustomerDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
   PERMISSION_MANAGE_ORDERS: Scalars['Boolean']['input'];
   PERMISSION_MANAGE_STAFF: Scalars['Boolean']['input'];
+  kpiChannelId: Scalars['ID']['input'];
+  includeKpiOrderCount: Scalars['Boolean']['input'];
 }>;
 
 
-export type CustomerDetailsQuery = { __typename: 'Query', user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any, number: string, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', currency: string, amount: number } } } }> } | null, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
+export type CustomerDetailsQuery = { __typename: 'Query', user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any, number: string, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', currency: string, amount: number } }, subtotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', currency: string, amount: number } } } }> } | null, kpiOrderChannels?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, status: OrderStatus, created: any, channel: { __typename: 'Channel', id: string, name: string, slug: string, isActive: boolean, currencyCode: string } } }> } | null, kpiOrders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, status: OrderStatus, created: any, subtotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } }, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, channel: { __typename: 'Channel', id: string, name: string, slug: string, isActive: boolean, currencyCode: string } } }> } | null, kpiNonCancelledOrderCount?: { __typename: 'OrderCountableConnection', totalCount: number | null } | null, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
 
 export type CustomerAddressesQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -12573,7 +12591,7 @@ export type OrderListQueryVariables = Exact<{
 }>;
 
 
-export type OrderListQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', created: any, id: string, number: string, paymentStatus: PaymentChargeStatusEnum, status: OrderStatus, userEmail: string | null, chargeStatus: OrderChargeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, channel: { __typename: 'Channel', name: string, id: string }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
+export type OrderListQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', created: any, id: string, number: string, paymentStatus: PaymentChargeStatusEnum, status: OrderStatus, userEmail: string | null, chargeStatus: OrderChargeStatusEnum, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, channel: { __typename: 'Channel', name: string, id: string }, subtotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type OrderDraftListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;

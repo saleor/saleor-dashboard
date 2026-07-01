@@ -229,6 +229,15 @@ export enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER'
 }
 
+/** Defines a shop-level announcement's level/severity. */
+export enum AnnouncementImportanceEnum {
+  CRITICAL = 'CRITICAL',
+  HIGH = 'HIGH',
+  LOW = 'LOW',
+  MODERATE = 'MODERATE',
+  UNSET = 'UNSET'
+}
+
 export enum AppErrorCode {
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',

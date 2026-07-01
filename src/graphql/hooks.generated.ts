@@ -4,6 +4,17 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as ApolloReactHooks from '@dashboard/hooks/graphql';
 const defaultOptions = {} as const;
+export const AnnouncementFragmentDoc = gql`
+    fragment Announcement on Announcement {
+  title
+  messageHtml
+  importance
+  type
+  createdAt
+  updatedAt
+  extra
+}
+    `;
 export const AppManifestFragmentDoc = gql`
     fragment AppManifest on Manifest {
   identifier
@@ -3893,6 +3904,42 @@ export const WebhookDetailsFragmentDoc = gql`
   customHeaders
 }
     ${WebhookFragmentDoc}`;
+export const AnnouncementsDocument = gql`
+    query Announcements {
+  shop {
+    announcements {
+      ...Announcement
+    }
+  }
+}
+    ${AnnouncementFragmentDoc}`;
+
+/**
+ * __useAnnouncementsQuery__
+ *
+ * To run a query within a React component, call `useAnnouncementsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAnnouncementsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAnnouncementsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAnnouncementsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AnnouncementsQuery, Types.AnnouncementsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AnnouncementsQuery, Types.AnnouncementsQueryVariables>(AnnouncementsDocument, options);
+      }
+export function useAnnouncementsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AnnouncementsQuery, Types.AnnouncementsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AnnouncementsQuery, Types.AnnouncementsQueryVariables>(AnnouncementsDocument, options);
+        }
+export type AnnouncementsQueryHookResult = ReturnType<typeof useAnnouncementsQuery>;
+export type AnnouncementsLazyQueryHookResult = ReturnType<typeof useAnnouncementsLazyQuery>;
+export type AnnouncementsQueryResult = Apollo.QueryResult<Types.AnnouncementsQuery, Types.AnnouncementsQueryVariables>;
 export const AttributeBulkDeleteDocument = gql`
     mutation AttributeBulkDelete($ids: [ID!]!) {
   attributeBulkDelete(ids: $ids) {
@@ -7478,7 +7525,7 @@ export type ListCustomersQueryHookResult = ReturnType<typeof useListCustomersQue
 export type ListCustomersLazyQueryHookResult = ReturnType<typeof useListCustomersLazyQuery>;
 export type ListCustomersQueryResult = Apollo.QueryResult<Types.ListCustomersQuery, Types.ListCustomersQueryVariables>;
 export const CustomerDetailsDocument = gql`
-    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!) {
+    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!, $PERMISSION_MANAGE_STAFF: Boolean!, $kpiChannelId: ID!, $includeKpiOrderCount: Boolean!) {
   user(id: $id) {
     ...CustomerDetails
     metadata {
@@ -7501,9 +7548,69 @@ export const CustomerDetailsDocument = gql`
               amount
             }
           }
+          subtotal {
+            net {
+              currency
+              amount
+            }
+          }
           chargeStatus
         }
       }
+    }
+    kpiOrderChannels: orders(first: 50) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      edges {
+        node {
+          id
+          status
+          created
+          channel {
+            id
+            name
+            slug
+            isActive
+            currencyCode
+          }
+        }
+      }
+    }
+    kpiOrders: orders(first: 50, where: {channelId: {eq: $kpiChannelId}}) @include(if: $includeKpiOrderCount) {
+      edges {
+        node {
+          id
+          status
+          created
+          subtotal {
+            net {
+              amount
+              currency
+            }
+          }
+          shippingPrice {
+            gross {
+              amount
+              currency
+            }
+          }
+          totalRefunded {
+            amount
+            currency
+          }
+          channel {
+            id
+            name
+            slug
+            isActive
+            currencyCode
+          }
+        }
+      }
+    }
+    kpiNonCancelledOrderCount: orders(
+      first: 1
+      where: {AND: [{status: {oneOf: [UNCONFIRMED, UNFULFILLED, PARTIALLY_FULFILLED, PARTIALLY_RETURNED, RETURNED, FULFILLED, EXPIRED]}}, {channelId: {eq: $kpiChannelId}}]}
+    ) @include(if: $includeKpiOrderCount) {
+      totalCount
     }
   }
 }
@@ -7525,6 +7632,8 @@ ${MetadataItemFragmentDoc}`;
  *      id: // value for 'id'
  *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
  *      PERMISSION_MANAGE_STAFF: // value for 'PERMISSION_MANAGE_STAFF'
+ *      kpiChannelId: // value for 'kpiChannelId'
+ *      includeKpiOrderCount: // value for 'includeKpiOrderCount'
  *   },
  * });
  */
@@ -13358,6 +13467,14 @@ export const OrderListDocument = gql`
         number
         paymentStatus
         status
+        subtotal {
+          __typename
+          net {
+            __typename
+            amount
+            currency
+          }
+        }
         total {
           __typename
           gross {

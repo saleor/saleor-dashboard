@@ -254,6 +254,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 305.17,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -296,6 +304,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 1215.89,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -320,6 +336,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.DRAFT,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 321.71,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -362,6 +386,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 271.95,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -404,6 +436,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 335.84,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -446,6 +486,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 1042.15,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -488,6 +536,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 213.69,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -530,6 +586,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 367.03,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -572,6 +636,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 298.76,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -614,6 +686,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.UNFULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 663.69,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -656,6 +736,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 280.41,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -698,6 +786,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 234.93,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -740,6 +836,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 485.19,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -782,6 +886,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 223.54,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -824,6 +936,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 237.55,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -866,6 +986,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 453.55,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -908,6 +1036,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 812.67,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -950,6 +1086,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 481.41,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -992,6 +1136,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 569.19,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -1034,6 +1186,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 557,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {

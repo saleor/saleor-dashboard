@@ -69,6 +69,30 @@ describe("KpiCard", () => {
     expect(onSelect).toHaveBeenCalledTimes(1);
   });
 
+  it("does not invoke onSelect when value tooltip trigger is used", () => {
+    // Arrange
+    const onSelect = jest.fn();
+
+    renderCard(
+      <KpiCard
+        title="Orders"
+        value="28"
+        valueTooltip="Shipping: $10"
+        onSelect={onSelect}
+        dataTestId="kpi-clickable"
+      />,
+    );
+
+    // Act
+    const valueTooltipTrigger = screen.getByTestId("kpi-value-tooltip-trigger");
+
+    fireEvent.pointerDown(valueTooltipTrigger);
+    fireEvent.click(valueTooltipTrigger);
+
+    // Assert
+    expect(onSelect).not.toHaveBeenCalled();
+  });
+
   it("does not invoke onSelect when tooltip trigger is used", () => {
     // Arrange
     const onSelect = jest.fn();

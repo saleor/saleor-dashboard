@@ -386,9 +386,6 @@
     "context": "Suffix for show-more button when hidden problems include active ones",
     "string": ", including {active} active"
   },
-  "0+zatS": {
-    "string": "Hello {userName}, welcome to your Store Dashboard"
-  },
   "0/Y0nG": {
     "context": "date group header",
     "string": "Last 7 days"
@@ -400,6 +397,10 @@
   "02a84g": {
     "context": "grant refund within return, structured reason select label",
     "string": "Reason"
+  },
+  "02j7gU": {
+    "context": "customer recent orders table, net column tooltip aria label",
+    "string": "Net order value explanation"
   },
   "033/zW": {
     "context": "explore extensions section name",
@@ -2324,10 +2325,6 @@
     "context": "scope note for model type tab grouping help tooltip",
     "string": "Browser-only display — does not rename, merge, or change your model types or data."
   },
-  "AJMlmz": {
-    "context": "customer overview stat label: sum of recent orders",
-    "string": "Recent orders total"
-  },
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
   },
@@ -2901,6 +2898,10 @@
   "DGWVA9": {
     "context": "variant created error message",
     "string": "Variant creation failed"
+  },
+  "DGgIIw": {
+    "context": "customer recent orders table column: checkout total including shipping and tax",
+    "string": "Gross"
   },
   "DILs4b": {
     "string": "Unsupported media provider or incorrect URL"
@@ -4447,6 +4448,9 @@
     "context": "dialog header",
     "string": "Delete Channel: {channelSlug}"
   },
+  "LCPfA9": {
+    "string": "Open this voucher in GraphiQL"
+  },
   "LCmiky": {
     "string": "Shipping zones deleted"
   },
@@ -5217,6 +5221,10 @@
     "context": "select all model types preset label",
     "string": "All model types"
   },
+  "P94gV7": {
+    "context": "Transaction cancel action label while a cancel request is in flight",
+    "string": "Cancel in progress"
+  },
   "P98zBi": {
     "string": "Edit reason"
   },
@@ -5538,6 +5546,10 @@
   },
   "Qb2XN5": {
     "string": "\"Mark as paid\" feature creates a {link} - used by Payment Apps"
+  },
+  "QcXdj6": {
+    "context": "customer recent orders table column: net product sales after discounts",
+    "string": "Net"
   },
   "QclvqG": {
     "context": "input label",
@@ -6068,10 +6080,6 @@
     "context": "intro for model type tab grouping help tooltip",
     "string": "Each model type name is split at the first matching separator. The part before becomes the tab name; the part after appears in the tab menu."
   },
-  "TZq1Tm": {
-    "context": "customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency",
-    "string": "Across last {count, plural, one {# order} other {# orders}} in {currency}"
-  },
   "TZtvTG": {
     "context": "table header required stock label",
     "string": "Required"
@@ -6273,6 +6281,10 @@
   "UjsI4o": {
     "context": "date",
     "string": "since {date}"
+  },
+  "UjzI96": {
+    "context": "Transaction capture button label while a capture request is in flight",
+    "string": "Capture in progress"
   },
   "Um3g00": {
     "context": "send to customer selected label",
@@ -6738,6 +6750,9 @@
   "XJm60a": {
     "string": "Manually change permission for the extension."
   },
+  "XL64mm": {
+    "string": "Open this menu in GraphiQL"
+  },
   "XLBNT0": {
     "context": "Header description when product is hidden",
     "string": "Invisible via public API"
@@ -6968,6 +6983,9 @@
   "YNUHeb": {
     "context": "attribute metadata dialog header",
     "string": "Attribute Metadata"
+  },
+  "YNhhZh": {
+    "string": "Open this gift card in GraphiQL"
   },
   "YPCB7b": {
     "context": "label for fixed amount discount type",
@@ -7534,6 +7552,10 @@
   "bIAY+o": {
     "string": "Address updated"
   },
+  "bIttOt": {
+    "context": "customer overview, AOV tooltip",
+    "string": "Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
+  },
   "bKCoN5": {
     "context": "order line discount updated title",
     "string": "{productName} discount was updated"
@@ -7680,6 +7702,9 @@
   "bqSNm/": {
     "context": "success notification when product media is uploaded",
     "string": "Image added"
+  },
+  "br+OIS": {
+    "string": "Open this model type in GraphiQL"
   },
   "brkxbY": {
     "string": "There are no transactions to refund"
@@ -8044,6 +8069,10 @@
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
   },
+  "doQvFl": {
+    "context": "customer overview, subtitle scoping recent money stats to the selected channel window",
+    "string": "{count} of last {windowSize, plural, one {# order} other {# orders}} in {channelName}"
+  },
   "dpXfQL": {
     "context": "channel link title and a11y label",
     "string": "View orders from {channelName}"
@@ -8110,10 +8139,6 @@
   "eAFU/E": {
     "context": "product inventory, checkbox",
     "string": "Variant currently in preorder"
-  },
-  "eAvs2Y": {
-    "context": "customer overview, subtitle scoping a money stat when only part of the fetched recent orders belong to this currency",
-    "string": "{count} of last {total, plural, one {# order} other {# orders}} in {currency}"
   },
   "eB6oHa": {
     "context": "Message when product is not in any channel",
@@ -8743,6 +8768,10 @@
     "context": "table head",
     "string": "Collection Name"
   },
+  "htV3fN": {
+    "context": "customer overview, prefix before channel name or channel selector",
+    "string": "Statistics from"
+  },
   "htvX+Z": {
     "string": "Deny"
   },
@@ -8850,6 +8879,9 @@
   "iPk640": {
     "context": "dialog header",
     "string": "Media Selection"
+  },
+  "iSnXTt": {
+    "string": "Open this collection in GraphiQL"
   },
   "iSp+AA": {
     "context": "field translation status",
@@ -9677,9 +9709,17 @@
     "context": "button",
     "string": "Create shipping zone"
   },
+  "mKu838": {
+    "context": "customer overview, value tooltip heading for shipping and refund breakdown",
+    "string": "From these orders"
+  },
   "mLZMb6": {
     "context": "ChannelsSection select field label",
     "string": "Channel"
+  },
+  "mMEpFC": {
+    "context": "customer overview, refunded row label in value tooltip",
+    "string": "Refunded"
   },
   "mMOskm": {
     "string": "Open product detail"
@@ -9795,6 +9835,10 @@
   "n5vskv": {
     "context": "customer's address book, header",
     "string": "{fullName}'s Address Book"
+  },
+  "n8tEIV": {
+    "context": "customer overview, last login tooltip",
+    "string": "Most recent time this customer signed in to their account."
   },
   "n97Ii0": {
     "context": "export selected items to csv file",
@@ -10069,6 +10113,9 @@
   "oUWXLO": {
     "context": "header",
     "string": "Translation Page \"{pageName}\" - {languageCode}"
+  },
+  "oUkVpp": {
+    "string": "Open this customer in GraphiQL"
   },
   "oWIL0E": {
     "context": "order header date, older than yesterday",
@@ -10437,6 +10484,9 @@
     "context": "User registration",
     "string": "User registration"
   },
+  "qNpzxl": {
+    "string": "Open this category in GraphiQL"
+  },
   "qOXgxv": {
     "context": "gift card history message",
     "string": "Gift card was refunded in order {orderLink}"
@@ -10482,6 +10532,10 @@
   "qVT7rt": {
     "context": "Badge label showing number of errors",
     "string": "{count, plural, one {{count} error} other {{count} errors}}"
+  },
+  "qXjR1X": {
+    "context": "customer overview, shipping row label in value tooltip",
+    "string": "Shipping"
   },
   "qYukJi": {
     "context": "Status when product is partially configured",
@@ -10660,6 +10714,10 @@
   "rTBpeo": {
     "context": "expand refunded line sub-rows",
     "string": "Show all {count} lines"
+  },
+  "rU2b3o": {
+    "context": "orders list column: net product value (excludes tax and shipping)",
+    "string": "Net"
   },
   "rVIlBs": {
     "context": "page header with order number",
@@ -10992,6 +11050,10 @@
   "tLM9Jr": {
     "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier. {docsLink} ({errorCode})"
   },
+  "tQA//+": {
+    "context": "customer overview, recent net sales tooltip",
+    "string": "Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
+  },
   "tQxBXs": {
     "context": "PageTypeDeleteWarningDialog single assigned items description",
     "string": "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?"
@@ -11041,10 +11103,6 @@
   "taS/08": {
     "context": "variant stocks section subtitle",
     "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
-  },
-  "taX/V3": {
-    "context": "order total amount",
-    "string": "Total"
   },
   "tf+OkY": {
     "context": "link to edit variant metadata",
@@ -11726,6 +11784,10 @@
     "context": "relative time",
     "string": "just now"
   },
+  "wPhgkN": {
+    "context": "customer recent orders table, net column tooltip",
+    "string": "Product revenue after discounts. Excludes shipping and tax. Matches the net sales figures in the overview above."
+  },
   "wQdR8M": {
     "string": "Add search engine title and description to make this category easier to find"
   },
@@ -11774,6 +11836,10 @@
   "weguIe": {
     "context": "deactivate customer dialog, confirm button label",
     "string": "Deactivate"
+  },
+  "wek82T": {
+    "context": "customer overview stat label: sum of recent orders net product sales",
+    "string": "Recent orders total"
   },
   "werrDz": {
     "context": "refunded event title",
@@ -11890,6 +11956,9 @@
   "xBulM3": {
     "string": "Set reward and conditions for the selected channel"
   },
+  "xEef/i": {
+    "string": "Open this model in GraphiQL"
+  },
   "xFSJR1": {
     "context": "recent changes shortcut",
     "string": "What's New"
@@ -11955,6 +12024,9 @@
     "context": "configuration section name",
     "string": "Configuration"
   },
+  "xfvvg2": {
+    "string": "Open this promotion in GraphiQL"
+  },
   "xfypNP": {
     "context": "tooltip for variant selection column header",
     "string": "When enabled, this attribute will be used to distinguish variants on the storefront."
@@ -12007,6 +12079,10 @@
   "xvKNkf": {
     "context": "Info message when user sets a past publication date",
     "string": "This date is in the past. The product will be visible immediately when you save."
+  },
+  "xwXFUB": {
+    "context": "customer overview, total orders tooltip",
+    "string": "Number of orders placed by this customer in the selected channel. Draft and cancelled orders are not counted."
   },
   "xxQxLE": {
     "string": "Email Address"
@@ -12228,10 +12304,6 @@
   "zJpP1T": {
     "context": "create new structure, header",
     "string": "Add Item"
-  },
-  "zJuyv/": {
-    "context": "customer overview, AOV tooltip clarifying that the average is computed only over the fetched recent orders, not the customer's lifetime",
-    "string": "Sum of the recent orders shown divided by their count."
   },
   "zKEVOg": {
     "context": "error message when required attributes are not filled",

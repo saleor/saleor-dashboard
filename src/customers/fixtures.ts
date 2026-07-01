@@ -2,6 +2,7 @@ import {
   type CustomerAddressesQuery,
   type CustomerDetailsQuery,
   OrderChargeStatusEnum,
+  OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 
@@ -1061,9 +1062,86 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
               currency: "USD",
             },
           },
+          subtotal: {
+            __typename: "TaxedMoney",
+            net: {
+              __typename: "Money",
+              amount: 1180.0,
+              currency: "USD",
+            },
+          },
         },
       },
     ],
+  },
+  kpiOrderChannels: {
+    __typename: "OrderCountableConnection",
+    edges: [
+      {
+        __typename: "OrderCountableEdge",
+        node: {
+          __typename: "Order",
+          id: "T3JkZXI6MTk=",
+          created: "2018-05-07T09:37:30.124154+00:00",
+          status: OrderStatus.FULFILLED,
+          channel: {
+            __typename: "Channel",
+            id: "Q2hhbm5lbDox",
+            name: "United States",
+            slug: "us",
+            isActive: true,
+            currencyCode: "USD",
+          },
+        },
+      },
+    ],
+  },
+  kpiOrders: {
+    __typename: "OrderCountableConnection",
+    edges: [
+      {
+        __typename: "OrderCountableEdge",
+        node: {
+          __typename: "Order",
+          id: "T3JkZXI6MTk=",
+          created: "2018-05-07T09:37:30.124154+00:00",
+          status: OrderStatus.FULFILLED,
+          subtotal: {
+            __typename: "TaxedMoney",
+            net: {
+              __typename: "Money",
+              amount: 1180.0,
+              currency: "USD",
+            },
+          },
+          shippingPrice: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 35.89,
+              currency: "USD",
+            },
+          },
+          totalRefunded: {
+            __typename: "Money",
+            amount: 0,
+            currency: "USD",
+          },
+          channel: {
+            __typename: "Channel",
+            id: "Q2hhbm5lbDox",
+            name: "United States",
+            slug: "us",
+            isActive: true,
+            currencyCode: "USD",
+          },
+        },
+      },
+    ],
+  },
+  kpiNonCancelledOrderCount: {
+    __typename: "OrderCountableConnection",
+    totalCount: 1,
   },
   privateMetadata: [],
 };

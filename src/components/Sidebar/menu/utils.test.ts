@@ -42,6 +42,7 @@ describe("mapToExtensionsItems", () => {
     targetName: "APP_PAGE",
     settings: {},
     isSaleorOfficial: false,
+    fromCache: false,
   };
 
   const mockHeader: SidebarMenuItem = {
@@ -291,6 +292,7 @@ describe("getMenuItemExtension", () => {
     settings: {},
     targetName: "POPUP",
     isSaleorOfficial: false,
+    fromCache: false,
   };
 
   const mockExtension: Extension = {

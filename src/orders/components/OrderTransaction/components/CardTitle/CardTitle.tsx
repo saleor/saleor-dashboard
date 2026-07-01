@@ -1,4 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -7,8 +8,9 @@ import { ExternalLink, MoreVertical } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type OrderTransactionProps } from "../../OrderTransaction";
+import { transactionActionInFlight } from "../../transactionInFlight";
 import { type ExtendedOrderTransaction } from "../../types";
-import { mapActionToMessage } from "../../utils";
+import { mapActionToInProgressMessage, mapActionToMessage } from "../../utils";
 import { PaymentMethodDetails } from "../PaymentMethodDetails";
 import { EventTime } from "../TransactionEvents/components/EventTime";
 import { messages } from "./messages";
@@ -129,6 +131,9 @@ export const OrderTransactionCardTitle = ({
 
   const { index = 0 } = transaction;
 
+  // Fake (optimistic) transactions have no real events, so nothing is ever in flight.
+  const transactionEvents = "events" in transaction ? transaction.events : undefined;
+
   const availableActions = transaction.actions.filter(
     action => action !== TransactionActionEnum.REFUND,
   );
@@ -166,19 +171,31 @@ export const OrderTransactionCardTitle = ({
         {(showPrimaryActions || showActionsMenu) && (
           <Box display="flex" gap={2} alignItems="center">
             {showPrimaryActions &&
-              primaryActions.map(action => (
-                <Button
-                  key={`transaction-primary-action-${action}`}
-                  variant="secondary"
-                  onClick={e => {
-                    e.stopPropagation();
-                    onTransactionAction(transaction.id, action);
-                  }}
-                  data-test-id={`transaction-action-${action.toLowerCase()}-button`}
-                >
-                  <FormattedMessage {...mapActionToMessage[action]} />
-                </Button>
-              ))}
+              primaryActions.map(action => {
+                const inFlight = transactionActionInFlight(transactionEvents, action);
+
+                return (
+                  <Button
+                    key={`transaction-primary-action-${action}`}
+                    variant="secondary"
+                    disabled={inFlight}
+                    onClick={e => {
+                      e.stopPropagation();
+                      onTransactionAction(transaction.id, action);
+                    }}
+                    data-test-id={`transaction-action-${action.toLowerCase()}-button`}
+                  >
+                    <Box display="flex" alignItems="center" gap={2}>
+                      {inFlight && <SaleorThrobber size={16} />}
+                      <FormattedMessage
+                        {...(inFlight
+                          ? mapActionToInProgressMessage[action]
+                          : mapActionToMessage[action])}
+                      />
+                    </Box>
+                  </Button>
+                );
+              })}
 
             {showActionsMenu && (
               <Dropdown>
@@ -203,23 +220,47 @@ export const OrderTransactionCardTitle = ({
                     boxShadow="defaultOverlay"
                     backgroundColor="default1"
                   >
-                    {menuActions.map(action => (
-                      <Dropdown.Item key={`transaction-action-${action}`}>
-                        <List.Item
-                          borderRadius={4}
-                          paddingX={1.5}
-                          paddingY={2}
-                          onClick={e => {
-                            e.stopPropagation();
-                            onTransactionAction(transaction.id, action);
-                          }}
-                        >
-                          <Text color={isDestructiveAction(action) ? "critical1" : undefined}>
-                            <FormattedMessage {...mapActionToMessage[action]} />
-                          </Text>
-                        </List.Item>
-                      </Dropdown.Item>
-                    ))}
+                    {menuActions.map(action => {
+                      const inFlight = transactionActionInFlight(transactionEvents, action);
+
+                      return (
+                        <Dropdown.Item key={`transaction-action-${action}`}>
+                          <List.Item
+                            borderRadius={4}
+                            paddingX={1.5}
+                            paddingY={2}
+                            disabled={inFlight}
+                            onClick={
+                              inFlight
+                                ? undefined
+                                : e => {
+                                    e.stopPropagation();
+                                    onTransactionAction(transaction.id, action);
+                                  }
+                            }
+                          >
+                            <Box display="flex" alignItems="center" gap={2}>
+                              {inFlight && <SaleorThrobber size={16} />}
+                              <Text
+                                color={
+                                  inFlight
+                                    ? "defaultDisabled"
+                                    : isDestructiveAction(action)
+                                      ? "critical1"
+                                      : undefined
+                                }
+                              >
+                                <FormattedMessage
+                                  {...(inFlight
+                                    ? mapActionToInProgressMessage[action]
+                                    : mapActionToMessage[action])}
+                                />
+                              </Text>
+                            </Box>
+                          </List.Item>
+                        </Dropdown.Item>
+                      );
+                    })}
                   </List>
                 </Dropdown.Content>
               </Dropdown>

@@ -11,4 +11,5 @@ export interface AvailableColumn {
   icon?: string;
   themeOverride?: Partial<Theme>;
   action?: (id: string) => boolean;
+  headerAlign?: "left" | "right";
 }
