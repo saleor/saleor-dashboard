@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { type ChannelData } from "@dashboard/channels/utils";
 import {
+  getAttributeSwatchData,
+  SwatchPreview,
+} from "@dashboard/components/Attributes/SwatchPreview";
+import {
   booleanCell,
   dropdownCell,
   moneyCell,
@@ -8,10 +12,15 @@ import {
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/customCells/DropdownCell";
+import { type AttributeSearchOption } from "@dashboard/components/Datagrid/customCells/DropdownCell";
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  type ProductDetailsVariantFragment,
+  type ProductFragment,
+} from "@dashboard/graphql";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { type GridCell } from "@glideapps/glide-data-grid";
@@ -81,6 +90,32 @@ interface GetDataOrError {
   getChangeIndex: (column: string, row: number) => number;
 }
 
+interface GetDataParams extends GetDataOrError {
+  variantAttributes: ProductFragment["productType"]["variantAttributes"];
+}
+
+const enrichSwatchSearchOptions = (options: Option[]): AttributeSearchOption[] =>
+  options.map(option => {
+    const swatch = (option as AttributeSearchOption).swatch;
+
+    if (!swatch) {
+      return option;
+    }
+
+    return {
+      ...option,
+      startAdornment: <SwatchPreview {...swatch} size={8} />,
+    };
+  });
+
+const getSwatchAttributeOption = (
+  attributeValue: ProductDetailsVariantFragment["attributes"][number]["values"][number],
+): AttributeSearchOption => ({
+  label: attributeValue.name ?? "",
+  value: attributeValue.slug ?? attributeValue.id,
+  swatch: getAttributeSwatchData(attributeValue),
+});
+
 export function getData({
   availableColumns,
   changes,
@@ -91,8 +126,9 @@ export function getData({
   row,
   channels,
   variants,
+  variantAttributes,
   searchAttributeValues,
-}: GetDataOrError): GridCell {
+}: GetDataParams): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
     return textCell("");
@@ -151,19 +187,31 @@ export function getData({
   }
 
   if (getColumnAttribute(columnId)) {
-    const value =
-      change?.value ??
-      mapNodeToChoice(
-        dataRow?.attributes.find(
-          attribute => attribute.attribute.id === getColumnAttribute(columnId),
-        )?.values,
-      )[0] ??
-      emptyDropdownCellValue;
+    const attributeId = getColumnAttribute(columnId);
+    const attributeDefinition = variantAttributes?.find(attribute => attribute.id === attributeId);
+    const isSwatchAttribute = attributeDefinition?.inputType === AttributeInputTypeEnum.SWATCH;
+    const attributeValue = dataRow?.attributes.find(
+      attribute => attribute.attribute.id === attributeId,
+    )?.values?.[0];
+    const initialValue: AttributeSearchOption = attributeValue
+      ? isSwatchAttribute
+        ? getSwatchAttributeOption(attributeValue)
+        : mapNodeToChoice([attributeValue], node => node.slug ?? node.id)[0]
+      : emptyDropdownCellValue;
+    const cellValue = (change?.value as AttributeSearchOption | undefined) ?? initialValue;
+    const swatch = isSwatchAttribute
+      ? (cellValue.swatch ?? getAttributeSwatchData(attributeValue))
+      : undefined;
 
-    return dropdownCell(value, {
+    return dropdownCell(cellValue, {
       allowCustomValues: true,
       emptyOption: true,
-      update: text => searchAttributeValues(getColumnAttribute(columnId), text),
+      swatch,
+      update: async text => {
+        const options = await searchAttributeValues(attributeId, text);
+
+        return isSwatchAttribute ? enrichSwatchSearchOptions(options) : options;
+      },
     });
   }
 }

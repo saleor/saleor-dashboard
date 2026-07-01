@@ -171,7 +171,7 @@ export function moneyDiscountedCell(
 
 export function dropdownCell(
   value: Option,
-  dataOpts: Pick<DropdownCellProps, "allowCustomValues" | "emptyOption"> &
+  dataOpts: Pick<DropdownCellProps, "allowCustomValues" | "emptyOption" | "swatch"> &
     ({ choices: Option[] } | { update: (text: string) => Promise<Option[]> }),
   opts?: Partial<GridCell>,
 ): DropdownCell {

@@ -252,10 +252,11 @@ export const ProductVariants = ({
         row,
         channels,
         variants,
+        variantAttributes,
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [channels, visibleColumns, onAttributeValuesSearch, variants],
+    [channels, visibleColumns, onAttributeValuesSearch, variantAttributes, variants],
   );
   const getCellError = useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
