@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
-import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
 import { getUserName } from "@dashboard/misc";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -48,8 +48,15 @@ export const HomePage = () => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions ?? [];
 
-  const { HOMEPAGE_WIDGETS: extensions } = useExtensions(HOMEPAGE_MOUNT);
+  const { extensions: extensionsByMount, loading } = useExtensionsWithLoadingState(HOMEPAGE_MOUNT);
+  const extensions = extensionsByMount.HOMEPAGE_WIDGETS;
   const { fullscreen, widgets } = filterHomeExtensions(extensions, userPermissions);
+
+  if (loading) {
+    // First-ever load with no cached snapshot: keep the screen blank to avoid
+    // flashing the "Welcome" empty state before extensions resolve.
+    return <Box height="100%" />;
+  }
 
   if (fullscreen.length === 0 && widgets.length === 0) {
     return (
