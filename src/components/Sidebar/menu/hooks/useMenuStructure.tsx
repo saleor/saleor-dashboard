@@ -34,16 +34,18 @@ import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { SearchShortcut } from "@dashboard/search/SearchShortcut";
 import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
 import { Search } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { SidebarIconSlot } from "../../SidebarIconSlot";
+import { createSettingsSubmenuItem } from "../settingsSubmenuItem";
 import { type SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
 
@@ -74,7 +76,9 @@ export function useMenuStructure() {
       {
         label: (
           <Box display="flex" alignItems="center" gap={3}>
-            {intl.formatMessage(sectionNames.installedExtensions)}
+            <Text size={3} fontWeight="medium">
+              {intl.formatMessage(sectionNames.installedExtensions)}
+            </Text>
             <SidebarAppAlert hasNewFailedAttempts={hasProblems} small />
           </Box>
         ),
@@ -112,7 +116,9 @@ export function useMenuStructure() {
       icon: renderIcon(<Search {...navigationLucideIconProps} />),
       label: (
         <Box display="flex" alignItems="center" gap={2}>
-          {intl.formatMessage(sectionNames.search)}
+          <Text size={3} fontWeight="medium">
+            {intl.formatMessage(sectionNames.search)}
+          </Text>
           <SearchShortcut />
         </Box>
       ),
@@ -157,11 +163,21 @@ export function useMenuStructure() {
           type: "item",
         },
         ...mapToExtensionsItems(extensions.NAVIGATION_CATALOG, appExtensionsHeaderItem),
+        createSettingsSubmenuItem({
+          id: "product-types",
+          label: intl.formatMessage(sectionNames.productTypes),
+          url: productTypeListUrl(),
+          permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
+        }),
       ],
       icon: renderIcon(<ProductsIcon />),
       url: productListUrl(),
       label: intl.formatMessage(sectionNames.catalog),
-      permissions: [PermissionEnum.MANAGE_GIFT_CARD, PermissionEnum.MANAGE_PRODUCTS],
+      permissions: [
+        PermissionEnum.MANAGE_GIFT_CARD,
+        PermissionEnum.MANAGE_PRODUCTS,
+        PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+      ],
       id: "products",
       type: "itemGroup",
     },
@@ -255,16 +271,6 @@ export function useMenuStructure() {
           type: "item",
         },
         {
-          label: intl.formatMessage(sectionNames.modelTypes),
-          id: "model-types",
-          url: pageTypeListUrl(),
-          permissions: [
-            PermissionEnum.MANAGE_PAGES,
-            PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-          ],
-          type: "item",
-        },
-        {
           label: intl.formatMessage(sectionNames.structures),
           id: "structures",
           url: menuListUrl(),
@@ -272,10 +278,20 @@ export function useMenuStructure() {
           type: "item",
         },
         ...mapToExtensionsItems(extensions.NAVIGATION_PAGES, appExtensionsHeaderItem),
+        createSettingsSubmenuItem({
+          id: "model-types",
+          label: intl.formatMessage(sectionNames.modelTypes),
+          url: pageTypeListUrl(),
+          permissions: [PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES],
+        }),
       ],
       icon: renderIcon(<ModelingIcon />),
       label: intl.formatMessage(sectionNames.modeling),
-      permissions: [PermissionEnum.MANAGE_PAGES, PermissionEnum.MANAGE_MENUS],
+      permissions: [
+        PermissionEnum.MANAGE_PAGES,
+        PermissionEnum.MANAGE_MENUS,
+        PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+      ],
       id: "modeling",
       url: pageListPath,
       type: "itemGroup",

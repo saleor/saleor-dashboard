@@ -241,13 +241,9 @@ const Routes = () => {
                     component={PageSection}
                   />
                   <SectionRoute
-                    permissions={[
-                      PermissionEnum.MANAGE_PAGES,
-                      PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-                    ]}
+                    permissions={[PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES]}
                     path={modelTypesPath}
                     component={PageTypesSection}
-                    matchPermission="any"
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_ORDERS]}
