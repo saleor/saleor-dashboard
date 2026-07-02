@@ -1,7 +1,8 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
 import { Close } from "./Close";
+import { ContextHeader } from "./ContextHeader";
 import modalStyles from "./DashboardModal.module.css";
 import { Title, type TitleProps } from "./Title";
 
@@ -11,22 +12,25 @@ interface HeaderProps extends TitleProps {
 }
 
 export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
+  if (subtitle) {
+    return <ContextHeader description={subtitle}>{children}</ContextHeader>;
+  }
+
   return (
-    <Box
-      className={modalStyles.modalChromeHeader}
-      display="flex"
-      justifyContent="space-between"
-      gap={4}
-    >
-      <Box display="flex" flexDirection="column" gap={2} minWidth={0}>
-        <Title {...rest}>{children}</Title>
-        {subtitle ? (
-          <Text size={2} fontWeight="light" color="default2">
-            {subtitle}
-          </Text>
-        ) : null}
+    <Box className={modalStyles.modalChromeHeaderWrapper} flexShrink="0">
+      <Box
+        className={modalStyles.modalChromeHeader}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="flex-start"
+        gap={4}
+      >
+        <Box minWidth={0}>
+          <Title {...rest}>{children}</Title>
+        </Box>
+        <Close />
       </Box>
-      <Close />
+      <Box className={modalStyles.fullBleedDivider} />
     </Box>
   );
 };

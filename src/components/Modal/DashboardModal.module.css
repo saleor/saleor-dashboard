@@ -29,6 +29,13 @@
   padding-bottom: 0;
 }
 
+.modalChromeHeaderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-4);
+  flex-shrink: 0;
+}
+
 .fullBleedDivider {
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }

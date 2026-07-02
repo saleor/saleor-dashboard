@@ -14,7 +14,7 @@ interface PickerHeaderProps {
 
 export const PickerHeader = ({ children, toolbar }: PickerHeaderProps) => {
   return (
-    <Box className={styles.wrapper} flexShrink="0">
+    <Box className={modalStyles.modalChromeHeaderWrapper} flexShrink="0">
       <Box
         className={modalStyles.modalChromeHeader}
         display="flex"

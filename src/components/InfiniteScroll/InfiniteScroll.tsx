@@ -55,7 +55,8 @@ export const InfiniteScroll = ({
     );
   }
 
-  const scrollContainerId = id ?? scrollableTarget;
+  const scrollContainerId =
+    id ?? (typeof scrollableTarget === "string" ? scrollableTarget : undefined);
 
   if (!scrollContainerId) {
     throw new Error("InfiniteScroll requires `id` when no parent `scrollableTarget` is provided.");

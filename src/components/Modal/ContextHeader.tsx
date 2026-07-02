@@ -24,7 +24,7 @@ export const ContextHeader = ({
   steps,
 }: ContextHeaderProps) => {
   return (
-    <Box className={styles.wrapper} flexShrink="0">
+    <Box className={modalStyles.modalChromeHeaderWrapper} flexShrink="0">
       <Box
         className={modalStyles.modalChromeHeader}
         display="flex"
@@ -42,7 +42,7 @@ export const ContextHeader = ({
             ) : null}
           </Box>
           {description ? (
-            <Box className={styles.description}>
+            <Box className={steps ? styles.descriptionWithSteps : undefined}>
               <Text size={2} color="default2">
                 {description}
               </Text>
