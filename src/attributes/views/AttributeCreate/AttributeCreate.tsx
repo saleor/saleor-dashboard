@@ -158,7 +158,6 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
       defaultAttributeType={defaultAttributeType}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
-      params={params}
       onDelete={() => undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}

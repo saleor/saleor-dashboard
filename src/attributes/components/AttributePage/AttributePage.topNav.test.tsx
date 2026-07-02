@@ -98,7 +98,6 @@ const defaultProps = {
   disabled: false,
   errors: [],
   saveButtonBarState: "default" as const,
-  params: {},
   onDelete: jest.fn(),
   onSubmit: jest.fn(),
   onValueAdd: jest.fn(),

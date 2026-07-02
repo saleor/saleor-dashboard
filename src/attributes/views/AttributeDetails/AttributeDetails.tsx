@@ -224,7 +224,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       attribute={data?.attribute}
       disabled={isInitialLoading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
-      params={params}
       onDelete={() => openModal("remove")}
       onShowMetadata={() => openModal("view-metadata", { id: undefined })}
       onSubmit={handleSubmit}

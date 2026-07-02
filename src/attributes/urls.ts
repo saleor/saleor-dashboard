@@ -103,12 +103,7 @@ export const getAttributeTypeFromBuiltInPresetTab = (
 export const attributeListUrlWithAttributeTypePreset = (attributeType: AttributeTypeEnum) =>
   `${attributeListUrlWithAttributeType(attributeType)}&activeTab=${builtInAttributeTypePresetTabIndex[attributeType]}`;
 
-export type AttributeAddUrlDialog =
-  | "add-value"
-  | "edit-value"
-  | "remove-value"
-  | "remove-values"
-  | "assign-reference-types";
+export type AttributeAddUrlDialog = "add-value" | "edit-value" | "remove-value" | "remove-values";
 export type AttributeAddUrlQueryParams = Dialog<AttributeAddUrlDialog> &
   SingleAction & {
     type?: AttributeTypeEnum;
@@ -135,7 +130,6 @@ export type AttributeUrlDialog =
   | "remove"
   | "remove-value"
   | "remove-values"
-  | "assign-reference-types"
   | "view-metadata";
 export type AttributeUrlQueryParams = BulkAction & Dialog<AttributeUrlDialog> & SingleAction;
 export const attributePath = (id: string) => urlJoin(attributeSection, id);

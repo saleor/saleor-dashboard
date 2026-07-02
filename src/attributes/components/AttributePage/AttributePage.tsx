@@ -1,9 +1,5 @@
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
-import {
-  type AttributeAddUrlQueryParams,
-  attributeListPath,
-  type AttributeUrlQueryParams,
-} from "@dashboard/attributes/urls";
+import { attributeListPath } from "@dashboard/attributes/urls";
 import {
   getAttributePageInitialForm,
   isAttributeUpdateFormPristine,
@@ -91,7 +87,6 @@ interface AttributePageProps {
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   values?: NonNullable<AttributeDetailsQuery["attribute"]>["choices"] | undefined;
-  params: AttributeAddUrlQueryParams | AttributeUrlQueryParams;
   onDelete: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
