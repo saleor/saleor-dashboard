@@ -12,6 +12,7 @@ import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
@@ -93,6 +94,8 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
     () => productChoices.flatMap(product => product.variants || []),
     [productChoices],
   );
+  const displayedProductChoices = useStalePickerList(productChoices, loading, open);
+  const showEmptyState = !loading && displayedProductChoices.length === 0;
 
   const handleSubmit = () => {
     if (selectedVariantId) {
@@ -125,104 +128,117 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
 
   return (
     <>
-      <TextField
-        name="query"
-        value={query}
-        onChange={onQueryChange}
-        label={intl.formatMessage(messages.assignVariantDialogSearch)}
-        placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
-        }}
-      />
+      <DashboardModal.PickerHeader
+        toolbar={
+          <>
+            <TextField
+              name="query"
+              value={query}
+              onChange={onQueryChange}
+              label={intl.formatMessage(messages.assignVariantDialogSearch)}
+              placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
+              fullWidth
+              InputProps={{
+                autoComplete: "off",
+                endAdornment: loading && <SaleorThrobber size={16} />,
+              }}
+            />
 
-      <ModalFilters />
-
-      <InfiniteScroll
-        id={scrollableTargetId}
-        dataLength={productChoices.reduce(
-          (acc, product) => acc + (product.variants?.length || 0),
-          0,
-        )}
-        next={onFetchMore}
-        hasMore={hasMore}
-        scrollThreshold="100px"
-        scrollableTarget={scrollableTargetId}
+            <ModalFilters />
+          </>
+        }
       >
-        <ResponsiveTable key="table">
-          <TableBody>
-            {renderCollection(
-              productChoices,
-              product => (
-                <Fragment key={product ? product.id : "skeleton"}>
-                  {/* Product header row (non-selectable) */}
-                  <TableRowLink>
-                    <TableCell padding="checkbox">
-                      {/* No checkbox for products in single mode */}
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.avatar}
-                      thumbnail={product ? maybe(() => product.thumbnail?.url) : undefined}
-                    />
-                    <TableCell colSpan={2}>{product ? maybe(() => product.name) : null}</TableCell>
-                  </TableRowLink>
-                  {/* Variant rows (selectable) */}
-                  {(product?.variants || [])
-                    .filter(v => v !== null)
-                    .map(variant => {
-                      const isSelected = selectedVariantId === variant.id;
+        <FormattedMessage {...messages.assignVariantDialogHeader} />
+      </DashboardModal.PickerHeader>
 
-                      return (
-                        <TableRowLink
-                          key={variant.id}
-                          data-test-id="assign-variant-table-row"
-                          onClick={() => handleVariantSelect(variant.id)}
-                        >
-                          <TableCell />
-                          <TableCell className={classes.colVariantCheckbox}>
-                            <Radio
-                              className={classes.variantCheckbox}
-                              checked={isSelected}
-                              disabled={loading}
-                              onChange={() => handleVariantSelect(variant.id)}
-                              value={variant.id}
-                              name="variant-selection"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <div>{variant.name}</div>
-                            <div className={classes.grayText}>
-                              <FormattedMessage
-                                {...messages.assignVariantDialogSKU}
-                                values={{
-                                  sku: variant.sku,
-                                }}
+      <DashboardModal.Body fill id={scrollableTargetId}>
+        <InfiniteScroll
+          flush
+          dataLength={displayedProductChoices.reduce(
+            (acc, product) => acc + (product.variants?.length || 0),
+            0,
+          )}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          scrollableTarget={scrollableTargetId}
+        >
+          <ResponsiveTable bleed fillHeight key="table">
+            <TableBody>
+              {renderCollection(
+                displayedProductChoices,
+                product => (
+                  <Fragment key={product ? product.id : "skeleton"}>
+                    {/* Product header row (non-selectable) */}
+                    <TableRowLink>
+                      <TableCell padding="checkbox">
+                        {/* No checkbox for products in single mode */}
+                      </TableCell>
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={product ? maybe(() => product.thumbnail?.url) : undefined}
+                      />
+                      <TableCell colSpan={2}>
+                        {product ? maybe(() => product.name) : null}
+                      </TableCell>
+                    </TableRowLink>
+                    {/* Variant rows (selectable) */}
+                    {(product?.variants || [])
+                      .filter(v => v !== null)
+                      .map(variant => {
+                        const isSelected = selectedVariantId === variant.id;
+
+                        return (
+                          <TableRowLink
+                            key={variant.id}
+                            data-test-id="assign-variant-table-row"
+                            onClick={() => handleVariantSelect(variant.id)}
+                          >
+                            <TableCell />
+                            <TableCell className={classes.colVariantCheckbox}>
+                              <Radio
+                                className={classes.variantCheckbox}
+                                checked={isSelected}
+                                disabled={loading}
+                                onChange={() => handleVariantSelect(variant.id)}
+                                value={variant.id}
+                                name="variant-selection"
                               />
-                            </div>
-                          </TableCell>
-                          <TableCell className={classes.textRight}>
-                            {variant?.channelListings?.[0]?.price && (
-                              <Money money={variant.channelListings[0].price} />
-                            )}
-                          </TableCell>
-                        </TableRowLink>
-                      );
-                    })}
-                </Fragment>
-              ),
-              () => (
-                <Text className={classes.noContentText}>
-                  {query
-                    ? intl.formatMessage(messages.noProductsInQuery)
-                    : intl.formatMessage(messages.noProductsInChannel)}
-                </Text>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
-      </InfiniteScroll>
+                            </TableCell>
+                            <TableCell>
+                              <div>{variant.name}</div>
+                              <div className={classes.grayText}>
+                                <FormattedMessage
+                                  {...messages.assignVariantDialogSKU}
+                                  values={{
+                                    sku: variant.sku,
+                                  }}
+                                />
+                              </div>
+                            </TableCell>
+                            <TableCell className={classes.textRight}>
+                              {variant?.channelListings?.[0]?.price && (
+                                <Money money={variant.channelListings[0].price} />
+                              )}
+                            </TableCell>
+                          </TableRowLink>
+                        );
+                      })}
+                  </Fragment>
+                ),
+                () =>
+                  showEmptyState && (
+                    <Text className={classes.noContentText}>
+                      {query
+                        ? intl.formatMessage(messages.noProductsInQuery)
+                        : intl.formatMessage(messages.noProductsInChannel)}
+                    </Text>
+                  ),
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
+      </DashboardModal.Body>
 
       <DashboardModal.Actions>
         <BackButton onClick={handleClose} />

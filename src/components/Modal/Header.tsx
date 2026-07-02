@@ -2,6 +2,7 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
 import { Close } from "./Close";
+import modalStyles from "./DashboardModal.module.css";
 import { Title, type TitleProps } from "./Title";
 
 interface HeaderProps extends TitleProps {
@@ -11,7 +12,12 @@ interface HeaderProps extends TitleProps {
 
 export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
   return (
-    <Box display="flex" justifyContent="space-between" gap={4}>
+    <Box
+      className={modalStyles.modalChromeHeader}
+      display="flex"
+      justifyContent="space-between"
+      gap={4}
+    >
       <Box display="flex" flexDirection="column" gap={2} minWidth={0}>
         <Title {...rest}>{children}</Title>
         {subtitle ? (

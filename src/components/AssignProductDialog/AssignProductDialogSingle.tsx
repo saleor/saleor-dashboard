@@ -11,6 +11,7 @@ import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe } from "@dashboard/misc";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
@@ -117,35 +118,46 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
     setSelectedProductId(productId === selectedProductId ? "" : productId);
   };
 
+  const displayedProducts = useStalePickerList(products, loading, open);
+  const showEmptyState = !loading && displayedProducts.length === 0;
+
   return (
     <>
-      <TextField
-        name="query"
-        value={query}
-        onChange={onQueryChange}
-        label={intl.formatMessage(messages.assignProductDialogSearch)}
-        placeholder={intl.formatMessage(messages.assignProductDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
-        }}
-      />
+      <DashboardModal.PickerHeader
+        toolbar={
+          <>
+            <TextField
+              name="query"
+              value={query}
+              onChange={onQueryChange}
+              label={intl.formatMessage(messages.assignProductDialogSearch)}
+              placeholder={intl.formatMessage(messages.assignProductDialogContent)}
+              fullWidth
+              InputProps={{
+                autoComplete: "off",
+                endAdornment: loading && <SaleorThrobber size={16} />,
+              }}
+            />
 
-      <ModalFilters />
-
-      <InfiniteScroll
-        id={scrollableTargetId}
-        dataLength={products?.length ?? 0}
-        next={onFetchMore}
-        hasMore={hasMore}
-        scrollThreshold="100px"
-        scrollableTarget={scrollableTargetId}
+            <ModalFilters />
+          </>
+        }
       >
-        <ResponsiveTable key="table">
-          <TableBody>
-            {products &&
-              products.map(product => {
+        <FormattedMessage {...messages.assignVariantDialogHeader} />
+      </DashboardModal.PickerHeader>
+
+      <DashboardModal.Body fill id={scrollableTargetId}>
+        <InfiniteScroll
+          flush
+          dataLength={displayedProducts.length}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          scrollableTarget={scrollableTargetId}
+        >
+          <ResponsiveTable bleed fillHeight key="table">
+            <TableBody>
+              {displayedProducts.map(product => {
                 const isSelected = selectedProductId === product.id;
                 const isProductAvailable = isProductAvailableInVoucherChannels(
                   product.channelListings ?? [],
@@ -185,14 +197,15 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
                   </TableRowLink>
                 );
               })}
-            {!loading && (products?.length ?? 0) === 0 && (
-              <Text>
-                <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
-              </Text>
-            )}
-          </TableBody>
-        </ResponsiveTable>
-      </InfiniteScroll>
+              {showEmptyState && (
+                <Text>
+                  <Text>{intl.formatMessage(messages.noProductsFound)}</Text>
+                </Text>
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
+      </DashboardModal.Body>
 
       <DashboardModal.Actions>
         <BackButton onClick={handleClose} />

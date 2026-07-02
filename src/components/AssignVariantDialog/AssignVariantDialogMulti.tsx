@@ -13,6 +13,7 @@ import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
@@ -79,14 +80,13 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
 
   const [variants, setVariants] = useState<VariantWithProductLabel[]>([]);
   const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
-  const selectedVariantsToProductsMap = productChoices
-    ? productChoices.map(product =>
-        product.variants.map(variant => isVariantSelected(variant, variants)),
-      )
-    : [];
-  const productsWithAllVariantsSelected = productChoices
-    ? productChoices.map(product => hasAllVariantsSelected(product.variants, variants))
-    : [];
+  const displayedProductChoices = useStalePickerList(productChoices, loading, open);
+  const selectedVariantsToProductsMap = displayedProductChoices.map(product =>
+    product.variants.map(variant => isVariantSelected(variant, variants)),
+  );
+  const productsWithAllVariantsSelected = displayedProductChoices.map(product =>
+    hasAllVariantsSelected(product.variants, variants),
+  );
   const handleSubmit = () =>
     onSubmit(
       variants.map(variant => ({
@@ -110,111 +110,124 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
     onClose: handleClose,
   });
 
+  const showEmptyState = !loading && displayedProductChoices.length === 0;
+
   return (
     <>
-      <TextField
-        name="query"
-        value={query}
-        onChange={onQueryChange}
-        label={intl.formatMessage(messages.assignVariantDialogSearch)}
-        placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
-        }}
-      />
+      <DashboardModal.PickerHeader
+        toolbar={
+          <>
+            <TextField
+              name="query"
+              value={query}
+              onChange={onQueryChange}
+              label={intl.formatMessage(messages.assignVariantDialogSearch)}
+              placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
+              fullWidth
+              InputProps={{
+                autoComplete: "off",
+                endAdornment: loading && <SaleorThrobber size={16} />,
+              }}
+            />
 
-      <ModalFilters />
-
-      <InfiniteScroll
-        id={scrollableTargetId}
-        dataLength={variants?.length ?? 0}
-        next={onFetchMore}
-        hasMore={hasMore}
-        scrollThreshold="100px"
-        scrollableTarget={scrollableTargetId}
+            <ModalFilters />
+          </>
+        }
       >
-        <ResponsiveTable key="table">
-          <TableBody>
-            {renderCollection(
-              productChoices,
-              (product, productIndex) => (
-                <Fragment key={product ? product.id : "skeleton"}>
-                  <TableRowLink>
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={productsWithAllVariantsSelected[productIndex]}
-                        disabled={loading}
-                        onChange={() =>
-                          handleProductAssign(
-                            product,
-                            productIndex,
-                            productsWithAllVariantsSelected,
-                            variants,
-                            setVariants,
-                          )
-                        }
-                      />
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.avatar}
-                      thumbnail={maybe(() => product.thumbnail.url)}
-                    />
-                    <TableCell colSpan={2}>{maybe(() => product.name)}</TableCell>
-                  </TableRowLink>
-                  {maybe(() => product.variants, []).map((variant, variantIndex) => (
-                    <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
-                      <TableCell />
-                      <TableCell className={classes.colVariantCheckbox}>
+        <FormattedMessage {...messages.assignVariantDialogHeader} />
+      </DashboardModal.PickerHeader>
+
+      <DashboardModal.Body fill id={scrollableTargetId}>
+        <InfiniteScroll
+          flush
+          dataLength={variants?.length ?? 0}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          scrollableTarget={scrollableTargetId}
+        >
+          <ResponsiveTable bleed fillHeight key="table">
+            <TableBody>
+              {renderCollection(
+                displayedProductChoices,
+                (product, productIndex) => (
+                  <Fragment key={product ? product.id : "skeleton"}>
+                    <TableRowLink>
+                      <TableCell padding="checkbox">
                         <Checkbox
-                          className={classes.variantCheckbox}
-                          checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
+                          checked={productsWithAllVariantsSelected[productIndex]}
                           disabled={loading}
                           onChange={() =>
-                            handleVariantAssign(
-                              variant,
+                            handleProductAssign(
                               product,
-                              variantIndex,
                               productIndex,
+                              productsWithAllVariantsSelected,
                               variants,
-                              selectedVariantsToProductsMap,
                               setVariants,
                             )
                           }
                         />
                       </TableCell>
-                      <TableCell>
-                        <div>{variant.name}</div>
-                        <div className={classes.grayText}>
-                          <FormattedMessage
-                            {...messages.assignVariantDialogSKU}
-                            values={{
-                              sku: variant.sku,
-                            }}
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className={classes.textRight}>
-                        {variant?.channelListings[0]?.price && (
-                          <Money money={variant.channelListings[0].price} />
-                        )}
-                      </TableCell>
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => product.thumbnail.url)}
+                      />
+                      <TableCell colSpan={2}>{maybe(() => product.name)}</TableCell>
                     </TableRowLink>
-                  ))}
-                </Fragment>
-              ),
-              () => (
-                <Text className={classes.noContentText}>
-                  {query
-                    ? intl.formatMessage(messages.noProductsInQuery)
-                    : intl.formatMessage(messages.noProductsInChannel)}
-                </Text>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
-      </InfiniteScroll>
+                    {maybe(() => product.variants, []).map((variant, variantIndex) => (
+                      <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">
+                        <TableCell />
+                        <TableCell className={classes.colVariantCheckbox}>
+                          <Checkbox
+                            className={classes.variantCheckbox}
+                            checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
+                            disabled={loading}
+                            onChange={() =>
+                              handleVariantAssign(
+                                variant,
+                                product,
+                                variantIndex,
+                                productIndex,
+                                variants,
+                                selectedVariantsToProductsMap,
+                                setVariants,
+                              )
+                            }
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <div>{variant.name}</div>
+                          <div className={classes.grayText}>
+                            <FormattedMessage
+                              {...messages.assignVariantDialogSKU}
+                              values={{
+                                sku: variant.sku,
+                              }}
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell className={classes.textRight}>
+                          {variant?.channelListings[0]?.price && (
+                            <Money money={variant.channelListings[0].price} />
+                          )}
+                        </TableCell>
+                      </TableRowLink>
+                    ))}
+                  </Fragment>
+                ),
+                () =>
+                  showEmptyState && (
+                    <Text className={classes.noContentText}>
+                      {query
+                        ? intl.formatMessage(messages.noProductsInQuery)
+                        : intl.formatMessage(messages.noProductsInChannel)}
+                    </Text>
+                  ),
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
+      </DashboardModal.Body>
 
       <DashboardModal.Actions>
         <BackButton onClick={handleClose} />

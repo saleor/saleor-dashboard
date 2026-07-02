@@ -98,15 +98,12 @@ export const Content = ({
         borderStyle="solid"
         borderWidth={1}
         borderColor="default1"
-        padding={6}
         __maxHeight="calc(100vh - 100px)"
         __width="calc(100% - 64px)"
         display="flex"
         flexDirection="column"
         __minHeight="0"
         __maxWidth={sizes[size]}
-        overflowX="hidden"
-        overflowY="hidden"
         className={clsx(styles.contentShell, className)}
         {...rest}
       >

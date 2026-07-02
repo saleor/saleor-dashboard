@@ -2,7 +2,6 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
-import { FormattedMessage } from "react-intl";
 
 import {
   type InitialConstraints,
@@ -10,7 +9,6 @@ import {
 } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { AssignProductDialogMulti } from "./AssignProductDialogMulti";
 import { AssignProductDialogSingle } from "./AssignProductDialogSingle";
-import { messages } from "./messages";
 import { type Products, type SelectedChannel } from "./types";
 
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
@@ -45,22 +43,16 @@ export const AssignProductDialog = (props: AssignProductDialogProps): JSX.Elemen
     onClose();
   };
 
-  const dialogContent = (
-    <>
-      <DashboardModal.Header>
-        <FormattedMessage {...messages.assignVariantDialogHeader} />
-      </DashboardModal.Header>
-      {selectionMode === "single" ? (
-        <AssignProductDialogSingle {...restProps} />
-      ) : (
-        <AssignProductDialogMulti {...restProps} />
-      )}
-    </>
-  );
+  const dialogContent =
+    selectionMode === "single" ? (
+      <AssignProductDialogSingle {...restProps} />
+    ) : (
+      <AssignProductDialogMulti {...restProps} />
+    );
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+      <DashboardModal.Content size="sm">
         <ModalProductFilterProvider
           excludedFilters={excludedFilters}
           initialConstraints={initialConstraints}

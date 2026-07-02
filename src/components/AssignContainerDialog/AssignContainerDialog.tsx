@@ -6,6 +6,7 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
@@ -72,6 +73,10 @@ const AssignContainerDialog = ({
     onSubmit,
   });
 
+  const displayedContainers = useStalePickerList(containers, loading, open);
+  const itemCount = displayedContainers.length;
+  const showEmptyState = !loading && itemCount === 0;
+
   const multiSelection = useAssignDialogMultiSelection({
     open,
     onSubmit,
@@ -80,59 +85,65 @@ const AssignContainerDialog = ({
   const handleSubmit =
     selectionMode === "single" ? singleSelection.handleSubmit : multiSelection.handleSubmit;
 
-  const itemCount = containers?.length ?? 0;
-
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
-        <DashboardModal.Header>{labels.title}</DashboardModal.Header>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.PickerHeader
+          toolbar={
+            <>
+              <TextField
+                name="query"
+                value={query}
+                onChange={onQueryChange}
+                label={labels.label}
+                placeholder={labels.placeholder}
+                fullWidth
+                InputProps={{
+                  autoComplete: "off",
+                  endAdornment: loading && <SaleorThrobber size={16} />,
+                }}
+              />
 
-        <TextField
-          name="query"
-          value={query}
-          onChange={onQueryChange}
-          label={labels.label}
-          placeholder={labels.placeholder}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
-          }}
-        />
-
-        {filtersSlot}
-
-        <InfiniteScroll
-          id={scrollableTargetId}
-          dataLength={itemCount}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          scrollableTarget={scrollableTargetId}
+              {filtersSlot}
+            </>
+          }
         >
-          <ResponsiveTable>
-            <TableBody>
-              {!loading && itemCount === 0 && (
-                <Text>
-                  <Text>{emptyMessage}</Text>
-                </Text>
-              )}
-              {selectionMode === "single" ? (
-                <SingleSelectionRows
-                  containers={containers}
-                  selectedItemId={singleSelection.selectedItemId}
-                  onSelect={singleSelection.handleSelect}
-                />
-              ) : (
-                <MultiSelectionRows
-                  containers={containers}
-                  isSelected={multiSelection.isSelected}
-                  onToggle={multiSelection.handleToggle}
-                />
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </InfiniteScroll>
+          {labels.title}
+        </DashboardModal.PickerHeader>
+
+        <DashboardModal.Body fill id={scrollableTargetId}>
+          <InfiniteScroll
+            flush
+            dataLength={itemCount}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
+          >
+            <ResponsiveTable bleed fillHeight>
+              <TableBody>
+                {showEmptyState && (
+                  <Text>
+                    <Text>{emptyMessage}</Text>
+                  </Text>
+                )}
+                {selectionMode === "single" ? (
+                  <SingleSelectionRows
+                    containers={displayedContainers}
+                    selectedItemId={singleSelection.selectedItemId}
+                    onSelect={singleSelection.handleSelect}
+                  />
+                ) : (
+                  <MultiSelectionRows
+                    containers={displayedContainers}
+                    isSelected={multiSelection.isSelected}
+                    onToggle={multiSelection.handleToggle}
+                  />
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
           <BackButton onClick={handleClose} />

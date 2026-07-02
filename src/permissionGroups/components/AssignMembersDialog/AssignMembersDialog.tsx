@@ -12,6 +12,7 @@ import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { type SearchStaffMembersQuery } from "@dashboard/graphql";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { buttonMessages } from "@dashboard/intl";
 import { getUserInitials, getUserName, renderCollection } from "@dashboard/misc";
 import {
@@ -50,11 +51,8 @@ const useStyles = makeStyles(
       width: "100%",
     },
     checkboxCell: {
-      "&&:not(first-child)": {
-        paddingLeft: 0,
-        paddingRight: 0,
-        width: 48,
-      },
+      paddingRight: 0,
+      width: 48,
     },
     colActions: {
       textAlign: "right",
@@ -73,9 +71,6 @@ const useStyles = makeStyles(
     },
     overflow: {
       overflowY: "visible",
-    },
-    table: {
-      marginBottom: theme.spacing(3),
     },
     wideCell: {
       width: "80%",
@@ -126,100 +121,109 @@ const AssignMembersDialog = ({
   const [selectedMembers, setSelectedMembers] = useState<
     RelayToFlat<SearchStaffMembersQuery["search"]>
   >([]);
+  const displayedMembers = useStalePickerList(staffMembers, loading, open);
+  const showEmptyState = !loading && displayedMembers.length === 0;
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr">
-        <DashboardModal.Header>
-          <FormattedMessage {...messages.title} />
-        </DashboardModal.Header>
-
-        <TextField
-          data-test-id="search-members-input"
-          name="query"
-          value={query}
-          onChange={onQueryChange}
-          label={intl.formatMessage(messages.searchInputLabel)}
-          placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
-          }}
-          disabled={disabled}
-        />
-
-        <InfiniteScroll
-          id={scrollableTargetId}
-          dataLength={staffMembers?.length || 0}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          scrollableTarget={scrollableTargetId}
+      <DashboardModal.Content size="sm">
+        <DashboardModal.PickerHeader
+          toolbar={
+            <TextField
+              data-test-id="search-members-input"
+              name="query"
+              value={query}
+              onChange={onQueryChange}
+              label={intl.formatMessage(messages.searchInputLabel)}
+              placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
+              fullWidth
+              InputProps={{
+                autoComplete: "off",
+                endAdornment: loading && <SaleorThrobber size={16} />,
+              }}
+              disabled={disabled}
+            />
+          }
         >
-          <ResponsiveTable className={classes.table}>
-            <TableBody data-test-id="search-results">
-              {renderCollection(
-                staffMembers,
-                member => {
-                  if (!member) {
-                    return null;
-                  }
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.PickerHeader>
 
-                  const isSelected = selectedMembers.some(
-                    selectedMember => selectedMember.id === member.id,
-                  );
+        <DashboardModal.Body fill id={scrollableTargetId}>
+          <InfiniteScroll
+            flush
+            dataLength={displayedMembers.length}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
+          >
+            <ResponsiveTable bleed fillHeight>
+              <TableBody data-test-id="search-results">
+                {renderCollection(
+                  displayedMembers,
+                  member => {
+                    if (!member) {
+                      return null;
+                    }
 
-                  return (
-                    <TableRowLink key={member.id} data-test-id="user-row">
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox
-                          color="primary"
-                          checked={isSelected}
-                          onChange={() =>
-                            handleStaffMemberAssign(
-                              member,
-                              isSelected,
-                              selectedMembers,
-                              setSelectedMembers,
-                            )
-                          }
-                        />
-                      </TableCell>
-                      <TableCell className={classes.avatarCell}>
-                        <UserAvatar url={member?.avatar?.url} initials={getUserInitials(member)} />
-                      </TableCell>
-                      <TableCell className={classes.colName}>
-                        <Box display="flex" flexDirection="column" justifyContent="center">
-                          <Text>{getUserName(member) || <Skeleton />}</Text>
-                          <Text size={2} color="default2">
-                            {member ? (
-                              member.isActive ? (
-                                intl.formatMessage(messages.staffActive)
-                              ) : (
-                                intl.formatMessage(messages.staffInactive)
+                    const isSelected = selectedMembers.some(
+                      selectedMember => selectedMember.id === member.id,
+                    );
+
+                    return (
+                      <TableRowLink key={member.id} data-test-id="user-row">
+                        <TableCell padding="checkbox" className={classes.checkboxCell}>
+                          <Checkbox
+                            color="primary"
+                            checked={isSelected}
+                            onChange={() =>
+                              handleStaffMemberAssign(
+                                member,
+                                isSelected,
+                                selectedMembers,
+                                setSelectedMembers,
                               )
-                            ) : (
-                              <Skeleton />
-                            )}
-                          </Text>
-                        </Box>
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                },
-                () =>
-                  !loading && (
-                    <TableRowLink>
-                      <TableCell colSpan={2}>
-                        <FormattedMessage {...messages.noMembersFound} />
-                      </TableCell>
-                    </TableRowLink>
-                  ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </InfiniteScroll>
+                            }
+                          />
+                        </TableCell>
+                        <TableCell className={classes.avatarCell}>
+                          <UserAvatar
+                            url={member?.avatar?.url}
+                            initials={getUserInitials(member)}
+                          />
+                        </TableCell>
+                        <TableCell className={classes.colName}>
+                          <Box display="flex" flexDirection="column" justifyContent="center">
+                            <Text>{getUserName(member) || <Skeleton />}</Text>
+                            <Text size={2} color="default2">
+                              {member ? (
+                                member.isActive ? (
+                                  intl.formatMessage(messages.staffActive)
+                                ) : (
+                                  intl.formatMessage(messages.staffInactive)
+                                )
+                              ) : (
+                                <Skeleton />
+                              )}
+                            </Text>
+                          </Box>
+                        </TableCell>
+                      </TableRowLink>
+                    );
+                  },
+                  () =>
+                    showEmptyState && (
+                      <TableRowLink>
+                        <TableCell colSpan={2}>
+                          <FormattedMessage {...messages.noMembersFound} />
+                        </TableCell>
+                      </TableRowLink>
+                    ),
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} />

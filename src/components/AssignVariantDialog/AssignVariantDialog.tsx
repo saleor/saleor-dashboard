@@ -7,7 +7,6 @@ import {
   type FetchMoreProps,
   type RelayToFlat,
 } from "@dashboard/types";
-import { FormattedMessage } from "react-intl";
 
 import { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import {
@@ -16,7 +15,6 @@ import {
 } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { AssignVariantDialogMulti } from "./AssignVariantDialogMulti";
 import { AssignVariantDialogSingle } from "./AssignVariantDialogSingle";
-import { messages } from "./messages";
 
 interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -44,23 +42,16 @@ const AssignVariantDialog = (props: AssignVariantDialogProps) => {
     onClose();
   };
 
-  const dialogContent = (
-    <>
-      <DashboardModal.Header>
-        <FormattedMessage {...messages.assignVariantDialogHeader} />
-      </DashboardModal.Header>
-
-      {selectionMode === "single" ? (
-        <AssignVariantDialogSingle {...restProps} />
-      ) : (
-        <AssignVariantDialogMulti {...restProps} />
-      )}
-    </>
-  );
+  const dialogContent =
+    selectionMode === "single" ? (
+      <AssignVariantDialogSingle {...restProps} />
+    ) : (
+      <AssignVariantDialogMulti {...restProps} />
+    );
 
   return (
     <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
+      <DashboardModal.Content size="sm">
         <ModalProductFilterProvider
           excludedFilters={excludedFilters}
           initialConstraints={initialConstraints}

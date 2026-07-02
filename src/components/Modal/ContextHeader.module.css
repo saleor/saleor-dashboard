@@ -14,8 +14,3 @@
 .description {
   min-height: 40px;
 }
-
-.divider {
-  border-bottom: 1px solid var(--mu-colors-border-default1);
-  margin-inline: calc(var(--mu-spacing-6) * -1);
-}

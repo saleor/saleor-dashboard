@@ -14,11 +14,12 @@ import { type AvailableAttributeFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
@@ -26,9 +27,6 @@ import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
-    checkboxCell: {
-      paddingLeft: 0,
-    },
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
@@ -76,6 +74,8 @@ const AssignAttributeDialog = ({
   const classes = useStyles({});
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const errors = useModalDialogErrors(apiErrors, open);
+  const displayedAttributes = useStalePickerList(attributes, loading, open);
+  const showEmptyState = !loading && displayedAttributes.length === 0;
 
   useModalDialogOpen(open, {
     onClose: resetQuery,
@@ -84,84 +84,89 @@ const AssignAttributeDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto auto">
-        <DashboardModal.Header>
-          <FormattedMessage {...messages.title} />
-        </DashboardModal.Header>
-
-        <TextField
-          data-test-id="attribute-search-input"
-          name="query"
-          value={query}
-          onChange={onQueryChange}
-          label={intl.formatMessage(messages.searchInputLabel)}
-          placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
-          }}
-        />
-
-        <InfiniteScroll
-          id={scrollableTargetId}
-          dataLength={attributes?.length || 0}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          scrollableTarget={scrollableTargetId}
+      <DashboardModal.Content size="sm">
+        <DashboardModal.PickerHeader
+          toolbar={
+            <TextField
+              data-test-id="attribute-search-input"
+              name="query"
+              value={query}
+              onChange={onQueryChange}
+              label={intl.formatMessage(messages.searchInputLabel)}
+              placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
+              fullWidth
+              InputProps={{
+                autoComplete: "off",
+                endAdornment: loading && <SaleorThrobber size={16} />,
+              }}
+            />
+          }
         >
-          <ResponsiveTable key="table">
-            <TableBody data-test-id="attributes-list">
-              {renderCollection(
-                attributes,
-                attribute => {
-                  if (!attribute) {
-                    return null;
-                  }
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.PickerHeader>
 
-                  const isChecked = !!selected.find(
-                    selectedAttribute => selectedAttribute === attribute.id,
-                  );
+        <DashboardModal.Body fill id={scrollableTargetId}>
+          <InfiniteScroll
+            flush
+            dataLength={displayedAttributes.length}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
+          >
+            <ResponsiveTable bleed fillHeight key="table">
+              <TableBody data-test-id="attributes-list">
+                {renderCollection(
+                  displayedAttributes,
+                  attribute => {
+                    if (!attribute) {
+                      return null;
+                    }
 
-                  return (
-                    <TableRowLink key={maybe(() => attribute.id)}>
-                      <TableCell padding="checkbox" className={classes.checkboxCell}>
-                        <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
-                      </TableCell>
-                      <TableCell className={classes.wideCell}>
-                        <AttributeNameWithTypeIcon
-                          name={attribute.name}
-                          inputType={attribute.inputType}
-                        />
-                        <Text size={2} fontWeight="light" display="block">
-                          {attribute.slug}
-                        </Text>
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                },
-                () =>
-                  !loading && (
-                    <TableRowLink>
-                      <TableCell colSpan={2}>
-                        <FormattedMessage {...messages.noMembersFound} />
-                      </TableCell>
-                    </TableRowLink>
-                  ),
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </InfiniteScroll>
+                    const isChecked = !!selected.find(
+                      selectedAttribute => selectedAttribute === attribute.id,
+                    );
 
-        <Box>
-          {errors.length > 0 &&
-            errors.map((error, errorIndex) => (
+                    return (
+                      <TableRowLink key={maybe(() => attribute.id)}>
+                        <TableCell padding="checkbox">
+                          <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
+                        </TableCell>
+                        <TableCell className={classes.wideCell}>
+                          <AttributeNameWithTypeIcon
+                            name={attribute.name}
+                            inputType={attribute.inputType}
+                          />
+                          <Text size={2} fontWeight="light" display="block">
+                            {attribute.slug}
+                          </Text>
+                        </TableCell>
+                      </TableRowLink>
+                    );
+                  },
+                  () =>
+                    showEmptyState && (
+                      <TableRowLink>
+                        <TableCell colSpan={2}>
+                          <FormattedMessage {...messages.noMembersFound} />
+                        </TableCell>
+                      </TableRowLink>
+                    ),
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </DashboardModal.Body>
+
+        {errors.length > 0 ? (
+          <DashboardModal.Inset>
+            {errors.map((error, errorIndex) => (
               <Text display="block" color="critical1" key={errorIndex}>
                 {error}
               </Text>
             ))}
-        </Box>
+          </DashboardModal.Inset>
+        ) : null}
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} />
