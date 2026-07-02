@@ -1,0 +1,12 @@
+.swatchPreview {
+  display: inline-block;
+  border-radius: var(--mu-border-radius-2);
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.swatchPreviewEmpty {
+  background-color: var(--mu-colors-background-default2);
+}

@@ -1,5 +1,9 @@
 import { Box, Modal, type PropsWithBox } from "@saleor/macaw-ui-next";
-import { type ReactNode } from "react";
+import clsx from "clsx";
+import { Children, isValidElement, type ReactNode } from "react";
+
+import styles from "./DashboardModal.module.css";
+import { MODAL_ACTIONS_DISPLAY_NAME, MODAL_BODY_DISPLAY_NAME } from "./modalDisplayNames";
 
 export type ContentSize = "xs" | "sm" | "md" | "lg" | "xl";
 
@@ -7,6 +11,8 @@ type ContentProps = PropsWithBox<{
   children: ReactNode;
   disableAutofocus?: boolean;
   disableEscapeKeyDown?: boolean;
+  /** Keep children as-is when the modal manages its own scroll regions (e.g. nested forms). */
+  disableScrollLayout?: boolean;
   size: ContentSize;
 }>;
 
@@ -18,13 +24,48 @@ const sizes: Record<ContentSize, number> = {
   xl: 1920,
 };
 
+const getComponentDisplayName = (type: unknown): string | undefined => {
+  if (typeof type === "function" || (typeof type === "object" && type !== null)) {
+    return (type as { displayName?: string }).displayName;
+  }
+
+  return undefined;
+};
+
+const isModalComponent = (child: ReactNode, displayName: string): boolean => {
+  return isValidElement(child) && getComponentDisplayName(child.type) === displayName;
+};
+
 export const Content = ({
   children,
   disableAutofocus,
   disableEscapeKeyDown,
+  disableScrollLayout = false,
   size,
+  className,
   ...rest
 }: ContentProps) => {
+  const items = Children.toArray(children);
+  const hasBody = items.some(child => isModalComponent(child, MODAL_BODY_DISPLAY_NAME));
+  const actionsIndex = items.findLastIndex(child =>
+    isModalComponent(child, MODAL_ACTIONS_DISPLAY_NAME),
+  );
+  const actionsChild = actionsIndex >= 0 ? items[actionsIndex] : null;
+  const contentItems =
+    actionsChild !== null ? items.filter((_, index) => index !== actionsIndex) : items;
+
+  const renderedContent = disableScrollLayout ? (
+    children
+  ) : hasBody ? (
+    contentItems
+  ) : (
+    <Box className={styles.scrollBody} flexGrow="1" overflowY="auto" __minHeight="0">
+      {contentItems}
+    </Box>
+  );
+
+  const pinnedActions = disableScrollLayout ? null : actionsChild;
+
   return (
     <Modal.Content
       disableAutofocus={disableAutofocus}
@@ -60,14 +101,17 @@ export const Content = ({
         padding={6}
         __maxHeight="calc(100vh - 100px)"
         __width="calc(100% - 64px)"
-        display="grid"
-        gap={6}
+        display="flex"
+        flexDirection="column"
+        __minHeight="0"
         __maxWidth={sizes[size]}
         overflowX="hidden"
-        overflowY="auto"
+        overflowY="hidden"
+        className={clsx(styles.contentShell, className)}
         {...rest}
       >
-        {children}
+        {renderedContent}
+        {pinnedActions}
       </Box>
     </Modal.Content>
   );

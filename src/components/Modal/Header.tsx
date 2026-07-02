@@ -1,4 +1,3 @@
-import { useModalContext } from "@dashboard/components/Modal/context";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
@@ -11,8 +10,6 @@ interface HeaderProps extends TitleProps {
 }
 
 export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
-  const { onChange } = useModalContext();
-
   return (
     <Box display="flex" justifyContent="space-between" gap={4}>
       <Box display="flex" flexDirection="column" gap={2} minWidth={0}>
@@ -23,7 +20,7 @@ export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
           </Text>
         ) : null}
       </Box>
-      <Close onClose={() => onChange?.(false)} />
+      <Close />
     </Box>
   );
 };

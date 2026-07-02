@@ -60,7 +60,17 @@
   padding-right: 4px !important;
 }
 
+.table td.cellFlush,
+.table td.cellFlush:first-child,
+.table td.cellFlush:last-child {
+  padding: 0 !important;
+}
+
 .table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tfoot td {
   border-bottom: none;
 }
 

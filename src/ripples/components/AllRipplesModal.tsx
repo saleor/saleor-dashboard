@@ -287,7 +287,7 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
                   })}
                 </Text>
               </Box>
-              <DashboardModal.Close onClose={() => props.onChange?.(false)} />
+              <DashboardModal.Close />
             </Box>
             {/* Bottom border - full width */}
             <Box

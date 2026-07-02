@@ -173,8 +173,6 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
           id,
         })
       }
-      onOpenReferenceTypes={() => openModal("assign-reference-types")}
-      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeCreateOpts.status}
       values={{
         __typename: "AttributeValueCountableConnection" as const,
@@ -201,7 +199,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
             reference: null,
             slug: slugify(value.name).toLowerCase(),
             sortOrder: valueIndex,
-            value: null,
+            value: value.value ?? null,
             plainText: null,
             richText: null,
             boolean: null,

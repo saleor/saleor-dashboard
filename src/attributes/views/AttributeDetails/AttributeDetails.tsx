@@ -240,8 +240,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           id,
         })
       }
-      onOpenReferenceTypes={() => openModal("assign-reference-types")}
-      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeUpdateOpts.status}
       values={data?.attribute?.choices}
       settings={settings}

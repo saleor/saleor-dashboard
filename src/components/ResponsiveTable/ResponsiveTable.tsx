@@ -131,4 +131,5 @@ ResponsiveTable.displayName = "ResponsiveTable";
 
 export const tableStyles = {
   colAction: styles.colAction,
+  cellFlush: styles.cellFlush,
 };

@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -13,9 +13,11 @@ import { type AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import styles from "./PageTypeAttributes.module.css";
 
 const useStyles = makeStyles(
   {
@@ -38,6 +40,7 @@ interface PageTypeAttributesProps extends ListActions {
   disabled: boolean;
   type: string;
   onAttributeAssign: (type: AttributeTypeEnum) => void;
+  onAttributeCreate: (type: AttributeTypeEnum) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
 }
@@ -54,11 +57,15 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
     toolbar,
     type,
     onAttributeAssign,
+    onAttributeCreate,
     onAttributeReorder,
     onAttributeUnassign,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+  const attributeType = AttributeTypeEnum[type];
+  const handleAssignAttribute = () => onAttributeAssign(attributeType);
+  const handleCreateAttribute = () => onAttributeCreate(attributeType);
 
   return (
     <DashboardCard data-test-id="page-attributes">
@@ -71,22 +78,65 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button
+          <ButtonGroupWithDropdown
             variant="secondary"
-            onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
-            data-test-id="assign-attributes"
+            onClick={handleAssignAttribute}
+            testId="assign-attributes"
+            options={[
+              {
+                label: intl.formatMessage({
+                  id: "N+Omth",
+                  defaultMessage: "Create attribute",
+                  description: "create attribute from model type, button",
+                }),
+                testId: "create-attribute",
+                onSelect: handleCreateAttribute,
+              },
+            ]}
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-          </Button>
+          </ButtonGroupWithDropdown>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
         {attributes === undefined ? (
           <Skeleton />
         ) : attributes.length === 0 ? (
-          <Placeholder>
-            <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
-          </Placeholder>
+          <Box
+            className={styles.emptyState}
+            borderRadius={4}
+            borderColor="default1"
+            borderWidth={1}
+            padding={4}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap={4}
+          >
+            <Text size={2} color="default2" textAlign="center">
+              <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
+            </Text>
+            <Box display="flex" gap={2}>
+              <Button
+                variant="primary"
+                onClick={handleCreateAttribute}
+                data-test-id="create-attribute-empty"
+              >
+                <FormattedMessage
+                  id="N+Omth"
+                  defaultMessage="Create attribute"
+                  description="create attribute from model type, button"
+                />
+              </Button>
+              <Button variant="secondary" onClick={handleAssignAttribute}>
+                <FormattedMessage
+                  id="uxPpRx"
+                  defaultMessage="Assign attribute"
+                  description="button"
+                />
+              </Button>
+            </Box>
+          </Box>
         ) : (
           <ResponsiveTable>
             <colgroup>
@@ -161,7 +211,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                               strokeWidth={iconStrokeWidthBySize.small}
                             />
                           }
-                          variant="secondary"
+                          variant="tertiary"
                           onClick={() => onAttributeUnassign(attribute.id)}
                         />
                       </TableButtonWrapper>

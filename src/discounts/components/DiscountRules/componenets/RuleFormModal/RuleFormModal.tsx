@@ -84,6 +84,7 @@ export const RuleFormModal = ({
     <DashboardModal open={true} onChange={onClose}>
       <DashboardModal.Content
         size="md"
+        disableScrollLayout
         display="flex"
         flexDirection="column"
         overflowY="hidden"
@@ -122,24 +123,16 @@ export const RuleFormModal = ({
             >
               {children}
             </Box>
-            <Box flexShrink="0" display="flex" flexDirection="column" gap={5} paddingTop={5}>
-              <Box
-                __height="1px"
-                __backgroundColor="var(--mu-colors-border-default1)"
-                __marginLeft="calc(-1 * var(--mu-spacing-6))"
-                __marginRight="calc(-1 * var(--mu-spacing-6))"
-              />
-              <DashboardModal.Actions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton
-                  data-test-id="saveRuleButton"
-                  transitionState={confimButtonState}
-                  onClick={methods.handleSubmit(onSubmit)}
-                >
-                  {intl.formatMessage(buttonMessages.save)}
-                </ConfirmButton>
-              </DashboardModal.Actions>
-            </Box>
+            <DashboardModal.Actions>
+              <BackButton onClick={onClose} />
+              <ConfirmButton
+                data-test-id="saveRuleButton"
+                transitionState={confimButtonState}
+                onClick={methods.handleSubmit(onSubmit)}
+              >
+                {intl.formatMessage(buttonMessages.save)}
+              </ConfirmButton>
+            </DashboardModal.Actions>
           </form>
         </FormProvider>
       </DashboardModal.Content>

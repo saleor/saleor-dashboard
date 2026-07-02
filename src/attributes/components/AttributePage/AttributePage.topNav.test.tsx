@@ -105,8 +105,6 @@ const defaultProps = {
   onValueDelete: jest.fn(),
   onValueReorder: jest.fn(),
   onValueUpdate: jest.fn(),
-  onOpenReferenceTypes: jest.fn(),
-  onCloseAssignReferenceTypes: jest.fn(),
   pageInfo: { hasNextPage: false, hasPreviousPage: false },
   onNextPage: jest.fn(),
   onPreviousPage: jest.fn(),
