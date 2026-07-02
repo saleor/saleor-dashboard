@@ -142,6 +142,7 @@ export const CreateAttributeDialog = ({
       <ProductTypeDisplay productType={{ name: contextName }} />
     )
   ) : undefined;
+  const isProductTypeAttribute = attributeType === AttributeTypeEnum.PRODUCT_TYPE;
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -193,7 +194,13 @@ export const CreateAttributeDialog = ({
                     contextLabel={contextBadgeLabel}
                     description={
                       <FormattedMessage
-                        {...(step === 1 ? messages.introHint : messages.stepTwoIntro)}
+                        {...(step === 1
+                          ? isProductTypeAttribute
+                            ? messages.introHintProduct
+                            : messages.introHint
+                          : isProductTypeAttribute
+                            ? messages.stepTwoIntroProduct
+                            : messages.stepTwoIntro)}
                       />
                     }
                     steps={{

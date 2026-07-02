@@ -22,16 +22,28 @@ export const messages = defineMessages({
     description: "error when attribute create returns no id",
   },
   introHint: {
-    id: "0Vtvox",
+    id: "y/ImBd",
     defaultMessage:
       "Attributes store extra fields on models of this type, such as materials or care instructions.",
-    description: "create attribute dialog step one intro",
+    description: "create attribute dialog step one intro for model types",
+  },
+  introHintProduct: {
+    id: "fF9jx2",
+    defaultMessage:
+      "Attributes store extra fields on products of this type, such as material or size.",
+    description: "create attribute dialog step one intro for product types",
   },
   stepTwoIntro: {
-    id: "t7h2x2",
+    id: "sglKoA",
     defaultMessage:
       "Add the choices merchants can pick from and set how this attribute behaves on models.",
-    description: "create attribute dialog step two intro",
+    description: "create attribute dialog step two intro for model types",
+  },
+  stepTwoIntroProduct: {
+    id: "n4wLTL",
+    defaultMessage:
+      "Add the choices merchants can pick from and set how this attribute behaves on products.",
+    description: "create attribute dialog step two intro for product types",
   },
   stepGeneral: {
     id: "opSGsa",
