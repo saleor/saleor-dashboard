@@ -82,6 +82,7 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
         <DashboardCard.Toolbar>
           <ButtonGroupWithDropdown
             variant="secondary"
+            disabled={disabled}
             onClick={handleAssignAttribute}
             testId={testId}
             options={[
@@ -121,6 +122,7 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
             <Box display="flex" gap={2}>
               <Button
                 variant="primary"
+                disabled={disabled}
                 onClick={handleCreateAttribute}
                 data-test-id="create-product-attribute-empty"
               >
@@ -130,7 +132,7 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
                   description="create attribute from product type, button"
                 />
               </Button>
-              <Button variant="secondary" onClick={handleAssignAttribute}>
+              <Button variant="secondary" disabled={disabled} onClick={handleAssignAttribute}>
                 <FormattedMessage
                   id="uxPpRx"
                   defaultMessage="Assign attribute"

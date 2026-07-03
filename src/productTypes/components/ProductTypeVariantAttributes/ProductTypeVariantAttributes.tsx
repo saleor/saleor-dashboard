@@ -129,6 +129,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
         <DashboardCard.Toolbar>
           <ButtonGroupWithDropdown
             variant="secondary"
+            disabled={disabled}
             onClick={handleAssignAttribute}
             testId={testId}
             options={[

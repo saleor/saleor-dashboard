@@ -80,6 +80,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
         <DashboardCard.Toolbar>
           <ButtonGroupWithDropdown
             variant="secondary"
+            disabled={disabled}
             onClick={handleAssignAttribute}
             testId="assign-attributes"
             options={[
@@ -119,6 +120,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
             <Box display="flex" gap={2}>
               <Button
                 variant="primary"
+                disabled={disabled}
                 onClick={handleCreateAttribute}
                 data-test-id="create-attribute-empty"
               >
@@ -128,7 +130,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                   description="create attribute from model type, button"
                 />
               </Button>
-              <Button variant="secondary" onClick={handleAssignAttribute}>
+              <Button variant="secondary" disabled={disabled} onClick={handleAssignAttribute}>
                 <FormattedMessage
                   id="uxPpRx"
                   defaultMessage="Assign attribute"
@@ -212,6 +214,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                             />
                           }
                           variant="tertiary"
+                          disabled={disabled}
                           onClick={() => onAttributeUnassign(attribute.id)}
                         />
                       </TableButtonWrapper>
