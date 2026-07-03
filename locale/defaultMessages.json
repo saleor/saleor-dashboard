@@ -2201,6 +2201,10 @@
     "context": "customer gift cards card header",
     "string": "Gift cards"
   },
+  "9WBeX6": {
+    "context": "assign button with selected country count",
+    "string": "Assign ({count, plural, one {# country} other {# countries}})"
+  },
   "9WhNiN": {
     "context": "Pending authorization transaction amount, data display header",
     "string": "Pending auth"
@@ -6959,6 +6963,10 @@
   "Xm9qOu": {
     "context": "product pricing, section header",
     "string": "Pricing"
+  },
+  "Xn0VFH": {
+    "context": "no countries found in assign countries dialog",
+    "string": "No countries found"
   },
   "XrliJg": {
     "context": "label for amount selection",

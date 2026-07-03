@@ -1,6 +1,9 @@
+import BackButton from "@dashboard/components/BackButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Input } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -39,62 +42,74 @@ export const VoucherCodesGenerateDialog = ({
       return;
     }
 
-    setData(data => ({
-      ...data,
+    setData(currentData => ({
+      ...currentData,
       [e.target.name]: e.target.value,
     }));
   };
   const handleModalClose = () => {
-    onClose();
     setData(initialData);
-  };
-  const handleSubmit = async () => {
-    await onSubmit(data);
     onClose();
-    setData(initialData);
   };
+  const handleSubmit = () => {
+    onSubmit(data);
+    setData(initialData);
+    onClose();
+  };
+  const isConfirmDisabled = Number(data.quantity) === 0;
+
+  useModalDialogOpen(open, {
+    onOpen: () => {
+      setData(initialData);
+    },
+  });
 
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
       <DashboardModal.Content size="xs">
         <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
-        <Box display="grid" gap={3} __width={390}>
-          <Input
-            name="quantity"
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            label={intl.formatMessage(messages.codeQuantity, {
-              maxCodes: MAX_VOUCHER_CODES,
-            })}
-            value={data.quantity}
-            onChange={handleChange}
-            data-test-id="quantity-input"
-          />
-          <Input
-            name="prefix"
-            label={intl.formatMessage(messages.codePrefix)}
-            value={data.prefix}
-            onChange={e => {
-              setData(data => ({
-                ...data,
-                [e.target.name]: e.target.value,
-              }));
-            }}
-            data-test-id="prefix-input"
-          />
-        </Box>
+
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box display="grid" gap={3}>
+              <Input
+                name="quantity"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                label={intl.formatMessage(messages.codeQuantity, {
+                  maxCodes: MAX_VOUCHER_CODES,
+                })}
+                value={data.quantity}
+                onChange={handleChange}
+                data-test-id="quantity-input"
+              />
+              <Input
+                name="prefix"
+                label={intl.formatMessage(messages.codePrefix)}
+                value={data.prefix}
+                onChange={e => {
+                  setData(currentData => ({
+                    ...currentData,
+                    [e.target.name]: e.target.value,
+                  }));
+                }}
+                data-test-id="prefix-input"
+              />
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
         <DashboardModal.Actions>
-          <Button onClick={handleModalClose} variant="secondary">
-            {intl.formatMessage(buttonMessages.back)}
-          </Button>
-          <Button
+          <BackButton onClick={handleModalClose} />
+          <ConfirmButton
+            transitionState="default"
+            disabled={isConfirmDisabled}
             onClick={handleSubmit}
-            disabled={Number(data.quantity) === 0}
             data-test-id="confirm-button"
           >
             {intl.formatMessage(buttonMessages.confirm)}
-          </Button>
+          </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>

@@ -1,24 +1,32 @@
 import BackButton from "@dashboard/components/BackButton";
-import Checkbox from "@dashboard/components/Checkbox";
+import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySearchField";
+import { ChannelsAvailabilitySelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySelectAll";
+import { useChannelsSelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/useChannelsSelectAll";
+import {
+  areSelectedChannelIdsEqual,
+  useChannelsSearch,
+} from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import listStyles from "@dashboard/components/ChannelsAvailabilityDialogChannelsList/ChannelsAvailabilityDialogChannelsList.module.css";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import Hr from "@dashboard/components/Hr";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { type CountryWithCodeFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import { fuzzySearch } from "@dashboard/misc";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { toggle } from "@dashboard/utils/lists";
+import { Box } from "@saleor/macaw-ui-next";
+import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
+import {
+  type CountryPickerItem,
+  DiscountCountrySelectDialogCountriesList,
+} from "./DiscountCountrySelectDialogCountriesList";
+import { discountCountrySelectDialogMessages } from "./messages";
 
-interface FormData {
+export interface DiscountCountrySelectFormData {
   allCountries: boolean;
   countries: string[];
   query: string;
@@ -30,139 +38,142 @@ interface DiscountCountrySelectDialogProps {
   initial: string[];
   open: boolean;
   onClose: () => void;
-  onConfirm: (data: FormData) => SubmitPromise;
+  onConfirm: (data: DiscountCountrySelectFormData) => SubmitPromise;
   labels?: {
     confirmBtn?: string;
   };
 }
 
-const DiscountCountrySelectDialog = (props: DiscountCountrySelectDialogProps) => {
-  const { confirmButtonState, onClose, countries, open, initial, onConfirm, labels } = props;
-  const classes = useStyles(props);
+const toCountryPickerItems = (countries: CountryWithCodeFragment[]): CountryPickerItem[] =>
+  countries.map(country => ({
+    id: country.code,
+    name: country.country,
+  }));
+
+const DiscountCountrySelectDialog = ({
+  confirmButtonState,
+  onClose,
+  countries,
+  open,
+  initial,
+  onConfirm,
+  labels,
+}: DiscountCountrySelectDialogProps) => {
   const intl = useIntl();
-  const initialForm: FormData = {
-    allCountries: true,
-    countries: initial,
-    query: "",
+  const countryItems = useMemo(() => toCountryPickerItems(countries), [countries]);
+  const [selectedCountryIds, setSelectedCountryIds] = useState(initial);
+  const [baselineCountryIds, setBaselineCountryIds] = useState(initial);
+  const {
+    query,
+    onQueryChange,
+    resetQuery,
+    filteredChannels: filteredCountries,
+  } = useChannelsSearch(countryItems);
+  const hasCountries = countryItems.length > 0;
+  const isCountrySelected = (country: CountryPickerItem) => selectedCountryIds.includes(country.id);
+  const handleCountryToggle = (country: CountryPickerItem) => {
+    setSelectedCountryIds(currentSelected =>
+      toggle(country.id, currentSelected, (leftId, rightId) => leftId === rightId),
+    );
+  };
+  const toggleAllCountries = (items: CountryPickerItem[], selectedCount: number) => {
+    if (selectedCount !== items.length) {
+      setSelectedCountryIds(items.map(item => item.id));
+    } else {
+      setSelectedCountryIds([]);
+    }
+  };
+  const { hasAllVisibleSelected, handleToggleAll, isSearchActive } = useChannelsSelectAll({
+    channels: countryItems,
+    filteredChannels: filteredCountries,
+    query,
+    isSelected: isCountrySelected,
+    onChange: handleCountryToggle,
+    selected: selectedCountryIds.length,
+    toggleAll: toggleAllCountries,
+  });
+  const hasSelectionChanged = !areSelectedChannelIdsEqual(selectedCountryIds, baselineCountryIds);
+  const confirmButtonLabel =
+    labels?.confirmBtn ??
+    intl.formatMessage(discountCountrySelectDialogMessages.assignCountedButton, {
+      count: selectedCountryIds.length,
+    });
+  const handleClose = () => {
+    setSelectedCountryIds(baselineCountryIds);
+    resetQuery();
+    onClose();
+  };
+  const handleConfirm = () => {
+    void onConfirm({
+      allCountries: true,
+      countries: selectedCountryIds,
+      query,
+    });
   };
 
+  useModalDialogOpen(open, {
+    onOpen: () => {
+      setSelectedCountryIds(initial);
+      setBaselineCountryIds(initial);
+    },
+    onClose: resetQuery,
+  });
+
   return (
-    <DashboardModal onChange={onClose} open={open}>
+    <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm">
-        <Form initial={initialForm} onSubmit={onConfirm}>
-          {({ data, change }) => {
-            const countrySelectionMap = countries.reduce(
-              (acc, country) => {
-                acc[country.code] = !!data.countries.find(
-                  selectedCountries => selectedCountries === country.code,
-                );
-
-                return acc;
-              },
-              {} as Record<string, boolean>,
-            );
-
-            return (
-              <DashboardModal.Grid
-                __gridTemplateRows="auto auto auto auto auto 1fr auto"
-                height="100%"
-              >
-                <DashboardModal.Header>
-                  <FormattedMessage
-                    id="cvVIV/"
-                    defaultMessage="Assign Countries"
-                    description="dialog header"
-                  />
-                </DashboardModal.Header>
-
-                <Text>
-                  <FormattedMessage
-                    id="dWK/Ck"
-                    defaultMessage="Choose countries, you want voucher to be limited to, from the list below"
-                  />
-                </Text>
-
-                <TextField
-                  name="query"
-                  value={data.query}
-                  onChange={event => change(event)}
-                  label={intl.formatMessage({
-                    id: "8EGagh",
-                    defaultMessage: "Filter Countries",
-                    description: "search box label",
-                  })}
-                  placeholder={intl.formatMessage({
-                    id: "dGqEJ9",
-                    defaultMessage: "Search by country name",
-                    description: "search box placeholder",
-                  })}
-                  fullWidth
+        <DashboardModal.PickerHeader
+          description={<FormattedMessage {...discountCountrySelectDialogMessages.description} />}
+          toolbar={
+            hasCountries ? (
+              <Box display="flex" flexDirection="column" gap={2}>
+                <ChannelsAvailabilitySearchField
+                  query={query}
+                  onQueryChange={onQueryChange}
+                  label={intl.formatMessage(discountCountrySelectDialogMessages.searchLabel)}
+                  placeholder={intl.formatMessage(
+                    discountCountrySelectDialogMessages.searchPlaceholder,
+                  )}
+                  inputTestId="search-country-input"
                 />
+                <ChannelsAvailabilitySelectAll
+                  checked={hasAllVisibleSelected}
+                  inPickerToolbar
+                  isSearchActive={isSearchActive}
+                  onToggle={handleToggleAll}
+                />
+              </Box>
+            ) : undefined
+          }
+        >
+          <FormattedMessage {...discountCountrySelectDialogMessages.title} />
+        </DashboardModal.PickerHeader>
 
-                <Hr />
+        <DashboardModal.Body fill __overflowX="hidden">
+          {filteredCountries.length ? (
+            <DiscountCountrySelectDialogCountriesList
+              countries={filteredCountries}
+              isCountrySelected={isCountrySelected}
+              onChange={handleCountryToggle}
+            />
+          ) : (
+            <div className={listStyles.empty}>
+              <FormattedMessage {...discountCountrySelectDialogMessages.notFoundTitle} />
+            </div>
+          )}
+        </DashboardModal.Body>
 
-                <Text fontSize={3}>
-                  <FormattedMessage
-                    id="wgA48T"
-                    defaultMessage="Countries A to Z"
-                    description="country selection"
-                  />
-                </Text>
-
-                <Box height="100%" overflowY="auto" className="scrollArea">
-                  <ResponsiveTable>
-                    <TableBody>
-                      {fuzzySearch(countries, data.query, ["country"]).map(country => {
-                        const isChecked = countrySelectionMap[country.code];
-
-                        return (
-                          <TableRowLink key={country.code}>
-                            <TableCell className={classes.wideCell}>{country.country}</TableCell>
-                            <TableCell padding="checkbox" className={classes.checkboxCell}>
-                              <Checkbox
-                                checked={!!isChecked}
-                                onChange={() =>
-                                  isChecked
-                                    ? change({
-                                        target: {
-                                          name: "countries" as keyof FormData,
-                                          value: data.countries.filter(
-                                            selectedCountries => selectedCountries !== country.code,
-                                          ),
-                                        },
-                                      } as any)
-                                    : change({
-                                        target: {
-                                          name: "countries" as keyof FormData,
-                                          value: [...data.countries, country.code],
-                                        },
-                                      } as any)
-                                }
-                              />
-                            </TableCell>
-                          </TableRowLink>
-                        );
-                      })}
-                    </TableBody>
-                  </ResponsiveTable>
-                </Box>
-
-                <DashboardModal.Actions>
-                  <BackButton onClick={onClose} />
-                  <ConfirmButton transitionState={confirmButtonState} type="submit">
-                    {labels?.confirmBtn ?? (
-                      <FormattedMessage
-                        id="zZCCqz"
-                        defaultMessage="Assign countries"
-                        description="button"
-                      />
-                    )}
-                  </ConfirmButton>
-                </DashboardModal.Actions>
-              </DashboardModal.Grid>
-            );
-          }}
-        </Form>
+        <DashboardModal.Actions>
+          <BackButton onClick={handleClose} />
+          <ConfirmButton
+            transitionState={confirmButtonState}
+            disabled={hasSelectionChanged === false}
+            onClick={handleConfirm}
+            data-test-id="submit"
+          >
+            {confirmButtonLabel}
+          </ConfirmButton>
+        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );
