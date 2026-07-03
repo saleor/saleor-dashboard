@@ -140,4 +140,21 @@ describe("getLayoutChildren", () => {
     expect(wrapper).not.toBeNull();
     expect(getLayoutWrapper(<PickerHeader />)).toBeNull();
   });
+
+  it("applies header-only layout class for confirmation dialogs", () => {
+    // Arrange
+    render(
+      <DashboardModal open onChange={() => undefined}>
+        <DashboardModal.Content size="sm">
+          <DashboardModal.Header>Leave without saving changes?</DashboardModal.Header>
+          <DashboardModal.Actions>
+            <button type="button">Keep editing</button>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>,
+    );
+
+    // Assert
+    expect(document.querySelector(`.${styles.contentShellHeaderOnly}`)).toBeInTheDocument();
+  });
 });

@@ -23,7 +23,7 @@ export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
         className={modalStyles.modalChromeHeader}
         display="flex"
         justifyContent="space-between"
-        alignItems="flex-start"
+        alignItems="center"
         gap={4}
       >
         <Box minWidth={0}>

@@ -45,6 +45,18 @@
   border-bottom: none;
 }
 
+.contentShellHeaderOnly .modalChromeHeader {
+  padding-bottom: var(--modal-padding);
+}
+
+.contentShellHeaderOnly .modalChromeHeaderWrapper {
+  gap: 0;
+}
+
+.contentShellHeaderOnly .fullBleedDivider {
+  display: none;
+}
+
 .scrollBody,
 .body {
   flex: 1 1 auto;

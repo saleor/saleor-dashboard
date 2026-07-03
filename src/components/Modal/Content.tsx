@@ -84,6 +84,8 @@ export const Content = ({
     actionsChild !== null ? items.filter((_, index) => index !== actionsIndex) : items;
   const chromeItems = contentItems.filter(isChromeComponent);
   const scrollItems = contentItems.filter(child => !isChromeComponent(child));
+  const isHeaderOnlyDialog =
+    !hasBody && scrollItems.length === 0 && chromeItems.length > 0 && actionsChild !== null;
 
   const renderedContent = disableScrollLayout ? (
     children
@@ -150,7 +152,12 @@ export const Content = ({
         flexDirection="column"
         __minHeight="0"
         __maxWidth={sizes[size]}
-        className={clsx(styles.contentShell, !hasBody && styles.contentShellNoBody, className)}
+        className={clsx(
+          styles.contentShell,
+          !hasBody && styles.contentShellNoBody,
+          isHeaderOnlyDialog && styles.contentShellHeaderOnly,
+          className,
+        )}
         {...rest}
       >
         {layoutMain}
