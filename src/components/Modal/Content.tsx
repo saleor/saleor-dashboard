@@ -57,6 +57,16 @@ const wrapLayoutContent = (children: ReactNode, content: ReactNode): ReactNode =
   return content;
 };
 
+const findLastModalChildIndex = (items: ReactNode[], displayName: string): number => {
+  for (let index = items.length - 1; index >= 0; index -= 1) {
+    if (isModalComponent(items[index], displayName)) {
+      return index;
+    }
+  }
+
+  return -1;
+};
+
 export const Content = ({
   children,
   disableAutofocus,
@@ -68,9 +78,7 @@ export const Content = ({
 }: ContentProps) => {
   const items = getLayoutChildren(children);
   const hasBody = items.some(child => isModalComponent(child, MODAL_BODY_DISPLAY_NAME));
-  const actionsIndex = items.findLastIndex(child =>
-    isModalComponent(child, MODAL_ACTIONS_DISPLAY_NAME),
-  );
+  const actionsIndex = findLastModalChildIndex(items, MODAL_ACTIONS_DISPLAY_NAME);
   const actionsChild = actionsIndex >= 0 ? items[actionsIndex] : null;
   const contentItems =
     actionsChild !== null ? items.filter((_, index) => index !== actionsIndex) : items;

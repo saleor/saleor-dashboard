@@ -1,4 +1,9 @@
-import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
+import { getAttributePageInitialForm } from "@dashboard/attributes/utils/attributePageForm";
+import {
+  AttributeEntityTypeEnum,
+  AttributeInputTypeEnum,
+  AttributeTypeEnum,
+} from "@dashboard/graphql";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -18,6 +23,15 @@ jest.mock("@dashboard/hooks/useModalDialogOpen", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+
+jest.mock("@dashboard/attributes/utils/attributePageForm", () => {
+  const actual = jest.requireActual("@dashboard/attributes/utils/attributePageForm");
+
+  return {
+    ...actual,
+    getAttributePageInitialForm: jest.fn(actual.getAttributePageInitialForm),
+  };
+});
 
 jest.mock("@dashboard/searches/useProductTypeSearch", () => ({
   __esModule: true,
@@ -179,6 +193,43 @@ describe("CreateAttributeDialog", () => {
 
     // Act
     await user.type(screen.getByLabelText("Attribute name"), "Color");
+    await user.click(screen.getByTestId("create-attribute-next-button"));
+
+    // Assert
+    expect(screen.getByTestId("create-and-assign-attribute-button")).toBeEnabled();
+  });
+
+  it("enables Create and assign for reference types without reference type restrictions", async () => {
+    // Arrange
+    (getAttributePageInitialForm as jest.Mock).mockReturnValueOnce({
+      availableInGrid: true,
+      entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
+      filterableInDashboard: true,
+      filterableInStorefront: true,
+      inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
+      metadata: [],
+      name: "",
+      privateMetadata: [],
+      slug: "",
+      storefrontSearchPosition: "",
+      type: AttributeTypeEnum.PRODUCT_TYPE,
+      valueRequired: true,
+      visibleInStorefront: true,
+      unit: undefined,
+      referenceTypes: [],
+    });
+
+    render(
+      <CreateAttributeDialog {...defaultProps} attributeType={AttributeTypeEnum.PRODUCT_TYPE} />,
+      {
+        wrapper: Wrapper,
+      },
+    );
+
+    const user = userEvent.setup();
+
+    // Act
+    await user.type(screen.getByLabelText("Attribute name"), "Related variant");
     await user.click(screen.getByTestId("create-attribute-next-button"));
 
     // Assert

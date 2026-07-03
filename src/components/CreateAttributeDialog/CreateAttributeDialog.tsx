@@ -5,8 +5,6 @@ import { getAttributePageInitialForm } from "@dashboard/attributes/utils/attribu
 import {
   ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES,
   type AttributeValueEditDialogFormData,
-  ENTITY_TYPES_WITH_TYPES_RESTRICTION,
-  REFERENCE_ATTRIBUTE_TYPES,
 } from "@dashboard/attributes/utils/data";
 import BackButton from "@dashboard/components/BackButton";
 import {
@@ -172,13 +170,8 @@ export const CreateAttributeDialog = ({
             };
             const canProceedToStepTwo = data.name.trim().length > 0;
             const requiresValues = ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType);
-            const requiresReferenceTypes =
-              data.entityType !== null &&
-              REFERENCE_ATTRIBUTE_TYPES.includes(data.inputType) &&
-              ENTITY_TYPES_WITH_TYPES_RESTRICTION.includes(data.entityType);
-            const canSubmit =
-              (!requiresValues || values.length > 0) &&
-              (!requiresReferenceTypes || data.referenceTypes.length > 0);
+            // Reference types are optional in the API — omitting them allows all items of the entity type.
+            const canSubmit = !requiresValues || values.length > 0;
             const handleBack = () => {
               if (step === 2) {
                 setStep(1);

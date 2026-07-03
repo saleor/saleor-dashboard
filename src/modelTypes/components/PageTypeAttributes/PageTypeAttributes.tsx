@@ -80,6 +80,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
         <DashboardCard.Toolbar>
           <ButtonGroupWithDropdown
             variant="secondary"
+            disabled={disabled}
             onClick={handleAssignAttribute}
             testId="assign-attributes"
             options={[
@@ -111,31 +112,10 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            gap={4}
           >
             <Text size={2} color="default2" textAlign="center">
               <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
             </Text>
-            <Box display="flex" gap={2}>
-              <Button
-                variant="primary"
-                onClick={handleCreateAttribute}
-                data-test-id="create-attribute-empty"
-              >
-                <FormattedMessage
-                  id="N+Omth"
-                  defaultMessage="Create attribute"
-                  description="create attribute from model type, button"
-                />
-              </Button>
-              <Button variant="secondary" onClick={handleAssignAttribute}>
-                <FormattedMessage
-                  id="uxPpRx"
-                  defaultMessage="Assign attribute"
-                  description="button"
-                />
-              </Button>
-            </Box>
           </Box>
         ) : (
           <ResponsiveTable>
@@ -212,6 +192,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                             />
                           }
                           variant="tertiary"
+                          disabled={disabled}
                           onClick={() => onAttributeUnassign(attribute.id)}
                         />
                       </TableButtonWrapper>
