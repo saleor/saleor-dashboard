@@ -142,6 +142,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -409,6 +410,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
           }
           selected={channelListElements.length}
           confirmButtonState="default"
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirmWithFocus}
           toggleAll={(items, selected) =>
             toggleAllChannels(items as ChannelShippingData[], selected)

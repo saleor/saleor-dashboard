@@ -16,6 +16,10 @@
   background-color: transparent;
 }
 
+.wrapperBleed.wrapperFill {
+  background-color: var(--mu-colors-background-default1);
+}
+
 .searchBar {
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }

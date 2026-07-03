@@ -1,4 +1,4 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { type ReactNode } from "react";
 
@@ -10,10 +10,11 @@ import { Title } from "./Title";
 
 interface PickerHeaderProps {
   children: ReactNode;
+  description?: ReactNode;
   toolbar?: ReactNode;
 }
 
-export const PickerHeader = ({ children, toolbar }: PickerHeaderProps) => {
+export const PickerHeader = ({ children, description, toolbar }: PickerHeaderProps) => {
   return (
     <Box className={modalStyles.modalChromeHeaderWrapper} flexShrink="0">
       <Box
@@ -25,6 +26,11 @@ export const PickerHeader = ({ children, toolbar }: PickerHeaderProps) => {
       >
         <Box minWidth={0}>
           <Title>{children}</Title>
+          {description ? (
+            <Text size={2} color="default2" marginTop={3} display="block">
+              {description}
+            </Text>
+          ) : null}
         </Box>
         <Close />
       </Box>

@@ -215,6 +215,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -361,7 +362,6 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={false}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
@@ -371,8 +371,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
             defaultMessage: "Manage Channel Availability",
           })}
           selected={channelListElements.length}
-          confirmButtonState="default"
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
+          confirmButtonState="default"
           toggleAll={toggleAllChannels}
         />
       )}

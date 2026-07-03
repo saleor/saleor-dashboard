@@ -316,10 +316,6 @@
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
   },
-  "/lBLBI": {
-    "context": "channels alphabetically title",
-    "string": "Channels from A to Z"
-  },
   "/ly15q": {
     "context": "tab label for required attributes",
     "string": "Required Attributes"
@@ -4641,6 +4637,10 @@
     "context": "button",
     "string": "Create order"
   },
+  "LvsFO1": {
+    "context": "select all channels label",
+    "string": "Select all channels"
+  },
   "LwU0Vy": {
     "context": "datagrid title label",
     "string": "Select quantities to refund"
@@ -5387,6 +5387,10 @@
   "PaQFmR": {
     "context": "onboarding step title",
     "string": "Welcome to Dashboard!"
+  },
+  "PbDaM4": {
+    "context": "confirm button with selected channel count",
+    "string": "Confirm ({count, plural, one {# channel} other {# channels}})"
   },
   "PbqNhi": {
     "context": "order status",
@@ -8751,6 +8755,10 @@
   "hHOI7D": {
     "context": "product type name",
     "string": "Type Name"
+  },
+  "hIhJpk": {
+    "context": "select all channels label when channel search is active",
+    "string": "Select all matching channels"
   },
   "hJZwTS": {
     "string": "Email address"
@@ -12459,10 +12467,6 @@
   },
   "zQvVDJ": {
     "string": "All"
-  },
-  "zR9Ozi": {
-    "context": "select all channels label",
-    "string": "Select All Channels"
   },
   "zRIsjN": {
     "string": "Learn more about {apiReference} and view {apiGuide}"

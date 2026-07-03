@@ -134,6 +134,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -341,6 +342,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
           toggleAll={toggleAllChannels}
         />

@@ -52,6 +52,7 @@ const CollectionCreate = ({ params }: CollectionCreateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -135,7 +136,6 @@ const CollectionCreate = ({ params }: CollectionCreateProps) => {
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={!channelListElements.length}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
@@ -146,6 +146,7 @@ const CollectionCreate = ({ params }: CollectionCreateProps) => {
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
           toggleAll={toggleAllChannels}
         />

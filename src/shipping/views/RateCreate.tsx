@@ -58,6 +58,7 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -142,6 +143,7 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
           }
           confirmButtonState="default"
           selected={channelListElements.length}
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
           toggleAll={toggleAllChannels}
         />

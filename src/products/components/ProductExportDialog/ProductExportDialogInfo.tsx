@@ -1,5 +1,8 @@
 // @ts-strict-ignore
 import Accordion, { type AccordionProps } from "@dashboard/components/Accordion";
+import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySearchField";
+import { ChannelsAvailabilitySelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySelectAll";
+import { useChannelsSelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/useChannelsSelectAll";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList";
 import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper";
@@ -19,7 +22,7 @@ import { type FetchMoreProps } from "@dashboard/types";
 import { toggle } from "@dashboard/utils/lists";
 import { Button, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
+import { Box, type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -252,6 +255,15 @@ const ProductExportDialogInfo = ({
     onQueryChange: onChannelsQueryChange,
     filteredChannels,
   } = useChannelsSearch(channels);
+  const { hasAllVisibleSelected, handleToggleAll, isSearchActive } = useChannelsSelectAll({
+    channels,
+    filteredChannels,
+    query: channelsQuery,
+    isSelected: option => !!selectedChannels.find(channel => channel.id === option.id),
+    onChange: onChannelSelect,
+    selected: selectedChannels.length,
+    toggleAll: onSelectAllChannels,
+  });
   const handleFieldChange = (event: ChangeEvent) =>
     onChange({
       target: {
@@ -281,7 +293,6 @@ const ProductExportDialogInfo = ({
     inventoryFields.includes(field),
   );
   const selectedAllInventoryFields = selectedInventoryFields.length === inventoryFields.length;
-  const handleSelectAllChannels = () => onSelectAllChannels(selectedChannels, channels.length);
 
   return (
     <>
@@ -325,12 +336,19 @@ const ProductExportDialogInfo = ({
           }
           data-test-id="channels"
         >
+          <Box display="flex" flexDirection="column" gap={2}>
+            <ChannelsAvailabilitySearchField
+              query={channelsQuery}
+              onQueryChange={onChannelsQueryChange}
+            />
+            <ChannelsAvailabilitySelectAll
+              checked={hasAllVisibleSelected}
+              isSearchActive={isSearchActive}
+              onToggle={handleToggleAll}
+            />
+          </Box>
           <ChannelsAvailabilityDialogContentWrapper
-            hasAnyChannelsToDisplay={!!channels.length}
-            hasAllSelected={selectedChannels.length === channels.length}
-            query={channelsQuery}
-            onQueryChange={onChannelsQueryChange}
-            toggleAll={handleSelectAllChannels}
+            hasAnyChannelsToDisplay={!!filteredChannels.length}
           >
             <ChannelsAvailabilityDialogChannelsList
               channels={filteredChannels}
