@@ -36,6 +36,19 @@ const isModalComponent = (child: ReactNode, displayName: string): boolean => {
   return isValidElement(child) && getComponentDisplayName(child.type) === displayName;
 };
 
+const findLastModalChildIndex = (
+  items: ReturnType<typeof Children.toArray>,
+  displayName: string,
+) => {
+  for (let index = items.length - 1; index >= 0; index -= 1) {
+    if (isModalComponent(items[index], displayName)) {
+      return index;
+    }
+  }
+
+  return -1;
+};
+
 export const Content = ({
   children,
   disableAutofocus,
@@ -47,9 +60,7 @@ export const Content = ({
 }: ContentProps) => {
   const items = Children.toArray(children);
   const hasBody = items.some(child => isModalComponent(child, MODAL_BODY_DISPLAY_NAME));
-  const actionsIndex = items.findLastIndex(child =>
-    isModalComponent(child, MODAL_ACTIONS_DISPLAY_NAME),
-  );
+  const actionsIndex = findLastModalChildIndex(items, MODAL_ACTIONS_DISPLAY_NAME);
   const actionsChild = actionsIndex >= 0 ? items[actionsIndex] : null;
   const contentItems =
     actionsChild !== null ? items.filter((_, index) => index !== actionsIndex) : items;
