@@ -19,7 +19,7 @@ import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors, getById, getStringOrPlaceholder } from "@dashboard/misc";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
-import ShippingZoneCountriesAssignDialog from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog";
+import { ShippingZoneCountriesAssignDialog } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog";
 import { ShippingZoneMetadataDialog } from "@dashboard/shipping/components/ShippingZoneMetadataDialog/ShippingZoneMetadataDialog";
 import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";

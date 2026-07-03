@@ -414,6 +414,10 @@
     "context": "order history message",
     "string": "Order cancel information was sent to customer"
   },
+  "07nmyw": {
+    "context": "quick pick label for United States, Canada, and Mexico",
+    "string": "North America"
+  },
   "0AQH0Q": {
     "string": "Plugin is misconfigured and cannot be activated"
   },
@@ -3440,10 +3444,6 @@
     "context": "dialog header",
     "string": "Reset password"
   },
-  "G+9nOZ": {
-    "context": "checkbox description",
-    "string": "If selected, this will add all of the countries not selected to other shipping zones"
-  },
   "G+MtyG": {
     "context": "no shipping methods available",
     "string": "No applicable shipping methods"
@@ -3796,6 +3796,10 @@
   },
   "HTiAMm": {
     "string": "Taxes"
+  },
+  "HUpSiH": {
+    "context": "section title for country preset shortcuts in assign countries dialog",
+    "string": "Quick picks"
   },
   "HVFq//": {
     "context": "button",
@@ -4331,10 +4335,6 @@
   "K/gnGg": {
     "string": "If you want to disable this User please uncheck the box below."
   },
-  "K/ic0P": {
-    "context": "checkbox label",
-    "string": "Rest of the World"
-  },
   "K1ycaD": {
     "context": "input label",
     "string": "Refund value"
@@ -4516,8 +4516,8 @@
     "string": "Shipping zones deleted"
   },
   "LHPVg/": {
-    "context": "assign countries to shipping zone and save, button",
-    "string": "Assign and save"
+    "context": "assign countries to shipping zone and save, button with selected country count",
+    "string": "Assign and save ({count, plural, one {# country} other {# countries}})"
   },
   "LICZeR": {
     "context": "weight",
@@ -5970,6 +5970,10 @@
     "context": "success toast after deactivating a customer",
     "string": "Customer deactivated"
   },
+  "SQ8elk": {
+    "context": "quick pick label for unassigned countries",
+    "string": "Rest of the World"
+  },
   "SRMNCS": {
     "string": "Pending & failed deliveries (last 10)"
   },
@@ -6294,6 +6298,10 @@
   "UIM5bq": {
     "context": "charge status full",
     "string": "Full"
+  },
+  "UIiVi2": {
+    "context": "section hint for country preset shortcuts in assign countries dialog",
+    "string": "Add common country groups in one click. Adjust individual countries in the list below."
   },
   "UJ97Lb": {
     "string": "Delete codes"
@@ -6963,10 +6971,6 @@
   "Xm9qOu": {
     "context": "product pricing, section header",
     "string": "Pricing"
-  },
-  "Xn0VFH": {
-    "context": "no countries found in assign countries dialog",
-    "string": "No countries found"
   },
   "XrliJg": {
     "context": "label for amount selection",
@@ -8358,10 +8362,6 @@
   "f1Pj99": {
     "string": "Discount of {value} through the {channel} with {unknown} conditions"
   },
-  "f2F1NJ": {
-    "context": "section title",
-    "string": "Quick Pick"
-  },
   "f2WJW7": {
     "context": "transaction event type, amount was captured from client",
     "string": "Capture"
@@ -9393,6 +9393,10 @@
     "context": "Message when no errors or warnings, but exactly one info-level advisory exists",
     "string": "All channels configured correctly · 1 advisory"
   },
+  "kGW52l": {
+    "context": "aria label for rest of the world quick pick help tooltip",
+    "string": "About Rest of the World"
+  },
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
@@ -10349,6 +10353,10 @@
   "pAwBtz": {
     "string": "Reward value"
   },
+  "pBuMjY": {
+    "context": "tooltip for rest of the world quick pick in assign countries dialog",
+    "string": "Countries not assigned to any other shipping zone."
+  },
   "pC6/1z": {
     "string": "Invalid manifest format"
   },
@@ -10519,6 +10527,10 @@
   "q/FMPM": {
     "context": "dialog header",
     "string": "Publish models"
+  },
+  "q0TV+c": {
+    "context": "no countries found in assign countries dialog",
+    "string": "No countries found"
   },
   "q1shey": {
     "context": "key-value field input",
@@ -10745,6 +10757,10 @@
   },
   "qrWOxx": {
     "string": "No members found"
+  },
+  "qsQQm4": {
+    "context": "quick pick label for EU member states",
+    "string": "European Union ({count})"
   },
   "qtF0Ft": {
     "context": "transaction event type, amount was authorized, but not captured",
@@ -11984,10 +12000,6 @@
   "werrDz": {
     "context": "refunded event title",
     "string": "Products were refunded"
-  },
-  "wgA48T": {
-    "context": "country selection",
-    "string": "Countries A to Z"
   },
   "wjKYSU": {
     "context": "WarehousesSection subtitle",

@@ -13,7 +13,7 @@ import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import ShippingZoneCountriesAssignDialog from "../ShippingZoneCountriesAssignDialog";
+import { ShippingZoneCountriesAssignDialog } from "../ShippingZoneCountriesAssignDialog";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 
 export interface ShippingZoneCreateFormData {

@@ -1,2 +1,4 @@
-export { default } from "./ShippingZoneCountriesAssignDialog";
-export * from "./ShippingZoneCountriesAssignDialog";
+export {
+  ShippingZoneCountriesAssignDialog,
+  type ShippingZoneCountriesAssignFormData,
+} from "./ShippingZoneCountriesAssignDialog";

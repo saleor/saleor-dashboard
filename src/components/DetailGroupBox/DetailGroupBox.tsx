@@ -1,5 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Accordion, Box } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
 import type * as React from "react";
 import { useState } from "react";
@@ -28,6 +29,7 @@ export const DetailGroupBox = ({
   const [expanded, setExpanded] = useState<string | undefined>(
     defaultExpanded ? groupId : undefined,
   );
+  const isExpanded = expanded === groupId;
 
   return (
     <Box marginTop={marginTop} data-test-id={dataTestId}>
@@ -50,7 +52,7 @@ export const DetailGroupBox = ({
                   width="100%"
                 >
                   <Box display="flex" alignItems="center" gap={2} minWidth={0}>
-                    <Box className={styles.chevron}>
+                    <Box className={clsx(styles.chevron, isExpanded && styles.chevronOpen)}>
                       <ChevronDown
                         size={iconSize.small}
                         strokeWidth={iconStrokeWidthBySize.small}
