@@ -9,7 +9,7 @@ import { commonMessages } from "@dashboard/intl";
 import { type DialogProps, type MinMax } from "@dashboard/types";
 import { Box, Input } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
@@ -55,7 +55,14 @@ export const ShippingZonePostalCodeRangeDialog = ({
   return (
     <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header subtitle={intl.formatMessage(messages.description)}>
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              id="8InCjD"
+              defaultMessage="Please provide range of postal codes you want to add to the include/exclude list."
+            />
+          }
+        >
           {intl.formatMessage(messages.title)}
         </DashboardModal.Header>
 

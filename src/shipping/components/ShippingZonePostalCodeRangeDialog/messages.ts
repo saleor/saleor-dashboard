@@ -6,12 +6,6 @@ export const messages = defineMessages({
     defaultMessage: "Add postal codes",
     description: "dialog header",
   },
-  description: {
-    id: "MBa3tF",
-    defaultMessage:
-      "Please provide range of postal codes you want to add to the include/exclude list.",
-    description: "dialog description",
-  },
   postalCodeStartLabel: {
     id: "1T1fP8",
     defaultMessage: "Postal codes (start)",
