@@ -10,6 +10,7 @@ import {
   MODAL_BODY_DISPLAY_NAME,
   MODAL_CHROME_DISPLAY_NAMES,
 } from "./modalDisplayNames";
+import { ModalLayoutContextProvider } from "./modalLayoutContext";
 
 export type ContentSize = "xs" | "sm" | "picker" | "md" | "lg" | "xl";
 
@@ -160,8 +161,10 @@ export const Content = ({
         )}
         {...rest}
       >
-        {layoutMain}
-        {pinnedActions}
+        <ModalLayoutContextProvider isHeaderOnly={isHeaderOnlyDialog}>
+          {layoutMain}
+          {pinnedActions}
+        </ModalLayoutContextProvider>
       </Box>
     </Modal.Content>
   );

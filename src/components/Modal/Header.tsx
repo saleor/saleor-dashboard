@@ -4,8 +4,11 @@ import { type ReactNode } from "react";
 import { Close } from "./Close";
 import { ContextHeader } from "./ContextHeader";
 import modalStyles from "./DashboardModal.module.css";
+import { ModalChromeHeader } from "./ModalChromeHeader";
 import { MODAL_HEADER_DISPLAY_NAME } from "./modalDisplayNames";
+import { ModalDivider } from "./ModalDivider";
 import { Title, type TitleProps } from "./Title";
+import { MODAL_HEADER_DIVIDER_GAP_SPACING } from "./tokens";
 
 interface HeaderProps extends TitleProps {
   children: ReactNode;
@@ -18,20 +21,20 @@ export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
   }
 
   return (
-    <Box className={modalStyles.modalChromeHeaderWrapper} flexShrink="0">
-      <Box
-        className={modalStyles.modalChromeHeader}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        gap={4}
-      >
+    <Box
+      className={modalStyles.modalChromeHeaderWrapper}
+      display="flex"
+      flexDirection="column"
+      flexShrink="0"
+      gap={MODAL_HEADER_DIVIDER_GAP_SPACING}
+    >
+      <ModalChromeHeader>
         <Box minWidth={0}>
           <Title {...rest}>{children}</Title>
         </Box>
         <Close />
-      </Box>
-      <Box className={modalStyles.fullBleedDivider} />
+      </ModalChromeHeader>
+      <ModalDivider />
     </Box>
   );
 };

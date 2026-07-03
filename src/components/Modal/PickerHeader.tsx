@@ -1,12 +1,14 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
 import { type ReactNode } from "react";
 
 import { Close } from "./Close";
 import modalStyles from "./DashboardModal.module.css";
+import { ModalChromeHeader } from "./ModalChromeHeader";
 import { MODAL_PICKER_HEADER_DISPLAY_NAME } from "./modalDisplayNames";
+import { ModalDivider } from "./ModalDivider";
 import styles from "./PickerHeader.module.css";
 import { Title } from "./Title";
+import { MODAL_HEADER_DIVIDER_GAP_SPACING, MODAL_PADDING_SPACING } from "./tokens";
 
 interface PickerHeaderProps {
   children: ReactNode;
@@ -16,14 +18,14 @@ interface PickerHeaderProps {
 
 export const PickerHeader = ({ children, description, toolbar }: PickerHeaderProps) => {
   return (
-    <Box className={modalStyles.modalChromeHeaderWrapper} flexShrink="0">
-      <Box
-        className={modalStyles.modalChromeHeader}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="flex-start"
-        gap={4}
-      >
+    <Box
+      className={modalStyles.modalChromeHeaderWrapper}
+      display="flex"
+      flexDirection="column"
+      flexShrink="0"
+      gap={MODAL_HEADER_DIVIDER_GAP_SPACING}
+    >
+      <ModalChromeHeader alignItems="flex-start">
         <Box minWidth={0}>
           <Title>{children}</Title>
           {description ? (
@@ -33,11 +35,13 @@ export const PickerHeader = ({ children, description, toolbar }: PickerHeaderPro
           ) : null}
         </Box>
         <Close />
-      </Box>
+      </ModalChromeHeader>
       {toolbar ? (
-        <Box className={clsx(modalStyles.modalChrome, styles.toolbar)}>{toolbar}</Box>
+        <Box className={styles.toolbar} paddingX={MODAL_PADDING_SPACING}>
+          {toolbar}
+        </Box>
       ) : null}
-      <Box className={modalStyles.fullBleedDivider} />
+      <ModalDivider />
     </Box>
   );
 };

@@ -1,6 +1,7 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { ConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/context";
 import { DashboardModal } from "@dashboard/components/Modal";
+import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 
 import styles from "./DashboardModal.module.css";
@@ -139,6 +140,34 @@ describe("getLayoutChildren", () => {
     // Assert
     expect(wrapper).not.toBeNull();
     expect(getLayoutWrapper(<PickerHeader />)).toBeNull();
+  });
+
+  it("renders form modal with header divider and inset body padding", () => {
+    // Arrange
+    render(
+      <DashboardModal open onChange={() => undefined}>
+        <DashboardModal.Content size="xs">
+          <DashboardModal.Header>Enter Voucher Code</DashboardModal.Header>
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              <input data-test-id="form-input" />
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
+          <DashboardModal.Actions>
+            <button type="button">Confirm</button>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>,
+      { wrapper: Wrapper },
+    );
+
+    const divider = document.querySelector(`.${styles.fullBleedDivider}`);
+    const inset = screen.getByTestId("form-input").parentElement;
+
+    // Assert
+    expect(divider).toBeInTheDocument();
+    expect(document.querySelector(`.${styles.contentShellHeaderOnly}`)).not.toBeInTheDocument();
+    expect(inset).toContainElement(screen.getByTestId("form-input"));
   });
 
   it("applies header-only layout class for confirmation dialogs", () => {

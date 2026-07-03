@@ -4,9 +4,12 @@ import { type ReactNode } from "react";
 import { Close } from "./Close";
 import styles from "./ContextHeader.module.css";
 import modalStyles from "./DashboardModal.module.css";
+import { ModalChromeHeader } from "./ModalChromeHeader";
 import { MODAL_CONTEXT_HEADER_DISPLAY_NAME } from "./modalDisplayNames";
+import { ModalDivider } from "./ModalDivider";
 import { type ModalStep, ModalSteps } from "./ModalSteps";
 import { Title } from "./Title";
+import { MODAL_HEADER_DIVIDER_GAP_SPACING } from "./tokens";
 
 interface ContextHeaderProps {
   children: ReactNode;
@@ -25,14 +28,14 @@ export const ContextHeader = ({
   steps,
 }: ContextHeaderProps) => {
   return (
-    <Box className={modalStyles.modalChromeHeaderWrapper} flexShrink="0">
-      <Box
-        className={modalStyles.modalChromeHeader}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="flex-start"
-        gap={4}
-      >
+    <Box
+      className={modalStyles.modalChromeHeaderWrapper}
+      display="flex"
+      flexDirection="column"
+      flexShrink="0"
+      gap={MODAL_HEADER_DIVIDER_GAP_SPACING}
+    >
+      <ModalChromeHeader alignItems="flex-start">
         <Box display="flex" flexDirection="column" gap={3} minWidth={0}>
           <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
             <Title>{children}</Title>
@@ -52,8 +55,8 @@ export const ContextHeader = ({
           {steps ? <ModalSteps currentStep={steps.current} steps={steps.items} /> : null}
         </Box>
         <Close />
-      </Box>
-      <Box className={modalStyles.fullBleedDivider} />
+      </ModalChromeHeader>
+      <ModalDivider />
     </Box>
   );
 };
