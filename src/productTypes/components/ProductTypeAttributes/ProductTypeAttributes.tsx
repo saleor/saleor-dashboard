@@ -114,32 +114,10 @@ const ProductTypeAttributes = (props: ProductTypeAttributesProps) => {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            gap={4}
           >
             <Text size={2} color="default2" textAlign="center">
               <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
             </Text>
-            <Box display="flex" gap={2}>
-              <Button
-                variant="primary"
-                disabled={disabled}
-                onClick={handleCreateAttribute}
-                data-test-id="create-product-attribute-empty"
-              >
-                <FormattedMessage
-                  id="LApQsw"
-                  defaultMessage="Create attribute"
-                  description="create attribute from product type, button"
-                />
-              </Button>
-              <Button variant="secondary" disabled={disabled} onClick={handleAssignAttribute}>
-                <FormattedMessage
-                  id="uxPpRx"
-                  defaultMessage="Assign attribute"
-                  description="button"
-                />
-              </Button>
-            </Box>
           </Box>
         ) : (
           <ResponsiveTable>
