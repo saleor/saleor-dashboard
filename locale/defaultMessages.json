@@ -4515,10 +4515,6 @@
   "LCmiky": {
     "string": "Shipping zones deleted"
   },
-  "LHPVg/": {
-    "context": "assign countries to shipping zone and save, button with selected country count",
-    "string": "Assign and save ({count, plural, one {# country} other {# countries}})"
-  },
   "LICZeR": {
     "context": "weight",
     "string": "from {value} {unit}"
@@ -8350,6 +8346,10 @@
   "ez6WHE": {
     "context": "translation progress count",
     "string": "{completed} of {total} fields translated"
+  },
+  "f+EgUw": {
+    "context": "assign countries to shipping zone and save, button with selected country count",
+    "string": "Assign and save ({count, plural, one {# country} other {# countries}})"
   },
   "f/Drvo": {
     "context": "order history message",
