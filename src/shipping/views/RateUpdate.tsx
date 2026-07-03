@@ -34,7 +34,7 @@ import useProductSearch from "@dashboard/searches/useProductSearch";
 import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
 import { ShippingMethodMetadataDialog } from "@dashboard/shipping/components/ShippingMethodMetadataDialog/ShippingMethodMetadataDialog";
 import ShippingMethodProductsAddDialog from "@dashboard/shipping/components/ShippingMethodProductsAddDialog";
-import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
+import { ShippingZonePostalCodeRangeDialog } from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesPage from "@dashboard/shipping/components/ShippingZoneRatesPage";
 import { type ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
 import UnassignDialog from "@dashboard/shipping/components/UnassignDialog";
