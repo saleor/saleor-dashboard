@@ -10,6 +10,8 @@ import {
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
@@ -29,9 +31,9 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -39,6 +41,7 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
@@ -148,6 +151,12 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     params.action === "assign-attribute-value" && params.id
       ? pageDetails?.data?.page?.attributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -162,20 +171,12 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  } = useReferenceCollectionSearch(refAttr);
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
-  });
+  } = useReferenceCategorySearch(refAttr);
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
@@ -214,6 +215,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchCategoriesOpts.refetch,
     refetchCollections: searchCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
 
   return (
@@ -252,6 +254,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         onCloseDialog={closeModal}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
       <PageMetadataDialog
         open={params.action === "view-metadata" && !!pageDetails.data?.page}

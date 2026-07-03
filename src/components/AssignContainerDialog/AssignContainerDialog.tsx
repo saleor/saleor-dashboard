@@ -6,14 +6,18 @@ import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
 import { type ChangeEvent, type ReactNode } from "react";
+import { useIntl } from "react-intl";
 
+import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
+import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "../BackButton";
 import { MultiSelectionRows, SingleSelectionRows } from "./AssignContainerRows";
+import { messages } from "./messages";
 import { useAssignContainerSearch } from "./useAssignContainerSearch";
 import { useAssignDialogMultiSelection } from "./useAssignDialogMultiSelection";
 import { useAssignDialogSingleSelection } from "./useAssignDialogSingleSelection";
@@ -59,6 +63,7 @@ const AssignContainerDialog = ({
   search: externalSearch,
   onResetFilters,
 }: AssignContainerDialogProps) => {
+  const intl = useIntl();
   const { query, onQueryChange, handleClose } = useAssignContainerSearch({
     onFetch,
     externalSearch,
@@ -75,7 +80,7 @@ const AssignContainerDialog = ({
 
   const displayedContainers = useStalePickerList(containers, loading, open);
   const itemCount = displayedContainers.length;
-  const showEmptyState = !loading && itemCount === 0;
+  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(loading, itemCount);
 
   const multiSelection = useAssignDialogMultiSelection({
     open,
@@ -85,9 +90,25 @@ const AssignContainerDialog = ({
   const handleSubmit =
     selectionMode === "single" ? singleSelection.handleSubmit : multiSelection.handleSubmit;
 
+  // Multi-selection always starts empty (already-assigned items are filtered
+  // out of the list), so any selection counts as a change. Single-selection
+  // starts at the current assignment, so only a different pick is a change.
+  const selectedCount = multiSelection.selectedItems.length;
+  const hasSelectionChanged =
+    selectionMode === "single"
+      ? singleSelection.selectedItemId !== (selectedId ?? "")
+      : selectedCount > 0;
+  const confirmLabel =
+    selectionMode === "multiple" && selectedCount > 0
+      ? intl.formatMessage(messages.assignCountedButton, {
+          label: labels.confirmBtn,
+          count: selectedCount,
+        })
+      : labels.confirmBtn;
+
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="picker">
         <DashboardModal.PickerHeader
           toolbar={
             <>
@@ -122,23 +143,29 @@ const AssignContainerDialog = ({
           >
             <ResponsiveTable bleed fillHeight>
               <TableBody>
-                {showEmptyState && (
-                  <Text>
-                    <Text>{emptyMessage}</Text>
-                  </Text>
-                )}
-                {selectionMode === "single" ? (
-                  <SingleSelectionRows
-                    containers={displayedContainers}
-                    selectedItemId={singleSelection.selectedItemId}
-                    onSelect={singleSelection.handleSelect}
-                  />
+                {showListLoading ? (
+                  <AssignPickerListLoadingRow colSpan={2} />
                 ) : (
-                  <MultiSelectionRows
-                    containers={displayedContainers}
-                    isSelected={multiSelection.isSelected}
-                    onToggle={multiSelection.handleToggle}
-                  />
+                  <>
+                    {showEmptyState && (
+                      <AssignPickerListEmptyStateRow colSpan={2}>
+                        {emptyMessage}
+                      </AssignPickerListEmptyStateRow>
+                    )}
+                    {selectionMode === "single" ? (
+                      <SingleSelectionRows
+                        containers={displayedContainers}
+                        selectedItemId={singleSelection.selectedItemId}
+                        onSelect={singleSelection.handleSelect}
+                      />
+                    ) : (
+                      <MultiSelectionRows
+                        containers={displayedContainers}
+                        isSelected={multiSelection.isSelected}
+                        onToggle={multiSelection.handleToggle}
+                      />
+                    )}
+                  </>
                 )}
               </TableBody>
             </ResponsiveTable>
@@ -149,11 +176,12 @@ const AssignContainerDialog = ({
           <BackButton onClick={handleClose} />
           <ConfirmButton
             data-test-id="assign-and-save-button"
+            disabled={!hasSelectionChanged}
             transitionState={confirmButtonState}
             type="submit"
             onClick={handleSubmit}
           >
-            {labels.confirmBtn}
+            {confirmLabel}
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>

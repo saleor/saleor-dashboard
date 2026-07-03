@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 import { Close } from "./Close";
 import { ContextHeader } from "./ContextHeader";
 import modalStyles from "./DashboardModal.module.css";
+import { MODAL_HEADER_DISPLAY_NAME } from "./modalDisplayNames";
 import { Title, type TitleProps } from "./Title";
 
 interface HeaderProps extends TitleProps {
@@ -34,3 +35,5 @@ export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
     </Box>
   );
 };
+
+Header.displayName = MODAL_HEADER_DISPLAY_NAME;

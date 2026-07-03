@@ -17,6 +17,8 @@ export interface MetadataCardProps {
   disabled?: boolean;
   error?: string | undefined;
   defaultExpanded?: boolean;
+  /** Removes page-level card padding — use inside modals with DashboardModal.Inset */
+  inModal?: boolean;
 }
 
 const ACCORDION_VALUE = "metadata-accordion";
@@ -29,14 +31,20 @@ export const MetadataCard = ({
   disabled,
   error,
   defaultExpanded,
+  inModal = false,
 }: MetadataCardProps) => {
   const intl = useIntl();
   const initiallyExpanded = defaultExpanded ?? false;
   const [expanded, setExpanded] = useState(initiallyExpanded ? ACCORDION_VALUE : undefined);
 
   return (
-    <DashboardCard paddingTop={6} data-test-id="metadata-editor" data-test-is-private={isPrivate}>
-      <DashboardCard.Content>
+    <DashboardCard
+      paddingTop={inModal ? 0 : 6}
+      gap={inModal ? 2 : 5}
+      data-test-id="metadata-editor"
+      data-test-is-private={isPrivate}
+    >
+      <DashboardCard.Content paddingX={inModal ? 0 : 6}>
         <Accordion value={expanded} onValueChange={setExpanded}>
           <Accordion.Item data-test-id="metadata-item" value={ACCORDION_VALUE}>
             <Accordion.Trigger>

@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
-import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
-import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -30,6 +30,8 @@ import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttr
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -71,17 +73,6 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchCategoriesOpts,
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreReferenceCategories,
-    search: searchReferenceCategories,
-    result: searchReferenceCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -393,14 +384,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     reorderProductImages(options),
   );
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
-    navigate(
-      productUrl(id, {
-        ...params,
-        action: "assign-attribute-value",
-        id: attribute.id,
-      }),
-      { resetScroll: false },
-    );
+    openModal("assign-attribute-value", { id: attribute.id });
   const disableFormSave =
     submitOpts.loading ||
     createProductImageOpts.loading ||
@@ -420,36 +404,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       : undefined;
 
   // Extract productType and pageType constraints from reference attribute for modal filter
-  const initialConstraints = useMemo(():
-    | (InitialConstraints & InitialPageConstraints)
-    | undefined => {
-    if (!refAttr?.referenceTypes?.length) {
-      return undefined;
-    }
-
-    const productTypeRefs = refAttr.referenceTypes.filter(
-      (t): t is { __typename: "ProductType"; id: string; name: string } =>
-        t?.__typename === "ProductType" && Boolean(t?.id),
-    );
-
-    const pageTypeRefs = refAttr.referenceTypes.filter(
-      (t): t is { __typename: "PageType"; id: string; name: string } =>
-        t?.__typename === "PageType" && Boolean(t?.id),
-    );
-
-    if (productTypeRefs.length === 0 && pageTypeRefs.length === 0) {
-      return undefined;
-    }
-
-    return {
-      ...(productTypeRefs.length > 0 && {
-        productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
-      }),
-      ...(pageTypeRefs.length > 0 && {
-        pageTypes: pageTypeRefs.map(t => ({ id: t.id, name: t.name })),
-      }),
-    };
-  }, [refAttr?.referenceTypes]);
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
 
   const {
     loadMore: loadMoreProducts,
@@ -463,11 +421,24 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
+  const {
+    loadMore: loadMoreReferenceCategories,
+    search: searchReferenceCategories,
+    result: searchReferenceCategoriesOpts,
+  } = useReferenceCategorySearch(refAttr);
+
+  const {
+    loadMore: loadMoreReferenceCollections,
+    search: searchReferenceCollections,
+    result: searchReferenceCollectionsOpts,
+  } = useReferenceCollectionSearch(refAttr);
+
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
     refetchProducts: searchProductsOpts.refetch,
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchReferenceCategoriesOpts.refetch,
-    refetchCollections: searchCollectionsOpts.refetch,
+    refetchCollections: searchReferenceCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
@@ -479,6 +450,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const fetchMoreReferenceCategories = getSearchFetchMoreProps(
     searchReferenceCategoriesOpts,
     loadMoreReferenceCategories,
+  );
+  const fetchMoreReferenceCollections = getSearchFetchMoreProps(
+    searchReferenceCollectionsOpts,
+    loadMoreReferenceCollections,
   );
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
@@ -538,17 +513,17 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         referenceCategories={referenceCategories}
-        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
+        referenceCollections={mapEdgesToItems(searchReferenceCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchReferenceCategories={searchReferenceCategories}
         fetchMoreReferenceCategories={fetchMoreReferenceCategories}
-        fetchReferenceCollections={searchCollections}
-        fetchMoreReferenceCollections={fetchMoreCollections}
+        fetchReferenceCollections={searchReferenceCollections}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
+        onCloseDialog={closeModal}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
         onFilterChange={onFilterChange}

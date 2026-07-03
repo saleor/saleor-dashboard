@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 import { Close } from "./Close";
 import styles from "./ContextHeader.module.css";
 import modalStyles from "./DashboardModal.module.css";
+import { MODAL_CONTEXT_HEADER_DISPLAY_NAME } from "./modalDisplayNames";
 import { type ModalStep, ModalSteps } from "./ModalSteps";
 import { Title } from "./Title";
 
@@ -56,3 +57,5 @@ export const ContextHeader = ({
     </Box>
   );
 };
+
+ContextHeader.displayName = MODAL_CONTEXT_HEADER_DISPLAY_NAME;

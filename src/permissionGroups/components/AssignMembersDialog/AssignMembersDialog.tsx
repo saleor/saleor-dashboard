@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { AssignPickerListEmptyStateRow } from "@dashboard/components/AssignPickerListEmptyState/AssignPickerListEmptyState";
+import { AssignPickerListLoadingRow } from "@dashboard/components/AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
@@ -11,6 +13,7 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { type SearchStaffMembersQuery } from "@dashboard/graphql";
+import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { buttonMessages } from "@dashboard/intl";
@@ -122,7 +125,10 @@ const AssignMembersDialog = ({
     RelayToFlat<SearchStaffMembersQuery["search"]>
   >([]);
   const displayedMembers = useStalePickerList(staffMembers, loading, open);
-  const showEmptyState = !loading && displayedMembers.length === 0;
+  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
+    loading,
+    displayedMembers.length,
+  );
 
   return (
     <DashboardModal onChange={onClose} open={open}>
@@ -159,66 +165,68 @@ const AssignMembersDialog = ({
           >
             <ResponsiveTable bleed fillHeight>
               <TableBody data-test-id="search-results">
-                {renderCollection(
-                  displayedMembers,
-                  member => {
-                    if (!member) {
-                      return null;
-                    }
+                {showListLoading ? (
+                  <AssignPickerListLoadingRow colSpan={3} />
+                ) : (
+                  renderCollection(
+                    displayedMembers,
+                    member => {
+                      if (!member) {
+                        return null;
+                      }
 
-                    const isSelected = selectedMembers.some(
-                      selectedMember => selectedMember.id === member.id,
-                    );
+                      const isSelected = selectedMembers.some(
+                        selectedMember => selectedMember.id === member.id,
+                      );
 
-                    return (
-                      <TableRowLink key={member.id} data-test-id="user-row">
-                        <TableCell padding="checkbox" className={classes.checkboxCell}>
-                          <Checkbox
-                            color="primary"
-                            checked={isSelected}
-                            onChange={() =>
-                              handleStaffMemberAssign(
-                                member,
-                                isSelected,
-                                selectedMembers,
-                                setSelectedMembers,
-                              )
-                            }
-                          />
-                        </TableCell>
-                        <TableCell className={classes.avatarCell}>
-                          <UserAvatar
-                            url={member?.avatar?.url}
-                            initials={getUserInitials(member)}
-                          />
-                        </TableCell>
-                        <TableCell className={classes.colName}>
-                          <Box display="flex" flexDirection="column" justifyContent="center">
-                            <Text>{getUserName(member) || <Skeleton />}</Text>
-                            <Text size={2} color="default2">
-                              {member ? (
-                                member.isActive ? (
-                                  intl.formatMessage(messages.staffActive)
-                                ) : (
-                                  intl.formatMessage(messages.staffInactive)
+                      return (
+                        <TableRowLink key={member.id} data-test-id="user-row">
+                          <TableCell padding="checkbox" className={classes.checkboxCell}>
+                            <Checkbox
+                              color="primary"
+                              checked={isSelected}
+                              onChange={() =>
+                                handleStaffMemberAssign(
+                                  member,
+                                  isSelected,
+                                  selectedMembers,
+                                  setSelectedMembers,
                                 )
-                              ) : (
-                                <Skeleton />
-                              )}
-                            </Text>
-                          </Box>
-                        </TableCell>
-                      </TableRowLink>
-                    );
-                  },
-                  () =>
-                    showEmptyState && (
-                      <TableRowLink>
-                        <TableCell colSpan={2}>
+                              }
+                            />
+                          </TableCell>
+                          <TableCell className={classes.avatarCell}>
+                            <UserAvatar
+                              url={member?.avatar?.url}
+                              initials={getUserInitials(member)}
+                            />
+                          </TableCell>
+                          <TableCell className={classes.colName}>
+                            <Box display="flex" flexDirection="column" justifyContent="center">
+                              <Text>{getUserName(member) || <Skeleton />}</Text>
+                              <Text size={2} color="default2">
+                                {member ? (
+                                  member.isActive ? (
+                                    intl.formatMessage(messages.staffActive)
+                                  ) : (
+                                    intl.formatMessage(messages.staffInactive)
+                                  )
+                                ) : (
+                                  <Skeleton />
+                                )}
+                              </Text>
+                            </Box>
+                          </TableCell>
+                        </TableRowLink>
+                      );
+                    },
+                    () =>
+                      showEmptyState && (
+                        <AssignPickerListEmptyStateRow colSpan={3}>
                           <FormattedMessage {...messages.noMembersFound} />
-                        </TableCell>
-                      </TableRowLink>
-                    ),
+                        </AssignPickerListEmptyStateRow>
+                      ),
+                  )
                 )}
               </TableBody>
             </ResponsiveTable>

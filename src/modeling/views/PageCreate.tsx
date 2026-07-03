@@ -4,6 +4,8 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
@@ -20,10 +22,10 @@ import { useLastCreatedEntityTypeStorage } from "@dashboard/hooks/useLastCreated
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -31,6 +33,7 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -82,24 +85,6 @@ const PageCreate = ({ params }: PageCreateProps) => {
     result: searchPageTypesOpts,
   } = usePageTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreCollections,
-    search: searchCollections,
-    result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreCategories,
-    search: searchCategories,
-    result: searchCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
   });
   const {
     loadMore: loadMoreAttributeValues,
@@ -206,6 +191,12 @@ const PageCreate = ({ params }: PageCreateProps) => {
     params.action === "assign-attribute-value" && params.id
       ? selectedPageType?.pageType.attributes?.find(a => a.id === params.id)
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const fetchMorePageTypes = {
     hasMore: searchPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPageTypesOpts.loading,
@@ -223,11 +214,24 @@ const PageCreate = ({ params }: PageCreateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
+  const {
+    loadMore: loadMoreCollections,
+    search: searchCollections,
+    result: searchCollectionsOpts,
+  } = useReferenceCollectionSearch(refAttr);
+
+  const {
+    loadMore: loadMoreCategories,
+    search: searchCategories,
+    result: searchCategoriesOpts,
+  } = useReferenceCategorySearch(refAttr);
+
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
     refetchProducts: searchProductsOpts.refetch,
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchCategoriesOpts.refetch,
     refetchCollections: searchCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
 
   const fetchMoreReferenceCategories = {
@@ -290,6 +294,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
         onSelectPageType={handleSelectPageTypeId}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
     </>
   );

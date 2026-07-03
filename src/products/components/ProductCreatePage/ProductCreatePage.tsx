@@ -15,6 +15,8 @@ import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailability
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import {
@@ -104,6 +106,7 @@ interface ProductCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
   onFilterChange: AssignAttributeValueDialogFilterChangeMap;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
 }
 
 const ProductCreatePage = ({
@@ -156,6 +159,7 @@ const ProductCreatePage = ({
   searchWarehousesResult,
   searchWarehouses,
   onFilterChange,
+  initialConstraints,
 }: ProductCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -406,6 +410,7 @@ const ProductCreatePage = ({
                   handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }
                 onFilterChange={onFilterChange}
+                initialConstraints={initialConstraints}
               />
             )}
           </DetailPageLayout>

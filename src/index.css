@@ -151,3 +151,12 @@ a.command-menu-item {
 #toast-portal > * {
   pointer-events: auto;
 }
+
+/*
+ * Macaw button recipes can still apply hover/active styles to disabled buttons.
+ * Suppress pointer interaction so disabled CTAs keep their resting appearance.
+ * Loading buttons use aria-busy (not disabled) and ConfirmButton handles those.
+ */
+button:disabled {
+  pointer-events: none;
+}

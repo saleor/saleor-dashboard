@@ -15,6 +15,8 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
@@ -88,6 +90,7 @@ interface PageDetailsPageProps {
   onSelectPageType?: (pageTypeId: string) => void;
   onAttributeSelectBlur: () => void;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
 }
 
 const PageDetailsPage = ({
@@ -123,6 +126,7 @@ const PageDetailsPage = ({
   onSelectPageType,
   onAttributeSelectBlur,
   onFilterChange,
+  initialConstraints,
 }: PageDetailsPageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -353,6 +357,7 @@ const PageDetailsPage = ({
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={onCloseDialog}
                 onFilterChange={onFilterChange}
+                initialConstraints={initialConstraints}
                 onSubmit={attributeValues =>
                   handleAssignReferenceAttribute(attributeValues, data, handlers)
                 }

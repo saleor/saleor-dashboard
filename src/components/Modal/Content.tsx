@@ -1,11 +1,17 @@
 import { Box, Modal, type PropsWithBox } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { Children, isValidElement, type ReactNode } from "react";
+import { cloneElement, isValidElement, type ReactNode } from "react";
 
 import styles from "./DashboardModal.module.css";
-import { MODAL_ACTIONS_DISPLAY_NAME, MODAL_BODY_DISPLAY_NAME } from "./modalDisplayNames";
+import { getLayoutChildren, getLayoutWrapper } from "./getLayoutChildren";
+import { isRadixPortaledContent } from "./isRadixPortaledContent";
+import {
+  MODAL_ACTIONS_DISPLAY_NAME,
+  MODAL_BODY_DISPLAY_NAME,
+  MODAL_CHROME_DISPLAY_NAMES,
+} from "./modalDisplayNames";
 
-export type ContentSize = "xs" | "sm" | "md" | "lg" | "xl";
+export type ContentSize = "xs" | "sm" | "picker" | "md" | "lg" | "xl";
 
 type ContentProps = PropsWithBox<{
   children: ReactNode;
@@ -19,6 +25,7 @@ type ContentProps = PropsWithBox<{
 const sizes: Record<ContentSize, number> = {
   xs: 444,
   sm: 600,
+  picker: 720,
   md: 960,
   lg: 1280,
   xl: 1920,
@@ -36,6 +43,20 @@ const isModalComponent = (child: ReactNode, displayName: string): boolean => {
   return isValidElement(child) && getComponentDisplayName(child.type) === displayName;
 };
 
+const isChromeComponent = (child: ReactNode): boolean => {
+  return MODAL_CHROME_DISPLAY_NAMES.some(displayName => isModalComponent(child, displayName));
+};
+
+const wrapLayoutContent = (children: ReactNode, content: ReactNode): ReactNode => {
+  const wrapper = getLayoutWrapper(children);
+
+  if (wrapper) {
+    return cloneElement(wrapper, wrapper.props, content);
+  }
+
+  return content;
+};
+
 export const Content = ({
   children,
   disableAutofocus,
@@ -45,7 +66,7 @@ export const Content = ({
   className,
   ...rest
 }: ContentProps) => {
-  const items = Children.toArray(children);
+  const items = getLayoutChildren(children);
   const hasBody = items.some(child => isModalComponent(child, MODAL_BODY_DISPLAY_NAME));
   const actionsIndex = items.findLastIndex(child =>
     isModalComponent(child, MODAL_ACTIONS_DISPLAY_NAME),
@@ -53,18 +74,31 @@ export const Content = ({
   const actionsChild = actionsIndex >= 0 ? items[actionsIndex] : null;
   const contentItems =
     actionsChild !== null ? items.filter((_, index) => index !== actionsIndex) : items;
+  const chromeItems = contentItems.filter(isChromeComponent);
+  const scrollItems = contentItems.filter(child => !isChromeComponent(child));
 
   const renderedContent = disableScrollLayout ? (
     children
   ) : hasBody ? (
-    contentItems
+    wrapLayoutContent(children, contentItems)
+  ) : scrollItems.length > 0 ? (
+    <>
+      {chromeItems}
+      <Box className={styles.scrollBody} flexGrow="1" overflowY="auto" __minHeight="0">
+        {wrapLayoutContent(children, scrollItems)}
+      </Box>
+    </>
   ) : (
-    <Box className={styles.scrollBody} flexGrow="1" overflowY="auto" __minHeight="0">
-      {contentItems}
-    </Box>
+    wrapLayoutContent(children, contentItems)
   );
 
   const pinnedActions = disableScrollLayout ? null : actionsChild;
+  const layoutMain =
+    hasBody && pinnedActions ? (
+      <Box className={styles.contentMain}>{renderedContent}</Box>
+    ) : (
+      renderedContent
+    );
 
   return (
     <Modal.Content
@@ -73,14 +107,18 @@ export const Content = ({
         onPointerDownOutside: e => {
           // This fixes issues when cursor was clicked on DataGrid x/y coordinates
           // For example: when in modal clicked on "View metadata" button in DataGrid
+          if (isRadixPortaledContent(e.target)) {
+            e.preventDefault();
+
+            return;
+          }
+
           e.detail.originalEvent.preventDefault();
         },
         onInteractOutside: e => {
           // Prevent modal from closing when interacting with popovers (e.g., filter dropdowns)
           // Popovers render in portals outside the modal's DOM tree, so Radix treats them as "outside"
-          const target = e.target as HTMLElement;
-
-          if (target?.closest("[data-radix-popper-content-wrapper]")) {
+          if (isRadixPortaledContent(e.target)) {
             e.preventDefault();
           }
         },
@@ -104,10 +142,10 @@ export const Content = ({
         flexDirection="column"
         __minHeight="0"
         __maxWidth={sizes[size]}
-        className={clsx(styles.contentShell, className)}
+        className={clsx(styles.contentShell, !hasBody && styles.contentShellNoBody, className)}
         {...rest}
       >
-        {renderedContent}
+        {layoutMain}
         {pinnedActions}
       </Box>
     </Modal.Content>

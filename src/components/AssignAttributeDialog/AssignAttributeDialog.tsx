@@ -11,6 +11,7 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type AvailableAttributeFragment } from "@dashboard/graphql";
+import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
@@ -22,6 +23,8 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
+import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "../BackButton";
 import { messages } from "./messages";
 
@@ -75,7 +78,10 @@ const AssignAttributeDialog = ({
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
   const errors = useModalDialogErrors(apiErrors, open);
   const displayedAttributes = useStalePickerList(attributes, loading, open);
-  const showEmptyState = !loading && displayedAttributes.length === 0;
+  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
+    loading,
+    displayedAttributes.length,
+  );
 
   useModalDialogOpen(open, {
     onClose: resetQuery,
@@ -116,42 +122,44 @@ const AssignAttributeDialog = ({
           >
             <ResponsiveTable bleed fillHeight key="table">
               <TableBody data-test-id="attributes-list">
-                {renderCollection(
-                  displayedAttributes,
-                  attribute => {
-                    if (!attribute) {
-                      return null;
-                    }
+                {showListLoading ? (
+                  <AssignPickerListLoadingRow colSpan={2} />
+                ) : (
+                  renderCollection(
+                    displayedAttributes,
+                    attribute => {
+                      if (!attribute) {
+                        return null;
+                      }
 
-                    const isChecked = !!selected.find(
-                      selectedAttribute => selectedAttribute === attribute.id,
-                    );
+                      const isChecked = !!selected.find(
+                        selectedAttribute => selectedAttribute === attribute.id,
+                      );
 
-                    return (
-                      <TableRowLink key={maybe(() => attribute.id)}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
-                        </TableCell>
-                        <TableCell className={classes.wideCell}>
-                          <AttributeNameWithTypeIcon
-                            name={attribute.name}
-                            inputType={attribute.inputType}
-                          />
-                          <Text size={2} fontWeight="light" display="block">
-                            {attribute.slug}
-                          </Text>
-                        </TableCell>
-                      </TableRowLink>
-                    );
-                  },
-                  () =>
-                    showEmptyState && (
-                      <TableRowLink>
-                        <TableCell colSpan={2}>
+                      return (
+                        <TableRowLink key={maybe(() => attribute.id)}>
+                          <TableCell padding="checkbox">
+                            <Checkbox checked={isChecked} onChange={() => onToggle(attribute.id)} />
+                          </TableCell>
+                          <TableCell className={classes.wideCell}>
+                            <AttributeNameWithTypeIcon
+                              name={attribute.name}
+                              inputType={attribute.inputType}
+                            />
+                            <Text size={2} fontWeight="light" display="block">
+                              {attribute.slug}
+                            </Text>
+                          </TableCell>
+                        </TableRowLink>
+                      );
+                    },
+                    () =>
+                      showEmptyState && (
+                        <AssignPickerListEmptyStateRow colSpan={2}>
                           <FormattedMessage {...messages.noMembersFound} />
-                        </TableCell>
-                      </TableRowLink>
-                    ),
+                        </AssignPickerListEmptyStateRow>
+                      ),
+                  )
                 )}
               </TableBody>
             </ResponsiveTable>

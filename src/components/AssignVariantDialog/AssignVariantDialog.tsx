@@ -1,5 +1,4 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import {
   type Container,
@@ -8,6 +7,7 @@ import {
   type RelayToFlat,
 } from "@dashboard/types";
 
+import { hasReferenceTypeConstraints } from "../AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import {
   type InitialConstraints,
@@ -35,31 +35,22 @@ interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
 
 const AssignVariantDialog = (props: AssignVariantDialogProps) => {
   const { selectionMode = "multiple", excludedFilters, initialConstraints, ...restProps } = props;
-
-  const { open, onClose } = props;
-
-  const handleClose = () => {
-    onClose();
-  };
+  const skipFetchOnOpen = hasReferenceTypeConstraints(initialConstraints);
 
   const dialogContent =
     selectionMode === "single" ? (
-      <AssignVariantDialogSingle {...restProps} />
+      <AssignVariantDialogSingle skipFetchOnOpen={skipFetchOnOpen} {...restProps} />
     ) : (
-      <AssignVariantDialogMulti {...restProps} />
+      <AssignVariantDialogMulti skipFetchOnOpen={skipFetchOnOpen} {...restProps} />
     );
 
   return (
-    <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="sm">
-        <ModalProductFilterProvider
-          excludedFilters={excludedFilters}
-          initialConstraints={initialConstraints}
-        >
-          {dialogContent}
-        </ModalProductFilterProvider>
-      </DashboardModal.Content>
-    </DashboardModal>
+    <ModalProductFilterProvider
+      excludedFilters={excludedFilters}
+      initialConstraints={initialConstraints}
+    >
+      {dialogContent}
+    </ModalProductFilterProvider>
   );
 };
 

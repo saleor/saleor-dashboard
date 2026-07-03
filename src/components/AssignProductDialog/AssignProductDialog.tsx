@@ -1,8 +1,8 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 
+import { hasReferenceTypeConstraints } from "../AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import {
   type InitialConstraints,
   ModalProductFilterProvider,
@@ -35,32 +35,41 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
 }
 
 export const AssignProductDialog = (props: AssignProductDialogProps): JSX.Element => {
-  const { selectionMode = "multiple", excludedFilters, initialConstraints, ...restProps } = props;
+  const {
+    selectionMode = "multiple",
+    excludedFilters,
+    initialConstraints,
+    open,
+    onClose,
+    ...restProps
+  } = props;
 
-  const { open, onClose } = props;
-
-  const handleClose = (): void => {
-    onClose();
-  };
+  const skipFetchOnOpen = hasReferenceTypeConstraints(initialConstraints);
 
   const dialogContent =
     selectionMode === "single" ? (
-      <AssignProductDialogSingle {...restProps} />
+      <AssignProductDialogSingle
+        open={open}
+        onClose={onClose}
+        skipFetchOnOpen={skipFetchOnOpen}
+        {...restProps}
+      />
     ) : (
-      <AssignProductDialogMulti {...restProps} />
+      <AssignProductDialogMulti
+        open={open}
+        onClose={onClose}
+        skipFetchOnOpen={skipFetchOnOpen}
+        {...restProps}
+      />
     );
 
   return (
-    <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="sm">
-        <ModalProductFilterProvider
-          excludedFilters={excludedFilters}
-          initialConstraints={initialConstraints}
-        >
-          {dialogContent}
-        </ModalProductFilterProvider>
-      </DashboardModal.Content>
-    </DashboardModal>
+    <ModalProductFilterProvider
+      excludedFilters={excludedFilters}
+      initialConstraints={initialConstraints}
+    >
+      {dialogContent}
+    </ModalProductFilterProvider>
   );
 };
 

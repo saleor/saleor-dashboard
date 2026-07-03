@@ -22,6 +22,8 @@ import Grid from "@dashboard/components/Grid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Link from "@dashboard/components/Link";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -131,6 +133,7 @@ interface ProductVariantPageProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
   onVariantPreorderDeactivate: (id: string) => void;
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
@@ -174,6 +177,7 @@ export const ProductVariantPage = ({
   assignReferencesAttributeId,
   onAssignReferencesClick,
   onFilterChange,
+  initialConstraints,
   fetchReferencePages,
   fetchReferenceProducts,
   fetchReferenceCategories,
@@ -505,6 +509,7 @@ export const ProductVariantPage = ({
                       handleAssignReferenceAttribute(attributeValues, data, handlers)
                     }
                     onFilterChange={onFilterChange}
+                    initialConstraints={initialConstraints}
                   />
                 )}
                 {variant && (

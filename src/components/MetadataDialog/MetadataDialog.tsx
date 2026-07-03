@@ -72,12 +72,13 @@ export const MetadataDialog = ({
             <Box display="flex" flexDirection="column" gap={2}>
               {contentLoading ? (
                 <>
-                  <MetadataLoadingCard />
-                  <MetadataLoadingCard isPrivate />
+                  <MetadataLoadingCard inModal />
+                  <MetadataLoadingCard isPrivate inModal />
                 </>
               ) : (
                 <>
                   <MetadataCard
+                    inModal
                     data={data.metadata}
                     isPrivate={false}
                     disabled={disabled || loading}
@@ -86,6 +87,7 @@ export const MetadataDialog = ({
                   />
 
                   <MetadataCard
+                    inModal
                     data={data.privateMetadata}
                     isPrivate={true}
                     disabled={disabled || loading}

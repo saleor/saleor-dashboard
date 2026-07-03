@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 
 import { Close } from "./Close";
 import modalStyles from "./DashboardModal.module.css";
+import { MODAL_PICKER_HEADER_DISPLAY_NAME } from "./modalDisplayNames";
 import styles from "./PickerHeader.module.css";
 import { Title } from "./Title";
 
@@ -34,3 +35,5 @@ export const PickerHeader = ({ children, toolbar }: PickerHeaderProps) => {
     </Box>
   );
 };
+
+PickerHeader.displayName = MODAL_PICKER_HEADER_DISPLAY_NAME;

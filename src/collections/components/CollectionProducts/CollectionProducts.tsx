@@ -5,7 +5,7 @@ import {
   type CollectionUrlQueryParams,
 } from "@dashboard/collections/urls";
 import {
-  getAssignedProductIdsToCollection,
+  excludeProductsInCollection,
   getProductsFromSearchResults,
 } from "@dashboard/collections/utils";
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
@@ -30,7 +30,7 @@ import { type Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
@@ -95,7 +95,7 @@ const CollectionProducts = ({
     },
   });
 
-  const { data } = useCollectionProductsQuery({
+  const { data, refetch: refetchCollectionProducts } = useCollectionProductsQuery({
     displayLoader: true,
     variables: { id, ...paginationState },
   });
@@ -125,7 +125,26 @@ const CollectionProducts = ({
     [result.refetch],
   );
 
-  const assignedProductDict = getAssignedProductIdsToCollection(collection, result.data?.search);
+  const handleAssignDialogClose = useCallback(() => {
+    void result.refetch(DEFAULT_INITIAL_SEARCH_DATA);
+    closeModal();
+  }, [closeModal, result]);
+
+  const assignableProducts = useMemo(
+    () =>
+      excludeProductsInCollection(getProductsFromSearchResults(result?.data) ?? [], collection?.id),
+    [collection?.id, result?.data],
+  );
+
+  const assignProductInitialConstraints = useMemo(
+    () =>
+      collection
+        ? {
+            excludeCollections: [{ id: collection.id, name: collection.name }],
+          }
+        : undefined,
+    [collection],
+  );
 
   const handleProductUnassign = async (productId: string) => {
     await unassignProduct({
@@ -140,30 +159,29 @@ const CollectionProducts = ({
 
   const handleAssignationChange = async (products: Container[]) => {
     const productIds = products.map(product => product.id);
-    const toUnassignIds = Object.keys(assignedProductDict).filter(
-      s => assignedProductDict[s] && !productIds.includes(s),
-    );
-    const baseVariables = { ...paginationState, collectionId: id };
 
-    if (productIds.length > 0) {
-      await assignProduct({
-        variables: {
-          ...baseVariables,
-          productIds,
-          moves: productIds.map(id => ({ productId: id, sortOrder: 0 })),
-        },
-      });
+    if (productIds.length === 0) {
+      closeModal();
+
+      return;
     }
 
-    if (toUnassignIds.length > 0) {
-      await unassignProduct({
-        variables: { ...baseVariables, productIds: toUnassignIds },
-      });
+    const response = await assignProduct({
+      variables: {
+        ...paginationState,
+        collectionId: id,
+        productIds,
+        moves: productIds.map(productId => ({ productId, sortOrder: 0 })),
+      },
+    });
+
+    if ((response.data?.collectionAddProducts?.errors.length ?? 0) > 0) {
+      return;
     }
 
     closeModal();
 
-    await result.refetch(DEFAULT_INITIAL_SEARCH_DATA);
+    await Promise.all([result.refetch(DEFAULT_INITIAL_SEARCH_DATA), refetchCollectionProducts()]);
   };
 
   return (
@@ -228,16 +246,16 @@ const CollectionProducts = ({
           id: "OtMtzH",
           defaultMessage: "Product unavailable in collection channels",
         })}
-        selectedIds={assignedProductDict}
         confirmButtonState={assignProductOpts.status}
         hasMore={result.data?.search?.pageInfo?.hasNextPage ?? false}
         open={params.action === "assign"}
         onFetchMore={loadMore}
         loading={result.loading}
-        onClose={closeModal}
+        onClose={handleAssignDialogClose}
         onSubmit={handleAssignationChange}
-        products={getProductsFromSearchResults(result?.data) ?? []}
+        products={assignableProducts}
         excludedFilters={["channel"]}
+        initialConstraints={assignProductInitialConstraints}
         onFilterChange={handleFilterChange}
       />
       <ActionDialog
