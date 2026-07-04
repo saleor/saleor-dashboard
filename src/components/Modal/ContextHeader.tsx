@@ -15,6 +15,8 @@ interface ContextHeaderProps {
   children: ReactNode;
   contextLabel?: ReactNode;
   description?: ReactNode;
+  /** When false, renders contextLabel inline without the default badge chrome. */
+  wrapContextLabel?: boolean;
   steps?: {
     current: number;
     items: ModalStep[];
@@ -25,6 +27,7 @@ export const ContextHeader = ({
   children,
   contextLabel,
   description,
+  wrapContextLabel = true,
   steps,
 }: ContextHeaderProps) => {
   return (
@@ -40,9 +43,13 @@ export const ContextHeader = ({
           <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
             <Title>{children}</Title>
             {contextLabel ? (
-              <Box className={styles.contextBadge} paddingX={2} paddingY={0.5}>
-                {contextLabel}
-              </Box>
+              wrapContextLabel ? (
+                <Box className={styles.contextBadge} paddingX={2} paddingY={0.5}>
+                  {contextLabel}
+                </Box>
+              ) : (
+                contextLabel
+              )
             ) : null}
           </Box>
           {description ? (
