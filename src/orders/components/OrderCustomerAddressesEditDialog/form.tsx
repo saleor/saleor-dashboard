@@ -9,9 +9,18 @@ import useForm, {
 } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { type Option } from "@saleor/macaw-ui-next";
-import type * as React from "react";
-import { useEffect, useState } from "react";
+import { Box, type Option } from "@saleor/macaw-ui-next";
+import {
+  type ChangeEvent,
+  createContext,
+  type FormEvent,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+import { ORDER_CUSTOMER_ADDRESSES_EDIT_FORM_ID } from "./types";
 
 export enum AddressInputOptionEnum {
   CUSTOMER_ADDRESS = "customerAddress",
@@ -35,7 +44,7 @@ export interface OrderCustomerAddressesEditData extends OrderCustomerAddressesEd
 
 export interface OrderCustomerAddressesEditHandlers {
   changeFormAddress: (
-    event: React.ChangeEvent<any>,
+    event: ChangeEvent<any>,
     addressType: "shippingAddress" | "billingAddress",
   ) => void;
   changeCustomerAddress: (
@@ -46,12 +55,12 @@ export interface OrderCustomerAddressesEditHandlers {
   selectBillingCountry: FormChange;
 }
 
-interface UseOrderCustomerAddressesEditFormResult
+export interface OrderCustomerAddressesEditFormContextValue
   extends CommonUseFormResultWithHandlers<
     OrderCustomerAddressesEditData,
     OrderCustomerAddressesEditHandlers
   > {
-  submit: (event: React.FormEvent<any>) => SubmitPromise<any[]>;
+  submit: (event: FormEvent<any>) => SubmitPromise<any[]>;
 }
 
 interface UseOrderCustomerAddressesEditFormOpts {
@@ -63,16 +72,32 @@ interface UseOrderCustomerAddressesEditFormOpts {
 }
 
 interface OrderCustomerAddressesEditFormProps extends UseOrderCustomerAddressesEditFormOpts {
-  children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
+  children: ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
   onSubmit: (data: OrderCustomerAddressesEditData) => void;
 }
+
+const OrderCustomerAddressesEditFormContext =
+  createContext<OrderCustomerAddressesEditFormContextValue | null>(null);
+
+export const useOrderCustomerAddressesEditFormContext =
+  (): OrderCustomerAddressesEditFormContextValue => {
+    const context = useContext(OrderCustomerAddressesEditFormContext);
+
+    if (!context) {
+      throw new Error(
+        "useOrderCustomerAddressesEditFormContext must be used within OrderCustomerAddressesEditForm",
+      );
+    }
+
+    return context;
+  };
 
 function useOrderCustomerAddressesEditForm(
   providedInitialFormData: Partial<OrderCustomerAddressesEditFormData>,
   onSubmit: (data: OrderCustomerAddressesEditData) => void,
   opts: UseOrderCustomerAddressesEditFormOpts,
-): UseOrderCustomerAddressesEditFormResult {
+): OrderCustomerAddressesEditFormContextValue {
   const emptyAddress: AddressTypeInput = {
     city: "",
     country: "",
@@ -102,7 +127,7 @@ function useOrderCustomerAddressesEditForm(
     opts.countries.find(country => initialData.billingAddress.country === country.code)?.country,
   );
   const handleFormAddressChange = (
-    event: React.ChangeEvent<any>,
+    event: ChangeEvent<any>,
     addressType: "shippingAddress" | "billingAddress",
   ) =>
     change({
@@ -163,7 +188,7 @@ function useOrderCustomerAddressesEditForm(
     onSubmit,
   });
   const handleSubmit = () => handleFormSubmit(data);
-  const submit = (event: React.FormEvent<any>) => {
+  const submit = (event: FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
 
@@ -185,20 +210,39 @@ function useOrderCustomerAddressesEditForm(
   };
 }
 
+interface OrderCustomerAddressesEditFormElementProps {
+  children: ReactNode;
+  id?: string;
+}
+
+const OrderCustomerAddressesEditFormElement = ({
+  children,
+  id = ORDER_CUSTOMER_ADDRESSES_EDIT_FORM_ID,
+}: OrderCustomerAddressesEditFormElementProps) => {
+  const { submit } = useOrderCustomerAddressesEditFormContext();
+
+  return (
+    <Box as="form" id={id} onSubmit={submit} autoComplete="off">
+      {children}
+    </Box>
+  );
+};
+
 const OrderCustomerAddressesEditForm = ({
   children,
   initial,
   onSubmit,
   ...rest
 }: OrderCustomerAddressesEditFormProps) => {
-  const props = useOrderCustomerAddressesEditForm(initial || {}, onSubmit, rest);
+  const value = useOrderCustomerAddressesEditForm(initial || {}, onSubmit, rest);
 
   return (
-    <form onSubmit={props.submit} autoComplete="off">
-      {children(props)}
-    </form>
+    <OrderCustomerAddressesEditFormContext.Provider value={value}>
+      {children}
+    </OrderCustomerAddressesEditFormContext.Provider>
   );
 };
 
 OrderCustomerAddressesEditForm.displayName = "OrderCustomerAddressesEditForm";
+OrderCustomerAddressesEditForm.Form = OrderCustomerAddressesEditFormElement;
 export default OrderCustomerAddressesEditForm;

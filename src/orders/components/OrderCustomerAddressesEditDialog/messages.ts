@@ -32,9 +32,9 @@ export const dialogMessages = defineMessages({
     description: "dialog content",
   },
   noAddressDescription: {
-    id: "xWEFrR",
+    id: "gnIyDX",
     defaultMessage:
-      "This customer doesn't have any addresses in the address book. Provide address for order:",
+      "This customer doesn't have any addresses in the address book. Provide address for order.",
     description: "dialog content",
   },
   customerChangeDescription: {
@@ -72,6 +72,24 @@ export const dialogMessages = defineMessages({
     id: "kQq6/o",
     defaultMessage: "No results found",
     description: "info when addresses search is unsuccessful",
+  },
+  orderLevelFieldError: {
+    id: "djhz70",
+    defaultMessage:
+      "Order validation failed on {field}: {details}. This is not an address field error — fix the order record before addresses can be saved.",
+    description: "order-level validation error in address edit dialog",
+  },
+  orderLevelError: {
+    id: "rPAbtu",
+    defaultMessage:
+      "Order validation failed: {details}. This is not an address field error — fix the order record before addresses can be saved.",
+    description: "order-level validation error without field name in address edit dialog",
+  },
+  orderOriginErrorDetails: {
+    id: "2K7f9w",
+    defaultMessage:
+      "Order.origin is required but missing or empty. Set it to CHECKOUT, DRAFT, BULK_CREATE, or REISSUE via GraphQL or the database.",
+    description: "details for missing order origin in address edit dialog",
   },
 });
 

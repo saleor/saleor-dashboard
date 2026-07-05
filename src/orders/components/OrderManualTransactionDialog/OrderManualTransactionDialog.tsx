@@ -11,6 +11,8 @@ import {
 } from "../OrderManualTransactionForm";
 import { manualTransactionMessages } from "./messages";
 
+const ORDER_MANUAL_TRANSACTION_FORM_ID = "order-manual-transaction-form";
+
 type OrderManualTransactionDialogProps = {
   dialogProps: DialogProps;
 } & OrderManualTransactionFormProps;
@@ -32,9 +34,9 @@ export const OrderManualTransactionDialog = ({
             {intl.formatMessage(manualTransactionMessages.dialogTitle)}
           </DashboardModal.Header>
 
-          <OrderManualTransactionForm.Form>
-            <DashboardModal.Body>
-              <DashboardModal.Inset>
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              <OrderManualTransactionForm.Form id={ORDER_MANUAL_TRANSACTION_FORM_ID}>
                 <Box display="flex" flexDirection="column" gap={4}>
                   <OrderManualTransactionForm.DescriptionField
                     label={intl.formatMessage(commonMessages.description)}
@@ -49,16 +51,19 @@ export const OrderManualTransactionDialog = ({
                   />
                   <OrderManualTransactionForm.ErrorText />
                 </Box>
-              </DashboardModal.Inset>
-            </DashboardModal.Body>
+              </OrderManualTransactionForm.Form>
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
 
-            <DashboardModal.Actions>
-              <BackButton onClick={onClose} />
-              <OrderManualTransactionForm.SubmitButton size="medium">
-                <FormattedMessage {...manualTransactionMessages.submitButton} />
-              </OrderManualTransactionForm.SubmitButton>
-            </DashboardModal.Actions>
-          </OrderManualTransactionForm.Form>
+          <DashboardModal.Actions>
+            <BackButton onClick={onClose} />
+            <OrderManualTransactionForm.SubmitButton
+              form={ORDER_MANUAL_TRANSACTION_FORM_ID}
+              size="medium"
+            >
+              <FormattedMessage {...manualTransactionMessages.submitButton} />
+            </OrderManualTransactionForm.SubmitButton>
+          </DashboardModal.Actions>
         </DashboardModal.Content>
       </DashboardModal>
     </OrderManualTransactionForm>

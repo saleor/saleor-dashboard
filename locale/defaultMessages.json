@@ -270,9 +270,6 @@
     "context": "section header",
     "string": "Media"
   },
-  "/TF6BZ": {
-    "string": "Search Products"
-  },
   "/U8FUp": {
     "string": "Couldn't load activities"
   },
@@ -393,6 +390,10 @@
   "00d8GP": {
     "context": "info about variant metadata with link to edit",
     "string": "The read-only metadata of the actual variant used in this order. {link}"
+  },
+  "02JZBs": {
+    "context": "order-level validation error in address edit dialog",
+    "string": "Order validation failed on {field}: {details}. This is not an address field error — fix the order record before addresses can be saved."
   },
   "02a84g": {
     "context": "grant refund within return, structured reason select label",
@@ -794,6 +795,10 @@
   "2JBvj0": {
     "context": "export products to csv file, button",
     "string": "Export products"
+  },
+  "2K7f9w": {
+    "context": "details for missing order origin in address edit dialog",
+    "string": "Order.origin is required but missing or empty. Set it to CHECKOUT, DRAFT, BULK_CREATE, or REISSUE via GraphQL or the database."
   },
   "2MKBk2": {
     "context": "window title",
@@ -1405,9 +1410,6 @@
   "5ZYUn5": {
     "context": "Filter and element text",
     "string": "And"
-  },
-  "5ZvuVw": {
-    "string": "No products matching given query"
   },
   "5ZxAiY": {
     "string": "Token"
@@ -7424,6 +7426,10 @@
     "context": "tab name",
     "string": "All discounts"
   },
+  "a8LN6a": {
+    "context": "order-level validation error without field name in address edit dialog",
+    "string": "Order validation failed: {details}. This is not an address field error — fix the order record before addresses can be saved."
+  },
   "aAAxKp": {
     "context": "table column header",
     "string": "Product"
@@ -8689,6 +8695,10 @@
   "gmU4T7": {
     "context": "Warning when channel has no warehouses",
     "string": "No warehouses assigned to \"{channelName}\""
+  },
+  "gnIyDX": {
+    "context": "dialog content",
+    "string": "This customer doesn't have any addresses in the address book. Provide address for order."
   },
   "gr+oXW": {
     "context": "page title",
@@ -12160,14 +12170,6 @@
   "xVn5B0": {
     "context": "added new attribute value",
     "string": "Added new value"
-  },
-  "xWEFrR": {
-    "context": "dialog content",
-    "string": "This customer doesn't have any addresses in the address book. Provide address for order:"
-  },
-  "xZhxBJ": {
-    "context": "dialog header",
-    "string": "Assign Products"
   },
   "xeMcID": {
     "string": "Warehouse created"
