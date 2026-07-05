@@ -9946,7 +9946,8 @@
     "string": "No Authorization"
   },
   "mxtAFx": {
-    "string": "Are you sure you want to delete draft #{orderNumber}?"
+    "context": "delete draft order confirmation",
+    "string": "Are you sure you want to delete draft <b>{orderNumber}</b>?"
   },
   "mykruj": {
     "context": "detail page top bar, translations button tooltip",
@@ -11457,6 +11458,10 @@
   "uT5L4h": {
     "context": "cancel button label",
     "string": "Cancel"
+  },
+  "uU1mx5": {
+    "context": "button to keep draft order",
+    "string": "Keep draft"
   },
   "uULcph": {
     "context": "header",
