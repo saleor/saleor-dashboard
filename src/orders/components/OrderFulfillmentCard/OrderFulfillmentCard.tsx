@@ -1,11 +1,13 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
+import { useIntl } from "react-intl";
 
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
@@ -55,6 +57,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     onFulfillmentShowMetadata,
     dataTestId,
   } = props;
+  const intl = useIntl();
   const { themeValues } = useTheme();
 
   if (!fulfillment) {
@@ -108,11 +111,14 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                 <Dropdown.Trigger>
                   <Button
                     variant="tertiary"
-                    icon={<EllipsisVertical />}
+                    icon={
+                      <EllipsisVertical
+                        size={iconSize.small}
+                        strokeWidth={iconStrokeWidthBySize.small}
+                      />
+                    }
                     data-test-id="fulfillment-menu-button"
-                    // optical alignment
-                    __marginRight={"-16px"}
-                    title="Show more"
+                    title={intl.formatMessage(buttonMessages.moreOptions)}
                   />
                 </Dropdown.Trigger>
                 <Dropdown.Content align="end">
