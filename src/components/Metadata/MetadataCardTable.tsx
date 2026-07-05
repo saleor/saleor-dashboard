@@ -17,6 +17,8 @@ interface MetadataCardTableProps {
   readonly?: boolean;
   /** Form is temporarily unavailable (e.g. on submit) */
   disabled?: boolean;
+  /** DetailGroupBox layout — full-bleed row dividers with inset cell padding */
+  inModal?: boolean;
 }
 
 export const MetadataCardTable = ({
@@ -24,17 +26,20 @@ export const MetadataCardTable = ({
   onChange,
   readonly = false,
   disabled,
+  inModal = false,
 }: MetadataCardTableProps) => {
   if (!data || data.length === 0) {
     return null;
   }
 
+  const horizontalPadding = inModal ? vars.spacing[5] : vars.spacing[6];
+
   return (
-    <Box __marginLeft={-24} __marginRight={-24}>
+    <Box {...(inModal ? { paddingTop: 4 } : { __marginLeft: -24, __marginRight: -24 })}>
       <Table>
         <TableHead>
           <TableRowLink>
-            <TableCell style={{ paddingLeft: vars.spacing[6] }}>
+            <TableCell style={{ paddingLeft: horizontalPadding }}>
               <Text size={2} color="default2">
                 <FormattedMessage
                   id="nudPsY"
@@ -56,7 +61,7 @@ export const MetadataCardTable = ({
               <TableCell
                 style={{
                   textAlign: "end",
-                  paddingRight: vars.spacing[6],
+                  paddingRight: horizontalPadding,
                 }}
               >
                 <Text size={2} color="default2">
@@ -73,7 +78,7 @@ export const MetadataCardTable = ({
         <TableBody>
           {data.map((field, fieldIndex) => (
             <TableRowLink data-test-id="field" key={fieldIndex}>
-              <TableCell width="50%" style={{ paddingLeft: vars.spacing[6] }}>
+              <TableCell width="50%" style={{ paddingLeft: horizontalPadding }}>
                 <Input
                   data-test-id="metadata-key-input"
                   width="100%"
@@ -110,7 +115,7 @@ export const MetadataCardTable = ({
                 />
               </TableCell>
               {!readonly && (
-                <TableCell style={{ paddingRight: vars.spacing[6] }}>
+                <TableCell style={{ paddingRight: horizontalPadding }}>
                   <Box display="flex" justifyContent="flex-end">
                     {!readonly && (
                       <Button

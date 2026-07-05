@@ -14,7 +14,10 @@ interface DetailGroupBoxProps {
   children: React.ReactNode;
   defaultExpanded?: boolean;
   dataTestId?: string;
+  dataTestIsPrivate?: boolean;
   marginTop?: 0 | 1 | 2 | 3 | 4;
+  /** Optional test id for the expand/collapse control (e.g. metadata modal tests). */
+  triggerButtonTestId?: string;
 }
 
 export const DetailGroupBox = ({
@@ -24,7 +27,9 @@ export const DetailGroupBox = ({
   children,
   defaultExpanded = false,
   dataTestId,
+  dataTestIsPrivate,
   marginTop = 4,
+  triggerButtonTestId,
 }: DetailGroupBoxProps) => {
   const [expanded, setExpanded] = useState<string | undefined>(
     defaultExpanded ? groupId : undefined,
@@ -32,7 +37,7 @@ export const DetailGroupBox = ({
   const isExpanded = expanded === groupId;
 
   return (
-    <Box marginTop={marginTop} data-test-id={dataTestId}>
+    <Box marginTop={marginTop} data-test-id={dataTestId} data-test-is-private={dataTestIsPrivate}>
       <Accordion value={expanded} onValueChange={setExpanded}>
         <Accordion.Item value={groupId}>
           <Box
@@ -41,6 +46,7 @@ export const DetailGroupBox = ({
             borderStyle="solid"
             borderColor="default1"
             borderWidth={1}
+            overflow="hidden"
           >
             <Accordion.Trigger>
               <Box paddingY={4} paddingX={5} width="100%">
@@ -52,7 +58,10 @@ export const DetailGroupBox = ({
                   width="100%"
                 >
                   <Box display="flex" alignItems="center" gap={2} minWidth={0}>
-                    <Box className={clsx(styles.chevron, isExpanded && styles.chevronOpen)}>
+                    <Box
+                      className={clsx(styles.chevron, isExpanded && styles.chevronOpen)}
+                      data-test-id={triggerButtonTestId}
+                    >
                       <ChevronDown
                         size={iconSize.small}
                         strokeWidth={iconStrokeWidthBySize.small}

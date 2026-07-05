@@ -5,25 +5,20 @@ import { FormattedMessage } from "react-intl";
 
 import { VariantThumbnail } from "./VariantThumbnail";
 
-export const OrderLineDetails = ({
-  loading,
-  data,
-}: {
+interface OrderLineDetailsProps {
   loading: boolean;
   data: OrderLineMetadataDetailsFragment | null | undefined;
-}) => (
+}
+
+export const OrderLineDetails = ({ loading, data }: OrderLineDetailsProps) => (
   <Box display="flex" gap={4} alignItems="center" overflow="hidden" __minWidth={0}>
     <VariantThumbnail src={data?.thumbnail?.url} loading={loading} />
     <Box display="flex" flexDirection="column" gap={0.5} overflow="hidden" __minWidth={0}>
-      <Text size={5} fontWeight="bold">
-        <FormattedMessage
-          defaultMessage="Order line metadata"
-          id="QSTD5z"
-          description="dialog title for order line metadata"
-        />
-      </Text>
       {loading ? (
-        <Skeleton width={52} height={5} />
+        <>
+          <Skeleton width={52} height={5} />
+          <Skeleton width={40} height={5} />
+        </>
       ) : (
         <>
           <Text size={2} color="default2" className={styles.truncatedText}>

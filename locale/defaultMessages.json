@@ -879,6 +879,10 @@
     "context": "shipping method channel status description when newly added",
     "string": "Set a price in the Pricing section before saving"
   },
+  "2m2Xi9": {
+    "context": "scope helper for editable order line metadata section",
+    "string": "Metadata stored on this order line only. Changes here do not update the product variant."
+  },
   "2nnp9+": {
     "context": "Info box title when product is not available for purchase",
     "string": "Visible but not purchasable."
@@ -1810,10 +1814,6 @@
     "context": "select label",
     "string": "True"
   },
-  "7WrRzs": {
-    "context": "dialog , editing order line metadata",
-    "string": "Represents the metadata of the given ordered item"
-  },
   "7WzUxn": {
     "context": "staff member status",
     "string": "Inactive"
@@ -2512,10 +2512,6 @@
   },
   "B52Em/": {
     "string": "Address line 1"
-  },
-  "B54f/g": {
-    "context": "dialog, editing order line metadata",
-    "string": "Order line metadata"
   },
   "B5KI59": {
     "context": "Empty filters text",

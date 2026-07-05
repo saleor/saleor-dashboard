@@ -15,6 +15,8 @@ interface ContextHeaderProps {
   children: ReactNode;
   contextLabel?: ReactNode;
   description?: ReactNode;
+  /** When false, renders description without default body text styling (e.g. thumbnail rows). */
+  wrapDescription?: boolean;
   /** When false, renders contextLabel inline without the default badge chrome. */
   wrapContextLabel?: boolean;
   steps?: {
@@ -27,6 +29,7 @@ export const ContextHeader = ({
   children,
   contextLabel,
   description,
+  wrapDescription = true,
   wrapContextLabel = true,
   steps,
 }: ContextHeaderProps) => {
@@ -54,9 +57,13 @@ export const ContextHeader = ({
           </Box>
           {description ? (
             <Box className={steps ? styles.descriptionWithSteps : undefined}>
-              <Text size={2} color="default2">
-                {description}
-              </Text>
+              {wrapDescription ? (
+                <Text size={2} color="default2">
+                  {description}
+                </Text>
+              ) : (
+                description
+              )}
             </Box>
           ) : null}
           {steps ? <ModalSteps currentStep={steps.current} steps={steps.items} /> : null}

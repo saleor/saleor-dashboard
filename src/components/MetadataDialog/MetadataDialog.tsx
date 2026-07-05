@@ -69,16 +69,17 @@ export const MetadataDialog = ({
 
         <DashboardModal.Body>
           <DashboardModal.Inset>
-            <Box display="flex" flexDirection="column" gap={2}>
+            <Box display="flex" flexDirection="column">
               {contentLoading ? (
                 <>
-                  <MetadataLoadingCard inModal />
+                  <MetadataLoadingCard inModal marginTop={0} />
                   <MetadataLoadingCard isPrivate inModal />
                 </>
               ) : (
                 <>
                   <MetadataCard
                     inModal
+                    marginTop={0}
                     data={data.metadata}
                     isPrivate={false}
                     disabled={disabled || loading}
