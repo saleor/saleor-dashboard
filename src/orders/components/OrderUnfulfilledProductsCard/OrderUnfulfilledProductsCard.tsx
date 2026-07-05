@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { PackageIcon } from "lucide-react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
@@ -32,8 +32,6 @@ export const OrderUnfulfilledProductsCard = ({
   loading,
   showBottomSeparator = false,
 }: OrderUnfulfilledProductsCardProps) => {
-  const intl = useIntl();
-
   if (!lines.length) {
     return null;
   }
@@ -45,22 +43,26 @@ export const OrderUnfulfilledProductsCard = ({
           status="unfulfilled"
           toolbar={
             showFulfillmentAction && (
-              <Box>
-                <Button
-                  data-test-id="fulfill-button"
-                  variant="primary"
-                  onClick={onFulfill}
-                  disabled={notAllowedToFulfillUnpaid}
-                  title={
-                    notAllowedToFulfillUnpaid
-                      ? intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)
-                      : undefined
-                  }
-                >
-                  <PackageIcon size={16} />
-                  <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
-                </Button>
-              </Box>
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <Box>
+                    <Button
+                      data-test-id="fulfill-button"
+                      variant="primary"
+                      onClick={onFulfill}
+                      disabled={notAllowedToFulfillUnpaid}
+                    >
+                      <PackageIcon size={16} />
+                      <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
+                    </Button>
+                  </Box>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  {notAllowedToFulfillUnpaid && (
+                    <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
+                  )}
+                </Tooltip.Content>
+              </Tooltip>
             )
           }
         />
