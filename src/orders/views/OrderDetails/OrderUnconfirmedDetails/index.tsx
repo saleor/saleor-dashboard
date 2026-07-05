@@ -49,7 +49,7 @@ import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCa
 import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog";
 import OrderMarkAsPaidDialog from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
-import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
+import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
   orderFulfillUrl,
