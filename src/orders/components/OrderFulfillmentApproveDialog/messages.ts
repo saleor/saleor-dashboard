@@ -1,14 +1,14 @@
 import { defineMessages } from "react-intl";
 
-export const messages = defineMessages({
+export const orderFulfillmentApproveDialogMessages = defineMessages({
   title: {
     id: "UQu75k",
     defaultMessage: "Approve this fulfillment",
     description: "dialog header",
   },
   description: {
-    id: "EHsnZX",
-    defaultMessage: "Are you sure you want to approve this fullfillment?",
+    id: "G3caQh",
+    defaultMessage: "Are you sure you want to approve this fulfillment?",
     description: "dialog description",
   },
   notifyCustomer: {
