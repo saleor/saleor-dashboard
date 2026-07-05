@@ -1511,6 +1511,10 @@
     "context": "dialog title",
     "string": "Create new refund"
   },
+  "66ZnLi": {
+    "context": "cannot cancel order dialog explanation",
+    "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
+  },
   "67V0c0": {
     "context": "unassign product from collection, button",
     "string": "Unassign"
@@ -3121,10 +3125,6 @@
     "context": "product media detail page header",
     "string": "Edit Image"
   },
-  "EHsnZX": {
-    "context": "dialog description",
-    "string": "Are you sure you want to approve this fullfillment?"
-  },
   "EIULpW": {
     "string": "Manage how your store charges tax"
   },
@@ -3205,10 +3205,6 @@
   "EojeG7": {
     "context": "authorize status partial",
     "string": "Partial"
-  },
-  "Epm41J": {
-    "context": "change warehouse dialog warehouse list label",
-    "string": "Warehouses A to Z"
   },
   "Eq3GFh": {
     "string": "Is giftcard"
@@ -3472,6 +3468,10 @@
   "G3ay2p": {
     "context": "section header",
     "string": "Fulfillment settings"
+  },
+  "G3caQh": {
+    "context": "dialog description",
+    "string": "Are you sure you want to approve this fulfillment?"
   },
   "G4g5Ii": {
     "context": "tab name",
@@ -3892,6 +3892,10 @@
   "HyMpO2": {
     "string": "Percentage"
   },
+  "HzOpXG": {
+    "context": "change warehouse dialog empty state",
+    "string": "No warehouses found"
+  },
   "I+1KzL": {
     "context": "tab name",
     "string": "All attributes"
@@ -4199,6 +4203,10 @@
   "JTjg1r": {
     "context": "onboarding step title",
     "string": "Discover extension capabilities"
+  },
+  "JUaiTB": {
+    "context": "address search input placeholder in order address edit dialog",
+    "string": "Search addresses"
   },
   "JV+EiM": {
     "context": "voucher value",
@@ -5461,6 +5469,10 @@
   "PvrceS": {
     "context": "Refund draft status",
     "string": "Draft"
+  },
+  "PwJvsc": {
+    "context": "address search input label in order address edit dialog",
+    "string": "Search addresses"
   },
   "PxvG+u": {
     "context": "grant refund table, add reason button",
@@ -7599,9 +7611,6 @@
   "azych5": {
     "context": "Message when no diagnostic issues found",
     "string": "All channels configured correctly"
-  },
-  "b+jcaN": {
-    "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
   "b1j4K6": {
     "context": "select label",
@@ -9798,10 +9807,6 @@
     "context": "warning when preview is truncated due to too many combinations",
     "string": "Your selection would create {total} variants. You can generate up to {limit} at a time."
   },
-  "m8Vn2p": {
-    "context": "address search input placeholder in order address edit dialog",
-    "string": "Search addresses"
-  },
   "m8cjcK": {
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
@@ -9988,10 +9993,6 @@
   "n9JOI3": {
     "context": "money amount input label",
     "string": "Enter amount"
-  },
-  "n9Wo3q": {
-    "context": "address search input label in order address edit dialog",
-    "string": "Search addresses"
   },
   "nABmvC": {
     "string": "No. of rows"

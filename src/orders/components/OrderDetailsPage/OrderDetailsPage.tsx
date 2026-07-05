@@ -241,6 +241,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={setPricingLineId}
+            showBottomSeparator={(order?.fulfillments?.length ?? 0) > 0}
           />
         ) : (
           <>
@@ -256,10 +257,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             <CardSpacer />
           </>
         )}
-        {order?.fulfillments?.map(fulfillment => (
+        {order?.fulfillments?.map((fulfillment, index) => (
           <OrderFulfillmentCard
-            dataTestId="fulfilled-order-section"
             key={fulfillment.id}
+            dataTestId="fulfilled-order-section"
             fulfillment={fulfillment}
             fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
             order={order}
@@ -269,11 +270,13 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
             onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
             onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
+            showBottomSeparator={index < (order.fulfillments?.length ?? 0) - 1}
           />
         ))}
 
         {order && !isOrderUnconfirmed && (
           <>
+            {(unfulfilled.length > 0 || (order.fulfillments?.length ?? 0) > 0) && <CardSpacer />}
             <OrderSummary
               order={order}
               onMarkAsPaid={onMarkAsPaid}
@@ -282,10 +285,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               onLegacyPaymentsApiRefund={onPaymentRefund}
               onLegacyPaymentsApiVoid={onPaymentVoid}
             />
-            <CardSpacer />
 
             {orderShouldUseTransactions(order) && (
               <>
+                <CardSpacer />
                 <OrderTransactionsSection
                   order={order}
                   shop={shop}
@@ -295,7 +298,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   onAddManualTransaction={onAddManualTransaction}
                   onRefundAdd={onRefundAdd}
                 />
-                <CardSpacer />
               </>
             )}
           </>
@@ -303,6 +305,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
 
         {order && isOrderUnconfirmed && orderDiscountContext && (
           <>
+            {(order.fulfillments?.length ?? 0) > 0 && <CardSpacer />}
             <OrderSummary
               order={order}
               onMarkAsPaid={onMarkAsPaid}
@@ -315,22 +318,25 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               errors={errors}
               {...orderDiscountContext}
             />
-            <CardSpacer />
 
             {orderShouldUseTransactions(order) && (
-              <OrderTransactionsSection
-                order={order}
-                shop={shop}
-                onTransactionAction={onTransactionAction}
-                onPaymentCapture={onPaymentCapture}
-                onPaymentVoid={onPaymentVoid}
-                onAddManualTransaction={onAddManualTransaction}
-                onRefundAdd={onRefundAdd}
-              />
+              <>
+                <CardSpacer />
+                <OrderTransactionsSection
+                  order={order}
+                  shop={shop}
+                  onTransactionAction={onTransactionAction}
+                  onPaymentCapture={onPaymentCapture}
+                  onPaymentVoid={onPaymentVoid}
+                  onAddManualTransaction={onAddManualTransaction}
+                  onRefundAdd={onRefundAdd}
+                />
+              </>
             )}
           </>
         )}
 
+        <CardSpacer />
         <OrderHistory
           history={order?.events}
           onNoteUpdateLoading={onNoteUpdateLoading}

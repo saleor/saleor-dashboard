@@ -9,6 +9,7 @@ import {
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { alertMessages } from "../OrderDraftPage/messages";
@@ -76,6 +77,7 @@ const OrderDraftDetails = ({
           </Box>
         }
       />
+      <OrderCardDatagridSeparator />
       <DashboardCard.Content paddingX={0}>
         <OrderDraftDetailsProducts
           order={order}

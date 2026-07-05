@@ -16,7 +16,7 @@ import { productPath } from "@dashboard/products/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { ListViews } from "@dashboard/types";
 import { type Item, type Theme } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, type vars } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -42,6 +42,8 @@ interface OrderDetailsDatagridProps {
    *  the strikethrough on the original price is the only visual affordance. */
   onShowLinePriceBreakdown?: (lineId: string) => void;
   datagridCustomTheme?: Partial<Theme>;
+  /** Matches the datagrid header surface so the sticky column picker masks scrolled cells. */
+  columnPickerBackgroundColor?: keyof typeof vars.colors.background;
   /** Per-line reasons aligned by index with `lines`; when set, a `reason` column is shown. */
   lineReasons?: LineReasonDisplay[];
 }
@@ -52,6 +54,7 @@ export const OrderDetailsDatagrid = ({
   onOrderLineShowMetadata,
   onShowLinePriceBreakdown,
   datagridCustomTheme = {},
+  columnPickerBackgroundColor = "default1",
   lineReasons,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
@@ -194,6 +197,7 @@ export const OrderDetailsDatagrid = ({
               selectedColumns={selectedColumns}
               onToggle={handlers.onToggle}
               align="end"
+              backgroundColor={columnPickerBackgroundColor}
             />
           )}
           renderRowActions={renderRowActions}

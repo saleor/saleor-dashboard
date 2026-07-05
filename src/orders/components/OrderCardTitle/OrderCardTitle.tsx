@@ -1,9 +1,11 @@
-import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { FormatDate } from "@dashboard/components/Date/FormatDate";
 import { type FulfillmentStatus } from "@dashboard/graphql";
 import { Box, Text, type vars } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
+import type { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
+import styles from "./OrderCardTitle.module.css";
 import { StatusIndicator } from "./StatusIndicator";
 import { TrackingNumberDisplay } from "./TrackingNumberDisplay";
 import { getOrderTitleMessage } from "./utils";
@@ -13,10 +15,11 @@ export type CardTitleStatus = FulfillmentStatus | "unfulfilled" | "draft";
 
 type BaseOrderCardTitleProps = {
   status?: CardTitleStatus;
-  toolbar?: React.ReactNode;
+  toolbar?: ReactNode;
   withStatus?: boolean;
   className?: string;
   backgroundColor?: keyof typeof vars.colors.background;
+  hasToolbarMenu?: boolean;
 };
 
 type OrderCardTitleWithWarehouseProps = BaseOrderCardTitleProps & {
@@ -46,36 +49,39 @@ export const OrderCardTitle = ({
   className,
   trackingNumber,
   warehouseId,
-  backgroundColor,
+  backgroundColor = "default1",
+  hasToolbarMenu = false,
 }: OrderCardTitleProps): JSX.Element => {
   const intl = useIntl();
+  const hasEyebrow = Boolean(createdDate || (warehouseName && warehouseId) || trackingNumber);
 
   return (
-    <CardTitle
-      toolbar={toolbar}
-      className={className}
+    <Box
+      className={clsx(styles.header, hasToolbarMenu && styles.headerToolbarMenuRight, className)}
       backgroundColor={backgroundColor}
-      title={
-        <Box>
-          <Box display="flex" alignItems="center">
-            {createdDate && (
-              <Text color="default2" size={2}>
-                <FormatDate date={createdDate} />
-              </Text>
-            )}
-            {warehouseName && warehouseId && (
-              <WarehouseInfo warehouseName={warehouseName} warehouseId={warehouseId} />
-            )}
-            {trackingNumber && <TrackingNumberDisplay trackingNumber={trackingNumber} />}
-          </Box>
-          <Box display="flex" alignItems="center" marginTop={1}>
-            <Text size={6} fontWeight="medium">
-              {intl.formatMessage(getOrderTitleMessage(status))}
+    >
+      {hasEyebrow && (
+        <Box className={styles.eyebrow}>
+          {createdDate && (
+            <Text color="default2" size={2}>
+              <FormatDate date={createdDate} />
             </Text>
-            {withStatus && <StatusIndicator status={status} />}
-          </Box>
+          )}
+          {warehouseName && warehouseId && (
+            <WarehouseInfo warehouseName={warehouseName} warehouseId={warehouseId} />
+          )}
+          {trackingNumber && <TrackingNumberDisplay trackingNumber={trackingNumber} />}
         </Box>
-      }
-    />
+      )}
+      <Box className={clsx(styles.titleRow, hasEyebrow && styles.titleRowWithEyebrow)}>
+        <Box className={styles.title}>
+          <Text size={6} fontWeight="medium">
+            {intl.formatMessage(getOrderTitleMessage(status))}
+          </Text>
+          {withStatus && <StatusIndicator status={status} />}
+        </Box>
+        {toolbar && <Box className={styles.toolbar}>{toolbar}</Box>}
+      </Box>
+    </Box>
   );
 };

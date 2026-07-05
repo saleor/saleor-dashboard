@@ -1,5 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { GridTable } from "@dashboard/components/GridTable";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderRefundsViewModel } from "@dashboard/orders/utils/OrderRefundsViewModel";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
@@ -32,7 +33,7 @@ export const OrderDetailsRefundTable = ({
 
   return (
     <DashboardCard data-test-id="order-refund-section">
-      <Box paddingTop={6} display="flex" justifyContent="space-between" paddingX={6}>
+      <Box display="flex" justifyContent="space-between" paddingX={6}>
         <Text size={6} fontWeight="medium">
           <FormattedMessage {...refundGridMessages.refundSection} />
         </Text>
@@ -62,37 +63,41 @@ export const OrderDetailsRefundTable = ({
           )}
         </Tooltip>
       </Box>
-      <GridTable data-test-id="refund-list" height="100%" paddingX={6}>
-        <GridTable.Colgroup>
-          <GridTable.Col __width="1%" />
-          <GridTable.Col __width="1%" />
-          <GridTable.Col __width="10%" />
-          <GridTable.Col />
-          <GridTable.Col __width="1%" />
-        </GridTable.Colgroup>
-        {mergedRefunds.map((refund, index) => (
-          <Fragment key={refund.id}>
-            <OrderDetailsRefundLine refund={refund} orderId={orderId} />
-            {index < mergedRefunds.length - 1 && (
-              <GridTable.Row>
-                <GridTable.Cell
-                  colSpan={REFUND_TABLE_COLUMN_COUNT}
-                  padding={0}
-                  borderWidth={0}
-                  backgroundColor="default1"
-                  __height="24px"
-                />
-              </GridTable.Row>
-            )}
-          </Fragment>
-        ))}
-      </GridTable>
-      {mergedRefunds.length === 0 && (
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Text size={2} color="default2">
+      {mergedRefunds.length === 0 ? (
+        <Box paddingX={6} paddingBottom={6}>
+          <Placeholder>
             <FormattedMessage {...refundGridMessages.noRefunds} />
-          </Text>
+          </Placeholder>
         </Box>
+      ) : (
+        <>
+          <GridTable data-test-id="refund-list" height="100%">
+            <GridTable.Colgroup>
+              <GridTable.Col __width="1%" />
+              <GridTable.Col __width="1%" />
+              <GridTable.Col __width="10%" />
+              <GridTable.Col />
+              <GridTable.Col __width="1%" />
+            </GridTable.Colgroup>
+            {mergedRefunds.map((refund, index) => (
+              <Fragment key={refund.id}>
+                <OrderDetailsRefundLine refund={refund} orderId={orderId} />
+                {index < mergedRefunds.length - 1 && (
+                  <GridTable.Row>
+                    <GridTable.Cell
+                      colSpan={REFUND_TABLE_COLUMN_COUNT}
+                      padding={0}
+                      borderWidth={0}
+                      backgroundColor="default1"
+                      __height="24px"
+                    />
+                  </GridTable.Row>
+                )}
+              </Fragment>
+            ))}
+          </GridTable>
+          <Box paddingBottom={6} />
+        </>
       )}
     </DashboardCard>
   );

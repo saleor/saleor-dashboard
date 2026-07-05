@@ -9,8 +9,10 @@ import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-ne
 import { Code, EllipsisVertical } from "lucide-react";
 import { useIntl } from "react-intl";
 
+import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
+import { OrderLineGroupEnd } from "../OrderLineGroupBottomSeparator/OrderLineGroupBottomSeparator";
 import { ReasonDisplay } from "../ReasonDisplay/ReasonDisplay";
 import { ActionButtons } from "./ActionButtons";
 
@@ -25,6 +27,7 @@ interface OrderFulfillmentCardProps {
   onOrderLineShowMetadata: (id: string) => void;
   onShowLinePriceBreakdown?: (lineId: string) => void;
   onFulfillmentShowMetadata?: () => void;
+  showBottomSeparator?: boolean;
 }
 
 const statusesToMergeLines = [
@@ -56,6 +59,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     onShowLinePriceBreakdown,
     onFulfillmentShowMetadata,
     dataTestId,
+    showBottomSeparator = false,
   } = props;
   const intl = useIntl();
   const { themeValues } = useTheme();
@@ -76,7 +80,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   const hasLineReasons = lineReasons.some(({ reason, reasonType }) => reason || reasonType);
 
   return (
-    <Box data-test-id={dataTestId} backgroundColor={"default2"}>
+    <Box data-test-id={dataTestId} backgroundColor="default2">
       <OrderCardTitle
         withStatus
         status={fulfillment?.status}
@@ -85,6 +89,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
         createdDate={fulfillment?.created}
         trackingNumber={fulfillment.trackingNumber}
         warehouseId={fulfillment?.warehouse?.id}
+        hasToolbarMenu={cancelableStatuses.includes(fulfillment?.status)}
         toolbar={
           <Box display="flex" alignItems="center" gap={3}>
             {onFulfillmentShowMetadata && (
@@ -154,6 +159,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           />
         </Box>
       )}
+      <OrderCardDatagridSeparator />
       <DashboardCard.Content paddingX={0}>
         <OrderDetailsDatagrid
           lines={getLines()}
@@ -161,18 +167,12 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           loading={false}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
           onShowLinePriceBreakdown={onShowLinePriceBreakdown}
+          columnPickerBackgroundColor="default2"
           datagridCustomTheme={{
             bgHeader: themeValues.colors.background.default2,
           }}
         />
-        <Box
-          backgroundColor={"default1"}
-          width="100%"
-          height={6}
-          borderBottomStyle={"solid"}
-          borderBottomWidth={1}
-          borderColor={"default1"}
-        />
+        <OrderLineGroupEnd showBottomSeparator={showBottomSeparator} backgroundColor="default2" />
       </DashboardCard.Content>
     </Box>
   );
