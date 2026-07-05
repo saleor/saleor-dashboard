@@ -139,6 +139,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
         />
         {order && orderDiscountContext && (
           <>
+            <CardSpacer />
             <OrderSummary
               order={order}
               isEditable

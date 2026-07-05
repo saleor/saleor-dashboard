@@ -1,7 +1,10 @@
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
+import { FormattedMessage } from "react-intl";
 
+import { messages } from "../OrderDraftDetailsDatagrid/messages";
 import { OrderDraftDetailsDatagrid } from "../OrderDraftDetailsDatagrid/OrderDraftDetailsDatagrid";
 
 export interface FormData {
@@ -40,6 +43,14 @@ const OrderDraftDetailsProducts = ({
 
   if (order === undefined) {
     return <Skeleton className={classes.skeleton} />;
+  }
+
+  if (lines.length === 0) {
+    return (
+      <Placeholder>
+        <FormattedMessage {...messages.emptyText} />
+      </Placeholder>
+    );
   }
 
   return (

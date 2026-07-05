@@ -236,6 +236,8 @@ export const OrderDraftDetailsDatagrid = ({
             selectedColumns={selectedColumns}
             staticColumns={staticColumns}
             onToggle={handlers.onToggle}
+            align="end"
+            backgroundColor="default1"
           />
         )}
         onChange={handleDatagridChange}

@@ -13,6 +13,7 @@ import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridS
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { alertMessages } from "../OrderDraftPage/messages";
+import { OrderLineGroupEnd } from "../OrderLineGroupBottomSeparator/OrderLineGroupBottomSeparator";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
@@ -39,6 +40,7 @@ const OrderDraftDetails = ({
   const isChannelActive = order?.channel.isActive;
   const areProductsInChannel = !!channelUsabilityData?.products.totalCount;
   const canAddProducts = isChannelActive && areProductsInChannel;
+  const hasLines = (order?.lines ?? []).length > 0;
 
   const getTooltip = () => {
     if (!isChannelActive) {
@@ -77,8 +79,8 @@ const OrderDraftDetails = ({
           </Box>
         }
       />
-      <OrderCardDatagridSeparator />
-      <DashboardCard.Content paddingX={0}>
+      {hasLines && <OrderCardDatagridSeparator />}
+      <DashboardCard.Content {...(hasLines ? { paddingX: 0 } : { paddingBottom: 6 })}>
         <OrderDraftDetailsProducts
           order={order}
           errors={errors}
@@ -87,6 +89,7 @@ const OrderDraftDetails = ({
           onOrderLineRemove={onOrderLineRemove}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
+        {hasLines && <OrderLineGroupEnd showBottomSeparator={false} backgroundColor="default1" />}
       </DashboardCard.Content>
     </DashboardCard>
   );
