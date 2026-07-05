@@ -40,7 +40,7 @@ import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
-import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
+import { OrderFulfillStockExceededDialog } from "../OrderFulfillStockExceededDialog/OrderFulfillStockExceededDialog";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 

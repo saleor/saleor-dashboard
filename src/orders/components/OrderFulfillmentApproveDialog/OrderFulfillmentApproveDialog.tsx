@@ -51,7 +51,7 @@ export const OrderFulfillmentApproveDialog = ({
   return (
     <DashboardModal onChange={onClose} open={open}>
       <Form key={formKey} initial={INITIAL_FORM_DATA} onSubmit={onConfirm}>
-        {({ change, data }) => (
+        {({ change, data, submit }) => (
           <DashboardModal.Content size="xs">
             <DashboardModal.Header subtitle={<FormattedMessage {...messages.description} />}>
               <FormattedMessage {...messages.title} />
@@ -82,7 +82,7 @@ export const OrderFulfillmentApproveDialog = ({
               <ConfirmButton
                 data-test-id="submit"
                 transitionState={confirmButtonState}
-                type="submit"
+                onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.approve} />
               </ConfirmButton>
