@@ -48,7 +48,7 @@ import { useIntl } from "react-intl";
 import { customerUrl } from "../../../../customers/urls";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
-import OrderCancelDialog from "../../../components/OrderCancelDialog";
+import { OrderCancelDialog } from "../../../components/OrderCancelDialog";
 import { OrderCaptureDialog } from "../../../components/OrderCaptureDialog/OrderCaptureDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
 import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";

@@ -21,44 +21,56 @@ interface OrderCancelDialogProps {
   onSubmit: () => void;
 }
 
-export const OrderCancelDialog = (props: OrderCancelDialogProps) => {
-  const {
-    confirmButtonState,
-    errors: apiErrors,
-    number: orderNumber,
-    open,
-    onSubmit,
-    onClose,
-  } = props;
+export const OrderCancelDialog = ({
+  confirmButtonState,
+  errors: apiErrors,
+  number: orderNumber,
+  open,
+  onSubmit,
+  onClose,
+}: OrderCancelDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
-        <DashboardModal.Header data-test-id="dialog-title">
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          data-test-id="dialog-title"
+          subtitle={
+            <FormattedMessage
+              {...cancelOrderDialogMessages.dialogContent}
+              values={{
+                b: (...chunks) => <b>{chunks}</b>,
+              }}
+            />
+          }
+        >
           <FormattedMessage {...cancelOrderDialogMessages.dialogTitle} values={{ orderNumber }} />
         </DashboardModal.Header>
-        <Text>
-          <FormattedMessage
-            {...cancelOrderDialogMessages.dialogContent}
-            values={{
-              b: (...chunks) => <b>{chunks}</b>,
-            }}
-          />
-        </Text>
-        {errors.length > 0 &&
-          errors.map((err, index) => (
-            <Text display="block" color="critical1" key={index} data-test-id="dialog-error">
-              {getOrderErrorMessage(err, intl)}
-            </Text>
-          ))}
+
+        {errors.length > 0 && (
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              {errors.map((err, index) => (
+                <Text display="block" color="critical1" key={index} data-test-id="dialog-error">
+                  {getOrderErrorMessage(err, intl)}
+                </Text>
+              ))}
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
+        )}
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>
             <FormattedMessage {...cancelOrderDialogMessages.buttonKeepOrder} />
           </BackButton>
-          <ConfirmButton onClick={onSubmit} transitionState={confirmButtonState} type="submit">
+          <ConfirmButton
+            data-test-id="submit"
+            onClick={onSubmit}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
             <FormattedMessage {...cancelOrderDialogMessages.buttonCancelOrder} />
           </ConfirmButton>
         </DashboardModal.Actions>
@@ -66,5 +78,5 @@ export const OrderCancelDialog = (props: OrderCancelDialogProps) => {
     </DashboardModal>
   );
 };
+
 OrderCancelDialog.displayName = "OrderCancelDialog";
-export default OrderCancelDialog;
