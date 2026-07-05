@@ -39,7 +39,10 @@ export const OrderFulfillmentTrackingDialog = ({
 }: OrderFulfillmentTrackingDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
-  const formFields = ["trackingNumber"];
+  const formFields = ["trackingNumber"] as const;
+
+  const isTrackingNumberField = (field: string | null): field is (typeof formFields)[number] =>
+    field !== null && formFields.includes(field as (typeof formFields)[number]);
   const formErrors = getFormErrors(formFields, errors);
   const initialData: FormData = {
     trackingNumber: trackingNumber || "",
@@ -71,9 +74,14 @@ export const OrderFulfillmentTrackingDialog = ({
                   />
 
                   {errors
-                    .filter(err => err.field && !formFields.includes(err.field))
+                    .filter(err => !isTrackingNumberField(err.field))
                     .map((err, index) => (
-                      <Text display="block" color="critical1" key={index}>
+                      <Text
+                        display="block"
+                        color="critical1"
+                        key={index}
+                        data-test-id="dialog-error"
+                      >
                         {getOrderErrorMessage(err, intl)}
                       </Text>
                     ))}
