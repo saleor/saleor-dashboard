@@ -1,24 +1,25 @@
 // @ts-strict-ignore
+import BackButton from "@dashboard/components/BackButton";
+import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySearchField";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
+import { ModalDivider } from "@dashboard/components/Modal/ModalDivider";
+import { CustomerAddressChoiceCard } from "@dashboard/customers/components/CustomerAddressChoiceCard";
 import { type AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
-import { Checkbox, FormControlLabel, InputAdornment, TextField } from "@material-ui/core";
-import { Button, SearchIcon } from "@saleor/macaw-ui";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { createContext, useContext } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useOrderCustomerAddressesEditFormContext } from "./form";
 import { dialogMessages as messages } from "./messages";
-import { useStyles } from "./styles";
-import { ORDER_CUSTOMER_ADDRESSES_EDIT_FORM_ID } from "./types";
 import { parseQuery, stringifyAddress } from "./utils";
 
 interface OrderCustomerAddressesSearchProps {
@@ -31,7 +32,7 @@ interface OrderCustomerAddressesSearchProps {
   customerAddresses: AddressFragment[];
   onChangeCustomerShippingAddress: (customerAddress: AddressFragment) => void;
   onChangeCustomerBillingAddress: (customerAddress: AddressFragment) => void;
-  exitSearch: () => any;
+  exitSearch: () => void;
   children: React.ReactNode;
 }
 
@@ -74,6 +75,14 @@ const useOrderCustomerAddressesSearchState = ({
   const [query, setQuery] = React.useState("");
   const [temporarySelectedAddress, setTemporarySelectedAddress] = React.useState(initialAddress);
 
+  React.useEffect(() => {
+    const address = customerAddresses.find(getById(selectedCustomerAddressId));
+
+    if (address) {
+      setTemporarySelectedAddress(address);
+    }
+  }, [customerAddresses, selectedCustomerAddressId]);
+
   const handleSelect = () => {
     if (type === AddressTypeEnum.SHIPPING) {
       onChangeCustomerShippingAddress(temporarySelectedAddress);
@@ -86,8 +95,8 @@ const useOrderCustomerAddressesSearchState = ({
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+  const onQueryChange = (value: string) => {
+    setQuery(value);
   };
 
   const filteredCustomerAddresses = customerAddresses.filter(address => {
@@ -108,7 +117,7 @@ const useOrderCustomerAddressesSearchState = ({
     cloneAddress,
     filteredCustomerAddresses,
     formChange,
-    handleChange,
+    onQueryChange,
     query,
     setTemporarySelectedAddress,
     temporarySelectedAddress,
@@ -148,7 +157,7 @@ interface OrderCustomerAddressesSearchContentContextValue {
   cloneAddress: boolean;
   filteredCustomerAddresses: AddressFragment[];
   formChange: FormChange;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onQueryChange: (query: string) => void;
   query: string;
   setTemporarySelectedAddress: React.Dispatch<React.SetStateAction<AddressFragment | undefined>>;
   temporarySelectedAddress: AddressFragment | undefined;
@@ -164,61 +173,65 @@ const useOrderCustomerAddressesSearchContentContext =
 
     if (!context) {
       throw new Error(
-        "OrderCustomerAddressesSearch.Content must be used within OrderCustomerAddressesSearch",
+        "Address search components must be used within OrderCustomerAddressesSearchProvider",
       );
     }
 
     return context;
   };
 
-const OrderCustomerAddressesSearchContent = () => {
+export const AddressSearchToolbar = () => {
   const intl = useIntl();
-  const classes = useStyles({});
-  const { openFromCustomerChange } = useOrderCustomerAddressesSearchContext();
-  const {
-    cloneAddress,
-    filteredCustomerAddresses,
-    formChange,
-    handleChange,
-    query,
-    setTemporarySelectedAddress,
-    temporarySelectedAddress,
-    type,
-  } = useOrderCustomerAddressesSearchContentContext();
+  const { onQueryChange, query } = useOrderCustomerAddressesSearchContentContext();
+
+  return (
+    <ChannelsAvailabilitySearchField
+      query={query}
+      onQueryChange={onQueryChange}
+      label={intl.formatMessage(messages.searchLabel)}
+      placeholder={intl.formatMessage(messages.searchPlaceholder)}
+      inputTestId="address-search-input"
+    />
+  );
+};
+
+export const AddressSearchList = () => {
+  const intl = useIntl();
+  const { filteredCustomerAddresses, setTemporarySelectedAddress, temporarySelectedAddress } =
+    useOrderCustomerAddressesSearchContentContext();
+
+  if (filteredCustomerAddresses.length === 0) {
+    return intl.formatMessage(messages.noResultsFound);
+  }
 
   return (
     <Box display="flex" flexDirection="column" gap={4}>
-      <TextField
-        value={query}
-        variant="outlined"
-        onChange={handleChange}
-        placeholder={"Search addresses"}
-        fullWidth
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-            </InputAdornment>
-          ),
-        }}
-        inputProps={{ className: classes.searchInput }}
-      />
+      {filteredCustomerAddresses.map(address => (
+        <CustomerAddressChoiceCard
+          key={address.id}
+          selected={address.id === temporarySelectedAddress?.id}
+          onSelect={() => setTemporarySelectedAddress(address)}
+          address={address}
+        />
+      ))}
+    </Box>
+  );
+};
 
-      <div className={classes.scrollableWrapper}>
-        {filteredCustomerAddresses.length === 0
-          ? intl.formatMessage(messages.noResultsFound)
-          : filteredCustomerAddresses?.map(address => (
-              <React.Fragment key={address.id}>
-                <CustomerAddressChoiceCard
-                  selected={address.id === temporarySelectedAddress?.id}
-                  onSelect={() => setTemporarySelectedAddress(address)}
-                  address={address}
-                />
-              </React.Fragment>
-            ))}
-      </div>
+export const AddressSearchFooter = () => {
+  const intl = useIntl();
+  const { openFromCustomerChange } = useOrderCustomerAddressesSearchContext();
+  const { cloneAddress, filteredCustomerAddresses, formChange, type } =
+    useOrderCustomerAddressesSearchContentContext();
 
-      {!openFromCustomerChange && filteredCustomerAddresses.length !== 0 && (
+  if (openFromCustomerChange || filteredCustomerAddresses.length === 0) {
+    return null;
+  }
+
+  return (
+    <Box flexShrink={0}>
+      <ModalDivider />
+      <DashboardModal.Inset paddingY={2}>
         <FormControlLabel
           control={
             <Checkbox
@@ -240,39 +253,43 @@ const OrderCustomerAddressesSearchContent = () => {
               : messages.shippingSameAsBilling,
           )}
         />
-      )}
+      </DashboardModal.Inset>
     </Box>
   );
 };
 
-const OrderCustomerAddressesSearchActions = () => {
+export const AddressSearchActionsButtons = () => {
   const { exitSearch, handleSelect, hasSearchResults, openFromCustomerChange, transitionState } =
     useOrderCustomerAddressesSearchContext();
+  const { submit } = useOrderCustomerAddressesEditFormContext();
+
+  const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
+    handleSelect();
+
+    if (!openFromCustomerChange) {
+      submit(event);
+    }
+  };
 
   return (
-    <DashboardModal.Actions>
-      <Button onClick={exitSearch} variant="secondary">
+    <>
+      <BackButton onClick={exitSearch}>
         <FormattedMessage {...buttonMessages.cancel} />
-      </Button>
+      </BackButton>
       <ConfirmButton
         variant="primary"
         transitionState={transitionState}
-        form={openFromCustomerChange ? undefined : ORDER_CUSTOMER_ADDRESSES_EDIT_FORM_ID}
-        type={openFromCustomerChange ? undefined : "submit"}
-        onClick={handleSelect}
+        onClick={handleConfirm}
         disabled={!hasSearchResults}
       >
         <FormattedMessage {...buttonMessages.select} />
       </ConfirmButton>
-    </DashboardModal.Actions>
+    </>
   );
 };
 
+AddressSearchToolbar.displayName = "AddressSearchToolbar";
+AddressSearchList.displayName = "AddressSearchList";
+AddressSearchFooter.displayName = "AddressSearchFooter";
+AddressSearchActionsButtons.displayName = "AddressSearchActionsButtons";
 OrderCustomerAddressesSearch.displayName = "OrderCustomerAddressesSearch";
-OrderCustomerAddressesSearchContent.displayName = "OrderCustomerAddressesSearchContent";
-OrderCustomerAddressesSearchActions.displayName = "OrderCustomerAddressesSearchActions";
-
-OrderCustomerAddressesSearch.Content = OrderCustomerAddressesSearchContent;
-OrderCustomerAddressesSearch.Actions = OrderCustomerAddressesSearchActions;
-
-export default OrderCustomerAddressesSearch;

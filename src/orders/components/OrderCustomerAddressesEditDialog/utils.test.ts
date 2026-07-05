@@ -8,7 +8,15 @@ import {
 import { type IntlShape } from "react-intl";
 
 import { AddressEditDialogVariant } from "./types";
-import { getAddressSectionErrors, getOrderLevelErrorMessage, getOrderLevelErrors } from "./utils";
+import {
+  findMatchingCustomerAddress,
+  getAddressComparableKey,
+  getAddressSectionErrors,
+  getOrderLevelErrorMessage,
+  getOrderLevelErrors,
+  getPreSubmitErrors,
+  resolveInitialCustomerAddress,
+} from "./utils";
 
 const intl = {
   formatMessage: (
@@ -181,6 +189,164 @@ describe("OrderCustomerAddressesEditDialog utils", () => {
 
       // Assert
       expect(billingSectionErrors).toEqual([accountError]);
+    });
+  });
+
+  describe("getPreSubmitErrors", () => {
+    it("returns account validation errors from address submit payload", () => {
+      // Arrange
+      const accountError = createAccountError({ field: "city" });
+      const input = {
+        shippingAddress: [accountError],
+        billingAddress: { city: "Wrocław", country: "PL" },
+      };
+
+      // Act
+      const errors = getPreSubmitErrors(input);
+
+      // Assert
+      expect(errors).toEqual([accountError]);
+    });
+  });
+
+  describe("findMatchingCustomerAddress", () => {
+    const customerAddresses = [
+      {
+        __typename: "Address" as const,
+        id: "addr-default",
+        firstName: "John",
+        lastName: "Appleseed",
+        companyName: "",
+        streetAddress1: "1 Infinite Loop",
+        streetAddress2: "",
+        city: "CUPERTINO",
+        cityArea: "",
+        countryArea: "",
+        postalCode: "95014",
+        phone: "",
+        country: { __typename: "CountryDisplay" as const, code: "US", country: "United States" },
+      },
+      {
+        __typename: "Address" as const,
+        id: "addr-mirek",
+        firstName: "Miroslaw",
+        lastName: "Mencel",
+        companyName: "",
+        streetAddress1: "Jagielly 3/33",
+        streetAddress2: "",
+        city: "WROCŁAW",
+        cityArea: "",
+        countryArea: "",
+        postalCode: "50-201",
+        phone: "",
+        country: { __typename: "CountryDisplay" as const, code: "PL", country: "Poland" },
+      },
+    ];
+
+    it("matches order address to customer address by field values", () => {
+      // Arrange
+      const orderShippingAddress = {
+        firstName: "Miroslaw",
+        lastName: "Mencel",
+        streetAddress1: "Jagielly 3/33",
+        city: "WROCŁAW",
+        postalCode: "50-201",
+        country: "PL",
+        phone: "",
+      };
+
+      // Act
+      const match = findMatchingCustomerAddress(orderShippingAddress, customerAddresses);
+
+      // Assert
+      expect(match?.id).toBe("addr-mirek");
+    });
+
+    it("returns undefined when order address does not match any customer address", () => {
+      // Arrange
+      const orderShippingAddress = {
+        firstName: "Custom",
+        lastName: "Address",
+        streetAddress1: "Unknown street",
+        city: "City",
+        postalCode: "00-000",
+        country: "PL",
+        phone: "",
+      };
+
+      // Act
+      const match = findMatchingCustomerAddress(orderShippingAddress, customerAddresses);
+
+      // Assert
+      expect(match).toBeUndefined();
+    });
+  });
+
+  describe("resolveInitialCustomerAddress", () => {
+    it("prefers matching order address over customer default address", () => {
+      // Arrange
+      const customerAddresses = [
+        {
+          __typename: "Address" as const,
+          id: "addr-mirek",
+          firstName: "Miroslaw",
+          lastName: "Mencel",
+          companyName: "",
+          streetAddress1: "Jagielly 3/33",
+          streetAddress2: "",
+          city: "WROCŁAW",
+          cityArea: "",
+          countryArea: "",
+          postalCode: "50-201",
+          phone: "",
+          country: { __typename: "CountryDisplay" as const, code: "PL", country: "Poland" },
+        },
+      ];
+      const orderShippingAddress = {
+        firstName: "Miroslaw",
+        lastName: "Mencel",
+        streetAddress1: "Jagielly 3/33",
+        city: "WROCŁAW",
+        postalCode: "50-201",
+        country: "PL",
+        phone: "",
+      };
+
+      // Act
+      const resolved = resolveInitialCustomerAddress(orderShippingAddress, customerAddresses, {
+        id: "addr-default",
+      });
+
+      // Assert
+      expect(resolved.id).toBe("addr-mirek");
+    });
+  });
+
+  describe("getAddressComparableKey", () => {
+    it("normalizes casing and whitespace when comparing addresses", () => {
+      // Arrange
+      const formAddress = {
+        firstName: " Miroslaw ",
+        lastName: "Mencel",
+        streetAddress1: "Jagielly 3/33",
+        city: "wrocław",
+        postalCode: "50-201",
+        country: "pl",
+        phone: "",
+      };
+      const graphqlAddress = {
+        firstName: "Miroslaw",
+        lastName: "Mencel",
+        streetAddress1: "Jagielly 3/33",
+        city: "WROCŁAW",
+        postalCode: "50-201",
+        country: { code: "PL" },
+        phone: null,
+      };
+
+      // Act
+      // Assert
+      expect(getAddressComparableKey(formAddress)).toBe(getAddressComparableKey(graphqlAddress));
     });
   });
 });

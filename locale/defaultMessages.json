@@ -391,10 +391,6 @@
     "context": "info about variant metadata with link to edit",
     "string": "The read-only metadata of the actual variant used in this order. {link}"
   },
-  "02JZBs": {
-    "context": "order-level validation error in address edit dialog",
-    "string": "Order validation failed on {field}: {details}. This is not an address field error — fix the order record before addresses can be saved."
-  },
   "02a84g": {
     "context": "grant refund within return, structured reason select label",
     "string": "Reason"
@@ -7426,10 +7422,6 @@
     "context": "tab name",
     "string": "All discounts"
   },
-  "a8LN6a": {
-    "context": "order-level validation error without field name in address edit dialog",
-    "string": "Order validation failed: {details}. This is not an address field error — fix the order record before addresses can be saved."
-  },
   "aAAxKp": {
     "context": "table column header",
     "string": "Product"
@@ -8181,6 +8173,10 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
+  },
+  "djhz70": {
+    "context": "order-level validation error in address edit dialog",
+    "string": "Order validation failed on {field}: {details}. This is not an address field error — fix the order record before addresses can be saved."
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
@@ -9802,6 +9798,10 @@
     "context": "warning when preview is truncated due to too many combinations",
     "string": "Your selection would create {total} variants. You can generate up to {limit} at a time."
   },
+  "m8Vn2p": {
+    "context": "address search input placeholder in order address edit dialog",
+    "string": "Search addresses"
+  },
   "m8cjcK": {
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
@@ -9988,6 +9988,10 @@
   "n9JOI3": {
     "context": "money amount input label",
     "string": "Enter amount"
+  },
+  "n9Wo3q": {
+    "context": "address search input label in order address edit dialog",
+    "string": "Search addresses"
   },
   "nABmvC": {
     "string": "No. of rows"
@@ -10863,6 +10867,10 @@
   "rLnEAj": {
     "context": "Health check error when product not available",
     "string": "Unable to verify"
+  },
+  "rPAbtu": {
+    "context": "order-level validation error without field name in address edit dialog",
+    "string": "Order validation failed: {details}. This is not an address field error — fix the order record before addresses can be saved."
   },
   "rPX1f2": {
     "context": "section title",

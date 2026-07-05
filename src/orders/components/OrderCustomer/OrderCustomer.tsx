@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
+import { ReadonlyAddress } from "@dashboard/components/ReadonlyAddress/ReadonlyAddress";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { customerUrl } from "@dashboard/customers/urls";
@@ -324,7 +324,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                     onMouseEnter={() => setShowShippingCopy(true)}
                     onMouseLeave={() => setShowShippingCopy(false)}
                   >
-                    <AddressFormatter address={shippingAddress} fontSize={4} />
+                    <ReadonlyAddress address={shippingAddress} variant="default" />
                     <PickupAnnotation order={order} />
                     <CopyButton
                       show={showShippingCopy}
@@ -383,7 +383,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                     onMouseEnter={() => setShowBillingCopy(true)}
                     onMouseLeave={() => setShowBillingCopy(false)}
                   >
-                    <AddressFormatter address={billingAddress} fontSize={4} />
+                    <ReadonlyAddress address={billingAddress} variant="default" />
                     <CopyButton
                       show={showBillingCopy}
                       copied={copiedBilling}

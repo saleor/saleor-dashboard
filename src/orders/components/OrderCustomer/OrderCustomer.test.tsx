@@ -8,9 +8,8 @@ import { MemoryRouter } from "react-router-dom";
 import OrderCustomer from "./OrderCustomer";
 
 // Mocks
-jest.mock("@dashboard/components/AddressFormatter", () => ({
-  __esModule: true,
-  default: () => <div>AddressFormatter</div>,
+jest.mock("@dashboard/components/ReadonlyAddress/ReadonlyAddress", () => ({
+  ReadonlyAddress: () => <div>ReadonlyAddress</div>,
 }));
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
 jest.mock("./CustomerEditForm", () => ({
@@ -121,7 +120,7 @@ describe("OrderCustomer", () => {
       </Wrapper>,
     );
 
-    expect(screen.getAllByText("AddressFormatter")[0]).toBeInTheDocument();
+    expect(screen.getAllByText("ReadonlyAddress")[0]).toBeInTheDocument();
   });
 
   it("renders same as shipping address for billing when they match", () => {

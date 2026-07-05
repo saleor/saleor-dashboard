@@ -1,3 +1,4 @@
+import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
   type AccountErrorFragment,
   type AddressFragment,
@@ -55,6 +56,70 @@ export function validateDefaultAddress<T extends AddressFragment>(
 
   return defaultAddress;
 }
+
+type AddressComparable = {
+  firstName?: string | null;
+  lastName?: string | null;
+  companyName?: string | null;
+  streetAddress1?: string | null;
+  streetAddress2?: string | null;
+  city?: string | null;
+  cityArea?: string | null;
+  countryArea?: string | null;
+  postalCode?: string | null;
+  phone?: string | null;
+  country?: string | { code?: string } | null;
+};
+
+const normalizeAddressField = (value: string | null | undefined): string =>
+  (value ?? "").trim().toLowerCase();
+
+const getCountryCode = (country: AddressComparable["country"]): string => {
+  if (typeof country === "string") {
+    return normalizeAddressField(country);
+  }
+
+  return normalizeAddressField(country?.code);
+};
+
+export const getAddressComparableKey = (address: AddressComparable): string =>
+  [
+    normalizeAddressField(address.firstName),
+    normalizeAddressField(address.lastName),
+    normalizeAddressField(address.companyName),
+    normalizeAddressField(address.streetAddress1),
+    normalizeAddressField(address.streetAddress2),
+    normalizeAddressField(address.city),
+    normalizeAddressField(address.cityArea),
+    normalizeAddressField(address.countryArea),
+    normalizeAddressField(address.postalCode),
+    normalizeAddressField(address.phone),
+    getCountryCode(address.country),
+  ].join("|");
+
+export const findMatchingCustomerAddress = (
+  orderAddress: AddressTypeInput | undefined,
+  customerAddresses: AddressFragment[],
+): AddressFragment | undefined => {
+  if (!orderAddress || customerAddresses.length === 0) {
+    return undefined;
+  }
+
+  const orderKey = getAddressComparableKey(orderAddress);
+
+  return customerAddresses.find(address => getAddressComparableKey(address) === orderKey);
+};
+
+export const resolveInitialCustomerAddress = (
+  orderAddress: AddressTypeInput | undefined,
+  customerAddresses: AddressFragment[],
+  fallbackAddress: Node,
+): Node => {
+  const fallback = validateDefaultAddress(fallbackAddress, customerAddresses);
+  const matchingAddress = findMatchingCustomerAddress(orderAddress, customerAddresses);
+
+  return matchingAddress ?? fallback;
+};
 
 export const ADDRESS_FORM_FIELDS = [
   "city",
@@ -167,9 +232,14 @@ interface ShippingAddresses {
 }
 
 export const hasPreSubmitErrors = (input: ShippingAddresses) =>
+  getPreSubmitErrors(input).length > 0;
+
+export const getPreSubmitErrors = (input: ShippingAddresses): AccountErrorFragment[] =>
   Object.values(input)
     .flat()
-    .some(el => "code" in el);
+    .filter(
+      (el): el is AccountErrorFragment => typeof el === "object" && el !== null && "code" in el,
+    );
 
 export const getAddressEditProps = (
   variant: "shipping" | "billing",

@@ -2,7 +2,7 @@
 import { AddressEdit } from "@dashboard/components/AddressEdit/AddressEdit";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
+import { CustomerAddressChoiceCard } from "@dashboard/customers/components/CustomerAddressChoiceCard";
 import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
   type AccountErrorFragment,

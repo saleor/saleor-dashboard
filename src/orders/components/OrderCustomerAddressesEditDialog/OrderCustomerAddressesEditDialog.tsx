@@ -34,19 +34,25 @@ import OrderCustomerAddressesEditForm, {
 } from "./form";
 import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
-import OrderCustomerAddressesSearch, {
+import {
+  AddressSearchActionsButtons,
+  AddressSearchFooter,
+  AddressSearchList,
+  AddressSearchToolbar,
   OrderCustomerAddressesSearchProvider,
 } from "./OrderCustomerAddressesSearch";
 import {
   AddressEditDialogVariant,
-  ORDER_CUSTOMER_ADDRESSES_EDIT_FORM_ID,
   type OrderCustomerAddressesEditDialogOutput,
   type OrderCustomerSearchAddressState,
 } from "./types";
 import {
+  findMatchingCustomerAddress,
   getAddressEditProps,
   getOrderLevelErrors,
+  getPreSubmitErrors,
   hasPreSubmitErrors,
+  resolveInitialCustomerAddress,
   validateDefaultAddress,
 } from "./utils";
 
@@ -218,14 +224,13 @@ const OrderCustomerAddressesEditDialogSubmitButton = ({
   confirmButtonState,
   continueToSearchAddressesState,
 }: OrderCustomerAddressesEditDialogSubmitButtonProps) => {
-  const { data } = useOrderCustomerAddressesEditFormContext();
+  const { data, submit } = useOrderCustomerAddressesEditFormContext();
 
   return (
     <ConfirmButton
       transitionState={confirmButtonState}
       variant="primary"
-      type="submit"
-      form={ORDER_CUSTOMER_ADDRESSES_EDIT_FORM_ID}
+      onClick={submit}
       data-test-id="submit"
     >
       <FormattedMessage
@@ -243,21 +248,6 @@ interface OrderCustomerAddressesEditDialogSearchProps {
   setAddressSearchState: React.Dispatch<React.SetStateAction<OrderCustomerSearchAddressState>>;
   type: AddressTypeEnum;
 }
-
-const OrderCustomerAddressesEditDialogSearchContent = ({
-  orderLevelErrors,
-}: {
-  orderLevelErrors: Array<OrderErrorFragment | AccountErrorFragment>;
-}) => (
-  <DashboardModal.Body>
-    <DashboardModal.Inset>
-      <Box display="flex" flexDirection="column" gap={4}>
-        {orderLevelErrors.length > 0 && <AddressEditDialogErrorCallout errors={orderLevelErrors} />}
-        <OrderCustomerAddressesSearch.Content />
-      </Box>
-    </DashboardModal.Inset>
-  </DashboardModal.Body>
-);
 
 const OrderCustomerAddressesEditDialogSearch = ({
   children,
@@ -407,8 +397,7 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
 
     return dialogMessages.addressChangeDescription;
   };
-  const getDialogSubtitle = (): MessageDescriptor =>
-    addressSearchState.open ? dialogMessages.searchInfo : getDialogDescription();
+  const getDialogSubtitle = (): MessageDescriptor => getDialogDescription();
   const handleContinue = (data: OrderCustomerAddressesEditFormData) => {
     if (continueToSearchAddressesState(data)) {
       setAddressSearchState({
@@ -422,7 +411,7 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
       return;
     }
 
-    handleSubmit(data);
+    return handleSubmit(data);
   };
   const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
     const addressesInput = await handleAddressesSubmit(data);
@@ -430,9 +419,11 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
     if (addressesInput && !hasPreSubmitErrors(addressesInput)) {
       await onConfirm(addressesInput as OrderCustomerAddressesEditDialogOutput);
       setAddressSearchState(defaultSearchState);
+
+      return [];
     }
 
-    return Promise.resolve([...shippingValidationErrors, ...billingValidationErrors]);
+    return addressesInput ? getPreSubmitErrors(addressesInput) : [];
   };
   const countryChoices = mapCountriesToChoices(countries);
   const validatedDefaultShippingAddress = validateDefaultAddress(
@@ -443,6 +434,38 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
     defaultBillingAddress,
     customerAddresses,
   );
+  const matchingShippingCustomerAddress = findMatchingCustomerAddress(
+    orderShippingAddress,
+    customerAddresses,
+  );
+  const matchingBillingCustomerAddress = findMatchingCustomerAddress(
+    orderBillingAddress,
+    customerAddresses,
+  );
+  const initialFormData: Partial<OrderCustomerAddressesEditFormData> = {
+    shippingAddress: orderShippingAddress,
+    billingAddress: orderBillingAddress,
+    customerShippingAddress: resolveInitialCustomerAddress(
+      orderShippingAddress,
+      customerAddresses,
+      validatedDefaultShippingAddress,
+    ),
+    customerBillingAddress: resolveInitialCustomerAddress(
+      orderBillingAddress,
+      customerAddresses,
+      validatedDefaultBillingAddress,
+    ),
+  };
+
+  if (customerAddresses.length > 0) {
+    initialFormData.shippingAddressInputOption = matchingShippingCustomerAddress
+      ? AddressInputOptionEnum.CUSTOMER_ADDRESS
+      : AddressInputOptionEnum.NEW_ADDRESS;
+    initialFormData.billingAddressInputOption = matchingBillingCustomerAddress
+      ? AddressInputOptionEnum.CUSTOMER_ADDRESS
+      : AddressInputOptionEnum.NEW_ADDRESS;
+  }
+
   const addressEditCommonProps = {
     showCard: hasCustomerChanged,
     loading,
@@ -458,43 +481,68 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
 
   const modalContent = (
     <DashboardModal.Content size="sm">
-      <DashboardModal.Header subtitle={intl.formatMessage(getDialogSubtitle())}>
-        <FormattedMessage {...getDialogTitle()} />
-      </DashboardModal.Header>
-
       {addressSearchState.open ? (
-        <OrderCustomerAddressesEditDialogSearchContent orderLevelErrors={orderLevelErrors} />
-      ) : (
-        <DashboardModal.Body>
-          <DashboardModal.Inset>
-            <Box display="flex" flexDirection="column" gap={4}>
-              {orderLevelErrors.length > 0 && (
+        <>
+          <DashboardModal.PickerHeader
+            description={<FormattedMessage {...dialogMessages.searchInfo} />}
+            toolbar={<AddressSearchToolbar />}
+          >
+            <FormattedMessage {...getDialogTitle()} />
+          </DashboardModal.PickerHeader>
+
+          {orderLevelErrors.length > 0 && (
+            <Box flexShrink={0}>
+              <DashboardModal.Inset paddingY={4}>
                 <AddressEditDialogErrorCallout errors={orderLevelErrors} />
-              )}
-              <OrderCustomerAddressesEditForm.Form>
-                <OrderCustomerAddressesEditDialogFields
-                  addressEditCommonProps={addressEditCommonProps}
-                  customerAddresses={customerAddresses}
-                  dialogErrors={dialogErrors}
-                  hasCustomerChanged={hasCustomerChanged}
-                  setAddressSearchState={setAddressSearchState}
-                  variant={variant}
-                />
-              </OrderCustomerAddressesEditForm.Form>
+              </DashboardModal.Inset>
             </Box>
-          </DashboardModal.Inset>
-        </DashboardModal.Body>
-      )}
+          )}
 
-      {addressSearchState.open ? (
-        <OrderCustomerAddressesSearch.Actions />
+          <DashboardModal.Body fill __overflowX="hidden">
+            <DashboardModal.Inset>
+              <AddressSearchList />
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
+
+          <AddressSearchFooter />
+
+          <DashboardModal.Actions>
+            <AddressSearchActionsButtons />
+          </DashboardModal.Actions>
+        </>
       ) : (
-        <DashboardModal.Actions>
-          <OrderCustomerAddressesEditDialogSubmitButton
-            confirmButtonState={confirmButtonState}
-            continueToSearchAddressesState={continueToSearchAddressesState}
-          />
-        </DashboardModal.Actions>
+        <>
+          <DashboardModal.Header subtitle={intl.formatMessage(getDialogSubtitle())}>
+            <FormattedMessage {...getDialogTitle()} />
+          </DashboardModal.Header>
+
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              <Box display="flex" flexDirection="column" gap={4}>
+                {orderLevelErrors.length > 0 && (
+                  <AddressEditDialogErrorCallout errors={orderLevelErrors} />
+                )}
+                <OrderCustomerAddressesEditForm.Form>
+                  <OrderCustomerAddressesEditDialogFields
+                    addressEditCommonProps={addressEditCommonProps}
+                    customerAddresses={customerAddresses}
+                    dialogErrors={dialogErrors}
+                    hasCustomerChanged={hasCustomerChanged}
+                    setAddressSearchState={setAddressSearchState}
+                    variant={variant}
+                  />
+                </OrderCustomerAddressesEditForm.Form>
+              </Box>
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
+
+          <DashboardModal.Actions>
+            <OrderCustomerAddressesEditDialogSubmitButton
+              confirmButtonState={confirmButtonState}
+              continueToSearchAddressesState={continueToSearchAddressesState}
+            />
+          </DashboardModal.Actions>
+        </>
       )}
     </DashboardModal.Content>
   );
@@ -506,10 +554,7 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
       defaultShippingAddress={validatedDefaultShippingAddress}
       defaultBillingAddress={validatedDefaultBillingAddress}
       defaultCloneAddress={hasCustomerChanged}
-      initial={{
-        shippingAddress: orderShippingAddress,
-        billingAddress: orderBillingAddress,
-      }}
+      initial={initialFormData}
       onSubmit={handleContinue}
     >
       <DashboardModal onChange={exitModal} open={open}>

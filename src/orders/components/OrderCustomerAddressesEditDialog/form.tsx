@@ -9,7 +9,7 @@ import useForm, {
 } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { Box, type Option } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 import {
   type ChangeEvent,
   createContext,
@@ -17,6 +17,7 @@ import {
   type ReactNode,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -120,6 +121,7 @@ function useOrderCustomerAddressesEditForm(
   };
   const { handleChange, change, data: formData } = useForm(initialData);
   const { setExitDialogSubmitRef } = useExitFormDialog();
+  const dataRef = useRef<OrderCustomerAddressesEditData>();
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
     opts.countries.find(country => initialData.shippingAddress.country === country.code)?.country,
   );
@@ -142,13 +144,21 @@ function useOrderCustomerAddressesEditForm(
   const handleCustomerAddressChange = (
     customerAddress: AddressFragment,
     addressType: "customerShippingAddress" | "customerBillingAddress",
-  ) =>
+  ) => {
     change({
       target: {
         name: addressType,
         value: customerAddress,
       },
     });
+
+    if (dataRef.current) {
+      dataRef.current = {
+        ...dataRef.current,
+        [addressType]: customerAddress,
+      };
+    }
+  };
   const handleShippingCountrySelect = createSingleAutocompleteSelectHandler(
     event =>
       change({
@@ -184,10 +194,18 @@ function useOrderCustomerAddressesEditForm(
     shippingCountryDisplayName,
     billingCountryDisplayName,
   };
+
+  useEffect(
+    function syncFormDataRef() {
+      dataRef.current = data;
+    },
+    [data],
+  );
+
   const handleFormSubmit = useHandleFormSubmit({
     onSubmit,
   });
-  const handleSubmit = () => handleFormSubmit(data);
+  const handleSubmit = () => handleFormSubmit(dataRef.current ?? data);
   const submit = (event: FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
@@ -195,7 +213,12 @@ function useOrderCustomerAddressesEditForm(
     return handleSubmit();
   };
 
-  useEffect(() => setExitDialogSubmitRef(submit), [handleSubmit]);
+  useEffect(
+    function registerExitDialogSubmitRef() {
+      setExitDialogSubmitRef(submit);
+    },
+    [setExitDialogSubmitRef, submit],
+  );
 
   return {
     change: handleChange,
@@ -222,9 +245,9 @@ const OrderCustomerAddressesEditFormElement = ({
   const { submit } = useOrderCustomerAddressesEditFormContext();
 
   return (
-    <Box as="form" id={id} onSubmit={submit} autoComplete="off">
+    <form id={id} onSubmit={submit} autoComplete="off">
       {children}
-    </Box>
+    </form>
   );
 };
 

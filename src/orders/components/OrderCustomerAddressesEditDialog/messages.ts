@@ -68,6 +68,16 @@ export const dialogMessages = defineMessages({
     defaultMessage: "Select an address you want to use from the list below",
     description: "modal information under title",
   },
+  searchPlaceholder: {
+    id: "JUaiTB",
+    defaultMessage: "Search addresses",
+    description: "address search input placeholder in order address edit dialog",
+  },
+  searchLabel: {
+    id: "PwJvsc",
+    defaultMessage: "Search addresses",
+    description: "address search input label in order address edit dialog",
+  },
   noResultsFound: {
     id: "kQq6/o",
     defaultMessage: "No results found",
