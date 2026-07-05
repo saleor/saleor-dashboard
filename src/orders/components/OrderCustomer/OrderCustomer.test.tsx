@@ -12,9 +12,6 @@ jest.mock("@dashboard/components/ReadonlyAddress/ReadonlyAddress", () => ({
   ReadonlyAddress: () => <div>ReadonlyAddress</div>,
 }));
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
-jest.mock("./CustomerEditForm", () => ({
-  CustomerEditForm: () => <div data-test-id="customer-edit-form">CustomerEditForm</div>,
-}));
 jest.mock("./PickupAnnotation", () => ({
   PickupAnnotation: () => <div>PickupAnnotation</div>,
 }));
@@ -44,7 +41,7 @@ describe("OrderCustomer", () => {
     errors: [],
     canEditAddresses: true,
     canEditCustomer: true,
-    onCustomerEdit: jest.fn(),
+    onCustomerChangeClick: jest.fn(),
     onProfileView: jest.fn(),
     onBillingAddressEdit: jest.fn(),
     onShippingAddressEdit: jest.fn(),
@@ -69,6 +66,7 @@ describe("OrderCustomer", () => {
     );
 
     expect(screen.getByText("Customer details")).toBeInTheDocument();
+    expect(screen.getByText("Change customer")).toBeInTheDocument();
     expect(screen.getByText("Customer")).toBeInTheDocument();
     expect(screen.getByText("Shipping address")).toBeInTheDocument();
     expect(screen.getByText("Billing address")).toBeInTheDocument();
@@ -76,20 +74,20 @@ describe("OrderCustomer", () => {
     expect(screen.getByText("customer@example.com")).toBeInTheDocument();
   });
 
-  it("toggles edit mode", () => {
+  it("opens change customer dialog when button is clicked", () => {
+    const onCustomerChangeClick = jest.fn();
+
     render(
       <Wrapper>
         <MemoryRouter>
-          <OrderCustomer {...defaultProps} />
+          <OrderCustomer {...defaultProps} onCustomerChangeClick={onCustomerChangeClick} />
         </MemoryRouter>
       </Wrapper>,
     );
 
-    const editButton = screen.getByTestId("edit-customer");
+    fireEvent.click(screen.getByTestId("change-customer"));
 
-    fireEvent.click(editButton);
-
-    expect(screen.getByTestId("customer-edit-form")).toBeInTheDocument();
+    expect(onCustomerChangeClick).toHaveBeenCalled();
   });
 
   it("renders Not set when no customer", () => {
@@ -150,21 +148,21 @@ describe("OrderCustomer", () => {
       </Wrapper>,
     );
 
-    expect(screen.getByTestId("edit-customer")).toBeInTheDocument();
+    expect(screen.getByTestId("change-customer")).toBeInTheDocument();
     expect(screen.getByTestId("edit-shipping-address")).toBeInTheDocument();
     expect(screen.getByTestId("edit-billing-address")).toBeInTheDocument();
   });
 
-  it("disables edit customer button if onCustomerEdit is not provided", () => {
+  it("disables change customer button if onCustomerChangeClick is not provided", () => {
     render(
       <Wrapper>
         <MemoryRouter>
-          <OrderCustomer {...defaultProps} onCustomerEdit={undefined} />
+          <OrderCustomer {...defaultProps} onCustomerChangeClick={undefined} />
         </MemoryRouter>
       </Wrapper>,
     );
 
-    expect(screen.getByTestId("edit-customer")).toBeDisabled();
+    expect(screen.getByTestId("change-customer")).toBeDisabled();
   });
 
   it("copies email to clipboard", () => {

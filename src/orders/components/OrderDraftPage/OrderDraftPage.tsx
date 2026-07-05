@@ -15,7 +15,6 @@ import {
   type OrderErrorFragment,
   type OrderLineInput,
   type OrderNoteUpdateMutation,
-  type SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -23,12 +22,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Divider } from "@saleor/macaw-ui-next";
 import { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import OrderCustomer, { type CustomerEditData } from "../OrderCustomer";
+import OrderCustomer from "../OrderCustomer";
 import { messages as orderDetailsPageMessages } from "../OrderDetailsPage/messages";
 import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -36,17 +34,14 @@ import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory"
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 
-interface OrderDraftPageProps extends FetchMoreProps {
+interface OrderDraftPageProps {
   disabled: boolean;
   order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
-  users: RelayToFlat<SearchCustomersQuery["search"]>;
-  usersLoading: boolean;
   errors: OrderErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  fetchUsers: (query: string) => void;
   onBillingAddressEdit: () => void;
-  onCustomerEdit: (data: CustomerEditData) => void;
+  onCustomerChangeClick: () => void;
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => SubmitPromise<any[]>;
@@ -68,14 +63,11 @@ const draftOrderListUrl = orderDraftListUrl();
 const OrderDraftPage = (props: OrderDraftPageProps) => {
   const {
     loading,
-    fetchUsers,
-    hasMore,
     saveButtonBarState,
     onBillingAddressEdit,
-    onCustomerEdit,
+    onCustomerChangeClick,
     onDraftFinalize,
     onDraftRemove,
-    onFetchMore,
     onNoteAdd,
     onNoteUpdateLoading,
     onNoteUpdate,
@@ -89,8 +81,6 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     onOrderShowMetadata,
     order,
     channelUsabilityData,
-    users,
-    usersLoading,
     errors,
     disabled,
   } = props;
@@ -171,15 +161,10 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
         <OrderCustomer
           canEditAddresses={!!order?.user}
           canEditCustomer={true}
-          fetchUsers={fetchUsers}
-          hasMore={hasMore}
-          loading={usersLoading}
           errors={errors}
           order={order as OrderDetailsFragment}
-          users={users}
           onBillingAddressEdit={onBillingAddressEdit}
-          onCustomerEdit={onCustomerEdit}
-          onFetchMore={onFetchMore}
+          onCustomerChangeClick={onCustomerChangeClick}
           onProfileView={onProfileView}
           onShippingAddressEdit={onShippingAddressEdit}
         />
