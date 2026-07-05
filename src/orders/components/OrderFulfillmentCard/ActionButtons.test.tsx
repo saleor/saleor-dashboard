@@ -4,6 +4,8 @@ import { render, screen } from "@testing-library/react";
 
 import { ActionButtons } from "./ActionButtons";
 
+jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
+
 describe("ActionButtons", () => {
   const defaultProps = {
     orderId: "order-1",
