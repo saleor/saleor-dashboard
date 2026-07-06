@@ -12132,6 +12132,10 @@
     "context": "refunded event title",
     "string": "Products were refunded"
   },
+  "wgOP2K": {
+    "context": "empty state in add country dialog search results",
+    "string": "No countries found"
+  },
   "wjKYSU": {
     "context": "WarehousesSection subtitle",
     "string": "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes."

@@ -156,6 +156,11 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Choose country you want to add",
     description: "add country dialog header",
   },
+  chooseCountryNotFound: {
+    id: "wgOP2K",
+    defaultMessage: "No countries found",
+    description: "empty state in add country dialog search results",
+  },
   country: {
     id: "UBuKZ9",
     defaultMessage: "Country",
