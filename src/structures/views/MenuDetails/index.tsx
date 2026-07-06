@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import ActionDialog from "@dashboard/components/ActionDialog";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   PermissionEnum,
@@ -21,6 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
+import { MenuDeleteDialog } from "../../components/MenuDeleteDialog/MenuDeleteDialog";
 import MenuDetailsPage, { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
 import { MenuItemDialog } from "../../components/MenuItemDialog/MenuItemDialog";
@@ -197,26 +197,21 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
         onSubmit={handleSubmit}
         saveButtonState={menuUpdateOpts.status}
       />
-      <ActionDialog
-        open={params.action === "remove"}
-        onClose={closeModal}
+      <MenuDeleteDialog
         confirmButtonState={menuDeleteOpts.status}
+        onClose={closeModal}
         onConfirm={() => extractMutationErrors(menuDelete({ variables: { id } }))}
-        variant="delete"
-        title={intl.formatMessage({
-          id: "x79cEk",
-          defaultMessage: "Delete structure",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="U2DyeR"
-          defaultMessage="Are you sure you want to delete structure {menuName}?"
-          values={{
-            menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove"}
+        subtitle={
+          <FormattedMessage
+            id="U2DyeR"
+            defaultMessage="Are you sure you want to delete structure {menuName}?"
+            values={{
+              menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
+            }}
+          />
+        }
+      />
 
       <MenuItemDialog
         confirmButtonState={menuItemCreateOpts.status}
