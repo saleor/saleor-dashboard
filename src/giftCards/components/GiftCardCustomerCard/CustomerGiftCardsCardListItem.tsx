@@ -9,7 +9,7 @@ import { type CustomerGiftCardFragment } from "@dashboard/graphql";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import GiftCardDeleteDialogContent from "../GiftCardDeleteDialog/GiftCardDeleteDialogContent";
+import { GiftCardDeleteDialogContent } from "../GiftCardDeleteDialog/GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "../GiftCardDeleteDialog/useGiftCardSingleDelete";
 import GiftCardStatusChip from "../GiftCardStatusChip/GiftCardStatusChip";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";

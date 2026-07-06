@@ -132,7 +132,7 @@ export const DiscountRules = <ErrorCode,>({
 
         {isModalOpen && (
           <RuleFormModal
-            confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
+            confirmButtonState={getRuleConfirmButtonState(ruleEditIndex)}
             onClose={handleRuleModalClose}
             initialFormValues={ruleInitialValues}
             onSubmit={handleRuleModalSubmit}

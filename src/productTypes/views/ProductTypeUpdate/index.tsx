@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
-import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
-import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
+import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
 import { Button } from "@dashboard/components/Button";
 import {
   type AttributeCreateSubmitData,

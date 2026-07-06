@@ -20,7 +20,7 @@ import { useIntl } from "react-intl";
 import slugify from "slugify";
 
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
-import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
 import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
 import {
   attributeAddUrl,

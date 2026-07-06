@@ -9,7 +9,6 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import ActionDialog from "@dashboard/components/ActionDialog";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
@@ -46,6 +45,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getStringOrPlaceholder, maybe } from "../../misc";
+import { PageDeleteDialog } from "../components/PageDeleteDialog/PageDeleteDialog";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { type PageData, type PageSubmitData } from "../components/PageDetailsPage/form";
 import { PageMetadataDialog } from "../components/PageMetadataDialog/PageMetadataDialog";
@@ -262,27 +262,22 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         page={pageDetails.data?.page}
         refetchPage={pageDetails.refetch}
       />
-      <ActionDialog
-        open={params.action === "remove"}
+      <PageDeleteDialog
         confirmButtonState={pageRemoveOpts.status}
-        title={intl.formatMessage({
-          id: "0B0HS2",
-          defaultMessage: "Delete model",
-          description: "dialog header",
-        })}
         onClose={closeModal}
         onConfirm={() => pageRemove({ variables: { id } })}
-        variant="delete"
-      >
-        <FormattedMessage
-          id="knO/IN"
-          defaultMessage="Are you sure you want to delete {title}?"
-          description="delete model"
-          values={{
-            title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove"}
+        title={
+          <FormattedMessage
+            description="delete model"
+            id="knO/IN"
+            defaultMessage="Are you sure you want to delete {title}?"
+            values={{
+              title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
+            }}
+          />
+        }
+      />
     </>
   );
 };

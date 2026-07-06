@@ -3,7 +3,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
 import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {

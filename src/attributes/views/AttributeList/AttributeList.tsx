@@ -6,7 +6,7 @@ import {
 } from "@dashboard/attributes/views/AttributeList/filters";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
   AttributeTypeEnum,
@@ -33,7 +33,7 @@ import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
+import { AttributeBulkDeleteDialog } from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import {
   attributeListUrl,

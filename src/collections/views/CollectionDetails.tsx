@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { createCollectionChannels, createCollectionChannelsData } from "@dashboard/channels/utils";
-import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
@@ -25,9 +24,11 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
+import { CollectionDeleteDialog } from "../components/CollectionDeleteDialog/CollectionDeleteDialog";
+import { CollectionDeleteImageDialog } from "../components/CollectionDeleteImageDialog/CollectionDeleteImageDialog";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { type CollectionUpdateData } from "../components/CollectionDetailsPage/form";
 import {
@@ -231,7 +232,8 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
         params={params}
       />
 
-      <ActionDialog
+      <CollectionDeleteDialog
+        collectionName={<strong>{maybe(() => data.collection.name, "...")}</strong>}
         confirmButtonState={removeCollectionOpts.status}
         onClose={closeModal}
         onConfirm={() =>
@@ -240,23 +242,9 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
           })
         }
         open={params.action === "remove"}
-        title={intl.formatMessage({
-          id: "+wpvnk",
-          defaultMessage: "Delete Collection",
-          description: "dialog title",
-        })}
-        variant="delete"
-      >
-        <FormattedMessage
-          id="pVFoOk"
-          defaultMessage="Are you sure you want to delete {collectionName}?"
-          values={{
-            collectionName: <strong>{maybe(() => data.collection.name, "...")}</strong>,
-          }}
-        />
-      </ActionDialog>
+      />
 
-      <ActionDialog
+      <CollectionDeleteImageDialog
         confirmButtonState={updateCollectionOpts.status}
         onClose={closeModal}
         onConfirm={() =>
@@ -270,18 +258,7 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
           })
         }
         open={params.action === "removeImage"}
-        title={intl.formatMessage({
-          id: "fzk04H",
-          defaultMessage: "Delete image",
-          description: "dialog title",
-        })}
-        variant="delete"
-      >
-        <FormattedMessage
-          id="MxhVZv"
-          defaultMessage="Are you sure you want to delete collection's image?"
-        />
-      </ActionDialog>
+      />
     </>
   );
 };

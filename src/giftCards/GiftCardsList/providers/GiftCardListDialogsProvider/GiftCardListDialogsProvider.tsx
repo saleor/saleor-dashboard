@@ -1,4 +1,4 @@
-import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
+import { GiftCardListPageDeleteDialog } from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import { GiftCardBulkCreateDialog } from "@dashboard/giftCards/GiftCardBulkCreateDialog/GiftCardBulkCreateDialog";
 import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { GiftCardExportDialogContent } from "@dashboard/giftCards/GiftCardExportDialogContent/GiftCardExportDialogContent";
