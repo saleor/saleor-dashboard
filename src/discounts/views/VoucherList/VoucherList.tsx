@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createVoucherQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
@@ -26,8 +25,9 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { VoucherBulkDeleteDialog } from "../../components/VoucherBulkDeleteDialog/VoucherBulkDeleteDialog";
 import VoucherListPage from "../../components/VoucherListPage";
 import {
   voucherListUrl,
@@ -200,28 +200,13 @@ const VoucherList = ({ params }: VoucherListProps) => {
         sort={getSortParams(params)}
         selectedChannelId={selectedChannel?.id}
       />
-      <ActionDialog
+      <VoucherBulkDeleteDialog
         confirmButtonState={voucherBulkDeleteOpts.status}
+        count={selectedRowIds.length}
         onClose={closeModal}
         onConfirm={onVoucherBulkDelete}
         open={params.action === "remove" && selectedRowIds.length > 0}
-        title={intl.formatMessage({
-          id: "Q0JJ4F",
-          defaultMessage: "Delete Vouchers",
-          description: "dialog header",
-        })}
-        variant="delete"
-      >
-        <FormattedMessage
-          id="O9QPe1"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this voucher?} other{Are you sure you want to delete {displayQuantity} vouchers?}}"
-          description="dialog content"
-          values={{
-            counter: selectedRowIds.length,
-            displayQuantity: <strong>{selectedRowIds.length}</strong>,
-          }}
-        />
-      </ActionDialog>
+      />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
