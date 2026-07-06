@@ -21,7 +21,7 @@ import slugify from "slugify";
 
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
 import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
+import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog/AttributeValueEditDialog";
 import {
   attributeAddUrl,
   type AttributeAddUrlDialog,
