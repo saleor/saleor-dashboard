@@ -2,6 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
@@ -70,6 +71,7 @@ const PageTypeListPage = ({
       <TopNav
         isAlignToRight={false}
         withoutBorder
+        href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.modelTypes)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">

@@ -1,7 +1,8 @@
-import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Box, List, sprinkles } from "@saleor/macaw-ui-next";
 import { Link } from "react-router-dom";
 
 import { useIsMenuActive } from "./hooks/useIsMenuActive";
+import { MenuItemLabel } from "./MenuItemLabel";
 import { type SidebarMenuItem } from "./types";
 
 interface Props {
@@ -34,17 +35,13 @@ export const SingleItem = ({ menuItem }: Props) => {
         })}
       >
         <Box
-          className={sprinkles({
-            paddingY: 1.5,
-            gap: 3,
-            display: "flex",
-            alignItems: "center",
-          })}
+          paddingY={1.5}
+          gap={menuItem.labelStyle === "settings" ? 1.5 : 3}
+          display="flex"
+          alignItems="center"
         >
           {menuItem.icon}
-          <Text size={3} fontWeight="medium">
-            {menuItem.label}
-          </Text>
+          <MenuItemLabel menuItem={menuItem} />
         </Box>
       </Link>
       {menuItem.endAdornment && (
