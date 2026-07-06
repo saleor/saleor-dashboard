@@ -5,7 +5,11 @@ import { useExportGiftCardsMutation, useGiftCardTotalCountQuery } from "@dashboa
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useForm from "@dashboard/hooks/useForm";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import ExportDialogSettings from "@dashboard/products/components/ProductExportDialog/ExportDialogSettings";
+import {
+  exportDialogScopeMessages,
+  ExportDialogSettings,
+  getFilteredItemsScopeLabel,
+} from "@dashboard/products/components/ProductExportDialog/ExportDialogSettings";
 import {
   type ExportSettingsFormData,
   exportSettingsInitialFormData,
@@ -93,6 +97,7 @@ const GiftCardExportDialog = ({
         number: selectedRowIds.length,
       },
     ),
+    filteredItems: getFilteredItemsScopeLabel(intl, filteredGiftCardsCount),
   };
 
   return (
@@ -111,10 +116,7 @@ const GiftCardExportDialog = ({
               data={data}
               exportScopeLabels={exportScopeLabels}
               allowScopeSelection={!hasIdsToExport}
-              itemsQuantity={{
-                filter: filteredGiftCardsCount,
-                all: allGiftCardsCount,
-              }}
+              scopeSectionMessage={exportDialogScopeMessages.giftCardsToInclude}
             />
 
             <Text>{intl.formatMessage(messages.exportNote)}</Text>

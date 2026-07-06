@@ -36,7 +36,7 @@ import usePaginator, {
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
 import { ProductBulkDeleteDialog } from "@dashboard/products/components/ProductBulkDeleteDialog/ProductBulkDeleteDialog";
-import ProductExportDialog from "@dashboard/products/components/ProductExportDialog";
+import { ProductExportDialog } from "@dashboard/products/components/ProductExportDialog/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue,
