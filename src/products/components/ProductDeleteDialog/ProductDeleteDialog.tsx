@@ -4,34 +4,33 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
 import { FormattedMessage } from "react-intl";
 
-import { productVariantEndPreorderDialogMessages as messages } from "./messages";
+import { productDeleteDialogMessages as messages } from "./messages";
 
-interface ProductVariantEndPreorderDialogProps {
+interface ProductDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  name: string;
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  variantGlobalSoldUnits?: number;
 }
 
-export const ProductVariantEndPreorderDialog = ({
+export const ProductDeleteDialog = ({
   confirmButtonState,
+  name,
   open,
   onClose,
   onConfirm,
-  variantGlobalSoldUnits,
-}: ProductVariantEndPreorderDialogProps) => {
+}: ProductDeleteDialogProps) => {
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="xs">
         <DashboardModal.Header
-          subtitle={
-            <FormattedMessage {...messages.dialogMessage} values={{ variantGlobalSoldUnits }} />
-          }
+          subtitle={<FormattedMessage {...messages.subtitle} values={{ name }} />}
         >
-          <FormattedMessage {...messages.dialogTitle} />
+          <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 
         <DashboardModal.Actions>
@@ -40,8 +39,9 @@ export const ProductVariantEndPreorderDialog = ({
             data-test-id="submit"
             onClick={onConfirm}
             transitionState={confirmButtonState}
+            variant="error"
           >
-            <FormattedMessage {...messages.dialogConfirmButtonLabel} />
+            <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
@@ -49,4 +49,4 @@ export const ProductVariantEndPreorderDialog = ({
   );
 };
 
-ProductVariantEndPreorderDialog.displayName = "ProductVariantEndPreorderDialog";
+ProductDeleteDialog.displayName = "ProductDeleteDialog";

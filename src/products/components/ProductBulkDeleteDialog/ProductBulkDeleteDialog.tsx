@@ -4,34 +4,41 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
 import { FormattedMessage } from "react-intl";
 
-import { productVariantEndPreorderDialogMessages as messages } from "./messages";
+import { productBulkDeleteDialogMessages as messages } from "./messages";
 
-interface ProductVariantEndPreorderDialogProps {
+interface ProductBulkDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  count: number;
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  variantGlobalSoldUnits?: number;
 }
 
-export const ProductVariantEndPreorderDialog = ({
+export const ProductBulkDeleteDialog = ({
   confirmButtonState,
+  count,
   open,
   onClose,
   onConfirm,
-  variantGlobalSoldUnits,
-}: ProductVariantEndPreorderDialogProps) => {
+}: ProductBulkDeleteDialogProps) => {
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="xs">
         <DashboardModal.Header
           subtitle={
-            <FormattedMessage {...messages.dialogMessage} values={{ variantGlobalSoldUnits }} />
+            <FormattedMessage
+              {...messages.subtitle}
+              values={{
+                counter: count,
+                displayQuantity: <strong>{count}</strong>,
+              }}
+            />
           }
         >
-          <FormattedMessage {...messages.dialogTitle} />
+          <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 
         <DashboardModal.Actions>
@@ -40,8 +47,9 @@ export const ProductVariantEndPreorderDialog = ({
             data-test-id="submit"
             onClick={onConfirm}
             transitionState={confirmButtonState}
+            variant="error"
           >
-            <FormattedMessage {...messages.dialogConfirmButtonLabel} />
+            <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
@@ -49,4 +57,4 @@ export const ProductVariantEndPreorderDialog = ({
   );
 };
 
-ProductVariantEndPreorderDialog.displayName = "ProductVariantEndPreorderDialog";
+ProductBulkDeleteDialog.displayName = "ProductBulkDeleteDialog";

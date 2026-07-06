@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
@@ -41,10 +40,12 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getMutationState } from "../../../misc";
+import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/ProductDeleteDialog";
+import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import {
@@ -535,35 +536,20 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onClose={closeModal}
         product={product}
       />
-      <ActionDialog
+      <ProductDeleteDialog
         open={params.action === "remove"}
         onClose={closeModal}
         confirmButtonState={deleteProductOpts.status}
+        name={product?.name ?? ""}
         onConfirm={() => deleteProduct({ variables: { id } })}
-        variant="delete"
-        title={intl.formatMessage(messages.deleteProductDialogTitle)}
-      >
-        <FormattedMessage
-          {...messages.deleteProductDialogSubtitle}
-          values={{ name: product?.name }}
-        />
-      </ActionDialog>
-      <ActionDialog
+      />
+      <ProductMediaDeleteDialog
         open={params.action === "remove-media" && !!params.id}
         onClose={closeModal}
         confirmButtonState={deleteProductImageOpts.status}
+        isVideo={isVideoMediaToDelete}
         onConfirm={handleConfirmMediaDelete}
-        variant="delete"
-        title={intl.formatMessage(
-          isVideoMediaToDelete ? messages.deleteMediaVideoTitle : messages.deleteMediaImageTitle,
-        )}
-      >
-        <FormattedMessage
-          {...(isVideoMediaToDelete
-            ? messages.deleteMediaVideoConfirmation
-            : messages.deleteMediaImageConfirmation)}
-        />
-      </ActionDialog>
+      />
     </>
   );
 };

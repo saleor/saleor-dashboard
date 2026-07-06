@@ -1,2 +1,1 @@
-export * from "./ProductTypePickerDialog";
-export { default } from "./ProductTypePickerDialog";
+export { ProductTypePickerDialog } from "./ProductTypePickerDialog";

@@ -107,6 +107,7 @@ export const MetadataCard = ({
             data={data}
             onChange={onChange}
             inModal
+            error={error}
           />
 
           {!readonly && (
@@ -130,25 +131,6 @@ export const MetadataCard = ({
                   description="add metadata field,button"
                 />
               </Button>
-
-              {error && (
-                <Box fontSize={4} fontWeight="medium" color="critical1" marginTop={4}>
-                  {error}
-                </Box>
-              )}
-            </Box>
-          )}
-
-          {readonly && error && (
-            <Box
-              fontSize={4}
-              fontWeight="medium"
-              color="critical1"
-              marginTop={4}
-              paddingX={5}
-              paddingBottom={4}
-            >
-              {error}
             </Box>
           )}
         </>
@@ -238,6 +220,7 @@ export const MetadataCard = ({
                       disabled={disabled}
                       data={data}
                       onChange={onChange}
+                      error={error}
                     />
 
                     {!readonly && (
@@ -260,12 +243,6 @@ export const MetadataCard = ({
                           description="add metadata field,button"
                         />
                       </Button>
-                    )}
-
-                    {error && (
-                      <Box fontSize={4} fontWeight="medium" color="critical1" marginTop={4}>
-                        {error}
-                      </Box>
                     )}
                   </>
                 )}

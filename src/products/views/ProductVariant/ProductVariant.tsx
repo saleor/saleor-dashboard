@@ -54,7 +54,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
-import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
+import { ProductVariantDeleteDialog } from "../../components/ProductVariantDeleteDialog/ProductVariantDeleteDialog";
 import { ProductVariantMetadataDialog } from "../../components/ProductVariantMetadataDialog/ProductVariantMetadataDialog";
 import { type ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import { ProductVariantPage } from "../../components/ProductVariantPage/ProductVariantPage";

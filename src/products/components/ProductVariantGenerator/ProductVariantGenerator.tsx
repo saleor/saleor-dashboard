@@ -1,4 +1,3 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
 import BackButton from "@dashboard/components/BackButton";
 import { Callout } from "@dashboard/components/Callout/Callout";
 import {
@@ -508,29 +507,48 @@ export const ProductVariantGenerator = ({
         </DashboardModal.Actions>
       </DashboardModal.Content>
 
-      {/* Warning dialog for missing SKU/stock */}
-      <ActionDialog
+      <DashboardModal
+        onChange={() => setShowMissingDefaultsWarning(false)}
         open={showMissingDefaultsWarning}
-        onClose={() => setShowMissingDefaultsWarning(false)}
-        onConfirm={proceedWithGeneration}
-        title={intl.formatMessage(messages.missingDefaultsTitle)}
-        confirmButtonLabel={intl.formatMessage(buttonMessages.continue)}
-        confirmButtonState="default"
       >
-        <Text>{intl.formatMessage(messages.missingDefaultsDescription)}</Text>
-      </ActionDialog>
+        <DashboardModal.Content size="xs">
+          <DashboardModal.Header subtitle={intl.formatMessage(messages.missingDefaultsDescription)}>
+            {intl.formatMessage(messages.missingDefaultsTitle)}
+          </DashboardModal.Header>
 
-      {/* Confirmation dialog for large batches */}
-      <ActionDialog
-        open={showConfirmation}
-        onClose={() => setShowConfirmation(false)}
-        onConfirm={executeGenerate}
-        confirmButtonState={confirmState}
-        title={intl.formatMessage(messages.confirmTitle, { count: newVariantsCount })}
-        confirmButtonLabel={intl.formatMessage(buttonMessages.continue)}
-      >
-        <Text>{intl.formatMessage(messages.confirmDescription, { count: newVariantsCount })}</Text>
-      </ActionDialog>
+          <DashboardModal.Actions>
+            <BackButton onClick={() => setShowMissingDefaultsWarning(false)} />
+            <ConfirmButton
+              data-test-id="submit"
+              onClick={proceedWithGeneration}
+              transitionState="default"
+            >
+              {intl.formatMessage(buttonMessages.continue)}
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
+
+      <DashboardModal onChange={() => setShowConfirmation(false)} open={showConfirmation}>
+        <DashboardModal.Content size="xs">
+          <DashboardModal.Header
+            subtitle={intl.formatMessage(messages.confirmDescription, { count: newVariantsCount })}
+          >
+            {intl.formatMessage(messages.confirmTitle, { count: newVariantsCount })}
+          </DashboardModal.Header>
+
+          <DashboardModal.Actions>
+            <BackButton onClick={() => setShowConfirmation(false)} />
+            <ConfirmButton
+              data-test-id="submit"
+              onClick={executeGenerate}
+              transitionState={confirmState}
+            >
+              {intl.formatMessage(buttonMessages.continue)}
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
     </DashboardModal>
   );
 };

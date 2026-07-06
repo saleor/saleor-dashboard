@@ -4,34 +4,36 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
 import { FormattedMessage } from "react-intl";
 
-import { productVariantEndPreorderDialogMessages as messages } from "./messages";
+import { productMediaDeleteDialogMessages as messages } from "./messages";
 
-interface ProductVariantEndPreorderDialogProps {
+interface ProductMediaDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
+  isVideo: boolean;
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  variantGlobalSoldUnits?: number;
 }
 
-export const ProductVariantEndPreorderDialog = ({
+export const ProductMediaDeleteDialog = ({
   confirmButtonState,
+  isVideo,
   open,
   onClose,
   onConfirm,
-  variantGlobalSoldUnits,
-}: ProductVariantEndPreorderDialogProps) => {
+}: ProductMediaDeleteDialogProps) => {
+  const titleMessage = isVideo ? messages.deleteVideoTitle : messages.deleteImageTitle;
+  const subtitleMessage = isVideo
+    ? messages.deleteVideoConfirmation
+    : messages.deleteImageConfirmation;
+
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="xs">
-        <DashboardModal.Header
-          subtitle={
-            <FormattedMessage {...messages.dialogMessage} values={{ variantGlobalSoldUnits }} />
-          }
-        >
-          <FormattedMessage {...messages.dialogTitle} />
+        <DashboardModal.Header subtitle={<FormattedMessage {...subtitleMessage} />}>
+          <FormattedMessage {...titleMessage} />
         </DashboardModal.Header>
 
         <DashboardModal.Actions>
@@ -40,8 +42,9 @@ export const ProductVariantEndPreorderDialog = ({
             data-test-id="submit"
             onClick={onConfirm}
             transitionState={confirmButtonState}
+            variant="error"
           >
-            <FormattedMessage {...messages.dialogConfirmButtonLabel} />
+            <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
@@ -49,4 +52,4 @@ export const ProductVariantEndPreorderDialog = ({
   );
 };
 
-ProductVariantEndPreorderDialog.displayName = "ProductVariantEndPreorderDialog";
+ProductMediaDeleteDialog.displayName = "ProductMediaDeleteDialog";
