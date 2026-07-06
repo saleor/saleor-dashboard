@@ -4,7 +4,7 @@ import { Button, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import GiftCardExportDialogContent from "../GiftCardExportDialogContent";
+import { GiftCardExportDialogContent } from "../GiftCardExportDialogContent/GiftCardExportDialogContent";
 import { giftCardCreateMessages as messages } from "./messages";
 
 interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
@@ -44,9 +44,11 @@ const GiftCardBulkCreateSuccessDialog = ({
         </DashboardModal.Content>
       </DashboardModal>
 
-      <DashboardModal onChange={onExportDialogClose} open={openEmailExport}>
-        <GiftCardExportDialogContent idsToExport={idsToExport} onClose={onExportDialogClose} />
-      </DashboardModal>
+      <GiftCardExportDialogContent
+        idsToExport={idsToExport}
+        onClose={onExportDialogClose}
+        open={openEmailExport}
+      />
     </>
   );
 };

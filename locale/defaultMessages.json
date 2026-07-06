@@ -1060,10 +1060,6 @@
     "context": "Checkbox label for setting publication date",
     "string": "Set publication date"
   },
-  "3kwdxJ": {
-    "context": "gift card export type label",
-    "string": "gift cards"
-  },
   "3mvL2Q": {
     "string": "and"
   },
@@ -1183,9 +1179,6 @@
   },
   "4Kq3O6": {
     "string": "This unit will be used as default shipping weight"
-  },
-  "4LRapg": {
-    "string": "Promotion removed"
   },
   "4Rj36Y": {
     "string": "Create new Model Type"
@@ -1545,10 +1538,6 @@
   },
   "6D+yYX": {
     "string": "Payment status"
-  },
-  "6FLezz": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete this promotion?"
   },
   "6GTAm2": {
     "context": "order history message",
@@ -3025,7 +3014,7 @@
   },
   "DQJnB4": {
     "context": "gift card export dialog title",
-    "string": "Export Gift Card Codes"
+    "string": "Export gift cards"
   },
   "DR3EBs": {
     "context": "customer detail page, top-bar metadata button tooltip",
@@ -7089,6 +7078,10 @@
   "Y8XVvH": {
     "string": "Failed to delete voucher codes"
   },
+  "Y8xLdE": {
+    "context": "gift card export dialog intro",
+    "string": "Choose which gift cards to export and the file format. Only active, unused gift cards are included."
+  },
   "Y9lv8z": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
@@ -7255,6 +7248,10 @@
   "YzLUXA": {
     "string": "Ensure this value is greater than 0."
   },
+  "YzoG9n": {
+    "context": "dialog header",
+    "string": "Delete promotion"
+  },
   "Z/7hyu": {
     "context": "card balance label",
     "string": "Card Balance"
@@ -7398,10 +7395,6 @@
   },
   "ZpVtCa": {
     "string": "Shipping address"
-  },
-  "ZrIt1W": {
-    "context": "dialog header",
-    "string": "Delete promotion"
   },
   "ZuqkSp": {
     "context": "note input subtitle",
@@ -8250,10 +8243,6 @@
   "drEC/t": {
     "context": "factor label for order promotion propagated to a line",
     "string": "Order promotion (line share)"
-  },
-  "dsJ+Wv": {
-    "context": "note on export gift cards",
-    "string": "Note: Only active and not used gift cards will be expored"
   },
   "dxCVWI": {
     "context": "error message",
@@ -9845,6 +9834,10 @@
   "m2Jb3P": {
     "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
   },
+  "m3Kp9w": {
+    "context": "gift card export dialog intro when exporting preselected cards",
+    "string": "Choose the file format for the selected gift cards. Only active, unused gift cards are included."
+  },
   "m66R1V": {
     "context": "hint below tax class selector",
     "string": "You can create new tax classes in {taxSettingsLink}."
@@ -10034,8 +10027,8 @@
     "string": "Most recent time this customer signed in to their account."
   },
   "n97Ii0": {
-    "context": "export selected items to csv file",
-    "string": "Selected giftCards ({number})"
+    "context": "export selected gift cards scope option",
+    "string": "Selected gift cards ({number})"
   },
   "n9JOI3": {
     "context": "money amount input label",
@@ -10391,6 +10384,9 @@
   "p12BmC": {
     "context": "transaction refund tiles disabled transaction",
     "string": "This transaction is non-refundable."
+  },
+  "p2EAP0": {
+    "string": "Promotion removed"
   },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
@@ -11498,7 +11494,7 @@
     "string": "Add custom request header"
   },
   "uQk8gB": {
-    "context": "export all items to csv file",
+    "context": "export all gift cards scope option",
     "string": "All gift cards ({number})"
   },
   "uR2ks6": {
@@ -11547,6 +11543,10 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
+  },
+  "ubeXkl": {
+    "context": "dialog content",
+    "string": "Are you sure you want to delete this promotion?"
   },
   "ubmFc8": {
     "string": "Install"

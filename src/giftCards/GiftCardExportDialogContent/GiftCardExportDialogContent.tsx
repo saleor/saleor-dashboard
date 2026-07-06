@@ -1,13 +1,20 @@
+import BackButton from "@dashboard/components/BackButton";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
 import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
 import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import { useExportGiftCardsMutation, useGiftCardTotalCountQuery } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useForm from "@dashboard/hooks/useForm";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { buttonMessages } from "@dashboard/intl";
 import {
   exportDialogScopeMessages,
   ExportDialogSettings,
@@ -19,23 +26,25 @@ import {
   exportSettingsInitialFormDataWithIds,
 } from "@dashboard/products/components/ProductExportDialog/types";
 import { type DialogProps } from "@dashboard/types";
-import { Text } from "@saleor/macaw-ui-next";
-import { useMemo } from "react";
+import { Box } from "@saleor/macaw-ui-next";
+import { useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
 import { useGiftCardList } from "../GiftCardsList/providers/GiftCardListProvider";
 import { giftCardExportDialogMessages as messages } from "./messages";
 import { getExportGiftCardsInput } from "./utils";
 
 type IdsToExport = string[] | null;
 
-const GiftCardExportDialog = ({
-  onClose,
-  idsToExport,
-}: Pick<DialogProps, "onClose"> & {
+interface GiftCardExportDialogContentProps extends Pick<DialogProps, "onClose" | "open"> {
   idsToExport?: IdsToExport;
-}) => {
+}
+
+export const GiftCardExportDialogContent = ({
+  idsToExport,
+  onClose,
+  open,
+}: GiftCardExportDialogContentProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
@@ -86,73 +95,95 @@ const GiftCardExportDialog = ({
       },
     });
   };
-  const { data, change, submit } = useForm(
+  const { data, change, submit, reset } = useForm(
     hasIdsToExport ? exportSettingsInitialFormDataWithIds : exportSettingsInitialFormData,
     handleSubmit,
   );
+
+  useModalDialogOpen(open, {
+    onClose: () => {
+      reset();
+    },
+  });
+
   const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount ?? 0;
   const exportScopeLabels = {
-    allItems: intl.formatMessage(
-      {
-        id: "uQk8gB",
-        defaultMessage: "All gift cards ({number})",
-        description: "export all items to csv file",
-      },
-      {
-        number: allGiftCardsCount || "...",
-      },
-    ),
-    selectedItems: intl.formatMessage(
-      {
-        id: "n97Ii0",
-        defaultMessage: "Selected giftCards ({number})",
-        description: "export selected items to csv file",
-      },
-      {
-        number: selectedRowIds.length,
-      },
-    ),
+    allItems: intl.formatMessage(messages.allGiftCards, {
+      number: allGiftCardsCount || "...",
+    }),
+    selectedItems: intl.formatMessage(messages.selectedGiftCards, {
+      number: selectedIds?.length ?? 0,
+    }),
     filteredItems: getFilteredItemsScopeLabel(intl, filteredGiftCardsCount),
+  };
+  const confirmButtonState: ConfirmButtonTransitionState = exportGiftCardsOpts.status;
+  const isSubmittingRef = useRef(false);
+  const isSubmitting = confirmButtonState === "loading";
+
+  isSubmittingRef.current = isSubmitting;
+
+  const handleModalClose = (): void => {
+    if (isSubmittingRef.current) {
+      return;
+    }
+
+    onClose();
   };
 
   return (
-    <DashboardModal.Content size="sm">
-      <DashboardModal.Header>
-        <FormattedMessage {...messages.title} />
-      </DashboardModal.Header>
+    <DashboardModal onChange={handleModalClose} open={open}>
+      {open ? (
+        <DashboardModal.Content size="sm">
+          <DashboardModal.ContextHeader
+            description={
+              <FormattedMessage
+                {...(hasIdsToExport ? messages.descriptionSelectedOnly : messages.description)}
+              />
+            }
+          >
+            <FormattedMessage {...messages.title} />
+          </DashboardModal.ContextHeader>
 
-      <ContentWithProgress>
-        {!loading && (
-          <>
-            <ExportDialogSettings
-              errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors ?? []}
-              onChange={change}
-              selectedItems={selectedIds?.length}
-              data={data}
-              exportScopeLabels={exportScopeLabels}
-              allowScopeSelection={!hasIdsToExport}
-              hasListFilters={hasListFilters}
-              scopeSectionMessage={exportDialogScopeMessages.giftCardsToInclude}
-            />
+          <DashboardModal.Body fill>
+            <DashboardModal.Inset>
+              {loading ? (
+                <Box display="flex" alignItems="center" justifyContent="center" padding={6}>
+                  <SaleorThrobber />
+                </Box>
+              ) : (
+                <ExportDialogSettings
+                  allowScopeSelection={!hasIdsToExport}
+                  data={data}
+                  errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors ?? []}
+                  exportScopeLabels={exportScopeLabels}
+                  hasListFilters={hasListFilters}
+                  onChange={change}
+                  scopeSectionMessage={exportDialogScopeMessages.giftCardsToInclude}
+                  selectedItems={selectedIds?.length ?? 0}
+                />
+              )}
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
 
-            <Text>{intl.formatMessage(messages.exportNote)}</Text>
-          </>
-        )}
-      </ContentWithProgress>
-
-      <DashboardModal.Actions>
-        <ConfirmButton
-          transitionState={exportGiftCardsOpts.status}
-          variant="primary"
-          type="submit"
-          data-test-id="submit"
-          onClick={submit}
-        >
-          <FormattedMessage {...messages.confirmButtonLabel} />
-        </ConfirmButton>
-      </DashboardModal.Actions>
-    </DashboardModal.Content>
+          <DashboardModal.Actions>
+            <BackButton disabled={isSubmitting || loading} onClick={handleModalClose}>
+              <FormattedMessage {...buttonMessages.cancel} />
+            </BackButton>
+            <ConfirmButton
+              data-test-id="submit"
+              disabled={isSubmitting || loading}
+              onClick={submit}
+              transitionState={confirmButtonState}
+              type="submit"
+              variant="primary"
+            >
+              <FormattedMessage {...messages.confirmButtonLabel} />
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      ) : null}
+    </DashboardModal>
   );
 };
 
-export default GiftCardExportDialog;
+GiftCardExportDialogContent.displayName = "GiftCardExportDialogContent";
