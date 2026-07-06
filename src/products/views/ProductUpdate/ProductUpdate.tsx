@@ -240,16 +240,16 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
     onCompleted: handleProductMediaCreateCompleted,
   });
-  const handleMediaUrlUpload = (mediaUrl: string) => {
-    const variables = {
-      alt: "",
-      mediaUrl,
-      product: product.id,
-    };
-
-    createProductMedia({
-      variables,
+  const handleMediaUrlUpload = async (mediaUrl: string) => {
+    const result = await createProductMedia({
+      variables: {
+        alt: "",
+        mediaUrl,
+        product: product.id,
+      },
     });
+
+    return result.data?.productMediaCreate?.errors ?? [];
   };
   const handleBack = () => navigate(productListUrl());
 
