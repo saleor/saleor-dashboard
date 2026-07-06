@@ -59,6 +59,7 @@ export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   errors: ExportErrorFragment[];
   productQuantity: ExportItemsQuantity;
   selectedProducts: number;
+  hasListFilters: boolean;
   warehouses: WarehouseFragment[];
   onFetch: (query: string) => void;
   onSubmit: (data: ExportProductsInput) => void;
@@ -74,6 +75,7 @@ export const ProductExportDialog = ({
   onSubmit,
   open,
   selectedProducts,
+  hasListFilters,
   warehouses,
   ...fetchMoreProps
 }: ProductExportDialogProps): JSX.Element => {
@@ -265,6 +267,7 @@ export const ProductExportDialog = ({
                   onChange={change}
                   selectedItems={selectedProducts}
                   exportScopeLabels={exportScopeLabels}
+                  hasListFilters={hasListFilters}
                 />
               )}
 

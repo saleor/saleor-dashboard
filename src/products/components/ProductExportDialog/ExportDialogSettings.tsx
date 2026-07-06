@@ -7,7 +7,7 @@ import { type ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import {
   defineMessages,
   FormattedMessage,
@@ -47,6 +47,11 @@ export const exportDialogScopeMessages = defineMessages({
     defaultMessage: "File format",
     description: "export file type section header",
   },
+  listFiltersDisabledHint: {
+    id: "JB7OuS",
+    defaultMessage: "Apply filters or search on the list to enable this option.",
+    description: "export scope option disabled when list has no active filters",
+  },
 });
 
 export const getFilteredItemsScopeLabel = (intl: IntlShape, count?: number): string =>
@@ -61,6 +66,7 @@ interface ExportDialogSettingsProps {
   exportScopeLabels: ExportScopeLabels;
   onChange: (event: ChangeEvent) => void;
   allowScopeSelection?: boolean;
+  hasListFilters: boolean;
   scopeSectionMessage?: MessageDescriptor;
 }
 
@@ -73,6 +79,7 @@ export const ExportDialogSettings = ({
   selectedItems,
   exportScopeLabels,
   allowScopeSelection = true,
+  hasListFilters,
   scopeSectionMessage = exportDialogScopeMessages.productsToInclude,
 }: ExportDialogSettingsProps) => {
   const intl = useIntl();
@@ -106,6 +113,7 @@ export const ExportDialogSettings = ({
       value: ExportScope.IDS,
     },
     {
+      disabled: !hasListFilters,
       label: exportScopeLabels.filteredItems,
       value: ExportScope.FILTER,
     },
@@ -127,6 +135,12 @@ export const ExportDialogSettings = ({
             choices={exportScopeChoices}
             errorMessage={getExportErrorMessage(formErrors.scope, intl)}
           />
+
+          {!hasListFilters && (
+            <Text size={2} color="default2">
+              <FormattedMessage {...exportDialogScopeMessages.listFiltersDisabledHint} />
+            </Text>
+          )}
         </Box>
       )}
 

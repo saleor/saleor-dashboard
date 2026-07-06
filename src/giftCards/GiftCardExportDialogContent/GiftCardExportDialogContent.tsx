@@ -1,3 +1,6 @@
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
+import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
+import { createGiftCardQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
@@ -17,6 +20,7 @@ import {
 } from "@dashboard/products/components/ProductExportDialog/types";
 import { type DialogProps } from "@dashboard/types";
 import { Text } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
@@ -35,12 +39,23 @@ const GiftCardExportDialog = ({
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
+  const { valueProvider } = useConditionalFilterContext();
   const hasIdsToExport = !!idsToExport?.length;
   const {
     loading: loadingGiftCardList,
     totalCount: filteredGiftCardsCount,
     selectedRowIds,
+    params,
   } = useGiftCardList();
+  const hasListFilters = useMemo(
+    () =>
+      hasActiveListFilters({
+        filterContainer: valueProvider.value,
+        searchQuery: params.query,
+        createFilterVariables: createGiftCardQueryVariables,
+      }),
+    [params.query, valueProvider.value],
+  );
   const selectedIds = idsToExport ?? selectedRowIds;
   const { data: allGiftCardsCountData, loading: loadingGiftCardCount } =
     useGiftCardTotalCountQuery();
@@ -116,6 +131,7 @@ const GiftCardExportDialog = ({
               data={data}
               exportScopeLabels={exportScopeLabels}
               allowScopeSelection={!hasIdsToExport}
+              hasListFilters={hasListFilters}
               scopeSectionMessage={exportDialogScopeMessages.giftCardsToInclude}
             />
 
