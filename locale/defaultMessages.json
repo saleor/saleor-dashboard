@@ -259,6 +259,10 @@
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
   },
+  "/H393C": {
+    "context": "issue gift card options section header",
+    "string": "Options"
+  },
   "/ILyIf": {
     "context": "tax classes menu header",
     "string": "Tax class label"
@@ -472,6 +476,10 @@
   "0ReyKr": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
     "string": "Published since {publishedAt}"
+  },
+  "0UeJGl": {
+    "context": "issue gift card dialog intro",
+    "string": "Set the gift card value and optional delivery details."
   },
   "0V1q0d": {
     "context": "add country dialog header",
@@ -7022,6 +7030,10 @@
   "XtlUj6": {
     "string": "Add your first rule to set up a promotion"
   },
+  "XvS/E0": {
+    "context": "issue gift card details section header",
+    "string": "Gift card details"
+  },
   "XvbjyW": {
     "context": "add new structure",
     "string": "Create new item"
@@ -7119,6 +7131,10 @@
   },
   "YIT1XP": {
     "string": "Create voucher"
+  },
+  "YJ4fhf": {
+    "context": "successfully created gift card alert notification title",
+    "string": "Gift card created"
   },
   "YL8K/3": {
     "context": "automatic completion delay input label",
@@ -7396,6 +7412,10 @@
   "Zj/7QZ": {
     "context": "details title",
     "string": "Details"
+  },
+  "Zk1shR": {
+    "context": "issue gift card delivery section header",
+    "string": "Delivery"
   },
   "ZpVtCa": {
     "string": "Shipping address"
@@ -9241,6 +9261,10 @@
   "jGvclB": {
     "string": "Transaction Reference"
   },
+  "jKm3k/": {
+    "context": "issue gift card success dialog intro",
+    "string": "Copy the code below to share with the customer."
+  },
   "jL3caQ": {
     "context": "resent code success message",
     "string": "Code resent to customer"
@@ -9614,6 +9638,10 @@
   "kv3FWU": {
     "context": "btn label",
     "string": "Go to orders"
+  },
+  "kvsZ4J": {
+    "context": "copy gift card code error",
+    "string": "Failed to copy to clipboard"
   },
   "kyOwDW": {
     "context": "aria-label for the error icon inside a channel issue badge",
@@ -10524,6 +10552,10 @@
     "context": "shipping method channel status when price is not set",
     "string": "Missing price"
   },
+  "pY/9R2": {
+    "context": "gift card currency redemption info callout",
+    "string": "This {currency} gift card can only be redeemed in channels that use {currency}. The delivery channel above only controls which email notification is sent."
+  },
   "pc36KX": {
     "context": "PageTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those model types and assigned models"
@@ -11223,6 +11255,10 @@
   },
   "spjKeI": {
     "string": "Fulfillment approved"
+  },
+  "srtbbS": {
+    "context": "gift card currency mismatch with delivery channel callout",
+    "string": "The selected channel uses {channelCurrency}, but this gift card is in {giftCardCurrency}. The customer can still receive the code by email, but they will only be able to redeem it in {giftCardCurrency} channels at checkout."
   },
   "stjHjY": {
     "context": "error message",
@@ -12491,6 +12527,10 @@
     "context": "date group header",
     "string": "Unknown"
   },
+  "ynhBeQ": {
+    "context": "created gift card code label",
+    "string": "Gift card code"
+  },
   "ypW4Mi": {
     "context": "button refreshing page",
     "string": "Refresh page"
@@ -12662,10 +12702,6 @@
   "zjHH6b": {
     "context": "sale start date",
     "string": "Started"
-  },
-  "zjZuhM": {
-    "context": "created gift card code label",
-    "string": "This is the code of a created gift card:"
   },
   "zjkAMs": {
     "context": "header",

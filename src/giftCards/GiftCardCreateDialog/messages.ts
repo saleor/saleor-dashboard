@@ -6,6 +6,36 @@ export const giftCardCreateMessages = defineMessages({
     defaultMessage: "Issue gift card",
     description: "issue gift card dialog title",
   },
+  description: {
+    id: "0UeJGl",
+    defaultMessage: "Set the gift card value and optional delivery details.",
+    description: "issue gift card dialog intro",
+  },
+  detailsSection: {
+    id: "XvS/E0",
+    defaultMessage: "Gift card details",
+    description: "issue gift card details section header",
+  },
+  deliverySection: {
+    id: "Zk1shR",
+    defaultMessage: "Delivery",
+    description: "issue gift card delivery section header",
+  },
+  optionsSection: {
+    id: "/H393C",
+    defaultMessage: "Options",
+    description: "issue gift card options section header",
+  },
+  successTitle: {
+    id: "HFo3Qe",
+    defaultMessage: "Gift card created",
+    description: "successfully created gift card alert title",
+  },
+  successDescription: {
+    id: "jKm3k/",
+    defaultMessage: "Copy the code below to share with the customer.",
+    description: "issue gift card success dialog intro",
+  },
   amountLabel: {
     id: "n9JOI3",
     defaultMessage: "Enter amount",
@@ -37,9 +67,9 @@ export const giftCardCreateMessages = defineMessages({
       "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history",
     description: "note input subtitle",
   },
-  createdGiftCardLabel: {
-    id: "zjZuhM",
-    defaultMessage: "This is the code of a created gift card:",
+  successCodeLabel: {
+    id: "ynhBeQ",
+    defaultMessage: "Gift card code",
     description: "created gift card code label",
   },
   copyCodeLabel: {
@@ -52,10 +82,15 @@ export const giftCardCreateMessages = defineMessages({
     defaultMessage: "Copied to clipboard",
     description: "copied to clipboard alert title",
   },
+  copyCodeError: {
+    id: "kvsZ4J",
+    defaultMessage: "Failed to copy to clipboard",
+    description: "copy gift card code error",
+  },
   createdSuccessAlertTitle: {
-    id: "HFo3Qe",
+    id: "YJ4fhf",
     defaultMessage: "Gift card created",
-    description: "successfully created gift card alert title",
+    description: "successfully created gift card alert notification title",
   },
   requiresActivationLabel: {
     id: "vCw7BP",

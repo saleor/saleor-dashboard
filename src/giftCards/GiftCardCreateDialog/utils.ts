@@ -1,13 +1,19 @@
 // @ts-strict-ignore
 import { type INotification } from "@dashboard/components/notifications";
-import { type GiftCardCreateMutation, TimePeriodTypeEnum } from "@dashboard/graphql";
+import {
+  type GiftCardCreateInput,
+  type GiftCardCreateMutation,
+  TimePeriodTypeEnum,
+} from "@dashboard/graphql";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import moment from "moment-timezone";
 import { type IntlShape } from "react-intl";
 
 import { type GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import { giftCardUpdateFormMessages } from "../GiftCardsList/messages";
+import { type GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
+import { type GiftCardCreateFormCustomer } from "./types";
 
 const addToCurrentDate = (
   currentDate: number,
@@ -58,7 +64,9 @@ export const getGiftCardCreateOnCompletedMessage = (
   return errors?.length
     ? {
         status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError),
+        text:
+          errors.find(error => error.message)?.message ??
+          intl.formatMessage(commonErrorMessages.unknownError),
       }
     : successGiftCardMessage;
 };
@@ -86,4 +94,35 @@ export const getGiftCardExpiryInputData = (
   }
 
   return expiryDate;
+};
+
+export const getCreateGiftCardInputData = (
+  formData: GiftCardCreateFormData,
+  selectedCustomer: GiftCardCreateFormCustomer,
+  currentDate: number,
+  defaultChannelSlug?: string | null,
+): GiftCardCreateInput => {
+  const {
+    balanceAmount,
+    balanceCurrency,
+    channelSlug,
+    note,
+    requiresActivation,
+    sendToCustomerSelected,
+    tags,
+  } = formData;
+  const resolvedChannelSlug = channelSlug || defaultChannelSlug;
+
+  return {
+    addTags: tags?.map(tag => tag.value) || null,
+    balance: {
+      amount: balanceAmount,
+      currency: balanceCurrency,
+    },
+    channel: (sendToCustomerSelected && resolvedChannelSlug) || null,
+    expiryDate: getGiftCardExpiryInputData(formData, currentDate),
+    isActive: !requiresActivation,
+    note: note || null,
+    userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
+  };
 };
