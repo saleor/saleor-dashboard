@@ -23,10 +23,11 @@ import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
 import MenuDetailsPage, { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
-import MenuItemDialog, {
+import { MenuItemDialog } from "../../components/MenuItemDialog/MenuItemDialog";
+import {
   type MenuItemDialogFormData,
   type MenuItemType,
-} from "../../components/MenuItemDialog";
+} from "../../components/MenuItemDialog/types";
 import {
   getItemId,
   getItemType,
@@ -218,22 +219,20 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
       </ActionDialog>
 
       <MenuItemDialog
-        open={params.action === "add-item"}
-        errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
         confirmButtonState={menuItemCreateOpts.status}
-        disabled={menuItemCreateOpts.loading}
+        errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
         onClose={closeModal}
         onSubmit={handleMenuItemCreate}
+        open={params.action === "add-item"}
       />
       <MenuItemDialog
-        open={params.action === "edit-item"}
+        confirmButtonState={menuItemUpdateOpts.status}
         errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
         initial={initialMenuItemUpdateFormData}
         initialDisplayValue={getInitialMenuItemLabel(menuItem)}
-        confirmButtonState={menuItemUpdateOpts.status}
-        disabled={menuItemUpdateOpts.loading}
         onClose={closeModal}
         onSubmit={handleMenuItemUpdate}
+        open={params.action === "edit-item"}
       />
     </>
   );

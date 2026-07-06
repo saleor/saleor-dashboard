@@ -6,7 +6,7 @@ import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type MenuItemType } from "../MenuItemDialog";
+import { type MenuItemType } from "../MenuItemDialog/types";
 import { MenuItemsSortableTree } from "../MenuItemsSortableTree";
 import { getNodeData } from "../MenuItemsSortableTree/utils";
 import { getDiff, type TreeOperation } from "./tree";

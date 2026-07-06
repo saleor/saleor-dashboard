@@ -16,7 +16,7 @@ import { menuListUrl } from "@dashboard/structures/urls";
 import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { type MenuItemType } from "../MenuItemDialog";
+import { type MenuItemType } from "../MenuItemDialog/types";
 import MenuItems, { type TreeOperation } from "../MenuItems";
 import MenuProperties from "../MenuProperties";
 import { computeRelativeTree } from "./tree";
