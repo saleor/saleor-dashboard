@@ -50,6 +50,8 @@ interface OrderDraftPageProps {
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onProductClick: (id: string) => void;
   onShippingAddressEdit: () => void;
   onShippingMethodEdit: () => void;
@@ -74,6 +76,8 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     onOrderLineAdd,
     onOrderLineChange,
     onOrderLineRemove,
+    orderLineRemoveConfirmState,
+    orderLineRemoveErrors,
     onShippingAddressEdit,
     onShippingMethodEdit,
     onProfileView,
@@ -132,6 +136,8 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           channelUsabilityData={channelUsabilityData}
           errors={errors}
           loading={loading}
+          orderLineRemoveConfirmState={orderLineRemoveConfirmState}
+          orderLineRemoveErrors={orderLineRemoveErrors}
           onOrderLineAdd={onOrderLineAdd}
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}

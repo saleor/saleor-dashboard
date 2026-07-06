@@ -66,6 +66,8 @@ interface OrderDetailsPageProps {
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (id: string, data: OrderDraftDetailsProductsFormData) => void;
   onOrderLineRemove?: (id: string) => void;
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onShippingMethodEdit?: () => void;
   onBillingAddressEdit: () => any;
   onFulfillmentApprove: (id: string) => any;
@@ -124,6 +126,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onOrderLineAdd,
     onOrderLineChange,
     onOrderLineRemove,
+    orderLineRemoveConfirmState,
+    orderLineRemoveErrors,
     onShippingMethodEdit,
     onTransactionAction,
     onAddManualTransaction,
@@ -253,6 +257,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               onOrderLineAdd={onOrderLineAdd}
               onOrderLineChange={onOrderLineChange}
               onOrderLineRemove={onOrderLineRemove}
+              orderLineRemoveConfirmState={orderLineRemoveConfirmState}
+              orderLineRemoveErrors={orderLineRemoveErrors}
             />
             <CardSpacer />
           </>

@@ -68,7 +68,7 @@ export const ProductVariantMediaSelectDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="picker">
         <DashboardModal.ContextHeader
           description={<FormattedMessage {...messages.subtitle} />}
           contextLabel={

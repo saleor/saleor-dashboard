@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   type ChannelUsabilityDataQuery,
   type OrderDetailsFragment,
@@ -20,6 +21,8 @@ interface OrderDraftDetailsProps {
   channelUsabilityData?: ChannelUsabilityDataQuery;
   errors: OrderErrorFragment[];
   loading: boolean;
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -31,6 +34,8 @@ const OrderDraftDetails = ({
   channelUsabilityData,
   errors,
   loading,
+  orderLineRemoveConfirmState,
+  orderLineRemoveErrors,
   onOrderLineAdd,
   onOrderLineChange,
   onOrderLineRemove,
@@ -85,6 +90,8 @@ const OrderDraftDetails = ({
           order={order}
           errors={errors}
           loading={loading}
+          orderLineRemoveConfirmState={orderLineRemoveConfirmState}
+          orderLineRemoveErrors={orderLineRemoveErrors}
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
           onOrderLineShowMetadata={onOrderLineShowMetadata}

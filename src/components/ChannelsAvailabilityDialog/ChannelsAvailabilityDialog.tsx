@@ -80,7 +80,7 @@ const ChannelsAvailabilityDialog = ({
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+      <DashboardModal.Content size="picker">
         <DashboardModal.PickerHeader
           description={description}
           toolbar={

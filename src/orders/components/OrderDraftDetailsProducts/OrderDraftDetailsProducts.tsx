@@ -1,3 +1,4 @@
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -24,6 +25,8 @@ interface OrderDraftDetailsProductsProps {
   order?: OrderDetailsFragment;
   errors: OrderErrorFragment[];
   loading: boolean;
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
   onOrderLineShowMetadata: (id: string) => void;
@@ -33,6 +36,8 @@ const OrderDraftDetailsProducts = ({
   order,
   errors,
   loading,
+  orderLineRemoveConfirmState,
+  orderLineRemoveErrors,
   onOrderLineChange,
   onOrderLineRemove,
   onOrderLineShowMetadata,
@@ -60,6 +65,8 @@ const OrderDraftDetailsProducts = ({
       onOrderLineRemove={onOrderLineRemove}
       onOrderLineChange={onOrderLineChange}
       errors={formErrors}
+      orderLineRemoveConfirmState={orderLineRemoveConfirmState}
+      orderLineRemoveErrors={orderLineRemoveErrors}
       onOrderLineShowMetadata={onOrderLineShowMetadata}
     />
   );

@@ -232,6 +232,8 @@ export const OrderDraftDetails = ({
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
             onShippingMethodEdit={() => openModal("edit-shipping")}
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
+            orderLineRemoveConfirmState={orderLineDelete.opts.status}
+            orderLineRemoveErrors={orderLineDelete.opts.data?.orderLineDelete?.errors ?? []}
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
                 id,

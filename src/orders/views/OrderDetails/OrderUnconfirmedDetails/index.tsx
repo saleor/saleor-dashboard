@@ -240,6 +240,8 @@ export const OrderUnconfirmedDetails = ({
               })
             }
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
+            orderLineRemoveConfirmState={orderLineDelete.opts.status}
+            orderLineRemoveErrors={orderLineDelete.opts.data?.orderLineDelete?.errors ?? []}
             onShippingMethodEdit={() => openModal("edit-shipping")}
             onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
             onOrderShowMetadata={() => openModal("view-order-metadata")}
