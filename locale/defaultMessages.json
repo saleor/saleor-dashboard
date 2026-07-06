@@ -546,6 +546,10 @@
   "0nLsyM": {
     "string": "No product types found"
   },
+  "0o9VGr": {
+    "context": "bulk issue gift cards dialog intro",
+    "string": "Set how many gift cards to issue and their value. After creation, you can download the list of codes."
+  },
   "0oo+BT": {
     "context": "section header",
     "string": "Refunded Amount"
@@ -1837,10 +1841,6 @@
     "context": "export scope section header for gift cards",
     "string": "Gift cards to include"
   },
-  "7dhhzL": {
-    "context": "bulk issue gift cards dialog title",
-    "string": "Bulk Issue Gift Cards"
-  },
   "7eGvyy": {
     "context": "extension install page, extension permissions (from manifest)",
     "string": "Permissions"
@@ -3011,10 +3011,6 @@
   "DPz5y6": {
     "context": "dialog header",
     "string": "Assign Staff Members"
-  },
-  "DQJnB4": {
-    "context": "gift card export dialog title",
-    "string": "Export gift cards"
   },
   "DR3EBs": {
     "context": "customer detail page, top-bar metadata button tooltip",
@@ -4995,6 +4991,10 @@
   "NQgbYA": {
     "string": "Account Settings"
   },
+  "NSOHa/": {
+    "context": "gift card export dialog intro",
+    "string": "Choose which gift cards to export and the file format. Only active, unused gift cards are included."
+  },
   "NUBTlN": {
     "string": "Extension doesn't provide a privacy policy."
   },
@@ -6069,6 +6069,10 @@
   "Sz6CRr": {
     "string": "Create new product"
   },
+  "Szr2Je": {
+    "context": "bulk issue gift cards settings section header",
+    "string": "Options"
+  },
   "T0Mfxq": {
     "context": "product status title",
     "string": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}"
@@ -6397,6 +6401,10 @@
   "UhqCK5": {
     "context": "help section example in model type tab grouping help tooltip",
     "string": "<em>Help section for Docs</em> with separator \"section for\" appears under a <strong>Help</strong> tab."
+  },
+  "Ui4GxI": {
+    "context": "gift card bulk create success dialog export button",
+    "string": "Export to email"
   },
   "UjoSZB": {
     "context": "dialog content",
@@ -7078,10 +7086,6 @@
   "Y8XVvH": {
     "string": "Failed to delete voucher codes"
   },
-  "Y8xLdE": {
-    "context": "gift card export dialog intro",
-    "string": "Choose which gift cards to export and the file format. Only active, unused gift cards are included."
-  },
   "Y9lv8z": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
@@ -7459,6 +7463,10 @@
   "a6GDem": {
     "context": "tab name",
     "string": "All discounts"
+  },
+  "a6cSKQ": {
+    "context": "export all gift cards scope option",
+    "string": "All gift cards ({number})"
   },
   "aAAxKp": {
     "context": "table column header",
@@ -8220,6 +8228,10 @@
   },
   "da1ebU": {
     "string": "Product type"
+  },
+  "da4+d5": {
+    "context": "bulk issue gift cards dialog title",
+    "string": "Bulk issue gift cards"
   },
   "dc5KWn": {
     "context": "products export type label",
@@ -9199,6 +9211,10 @@
     "context": "attribute is filterable in dashboard",
     "string": "Filterable in dashboard"
   },
+  "j5r4iT": {
+    "context": "bulk issue gift cards quantity section header",
+    "string": "Gift cards to issue"
+  },
   "jBl05c": {
     "context": "Badge shown when channel has validation errors",
     "string": "Error"
@@ -9780,6 +9796,10 @@
     "context": "discount value label",
     "string": "Discount value"
   },
+  "lkqgNs": {
+    "context": "export selected gift cards scope option",
+    "string": "Selected gift cards ({number})"
+  },
   "llBnr+": {
     "string": "Warehouse Name"
   },
@@ -9833,10 +9853,6 @@
   },
   "m2Jb3P": {
     "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
-  },
-  "m3Kp9w": {
-    "context": "gift card export dialog intro when exporting preselected cards",
-    "string": "Choose the file format for the selected gift cards. Only active, unused gift cards are included."
   },
   "m66R1V": {
     "context": "hint below tax class selector",
@@ -10026,10 +10042,6 @@
     "context": "customer overview, last login tooltip",
     "string": "Most recent time this customer signed in to their account."
   },
-  "n97Ii0": {
-    "context": "export selected gift cards scope option",
-    "string": "Selected gift cards ({number})"
-  },
   "n9JOI3": {
     "context": "money amount input label",
     "string": "Enter amount"
@@ -10203,6 +10215,10 @@
   "ny4zrH": {
     "context": "dialog title",
     "string": "Delete Warehouse"
+  },
+  "nzycaQ": {
+    "context": "gift card export dialog title",
+    "string": "Export gift cards"
   },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
@@ -10647,6 +10663,10 @@
     "context": "Modal header showing total problem count for an app",
     "string": "All problems ({count})"
   },
+  "qJ6D+G": {
+    "context": "gift card bulk create success dialog content",
+    "string": "Your gift cards are ready. Export the codes to your email to download the list."
+  },
   "qJedl0": {
     "context": "product label",
     "string": "Published"
@@ -10729,6 +10749,10 @@
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
+  },
+  "qU6l9V": {
+    "context": "gift card export dialog intro when exporting preselected cards",
+    "string": "Choose the file format for the selected gift cards. Only active, unused gift cards are included."
   },
   "qVT7rt": {
     "context": "Badge label showing number of errors",
@@ -11189,6 +11213,10 @@
     "context": "table header column",
     "string": "Show gross prices in storefront"
   },
+  "slmhRQ": {
+    "context": "gift card bulk create success dialog title",
+    "string": "Gift cards issued"
+  },
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
@@ -11493,10 +11521,6 @@
     "context": "add header,button",
     "string": "Add custom request header"
   },
-  "uQk8gB": {
-    "context": "export all gift cards scope option",
-    "string": "All gift cards ({number})"
-  },
   "uR2ks6": {
     "context": "bulk save button",
     "string": "Save changes"
@@ -11742,6 +11766,10 @@
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
+  },
+  "vNRe6t": {
+    "context": "gift card bulk create success dialog accept button",
+    "string": "Done"
   },
   "vONi+O": {
     "string": "Country"
