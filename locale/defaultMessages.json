@@ -114,9 +114,6 @@
   "+bhokL": {
     "string": "Search discounts..."
   },
-  "+cGU63": {
-    "string": "Are you sure you want to cancel fulfillment?"
-  },
   "+djx5u": {
     "string": "You can't give this extension permissions you don't have."
   },
@@ -443,6 +440,10 @@
   "0HBlkO": {
     "string": "Search channels"
   },
+  "0I+Z8l": {
+    "context": "stock exceeded dialog description",
+    "string": "{count, plural, one {# item exceeds available stock.} other {# items exceed available stock.}} Go back to adjust quantities, or fulfill anyway to oversell."
+  },
   "0KVj6r": {
     "string": "Copy tracking number"
   },
@@ -598,6 +599,10 @@
   "12K83x": {
     "context": "shipping method option when name unknown",
     "string": "Current method"
+  },
+  "14t8+g": {
+    "context": "external media dialog url input label",
+    "string": "URL"
   },
   "15PiOX": {
     "context": "button title",
@@ -1180,7 +1185,7 @@
     "string": "This unit will be used as default shipping weight"
   },
   "4LRapg": {
-    "string": "Discount removed"
+    "string": "Promotion removed"
   },
   "4Rj36Y": {
     "string": "Create new Model Type"
@@ -1460,6 +1465,10 @@
     "context": "grant refund, reason input field placeholder",
     "string": "Reason note"
   },
+  "5nQ6yG": {
+    "context": "empty state in variant media selection dialog",
+    "string": "No product media available. Upload images on the product page first."
+  },
   "5nrCxC": {
     "string": "Go to model types"
   },
@@ -1538,7 +1547,8 @@
     "string": "Payment status"
   },
   "6FLezz": {
-    "string": "Are you sure you want to delete this discount?"
+    "context": "dialog content",
+    "string": "Are you sure you want to delete this promotion?"
   },
   "6GTAm2": {
     "context": "order history message",
@@ -1751,6 +1761,10 @@
     "context": "tab name",
     "string": "All gift cards"
   },
+  "7F+Lpf": {
+    "context": "table header stock shortfall label",
+    "string": "Short"
+  },
   "7FL+WZ": {
     "context": "export products to csv file, button",
     "string": "Export Products"
@@ -1822,9 +1836,17 @@
     "context": "model",
     "string": "will be visible from {date}"
   },
+  "7YSzeP": {
+    "context": "dialog description",
+    "string": "Are you sure you want to cancel fulfillment?"
+  },
   "7ZKQU3": {
     "context": "no shipping method option",
     "string": "No shipping method"
+  },
+  "7bueG3": {
+    "context": "export scope section header for gift cards",
+    "string": "Gift cards to include"
   },
   "7dhhzL": {
     "context": "bulk issue gift cards dialog title",
@@ -2310,6 +2332,10 @@
   "9uqfGj": {
     "string": "Variant updated"
   },
+  "9vKIIg": {
+    "context": "assign warehouse dialog search placeholder",
+    "string": "Search by warehouse name"
+  },
   "9vQR6c": {
     "context": "collection label",
     "string": "Visible"
@@ -2777,6 +2803,10 @@
     "context": "helper explaining the effect of assigning reference types",
     "string": "Assigning reference types narrows the list of items this attribute can reference."
   },
+  "COhmwv": {
+    "context": "Transaction void action label while a void request is in flight",
+    "string": "Void in progress"
+  },
   "CPPACf": {
     "string": "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})"
   },
@@ -2794,6 +2824,10 @@
   "CT5PAn": {
     "context": "CannotDefineChannelsAvailabilityCard title",
     "string": "Availability"
+  },
+  "CVVSkC": {
+    "context": "product export dialog step one intro",
+    "string": "Select the columns and details to include in your export file."
   },
   "CWDuMj": {
     "context": "remaining quantity",
@@ -3244,6 +3278,10 @@
     "context": "note about standalone tabs in model type tab grouping help",
     "string": "Types without a separator stay as separate tabs."
   },
+  "F2fOM7": {
+    "context": "export scope option for items matching list view filters and search",
+    "string": "List view filters ({number})"
+  },
   "F2kF9e": {
     "string": "You must select transaction that you want to refund"
   },
@@ -3563,6 +3601,10 @@
     "context": "configuration menu item title",
     "string": "Product attributes"
   },
+  "GU+ikh": {
+    "context": "dialog description when restock warehouse must be selected",
+    "string": "Canceling a fulfillment will restock products at a selected warehouse."
+  },
   "GUeIcq": {
     "context": "edit structure, header",
     "string": "Edit Item"
@@ -3686,6 +3728,10 @@
   "Gzg8hy": {
     "context": "section header",
     "string": "Invoices"
+  },
+  "Gzsems": {
+    "context": "dialog description",
+    "string": "Search for an existing customer or enter an email address to assign to this draft order."
   },
   "H/f9KR": {
     "context": "section header returned",
@@ -4133,6 +4179,10 @@
     "context": "Number of shipping zones configured",
     "string": "{count, plural, one {# shipping zone} other {# shipping zones}}"
   },
+  "JB7OuS": {
+    "context": "export scope option disabled when list has no active filters",
+    "string": "Apply filters or search on the list to enable this option."
+  },
   "JDvxO6": {
     "context": "search gift card placeholder",
     "string": "Search Gift Cards (e.g. by code, email, user name)"
@@ -4315,10 +4365,6 @@
     "context": "warning dialog description when SKU and stock are not set",
     "string": "You haven't set a SKU prefix or initial stock. The variants will be created without these values. You can add them later by editing individual variants."
   },
-  "Jwuu4X": {
-    "context": "select product informations to be exported",
-    "string": "Information exported:"
-  },
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
@@ -4347,6 +4393,10 @@
   "K8xNLe": {
     "context": "products section name",
     "string": "Products"
+  },
+  "KAhzcY": {
+    "context": "product export dialog step two intro",
+    "string": "Choose which products to export and the file format."
   },
   "KCjd1o": {
     "context": "dialog title",
@@ -4739,9 +4789,6 @@
     "context": "Number of warehouses",
     "string": "{count, plural, =0 {No warehouses} one {# warehouse} other {# warehouses}}"
   },
-  "MPfyne": {
-    "string": "Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
-  },
   "MQwT1W": {
     "context": "activate",
     "string": "Activate"
@@ -4818,10 +4865,6 @@
     "context": "dialog header",
     "string": "Unassign Collections From Voucher"
   },
-  "Mmo9k2": {
-    "context": "table header warehouse stock label",
-    "string": "Warehouse stock"
-  },
   "MnpUD7": {
     "string": "View details"
   },
@@ -4831,6 +4874,10 @@
   "MpR4zK": {
     "context": "customer details, header",
     "string": "{fullName} Details"
+  },
+  "MqF/Kg": {
+    "context": "dialog content",
+    "string": "Are you sure you want to void this payment?"
   },
   "MwfSVA": {
     "context": "input helper text",
@@ -5292,10 +5339,6 @@
     "context": "select all model types preset label",
     "string": "All model types"
   },
-  "P94gV7": {
-    "context": "Transaction cancel action label while a cancel request is in flight",
-    "string": "Cancel in progress"
-  },
   "P98zBi": {
     "string": "Edit reason"
   },
@@ -5604,9 +5647,6 @@
   "QUyUJy": {
     "string": "Main Product"
   },
-  "QV5QKO": {
-    "string": "Canceling a fulfillment will restock products at a selected warehouse."
-  },
   "QVNg8A": {
     "context": "product field",
     "string": "Charge Taxes"
@@ -5874,6 +5914,10 @@
   "RzsKm8": {
     "string": "Shipping methods"
   },
+  "S1hCno": {
+    "context": "Dialog confirmation when voiding transaction authorization",
+    "string": "Are you sure you want to void this transaction?"
+  },
   "S1u2pa": {
     "context": "app settings error",
     "string": "Failed to fetch extension settings"
@@ -5899,10 +5943,6 @@
   },
   "S6zKcD": {
     "string": "Payment voided"
-  },
-  "S7Rwl0": {
-    "context": "stock exceeded action question label",
-    "string": "Are you sure you want to fulfill those products anyway?"
   },
   "S7j+Wf": {
     "context": "unassign attribute from product type, button",
@@ -6003,10 +6043,6 @@
     "context": "set variant as default, button",
     "string": "Set as default"
   },
-  "SZt9kC": {
-    "context": "export filtered items to csv file",
-    "string": "Current search ({number})"
-  },
   "SZyphU": {
     "string": "Product type created"
   },
@@ -6054,6 +6090,10 @@
   },
   "T1f2Yl": {
     "string": "Variant Name"
+  },
+  "T1yaeM": {
+    "context": "Dialog title when voiding transaction authorization",
+    "string": "Void transaction"
   },
   "T3cLGs": {
     "context": "alert link message",
@@ -6174,10 +6214,6 @@
   "TZZ8Z7": {
     "context": "intro for model type tab grouping help tooltip",
     "string": "Each model type name is split at the first matching separator. The part before becomes the tab name; the part after appears in the tab menu."
-  },
-  "TZtvTG": {
-    "context": "table header required stock label",
-    "string": "Required"
   },
   "Ta9j04": {
     "context": "orders section name",
@@ -7209,6 +7245,10 @@
     "context": "consent removal of gift cards with balance button label",
     "string": "{selectedItemsCount,plural,one{I am aware that I am removing a gift card with balance} other{I am aware that I am removing gift cards with balance}}"
   },
+  "Yxnwa3": {
+    "context": "dialog content",
+    "string": "Are you sure you want to send this invoice: <strong>{invoiceNumber}</strong> to the customer?"
+  },
   "Yy/yDL": {
     "string": "Reset password"
   },
@@ -7225,10 +7265,6 @@
   "Z3T6zR": {
     "context": "card title",
     "string": "Return & Replace"
-  },
-  "Z7Tf8e": {
-    "context": "stock exceeded dialog description",
-    "string": "Stock for items shown below are not enough to prepare fulfillment:"
   },
   "Z7YrIb": {
     "context": "no customer assigned to order",
@@ -7364,7 +7400,8 @@
     "string": "Shipping address"
   },
   "ZrIt1W": {
-    "string": "Delete discount"
+    "context": "dialog header",
+    "string": "Delete promotion"
   },
   "ZuqkSp": {
     "context": "note input subtitle",
@@ -7464,6 +7501,10 @@
   "aHIrs/": {
     "string": "Failed to load filter data. Please refresh page to try again."
   },
+  "aHasbu": {
+    "context": "delete draft order confirmation",
+    "string": "Are you sure you want to delete draft <b>{orderNumber}</b>?"
+  },
   "aHc89n": {
     "context": "select warehouse to restock items",
     "string": "Select Warehouse"
@@ -7500,6 +7541,10 @@
   "aPqizA": {
     "context": "ProductTypeDeleteWarningDialog multiple assigned items description",
     "string": "Are you sure you want to delete selected product types? If you remove them you won’t be able to assign them to created products."
+  },
+  "aRvO6i": {
+    "context": "button",
+    "string": "Assign Warehouses"
   },
   "aSn2Ud": {
     "string": "Add reason"
@@ -7731,9 +7776,17 @@
     "context": "product attribute type",
     "string": "Dropdown"
   },
+  "bavdMA": {
+    "context": "stock exceeded dialog go back button",
+    "string": "Go back"
+  },
   "bb4nSp": {
     "context": "dialog header",
     "string": "Cancel Fulfillment"
+  },
+  "bbSkxt": {
+    "context": "export scope section header for products",
+    "string": "Products to include"
   },
   "bcf60I": {
     "context": "voucher",
@@ -8339,9 +8392,6 @@
   "eu98dw": {
     "string": "Invalid password"
   },
-  "euRfu+": {
-    "string": "Are you sure you want to void this payment?"
-  },
   "ey0lZj": {
     "context": "dialog header",
     "string": "Delete Customer"
@@ -8563,10 +8613,6 @@
     "context": "button",
     "string": "Assign categories"
   },
-  "g6yuk2": {
-    "context": "export items to csv file, choice field label",
-    "string": "Export information for:"
-  },
   "g8lXTL": {
     "context": "swatch attribute",
     "string": "Swatch"
@@ -8782,6 +8828,10 @@
   "hJZwTS": {
     "string": "Email address"
   },
+  "hJj8QA": {
+    "context": "button to confirm fulfillment cancellation",
+    "string": "Cancel fulfillment"
+  },
   "hLOEeb": {
     "context": "button",
     "string": "Set as default billing address"
@@ -8981,10 +9031,6 @@
   "iIPThY": {
     "context": "onboarding title",
     "string": "Let’s Get Started ({count}/{total})"
-  },
-  "iIfq2+": {
-    "context": "Transaction cancel button - return preauthorized amount to client",
-    "string": "Cancel"
   },
   "iK8hZU": {
     "context": "activate app",
@@ -9215,6 +9261,10 @@
     "context": "description",
     "string": "No members found"
   },
+  "jWTXmC": {
+    "context": "selected media count badge in variant media selection dialog",
+    "string": "{count, plural, one {# selected} other {# selected}}"
+  },
   "jXf/9p": {
     "context": "product availability",
     "string": "Hide in product listings"
@@ -9422,6 +9472,10 @@
   "kJYa8Y": {
     "context": "grant refund, refund card calculated refund value",
     "string": "Selected refund value:"
+  },
+  "kKxHG9": {
+    "context": "button to open change customer dialog on draft order",
+    "string": "Change customer"
   },
   "kMziE/": {
     "string": "PSP Reference"
@@ -9944,10 +9998,6 @@
   "mxGY7T": {
     "context": "status pill for no authorization",
     "string": "No Authorization"
-  },
-  "mxtAFx": {
-    "context": "delete draft order confirmation",
-    "string": "Are you sure you want to delete draft <b>{orderNumber}</b>?"
   },
   "mykruj": {
     "context": "detail page top bar, translations button tooltip",
@@ -10878,6 +10928,10 @@
     "context": "status label active",
     "string": "Active"
   },
+  "rRxWkt": {
+    "context": "dialog header",
+    "string": "Change customer"
+  },
   "rTBpeo": {
     "context": "expand refunded line sub-rows",
     "string": "Show all {count} lines"
@@ -11275,6 +11329,10 @@
     "context": "variant stocks section subtitle",
     "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
   },
+  "teWSsc": {
+    "context": "assign warehouse dialog search label",
+    "string": "Search warehouses"
+  },
   "tf+OkY": {
     "context": "link to edit variant metadata",
     "string": "Edit on variant page"
@@ -11361,6 +11419,10 @@
   "u2zyiB": {
     "context": "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
     "string": "A manual amount below replaces that automatic discount—the strikethrough price on the line will update to match."
+  },
+  "u30A+K": {
+    "context": "variant media selection dialog subtitle",
+    "string": "Choose product images to assign to this variant."
   },
   "u34css": {
     "context": "label for empty list in channels list",
@@ -11454,10 +11516,6 @@
   "uT3VS+": {
     "context": "promotion status",
     "string": "Status"
-  },
-  "uT5L4h": {
-    "context": "cancel button label",
-    "string": "Cancel"
   },
   "uU1mx5": {
     "context": "button to keep draft order",
@@ -12071,6 +12129,10 @@
     "context": "WarehouseSettings private stock label",
     "string": "Private Stock"
   },
+  "wqaEMQ": {
+    "context": "export file type section header",
+    "string": "File format"
+  },
   "wsDF7X": {
     "context": "product variant attribute entity type",
     "string": "Product variants"
@@ -12124,6 +12186,10 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
+  },
+  "xB7Jge": {
+    "context": "table header quantity to fulfill label",
+    "string": "To fulfill"
   },
   "xBulM3": {
     "string": "Set reward and conditions for the selected channel"
@@ -12426,10 +12492,6 @@
   "z0gGP+": {
     "context": "number of attributes",
     "string": "{number} Attributes"
-  },
-  "z1puMb": {
-    "context": "export items as csv or spreadsheet file",
-    "string": "Export as:"
   },
   "z1y9oL": {
     "context": "file attribute type",

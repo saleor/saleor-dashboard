@@ -1,46 +1,56 @@
+import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { messages } from "../../messages";
 
 interface RuleDeleteModalProps {
+  confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
-  confimButtonState: ConfirmButtonTransitionState;
+  onConfirm: () => void;
 }
 
 export const RuleDeleteModal = ({
+  confirmButtonState,
   open,
   onClose,
-  onSubmit,
-  confimButtonState,
+  onConfirm,
 }: RuleDeleteModalProps) => {
-  const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="xs" data-test-id="delete-rule-dialog">
-        <DashboardModal.Header>{intl.formatMessage(messages.deleteRule)}</DashboardModal.Header>
-
-        <Text>
-          <FormattedMessage {...messages.deleteRuleDescription} />
-        </Text>
+        <DashboardModal.Header subtitle={<FormattedMessage {...messages.deleteRuleDescription} />}>
+          <FormattedMessage {...messages.deleteRule} />
+        </DashboardModal.Header>
 
         <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary" data-test-id="cancel-delete-rule-button">
-            <FormattedMessage {...buttonMessages.close} />
-          </Button>
+          <BackButton
+            disabled={isSubmitting}
+            onClick={handleClose}
+            data-test-id="cancel-delete-rule-button"
+          />
           <ConfirmButton
-            transitionState={confimButtonState}
-            onClick={onSubmit}
             data-test-id="delete-rule-button"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
           >
             <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
@@ -49,3 +59,5 @@ export const RuleDeleteModal = ({
     </DashboardModal>
   );
 };
+
+RuleDeleteModal.displayName = "RuleDeleteModal";

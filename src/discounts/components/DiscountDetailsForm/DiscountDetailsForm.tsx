@@ -25,7 +25,7 @@ interface DiscountDetailsFormRenderProps {
   discountType: PromotionTypeEnum;
   onSubmit: () => void;
   onRuleSubmit: (rule: Rule, ruleEditIndex: number | null) => Promise<void>;
-  onDeleteRule: (ruleDeleteIndex: number) => Promise<void>;
+  onDeleteRule: (ruleDeleteIndex: number) => Promise<boolean>;
 }
 
 interface DiscountDetailsFormProps {
@@ -35,7 +35,7 @@ interface DiscountDetailsFormProps {
   onSubmit: (data: DiscoutFormData) => void;
   onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
   onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
-  onRuleDeleteSubmit: (id: string) => void;
+  onRuleDeleteSubmit: (id: string) => Promise<boolean>;
 }
 
 export const DiscountDetailsForm = ({
