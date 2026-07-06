@@ -25,7 +25,7 @@ import { getSortParams } from "@dashboard/utils/sort";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import MenuCreateDialog from "../../components/MenuCreateDialog";
+import { MenuCreateDialog } from "../../components/MenuCreateDialog/MenuCreateDialog";
 import MenuListPage from "../../components/MenuListPage";
 import { menuListUrl, type MenuListUrlQueryParams, menuUrl } from "../../urls";
 import { getSortQueryVariables } from "./sort";
@@ -153,10 +153,9 @@ const MenuList = ({ params }: MenuListProps) => {
         }
       />
       <MenuCreateDialog
-        open={params.action === "add"}
         confirmButtonState={menuCreateOpts.status}
-        disabled={menuCreateOpts.loading}
         errors={menuCreateOpts?.data?.menuCreate.errors || []}
+        open={params.action === "add"}
         onClose={closeModal}
         onConfirm={formData =>
           menuCreate({
