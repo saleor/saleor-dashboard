@@ -35,7 +35,7 @@ export const MenuCreateDialog = ({
   onClose,
   onConfirm,
   open,
-}: MenuCreateDialogProps) => {
+}: MenuCreateDialogProps): JSX.Element => {
   const intl = useIntl();
   const isSubmittingRef = useRef(false);
   const formErrors = getFormErrors(["name"], errors);

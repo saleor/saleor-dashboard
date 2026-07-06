@@ -59,7 +59,7 @@ const MenuList = ({ params }: MenuListProps) => {
       ...paginationState,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber],
+    [paginationState, params],
   );
   const { data, loading, refetch } = useMenuListQuery({
     displayLoader: true,
