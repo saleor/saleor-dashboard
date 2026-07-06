@@ -4,7 +4,7 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,

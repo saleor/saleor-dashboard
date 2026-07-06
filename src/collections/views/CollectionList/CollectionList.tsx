@@ -3,7 +3,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";

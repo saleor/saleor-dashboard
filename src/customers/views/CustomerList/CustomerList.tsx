@@ -1,7 +1,7 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createCustomerQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";

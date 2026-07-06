@@ -2,7 +2,7 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { Box } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

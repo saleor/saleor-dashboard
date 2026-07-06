@@ -1,5 +1,5 @@
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
   type CategoryBulkDeleteMutation,
   useCategoryBulkDeleteMutation,

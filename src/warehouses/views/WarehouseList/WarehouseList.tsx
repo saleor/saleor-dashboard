@@ -1,5 +1,5 @@
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useWarehouseDeleteMutation, useWarehouseListQuery } from "@dashboard/graphql";
