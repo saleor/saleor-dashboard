@@ -1,9 +1,12 @@
 // @ts-strict-ignore
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
+import { Fragment } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 
 import { MenuItem } from "./Item";
+import { showSubmenuSeparator } from "./settingsSubmenuItem";
+import { SubmenuSeparator } from "./SubmenuSeparator";
 import { type SidebarMenuItem } from "./types";
 import { isMenuActive } from "./utils";
 
@@ -68,8 +71,11 @@ export const ItemGroup = ({ menuItem }: Props) => {
           marginTop={1}
           gap="px"
         >
-          {menuItem.children?.map(child => (
-            <MenuItem menuItem={child} key={child.id} />
+          {menuItem.children?.map((child, index) => (
+            <Fragment key={child.id}>
+              {showSubmenuSeparator(child, index) && <SubmenuSeparator />}
+              <MenuItem menuItem={child} />
+            </Fragment>
           ))}
         </Box>
       </List.ItemGroup.Content>
