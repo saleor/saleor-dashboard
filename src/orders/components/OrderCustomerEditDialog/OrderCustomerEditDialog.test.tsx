@@ -2,7 +2,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { OrderErrorCode, type OrderErrorFragment } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { OrderCustomerEditDialog } from "./OrderCustomerEditDialog";
@@ -70,7 +70,13 @@ describe("OrderCustomerEditDialog", () => {
 
     // Act
     await user.click(screen.getByTestId("select-customer-option"));
-    await user.click(screen.getByTestId("submit"));
+
+    const submitButton = screen.getByTestId("submit");
+
+    await waitFor(() => {
+      expect(submitButton).not.toBeDisabled();
+    });
+    fireEvent.click(submitButton);
 
     // Assert
     expect(onCustomerEdit).toHaveBeenCalledWith({
@@ -104,7 +110,13 @@ describe("OrderCustomerEditDialog", () => {
 
     // Act
     await user.click(screen.getByTestId("select-customer-option"));
-    await user.click(screen.getByTestId("submit"));
+
+    const submitButton = screen.getByTestId("submit");
+
+    await waitFor(() => {
+      expect(submitButton).not.toBeDisabled();
+    });
+    fireEvent.click(submitButton);
 
     // Assert
     expect(screen.getByTestId("button-progress")).toBeInTheDocument();

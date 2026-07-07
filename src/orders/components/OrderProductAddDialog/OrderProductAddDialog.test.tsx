@@ -1,7 +1,7 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { orderLineSearch } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { OrderProductAddDialog } from "./OrderProductAddDialog";
@@ -56,7 +56,13 @@ describe("OrderProductAddDialog", () => {
 
     // Act
     await user.click(screen.getAllByRole("checkbox")[1]);
-    await user.click(screen.getByTestId("confirm-button"));
+
+    const confirmButton = screen.getByTestId("confirm-button");
+
+    await waitFor(() => {
+      expect(confirmButton).not.toBeDisabled();
+    });
+    fireEvent.click(confirmButton);
 
     const firstVariantId = products?.[0]?.variants?.[0]?.id;
 

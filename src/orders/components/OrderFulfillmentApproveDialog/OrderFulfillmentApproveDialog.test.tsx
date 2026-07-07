@@ -1,7 +1,6 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import { OrderFulfillmentApproveDialog } from "./OrderFulfillmentApproveDialog";
 
@@ -14,9 +13,8 @@ describe("OrderFulfillmentApproveDialog", () => {
     onConfirm: jest.fn(),
   };
 
-  it("calls onConfirm when approve is clicked", async () => {
+  it("calls onConfirm when approve is clicked", () => {
     // Arrange
-    const user = userEvent.setup();
     const onConfirm = jest.fn();
 
     render(
@@ -26,7 +24,7 @@ describe("OrderFulfillmentApproveDialog", () => {
     );
 
     // Act
-    await user.click(screen.getByTestId("submit"));
+    fireEvent.click(screen.getByTestId("submit"));
 
     // Assert
     expect(onConfirm).toHaveBeenCalledWith({ notifyCustomer: true });
