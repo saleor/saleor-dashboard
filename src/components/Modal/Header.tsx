@@ -10,15 +10,18 @@ import { ModalDivider } from "./ModalDivider";
 import { Title, type TitleProps } from "./Title";
 import { MODAL_HEADER_DIVIDER_GAP_SPACING } from "./tokens";
 
-interface HeaderProps extends TitleProps {
-  children: ReactNode;
-  subtitle?: ReactNode;
-}
+type HeaderProps =
+  | ({ children: ReactNode; subtitle?: undefined } & TitleProps)
+  | { children: ReactNode; subtitle: ReactNode };
 
-export const Header = ({ children, subtitle, ...rest }: HeaderProps) => {
-  if (subtitle) {
+export const Header = (props: HeaderProps) => {
+  if (props.subtitle) {
+    const { children, subtitle } = props;
+
     return <ContextHeader description={subtitle}>{children}</ContextHeader>;
   }
+
+  const { children, ...rest } = props;
 
   return (
     <Box

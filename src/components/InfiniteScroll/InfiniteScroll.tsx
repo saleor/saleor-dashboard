@@ -5,13 +5,18 @@ import InfiniteScrollComponent, { type Props } from "react-infinite-scroll-compo
 import { SaleorThrobber } from "../Throbber";
 import styles from "./InfiniteScroll.module.css";
 
-interface InfiniteScrollProps extends Omit<Props, "loader"> {
-  /** Required when this component owns the scroll container. Omit when scrolling a parent element. */
-  id?: string;
+type InfiniteScrollBaseProps = Omit<Props, "loader" | "id" | "scrollableTarget"> & {
   loader?: React.ReactNode;
   children: React.ReactNode;
   flush?: boolean;
-}
+};
+
+type InfiniteScrollProps =
+  | (InfiniteScrollBaseProps & { id: string; scrollableTarget?: Props["scrollableTarget"] })
+  | (InfiniteScrollBaseProps & {
+      scrollableTarget: NonNullable<Props["scrollableTarget"]>;
+      id?: never;
+    });
 
 const InfiniteScrollLoader = () => (
   <Box
@@ -59,7 +64,7 @@ export const InfiniteScroll = ({
     id ?? (typeof scrollableTarget === "string" ? scrollableTarget : undefined);
 
   if (!scrollContainerId) {
-    throw new Error("InfiniteScroll requires `id` when no parent `scrollableTarget` is provided.");
+    throw new Error("InfiniteScroll requires either `id` or `scrollableTarget`.");
   }
 
   return (
