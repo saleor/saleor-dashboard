@@ -1,5 +1,7 @@
 import {
   type AttributeFilterInput,
+  AttributeInputTypeEnum,
+  type AttributeWhereInput,
   type CategoryFilterInput,
   type CollectionFilterInput,
   type CustomerFilterInput,
@@ -15,7 +17,8 @@ import {
   type VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { type FilterContainer } from "./FilterElement";
+import { type FilterContainer, FilterElement } from "./FilterElement";
+import { isItemOption } from "./FilterElement/ConditionValue";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
@@ -245,13 +248,39 @@ export const createStaffMembersQueryVariables = (value: FilterContainer): StaffU
 };
 
 export const createAttributesQueryVariables = (value: FilterContainer): AttributeFilterInput => {
+  const filterContainer = value.filter(
+    item => !FilterElement.isFilterElement(item) || item.value.value !== "inputType",
+  );
   const builder = new FiltersQueryBuilder<AttributeFilterInput>({
     apiType: QUERY_API_TYPES.ATTRIBUTE,
-    filterContainer: value,
+    filterContainer,
   });
   const { filters } = builder.build();
 
   return filters;
+};
+
+export const createAttributesWhereVariables = (value: FilterContainer): AttributeWhereInput => {
+  const inputTypeFilter = value.find(
+    item => FilterElement.isFilterElement(item) && item.value.value === "inputType",
+  );
+
+  if (!FilterElement.isFilterElement(inputTypeFilter)) {
+    return {};
+  }
+
+  const { value: selectedValue } = inputTypeFilter.condition.selected;
+  const inputType = isItemOption(selectedValue) ? selectedValue.value : selectedValue;
+
+  if (!Object.values(AttributeInputTypeEnum).includes(inputType as AttributeInputTypeEnum)) {
+    return {};
+  }
+
+  return {
+    inputType: {
+      eq: inputType as AttributeInputTypeEnum,
+    },
+  };
 };
 
 const categoryFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([

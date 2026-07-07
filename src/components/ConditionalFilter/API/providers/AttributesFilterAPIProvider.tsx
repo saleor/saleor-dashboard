@@ -1,5 +1,5 @@
 import { type ApolloClient, useApolloClient } from "@apollo/client";
-import { AttributeTypeEnum } from "@dashboard/graphql";
+import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
 import { type IntlShape, useIntl } from "react-intl";
 
 import { type FilterContainer, type FilterElement } from "../../FilterElement";
@@ -37,6 +37,10 @@ const createAPIHandler = (
 
   if (rowType === "attributeType") {
     return new EnumValuesHandler(AttributeTypeEnum, "attributeType", intl);
+  }
+
+  if (rowType === "inputType") {
+    return new EnumValuesHandler(AttributeInputTypeEnum, "inputType", intl);
   }
 
   if (rowType && booleanTypes.includes(rowType) && rowType !== "attribute") {

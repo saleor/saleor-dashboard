@@ -10312,6 +10312,7 @@ export type AttributeListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<AttributeSortingInput>;
+  where?: InputMaybe<AttributeWhereInput>;
 }>;
 
 

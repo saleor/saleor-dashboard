@@ -1,7 +1,21 @@
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { AttributeInputTypeEnum, type VariantAttributeFragment } from "@dashboard/graphql";
 import { variantAttributes } from "@dashboard/products/fixtures";
 
 import { getAttributeData } from "./attributes";
+
+const numericAttributeId = "numeric-attribute-id";
+const numericVariantAttributes: VariantAttributeFragment[] = [
+  ...variantAttributes,
+  {
+    ...variantAttributes[0],
+    id: numericAttributeId,
+    name: "Weight",
+    slug: "weight",
+    inputType: AttributeInputTypeEnum.NUMERIC,
+  },
+];
 
 describe("getAttributeData", () => {
   test("should filter and map data to attribute format", () => {
@@ -55,5 +69,53 @@ describe("getAttributeData", () => {
 
     // Assert
     expect(attributes).toEqual([]);
+  });
+  test("should return numeric input for numeric attribute change", () => {
+    // Arrange
+    const changeData: DatagridChange[] = [
+      {
+        column: `attribute:${numericAttributeId}`,
+        row: 1,
+        data: {
+          kind: "number-cell",
+          value: 150,
+        },
+      },
+    ];
+
+    // Act
+    const attributes = getAttributeData(changeData, 1, numericVariantAttributes);
+
+    // Assert
+    expect(attributes).toEqual([
+      {
+        id: numericAttributeId,
+        numeric: "150",
+      },
+    ]);
+  });
+  test("should return null numeric input when numeric attribute is cleared", () => {
+    // Arrange
+    const changeData: DatagridChange[] = [
+      {
+        column: `attribute:${numericAttributeId}`,
+        row: 1,
+        data: {
+          kind: "number-cell",
+          value: numberCellEmptyValue,
+        },
+      },
+    ];
+
+    // Act
+    const attributes = getAttributeData(changeData, 1, numericVariantAttributes);
+
+    // Assert
+    expect(attributes).toEqual([
+      {
+        id: numericAttributeId,
+        numeric: null,
+      },
+    ]);
   });
 });

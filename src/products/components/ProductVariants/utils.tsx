@@ -11,7 +11,11 @@ import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/customCel
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  type ProductDetailsVariantFragment,
+  type VariantAttributeFragment,
+} from "@dashboard/graphql";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { type GridCell } from "@glideapps/glide-data-grid";
@@ -73,6 +77,7 @@ interface GetDataOrError {
   column: number;
   row: number;
   variants: ProductDetailsVariantFragment[];
+  variantAttributes?: VariantAttributeFragment[] | null;
   changes: MutableRefObject<DatagridChange[]>;
   channels: ChannelData[];
   added: number[];
@@ -91,6 +96,7 @@ export function getData({
   row,
   channels,
   variants,
+  variantAttributes,
   searchAttributeValues,
 }: GetDataOrError): GridCell {
   // For some reason it happens when user deselects channel
@@ -151,19 +157,35 @@ export function getData({
   }
 
   if (getColumnAttribute(columnId)) {
-    const value =
-      change?.value ??
-      mapNodeToChoice(
-        dataRow?.attributes.find(
-          attribute => attribute.attribute.id === getColumnAttribute(columnId),
-        )?.values,
-      )[0] ??
-      emptyDropdownCellValue;
+    const attributeId = getColumnAttribute(columnId);
+
+    if (!attributeId) {
+      return textCell("");
+    }
+
+    const attribute = dataRow?.attributes.find(attribute => attribute.attribute.id === attributeId);
+    const inputType = variantAttributes?.find(attribute => attribute.id === attributeId)?.inputType;
+
+    if (inputType === AttributeInputTypeEnum.NUMERIC) {
+      const value = change?.value ?? getNumericAttributeValue(attribute?.values[0]?.name);
+
+      return numberCell(value, { hasFloatingPoint: true });
+    }
+
+    const value = change?.value ?? mapNodeToChoice(attribute?.values)[0] ?? emptyDropdownCellValue;
 
     return dropdownCell(value, {
       allowCustomValues: true,
       emptyOption: true,
-      update: text => searchAttributeValues(getColumnAttribute(columnId), text),
+      update: text => searchAttributeValues(attributeId, text),
     });
   }
+}
+
+function getNumericAttributeValue(value: string | null | undefined) {
+  if (!value) {
+    return numberCellEmptyValue;
+  }
+
+  return Number(value);
 }
