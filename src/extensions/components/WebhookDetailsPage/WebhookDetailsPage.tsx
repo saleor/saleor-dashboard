@@ -85,21 +85,21 @@ export const WebhookDetailsPage = ({
   }, [prettified]);
 
   const [localErrors, setLocalErrors] = React.useState<WebhookErrorFragment[]>([]);
-  const handleSubmit = (data: WebhookFormData) => {
+  const handleSubmit = (data: WebhookFormData): SubmitPromise<WebhookErrorFragment[]> => {
     if (!webhook && query.length === 0) {
-      setLocalErrors([
-        {
-          __typename: "WebhookError",
-          code: WebhookErrorCode.REQUIRED,
-          field: "subscriptionQuery",
-          message: intl.formatMessage(messages.subscriptionQueryBlankError),
-        },
-      ]);
+      const validationError: WebhookErrorFragment = {
+        __typename: "WebhookError",
+        code: WebhookErrorCode.REQUIRED,
+        field: "subscriptionQuery",
+        message: intl.formatMessage(messages.subscriptionQueryBlankError),
+      };
 
-      return;
+      setLocalErrors([validationError]);
+
+      return Promise.resolve([validationError]);
     }
 
-    onSubmit({ ...data, ...{ subscriptionQuery: query } });
+    return onSubmit({ ...data, subscriptionQuery: query });
   };
 
   return (
