@@ -1,1 +1,0 @@
-export { ProductVariantDeleteDialog } from "./ProductVariantDeleteDialog";

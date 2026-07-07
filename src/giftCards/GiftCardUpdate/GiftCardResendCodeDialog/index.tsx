@@ -1,1 +1,0 @@
-export { GiftCardResendCodeDialog } from "./GiftCardResendCodeDialog";

@@ -1,1 +1,0 @@
-export { ProductVariantMediaSelectDialog } from "./ProductVariantMediaSelectDialog";
