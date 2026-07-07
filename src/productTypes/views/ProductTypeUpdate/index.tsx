@@ -464,20 +464,22 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
               key={key}
             />
           ))}
-          <CreateAttributeDialog
-            attributeType={AttributeTypeEnum.PRODUCT_TYPE}
-            confirmButtonState={
-              attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
-                ? "loading"
-                : attributeCreateOpts.status
-            }
-            contextName={productType.name}
-            disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
-            errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
-            open={params.action === "create-attribute" && Boolean(createAttributeAssignmentType)}
-            onClose={closeModal}
-            onSubmit={handleCreateAttribute}
-          />
+          {productType && (
+            <CreateAttributeDialog
+              attributeType={AttributeTypeEnum.PRODUCT_TYPE}
+              confirmButtonState={
+                attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
+                  ? "loading"
+                  : attributeCreateOpts.status
+              }
+              contextName={productType.name}
+              disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
+              errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
+              open={params.action === "create-attribute" && Boolean(createAttributeAssignmentType)}
+              onClose={closeModal}
+              onSubmit={handleCreateAttribute}
+            />
+          )}
           {productType && (
             <TypeDeleteWarningDialog
               {...productTypeDeleteData}
