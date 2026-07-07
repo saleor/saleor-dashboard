@@ -2471,10 +2471,6 @@
     "context": "sale status",
     "string": "Active"
   },
-  "AqHafs": {
-    "context": "provided email input placeholder",
-    "string": "Provided email address"
-  },
   "AqXzM2": {
     "string": "Order #{orderNumber}"
   },
@@ -2818,6 +2814,10 @@
   "CT5PAn": {
     "context": "CannotDefineChannelsAvailabilityCard title",
     "string": "Availability"
+  },
+  "CTASiY": {
+    "context": "gift card resend dialog email field label",
+    "string": "Email address"
   },
   "CVVSkC": {
     "context": "product export dialog step one intro",
@@ -4960,10 +4960,6 @@
   },
   "NJ9ngY": {
     "string": "Visible Action"
-  },
-  "NLNonj": {
-    "context": "send to channel select label",
-    "string": "Send to channel"
   },
   "NLnLoj": {
     "context": "voucher code label appended to a voucher factor",
@@ -7390,6 +7386,10 @@
     "context": "dialog description",
     "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
   },
+  "Zhloph": {
+    "context": "gift card resend dialog channel field helper text",
+    "string": "Uses this channel's email configuration."
+  },
   "ZhqH8J": {
     "context": "button",
     "string": "Copy headers"
@@ -7421,6 +7421,10 @@
   },
   "Zx1w1e": {
     "string": "edited"
+  },
+  "Zyjb/g": {
+    "context": "gift card resend dialog custom recipient radio option",
+    "string": "Different email address"
   },
   "a+iRI1": {
     "context": "single gift card title",
@@ -7476,6 +7480,10 @@
   "a6cSKQ": {
     "context": "export all gift cards scope option",
     "string": "All gift cards ({number})"
+  },
+  "a80vXY": {
+    "context": "gift card resend dialog recipient section title",
+    "string": "Recipient"
   },
   "aAAxKp": {
     "context": "table column header",
@@ -8343,6 +8351,10 @@
     "context": "button",
     "string": "Done"
   },
+  "ePaUMU": {
+    "context": "gift card resend dialog fallback when default recipient email is unknown",
+    "string": "Default recipient assigned to this gift card"
+  },
   "eR2vV/": {
     "string": "If left unchecked it creates a {link} - used by Payment Plugins"
   },
@@ -8352,6 +8364,10 @@
   "eS8xZ6": {
     "context": "card header",
     "string": "Tax class rates: {country}"
+  },
+  "eUcaVH": {
+    "context": "gift card resend dialog notification section title",
+    "string": "Notification"
   },
   "eUjFjW": {
     "string": "Permission group created"
@@ -9422,6 +9438,10 @@
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
+  },
+  "k80FoQ": {
+    "context": "gift card resend dialog default recipient radio option",
+    "string": "Default recipient: {recipient}"
   },
   "k8k07f": {
     "context": "order header date, less than an hour ago",
@@ -10775,6 +10795,10 @@
     "context": "gift card export dialog intro when exporting preselected cards",
     "string": "Choose the file format for the selected gift cards. Only active, unused gift cards are included."
   },
+  "qUMJtL": {
+    "context": "gift card resend dialog channel field label",
+    "string": "Send from channel"
+  },
   "qVT7rt": {
     "context": "Badge label showing number of errors",
     "string": "{count, plural, one {{count} error} other {{count} errors}}"
@@ -11425,10 +11449,6 @@
   "tthToS": {
     "string": "Disabled"
   },
-  "ttk0w7": {
-    "context": "resend code to customer description",
-    "string": "Gift Card Code will be resent to email provided during checkout. You can provide a different email address if you want to:"
-  },
   "tuYPlG": {
     "context": "minimum amount of spent money to activate voucher",
     "string": "Min. Spent"
@@ -11698,10 +11718,6 @@
   "v/tz3W": {
     "context": "Summary of diagnostic issues found",
     "string": "{errorCount, plural, =0 {} one {# problem} other {# problems}}{hasWarnings, select, true {{hasErrors, select, true {, } other {}}} other {}}{warningCount, plural, =0 {} one {# warning} other {# warnings}} found"
-  },
-  "v01/tY": {
-    "context": "consent to send gift card to different address checkbox label",
-    "string": "Yes, I want to send gift card to different address"
   },
   "v17EX7": {
     "context": "built-in attribute list filter preset",
