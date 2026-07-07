@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { type FetchResult } from "@apollo/client";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {

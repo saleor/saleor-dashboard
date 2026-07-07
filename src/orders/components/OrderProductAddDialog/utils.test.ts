@@ -2,8 +2,8 @@ import { type SearchOrderVariantQuery } from "@dashboard/graphql";
 
 import { hasVariantPricing, onProductAdd } from "./utils";
 
-type OrderProduct = SearchOrderVariantQuery["search"]["edges"][0]["node"];
-type OrderVariant = OrderProduct["variants"][0];
+type OrderProduct = NonNullable<SearchOrderVariantQuery["search"]>["edges"][number]["node"];
+type OrderVariant = NonNullable<OrderProduct["variants"]>[number];
 
 const createVariant = (id: string, withPricing: boolean): OrderVariant =>
   ({

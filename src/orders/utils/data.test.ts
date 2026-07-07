@@ -3552,7 +3552,7 @@ describe("getOrderFulfillStockFormsetLineId", () => {
     const fulfillmentLine = {
       id: "FulfillmentLine:1",
       orderLine: { id: "OrderLine:1" },
-    };
+    } as Parameters<typeof getOrderFulfillStockFormsetLineId>[0];
 
     // Act // Assert
     expect(getOrderFulfillStockFormsetLineId(fulfillmentLine)).toBe("OrderLine:1");
@@ -3560,7 +3560,9 @@ describe("getOrderFulfillStockFormsetLineId", () => {
 
   it("returns line id for order fulfill lines", () => {
     // Arrange
-    const orderLine = { id: "OrderLine:2" };
+    const orderLine = { id: "OrderLine:2" } as Parameters<
+      typeof getOrderFulfillStockFormsetLineId
+    >[0];
 
     // Act // Assert
     expect(getOrderFulfillStockFormsetLineId(orderLine)).toBe("OrderLine:2");

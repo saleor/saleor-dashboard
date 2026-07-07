@@ -43,7 +43,7 @@ export const OrderFulfillmentTrackingDialog = ({
 
   const isTrackingNumberField = (field: string | null): field is (typeof formFields)[number] =>
     field !== null && formFields.includes(field as (typeof formFields)[number]);
-  const formErrors = getFormErrors(formFields, errors);
+  const formErrors = getFormErrors([...formFields], errors);
   const initialData: FormData = {
     trackingNumber: trackingNumber || "",
   };

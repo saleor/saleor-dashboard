@@ -491,7 +491,7 @@ const OrderCustomerAddressesEditDialog = (props: OrderCustomerAddressesEditDialo
           </DashboardModal.PickerHeader>
 
           {orderLevelErrors.length > 0 && (
-            <Box flexShrink={0}>
+            <Box __flexShrink={0}>
               <DashboardModal.Inset paddingY={4}>
                 <AddressEditDialogErrorCallout errors={orderLevelErrors} />
               </DashboardModal.Inset>

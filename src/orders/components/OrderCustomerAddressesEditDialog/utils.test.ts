@@ -2,6 +2,7 @@ import {
   AccountErrorCode,
   type AccountErrorFragment,
   AddressTypeEnum,
+  CountryCode,
   OrderErrorCode,
   type OrderErrorFragment,
 } from "@dashboard/graphql";
@@ -198,7 +199,7 @@ describe("OrderCustomerAddressesEditDialog utils", () => {
       const accountError = createAccountError({ field: "city" });
       const input = {
         shippingAddress: [accountError],
-        billingAddress: { city: "Wrocław", country: "PL" },
+        billingAddress: { city: "Wrocław", country: CountryCode.PL },
       };
 
       // Act

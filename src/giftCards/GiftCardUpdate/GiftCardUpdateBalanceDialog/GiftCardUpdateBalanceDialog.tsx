@@ -27,12 +27,10 @@ export const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
   const notify = useNotifier();
   const isSubmittingRef = useRef(false);
   const { canSeeCreatedBy } = useGiftCardPermissions();
-  const {
-    giftCard: {
-      currentBalance: { amount, currency },
-      id,
-    },
-  } = useGiftCardDetails();
+  const { giftCard } = useGiftCardDetails();
+  const amount = giftCard?.currentBalance?.amount ?? 0;
+  const currency = giftCard?.currentBalance?.currency ?? "";
+  const giftCardId = giftCard?.id ?? "";
   const initialFormData: GiftCardBalanceUpdateFormData = {
     balanceAmount: amount,
   };
@@ -51,7 +49,7 @@ export const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
 
       notify(notifierData);
 
-      if (!errors.length) {
+      if (!errors?.length) {
         onClose();
       }
     },
@@ -60,7 +58,7 @@ export const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
   const handleSubmit = async ({ balanceAmount }: GiftCardBalanceUpdateFormData) => {
     const result = await updateGiftCardBalance({
       variables: {
-        id,
+        id: giftCardId,
         input: {
           balanceAmount,
         },
@@ -68,7 +66,7 @@ export const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
       },
     });
 
-    return result?.data?.giftCardUpdate?.errors;
+    return result?.data?.giftCardUpdate?.errors ?? [];
   };
 
   const { data, change, submit, reset } = useForm(initialFormData, handleSubmit);
@@ -78,7 +76,7 @@ export const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
   isSubmittingRef.current = isSubmitting;
 
   const { formErrors } = useDialogFormReset({
-    apiErrors: submitData?.giftCardUpdate?.errors,
+    apiErrors: submitData?.giftCardUpdate?.errors ?? [],
     keys: ["initialBalanceAmount"],
     open,
     reset,

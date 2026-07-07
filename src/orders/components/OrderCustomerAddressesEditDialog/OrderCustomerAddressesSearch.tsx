@@ -229,7 +229,7 @@ export const AddressSearchFooter = () => {
   }
 
   return (
-    <Box flexShrink={0}>
+    <Box __flexShrink={0}>
       <ModalDivider />
       <DashboardModal.Inset paddingY={2}>
         <FormControlLabel

@@ -75,7 +75,7 @@ export const GiftCardCreateDialogCodeContent = ({
         >
           {cardCode}
         </Text>
-        <Box flexShrink={0}>
+        <Box __flexShrink={0}>
           <ConfirmButton
             noTransition
             onClick={handleCopy}

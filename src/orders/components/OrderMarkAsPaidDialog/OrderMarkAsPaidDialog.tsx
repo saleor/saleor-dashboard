@@ -42,7 +42,7 @@ export const OrderMarkAsPaidDialog = ({
 }: OrderMarkAsPaidDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
-  const formErrors = getFormErrors(formFields, errors);
+  const formErrors = getFormErrors([...formFields], errors);
 
   return (
     <DashboardModal onChange={onClose} open={open}>

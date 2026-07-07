@@ -13,8 +13,8 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 
 describe("OrderFulfillmentCancelDialog", () => {
   const warehouses = [
-    { id: "wh-1", name: "Warehouse A" },
-    { id: "wh-2", name: "Warehouse B" },
+    { __typename: "Warehouse" as const, id: "wh-1", name: "Warehouse A" },
+    { __typename: "Warehouse" as const, id: "wh-2", name: "Warehouse B" },
   ];
 
   const defaultProps = {

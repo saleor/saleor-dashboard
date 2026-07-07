@@ -34,7 +34,7 @@ describe("OrderInvoiceEmailSendDialog", () => {
 
   it("displays error messages when provided", () => {
     // Arrange
-    const errors = [{ code: InvoiceErrorCode.GRAPHQL_ERROR }] as unknown as InvoiceErrorFragment[];
+    const errors = [{ code: InvoiceErrorCode.EMAIL_NOT_SET }] as unknown as InvoiceErrorFragment[];
 
     // Act
     render(

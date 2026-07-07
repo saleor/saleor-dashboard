@@ -345,7 +345,7 @@ export type OrderFulfillStockFormsetData = Array<
 >;
 
 export const getOrderFulfillStockFormsetLineId = (
-  line: FulfillmentFragment["lines"][0] | OrderFulfillLineFragment,
+  line: NonNullable<FulfillmentFragment["lines"]>[number] | OrderFulfillLineFragment,
 ): string => {
   if ("orderLine" in line && line.orderLine?.id) {
     return line.orderLine.id;

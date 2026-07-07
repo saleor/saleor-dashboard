@@ -23,7 +23,7 @@ import { getCustomerEditDataFromOption } from "../OrderCustomer/getCustomerEditD
 import { type CustomerEditData } from "../OrderCustomer/OrderCustomer";
 import { orderCustomerEditDialogMessages as messages } from "./messages";
 
-interface OrderCustomerEditDialogProps extends FetchMoreProps {
+interface OrderCustomerEditDialogProps extends Omit<FetchMoreProps, "loading"> {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -55,7 +55,7 @@ export const OrderCustomerEditDialog = ({
   open,
   order,
   users,
-  loading,
+  loading = false,
   fetchUsers,
   hasMore,
   onFetchMore,

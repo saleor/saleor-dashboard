@@ -34,8 +34,8 @@ const AddressSelectionIndicator = ({ checked, isHoverState }: AddressSelectionIn
     display="flex"
     justifyContent="center"
     alignItems="center"
-    flexShrink={0}
-    marginTop={0.5}
+    __flexShrink={0}
+    __marginTop={0.5}
     backgroundColor={getHoverStateBgColor({ checked, isHoverState })}
   >
     <Box

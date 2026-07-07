@@ -58,9 +58,9 @@ describe("OrderProductAddDialog", () => {
     await user.click(screen.getAllByRole("checkbox")[1]);
     await user.click(screen.getByTestId("confirm-button"));
 
+    const firstVariantId = products?.[0]?.variants?.[0]?.id;
+
     // Assert
-    expect(onSubmit).toHaveBeenCalledWith([
-      expect.objectContaining({ id: products[0].variants[0].id }),
-    ]);
+    expect(onSubmit).toHaveBeenCalledWith([expect.objectContaining({ id: firstVariantId })]);
   });
 });

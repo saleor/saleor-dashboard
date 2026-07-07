@@ -30,16 +30,16 @@ export const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const isSubmittingRef = useRef(false);
-  const {
-    giftCard: { boughtInChannel: initialChannelSlug, id },
-  } = useGiftCardDetails();
+  const { giftCard } = useGiftCardDetails();
+  const initialChannelSlug = giftCard?.boughtInChannel ?? "";
+  const giftCardId = giftCard?.id ?? "";
   const { canManageChannels } = useGiftCardPermissions();
   const [consentSelected, setConsentSelected] = useState(false);
   const { data: channelsData, loading: loadingChannels } = useChannelsQuery({
     skip: !canManageChannels,
   });
   const channels = channelsData?.channels;
-  const activeChannels = channels?.filter(({ isActive }) => isActive);
+  const activeChannels = channels?.filter(({ isActive }) => isActive) ?? [];
   const { onQueryChange, filteredChannels } = useChannelsSearch(activeChannels);
   const initialFormData: GiftCardResendCodeFormData = {
     channelSlug: initialChannelSlug || "",
@@ -52,12 +52,12 @@ export const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
         input: {
           channel: channelSlug,
           email: email || null,
-          id,
+          id: giftCardId,
         },
       },
     });
 
-    return result?.data?.giftCardResend?.errors;
+    return result?.data?.giftCardResend?.errors ?? [];
   };
 
   const { data, change, submit, reset } = useForm(initialFormData, handleSubmit);
@@ -76,7 +76,7 @@ export const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
 
       notify(notifierData);
 
-      if (!errors.length) {
+      if (!errors?.length) {
         onClose();
         reset();
       }
@@ -88,7 +88,7 @@ export const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
   isSubmittingRef.current = isSubmitting;
 
   const { formErrors } = useDialogFormReset({
-    apiErrors: submitData?.giftCardResend?.errors,
+    apiErrors: submitData?.giftCardResend?.errors ?? [],
     keys: ["email"],
     open,
     reset,

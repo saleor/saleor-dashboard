@@ -36,7 +36,7 @@ interface GiftCardDeleteDialogContentProps<TGiftCard extends DeleteDialogContent
 }
 
 const hasGiftCardBalance = (
-  giftCards: GiftCardsListConsumerProps["giftCards"],
+  giftCards: GiftCardsListConsumerProps["giftCards"] | undefined,
   giftCard: DeleteDialogContentGiftCard | undefined,
   id: string,
 ): boolean => {
