@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.23.14
+
+### Patch Changes
+
+- [#6703](https://github.com/saleor/saleor-dashboard/pull/6703) [`f26158a`](https://github.com/saleor/saleor-dashboard/commit/f26158a7e1a404f3b21e447c192353a44fc456a3) Thanks [@mirekm](https://github.com/mirekm)! - Customer profiles now show channel-scoped order statistics: total orders, recent net sales, and average order value. Net sales use product revenue after discounts and exclude shipping and tax; hover the amount for shipping and refund details from the same orders. The recent orders table shows net and gross amounts per order, with a hint explaining how net relates to the overview figures.
+
+- [#6716](https://github.com/saleor/saleor-dashboard/pull/6716) [`ce87ab7`](https://github.com/saleor/saleor-dashboard/commit/ce87ab711dfa71f5ab8cc7f1350cb856d8eecfc1) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed the "Used by" column from the gift cards list and the "Used by" field from the gift card details page. These relied on the `GiftCard.usedBy` / `usedByEmail` API fields, which have been deprecated and no longer behave as intended since Saleor 3.14 — `usedBy` became mutable and points to the last usage rather than a reliable single user, so the displayed value was misleading. Filtering gift cards by the customer who used them is unaffected.
+
+- [#6700](https://github.com/saleor/saleor-dashboard/pull/6700) [`260b3ab`](https://github.com/saleor/saleor-dashboard/commit/260b3ab37891d59443717d3b2306b0e848e6d893) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed a flash on the homepage where an empty "Welcome" screen briefly appeared before the app extension tabs and widgets loaded on every page refresh. The homepage now caches the last-known extensions locally and renders their tabs immediately on load while refreshing in the background. On the very first load (before anything is cached) the page stays blank until extensions resolve, instead of flashing the "Welcome" message.
+
+- [#6708](https://github.com/saleor/saleor-dashboard/pull/6708) [`b216b81`](https://github.com/saleor/saleor-dashboard/commit/b216b814a291a263fc846cfbf4d4b7c80021e829) Thanks [@mirekm](https://github.com/mirekm)! - Moved Model Types and Product Types to the bottom of their sidebar sections, separated by a dashed line from daily-use items. Both open the same settings views as Configuration, with a small settings icon and lighter label styling.
+
+- [#6704](https://github.com/saleor/saleor-dashboard/pull/6704) [`4036943`](https://github.com/saleor/saleor-dashboard/commit/40369430a5e3d7cb91d966b1de623919f631ca1b) Thanks [@mirekm](https://github.com/mirekm)! - Added a **Net** column to the orders list showing post-discount product value (excluding tax and shipping), placed before the existing **Total** column. The Net column is shown by default for new layouts and can be enabled from the column picker for customized views.
+
+- [#6712](https://github.com/saleor/saleor-dashboard/pull/6712) [`5b4f22d`](https://github.com/saleor/saleor-dashboard/commit/5b4f22db145c9e0b7d16ffa4345bc87804ce7097) Thanks [@mirekm](https://github.com/mirekm)! - Fixed saving a webhook from the create view incorrectly showing the "Leave without saving changes?" dialog instead of navigating to the new webhook.
+
 ## 3.23.13
 
 ### Patch Changes
