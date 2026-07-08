@@ -44,11 +44,6 @@ export const getColumns = (intl: IntlShape, sort?: Sort<GiftCardUrlSortField>): 
       width: 200,
     },
     {
-      id: "usedBy",
-      title: intl.formatMessage(columnsMessages.customer),
-      width: 200,
-    },
-    {
       id: "assignedTo",
       title: intl.formatMessage(columnsMessages.assignedTo),
       width: 200,
@@ -127,12 +122,6 @@ export const createGetCellContent =
         return readonlyTextCell(getTagCellText(rowData?.tags ?? []));
       case "product":
         return readonlyTextCell(rowData?.product?.name ?? PLACEHOLDER);
-      case "usedBy":
-        if (rowData.usedBy) {
-          return readonlyTextCell(`${rowData.usedBy.firstName} ${rowData.usedBy.lastName}`);
-        }
-
-        return readonlyTextCell(rowData?.usedByEmail ?? PLACEHOLDER);
       case "assignedTo":
         return readonlyTextCell(rowData?.assignedToEmail ?? PLACEHOLDER);
       case "balance":

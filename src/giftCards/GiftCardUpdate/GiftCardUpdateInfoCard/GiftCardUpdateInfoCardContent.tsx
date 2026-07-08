@@ -7,7 +7,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { GiftCardEventsEnum, useGiftCardUnassignUserMutation } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
+import { getFullName } from "@dashboard/misc";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getOrderNumberLinkObject } from "@dashboard/orders/components/OrderHistory/utils";
 import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
@@ -29,17 +29,7 @@ const GiftCardUpdateInfoCardContent = () => {
   const localizeDate = useDateLocalize();
   const { giftCard } = useGiftCardDetails();
   const { openAssignCustomerDialog } = useGiftCardUpdateDialogs();
-  const {
-    id,
-    created,
-    createdByEmail,
-    createdBy,
-    usedByEmail,
-    usedBy,
-    product,
-    assignedTo,
-    assignedToEmail,
-  } = giftCard;
+  const { id, created, createdByEmail, createdBy, product, assignedTo, assignedToEmail } = giftCard;
   const [unassignUser, unassignUserOpts] = useGiftCardUnassignUserMutation({
     onCompleted: data => {
       const errors = data?.giftCardUnassignUser?.errors;
@@ -149,14 +139,6 @@ const GiftCardUpdateInfoCardContent = () => {
 
       <Label text={intl.formatMessage(buyerLabelMessage)} />
       {buyerUrl ? <Link href={buyerUrl}>{buyerName}</Link> : <Text>{buyerName}</Text>}
-      <CardSpacer />
-
-      <Label text={intl.formatMessage(messages.usedByLabel)} />
-      {usedBy ? (
-        <Link href={customerUrl(usedBy.id)}>{getFullName(usedBy)}</Link>
-      ) : (
-        <Text>{getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}</Text>
-      )}
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.assignedToLabel)} />

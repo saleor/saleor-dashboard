@@ -9,16 +9,9 @@ import {
   type Sort,
 } from "@dashboard/types";
 
-export type GiftCardListColummns =
-  | "giftCardCode"
-  | "tag"
-  | "balance"
-  | "usedBy"
-  | "assignedTo"
-  | "product";
+export type GiftCardListColummns = "giftCardCode" | "tag" | "balance" | "assignedTo" | "product";
 
 export enum GiftCardUrlSortField {
-  usedBy = "usedBy",
   balance = "balance",
   product = "product",
 }

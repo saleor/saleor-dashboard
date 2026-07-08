@@ -23,7 +23,6 @@ export const giftCardList = gql`
       edges {
         node {
           id
-          usedByEmail
           assignedToEmail
           last4CodeChars
           isActive
@@ -34,9 +33,6 @@ export const giftCardList = gql`
           }
           tags {
             name
-          }
-          usedBy {
-            ...UserBase
           }
           currentBalance {
             ...Money

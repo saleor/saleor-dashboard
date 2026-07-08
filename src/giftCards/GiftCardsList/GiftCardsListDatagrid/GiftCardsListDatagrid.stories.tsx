@@ -30,13 +30,6 @@ const mockGiftCards: GiftCardNode[] = [
       id: "prod-1",
       name: "Gift Card $50",
     },
-    usedBy: {
-      __typename: "User" as const,
-      id: "user-1",
-      firstName: "John",
-      lastName: "Doe",
-    },
-    usedByEmail: "john@example.com",
     assignedToEmail: "vip@example.com",
     currentBalance: {
       __typename: "Money" as const,
@@ -53,8 +46,6 @@ const mockGiftCards: GiftCardNode[] = [
     isExpired: true,
     tags: [],
     product: null,
-    usedBy: null,
-    usedByEmail: null,
     assignedToEmail: null,
     currentBalance: {
       __typename: "Money" as const,
@@ -78,13 +69,6 @@ const mockGiftCards: GiftCardNode[] = [
       id: "prod-2",
       name: "Gift Card $100",
     },
-    usedBy: {
-      __typename: "User" as const,
-      id: "user-2",
-      firstName: "Jane",
-      lastName: "Smith",
-    },
-    usedByEmail: "jane@example.com",
     assignedToEmail: null,
     currentBalance: {
       __typename: "Money" as const,
@@ -98,7 +82,7 @@ const defaultContextValue: GiftCardsListConsumerProps = {
   loading: false,
   giftCards: mockGiftCards,
   settings: {
-    columns: ["giftCardCode", "tag", "product", "usedBy", "assignedTo", "balance"],
+    columns: ["giftCardCode", "tag", "product", "assignedTo", "balance"],
     rowNumber: 20,
   },
   updateListSettings: fn(),
@@ -106,7 +90,7 @@ const defaultContextValue: GiftCardsListConsumerProps = {
   setSelectedRowIds: fn(),
   setClearDatagridRowSelectionCallback: fn(),
   clearRowSelection: fn(),
-  sort: { sort: GiftCardUrlSortField.usedBy, asc: true },
+  sort: { sort: GiftCardUrlSortField.product, asc: true },
   onSort: fn(),
   pageInfo: {
     hasNextPage: false,
