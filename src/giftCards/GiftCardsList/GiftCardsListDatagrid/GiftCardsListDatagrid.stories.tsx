@@ -37,6 +37,7 @@ const mockGiftCards: GiftCardNode[] = [
       lastName: "Doe",
     },
     usedByEmail: "john@example.com",
+    assignedToEmail: "vip@example.com",
     currentBalance: {
       __typename: "Money" as const,
       amount: 50,
@@ -54,6 +55,7 @@ const mockGiftCards: GiftCardNode[] = [
     product: null,
     usedBy: null,
     usedByEmail: null,
+    assignedToEmail: null,
     currentBalance: {
       __typename: "Money" as const,
       amount: 0,
@@ -83,6 +85,7 @@ const mockGiftCards: GiftCardNode[] = [
       lastName: "Smith",
     },
     usedByEmail: "jane@example.com",
+    assignedToEmail: null,
     currentBalance: {
       __typename: "Money" as const,
       amount: 75,
@@ -95,7 +98,7 @@ const defaultContextValue: GiftCardsListConsumerProps = {
   loading: false,
   giftCards: mockGiftCards,
   settings: {
-    columns: ["giftCardCode", "tag", "product", "usedBy", "balance"],
+    columns: ["giftCardCode", "tag", "product", "usedBy", "assignedTo", "balance"],
     rowNumber: 20,
   },
   updateListSettings: fn(),

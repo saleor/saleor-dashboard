@@ -8,6 +8,14 @@ export const giftCardDetails = gql`
       ...GiftCardData
       events {
         ...GiftCardEvent
+        assignedTo {
+          currentAssignedTo @include(if: $canSeeUser) {
+            id
+          }
+          oldAssignedTo @include(if: $canSeeUser) {
+            id
+          }
+        }
         app @include(if: $canSeeApp) {
           id
           name

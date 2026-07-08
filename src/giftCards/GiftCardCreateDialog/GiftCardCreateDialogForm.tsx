@@ -19,6 +19,10 @@ import { Box, Textarea } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
+import {
+  type AssignedCustomer,
+  GiftCardAssignCustomerSelect,
+} from "../components/GiftCardAssignCustomerSelect/GiftCardAssignCustomerSelect";
 import { GiftCardSendToCustomer } from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { type GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
@@ -31,6 +35,7 @@ export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
   note: string;
   sendToCustomerSelected: boolean;
   selectedCustomer?: GiftCardCreateFormCustomer;
+  assignedCustomer?: AssignedCustomer | null;
   channelSlug?: string;
 }
 
@@ -69,7 +74,9 @@ export const GiftCardCreateDialogForm = ({
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(
     initialCustomer || defaultInitialCustomer,
   );
-  const handleSubmit = (data: GiftCardCreateFormData) => onSubmit({ ...data, selectedCustomer });
+  const [assignedCustomer, setAssignedCustomer] = useState<AssignedCustomer | null>(null);
+  const handleSubmit = (data: GiftCardCreateFormData) =>
+    onSubmit({ ...data, selectedCustomer, assignedCustomer });
   const getInitialExpirySettingsData = (): Partial<GiftCardCreateFormData> => {
     if (loadingSettings) {
       return {};
@@ -143,6 +150,15 @@ export const GiftCardCreateDialogForm = ({
         setSelectedCustomer={setSelectedCustomer}
         disabled={!!initialCustomer}
       />
+
+      <Box display="grid" gap={2}>
+        <GiftCardAssignCustomerSelect
+          selectedCustomer={assignedCustomer}
+          onChange={setAssignedCustomer}
+          label={intl.formatMessage(messages.restrictToCustomerLabel)}
+        />
+        <Label text={intl.formatMessage(messages.restrictToCustomerSubtitle)} />
+      </Box>
 
       <GiftCardCreateExpirySelect {...commonFormProps} />
 

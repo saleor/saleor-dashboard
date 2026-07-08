@@ -35,6 +35,7 @@ export const GiftCardCreateDialogContent = ({
       tags,
       sendToCustomerSelected,
       selectedCustomer,
+      assignedCustomer,
       requiresActivation,
       channelSlug,
     } = formData;
@@ -43,6 +44,7 @@ export const GiftCardCreateDialogContent = ({
       note: note || null,
       addTags: tags?.map(tag => tag.value) || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
+      assignedTo: assignedCustomer?.id || null,
       channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {
         amount: balanceAmount,

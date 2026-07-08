@@ -4,6 +4,7 @@ export enum GiftCardUpdatePageActionParamsEnum {
   SET_BALANCE = "set-balance",
   DELETE = "delete",
   RESEND_CODE = "resend-code",
+  ASSIGN_CUSTOMER = "assign-customer",
 }
 
 export type GiftCardUpdatePageUrlQueryParams = Dialog<GiftCardUpdatePageActionParamsEnum>;

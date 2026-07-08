@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import Link from "@dashboard/components/Link";
+import Money from "@dashboard/components/Money";
 import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
 import { customerPath } from "@dashboard/customers/urls";
 import { ExtensionsPaths, ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -40,28 +41,80 @@ const getUserOrAppUrl = (event: GiftCardEventType): string => {
 
   return null;
 };
+// Renders the assigned customer email as a link to the customer (when the user
+// has permission to see the customer id), otherwise as a plain span. Falls back
+// to "a customer" when the email is not available.
+const getAssignmentCustomer = (
+  email: string | null | undefined,
+  customerId: string | null | undefined,
+  intl: IntlShape,
+) => {
+  if (!email) {
+    return intl.formatMessage(timelineMessages.assignmentCustomerFallback);
+  }
+
+  return customerId ? <Link href={customerPath(customerId)}>{email}</Link> : <span>{email}</span>;
+};
+
 const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
   const user = getUserOrApp(event);
   const userUrl = getUserOrAppUrl(event);
 
-  // We cast to the staging GiftCardEventsEnum because the new enum (from 3.23 schema)
-  // extends the stable one (3.22) with additional values. In 3.22, event.type will never contain
-  // the new values, so this cast is safe. In 3.23, the staging enum will match the stable schema
-  // and the cast becomes a no-op.
-  // TODO: Remove this cast when 3.23 is released and the stable schema includes the new enum values.
-  switch (event.type as GiftCardEventsEnum) {
+  switch (event.type) {
     case GiftCardEventsEnum.ACTIVATED:
       return user
         ? intl.formatMessage(timelineMessages.activated, {
             activatedBy: <Link href={userUrl}>{user}</Link>,
           })
         : intl.formatMessage(timelineMessages.activatedAnonymous);
-    case GiftCardEventsEnum.BALANCE_RESET:
-      return user
-        ? intl.formatMessage(timelineMessages.balanceReset, {
-            resetBy: <Link href={userUrl}>{user}</Link>,
+    case GiftCardEventsEnum.BALANCE_RESET: {
+      const oldBalance = event.balance?.oldCurrentBalance;
+      const newBalance = event.balance?.currentBalance;
+      const hasAmounts = !!(oldBalance && newBalance);
+
+      if (user) {
+        return hasAmounts
+          ? intl.formatMessage(timelineMessages.balanceResetWithAmount, {
+              oldBalance: <Money money={oldBalance} />,
+              newBalance: <Money money={newBalance} />,
+              resetBy: <Link href={userUrl}>{user}</Link>,
+            })
+          : intl.formatMessage(timelineMessages.balanceReset, {
+              resetBy: <Link href={userUrl}>{user}</Link>,
+            });
+      }
+
+      return hasAmounts
+        ? intl.formatMessage(timelineMessages.balanceResetWithAmountAnonymous, {
+            oldBalance: <Money money={oldBalance} />,
+            newBalance: <Money money={newBalance} />,
           })
         : intl.formatMessage(timelineMessages.balanceResetAnonymous);
+    }
+    case GiftCardEventsEnum.BALANCE_ADJUSTED: {
+      const oldBalance = event.balance?.oldCurrentBalance;
+      const newBalance = event.balance?.currentBalance;
+      const hasAmounts = !!(oldBalance && newBalance);
+
+      if (user) {
+        return hasAmounts
+          ? intl.formatMessage(timelineMessages.balanceAdjustedWithAmount, {
+              oldBalance: <Money money={oldBalance} />,
+              newBalance: <Money money={newBalance} />,
+              adjustedBy: <Link href={userUrl}>{user}</Link>,
+            })
+          : intl.formatMessage(timelineMessages.balanceAdjusted, {
+              adjustedBy: <Link href={userUrl}>{user}</Link>,
+            });
+      }
+
+      return hasAmounts
+        ? intl.formatMessage(timelineMessages.balanceAdjustedWithAmountAnonymous, {
+            oldBalance: <Money money={oldBalance} />,
+            newBalance: <Money money={newBalance} />,
+          })
+        : intl.formatMessage(timelineMessages.balanceAdjustedAnonymous);
+    }
     case GiftCardEventsEnum.BOUGHT:
       return intl.formatMessage(timelineMessages.bought, {
         orderNumber: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
@@ -90,6 +143,34 @@ const getEventMessage = (event: GiftCardEventType, intl: IntlShape) => {
             orderLink: <Link href={orderUrl(event.orderId)}>#{event.orderNumber}</Link>,
           })
         : intl.formatMessage(timelineMessages.refundedInOrderNoLink);
+    case GiftCardEventsEnum.ASSIGNED_TO_USER: {
+      const customer = getAssignmentCustomer(
+        event.assignedTo?.currentAssignedToEmail,
+        event.assignedTo?.currentAssignedTo?.id,
+        intl,
+      );
+
+      return user
+        ? intl.formatMessage(timelineMessages.assignedToUserBy, {
+            customer,
+            assignedBy: <Link href={userUrl}>{user}</Link>,
+          })
+        : intl.formatMessage(timelineMessages.assignedToUser, { customer });
+    }
+    case GiftCardEventsEnum.UNASSIGNED_FROM_USER: {
+      const customer = getAssignmentCustomer(
+        event.assignedTo?.oldAssignedToEmail,
+        event.assignedTo?.oldAssignedTo?.id,
+        intl,
+      );
+
+      return user
+        ? intl.formatMessage(timelineMessages.unassignedFromUserBy, {
+            customer,
+            unassignedBy: <Link href={userUrl}>{user}</Link>,
+          })
+        : intl.formatMessage(timelineMessages.unassignedFromUser, { customer });
+    }
     case GiftCardEventsEnum.RESENT:
       return intl.formatMessage(timelineMessages.resent);
     case GiftCardEventsEnum.SENT_TO_CUSTOMER:
@@ -126,8 +207,16 @@ interface GiftCardTimelineEventProps {
 
 const GiftCardTimelineEvent = ({ date, event }: GiftCardTimelineEventProps) => {
   const intl = useIntl();
+  const avatarUrl = event.user?.avatar?.url ?? event.app?.brand?.logo?.default ?? null;
 
-  return <TimelineEvent date={date} title={getEventMessage(event, intl)} hasPlainDate={false} />;
+  return (
+    <TimelineEvent
+      date={date}
+      title={getEventMessage(event, intl)}
+      hasPlainDate={false}
+      avatar={avatarUrl ? { url: avatarUrl } : null}
+    />
+  );
 };
 
 export default GiftCardTimelineEvent;
