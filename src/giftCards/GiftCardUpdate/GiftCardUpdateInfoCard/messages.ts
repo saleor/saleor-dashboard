@@ -36,9 +36,4 @@ export const giftCardUpdateInfoCardMessages = defineMessages({
     defaultMessage: "Bought by",
     description: "bought by label",
   },
-  usedByLabel: {
-    id: "kS5Qgk",
-    defaultMessage: "Used by",
-    description: "used by label",
-  },
 });
