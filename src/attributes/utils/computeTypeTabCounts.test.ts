@@ -1,5 +1,53 @@
-import { computePageTypeTabCounts } from "@dashboard/attributes/utils/computeTypeTabCounts";
-import { type PageTypeListWithAssignedAttributeCountsQuery } from "@dashboard/graphql";
+import {
+  computePageTypeTabCounts,
+  computeProductTypeTabCounts,
+} from "@dashboard/attributes/utils/computeTypeTabCounts";
+import {
+  type PageTypeListWithAssignedAttributeCountsQuery,
+  ProductTypeKindEnum,
+  type ProductTypeListWithAssignedAttributeCountsQuery,
+} from "@dashboard/graphql";
+
+const emptyPageInfo = {
+  __typename: "PageInfo" as const,
+  endCursor: null,
+  hasNextPage: false,
+  hasPreviousPage: false,
+  startCursor: null,
+};
+
+const createProductTypeTabCountsQuery = (
+  productType: ProductTypeListWithAssignedAttributeCountsQuery["productTypes"]["edges"][number]["node"],
+): ProductTypeListWithAssignedAttributeCountsQuery => ({
+  __typename: "Query",
+  productTypes: {
+    __typename: "ProductTypeCountableConnection",
+    edges: [
+      {
+        __typename: "ProductTypeCountableEdge",
+        node: productType,
+      },
+    ],
+    pageInfo: emptyPageInfo,
+  },
+});
+
+const createProductTypeNode = (
+  attributes: Pick<
+    ProductTypeListWithAssignedAttributeCountsQuery["productTypes"]["edges"][number]["node"],
+    "productAttributes" | "variantAttributes"
+  >,
+): ProductTypeListWithAssignedAttributeCountsQuery["productTypes"]["edges"][number]["node"] => ({
+  __typename: "ProductType",
+  id: "pt-1",
+  name: "Default",
+  slug: "default",
+  kind: ProductTypeKindEnum.NORMAL,
+  hasVariants: true,
+  isShippingRequired: true,
+  taxClass: null,
+  ...attributes,
+});
 
 describe("computePageTypeTabCounts", () => {
   it("should build counts from page type attribute ids", () => {
@@ -20,13 +68,7 @@ describe("computePageTypeTabCounts", () => {
             },
           },
         ],
-        pageInfo: {
-          __typename: "PageInfo",
-          endCursor: null,
-          hasNextPage: false,
-          hasPreviousPage: false,
-          startCursor: null,
-        },
+        pageInfo: emptyPageInfo,
       },
     };
 
@@ -36,6 +78,53 @@ describe("computePageTypeTabCounts", () => {
     // Assert
     expect(result).toEqual({
       "pt-1": { value: 1, hasMore: false },
+    });
+  });
+});
+
+describe("computeProductTypeTabCounts", () => {
+  it("should build counts from product and variant attribute ids", () => {
+    // Arrange
+    const data = createProductTypeTabCountsQuery(
+      createProductTypeNode({
+        productAttributes: [
+          { __typename: "Attribute", id: "a-1" },
+          { __typename: "Attribute", id: "a-2" },
+        ],
+        variantAttributes: [{ __typename: "Attribute", id: "a-3" }],
+      }),
+    );
+
+    // Act
+    const result = computeProductTypeTabCounts(data);
+
+    // Assert
+    expect(result).toEqual({
+      "pt-1": { value: 3, hasMore: false },
+    });
+  });
+
+  it("should dedupe attribute ids shared between product and variant attributes", () => {
+    // Arrange
+    const data = createProductTypeTabCountsQuery(
+      createProductTypeNode({
+        productAttributes: [
+          { __typename: "Attribute", id: "a-1" },
+          { __typename: "Attribute", id: "a-2" },
+        ],
+        variantAttributes: [
+          { __typename: "Attribute", id: "a-2" },
+          { __typename: "Attribute", id: "a-3" },
+        ],
+      }),
+    );
+
+    // Act
+    const result = computeProductTypeTabCounts(data);
+
+    // Assert
+    expect(result).toEqual({
+      "pt-1": { value: 3, hasMore: false },
     });
   });
 });

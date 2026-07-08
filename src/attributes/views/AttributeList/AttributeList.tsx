@@ -369,8 +369,8 @@ const AttributeList = ({ params }: AttributeListProps) => {
       status: "success",
       text: intl.formatMessage(
         assignedTypeKind === "product"
-          ? { id: "6j4TUi", defaultMessage: "Product type updated" }
-          : { id: "GVGaij", defaultMessage: "Model type updated" },
+          ? attributeListPageMessages.productTypeUpdated
+          : attributeListPageMessages.modelTypeUpdated,
       ),
     });
     clearRowSelection();

@@ -1,3 +1,4 @@
+import { countUniqueAttributeIds } from "@dashboard/attributes/utils/countUniqueAttributeIds";
 import {
   type PageTypeListWithAssignedAttributeCountsQuery,
   type ProductTypeListWithAssignedAttributeCountsQuery,
@@ -27,12 +28,9 @@ export const computeProductTypeTabCounts = (
   const counts: Record<string, ModelTypeTabCount> = {};
 
   data?.productTypes?.edges?.forEach(({ node }) => {
-    const ids = new Set<string>();
-
-    node.productAttributes?.forEach(attribute => ids.add(attribute.id));
-    node.variantAttributes?.forEach(attribute => ids.add(attribute.id));
-
-    counts[node.id] = toTabCount(ids.size);
+    counts[node.id] = toTabCount(
+      countUniqueAttributeIds([node.productAttributes, node.variantAttributes]),
+    );
   });
 
   return counts;
