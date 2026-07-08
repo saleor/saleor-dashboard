@@ -1,15 +1,27 @@
-import { type GiftCardDetailsQuery } from "@dashboard/graphql";
+import { type GiftCardDetailsQuery, GiftCardEventsEnum } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 
 type GiftCardForResend = NonNullable<GiftCardDetailsQuery["giftCard"]>;
+type GiftCardEvent = GiftCardForResend["events"][number];
 
 export type GiftCardResendDefaultRecipient = {
   email: string | null;
   name: string | null;
 };
 
-const giftCardWasUsed = (giftCard: GiftCardForResend): boolean =>
-  Boolean(giftCard.usedBy || giftCard.usedByEmail || giftCard.lastUsedOn);
+const DELIVERY_EVENT_TYPES = [GiftCardEventsEnum.SENT_TO_CUSTOMER, GiftCardEventsEnum.RESENT];
+
+const getLatestDeliveryEmail = (events: GiftCardEvent[]): string | null => {
+  const deliveryEvents = events.filter(
+    event => event.type && DELIVERY_EVENT_TYPES.includes(event.type) && event.email,
+  );
+
+  if (deliveryEvents.length === 0) {
+    return null;
+  }
+
+  return deliveryEvents[deliveryEvents.length - 1].email ?? null;
+};
 
 export const getGiftCardResendDefaultRecipient = (
   giftCard: GiftCardForResend | undefined | null,
@@ -21,10 +33,22 @@ export const getGiftCardResendDefaultRecipient = (
     };
   }
 
-  if (giftCardWasUsed(giftCard)) {
+  // Backend resends to the last user when the card was used. That recipient is no
+  // longer exposed reliably after usedBy/usedByEmail removal, so the UI falls back
+  // to a generic label instead of guessing.
+  if (giftCard.lastUsedOn) {
     return {
-      email: giftCard.usedByEmail ?? null,
-      name: giftCard.usedBy ? getFullName(giftCard.usedBy) : null,
+      email: null,
+      name: null,
+    };
+  }
+
+  const deliveryEmail = getLatestDeliveryEmail(giftCard.events);
+
+  if (deliveryEmail) {
+    return {
+      email: deliveryEmail,
+      name: null,
     };
   }
 

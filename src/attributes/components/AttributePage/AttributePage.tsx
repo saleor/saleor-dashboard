@@ -1,3 +1,7 @@
+import {
+  AttributeAssignedTypesCard,
+  type AttributeAssignedTypesCardProps,
+} from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import { attributeListPath } from "@dashboard/attributes/urls";
 import {
@@ -83,6 +87,7 @@ function AttributePageDirtyStateSync({
 
 interface AttributePageProps {
   attribute?: AttributeDetailsQuery["attribute"] | null | undefined;
+  assignedTypes?: AttributeAssignedTypesCardProps;
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -126,6 +131,7 @@ export interface AttributePageFormData extends MetadataFormData {
 
 const AttributePage = ({
   attribute,
+  assignedTypes,
   disabled,
   errors: apiErrors,
   saveButtonBarState,
@@ -369,6 +375,12 @@ const AttributePage = ({
                   disabled={disabled}
                   onChange={change}
                 />
+                {assignedTypes && (
+                  <>
+                    <CardSpacer />
+                    <AttributeAssignedTypesCard {...assignedTypes} />
+                  </>
+                )}
               </DetailPageLayout.RightSidebar>
               <Savebar>
                 {attribute !== null && <Savebar.DeleteButton onClick={onDelete} />}

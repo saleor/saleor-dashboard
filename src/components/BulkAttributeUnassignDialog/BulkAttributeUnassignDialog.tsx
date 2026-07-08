@@ -4,6 +4,8 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { Text } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -14,6 +16,7 @@ interface BulkAttributeUnassignDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   itemTypeName: string;
+  description?: React.ReactNode;
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -24,6 +27,7 @@ export const BulkAttributeUnassignDialog = ({
   confirmButtonState,
   open,
   itemTypeName,
+  description,
   onClose,
   onConfirm,
 }: BulkAttributeUnassignDialogProps) => {
@@ -43,14 +47,21 @@ export const BulkAttributeUnassignDialog = ({
       <DashboardModal.Content size="xs">
         <DashboardModal.Header
           subtitle={
-            <FormattedMessage
-              {...messages.content}
-              values={{
-                attributeQuantity: <strong>{attributeQuantity}</strong>,
-                counter: attributeQuantity,
-                itemTypeName: <strong>{itemTypeName}</strong>,
-              }}
-            />
+            <>
+              <FormattedMessage
+                {...messages.content}
+                values={{
+                  attributeQuantity: <strong>{attributeQuantity}</strong>,
+                  counter: attributeQuantity,
+                  itemTypeName: <strong>{itemTypeName}</strong>,
+                }}
+              />
+              {description ? (
+                <Text fontSize={3} color="default2" marginTop={4} display="block">
+                  {description}
+                </Text>
+              ) : null}
+            </>
           }
         >
           {title}

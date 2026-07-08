@@ -1,3 +1,5 @@
+import { GiftCardEventsEnum } from "@dashboard/graphql";
+
 import { getGiftCardResendDefaultRecipient } from "./getGiftCardResendDefaultRecipient";
 
 type GiftCardForResend = Parameters<typeof getGiftCardResendDefaultRecipient>[0];
@@ -14,49 +16,11 @@ describe("getGiftCardResendDefaultRecipient", () => {
     });
   });
 
-  it("returns used-by email when the card has been used", () => {
+  it("returns empty recipient when the card was already used", () => {
     // Arrange
     const giftCard = {
-      usedByEmail: "used@example.com",
-      createdByEmail: "buyer@example.com",
       lastUsedOn: "2024-01-01",
-    } as GiftCardForResend;
-
-    // Act
-    const result = getGiftCardResendDefaultRecipient(giftCard);
-
-    // Assert
-    expect(result).toEqual({
-      email: "used@example.com",
-      name: null,
-    });
-  });
-
-  it("returns creator email when the card has not been used", () => {
-    // Arrange
-    const giftCard = {
-      usedByEmail: null,
       createdByEmail: "buyer@example.com",
-      lastUsedOn: null,
-      createdBy: { firstName: "Jane", lastName: "Doe" },
-    } as GiftCardForResend;
-
-    // Act
-    const result = getGiftCardResendDefaultRecipient(giftCard);
-
-    // Assert
-    expect(result).toEqual({
-      email: "buyer@example.com",
-      name: "Jane Doe",
-    });
-  });
-
-  it("falls back to used-by name when only a user reference exists", () => {
-    // Arrange
-    const giftCard = {
-      usedBy: { firstName: "John", lastName: "Appleseed" },
-      usedByEmail: null,
-      lastUsedOn: "2024-01-01",
     } as GiftCardForResend;
 
     // Act
@@ -65,7 +29,71 @@ describe("getGiftCardResendDefaultRecipient", () => {
     // Assert
     expect(result).toEqual({
       email: null,
-      name: "John Appleseed",
+      name: null,
+    });
+  });
+
+  it("returns the latest delivery email for unused cards", () => {
+    // Arrange
+    const giftCard = {
+      lastUsedOn: null,
+      createdByEmail: "staff@example.com",
+      events: [
+        {
+          type: GiftCardEventsEnum.SENT_TO_CUSTOMER,
+          email: "recipient@example.com",
+        },
+        {
+          type: GiftCardEventsEnum.RESENT,
+          email: "updated-recipient@example.com",
+        },
+      ],
+    } as GiftCardForResend;
+
+    // Act
+    const result = getGiftCardResendDefaultRecipient(giftCard);
+
+    // Assert
+    expect(result).toEqual({
+      email: "updated-recipient@example.com",
+      name: null,
+    });
+  });
+
+  it("returns creator email when no delivery event exists", () => {
+    // Arrange
+    const giftCard = {
+      lastUsedOn: null,
+      createdByEmail: "buyer@example.com",
+      events: [],
+    } as GiftCardForResend;
+
+    // Act
+    const result = getGiftCardResendDefaultRecipient(giftCard);
+
+    // Assert
+    expect(result).toEqual({
+      email: "buyer@example.com",
+      name: null,
+    });
+  });
+
+  it("returns creator name when only a user reference exists", () => {
+    // Arrange
+    const giftCard = {
+      lastUsedOn: null,
+      createdByEmail: null,
+      createdBy: { firstName: "Jane", lastName: "Doe" },
+      events: [],
+    } as GiftCardForResend;
+
+    // Act
+    const result = getGiftCardResendDefaultRecipient(giftCard);
+
+    // Assert
+    expect(result).toEqual({
+      email: null,
+      name: "Jane Doe",
     });
   });
 });
