@@ -72,7 +72,8 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     statusesToMergeLines.includes(fulfillment?.status)
       ? mergeRepeatedOrderLines(fulfillment.lines)
       : (fulfillment?.lines ?? []);
-  const getLines = () => getFulfillmentLines().map(fulfillmentLineToLine);
+  const lines = getFulfillmentLines().map(fulfillmentLineToLine);
+  const hasLines = lines.length > 0;
   const lineReasons = getFulfillmentLines().map(line => ({
     reason: line.reason ?? null,
     reasonType: line.reasonReference?.title ?? null,
@@ -159,21 +160,28 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           />
         </Box>
       )}
-      <OrderCardDatagridSeparator />
-      <DashboardCard.Content paddingX={0}>
-        <OrderDetailsDatagrid
-          lines={getLines()}
-          lineReasons={hasLineReasons ? lineReasons : undefined}
-          loading={false}
-          onOrderLineShowMetadata={onOrderLineShowMetadata}
-          onShowLinePriceBreakdown={onShowLinePriceBreakdown}
-          columnPickerBackgroundColor="default2"
-          datagridCustomTheme={{
-            bgHeader: themeValues.colors.background.default2,
-          }}
-        />
-        <OrderLineGroupEnd showBottomSeparator={showBottomSeparator} backgroundColor="default2" />
-      </DashboardCard.Content>
+      {hasLines && (
+        <>
+          <OrderCardDatagridSeparator />
+          <DashboardCard.Content paddingX={0}>
+            <OrderDetailsDatagrid
+              lines={lines}
+              lineReasons={hasLineReasons ? lineReasons : undefined}
+              loading={false}
+              onOrderLineShowMetadata={onOrderLineShowMetadata}
+              onShowLinePriceBreakdown={onShowLinePriceBreakdown}
+              columnPickerBackgroundColor="default2"
+              datagridCustomTheme={{
+                bgHeader: themeValues.colors.background.default2,
+              }}
+            />
+            <OrderLineGroupEnd
+              showBottomSeparator={showBottomSeparator}
+              backgroundColor="default2"
+            />
+          </DashboardCard.Content>
+        </>
+      )}
     </Box>
   );
 };
