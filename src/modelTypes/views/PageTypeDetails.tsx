@@ -1,15 +1,24 @@
 // @ts-strict-ignore
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
-import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
-import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
+import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
 import { Button } from "@dashboard/components/Button";
+import {
+  type AttributeCreateSubmitData,
+  CreateAttributeDialog,
+} from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
+import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
+  type AttributeErrorFragment,
+  AttributeTypeEnum,
   useAssignPageAttributeMutation,
+  useAttributeCreateMutation,
   usePageTypeAttributeReorderMutation,
   usePageTypeDeleteMutation,
   usePageTypeDetailsQuery,
@@ -25,12 +34,14 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { type ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
 import PageTypeDetailsPage, { type PageTypeForm } from "../components/PageTypeDetailsPage";
+import { executePageTypeAttributeCreate } from "../handlers/pageTypeAttributeCreateHandler";
 import usePageTypeDelete from "../hooks/usePageTypeDelete";
 import { pageTypeListUrl, pageTypeUrl, type PageTypeUrlQueryParams } from "../urls";
 
@@ -79,6 +90,8 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
       }
     },
   });
+  const [assignCreatedAttribute, assignCreatedAttributeOpts] = useAssignPageAttributeMutation();
+  const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation();
   const [unassignAttribute, unassignAttributeOpts] = useUnassignPageAttributeMutation({
     onCompleted: data => {
       if (data.pageAttributeUnassign.errors.length === 0) {
@@ -126,6 +139,49 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
     });
 
     assignAttributesActions.clearSelectedItems();
+  };
+  const handleCreateAttribute = async ({
+    formData,
+    values,
+  }: AttributeCreateSubmitData): Promise<AttributeErrorFragment[]> => {
+    const submitWithMetadata = createMetadataCreateHandler(
+      async (data: AttributePageFormData) => {
+        const outcome = await executePageTypeAttributeCreate(
+          {
+            pageTypeId: id,
+            formData: data,
+            values,
+            createFailedMessage: intl.formatMessage(createAttributeMessages.createFailed),
+            formatAssignErrors: errors =>
+              errors.map(error => getPageErrorMessage(error, intl)).join(" "),
+          },
+          {
+            attributeCreate,
+            assignCreatedAttribute,
+          },
+        );
+
+        if (outcome.assignErrorMessage) {
+          notify({
+            status: "error",
+            text: outcome.assignErrorMessage,
+          });
+        }
+
+        return outcome;
+      },
+      updateMetadata,
+      updatePrivateMetadata,
+      () => {
+        notify({
+          status: "success",
+          text: intl.formatMessage(createAttributeMessages.createdAndAssigned),
+        });
+        closeModal();
+      },
+    );
+
+    return (await submitWithMetadata(formData)) as AttributeErrorFragment[];
   };
   const handleAttributeUnassign = () =>
     unassignAttribute({
@@ -196,6 +252,13 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
             pageTypeUrl(id, {
               action: "assign-attribute",
               type,
+            }),
+          )
+        }
+        onAttributeCreate={() =>
+          navigate(
+            pageTypeUrl(id, {
+              action: "create-attribute",
             }),
           )
         }
@@ -274,6 +337,20 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
             open={params.action === "assign-attribute"}
             selected={assignAttributesActions.selectedItems}
             onToggle={assignAttributesActions.toggleSelectItem}
+          />
+          <CreateAttributeDialog
+            attributeType={AttributeTypeEnum.PAGE_TYPE}
+            confirmButtonState={
+              attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
+                ? "loading"
+                : attributeCreateOpts.status
+            }
+            contextName={pageType.name}
+            disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
+            errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
+            open={params.action === "create-attribute"}
+            onClose={closeModal}
+            onSubmit={handleCreateAttribute}
           />
         </>
       )}

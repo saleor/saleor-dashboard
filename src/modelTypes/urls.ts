@@ -40,6 +40,7 @@ export const pageTypeAddUrl = pageTypeAddPath;
 export const pageTypePath = (id: string) => urlJoin(modelTypesSection, id);
 type PageTypeUrlDialog =
   | "assign-attribute"
+  | "create-attribute"
   | "unassign-attribute"
   | "unassign-attributes"
   | "remove";

@@ -73,4 +73,25 @@ describe("OrderShippingMethodEditDialog", () => {
 
     expect(screen.getByText(shippingMethods[1].name)).toBeInTheDocument();
   });
+
+  it("disables confirm until shipping method changes", () => {
+    render(
+      <Wrapper>
+        <OrderShippingMethodEditDialog {...defaultProps} />
+      </Wrapper>,
+    );
+
+    expect(screen.getByTestId("confirm-button")).toBeDisabled();
+  });
+
+  it("uses string label for select title tooltip", () => {
+    render(
+      <Wrapper>
+        <OrderShippingMethodEditDialog {...defaultProps} />
+      </Wrapper>,
+    );
+
+    expect(screen.getByTitle(shippingMethods[1].name)).toBeInTheDocument();
+    expect(screen.queryByTitle("[object Object]")).not.toBeInTheDocument();
+  });
 });

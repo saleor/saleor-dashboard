@@ -1,0 +1,31 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  max-height: min(420px, 50vh);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panelHeader {
+  flex-shrink: 0;
+}
+
+.panelBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.panelBody :global([data-macaw-ui-component="Combobox"]),
+.panelBody :global([data-macaw-ui-component="Select"]),
+.panelBody :global([data-macaw-ui-component="Input"]),
+.panelBody :global([data-macaw-ui-component="Multiselect"]),
+.panelBody :global([data-macaw-ui-component="RangeInput"]) {
+  background-color: var(--mu-colors-background-default1);
+}
+
+.toggleButton {
+  align-self: flex-start;
+}

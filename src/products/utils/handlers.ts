@@ -121,8 +121,22 @@ export const createPreorderEndDateChangeHandler =
     triggerChange();
   };
 
+export const areMediaSelectionsEqual = (left: string[] = [], right: string[] = []): boolean => {
+  if (left.length !== right.length) {
+    return false;
+  }
+
+  const rightIds = new Set(right);
+
+  return left.every(id => rightIds.has(id));
+};
+
 export const createMediaChangeHandler =
   (form: UseFormResult<{ media: string[] }>, triggerChange: () => void) => (ids: string[]) => {
+    if (areMediaSelectionsEqual(form.data.media, ids)) {
+      return;
+    }
+
     form.change({
       target: {
         name: "media",

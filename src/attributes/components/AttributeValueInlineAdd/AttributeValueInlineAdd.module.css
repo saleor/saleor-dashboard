@@ -1,0 +1,26 @@
+.footerCell {
+  border-top: 1px solid var(--mu-colors-border-default1);
+}
+
+.section {
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.sectionWithTableAbove {
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.swatchNameInput {
+  padding-right: var(--mu-spacing-1-5);
+}
+
+/* Center swatch vertically in the input border; avoid inline-block baseline gap. */
+.swatchNameInput > :last-child {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  line-height: 0;
+}

@@ -16,10 +16,10 @@ export const changeWarehouseDialogMessages = defineMessages({
     id: "WCg2GZ",
     description: "change warehouse dialog search placeholder",
   },
-  warehouseListLabel: {
-    defaultMessage: "Warehouses A to Z",
-    id: "Epm41J",
-    description: "change warehouse dialog warehouse list label",
+  noWarehousesFound: {
+    defaultMessage: "No warehouses found",
+    id: "HzOpXG",
+    description: "change warehouse dialog empty state",
   },
   productAvailability: {
     defaultMessage: "{productCount} available at this location",

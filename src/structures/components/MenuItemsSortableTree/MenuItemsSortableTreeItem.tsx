@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type TreeItemComponentProps } from "@dashboard/components/SortableTree/types";
 import { buttonMessages } from "@dashboard/intl";
-import { type MenuItemType } from "@dashboard/structures/components/MenuItemDialog";
+import { type MenuItemType } from "@dashboard/structures/components/MenuItemDialog/types";
 import { type RecursiveMenuItem } from "@dashboard/structures/types";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { type UniqueIdentifier } from "@dnd-kit/core";

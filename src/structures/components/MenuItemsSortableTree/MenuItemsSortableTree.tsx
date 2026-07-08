@@ -4,7 +4,7 @@ import { type UniqueIdentifier } from "@dnd-kit/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import { type MenuItemType } from "../MenuItemDialog";
+import { type MenuItemType } from "../MenuItemDialog/types";
 import { MenuItemsSortableTreeItem } from "./MenuItemsSortableTreeItem";
 import { getNodeData } from "./utils";
 

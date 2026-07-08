@@ -232,278 +232,283 @@ export const OrderCaptureDialog = ({
   return (
     <DashboardModal open onChange={onClose}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
-          <Box display="flex" alignItems="center" gap={3}>
-            <FormattedMessage {...messages.title} />
-            {getStatusPill()}
-          </Box>
-        </DashboardModal.Header>
+        <DashboardModal.ContextHeader contextLabel={getStatusPill()} wrapContextLabel={false}>
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.ContextHeader>
 
-        <Box display="flex" flexDirection="column" gap={5}>
-          {/* Summary box with order and payment sections */}
-          <Box
-            borderRadius={4}
-            borderWidth={1}
-            borderStyle="solid"
-            borderColor="default1"
-            display="flex"
-            flexDirection="column"
-          >
-            {/* Order section */}
-            <Box
-              padding={4}
-              display="flex"
-              flexDirection="column"
-              gap={2}
-              borderBottomWidth={1}
-              borderBottomStyle="solid"
-              borderColor="default1"
-            >
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Box display="flex" alignItems="center" gap={2}>
-                  <BoxIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                  <Text>
-                    <FormattedMessage {...messages.orderTotal} />
-                  </Text>
-                </Box>
-                <Text fontWeight="medium">{formatMoney(totalAmount)}</Text>
-              </Box>
-              {orderTotalCaptured > 0 && (
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Box display="flex" alignItems="center" gap={2}>
-                    <Box __width="16px" /> {/* Spacer to align with icon above */}
-                    <Text>
-                      <FormattedMessage {...messages.capturedSoFar} />
-                    </Text>
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box display="flex" flexDirection="column" gap={5}>
+              {/* Summary box with order and payment sections */}
+              <Box
+                borderRadius={4}
+                borderWidth={1}
+                borderStyle="solid"
+                borderColor="default1"
+                display="flex"
+                flexDirection="column"
+              >
+                {/* Order section */}
+                <Box
+                  padding={4}
+                  display="flex"
+                  flexDirection="column"
+                  gap={2}
+                  borderBottomWidth={1}
+                  borderBottomStyle="solid"
+                  borderColor="default1"
+                >
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Box display="flex" alignItems="center" gap={2}>
+                      <BoxIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      <Text>
+                        <FormattedMessage {...messages.orderTotal} />
+                      </Text>
+                    </Box>
+                    <Text fontWeight="medium">{formatMoney(totalAmount)}</Text>
                   </Box>
-                  <Text fontWeight="medium">{formatMoney(orderTotalCaptured)}</Text>
-                </Box>
-              )}
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Box __width="16px" /> {/* Spacer to align with icon above */}
-                  <Text>
-                    <FormattedMessage {...messages.balanceDue} />
-                  </Text>
-                </Box>
-                <Text fontWeight="medium">{formatMoney(remainingToPay)}</Text>
-              </Box>
-            </Box>
-
-            {/* Transaction section */}
-            <Box padding={4} display="flex" flexDirection="column" gap={4}>
-              <Box display="flex" flexDirection="column" gap={3}>
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Box display="flex" alignItems="center" gap={2}>
-                    <CreditCard size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                    <Text>
-                      <FormattedMessage {...messages.availableToCapture} />
-                    </Text>
-                  </Box>
-                  <Text fontWeight="medium" color={authorizedAmountColor}>
-                    {formatMoney(availableToCapture)}
-                  </Text>
-                </Box>
-                {alreadyCharged > 0 && (
+                  {orderTotalCaptured > 0 && (
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Box display="flex" alignItems="center" gap={2}>
+                        <Box __width="16px" /> {/* Spacer to align with icon above */}
+                        <Text>
+                          <FormattedMessage {...messages.capturedSoFar} />
+                        </Text>
+                      </Box>
+                      <Text fontWeight="medium">{formatMoney(orderTotalCaptured)}</Text>
+                    </Box>
+                  )}
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Box display="flex" alignItems="center" gap={2}>
                       <Box __width="16px" /> {/* Spacer to align with icon above */}
                       <Text>
-                        <FormattedMessage {...messages.transactionCaptured} />
+                        <FormattedMessage {...messages.balanceDue} />
                       </Text>
                     </Box>
-                    <Text fontWeight="medium">{formatMoney(alreadyCharged)}</Text>
+                    <Text fontWeight="medium">{formatMoney(remainingToPay)}</Text>
                   </Box>
-                )}
-              </Box>
+                </Box>
 
-              {/* Warning/Error messages */}
-              {authStatus === "partial" && (
-                <Callout
-                  type="warning"
-                  title={
-                    <Text size={2}>
-                      <FormattedMessage
-                        {...messages.warningPartialAuthorization}
-                        values={{
-                          shortfall: <strong>{formatMoney(shortfall)}</strong>,
-                        }}
-                      />
-                    </Text>
-                  }
-                />
-              )}
-
-              {authStatus === "none" && (
-                <Callout
-                  type="error"
-                  title={
-                    <Text size={2}>
-                      <FormattedMessage
-                        {...messages.errorNoAuthorization}
-                        values={{
-                          amount: <strong>{formatMoney(remainingToPay)}</strong>,
-                        }}
-                      />
-                    </Text>
-                  }
-                />
-              )}
-            </Box>
-          </Box>
-
-          {/* Radio options - primary section */}
-          <Box display="flex" flexDirection="column" gap={4}>
-            <ModalSectionHeader>
-              <FormattedMessage {...messages.selectAmount} />
-            </ModalSectionHeader>
-
-            <RadioGroup
-              value={selectedOption}
-              onValueChange={value => setSelectedOption(value as CaptureAmountOption)}
-            >
-              <Box display="flex" flexDirection="column" gap={4}>
-                {/* Order Total / Remaining Balance / Remaining Max option */}
-                <Box display="flex" flexDirection="column" gap={1}>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    paddingRight={4}
-                  >
-                    <RadioGroup.Item
-                      id="orderTotal"
-                      value="orderTotal"
-                      disabled={isFirstOptionDisabled}
-                    >
-                      <Text color={isFirstOptionDisabled ? "default2" : "default1"}>
-                        <FormattedMessage
-                          {...(authStatus === "partial"
-                            ? messages.remainingMax
-                            : alreadyCharged > 0
-                              ? messages.remainingBalance
-                              : messages.optionOrderTotal)}
+                {/* Transaction section */}
+                <Box padding={4} display="flex" flexDirection="column" gap={4}>
+                  <Box display="flex" flexDirection="column" gap={3}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Box display="flex" alignItems="center" gap={2}>
+                        <CreditCard
+                          size={iconSize.small}
+                          strokeWidth={iconStrokeWidthBySize.small}
                         />
-                      </Text>
-                    </RadioGroup.Item>
-                    <Text
-                      fontWeight="medium"
-                      color={isFirstOptionDisabled ? "default2" : "default1"}
-                    >
-                      {formatMoney(authStatus === "partial" ? availableToCapture : remainingToPay)}
-                    </Text>
-                  </Box>
-                  {canCaptureOrderTotal && (
-                    <Box paddingLeft={5}>
-                      <Text size={2} color="default2">
-                        <FormattedMessage {...messages.optionOrderTotalHint} />
+                        <Text>
+                          <FormattedMessage {...messages.availableToCapture} />
+                        </Text>
+                      </Box>
+                      <Text fontWeight="medium" color={authorizedAmountColor}>
+                        {formatMoney(availableToCapture)}
                       </Text>
                     </Box>
+                    {alreadyCharged > 0 && (
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box display="flex" alignItems="center" gap={2}>
+                          <Box __width="16px" /> {/* Spacer to align with icon above */}
+                          <Text>
+                            <FormattedMessage {...messages.transactionCaptured} />
+                          </Text>
+                        </Box>
+                        <Text fontWeight="medium">{formatMoney(alreadyCharged)}</Text>
+                      </Box>
+                    )}
+                  </Box>
+
+                  {/* Warning/Error messages */}
+                  {authStatus === "partial" && (
+                    <Callout
+                      type="warning"
+                      title={
+                        <Text size={2}>
+                          <FormattedMessage
+                            {...messages.warningPartialAuthorization}
+                            values={{
+                              shortfall: <strong>{formatMoney(shortfall)}</strong>,
+                            }}
+                          />
+                        </Text>
+                      }
+                    />
+                  )}
+
+                  {authStatus === "none" && (
+                    <Callout
+                      type="error"
+                      title={
+                        <Text size={2}>
+                          <FormattedMessage
+                            {...messages.errorNoAuthorization}
+                            values={{
+                              amount: <strong>{formatMoney(remainingToPay)}</strong>,
+                            }}
+                          />
+                        </Text>
+                      }
+                    />
                   )}
                 </Box>
-
-                {/* Custom amount option */}
-                <Box display="flex" flexDirection="column" gap={3}>
-                  <Box display="flex" alignItems="center" justifyContent="space-between">
-                    <RadioGroup.Item
-                      id="custom"
-                      value="custom"
-                      disabled={authStatus === "none" || authStatus === "charged"}
-                    >
-                      <Text
-                        color={
-                          authStatus === "none" || authStatus === "charged"
-                            ? "default2"
-                            : "default1"
-                        }
-                      >
-                        <FormattedMessage {...messages.optionCustom} />
-                      </Text>
-                    </RadioGroup.Item>
-                  </Box>
-
-                  <Box paddingLeft={7} display="flex" alignItems="center" gap={4}>
-                    <Box __width="180px">
-                      <Input
-                        size="small"
-                        type="text"
-                        inputMode="decimal"
-                        value={customAmountInput}
-                        onChange={handleCustomAmountChange}
-                        error={showCustomAmountError}
-                        disabled={
-                          authStatus === "none" ||
-                          authStatus === "charged" ||
-                          selectedOption !== "custom"
-                        }
-                        endAdornment={
-                          <Text size={2} color="default2" marginRight={2}>
-                            {currency}
-                          </Text>
-                        }
-                      />
-                    </Box>
-                    <Text size={2} color="default2">
-                      <FormattedMessage
-                        {...messages.customAmountMax}
-                        values={{
-                          amount: intl.formatNumber(maxCapturable, {
-                            style: "currency",
-                            currency,
-                          }),
-                        }}
-                      />
-                    </Text>
-                  </Box>
-                </Box>
               </Box>
-            </RadioGroup>
-          </Box>
-        </Box>
 
-        {/* Outcome prediction */}
-        {canSubmit && selectedAmount > 0 && (
-          <Box display="flex" alignItems="center" gap={1}>
-            <Text size={2} color="default2">
-              <FormattedMessage
-                {...messages.outcomeMessage}
-                values={{
-                  status: (
-                    <Pill
-                      size="small"
-                      color={
-                        outcomeStatus === "overcharged"
-                          ? "error"
-                          : outcomeStatus === "fullyCharged"
-                            ? "success"
-                            : "warning"
-                      }
-                      label={intl.formatMessage(
-                        outcomeStatus === "overcharged"
-                          ? messages.statusOvercapturedPill
-                          : outcomeStatus === "fullyCharged"
-                            ? messages.statusFullyCapturedPill
-                            : messages.statusPartiallyCapturedPill,
+              {/* Radio options - primary section */}
+              <Box display="flex" flexDirection="column" gap={4}>
+                <ModalSectionHeader>
+                  <FormattedMessage {...messages.selectAmount} />
+                </ModalSectionHeader>
+
+                <RadioGroup
+                  value={selectedOption}
+                  onValueChange={value => setSelectedOption(value as CaptureAmountOption)}
+                >
+                  <Box display="flex" flexDirection="column" gap={4}>
+                    {/* Order Total / Remaining Balance / Remaining Max option */}
+                    <Box display="flex" flexDirection="column" gap={1}>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        paddingRight={4}
+                      >
+                        <RadioGroup.Item
+                          id="orderTotal"
+                          value="orderTotal"
+                          disabled={isFirstOptionDisabled}
+                        >
+                          <Text color={isFirstOptionDisabled ? "default2" : "default1"}>
+                            <FormattedMessage
+                              {...(authStatus === "partial"
+                                ? messages.remainingMax
+                                : alreadyCharged > 0
+                                  ? messages.remainingBalance
+                                  : messages.optionOrderTotal)}
+                            />
+                          </Text>
+                        </RadioGroup.Item>
+                        <Text
+                          fontWeight="medium"
+                          color={isFirstOptionDisabled ? "default2" : "default1"}
+                        >
+                          {formatMoney(
+                            authStatus === "partial" ? availableToCapture : remainingToPay,
+                          )}
+                        </Text>
+                      </Box>
+                      {canCaptureOrderTotal && (
+                        <Box paddingLeft={5}>
+                          <Text size={2} color="default2">
+                            <FormattedMessage {...messages.optionOrderTotalHint} />
+                          </Text>
+                        </Box>
                       )}
-                    />
-                  ),
-                }}
-              />
-            </Text>
-          </Box>
-        )}
+                    </Box>
 
-        {errors.length > 0 && (
-          <Box display="flex" flexDirection="column" gap={2}>
-            {errors.map((error, index) => (
-              <Text color="critical1" key={index}>
-                {isTransactionError(error)
-                  ? getOrderTransactionErrorMessage(error, intl)
-                  : getOrderErrorMessage(error, intl)}
-              </Text>
-            ))}
-          </Box>
-        )}
+                    {/* Custom amount option */}
+                    <Box display="flex" flexDirection="column" gap={2}>
+                      <Box display="flex" alignItems="center" justifyContent="space-between">
+                        <RadioGroup.Item
+                          id="custom"
+                          value="custom"
+                          disabled={authStatus === "none" || authStatus === "charged"}
+                        >
+                          <Text
+                            color={
+                              authStatus === "none" || authStatus === "charged"
+                                ? "default2"
+                                : "default1"
+                            }
+                          >
+                            <FormattedMessage {...messages.optionCustom} />
+                          </Text>
+                        </RadioGroup.Item>
+                      </Box>
+
+                      <Box paddingLeft={5} display="flex" alignItems="center" gap={4}>
+                        <Box __width="180px">
+                          <Input
+                            size="small"
+                            type="text"
+                            inputMode="decimal"
+                            value={customAmountInput}
+                            onChange={handleCustomAmountChange}
+                            error={showCustomAmountError}
+                            disabled={
+                              authStatus === "none" ||
+                              authStatus === "charged" ||
+                              selectedOption !== "custom"
+                            }
+                            endAdornment={
+                              <Text size={2} color="default2" marginRight={2}>
+                                {currency}
+                              </Text>
+                            }
+                          />
+                        </Box>
+                        <Text size={2} color="default2">
+                          <FormattedMessage
+                            {...messages.customAmountMax}
+                            values={{
+                              amount: intl.formatNumber(maxCapturable, {
+                                style: "currency",
+                                currency,
+                              }),
+                            }}
+                          />
+                        </Text>
+                      </Box>
+                    </Box>
+                  </Box>
+                </RadioGroup>
+              </Box>
+
+              {canSubmit && selectedAmount > 0 && (
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Text size={2} color="default2">
+                    <FormattedMessage
+                      {...messages.outcomeMessage}
+                      values={{
+                        status: (
+                          <Pill
+                            size="small"
+                            color={
+                              outcomeStatus === "overcharged"
+                                ? "error"
+                                : outcomeStatus === "fullyCharged"
+                                  ? "success"
+                                  : "warning"
+                            }
+                            label={intl.formatMessage(
+                              outcomeStatus === "overcharged"
+                                ? messages.statusOvercapturedPill
+                                : outcomeStatus === "fullyCharged"
+                                  ? messages.statusFullyCapturedPill
+                                  : messages.statusPartiallyCapturedPill,
+                            )}
+                          />
+                        ),
+                      }}
+                    />
+                  </Text>
+                </Box>
+              )}
+
+              {errors.length > 0 && (
+                <Box display="flex" flexDirection="column" gap={2}>
+                  {errors.map((error, index) => (
+                    <Text color="critical1" key={index}>
+                      {isTransactionError(error)
+                        ? getOrderTransactionErrorMessage(error, intl)
+                        : getOrderErrorMessage(error, intl)}
+                    </Text>
+                  ))}
+                </Box>
+              )}
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} />

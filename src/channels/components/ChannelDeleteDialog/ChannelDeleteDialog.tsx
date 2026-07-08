@@ -1,10 +1,14 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { Select } from "@dashboard/components/Select";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
 import { type Option, Text } from "@saleor/macaw-ui-next";
-import { defineMessages, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
 
@@ -55,13 +59,12 @@ interface ChannelDeleteDialogProps {
   onConfirm: (targetChannelId: string) => void;
 }
 
-const ChannelDeleteDialog = ({
+export const ChannelDeleteDialog = ({
   channelsChoices = [],
   channelSlug,
   hasOrders,
   confirmButtonState,
   open,
-  onBack,
   currency,
   onClose,
   onConfirm,
@@ -73,58 +76,82 @@ const ChannelDeleteDialog = ({
   );
   const hasChannels = !!channelsChoices?.length;
   const canBeDeleted = hasChannels || !hasOrders;
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      backButtonText={
-        canBeDeleted ? buttonMessages.cancel.defaultMessage : buttonMessages.ok.defaultMessage
-      }
-      open={open}
-      onClose={onClose}
-      onConfirm={() => (canBeDeleted ? onConfirm(choice) : onBack())}
-      title={intl.formatMessage(messages.deleteChannel, { channelSlug })}
-      confirmButtonLabel={intl.formatMessage(
-        canBeDeleted ? buttonMessages.delete : buttonMessages.cancel,
-      )}
-      variant={canBeDeleted ? "delete" : "info"}
-    >
-      <div>
-        {hasOrders ? (
-          hasChannels ? (
-            <>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.ContextHeader>
+          <FormattedMessage {...messages.deleteChannel} values={{ channelSlug }} />
+        </DashboardModal.ContextHeader>
+
+        <DashboardModal.Body fill>
+          <DashboardModal.Inset>
+            {hasOrders ? (
+              hasChannels ? (
+                <>
+                  <Text>{intl.formatMessage(messages.deletingAllProductData)}</Text>
+                  <br />
+                  <Text>
+                    {intl.formatMessage(messages.needToBeMoved)}
+                    <br />
+                    {intl.formatMessage(messages.note)}
+                  </Text>
+                  <div className={classes.select}>
+                    <Select
+                      label={intl.formatMessage(messages.selectChannel)}
+                      name="channels"
+                      onChange={({ target }) => setChoice(target.value)}
+                      value={choice}
+                      options={channelsChoices}
+                    />
+                  </div>
+                </>
+              ) : (
+                <Text>
+                  {intl.formatMessage(messages.noAvailableChannel, {
+                    channelSlug: <strong>{channelSlug}</strong>,
+                    currency: <strong>{currency}</strong>,
+                  })}
+                </Text>
+              )
+            ) : (
               <Text>{intl.formatMessage(messages.deletingAllProductData)}</Text>
-              <br />
-              <Text>
-                {intl.formatMessage(messages.needToBeMoved)}
-                <br />
-                {intl.formatMessage(messages.note)}
-              </Text>
-              <div className={classes.select}>
-                <Select
-                  label={intl.formatMessage(messages.selectChannel)}
-                  name="channels"
-                  onChange={({ target }) => setChoice(target.value)}
-                  value={choice}
-                  options={channelsChoices}
-                />
-              </div>
+            )}
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          {canBeDeleted ? (
+            <>
+              <BackButton disabled={isSubmitting} onClick={handleClose} />
+              <ConfirmButton
+                data-test-id="submit"
+                disabled={isSubmitting}
+                onClick={() => onConfirm(choice)}
+                transitionState={confirmButtonState}
+                variant="error"
+              >
+                <FormattedMessage {...buttonMessages.delete} />
+              </ConfirmButton>
             </>
           ) : (
-            <Text>
-              {intl.formatMessage(messages.noAvailableChannel, {
-                channelSlug: <strong>{channelSlug}</strong>,
-                currency: <strong>{currency}</strong>,
-              })}
-            </Text>
-          )
-        ) : (
-          <Text>{intl.formatMessage(messages.deletingAllProductData)}</Text>
-        )}
-      </div>
-    </ActionDialog>
+            <BackButton disabled={isSubmitting} onClick={handleClose}>
+              <FormattedMessage {...buttonMessages.ok} />
+            </BackButton>
+          )}
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 ChannelDeleteDialog.displayName = "ChannelDeleteDialog";
-export default ChannelDeleteDialog;

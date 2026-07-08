@@ -24,6 +24,7 @@ import {
   isTextInput,
 } from "./operators";
 import { RangeInputWrapper } from "./RangeInputWrapper";
+import { type ConditionalFiltersLayout } from "./Root";
 import { type SelectedOperator } from "./types";
 
 interface RightOperatorProps {
@@ -33,7 +34,11 @@ interface RightOperatorProps {
   error: boolean;
   helperText: string;
   disabled: boolean;
+  layout?: ConditionalFiltersLayout;
 }
+
+const getInlineControlProps = (layout: ConditionalFiltersLayout | undefined) =>
+  layout === "inline" ? { backgroundColor: "default1" as const } : {};
 
 export const RightOperator = ({
   index,
@@ -42,10 +47,14 @@ export const RightOperator = ({
   error,
   disabled,
   helperText,
+  layout = "popover",
 }: RightOperatorProps) => {
+  const inlineControlProps = getInlineControlProps(layout);
+
   if (isTextInput(selected)) {
     return (
       <Input
+        {...inlineControlProps}
         data-test-id={`right-${index}`}
         value={typeof selected.value === "object" ? selected.value.value : selected.value}
         onChange={e => {
@@ -67,6 +76,7 @@ export const RightOperator = ({
   if (isNumberInput(selected)) {
     return (
       <Input
+        {...inlineControlProps}
         data-test-id={`right-${index}`}
         type="number"
         value={typeof selected.value === "object" ? selected.value.value : selected.value}
@@ -104,6 +114,7 @@ export const RightOperator = ({
   if (isMultiselect(selected)) {
     return (
       <DynamicMultiselect
+        {...inlineControlProps}
         data-test-id={`right-${index}`}
         value={selected.value}
         options={selected.options ?? []}
@@ -130,6 +141,7 @@ export const RightOperator = ({
   if (isCombobox(selected)) {
     return (
       <DynamicCombobox
+        {...inlineControlProps}
         data-test-id={`right-${index}`}
         value={selected.value}
         options={selected.options ?? []}
@@ -156,6 +168,7 @@ export const RightOperator = ({
   if (isSelect(selected)) {
     return (
       <Select
+        {...inlineControlProps}
         data-test-id={`right-${index}`}
         value={selected.value}
         options={selected.options ?? []}
@@ -177,6 +190,7 @@ export const RightOperator = ({
     return (
       <RangeInputWrapper>
         <RangeInput
+          {...inlineControlProps}
           data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
@@ -195,6 +209,7 @@ export const RightOperator = ({
   if (isDate(selected)) {
     return (
       <Input
+        {...inlineControlProps}
         data-test-id={`right-${index}`}
         type="date"
         value={selected.value}
@@ -211,6 +226,7 @@ export const RightOperator = ({
   if (isDateTime(selected)) {
     return (
       <Input
+        {...inlineControlProps}
         data-test-id={`right-${index}`}
         type="datetime-local"
         value={selected.value}
@@ -228,6 +244,7 @@ export const RightOperator = ({
     return (
       <RangeInputWrapper>
         <RangeInput
+          {...inlineControlProps}
           data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
@@ -247,6 +264,7 @@ export const RightOperator = ({
     return (
       <RangeInputWrapper>
         <RangeInput
+          {...inlineControlProps}
           data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
@@ -274,5 +292,12 @@ export const RightOperator = ({
     );
   }
 
-  return <Input disabled value={selected.value} data-test-id={`right-${index}`} />;
+  return (
+    <Input
+      {...inlineControlProps}
+      disabled
+      value={selected.value}
+      data-test-id={`right-${index}`}
+    />
+  );
 };

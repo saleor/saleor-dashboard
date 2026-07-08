@@ -46,7 +46,7 @@ interface DiscountDetailsPageProps {
   ruleUpdateButtonState: ConfirmButtonTransitionState;
   onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
   ruleCreateButtonState: ConfirmButtonTransitionState;
-  onRuleDeleteSubmit: (id: string) => void;
+  onRuleDeleteSubmit: (id: string) => Promise<boolean>;
   ruleDeleteButtonState: ConfirmButtonTransitionState;
   onBack: () => void;
   backLinkHref: string;

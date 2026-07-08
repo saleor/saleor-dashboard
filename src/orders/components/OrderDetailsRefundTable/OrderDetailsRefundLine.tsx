@@ -115,13 +115,15 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
             ) : (
               <Tooltip>
                 <Tooltip.Trigger>
-                  <Button
-                    disabled
-                    icon={
-                      <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                    }
-                    variant="secondary"
-                  />
+                  <Box as="span" display="inline-flex" cursor="not-allowed">
+                    <Button
+                      disabled
+                      icon={
+                        <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      }
+                      variant="secondary"
+                    />
+                  </Box>
                 </Tooltip.Trigger>
                 <Tooltip.Content>
                   <Tooltip.Arrow />

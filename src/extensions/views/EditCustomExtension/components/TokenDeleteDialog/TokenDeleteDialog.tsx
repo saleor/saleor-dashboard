@@ -1,6 +1,11 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
+import { FormattedMessage } from "react-intl";
 
 interface TokenDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -17,30 +22,48 @@ export const TokenDeleteDialog = ({
   onConfirm,
   open,
 }: TokenDeleteDialogProps) => {
-  const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      open={open}
-      onClose={onClose}
-      confirmButtonState={confirmButtonState}
-      onConfirm={onConfirm}
-      variant="delete"
-      title={intl.formatMessage({
-        id: "quV5zH",
-        defaultMessage: "Delete Token",
-        description: "dialog title",
-      })}
-    >
-      <FormattedMessage
-        id="2VSP8C"
-        defaultMessage="Are you sure you want to delete token {token}?"
-        description="delete token"
-        values={{
-          token: <strong>{name}</strong>,
-        }}
-      />
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              id="2VSP8C"
+              defaultMessage="Are you sure you want to delete token {token}?"
+              description="delete token"
+              values={{
+                token: <strong>{name}</strong>,
+              }}
+            />
+          }
+        >
+          <FormattedMessage id="quV5zH" defaultMessage="Delete Token" description="dialog title" />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

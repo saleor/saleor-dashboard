@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
-import { DashboardModal } from "@dashboard/components/Modal";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
@@ -74,22 +73,21 @@ export const CustomerGiftCardsCard = () => {
           )}
         </DashboardCard.Content>
       </DashboardCard>
-      <DashboardModal open={openCreateDialog} onChange={closeCreateDialog}>
-        <GiftCardCreateDialogContent
-          onClose={closeCreateDialog}
-          refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
-          initialCustomer={{
-            email: customer?.email,
-            name:
-              getFullName(customer) ||
-              intl.formatMessage({
-                defaultMessage: "Unknown customer",
-                id: "+mbkbU",
-                description: "unknown customer display name",
-              }),
-          }}
-        />
-      </DashboardModal>
+      <GiftCardCreateDialogContent
+        open={openCreateDialog}
+        onClose={closeCreateDialog}
+        refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
+        initialCustomer={{
+          email: customer?.email,
+          name:
+            getFullName(customer) ||
+            intl.formatMessage({
+              defaultMessage: "Unknown customer",
+              id: "+mbkbU",
+              description: "unknown customer display name",
+            }),
+        }}
+      />
     </>
   );
 };

@@ -1,26 +1,34 @@
 import BackButton from "@dashboard/components/BackButton";
-import Checkbox from "@dashboard/components/Checkbox";
+import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySearchField";
+import {
+  areSelectedChannelIdsEqual,
+  useChannelsSearch,
+} from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import listStyles from "@dashboard/components/ChannelsAvailabilityDialogChannelsList/ChannelsAvailabilityDialogChannelsList.module.css";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import Hr from "@dashboard/components/Hr";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { type CountryWithCodeFragment } from "@dashboard/graphql";
-import { fuzzySearch } from "@dashboard/misc";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { toggle } from "@dashboard/utils/lists";
+import { Box } from "@saleor/macaw-ui-next";
+import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { createCountryChangeHandler, createRestOfTheWorldChangeHandler } from "./handlers";
+import { COUNTRY_PRESET_CODES, type CountryPresetCode } from "./countryPresets";
+import { toggleRestOfTheWorldSelection } from "./handlers";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
+import { togglePresetSelection } from "./presetSelection";
+import {
+  ShippingZoneCountriesAssignDialogCountriesList,
+  type ShippingZoneCountryPickerItem,
+} from "./ShippingZoneCountriesAssignDialogCountriesList";
+import { ShippingZoneCountriesAssignDialogQuickPicks } from "./ShippingZoneCountriesAssignDialogQuickPicks";
 
-interface FormData {
+export interface ShippingZoneCountriesAssignFormData {
   countries: string[];
   query: string;
 }
@@ -32,138 +40,149 @@ interface ShippingZoneCountriesAssignDialogProps {
   initial: string[];
   open: boolean;
   onClose: () => void;
-  onConfirm: (data: FormData) => void;
+  onConfirm: (data: ShippingZoneCountriesAssignFormData) => void;
 }
 
-const ShippingZoneCountriesAssignDialog = (props: ShippingZoneCountriesAssignDialogProps) => {
-  const { confirmButtonState, onClose, countries, restWorldCountries, open, initial, onConfirm } =
-    props;
-  const classes = useStyles(props);
+const toCountryPickerItems = (
+  countries: CountryWithCodeFragment[],
+): ShippingZoneCountryPickerItem[] =>
+  countries.map(country => ({
+    id: country.code,
+    name: country.country,
+  }));
+
+export const ShippingZoneCountriesAssignDialog = ({
+  confirmButtonState,
+  onClose,
+  countries,
+  restWorldCountries,
+  open,
+  initial,
+  onConfirm,
+}: ShippingZoneCountriesAssignDialogProps) => {
   const intl = useIntl();
-  const initialForm: FormData = {
-    countries: initial,
-    query: "",
+  const countryItems = useMemo(() => toCountryPickerItems(countries), [countries]);
+  const availableCountryCodes = useMemo(
+    () => countryItems.map(country => country.id),
+    [countryItems],
+  );
+  const [selectedCountryIds, setSelectedCountryIds] = useState(initial);
+  const [baselineCountryIds, setBaselineCountryIds] = useState(initial);
+  const {
+    query,
+    onQueryChange,
+    resetQuery,
+    filteredChannels: filteredCountries,
+  } = useChannelsSearch(countryItems);
+  const countrySelectionMap = getCountrySelectionMap(countries, selectedCountryIds);
+  const isRestOfTheWorldSelected = Boolean(
+    isRestWorldCountriesSelected(restWorldCountries, countrySelectionMap),
+  );
+  const hasCountries = countryItems.length > 0;
+  const isCountrySelected = (country: ShippingZoneCountryPickerItem) =>
+    selectedCountryIds.includes(country.id);
+  const handleCountryToggle = (country: ShippingZoneCountryPickerItem) => {
+    setSelectedCountryIds(currentSelected =>
+      toggle(country.id, currentSelected, (leftId, rightId) => leftId === rightId),
+    );
+  };
+  const hasSelectionChanged = !areSelectedChannelIdsEqual(selectedCountryIds, baselineCountryIds);
+  const confirmButtonLabel = intl.formatMessage(messages.assignCountriesButton, {
+    count: selectedCountryIds.length,
+  });
+  const handlePresetToggle = (preset: CountryPresetCode, checked: boolean) => {
+    setSelectedCountryIds(currentSelected =>
+      togglePresetSelection(
+        currentSelected,
+        COUNTRY_PRESET_CODES[preset],
+        availableCountryCodes,
+        checked,
+      ),
+    );
+  };
+  const handleRestOfTheWorldToggle = (checked: boolean) => {
+    setSelectedCountryIds(currentSelected =>
+      toggleRestOfTheWorldSelection(currentSelected, restWorldCountries, countries, checked),
+    );
+  };
+  const handleClose = () => {
+    setSelectedCountryIds(baselineCountryIds);
+    resetQuery();
+    onClose();
+  };
+  const handleConfirm = () => {
+    onConfirm({
+      countries: selectedCountryIds,
+      query,
+    });
   };
 
+  useModalDialogOpen(open, {
+    onOpen: () => {
+      setSelectedCountryIds(initial);
+      setBaselineCountryIds(initial);
+    },
+    onClose: resetQuery,
+  });
+
   return (
-    <DashboardModal onChange={onClose} open={open}>
+    <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm">
-        <Form initial={initialForm} onSubmit={onConfirm}>
-          {({ data, change }) => {
-            const countrySelectionMap = getCountrySelectionMap(countries, data.countries);
-            const isRestOfTheWorldSelected = isRestWorldCountriesSelected(
-              restWorldCountries,
-              countrySelectionMap,
-            );
-            const handleCountryChange = createCountryChangeHandler(data.countries, change);
-            const handleRestOfTheWorldChange = createRestOfTheWorldChangeHandler(
-              countrySelectionMap,
-              data.countries,
-              restWorldCountries,
-              change,
-            );
-            const displayCountries = fuzzySearch(countries, data.query, ["country"]);
-
-            return (
-              <DashboardModal.Grid>
-                <DashboardModal.Header>
-                  <FormattedMessage {...messages.assignCountriesTitle} />
-                </DashboardModal.Header>
-
-                <Text>
-                  <FormattedMessage {...messages.assignCountriesDescription} />
-                </Text>
-
-                <TextField
-                  name="query"
-                  data-test-id="search-country-input"
-                  value={data.query}
-                  onChange={event => change(event)}
+        <DashboardModal.PickerHeader
+          description={<FormattedMessage {...messages.assignCountriesDescription} />}
+          toolbar={
+            hasCountries ? (
+              <Box display="flex" flexDirection="column" gap={2}>
+                <ChannelsAvailabilitySearchField
+                  query={query}
+                  onQueryChange={onQueryChange}
                   label={intl.formatMessage(messages.searchCountriesLabel)}
                   placeholder={intl.formatMessage(messages.searchCountriesPlaceholder)}
-                  fullWidth
+                  inputTestId="search-country-input"
                 />
+                <ShippingZoneCountriesAssignDialogQuickPicks
+                  availableCountryCodes={availableCountryCodes}
+                  isRestOfTheWorldSelected={isRestOfTheWorldSelected}
+                  selectedCountryIds={selectedCountryIds}
+                  showRestOfTheWorld={restWorldCountries.length > 0}
+                  onPresetToggle={handlePresetToggle}
+                  onRestOfTheWorldToggle={handleRestOfTheWorldToggle}
+                />
+              </Box>
+            ) : undefined
+          }
+        >
+          <FormattedMessage {...messages.assignCountriesTitle} />
+        </DashboardModal.PickerHeader>
 
-                <Hr />
+        <DashboardModal.Body fill __overflowX="hidden">
+          {filteredCountries.length ? (
+            <ShippingZoneCountriesAssignDialogCountriesList
+              countries={filteredCountries}
+              isCountrySelected={isCountrySelected}
+              onChange={handleCountryToggle}
+            />
+          ) : (
+            <div className={listStyles.empty}>
+              <FormattedMessage {...messages.notFoundTitle} />
+            </div>
+          )}
+        </DashboardModal.Body>
 
-                {restWorldCountries.length > 0 && (
-                  <>
-                    <Text fontSize={3}>
-                      <FormattedMessage {...messages.quickPickSubtitle} />
-                    </Text>
-
-                    <ResponsiveTable>
-                      <TableBody>
-                        <TableRowLink
-                          data-test-id="rest-of-the-world-row"
-                          className={classes.clickableRow}
-                          onClick={() => handleRestOfTheWorldChange(!isRestOfTheWorldSelected)}
-                        >
-                          <TableCell className={classes.wideCell}>
-                            <Box paddingY={2}>
-                              <Text size={3} display="block">
-                                <FormattedMessage {...messages.restOfTheWorldCheckbox} />
-                              </Text>
-                              <Text size={2} fontWeight="light">
-                                <FormattedMessage {...messages.restOfTheWorldCheckboxDescription} />
-                              </Text>
-                            </Box>
-                          </TableCell>
-                          <TableCell padding="checkbox" className={classes.checkboxCell}>
-                            <Checkbox name="restOfTheWorld" checked={isRestOfTheWorldSelected} />
-                          </TableCell>
-                        </TableRowLink>
-                      </TableBody>
-                    </ResponsiveTable>
-                  </>
-                )}
-
-                <Text fontSize={3}>
-                  <FormattedMessage {...messages.countriesSubtitle} />
-                </Text>
-
-                <Box overflowY="auto" __maxHeight={300}>
-                  <ResponsiveTable>
-                    <TableBody>
-                      {displayCountries.map(country => {
-                        const isChecked = countrySelectionMap[country.code];
-
-                        return (
-                          <TableRowLink
-                            data-test-id="country-row"
-                            className={classes.clickableRow}
-                            onClick={() => handleCountryChange(country.code, !isChecked)}
-                            key={country.code}
-                          >
-                            <TableCell className={classes.wideCell}>{country.country}</TableCell>
-                            <TableCell padding="checkbox" className={classes.checkboxCell}>
-                              <Checkbox checked={isChecked} />
-                            </TableCell>
-                          </TableRowLink>
-                        );
-                      })}
-                    </TableBody>
-                  </ResponsiveTable>
-                </Box>
-
-                <DashboardModal.Actions>
-                  <BackButton onClick={onClose} data-test-id="back-button" />
-                  <ConfirmButton
-                    transitionState={confirmButtonState}
-                    type="submit"
-                    data-test-id="assign-and-save-button"
-                  >
-                    <FormattedMessage {...messages.assignCountriesButton} />
-                  </ConfirmButton>
-                </DashboardModal.Actions>
-              </DashboardModal.Grid>
-            );
-          }}
-        </Form>
+        <DashboardModal.Actions>
+          <BackButton onClick={handleClose} data-test-id="back-button" />
+          <ConfirmButton
+            transitionState={confirmButtonState}
+            disabled={hasSelectionChanged === false}
+            onClick={handleConfirm}
+            data-test-id="assign-and-save-button"
+          >
+            {confirmButtonLabel}
+          </ConfirmButton>
+        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );
 };
 
 ShippingZoneCountriesAssignDialog.displayName = "ShippingZoneCountriesAssignDialog";
-export default ShippingZoneCountriesAssignDialog;

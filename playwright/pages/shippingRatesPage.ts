@@ -25,7 +25,8 @@ export class ShippingRatesPage extends BasePage {
     readonly addPostalCodeRangeButton = page.getByTestId("add-postal-code-range"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly assignProductButton = page.getByTestId("assign-product-button"),
-    readonly assignExcludedProductsDialog = page.getByTestId("assign-products-dialog-content"),
+    readonly assignDialogProductList = page.getByTestId("products-list"),
+    readonly assignDialogProductRow = page.getByTestId("assign-product-table-row"),
     readonly priceInput = page.getByTestId("price-input"),
     readonly minValueInput = page.getByTestId("min-value-price-input"),
     readonly minWeightInput = page.getByTestId("min-order-weight-input").locator("input"),
@@ -34,8 +35,6 @@ export class ShippingRatesPage extends BasePage {
     readonly excludedProductsRows = page.getByTestId("excluded-products-rows"),
     readonly includePostalCodesRadioButton = page.getByTestId("INCLUDE"),
     readonly assignedPostalCodesRows = page.getByTestId("assigned-postal-codes-rows"),
-    readonly assignDialogProductList = page.getByTestId("assign-product-list"),
-    readonly assignDialogProductRow = page.getByTestId("product-row"),
   ) {
     super(page);
     this.basePage = new BasePage(page);

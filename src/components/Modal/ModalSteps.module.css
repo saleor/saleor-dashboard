@@ -1,0 +1,53 @@
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+}
+
+.stepCircle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default1);
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.stepCirclePending {
+  border-color: var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default2);
+  font-weight: 400;
+}
+
+.stepCircleActive,
+.stepCircleCompleted {
+  border-color: var(--mu-colors-background-button-default-primary);
+  background-color: var(--mu-colors-background-button-default-primary);
+  color: var(--mu-colors-text-button-default-primary);
+}
+
+.stepCircleCompleted svg {
+  stroke: currentColor;
+}
+
+.connector {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--mu-colors-border-default1);
+  flex-shrink: 0;
+}

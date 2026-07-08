@@ -1,61 +1,85 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ChipField } from "@dashboard/components/ChipField/ChipField";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { Plus } from "lucide-react";
-import type React from "react";
+import { Multiselect } from "@dashboard/components/Combobox";
+import { AttributeEntityTypeEnum } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type FetchMoreProps } from "@dashboard/types";
+import { Box, type Option, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-type Option = { label: string; value: string };
-
 interface AttributeReferenceTypesSectionProps {
-  selectedTypes: Option[];
   disabled?: boolean;
-  onAssignClick: () => void;
-  onRemoveType?: (id: string) => void;
+  entityType?: AttributeEntityTypeEnum | undefined;
+  fetchMore?: FetchMoreProps;
+  fetchOptions: (query: string) => void;
+  loading?: boolean;
+  onChange: FormChange;
+  options: Option[];
+  value: Option[];
+  variant?: "card" | "embedded";
 }
 
-export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSectionProps> = ({
-  selectedTypes,
-  disabled,
-  onAssignClick,
-  onRemoveType,
-}) => {
+export const AttributeReferenceTypesSection = ({
+  disabled = false,
+  entityType,
+  fetchMore,
+  fetchOptions,
+  loading = false,
+  onChange,
+  options,
+  value,
+  variant = "card",
+}: AttributeReferenceTypesSectionProps) => {
   const intl = useIntl();
+  const isEmbedded = variant === "embedded";
+  const label =
+    entityType === AttributeEntityTypeEnum.PAGE
+      ? intl.formatMessage(messages.modelTypesLabel)
+      : intl.formatMessage(messages.productTypesLabel);
+
+  const field = (
+    <Multiselect
+      data-test-id="attribute-reference-types-select"
+      disabled={disabled}
+      fetchMore={fetchMore}
+      fetchOptions={fetchOptions}
+      helperText={intl.formatMessage(messages.referenceTypesHelp)}
+      label={label}
+      loading={loading}
+      name="referenceTypes"
+      onChange={onChange}
+      options={options}
+      placeholder={intl.formatMessage(messages.searchPlaceholder)}
+      value={value}
+      width="100%"
+    />
+  );
+
+  if (isEmbedded) {
+    return (
+      <Box
+        data-test-id="attribute-reference-types-section"
+        display="flex"
+        flexDirection="column"
+        gap={3}
+      >
+        <Text size={3} fontWeight="bold">
+          {intl.formatMessage(messages.referenceTypesTitle)}
+        </Text>
+        {field}
+      </Box>
+    );
+  }
 
   return (
-    <DashboardCard paddingTop={6}>
-      <DashboardCard.Content>
-        <Box display="grid" gap={1} data-test-id="attribute-reference-types-section">
-          <Box display="flex" alignItems="center" gap={3} justifyContent="space-between">
-            <Text size={5} fontWeight="bold">
-              {intl.formatMessage(messages.referenceTypesTitle)}
-            </Text>
-            <Button
-              variant="secondary"
-              icon={<Plus size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-              onClick={onAssignClick}
-              disabled={disabled}
-            />
-          </Box>
-          <Text size={2} color="default2" paddingBottom={2}>
-            {intl.formatMessage(messages.referenceTypesHelp)}
-          </Text>
-          {selectedTypes.length > 0 && (
-            <Box display="flex" gap={2} flexWrap="wrap">
-              {selectedTypes.map(type => (
-                <ChipField
-                  key={type.value}
-                  label={type.label}
-                  onClose={() => onRemoveType?.(type.value)}
-                />
-              ))}
-            </Box>
-          )}
-        </Box>
-      </DashboardCard.Content>
+    <DashboardCard paddingTop={6} data-test-id="attribute-reference-types-section">
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(messages.referenceTypesTitle)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>{field}</DashboardCard.Content>
     </DashboardCard>
   );
 };

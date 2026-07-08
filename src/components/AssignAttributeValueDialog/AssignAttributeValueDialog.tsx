@@ -9,6 +9,8 @@ import {
   type SearchPagesQuery,
 } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
+import { useMemo } from "react";
+import { useIntl } from "react-intl";
 
 import AssignCategoryDialog from "../AssignCategoryDialog";
 import AssignCollectionDialog, {
@@ -20,6 +22,11 @@ import AssignVariantDialog from "../AssignVariantDialog";
 import { type AttributeInput } from "../Attributes";
 import { type InitialPageConstraints } from "../ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
+import {
+  filterProductsByReferenceTypeConstraints,
+  getReferencePickerLoadingState,
+} from "./mergeReferenceTypeWhereConstraints";
+import { messages } from "./messages";
 import {
   filterCategoriesByAttributeValues,
   filterCollectionsByAttributeValues,
@@ -74,6 +81,7 @@ const getSingleOrMultipleDialogProps = (attribute: AttributeInput) => {
 };
 
 const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
+  const intl = useIntl();
   const {
     entityType,
     pages,
@@ -83,9 +91,20 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     attribute,
     initialConstraints,
     onFilterChange,
+    labels,
+    loading,
     ...rest
   } = props;
   const filteredProducts = filterProductsByAttributeValues(products, attribute);
+  const constrainedProducts = useMemo(
+    () => filterProductsByReferenceTypeConstraints(filteredProducts, initialConstraints),
+    [filteredProducts, initialConstraints],
+  );
+  const referencePickerLoading = getReferencePickerLoadingState(
+    loading,
+    initialConstraints,
+    filteredProducts,
+  );
   const filteredPages = filterPagesByAttributeValues(pages, attribute);
   const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
   const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
@@ -96,6 +115,13 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
   const pageFilterChange = onFilterChange?.[AttributeEntityTypeEnum.PAGE];
   const categoryFilterChange = onFilterChange?.[AttributeEntityTypeEnum.CATEGORY];
   const collectionFilterChange = onFilterChange?.[AttributeEntityTypeEnum.COLLECTION];
+  const dialogLabels = useMemo(
+    () => ({
+      ...labels,
+      confirmBtn: intl.formatMessage(messages.assignReferencesButton),
+    }),
+    [intl, labels],
+  );
 
   switch (entityType) {
     case AttributeEntityTypeEnum.PAGE:
@@ -104,6 +130,8 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
           pages={filteredPages ?? []}
           initialConstraints={initialConstraints}
           onFilterChange={pageFilterChange}
+          labels={dialogLabels}
+          loading={loading}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -111,9 +139,11 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     case AttributeEntityTypeEnum.PRODUCT:
       return (
         <AssignProductDialog
-          products={filteredProducts ?? []}
+          products={constrainedProducts ?? []}
           initialConstraints={initialConstraints}
           onFilterChange={productFilterChange}
+          labels={dialogLabels}
+          loading={referencePickerLoading}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -121,9 +151,11 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     case AttributeEntityTypeEnum.PRODUCT_VARIANT:
       return (
         <AssignVariantDialog
-          products={filteredProducts}
+          products={constrainedProducts}
           initialConstraints={initialConstraints}
           onFilterChange={variantFilterChange}
+          labels={dialogLabels}
+          loading={referencePickerLoading}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -133,6 +165,8 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
         <AssignCollectionDialog
           collections={filteredCollections}
           onFilterChange={collectionFilterChange}
+          labels={dialogLabels}
+          loading={loading}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />
@@ -142,6 +176,8 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
         <AssignCategoryDialog
           categories={filteredCategories}
           onFilterChange={categoryFilterChange}
+          labels={dialogLabels}
+          loading={loading}
           {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
         />

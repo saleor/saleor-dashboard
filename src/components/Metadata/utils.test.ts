@@ -1,7 +1,7 @@
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 
 import { EventDataAction, EventDataField } from "./types";
-import { getDataKey, getMetadataTitle, parseEventData } from "./utils";
+import { getDataKey, getMetadataKeyFieldErrors, getMetadataTitle, parseEventData } from "./utils";
 
 describe("parseEventData", () => {
   it("parses name field update event", () => {
@@ -94,6 +94,43 @@ describe("getDataKey", () => {
 
   it("returns 'metadata' when isPrivate is false", () => {
     expect(getDataKey(false)).toBe("metadata");
+  });
+});
+
+describe("getMetadataKeyFieldErrors", () => {
+  it("maps empty key errors to rows with empty keys", () => {
+    // Arrange
+    const data = [
+      { key: "color", value: "blue" },
+      { key: "", value: "x" },
+    ];
+    const error = "Metadata key cannot be empty";
+
+    // Act
+    const result = getMetadataKeyFieldErrors(data, error);
+
+    // Assert
+    expect(result).toEqual({ 1: error });
+  });
+
+  it("maps duplicate key errors to all duplicate rows", () => {
+    // Arrange
+    const data = [
+      { key: "color", value: "blue" },
+      { key: "color", value: "red" },
+    ];
+    const error = "Metadata keys must be unique, remove duplicate key";
+
+    // Act
+    const result = getMetadataKeyFieldErrors(data, error);
+
+    // Assert
+    expect(result).toEqual({ 0: error, 1: error });
+  });
+
+  it("returns an empty map when there is no form error", () => {
+    // Arrange // Act // Assert
+    expect(getMetadataKeyFieldErrors([{ key: "", value: "" }], undefined)).toEqual({});
   });
 });
 

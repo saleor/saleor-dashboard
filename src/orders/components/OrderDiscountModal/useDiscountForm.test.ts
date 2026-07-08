@@ -46,6 +46,7 @@ describe("useDiscountForm", () => {
       expect(data.value).toBe(25);
       expect(data.reason).toBe("Test discount");
       expect(data.calculationMode).toBe(DiscountValueTypeEnum.PERCENTAGE);
+      expect(result.current.isSubmitDisabled).toBe(true);
     });
 
     it("should initialize with fixed amount discount", () => {
@@ -235,6 +236,54 @@ describe("useDiscountForm", () => {
         reason: "Test reason",
         calculationMode: DiscountValueTypeEnum.PERCENTAGE,
       });
+    });
+  });
+
+  describe("submit state", () => {
+    it("should keep submit disabled until an existing discount is changed", () => {
+      // Arrange
+      const existingDiscount = {
+        value: 10,
+        reason: "",
+        calculationMode: DiscountValueTypeEnum.FIXED,
+      };
+      const { result } = renderHook(() =>
+        useDiscountForm({ maxPrice: defaultMaxPrice, existingDiscount }),
+      );
+
+      // Assert
+      expect(result.current.isSubmitDisabled).toBe(true);
+
+      // Act
+      act(() => {
+        result.current.setValue("reason", "Updated reason");
+      });
+
+      // Assert
+      expect(result.current.isSubmitDisabled).toBe(false);
+    });
+
+    it("should disable submit again when values match the original discount", () => {
+      // Arrange
+      const existingDiscount = {
+        value: 10,
+        reason: "",
+        calculationMode: DiscountValueTypeEnum.FIXED,
+      };
+      const { result } = renderHook(() =>
+        useDiscountForm({ maxPrice: defaultMaxPrice, existingDiscount }),
+      );
+
+      // Act
+      act(() => {
+        result.current.setValue("value", "15");
+      });
+      act(() => {
+        result.current.setValue("value", "10");
+      });
+
+      // Assert
+      expect(result.current.isSubmitDisabled).toBe(true);
     });
   });
 

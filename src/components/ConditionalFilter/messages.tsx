@@ -12,19 +12,24 @@ export const conditionalFilterMessages = defineMessages({
     description: "Popover title",
   },
   addFilter: {
-    defaultMessage: "+ Add filter",
-    id: "nyhf9b",
+    defaultMessage: "Add filter",
+    id: "ECpTeb",
     description: "Add filter button text",
   },
   clearFilters: {
-    defaultMessage: "Reset",
-    id: "nMojhT",
+    defaultMessage: "Clear filters",
+    id: "SHF+gG",
     description: "Clear filters button text",
   },
   saveFilters: {
     defaultMessage: "Save",
     id: "wUQCnQ",
     description: "Save filters button text",
+  },
+  applyFilters: {
+    defaultMessage: "Filter",
+    id: "pTOnzt",
+    description: "Apply filters button text in modal picker",
   },
   emptyFilters: {
     defaultMessage: "Add filter to start",
@@ -55,6 +60,7 @@ export const useFiltersAreaTranslations = () => {
     addFilter: formatMessage(conditionalFilterMessages.addFilter),
     clearFilters: formatMessage(conditionalFilterMessages.clearFilters),
     saveFilters: formatMessage(conditionalFilterMessages.saveFilters),
+    applyFilters: formatMessage(conditionalFilterMessages.applyFilters),
     locale: {
       WHERE: formatMessage(conditionalFilterMessages.filterWhereElement),
       AND: formatMessage(conditionalFilterMessages.filterAndElement),

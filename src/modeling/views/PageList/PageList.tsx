@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   OrderDirection,
@@ -29,7 +28,7 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { resolveActiveTabCountKey } from "../../components/ModelTypeTabs/groupModelTypeTabs";
@@ -38,6 +37,8 @@ import {
   type ModelTypeTabCount,
 } from "../../components/ModelTypeTabs/ModelTypeTabs";
 import { useModelTypeTabGrouping } from "../../components/ModelTypeTabs/useModelTypeTabGrouping";
+import { PageBulkDeleteDialog } from "../../components/PageBulkDeleteDialog/PageBulkDeleteDialog";
+import { PageBulkPublishDialog } from "../../components/PageBulkPublishDialog/PageBulkPublishDialog";
 import PageListPage from "../../components/PageListPage/PageListPage";
 import {
   pageCreateUrl,
@@ -373,52 +374,26 @@ const PageList = ({ params }: PageListProps) => {
         onTabChange={handleTabChange}
         grouping={grouping}
       />
-      <ActionDialog
-        open={params.action === "publish"}
-        onClose={closeModal}
+      <PageBulkPublishDialog
         confirmButtonState={bulkPagePublishOpts.status}
+        count={selectedRowIds.length}
+        onClose={closeModal}
         onConfirm={() => handlePublish(selectedRowIds)}
-        title={intl.formatMessage({
-          id: "q/FMPM",
-          defaultMessage: "Publish models",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="8y4+0a"
-          defaultMessage="{counter,plural,one{Are you sure you want to publish this model?} other{Are you sure you want to publish {displayQuantity} models?}}"
-          description="dialog content"
-          values={{
-            counter: selectedRowIds.length,
-            displayQuantity: <strong>{selectedRowIds.length}</strong>,
-          }}
-        />
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "unpublish"}
-        onClose={closeModal}
+        open={params.action === "publish"}
+        variant="publish"
+      />
+      <PageBulkPublishDialog
         confirmButtonState={bulkPagePublishOpts.status}
-        onConfirm={() => handleUnpublish(selectedRowIds)}
-        title={intl.formatMessage({
-          id: "kG44rx",
-          defaultMessage: "Unpublish models",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="8LWaFr"
-          defaultMessage="{counter,plural,one{Are you sure you want to unpublish this model?} other{Are you sure you want to unpublish {displayQuantity} models?}}"
-          description="dialog content"
-          values={{
-            counter: selectedRowIds.length,
-            displayQuantity: <strong>{selectedRowIds.length}</strong>,
-          }}
-        />
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "remove"}
+        count={selectedRowIds.length}
         onClose={closeModal}
+        onConfirm={() => handleUnpublish(selectedRowIds)}
+        open={params.action === "unpublish"}
+        variant="unpublish"
+      />
+      <PageBulkDeleteDialog
         confirmButtonState={bulkPageRemoveOpts.status}
+        count={selectedRowIds.length}
+        onClose={closeModal}
         onConfirm={() =>
           bulkPageRemove({
             variables: {
@@ -426,23 +401,8 @@ const PageList = ({ params }: PageListProps) => {
             },
           })
         }
-        variant="delete"
-        title={intl.formatMessage({
-          id: "AgHhjW",
-          defaultMessage: "Delete models",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="8a4uf/"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this model?} other{Are you sure you want to delete {displayQuantity} models?}}"
-          description="dialog content"
-          values={{
-            counter: selectedRowIds.length,
-            displayQuantity: <strong>{selectedRowIds.length}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove"}
+      />
       <PageTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-page"}

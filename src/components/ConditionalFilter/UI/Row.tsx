@@ -3,7 +3,8 @@ import {
   enrichAttributeComboboxOptions,
 } from "@dashboard/components/AttributeInputTypeIcon/enrichAttributeComboboxOptions";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button, DynamicCombobox, Select } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Select, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { X } from "lucide-react";
 import { useMemo } from "react";
 
@@ -11,7 +12,8 @@ import { getItemConstraint } from "./constrains";
 import { type ErrorLookup } from "./errors";
 import { type FilterEventEmitter } from "./EventEmitter";
 import { RightOperator } from "./RightOperator";
-import { type ExperimentalFiltersProps } from "./Root";
+import { type ConditionalFiltersLayout, type ExperimentalFiltersProps } from "./Root";
+import styles from "./Row.module.css";
 import { type LeftOperatorOption, type Row } from "./types";
 
 interface RowProps {
@@ -20,9 +22,27 @@ interface RowProps {
   leftOptions: ExperimentalFiltersProps["leftOptions"];
   emitter: FilterEventEmitter;
   error: ErrorLookup[number];
+  layout?: ConditionalFiltersLayout;
 }
 
-export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowProps) => {
+const getGridTemplateColumns = (layout: ConditionalFiltersLayout, isAttribute: boolean): string => {
+  if (layout === "inline") {
+    return isAttribute
+      ? "minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1fr) auto"
+      : "minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1fr) auto";
+  }
+
+  return isAttribute ? "200px 200px 120px 200px 1fr" : "200px 120px 200px 1fr";
+};
+
+export const RowComponent = ({
+  item,
+  index,
+  leftOptions,
+  emitter,
+  error,
+  layout = "popover",
+}: RowProps) => {
   const constrain = getItemConstraint(item.constraint);
   const isAttribute = item.isAttribute;
   const attributeOptions = useMemo(
@@ -33,16 +53,21 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
     () => (item.selectedAttribute ? enrichAttributeComboboxOption(item.selectedAttribute) : null),
     [item.selectedAttribute],
   );
+  const inlineControlProps = layout === "inline" ? { backgroundColor: "default1" as const } : {};
 
   return (
     <Box
+      className={clsx(layout === "inline" && styles.inlineRow)}
       display="grid"
-      gap={0.5}
-      __gridTemplateColumns={isAttribute ? "200px 200px 120px 200px 1fr" : "200px 120px 200px 1fr"}
+      gap={layout === "inline" ? 2 : 0.5}
+      __gridTemplateColumns={getGridTemplateColumns(layout, isAttribute)}
       placeItems="flex-start"
       alignItems="center"
+      width={layout === "inline" ? "100%" : undefined}
+      __minWidth={layout === "inline" ? "0" : undefined}
     >
       <DynamicCombobox
+        {...inlineControlProps}
         data-test-id={`left-${index}`}
         value={item.value}
         options={leftOptions}
@@ -72,6 +97,7 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
 
       {isAttribute && (
         <DynamicCombobox
+          {...inlineControlProps}
           data-test-id={`attribute-value-${index}`}
           value={selectedAttributeValue}
           options={attributeOptions}
@@ -94,6 +120,7 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
       )}
 
       <Select
+        {...inlineControlProps}
         data-test-id={`condition-${index}`}
         value={item.condition.selected.conditionValue}
         options={item.condition.options}
@@ -118,15 +145,28 @@ export const RowComponent = ({ item, index, leftOptions, emitter, error }: RowPr
         error={error.right.show}
         helperText={error.right.text}
         disabled={constrain.disableRightOperator}
+        layout={layout}
       />
 
-      <Button
-        marginLeft="auto"
-        variant="tertiary"
-        icon={<X size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-        onClick={() => emitter.removeRow(index)}
-        disabled={constrain.disableRemoveButton}
-      />
+      {layout === "inline" ? (
+        <button
+          className={styles.inlineRemoveButton}
+          data-test-id={`remove-row-${index}`}
+          disabled={constrain.disableRemoveButton}
+          onClick={() => emitter.removeRow(index)}
+          type="button"
+        >
+          <Text size={1}>✕</Text>
+        </button>
+      ) : (
+        <Button
+          marginLeft="auto"
+          variant="tertiary"
+          icon={<X size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          onClick={() => emitter.removeRow(index)}
+          disabled={constrain.disableRemoveButton}
+        />
+      )}
     </Box>
   );
 };

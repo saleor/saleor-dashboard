@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-style: inherit;
+}
+
+.rootCompact {
+  gap: var(--mu-spacing-1);
+}
+
+.detailBlockCompact {
+  margin-top: var(--mu-spacing-1);
+}
+
+.detailBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-0-5);
+}

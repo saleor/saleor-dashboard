@@ -1,0 +1,14 @@
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-2);
+}
+
+.row {
+  padding-block: 0;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 1.25;
+}

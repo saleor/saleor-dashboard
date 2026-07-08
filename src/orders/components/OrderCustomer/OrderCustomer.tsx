@@ -1,8 +1,8 @@
 // @ts-strict-ignore
-import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
+import { ReadonlyAddress } from "@dashboard/components/ReadonlyAddress/ReadonlyAddress";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { customerUrl } from "@dashboard/customers/urls";
@@ -11,13 +11,11 @@ import {
   OrderErrorCode,
   type OrderErrorFragment,
   PermissionEnum,
-  type SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail, orderListUrlWithCustomerId } from "@dashboard/orders/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Box, Button, Skeleton, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import * as React from "react";
@@ -25,7 +23,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { AddressTextError } from "./AddressTextError";
-import { CustomerEditForm } from "./CustomerEditForm";
+import { orderCustomerMessages } from "./messages";
 import { PickupAnnotation } from "./PickupAnnotation";
 
 export interface CustomerEditData {
@@ -35,15 +33,12 @@ export interface CustomerEditData {
   prevUserEmail?: string;
 }
 
-interface OrderCustomerProps extends Partial<FetchMoreProps> {
+interface OrderCustomerProps {
   order: OrderDetailsFragment;
-  users?: RelayToFlat<SearchCustomersQuery["search"]>;
-  loading?: boolean;
   errors: OrderErrorFragment[];
   canEditAddresses: boolean;
   canEditCustomer: boolean;
-  fetchUsers?: (query: string) => void;
-  onCustomerEdit?: (data: CustomerEditData) => void;
+  onCustomerChangeClick?: () => void;
   onProfileView: () => void;
   onBillingAddressEdit?: () => void;
   onShippingAddressEdit?: () => void;
@@ -88,23 +83,16 @@ const OrderCustomer = (props: OrderCustomerProps) => {
   const {
     canEditAddresses,
     canEditCustomer,
-    fetchUsers,
-    hasMore: hasMoreUsers,
-    loading,
     errors = [],
     order,
-    users,
-    onCustomerEdit,
+    onCustomerChangeClick,
     onBillingAddressEdit,
-    onFetchMore: onFetchMoreUsers,
     onProfileView,
     onShippingAddressEdit,
   } = props;
 
   const intl = useIntl();
   const user = maybe(() => order.user);
-  const [isInEditMode, setEditModeStatus] = React.useState(false);
-  const toggleEditMode = () => setEditModeStatus(!isInEditMode);
 
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
@@ -132,45 +120,6 @@ const OrderCustomer = (props: OrderCustomerProps) => {
     id: "aCdAsI",
   });
 
-  if (isInEditMode) {
-    return (
-      <DashboardCard>
-        <DashboardCard.Header>
-          <DashboardCard.Title size={6} fontWeight="medium">
-            <FormattedMessage
-              id="+ahkGr"
-              defaultMessage="Customer details"
-              description="section header"
-            />
-          </DashboardCard.Title>
-          <DashboardCard.Toolbar>
-            <Button
-              data-test-id="edit-customer"
-              variant="secondary"
-              disabled={!onCustomerEdit}
-              onClick={toggleEditMode}
-            >
-              <FormattedMessage {...buttonMessages.edit} />
-            </Button>
-          </DashboardCard.Toolbar>
-        </DashboardCard.Header>
-        <DashboardCard.Content>
-          <CustomerEditForm
-            currentUser={user}
-            currentUserEmail={order?.userEmail}
-            allUsers={users}
-            fetchUsers={fetchUsers}
-            onCustomerEdit={onCustomerEdit}
-            onFetchMore={onFetchMoreUsers}
-            hasMore={hasMoreUsers}
-            loading={loading}
-            toggleEditMode={toggleEditMode}
-          />
-        </DashboardCard.Content>
-      </DashboardCard>
-    );
-  }
-
   return (
     <DashboardCard>
       <DashboardCard.Header>
@@ -186,11 +135,11 @@ const OrderCustomer = (props: OrderCustomerProps) => {
             <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
               <Button
                 variant="secondary"
-                disabled={!onCustomerEdit}
-                onClick={toggleEditMode}
-                data-test-id="edit-customer"
+                disabled={!onCustomerChangeClick}
+                onClick={onCustomerChangeClick}
+                data-test-id="change-customer"
               >
-                <FormattedMessage {...buttonMessages.edit} />
+                <FormattedMessage {...orderCustomerMessages.changeCustomer} />
               </Button>
             </RequirePermissions>
           )}
@@ -324,7 +273,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                     onMouseEnter={() => setShowShippingCopy(true)}
                     onMouseLeave={() => setShowShippingCopy(false)}
                   >
-                    <AddressFormatter address={shippingAddress} fontSize={4} />
+                    <ReadonlyAddress address={shippingAddress} variant="default" />
                     <PickupAnnotation order={order} />
                     <CopyButton
                       show={showShippingCopy}
@@ -383,7 +332,7 @@ const OrderCustomer = (props: OrderCustomerProps) => {
                     onMouseEnter={() => setShowBillingCopy(true)}
                     onMouseLeave={() => setShowBillingCopy(false)}
                   >
-                    <AddressFormatter address={billingAddress} fontSize={4} />
+                    <ReadonlyAddress address={billingAddress} variant="default" />
                     <CopyButton
                       show={showBillingCopy}
                       copied={copiedBilling}

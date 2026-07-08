@@ -20,6 +20,8 @@ import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   type ProductErrorWithAttributesFragment,
@@ -125,6 +127,7 @@ interface ProductVariantCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
 }
 
 export const ProductVariantCreatePage = ({
@@ -162,6 +165,7 @@ export const ProductVariantCreatePage = ({
   searchWarehousesResult,
   searchWarehouses,
   onFilterChange,
+  initialConstraints,
 }: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -400,6 +404,7 @@ export const ProductVariantCreatePage = ({
                     handleAssignReferenceAttribute(attributeValues, data, handlers)
                   }
                   onFilterChange={onFilterChange}
+                  initialConstraints={initialConstraints}
                 />
               )}
               {product && (

@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-const messages = defineMessages({
+export const orderCustomerChangeDialogMessages = defineMessages({
   title: {
     id: "uD93er",
     defaultMessage: "Changed Customer",
@@ -23,5 +23,3 @@ const messages = defineMessages({
     description: "option label",
   },
 });
-
-export default messages;

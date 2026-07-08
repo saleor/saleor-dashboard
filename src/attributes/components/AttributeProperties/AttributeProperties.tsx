@@ -87,109 +87,134 @@ interface AttributePropertiesProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   onChange: FormChange;
+  variant?: "card" | "embedded";
 }
 
-const AttributeProperties = ({ data, errors, disabled, onChange }: AttributePropertiesProps) => {
+const AttributeProperties = ({
+  data,
+  errors,
+  disabled,
+  onChange,
+  variant = "card",
+}: AttributePropertiesProps) => {
   const intl = useIntl();
+  const isEmbedded = variant === "embedded";
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
   const storefrontFacetedNavigationProperties =
     ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(data.inputType) &&
     data.type === AttributeTypeEnum.PRODUCT_TYPE;
+  const propertySpacer = isEmbedded ? null : <FormSpacer />;
+
+  const propertiesContent = (
+    <>
+      <Box className={styles.propertyControl}>
+        <Checkbox
+          name={"valueRequired" as keyof AttributePageFormData}
+          checked={data.valueRequired}
+          onCheckedChange={checked =>
+            onChange({ target: { name: "valueRequired", value: checked } })
+          }
+          disabled={disabled}
+        >
+          <Paragraph fontWeight="medium" fontSize={3} margin={0}>
+            <FormattedMessage {...messages.valueRequired} />
+            <Text size={2} fontWeight="light" color="default2" display="block">
+              <FormattedMessage {...messages.valueRequiredCaption} />
+            </Text>
+          </Paragraph>
+        </Checkbox>
+      </Box>
+
+      {propertySpacer}
+
+      {storefrontFacetedNavigationProperties && (
+        <>
+          <Box className={styles.propertyControl}>
+            <Checkbox
+              name={"filterableInStorefront" as keyof FormData}
+              checked={data.filterableInStorefront}
+              onCheckedChange={checked =>
+                onChange({
+                  target: {
+                    name: "filterableInStorefront",
+                    value: checked as boolean,
+                  },
+                })
+              }
+              disabled={disabled}
+            >
+              <Paragraph fontWeight="medium" fontSize={3} margin={0}>
+                <FormattedMessage {...messages.filterableInStorefront} />
+                <Text size={2} fontWeight="light" color="default2" display="block">
+                  <FormattedMessage {...messages.filterableInStorefrontCaption} />
+                </Text>
+              </Paragraph>
+            </Checkbox>
+          </Box>
+
+          {data.filterableInStorefront && (
+            <>
+              {propertySpacer}
+              <Input
+                disabled={disabled}
+                error={!!formErrors.storefrontSearchPosition}
+                width="100%"
+                helperText={getAttributeErrorMessage(formErrors.storefrontSearchPosition, intl)}
+                name={"storefrontSearchPosition" as keyof AttributePageFormData}
+                label={intl.formatMessage(messages.storefrontSearchPosition)}
+                value={data.storefrontSearchPosition}
+                onChange={onChange}
+              />
+            </>
+          )}
+          {propertySpacer}
+        </>
+      )}
+
+      <Box className={styles.propertyControl}>
+        <Checkbox
+          name={"visibleInStorefront" as keyof FormData}
+          checked={data.visibleInStorefront}
+          onCheckedChange={checked =>
+            onChange({
+              target: {
+                name: "visibleInStorefront" as keyof FormData,
+                value: checked as boolean,
+              },
+            })
+          }
+          disabled={disabled}
+        >
+          <Paragraph fontWeight="medium" fontSize={3} margin={0}>
+            <FormattedMessage {...messages.visibleInStorefront} />
+            <Text size={2} fontWeight="light" color="default2" display="block">
+              <FormattedMessage {...messages.visibleInStorefrontCaption} />
+            </Text>
+          </Paragraph>
+        </Checkbox>
+      </Box>
+    </>
+  );
+
+  if (isEmbedded) {
+    return (
+      <Box display="flex" flexDirection="column" gap={3}>
+        <Text size={3} fontWeight="bold">
+          {intl.formatMessage(commonMessages.properties)}
+        </Text>
+        <Box display="flex" flexDirection="column" gap={3}>
+          {propertiesContent}
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <DashboardCard>
       <DashboardCard.Header>
         <DashboardCard.Title>{intl.formatMessage(commonMessages.properties)}</DashboardCard.Title>
       </DashboardCard.Header>
-
-      <DashboardCard.Content>
-        <Box className={styles.propertyControl}>
-          <Checkbox
-            name={"valueRequired" as keyof AttributePageFormData}
-            checked={data.valueRequired}
-            onCheckedChange={checked =>
-              onChange({ target: { name: "valueRequired", value: checked } })
-            }
-            disabled={disabled}
-          >
-            <Paragraph fontWeight="medium" fontSize={3} margin={0}>
-              <FormattedMessage {...messages.valueRequired} />
-              <Text size={2} fontWeight="light" color="default2" display="block">
-                <FormattedMessage {...messages.valueRequiredCaption} />
-              </Text>
-            </Paragraph>
-          </Checkbox>
-        </Box>
-
-        <FormSpacer />
-
-        {storefrontFacetedNavigationProperties && (
-          <>
-            <Box className={styles.propertyControl}>
-              <Checkbox
-                name={"filterableInStorefront" as keyof FormData}
-                checked={data.filterableInStorefront}
-                onCheckedChange={checked =>
-                  onChange({
-                    target: {
-                      name: "filterableInStorefront",
-                      value: checked as boolean,
-                    },
-                  })
-                }
-                disabled={disabled}
-              >
-                <Paragraph fontWeight="medium" fontSize={3} margin={0}>
-                  <FormattedMessage {...messages.filterableInStorefront} />
-                  <Text size={2} fontWeight="light" color="default2" display="block">
-                    <FormattedMessage {...messages.filterableInStorefrontCaption} />
-                  </Text>
-                </Paragraph>
-              </Checkbox>
-            </Box>
-
-            {data.filterableInStorefront && (
-              <>
-                <FormSpacer />
-                <Input
-                  disabled={disabled}
-                  error={!!formErrors.storefrontSearchPosition}
-                  width="100%"
-                  helperText={getAttributeErrorMessage(formErrors.storefrontSearchPosition, intl)}
-                  name={"storefrontSearchPosition" as keyof AttributePageFormData}
-                  label={intl.formatMessage(messages.storefrontSearchPosition)}
-                  value={data.storefrontSearchPosition}
-                  onChange={onChange}
-                />
-              </>
-            )}
-            <FormSpacer />
-          </>
-        )}
-
-        <Box className={styles.propertyControl}>
-          <Checkbox
-            name={"visibleInStorefront" as keyof FormData}
-            checked={data.visibleInStorefront}
-            onCheckedChange={checked =>
-              onChange({
-                target: {
-                  name: "visibleInStorefront" as keyof FormData,
-                  value: checked as boolean,
-                },
-              })
-            }
-            disabled={disabled}
-          >
-            <Paragraph fontWeight="medium" fontSize={3} margin={0}>
-              <FormattedMessage {...messages.visibleInStorefront} />
-              <Text size={2} fontWeight="light" color="default2" display="block">
-                <FormattedMessage {...messages.visibleInStorefrontCaption} />
-              </Text>
-            </Paragraph>
-          </Checkbox>
-        </Box>
-      </DashboardCard.Content>
+      <DashboardCard.Content>{propertiesContent}</DashboardCard.Content>
     </DashboardCard>
   );
 };

@@ -1,0 +1,21 @@
+.group {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-border-radius-3);
+  overflow: hidden;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.divider {
+  width: 1px;
+  flex-shrink: 0;
+  align-self: stretch;
+  background-color: var(--mu-colors-border-default1);
+}
+
+.segment {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}

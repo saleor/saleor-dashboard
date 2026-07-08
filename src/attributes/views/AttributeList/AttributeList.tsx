@@ -12,11 +12,11 @@ import {
   getFilterQueryParam,
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
-import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
   AttributeTypeEnum,
   OrderDirection,
@@ -55,7 +55,7 @@ import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
+import { AttributeBulkDeleteDialog } from "../../components/AttributeBulkDeleteDialog";
 import AttributeListPage from "../../components/AttributeListPage";
 import { attributeListPageMessages } from "../../components/AttributeListPage/messages";
 import {

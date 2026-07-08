@@ -426,6 +426,22 @@ describe("isDialogOnlyQueryChange", () => {
   it("treats clearing channel focus as a dialog-only change", () => {
     expect(isDialogOnlyQueryChange("?channelId=ch-1", "")).toBe(true);
   });
+  it("treats adding modal filter tokens (numeric keys) as a dialog-only change", () => {
+    expect(
+      isDialogOnlyQueryChange(
+        "?action=assign-attribute-value&id=123",
+        "?action=assign-attribute-value&id=123&0%5Bs0.productType%5D=pt-1",
+      ),
+    ).toBe(true);
+  });
+  it("treats clearing modal filter tokens as a dialog-only change", () => {
+    expect(
+      isDialogOnlyQueryChange(
+        "?action=assign-attribute-value&id=123&0%5Bs0.productType%5D=pt-1",
+        "?action=assign-attribute-value&id=123",
+      ),
+    ).toBe(true);
+  });
   it("does not treat a bulk mode change as a dialog-only change", () => {
     expect(isDialogOnlyQueryChange("", "?bulk=1")).toBe(false);
   });

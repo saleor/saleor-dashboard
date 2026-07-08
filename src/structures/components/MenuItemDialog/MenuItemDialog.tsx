@@ -13,24 +13,23 @@ import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, DynamicCombobox, Input, Text } from "@saleor/macaw-ui-next";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { MenuItemDialogLinkValue } from "./MenuItemDialogLinkValue";
+import { MenuItemDialogLinkValue } from "./MenuItemDialogLinkValue/MenuItemDialogLinkValue";
 import { getLinkTypeOptions } from "./options";
 import { type MenuItemDialogFormData } from "./types";
 import { getValidationSchema } from "./validationSchema";
 
 interface MenuItemDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  disabled: boolean;
   errors: MenuErrorFragment[];
   initial?: MenuItemDialogFormData;
   initialDisplayValue?: string;
-  open: boolean;
   onClose: () => void;
   onSubmit: (data: MenuItemDialogFormData) => void;
+  open: boolean;
 }
 
 const defaultInitial: MenuItemDialogFormData = {
@@ -39,17 +38,17 @@ const defaultInitial: MenuItemDialogFormData = {
   linkValue: "",
 };
 
-const MenuItemDialog = ({
+export const MenuItemDialog = ({
   confirmButtonState,
-  disabled,
   errors: apiErrors,
   initial,
   initialDisplayValue,
   onClose,
   onSubmit,
   open,
-}: MenuItemDialogProps) => {
+}: MenuItemDialogProps): JSX.Element => {
   const intl = useIntl();
+  const isSubmittingRef = useRef(false);
 
   const { handleSubmit, control, watch, formState, setValue, reset, clearErrors } =
     useForm<MenuItemDialogFormData>({
@@ -58,6 +57,19 @@ const MenuItemDialog = ({
     });
 
   const linkType = watch("linkType");
+  const isMutationLoading = confirmButtonState === "loading";
+  const isActionsDisabled = formState.isSubmitting || isMutationLoading;
+
+  isSubmittingRef.current = isActionsDisabled;
+
+  useEffect(
+    function resetSubmittingRefWhenDialogCloses() {
+      if (!open) {
+        isSubmittingRef.current = false;
+      }
+    },
+    [open],
+  );
 
   // Reset input state after closing dialog
   useModalDialogOpen(open, {
@@ -68,12 +80,22 @@ const MenuItemDialog = ({
   });
 
   // Refresh initial display value if changed
-  useEffect(() => {
-    // Form should be reset only when dialog is opened
-    // otherwise it will reset form on every render and when input is empty
-    reset(initial);
+  useEffect(
+    function resetFormWhenDialogOpens() {
+      reset(initial);
+    },
+    // Form should reset only when dialog opens, not when `initial` identity changes on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+    [open],
+  );
+
+  const handleClose = (): void => {
+    if (isSubmittingRef.current) {
+      return;
+    }
+
+    onClose();
+  };
 
   const errors = useModalDialogErrors(apiErrors, open);
   const mutationErrors = errors.filter(err => err.field === null);
@@ -85,137 +107,146 @@ const MenuItemDialog = ({
   const linkTypeOptions = getLinkTypeOptions(intl);
 
   return (
-    <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DashboardModal.Grid>
-            <DashboardModal.Header data-test-id="add-menu-item-dialog-title">
-              {initial
-                ? intl.formatMessage({
-                    id: "GUeIcq",
-                    defaultMessage: "Edit Item",
-                    description: "edit structure, header",
-                  })
-                : intl.formatMessage({
-                    id: "zJpP1T",
-                    defaultMessage: "Add Item",
-                    description: "create new structure, header",
-                  })}
-            </DashboardModal.Header>
+    <DashboardModal onChange={handleClose} open={open}>
+      {open ? (
+        <DashboardModal.Content size="sm">
+          <DashboardModal.ContextHeader data-test-id="add-menu-item-dialog-title">
+            {initial ? (
+              <FormattedMessage
+                description="edit structure, header"
+                id="GUeIcq"
+                defaultMessage="Edit Item"
+              />
+            ) : (
+              <FormattedMessage
+                description="create new structure, header"
+                id="zJpP1T"
+                defaultMessage="Add Item"
+              />
+            )}
+          </DashboardModal.ContextHeader>
 
-            <Controller
-              control={control}
-              name="name"
-              render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
-                <Input
-                  {...field}
-                  data-test-id="menu-item-name-input"
-                  disabled={disabled}
-                  label={intl.formatMessage({
-                    id: "z/pKCq",
-                    defaultMessage: "Name",
-                    description: "structure name",
-                  })}
-                  value={value}
-                  onChange={onChange}
-                  error={!!formErrors.name || !!error}
-                  helperText={getMenuErrorMessage(formErrors.name, intl) || error?.message}
-                />
-              )}
-            />
-
-            <Box display="flex" gap={3}>
-              <Box width="100%">
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              <Box display="grid" gap={4}>
                 <Controller
-                  name="linkType"
                   control={control}
-                  render={({ field: { value, onChange, ...field }, fieldState: { error } }) => {
-                    return (
+                  name="name"
+                  render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
+                    <Input
+                      {...field}
+                      data-test-id="menu-item-name-input"
+                      disabled={isActionsDisabled}
+                      error={!!formErrors.name || !!error}
+                      helperText={getMenuErrorMessage(formErrors.name, intl) || error?.message}
+                      label={intl.formatMessage({
+                        description: "structure name",
+                        id: "z/pKCq",
+                        defaultMessage: "Name",
+                      })}
+                      onChange={onChange}
+                      value={value}
+                      width="100%"
+                    />
+                  )}
+                />
+
+                <Box display="grid" gap={2} __gridTemplateColumns="1fr 1fr">
+                  <Controller
+                    control={control}
+                    name="linkType"
+                    render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
                       <DynamicCombobox
                         {...field}
-                        disabled={disabled}
+                        data-test-id="menu-item-link-type-input"
+                        disabled={isActionsDisabled}
+                        error={!!idError || !!error}
+                        helperText={getMenuErrorMessage(idError, intl) || error?.message}
                         label={intl.formatMessage({
+                          description: "label",
                           id: "aasX8r",
                           defaultMessage: "Link type",
-                          description: "label",
                         })}
-                        options={linkTypeOptions}
+                        name="linkType"
                         onChange={option => {
                           onChange(option?.value ?? null);
                           setValue("linkValue", "");
                           clearErrors("linkValue");
                         }}
-                        value={linkTypeOptions.find(o => o.value === value) || null}
-                        name="linkType"
+                        options={linkTypeOptions}
                         size="small"
-                        error={!!idError || !!error}
-                        helperText={getMenuErrorMessage(idError, intl) || error?.message}
-                        data-test-id="menu-item-link-type-input"
-                      />
-                    );
-                  }}
-                />
-              </Box>
-
-              <Box width="100%">
-                {linkType !== "link" ? (
-                  <MenuItemDialogLinkValue
-                    control={control}
-                    disabled={disabled}
-                    initialDisplayValue={initialDisplayValue}
-                    linkType={linkType}
-                    showInitialValue={initial && !formState.dirtyFields.linkValue}
-                  />
-                ) : (
-                  <Controller
-                    control={control}
-                    name="linkValue"
-                    render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
-                      <Input
-                        {...field}
-                        data-test-id="menu-item-link-value-input"
-                        disabled={disabled}
-                        label={intl.formatMessage({
-                          id: "WDrC7e",
-                          defaultMessage: "Link value",
-                          description: "label",
-                        })}
-                        value={value}
-                        onChange={onChange}
-                        error={!!error}
-                        helperText={error?.message}
+                        value={linkTypeOptions.find(o => o.value === value) || null}
                       />
                     )}
                   />
+
+                  {linkType !== "link" ? (
+                    <MenuItemDialogLinkValue
+                      control={control}
+                      disabled={isActionsDisabled}
+                      initialDisplayValue={initialDisplayValue}
+                      linkType={linkType}
+                      showInitialValue={initial && !formState.dirtyFields.linkValue}
+                    />
+                  ) : (
+                    <Controller
+                      control={control}
+                      name="linkValue"
+                      render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
+                        <Input
+                          {...field}
+                          data-test-id="menu-item-link-value-input"
+                          disabled={isActionsDisabled}
+                          error={!!error}
+                          helperText={error?.message}
+                          label={intl.formatMessage({
+                            description: "label",
+                            id: "WDrC7e",
+                            defaultMessage: "Link value",
+                          })}
+                          onChange={onChange}
+                          value={value}
+                          width="100%"
+                        />
+                      )}
+                    />
+                  )}
+                </Box>
+
+                {mutationErrors.length > 0 && (
+                  <Box>
+                    {mutationErrors.map(err => (
+                      <Text key={err.code} color="critical1" display="block">
+                        {getMenuErrorMessage(err, intl)}
+                      </Text>
+                    ))}
+                  </Box>
                 )}
               </Box>
-            </Box>
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
 
-            {mutationErrors.length > 0 && (
-              <Box>
-                {mutationErrors.map(err => (
-                  <Text key={err.code} color="critical1" display="block">
-                    {getMenuErrorMessage(err, intl)}
-                  </Text>
-                ))}
-              </Box>
-            )}
-            <DashboardModal.Actions>
-              <BackButton onClick={onClose} />
-              <ConfirmButton
-                data-test-id="submit"
-                transitionState={confirmButtonState}
-                type="submit"
-              >
-                <FormattedMessage {...buttonMessages.confirm} />
-              </ConfirmButton>
-            </DashboardModal.Actions>
-          </DashboardModal.Grid>
-        </form>
-      </DashboardModal.Content>
+          <DashboardModal.Actions>
+            <BackButton disabled={isActionsDisabled} onClick={handleClose} />
+            <ConfirmButton
+              data-test-id="submit"
+              disabled={isActionsDisabled}
+              onClick={handleSubmit(onSubmit)}
+              transitionState={
+                isMutationLoading
+                  ? confirmButtonState
+                  : formState.isSubmitting
+                    ? "loading"
+                    : "default"
+              }
+            >
+              <FormattedMessage {...buttonMessages.confirm} />
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      ) : null}
     </DashboardModal>
   );
 };
 
 MenuItemDialog.displayName = "MenuItemDialog";
-export default MenuItemDialog;

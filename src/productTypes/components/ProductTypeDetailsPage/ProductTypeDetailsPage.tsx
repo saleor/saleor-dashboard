@@ -65,6 +65,7 @@ interface ProductTypeDetailsPageProps {
   taxClasses: TaxClassBaseFragment[];
   variantAttributeList: ListActions;
   onAttributeAdd: (type: ProductAttributeType) => void;
+  onAttributeCreate: (type: ProductAttributeType) => void;
   onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;
   onAttributeUnassign: (id: string) => void;
   onDelete: () => void;
@@ -86,6 +87,7 @@ const ProductTypeDetailsPage = ({
   taxClasses,
   variantAttributeList,
   onAttributeAdd,
+  onAttributeCreate,
   onAttributeUnassign,
   onAttributeReorder,
   onDelete,
@@ -180,6 +182,7 @@ const ProductTypeDetailsPage = ({
                 disabled={disabled}
                 type={ProductAttributeType.PRODUCT}
                 onAttributeAssign={onAttributeAdd}
+                onAttributeCreate={onAttributeCreate}
                 onAttributeReorder={(event: ReorderEvent) =>
                   onAttributeReorder(event, ProductAttributeType.PRODUCT)
                 }
@@ -213,6 +216,7 @@ const ProductTypeDetailsPage = ({
                     disabled={disabled}
                     type={ProductAttributeType.VARIANT}
                     onAttributeAssign={onAttributeAdd}
+                    onAttributeCreate={onAttributeCreate}
                     onAttributeReorder={(event: ReorderEvent) =>
                       onAttributeReorder(event, ProductAttributeType.VARIANT)
                     }

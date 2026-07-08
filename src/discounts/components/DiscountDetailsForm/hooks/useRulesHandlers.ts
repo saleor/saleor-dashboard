@@ -16,7 +16,7 @@ interface UseRulesHandlersProps {
   giftsOptionsDetailsMap: Record<string, string>;
   onRuleUpdateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleUpdateErrorFragment>>>;
   onRuleCreateSubmit: (data: Rule) => Promise<Array<CommonError<PromotionRuleCreateErrorFragment>>>;
-  onRuleDeleteSubmit: (id: string) => void;
+  onRuleDeleteSubmit: (id: string) => Promise<boolean>;
 }
 
 export const useRulesHandlers = ({
@@ -76,18 +76,18 @@ export const useRulesHandlers = ({
       }
     }
   };
-  const onDeleteRule = async (ruleDeleteIndex: number) => {
+  const onDeleteRule = async (ruleDeleteIndex: number): Promise<boolean> => {
     if (ruleDeleteIndex === null) {
-      return;
+      return false;
     }
 
     const ruleId = rules[ruleDeleteIndex].id;
 
     if (!ruleId) {
-      return;
+      return false;
     }
 
-    await onRuleDeleteSubmit(ruleId);
+    return onRuleDeleteSubmit(ruleId);
   };
 
   return {

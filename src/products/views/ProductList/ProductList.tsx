@@ -1,9 +1,10 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
+import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
@@ -36,12 +37,13 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
-import ProductExportDialog from "@dashboard/products/components/ProductExportDialog";
+import { ProductBulkDeleteDialog } from "@dashboard/products/components/ProductBulkDeleteDialog/ProductBulkDeleteDialog";
+import { ProductExportDialog } from "@dashboard/products/components/ProductExportDialog/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue,
 } from "@dashboard/products/components/ProductListPage/utils";
-import ProductTypePickerDialog from "@dashboard/products/components/ProductTypePickerDialog";
+import { ProductTypePickerDialog } from "@dashboard/products/components/ProductTypePickerDialog/ProductTypePickerDialog";
 import {
   productAddUrl,
   productListUrl,
@@ -57,7 +59,7 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import ProductListPage, { ProductFilterKeys } from "../../components/ProductListPage";
 import { ProductsExportParameters } from "./export";
@@ -75,6 +77,15 @@ const ProductList = ({ params }: ProductListProps) => {
   const { queue } = useBackgroundTask();
   const { valueProvider } = useConditionalFilterContext();
   const selectedChannelSlug = obtainChannelFromFilter(valueProvider);
+  const hasListFilters = useMemo(
+    () =>
+      hasActiveListFilters({
+        filterContainer: valueProvider.value,
+        searchQuery: params.query,
+        createFilterVariables: createProductExportQueryVariables,
+      }),
+    [params.query, valueProvider.value],
+  );
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
@@ -202,7 +213,6 @@ const ProductList = ({ params }: ProductListProps) => {
     productBulkDelete({
       variables: { ids: selectedRowIds },
     });
-    clearRowSelection();
   };
   const paginationState = createPaginationState(settings.rowNumber, params);
   const filterVariables = getFilterVariables({
@@ -329,28 +339,13 @@ const ProductList = ({ params }: ProductListProps) => {
         onSelectProductIds={handleSetSelectedProductIds}
         clearRowSelection={clearRowSelection}
       />
-      <ActionDialog
+      <ProductBulkDeleteDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
+        count={selectedRowIds.length}
         onClose={closeModal}
         onConfirm={handleSubmitBulkDelete}
-        title={intl.formatMessage({
-          id: "F4WdSO",
-          defaultMessage: "Delete Products",
-          description: "dialog header",
-        })}
-        variant="delete"
-      >
-        <FormattedMessage
-          id="yDkmX7"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-          description="dialog content"
-          values={{
-            counter: selectedRowIds.length,
-            displayQuantity: <strong>{selectedRowIds.length}</strong>,
-          }}
-        />
-      </ActionDialog>
+      />
       <ProductExportDialog
         attributes={mapEdgesToItems(searchAttributes?.result?.data?.search) || []}
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
@@ -365,6 +360,7 @@ const ProductList = ({ params }: ProductListProps) => {
           filter: data?.products?.totalCount,
         }}
         selectedProducts={selectedRowIds.length}
+        hasListFilters={hasListFilters}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}

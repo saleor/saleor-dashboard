@@ -1,3 +1,4 @@
+import { type MetadataInput } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 
 import { type EventData, EventDataAction, EventDataField } from "./types";
@@ -62,3 +63,50 @@ export const getMetadataTitle = (isPrivate: boolean) =>
         defaultMessage: "Metadata",
         description: "header",
       };
+
+/** Maps metadata form errors to the key field row they apply to. */
+export const getMetadataKeyFieldErrors = (
+  data: MetadataInput[],
+  formError: string | undefined,
+): Record<number, string> => {
+  if (!formError) {
+    return {};
+  }
+
+  const errors: Record<number, string> = {};
+  const keys = data.map(entry => entry.key);
+
+  if (keys.some(key => key === "")) {
+    data.forEach((entry, index) => {
+      if (entry.key === "") {
+        errors[index] = formError;
+      }
+    });
+
+    return errors;
+  }
+
+  const firstIndexByKey = new Map<string, number>();
+
+  keys.forEach((key, index) => {
+    if (key === "") {
+      return;
+    }
+
+    const firstIndex = firstIndexByKey.get(key);
+
+    if (firstIndex === undefined) {
+      firstIndexByKey.set(key, index);
+
+      return;
+    }
+
+    errors[index] = formError;
+
+    if (!(firstIndex in errors)) {
+      errors[firstIndex] = formError;
+    }
+  });
+
+  return errors;
+};

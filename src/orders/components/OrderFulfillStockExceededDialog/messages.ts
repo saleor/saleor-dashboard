@@ -7,19 +7,15 @@ export const stockExceededDialogMessages = defineMessages({
     description: "stock exceeded dialog title",
   },
   infoLabel: {
-    defaultMessage: "Stock for items shown below are not enough to prepare fulfillment:",
-    id: "Z7Tf8e",
+    defaultMessage:
+      "{count, plural, one {# item exceeds available stock.} other {# items exceed available stock.}} Go back to adjust quantities, or fulfill anyway to oversell.",
+    id: "0I+Z8l",
     description: "stock exceeded dialog description",
   },
-  questionLabel: {
-    defaultMessage: "Are you sure you want to fulfill those products anyway?",
-    id: "S7Rwl0",
-    description: "stock exceeded action question label",
-  },
-  cancelButton: {
-    defaultMessage: "Cancel",
-    id: "uT5L4h",
-    description: "cancel button label",
+  goBackButton: {
+    defaultMessage: "Go back",
+    id: "bavdMA",
+    description: "stock exceeded dialog go back button",
   },
   fulfillButton: {
     defaultMessage: "Fulfill anyway",
@@ -31,19 +27,19 @@ export const stockExceededDialogMessages = defineMessages({
     id: "74Cxe8",
     description: "table header product label",
   },
-  requiredStockLabel: {
-    defaultMessage: "Required",
-    id: "TZtvTG",
-    description: "table header required stock label",
+  toFulfillLabel: {
+    defaultMessage: "To fulfill",
+    id: "xB7Jge",
+    description: "table header quantity to fulfill label",
   },
   availableStockLabel: {
     defaultMessage: "Available",
     id: "JMBsrr",
     description: "table header available stock label",
   },
-  warehouseStockLabel: {
-    defaultMessage: "Warehouse stock",
-    id: "Mmo9k2",
-    description: "table header warehouse stock label",
+  shortLabel: {
+    defaultMessage: "Short",
+    id: "7F+Lpf",
+    description: "table header stock shortfall label",
   },
 });

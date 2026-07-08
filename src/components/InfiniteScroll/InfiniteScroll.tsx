@@ -1,12 +1,22 @@
-import { Box, Spinner } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import InfiniteScrollComponent, { type Props } from "react-infinite-scroll-component";
 
-interface InfiniteScrollProps extends Omit<Props, "loader"> {
-  id: string;
+import { SaleorThrobber } from "../Throbber";
+import styles from "./InfiniteScroll.module.css";
+
+type InfiniteScrollBaseProps = Omit<Props, "loader" | "id" | "scrollableTarget"> & {
   loader?: React.ReactNode;
   children: React.ReactNode;
-}
+  flush?: boolean;
+};
+
+type InfiniteScrollProps =
+  | (InfiniteScrollBaseProps & { id: string; scrollableTarget?: Props["scrollableTarget"] })
+  | (InfiniteScrollBaseProps & {
+      scrollableTarget: NonNullable<Props["scrollableTarget"]>;
+      id?: never;
+    });
 
 const InfiniteScrollLoader = () => (
   <Box
@@ -14,19 +24,62 @@ const InfiniteScrollLoader = () => (
     alignItems="center"
     height={6}
     justifyContent="center"
-    marginTop={6}
-    marginBottom={3}
+    marginTop={4}
+    marginBottom={4}
   >
-    <Spinner />
+    <SaleorThrobber size={20} />
   </Box>
 );
 
-export const InfiniteScroll = ({ children, id, loader, ...props }: InfiniteScrollProps) => {
+export const InfiniteScroll = ({
+  children,
+  flush = false,
+  id,
+  loader,
+  scrollableTarget,
+  ...props
+}: InfiniteScrollProps) => {
   const loaderComponent = loader ?? <InfiniteScrollLoader />;
+  const usesParentScroller = scrollableTarget != null && scrollableTarget !== id;
+
+  if (usesParentScroller) {
+    return (
+      <Box
+        className={styles.fillContent}
+        marginBottom={flush ? 0 : 3}
+        data-test-id="infinite-scroll-content"
+      >
+        <InfiniteScrollComponent
+          loader={loaderComponent}
+          scrollableTarget={scrollableTarget}
+          {...props}
+        >
+          {children}
+        </InfiniteScrollComponent>
+      </Box>
+    );
+  }
+
+  const scrollContainerId =
+    id ?? (typeof scrollableTarget === "string" ? scrollableTarget : undefined);
+
+  if (!scrollContainerId) {
+    throw new Error("InfiniteScroll requires either `id` or `scrollableTarget`.");
+  }
 
   return (
-    <Box id={id} overflowY="auto" __height="inherit" marginBottom={3} className="scrollArea">
-      <InfiniteScrollComponent loader={loaderComponent} {...props}>
+    <Box
+      id={scrollContainerId}
+      overflowY="auto"
+      __height="inherit"
+      marginBottom={flush ? 0 : 3}
+      className="scrollArea"
+    >
+      <InfiniteScrollComponent
+        loader={loaderComponent}
+        scrollableTarget={scrollContainerId}
+        {...props}
+      >
         {children}
       </InfiniteScrollComponent>
     </Box>

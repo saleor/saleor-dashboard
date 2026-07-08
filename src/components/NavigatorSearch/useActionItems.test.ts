@@ -29,12 +29,25 @@ describe("useActionItems", () => {
 
       element.className = className;
       element.dataset.href = `/test-route-${i}`;
+      element.id = `/test-route-${i}`;
       element.setAttribute = jest.fn();
-      document.body.appendChild(element);
       elements.push(element);
     }
 
     return elements;
+  };
+
+  const createContainerWithItems = () => {
+    const container = document.createElement("div");
+    const mockElements = createMockElements(3, "command-menu-item");
+
+    mockElements.forEach(element => {
+      container.appendChild(element);
+    });
+
+    document.body.appendChild(container);
+
+    return { container, mockElements };
   };
 
   describe("initial state", () => {
@@ -47,79 +60,85 @@ describe("useActionItems", () => {
     });
   });
 
-  describe("collectLinks", () => {
-    it("should collect elements with command-menu-item class", () => {
-      const mockElements = createMockElements(3, "command-menu-item");
+  describe("collectItems", () => {
+    it("should collect command menu items and rows in DOM order", () => {
+      const { container, mockElements } = createContainerWithItems();
+      const row = document.createElement("tr");
+
+      row.dataset.href = "/order-1";
+      row.setAttribute = jest.fn();
+      container.appendChild(row);
+
       const { result } = renderHook(() => useActionItems());
 
-      result.current.collectLinks();
+      result.current.collectItems(container);
 
-      expect(result.current.items.current).toHaveLength(3);
-      expect(result.current.items.current).toEqual(expect.arrayContaining(mockElements));
+      expect(result.current.items.current).toHaveLength(4);
+      expect(result.current.items.current.slice(0, 3)).toEqual(mockElements);
+      expect(result.current.items.current[3]).toBe(row);
     });
 
-    it("should append to existing items", () => {
-      createMockElements(2, "command-menu-item");
-
+    it("should replace existing items", () => {
+      const { container } = createContainerWithItems();
       const { result } = renderHook(() => useActionItems());
 
-      const existingElement = document.createElement("div");
-
-      result.current.items.current.push(existingElement);
-
-      result.current.collectLinks();
+      result.current.items.current.push(document.createElement("div"));
+      result.current.collectItems(container);
 
       expect(result.current.items.current).toHaveLength(3);
-      expect(result.current.items.current[0]).toBe(existingElement);
     });
-  });
 
-  describe("collectTableRows", () => {
-    it("should collect table row elements with command-menu class", () => {
-      const table = document.createElement("table");
-
-      table.className = "command-menu";
-
-      const rows: HTMLElement[] = [];
-
-      for (let i = 0; i < 2; i++) {
-        const row = document.createElement("tr");
-
-        row.setAttribute = jest.fn();
-        table.appendChild(row);
-        rows.push(row);
-      }
-
-      document.body.appendChild(table);
-
+    it("should clear items when container is null", () => {
       const { result } = renderHook(() => useActionItems());
 
-      result.current.collectTableRows();
+      result.current.items.current.push(document.createElement("div"));
+      result.current.collectItems(null);
 
-      expect(result.current.items.current).toHaveLength(2);
-      expect(result.current.items.current).toEqual(expect.arrayContaining(rows));
+      expect(result.current.items.current).toEqual([]);
     });
   });
 
   describe("focus management", () => {
     let mockElements: HTMLElement[];
+    let container: HTMLDivElement;
 
     beforeEach(() => {
-      mockElements = createMockElements(3, "command-menu-item");
+      ({ container, mockElements } = createContainerWithItems());
     });
 
-    describe("focusFirst", () => {
+    describe("restoreFocus", () => {
       it("should set focus to first element", () => {
         const { result } = renderHook(() => useActionItems());
 
-        result.current.collectLinks();
-
-        result.current.focusFirst();
+        result.current.collectItems(container);
+        result.current.restoreFocus();
 
         expect(result.current.currentFocusIndex.current).toBe(0);
         expect(mockElements[0].setAttribute).toHaveBeenCalledWith("data-focus", "true");
         expect(mockElements[0].setAttribute).toHaveBeenCalledWith("aria-selected", "true");
         expect(mockScrollIntoView).toHaveBeenCalled();
+      });
+
+      it("should restore focus to a preferred element when it still exists", () => {
+        const { result } = renderHook(() => useActionItems());
+
+        result.current.collectItems(container);
+        result.current.restoreFocus(mockElements[2].id);
+
+        expect(result.current.currentFocusIndex.current).toBe(2);
+        expect(mockElements[2].setAttribute).toHaveBeenCalledWith("data-focus", "true");
+      });
+    });
+
+    describe("focusFirst", () => {
+      it("should focus the first element", () => {
+        const { result } = renderHook(() => useActionItems());
+
+        result.current.collectItems(container);
+        result.current.focusFirst();
+
+        expect(result.current.currentFocusIndex.current).toBe(0);
+        expect(mockElements[0].setAttribute).toHaveBeenCalledWith("data-focus", "true");
       });
     });
 
@@ -127,7 +146,7 @@ describe("useActionItems", () => {
       it("should move focus to next element", () => {
         const { result } = renderHook(() => useActionItems());
 
-        result.current.collectLinks();
+        result.current.collectItems(container);
         result.current.focusFirst();
 
         result.current.focusNext();
@@ -142,7 +161,7 @@ describe("useActionItems", () => {
       it("should wrap to first element when at the end", () => {
         const { result } = renderHook(() => useActionItems());
 
-        result.current.collectLinks();
+        result.current.collectItems(container);
         result.current.currentFocusIndex.current = 2;
 
         result.current.focusNext();
@@ -153,7 +172,7 @@ describe("useActionItems", () => {
       it("should do nothing when no focus is set", () => {
         const { result } = renderHook(() => useActionItems());
 
-        result.current.collectLinks();
+        result.current.collectItems(container);
 
         result.current.focusNext();
 
@@ -165,7 +184,7 @@ describe("useActionItems", () => {
       it("should move focus to previous element", () => {
         const { result } = renderHook(() => useActionItems());
 
-        result.current.collectLinks();
+        result.current.collectItems(container);
         result.current.currentFocusIndex.current = 1;
 
         result.current.focusPrevious();
@@ -180,7 +199,7 @@ describe("useActionItems", () => {
       it("should do nothing when at first element", () => {
         const { result } = renderHook(() => useActionItems());
 
-        result.current.collectLinks();
+        result.current.collectItems(container);
         result.current.currentFocusIndex.current = 0;
 
         result.current.focusPrevious();
@@ -191,7 +210,7 @@ describe("useActionItems", () => {
       it("should do nothing when no focus is set", () => {
         const { result } = renderHook(() => useActionItems());
 
-        result.current.collectLinks();
+        result.current.collectItems(container);
 
         result.current.focusPrevious();
 
@@ -202,11 +221,10 @@ describe("useActionItems", () => {
 
   describe("resetFocus", () => {
     it("should reset focus index and clear items", () => {
-      createMockElements(3, "command-menu-item");
-
+      const { container } = createContainerWithItems();
       const { result } = renderHook(() => useActionItems());
 
-      result.current.collectLinks();
+      result.current.collectItems(container);
       result.current.focusFirst();
 
       result.current.resetFocus();
@@ -219,10 +237,10 @@ describe("useActionItems", () => {
 
   describe("getActiveFocusedElement", () => {
     it("should return the currently focused element", () => {
-      const mockElements = createMockElements(3, "command-menu-item");
+      const { container, mockElements } = createContainerWithItems();
       const { result } = renderHook(() => useActionItems());
 
-      result.current.collectLinks();
+      result.current.collectItems(container);
       result.current.focusFirst();
 
       const activeElement = result.current.getActiveFocusedElement();
@@ -241,11 +259,10 @@ describe("useActionItems", () => {
 
   describe("takeAction", () => {
     it("should navigate to the href of the focused element", () => {
-      createMockElements(3, "command-menu-item");
-
+      const { container } = createContainerWithItems();
       const { result } = renderHook(() => useActionItems());
 
-      result.current.collectLinks();
+      result.current.collectItems(container);
       result.current.focusFirst();
 
       result.current.takeAction();
@@ -254,11 +271,10 @@ describe("useActionItems", () => {
     });
 
     it("should do nothing when no element is focused", () => {
-      createMockElements(3, "command-menu-item");
-
+      const { container } = createContainerWithItems();
       const { result } = renderHook(() => useActionItems());
 
-      result.current.collectLinks();
+      result.current.collectItems(container);
 
       result.current.takeAction();
 
@@ -268,11 +284,10 @@ describe("useActionItems", () => {
 
   describe("hasAnyFocus", () => {
     it("should return true when an element is focused", () => {
-      createMockElements(3, "command-menu-item");
-
+      const { container } = createContainerWithItems();
       const { result } = renderHook(() => useActionItems());
 
-      result.current.collectLinks();
+      result.current.collectItems(container);
       result.current.focusFirst();
 
       expect(result.current.hasAnyFocus()).toBe(true);

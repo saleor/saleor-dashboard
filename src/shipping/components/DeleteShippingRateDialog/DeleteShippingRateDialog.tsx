@@ -1,7 +1,12 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 interface DeleteShippingRateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -11,38 +16,60 @@ interface DeleteShippingRateDialogProps {
   handleConfirm: () => void;
 }
 
-const DeleteShippingRateDialog = ({
+export const DeleteShippingRateDialog = ({
   confirmButtonState,
   onClose,
   handleConfirm,
   name,
   open,
 }: DeleteShippingRateDialogProps) => {
-  const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      onClose={onClose}
-      onConfirm={handleConfirm}
-      open={open}
-      title={intl.formatMessage({
-        id: "nNeWAx",
-        defaultMessage: "Delete Shipping Method",
-        description: "dialog header",
-      })}
-      variant="delete"
-    >
-      <FormattedMessage
-        id="yOaNWB"
-        defaultMessage="Are you sure you want to delete {name}?"
-        description="delete shipping method"
-        values={{
-          name: getStringOrPlaceholder(name),
-        }}
-      />
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              id="yOaNWB"
+              defaultMessage="Are you sure you want to delete {name}?"
+              description="delete shipping method"
+              values={{
+                name: getStringOrPlaceholder(name),
+              }}
+            />
+          }
+        >
+          <FormattedMessage
+            id="nNeWAx"
+            defaultMessage="Delete Shipping Method"
+            description="dialog header"
+          />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={handleConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
-export default DeleteShippingRateDialog;
+DeleteShippingRateDialog.displayName = "DeleteShippingRateDialog";

@@ -15,7 +15,7 @@ export const CommandContent = () => {
   const { setNavigatorVisibility } = useNavigatorSearchContext();
 
   const [query, setQuery] = useState("");
-  const { scope, collectLinks, collectTableRows, resetFocus } = useKeyboardNavigation({ query });
+  const { scope, refreshItems, resetFocus } = useKeyboardNavigation({ query });
 
   const handleClick = () => {
     setNavigatorVisibility(false);
@@ -27,12 +27,8 @@ export const CommandContent = () => {
     setQuery(value);
   };
 
-  const handleActionsLoaded = () => {
-    collectLinks();
-  };
-
-  const handleResourcesLoaded = () => {
-    collectTableRows();
+  const handleItemsChange = () => {
+    refreshItems();
   };
 
   return (
@@ -48,7 +44,7 @@ export const CommandContent = () => {
         paddingTop={2}
         paddingBottom={2}
       >
-        <Actions query={query} onActionClick={handleClick} onActionsLoaded={handleActionsLoaded} />
+        <Actions query={query} onActionClick={handleClick} />
         <Box marginTop={3}>
           <Text fontWeight="medium" size={2} color="default2" paddingX={6} display="block">
             <FormattedMessage id="49vo8t" defaultMessage="Quick search" />
@@ -57,19 +53,16 @@ export const CommandContent = () => {
             href={globalSearchUrl({ query, trigger: true })}
             data-href={globalSearchUrl({ query, trigger: true })}
             className="command-menu-item"
-            data-focus={false}
           >
             <Box
+              className="command-menu-item-content"
               display="flex"
               alignItems="center"
               color="default1"
               gap={2}
-              backgroundColor={{
-                hover: "default1Hovered",
-              }}
-              paddingY={1.5}
-              paddingX={6}
               marginBottom={2}
+              paddingX={6}
+              paddingY={1.5}
             >
               <Text size={2} fontWeight="medium" color="default1">
                 <FormattedMessage id="pdJlXC" defaultMessage="See all global search results" />
@@ -90,7 +83,7 @@ export const CommandContent = () => {
           <ResourcesTable
             query={query}
             onResourceClick={handleClick}
-            onResourcesLoaded={handleResourcesLoaded}
+            onResourcesLoaded={handleItemsChange}
           />
         </Box>
       </Box>
