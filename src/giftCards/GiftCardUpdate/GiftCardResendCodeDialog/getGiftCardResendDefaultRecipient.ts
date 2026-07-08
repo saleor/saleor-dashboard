@@ -2,7 +2,18 @@ import { type GiftCardDetailsQuery, GiftCardEventsEnum } from "@dashboard/graphq
 import { getFullName } from "@dashboard/misc";
 
 type GiftCardForResend = NonNullable<GiftCardDetailsQuery["giftCard"]>;
-type GiftCardEvent = GiftCardForResend["events"][number];
+
+export type GiftCardResendRecipientEvent = {
+  type: GiftCardEventsEnum | null;
+  email: string | null;
+};
+
+export type GiftCardResendRecipientInput = {
+  lastUsedOn: GiftCardForResend["lastUsedOn"];
+  createdByEmail: string | null;
+  createdBy: { firstName: string; lastName: string } | null;
+  events: ReadonlyArray<GiftCardResendRecipientEvent>;
+};
 
 export type GiftCardResendDefaultRecipient = {
   email: string | null;
@@ -11,7 +22,9 @@ export type GiftCardResendDefaultRecipient = {
 
 const DELIVERY_EVENT_TYPES = [GiftCardEventsEnum.SENT_TO_CUSTOMER, GiftCardEventsEnum.RESENT];
 
-const getLatestDeliveryEmail = (events: GiftCardEvent[]): string | null => {
+const getLatestDeliveryEmail = (
+  events: ReadonlyArray<GiftCardResendRecipientEvent>,
+): string | null => {
   const deliveryEvents = events.filter(
     event => event.type && DELIVERY_EVENT_TYPES.includes(event.type) && event.email,
   );
@@ -24,7 +37,7 @@ const getLatestDeliveryEmail = (events: GiftCardEvent[]): string | null => {
 };
 
 export const getGiftCardResendDefaultRecipient = (
-  giftCard: GiftCardForResend | undefined | null,
+  giftCard: GiftCardResendRecipientInput | undefined | null,
 ): GiftCardResendDefaultRecipient => {
   if (!giftCard) {
     return {

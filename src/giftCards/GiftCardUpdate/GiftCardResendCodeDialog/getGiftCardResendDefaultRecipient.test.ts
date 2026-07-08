@@ -1,8 +1,9 @@
 import { GiftCardEventsEnum } from "@dashboard/graphql";
 
-import { getGiftCardResendDefaultRecipient } from "./getGiftCardResendDefaultRecipient";
-
-type GiftCardForResend = Parameters<typeof getGiftCardResendDefaultRecipient>[0];
+import {
+  getGiftCardResendDefaultRecipient,
+  type GiftCardResendRecipientInput,
+} from "./getGiftCardResendDefaultRecipient";
 
 describe("getGiftCardResendDefaultRecipient", () => {
   it("returns empty recipient when gift card is missing", () => {
@@ -18,10 +19,12 @@ describe("getGiftCardResendDefaultRecipient", () => {
 
   it("returns empty recipient when the card was already used", () => {
     // Arrange
-    const giftCard = {
+    const giftCard: GiftCardResendRecipientInput = {
       lastUsedOn: "2024-01-01",
       createdByEmail: "buyer@example.com",
-    } as GiftCardForResend;
+      createdBy: null,
+      events: [],
+    };
 
     // Act
     const result = getGiftCardResendDefaultRecipient(giftCard);
@@ -35,9 +38,10 @@ describe("getGiftCardResendDefaultRecipient", () => {
 
   it("returns the latest delivery email for unused cards", () => {
     // Arrange
-    const giftCard = {
+    const giftCard: GiftCardResendRecipientInput = {
       lastUsedOn: null,
       createdByEmail: "staff@example.com",
+      createdBy: null,
       events: [
         {
           type: GiftCardEventsEnum.SENT_TO_CUSTOMER,
@@ -48,7 +52,7 @@ describe("getGiftCardResendDefaultRecipient", () => {
           email: "updated-recipient@example.com",
         },
       ],
-    } as GiftCardForResend;
+    };
 
     // Act
     const result = getGiftCardResendDefaultRecipient(giftCard);
@@ -62,11 +66,12 @@ describe("getGiftCardResendDefaultRecipient", () => {
 
   it("returns creator email when no delivery event exists", () => {
     // Arrange
-    const giftCard = {
+    const giftCard: GiftCardResendRecipientInput = {
       lastUsedOn: null,
       createdByEmail: "buyer@example.com",
+      createdBy: null,
       events: [],
-    } as GiftCardForResend;
+    };
 
     // Act
     const result = getGiftCardResendDefaultRecipient(giftCard);
@@ -80,12 +85,12 @@ describe("getGiftCardResendDefaultRecipient", () => {
 
   it("returns creator name when only a user reference exists", () => {
     // Arrange
-    const giftCard = {
+    const giftCard: GiftCardResendRecipientInput = {
       lastUsedOn: null,
       createdByEmail: null,
       createdBy: { firstName: "Jane", lastName: "Doe" },
       events: [],
-    } as GiftCardForResend;
+    };
 
     // Act
     const result = getGiftCardResendDefaultRecipient(giftCard);
