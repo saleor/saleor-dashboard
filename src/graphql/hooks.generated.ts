@@ -244,6 +244,12 @@ export const AttributeFragmentDoc = gql`
   inputType
 }
     `;
+export const AttributeAssignedListFragmentDoc = gql`
+    fragment AttributeAssignedList on Attribute {
+  ...Attribute
+  valueRequired
+}
+    ${AttributeFragmentDoc}`;
 export const AttributeUpdateResultFragmentDoc = gql`
     fragment AttributeUpdateResult on Attribute {
   ...Attribute
@@ -262,6 +268,32 @@ export const AttributeUpdateResultFragmentDoc = gql`
   }
 }
     ${AttributeFragmentDoc}`;
+export const AttributeAssignedTypesFragmentDoc = gql`
+    fragment AttributeAssignedTypes on Attribute {
+  productTypes(first: 100) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      hasNextPage
+    }
+  }
+  productVariantTypes(first: 100) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      hasNextPage
+    }
+  }
+}
+    `;
 export const AvailableAttributeFragmentDoc = gql`
     fragment AvailableAttribute on Attribute {
   id
@@ -4303,10 +4335,12 @@ export const AttributeDetailsDocument = gql`
     query AttributeDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $searchValues: String) {
   attribute(id: $id) {
     ...AttributeDetails
+    ...AttributeAssignedTypes
     ...Metadata
   }
 }
     ${AttributeDetailsFragmentDoc}
+${AttributeAssignedTypesFragmentDoc}
 ${MetadataFragmentDoc}`;
 
 /**
@@ -4396,6 +4430,204 @@ export function useAttributeListLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type AttributeListQueryHookResult = ReturnType<typeof useAttributeListQuery>;
 export type AttributeListLazyQueryHookResult = ReturnType<typeof useAttributeListLazyQuery>;
 export type AttributeListQueryResult = Apollo.QueryResult<Types.AttributeListQuery, Types.AttributeListQueryVariables>;
+export const PageTypeAssignedAttributesForListDocument = gql`
+    query PageTypeAssignedAttributesForList($id: ID!) {
+  pageType(id: $id) {
+    id
+    attributes {
+      ...AttributeAssignedList
+    }
+  }
+}
+    ${AttributeAssignedListFragmentDoc}`;
+
+/**
+ * __usePageTypeAssignedAttributesForListQuery__
+ *
+ * To run a query within a React component, call `usePageTypeAssignedAttributesForListQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeAssignedAttributesForListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePageTypeAssignedAttributesForListQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePageTypeAssignedAttributesForListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PageTypeAssignedAttributesForListQuery, Types.PageTypeAssignedAttributesForListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PageTypeAssignedAttributesForListQuery, Types.PageTypeAssignedAttributesForListQueryVariables>(PageTypeAssignedAttributesForListDocument, options);
+      }
+export function usePageTypeAssignedAttributesForListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeAssignedAttributesForListQuery, Types.PageTypeAssignedAttributesForListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeAssignedAttributesForListQuery, Types.PageTypeAssignedAttributesForListQueryVariables>(PageTypeAssignedAttributesForListDocument, options);
+        }
+export type PageTypeAssignedAttributesForListQueryHookResult = ReturnType<typeof usePageTypeAssignedAttributesForListQuery>;
+export type PageTypeAssignedAttributesForListLazyQueryHookResult = ReturnType<typeof usePageTypeAssignedAttributesForListLazyQuery>;
+export type PageTypeAssignedAttributesForListQueryResult = Apollo.QueryResult<Types.PageTypeAssignedAttributesForListQuery, Types.PageTypeAssignedAttributesForListQueryVariables>;
+export const ProductTypeAssignedAttributesForListDocument = gql`
+    query ProductTypeAssignedAttributesForList($id: ID!) {
+  productType(id: $id) {
+    id
+    productAttributes {
+      ...AttributeAssignedList
+    }
+    variantAttributes {
+      ...AttributeAssignedList
+    }
+  }
+}
+    ${AttributeAssignedListFragmentDoc}`;
+
+/**
+ * __useProductTypeAssignedAttributesForListQuery__
+ *
+ * To run a query within a React component, call `useProductTypeAssignedAttributesForListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductTypeAssignedAttributesForListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductTypeAssignedAttributesForListQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProductTypeAssignedAttributesForListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductTypeAssignedAttributesForListQuery, Types.ProductTypeAssignedAttributesForListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductTypeAssignedAttributesForListQuery, Types.ProductTypeAssignedAttributesForListQueryVariables>(ProductTypeAssignedAttributesForListDocument, options);
+      }
+export function useProductTypeAssignedAttributesForListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeAssignedAttributesForListQuery, Types.ProductTypeAssignedAttributesForListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductTypeAssignedAttributesForListQuery, Types.ProductTypeAssignedAttributesForListQueryVariables>(ProductTypeAssignedAttributesForListDocument, options);
+        }
+export type ProductTypeAssignedAttributesForListQueryHookResult = ReturnType<typeof useProductTypeAssignedAttributesForListQuery>;
+export type ProductTypeAssignedAttributesForListLazyQueryHookResult = ReturnType<typeof useProductTypeAssignedAttributesForListLazyQuery>;
+export type ProductTypeAssignedAttributesForListQueryResult = Apollo.QueryResult<Types.ProductTypeAssignedAttributesForListQuery, Types.ProductTypeAssignedAttributesForListQueryVariables>;
+export const PageTypeListWithAssignedAttributeCountsDocument = gql`
+    query PageTypeListWithAssignedAttributeCounts($after: String, $before: String, $first: Int, $last: Int, $filter: PageTypeFilterInput, $sort: PageTypeSortingInput) {
+  pageTypes(
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    filter: $filter
+    sortBy: $sort
+  ) {
+    edges {
+      node {
+        ...PageType
+        attributes {
+          id
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${PageTypeFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __usePageTypeListWithAssignedAttributeCountsQuery__
+ *
+ * To run a query within a React component, call `usePageTypeListWithAssignedAttributeCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePageTypeListWithAssignedAttributeCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePageTypeListWithAssignedAttributeCountsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      filter: // value for 'filter'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function usePageTypeListWithAssignedAttributeCountsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.PageTypeListWithAssignedAttributeCountsQuery, Types.PageTypeListWithAssignedAttributeCountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PageTypeListWithAssignedAttributeCountsQuery, Types.PageTypeListWithAssignedAttributeCountsQueryVariables>(PageTypeListWithAssignedAttributeCountsDocument, options);
+      }
+export function usePageTypeListWithAssignedAttributeCountsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PageTypeListWithAssignedAttributeCountsQuery, Types.PageTypeListWithAssignedAttributeCountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PageTypeListWithAssignedAttributeCountsQuery, Types.PageTypeListWithAssignedAttributeCountsQueryVariables>(PageTypeListWithAssignedAttributeCountsDocument, options);
+        }
+export type PageTypeListWithAssignedAttributeCountsQueryHookResult = ReturnType<typeof usePageTypeListWithAssignedAttributeCountsQuery>;
+export type PageTypeListWithAssignedAttributeCountsLazyQueryHookResult = ReturnType<typeof usePageTypeListWithAssignedAttributeCountsLazyQuery>;
+export type PageTypeListWithAssignedAttributeCountsQueryResult = Apollo.QueryResult<Types.PageTypeListWithAssignedAttributeCountsQuery, Types.PageTypeListWithAssignedAttributeCountsQueryVariables>;
+export const ProductTypeListWithAssignedAttributeCountsDocument = gql`
+    query ProductTypeListWithAssignedAttributeCounts($after: String, $before: String, $first: Int, $last: Int, $filter: ProductTypeFilterInput, $sort: ProductTypeSortingInput) {
+  productTypes(
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+    filter: $filter
+    sortBy: $sort
+  ) {
+    edges {
+      node {
+        ...ProductType
+        productAttributes {
+          id
+        }
+        variantAttributes {
+          id
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${ProductTypeFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useProductTypeListWithAssignedAttributeCountsQuery__
+ *
+ * To run a query within a React component, call `useProductTypeListWithAssignedAttributeCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductTypeListWithAssignedAttributeCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductTypeListWithAssignedAttributeCountsQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      filter: // value for 'filter'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useProductTypeListWithAssignedAttributeCountsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductTypeListWithAssignedAttributeCountsQuery, Types.ProductTypeListWithAssignedAttributeCountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductTypeListWithAssignedAttributeCountsQuery, Types.ProductTypeListWithAssignedAttributeCountsQueryVariables>(ProductTypeListWithAssignedAttributeCountsDocument, options);
+      }
+export function useProductTypeListWithAssignedAttributeCountsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeListWithAssignedAttributeCountsQuery, Types.ProductTypeListWithAssignedAttributeCountsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductTypeListWithAssignedAttributeCountsQuery, Types.ProductTypeListWithAssignedAttributeCountsQueryVariables>(ProductTypeListWithAssignedAttributeCountsDocument, options);
+        }
+export type ProductTypeListWithAssignedAttributeCountsQueryHookResult = ReturnType<typeof useProductTypeListWithAssignedAttributeCountsQuery>;
+export type ProductTypeListWithAssignedAttributeCountsLazyQueryHookResult = ReturnType<typeof useProductTypeListWithAssignedAttributeCountsLazyQuery>;
+export type ProductTypeListWithAssignedAttributeCountsQueryResult = Apollo.QueryResult<Types.ProductTypeListWithAssignedAttributeCountsQuery, Types.ProductTypeListWithAssignedAttributeCountsQueryVariables>;
 export const RequestPasswordResetDocument = gql`
     mutation RequestPasswordReset($email: String!, $redirectUrl: String!) {
   requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {

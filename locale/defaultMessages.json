@@ -719,6 +719,10 @@
   "1wyZpQ": {
     "string": "These passwords are too similar"
   },
+  "1y3hRg": {
+    "context": "hint linking to model types settings",
+    "string": "Assign this attribute from a {link}."
+  },
   "1zuQ2P": {
     "context": "unassign country",
     "string": "Are you sure you want to remove {countryName} from this shipping zone?"
@@ -1130,10 +1134,6 @@
   "4Dc2j0": {
     "context": "order status",
     "string": "Returned"
-  },
-  "4DkQt1": {
-    "context": "empty state for model types",
-    "string": "No model types assigned"
   },
   "4ELCCk": {
     "context": "column picker section default header",
@@ -2468,6 +2468,10 @@
     "context": "button label",
     "string": "Add reason"
   },
+  "B3dqGE": {
+    "context": "usage summary for model attribute assignments",
+    "string": "{count, plural, one {# model type} other {# model types}}"
+  },
   "B5/YE0": {
     "string": "Profile updated"
   },
@@ -3322,6 +3326,10 @@
     "context": "WarehouseSettings public stock description",
     "string": "If enabled stock in this warehouse will be shown"
   },
+  "FgHWZ1": {
+    "context": "bulk unassign attributes from the active product or model type",
+    "string": "Unassign"
+  },
   "FiO/W/": {
     "string": "Delete categories"
   },
@@ -3459,6 +3467,10 @@
   "GD/bom": {
     "context": "label",
     "string": "Min Delivery Time"
+  },
+  "GDHGAK": {
+    "context": "usage summary when attribute is only on product types",
+    "string": "{count, plural, one {# product type} other {# product types}}"
   },
   "GFJabu": {
     "context": "dialog header",
@@ -3931,6 +3943,10 @@
   "IN5iJz": {
     "context": "value input helper text",
     "string": "Invalid value"
+  },
+  "INGC4/": {
+    "context": "helper text in unassign dialog on product attributes list, type tab",
+    "string": "Attributes are removed from this product type only. They are not deleted and remain available for other product types. Products that use other types are not affected."
   },
   "INKsSL": {
     "context": "Transaction event status - success",
@@ -4591,10 +4607,6 @@
   "M3OlSr": {
     "context": "error message",
     "string": "Maximum weight must be higher than minimum"
-  },
-  "M3aMq+": {
-    "context": "empty state for reference types",
-    "string": "No product types assigned"
   },
   "M59JhX": {
     "string": "Manual"
@@ -5473,6 +5485,10 @@
     "context": "Webhook events header",
     "string": "Webhook events"
   },
+  "QBgj2A": {
+    "context": "link label in usage empty state",
+    "string": "model type"
+  },
   "QBxN6z": {
     "context": "is filter range or value",
     "string": "between"
@@ -6139,6 +6155,10 @@
     "context": "grant refund table, edit reason button",
     "string": "Edit reason"
   },
+  "U/vaYf": {
+    "context": "attribute model type (PAGE_TYPE enum value in filters)",
+    "string": "Model type"
+  },
   "U0IK0G": {
     "context": "label for authorized amount",
     "string": "Authorized"
@@ -6719,6 +6739,10 @@
   },
   "XAvER/": {
     "string": "Product reordered"
+  },
+  "XBPCxj": {
+    "context": "helper text in unassign dialog on model attributes list, type tab",
+    "string": "Attributes are removed from this model type only. They are not deleted and remain available for other model types. Models that use other types are not affected."
   },
   "XBfvKN": {
     "string": "Order History"
@@ -7434,6 +7458,10 @@
     "context": "error message",
     "string": "Email address is not set"
   },
+  "acLsce": {
+    "context": "truncation hint when usage list hits query limit",
+    "string": "Showing first {count} types."
+  },
   "acgbDa": {
     "context": "product created at",
     "string": "Created at"
@@ -7622,6 +7650,10 @@
     "context": "dialog header",
     "string": "Cancel Fulfillment"
   },
+  "bbBirg": {
+    "context": "empty state when attribute is not assigned to model types",
+    "string": "Not used on any model types yet."
+  },
   "bcf60I": {
     "context": "voucher",
     "string": "Applies to"
@@ -7730,6 +7762,10 @@
   "c0hLoI": {
     "string": "Attribute created"
   },
+  "c1z3+H": {
+    "context": "role label for variant-level type assignment",
+    "string": "Variant"
+  },
   "c24hjq": {
     "context": "status",
     "string": "Active"
@@ -7835,6 +7871,10 @@
   "cPAc45": {
     "context": "column picker search no results message",
     "string": "No results found"
+  },
+  "cPEhZO": {
+    "context": "view menu option to group attribute list by product or model type",
+    "string": "Group by type"
   },
   "cRQ9hb": {
     "string": "Deleted structure"
@@ -8674,6 +8714,10 @@
   },
   "hMRP6J": {
     "string": "Default Address"
+  },
+  "hOZsq5": {
+    "context": "link label in usage empty state",
+    "string": "product type"
   },
   "hOxIeP": {
     "string": "Availability"
@@ -10022,6 +10066,10 @@
     "context": "Add filter button text",
     "string": "+ Add filter"
   },
+  "o+5eA9": {
+    "context": "attribute detail sidebar card title for type assignments",
+    "string": "Usage"
+  },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
   },
@@ -10517,10 +10565,6 @@
   "qSCmIG": {
     "string": "lower than {value}"
   },
-  "qT0qr/": {
-    "context": "attribute page type",
-    "string": "Page type"
-  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -10831,6 +10875,10 @@
     "context": "limit voucher",
     "string": "Limit of Uses"
   },
+  "s6Wgi3": {
+    "context": "role label for product-level type assignment",
+    "string": "Product"
+  },
   "s6lW8R": {
     "context": "option label",
     "string": "Change address"
@@ -11128,9 +11176,17 @@
     "context": "order status",
     "string": "Draft"
   },
+  "tpM9O2": {
+    "context": "empty state when attribute is not assigned to product types",
+    "string": "Not used on any product types yet."
+  },
   "tqJwfo": {
     "context": "button",
     "string": "Set end date"
+  },
+  "tqV6rg": {
+    "context": "usage summary when attribute is only on variant types",
+    "string": "{count, plural, one {# variant type} other {# variant types}}"
   },
   "tsL3IW": {
     "context": "gift card history message",
@@ -11182,6 +11238,10 @@
   },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"
+  },
+  "u2KDfU": {
+    "context": "hint linking to product types settings",
+    "string": "Assign this attribute from a {link}."
   },
   "u2zyiB": {
     "context": "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
@@ -12289,6 +12349,10 @@
   "zDvDnG": {
     "context": "modal header",
     "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
+  },
+  "zGvkK2": {
+    "context": "usage summary when attribute is on both product and variant types",
+    "string": "{productCount, plural, one {# product type} other {# product types}}, {variantCount, plural, one {# variant type} other {# variant types}}"
   },
   "zHx85l": {
     "context": "value input helper text",
