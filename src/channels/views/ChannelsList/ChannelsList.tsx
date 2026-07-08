@@ -12,7 +12,7 @@ import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useIntl } from "react-intl";
 
-import ChannelDeleteDialog from "../../components/ChannelDeleteDialog";
+import { ChannelDeleteDialog } from "../../components/ChannelDeleteDialog";
 import ChannelsListPage from "../../pages/ChannelsListPage";
 import {
   channelsListUrl,

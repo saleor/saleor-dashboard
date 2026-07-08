@@ -1,25 +1,32 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useRef } from "react";
 
+const COMMAND_MENU_ITEM_SELECTOR = ".command-menu-item";
+const COMMAND_MENU_ROW_SELECTOR = "tr[data-href]";
+
 export const useActionItems = () => {
   const navigate = useNavigator();
   const items = useRef<HTMLElement[]>([]);
   const currentFocusIndex = useRef<number | undefined>(undefined);
 
-  const collectLinks = () => {
-    const elements = document.querySelectorAll(".command-menu-item");
+  const collectItems = (container: HTMLElement | null) => {
+    if (!container) {
+      items.current = [];
 
-    items.current.push(...(Array.from(elements) as HTMLElement[]));
-  };
+      return;
+    }
 
-  const collectTableRows = () => {
-    const elements = document.querySelectorAll(".command-menu tr");
-
-    items.current.push(...(Array.from(elements) as HTMLElement[]));
+    items.current = Array.from(
+      container.querySelectorAll(`${COMMAND_MENU_ITEM_SELECTOR}, ${COMMAND_MENU_ROW_SELECTOR}`),
+    ) as HTMLElement[];
   };
 
   const focusElement = (index: number, value: boolean) => {
     const element = items.current[index];
+
+    if (!element) {
+      return;
+    }
 
     element.setAttribute("data-focus", value.toString());
     element.setAttribute("aria-selected", value.toString());
@@ -47,9 +54,39 @@ export const useActionItems = () => {
     focusElement(currentFocusIndex.current, true);
   };
 
-  const focusFirst = () => {
+  const clearAllFocus = () => {
+    items.current.forEach(element => {
+      element.setAttribute("data-focus", "false");
+      element.setAttribute("aria-selected", "false");
+    });
+  };
+
+  const restoreFocus = (preferredId?: string) => {
+    clearAllFocus();
+
+    if (items.current.length === 0) {
+      currentFocusIndex.current = undefined;
+
+      return;
+    }
+
+    if (preferredId) {
+      const preferredIndex = items.current.findIndex(item => item.id === preferredId);
+
+      if (preferredIndex >= 0) {
+        currentFocusIndex.current = preferredIndex;
+        focusElement(preferredIndex, true);
+
+        return;
+      }
+    }
+
     currentFocusIndex.current = 0;
-    focusElement(currentFocusIndex.current, true);
+    focusElement(0, true);
+  };
+
+  const focusFirst = () => {
+    restoreFocus();
   };
 
   const resetFocus = () => {
@@ -81,12 +118,12 @@ export const useActionItems = () => {
     items,
     currentFocusIndex,
     resetFocus,
-    collectLinks,
-    collectTableRows,
+    collectItems,
     focusNext,
     focusPrevious,
     hasAnyFocus,
     focusFirst,
+    restoreFocus,
     getActiveFocusedElement,
     takeAction,
   };

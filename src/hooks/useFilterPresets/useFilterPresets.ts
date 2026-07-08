@@ -1,4 +1,4 @@
-import { type SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog";
+import { type SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   getActiveTabIndexAfterTabDelete,

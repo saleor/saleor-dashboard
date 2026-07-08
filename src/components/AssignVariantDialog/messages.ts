@@ -11,6 +11,11 @@ export const messages = defineMessages({
     defaultMessage: "Assign and save",
     description: "button, assign variants to sale and save",
   },
+  assignCountedButton: {
+    defaultMessage: "{label} ({count, plural, one {# item} other {# items}})",
+    id: "vFljxe",
+    description: "assign button label with number of selected items",
+  },
   assignVariantDialogContent: {
     id: "K+vjtE",
     defaultMessage: "Search Variants",

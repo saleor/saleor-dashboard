@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
+import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
-import makeCreatorSteps, { type Step } from "@dashboard/components/CreatorSteps";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
   type ChannelFragment,
@@ -22,11 +21,15 @@ import { type DialogProps, type FetchMoreProps, type RelayToFlat } from "@dashbo
 import getExportErrorMessage from "@dashboard/utils/errors/export";
 import { toggle } from "@dashboard/utils/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, type Option, Text } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { Box, Button, type Option, Text } from "@saleor/macaw-ui-next";
+import { useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ExportDialogSettings, { type ExportItemsQuantity } from "./ExportDialogSettings";
+import {
+  ExportDialogSettings,
+  type ExportItemsQuantity,
+  getFilteredItemsScopeLabel,
+} from "./ExportDialogSettings";
 import { productExportDialogMessages as messages } from "./messages";
 import ProductExportDialogInfo, {
   attributeNamePrefix,
@@ -39,29 +42,6 @@ enum ProductExportStep {
   SETTINGS = 1,
 }
 
-function useSteps(): Array<Step<ProductExportStep>> {
-  const intl = useIntl();
-
-  return [
-    {
-      label: intl.formatMessage({
-        id: "/68iG8",
-        defaultMessage: "Information exported",
-        description: "product export to csv file, header",
-      }),
-      value: ProductExportStep.INFO,
-    },
-    {
-      label: intl.formatMessage({
-        id: "ki7Mr8",
-        defaultMessage: "Export Settings",
-        description: "product export to csv file, header",
-      }),
-      value: ProductExportStep.SETTINGS,
-    },
-  ];
-}
-
 const initialForm: ExportProductsInput = {
   exportInfo: {
     attributes: [],
@@ -71,21 +51,21 @@ const initialForm: ExportProductsInput = {
   },
   ...exportSettingsInitialFormData,
 };
-const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
-interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
+export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   attributes: RelayToFlat<SearchAttributesQuery["search"]>;
   channels: ChannelFragment[];
   confirmButtonState: ConfirmButtonTransitionState;
   errors: ExportErrorFragment[];
   productQuantity: ExportItemsQuantity;
   selectedProducts: number;
+  hasListFilters: boolean;
   warehouses: WarehouseFragment[];
   onFetch: (query: string) => void;
   onSubmit: (data: ExportProductsInput) => void;
 }
 
-const ProductExportDialog = ({
+export const ProductExportDialog = ({
   attributes,
   channels,
   confirmButtonState,
@@ -95,27 +75,54 @@ const ProductExportDialog = ({
   onSubmit,
   open,
   selectedProducts,
+  hasListFilters,
   warehouses,
   ...fetchMoreProps
-}: ProductExportDialogProps) => {
+}: ProductExportDialogProps): JSX.Element => {
   const [step, { next, prev, set: setStep }] = useWizard(ProductExportStep.INFO, [
     ProductExportStep.INFO,
     ProductExportStep.SETTINGS,
   ]);
-  const steps = useSteps();
   const dialogErrors = useModalDialogErrors(errors, open);
   const notFormErrors = dialogErrors.filter(err => !err.field);
   const intl = useIntl();
+  const isSubmittingRef = useRef(false);
+  const isSubmitting = confirmButtonState === "loading";
+
+  isSubmittingRef.current = isSubmitting;
+
   const [selectedAttributes, setSelectedAttributes] = useState<Option[]>([]);
-  const [selectedChannels, setSelectedChannels] = useState([]);
+  const [selectedChannels, setSelectedChannels] = useState<ChannelFragment[]>([]);
   const { change, data, reset, submit } = useForm(initialForm, onSubmit);
 
   useModalDialogOpen(open, {
     onClose: () => {
       reset();
       setStep(ProductExportStep.INFO);
+      setSelectedAttributes([]);
+      setSelectedChannels([]);
     },
   });
+
+  const stepItems = useMemo(
+    () => [
+      {
+        label: intl.formatMessage(messages.infoStep),
+      },
+      {
+        label: intl.formatMessage(messages.settingsStep),
+      },
+    ],
+    [intl],
+  );
+
+  const handleModalClose = (): void => {
+    if (isSubmittingRef.current) {
+      return;
+    }
+
+    onClose();
+  };
 
   const attributeChoices = mapNodeToChoice(attributes);
   const warehouseChoices = mapNodeToChoice(warehouses);
@@ -211,85 +218,109 @@ const ProductExportDialog = ({
         number: selectedProducts,
       },
     ),
+    filteredItems: getFilteredItemsScopeLabel(intl, productQuantity.filter),
   };
 
   return (
-    <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
-          <FormattedMessage {...messages.title} />
-        </DashboardModal.Header>
+    <DashboardModal onChange={handleModalClose} open={open}>
+      {open ? (
+        <DashboardModal.Content size="md">
+          <DashboardModal.ContextHeader
+            description={
+              step === ProductExportStep.INFO ? (
+                <FormattedMessage {...messages.infoStepDescription} />
+              ) : (
+                <FormattedMessage {...messages.settingsStepDescription} />
+              )
+            }
+            steps={{
+              current: step + 1,
+              items: stepItems,
+            }}
+          >
+            <FormattedMessage {...messages.title} />
+          </DashboardModal.ContextHeader>
 
-        <ProductExportSteps currentStep={step} steps={steps} onStepClick={setStep} />
-        {step === ProductExportStep.INFO && (
-          <ProductExportDialogInfo
-            attributes={attributeChoices}
-            channels={channels}
-            data={data}
-            selectedChannels={selectedChannels}
-            selectedAttributes={selectedAttributes}
-            onAttrtibuteSelect={handleAttributeSelect}
-            onWarehouseSelect={handleWarehouseSelect}
-            onChange={change}
-            warehouses={warehouseChoices}
-            onChannelSelect={handleChannelSelect}
-            onSelectAllChannels={handleToggleAllChannels}
-            onSelectAllWarehouses={handleToggleAllWarehouses}
-            {...fetchMoreProps}
-          />
-        )}
-        {step === ProductExportStep.SETTINGS && (
-          <ExportDialogSettings
-            data={data}
-            errors={dialogErrors}
-            onChange={change}
-            itemsQuantity={productQuantity}
-            selectedItems={selectedProducts}
-            exportScopeLabels={exportScopeLabels}
-          />
-        )}
+          <DashboardModal.Body fill>
+            <DashboardModal.Inset>
+              {step === ProductExportStep.INFO && (
+                <ProductExportDialogInfo
+                  attributes={attributeChoices}
+                  channels={channels}
+                  data={data}
+                  selectedChannels={selectedChannels}
+                  selectedAttributes={selectedAttributes}
+                  onAttrtibuteSelect={handleAttributeSelect}
+                  onWarehouseSelect={handleWarehouseSelect}
+                  onChange={change}
+                  warehouses={warehouseChoices}
+                  onChannelSelect={handleChannelSelect}
+                  onSelectAllChannels={handleToggleAllChannels}
+                  onSelectAllWarehouses={handleToggleAllWarehouses}
+                  {...fetchMoreProps}
+                />
+              )}
+              {step === ProductExportStep.SETTINGS && (
+                <ExportDialogSettings
+                  data={data}
+                  errors={dialogErrors}
+                  onChange={change}
+                  selectedItems={selectedProducts}
+                  exportScopeLabels={exportScopeLabels}
+                  hasListFilters={hasListFilters}
+                />
+              )}
 
-        {notFormErrors.length > 0 && (
-          <Box>
-            {notFormErrors.map(err => (
-              <Text display="block" color="critical1" key={err.field + err.code}>
-                {getExportErrorMessage(err, intl)}
-              </Text>
-            ))}
-          </Box>
-        )}
+              {notFormErrors.length > 0 && (
+                <Box paddingTop={4}>
+                  {notFormErrors.map(err => (
+                    <Text display="block" color="critical1" key={err.field + err.code}>
+                      {getExportErrorMessage(err, intl)}
+                    </Text>
+                  ))}
+                </Box>
+              )}
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
 
-        <DashboardModal.Actions>
-          {step === ProductExportStep.INFO && (
-            <Button variant="secondary" color="text" onClick={onClose} data-test-id="cancel">
-              <FormattedMessage {...buttonMessages.cancel} />
-            </Button>
-          )}
-          {step === ProductExportStep.SETTINGS && (
-            <Button variant="secondary" color="text" onClick={prev} data-test-id="back">
-              <FormattedMessage {...buttonMessages.back} />
-            </Button>
-          )}
-          {step === ProductExportStep.INFO && (
-            <Button variant="primary" onClick={next} data-test-id="next">
-              <FormattedMessage {...buttonMessages.nextStep} />
-            </Button>
-          )}
-          {step === ProductExportStep.SETTINGS && (
-            <ConfirmButton
-              transitionState={confirmButtonState}
-              type="submit"
-              data-test-id="submit"
-              onClick={submit}
-            >
-              <FormattedMessage {...messages.confirmButtonLabel} />
-            </ConfirmButton>
-          )}
-        </DashboardModal.Actions>
-      </DashboardModal.Content>
+          <DashboardModal.Actions>
+            {step === ProductExportStep.INFO ? (
+              <>
+                <BackButton
+                  data-test-id="cancel"
+                  disabled={isSubmitting}
+                  onClick={handleModalClose}
+                >
+                  <FormattedMessage {...buttonMessages.cancel} />
+                </BackButton>
+                <Button
+                  data-test-id="next"
+                  disabled={isSubmitting}
+                  onClick={next}
+                  variant="primary"
+                >
+                  <FormattedMessage {...buttonMessages.nextStep} />
+                </Button>
+              </>
+            ) : (
+              <>
+                <BackButton data-test-id="back" disabled={isSubmitting} onClick={prev} />
+                <ConfirmButton
+                  data-test-id="submit"
+                  disabled={isSubmitting}
+                  onClick={submit}
+                  transitionState={confirmButtonState}
+                  type="submit"
+                >
+                  <FormattedMessage {...messages.confirmButtonLabel} />
+                </ConfirmButton>
+              </>
+            )}
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      ) : null}
     </DashboardModal>
   );
 };
 
 ProductExportDialog.displayName = "ProductExportDialog";
-export default ProductExportDialog;

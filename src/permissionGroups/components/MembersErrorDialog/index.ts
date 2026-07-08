@@ -1,2 +1,1 @@
-export { default } from "./MembersErrorDialog";
-export * from "./MembersErrorDialog";
+export { MembersErrorDialog } from "./MembersErrorDialog";

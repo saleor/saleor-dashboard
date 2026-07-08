@@ -1,28 +1,28 @@
-import TextWithSelectField from "@dashboard/components/TextWithSelectField";
 import { TimePeriodTypeEnum } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
+import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { timePeriodTextWithSelectFieldMessages as messages } from "./messages";
 
 interface TimePeriodFieldProps {
-  change: FormChange;
-  periodAmount: number;
-  periodType: TimePeriodTypeEnum;
   amountFieldName: string;
-  typeFieldName: string;
+  change: FormChange;
   helperText?: string;
   isError?: boolean;
+  periodAmount: number;
+  periodType: TimePeriodTypeEnum;
+  typeFieldName: string;
 }
 
 const TimePeriodField = ({
-  change,
-  periodAmount,
-  periodType,
   amountFieldName,
-  typeFieldName,
+  change,
   helperText,
   isError,
+  periodAmount,
+  periodType,
+  typeFieldName,
 }: TimePeriodFieldProps) => {
   const intl = useIntl();
   const options = [
@@ -45,23 +45,32 @@ const TimePeriodField = ({
   ];
 
   return (
-    <TextWithSelectField
-      isError={isError}
-      choices={options}
-      change={change}
-      helperText={helperText}
-      textFieldProps={{
-        type: "number",
-        name: amountFieldName,
-        value: periodAmount,
-        minValue: 0,
-      }}
-      selectFieldProps={{
-        name: typeFieldName,
-        value: periodType,
-      }}
-    />
+    <Box display="flex" flexDirection="column" gap={1} width="100%">
+      <Box __gridTemplateColumns="96px 1fr" display="grid" gap={2} width="100%">
+        <Input
+          error={isError}
+          min={0}
+          name={amountFieldName}
+          onChange={change}
+          type="number"
+          value={periodAmount}
+        />
+        <Select
+          error={isError}
+          name={typeFieldName}
+          onChange={value => change({ target: { name: typeFieldName, value } })}
+          options={options}
+          value={periodType}
+        />
+      </Box>
+      {helperText ? (
+        <Text color={isError ? "critical1" : "default2"} size={2}>
+          {helperText}
+        </Text>
+      ) : null}
+    </Box>
   );
 };
 
+export { TimePeriodField };
 export default TimePeriodField;

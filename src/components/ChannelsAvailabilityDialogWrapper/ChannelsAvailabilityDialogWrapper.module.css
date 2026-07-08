@@ -1,0 +1,9 @@
+.notFound {
+  padding-inline: var(--modal-padding);
+  padding-bottom: var(--mu-spacing-2);
+}
+
+.contentType {
+  padding-inline: var(--modal-padding);
+  margin-bottom: var(--mu-spacing-1);
+}

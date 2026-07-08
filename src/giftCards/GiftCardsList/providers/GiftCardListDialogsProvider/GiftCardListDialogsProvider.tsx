@@ -1,8 +1,7 @@
-import { DashboardModal } from "@dashboard/components/Modal";
-import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
+import { GiftCardListPageDeleteDialog } from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import { GiftCardBulkCreateDialog } from "@dashboard/giftCards/GiftCardBulkCreateDialog/GiftCardBulkCreateDialog";
-import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog";
-import GiftCardExportDialogContent from "@dashboard/giftCards/GiftCardExportDialogContent";
+import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
+import { GiftCardExportDialogContent } from "@dashboard/giftCards/GiftCardExportDialogContent/GiftCardExportDialogContent";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -69,13 +68,13 @@ const GiftCardListDialogsProvider = ({ children, params }: GiftCardListDialogsPr
   return (
     <GiftCardListDialogsContext.Provider value={providerValues}>
       {children}
-      <DashboardModal open={isDialogOpen(CREATE)} onChange={onClose}>
-        <GiftCardCreateDialogContent onClose={onClose} refetchQueries={[GIFT_CARD_LIST_QUERY]} />
-      </DashboardModal>
+      <GiftCardCreateDialogContent
+        open={isDialogOpen(CREATE)}
+        onClose={onClose}
+        refetchQueries={[GIFT_CARD_LIST_QUERY]}
+      />
       <GiftCardListPageDeleteDialog open={isDialogOpen(DELETE)} onClose={onClose} />
-      <DashboardModal open={isDialogOpen(EXPORT)} onChange={onClose}>
-        <GiftCardExportDialogContent onClose={onClose} />
-      </DashboardModal>
+      <GiftCardExportDialogContent open={isDialogOpen(EXPORT)} onClose={onClose} />
       <GiftCardBulkCreateDialog open={isDialogOpen(BULK_CREATE)} onClose={onClose} />
     </GiftCardListDialogsContext.Provider>
   );

@@ -1,2 +1,2 @@
-export { default } from "./PermissionGroupDeleteDialog";
+export { PermissionGroupDeleteDialog } from "./PermissionGroupDeleteDialog";
 export * from "./PermissionGroupDeleteDialog";

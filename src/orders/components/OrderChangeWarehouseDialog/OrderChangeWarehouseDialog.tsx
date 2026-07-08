@@ -1,57 +1,53 @@
-// @ts-strict-ignore
-import Debounce from "@dashboard/components/Debounce";
+import { AssignPickerListEmptyStateRow } from "@dashboard/components/AssignPickerListEmptyState/AssignPickerListEmptyState";
+import { AssignPickerListLoadingRow } from "@dashboard/components/AssignPickerListLoading/AssignPickerListLoading";
+import BackButton from "@dashboard/components/BackButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type OrderFulfillLineFragment, type WarehouseFragment } from "@dashboard/graphql";
+import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { buttonMessages } from "@dashboard/intl";
-import { getById } from "@dashboard/misc";
+import { renderCollection } from "@dashboard/misc";
 import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/data";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import {
-  FormControlLabel,
-  InputAdornment,
-  Radio,
-  RadioGroup,
-  Table,
-  TableCell,
-  TextField,
-} from "@material-ui/core";
-import { Button, isScrolledToBottom, SearchIcon, useElementScroll } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
-import * as React from "react";
+import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui-next";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { changeWarehouseDialogMessages as messages } from "./messages";
-import { useStyles } from "./styles";
+
+const EMPTY_SEARCH_FILTERS = {};
+const scrollableTargetId = "order-change-warehouse-scroll";
 
 interface OrderChangeWarehouseDialogProps {
   open: boolean;
   line: OrderFulfillLineFragment;
   currentWarehouseId: string;
   onConfirm: (warehouse: WarehouseFragment) => void;
-  onClose: () => any;
+  onClose: () => void;
 }
 
-const OrderChangeWarehouseDialog = ({
+export const OrderChangeWarehouseDialog = ({
   open,
   line,
   currentWarehouseId,
   onConfirm,
   onClose,
 }: OrderChangeWarehouseDialogProps) => {
-  const classes = useStyles();
   const intl = useIntl();
-  const { anchor, position, setAnchor } = useElementScroll();
-  const bottomShadow = !isScrolledToBottom(anchor, position, 20);
-  const [query, setQuery] = React.useState<string>("");
-  const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string | null>(null);
+  const [selectedWarehouse, setSelectedWarehouse] = useState<WarehouseFragment | null>(null);
+  const [initialSelectionId, setInitialSelectionId] = useState<string | null>(null);
+  const currentWarehouseIdRef = useRef(currentWarehouseId);
 
-  React.useEffect(() => {
-    if (currentWarehouseId) {
-      setSelectedWarehouseId(currentWarehouseId);
-    }
-  }, [currentWarehouseId, open]);
+  currentWarehouseIdRef.current = currentWarehouseId;
 
   const {
     result: warehousesOpts,
@@ -64,133 +60,194 @@ const OrderChangeWarehouseDialog = ({
       first: 20,
       query: "",
     },
+    skip: !open,
   });
-  const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
-  const selectedWarehouse = filteredWarehouses?.find(getById(selectedWarehouseId ?? ""));
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedWarehouseId(e.target.value);
-  };
-  const handleSubmit = () => {
-    onConfirm(selectedWarehouse);
+
+  const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
+    filterVariables: EMPTY_SEARCH_FILTERS,
+    open,
+    onFetch: (_filters, searchQuery) => search(searchQuery),
+  });
+
+  const resetDialogState = useCallback(() => {
+    resetQuery();
+    setSelectedWarehouse(null);
+    setInitialSelectionId(null);
+  }, [resetQuery]);
+
+  const syncOpenState = useCallback(() => {
+    resetQuery();
+    setInitialSelectionId(currentWarehouseIdRef.current ?? null);
+    setSelectedWarehouse(null);
+  }, [resetQuery]);
+
+  useModalDialogOpen(open, {
+    onOpen: syncOpenState,
+    onClose: resetDialogState,
+  });
+
+  const loading = warehousesOpts.loading;
+  const warehouses = mapEdgesToItems(warehousesOpts?.data?.search);
+  const displayedWarehouses = useStalePickerList(warehouses, loading, open);
+  const hasMore = warehousesOpts?.data?.search?.pageInfo?.hasNextPage ?? false;
+  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
+    loading,
+    displayedWarehouses.length,
+  );
+
+  useEffect(
+    function hydrateSelectedWarehouse() {
+      if (!open || selectedWarehouse || !initialSelectionId) {
+        return;
+      }
+
+      const match = displayedWarehouses.find(warehouse => warehouse.id === initialSelectionId);
+
+      if (match) {
+        setSelectedWarehouse(match);
+      }
+    },
+    [displayedWarehouses, initialSelectionId, open, selectedWarehouse],
+  );
+
+  const hasSelectionChanged = useMemo(
+    () => selectedWarehouse?.id !== initialSelectionId,
+    [initialSelectionId, selectedWarehouse?.id],
+  );
+
+  const handleClose = () => {
+    resetDialogState();
     onClose();
   };
 
-  React.useEffect(() => {
-    if (!bottomShadow) {
-      loadMore();
+  const handleSubmit = () => {
+    if (!selectedWarehouse) {
+      return;
     }
-  }, [bottomShadow]);
+
+    onConfirm(selectedWarehouse);
+    handleClose();
+  };
+
+  const handleChange = (warehouse: WarehouseFragment) => {
+    setSelectedWarehouse(warehouse);
+  };
 
   return (
-    <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto auto auto 1fr">
-        <DashboardModal.Header>
-          <FormattedMessage {...messages.dialogTitle} />
-          <Text size={3} display="block">
+    <DashboardModal open={open} onChange={handleClose}>
+      <DashboardModal.Content size="picker">
+        <DashboardModal.PickerHeader
+          description={
             <FormattedMessage
               {...messages.dialogDescription}
               values={{
-                productName: line?.productName,
+                productName: line.productName,
               }}
             />
-          </Text>
-        </DashboardModal.Header>
+          }
+          toolbar={
+            <TextField
+              data-test-id="warehouse-search-input"
+              name="query"
+              value={query}
+              onChange={onQueryChange}
+              label={intl.formatMessage(messages.searchFieldPlaceholder)}
+              placeholder={intl.formatMessage(messages.searchFieldPlaceholder)}
+              fullWidth
+              InputProps={{
+                autoComplete: "off",
+                endAdornment: loading && <SaleorThrobber size={16} />,
+              }}
+            />
+          }
+        >
+          <FormattedMessage {...messages.dialogTitle} />
+        </DashboardModal.PickerHeader>
 
-        <Debounce debounceFn={search}>
-          {debounceSearchChange => {
-            const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-              const value = event.target.value;
+        <DashboardModal.Body fill id={scrollableTargetId}>
+          <InfiniteScroll
+            flush
+            dataLength={displayedWarehouses.length}
+            next={loadMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
+          >
+            <ResponsiveTable bleed fillHeight>
+              <TableBody data-test-id="warehouses-list">
+                {showListLoading ? (
+                  <AssignPickerListLoadingRow colSpan={2} />
+                ) : (
+                  renderCollection(
+                    displayedWarehouses,
+                    warehouse => {
+                      if (!warehouse) {
+                        return null;
+                      }
 
-              setQuery(value);
-              debounceSearchChange(value);
-            };
+                      const isSelected = selectedWarehouse?.id === warehouse.id;
+                      const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(
+                        line,
+                        warehouse,
+                      );
+                      const isCurrentWarehouse = currentWarehouseId === warehouse.id;
 
-            return (
-              <TextField
-                value={query}
-                variant="outlined"
-                onChange={handleSearchChange}
-                placeholder={intl.formatMessage(messages.searchFieldPlaceholder)}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon
-                        onPointerEnterCapture={undefined}
-                        onPointerLeaveCapture={undefined}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                inputProps={{ className: classes.searchInput }}
-              />
-            );
-          }}
-        </Debounce>
-
-        <Text textTransform="uppercase" fontWeight="medium" lineHeight={2}>
-          <FormattedMessage {...messages.warehouseListLabel} />
-        </Text>
-
-        <Box ref={setAnchor} overflowY="auto">
-          <Table>
-            {filteredWarehouses ? (
-              <RadioGroup
-                value={selectedWarehouseId}
-                onChange={handleChange}
-                className={classes.tableBody}
-              >
-                {filteredWarehouses.map(warehouse => {
-                  const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(
-                    line,
-                    warehouse,
-                  );
-
-                  return (
-                    <TableRowLink key={warehouse.id}>
-                      <TableCell className={classes.tableCell}>
-                        <FormControlLabel
-                          value={warehouse.id}
-                          control={<Radio color="primary" />}
-                          label={
-                            <div className={classes.radioLabelContainer}>
-                              <span className={classes.warehouseName}>{warehouse.name}</span>
-                              <Text>
-                                <FormattedMessage
-                                  {...messages.productAvailability}
-                                  values={{
-                                    productCount: lineQuantityInWarehouse,
-                                  }}
-                                />
+                      return (
+                        <TableRowLink
+                          key={warehouse.id}
+                          data-test-id="change-warehouse-table-row"
+                          onClick={() => handleChange(warehouse)}
+                        >
+                          <TableCell padding="checkbox">
+                            <Radio
+                              checked={isSelected}
+                              onChange={() => handleChange(warehouse)}
+                              value={warehouse.id}
+                              name="warehouse-selection"
+                            />
+                          </TableCell>
+                          <TableCell style={{ width: "100%" }}>
+                            {warehouse.name}
+                            <Text display="block" size={1} color="default2">
+                              <FormattedMessage
+                                {...messages.productAvailability}
+                                values={{
+                                  productCount: lineQuantityInWarehouse,
+                                }}
+                              />
+                            </Text>
+                            {isCurrentWarehouse ? (
+                              <Text display="block" size={1} color="default2">
+                                <FormattedMessage {...messages.currentSelection} />
                               </Text>
-                            </div>
-                          }
-                        />
-                        {currentWarehouseId === warehouse?.id && (
-                          <Text display="inline-block" fontSize={3}>
-                            <FormattedMessage {...messages.currentSelection} />
-                          </Text>
-                        )}
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                })}
-              </RadioGroup>
-            ) : (
-              <Skeleton />
-            )}
-          </Table>
-        </Box>
+                            ) : null}
+                          </TableCell>
+                        </TableRowLink>
+                      );
+                    },
+                    () =>
+                      showEmptyState && (
+                        <AssignPickerListEmptyStateRow colSpan={2}>
+                          {intl.formatMessage(messages.noWarehousesFound)}
+                        </AssignPickerListEmptyStateRow>
+                      ),
+                  )
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
-          <Button
+          <BackButton onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={!hasSelectionChanged}
             onClick={handleSubmit}
-            color="primary"
-            variant="primary"
-            disabled={!selectedWarehouse}
+            transitionState="default"
           >
-            {intl.formatMessage(buttonMessages.select)}
-          </Button>
+            <FormattedMessage {...buttonMessages.select} />
+          </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
@@ -198,4 +255,3 @@ const OrderChangeWarehouseDialog = ({
 };
 
 OrderChangeWarehouseDialog.displayName = "OrderChangeWarehouseDialog";
-export default OrderChangeWarehouseDialog;

@@ -1,9 +1,9 @@
-import { type ActionDialogProps } from "@dashboard/components/ActionDialog";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
 import { type DialogProps } from "@dashboard/types";
 
-import GiftCardDeleteDialogContent, { SINGLE } from "./GiftCardDeleteDialogContent";
+import { GiftCardDeleteDialogContent, SINGLE } from "./GiftCardDeleteDialogContent";
 import useGiftCardBulkDelete from "./useGiftCardBulkDelete";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";
 
@@ -11,7 +11,7 @@ interface GiftCardDeleteDialogProps extends DialogProps {
   refetchQueries?: string[];
 }
 
-const GiftCardDeleteDialog = ({
+export const GiftCardListPageDeleteDialog = ({
   open,
   onClose,
   refetchQueries = [],
@@ -22,29 +22,30 @@ const GiftCardDeleteDialog = ({
   const { onDeleteGiftCard, deleteGiftCardOpts } = useGiftCardSingleDelete({
     id: selectedRowIds[0],
     onClose,
+    onSuccess: clearRowSelection,
     refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries],
   });
   const { onBulkDeleteGiftCards, bulkDeleteGiftCardOpts } = useGiftCardBulkDelete({
     onClose,
     refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries],
   });
-  const dialogProps: Pick<ActionDialogProps, "onConfirm" | "confirmButtonState"> = singleDeletion
+  const dialogProps: {
+    confirmButtonState: ConfirmButtonTransitionState;
+    onConfirm: () => void;
+  } = singleDeletion
     ? {
-        onConfirm: () => {
-          onDeleteGiftCard();
-          clearRowSelection();
-        },
+        onConfirm: onDeleteGiftCard,
         confirmButtonState: deleteGiftCardOpts?.status,
       }
     : {
-        onConfirm: () => {
-          onBulkDeleteGiftCards();
-          clearRowSelection();
-        },
+        onConfirm: onBulkDeleteGiftCards,
         confirmButtonState: bulkDeleteGiftCardOpts?.status,
       };
 
-  const isLoading = loading || deleteGiftCardOpts?.status === "loading";
+  const isLoading =
+    loading ||
+    deleteGiftCardOpts?.status === "loading" ||
+    bulkDeleteGiftCardOpts?.status === "loading";
 
   return (
     <GiftCardDeleteDialogContent
@@ -60,4 +61,4 @@ const GiftCardDeleteDialog = ({
   );
 };
 
-export default GiftCardDeleteDialog;
+GiftCardListPageDeleteDialog.displayName = "GiftCardListPageDeleteDialog";

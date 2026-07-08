@@ -3,14 +3,14 @@ import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries
 import useGiftCardDetails from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { type DialogProps } from "@dashboard/types";
 
-import GiftCardDeleteDialogContent from "./GiftCardDeleteDialogContent";
+import { GiftCardDeleteDialogContent } from "./GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";
 
 type GiftCardUpdatePageDeleteDialogProps = DialogProps & {
   onDelete: () => void;
 };
 
-const GiftCardUpdatePageDeleteDialog = ({
+export const GiftCardUpdatePageDeleteDialog = ({
   onClose,
   open,
   onDelete,
@@ -35,4 +35,4 @@ const GiftCardUpdatePageDeleteDialog = ({
   );
 };
 
-export default GiftCardUpdatePageDeleteDialog;
+GiftCardUpdatePageDeleteDialog.displayName = "GiftCardUpdatePageDeleteDialog";

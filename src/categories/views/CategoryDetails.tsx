@@ -1,4 +1,3 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
@@ -24,19 +23,21 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { errorMessages } from "@dashboard/intl";
+import { ProductBulkDeleteDialog } from "@dashboard/products/components/ProductBulkDeleteDialog/ProductBulkDeleteDialog";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { Box } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
 import { useCallback, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
 import { extractMutationErrors, maybe } from "../../misc";
 import { productAddUrl } from "../../products/urls";
+import { CategoryBulkDeleteDialog } from "../components/CategoryBulkDeleteDialog/CategoryBulkDeleteDialog";
+import { CategoryDeleteDialog } from "../components/CategoryDeleteDialog/CategoryDeleteDialog";
 import {
   CategoryPageTab,
   CategoryUpdatePage,
@@ -296,100 +297,37 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
         }}
       />
 
-      <ActionDialog
+      <CategoryDeleteDialog
+        categoryName={<strong>{data?.category?.name || "..."}</strong>}
         confirmButtonState={deleteResult.status}
         onClose={closeModal}
         onConfirm={() => deleteCategory({ variables: { id } })}
         open={params.action === "delete"}
-        title={intl.formatMessage({
-          id: "xo5UIb",
-          defaultMessage: "Delete category",
-          description: "dialog title",
-        })}
-        variant="delete"
-      >
-        <Box display="grid" gap={2}>
-          <Box>
-            <FormattedMessage
-              id="xRkj2h"
-              defaultMessage="Are you sure you want to delete {categoryName}?"
-              values={{
-                categoryName: <strong>{data?.category?.name || "..."}</strong>,
-              }}
-            />
-          </Box>
-          <Box>
-            <FormattedMessage
-              id="3DGvA/"
-              defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
-            />
-          </Box>
-        </Box>
-      </ActionDialog>
+      />
 
-      <ActionDialog
-        open={params.action === "delete-categories"}
+      <CategoryBulkDeleteDialog
         confirmButtonState={categoryBulkDeleteOpts.status}
+        count={maybe(() => selectedCategoryRowIds.length) ?? 0}
         onClose={closeModal}
         onConfirm={() =>
           categoryBulkDelete({
             variables: { ids: selectedCategoryRowIds },
           }).then(() => refetch())
         }
-        title={intl.formatMessage({
-          id: "sG0w22",
-          defaultMessage: "Delete categories",
-          description: "dialog title",
-        })}
-        variant="delete"
-      >
-        <Box display="grid" gap={2}>
-          <Box>
-            <FormattedMessage
-              id="Pp/7T7"
-              defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-              values={{
-                counter: maybe(() => selectedCategoryRowIds.length),
-                displayQuantity: <strong>{maybe(() => selectedCategoryRowIds.length)}</strong>,
-              }}
-            />
-          </Box>
-          <Box>
-            <FormattedMessage
-              id="e+L+q3"
-              defaultMessage="Remember this will also delete all products assigned to this category."
-            />
-          </Box>
-        </Box>
-      </ActionDialog>
+        open={params.action === "delete-categories"}
+      />
 
-      <ActionDialog
-        open={params.action === "delete-products"}
+      <ProductBulkDeleteDialog
         confirmButtonState={productBulkDeleteOpts.status}
+        count={maybe(() => selectedProductRowIds.length) ?? 0}
         onClose={closeModal}
         onConfirm={() =>
           productBulkDelete({
             variables: { ids: selectedProductRowIds },
           }).then(() => refetch())
         }
-        title={intl.formatMessage({
-          id: "KCjd1o",
-          defaultMessage: "Delete products",
-          description: "dialog title",
-        })}
-        variant="delete"
-      >
-        <Box>
-          <FormattedMessage
-            id="7l5Bh9"
-            defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-            values={{
-              counter: maybe(() => selectedProductRowIds.length),
-              displayQuantity: <strong>{maybe(() => selectedProductRowIds.length)}</strong>,
-            }}
-          />
-        </Box>
-      </ActionDialog>
+        open={params.action === "delete-products"}
+      />
     </PaginatorContext.Provider>
   );
 };

@@ -5,6 +5,10 @@ type SetVariantsAction = (
   data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
 ) => void;
 
+type OrderVariant = SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0];
+
+export const hasVariantPricing = (variant: OrderVariant): boolean => !!variant.pricing;
+
 export function hasAllVariantsSelected(
   productVariants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
   selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
@@ -32,21 +36,24 @@ export const onProductAdd = (
   productsWithAllVariantsSelected: boolean[],
   variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
   setVariants: SetVariantsAction,
-) =>
-  productsWithAllVariantsSelected[productIndex]
+) => {
+  const productVariants = product.variants.filter(hasVariantPricing);
+
+  return productsWithAllVariantsSelected[productIndex]
     ? setVariants(
         variants.filter(
           selectedVariant =>
-            !product.variants.find(productVariant => productVariant.id === selectedVariant.id),
+            !productVariants.find(productVariant => productVariant.id === selectedVariant.id),
         ),
       )
     : setVariants([
         ...variants,
-        ...product.variants.filter(
+        ...productVariants.filter(
           productVariant =>
             !variants.find(selectedVariant => selectedVariant.id === productVariant.id),
         ),
       ]);
+};
 
 export const onVariantAdd = (
   variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],

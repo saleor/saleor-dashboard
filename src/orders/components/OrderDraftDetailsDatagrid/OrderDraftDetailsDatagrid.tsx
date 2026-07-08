@@ -1,4 +1,4 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";
@@ -20,10 +20,11 @@ import { ListViews } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import { ExternalLink, Percent, Trash2 } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 
 import { type FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
+import { OrderDraftLineRemoveDialog } from "../OrderDraftLineRemoveDialog/OrderDraftLineRemoveDialog";
 import { orderDraftDetailsStaticColumnsAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 import { OrderDraftDetailsRowActions } from "./OrderDraftDetailsRowActions";
@@ -32,6 +33,8 @@ interface OrderDraftDetailsDatagridProps {
   loading: boolean;
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
   onOrderLineShowMetadata: (id: string) => void;
@@ -40,12 +43,15 @@ interface OrderDraftDetailsDatagridProps {
 export const OrderDraftDetailsDatagrid = ({
   lines,
   errors,
+  orderLineRemoveConfirmState = "default",
+  orderLineRemoveErrors = [],
   onOrderLineChange,
   onOrderLineRemove,
   onOrderLineShowMetadata,
 }: OrderDraftDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
+  const removeRequestedRef = useRef(false);
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DRAFT_DETAILS_LIST);
   const getDiscountProviderValues = useOrderLineDiscountContext();
   const [discountedLineId, setDiscountedLineId] = useState<string | null>(null);
@@ -176,17 +182,42 @@ export const OrderDraftDetailsDatagrid = ({
   }, []);
 
   const handleCloseRemoveDialog = useCallback(() => {
+    if (orderLineRemoveConfirmState === "loading") {
+      return;
+    }
+
     setLineToRemoveId(null);
-  }, []);
+  }, [orderLineRemoveConfirmState]);
 
   const handleConfirmRemove = useCallback(() => {
     if (!lineToRemoveId) {
       return;
     }
 
+    removeRequestedRef.current = true;
     onOrderLineRemove(lineToRemoveId);
-    setLineToRemoveId(null);
   }, [lineToRemoveId, onOrderLineRemove]);
+
+  useEffect(() => {
+    if (!removeRequestedRef.current || !lineToRemoveId) {
+      return;
+    }
+
+    if (orderLineRemoveConfirmState === "success") {
+      removeRequestedRef.current = false;
+      setLineToRemoveId(null);
+    }
+
+    if (orderLineRemoveConfirmState === "error") {
+      removeRequestedRef.current = false;
+    }
+  }, [lineToRemoveId, orderLineRemoveConfirmState]);
+
+  useEffect(() => {
+    if (!lineToRemoveId) {
+      removeRequestedRef.current = false;
+    }
+  }, [lineToRemoveId]);
 
   const handleRowClick = useCallback(
     (item: Item) => {
@@ -236,6 +267,8 @@ export const OrderDraftDetailsDatagrid = ({
             selectedColumns={selectedColumns}
             staticColumns={staticColumns}
             onToggle={handlers.onToggle}
+            align="end"
+            backgroundColor="default1"
           />
         )}
         onChange={handleDatagridChange}
@@ -256,24 +289,16 @@ export const OrderDraftDetailsDatagrid = ({
           onClose={handleDiscountClose}
         />
       )}
-      <ActionDialog
+      <OrderDraftLineRemoveDialog
+        confirmButtonState={orderLineRemoveConfirmState}
+        errors={orderLineRemoveErrors}
         open={!!lineToRemoveId}
+        productName={
+          lineToRemove?.productName ?? intl.formatMessage(messages.unknownProductFallback)
+        }
         onClose={handleCloseRemoveDialog}
         onConfirm={handleConfirmRemove}
-        title={intl.formatMessage(messages.removeProductDialogTitle)}
-        confirmButtonState="default"
-        variant="delete"
-        backButtonText={intl.formatMessage(messages.keepProductButton)}
-        confirmButtonLabel={intl.formatMessage(messages.removeProductButton)}
-      >
-        <FormattedMessage
-          {...messages.removeProductDialogContent}
-          values={{
-            productName:
-              lineToRemove?.productName ?? intl.formatMessage(messages.unknownProductFallback),
-          }}
-        />
-      </ActionDialog>
+      />
     </DatagridChangeStateContext.Provider>
   );
 };

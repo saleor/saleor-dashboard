@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export interface AccordionProps {
   className?: string;
+  compactQuickPeek?: boolean;
   initialExpand?: boolean;
   quickPeek?: React.ReactNode;
   title: string;
@@ -14,6 +15,7 @@ export interface AccordionProps {
 const AccordionItemId = "accordionItemId";
 const Accordion = ({
   children,
+  compactQuickPeek = false,
   initialExpand,
   quickPeek,
   title,
@@ -53,7 +55,7 @@ const Accordion = ({
         {!openedAccordionId && !!quickPeek && (
           <>
             <Divider />
-            <Box paddingY={4}>{quickPeek}</Box>
+            <Box paddingY={compactQuickPeek ? 2 : 4}>{quickPeek}</Box>
           </>
         )}
       </AccordionMacaw>

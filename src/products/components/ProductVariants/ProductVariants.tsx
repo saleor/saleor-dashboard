@@ -1,5 +1,6 @@
 import { type ChannelData } from "@dashboard/channels/utils";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import BackButton from "@dashboard/components/BackButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { Datagrid, type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -8,6 +9,7 @@ import {
   DatagridChangeStateContext,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
   AttributeInputTypeEnum,
   type ProductDetailsVariantFragment,
@@ -23,7 +25,7 @@ import { type ProductVariantListError } from "@dashboard/products/views/ProductU
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { type Option, Text } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 import { Pencil } from "lucide-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -343,17 +345,24 @@ export const ProductVariants = ({
       )}
 
       {/* Warning dialog when trying to open generator with unsaved changes */}
-      <ActionDialog
-        open={showUnsavedWarning}
-        onClose={handleCloseUnsavedWarning}
-        onConfirm={handleCloseUnsavedWarning}
-        title={intl.formatMessage(messages.unsavedChangesTitle)}
-        confirmButtonLabel={intl.formatMessage(buttonMessages.ok)}
-        confirmButtonState="default"
-        variant="default"
-      >
-        <Text>{intl.formatMessage(messages.unsavedChangesDescription)}</Text>
-      </ActionDialog>
+      <DashboardModal onChange={handleCloseUnsavedWarning} open={showUnsavedWarning}>
+        <DashboardModal.Content size="xs">
+          <DashboardModal.Header subtitle={intl.formatMessage(messages.unsavedChangesDescription)}>
+            {intl.formatMessage(messages.unsavedChangesTitle)}
+          </DashboardModal.Header>
+
+          <DashboardModal.Actions>
+            <BackButton onClick={handleCloseUnsavedWarning} />
+            <ConfirmButton
+              data-test-id="submit"
+              onClick={handleCloseUnsavedWarning}
+              transitionState="default"
+            >
+              {intl.formatMessage(buttonMessages.ok)}
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
     </>
   );
 };

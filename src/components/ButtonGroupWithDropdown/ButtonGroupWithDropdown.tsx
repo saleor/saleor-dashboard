@@ -10,6 +10,8 @@ import {
 } from "@saleor/macaw-ui-next";
 import { ChevronDown } from "lucide-react";
 
+import styles from "./ButtonGroupWithDropdown.module.css";
+
 interface ButtonGroupWithDropdownProps extends BoxProps {
   onClick?: () => void;
   options: Array<{
@@ -34,29 +36,25 @@ export const ButtonGroupWithDropdown = ({
 }: ButtonGroupWithDropdownProps) => {
   return (
     <Dropdown>
-      <Box display="flex" {...boxProps}>
+      <Box className={styles.group} {...boxProps}>
         <Button
+          className={styles.segment}
           variant={variant}
           onClick={onClick}
           data-test-id={testId}
           disabled={disabled}
-          // TODO: fix this in Macaw UI - allow overriding border radius
-          __borderBottomRightRadius={0}
-          __borderTopRightRadius={0}
         >
           {children}
         </Button>
 
+        <Box aria-hidden className={styles.divider} />
+
         <Dropdown.Trigger>
           <Button
+            className={styles.segment}
             variant={variant}
             icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             disabled={disabled}
-            borderColor="default1"
-            borderLeftWidth={1}
-            borderLeftStyle="solid"
-            __borderBottomLeftRadius={0}
-            __borderTopLeftRadius={0}
           />
         </Dropdown.Trigger>
       </Box>

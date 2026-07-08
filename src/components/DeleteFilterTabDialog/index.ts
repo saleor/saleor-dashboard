@@ -1,2 +1,2 @@
-export { default } from "./DeleteFilterTabDialog";
+export { DeleteFilterTabDialog } from "./DeleteFilterTabDialog";
 export * from "./DeleteFilterTabDialog";

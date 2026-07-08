@@ -1,0 +1,6 @@
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-4);
+  padding-top: var(--mu-spacing-4);
+}

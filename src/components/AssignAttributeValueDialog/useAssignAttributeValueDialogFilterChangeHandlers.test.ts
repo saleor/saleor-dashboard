@@ -69,6 +69,32 @@ describe("useAssignAttributeValueDialogFilterChangeHandlers", () => {
     );
   });
 
+  it("merges reference type constraints into product refetch variables", () => {
+    // Arrange
+    const refetchProducts = jest.fn();
+    const { result } = renderHook(() =>
+      useAssignAttributeValueDialogFilterChangeHandlers({
+        refetchProducts,
+        refetchPages: jest.fn(),
+        refetchCategories: jest.fn(),
+        refetchCollections: jest.fn(),
+        referenceWhereConstraints: { productTypeIds: ["pt-1"] },
+      }),
+    );
+
+    // Act
+    act(() => {
+      result.current[AttributeEntityTypeEnum.PRODUCT_VARIANT]({}, undefined, "");
+    });
+
+    // Assert
+    expect(refetchProducts).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { productType: { oneOf: ["pt-1"] } },
+      }),
+    );
+  });
+
   it("wires page handler to page refetch", () => {
     // Arrange
     const { result, refetchPages } = setup();

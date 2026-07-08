@@ -71,6 +71,7 @@ export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDisco
 
   const calculationMode = watch("calculationMode");
   const value = watch("value");
+  const reason = watch("reason");
 
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
 
@@ -137,7 +138,18 @@ export const useDiscountForm = ({ maxPrice, existingDiscount, isOpen }: UseDisco
 
   const parsedValue = parseNumericValue(value);
   const valueFieldSymbol = calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
-  const isSubmitDisabled = !parsedValue || !!valueErrorMsg;
+
+  const hasChanges = useMemo(() => {
+    const initialValues = getDefaultValues();
+
+    return (
+      calculationMode !== initialValues.calculationMode ||
+      reason !== initialValues.reason ||
+      parsedValue !== parseNumericValue(initialValues.value)
+    );
+  }, [calculationMode, reason, parsedValue, getDefaultValues]);
+
+  const isSubmitDisabled = !parsedValue || !!valueErrorMsg || !hasChanges;
 
   const getDiscountData = useCallback(
     (): OrderDiscountCommonInput => ({

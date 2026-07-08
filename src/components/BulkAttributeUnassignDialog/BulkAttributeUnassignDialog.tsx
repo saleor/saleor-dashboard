@@ -1,5 +1,9 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,7 +21,7 @@ interface BulkAttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const BulkAttributeUnassignDialog = ({
+export const BulkAttributeUnassignDialog = ({
   title,
   attributeQuantity,
   confirmButtonState,
@@ -28,32 +32,55 @@ const BulkAttributeUnassignDialog = ({
   onConfirm,
 }: BulkAttributeUnassignDialogProps) => {
   const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={onConfirm}
-      title={title}
-      confirmButtonLabel={intl.formatMessage(messages.confirmBtn)}
-    >
-      <FormattedMessage
-        {...messages.content}
-        values={{
-          attributeQuantity: <strong>{attributeQuantity}</strong>,
-          counter: attributeQuantity,
-          itemTypeName: <strong>{itemTypeName}</strong>,
-        }}
-      />
-      {description ? (
-        <Text fontSize={3} color="default2" marginTop={4} display="block">
-          {description}
-        </Text>
-      ) : null}
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <>
+              <FormattedMessage
+                {...messages.content}
+                values={{
+                  attributeQuantity: <strong>{attributeQuantity}</strong>,
+                  counter: attributeQuantity,
+                  itemTypeName: <strong>{itemTypeName}</strong>,
+                }}
+              />
+              {description ? (
+                <Text fontSize={3} color="default2" marginTop={4} display="block">
+                  {description}
+                </Text>
+              ) : null}
+            </>
+          }
+        >
+          {title}
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+          >
+            {intl.formatMessage(messages.confirmBtn)}
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 BulkAttributeUnassignDialog.displayName = "BulkAttributeUnassignDialog";
-export default BulkAttributeUnassignDialog;

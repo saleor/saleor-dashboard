@@ -10,6 +10,7 @@ import {
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
+import { hasReferenceTypeConstraints } from "../AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import AssignContainerDialog, { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import {
   type InitialPageConstraints,
@@ -38,14 +39,18 @@ const AssignModelDialogInner = ({
   labels: labelOverrides,
   open,
   onClose,
+  skipFetchOnOpen = false,
   ...restProps
-}: Omit<AssignModelDialogProps, "excludedFilters" | "initialConstraints">) => {
+}: Omit<AssignModelDialogProps, "excludedFilters" | "initialConstraints"> & {
+  skipFetchOnOpen?: boolean;
+}) => {
   const intl = useIntl();
   const { combinedFilters, clearFilters } = useModalPageFilterContext();
 
   const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
     filterVariables: combinedFilters,
     open,
+    skipFetchOnOpen,
     onFetch: (filters, query) => onFilterChange?.(filters.where, query),
   });
 
@@ -91,7 +96,10 @@ const AssignModelDialog = ({
     excludedFilters={excludedFilters}
     initialConstraints={initialConstraints}
   >
-    <AssignModelDialogInner {...props} />
+    <AssignModelDialogInner
+      {...props}
+      skipFetchOnOpen={hasReferenceTypeConstraints(initialConstraints)}
+    />
   </ModalPageFilterProvider>
 );
 

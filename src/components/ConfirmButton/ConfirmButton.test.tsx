@@ -8,6 +8,7 @@ import {
 } from "@testing-library/react";
 
 import { ConfirmButton } from "./ConfirmButton";
+import styles from "./ConfirmButton.module.css";
 
 describe("ConfirmButton", () => {
   it("should render a button with confirm label", () => {
@@ -25,6 +26,11 @@ describe("ConfirmButton", () => {
     );
     expect(screen.getByRole("button")).toBeInTheDocument();
     expect(screen.getByRole("button")).toHaveTextContent("Error");
+  });
+  it("should block hover interaction when disabled", () => {
+    render(<ConfirmButton transitionState="default" disabled onClick={jest.fn()} />);
+
+    expect(screen.getByRole("button")).toHaveClass(styles.noInteraction);
   });
   it("should render a button with loading spinner", () => {
     render(<ConfirmButton noTransition transitionState="loading" />);

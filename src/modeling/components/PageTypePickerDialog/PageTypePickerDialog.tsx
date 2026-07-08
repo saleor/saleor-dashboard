@@ -1,3 +1,4 @@
+import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
@@ -7,7 +8,7 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
-import { Button, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -62,24 +63,26 @@ const PageTypePickerDialog = ({
           <FormattedMessage {...messages.selectPageType} />
         </DashboardModal.Header>
 
-        <DynamicCombobox
-          name="pageType"
-          label={intl.formatMessage(messages.pageType)}
-          options={pageTypes}
-          size="small"
-          value={selectedOption}
-          onChange={setSelectedOption}
-          onInputValueChange={debouncedFetchPageTypes}
-          onFocus={() => fetchPageTypes("")}
-          data-test-id="dialog-page-type"
-          onScrollEnd={handleScrollEnd}
-          loading={fetchMorePageTypes?.loading}
-        />
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <DynamicCombobox
+              name="pageType"
+              label={intl.formatMessage(messages.pageType)}
+              options={pageTypes}
+              size="small"
+              value={selectedOption}
+              onChange={setSelectedOption}
+              onInputValueChange={debouncedFetchPageTypes}
+              onFocus={() => fetchPageTypes("")}
+              data-test-id="dialog-page-type"
+              onScrollEnd={handleScrollEnd}
+              loading={fetchMorePageTypes?.loading}
+            />
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary">
-            {intl.formatMessage(buttonMessages.back)}
-          </Button>
+          <BackButton onClick={onClose} />
 
           <ConfirmButton
             data-test-id="confirm-button"

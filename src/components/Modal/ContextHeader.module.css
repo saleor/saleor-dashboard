@@ -1,0 +1,9 @@
+.contextBadge {
+  border-radius: var(--mu-border-radius-3);
+  background-color: var(--mu-colors-background-default2);
+  border: 1px solid var(--mu-colors-border-default1);
+}
+
+.descriptionWithSteps {
+  min-height: 40px;
+}

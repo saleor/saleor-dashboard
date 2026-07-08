@@ -48,6 +48,7 @@ export const productTypeAddUrl = (params?: ProductTypeAddUrlQueryParams) =>
 export const productTypePath = (id: string) => urlJoin(productTypeSection, id);
 type ProductTypeUrlDialog =
   | "assign-attribute"
+  | "create-attribute"
   | "unassign-attribute"
   | "unassign-product-attributes"
   | "unassign-variant-attributes"

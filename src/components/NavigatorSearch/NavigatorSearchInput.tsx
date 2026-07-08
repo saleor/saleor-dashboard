@@ -1,4 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { MODAL_PADDING_SPACING } from "@dashboard/components/Modal/tokens";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { Box, sprinkles } from "@saleor/macaw-ui-next";
 import { Search } from "lucide-react";
@@ -22,7 +23,9 @@ const NavigatorSearchInput = ({ onSearch, value }: NavigatorSearchInputProps) =>
   return (
     <Box
       display="flex"
-      padding={4}
+      flexShrink="0"
+      paddingX={MODAL_PADDING_SPACING}
+      paddingY={4}
       __height="50px"
       borderBottomWidth={1}
       borderBottomStyle="solid"

@@ -22,7 +22,7 @@ export interface VoucherCodesProps extends VoucherCodesDatagridProps {
   voucherCodesPagination: LocalPagination;
   settings: UseListSettings["settings"];
   deleteCodesTransitionState: ConfirmButtonTransitionState;
-  onDeleteCodes: () => Promise<void>;
+  onDeleteCodes: () => Promise<boolean>;
   onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
   onSettingsChange: UseListSettings["updateListSettings"];
   onMultiCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
