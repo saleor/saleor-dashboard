@@ -21,7 +21,7 @@ import useFormset, { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
-import OrderChangeWarehouseDialog from "@dashboard/orders/components/OrderChangeWarehouseDialog";
+import { OrderChangeWarehouseDialog } from "@dashboard/orders/components/OrderChangeWarehouseDialog/OrderChangeWarehouseDialog";
 import {
   type OrderFulfillUrlDialog,
   type OrderFulfillUrlQueryParams,
@@ -40,7 +40,7 @@ import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
-import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
+import { OrderFulfillStockExceededDialog } from "../OrderFulfillStockExceededDialog/OrderFulfillStockExceededDialog";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -161,6 +161,11 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
 
     return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };
+
+  const changeWarehouseLine =
+    params.action === "change-warehouse"
+      ? order?.lines.find(orderLine => orderLine.id === params.lineId)
+      : undefined;
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
@@ -306,23 +311,29 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
             </>
           )}
         </Form>
-        <OrderChangeWarehouseDialog
-          open={params.action === "change-warehouse"}
-          line={order?.lines.find(line => line.id === params.lineId)}
-          currentWarehouseId={params.warehouseId}
-          onConfirm={warehouse => {
-            const lineFormQuantity = formsetData.find(item => item.id === params.lineId)?.value?.[0]
-              ?.quantity;
+        {changeWarehouseLine ? (
+          <OrderChangeWarehouseDialog
+            open={params.action === "change-warehouse"}
+            line={changeWarehouseLine}
+            currentWarehouseId={params.warehouseId}
+            onConfirm={warehouse => {
+              if (!params.lineId || !warehouse) {
+                return;
+              }
 
-            formsetChange(params.lineId, [
-              {
-                quantity: lineFormQuantity,
-                warehouse,
-              },
-            ]);
-          }}
-          onClose={closeModal}
-        />
+              const lineFormQuantity = formsetData.find(item => item.id === params.lineId)
+                ?.value?.[0]?.quantity;
+
+              formsetChange(params.lineId, [
+                {
+                  quantity: lineFormQuantity,
+                  warehouse,
+                },
+              ]);
+            }}
+            onClose={closeModal}
+          />
+        ) : null}
       </DetailPageLayout.Content>
     </DetailPageLayout>
   );

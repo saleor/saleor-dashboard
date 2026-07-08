@@ -130,7 +130,7 @@ export const ConfirmButton = ({
   return (
     <Button
       {...props}
-      className={clsx(className, isInteractionLocked && styles.noInteraction)}
+      className={clsx(className, (isInteractionLocked || isSaveDisabled) && styles.noInteraction)}
       variant={isError ? "error" : variant}
       disabled={isSaveDisabled}
       aria-busy={isLoading}

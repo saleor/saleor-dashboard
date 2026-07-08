@@ -56,6 +56,23 @@ describe("useModalSearchWithFilters", () => {
       expect(mockOnFetch).toHaveBeenCalledWith({ productType: { oneOf: ["pt-1"] } }, "");
     });
 
+    it("should skip the initial open fetch when skipFetchOnOpen is true", () => {
+      // Arrange
+      const options: UseModalSearchWithFiltersOptions<TestFilters> = {
+        ...defaultOptions,
+        filterVariables: { productType: { oneOf: ["pt-1"] } },
+        open: true,
+        skipFetchOnOpen: true,
+        onFetch: mockOnFetch,
+      };
+
+      // Act
+      renderHook(() => useModalSearchWithFilters(options));
+
+      // Assert
+      expect(mockOnFetch).not.toHaveBeenCalled();
+    });
+
     it("should not trigger search when dialog is closed", () => {
       // Arrange
       const options: UseModalSearchWithFiltersOptions<TestFilters> = {

@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
-import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
-import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
+import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
 import { Button } from "@dashboard/components/Button";
 import {
   type AttributeCreateSubmitData,
@@ -464,20 +464,22 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
               key={key}
             />
           ))}
-          <CreateAttributeDialog
-            attributeType={AttributeTypeEnum.PRODUCT_TYPE}
-            confirmButtonState={
-              attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
-                ? "loading"
-                : attributeCreateOpts.status
-            }
-            contextName={productType.name}
-            disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
-            errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
-            open={params.action === "create-attribute" && Boolean(createAttributeAssignmentType)}
-            onClose={closeModal}
-            onSubmit={handleCreateAttribute}
-          />
+          {productType && (
+            <CreateAttributeDialog
+              attributeType={AttributeTypeEnum.PRODUCT_TYPE}
+              confirmButtonState={
+                attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
+                  ? "loading"
+                  : attributeCreateOpts.status
+              }
+              contextName={productType.name}
+              disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
+              errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
+              open={params.action === "create-attribute" && Boolean(createAttributeAssignmentType)}
+              onClose={closeModal}
+              onSubmit={handleCreateAttribute}
+            />
+          )}
           {productType && (
             <TypeDeleteWarningDialog
               {...productTypeDeleteData}

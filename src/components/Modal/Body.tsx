@@ -6,14 +6,14 @@ import styles from "./DashboardModal.module.css";
 import { MODAL_BODY_DISPLAY_NAME } from "./modalDisplayNames";
 
 type BodyProps = PropsWithBox<{
-  bleed?: boolean;
   children: ReactNode;
+  fill?: boolean;
 }>;
 
-export const Body = ({ bleed = false, children, className, ...rest }: BodyProps) => {
+export const Body = ({ children, className, fill = false, ...rest }: BodyProps) => {
   return (
     <Box
-      className={clsx(styles.body, bleed && styles.bodyBleed, className)}
+      className={clsx(styles.body, fill && styles.bodyFill, className)}
       flexGrow="1"
       overflowY="auto"
       __minHeight="0"

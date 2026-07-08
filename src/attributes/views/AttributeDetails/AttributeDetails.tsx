@@ -22,11 +22,11 @@ import omit from "lodash/omit";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
+import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
 import { AttributeMetadataDialog } from "../../components/AttributeMetadataDialog/AttributeMetadataDialog";
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
-import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog/AttributeValueEditDialog";
 import {
   attributeListUrl,
   attributeUrl,

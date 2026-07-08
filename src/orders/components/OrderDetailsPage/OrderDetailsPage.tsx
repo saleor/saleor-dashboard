@@ -66,6 +66,8 @@ interface OrderDetailsPageProps {
   onOrderLineAdd?: () => void;
   onOrderLineChange?: (id: string, data: OrderDraftDetailsProductsFormData) => void;
   onOrderLineRemove?: (id: string) => void;
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onShippingMethodEdit?: () => void;
   onBillingAddressEdit: () => any;
   onFulfillmentApprove: (id: string) => any;
@@ -124,6 +126,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onOrderLineAdd,
     onOrderLineChange,
     onOrderLineRemove,
+    orderLineRemoveConfirmState,
+    orderLineRemoveErrors,
     onShippingMethodEdit,
     onTransactionAction,
     onAddManualTransaction,
@@ -241,6 +245,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={setPricingLineId}
+            showBottomSeparator={(order?.fulfillments?.length ?? 0) > 0}
           />
         ) : (
           <>
@@ -252,14 +257,16 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               onOrderLineAdd={onOrderLineAdd}
               onOrderLineChange={onOrderLineChange}
               onOrderLineRemove={onOrderLineRemove}
+              orderLineRemoveConfirmState={orderLineRemoveConfirmState}
+              orderLineRemoveErrors={orderLineRemoveErrors}
             />
             <CardSpacer />
           </>
         )}
-        {order?.fulfillments?.map(fulfillment => (
+        {order?.fulfillments?.map((fulfillment, index) => (
           <OrderFulfillmentCard
-            dataTestId="fulfilled-order-section"
             key={fulfillment.id}
+            dataTestId="fulfilled-order-section"
             fulfillment={fulfillment}
             fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
             order={order}
@@ -269,11 +276,13 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
             onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
             onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
+            showBottomSeparator={index < (order.fulfillments?.length ?? 0) - 1}
           />
         ))}
 
         {order && !isOrderUnconfirmed && (
           <>
+            {(unfulfilled.length > 0 || (order.fulfillments?.length ?? 0) > 0) && <CardSpacer />}
             <OrderSummary
               order={order}
               onMarkAsPaid={onMarkAsPaid}
@@ -282,10 +291,10 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               onLegacyPaymentsApiRefund={onPaymentRefund}
               onLegacyPaymentsApiVoid={onPaymentVoid}
             />
-            <CardSpacer />
 
             {orderShouldUseTransactions(order) && (
               <>
+                <CardSpacer />
                 <OrderTransactionsSection
                   order={order}
                   shop={shop}
@@ -295,7 +304,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
                   onAddManualTransaction={onAddManualTransaction}
                   onRefundAdd={onRefundAdd}
                 />
-                <CardSpacer />
               </>
             )}
           </>
@@ -303,6 +311,7 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
 
         {order && isOrderUnconfirmed && orderDiscountContext && (
           <>
+            {(order.fulfillments?.length ?? 0) > 0 && <CardSpacer />}
             <OrderSummary
               order={order}
               onMarkAsPaid={onMarkAsPaid}
@@ -315,22 +324,25 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
               errors={errors}
               {...orderDiscountContext}
             />
-            <CardSpacer />
 
             {orderShouldUseTransactions(order) && (
-              <OrderTransactionsSection
-                order={order}
-                shop={shop}
-                onTransactionAction={onTransactionAction}
-                onPaymentCapture={onPaymentCapture}
-                onPaymentVoid={onPaymentVoid}
-                onAddManualTransaction={onAddManualTransaction}
-                onRefundAdd={onRefundAdd}
-              />
+              <>
+                <CardSpacer />
+                <OrderTransactionsSection
+                  order={order}
+                  shop={shop}
+                  onTransactionAction={onTransactionAction}
+                  onPaymentCapture={onPaymentCapture}
+                  onPaymentVoid={onPaymentVoid}
+                  onAddManualTransaction={onAddManualTransaction}
+                  onRefundAdd={onRefundAdd}
+                />
+              </>
             )}
           </>
         )}
 
+        <CardSpacer />
         <OrderHistory
           history={order?.events}
           onNoteUpdateLoading={onNoteUpdateLoading}

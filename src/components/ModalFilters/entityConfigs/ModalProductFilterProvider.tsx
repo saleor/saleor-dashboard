@@ -1,7 +1,16 @@
 import { type ProductWhereInput } from "@dashboard/graphql";
-import { createContext, type FC, type ReactNode, useContext, useMemo } from "react";
+import {
+  createContext,
+  type FC,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 
 import { ConditionalFilterContext } from "../../ConditionalFilter/context/context";
+import { createOperandValueExclusions } from "../operandExclusions";
 import { type LockedFilter, type ModalFilterResult } from "../types";
 import { useModalFilters } from "../useModalFilters";
 import { productFilterConfig } from "./productFilterConfig";
@@ -11,8 +20,14 @@ export interface ProductTypeConstraint {
   name: string;
 }
 
+export interface CollectionConstraint {
+  id: string;
+  name: string;
+}
+
 export interface InitialConstraints {
   productTypes?: ProductTypeConstraint[];
+  excludeCollections?: CollectionConstraint[];
 }
 
 interface ModalProductFilterContextValue extends ModalFilterResult<ProductWhereInput> {
@@ -46,10 +61,16 @@ export const ModalProductFilterProvider: FC<ModalProductFilterProviderProps> = (
     };
   }, [initialConstraints?.productTypes]);
 
+  const operandValueExclusions = useMemo(
+    () => createOperandValueExclusions(initialConstraints?.excludeCollections),
+    [initialConstraints?.excludeCollections],
+  );
+
   const { filterContext, filterVariables, filterChannel, clearFilters, hasActiveFilters } =
     useModalFilters(productFilterConfig, {
       excludedFilters,
       lockedFilter,
+      operandValueExclusions,
     });
 
   const combinedFilters = useMemo(
@@ -59,6 +80,16 @@ export const ModalProductFilterProvider: FC<ModalProductFilterProviderProps> = (
     }),
     [filterVariables, filterChannel],
   );
+
+  const clearFiltersRef = useRef(clearFilters);
+
+  clearFiltersRef.current = clearFilters;
+
+  useEffect(() => {
+    return () => {
+      clearFiltersRef.current();
+    };
+  }, []);
 
   return (
     <ConditionalFilterContext.Provider value={filterContext}>

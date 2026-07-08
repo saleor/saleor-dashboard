@@ -1,5 +1,9 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface UnassignDialogProps {
@@ -10,7 +14,7 @@ interface UnassignDialogProps {
   onConfirm: () => void;
 }
 
-const UnassignDialog = ({
+export const UnassignDialog = ({
   closeModal,
   confirmButtonState,
   idsLength,
@@ -18,35 +22,57 @@ const UnassignDialog = ({
   open,
 }: UnassignDialogProps) => {
   const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    closeModal();
+  };
 
   return (
-    <ActionDialog
-      open={open}
-      title={intl.formatMessage({
-        id: "Gfbp36",
-        defaultMessage: "Unassign Products From Shipping",
-        description: "dialog header",
-      })}
-      confirmButtonState={confirmButtonState}
-      onClose={closeModal}
-      onConfirm={onConfirm}
-      confirmButtonLabel={intl.formatMessage({
-        id: "p/Fd7s",
-        defaultMessage: "Unassign and save",
-        description: "unassign products from shipping rate and save, button",
-      })}
-    >
-      <FormattedMessage
-        id="AHK0K9"
-        defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-        description="dialog content"
-        values={{
-          counter: idsLength,
-          displayQuantity: <strong>{idsLength}</strong>,
-        }}
-      />
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              id="AHK0K9"
+              defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+              description="dialog content"
+              values={{
+                counter: idsLength,
+                displayQuantity: <strong>{idsLength}</strong>,
+              }}
+            />
+          }
+        >
+          <FormattedMessage
+            id="Gfbp36"
+            defaultMessage="Unassign Products From Shipping"
+            description="dialog header"
+          />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+          >
+            {intl.formatMessage({
+              id: "p/Fd7s",
+              defaultMessage: "Unassign and save",
+              description: "unassign products from shipping rate and save, button",
+            })}
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
-export default UnassignDialog;
+UnassignDialog.displayName = "UnassignDialog";

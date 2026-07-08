@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { Date } from "@dashboard/components/Date/Date";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type InvoiceFragment } from "@dashboard/graphql";
@@ -76,9 +77,9 @@ const OrderInvoiceList = (props: OrderInvoiceListProps) => {
         {!generatedInvoices ? (
           <Skeleton />
         ) : !generatedInvoices?.length ? (
-          <Text color="default2">
+          <Placeholder>
             <FormattedMessage id="hPB89Y" defaultMessage="No invoices to be shown" />
-          </Text>
+          </Placeholder>
         ) : (
           <ResponsiveTable className={classes.invoicesTable}>
             <TableBody className={classes.invoicesTableBody}>

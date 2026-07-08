@@ -198,52 +198,50 @@ export const RequiredAttributesSection = ({
   }
 
   return (
-    <div className={styles.requiredAttributesSectionWrapper}>
-      <Box
-        className={styles.requiredAttributesSection}
-        borderStyle="solid"
-        borderColor="default1"
-        borderWidth={1}
-        borderRadius={4}
-      >
-        <Box display="flex" flexDirection="column" gap={1}>
-          <Text size={2} fontWeight="medium" color="default1">
-            {intl.formatMessage(messages.requiredAttributesTitle)}
-          </Text>
-          <Text size={2} color="default2">
-            {intl.formatMessage(messages.requiredAttributesDescription)}
-          </Text>
-        </Box>
-
-        <Box display="flex" flexDirection="column" gap={3}>
-          {attributes.map(attr => {
-            const error = errorsByAttribute.get(attr.id);
-
-            return (
-              <Box key={attr.id} display="flex" flexDirection="column" gap={1}>
-                <Text size={2} color="default1">
-                  {attr.name}
-                  <Text as="span" color="critical1">
-                    {" "}
-                    *
-                  </Text>
-                </Text>
-                <AttributeInput
-                  attribute={attr}
-                  value={values[attr.id] ?? []}
-                  onChange={newValues => onChange(attr.id, newValues)}
-                  onSearch={query => onAttributeValuesSearch(attr.id, query)}
-                />
-                {error && (
-                  <Text size={1} color="critical1">
-                    {error.message || intl.formatMessage(messages.missingRequiredAttributes)}
-                  </Text>
-                )}
-              </Box>
-            );
-          })}
-        </Box>
+    <Box
+      className={styles.requiredAttributesSection}
+      borderStyle="solid"
+      borderColor="default1"
+      borderWidth={1}
+      borderRadius={4}
+    >
+      <Box display="flex" flexDirection="column" gap={1}>
+        <Text size={2} fontWeight="medium" color="default1">
+          {intl.formatMessage(messages.requiredAttributesTitle)}
+        </Text>
+        <Text size={2} color="default2">
+          {intl.formatMessage(messages.requiredAttributesDescription)}
+        </Text>
       </Box>
-    </div>
+
+      <Box display="flex" flexDirection="column" gap={3}>
+        {attributes.map(attr => {
+          const error = errorsByAttribute.get(attr.id);
+
+          return (
+            <Box key={attr.id} display="flex" flexDirection="column" gap={1}>
+              <Text size={2} color="default1">
+                {attr.name}
+                <Text as="span" color="critical1">
+                  {" "}
+                  *
+                </Text>
+              </Text>
+              <AttributeInput
+                attribute={attr}
+                value={values[attr.id] ?? []}
+                onChange={newValues => onChange(attr.id, newValues)}
+                onSearch={query => onAttributeValuesSearch(attr.id, query)}
+              />
+              {error && (
+                <Text size={1} color="critical1">
+                  {error.message || intl.formatMessage(messages.missingRequiredAttributes)}
+                </Text>
+              )}
+            </Box>
+          );
+        })}
+      </Box>
+    </Box>
   );
 };

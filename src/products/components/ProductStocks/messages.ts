@@ -68,6 +68,11 @@ export const messages = defineMessages({
     defaultMessage: "Assign Warehouse",
     description: "button",
   },
+  assignWarehouses: {
+    id: "aRvO6i",
+    defaultMessage: "Assign Warehouses",
+    description: "button",
+  },
   preorderEndDateSetup: {
     id: "REVk27",
     defaultMessage:

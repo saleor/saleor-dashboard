@@ -25,7 +25,6 @@ export const Row = ({
       tabIndex={0}
       data-href={href}
       id={href}
-      data-focus={false}
       className={className}
       onClick={onClick}
     >

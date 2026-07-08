@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   type ChannelUsabilityDataQuery,
   type OrderDetailsFragment,
@@ -9,15 +10,19 @@ import {
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { alertMessages } from "../OrderDraftPage/messages";
+import { OrderLineGroupEnd } from "../OrderLineGroupBottomSeparator/OrderLineGroupBottomSeparator";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
   errors: OrderErrorFragment[];
   loading: boolean;
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -29,6 +34,8 @@ const OrderDraftDetails = ({
   channelUsabilityData,
   errors,
   loading,
+  orderLineRemoveConfirmState,
+  orderLineRemoveErrors,
   onOrderLineAdd,
   onOrderLineChange,
   onOrderLineRemove,
@@ -38,6 +45,7 @@ const OrderDraftDetails = ({
   const isChannelActive = order?.channel.isActive;
   const areProductsInChannel = !!channelUsabilityData?.products.totalCount;
   const canAddProducts = isChannelActive && areProductsInChannel;
+  const hasLines = (order?.lines ?? []).length > 0;
 
   const getTooltip = () => {
     if (!isChannelActive) {
@@ -76,15 +84,19 @@ const OrderDraftDetails = ({
           </Box>
         }
       />
-      <DashboardCard.Content paddingX={0}>
+      {hasLines && <OrderCardDatagridSeparator />}
+      <DashboardCard.Content {...(hasLines ? { paddingX: 0 } : { paddingBottom: 6 })}>
         <OrderDraftDetailsProducts
           order={order}
           errors={errors}
           loading={loading}
+          orderLineRemoveConfirmState={orderLineRemoveConfirmState}
+          orderLineRemoveErrors={orderLineRemoveErrors}
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
           onOrderLineShowMetadata={onOrderLineShowMetadata}
         />
+        {hasLines && <OrderLineGroupEnd showBottomSeparator={false} backgroundColor="default1" />}
       </DashboardCard.Content>
     </DashboardCard>
   );

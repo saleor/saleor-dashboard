@@ -50,12 +50,14 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const onRuleCreateSubmit = createRuleCreateHandler(promotionData?.promotion, variables =>
     promotionRuleCreate({ variables }),
   );
-  const onRuleDeleteSubmit = (id: string) => {
-    return promotionRuleDelete({
+  const onRuleDeleteSubmit = async (id: string) => {
+    const result = await promotionRuleDelete({
       variables: {
         id,
       },
     });
+
+    return (result.data?.promotionRuleDelete?.errors?.length ?? 0) === 0;
   };
   const onPromotionDelete = () => {
     promotionDelete({
@@ -97,8 +99,8 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
         />
       </LabelsMapsProvider>
       <DiscountDeleteModal
-        confirmButtonTransitionState={promotionDeleteOpts.status}
-        onChange={() => setOpenModal(false)}
+        confirmButtonState={promotionDeleteOpts.status}
+        onClose={() => setOpenModal(false)}
         onConfirm={onPromotionDelete}
         open={openModal}
       />

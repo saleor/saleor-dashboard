@@ -207,35 +207,37 @@ export const CreateAttributeDialog = ({
                     <FormattedMessage {...messages.title} />
                   </DashboardModal.ContextHeader>
 
-                  <DashboardModal.Body bleed>
-                    <AttributeCreateFormContent
-                      apiErrors={displayedErrors}
-                      change={change}
-                      clearErrors={clearErrors}
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      inputType={data.inputType}
-                      fetchMoreReferenceTypes={fetchMoreReferenceTypes}
-                      fetchReferenceTypes={activeRefSearch.search}
-                      referenceTypeOptions={referenceTypeOptions}
-                      referenceTypesLoading={Boolean(fetchMoreReferenceTypes?.loading)}
-                      onEntityTypeChange={handleEntityTypeChange}
-                      onInlineValueAdd={handleValueCreate}
-                      onNextPage={loadNextPage}
-                      onPreviousPage={loadPreviousPage}
-                      onUpdateListSettings={updateListSettings}
-                      onValueDelete={deleteValueById}
-                      onValueReorder={handleValueReorder}
-                      pageInfo={pageInfo}
-                      set={set}
-                      setError={setError}
-                      settings={settings}
-                      step={step}
-                      triggerChange={triggerChange}
-                      valueAddError={valueErrors[0] ?? null}
-                      values={valueEdges}
-                    />
+                  <DashboardModal.Body>
+                    <DashboardModal.Inset>
+                      <AttributeCreateFormContent
+                        apiErrors={displayedErrors}
+                        change={change}
+                        clearErrors={clearErrors}
+                        data={data}
+                        disabled={disabled}
+                        errors={errors}
+                        inputType={data.inputType}
+                        fetchMoreReferenceTypes={fetchMoreReferenceTypes}
+                        fetchReferenceTypes={activeRefSearch.search}
+                        referenceTypeOptions={referenceTypeOptions}
+                        referenceTypesLoading={Boolean(fetchMoreReferenceTypes?.loading)}
+                        onEntityTypeChange={handleEntityTypeChange}
+                        onInlineValueAdd={handleValueCreate}
+                        onNextPage={loadNextPage}
+                        onPreviousPage={loadPreviousPage}
+                        onUpdateListSettings={updateListSettings}
+                        onValueDelete={deleteValueById}
+                        onValueReorder={handleValueReorder}
+                        pageInfo={pageInfo}
+                        set={set}
+                        setError={setError}
+                        settings={settings}
+                        step={step}
+                        triggerChange={triggerChange}
+                        valueAddError={valueErrors[0] ?? null}
+                        values={valueEdges}
+                      />
+                    </DashboardModal.Inset>
                   </DashboardModal.Body>
 
                   <DashboardModal.Actions>

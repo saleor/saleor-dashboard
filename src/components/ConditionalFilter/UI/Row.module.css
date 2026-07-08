@@ -1,0 +1,25 @@
+.inlineRow {
+  width: 100%;
+  min-width: 0;
+}
+
+.inlineRow > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.inlineRemoveButton {
+  flex-shrink: 0;
+  align-self: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  color: var(--mu-colors-text-default2);
+}
+
+.inlineRemoveButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

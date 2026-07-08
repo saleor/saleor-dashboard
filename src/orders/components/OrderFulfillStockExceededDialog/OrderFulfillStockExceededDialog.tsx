@@ -1,72 +1,93 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type FulfillmentFragment, type OrderFulfillLineFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import {
   getFulfillmentFormsetQuantity,
+  getOrderFulfillStockFormsetLineId,
   getOrderLineAvailableQuantity,
   type OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { useMemo } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";
+import { OrderFulfillStockExceededDialogLine } from "../OrderFulfillStockExceededDialogLine/OrderFulfillStockExceededDialogLine";
 import { stockExceededDialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface OrderFulfillStockExceededDialogProps {
-  lines: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
+  lines?: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
   open: boolean;
   formsetData: OrderFulfillStockFormsetData;
   confirmButtonState: ConfirmButtonTransitionState;
-  onSubmit: () => any;
-  onClose: () => any;
+  onSubmit: () => void;
+  onClose: () => void;
 }
 
-const OrderFulfillStockExceededDialog = (props: OrderFulfillStockExceededDialogProps) => {
-  const { lines, open, formsetData, confirmButtonState, onClose, onSubmit } = props;
+export const OrderFulfillStockExceededDialog = ({
+  lines,
+  open,
+  formsetData,
+  confirmButtonState,
+  onClose,
+  onSubmit,
+}: OrderFulfillStockExceededDialogProps) => {
   const intl = useIntl();
-  const classes = useStyles(props);
-  const exceededLines = lines?.filter(el => {
-    const line = "orderLine" in el ? el.orderLine : el;
-    const lineFormWarehouse = formsetData?.find(item => item.id === el.id)?.value?.[0]?.warehouse;
-    const stock = line.variant?.stocks.find(stock => stock.warehouse.id === lineFormWarehouse?.id);
+  const classes = useStyles({});
+  const exceededLines = useMemo(
+    () =>
+      (lines ?? []).filter(lineItem => {
+        const line = "orderLine" in lineItem ? lineItem.orderLine : lineItem;
+        const formsetLineId = getOrderFulfillStockFormsetLineId(lineItem);
+        const lineFormWarehouse = formsetData?.find(item => item.id === formsetLineId)?.value?.[0]
+          ?.warehouse;
+        const stock = line.variant?.stocks.find(
+          warehouseStock => warehouseStock.warehouse.id === lineFormWarehouse?.id,
+        );
 
-    return (
-      getFulfillmentFormsetQuantity(formsetData, line) > getOrderLineAvailableQuantity(line, stock)
-    );
-  });
+        return (
+          getFulfillmentFormsetQuantity(formsetData, line) >
+          getOrderLineAvailableQuantity(line, stock)
+        );
+      }),
+    [formsetData, lines],
+  );
 
   return (
-    <>
-      <ActionDialog
-        open={open}
-        title={intl.formatMessage(messages.title)}
-        onConfirm={onSubmit}
-        onClose={onClose}
-        confirmButtonState={confirmButtonState}
-        confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
-      >
-        <Text>{intl.formatMessage(messages.infoLabel)}</Text>
-        <CardSpacer />
-        <div className={classes.scrollable}>
-          <ResponsiveTable className={classes.table}>
-            {!!lines?.length && (
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage {...messages.infoLabel} values={{ count: exceededLines.length }} />
+          }
+        >
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.Header>
+
+        <DashboardModal.Body fill>
+          <ResponsiveTable bleed fillHeight className={classes.table}>
+            {exceededLines.length > 0 && (
               <TableHead>
                 <TableRowLink>
                   <TableCell className={classes.colName}>
                     {intl.formatMessage(messages.productLabel)}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
-                    {intl.formatMessage(messages.requiredStockLabel)}
+                    {intl.formatMessage(messages.toFulfillLabel)}
                   </TableCell>
                   <TableCell className={classes.colWarehouseStock}>
-                    {intl.formatMessage(messages.warehouseStockLabel)}
+                    {intl.formatMessage(messages.availableStockLabel)}
+                  </TableCell>
+                  <TableCell className={classes.colShort}>
+                    {intl.formatMessage(messages.shortLabel)}
                   </TableCell>
                 </TableRowLink>
               </TableHead>
@@ -74,27 +95,38 @@ const OrderFulfillStockExceededDialog = (props: OrderFulfillStockExceededDialogP
 
             <TableBody>
               {renderCollection(exceededLines, line => {
-                const lineFormWarehouse = formsetData?.find(item => item.id === line.id)?.value?.[0]
-                  ?.warehouse;
+                const formsetLineId = getOrderFulfillStockFormsetLineId(line);
+                const lineFormWarehouse = formsetData?.find(item => item.id === formsetLineId)
+                  ?.value?.[0]?.warehouse;
 
                 return (
                   <OrderFulfillStockExceededDialogLine
                     key={line?.id}
                     line={line}
                     formsetData={formsetData}
-                    warehouseId={lineFormWarehouse?.id}
+                    warehouse={lineFormWarehouse}
                   />
                 );
               })}
             </TableBody>
           </ResponsiveTable>
-        </div>
-        <CardSpacer />
-        <Text>{intl.formatMessage(messages.questionLabel)}</Text>
-      </ActionDialog>
-    </>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose}>
+            <FormattedMessage {...messages.goBackButton} />
+          </BackButton>
+          <ConfirmButton
+            data-test-id="submit"
+            onClick={onSubmit}
+            transitionState={confirmButtonState}
+          >
+            <FormattedMessage {...messages.fulfillButton} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 OrderFulfillStockExceededDialog.displayName = "OrderFulfillStockExceededDialog";
-export default OrderFulfillStockExceededDialog;

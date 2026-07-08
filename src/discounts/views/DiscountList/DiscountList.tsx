@@ -1,7 +1,7 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createDiscountsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import DiscountListPage from "@dashboard/discounts/components/DiscountListPage/DiscountListPage";
 import { type PromotionFragment, usePromotionsListQuery } from "@dashboard/graphql";

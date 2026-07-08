@@ -45,7 +45,13 @@ const ActionDialog = ({
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size={size}>
         <DashboardModal.Header subtitle={subtitle}>{title}</DashboardModal.Header>
-        <Box fontSize={3}>{children}</Box>
+        {children ? (
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              <Box fontSize={3}>{children}</Box>
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
+        ) : null}
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{backButtonText}</BackButton>
           {variant !== "info" && (

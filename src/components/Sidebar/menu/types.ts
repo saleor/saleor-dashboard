@@ -14,4 +14,6 @@ export interface SidebarMenuItem {
   children?: SidebarMenuItem[];
   paddingY?: Sprinkles["paddingY"];
   endAdornment?: ReactNode;
+  separatorBefore?: boolean;
+  labelStyle?: "default" | "settings";
 }

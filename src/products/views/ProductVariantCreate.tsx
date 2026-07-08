@@ -4,6 +4,8 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -20,9 +22,9 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -31,6 +33,7 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
@@ -193,6 +196,12 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     params.action === "assign-attribute-value" && params.id
       ? product?.productType.nonSelectionVariantAttributes?.find(a => a.id === params.id)
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -207,25 +216,18 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
-  });
+  } = useReferenceCategorySearch(refAttr);
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  } = useReferenceCollectionSearch(refAttr);
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
     refetchProducts: searchProductsOpts.refetch,
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchCategoriesOpts.refetch,
     refetchCollections: searchCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
   const {
     loadMore: loadMoreAttributeValues,
@@ -318,6 +320,7 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
     </>
   );

@@ -68,12 +68,18 @@ export const useUrlFilterStore = (): {
 
   const state = useMemo(() => parseUrlSearch(locationSearch), [locationSearch]);
 
+  // Read the live location from the history object instead of the per-render
+  // router.location snapshot. These callbacks can run from stale closures
+  // (e.g. unmount cleanup after the modal-closing navigation); replacing the
+  // URL based on a stale snapshot would resurrect removed params such as
+  // `action`, reopening the dialog that was just closed.
   const updateFilters = useCallback(
     (newFilterParams: Record<string, unknown>): void => {
-      const currentState = parseUrlSearch(router.location.search);
+      const { location } = router.history;
+      const currentState = parseUrlSearch(location.search);
 
       router.history.replace({
-        pathname: router.location.pathname,
+        pathname: location.pathname,
         search: stringify({
           ...currentState.preservedParams,
           ...newFilterParams,
@@ -84,10 +90,15 @@ export const useUrlFilterStore = (): {
   );
 
   const clearFilters = useCallback((): void => {
-    const currentState = parseUrlSearch(router.location.search);
+    const { location } = router.history;
+    const currentState = parseUrlSearch(location.search);
+
+    if (Object.keys(currentState.filterParams).length === 0) {
+      return;
+    }
 
     router.history.replace({
-      pathname: router.location.pathname,
+      pathname: location.pathname,
       search: stringify(currentState.preservedParams),
     });
   }, [router]);

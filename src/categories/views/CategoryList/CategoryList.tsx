@@ -1,6 +1,5 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
   type CategoryBulkDeleteMutation,
   useCategoryBulkDeleteMutation,
@@ -21,11 +20,11 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { Box } from "@saleor/macaw-ui-next";
 import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { CategoryBulkDeleteDialog } from "../../components/CategoryBulkDeleteDialog/CategoryBulkDeleteDialog";
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
 import {
   categoryListUrl,
@@ -177,8 +176,9 @@ const CategoryList = ({ params }: CategoryListProps) => {
         onCategoriesDelete={() => openModal("delete")}
       />
 
-      <ActionDialog
+      <CategoryBulkDeleteDialog
         confirmButtonState={categoryBulkDeleteOpts.status}
+        count={params?.ids?.length ?? 0}
         onClose={() =>
           navigate(
             categoryListUrl({
@@ -190,32 +190,7 @@ const CategoryList = ({ params }: CategoryListProps) => {
         }
         onConfirm={handleCategoryBulkDelete}
         open={params.action === "delete"}
-        title={intl.formatMessage({
-          id: "sG0w22",
-          defaultMessage: "Delete categories",
-          description: "dialog title",
-        })}
-        variant="delete"
-      >
-        <Box display="grid" gap={2}>
-          <Box>
-            <FormattedMessage
-              id="Pp/7T7"
-              defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-              values={{
-                counter: params?.ids?.length,
-                displayQuantity: <strong>{params?.ids?.length}</strong>,
-              }}
-            />
-          </Box>
-          <Box>
-            <FormattedMessage
-              id="e+L+q3"
-              defaultMessage="Remember this will also delete all products assigned to this category."
-            />
-          </Box>
-        </Box>
-      </ActionDialog>
+      />
 
       <SaveFilterTabDialog
         open={params.action === "save-search"}

@@ -22,9 +22,8 @@ describe("useKeyboardNavigation", () => {
   const mockClearActiveDescendant = jest.fn();
   const mockResetInput = jest.fn();
   const mockResetFocus = jest.fn();
-  const mockCollectLinks = jest.fn();
-  const mockCollectTableRows = jest.fn();
-  const mockFocusFirst = jest.fn();
+  const mockCollectItems = jest.fn();
+  const mockRestoreFocus = jest.fn();
   const mockFocusNext = jest.fn();
   const mockFocusPrevious = jest.fn();
   const mockGetActiveFocusedElement = jest.fn();
@@ -57,9 +56,8 @@ describe("useKeyboardNavigation", () => {
 
     (useActionItems as jest.Mock).mockReturnValue({
       resetFocus: mockResetFocus,
-      collectLinks: mockCollectLinks,
-      collectTableRows: mockCollectTableRows,
-      focusFirst: mockFocusFirst,
+      collectItems: mockCollectItems,
+      restoreFocus: mockRestoreFocus,
       focusNext: mockFocusNext,
       focusPrevious: mockFocusPrevious,
       getActiveFocusedElement: mockGetActiveFocusedElement,
@@ -76,8 +74,7 @@ describe("useKeyboardNavigation", () => {
       expect(result.current).toMatchObject({
         scope: expect.objectContaining({ current: null }),
         resetFocus: mockResetFocus,
-        collectLinks: mockCollectLinks,
-        collectTableRows: mockCollectTableRows,
+        refreshItems: expect.any(Function),
       });
     });
 
@@ -110,18 +107,21 @@ describe("useKeyboardNavigation", () => {
   });
 
   describe("query change effect", () => {
-    it("should focus first element and update aria active descendant when query changes", () => {
+    it("should collect items, restore focus and update aria active descendant when query changes", () => {
       const { rerender } = renderHook(({ query }) => useKeyboardNavigation({ query }), {
         initialProps: { query: "initial" },
       });
 
-      expect(mockFocusFirst).toHaveBeenCalledTimes(1);
+      expect(mockCollectItems).toHaveBeenCalledTimes(1);
+      expect(mockRestoreFocus).toHaveBeenCalledWith(undefined);
       expect(mockGetActiveFocusedElement).toHaveBeenCalledTimes(1);
       expect(mockUpdateAriaActiveDescendant).toHaveBeenCalledWith("test-element-id");
 
       rerender({ query: "new query" });
 
-      expect(mockFocusFirst).toHaveBeenCalledTimes(2);
+      expect(mockCollectItems).toHaveBeenCalledTimes(2);
+      expect(mockRestoreFocus).toHaveBeenCalledTimes(2);
+      expect(mockRestoreFocus).toHaveBeenLastCalledWith(undefined);
       expect(mockGetActiveFocusedElement).toHaveBeenCalledTimes(2);
       expect(mockUpdateAriaActiveDescendant).toHaveBeenCalledWith("test-element-id");
     });
@@ -131,7 +131,7 @@ describe("useKeyboardNavigation", () => {
 
       renderHook(() => useKeyboardNavigation({ query: "test" }));
 
-      expect(mockFocusFirst).toHaveBeenCalled();
+      expect(mockRestoreFocus).toHaveBeenCalledWith(undefined);
       expect(mockGetActiveFocusedElement).toHaveBeenCalled();
       expect(mockUpdateAriaActiveDescendant).not.toHaveBeenCalled();
       expect(mockClearActiveDescendant).toHaveBeenCalled();

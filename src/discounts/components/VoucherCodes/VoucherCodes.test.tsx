@@ -36,7 +36,7 @@ const renderVoucherCodes = (props: Partial<VoucherCodesProps>) => {
       codes={[]}
       loading={false}
       onCustomCodeGenerate={jest.fn()}
-      onDeleteCodes={jest.fn().mockResolvedValue(undefined)}
+      onDeleteCodes={jest.fn().mockResolvedValue(true)}
       deleteCodesTransitionState="default"
       onMultiCodesGenerate={jest.fn()}
       onSelectVoucherCodesIds={jest.fn()}

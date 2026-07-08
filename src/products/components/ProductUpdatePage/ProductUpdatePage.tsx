@@ -47,7 +47,7 @@ import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
-import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
+import { ProductExternalMediaDialog } from "@dashboard/products/components/ProductExternalMediaDialog/ProductExternalMediaDialog";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
@@ -138,7 +138,7 @@ interface ProductUpdatePageProps {
   onShowMetadata: () => void;
   onImageReorder?: (event: { oldIndex: number; newIndex: number }) => any;
   onImageUpload: (file: File) => any;
-  onMediaUrlUpload: (mediaUrl: string) => any;
+  onMediaUrlUpload: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
   onSeoClick?: () => any;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
@@ -661,7 +661,6 @@ const ProductUpdatePage = ({
               )}
 
               <ProductExternalMediaDialog
-                product={product}
                 onClose={() => setMediaUrlModalStatus(false)}
                 open={mediaUrlModalStatus}
                 onSubmit={onMediaUrlUpload}

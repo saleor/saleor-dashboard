@@ -1,6 +1,8 @@
 // @ts-strict-ignore
 import { type ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -37,6 +39,8 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -49,7 +53,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
@@ -130,6 +134,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -232,6 +237,12 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     params.action === "assign-attribute-value" && params.id
       ? selectedProductType?.productType.productAttributes?.find(a => a.id === params.id)
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -244,11 +255,24 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
+  const {
+    loadMore: loadMoreReferenceCategories,
+    search: searchReferenceCategories,
+    result: searchReferenceCategoriesOpts,
+  } = useReferenceCategorySearch(refAttr);
+
+  const {
+    loadMore: loadMoreReferenceCollections,
+    search: searchReferenceCollections,
+    result: searchReferenceCollectionsOpts,
+  } = useReferenceCollectionSearch(refAttr);
+
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
     refetchProducts: searchProductsOpts.refetch,
     refetchPages: searchPagesOpts.refetch,
-    refetchCategories: searchCategoriesOpts.refetch,
-    refetchCollections: searchCollectionsOpts.refetch,
+    refetchCategories: searchReferenceCategoriesOpts.refetch,
+    refetchCollections: searchReferenceCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
 
   const fetchMoreProductTypes = {
@@ -268,6 +292,14 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
   };
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
+  const fetchMoreReferenceCategories = getSearchFetchMoreProps(
+    searchReferenceCategoriesOpts,
+    loadMoreReferenceCategories,
+  );
+  const fetchMoreReferenceCollections = getSearchFetchMoreProps(
+    searchReferenceCollectionsOpts,
+    loadMoreReferenceCollections,
+  );
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
@@ -310,6 +342,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
           toggleAll={toggleAllChannels}
         />
@@ -348,16 +381,16 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
-        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
-        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
+        referenceCategories={mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search) || []}
+        referenceCollections={mapEdgesToItems(searchReferenceCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-        fetchReferenceCategories={searchCategories}
-        fetchMoreReferenceCategories={fetchMoreCategories}
-        fetchReferenceCollections={searchCollections}
-        fetchMoreReferenceCollections={fetchMoreCollections}
+        fetchReferenceCategories={searchReferenceCategories}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+        fetchReferenceCollections={searchReferenceCollections}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={currentParams => navigate(productAddUrl(currentParams))}
         selectedProductType={selectedProductType?.productType}
@@ -367,6 +400,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
     </>
   );

@@ -5,12 +5,14 @@ import {
   createSortedShippingChannels,
   sortChannelShippingDataByName,
 } from "@dashboard/channels/utils";
+import { AssignProductDialog } from "@dashboard/components/AssignProductDialog/AssignProductDialog";
 import { Button } from "@dashboard/components/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   type PostalCodeRuleInclusionTypeEnum,
+  type ProductWhereInput,
   ShippingMethodTypeEnum,
   type ShippingMethodTypeFragment,
   type ShippingMethodWithPostalCodesFragment,
@@ -31,13 +33,12 @@ import { sectionNames } from "@dashboard/intl";
 import { type ShippingMethodPostalCodeRule } from "@dashboard/legacy-sdk/apollo/types";
 import { getById, getByUnmatchingId, getMutationState } from "@dashboard/misc";
 import useProductSearch from "@dashboard/searches/useProductSearch";
-import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
+import { DeleteShippingRateDialog } from "@dashboard/shipping/components/DeleteShippingRateDialog";
 import { ShippingMethodMetadataDialog } from "@dashboard/shipping/components/ShippingMethodMetadataDialog/ShippingMethodMetadataDialog";
-import ShippingMethodProductsAddDialog from "@dashboard/shipping/components/ShippingMethodProductsAddDialog";
-import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
+import { ShippingZonePostalCodeRangeDialog } from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesPage from "@dashboard/shipping/components/ShippingZoneRatesPage";
 import { type ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
-import UnassignDialog from "@dashboard/shipping/components/UnassignDialog";
+import { UnassignDialog } from "@dashboard/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingPriceRateVariables,
@@ -89,11 +90,20 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   const channelsData = data?.shippingZone?.channels;
   const zoneName = data?.shippingZone?.name;
   const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
-  const {
-    loadMore,
-    search: productsSearch,
-    result: productsSearchOpts,
-  } = useProductSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
+  const { loadMore, result: productsSearchOpts } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+  const handleProductFilterChange = useCallback(
+    (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
+      void productsSearchOpts.refetch({
+        ...DEFAULT_INITIAL_SEARCH_DATA,
+        where: filterVariables,
+        channel,
+        query,
+      });
+    },
+    [productsSearchOpts.refetch],
+  );
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingRateUrlDialog,
     ShippingRateUrlQueryParams
@@ -142,6 +152,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -338,10 +349,14 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     updateShippingRateOpts.data?.shippingPriceUpdate?.errors ?? [],
     updateShippingMethodChannelListingOpts.data?.shippingMethodChannelListingUpdate?.errors ?? [],
   );
-  const handleProductAssign = (ids: string[]) =>
-    assignProduct({
-      variables: { id: rateId, input: { products: ids } },
-    });
+  const handleProductAssign = useCallback(
+    (products: Array<{ id: string }>) => {
+      assignProduct({
+        variables: { id: rateId, input: { products: products.map(product => product.id) } },
+      });
+    },
+    [assignProduct, rateId],
+  );
   const handleProductUnassign = (ids: string[]) => {
     unassignProduct({
       variables: { id: rateId, products: ids },
@@ -409,6 +424,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
           }
           selected={channelListElements.length}
           confirmButtonState="default"
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirmWithFocus}
           toggleAll={(items, selected) =>
             toggleAllChannels(items as ChannelShippingData[], selected)
@@ -435,21 +451,32 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         closeModal={closeModal}
         onConfirm={() => handleProductUnassign(listElements)}
       />
-      <ShippingMethodProductsAddDialog
+      <AssignProductDialog
         confirmButtonState={assignProductOpts.status}
+        hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage ?? false}
+        labels={{
+          confirmBtn: intl.formatMessage({
+            id: "FzEew9",
+            defaultMessage: "Assign and save",
+            description: "assign products to shipping rate and save, button",
+          }),
+        }}
         loading={productsSearchOpts.loading}
+        onClose={closeModal}
+        onFetchMore={loadMore}
+        onFilterChange={handleProductFilterChange}
+        onSubmit={handleProductAssign}
         open={params.action === "assign-product"}
-        hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage!}
+        productUnavailableText={intl.formatMessage({
+          id: "jmZSK1",
+          defaultMessage: "Product is not available in selected channels",
+        })}
         products={
           mapEdgesToItems(productsSearchOpts?.data?.search)?.filter(
             suggestedProduct => suggestedProduct.id,
-          )!
+          ) ?? []
         }
-        onClose={closeModal}
-        onFetch={productsSearch}
-        onFetchMore={loadMore}
-        onSubmit={handleProductAssign}
-        availableChannels={currentChannels}
+        selectedChannels={currentChannels}
       />
       <ShippingZoneRatesPage
         formId={FORM_ID}

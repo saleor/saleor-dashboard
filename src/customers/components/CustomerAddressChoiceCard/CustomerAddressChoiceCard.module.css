@@ -1,0 +1,34 @@
+.card {
+  width: 100%;
+  text-align: left;
+}
+
+.cardSelectable {
+  cursor: pointer;
+}
+
+.cardSelectable:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
+
+.editButton {
+  display: flex;
+  flex-shrink: 0;
+  padding: var(--mu-spacing-1);
+  border: none;
+  background: transparent;
+  color: var(--mu-colors-text-default2);
+  cursor: pointer;
+  border-radius: var(--mu-border-radius-4);
+}
+
+.editButton:hover {
+  color: var(--mu-colors-text-accent1);
+  background-color: var(--mu-colors-background-default1Hovered);
+}
+
+.editButton:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}

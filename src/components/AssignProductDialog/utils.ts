@@ -1,5 +1,28 @@
 import { type ProductChannels, type SelectedChannel } from "./types";
 
+export const getSelectedIdsFromDict = (selection: Record<string, boolean>): string[] =>
+  Object.entries(selection)
+    .filter(([, isSelected]) => isSelected)
+    .map(([id]) => id)
+    .sort((a, b) => a.localeCompare(b));
+
+export const hasMultiSelectionChanged = (
+  current: Record<string, boolean>,
+  initial: Record<string, boolean>,
+): boolean => {
+  const currentIds = getSelectedIdsFromDict(current);
+  const initialIds = getSelectedIdsFromDict(initial);
+
+  if (currentIds.length !== initialIds.length) {
+    return true;
+  }
+
+  return currentIds.some((id, index) => id !== initialIds[index]);
+};
+
+export const hasSingleSelectionChanged = (current: string, initial: string): boolean =>
+  current !== initial;
+
 export const isProductAvailableInVoucherChannels = (
   productChannels?: ProductChannels,
   selectedChannels?: SelectedChannel[],

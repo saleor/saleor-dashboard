@@ -19,6 +19,7 @@ import {
   getAllFulfillmentLinesPriceSum,
   getAttributesCaption,
   getDiscountTypeLabel,
+  getOrderFulfillStockFormsetLineId,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
@@ -3542,5 +3543,28 @@ describe("getAttributesCaption", () => {
 
     // Assert
     expect(result).toBe("");
+  });
+});
+
+describe("getOrderFulfillStockFormsetLineId", () => {
+  it("returns order line id for fulfillment lines", () => {
+    // Arrange
+    const fulfillmentLine = {
+      id: "FulfillmentLine:1",
+      orderLine: { id: "OrderLine:1" },
+    } as Parameters<typeof getOrderFulfillStockFormsetLineId>[0];
+
+    // Act // Assert
+    expect(getOrderFulfillStockFormsetLineId(fulfillmentLine)).toBe("OrderLine:1");
+  });
+
+  it("returns line id for order fulfill lines", () => {
+    // Arrange
+    const orderLine = { id: "OrderLine:2" } as Parameters<
+      typeof getOrderFulfillStockFormsetLineId
+    >[0];
+
+    // Act // Assert
+    expect(getOrderFulfillStockFormsetLineId(orderLine)).toBe("OrderLine:2");
   });
 });

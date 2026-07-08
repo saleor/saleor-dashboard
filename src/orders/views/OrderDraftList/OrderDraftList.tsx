@@ -1,12 +1,11 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth/useUser";
-import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import { ChannelPickerDialog } from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { useOrderDraftCreateMutation, useOrderDraftListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
@@ -20,6 +19,7 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { maybe } from "@dashboard/misc";
+import { OrderDraftBulkDeleteDialog } from "@dashboard/orders/components/OrderDraftBulkDeleteDialog/OrderDraftBulkDeleteDialog";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -28,7 +28,7 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import OrderDraftListPage from "../../components/OrderDraftListPage";
 import {
@@ -199,28 +199,13 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
         selectedOrderDraftIds={selectedRowIds}
         onSelectOrderDraftIds={handleSetSelectedOrderDraftIds}
       />
-      <ActionDialog
+      <OrderDraftBulkDeleteDialog
         confirmButtonState={orderDraftBulkDeleteOpts.status}
+        count={selectedRowIds.length}
         onClose={closeModal}
         onConfirm={() => onOrderDraftBulkDelete(selectedRowIds)}
         open={params.action === "remove"}
-        title={intl.formatMessage({
-          id: "qbmeUI",
-          defaultMessage: "Delete Order Drafts",
-          description: "dialog header",
-        })}
-        variant="delete"
-      >
-        <FormattedMessage
-          id="Q6VRrE"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
-          description="dialog content"
-          values={{
-            counter: maybe(() => selectedRowIds.length),
-            displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
-          }}
-        />
-      </ActionDialog>
+      />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

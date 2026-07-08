@@ -12,14 +12,14 @@ export const ResourcesTable = ({
   onResourceClick: () => void;
   onResourcesLoaded: () => void;
 }) => {
-  const { data } = useNavigatorSearchQuery({
+  const { data, loading } = useNavigatorSearchQuery({
     variables: {
       query,
     },
     onCompleted: onResourcesLoaded,
   });
 
-  if (!data) {
+  if (loading || !data) {
     return <ListSkeleton />;
   }
 

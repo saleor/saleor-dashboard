@@ -1,8 +1,7 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createCustomerQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
@@ -17,6 +16,7 @@ import usePaginator, {
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { sectionNames } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
+import commonErrorMessages from "@dashboard/utils/errors/common";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -24,8 +24,9 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { CustomerBulkDeleteDialog } from "../../components/CustomerBulkDeleteDialog/CustomerBulkDeleteDialog";
 import CustomerListPage from "../../components/CustomerListPage";
 import {
   customerListUrl,
@@ -108,7 +109,9 @@ const CustomerList = ({ params }: CustomerListProps) => {
   });
   const [bulkRemoveCustomers, bulkRemoveCustomersOpts] = useBulkRemoveCustomersMutation({
     onCompleted: data => {
-      if (data.customerBulkDelete?.errors.length === 0) {
+      const errors = data.customerBulkDelete?.errors ?? [];
+
+      if (errors.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage({ id: "xgPXGD", defaultMessage: "Customers deleted" }),
@@ -116,7 +119,14 @@ const CustomerList = ({ params }: CustomerListProps) => {
         refetch();
         clearRowSelection();
         closeModal();
+
+        return;
       }
+
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonErrorMessages.unknownError),
+      });
     },
   });
   const handleSort = createSortHandler(navigate, customerListUrl, params);
@@ -168,10 +178,10 @@ const CustomerList = ({ params }: CustomerListProps) => {
         hasPresetsChanged={hasPresetsChanged}
         onCustomersDelete={() => openModal("remove", { ids: selectedRowIds })}
       />
-      <ActionDialog
-        open={params.action === "remove" && selectedRowIds?.length > 0}
-        onClose={closeModal}
+      <CustomerBulkDeleteDialog
         confirmButtonState={bulkRemoveCustomersOpts.status}
+        count={selectedRowIds?.length ?? 0}
+        onClose={closeModal}
         onConfirm={() =>
           bulkRemoveCustomers({
             variables: {
@@ -179,22 +189,8 @@ const CustomerList = ({ params }: CustomerListProps) => {
             },
           })
         }
-        variant="delete"
-        title={intl.formatMessage({
-          id: "q8ep2I",
-          defaultMessage: "Delete Customers",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="N2SbNc"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
-          values={{
-            counter: selectedRowIds?.length,
-            displayQuantity: <strong>{selectedRowIds?.length}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove" && selectedRowIds?.length > 0}
+      />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

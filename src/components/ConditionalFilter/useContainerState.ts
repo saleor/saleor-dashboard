@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { type FilterContainer, FilterElement } from "./FilterElement";
 import { type FilterValueProvider } from "./FilterValueProvider";
+import { getFilterContainerKey } from "./ValueProvider/utils";
 
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
+
+const getProviderSyncKey = (valueProvider: FilterValueProvider): string =>
+  getFilterContainerKey(valueProvider.value);
 
 const removeConstraint = (container: FilterContainer): FilterContainer => {
   return container.map(el => {
@@ -42,27 +46,33 @@ const removeElement = (container: FilterContainer, position: number): FilterCont
   return removeConstraint(newContainer);
 };
 
-const removeEmptyElements = (
-  container: FilterContainer,
-  provider: FilterValueProvider,
-): FilterContainer => {
-  const emptyIndex = container.findIndex(
-    el => FilterElement.isFilterElement(el) && (!provider.isPersisted(el) || el.isEmpty()),
-  );
+const removeEmptyElements = (container: FilterContainer): FilterContainer => {
+  const emptyIndex = container.findIndex(el => FilterElement.isFilterElement(el) && el.isEmpty());
 
   if (emptyIndex < 0) return container;
 
-  return removeEmptyElements(removeElement(container, emptyIndex), provider);
+  return removeEmptyElements(removeElement(container, emptyIndex));
 };
 
 export const useContainerState = (valueProvider: FilterValueProvider) => {
-  const [value, setValue] = useState<FilterContainer>([]);
+  const [value, setValue] = useState<FilterContainer>(() =>
+    valueProvider.loading ? [] : valueProvider.value,
+  );
+  const providerSyncKeyRef = useRef(getProviderSyncKey(valueProvider));
 
   useEffect(() => {
+    const nextProviderSyncKey = getProviderSyncKey(valueProvider);
+
+    if (nextProviderSyncKey === providerSyncKeyRef.current) {
+      return;
+    }
+
+    providerSyncKeyRef.current = nextProviderSyncKey;
+
     if (!valueProvider.loading) {
       setValue(valueProvider.value);
     }
-  }, [valueProvider.loading, valueProvider.value]);
+  }, [valueProvider]);
 
   const isFilterElementAtIndex = (
     elIndex: number,
@@ -147,7 +157,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
    * fire state update, but applied of those state change happened after create function call,
    * so we have not removed empty values in container */
   const createAndRemoveEmpty = (element: FilterElement): void => {
-    const filteredValue = removeEmptyElements(value, valueProvider);
+    const filteredValue = removeEmptyElements(value);
     const newValue = createNewValue(filteredValue, element);
 
     setValue(() => filteredValue.concat(newValue));
@@ -165,8 +175,19 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     setValue([]);
   };
 
+  const resetToProvider = (): void => {
+    if (valueProvider.loading) {
+      setValue([]);
+
+      return;
+    }
+
+    setValue(valueProvider.value);
+    providerSyncKeyRef.current = getProviderSyncKey(valueProvider);
+  };
+
   const clearEmpty = (): void => {
-    setValue(v => removeEmptyElements(v, valueProvider));
+    setValue(v => removeEmptyElements(v));
   };
 
   return {
@@ -180,6 +201,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     removeAt,
     value,
     clear,
+    resetToProvider,
     clearEmpty,
   };
 };

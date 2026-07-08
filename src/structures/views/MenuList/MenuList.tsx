@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import { Button } from "@dashboard/components/Button";
 import {
   useMenuBulkDeleteMutation,
@@ -25,7 +24,9 @@ import { getSortParams } from "@dashboard/utils/sort";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import MenuCreateDialog from "../../components/MenuCreateDialog";
+import { MenuBulkDeleteDialog } from "../../components/MenuBulkDeleteDialog/MenuBulkDeleteDialog";
+import { MenuCreateDialog } from "../../components/MenuCreateDialog/MenuCreateDialog";
+import { MenuDeleteDialog } from "../../components/MenuDeleteDialog/MenuDeleteDialog";
 import MenuListPage from "../../components/MenuListPage";
 import { menuListUrl, type MenuListUrlQueryParams, menuUrl } from "../../urls";
 import { getSortQueryVariables } from "./sort";
@@ -59,7 +60,7 @@ const MenuList = ({ params }: MenuListProps) => {
       ...paginationState,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber],
+    [paginationState, params],
   );
   const { data, loading, refetch } = useMenuListQuery({
     displayLoader: true,
@@ -153,10 +154,9 @@ const MenuList = ({ params }: MenuListProps) => {
         }
       />
       <MenuCreateDialog
-        open={params.action === "add"}
         confirmButtonState={menuCreateOpts.status}
-        disabled={menuCreateOpts.loading}
         errors={menuCreateOpts?.data?.menuCreate.errors || []}
+        open={params.action === "add"}
         onClose={closeModal}
         onConfirm={formData =>
           menuCreate({
@@ -164,10 +164,9 @@ const MenuList = ({ params }: MenuListProps) => {
           })
         }
       />
-      <ActionDialog
-        open={params.action === "remove"}
-        onClose={closeModal}
+      <MenuDeleteDialog
         confirmButtonState={menuDeleteOpts.status}
+        onClose={closeModal}
         onConfirm={() =>
           menuDelete({
             variables: {
@@ -175,27 +174,23 @@ const MenuList = ({ params }: MenuListProps) => {
             },
           })
         }
-        variant="delete"
-        title={intl.formatMessage({
-          id: "x79cEk",
-          defaultMessage: "Delete structure",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="bj1U23"
-          defaultMessage="Are you sure you want to delete {menuName}?"
-          values={{
-            menuName: getStringOrPlaceholder(
-              mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name,
-            ),
-          }}
-        />
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "remove-many" && maybe(() => params.ids.length > 0)}
-        onClose={closeModal}
+        open={params.action === "remove"}
+        subtitle={
+          <FormattedMessage
+            id="bj1U23"
+            defaultMessage="Are you sure you want to delete {menuName}?"
+            values={{
+              menuName: getStringOrPlaceholder(
+                mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name,
+              ),
+            }}
+          />
+        }
+      />
+      <MenuBulkDeleteDialog
         confirmButtonState={menuBulkDeleteOpts.status}
+        count={params.ids?.length ?? 0}
+        onClose={closeModal}
         onConfirm={() =>
           menuBulkDelete({
             variables: {
@@ -203,22 +198,8 @@ const MenuList = ({ params }: MenuListProps) => {
             },
           })
         }
-        variant="delete"
-        title={intl.formatMessage({
-          id: "wAGThK",
-          defaultMessage: "Delete structures",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="aWzvoq"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this structure?} other{Are you sure you want to delete {displayQuantity} structures?}}"
-          values={{
-            counter: maybe(() => params.ids.length.toString(), "..."),
-            displayQuantity: <strong>{maybe(() => params.ids.length.toString(), "...")}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove-many" && maybe(() => params.ids.length > 0)}
+      />
     </PaginatorContext.Provider>
   );
 };
