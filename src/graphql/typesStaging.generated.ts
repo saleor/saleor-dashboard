@@ -200,8 +200,6 @@ export type AddressInput = {
   /**
    * Determine if the address should be validated. By default, Saleor accepts only address inputs matching ruleset from [Google Address Data]{https://chromium-i18n.appspot.com/ssl-address), using [i18naddress](https://github.com/mirumee/google-i18n-address) library. Some mutations may require additional permissions to use the the field. More info about permissions can be found in relevant mutation.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   skipValidation?: InputMaybe<Scalars['Boolean']['input']>;
@@ -278,11 +276,7 @@ export type AppFilterInput = {
 };
 
 export type AppInput = {
-  /**
-   * Canonical app ID. If not provided, the identifier will be generated based on app.id.
-   *
-   * Added in Saleor 3.19.
-   */
+  /** Canonical app ID. If not provided, the identifier will be generated based on app.id. */
   identifier?: InputMaybe<Scalars['String']['input']>;
   /** Name of the app. */
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1291,8 +1285,6 @@ export type CheckoutCreateInput = {
    * Checkout public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
-   *
-   * Added in Saleor 3.21.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
@@ -1301,21 +1293,11 @@ export type CheckoutCreateInput = {
    * Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
-   *
-   * Added in Saleor 3.21.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Indicates whether the billing address should be saved to the user’s address book upon checkout completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to save the address.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Indicates whether the billing address should be saved to the user’s address book upon checkout completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to save the address. */
   saveBillingAddress?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Indicates whether the shipping address should be saved to the user’s address book upon checkout completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to save the address.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Indicates whether the shipping address should be saved to the user’s address book upon checkout completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to save the address. */
   saveShippingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions. */
   shippingAddress?: InputMaybe<AddressInput>;
@@ -1390,9 +1372,7 @@ export type CheckoutLineUpdateInput = {
   /** ID of the line. */
   lineId?: InputMaybe<Scalars['ID']['input']>;
   /**
-   * Checkout line public metadata. Will add and update keys. To delete keys use deleteMetadata mutation.
-   *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Checkout line public metadata. Will add and update keys. To delete keys use deleteMetadata mutation. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -1423,8 +1403,6 @@ export type CheckoutSettingsInput = {
   automaticCompletion?: InputMaybe<CheckoutAutoCompleteInput>;
   /**
    * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
-   *
-   * Added in Saleor 3.20.
    * @deprecated Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']['input']>;
@@ -2470,43 +2448,27 @@ export type DraftOrderCreateInput = {
   discount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Order language code.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Order language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Variant line input consisting of variant ID and quantity of products. */
   lines?: InputMaybe<Array<OrderLineCreateInput>>;
   /**
-   * Order public metadata.
-   *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Order public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * Order private metadata.
-   *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Order private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address. */
   saveBillingAddress?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address. */
   saveShippingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
@@ -2521,11 +2483,7 @@ export type DraftOrderCreateInput = {
    * @deprecated Use `voucherCode` instead.
    */
   voucher?: InputMaybe<Scalars['ID']['input']>;
-  /**
-   * A code of the voucher associated with the order.
-   *
-   * Added in Saleor 3.18.
-   */
+  /** A code of the voucher associated with the order. */
   voucherCode?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2543,41 +2501,25 @@ export type DraftOrderInput = {
   discount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Order language code.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Order language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
-   * Order public metadata.
-   *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Order public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * Order private metadata.
-   *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Order private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address. */
   saveBillingAddress?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address. */
   saveShippingAddress?: InputMaybe<Scalars['Boolean']['input']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
@@ -2592,11 +2534,7 @@ export type DraftOrderInput = {
    * @deprecated Use `voucherCode` instead.
    */
   voucher?: InputMaybe<Scalars['ID']['input']>;
-  /**
-   * A code of the voucher associated with the order.
-   *
-   * Added in Saleor 3.18.
-   */
+  /** A code of the voucher associated with the order. */
   voucherCode?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2895,9 +2833,7 @@ export type GiftCardCreateInput = {
   /** Determine if gift card is active. */
   isActive: Scalars['Boolean']['input'];
   /**
-   * Gift Card public metadata.
-   *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Gift Card public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -2905,9 +2841,7 @@ export type GiftCardCreateInput = {
   /** The gift card note from the staff member. */
   note?: InputMaybe<Scalars['String']['input']>;
   /**
-   * Gift Card private metadata.
-   *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Gift Card private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -3052,17 +2986,13 @@ export type GiftCardUpdateInput = {
   /** The gift card expiry date. */
   expiryDate?: InputMaybe<Scalars['Date']['input']>;
   /**
-   * Gift Card public metadata.
-   *
-   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   * Gift Card public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * Gift Card private metadata.
-   *
-   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Gift Card private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -5148,11 +5078,7 @@ export type OrderBulkCreateInput = {
   transactions?: InputMaybe<Array<TransactionCreateInput>>;
   /** Customer associated with the order. */
   user: OrderBulkCreateUserInput;
-  /**
-   * Code of a voucher associated with the order.
-   *
-   * Added in Saleor 3.18.
-   */
+  /** Code of a voucher associated with the order. */
   voucherCode?: InputMaybe<Scalars['String']['input']>;
   /** Weight of the order in kg. */
   weight?: InputMaybe<Scalars['WeightScalar']['input']>;
@@ -5215,11 +5141,7 @@ export type OrderBulkCreateOrderLineInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the product. */
   productName?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * The SKU of the product.
-   *
-   * Added in Saleor 3.18.
-   */
+  /** The SKU of the product. */
   productSku?: InputMaybe<Scalars['String']['input']>;
   /** Number of items in the order line */
   quantity: Scalars['Int']['input'];
@@ -5249,23 +5171,11 @@ export type OrderBulkCreateOrderLineInput = {
   translatedVariantName?: InputMaybe<Scalars['String']['input']>;
   /** Price of the order line excluding applied discount. */
   undiscountedTotalPrice: TaxedMoneyInput;
-  /**
-   * Reason of the discount on order line.
-   *
-   * Added in Saleor 3.19.
-   */
+  /** Reason of the discount on order line. */
   unitDiscountReason?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Type of the discount: fixed or percent
-   *
-   * Added in Saleor 3.19.
-   */
+  /** Type of the discount: fixed or percent */
   unitDiscountType?: InputMaybe<DiscountValueTypeEnum>;
-  /**
-   * Value of the discount. Can store fixed value or percent value
-   *
-   * Added in Saleor 3.19.
-   */
+  /** Value of the discount. Can store fixed value or percent value */
   unitDiscountValue?: InputMaybe<Scalars['PositiveDecimal']['input']>;
   /** The external ID of the product variant. */
   variantExternalReference?: InputMaybe<Scalars['String']['input']>;
@@ -5567,8 +5477,6 @@ export type OrderGrantRefundCreateInput = {
   /**
    * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from Saleor 3.21.
    *
-   * Added in Saleor 3.20.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   transactionId: Scalars['ID']['input'];
@@ -5626,8 +5534,6 @@ export type OrderGrantRefundUpdateInput = {
   removeLines?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
-   *
-   * Added in Saleor 3.20.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -5828,8 +5734,6 @@ export type OrderSettingsInput = {
   /**
    * Time in hours after which the draft order line price will be refreshed. Default value is 24 hours. Enter 0 or null to disable.
    *
-   * Added in Saleor 3.21.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   draftOrderLinePriceFreezePeriod?: InputMaybe<Scalars['Hour']['input']>;
@@ -5839,8 +5743,6 @@ export type OrderSettingsInput = {
    * Specify whether a coupon applied to draft orders will count toward voucher usage.
    *
    * Warning:  when switching this setting from `false` to `true`, the vouchers will be disconnected from all draft orders.
-   *
-   * Added in Saleor 3.18.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -5856,8 +5758,6 @@ export type OrderSettingsInput = {
    * - When legacy propagation is enabled, discounts from these vouchers are represented as `OrderDiscount` objects, attached to the order and returned in the `Order.discounts` field. Additionally, percentage-based vouchers are converted to fixed-value discounts.
    * - When legacy propagation is disabled, discounts are represented as `OrderLineDiscount` objects, attached to individual lines and returned in the `OrderLine.discounts` field. In this case, percentage-based vouchers retain their original type.
    * In future releases, `OrderLineDiscount` will become the default behavior, and this flag will be deprecated and removed.
-   *
-   * Added in Saleor 3.21.
    */
   useLegacyLineDiscountPropagation?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -5942,24 +5842,16 @@ export type OrderUpdateInput = {
   billingAddress?: InputMaybe<AddressInput>;
   /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Order language code.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Order language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
-   * Order public metadata.
-   *
-   * Added in Saleor 3.21.Can be read by any API client authorized to read the object it's attached to.
+   * Order public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * Order private metadata.
-   *
-   * Added in Saleor 3.21.Requires permissions to modify and to read the metadata of the object it's attached to.
+   * Order private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
@@ -6429,25 +6321,13 @@ export type PaymentMethodTypeEnumFilterInput = {
 };
 
 export type PaymentSettingsInput = {
-  /**
-   * Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date.
-   *
-   * Added in Saleor 3.20.
-   */
+  /** Specifies the earliest date on which funds for expired checkouts can begin to be released. Expired checkouts dated before this cut-off will not have their funds released. Additionally, no funds will be released for checkouts that are more than one year old, regardless of the cut-off date. */
   checkoutReleaseFundsCutOffDate?: InputMaybe<Scalars['DateTime']['input']>;
-  /**
-   * The time in hours after which funds for expired checkouts will be released.
-   *
-   * Added in Saleor 3.20.
-   */
+  /** The time in hours after which funds for expired checkouts will be released. */
   checkoutTtlBeforeReleasingFunds?: InputMaybe<Scalars['Hour']['input']>;
   /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
   defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
-  /**
-   * Determine if the funds for expired checkouts should be released automatically.
-   *
-   * Added in Saleor 3.20.
-   */
+  /** Determine if the funds for expired checkouts should be released automatically. */
   releaseFundsForExpiredCheckouts?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -7257,11 +7137,7 @@ export type ProductVariantChannelListingAddInput = {
   preorderThreshold?: InputMaybe<Scalars['Int']['input']>;
   /** Price of the particular variant in channel. */
   price: Scalars['PositiveDecimal']['input'];
-  /**
-   * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive. */
   priorPrice?: InputMaybe<Scalars['PositiveDecimal']['input']>;
 };
 
@@ -7478,11 +7354,7 @@ export type PromotionCreateInput = {
   rules?: InputMaybe<Array<PromotionRuleInput>>;
   /** The start date of the promotion in ISO 8601 format. */
   startDate?: InputMaybe<Scalars['DateTime']['input']>;
-  /**
-   * Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount.
-   *
-   * Added in Saleor 3.19.
-   */
+  /** Defines the promotion type. Implicate the required promotion rules predicate type and whether the promotion rules will give the catalogue or order discount. */
   type: PromotionTypeEnum;
 };
 
@@ -7524,8 +7396,6 @@ export type PromotionRuleCreateInput = {
   /**
    * Product variant IDs available as a gift to choose.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   gifts?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -7534,8 +7404,6 @@ export type PromotionRuleCreateInput = {
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   orderPredicate?: InputMaybe<OrderPredicateInput>;
@@ -7543,8 +7411,6 @@ export type PromotionRuleCreateInput = {
   promotion: Scalars['ID']['input'];
   /**
    * Defines the reward type of the promotion rule.
-   *
-   * Added in Saleor 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7570,8 +7436,6 @@ export type PromotionRuleInput = {
   /**
    * Product variant IDs available as a gift to choose.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   gifts?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -7580,15 +7444,11 @@ export type PromotionRuleInput = {
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   orderPredicate?: InputMaybe<OrderPredicateInput>;
   /**
    * Defines the reward type of the promotion rule.
-   *
-   * Added in Saleor 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -7628,8 +7488,6 @@ export type PromotionRuleUpdateInput = {
   /**
    * List of variant IDs available as a gift to add.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   addGifts?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -7642,8 +7500,6 @@ export type PromotionRuleUpdateInput = {
   /**
    * Defines the conditions on the checkout/draft order level that must be met for the reward to be applied.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   orderPredicate?: InputMaybe<OrderPredicateInput>;
@@ -7652,15 +7508,11 @@ export type PromotionRuleUpdateInput = {
   /**
    * List of variant IDs available as a gift to remove.
    *
-   * Added in Saleor 3.19.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   removeGifts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /**
    * Defines the reward type of the promotion rule.
-   *
-   * Added in Saleor 3.19.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -8408,19 +8260,11 @@ export type TaxConfigurationPerCountryInput = {
   countryCode: CountryCode;
   /** Determines whether displayed prices should include taxes for this country. */
   displayGrossPrices: Scalars['Boolean']['input'];
-  /**
-   * The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration.
-   *
-   * Added in Saleor 3.19.
-   */
+  /** The tax app `App.identifier` that will be used to calculate the taxes for the given channel and country. If not provided, use the value from the channel's tax configuration. */
   taxAppId?: InputMaybe<Scalars['String']['input']>;
   /** A country-specific strategy to use for tax calculation. Taxes can be calculated either using user-defined flat rates or with a tax app. If not provided, use the value from the channel's tax configuration. */
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
-  /**
-   * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`. */
   useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -8440,21 +8284,13 @@ export type TaxConfigurationUpdateInput = {
   pricesEnteredWithTax?: InputMaybe<Scalars['Boolean']['input']>;
   /** List of country codes for which to remove the tax configuration. */
   removeCountriesConfiguration?: InputMaybe<Array<CountryCode>>;
-  /**
-   * The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`.
-   *
-   * Added in Saleor 3.19.
-   */
+  /** The tax app `App.identifier` that will be used to calculate the taxes for the given channel. Empty value for `TAX_APP` set as `taxCalculationStrategy` means that Saleor will iterate over all installed tax apps. If multiple tax apps exist with provided tax app id use the `App` with newest `created` date. It's possible to set plugin by using prefix `plugin:` with `PLUGIN_ID` e.g. with Avalara `plugin:mirumee.taxes.avalara`.Will become mandatory in 4.0 for `TAX_APP` `taxCalculationStrategy`. */
   taxAppId?: InputMaybe<Scalars['String']['input']>;
   /** The default strategy to use for tax calculation in the given channel. Taxes can be calculated either using user-defined flat rates or with a tax app. Empty value means that no method is selected and taxes are not calculated. */
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
   /** List of tax country configurations to create or update (identified by a country code). */
   updateCountriesConfiguration?: InputMaybe<Array<TaxConfigurationPerCountryInput>>;
-  /**
-   * Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`.
-   *
-   * Added in Saleor 3.21.
-   */
+  /** Determines whether to use weighted tax for shipping. When set to true, the tax rate for shipping will be calculated based on the weighted average of tax rates from the order or checkout lines. Default value is `False`.Can be used only with `taxCalculationStrategy` set to `FLAT_RATES`. */
   useWeightedTaxForShipping?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -8529,7 +8365,7 @@ export enum TokenizedPaymentFlowEnum {
  *     The following actions are possible:
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
- *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
+ *     CANCEL - Represents a cancel action.
  */
 export enum TransactionActionEnum {
   CANCEL = 'CANCEL',
@@ -8623,8 +8459,6 @@ export enum TransactionEventReportErrorCode {
 
 /**
  * Represents possible event types.
- *
- *     Added in Saleor 3.12.
  *
  *     The following types are possible:
  *     AUTHORIZATION_SUCCESS - represents success authorization.
@@ -9050,8 +8884,6 @@ export type VoucherInput = {
   /**
    * List of codes to add.
    *
-   * Added in Saleor 3.18.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   addCodes?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -9087,8 +8919,6 @@ export type VoucherInput = {
    *
    * The option can only be changed if none of the voucher codes have been used.
    *
-   * Added in Saleor 3.18.
-   *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   singleUse?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9116,11 +8946,7 @@ export enum VoucherSortField {
    * This option requires a channel filter to work as the values can vary between channels.
    */
   MINIMUM_SPENT_AMOUNT = 'MINIMUM_SPENT_AMOUNT',
-  /**
-   * Sort vouchers by name.
-   *
-   * Added in Saleor 3.18.
-   */
+  /** Sort vouchers by name. */
   NAME = 'NAME',
   /** Sort vouchers by start date. */
   START_DATE = 'START_DATE',
@@ -9594,11 +9420,7 @@ export enum WebhookEventTypeAsyncEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /**
-   * A voucher code export is completed.
-   *
-   * Added in Saleor 3.18.
-   */
+  /** A voucher code export is completed. */
   VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
@@ -9968,11 +9790,7 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /**
-   * A voucher code export is completed.
-   *
-   * Added in Saleor 3.18.
-   */
+  /** A voucher code export is completed. */
   VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
