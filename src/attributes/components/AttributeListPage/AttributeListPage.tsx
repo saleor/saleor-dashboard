@@ -69,7 +69,7 @@ const AttributeListPage = ({
   onSelectAttributesIds,
   hidePagination = false,
   canGroupByType = false,
-  groupByType = false,
+  groupByType = true,
   onGroupByTypeChange,
   showTypeTabs = false,
   types,

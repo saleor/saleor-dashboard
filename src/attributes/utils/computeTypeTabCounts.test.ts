@@ -8,6 +8,11 @@ import {
   type ProductTypeListWithAssignedAttributeCountsQuery,
 } from "@dashboard/graphql";
 
+type ProductTypesConnection = NonNullable<
+  ProductTypeListWithAssignedAttributeCountsQuery["productTypes"]
+>;
+type ProductTypeNode = ProductTypesConnection["edges"][number]["node"];
+
 const emptyPageInfo = {
   __typename: "PageInfo" as const,
   endCursor: null,
@@ -17,7 +22,7 @@ const emptyPageInfo = {
 };
 
 const createProductTypeTabCountsQuery = (
-  productType: ProductTypeListWithAssignedAttributeCountsQuery["productTypes"]["edges"][number]["node"],
+  productType: ProductTypeNode,
 ): ProductTypeListWithAssignedAttributeCountsQuery => ({
   __typename: "Query",
   productTypes: {
@@ -33,11 +38,8 @@ const createProductTypeTabCountsQuery = (
 });
 
 const createProductTypeNode = (
-  attributes: Pick<
-    ProductTypeListWithAssignedAttributeCountsQuery["productTypes"]["edges"][number]["node"],
-    "productAttributes" | "variantAttributes"
-  >,
-): ProductTypeListWithAssignedAttributeCountsQuery["productTypes"]["edges"][number]["node"] => ({
+  attributes: Pick<ProductTypeNode, "productAttributes" | "variantAttributes">,
+): ProductTypeNode => ({
   __typename: "ProductType",
   id: "pt-1",
   name: "Default",
