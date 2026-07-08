@@ -81,12 +81,12 @@ describe("OrderTransactionCardTitle", () => {
       expect(screen.getByTestId("transaction-action-charge-button")).toBeInTheDocument();
       expect(screen.getByText("Capture")).toBeInTheDocument();
 
-      // Cancel should be in menu, not visible yet
-      expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
+      // Void should be in menu, not visible yet
+      expect(screen.queryByText("Void")).not.toBeInTheDocument();
 
-      // Open menu to see Cancel
+      // Open menu to see Void
       await user.click(screen.getByTestId("transaction-menu-button"));
-      expect(screen.getByText("Cancel")).toBeInTheDocument();
+      expect(screen.getByText("Void")).toBeInTheDocument();
     });
 
     it("shows only CHARGE button when no menu actions exist", () => {
@@ -133,9 +133,9 @@ describe("OrderTransactionCardTitle", () => {
       expect(screen.queryByTestId("transaction-action-charge-button")).not.toBeInTheDocument();
       expect(screen.getByTestId("transaction-menu-button")).toBeInTheDocument();
 
-      // Open menu to see Cancel
+      // Open menu to see Void
       await user.click(screen.getByTestId("transaction-menu-button"));
-      expect(screen.getByText("Cancel")).toBeInTheDocument();
+      expect(screen.getByText("Void")).toBeInTheDocument();
     });
 
     it("filters out REFUND action entirely", async () => {
@@ -163,7 +163,7 @@ describe("OrderTransactionCardTitle", () => {
       // Assert - CHARGE as button, CANCEL in menu, REFUND nowhere
       expect(screen.getByTestId("transaction-action-charge-button")).toBeInTheDocument();
       await user.click(screen.getByTestId("transaction-menu-button"));
-      expect(screen.getByText("Cancel")).toBeInTheDocument();
+      expect(screen.getByText("Void")).toBeInTheDocument();
       expect(screen.queryByText("Refund")).not.toBeInTheDocument();
     });
 
@@ -335,7 +335,7 @@ describe("OrderTransactionCardTitle", () => {
       expect(screen.getByText("Capture")).toBeInTheDocument();
     });
 
-    it("disables the Cancel menu item with an in-progress label while a cancel is in flight", async () => {
+    it("disables the Void menu item with an in-progress label while a void is in flight", async () => {
       // Arrange
       const user = userEvent.setup();
       const onTransactionAction = jest.fn();
@@ -357,8 +357,8 @@ describe("OrderTransactionCardTitle", () => {
       await user.click(screen.getByTestId("transaction-menu-button"));
 
       // Assert
-      expect(screen.getByText("Cancel in progress")).toBeInTheDocument();
-      await user.click(screen.getByText("Cancel in progress"));
+      expect(screen.getByText("Void in progress")).toBeInTheDocument();
+      await user.click(screen.getByText("Void in progress"));
       expect(onTransactionAction).not.toHaveBeenCalled();
     });
 
@@ -382,7 +382,7 @@ describe("OrderTransactionCardTitle", () => {
         </Wrapper>,
       );
       await user.click(screen.getByTestId("transaction-menu-button"));
-      await user.click(screen.getByText("Cancel"));
+      await user.click(screen.getByText("Void"));
 
       // Assert
       expect(onTransactionAction).toHaveBeenCalledWith("txn-abc-123", TransactionActionEnum.CANCEL);

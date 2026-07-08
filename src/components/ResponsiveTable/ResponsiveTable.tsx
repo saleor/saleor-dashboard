@@ -11,7 +11,9 @@ import styles from "./ResponsiveTable.module.css";
 
 interface ResponsiveTableProps {
   children: ReactNode | ReactNode[];
+  bleed?: boolean;
   className?: string;
+  fillHeight?: boolean;
   onMouseLeave?: () => void;
   key?: string;
   search?: {
@@ -26,7 +28,16 @@ interface ResponsiveTableProps {
 }
 
 export const ResponsiveTable = (props: ResponsiveTableProps) => {
-  const { children, className, onMouseLeave, search, footer, filteredItemsCount } = props;
+  const {
+    bleed = false,
+    children,
+    className,
+    fillHeight = false,
+    onMouseLeave,
+    search,
+    footer,
+    filteredItemsCount,
+  } = props;
   const [searchValue, setSearchValue] = useState(search?.initialValue ?? "");
 
   const isSearchActive = searchValue.length > 0;
@@ -58,8 +69,14 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
+    <div className={clsx(styles.container, fillHeight && styles.containerFill)}>
+      <div
+        className={clsx(
+          styles.wrapper,
+          fillHeight && styles.wrapperFill,
+          bleed && styles.wrapperBleed,
+        )}
+      >
         {search && (
           <Box
             className={styles.searchBar}
@@ -117,7 +134,10 @@ export const ResponsiveTable = (props: ResponsiveTableProps) => {
             </Text>
           </Box>
         ) : (
-          <Table className={clsx(styles.table, className)} onMouseLeave={onMouseLeave}>
+          <Table
+            className={clsx(styles.table, bleed && styles.tableBleed, className)}
+            onMouseLeave={onMouseLeave}
+          >
             {children}
           </Table>
         )}
@@ -131,4 +151,5 @@ ResponsiveTable.displayName = "ResponsiveTable";
 
 export const tableStyles = {
   colAction: styles.colAction,
+  cellFlush: styles.cellFlush,
 };

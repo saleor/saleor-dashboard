@@ -48,6 +48,7 @@ interface PageTypeDetailsPageProps {
   attributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAttributeAdd: (type: AttributeTypeEnum) => void;
+  onAttributeCreate: (type: AttributeTypeEnum) => void;
   onAttributeReorder: (event: ReorderEvent, type: AttributeTypeEnum) => void;
   onAttributeUnassign: (id: string) => void;
   onDelete: () => void;
@@ -63,6 +64,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     attributeList,
     saveButtonBarState,
     onAttributeAdd,
+    onAttributeCreate,
     onAttributeUnassign,
     onAttributeReorder,
     onDelete,
@@ -138,6 +140,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
                 disabled={disabled}
                 type={AttributeTypeEnum.PAGE_TYPE}
                 onAttributeAssign={onAttributeAdd}
+                onAttributeCreate={onAttributeCreate}
                 onAttributeReorder={(event: ReorderEvent) =>
                   onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
                 }

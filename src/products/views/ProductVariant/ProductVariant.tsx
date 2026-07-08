@@ -11,6 +11,8 @@ import {
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { createVariantChannels } from "@dashboard/channels/utils";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -37,9 +39,9 @@ import {
   mapFormsetStockToStockInput,
 } from "@dashboard/products/utils/data";
 import { handleAssignMedia } from "@dashboard/products/utils/handlers";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -48,11 +50,11 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
-import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
+import { ProductVariantDeleteDialog } from "../../components/ProductVariantDeleteDialog/ProductVariantDeleteDialog";
 import { ProductVariantMetadataDialog } from "../../components/ProductVariantMetadataDialog/ProductVariantMetadataDialog";
 import { type ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import { ProductVariantPage } from "../../components/ProductVariantPage/ProductVariantPage";
@@ -234,6 +236,12 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     params.action === "assign-attribute-value" && params.id
       ? variant?.nonSelectionAttributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -249,20 +257,12 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
-  });
+  } = useReferenceCategorySearch(refAttr);
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  } = useReferenceCollectionSearch(refAttr);
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
@@ -274,6 +274,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchCategoriesOpts.refetch,
     refetchCollections: searchCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -353,6 +354,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onCloseDialog={() => navigate(productVariantEditUrl(variantId))}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
       <ProductVariantMetadataDialog
         open={params.action === "view-metadata" && !!variant}

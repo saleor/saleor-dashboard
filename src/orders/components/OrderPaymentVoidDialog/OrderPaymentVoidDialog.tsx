@@ -4,13 +4,15 @@ import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type OrderErrorFragment } from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { orderPaymentVoidDialogMessages } from "./messages";
 
 interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -22,40 +24,38 @@ interface OrderPaymentVoidDialogProps {
 
 const OrderPaymentVoidDialog = ({
   confirmButtonState,
-  errors,
+  errors: apiErrors,
   open,
   onConfirm,
   onClose,
 }: OrderPaymentVoidDialogProps) => {
   const intl = useIntl();
+  const errors = useModalDialogErrors(apiErrors, open);
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
-          <FormattedMessage id="KszPFx" defaultMessage="Void Payment" description="dialog header" />
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={<FormattedMessage {...orderPaymentVoidDialogMessages.description} />}
+        >
+          <FormattedMessage {...orderPaymentVoidDialogMessages.title} />
         </DashboardModal.Header>
 
-        <Text>
-          <FormattedMessage
-            id="euRfu+"
-            defaultMessage="Are you sure you want to void this payment?"
-          />
-        </Text>
         {errors.length > 0 && (
-          <>
-            <FormSpacer />
-            {errors.map((err, index) => (
-              <Text color="critical1" key={index}>
-                {getOrderErrorMessage(err, intl)}
-              </Text>
-            ))}
-          </>
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              {errors.map((err, index) => (
+                <Text display="block" color="critical1" key={index} data-test-id="dialog-error">
+                  {getOrderErrorMessage(err, intl)}
+                </Text>
+              ))}
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
         )}
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} />
-          <ConfirmButton transitionState={confirmButtonState} onClick={onConfirm}>
+          <ConfirmButton transitionState={confirmButtonState} onClick={onConfirm} variant="error">
             <FormattedMessage {...buttonMessages.confirm} />
           </ConfirmButton>
         </DashboardModal.Actions>

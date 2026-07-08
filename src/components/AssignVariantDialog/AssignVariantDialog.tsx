@@ -1,5 +1,4 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import {
   type Container,
@@ -7,8 +6,8 @@ import {
   type FetchMoreProps,
   type RelayToFlat,
 } from "@dashboard/types";
-import { FormattedMessage } from "react-intl";
 
+import { hasReferenceTypeConstraints } from "../AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AssignContainerDialogProps } from "../AssignContainerDialog";
 import {
   type InitialConstraints,
@@ -16,7 +15,6 @@ import {
 } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { AssignVariantDialogMulti } from "./AssignVariantDialogMulti";
 import { AssignVariantDialogSingle } from "./AssignVariantDialogSingle";
-import { messages } from "./messages";
 
 interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -37,38 +35,22 @@ interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
 
 const AssignVariantDialog = (props: AssignVariantDialogProps) => {
   const { selectionMode = "multiple", excludedFilters, initialConstraints, ...restProps } = props;
+  const skipFetchOnOpen = hasReferenceTypeConstraints(initialConstraints);
 
-  const { open, onClose } = props;
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  const dialogContent = (
-    <>
-      <DashboardModal.Header>
-        <FormattedMessage {...messages.assignVariantDialogHeader} />
-      </DashboardModal.Header>
-
-      {selectionMode === "single" ? (
-        <AssignVariantDialogSingle {...restProps} />
-      ) : (
-        <AssignVariantDialogMulti {...restProps} />
-      )}
-    </>
-  );
+  const dialogContent =
+    selectionMode === "single" ? (
+      <AssignVariantDialogSingle skipFetchOnOpen={skipFetchOnOpen} {...restProps} />
+    ) : (
+      <AssignVariantDialogMulti skipFetchOnOpen={skipFetchOnOpen} {...restProps} />
+    );
 
   return (
-    <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
-        <ModalProductFilterProvider
-          excludedFilters={excludedFilters}
-          initialConstraints={initialConstraints}
-        >
-          {dialogContent}
-        </ModalProductFilterProvider>
-      </DashboardModal.Content>
-    </DashboardModal>
+    <ModalProductFilterProvider
+      excludedFilters={excludedFilters}
+      initialConstraints={initialConstraints}
+    >
+      {dialogContent}
+    </ModalProductFilterProvider>
   );
 };
 

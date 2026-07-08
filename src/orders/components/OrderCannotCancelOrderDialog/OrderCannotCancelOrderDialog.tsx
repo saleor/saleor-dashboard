@@ -4,27 +4,26 @@ import { type DialogProps } from "@dashboard/types";
 import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-const OrderCannotCancelOrderDialog = ({ open, onClose }: DialogProps) => {
+import { orderCannotCancelOrderDialogMessages as messages } from "./messages";
+
+export const OrderCannotCancelOrderDialog = ({ open, onClose }: DialogProps) => {
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
-          <FormattedMessage
-            id="NhQboB"
-            defaultMessage="Saleor couldn’t cancel order"
-            description="dialog header"
-          />
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header data-test-id="dialog-title">
+          <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 
-        <Text>
-          <FormattedMessage
-            id="b+jcaN"
-            defaultMessage="There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
-          />
-        </Text>
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Text>
+              <FormattedMessage {...messages.description} />
+            </Text>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
-          <Button variant="error" onClick={onClose}>
+          <Button variant="secondary" onClick={onClose} data-test-id="confirm">
             <FormattedMessage {...buttonMessages.ok} />
           </Button>
         </DashboardModal.Actions>
@@ -34,4 +33,3 @@ const OrderCannotCancelOrderDialog = ({ open, onClose }: DialogProps) => {
 };
 
 OrderCannotCancelOrderDialog.displayName = "OrderCannotCancelOrderDialog";
-export default OrderCannotCancelOrderDialog;

@@ -193,11 +193,13 @@ const VoucherCreatePage = ({
     });
   };
 
-  const handleDeleteVoucherCodes = async () => {
+  const handleDeleteVoucherCodes = async (): Promise<boolean> => {
     clearRowSelection();
     set({
       codes: data.codes.filter(({ code }) => !selectedRowIds.includes(code)),
     });
+
+    return true;
   };
 
   const handleGenerateCustomCode = (code: string) => {

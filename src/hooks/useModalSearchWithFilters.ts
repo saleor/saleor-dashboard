@@ -28,6 +28,12 @@ export interface UseModalSearchWithFiltersOptions<TFilterVariables> {
    * @default ""
    */
   initialQuery?: string;
+  /**
+   * Skip the fetch triggered when the modal opens. Use when the parent view
+   * already issued a constrained search for reference attributes.
+   * @default false
+   */
+  skipFetchOnOpen?: boolean;
 }
 
 export interface UseModalSearchWithFiltersResult {
@@ -75,6 +81,7 @@ export function useModalSearchWithFilters<TFilterVariables>({
   onFetch,
   debounceMs = 200,
   initialQuery = "",
+  skipFetchOnOpen = false,
 }: UseModalSearchWithFiltersOptions<TFilterVariables>): UseModalSearchWithFiltersResult {
   const [query, setQuery] = useState(initialQuery);
 
@@ -83,8 +90,19 @@ export function useModalSearchWithFilters<TFilterVariables>({
 
   // Store current values in ref for debounced function to read latest values
   const searchParamsRef = useRef({ filterVariables, query });
+  const skipOpenFetchesRemainingRef = useRef(0);
 
   searchParamsRef.current = { filterVariables, query };
+
+  const consumeSkipOpenFetch = (): boolean => {
+    if (skipOpenFetchesRemainingRef.current <= 0) {
+      return false;
+    }
+
+    skipOpenFetchesRemainingRef.current -= 1;
+
+    return true;
+  };
 
   // Debounced search trigger - reads current values from ref
   const debouncedSearch = useDebounce(() => {
@@ -93,18 +111,43 @@ export function useModalSearchWithFilters<TFilterVariables>({
     onFetch?.(filterVariables, query);
   }, debounceMs);
 
+  useEffect(() => {
+    if (!open) {
+      skipOpenFetchesRemainingRef.current = 0;
+
+      return;
+    }
+
+    if (skipFetchOnOpen) {
+      // Both open effects (immediate filter fetch + debounced query fetch) are skipped once.
+      skipOpenFetchesRemainingRef.current = 2;
+    }
+  }, [open, skipFetchOnOpen]);
+
   // Trigger debounced search when query changes
   useEffect(() => {
-    if (open) {
-      debouncedSearch();
+    if (!open) {
+      return;
     }
+
+    if (consumeSkipOpenFetch()) {
+      return;
+    }
+
+    debouncedSearch();
   }, [query, open]);
 
   // Trigger immediate search when filter variables change (user saved filters)
   useEffect(() => {
-    if (open) {
-      onFetch?.(filterVariables, query);
+    if (!open) {
+      return;
     }
+
+    if (consumeSkipOpenFetch()) {
+      return;
+    }
+
+    onFetch?.(filterVariables, query);
   }, [filterVariablesKey, open]);
 
   const onQueryChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {

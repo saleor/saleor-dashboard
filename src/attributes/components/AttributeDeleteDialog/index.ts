@@ -1,2 +1,2 @@
-export { default } from "./AttributeDeleteDialog";
+export { AttributeDeleteDialog } from "./AttributeDeleteDialog";
 export * from "./AttributeDeleteDialog";

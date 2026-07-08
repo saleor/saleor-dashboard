@@ -1,17 +1,9 @@
 import {
-  AssignReferenceTypesDialog,
-  type ReferenceTypes,
-} from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
-import {
   AttributeAssignedTypesCard,
   type AttributeAssignedTypesCardProps,
 } from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
-import {
-  type AttributeAddUrlQueryParams,
-  attributeListPath,
-  type AttributeUrlQueryParams,
-} from "@dashboard/attributes/urls";
+import { attributeListPath } from "@dashboard/attributes/urls";
 import {
   getAttributePageInitialForm,
   isAttributeUpdateFormPristine,
@@ -81,8 +73,7 @@ function AttributePageDirtyStateSync({
   // Derive the exit-dialog dirty flag from the pristine comparison instead of
   // marking it imperatively. Running it in an effect (after render/navigation)
   // is important: marking the form dirty synchronously inside a handler that
-  // also navigates (e.g. closing the assign-reference-types modal) would make
-  // the exit-form guard block that same-page navigation.
+  // also navigates would make the exit-form guard block that same-page navigation.
   useEffect(() => {
     if (!attribute) {
       return;
@@ -101,7 +92,6 @@ interface AttributePageProps {
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   values?: NonNullable<AttributeDetailsQuery["attribute"]>["choices"] | undefined;
-  params: AttributeAddUrlQueryParams | AttributeUrlQueryParams;
   onDelete: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
@@ -109,8 +99,6 @@ interface AttributePageProps {
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
-  onOpenReferenceTypes: () => void;
-  onCloseAssignReferenceTypes: () => void;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
   pageInfo: {
@@ -148,7 +136,6 @@ const AttributePage = ({
   errors: apiErrors,
   saveButtonBarState,
   values,
-  params,
   onDelete,
   onShowMetadata,
   onSubmit,
@@ -156,8 +143,6 @@ const AttributePage = ({
   onValueDelete,
   onValueReorder,
   onValueUpdate,
-  onOpenReferenceTypes,
-  onCloseAssignReferenceTypes,
   settings,
   onUpdateListSettings,
   pageInfo,
@@ -246,6 +231,11 @@ const AttributePage = ({
           activeRefSearch.loadMore,
         );
 
+        const referenceTypeOptions = (referenceTypes ?? []).map(type => ({
+          label: type.name,
+          value: type.id,
+        }));
+
         // Clear reference types in case entityType changes, as it may affect available options
         const handleChange = (event: ChangeEvent) => {
           const fieldName = event.target?.name;
@@ -256,24 +246,6 @@ const AttributePage = ({
           }
 
           change(event);
-        };
-        const setReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
-          const toAdd = selected
-            .map(ref => ({ value: ref.id, label: ref.name }))
-            .filter(
-              newRef =>
-                !data.referenceTypes.some(existingRef => existingRef.value === newRef.value),
-            );
-          const mergedReferenceTypes = [...data.referenceTypes, ...toAdd];
-
-          // Dirty state is derived from the form data via AttributePageDirtyStateSync,
-          // so we must not mark it dirty synchronously here: closing the modal navigates
-          // and the exit-form guard would block that navigation if the form were already dirty.
-          set({ referenceTypes: mergedReferenceTypes });
-          onCloseAssignReferenceTypes();
-        };
-        const handleRemoveReferenceType = (id: string) => {
-          set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
         };
         const showReferenceTypes = data.entityType
           ? REFERENCE_ATTRIBUTE_TYPES.includes(data.inputType) &&
@@ -356,10 +328,14 @@ const AttributePage = ({
                 <CardSpacer />
                 {showReferenceTypes && (
                   <AttributeReferenceTypesSection
-                    selectedTypes={data.referenceTypes}
                     disabled={disabled}
-                    onAssignClick={onOpenReferenceTypes}
-                    onRemoveType={handleRemoveReferenceType}
+                    entityType={data.entityType ?? undefined}
+                    fetchMore={fetchMoreReferenceTypes}
+                    fetchOptions={activeRefSearch.search}
+                    loading={Boolean(fetchMoreReferenceTypes?.loading)}
+                    onChange={event => set({ referenceTypes: event.target.value })}
+                    options={referenceTypeOptions}
+                    value={data.referenceTypes}
                   />
                 )}
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
@@ -417,19 +393,6 @@ const AttributePage = ({
                 />
               </Savebar>
             </DetailPageLayout>
-            <AssignReferenceTypesDialog
-              open={params.action === "assign-reference-types"}
-              confirmButtonState="default"
-              onClose={onCloseAssignReferenceTypes}
-              loading={Boolean(fetchMoreReferenceTypes?.loading)}
-              selectedReferenceTypesIds={data.referenceTypes.map(ref => ref.value)}
-              referenceTypes={(referenceTypes ?? []) as ReferenceTypes}
-              hasMore={fetchMoreReferenceTypes?.hasMore}
-              onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
-              onFetch={activeRefSearch.search}
-              onSubmit={setReferenceTypes}
-              entityType={data.entityType}
-            />
             {children(data)}
           </>
         );

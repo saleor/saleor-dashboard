@@ -1,4 +1,3 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
 import BackButton from "@dashboard/components/BackButton";
 import { Callout } from "@dashboard/components/Callout/Callout";
 import {
@@ -321,164 +320,167 @@ export const ProductVariantGenerator = ({
   return (
     <DashboardModal open={open} onChange={handleClose}>
       <DashboardModal.Content size="md">
-        <Box display="flex" flexDirection="column" gap={2}>
-          <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
-          <Text size={2} color="default2">
-            {intl.formatMessage(messages.subtitle)}
-          </Text>
-        </Box>
+        <DashboardModal.ContextHeader description={intl.formatMessage(messages.subtitle)}>
+          {intl.formatMessage(messages.title)}
+        </DashboardModal.ContextHeader>
 
-        <Box className={styles.body}>
-          {!hasVariantAttributes ? (
-            <Text className={styles.noAttributes}>{intl.formatMessage(messages.noAttributes)}</Text>
-          ) : (
-            <>
-              {/* Tab bar - only show if there are required attributes */}
-              {hasRequiredTab && (
-                <FilterTabs currentTab={activeTab}>
-                  <FilterTab
-                    label={intl.formatMessage(messages.tabSelection)}
-                    onClick={() => setActiveTab(TAB_SELECTION)}
-                  />
-                  <FilterTab
-                    label={intl.formatMessage(messages.tabRequired)}
-                    onClick={() => setActiveTab(TAB_REQUIRED)}
-                  />
-                </FilterTabs>
-              )}
-
-              {/* Tab content */}
-              {activeTab === TAB_SELECTION && (
-                <div className={styles.attributesSectionWrapper}>
-                  <Box
-                    className={styles.attributesSection}
-                    borderStyle="solid"
-                    borderColor="default1"
-                    borderWidth={1}
-                    borderRadius={4}
-                  >
-                    {attributes.map(attr => (
-                      <AttributeValueChips
-                        key={attr.id}
-                        attribute={attr}
-                        selectedIds={selections[attr.id] ?? new Set()}
-                        onToggleValue={valueId => toggleValue(attr.id, valueId)}
-                        onSelectAll={() => selectAllValues(attr.id)}
-                        onDeselectAll={() => deselectAllValues(attr.id)}
-                        onSetSelected={valueIds => setSelectedValues(attr.id, valueIds)}
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box className={styles.content}>
+              {!hasVariantAttributes ? (
+                <Text className={styles.noAttributes}>
+                  {intl.formatMessage(messages.noAttributes)}
+                </Text>
+              ) : (
+                <>
+                  {/* Tab bar - only show if there are required attributes */}
+                  {hasRequiredTab && (
+                    <FilterTabs currentTab={activeTab} flush>
+                      <FilterTab
+                        label={intl.formatMessage(messages.tabSelection)}
+                        onClick={() => setActiveTab(TAB_SELECTION)}
                       />
-                    ))}
-                  </Box>
-                </div>
-              )}
+                      <FilterTab
+                        label={intl.formatMessage(messages.tabRequired)}
+                        onClick={() => setActiveTab(TAB_REQUIRED)}
+                      />
+                    </FilterTabs>
+                  )}
 
-              {activeTab === TAB_REQUIRED && hasRequiredTab && (
-                <RequiredAttributesSection
-                  attributes={supportedRequiredAttributes}
-                  values={nonSelectionValues}
-                  errors={attributeErrors}
-                  onChange={handleNonSelectionAttributeChange}
-                  onAttributeValuesSearch={onAttributeValuesSearch}
-                />
-              )}
-
-              {/* Defaults row with view toggle - always visible */}
-              <Box className={styles.controlsRow}>
-                <DefaultsSection
-                  defaults={defaults}
-                  onChange={setDefaults}
-                  skuPreviewExample={skuPreviewExample}
-                />
-                {previews.length > 0 && (
-                  <Box className={styles.viewToggle}>
-                    <Tooltip open={canShowMatrix ? false : undefined}>
-                      <Tooltip.Trigger>
-                        <Button
-                          variant={viewMode === "grid" ? "primary" : "secondary"}
-                          size="small"
-                          onClick={() => setViewMode("grid")}
-                          disabled={!canShowMatrix}
-                          aria-label={intl.formatMessage(messages.gridView)}
-                          data-test-id="view-toggle-grid"
-                        >
-                          <LayoutGrid
-                            size={iconSize.small}
-                            strokeWidth={iconStrokeWidthBySize.small}
-                          />
-                        </Button>
-                      </Tooltip.Trigger>
-                      <Tooltip.Content side="bottom">
-                        <Tooltip.Arrow />
-                        {intl.formatMessage(messages.matrixRequiresTwoAttributes)}
-                      </Tooltip.Content>
-                    </Tooltip>
-                    <Button
-                      variant={viewMode === "list" ? "primary" : "secondary"}
-                      size="small"
-                      onClick={() => setViewMode("list")}
-                      aria-label={intl.formatMessage(messages.listView)}
-                      data-test-id="view-toggle-list"
+                  {/* Tab content */}
+                  {activeTab === TAB_SELECTION && (
+                    <Box
+                      className={styles.attributesSection}
+                      borderStyle="solid"
+                      borderColor="default1"
+                      borderWidth={1}
+                      borderRadius={4}
                     >
-                      <List size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                    </Button>
+                      {attributes.map(attr => (
+                        <AttributeValueChips
+                          key={attr.id}
+                          attribute={attr}
+                          selectedIds={selections[attr.id] ?? new Set()}
+                          onToggleValue={valueId => toggleValue(attr.id, valueId)}
+                          onSelectAll={() => selectAllValues(attr.id)}
+                          onDeselectAll={() => deselectAllValues(attr.id)}
+                          onSetSelected={valueIds => setSelectedValues(attr.id, valueIds)}
+                        />
+                      ))}
+                    </Box>
+                  )}
+
+                  {activeTab === TAB_REQUIRED && hasRequiredTab && (
+                    <RequiredAttributesSection
+                      attributes={supportedRequiredAttributes}
+                      values={nonSelectionValues}
+                      errors={attributeErrors}
+                      onChange={handleNonSelectionAttributeChange}
+                      onAttributeValuesSearch={onAttributeValuesSearch}
+                    />
+                  )}
+
+                  {/* Defaults row with view toggle - always visible */}
+                  <Box className={styles.controlsRow}>
+                    <DefaultsSection
+                      defaults={defaults}
+                      onChange={setDefaults}
+                      skuPreviewExample={skuPreviewExample}
+                    />
+                    {previews.length > 0 && (
+                      <Box className={styles.viewToggle}>
+                        <Tooltip open={canShowMatrix ? false : undefined}>
+                          <Tooltip.Trigger>
+                            <Button
+                              variant={viewMode === "grid" ? "primary" : "secondary"}
+                              size="small"
+                              onClick={() => setViewMode("grid")}
+                              disabled={!canShowMatrix}
+                              aria-label={intl.formatMessage(messages.gridView)}
+                              data-test-id="view-toggle-grid"
+                            >
+                              <LayoutGrid
+                                size={iconSize.small}
+                                strokeWidth={iconStrokeWidthBySize.small}
+                              />
+                            </Button>
+                          </Tooltip.Trigger>
+                          <Tooltip.Content side="bottom">
+                            <Tooltip.Arrow />
+                            {intl.formatMessage(messages.matrixRequiresTwoAttributes)}
+                          </Tooltip.Content>
+                        </Tooltip>
+                        <Button
+                          variant={viewMode === "list" ? "primary" : "secondary"}
+                          size="small"
+                          onClick={() => setViewMode("list")}
+                          aria-label={intl.formatMessage(messages.listView)}
+                          data-test-id="view-toggle-list"
+                        >
+                          <List size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        </Button>
+                      </Box>
+                    )}
                   </Box>
-                )}
-              </Box>
 
-              {/* Preview - always visible */}
-              <Box className={styles.previewContent}>
-                {viewMode === "grid" && canShowMatrix ? (
-                  <VariantMatrix
-                    attributes={attributes}
-                    selections={selections}
-                    existingCombinations={existingCombinations}
-                  />
-                ) : (
-                  <VariantPreviewList previews={previews} />
-                )}
-              </Box>
+                  {/* Preview - always visible */}
+                  <Box className={styles.previewSection}>
+                    {viewMode === "grid" && canShowMatrix ? (
+                      <VariantMatrix
+                        attributes={attributes}
+                        selections={selections}
+                        existingCombinations={existingCombinations}
+                      />
+                    ) : (
+                      <VariantPreviewList previews={previews} />
+                    )}
+                  </Box>
 
-              {/* Warnings */}
-              {(existingCount > 0 || isTruncated || isOverLimit) && (
-                <Box className={styles.callouts}>
-                  {existingCount > 0 && (
-                    <Callout
-                      type="warning"
-                      title={
-                        <Text size={2}>
-                          {intl.formatMessage(messages.existingSkipped, { count: existingCount })}
-                        </Text>
-                      }
-                    />
+                  {/* Warnings */}
+                  {(existingCount > 0 || isTruncated || isOverLimit) && (
+                    <Box className={styles.callouts}>
+                      {existingCount > 0 && (
+                        <Callout
+                          type="warning"
+                          title={
+                            <Text size={2}>
+                              {intl.formatMessage(messages.existingSkipped, {
+                                count: existingCount,
+                              })}
+                            </Text>
+                          }
+                        />
+                      )}
+                      {isTruncated && (
+                        <Callout
+                          type="warning"
+                          title={
+                            <Text size={2}>
+                              {intl.formatMessage(messages.previewTruncated, {
+                                total: totalCount.toLocaleString(),
+                                limit: VARIANT_LIMIT,
+                              })}
+                            </Text>
+                          }
+                        />
+                      )}
+                      {isOverLimit && (
+                        <Callout
+                          type="error"
+                          title={
+                            <Text size={2}>
+                              {intl.formatMessage(messages.limitReached, { limit: VARIANT_LIMIT })}
+                            </Text>
+                          }
+                        />
+                      )}
+                    </Box>
                   )}
-                  {isTruncated && (
-                    <Callout
-                      type="warning"
-                      title={
-                        <Text size={2}>
-                          {intl.formatMessage(messages.previewTruncated, {
-                            total: totalCount.toLocaleString(),
-                            limit: VARIANT_LIMIT,
-                          })}
-                        </Text>
-                      }
-                    />
-                  )}
-                  {isOverLimit && (
-                    <Callout
-                      type="error"
-                      title={
-                        <Text size={2}>
-                          {intl.formatMessage(messages.limitReached, { limit: VARIANT_LIMIT })}
-                        </Text>
-                      }
-                    />
-                  )}
-                </Box>
+                </>
               )}
-            </>
-          )}
-        </Box>
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
           <BackButton onClick={handleClose} disabled={confirmState === "loading"}>
@@ -505,29 +507,48 @@ export const ProductVariantGenerator = ({
         </DashboardModal.Actions>
       </DashboardModal.Content>
 
-      {/* Warning dialog for missing SKU/stock */}
-      <ActionDialog
+      <DashboardModal
+        onChange={() => setShowMissingDefaultsWarning(false)}
         open={showMissingDefaultsWarning}
-        onClose={() => setShowMissingDefaultsWarning(false)}
-        onConfirm={proceedWithGeneration}
-        title={intl.formatMessage(messages.missingDefaultsTitle)}
-        confirmButtonLabel={intl.formatMessage(buttonMessages.continue)}
-        confirmButtonState="default"
       >
-        <Text>{intl.formatMessage(messages.missingDefaultsDescription)}</Text>
-      </ActionDialog>
+        <DashboardModal.Content size="xs">
+          <DashboardModal.Header subtitle={intl.formatMessage(messages.missingDefaultsDescription)}>
+            {intl.formatMessage(messages.missingDefaultsTitle)}
+          </DashboardModal.Header>
 
-      {/* Confirmation dialog for large batches */}
-      <ActionDialog
-        open={showConfirmation}
-        onClose={() => setShowConfirmation(false)}
-        onConfirm={executeGenerate}
-        confirmButtonState={confirmState}
-        title={intl.formatMessage(messages.confirmTitle, { count: newVariantsCount })}
-        confirmButtonLabel={intl.formatMessage(buttonMessages.continue)}
-      >
-        <Text>{intl.formatMessage(messages.confirmDescription, { count: newVariantsCount })}</Text>
-      </ActionDialog>
+          <DashboardModal.Actions>
+            <BackButton onClick={() => setShowMissingDefaultsWarning(false)} />
+            <ConfirmButton
+              data-test-id="submit"
+              onClick={proceedWithGeneration}
+              transitionState="default"
+            >
+              {intl.formatMessage(buttonMessages.continue)}
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
+
+      <DashboardModal onChange={() => setShowConfirmation(false)} open={showConfirmation}>
+        <DashboardModal.Content size="xs">
+          <DashboardModal.Header
+            subtitle={intl.formatMessage(messages.confirmDescription, { count: newVariantsCount })}
+          >
+            {intl.formatMessage(messages.confirmTitle, { count: newVariantsCount })}
+          </DashboardModal.Header>
+
+          <DashboardModal.Actions>
+            <BackButton onClick={() => setShowConfirmation(false)} />
+            <ConfirmButton
+              data-test-id="submit"
+              onClick={executeGenerate}
+              transitionState={confirmState}
+            >
+              {intl.formatMessage(buttonMessages.continue)}
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
     </DashboardModal>
   );
 };

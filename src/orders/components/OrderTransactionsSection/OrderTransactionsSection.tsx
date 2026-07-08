@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CardSpacer from "@dashboard/components/CardSpacer";
+import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import {
   type OrderDetailsFragment,
@@ -50,7 +50,7 @@ export const OrderTransactionsSection = ({
       <OrderDetailsRefundTable orderId={order?.id} order={order} onRefundAdd={onRefundAdd} />
       <CardSpacer />
 
-      <Box paddingTop={6}>
+      <Box paddingBottom={6}>
         <Box
           as="header"
           display="flex"

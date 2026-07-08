@@ -80,7 +80,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     },
   });
 
-  const handleDeleteVoucherCodes = async () => {
+  const handleDeleteVoucherCodes = async (): Promise<boolean> => {
     const draftCodes: string[] = [];
     const serverCodeIds: string[] = [];
 
@@ -115,7 +115,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
           }),
         });
 
-        return;
+        return false;
       }
 
       serverDeletedCount = result.data?.voucherCodeBulkDelete?.count ?? 0;
@@ -136,6 +136,8 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
         ),
       });
     }
+
+    return true;
   };
 
   const handleUpdateVoucherCodesListSettings = (

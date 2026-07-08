@@ -15,6 +15,14 @@ import { type ExitFormDialogData, type FormData, type FormsData } from "./types"
 // saving" prompt.
 const DIALOG_QUERY_PARAMS = ["action", "id", "ids", "channelId"];
 
+// ConditionalFilter (list pages and modal pickers) serializes filter tokens
+// under numeric query keys (?0=...&1=...). Filter state is never part of a
+// form, so changing it must not trigger the exit prompt either.
+const isFilterQueryKey = (key: string): boolean => /^\d+$/.test(key);
+
+const isTransientQueryKey = (key: string): boolean =>
+  DIALOG_QUERY_PARAMS.includes(key) || isFilterQueryKey(key);
+
 // Stringifies with keys sorted so two equivalent query objects with different
 // key ordering produce the same string and compare equal.
 const sortedStringify = (params: Record<string, unknown>): string => {
@@ -35,7 +43,7 @@ const splitDialogParams = (search: string) => {
   const rest: Record<string, unknown> = {};
 
   Object.keys(parsed).forEach(key => {
-    if (DIALOG_QUERY_PARAMS.includes(key)) {
+    if (isTransientQueryKey(key)) {
       dialog[key] = parsed[key];
     } else {
       rest[key] = parsed[key];

@@ -6,6 +6,21 @@ export const messages = defineMessages({
     defaultMessage: "Reference Types",
     description: "section title for reference types selector",
   },
+  productTypesLabel: {
+    id: "2sDBzg",
+    defaultMessage: "Product types",
+    description: "reference types multiselect label for product entity",
+  },
+  modelTypesLabel: {
+    id: "oKUPKP",
+    defaultMessage: "Model types",
+    description: "reference types multiselect label for model entity",
+  },
+  searchPlaceholder: {
+    id: "A9bJg6",
+    defaultMessage: "Search by name…",
+    description: "reference types multiselect search placeholder",
+  },
   referenceTypesHelp: {
     id: "COWJSG",
     defaultMessage:

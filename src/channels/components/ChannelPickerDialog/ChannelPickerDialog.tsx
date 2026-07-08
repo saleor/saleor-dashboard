@@ -1,10 +1,15 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import useChoiceSearch from "@dashboard/hooks/useChoiceSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { buttonMessages } from "@dashboard/intl";
 import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
@@ -17,7 +22,7 @@ interface ChannelPickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ChannelPickerDialog = ({
+export const ChannelPickerDialog = ({
   channelsChoices = [],
   confirmButtonState,
   defaultChoice,
@@ -28,6 +33,7 @@ const ChannelPickerDialog = ({
   const intl = useIntl();
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const { result, search } = useChoiceSearch(channelsChoices);
+  const isSubmitting = confirmButtonState === "loading";
 
   useModalDialogOpen(open, {
     onClose: () => {
@@ -39,28 +45,50 @@ const ChannelPickerDialog = ({
     },
   });
 
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={() => onConfirm(selectedOption?.value ?? "")}
-      title={intl.formatMessage(messages.selectChannel)}
-      size="xs"
-    >
-      <DynamicCombobox
-        data-test-id="channel-autocomplete"
-        label={intl.formatMessage(messages.channelName)}
-        options={result}
-        onInputValueChange={search}
-        name="channel-autocomplete"
-        size="small"
-        value={selectedOption}
-        onChange={setSelectedOption}
-      />
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="picker">
+        <DashboardModal.PickerHeader>
+          <FormattedMessage {...messages.selectChannel} />
+        </DashboardModal.PickerHeader>
+
+        <DashboardModal.Body fill>
+          <DashboardModal.Inset>
+            <DynamicCombobox
+              data-test-id="channel-autocomplete"
+              label={intl.formatMessage(messages.channelName)}
+              options={result}
+              onInputValueChange={search}
+              name="channel-autocomplete"
+              size="small"
+              value={selectedOption}
+              onChange={setSelectedOption}
+            />
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={() => onConfirm(selectedOption?.value ?? "")}
+            transitionState={confirmButtonState}
+          >
+            <FormattedMessage {...buttonMessages.confirm} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 ChannelPickerDialog.displayName = "ChannelPickerDialog";
-export default ChannelPickerDialog;

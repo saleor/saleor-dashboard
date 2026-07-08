@@ -1,5 +1,7 @@
 import { type AddressInput, type AddressTypeEnum } from "@dashboard/graphql";
 
+export const ORDER_CUSTOMER_ADDRESSES_EDIT_FORM_ID = "order-customer-addresses-edit-form";
+
 export interface OrderCustomerSearchAddressState {
   open: boolean;
   type: AddressTypeEnum;

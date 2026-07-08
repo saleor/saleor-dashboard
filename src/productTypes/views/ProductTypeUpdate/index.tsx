@@ -1,18 +1,29 @@
 // @ts-strict-ignore
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
-import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
-import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
+import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
 import { Button } from "@dashboard/components/Button";
+import {
+  type AttributeCreateSubmitData,
+  CreateAttributeDialog,
+} from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
+import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type AssignProductAttributeMutation,
+  AttributeErrorCode,
+  type AttributeErrorFragment,
+  AttributeTypeEnum,
   ProductAttributeType,
   type ProductTypeAttributeReorderMutation,
   type ProductTypeDeleteMutation,
   type UnassignProductAttributeMutation,
+  useAssignProductAttributeMutation,
+  useAttributeCreateMutation,
   useProductAttributeAssignmentUpdateMutation,
   useProductTypeDetailsQuery,
   useProductTypeUpdateMutation,
@@ -29,6 +40,8 @@ import useProductTypeOperations from "@dashboard/productTypes/hooks/useProductTy
 import useAvailableProductAttributeSearch from "@dashboard/searches/useAvailableProductAttributeSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type ReorderEvent } from "@dashboard/types";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useState } from "react";
@@ -37,6 +50,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ProductTypeDetailsPage, {
   type ProductTypeForm,
 } from "../../components/ProductTypeDetailsPage";
+import { executeProductTypeAttributeCreate } from "../../handlers/productTypeAttributeCreateHandler";
 import { productTypeListUrl, productTypeUrl, type ProductTypeUrlQueryParams } from "../../urls";
 
 interface ProductTypeUpdateProps {
@@ -99,6 +113,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+  const [assignCreatedAttribute, assignCreatedAttributeOpts] = useAssignProductAttributeMutation();
+  const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation();
   const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<string[]>([]);
   const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
     const operations = formData.variantAttributes.map(variantAttribute => ({
@@ -145,6 +161,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     typeBaseData: productType ? [productType] : undefined,
   });
   const closeModal = () => navigate(productTypeUrl(id), { replace: true });
+  const createAttributeAssignmentType = ProductAttributeType[params.type];
   const handleAttributeAssignSuccess = (data: AssignProductAttributeMutation) => {
     if (data.productAttributeAssign.errors.length === 0) {
       notify({
@@ -228,6 +245,61 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
 
     assignAttributesActions.clearSelectedItems();
   };
+  const handleCreateAttribute = async ({
+    formData,
+    values,
+  }: AttributeCreateSubmitData): Promise<AttributeErrorFragment[]> => {
+    if (!createAttributeAssignmentType) {
+      return [
+        {
+          __typename: "AttributeError",
+          code: AttributeErrorCode.INVALID,
+          field: null,
+          message: intl.formatMessage(createAttributeMessages.createFailed),
+        },
+      ];
+    }
+
+    const submitWithMetadata = createMetadataCreateHandler(
+      async (data: AttributePageFormData) => {
+        const outcome = await executeProductTypeAttributeCreate(
+          {
+            productTypeId: id,
+            productAttributeType: createAttributeAssignmentType,
+            formData: data,
+            values,
+            createFailedMessage: intl.formatMessage(createAttributeMessages.createFailed),
+            formatAssignErrors: errors =>
+              errors.map(error => getProductErrorMessage(error, intl)).join(" "),
+          },
+          {
+            attributeCreate,
+            assignCreatedAttribute,
+          },
+        );
+
+        if (outcome.assignErrorMessage) {
+          notify({
+            status: "error",
+            text: outcome.assignErrorMessage,
+          });
+        }
+
+        return outcome;
+      },
+      updateMetadata,
+      updatePrivateMetadata,
+      () => {
+        notify({
+          status: "success",
+          text: intl.formatMessage(createAttributeMessages.createdAndAssigned),
+        });
+        closeModal();
+      },
+    );
+
+    return (await submitWithMetadata(formData)) as AttributeErrorFragment[];
+  };
   const handleAttributeUnassign = () =>
     unassignAttribute.mutate({
       id,
@@ -282,6 +354,14 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           navigate(
             productTypeUrl(id, {
               action: "assign-attribute",
+              type,
+            }),
+          )
+        }
+        onAttributeCreate={type =>
+          navigate(
+            productTypeUrl(id, {
+              action: "create-attribute",
               type,
             }),
           )
@@ -384,6 +464,22 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
               key={key}
             />
           ))}
+          {productType && (
+            <CreateAttributeDialog
+              attributeType={AttributeTypeEnum.PRODUCT_TYPE}
+              confirmButtonState={
+                attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
+                  ? "loading"
+                  : attributeCreateOpts.status
+              }
+              contextName={productType.name}
+              disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
+              errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
+              open={params.action === "create-attribute" && Boolean(createAttributeAssignmentType)}
+              onClose={closeModal}
+              onSubmit={handleCreateAttribute}
+            />
+          )}
           {productType && (
             <TypeDeleteWarningDialog
               {...productTypeDeleteData}

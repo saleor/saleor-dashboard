@@ -1,69 +1,29 @@
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
-import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
-import type * as React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { type ReactNode } from "react";
+import { defineMessages, FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    content: {
-      "& hr": {
-        left: -24,
-        position: "relative",
-        width: "calc(100% + 48px)",
-      },
-    },
-    contentTitle: {
-      margin: theme.spacing(1, 0),
-    },
-    dialog: {
-      marginBottom: -30,
-      marginTop: theme.spacing(2),
-    },
-    input: {
-      "& label": {
-        overflowX: "inherit",
-      },
-    },
-    notFound: {
-      paddingBottom: theme.spacing(2),
-    },
-    scrollArea: {
-      overflowY: "scroll",
-      overflowX: "hidden",
-      // overflowX can't be "visible" when overflowY is "scroll"
-      // workaround for visible button ripples:
-      marginLeft: -15,
-      paddingLeft: 15,
+import styles from "./ChannelsAvailabilityDialogWrapper.module.css";
 
-      marginBottom: theme.spacing(3),
-    },
-    text: {
-      marginBottom: 5,
-    },
-  }),
-  { name: "ChannelsAvailabilityContent" },
-);
-
-const messages = defineMessages({
+export const channelsAvailabilityDialogWrapperMessages = defineMessages({
   selectTitle: {
     id: "7scATx",
     defaultMessage: "Select channels you want for {contentType} to be available on",
     description: "select title",
   },
   selectAllChannelsLabel: {
-    id: "zR9Ozi",
-    defaultMessage: "Select All Channels",
+    id: "LvsFO1",
+    defaultMessage: "Select all channels",
     description: "select all channels label",
   },
-  channelsAlphabeticallyTitle: {
-    id: "/lBLBI",
-    defaultMessage: "Channels from A to Z",
-    description: "channels alphabetically title",
+  selectAllMatchingChannelsLabel: {
+    id: "hIhJpk",
+    defaultMessage: "Select all matching channels",
+    description: "select all channels label when channel search is active",
+  },
+  confirmCountedButton: {
+    id: "PbDaM4",
+    defaultMessage: "Confirm ({count, plural, one {# channel} other {# channels}})",
+    description: "confirm button with selected channel count",
   },
   notFoundTitle: {
     id: "PctLol",
@@ -74,81 +34,33 @@ const messages = defineMessages({
 
 interface ChannelsAvailabilityContentProps {
   contentType?: string;
-  toggleAll?: () => void;
-  children: React.ReactNode;
-  toggleAllLabel?: React.ReactNode;
-  query: string;
-  onQueryChange: (query: string) => void;
+  children: ReactNode;
   hasAnyChannelsToDisplay: boolean;
-  hasAllSelected: boolean;
 }
 
 const ChannelsAvailabilityContentWrapper = ({
   contentType = "",
-  toggleAll,
-  toggleAllLabel,
   children,
   hasAnyChannelsToDisplay,
-  query,
-  onQueryChange,
-  hasAllSelected,
 }: ChannelsAvailabilityContentProps) => {
-  const classes = useStyles({});
-  const intl = useIntl();
-  const searchText = intl.formatMessage({
-    id: "ybaLoZ",
-    defaultMessage: "Search through channels",
-  });
-
   return (
-    <div className={classes.content}>
+    <>
       {!!contentType && (
-        <Text className={classes.text} size={2} fontWeight="light">
-          <FormattedMessage {...messages.selectTitle} values={{ contentType }} />
+        <Text className={styles.contentType} size={2} fontWeight="light">
+          <FormattedMessage
+            {...channelsAvailabilityDialogWrapperMessages.selectTitle}
+            values={{ contentType }}
+          />
         </Text>
       )}
-      <TextField
-        name="query"
-        value={query}
-        className={classes.input}
-        onChange={e => onQueryChange(e.target.value)}
-        label={searchText}
-        placeholder={searchText}
-        fullWidth
-      />
-      <div className={classes.dialog}>
-        {!!toggleAll && (
-          <>
-            <ControlledCheckbox
-              checked={hasAllSelected}
-              name="allChannels"
-              label={
-                toggleAllLabel || (
-                  <Label text={intl.formatMessage(messages.selectAllChannelsLabel)} />
-                )
-              }
-              onChange={toggleAll}
-            />
-            <Hr />
-          </>
-        )}
-        <Text className={classes.contentTitle}>
-          <FormattedMessage {...messages.channelsAlphabeticallyTitle} />
-        </Text>
-        <div
-          className={clsx(classes.scrollArea, "scrollArea")}
-          data-test-id="manage-products-channels-availiability-list"
-        >
-          {hasAnyChannelsToDisplay ? (
-            children
-          ) : (
-            <div className={classes.notFound}>
-              <FormattedMessage {...messages.notFoundTitle} />
-            </div>
-          )}
+      {hasAnyChannelsToDisplay ? (
+        children
+      ) : (
+        <div className={styles.notFound}>
+          <FormattedMessage {...channelsAvailabilityDialogWrapperMessages.notFoundTitle} />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

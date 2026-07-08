@@ -1,9 +1,13 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import msgs from "./messages";
 
@@ -23,6 +27,7 @@ export const AppActivateDialog = ({
   onConfirm,
 }: AppActivateDialogProps) => {
   const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
   const isNameMissing = name === null || name === "";
   const getMainText = () => {
     if (isNameMissing) {
@@ -34,18 +39,34 @@ export const AppActivateDialog = ({
     });
   };
 
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <ActionDialog
-      confirmButtonLabel={intl.formatMessage(buttonMessages.activate)}
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={onConfirm}
-      title={intl.formatMessage(msgs.activateAppTitle)}
-      variant="default"
-    >
-      <Box data-test-id="dialog-content">{getMainText()}</Box>
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header subtitle={<Box data-test-id="dialog-content">{getMainText()}</Box>}>
+          <FormattedMessage {...msgs.activateAppTitle} />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+          >
+            <FormattedMessage {...buttonMessages.activate} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

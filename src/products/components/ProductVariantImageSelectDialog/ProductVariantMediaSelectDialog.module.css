@@ -1,0 +1,40 @@
+.grid {
+  display: grid;
+  gap: var(--mu-spacing-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tile {
+  aspect-ratio: 1;
+  background-color: var(--mu-colors-background-default1);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-radii-2);
+  cursor: pointer;
+  overflow: hidden;
+  padding: var(--mu-spacing-3);
+}
+
+.tileSelected {
+  border-color: var(--mu-colors-border-info1);
+  border-width: 2px;
+  padding: calc(var(--mu-spacing-3) - 1px);
+}
+
+.image {
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  width: 100%;
+}

@@ -15,7 +15,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
-import TaxCountryDialog from "../components/TaxCountryDialog";
+import { TaxCountryDialog } from "../components/TaxCountryDialog/TaxCountryDialog";
 import TaxCountriesPage from "../pages/TaxCountriesPage";
 import {
   taxCountriesListUrl,

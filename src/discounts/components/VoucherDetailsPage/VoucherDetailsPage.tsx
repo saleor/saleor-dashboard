@@ -131,7 +131,7 @@ interface VoucherDetailsPageProps
   onMultipleVoucherCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
   onCustomVoucherCodeGenerate: (code: string) => void;
   deleteVoucherCodesTransitionState: ConfirmButtonTransitionState;
-  onDeleteVoucherCodes: () => Promise<void>;
+  onDeleteVoucherCodes: () => Promise<boolean>;
   onVoucherCodesSettingsChange: UseListSettings["updateListSettings"];
   voucherCodesPagination: LocalPagination;
   voucherCodesSettings: UseListSettings["settings"];

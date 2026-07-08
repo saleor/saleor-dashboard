@@ -14,6 +14,11 @@ export const BulkDeleteButton = forwardRef<HTMLButtonElement, ProductListDeleteB
   ({ onClick, children, disabled }, ref) => {
     const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
+    const handleClick = (): void => {
+      setIsTooltipOpen(false);
+      onClick();
+    };
+
     return (
       <Tooltip open={isTooltipOpen}>
         <Tooltip.Trigger>
@@ -26,7 +31,7 @@ export const BulkDeleteButton = forwardRef<HTMLButtonElement, ProductListDeleteB
             onMouseLeave={() => {
               setIsTooltipOpen(false);
             }}
-            onClick={onClick}
+            onClick={handleClick}
             icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
             variant="secondary"
             data-test-id="bulk-delete-button"

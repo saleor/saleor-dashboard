@@ -11,7 +11,7 @@ import { getDataKey, parseEventData } from "./utils";
 
 export interface MetadataProps
   extends Omit<MetadataCardProps, "data" | "isPrivate">,
-    Omit<BoxProps, `on${string}` | "data"> {
+    Omit<BoxProps, `on${string}` | "data" | "marginTop"> {
   data: {
     metadata: MetadataInput[];
     privateMetadata: MetadataInput[] | undefined;

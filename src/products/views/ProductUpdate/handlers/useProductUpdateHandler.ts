@@ -24,9 +24,11 @@ import {
   useProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { getMutationErrors } from "@dashboard/misc";
 import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
-import { getProductErrorMessage } from "@dashboard/utils/errors";
+import {
+  getProductSubmitErrorNotificationMessages,
+  splitProductSubmitErrors,
+} from "@dashboard/products/utils/splitSubmitErrors";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -69,25 +71,18 @@ export function useProductUpdateHandler(
   const intl = useIntl();
   const notify = useNotifier();
   const [variantListErrors, setVariantListErrors] = useState<ProductVariantListError[]>([]);
+  const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
+  const [submitChannelsErrors, setSubmitChannelsErrors] = useState<
+    ProductChannelListingErrorFragment[]
+  >([]);
   const [called, setCalled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updateVariants] = useProductVariantBulkUpdateMutation();
   const [createVariants] = useProductVariantBulkCreateMutation();
   const [deleteVariants] = useProductVariantBulkDeleteMutation();
   const [uploadFile] = useFileUploadMutation();
-  const [updateProduct, updateProductOpts] = useProductUpdateMutation();
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({
-    onCompleted: data => {
-      if (data.productChannelListingUpdate.errors.length) {
-        data.productChannelListingUpdate.errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl),
-          }),
-        );
-      }
-    },
-  });
+  const [updateProduct] = useProductUpdateMutation();
+  const [updateChannels] = useProductChannelListingUpdateMutation();
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
   const sendMutations = async (
     data: ProductUpdateSubmitData,
@@ -109,7 +104,19 @@ export function useProductUpdateHandler(
     );
     const updateProductChannelsData = getProductChannelsUpdateVariables(product, data);
 
-    if (hasProductChannelsUpdate(updateProductChannelsData.input)) {
+    // Persist product fields (including category) before channel listing updates so
+    // publish validation sees the latest saved product state in the same submit.
+    const updateProductResult = await updateProduct({
+      variables: getProductUpdateVariables(product, data, uploadFilesResult),
+    });
+    const productUpdateErrors = updateProductResult?.data?.productUpdate?.errors ?? [];
+
+    errors = [...errors, ...productUpdateErrors];
+
+    if (
+      productUpdateErrors.length === 0 &&
+      hasProductChannelsUpdate(updateProductChannelsData.input)
+    ) {
       const updateChannelsResult = await updateChannels({
         variables: updateProductChannelsData,
       });
@@ -128,10 +135,6 @@ export function useProductUpdateHandler(
 
       errors = [...errors, ...deleteVaraintsResult.data.productVariantBulkDelete.errors];
     }
-
-    const updateProductResult = await updateProduct({
-      variables: getProductUpdateVariables(product, data, uploadFilesResult),
-    });
 
     if (data.variants.added.length > 0) {
       const createVariantsResults = await createVariants({
@@ -181,7 +184,6 @@ export function useProductUpdateHandler(
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
       ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-      ...(updateProductResult?.data?.productUpdate?.errors ?? []),
     ];
     setVariantListErrors(variantErrors);
 
@@ -194,6 +196,8 @@ export function useProductUpdateHandler(
 
     setCalled(true);
     setLoading(true);
+    setSubmitErrors([]);
+    setSubmitChannelsErrors([]);
 
     const errors = await sendMutations(data);
 
@@ -207,20 +211,30 @@ export function useProductUpdateHandler(
           defaultMessage: "Product updated",
         }),
       });
+    } else {
+      getProductSubmitErrorNotificationMessages(errors, intl).forEach(text =>
+        notify({
+          status: "error",
+          text,
+        }),
+      );
+
+      const { productErrors, channelsErrors } = splitProductSubmitErrors(errors);
+
+      setSubmitErrors(productErrors);
+      setSubmitChannelsErrors(channelsErrors);
     }
 
     return errors;
   };
-  const errors = getMutationErrors(updateProductOpts) as ProductErrorWithAttributesFragment[];
-  const channelsErrors = updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? [];
 
   return [
     submit,
     {
       called,
       loading,
-      channelsErrors,
-      errors,
+      channelsErrors: submitChannelsErrors,
+      errors: submitErrors,
       variantListErrors,
     },
   ];

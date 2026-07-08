@@ -1,0 +1,54 @@
+.valuesTableWithSection > div > div {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.embeddedTable {
+  table-layout: fixed;
+}
+
+.embeddedColumnSwatch {
+  width: 56px !important;
+}
+
+.embeddedColumnAdmin {
+  width: 24% !important;
+}
+
+.embeddedColumnStore {
+  width: auto !important;
+  white-space: nowrap;
+}
+
+.embeddedColumnIcon {
+  width: 48px !important;
+}
+
+.embeddedTable tbody td {
+  padding-top: var(--mu-spacing-3) !important;
+  padding-bottom: var(--mu-spacing-3) !important;
+  vertical-align: middle;
+}
+
+.embeddedTable tbody td:last-child {
+  padding-right: var(--mu-spacing-4) !important;
+}
+
+.embeddedRow td:first-child {
+  vertical-align: middle;
+}
+
+.embeddedCell {
+  align-items: center;
+  display: flex;
+  min-height: 32px;
+}
+
+.embeddedCellCenter {
+  justify-content: center;
+}
+
+.embeddedCellEnd {
+  justify-content: flex-end;
+}

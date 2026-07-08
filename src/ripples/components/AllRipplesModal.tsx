@@ -6,11 +6,13 @@ import { allRipples } from "@dashboard/ripples/allRipples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple, type RippleType } from "@dashboard/ripples/types";
-import { Box, Button, type ModalRootProps, Text, useTheme, vars } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
 import { cloneElement, isValidElement, type ReactNode, useEffect, useMemo, useState } from "react";
 import SVG from "react-inlinesvg";
 import { defineMessages, useIntl } from "react-intl";
+
+import styles from "./AllRipplesModal.module.css";
 
 const rippleDescriptionTextProps = {
   fontSize: 3 as const,
@@ -242,7 +244,12 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast }: RippleEntryRowProps) =>
   );
 };
 
-export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
+interface AllRipplesModalProps {
+  open: boolean;
+  onChange: (open: boolean) => void;
+}
+
+export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
   const intl = useIntl();
   const { hideAllRipples, setManuallyHidden } = useRippleStorage();
   const { trackEvent } = useAnalytics();
@@ -257,51 +264,44 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
       day: "numeric",
       year: "numeric",
     });
-  }, [allRipples]);
+  }, []);
 
-  useEffect(() => {
-    if (props.open) {
-      trackEvent("ripples.modal-opened");
-      setManuallyHidden(rippleIntroducedRipples);
-    }
-  }, [props.open, trackEvent, setManuallyHidden]);
+  useEffect(
+    function trackRipplesModalOpen() {
+      if (open) {
+        trackEvent("ripples.modal-opened");
+        setManuallyHidden(rippleIntroducedRipples);
+      }
+    },
+    [open, trackEvent, setManuallyHidden],
+  );
+
+  const handleClose = (): void => {
+    onChange(false);
+  };
+
+  const handleCloseAndHideAll = (): void => {
+    hideAllRipples();
+    handleClose();
+  };
 
   return (
-    <DashboardModal {...props}>
+    <DashboardModal onChange={onChange} open={open}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Grid gap={0}>
-          {/* Header */}
-          <Box>
-            <Box display="flex" justifyContent="space-between" alignItems="flex-start">
-              <Box>
-                <Text as="h1" fontSize={6} fontWeight="bold" color="default1" marginBottom={1}>
-                  {intl.formatMessage({
-                    defaultMessage: "What's New",
-                    id: "RKHBh0",
-                  })}
-                </Text>
-                <Text fontSize={3} color="default2">
-                  {intl.formatMessage({
-                    defaultMessage: "Latest updates and improvements",
-                    id: "ctdEON",
-                  })}
-                </Text>
-              </Box>
-              <DashboardModal.Close onClose={() => props.onChange?.(false)} />
-            </Box>
-            {/* Bottom border - full width */}
-            <Box
-              marginTop={4}
-              __marginLeft="calc(var(--mu-spacing-6) * -1)"
-              __marginRight="calc(var(--mu-spacing-6) * -1)"
-              borderTopWidth={1}
-              borderTopStyle="solid"
-              borderColor="default1Hovered"
-            />
-          </Box>
+        <DashboardModal.ContextHeader
+          description={intl.formatMessage({
+            defaultMessage: "Latest updates and improvements",
+            id: "ctdEON",
+          })}
+        >
+          {intl.formatMessage({
+            defaultMessage: "What's New",
+            id: "RKHBh0",
+          })}
+        </DashboardModal.ContextHeader>
 
-          {/* Content */}
-          <Box __maxHeight="500px" overflowY="auto" paddingRight={2} paddingY={4}>
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
             {flattenedRipples.map((entry, index) => (
               <RippleEntryRow
                 key={entry.ripple.ID}
@@ -310,109 +310,83 @@ export const AllRipplesModal = (props: Omit<ModalRootProps, "children">) => {
                 isLast={index === flattenedRipples.length - 1}
               />
             ))}
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions
+          alignItems="stretch"
+          backgroundColor="default1"
+          flexDirection="column"
+          gap={0}
+          justifyContent="flex-start"
+        >
+          <Box className={styles.footerButtonRow}>
+            <Button variant="secondary" onClick={handleCloseAndHideAll}>
+              {intl.formatMessage({
+                defaultMessage: "Close and hide all hints",
+                id: "pJ5/7G",
+              })}
+            </Button>
+            <Button onClick={handleClose}>
+              {intl.formatMessage({
+                defaultMessage: "Close",
+                id: "rbrahO",
+              })}
+            </Button>
           </Box>
 
-          {/* Footer - negative horizontal margins for full-width borders, negative bottom to remove modal padding */}
-          <Box
-            __marginLeft="calc(var(--mu-spacing-6) * -1)"
-            __marginRight="calc(var(--mu-spacing-6) * -1)"
-            __marginBottom="calc(var(--mu-spacing-6) * -1)"
-          >
-            {/* Top border */}
-            <Box borderTopWidth={1} borderTopStyle="solid" borderColor="default1Hovered" />
-
-            {/* Buttons section */}
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              paddingX={6}
-              paddingY={4}
-            >
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  hideAllRipples();
-
-                  if (props.onChange) {
-                    props.onChange(false);
-                  }
-                }}
-              >
-                {intl.formatMessage({
-                  defaultMessage: "Close and hide all hints",
-                  id: "pJ5/7G",
-                })}
-              </Button>
-              <Button onClick={() => props.onChange && props.onChange(false)}>
-                {intl.formatMessage({
-                  defaultMessage: "Close",
-                  id: "rbrahO",
-                })}
-              </Button>
-            </Box>
-
-            {/* Last updated section */}
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              paddingX={6}
-              paddingY={2}
-              backgroundColor="default2"
-            >
-              <Box display="flex" alignItems="center" gap={1}>
-                <Text fontSize={1} color="default2">
-                  {intl.formatMessage(
-                    {
-                      defaultMessage: "Last updated: {date}",
-                      id: "ZdCdo5",
-                    },
-                    { date: lastUpdatedDate },
-                  )}
-                  ,{" "}
-                </Text>
-                <Box
-                  as="a"
-                  href="https://github.com/saleor/saleor-dashboard/releases"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  display="flex"
-                  alignItems="center"
-                  gap={1}
-                  __opacity={{ default: "0.7", hover: "1" }}
-                  __color={vars.colors.text.default2}
-                  textDecoration={{ default: "none", hover: "underline" }}
-                  fontSize={1}
-                >
-                  <SVG src={githubLogo} width={12} height={12} />
-                  {intl.formatMessage({
-                    defaultMessage: "Releases",
-                    id: "JEw8ys",
-                  })}
-                </Box>
-              </Box>
+          <Box className={styles.footerMetaRow}>
+            <Box display="flex" alignItems="center" gap={1}>
+              <Text fontSize={1} color="default2">
+                {intl.formatMessage(
+                  {
+                    defaultMessage: "Last updated: {date}",
+                    id: "ZdCdo5",
+                  },
+                  { date: lastUpdatedDate },
+                )}
+                ,{" "}
+              </Text>
               <Box
                 as="a"
-                href="https://github.com/saleor/saleor-dashboard/issues/new"
+                href="https://github.com/saleor/saleor-dashboard/releases"
                 target="_blank"
                 rel="noopener noreferrer"
                 display="flex"
                 alignItems="center"
                 gap={1}
-                fontSize={1}
-                __color={vars.colors.text.accent1}
+                __opacity={{ default: "0.7", hover: "1" }}
+                __color={vars.colors.text.default2}
                 textDecoration={{ default: "none", hover: "underline" }}
+                fontSize={1}
               >
+                <SVG src={githubLogo} width={12} height={12} />
                 {intl.formatMessage({
-                  defaultMessage: "Suggest a change",
-                  id: "FN+iLO",
+                  defaultMessage: "Releases",
+                  id: "JEw8ys",
                 })}
-                <ChevronRightIcon size={12} />
               </Box>
             </Box>
+            <Box
+              as="a"
+              href="https://github.com/saleor/saleor-dashboard/issues/new"
+              target="_blank"
+              rel="noopener noreferrer"
+              display="flex"
+              alignItems="center"
+              gap={1}
+              fontSize={1}
+              __color={vars.colors.text.accent1}
+              textDecoration={{ default: "none", hover: "underline" }}
+            >
+              {intl.formatMessage({
+                defaultMessage: "Suggest a change",
+                id: "FN+iLO",
+              })}
+              <ChevronRightIcon size={12} />
+            </Box>
           </Box>
-        </DashboardModal.Grid>
+        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );

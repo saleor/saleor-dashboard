@@ -22,4 +22,16 @@ export const giftCardSendToCustomerMessages = defineMessages({
     defaultMessage: "Channel",
     description: "channel select label",
   },
+  currencyRedemptionInfo: {
+    id: "pY/9R2",
+    defaultMessage:
+      "This {currency} gift card can only be redeemed in channels that use {currency}. The delivery channel above only controls which email notification is sent.",
+    description: "gift card currency redemption info callout",
+  },
+  currencyMismatchWarning: {
+    id: "srtbbS",
+    defaultMessage:
+      "The selected channel uses {channelCurrency}, but this gift card is in {giftCardCurrency}. The customer can still receive the code by email, but they will only be able to redeem it in {giftCardCurrency} channels at checkout.",
+    description: "gift card currency mismatch with delivery channel callout",
+  },
 });

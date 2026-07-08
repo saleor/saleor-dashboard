@@ -4,7 +4,6 @@ import {
   createChannelsDataWithDiscountPrice,
   createSortedChannelsDataFromVoucher,
 } from "@dashboard/channels/utils";
-import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
@@ -14,6 +13,8 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
+import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
+import { VoucherDeleteDialog } from "@dashboard/discounts/components/VoucherDeleteDialog/VoucherDeleteDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
   type VoucherTabItemsCount,
@@ -215,6 +216,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -284,7 +286,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       }
     },
   });
-  const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
+  const selectedUnassignIds = params.ids ?? [];
+  const selectedUnassignIdsCount = selectedUnassignIds.length;
+  const canOpenBulkActionDialog = selectedUnassignIdsCount > 0;
   const handleUpdate = createUpdateHandler(
     data?.voucher,
     voucherChannelsChoices,
@@ -347,6 +351,32 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         },
       },
     });
+  const unassignCatalogueType =
+    params.action === "unassign-category"
+      ? "category"
+      : params.action === "unassign-collection"
+        ? "collection"
+        : params.action === "unassign-product"
+          ? "product"
+          : params.action === "unassign-variant"
+            ? "variant"
+            : null;
+  const handleUnassignConfirm = () => {
+    switch (unassignCatalogueType) {
+      case "category":
+        handleCategoriesUnassign(selectedUnassignIds);
+        break;
+      case "collection":
+        handleCollectionsUnassign(selectedUnassignIds);
+        break;
+      case "product":
+        handleProductsUnassign(selectedUnassignIds);
+        break;
+      case "variant":
+        handleVariantsUnassign(selectedUnassignIds);
+        break;
+    }
+  };
   const { pageInfo, ...paginationValues } = paginate(tabPageInfo, paginationState);
   const tabItemsCount: VoucherTabItemsCount = {
     categories: data?.voucher?.categoriesCount?.totalCount,
@@ -361,7 +391,6 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={false}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
@@ -371,8 +400,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
             defaultMessage: "Manage Channel Availability",
           })}
           selected={channelListElements.length}
-          confirmButtonState="default"
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
+          confirmButtonState="default"
           toggleAll={toggleAllChannels}
         />
       )}
@@ -614,143 +644,27 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         excludedFilters={["channel"]}
         onFilterChange={handleProductFilterChange}
       />
-      <ActionDialog
-        open={params.action === "unassign-category" && canOpenBulkActionDialog}
-        title={intl.formatMessage({
-          id: "LOSNq0",
-          defaultMessage: "Unassign Categories From Voucher",
-          description: "dialog header",
-        })}
-        confirmButtonState={voucherCataloguesRemoveOpts.status}
-        onClose={closeModal}
-        onConfirm={() => handleCategoriesUnassign(params.ids)}
-        confirmButtonLabel={intl.formatMessage({
-          id: "cNSLLO",
-          defaultMessage: "Unassign and save",
-          description: "button",
-        })}
-      >
-        {canOpenBulkActionDialog && (
-          <FormattedMessage
-            id="GiJm1v"
-            defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
-            description="dialog content"
-            values={{
-              counter: params.ids.length,
-              displayQuantity: <strong>{params.ids.length}</strong>,
-            }}
-          />
-        )}
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "unassign-collection" && canOpenBulkActionDialog}
-        title={intl.formatMessage({
-          id: "MmGlkp",
-          defaultMessage: "Unassign Collections From Voucher",
-          description: "dialog header",
-        })}
-        confirmButtonState={voucherCataloguesRemoveOpts.status}
-        onClose={closeModal}
-        onConfirm={() => handleCollectionsUnassign(params.ids)}
-        confirmButtonLabel={intl.formatMessage({
-          id: "cNSLLO",
-          defaultMessage: "Unassign and save",
-          description: "button",
-        })}
-      >
-        {canOpenBulkActionDialog && (
-          <FormattedMessage
-            id="UjoSZB"
-            defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
-            description="dialog content"
-            values={{
-              counter: params.ids.length,
-              displayQuantity: <strong>{params.ids.length}</strong>,
-            }}
-          />
-        )}
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "unassign-product" && canOpenBulkActionDialog}
-        title={intl.formatMessage({
-          id: "cKCfSW",
-          defaultMessage: "Unassign Products From Voucher",
-          description: "dialog header",
-        })}
-        confirmButtonState={voucherCataloguesRemoveOpts.status}
-        onClose={closeModal}
-        onConfirm={() => handleProductsUnassign(params.ids)}
-        confirmButtonLabel={intl.formatMessage({
-          id: "cNSLLO",
-          defaultMessage: "Unassign and save",
-          description: "button",
-        })}
-      >
-        {canOpenBulkActionDialog && (
-          <FormattedMessage
-            id="AHK0K9"
-            defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-            description="dialog content"
-            values={{
-              counter: params.ids.length,
-              displayQuantity: <strong>{params.ids.length}</strong>,
-            }}
-          />
-        )}
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "unassign-variant" && canOpenBulkActionDialog}
-        title={intl.formatMessage({
-          id: "F62RkR",
-          defaultMessage: "Unassign Variants From Voucher",
-          description: "dialog header",
-        })}
-        confirmButtonState={voucherCataloguesRemoveOpts.status}
-        onClose={closeModal}
-        onConfirm={() => handleVariantsUnassign(params.ids)}
-        confirmButtonLabel={intl.formatMessage({
-          id: "cNSLLO",
-          defaultMessage: "Unassign and save",
-          description: "button",
-        })}
-      >
-        {canOpenBulkActionDialog && (
-          <FormattedMessage
-            id="iWyoZn"
-            defaultMessage="{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
-            description="dialog content"
-            values={{
-              counter: params.ids.length,
-              displayQuantity: <strong>{params.ids.length}</strong>,
-            }}
-          />
-        )}
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "remove"}
-        title={intl.formatMessage({
-          id: "Hgz44z",
-          defaultMessage: "Delete Voucher",
-          description: "dialog header",
-        })}
+      {unassignCatalogueType !== null && (
+        <VoucherCatalogueUnassignDialog
+          catalogueType={unassignCatalogueType}
+          confirmButtonState={voucherCataloguesRemoveOpts.status}
+          count={selectedUnassignIdsCount}
+          onClose={closeModal}
+          onConfirm={handleUnassignConfirm}
+          open={canOpenBulkActionDialog}
+        />
+      )}
+      <VoucherDeleteDialog
         confirmButtonState={voucherDeleteOpts.status}
         onClose={closeModal}
-        variant="delete"
         onConfirm={() =>
           voucherDelete({
             variables: { id },
           })
         }
-      >
-        <FormattedMessage
-          id="NEJo1I"
-          defaultMessage="Are you sure you want to delete {voucherCode}?"
-          description="dialog content"
-          values={{
-            voucherCode: <strong>{maybe(() => data.voucher.name, "...")}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove"}
+        voucherCode={<strong>{maybe(() => data.voucher.name, "...")}</strong>}
+      />
     </PaginatorContext.Provider>
   );
 };

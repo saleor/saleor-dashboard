@@ -1,17 +1,15 @@
 import { fuzzySearch } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
-import { useEffect } from "react";
 
 import { useActionTriggers } from "./useActionTriggers";
 
 interface ActionsProps {
   query: string;
   onActionClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
-  onActionsLoaded: () => void;
 }
 
-export const Actions = ({ query, onActionClick, onActionsLoaded }: ActionsProps) => {
+export const Actions = ({ query, onActionClick }: ActionsProps) => {
   const triggers = useActionTriggers();
   const searchResults = fuzzySearch(triggers, query, ["name"]);
 
@@ -23,14 +21,6 @@ export const Actions = ({ query, onActionClick, onActionsLoaded }: ActionsProps)
       }>;
     }[]
   >;
-
-  /*
-    This component is rendered later than the parent.
-    Since there is slight delay, the DOM operations cannot catch action elements.
-    This use effect triggers itself when the component is mounted,
-    pretending the actions are "loaded" and they are accessible.
-  */
-  useEffect(onActionsLoaded, [query]);
 
   return (
     <Box>

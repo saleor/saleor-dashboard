@@ -1,52 +1,59 @@
+import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
+import { discountDeleteModalMessages as messages } from "./messages";
+
 interface DiscountDeleteModalProps {
+  confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  confirmButtonTransitionState: ConfirmButtonTransitionState;
-  onChange: () => void;
+  onClose: () => void;
   onConfirm: () => void;
 }
 
 export const DiscountDeleteModal = ({
-  onChange,
-  onConfirm,
-  confirmButtonTransitionState,
+  confirmButtonState,
   open,
+  onClose,
+  onConfirm,
 }: DiscountDeleteModalProps) => {
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <DashboardModal open={open} onChange={onChange}>
+    <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="xs">
-        <DashboardModal.Header>
-          <FormattedMessage defaultMessage="Delete discount" id="ZrIt1W" />
+        <DashboardModal.Header subtitle={<FormattedMessage {...messages.subtitle} />}>
+          <FormattedMessage {...messages.title} />
         </DashboardModal.Header>
 
-        <Text>
-          <FormattedMessage
-            defaultMessage="Are you sure you want to delete this discount?"
-            id="6FLezz"
-          />
-        </Text>
-
         <DashboardModal.Actions>
-          <Button variant="secondary" onClick={onChange}>
-            <FormattedMessage {...buttonMessages.cancel} />
-          </Button>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
           <ConfirmButton
             data-test-id="delete-confirmation-button"
-            transitionState={confirmButtonTransitionState}
+            disabled={isSubmitting}
             onClick={onConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
           >
-            <FormattedMessage {...buttonMessages.confirm} />
+            <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );
 };
+
+DiscountDeleteModal.displayName = "DiscountDeleteModal";
