@@ -65,7 +65,8 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     statusesToMergeLines.includes(fulfillment?.status)
       ? mergeRepeatedOrderLines(fulfillment.lines)
       : (fulfillment?.lines ?? []);
-  const getLines = () => getFulfillmentLines().map(fulfillmentLineToLine);
+  const lines = getFulfillmentLines().map(fulfillmentLineToLine);
+  const hasLines = lines.length > 0;
   const lineReasons = getFulfillmentLines().map(line => ({
     reason: line.reason ?? null,
     reasonType: line.reasonReference?.title ?? null,
@@ -148,26 +149,28 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           />
         </Box>
       )}
-      <DashboardCard.Content paddingX={0}>
-        <OrderDetailsDatagrid
-          lines={getLines()}
-          lineReasons={hasLineReasons ? lineReasons : undefined}
-          loading={false}
-          onOrderLineShowMetadata={onOrderLineShowMetadata}
-          onShowLinePriceBreakdown={onShowLinePriceBreakdown}
-          datagridCustomTheme={{
-            bgHeader: themeValues.colors.background.default2,
-          }}
-        />
-        <Box
-          backgroundColor={"default1"}
-          width="100%"
-          height={6}
-          borderBottomStyle={"solid"}
-          borderBottomWidth={1}
-          borderColor={"default1"}
-        />
-      </DashboardCard.Content>
+      {hasLines && (
+        <DashboardCard.Content paddingX={0}>
+          <OrderDetailsDatagrid
+            lines={lines}
+            lineReasons={hasLineReasons ? lineReasons : undefined}
+            loading={false}
+            onOrderLineShowMetadata={onOrderLineShowMetadata}
+            onShowLinePriceBreakdown={onShowLinePriceBreakdown}
+            datagridCustomTheme={{
+              bgHeader: themeValues.colors.background.default2,
+            }}
+          />
+          <Box
+            backgroundColor={"default1"}
+            width="100%"
+            height={6}
+            borderBottomStyle={"solid"}
+            borderBottomWidth={1}
+            borderColor={"default1"}
+          />
+        </DashboardCard.Content>
+      )}
     </Box>
   );
 };
