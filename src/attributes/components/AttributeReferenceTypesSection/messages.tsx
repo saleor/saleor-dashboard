@@ -6,16 +6,6 @@ export const messages = defineMessages({
     defaultMessage: "Reference Types",
     description: "section title for reference types selector",
   },
-  noProductTypesAssigned: {
-    id: "M3aMq+",
-    defaultMessage: "No product types assigned",
-    description: "empty state for reference types",
-  },
-  noModelTypesAssigned: {
-    id: "4DkQt1",
-    defaultMessage: "No model types assigned",
-    description: "empty state for model types",
-  },
   referenceTypesHelp: {
     id: "COWJSG",
     defaultMessage:

@@ -5,7 +5,7 @@ import { customerUrl } from "@dashboard/customers/urls";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { GiftCardEventsEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
+import { getFullName } from "@dashboard/misc";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getOrderNumberLinkObject } from "@dashboard/orders/components/OrderHistory/utils";
 import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
@@ -22,7 +22,7 @@ const GiftCardUpdateInfoCardContent = () => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
   const { giftCard } = useGiftCardDetails();
-  const { created, createdByEmail, createdBy, usedByEmail, usedBy, product } = giftCard;
+  const { created, createdByEmail, createdBy, product } = giftCard;
   const cardIssuedEvent = giftCard?.events?.find(getByType(GiftCardEventsEnum.ISSUED));
   const cardBoughtEvent = giftCard?.events?.find(getByType(GiftCardEventsEnum.BOUGHT));
 
@@ -114,14 +114,6 @@ const GiftCardUpdateInfoCardContent = () => {
 
       <Label text={intl.formatMessage(buyerLabelMessage)} />
       {buyerUrl ? <Link href={buyerUrl}>{buyerName}</Link> : <Text>{buyerName}</Text>}
-      <CardSpacer />
-
-      <Label text={intl.formatMessage(messages.usedByLabel)} />
-      {usedBy ? (
-        <Link href={customerUrl(usedBy.id)}>{getFullName(usedBy)}</Link>
-      ) : (
-        <Text>{getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}</Text>
-      )}
     </>
   );
 };

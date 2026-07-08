@@ -1,3 +1,4 @@
+import { rippleAttributeListGroupByType } from "@dashboard/attributes/ripples/attributeListGroupByType";
 import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
@@ -61,6 +62,7 @@ export const allRipples: Ripple[] = [
   rippleVariantGenerator,
 
   // Attributes
+  rippleAttributeListGroupByType,
   rippleAttributeValuesSearch,
   rippleAttributeViewOverhaul,
 
