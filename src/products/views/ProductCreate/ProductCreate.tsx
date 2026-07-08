@@ -25,7 +25,6 @@ import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { getMutationErrors } from "@dashboard/misc";
 import ProductCreatePage, {
   type ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
@@ -35,6 +34,7 @@ import {
   type ProductCreateUrlQueryParams,
   productUrl,
 } from "@dashboard/products/urls";
+import { splitProductSubmitErrors } from "@dashboard/products/utils/splitSubmitErrors";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
@@ -53,7 +53,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
@@ -70,7 +70,10 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
   const shop = useShop();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const intl = useIntl();
-  const [productCreateComplete, setProductCreateComplete] = useState(false);
+  const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
+  const [submitChannelsErrors, setSubmitChannelsErrors] = useState<
+    ProductChannelListingErrorFragment[]
+  >([]);
   const selectedProductTypeId = params["product-type-id"];
   const handleSelectProductType = (productTypeId: string) =>
     navigate(
@@ -185,7 +188,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
       const errors = data.productVariantCreate.errors;
 
       if (errors.length) {
-        errors.map(error =>
+        errors.forEach(error =>
           notify({
             status: "error",
             text: getProductErrorMessage(error, intl),
@@ -195,6 +198,9 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     },
   });
   const handleSubmit = async (data: ProductCreateData) => {
+    setSubmitErrors([]);
+    setSubmitChannelsErrors([]);
+
     const errors = await createMetadataCreateHandler(
       createHandler(
         selectedProductType?.productType,
@@ -207,14 +213,20 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
       ),
       updateMetadata,
       updatePrivateMetadata,
+      productId => {
+        markOnboardingStepAsCompleted("create-product");
+        handleSuccess(productId);
+      },
     )(data);
 
-    if (!errors?.length) {
-      markOnboardingStepAsCompleted("create-product");
-      setProductCreateComplete(true);
+    if (errors?.length) {
+      const { productErrors, channelsErrors } = splitProductSubmitErrors(errors);
+
+      setSubmitErrors(productErrors);
+      setSubmitChannelsErrors(channelsErrors);
     }
 
-    return errors;
+    return errors ?? [];
   };
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
@@ -224,14 +236,6 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         id: attribute.id,
       }),
     );
-
-  useEffect(() => {
-    const productId = productCreateOpts.data?.productCreate?.product?.id;
-
-    if (productCreateComplete && productId) {
-      handleSuccess(productId);
-    }
-  }, [productCreateComplete]);
 
   const refAttr =
     params.action === "assign-attribute-value" && params.id
@@ -311,14 +315,8 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     productVariantCreateOpts.loading ||
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading;
-  const channelsErrors = [
-    ...getMutationErrors(updateVariantChannelsOpts),
-    ...getMutationErrors(updateChannelsOpts),
-  ] as ProductChannelListingErrorFragment[];
-  const errors = [
-    ...getMutationErrors(productCreateOpts),
-    ...getMutationErrors(productVariantCreateOpts),
-  ] as ProductErrorWithAttributesFragment[];
+  const channelsErrors = submitChannelsErrors;
+  const errors = submitErrors;
 
   return (
     <>
