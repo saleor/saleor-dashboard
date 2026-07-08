@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { rippleTypePageCreateAttribute } from "@dashboard/attributes/ripples/typePageCreateAttribute";
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
@@ -10,6 +11,7 @@ import { SortableTableBody, SortableTableRow } from "@dashboard/components/Sorta
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import { type AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -78,25 +80,34 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <ButtonGroupWithDropdown
-            variant="secondary"
-            disabled={disabled}
-            onClick={handleAssignAttribute}
-            testId="assign-attributes"
-            options={[
-              {
-                label: intl.formatMessage({
-                  id: "N+Omth",
-                  defaultMessage: "Create attribute",
-                  description: "create attribute from model type, button",
-                }),
-                testId: "create-attribute",
-                onSelect: handleCreateAttribute,
-              },
-            ]}
-          >
-            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-          </ButtonGroupWithDropdown>
+          <Box position="relative">
+            <ButtonGroupWithDropdown
+              variant="secondary"
+              disabled={disabled}
+              onClick={handleAssignAttribute}
+              testId="assign-attributes"
+              options={[
+                {
+                  label: intl.formatMessage({
+                    id: "N+Omth",
+                    defaultMessage: "Create attribute",
+                    description: "create attribute from model type, button",
+                  }),
+                  testId: "create-attribute",
+                  onSelect: handleCreateAttribute,
+                },
+              ]}
+            >
+              <FormattedMessage
+                id="uxPpRx"
+                defaultMessage="Assign attribute"
+                description="button"
+              />
+            </ButtonGroupWithDropdown>
+            <Box position="absolute" __top="-4px" __right="-4px">
+              <Ripple model={rippleTypePageCreateAttribute} />
+            </Box>
+          </Box>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
