@@ -1,0 +1,58 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.listItem + .listItem {
+  margin-top: 8px;
+}
+
+.typeName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.typeName:hover {
+  text-decoration: underline;
+}
+
+.typeNameSkeleton {
+  min-width: 0;
+}
+
+.rolePillSkeleton {
+  flex-shrink: 0;
+  border-radius: 9px;
+}
+
+.roleGroup {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 4px;
+}
+
+.rolePill {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-text-default2);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+}

@@ -39,6 +39,13 @@ export const attributeFragment = gql`
   }
 `;
 
+export const attributeAssignedListFragment = gql`
+  fragment AttributeAssignedList on Attribute {
+    ...Attribute
+    valueRequired
+  }
+`;
+
 export const attributeUpdateResultFragment = gql`
   fragment AttributeUpdateResult on Attribute {
     ...Attribute
@@ -53,6 +60,33 @@ export const attributeUpdateResultFragment = gql`
       ... on PageType {
         id
         name
+      }
+    }
+  }
+`;
+
+export const attributeAssignedTypesFragment = gql`
+  fragment AttributeAssignedTypes on Attribute {
+    productTypes(first: 100) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+    productVariantTypes(first: 100) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
       }
     }
   }

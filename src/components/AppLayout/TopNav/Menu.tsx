@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Button, Dropdown, List, Text, type TextProps } from "@saleor/macaw-ui-next";
-import { Settings } from "lucide-react";
+import { CheckSquare, Settings, Square } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { topNavMessages } from "./messages";
@@ -10,6 +10,7 @@ interface TopNavMenuItem {
   testId?: string;
   onSelect: <T extends object>(params: T) => void;
   color?: TextProps["color"];
+  checked?: boolean;
 }
 
 interface TopNavMenuProps {
@@ -42,7 +43,15 @@ export const Menu = ({ items, dataTestId }: TopNavMenuProps) => {
                   onClick={item.onSelect}
                   data-test-id={item.testId}
                 >
-                  <Text color={item.color}>{item.label}</Text>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    {item.checked !== undefined &&
+                      (item.checked ? (
+                        <CheckSquare size={14} aria-hidden />
+                      ) : (
+                        <Square size={14} aria-hidden />
+                      ))}
+                    <Text color={item.color}>{item.label}</Text>
+                  </Box>
                 </List.Item>
               </Dropdown.Item>
             ))}

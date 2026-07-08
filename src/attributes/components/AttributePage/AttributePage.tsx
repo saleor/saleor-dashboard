@@ -2,6 +2,10 @@ import {
   AssignReferenceTypesDialog,
   type ReferenceTypes,
 } from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
+import {
+  AttributeAssignedTypesCard,
+  type AttributeAssignedTypesCardProps,
+} from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import {
   type AttributeAddUrlQueryParams,
@@ -92,6 +96,7 @@ function AttributePageDirtyStateSync({
 
 interface AttributePageProps {
   attribute?: AttributeDetailsQuery["attribute"] | null | undefined;
+  assignedTypes?: AttributeAssignedTypesCardProps;
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -138,6 +143,7 @@ export interface AttributePageFormData extends MetadataFormData {
 
 const AttributePage = ({
   attribute,
+  assignedTypes,
   disabled,
   errors: apiErrors,
   saveButtonBarState,
@@ -350,7 +356,6 @@ const AttributePage = ({
                 <CardSpacer />
                 {showReferenceTypes && (
                   <AttributeReferenceTypesSection
-                    entityType={data.entityType ?? undefined}
                     selectedTypes={data.referenceTypes}
                     disabled={disabled}
                     onAssignClick={onOpenReferenceTypes}
@@ -394,6 +399,12 @@ const AttributePage = ({
                   disabled={disabled}
                   onChange={change}
                 />
+                {assignedTypes && (
+                  <>
+                    <CardSpacer />
+                    <AttributeAssignedTypesCard {...assignedTypes} />
+                  </>
+                )}
               </DetailPageLayout.RightSidebar>
               <Savebar>
                 {attribute !== null && <Savebar.DeleteButton onClick={onDelete} />}
