@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useCreateCustomerAddressMutation,
@@ -11,11 +10,12 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
+import commonErrorMessages from "@dashboard/utils/errors/common";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { Box } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import CustomerAddressDialog from "../components/CustomerAddressDialog";
+import { CustomerAddressDeleteDialog } from "../components/CustomerAddressDeleteDialog/CustomerAddressDeleteDialog";
+import { CustomerAddressDialog } from "../components/CustomerAddressDialog/CustomerAddressDialog";
 import CustomerAddressListPage from "../components/CustomerAddressListPage";
 import {
   customerAddressesUrl,
@@ -88,7 +88,9 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
 
   const [removeCustomerAddress, removeCustomerAddressOpts] = useRemoveCustomerAddressMutation({
     onCompleted: data => {
-      if (data.addressDelete.errors.length === 0) {
+      const errors = data.addressDelete.errors;
+
+      if (errors.length === 0) {
         closeModal();
         notify({
           status: "success",
@@ -98,7 +100,14 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
             description: "address removed from a customer's address book, success toast",
           }),
         });
+
+        return;
       }
+
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonErrorMessages.unknownError),
+      });
     },
   });
 
@@ -135,7 +144,6 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
         }
       />
       <CustomerAddressDialog
-        address={undefined}
         confirmButtonState={createCustomerAddressOpts.status}
         countries={countryChoices}
         errors={createCustomerAddressOpts?.data?.addressCreate.errors || []}
@@ -168,14 +176,7 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
           })
         }
       />
-      <ActionDialog
-        open={params.action === "remove"}
-        variant="delete"
-        title={intl.formatMessage({
-          id: "qLOBff",
-          defaultMessage: "Delete Address",
-          description: "dialog header",
-        })}
+      <CustomerAddressDeleteDialog
         confirmButtonState={removeCustomerAddressOpts.status}
         onClose={closeModal}
         onConfirm={() =>
@@ -185,14 +186,8 @@ const CustomerAddresses = ({ id, params }: CustomerAddressesProps) => {
             },
           })
         }
-      >
-        <Box data-test-id="delete-address-dialog-content">
-          <FormattedMessage
-            id="/kWzY1"
-            defaultMessage="Are you sure you want to delete this address from users address book?"
-          />
-        </Box>
-      </ActionDialog>
+        open={params.action === "remove"}
+      />
     </>
   );
 };

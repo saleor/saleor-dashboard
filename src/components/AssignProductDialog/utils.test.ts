@@ -1,5 +1,76 @@
 import { type ProductChannels, type SelectedChannel } from "./types";
-import { isProductAvailableInVoucherChannels } from "./utils";
+import {
+  getSelectedIdsFromDict,
+  hasMultiSelectionChanged,
+  hasSingleSelectionChanged,
+  isProductAvailableInVoucherChannels,
+} from "./utils";
+
+describe("getSelectedIdsFromDict", () => {
+  it("returns only ids marked as selected, sorted", () => {
+    // Arrange
+    const selection: Record<string, boolean> = {
+      "product-2": true,
+      "product-1": true,
+      "product-3": false,
+    };
+
+    // Act
+    const result = getSelectedIdsFromDict(selection);
+
+    // Assert
+    expect(result).toEqual(["product-1", "product-2"]);
+  });
+});
+
+describe("hasMultiSelectionChanged", () => {
+  it("returns false when selection matches initial state", () => {
+    // Arrange
+    const initial: Record<string, boolean> = { "product-1": true };
+
+    // Act
+    const result = hasMultiSelectionChanged(initial, initial);
+
+    // Assert
+    expect(result).toBe(false);
+  });
+
+  it("returns true when a new product is selected", () => {
+    // Arrange
+    const initial: Record<string, boolean> = {};
+    const current: Record<string, boolean> = { "product-1": true };
+
+    // Act
+    const result = hasMultiSelectionChanged(current, initial);
+
+    // Assert
+    expect(result).toBe(true);
+  });
+
+  it("returns true when a selected product is removed", () => {
+    // Arrange
+    const initial: Record<string, boolean> = { "product-1": true, "product-2": true };
+    const current: Record<string, boolean> = { "product-1": true, "product-2": false };
+
+    // Act
+    const result = hasMultiSelectionChanged(current, initial);
+
+    // Assert
+    expect(result).toBe(true);
+  });
+});
+
+describe("hasSingleSelectionChanged", () => {
+  it("returns false when selection is unchanged", () => {
+    // Act & Assert
+    expect(hasSingleSelectionChanged("product-1", "product-1")).toBe(false);
+  });
+
+  it("returns true when selection changes", () => {
+    // Act & Assert
+    expect(hasSingleSelectionChanged("product-2", "product-1")).toBe(true);
+  });
+});
 
 describe("isProductAvailableInVoucherChannels", () => {
   it("should return true when product has at least one channel common with voucher", () => {

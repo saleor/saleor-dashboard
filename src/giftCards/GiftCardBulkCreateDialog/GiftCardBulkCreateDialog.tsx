@@ -1,21 +1,32 @@
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type INotification } from "@dashboard/components/notifications";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type GiftCardBulkCreateInput, useGiftCardBulkCreateMutation } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { buttonMessages } from "@dashboard/intl";
 import { type DialogProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+import { Box } from "@saleor/macaw-ui-next";
+import { useEffect, useRef, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
-import GiftCardBulkCreateSuccessDialog from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
+import { GiftCardBulkCreateSuccessDialog } from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
+import { giftCardCreateMessages as createMessages } from "../GiftCardCreateDialog/messages";
 import {
   getGiftCardCreateOnCompletedMessage,
   getGiftCardExpiryInputData,
 } from "../GiftCardCreateDialog/utils";
 import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/queries";
-import GiftCardBulkCreateDialogForm from "./GiftCardBulkCreateDialogForm";
+import {
+  GiftCardBulkCreateDialogFields,
+  useGiftCardBulkCreateDialogForm,
+} from "./GiftCardBulkCreateDialogForm";
 import { giftCardBulkCreateDialogMessages as messages } from "./messages";
 import {
   giftCardBulkCreateErrorKeys,
@@ -30,6 +41,7 @@ export const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
   const [formErrors, setFormErrors] = useState<GiftCardBulkCreateFormErrors | null>(null);
   const [issuedIds, setIssuedIds] = useState<string[] | null>(null);
   const [openIssueSuccessDialog, setOpenIssueSuccessDialog] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   const currentDate = useCurrentDate();
 
@@ -75,10 +87,10 @@ export const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
   });
 
   const handleSubmit = (data: GiftCardBulkCreateFormData) => {
-    const formErrors = validateForm(data);
+    const validationErrors = validateForm(data);
 
-    if (Object.keys(formErrors).length) {
-      setFormErrors(formErrors);
+    if (Object.keys(validationErrors).length) {
+      setFormErrors(validationErrors);
     } else {
       bulkCreateGiftCard({
         variables: {
@@ -88,37 +100,91 @@ export const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
     }
   };
 
+  const { change, data, loadingSettings, set, submit, toggleValue } =
+    useGiftCardBulkCreateDialogForm({
+      onSubmit: handleSubmit,
+      open,
+    });
+
   const apiErrors = bulkCreateGiftCardOpts?.data?.giftCardBulkCreate?.errors;
-  const handleSetSchemaErrors = () => {
+  const confirmButtonState: ConfirmButtonTransitionState = bulkCreateGiftCardOpts.status;
+  const isSubmitting = confirmButtonState === "loading";
+  const isLoading = loadingSettings;
+
+  isSubmittingRef.current = isSubmitting;
+
+  const handleModalClose = (): void => {
+    if (isSubmittingRef.current) {
+      return;
+    }
+
+    onClose();
+  };
+
+  useEffect(() => {
     if (apiErrors?.length) {
       const formErrorsFromApi = getFormErrors(giftCardBulkCreateErrorKeys, apiErrors);
 
       setFormErrors(formErrorsFromApi);
     }
-  };
+  }, [apiErrors]);
 
-  useEffect(handleSetSchemaErrors, [apiErrors]);
+  const isActionsDisabled = isSubmitting || isLoading;
 
   return (
     <>
-      <DashboardModal open={open} onChange={onClose}>
-        <DashboardModal.Content size="sm">
-          <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
-          <ContentWithProgress>
-            <GiftCardBulkCreateDialogForm
-              opts={bulkCreateGiftCardOpts}
-              onClose={onClose}
-              formErrors={formErrors}
-              onSubmit={handleSubmit}
-            />
-          </ContentWithProgress>
-        </DashboardModal.Content>
+      <DashboardModal onChange={handleModalClose} open={open}>
+        {open ? (
+          <DashboardModal.Content size="sm">
+            <DashboardModal.ContextHeader
+              description={<FormattedMessage {...messages.description} />}
+            >
+              <FormattedMessage {...messages.title} />
+            </DashboardModal.ContextHeader>
+
+            <DashboardModal.Body fill>
+              <DashboardModal.Inset>
+                {isLoading ? (
+                  <Box display="flex" alignItems="center" justifyContent="center" padding={6}>
+                    <SaleorThrobber />
+                  </Box>
+                ) : (
+                  <GiftCardBulkCreateDialogFields
+                    change={change}
+                    data={data}
+                    formErrors={formErrors}
+                    set={set}
+                    toggleValue={toggleValue}
+                  />
+                )}
+              </DashboardModal.Inset>
+            </DashboardModal.Body>
+
+            <DashboardModal.Actions>
+              <BackButton disabled={isActionsDisabled} onClick={handleModalClose}>
+                <FormattedMessage {...buttonMessages.cancel} />
+              </BackButton>
+              <ConfirmButton
+                data-test-id="submit"
+                disabled={isActionsDisabled}
+                onClick={submit}
+                transitionState={confirmButtonState}
+                type="submit"
+                variant="primary"
+              >
+                {intl.formatMessage(createMessages.issueButtonLabel)}
+              </ConfirmButton>
+            </DashboardModal.Actions>
+          </DashboardModal.Content>
+        ) : null}
       </DashboardModal>
       <GiftCardBulkCreateSuccessDialog
+        idsToExport={issuedIds}
         onClose={() => setOpenIssueSuccessDialog(false)}
         open={openIssueSuccessDialog}
-        idsToExport={issuedIds}
       />
     </>
   );
 };
+
+GiftCardBulkCreateDialog.displayName = "GiftCardBulkCreateDialog";

@@ -10,6 +10,7 @@ interface ControlledCheckboxProps {
   indeterminate?: boolean;
   disabled?: boolean;
   checkedIcon?: React.ReactNode;
+  size?: "small" | "medium";
   testId?: string;
   onChange: (event: any) => any;
 }
@@ -22,6 +23,7 @@ export const ControlledCheckbox = ({
   onChange,
   checkedIcon,
   indeterminate,
+  size,
   testId,
   ...props
 }: ControlledCheckboxProps) => (
@@ -35,6 +37,7 @@ export const ControlledCheckbox = ({
         indeterminate={indeterminate}
         disabled={disabled}
         name={name}
+        size={size}
         onChange={() => onChange({ target: { name, value: !checked } })}
       />
     }

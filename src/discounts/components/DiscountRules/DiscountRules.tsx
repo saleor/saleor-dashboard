@@ -29,7 +29,7 @@ interface DiscountRulesProps<ErrorCode> {
   deleteButtonState: ConfirmButtonTransitionState;
   getRuleConfirmButtonState: (ruleEditIndex: number | null) => ConfirmButtonTransitionState;
   onRuleSubmit: (data: Rule, ruleIndex: number | null) => void;
-  onRuleDelete: (ruleIndex: number) => void;
+  onRuleDelete: (ruleIndex: number) => void | Promise<boolean>;
 }
 
 export const DiscountRules = <ErrorCode,>({
@@ -77,7 +77,24 @@ export const DiscountRules = <ErrorCode,>({
     handleRuleModalClose();
   };
   const handleRuleDelete = async () => {
-    await onRuleDelete(ruleDeleteIndex!);
+    const index = ruleDeleteIndex;
+
+    if (index === null) {
+      return;
+    }
+
+    const result = onRuleDelete(index);
+
+    if (result instanceof Promise) {
+      const success = await result;
+
+      if (success !== false) {
+        setRuleDeleteIndex(null);
+      }
+
+      return;
+    }
+
     setRuleDeleteIndex(null);
   };
   const handleOpenPlayground = () => {
@@ -115,7 +132,7 @@ export const DiscountRules = <ErrorCode,>({
 
         {isModalOpen && (
           <RuleFormModal
-            confimButtonState={getRuleConfirmButtonState(ruleEditIndex)}
+            confirmButtonState={getRuleConfirmButtonState(ruleEditIndex)}
             onClose={handleRuleModalClose}
             initialFormValues={ruleInitialValues}
             onSubmit={handleRuleModalSubmit}
@@ -124,10 +141,10 @@ export const DiscountRules = <ErrorCode,>({
           </RuleFormModal>
         )}
         <RuleDeleteModal
+          confirmButtonState={deleteButtonState}
           open={ruleDeleteIndex !== null}
           onClose={() => setRuleDeleteIndex(null)}
-          onSubmit={handleRuleDelete}
-          confimButtonState={deleteButtonState}
+          onConfirm={handleRuleDelete}
         />
       </DashboardCard>
     </DiscountRulesContextProvider>

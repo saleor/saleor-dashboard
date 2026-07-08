@@ -16,7 +16,7 @@ import {
   type TaxConfigurationUpdateInput,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import TaxCountryDialog from "@dashboard/taxes/components/TaxCountryDialog";
+import { TaxCountryDialog } from "@dashboard/taxes/components/TaxCountryDialog/TaxCountryDialog";
 import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { isLastElement } from "@dashboard/taxes/utils/utils";

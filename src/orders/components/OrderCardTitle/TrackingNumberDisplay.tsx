@@ -25,16 +25,13 @@ export const TrackingNumberDisplay = ({
         display="flex"
         alignItems="center"
         gap={1}
+        tabIndex={0}
         onMouseEnter={() => setShowCopyButton(true)}
         onMouseLeave={() => setShowCopyButton(false)}
+        onFocus={() => setShowCopyButton(true)}
+        onBlur={() => setShowCopyButton(false)}
       >
-        <Text
-          color="default2"
-          size={2}
-          onFocus={() => setShowCopyButton(true)}
-          onBlur={() => setShowCopyButton(false)}
-          data-test-id="tracking-number-set"
-        >
+        <Text color="default2" size={2} data-test-id="tracking-number-set">
           {intl.formatMessage(
             {
               defaultMessage: "Tracking: {trackingNumber}",
@@ -42,7 +39,12 @@ export const TrackingNumberDisplay = ({
             },
             {
               trackingNumber: (
-                <Text size={2} color="default1" fontWeight="medium">
+                <Text
+                  size={2}
+                  color={showCopyButton ? "default1" : "default2"}
+                  fontWeight="medium"
+                  __transition="color 0.15s ease-in-out"
+                >
                   {trackingNumber}
                 </Text>
               ),

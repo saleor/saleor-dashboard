@@ -1,7 +1,12 @@
 import { ProductMediaType } from "@dashboard/graphql";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 
-import { createPreorderEndDateChangeHandler, handleAssignMedia } from "./handlers";
+import {
+  areMediaSelectionsEqual,
+  createMediaChangeHandler,
+  createPreorderEndDateChangeHandler,
+  handleAssignMedia,
+} from "./handlers";
 
 type HandleAssignMediaParams = Parameters<typeof handleAssignMedia>;
 
@@ -153,6 +158,59 @@ describe("Product handlers", () => {
       variantId: "1",
       mediaId: "2",
     });
+  });
+});
+
+describe("areMediaSelectionsEqual", () => {
+  it("returns true when selections contain the same ids regardless of order", () => {
+    // Arrange // Act // Assert
+    expect(areMediaSelectionsEqual(["1", "2"], ["2", "1"])).toBe(true);
+  });
+
+  it("returns false when selections differ", () => {
+    // Arrange // Act // Assert
+    expect(areMediaSelectionsEqual(["1", "2"], ["1"])).toBe(false);
+  });
+});
+
+describe("createMediaChangeHandler", () => {
+  const createMockForm = (media: string[] = []) =>
+    ({
+      data: { media },
+      change: jest.fn(),
+    }) as unknown as Parameters<typeof createMediaChangeHandler>[0];
+
+  it("does not update form state when selection is unchanged", () => {
+    // Arrange
+    const form = createMockForm(["1", "2"]);
+    const triggerChange = jest.fn();
+    const handler = createMediaChangeHandler(form, triggerChange);
+
+    // Act
+    handler(["2", "1"]);
+
+    // Assert
+    expect(form.change).not.toHaveBeenCalled();
+    expect(triggerChange).not.toHaveBeenCalled();
+  });
+
+  it("updates form state when selection changes", () => {
+    // Arrange
+    const form = createMockForm(["1"]);
+    const triggerChange = jest.fn();
+    const handler = createMediaChangeHandler(form, triggerChange);
+
+    // Act
+    handler(["1", "2"]);
+
+    // Assert
+    expect(form.change).toHaveBeenCalledWith({
+      target: {
+        name: "media",
+        value: ["1", "2"],
+      },
+    });
+    expect(triggerChange).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -31,94 +31,92 @@ const options: UntranslatedOption[] = [
 ];
 
 interface GiftCardCreateExpirySelectProps {
-  errors: GiftCardBulkCreateFormErrors;
   change: FormChange;
   data: Pick<
     GiftCardCreateCommonFormData,
-    "expirySelected" | "expiryPeriodType" | "expiryPeriodAmount" | "expiryType" | "expiryDate"
+    "expiryDate" | "expiryPeriodAmount" | "expiryPeriodType" | "expirySelected" | "expiryType"
   >;
+  errors: GiftCardBulkCreateFormErrors;
 }
 
 const GiftCardCreateExpirySelect = ({
-  errors,
   change,
-  data: { expirySelected, expiryPeriodType, expiryPeriodAmount, expiryType, expiryDate },
+  data: { expiryDate, expiryPeriodAmount, expiryPeriodType, expirySelected, expiryType },
+  errors,
 }: GiftCardCreateExpirySelectProps) => {
   const intl = useIntl();
   const translatedOptions = options.map(({ label, value }) => ({
-    value,
     label: intl.formatMessage(label),
+    value,
   }));
   const currentDate = useCurrentDate();
+  const expiryPreviewDate = getExpiryPeriodTerminationDate(
+    currentDate,
+    expiryPeriodType,
+    expiryPeriodAmount,
+  )?.format("ll");
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" gap={3}>
       <Checkbox
-        data-test-id="expiry-section"
-        name={"expirySelected"}
         checked={expirySelected}
+        data-test-id="expiry-section"
+        gap={3}
+        name="expirySelected"
         onCheckedChange={value => change({ target: { name: "expirySelected", value } })}
       >
         <Text>
           <FormattedMessage {...messages.expirySelectedLabel} />
         </Text>
       </Checkbox>
-      {expirySelected && (
-        <>
+      {expirySelected ? (
+        <Box display="flex" flexDirection="column" gap={4} paddingLeft={6}>
           <RadioGroupField
-            name="expiryType"
-            value={expiryType}
-            error={false}
-            onChange={change}
             choices={translatedOptions}
+            error={false}
+            name="expiryType"
+            onChange={change}
+            value={expiryType}
           />
 
-          {expiryType === "EXPIRY_DATE" && (
+          {expiryType === "EXPIRY_DATE" ? (
             <Input
               error={!!errors?.expiryDate}
               helperText={getGiftCardErrorMessage(errors?.expiryDate, intl)}
-              onChange={change}
-              name={"expiryDate"}
               label={intl.formatMessage(messages.expiryDateLabel)}
-              value={expiryDate}
+              name="expiryDate"
+              onChange={change}
               type="date"
+              value={expiryDate}
             />
-          )}
+          ) : null}
 
-          {expiryType === "EXPIRY_PERIOD" && (
-            <Box
-              data-test-id="gift-card-expire-data-fields"
-              display="flex"
-              flexDirection="row"
-              gap={4}
-              alignItems={errors?.expiryDate ? "flex-start" : "center"}
-            >
+          {expiryType === "EXPIRY_PERIOD" ? (
+            <Box display="flex" flexDirection="column" gap={2}>
               <TimePeriodField
-                isError={!!errors?.expiryDate}
-                helperText={getGiftCardErrorMessage(errors?.expiryDate, intl)}
+                amountFieldName="expiryPeriodAmount"
                 change={change}
-                periodType={expiryPeriodType}
+                helperText={getGiftCardErrorMessage(errors?.expiryDate, intl)}
+                isError={!!errors?.expiryDate}
                 periodAmount={expiryPeriodAmount}
-                amountFieldName={"expiryPeriodAmount"}
-                typeFieldName={"expiryPeriodType"}
+                periodType={expiryPeriodType}
+                typeFieldName="expiryPeriodType"
               />
-              <Text style={{ textWrap: "nowrap" }}>
-                <Text size={2} fontWeight="light" display="block">
-                  <FormattedMessage {...messages.expiryOnLabel} />
+              {expiryPreviewDate ? (
+                <Text color="default2" size={2}>
+                  <FormattedMessage {...messages.expiryOnLabel} />{" "}
+                  <Text as="span" color="default1" size={2}>
+                    {expiryPreviewDate}
+                  </Text>
                 </Text>
-
-                {getExpiryPeriodTerminationDate(
-                  currentDate,
-                  expiryPeriodType,
-                  expiryPeriodAmount,
-                )?.format("ll")}
-              </Text>
+              ) : null}
             </Box>
-          )}
-        </>
-      )}
-    </>
+          ) : null}
+        </Box>
+      ) : null}
+    </Box>
   );
 };
 
+export { GiftCardCreateExpirySelect };
 export default GiftCardCreateExpirySelect;

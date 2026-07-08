@@ -1,61 +1,72 @@
+import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 interface VoucherCodesDeleteDialogProps {
-  open: boolean;
   confirmButtonTransitionState: ConfirmButtonTransitionState;
   onClose: () => void;
-  onDelete: () => Promise<void>;
+  onDelete: () => Promise<boolean>;
+  open: boolean;
 }
 
 export const VoucherCodesDeleteDialog = ({
-  open,
   confirmButtonTransitionState,
   onClose,
   onDelete,
+  open,
 }: VoucherCodesDeleteDialogProps) => {
-  const intl = useIntl();
   const isDeleting = confirmButtonTransitionState === "loading";
-  const handleSubmit = async () => {
-    await onDelete();
+
+  const handleClose = (): void => {
+    if (isDeleting) {
+      return;
+    }
+
     onClose();
   };
 
+  const handleSubmit = async (): Promise<void> => {
+    const shouldClose = await onDelete();
+
+    if (shouldClose) {
+      onClose();
+    }
+  };
+
   return (
-    <DashboardModal open={open} onChange={onClose}>
+    <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="xs">
-        <DashboardModal.Header>
-          <FormattedMessage id="WMN0q+" defaultMessage="Delete voucher codes" />
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              defaultMessage="Are you sure you want to delete these voucher codes?"
+              id="GA+Djy"
+            />
+          }
+        >
+          <FormattedMessage defaultMessage="Delete voucher codes" id="WMN0q+" />
         </DashboardModal.Header>
 
-        <Text as="p">
-          <FormattedMessage
-            id="GA+Djy"
-            defaultMessage="Are you sure you want to delete these voucher codes?"
-          />
-        </Text>
-
         <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary" disabled={isDeleting}>
-            {intl.formatMessage(buttonMessages.back)}
-          </Button>
-
+          <BackButton disabled={isDeleting} onClick={handleClose} />
           <ConfirmButton
-            transitionState={confirmButtonTransitionState}
-            onClick={handleSubmit}
-            variant="error"
             data-test-id="submit"
+            disabled={isDeleting}
+            onClick={handleSubmit}
+            transitionState={confirmButtonTransitionState}
+            variant="error"
           >
-            {intl.formatMessage(buttonMessages.delete)}
+            <FormattedMessage {...buttonMessages.delete} />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );
 };
+
+VoucherCodesDeleteDialog.displayName = "VoucherCodesDeleteDialog";

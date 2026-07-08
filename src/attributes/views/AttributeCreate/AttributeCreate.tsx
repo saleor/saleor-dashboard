@@ -20,8 +20,8 @@ import { useIntl } from "react-intl";
 import slugify from "slugify";
 
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
-import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog/AttributeValueEditDialog";
 import {
   attributeAddUrl,
   type AttributeAddUrlDialog,
@@ -158,7 +158,6 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
       defaultAttributeType={defaultAttributeType}
       disabled={attributeCreateOpts.loading}
       errors={attributeCreateOpts?.data?.attributeCreate?.errors || []}
-      params={params}
       onDelete={() => undefined}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
@@ -173,8 +172,6 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
           id,
         })
       }
-      onOpenReferenceTypes={() => openModal("assign-reference-types")}
-      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeCreateOpts.status}
       values={{
         __typename: "AttributeValueCountableConnection" as const,
@@ -201,7 +198,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
             reference: null,
             slug: slugify(value.name).toLowerCase(),
             sortOrder: valueIndex,
-            value: null,
+            value: value.value ?? null,
             plainText: null,
             richText: null,
             boolean: null,

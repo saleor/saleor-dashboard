@@ -1,2 +1,2 @@
-export { default } from "./UnassignMembersDialog";
+export { UnassignMembersDialog } from "./UnassignMembersDialog";
 export * from "./UnassignMembersDialog";

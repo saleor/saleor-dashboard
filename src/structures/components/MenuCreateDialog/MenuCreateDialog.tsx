@@ -9,8 +9,8 @@ import { type MenuErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";
-import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Input } from "@saleor/macaw-ui-next";
+import { useEffect, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface MenuCreateDialogFormData {
@@ -19,73 +19,103 @@ interface MenuCreateDialogFormData {
 
 interface MenuCreateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  disabled: boolean;
   errors: MenuErrorFragment[];
-  open: boolean;
   onClose: () => void;
   onConfirm: (data: MenuCreateDialogFormData) => void;
+  open: boolean;
 }
 
 const initialForm: MenuCreateDialogFormData = {
   name: "",
 };
-const MenuCreateDialog = ({
+
+export const MenuCreateDialog = ({
   confirmButtonState,
-  disabled,
   errors,
   onClose,
   onConfirm,
   open,
-}: MenuCreateDialogProps) => {
+}: MenuCreateDialogProps): JSX.Element => {
   const intl = useIntl();
+  const isSubmittingRef = useRef(false);
   const formErrors = getFormErrors(["name"], errors);
 
+  useEffect(
+    function resetSubmittingRefWhenDialogCloses() {
+      if (!open) {
+        isSubmittingRef.current = false;
+      }
+    },
+    [open],
+  );
+
+  const handleClose = (): void => {
+    if (isSubmittingRef.current) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm">
+    <DashboardModal onChange={handleClose} open={open}>
+      {open ? (
         <Form initial={initialForm} onSubmit={onConfirm}>
-          {({ change, data, submit }) => (
-            <Box display="grid" gap={6}>
-              <DashboardModal.Header data-test-id="create-menu-dialog-title">
-                <FormattedMessage
-                  id="pSb46V"
-                  defaultMessage="Create structure"
-                  description="dialog header"
-                />
-              </DashboardModal.Header>
+          {({ change, data, submit, isSubmitting }) => {
+            const isMutationLoading = confirmButtonState === "loading";
+            const isActionsDisabled = isSubmitting || isMutationLoading;
 
-              <TextField
-                data-test-id="menu-name-input"
-                disabled={disabled}
-                error={!!formErrors.name}
-                fullWidth
-                helperText={getMenuErrorMessage(formErrors.name, intl)}
-                label={intl.formatMessage({
-                  id: "5KS3f4",
-                  defaultMessage: "Structure title",
-                })}
-                name={"name" as keyof MenuCreateDialogFormData}
-                value={data.name}
-                onChange={change}
-              />
+            isSubmittingRef.current = isActionsDisabled;
 
-              <DashboardModal.Actions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  onClick={submit}
-                  data-test-id="submit"
-                >
-                  <FormattedMessage {...buttonMessages.save} />
-                </ConfirmButton>
-              </DashboardModal.Actions>
-            </Box>
-          )}
+            return (
+              <DashboardModal.Content size="sm">
+                <DashboardModal.ContextHeader data-test-id="create-menu-dialog-title">
+                  <FormattedMessage
+                    description="dialog header"
+                    id="pSb46V"
+                    defaultMessage="Create structure"
+                  />
+                </DashboardModal.ContextHeader>
+
+                <DashboardModal.Body>
+                  <DashboardModal.Inset>
+                    <Input
+                      data-test-id="menu-name-input"
+                      disabled={isActionsDisabled}
+                      error={!!formErrors.name}
+                      helperText={getMenuErrorMessage(formErrors.name, intl)}
+                      label={intl.formatMessage({
+                        id: "5KS3f4",
+                        defaultMessage: "Structure title",
+                      })}
+                      name="name"
+                      onChange={change}
+                      value={data.name}
+                      width="100%"
+                    />
+                  </DashboardModal.Inset>
+                </DashboardModal.Body>
+
+                <DashboardModal.Actions>
+                  <BackButton disabled={isActionsDisabled} onClick={handleClose} />
+                  <ConfirmButton
+                    data-test-id="submit"
+                    disabled={!data.name.trim() || isActionsDisabled}
+                    onClick={submit}
+                    transitionState={
+                      isMutationLoading ? confirmButtonState : isSubmitting ? "loading" : "default"
+                    }
+                  >
+                    <FormattedMessage {...buttonMessages.save} />
+                  </ConfirmButton>
+                </DashboardModal.Actions>
+              </DashboardModal.Content>
+            );
+          }}
         </Form>
-      </DashboardModal.Content>
+      ) : null}
     </DashboardModal>
   );
 };
 
 MenuCreateDialog.displayName = "MenuCreateDialog";
-export default MenuCreateDialog;

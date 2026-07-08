@@ -1,23 +1,18 @@
 // @ts-strict-ignore
-import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { DashboardModal } from "@dashboard/components/Modal";
+import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import {
-  type GiftCardErrorFragment,
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
   useGiftCardSettingsQuery,
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { getFormErrors } from "@dashboard/utils/errors";
-import { Box, Textarea } from "@saleor/macaw-ui-next";
-import { useState } from "react";
-import { useIntl } from "react-intl";
+import { type getFormErrors } from "@dashboard/utils/errors";
+import { Box, Text, Textarea } from "@saleor/macaw-ui-next";
+import { useEffect, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { GiftCardSendToCustomer } from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { type GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
@@ -25,19 +20,23 @@ import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import { GiftCardCreateMoneyInput } from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "./messages";
-import { type GiftCardCreateFormCommonProps, type GiftCardCreateFormCustomer } from "./types";
+import {
+  type GiftCardCreateFormCommonProps,
+  type GiftCardCreateFormCustomer,
+  type GiftCardCreateFormErrors,
+} from "./types";
 
 export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
+  channelSlug?: string;
   note: string;
   sendToCustomerSelected: boolean;
-  selectedCustomer?: GiftCardCreateFormCustomer;
-  channelSlug?: string;
 }
 
 export const initialData: GiftCardCreateFormData = {
   tags: [],
   balanceAmount: 1,
   balanceCurrency: null,
+  channelSlug: "",
   note: "",
   sendToCustomerSelected: false,
   expirySelected: false,
@@ -47,131 +46,159 @@ export const initialData: GiftCardCreateFormData = {
   expiryPeriodAmount: 12,
   requiresActivation: true,
 };
-interface GiftCardCreateDialogFormProps {
-  opts: { status: ConfirmButtonTransitionState };
-  apiErrors: GiftCardErrorFragment[];
-  onSubmit: (data: GiftCardCreateFormData) => void;
-  onClose: () => void;
+
+interface UseGiftCardCreateDialogFormProps {
   initialCustomer?: GiftCardCreateFormCustomer | null;
+  onSubmit: (data: GiftCardCreateFormData, selectedCustomer: GiftCardCreateFormCustomer) => void;
+  open: boolean;
 }
 
-const defaultInitialCustomer = { email: "", name: "" };
+const defaultInitialCustomer: GiftCardCreateFormCustomer = { email: "", name: "" };
 
-export const GiftCardCreateDialogForm = ({
-  onSubmit,
-  opts,
-  onClose,
-  apiErrors,
+export const useGiftCardCreateDialogForm = ({
   initialCustomer,
-}: GiftCardCreateDialogFormProps) => {
-  const intl = useIntl();
+  onSubmit,
+  open,
+}: UseGiftCardCreateDialogFormProps) => {
   const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(
-    initialCustomer || defaultInitialCustomer,
+    initialCustomer ?? defaultInitialCustomer,
   );
-  const handleSubmit = (data: GiftCardCreateFormData) => onSubmit({ ...data, selectedCustomer });
-  const getInitialExpirySettingsData = (): Partial<GiftCardCreateFormData> => {
+  const { submit, toggleValue, change, data, set, reset } = useForm(
+    {
+      ...initialData,
+      balanceCurrency: "",
+    },
+    formData => onSubmit(formData, selectedCustomer),
+  );
+
+  useEffect(() => {
     if (loadingSettings) {
-      return {};
+      return;
     }
 
     const { expiryType, expiryPeriod } = settingsData?.giftCardSettings ?? {};
 
     if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
-      return {};
+      return;
     }
 
-    return {
+    set({
       expiryType,
       expiryPeriodType: expiryPeriod?.type,
       expiryPeriodAmount: expiryPeriod?.amount,
-    };
-  };
-  const { submit, change, toggleValue, data, set } = useForm(
-    {
-      ...initialData,
-      ...getInitialExpirySettingsData(),
-      balanceCurrency: "",
-      channelSlug: "",
-      sendToCustomerSelected: !!initialCustomer,
+    });
+  }, [loadingSettings, set, settingsData?.giftCardSettings]);
+
+  useModalDialogOpen(open, {
+    onClose: () => {
+      reset();
+      setSelectedCustomer(initialCustomer ?? defaultInitialCustomer);
     },
-    handleSubmit,
-  );
-  const formErrors = getFormErrors(
-    ["tags", "expiryDate", "customer", "currency", "amount", "balance"],
-    apiErrors,
-  );
-  const {
-    tags,
-    sendToCustomerSelected,
-    channelSlug,
-    balanceAmount,
-    expirySelected,
-    expiryType,
-    expiryDate,
-    requiresActivation,
-  } = data;
-  const shouldEnableSubmitButton = () => {
-    if (!balanceAmount) {
-      return false;
-    }
+  });
 
-    if (expirySelected && expiryType === "EXPIRY_DATE") {
-      return !!expiryDate;
-    }
+  const { balanceAmount, expiryDate, expirySelected, expiryType, sendToCustomerSelected } = data;
 
-    return true;
-  };
-  const commonFormProps: GiftCardCreateFormCommonProps = {
-    data,
-    errors: formErrors,
-    toggleValue,
+  const shouldEnableSubmitButton =
+    !!balanceAmount &&
+    (!expirySelected || expiryType !== "EXPIRY_DATE" || !!expiryDate) &&
+    (!sendToCustomerSelected || (!!selectedCustomer.email && !!data.channelSlug));
+
+  return {
     change,
+    data,
+    loadingSettings,
+    selectedCustomer,
+    set,
+    setSelectedCustomer,
+    shouldEnableSubmitButton,
+    submit,
+    toggleValue,
+  };
+};
+
+interface GiftCardCreateDialogFieldsProps {
+  change: GiftCardCreateFormCommonProps["change"];
+  data: GiftCardCreateFormData;
+  formErrors: ReturnType<typeof getFormErrors> | null;
+  initialCustomer?: GiftCardCreateFormCustomer | null;
+  selectedCustomer: GiftCardCreateFormCustomer;
+  set: (data: Partial<GiftCardCreateFormData>) => void;
+  setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
+  toggleValue: GiftCardCreateFormCommonProps["toggleValue"];
+}
+
+export const GiftCardCreateDialogFields = ({
+  change,
+  data,
+  formErrors = null,
+  initialCustomer,
+  selectedCustomer,
+  set,
+  setSelectedCustomer,
+  toggleValue,
+}: GiftCardCreateDialogFieldsProps) => {
+  const intl = useIntl();
+  const { channelSlug, note, requiresActivation, sendToCustomerSelected, tags } = data;
+  const commonFormProps: GiftCardCreateFormCommonProps = {
+    change,
+    data,
+    errors: (formErrors ?? {}) as GiftCardCreateFormErrors,
+    toggleValue,
   };
 
   return (
-    <>
-      <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
-
-      <GiftCardTagInput error={formErrors?.tags} name="tags" values={tags} onChange={change} />
-
-      <GiftCardSendToCustomer
-        selectedChannelSlug={channelSlug}
-        change={change}
-        sendToCustomerSelected={sendToCustomerSelected}
-        selectedCustomer={selectedCustomer}
-        setSelectedCustomer={setSelectedCustomer}
-        disabled={!!initialCustomer}
-      />
-
-      <GiftCardCreateExpirySelect {...commonFormProps} />
-
-      <Box display="grid" gap={2}>
-        <Textarea
-          data-test-id="note-field"
-          name="note"
+    <Box display="flex" flexDirection="column" gap={6}>
+      <Box display="flex" flexDirection="column" gap={3}>
+        <ModalSectionHeader>
+          <FormattedMessage {...messages.detailsSection} />
+        </ModalSectionHeader>
+        <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
+        <GiftCardTagInput
+          error={commonFormProps.errors?.tags}
+          name="tags"
+          values={tags}
           onChange={change}
-          rows={3}
-          width="100%"
-          label={`${intl.formatMessage(messages.noteLabel)}`}
         />
-
-        <Label text={intl.formatMessage(messages.noteSubtitle)} />
       </Box>
-
-      <GiftCardCreateRequiresActivationSection onChange={change} checked={requiresActivation} />
-
-      <DashboardModal.Actions>
-        <BackButton onClick={onClose} />
-        <ConfirmButton
-          data-test-id="submit"
-          disabled={!shouldEnableSubmitButton()}
-          transitionState={opts?.status}
-          onClick={submit}
-        >
-          {intl.formatMessage(messages.issueButtonLabel)}
-        </ConfirmButton>
-      </DashboardModal.Actions>
-    </>
+      <Box display="flex" flexDirection="column" gap={3}>
+        <ModalSectionHeader>
+          <FormattedMessage {...messages.deliverySection} />
+        </ModalSectionHeader>
+        <GiftCardSendToCustomer
+          balanceCurrency={data.balanceCurrency}
+          change={change}
+          disabled={!!initialCustomer}
+          selectedChannelSlug={channelSlug}
+          selectedCustomer={selectedCustomer}
+          sendToCustomerSelected={sendToCustomerSelected}
+          set={set}
+          setSelectedCustomer={setSelectedCustomer}
+        />
+      </Box>
+      <Box display="flex" flexDirection="column" gap={3}>
+        <ModalSectionHeader>
+          <FormattedMessage {...messages.optionsSection} />
+        </ModalSectionHeader>
+        <Box display="flex" flexDirection="column" gap={4}>
+          <GiftCardCreateExpirySelect {...commonFormProps} />
+          <Box display="flex" flexDirection="column" gap={1}>
+            <Text fontWeight="medium" size={3}>
+              <FormattedMessage {...messages.noteLabel} />
+            </Text>
+            <Textarea
+              data-test-id="note-field"
+              name="note"
+              onChange={change}
+              rows={3}
+              value={note}
+              width="100%"
+            />
+            <Label text={intl.formatMessage(messages.noteSubtitle)} />
+          </Box>
+          <GiftCardCreateRequiresActivationSection checked={requiresActivation} onChange={change} />
+        </Box>
+      </Box>
+    </Box>
   );
 };

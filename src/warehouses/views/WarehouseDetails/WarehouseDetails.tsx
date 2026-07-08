@@ -16,7 +16,7 @@ import {
   getStringOrPlaceholder,
 } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDeleteDialog";
+import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog";
 import WarehouseDetailsPage, {
   type WarehouseDetailsPageFormData,
 } from "@dashboard/warehouses/components/WarehouseDetailsPage";

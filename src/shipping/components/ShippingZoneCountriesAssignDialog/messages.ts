@@ -21,30 +21,50 @@ export const messages = defineMessages({
     defaultMessage: "Search by country name",
     description: "search placeholder",
   },
-  quickPickSubtitle: {
-    id: "f2F1NJ",
-    defaultMessage: "Quick Pick",
-    description: "section title",
+  quickPicksTitle: {
+    id: "HUpSiH",
+    defaultMessage: "Quick picks",
+    description: "section title for country preset shortcuts in assign countries dialog",
   },
-  countriesSubtitle: {
-    id: "wgA48T",
-    defaultMessage: "Countries A to Z",
-    description: "country selection",
-  },
-  restOfTheWorldCheckbox: {
-    id: "K/ic0P",
-    defaultMessage: "Rest of the World",
-    description: "checkbox label",
-  },
-  restOfTheWorldCheckboxDescription: {
-    id: "G+9nOZ",
+  quickPicksDescription: {
+    id: "UIiVi2",
     defaultMessage:
-      "If selected, this will add all of the countries not selected to other shipping zones",
-    description: "checkbox description",
+      "Add common country groups in one click. Adjust individual countries in the list below.",
+    description: "section hint for country preset shortcuts in assign countries dialog",
+  },
+  europeanUnionTitle: {
+    id: "qsQQm4",
+    defaultMessage: "European Union ({count})",
+    description: "quick pick label for EU member states",
+  },
+  northAmericaTitle: {
+    id: "07nmyw",
+    defaultMessage: "North America",
+    description: "quick pick label for United States, Canada, and Mexico",
+  },
+  restOfTheWorldTitle: {
+    id: "SQ8elk",
+    defaultMessage: "Rest of the World",
+    description: "quick pick label for unassigned countries",
+  },
+  restOfTheWorldDescription: {
+    id: "pBuMjY",
+    defaultMessage: "Countries not assigned to any other shipping zone.",
+    description: "tooltip for rest of the world quick pick in assign countries dialog",
+  },
+  restOfTheWorldTooltipAriaLabel: {
+    id: "kGW52l",
+    defaultMessage: "About Rest of the World",
+    description: "aria label for rest of the world quick pick help tooltip",
   },
   assignCountriesButton: {
-    id: "LHPVg/",
-    defaultMessage: "Assign and save",
-    description: "assign countries to shipping zone and save, button",
+    id: "f+EgUw",
+    defaultMessage: "Assign and save ({count, plural, one {# country} other {# countries}})",
+    description: "assign countries to shipping zone and save, button with selected country count",
+  },
+  notFoundTitle: {
+    id: "q0TV+c",
+    defaultMessage: "No countries found",
+    description: "no countries found in assign countries dialog",
   },
 });

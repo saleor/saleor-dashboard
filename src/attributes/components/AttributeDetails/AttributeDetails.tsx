@@ -23,6 +23,7 @@ import slugify from "slugify";
 
 import { getAttributeSlugErrorMessage } from "../../errors";
 import { type AttributePageFormData } from "../AttributePage";
+import styles from "./AttributeDetails.module.css";
 import { messages } from "./messages";
 
 const attributeInputTypeOptions = Object.values(AttributeInputTypeEnum);
@@ -65,6 +66,7 @@ interface AttributeDetailsProps
   apiErrors: AttributeErrorFragment[];
   onChange: FormChange;
   onUnitChange: (unit: AttributePageFormData["unit"]) => void;
+  variant?: "card" | "embedded";
 }
 
 const AttributeDetails = (props: AttributeDetailsProps) => {
@@ -78,8 +80,10 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
     apiErrors,
     onChange,
     onUnitChange,
+    variant = "card",
   } = props;
   const intl = useIntl();
+  const isEmbedded = variant === "embedded";
   const [inputTypeInputActive, setInputTypeInputActive] = useState(false);
   const showInputTypeDisplay =
     !inputTypeInputActive && Boolean(data.inputType) && isAttributeInputTypeEnum(data.inputType);
@@ -119,6 +123,144 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
     apiErrors,
   );
 
+  const slugPlaceholder = slugify(data.name).toLowerCase();
+  const fields = (
+    <Box display="flex" flexDirection="column" gap={isEmbedded ? 6 : undefined}>
+      <TextField
+        autoComplete="off"
+        data-test-id="attribute-default-label-input"
+        disabled={disabled}
+        error={!!formApiErrors.name}
+        label={intl.formatMessage(
+          isEmbedded ? messages.embeddedAttributeLabel : messages.attributeLabel,
+        )}
+        name={"name" as keyof AttributePageFormData}
+        placeholder={
+          isEmbedded ? intl.formatMessage(messages.embeddedAttributeLabelPlaceholder) : undefined
+        }
+        fullWidth
+        helperText={
+          getAttributeErrorMessage(formApiErrors.name, intl) ||
+          (isEmbedded ? intl.formatMessage(messages.embeddedAttributeLabelHelper) : undefined)
+        }
+        value={data.name}
+        onChange={onChange}
+      />
+      {!isEmbedded ? <FormSpacer /> : null}
+      <TextField
+        autoComplete="off"
+        className={isEmbedded ? styles.codeInput : undefined}
+        data-test-id="attribute-code-input"
+        disabled={disabled}
+        error={!!formApiErrors.slug}
+        label={intl.formatMessage(
+          isEmbedded ? messages.embeddedAttributeSlug : messages.attributeSlug,
+        )}
+        name={"slug" as keyof AttributePageFormData}
+        placeholder={slugPlaceholder}
+        fullWidth
+        helperText={
+          getAttributeSlugErrorMessage(formApiErrors.slug, intl) ||
+          intl.formatMessage(
+            isEmbedded ? messages.embeddedAttributeSlugHelper : messages.attributeSlugHelperText,
+          )
+        }
+        value={data.slug}
+        onChange={onChange}
+      />
+      {!isEmbedded ? <FormSpacer /> : null}
+      <Box
+        display="flex"
+        flexDirection={isEmbedded ? "column" : "row"}
+        justifyContent="space-between"
+        gap={4}
+      >
+        <Box width="100%">
+          {/*
+            Macaw Combobox renders startAdornment and the selected label as siblings
+            (icon wrapper + native <input>), so they cannot be aligned. Same workaround
+            as ProductOrganization: render icon + label in startAdornment and hide the
+            duplicate input text until focus. Revisit when Macaw supports field adornments.
+          */}
+          <Combobox
+            data-test-id="attribute-type-select"
+            disabled={disabled || !canChangeType}
+            error={!!formApiErrors.inputType}
+            helperText={
+              getAttributeErrorMessage(formApiErrors.inputType, intl) ||
+              (isEmbedded ? intl.formatMessage(messages.embeddedInputTypeHelper) : undefined)
+            }
+            label={intl.formatMessage(isEmbedded ? messages.embeddedInputType : messages.inputType)}
+            name="inputType"
+            value={data.inputType}
+            options={inputTypeChoices}
+            onFocus={() => setInputTypeInputActive(true)}
+            onBlur={() => setInputTypeInputActive(false)}
+            startAdornment={value => {
+              if (!showInputTypeDisplay || !value || !isAttributeInputTypeEnum(value)) {
+                return null;
+              }
+
+              return (
+                <AttributeInputTypeOptionLabel inputType={value} iconSize="small" textSize={3} />
+              );
+            }}
+            onChange={value => {
+              if (!value) {
+                return;
+              }
+
+              onChange({
+                target: { name: "inputType", value },
+              });
+            }}
+            {...(showInputTypeDisplay && {
+              width: "100%",
+              __opacity: 0,
+              position: "absolute",
+            })}
+          />
+        </Box>
+        {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
+          data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) && (
+          <Box width="100%">
+            <Select
+              aria-disabled={disabled || !canChangeType}
+              data-test-id="attribute-entity-type-select"
+              disabled={disabled || !canChangeType}
+              error={!!formApiErrors.entityType}
+              helperText={
+                getAttributeErrorMessage(formApiErrors.entityType, intl) ||
+                intl.formatMessage(
+                  isEmbedded ? messages.embeddedEntityTypeHelper : messages.entityTypeHelper,
+                )
+              }
+              label={intl.formatMessage(messages.entityType)}
+              name="entityType"
+              onChange={onChange}
+              value={data.entityType}
+              options={entityTypeChoices}
+            />
+          </Box>
+        )}
+      </Box>
+      {data.inputType === AttributeInputTypeEnum.NUMERIC && (
+        <NumericUnits
+          data={data}
+          errors={errors}
+          disabled={disabled}
+          clearErrors={clearErrors}
+          setError={setError}
+          onUnitChange={onUnitChange}
+        />
+      )}
+    </Box>
+  );
+
+  if (isEmbedded) {
+    return fields;
+  }
+
   return (
     <DashboardCard>
       <DashboardCard.Header>
@@ -127,108 +269,7 @@ const AttributeDetails = (props: AttributeDetailsProps) => {
         </DashboardCard.Title>
       </DashboardCard.Header>
 
-      <DashboardCard.Content>
-        <TextField
-          data-test-id="attribute-default-label-input"
-          disabled={disabled}
-          error={!!formApiErrors.name}
-          label={intl.formatMessage(messages.attributeLabel)}
-          name={"name" as keyof AttributePageFormData}
-          fullWidth
-          helperText={getAttributeErrorMessage(formApiErrors.name, intl)}
-          value={data.name}
-          onChange={onChange}
-        />
-        <FormSpacer />
-        <TextField
-          data-test-id="attribute-code-input"
-          disabled={disabled}
-          error={!!formApiErrors.slug}
-          label={intl.formatMessage(messages.attributeSlug)}
-          name={"slug" as keyof AttributePageFormData}
-          placeholder={slugify(data.name).toLowerCase()}
-          fullWidth
-          helperText={
-            getAttributeSlugErrorMessage(formApiErrors.slug, intl) ||
-            intl.formatMessage(messages.attributeSlugHelperText)
-          }
-          value={data.slug}
-          onChange={onChange}
-        />
-        <FormSpacer />
-        <Box display="flex" justifyContent="space-between" gap={4}>
-          <Box width="100%">
-            {/*
-              Macaw Combobox renders startAdornment and the selected label as siblings
-              (icon wrapper + native <input>), so they cannot be aligned. Same workaround
-              as ProductOrganization: render icon + label in startAdornment and hide the
-              duplicate input text until focus. Revisit when Macaw supports field adornments.
-            */}
-            <Combobox
-              data-test-id="attribute-type-select"
-              disabled={disabled || !canChangeType}
-              error={!!formApiErrors.inputType}
-              helperText={getAttributeErrorMessage(formApiErrors.inputType, intl)}
-              label={intl.formatMessage(messages.inputType)}
-              name="inputType"
-              value={data.inputType}
-              options={inputTypeChoices}
-              onFocus={() => setInputTypeInputActive(true)}
-              onBlur={() => setInputTypeInputActive(false)}
-              startAdornment={value => {
-                if (!showInputTypeDisplay || !value || !isAttributeInputTypeEnum(value)) {
-                  return null;
-                }
-
-                return (
-                  <AttributeInputTypeOptionLabel inputType={value} iconSize="small" textSize={3} />
-                );
-              }}
-              onChange={value => {
-                if (!value) {
-                  return;
-                }
-
-                onChange({
-                  target: { name: "inputType", value },
-                });
-              }}
-              {...(showInputTypeDisplay && {
-                width: "100%",
-                __opacity: 0,
-                position: "absolute",
-              })}
-            />
-          </Box>
-          {(data.inputType === AttributeInputTypeEnum.REFERENCE ||
-            data.inputType === AttributeInputTypeEnum.SINGLE_REFERENCE) && (
-            <Box width="100%">
-              <Select
-                aria-disabled={disabled || !canChangeType}
-                data-test-id="attribute-entity-type-select"
-                disabled={disabled || !canChangeType}
-                error={!!formApiErrors.entityType}
-                helperText={getAttributeErrorMessage(formApiErrors.entityType, intl)}
-                label={intl.formatMessage(messages.entityType)}
-                name="entityType"
-                onChange={onChange}
-                value={data.entityType}
-                options={entityTypeChoices}
-              />
-            </Box>
-          )}
-        </Box>
-        {data.inputType === AttributeInputTypeEnum.NUMERIC && (
-          <NumericUnits
-            data={data}
-            errors={errors}
-            disabled={disabled}
-            clearErrors={clearErrors}
-            setError={setError}
-            onUnitChange={onUnitChange}
-          />
-        )}
-      </DashboardCard.Content>
+      <DashboardCard.Content>{fields}</DashboardCard.Content>
     </DashboardCard>
   );
 };

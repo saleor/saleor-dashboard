@@ -10,11 +10,12 @@ import { type AttributeErrorFragment, AttributeInputTypeEnum } from "@dashboard/
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { TextField } from "@material-ui/core";
+import { Box, Input } from "@saleor/macaw-ui-next";
+import { useEffect, useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AttributeValueEditDialogFormData } from "../../utils/data";
-import AttributeSwatchField from "../AttributeSwatchField";
+import AttributeSwatchField from "../AttributeSwatchField/AttributeSwatchField";
 import { getAttributeValueFields } from "./utils";
 
 interface AttributeValueEditDialogProps {
@@ -28,7 +29,7 @@ interface AttributeValueEditDialogProps {
   inputType?: AttributeInputTypeEnum;
 }
 
-const AttributeValueEditDialog = ({
+export const AttributeValueEditDialog = ({
   attributeValue,
   confirmButtonState,
   disabled,
@@ -37,84 +38,127 @@ const AttributeValueEditDialog = ({
   onSubmit,
   open,
   inputType,
-}: AttributeValueEditDialogProps) => {
+}: AttributeValueEditDialogProps): JSX.Element => {
   const intl = useIntl();
+  const isSubmittingRef = useRef(false);
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
-  const attributeValueFields = getAttributeValueFields(attributeValue, isSwatch);
-  const initialForm: AttributeValueEditDialogFormData = {
-    name: attributeValue?.name ?? "",
-    ...attributeValueFields,
-  };
+  const initialForm = useMemo<AttributeValueEditDialogFormData>(
+    () => ({
+      name: attributeValue?.name ?? "",
+      ...getAttributeValueFields(attributeValue, isSwatch),
+    }),
+    [attributeValue, isSwatch],
+  );
   const errors = useModalDialogErrors(apiErrors, open);
   const formErrors = getFormErrors(["name"], errors);
 
+  useEffect(
+    function resetSubmittingRefWhenDialogCloses() {
+      if (!open) {
+        isSubmittingRef.current = false;
+      }
+    },
+    [open],
+  );
+
+  const handleClose = (): void => {
+    if (isSubmittingRef.current) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="sm" data-test-id="edit-attribute-value-dialog">
+    <DashboardModal onChange={handleClose} open={open}>
+      {open ? (
         <Form initial={initialForm} onSubmit={onSubmit}>
-          {({ errors, set, change, clearErrors, setError, data, submit }) => (
-            <DashboardModal.Grid>
-              <DashboardModal.Header>
-                {attributeValue === null ? (
-                  <FormattedMessage
-                    id="PqMbma"
-                    defaultMessage="Add Value"
-                    description="add attribute value"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="XYhE8p"
-                    defaultMessage="Edit Value"
-                    description="edit attribute value"
-                  />
-                )}
-              </DashboardModal.Header>
+          {({
+            errors: formFieldErrors,
+            set,
+            change,
+            clearErrors,
+            setError,
+            data,
+            submit,
+            isSubmitting,
+          }) => {
+            const isMutationLoading = confirmButtonState === "loading";
+            const isActionsDisabled = disabled || isSubmitting || isMutationLoading;
 
-              <TextField
-                data-test-id="value-name"
-                autoFocus
-                disabled={disabled}
-                error={!!formErrors.name}
-                fullWidth
-                helperText={getAttributeValueErrorMessage(formErrors.name, intl)}
-                name={"name" as keyof AttributeValueEditDialogFormData}
-                label={intl.formatMessage({
-                  id: "UhcALJ",
-                  defaultMessage: "Name",
-                  description: "attribute name",
-                })}
-                value={data.name}
-                onChange={change}
-              />
+            isSubmittingRef.current = isActionsDisabled;
 
-              {isSwatch && (
-                <AttributeSwatchField
-                  data={data}
-                  errors={errors}
-                  clearErrors={clearErrors}
-                  setError={setError}
-                  set={set}
-                />
-              )}
+            return (
+              <DashboardModal.Content size="sm" data-test-id="edit-attribute-value-dialog">
+                <DashboardModal.ContextHeader>
+                  {attributeValue === null ? (
+                    <FormattedMessage
+                      id="PqMbma"
+                      defaultMessage="Add Value"
+                      description="add attribute value"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="XYhE8p"
+                      defaultMessage="Edit Value"
+                      description="edit attribute value"
+                    />
+                  )}
+                </DashboardModal.ContextHeader>
 
-              <DashboardModal.Actions>
-                <BackButton onClick={onClose} />
-                <ConfirmButton
-                  data-test-id="submit"
-                  transitionState={confirmButtonState}
-                  disabled={data.name === ""}
-                  onClick={submit}
-                >
-                  <FormattedMessage {...buttonMessages.save} />
-                </ConfirmButton>
-              </DashboardModal.Actions>
-            </DashboardModal.Grid>
-          )}
+                <DashboardModal.Body fill={isSwatch}>
+                  <DashboardModal.Inset>
+                    <Box display="flex" flexDirection="column" gap={4}>
+                      <Input
+                        autoFocus
+                        data-test-id="value-name"
+                        disabled={isActionsDisabled}
+                        error={!!formErrors.name}
+                        helperText={getAttributeValueErrorMessage(formErrors.name, intl)}
+                        label={intl.formatMessage({
+                          id: "UhcALJ",
+                          defaultMessage: "Name",
+                          description: "attribute name",
+                        })}
+                        name="name"
+                        onChange={change}
+                        value={data.name}
+                        width="100%"
+                      />
+
+                      {isSwatch ? (
+                        <AttributeSwatchField
+                          clearErrors={clearErrors}
+                          data={data}
+                          errors={formFieldErrors}
+                          set={set}
+                          setError={setError}
+                        />
+                      ) : null}
+                    </Box>
+                  </DashboardModal.Inset>
+                </DashboardModal.Body>
+
+                <DashboardModal.Actions>
+                  <BackButton disabled={isActionsDisabled} onClick={handleClose} />
+                  <ConfirmButton
+                    data-test-id="submit"
+                    disabled={!data.name.trim() || isActionsDisabled}
+                    onClick={submit}
+                    transitionState={
+                      isMutationLoading ? confirmButtonState : isSubmitting ? "loading" : "default"
+                    }
+                  >
+                    <FormattedMessage {...buttonMessages.save} />
+                  </ConfirmButton>
+                </DashboardModal.Actions>
+              </DashboardModal.Content>
+            );
+          }}
         </Form>
-      </DashboardModal.Content>
+      ) : null}
     </DashboardModal>
   );
 };
 
 AttributeValueEditDialog.displayName = "AttributeValueEditDialog";
-export default AttributeValueEditDialog;

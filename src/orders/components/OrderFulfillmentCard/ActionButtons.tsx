@@ -4,7 +4,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { DEFAULT_ICON_SIZE } from "@dashboard/icons/utils";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { CheckIcon, TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
@@ -53,17 +53,19 @@ export const ActionButtons = ({
     const cannotFulfill = !orderIsPaid && !fulfillmentAllowUnpaid;
 
     return (
-      <Box>
-        <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
-          <CheckIcon size={DEFAULT_ICON_SIZE} />
-          <FormattedMessage {...buttonMessages.approve} />
-        </Button>
-        {cannotFulfill && (
-          <Text color="critical1" size={2} fontWeight="light">
-            <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
-          </Text>
-        )}
-      </Box>
+      <Tooltip>
+        <Tooltip.Trigger>
+          <Box>
+            <Button variant="primary" onClick={onApprove} disabled={cannotFulfill}>
+              <CheckIcon size={DEFAULT_ICON_SIZE} />
+              <FormattedMessage {...buttonMessages.approve} />
+            </Button>
+          </Box>
+        </Tooltip.Trigger>
+        <Tooltip.Content>
+          {cannotFulfill && <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />}
+        </Tooltip.Content>
+      </Tooltip>
     );
   }
 

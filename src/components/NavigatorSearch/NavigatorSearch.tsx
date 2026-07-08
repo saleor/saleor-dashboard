@@ -26,16 +26,13 @@ const NavigatorSearch = () => {
   return (
     <DashboardModal open={isNavigatorVisible} onChange={handleCloseMenu}>
       <DashboardModal.Content
-        __width="100%"
-        __maxWidth="720px"
+        className="command-menu"
+        disableScrollLayout
+        size="picker"
         __height="420px"
         __maxHeight="420px"
-        backgroundColor="default1"
-        padding={0}
-        paddingBottom={4}
-        size="sm"
-        className="command-menu"
         overflowY="hidden"
+        padding={0}
       >
         <HotkeysProvider initiallyActiveScopes={["command-menu"]}>
           <CommandContent />

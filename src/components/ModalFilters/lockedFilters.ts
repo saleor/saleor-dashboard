@@ -15,6 +15,7 @@ import {
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
 import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { stripGlobalConstraints } from "../ConditionalFilter/globalConstraints";
 import { type LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
 import { type UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import { type LockedFilter } from "./types";
@@ -59,18 +60,6 @@ export const createLockedFilterElement = (
   element.setConstraint(new Constraint(GLOBAL, ["left", "right", "condition"], false));
 
   return element;
-};
-
-export const stripGlobalConstraints = (filterValue: FilterContainer): FilterContainer => {
-  const nonConstraintElements = filterValue.filter(
-    item => !FilterElement.isFilterElement(item) || !item.constraint?.isGlobal,
-  );
-
-  if (nonConstraintElements[0] === "AND") {
-    return nonConstraintElements.slice(1);
-  }
-
-  return nonConstraintElements;
 };
 
 /** Wraps valueProvider from ConditionalFilter with logic for filters in modals

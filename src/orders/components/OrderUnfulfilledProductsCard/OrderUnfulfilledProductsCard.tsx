@@ -1,13 +1,14 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Box, Button } from "@saleor/macaw-ui-next";
+import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { PackageIcon } from "lucide-react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
+import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
-import { useStyles } from "./styles";
+import { OrderLineGroupEnd } from "../OrderLineGroupBottomSeparator/OrderLineGroupBottomSeparator";
 import { toLineWithUnfulfilledQuantity } from "./utils";
 
 interface OrderUnfulfilledProductsCardProps {
@@ -18,6 +19,7 @@ interface OrderUnfulfilledProductsCardProps {
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
   onShowLinePriceBreakdown?: (lineId: string) => void;
+  showBottomSeparator?: boolean;
 }
 
 export const OrderUnfulfilledProductsCard = ({
@@ -28,10 +30,8 @@ export const OrderUnfulfilledProductsCard = ({
   lines,
   onFulfill,
   loading,
+  showBottomSeparator = false,
 }: OrderUnfulfilledProductsCardProps) => {
-  const classes = useStyles();
-  const intl = useIntl();
-
   if (!lines.length) {
     return null;
   }
@@ -41,28 +41,32 @@ export const OrderUnfulfilledProductsCard = ({
       <DashboardCard gap={0}>
         <OrderCardTitle
           status="unfulfilled"
-          className={classes.cardTitle}
           toolbar={
             showFulfillmentAction && (
-              <Box>
-                <Button
-                  data-test-id="fulfill-button"
-                  variant="primary"
-                  onClick={onFulfill}
-                  disabled={notAllowedToFulfillUnpaid}
-                  title={
-                    notAllowedToFulfillUnpaid
-                      ? intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)
-                      : undefined
-                  }
-                >
-                  <PackageIcon size={16} />
-                  <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
-                </Button>
-              </Box>
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <Box>
+                    <Button
+                      data-test-id="fulfill-button"
+                      variant="primary"
+                      onClick={onFulfill}
+                      disabled={notAllowedToFulfillUnpaid}
+                    >
+                      <PackageIcon size={16} />
+                      <FormattedMessage id="/Xwjww" defaultMessage="Fulfill" description="button" />
+                    </Button>
+                  </Box>
+                </Tooltip.Trigger>
+                <Tooltip.Content>
+                  {notAllowedToFulfillUnpaid && (
+                    <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
+                  )}
+                </Tooltip.Content>
+              </Tooltip>
             )
           }
         />
+        <OrderCardDatagridSeparator />
         <DashboardCard.Content paddingX={0}>
           <OrderDetailsDatagrid
             lines={toLineWithUnfulfilledQuantity(lines)}
@@ -70,14 +74,7 @@ export const OrderUnfulfilledProductsCard = ({
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}
           />
-          <Box
-            backgroundColor={"default1"}
-            width="100%"
-            height={6}
-            borderBottomStyle={"solid"}
-            borderBottomWidth={1}
-            borderColor={"default1"}
-          />
+          <OrderLineGroupEnd showBottomSeparator={showBottomSeparator} backgroundColor="default1" />
         </DashboardCard.Content>
       </DashboardCard>
     </>

@@ -1,6 +1,11 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionGroupErrorCode, type PermissionGroupErrorFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -14,7 +19,7 @@ interface PermissionDeleteDialogProps {
   open: boolean;
 }
 
-const PermissionGroupDeleteDialog = ({
+export const PermissionGroupDeleteDialog = ({
   confirmButtonState,
   error,
   name,
@@ -23,6 +28,7 @@ const PermissionGroupDeleteDialog = ({
   open,
 }: PermissionDeleteDialogProps) => {
   const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
 
   let errorMessage;
 
@@ -36,33 +42,56 @@ const PermissionGroupDeleteDialog = ({
     errorMessage = getPermissionGroupErrorMessage(error, intl);
   }
 
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <ActionDialog
-      open={open}
-      confirmButtonState={confirmButtonState}
-      onClose={onClose}
-      onConfirm={onConfirm}
-      title={intl.formatMessage({
-        id: "L6+p8a",
-        defaultMessage: "Delete permission group",
-        description: "dialog title",
-      })}
-      variant="delete"
-    >
-      <Box data-testid="permission-group-delete-dialog-text">
-        <FormattedMessage
-          id="sR0urA"
-          defaultMessage="Are you sure you want to delete {name}?"
-          description="dialog content"
-          values={{
-            name: <strong>{name}</strong>,
-          }}
-        />
-      </Box>
-      {!!errorMessage && <Text color="critical1">{errorMessage}</Text>}
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.ContextHeader>
+          <FormattedMessage
+            id="L6+p8a"
+            defaultMessage="Delete permission group"
+            description="dialog title"
+          />
+        </DashboardModal.ContextHeader>
+
+        <DashboardModal.Body fill>
+          <DashboardModal.Inset>
+            <Box data-testid="permission-group-delete-dialog-text">
+              <FormattedMessage
+                id="sR0urA"
+                defaultMessage="Are you sure you want to delete {name}?"
+                description="dialog content"
+                values={{
+                  name: <strong>{name}</strong>,
+                }}
+              />
+            </Box>
+            {!!errorMessage && <Text color="critical1">{errorMessage}</Text>}
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 PermissionGroupDeleteDialog.displayName = "PermissionGroupDeleteDialog";
-export default PermissionGroupDeleteDialog;

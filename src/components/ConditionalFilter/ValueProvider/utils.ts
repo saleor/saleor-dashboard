@@ -15,3 +15,9 @@ export const prepareStructure = (filterValue: FilterContainer): Structure =>
 
     return f.asUrlEntry();
   });
+
+export const getFilterContainerKey = (filterValue: FilterContainer): string =>
+  JSON.stringify(prepareStructure(filterValue));
+
+export const areFilterContainersEqual = (left: FilterContainer, right: FilterContainer): boolean =>
+  getFilterContainerKey(left) === getFilterContainerKey(right);

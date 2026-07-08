@@ -1,9 +1,8 @@
+import BackButton from "@dashboard/components/BackButton";
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { type TransactionActionEnum } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { TransactionActionEnum } from "@dashboard/graphql";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { mapActionToMessage } from "../OrderTransaction/utils";
@@ -25,31 +24,35 @@ export const OrderTransactionActionDialog = ({
   action,
 }: OrderTransactionActionDialogProps) => {
   const intl = useIntl();
-  const actionIntl = action ? intl.formatMessage(mapActionToMessage[action]) : "";
-  const actionType = actionIntl.toLowerCase();
+  const actionMessage = action ? mapActionToMessage[action] : null;
+  const actionIntl = actionMessage ? intl.formatMessage(actionMessage) : "";
+  const isVoidAction = action === TransactionActionEnum.CANCEL;
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              {...(isVoidAction ? messages.voidDescription : messages.warningText)}
+              values={isVoidAction ? undefined : { actionType: actionIntl.toLowerCase() }}
+            />
+          }
+        >
           <FormattedMessage
-            {...messages.title}
-            values={{
-              actionType,
-            }}
+            {...(isVoidAction ? messages.voidTitle : messages.title)}
+            values={isVoidAction ? undefined : { actionType: actionIntl.toLowerCase() }}
           />
         </DashboardModal.Header>
 
-        <Text>
-          <FormattedMessage {...messages.warningText} values={{ actionType }} />
-        </Text>
-
         <DashboardModal.Actions>
-          <Button data-test-id="back" variant="secondary" onClick={onClose}>
-            <FormattedMessage {...buttonMessages.back} />
-          </Button>
-
-          <ButtonWithLoader onClick={onSubmit} transitionState={confirmButtonState} type="submit">
+          <BackButton data-test-id="back" onClick={onClose} />
+          <ButtonWithLoader
+            onClick={onSubmit}
+            transitionState={confirmButtonState}
+            type="submit"
+            variant={isVoidAction ? "error" : undefined}
+          >
             {actionIntl}
           </ButtonWithLoader>
         </DashboardModal.Actions>

@@ -162,7 +162,35 @@ describe("AssignModelDialog", () => {
       expect(onSubmit).toHaveBeenCalledWith([{ id: "page-2", name: "Test Page 2" }]);
     });
 
-    it("should allow deselecting in single selection mode by clicking the same radio", async () => {
+    it("should submit empty selection when deselecting an initially assigned item", async () => {
+      // Arrange
+      const onSubmit = jest.fn();
+
+      render(
+        <AssignModelDialog
+          {...defaultProps}
+          selectionMode="single"
+          selectedId="page-1"
+          onSubmit={onSubmit}
+        />,
+      );
+
+      const user = userEvent.setup();
+
+      // Act
+      const radios = screen.getAllByRole("radio");
+
+      await user.click(radios[0]);
+
+      const submitButton = screen.getByTestId("assign-and-save-button");
+
+      await user.click(submitButton);
+
+      // Assert
+      expect(onSubmit).toHaveBeenCalledWith([]);
+    });
+
+    it("should disable confirm button when selection returns to initial empty state", async () => {
       // Arrange
       const onSubmit = jest.fn();
 
@@ -176,12 +204,12 @@ describe("AssignModelDialog", () => {
       await user.click(radios[0]);
       await user.click(radios[0]);
 
+      // Assert
       const submitButton = screen.getByTestId("assign-and-save-button");
 
+      expect(submitButton).toBeDisabled();
       await user.click(submitButton);
-
-      // Assert
-      expect(onSubmit).toHaveBeenCalledWith([]);
+      expect(onSubmit).not.toHaveBeenCalled();
     });
   });
 

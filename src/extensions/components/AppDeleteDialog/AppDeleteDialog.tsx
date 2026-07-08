@@ -1,5 +1,10 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,6 +29,7 @@ export const AppDeleteDialog = ({
   type,
 }: AppDeleteDialogProps) => {
   const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
   const isNameMissing = name === null || name === "";
   const isExternal = type === "EXTERNAL";
   const getMainText = () => {
@@ -46,32 +52,56 @@ export const AppDeleteDialog = ({
     });
   };
 
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
+
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={onConfirm}
-      title={intl.formatMessage(msgs.deleteAppTitle)}
-      variant="delete"
-    >
-      <Box data-test-id="dialog-content">
-        <Box
-          backgroundColor="warning1"
-          padding={2}
-          borderRadius={2}
-          marginBottom={4}
-          borderWidth={1}
-          borderColor="warning1"
-          borderStyle="solid"
-        >
-          <Text size={2} color="warning1">
-            {intl.formatMessage(msgs.deleteAppWarning)}
-          </Text>
-        </Box>
-        {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
-      </Box>
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="sm">
+        <DashboardModal.ContextHeader>
+          <FormattedMessage {...msgs.deleteAppTitle} />
+        </DashboardModal.ContextHeader>
+
+        <DashboardModal.Body fill>
+          <DashboardModal.Inset>
+            <Box data-test-id="dialog-content">
+              <Box
+                backgroundColor="warning1"
+                padding={2}
+                borderRadius={2}
+                marginBottom={4}
+                borderWidth={1}
+                borderColor="warning1"
+                borderStyle="solid"
+              >
+                <Text size={2} color="warning1">
+                  {intl.formatMessage(msgs.deleteAppWarning)}
+                </Text>
+              </Box>
+              {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 

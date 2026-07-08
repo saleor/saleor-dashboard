@@ -1,104 +1,125 @@
 // @ts-strict-ignore
+import BackButton from "@dashboard/components/BackButton";
+import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySearchField";
+import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import listStyles from "@dashboard/components/ChannelsAvailabilityDialogChannelsList/ChannelsAvailabilityDialogChannelsList.module.css";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type CountryFragment } from "@dashboard/graphql";
-import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import { Divider, FormControlLabel, InputAdornment, Radio, TextField } from "@material-ui/core";
-import { SearchIcon } from "@saleor/macaw-ui";
-import { Box, Button } from "@saleor/macaw-ui-next";
-import { Fragment, useState } from "react";
+import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
+import { TaxCountryDialogCountriesList } from "./TaxCountryDialogCountriesList";
 
 interface TaxCountryDialogProps {
-  open: boolean;
   countries: CountryFragment[];
-  onConfirm: (countries: CountryFragment) => void;
   onClose: () => void;
+  onConfirm: (country: CountryFragment) => void;
+  open: boolean;
 }
 
-const TaxCountryDialog = ({ open, countries, onConfirm, onClose }: TaxCountryDialogProps) => {
-  const classes = useStyles();
+const toCountryPickerItems = (countries: CountryFragment[]) =>
+  countries.map(country => ({
+    id: country.code,
+    name: country.country,
+  }));
+
+export const TaxCountryDialog = ({
+  countries,
+  onClose,
+  onConfirm,
+  open,
+}: TaxCountryDialogProps): JSX.Element => {
   const intl = useIntl();
-  const [selectedCountry, setSelectedCountry] = useState<CountryFragment>();
+  const countryItems = useMemo(() => toCountryPickerItems(countries), [countries]);
+  const countriesByCode = useMemo(
+    () => new Map(countries.map(country => [country.code, country])),
+    [countries],
+  );
+  const [selectedCountryId, setSelectedCountryId] = useState<string>();
+  const {
+    filteredChannels: filteredCountries,
+    onQueryChange,
+    query,
+    resetQuery,
+  } = useChannelsSearch(countryItems);
+  const hasCountries = countryItems.length > 0;
 
   useModalDialogOpen(open, {
+    onOpen: () => {
+      setSelectedCountryId(undefined);
+      resetQuery();
+    },
     onClose: () => {
-      setSelectedCountry(undefined);
-      setQuery("");
+      setSelectedCountryId(undefined);
+      resetQuery();
     },
   });
 
-  const {
-    query,
-    setQuery,
-    searchResult: filteredCountries,
-  } = useLocalSearch<CountryFragment>(countries, country => country.country);
+  const handleConfirm = (): void => {
+    if (!selectedCountryId) {
+      return;
+    }
+
+    const country = countriesByCode.get(selectedCountryId);
+
+    if (country) {
+      onConfirm(country);
+    }
+  };
 
   return (
-    <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
-          <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
-        </DashboardModal.Header>
-
-        <TextField
-          data-test-id="search-country-input"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          variant="outlined"
-          placeholder={intl.formatMessage(taxesMessages.country)}
-          fullWidth
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-              </InputAdornment>
-            ),
-          }}
-          inputProps={{ className: classes.inputPadding }}
-        />
-
-        <Box
-          display="flex"
-          flexDirection="column"
-          overflowY="scroll"
-          __maxHeight="60vh"
-          __marginLeft={-15}
-          __paddingLeft={15}
-        >
-          {filteredCountries.map(country => (
-            <Fragment key={country.code}>
-              <FormControlLabel
-                data-test-id="country-row"
-                label={country.country}
-                checked={country.code === selectedCountry?.code}
-                onChange={() => setSelectedCountry(country)}
-                control={<Radio />}
-              />
-              <Divider />
-            </Fragment>
-          ))}
-        </Box>
-
-        <DashboardModal.Actions>
-          <Button
-            data-test-id="add-button"
-            variant="primary"
-            onClick={() => {
-              onConfirm(selectedCountry);
-            }}
-            disabled={!selectedCountry}
+    <DashboardModal onChange={onClose} open={open}>
+      {open ? (
+        <DashboardModal.Content size="sm">
+          <DashboardModal.PickerHeader
+            toolbar={
+              hasCountries ? (
+                <ChannelsAvailabilitySearchField
+                  inputTestId="search-country-input"
+                  label={intl.formatMessage(taxesMessages.country)}
+                  onQueryChange={onQueryChange}
+                  placeholder={intl.formatMessage(taxesMessages.country)}
+                  query={query}
+                />
+              ) : undefined
+            }
           >
-            <FormattedMessage {...buttonMessages.add} />
-          </Button>
-        </DashboardModal.Actions>
-      </DashboardModal.Content>
+            <FormattedMessage {...taxesMessages.chooseCountryDialogTitle} />
+          </DashboardModal.PickerHeader>
+
+          <DashboardModal.Body fill __overflowX="hidden">
+            {hasCountries && filteredCountries.length ? (
+              <TaxCountryDialogCountriesList
+                countries={filteredCountries}
+                onSelect={country => setSelectedCountryId(country.id)}
+                selectedCountryId={selectedCountryId}
+              />
+            ) : (
+              <div className={listStyles.empty}>
+                <FormattedMessage {...taxesMessages.chooseCountryNotFound} />
+              </div>
+            )}
+          </DashboardModal.Body>
+
+          <DashboardModal.Actions>
+            <BackButton onClick={onClose} />
+            <ConfirmButton
+              data-test-id="add-button"
+              disabled={!selectedCountryId}
+              onClick={handleConfirm}
+              transitionState="default"
+            >
+              <FormattedMessage {...buttonMessages.add} />
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      ) : null}
     </DashboardModal>
   );
 };
 
-export default TaxCountryDialog;
+TaxCountryDialog.displayName = "TaxCountryDialog";

@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import ActionDialog from "@dashboard/components/ActionDialog";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   PermissionEnum,
@@ -21,12 +20,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
+import { MenuDeleteDialog } from "../../components/MenuDeleteDialog/MenuDeleteDialog";
 import MenuDetailsPage, { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
-import MenuItemDialog, {
+import { MenuItemDialog } from "../../components/MenuItemDialog/MenuItemDialog";
+import {
   type MenuItemDialogFormData,
   type MenuItemType,
-} from "../../components/MenuItemDialog";
+} from "../../components/MenuItemDialog/types";
 import {
   getItemId,
   getItemType,
@@ -196,44 +197,37 @@ const MenuDetails = ({ id, params }: MenuDetailsProps) => {
         onSubmit={handleSubmit}
         saveButtonState={menuUpdateOpts.status}
       />
-      <ActionDialog
-        open={params.action === "remove"}
-        onClose={closeModal}
+      <MenuDeleteDialog
         confirmButtonState={menuDeleteOpts.status}
+        onClose={closeModal}
         onConfirm={() => extractMutationErrors(menuDelete({ variables: { id } }))}
-        variant="delete"
-        title={intl.formatMessage({
-          id: "x79cEk",
-          defaultMessage: "Delete structure",
-          description: "dialog header",
-        })}
-      >
-        <FormattedMessage
-          id="U2DyeR"
-          defaultMessage="Are you sure you want to delete structure {menuName}?"
-          values={{
-            menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove"}
+        subtitle={
+          <FormattedMessage
+            id="U2DyeR"
+            defaultMessage="Are you sure you want to delete structure {menuName}?"
+            values={{
+              menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
+            }}
+          />
+        }
+      />
 
       <MenuItemDialog
-        open={params.action === "add-item"}
-        errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
         confirmButtonState={menuItemCreateOpts.status}
-        disabled={menuItemCreateOpts.loading}
+        errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
         onClose={closeModal}
         onSubmit={handleMenuItemCreate}
+        open={params.action === "add-item"}
       />
       <MenuItemDialog
-        open={params.action === "edit-item"}
+        confirmButtonState={menuItemUpdateOpts.status}
         errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
         initial={initialMenuItemUpdateFormData}
         initialDisplayValue={getInitialMenuItemLabel(menuItem)}
-        confirmButtonState={menuItemUpdateOpts.status}
-        disabled={menuItemUpdateOpts.loading}
         onClose={closeModal}
         onSubmit={handleMenuItemUpdate}
+        open={params.action === "edit-item"}
       />
     </>
   );

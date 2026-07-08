@@ -20,17 +20,15 @@ import { defineMessages, FormattedMessage, type MessageDescriptor, useIntl } fro
 
 const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
   return (
-    <Link href={href} data-href={href} id={href} className="command-menu-item" data-focus={false}>
+    <Link href={href} data-href={href} id={href} className="command-menu-item">
       <Box
+        className="command-menu-item-content"
         display="flex"
         alignItems="center"
         color="default1"
         gap={2}
-        paddingY={1.5}
-        backgroundColor={{
-          hover: "default1Hovered",
-        }}
         paddingX={6}
+        paddingY={1.5}
         role="option"
         tabIndex={-1}
       >

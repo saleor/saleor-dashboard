@@ -177,16 +177,16 @@ export const createShippingChannelsFromRate = (
   );
 
 export const createCollectionChannelsData = (collectionData?: CollectionDetailsFragment) => {
-  if (collectionData?.channelListings) {
-    const collectionDataArr = collectionData?.channelListings.map(listing => ({
-      id: listing.channel.id,
-      isPublished: listing.isPublished,
-      name: listing.channel.name,
-      publishedAt: listing.publishedAt,
-    }));
-
-    return collectionDataArr;
+  if (!collectionData?.channelListings) {
+    return [];
   }
+
+  return collectionData.channelListings.map(listing => ({
+    id: listing.channel.id,
+    isPublished: listing.isPublished,
+    name: listing.channel.name,
+    publishedAt: listing.publishedAt,
+  }));
 };
 
 export interface ChannelShippingData {

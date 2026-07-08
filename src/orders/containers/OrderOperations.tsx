@@ -211,9 +211,14 @@ const OrderOperations = ({
   });
   const update = useOrderUpdateMutation({
     onCompleted: onUpdate,
+    // Order address edit dialogs surface validation errors inline on AddressEdit
+    // fields. Suppress the global per-error toast from makeMutation.
+    disableErrorHandling: true,
   });
   const updateDraft = useOrderDraftUpdateMutation({
     onCompleted: onDraftUpdate,
+    // Same as orderUpdate — address validation errors belong on the form fields.
+    disableErrorHandling: true,
   });
   const updateShippingMethod = useOrderShippingMethodUpdateMutation({
     onCompleted: onShippingMethodUpdate,

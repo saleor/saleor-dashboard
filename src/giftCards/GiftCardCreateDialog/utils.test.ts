@@ -1,7 +1,12 @@
 import { TimePeriodTypeEnum } from "@dashboard/graphql";
 
 import { type GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
-import { getExpiryPeriodTerminationDate, getGiftCardExpiryInputData } from "./utils";
+import { type GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
+import {
+  getCreateGiftCardInputData,
+  getExpiryPeriodTerminationDate,
+  getGiftCardExpiryInputData,
+} from "./utils";
 
 const FIXED_DATE = new Date("2024-01-15T00:00:00Z").getTime();
 
@@ -145,5 +150,38 @@ describe("getGiftCardExpiryInputData", () => {
 
     // Assert
     expect(result).toBe("2024-07-15");
+  });
+});
+
+describe("getCreateGiftCardInputData", () => {
+  const baseFormData: GiftCardCreateFormData = {
+    balanceAmount: 25,
+    balanceCurrency: "USD",
+    expiryDate: "",
+    expiryPeriodAmount: 12,
+    expiryPeriodType: TimePeriodTypeEnum.MONTH,
+    expirySelected: false,
+    expiryType: "EXPIRY_PERIOD",
+    note: "Internal note",
+    requiresActivation: true,
+    sendToCustomerSelected: true,
+    tags: [],
+  };
+
+  it("uses default channel slug when form state is empty", () => {
+    // Arrange
+    const selectedCustomer = { email: "customer@example.com", name: "Customer" };
+
+    // Act
+    const result = getCreateGiftCardInputData(
+      baseFormData,
+      selectedCustomer,
+      FIXED_DATE,
+      "channel-usd",
+    );
+
+    // Assert
+    expect(result.channel).toBe("channel-usd");
+    expect(result.userEmail).toBe("customer@example.com");
   });
 });

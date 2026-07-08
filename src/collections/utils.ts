@@ -45,3 +45,18 @@ export const getProductsFromSearchResults = (searchResults: SearchProductsQuery 
 
   return mapEdgesToItems(searchResults.search)?.filter(suggestedProduct => suggestedProduct.id);
 };
+
+type SearchProduct = NonNullable<ReturnType<typeof getProductsFromSearchResults>>[number];
+
+export const excludeProductsInCollection = (
+  products: SearchProduct[],
+  collectionId: string | undefined,
+): SearchProduct[] => {
+  if (!collectionId) {
+    return products;
+  }
+
+  return products.filter(
+    product => !product.collections?.some(collection => collection.id === collectionId),
+  );
+};

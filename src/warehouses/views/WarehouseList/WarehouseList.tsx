@@ -1,5 +1,5 @@
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useWarehouseDeleteMutation, useWarehouseListQuery } from "@dashboard/graphql";
@@ -20,7 +20,7 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDeleteDialog";
+import { WarehouseDeleteDialog } from "@dashboard/warehouses/components/WarehouseDeleteDialog";
 import WarehouseListPage from "@dashboard/warehouses/components/WarehouseListPage";
 import {
   warehouseListUrl,

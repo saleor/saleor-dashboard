@@ -46,7 +46,7 @@ export const AddressEdit = (props: AddressEditProps) => {
   >(formFields, errors);
 
   return (
-    <>
+    <Box display="grid" gap={4}>
       <Box display="grid" gap={2} __gridTemplateColumns="1fr 1fr">
         <div>
           <Input
@@ -249,6 +249,6 @@ export const AddressEdit = (props: AddressEditProps) => {
           )}
         </div>
       </Box>
-    </>
+    </Box>
   );
 };

@@ -344,6 +344,16 @@ export type OrderFulfillStockFormsetData = Array<
   Pick<FormsetData<null, OrderFulfillLineFormData[]>[0], "id" | "value">
 >;
 
+export const getOrderFulfillStockFormsetLineId = (
+  line: NonNullable<FulfillmentFragment["lines"]>[number] | OrderFulfillLineFragment,
+): string => {
+  if ("orderLine" in line && line.orderLine?.id) {
+    return line.orderLine.id;
+  }
+
+  return line.id;
+};
+
 export const getFulfillmentFormsetQuantity = (
   formsetData: OrderFulfillStockFormsetData,
   line: OrderLineStockDataFragment,
@@ -389,7 +399,7 @@ export const transformFuflillmentLinesToStockFormsetData = (
 ): OrderFulfillStockFormsetData =>
   lines?.map(line => ({
     data: null,
-    id: line.orderLine?.id ?? "",
+    id: getOrderFulfillStockFormsetLineId(line),
     value: [
       {
         quantity: line.quantity,

@@ -117,12 +117,8 @@ a.command-menu-item {
   display: block;
 }
 
-/**
-  TODO: Remove this when we have a way to style this via macaw.
-  - Currently there is no way in macaw to style conditions attached to attributes.
-  - You cannot easily override the current style set when used prop in Box (eg. override current backgroundColor=...)
-*/
-.command-menu-item[data-focus="true"] {
+.command-menu-item:hover .command-menu-item-content,
+.command-menu-item[data-focus="true"] .command-menu-item-content {
   background-color: var(--mu-colors-background-default1-hovered) !important;
 }
 
@@ -150,4 +146,13 @@ a.command-menu-item {
 
 #toast-portal > * {
   pointer-events: auto;
+}
+
+/*
+ * Macaw button recipes can still apply hover/active styles to disabled buttons.
+ * Suppress pointer interaction so disabled CTAs keep their resting appearance.
+ * Loading buttons use aria-busy (not disabled) and ConfirmButton handles those.
+ */
+button:disabled {
+  pointer-events: none;
 }

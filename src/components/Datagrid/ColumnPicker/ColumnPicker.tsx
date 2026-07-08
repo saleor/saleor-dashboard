@@ -1,6 +1,13 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { IconButton } from "@saleor/macaw-ui";
-import { Box, Popover, type PopoverContentProps, sprinkles, Text } from "@saleor/macaw-ui-next";
+import {
+  Box,
+  Popover,
+  type PopoverContentProps,
+  sprinkles,
+  Text,
+  type vars,
+} from "@saleor/macaw-ui-next";
 import { Columns3 } from "lucide-react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -12,7 +19,6 @@ import { ColumnPickerDynamicColumns } from "./ColumnPickerDynamicColumns";
 import { ColumnPickerStaticColumns } from "./ColumnPickerStaticColumns";
 import messages from "./messages";
 import { type ColumnCategory } from "./useColumns";
-import { rightColumnBoxShadow } from "./utils";
 
 interface ColumnPickerProps {
   staticColumns: AvailableColumn[];
@@ -22,6 +28,7 @@ interface ColumnPickerProps {
   onToggle: (columnId: string) => void;
   side?: PopoverContentProps["side"];
   align?: PopoverContentProps["align"];
+  backgroundColor?: keyof typeof vars.colors.background;
 }
 
 export const ColumnPicker = ({
@@ -32,6 +39,7 @@ export const ColumnPicker = ({
   onToggle,
   side,
   align,
+  backgroundColor = "default1",
 }: ColumnPickerProps) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -53,11 +61,7 @@ export const ColumnPicker = ({
           justifyContent="center"
           __width={singleActionWidth - 1}
           __height={cellHeight}
-          backgroundColor="default1"
-          borderLeftStyle="solid"
-          borderLeftWidth={1}
-          borderColor="default1"
-          __boxShadow={rightColumnBoxShadow}
+          backgroundColor={backgroundColor}
         >
           <IconButton
             data-test-id="open-column-picker-button"

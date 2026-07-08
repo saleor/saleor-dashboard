@@ -5,7 +5,6 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
 import { Select } from "@dashboard/components/Select";
@@ -16,6 +15,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Box, type Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { orderShippingMethodEditDialogMessages } from "./messages";
 
 interface FormData {
   shippingMethod: string;
@@ -54,94 +55,66 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
   const formFields = ["shippingMethod"];
   const formErrors = getFormErrors(formFields, errors);
   const nonFieldErrors = errors.filter(err => !formFields.includes(err.field));
-  const availableChoices = shippingMethods
+  const noShippingMethodLabel = intl.formatMessage(
+    orderShippingMethodEditDialogMessages.noShippingMethod,
+  );
+  const unavailableMethodLabel = intl.formatMessage(
+    orderShippingMethodEditDialogMessages.currentMethod,
+  );
+  const notAvailableLabel = intl.formatMessage(orderShippingMethodEditDialogMessages.notAvailable);
+
+  const availableChoices: Option[] = shippingMethods
     ? shippingMethods
         .map(s => ({
-          label: (
-            <Box display="flex" width="100%" gap={3}>
-              <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
-                {s.name}
-              </Box>
-
-              <Box>
-                <Money money={s.price} />
-              </Box>
-
-              {!s.active && (
+          label: s.name,
+          disabled: !s.active,
+          value: s.id,
+          endAdornment: (
+            <Box display="flex" alignItems="center" gap={3}>
+              <Money money={s.price} />
+              {!s.active && s.message && (
                 <Text color="defaultDisabled" size={2} fontWeight="light">
                   {s.message}
                 </Text>
               )}
             </Box>
           ),
-          disabled: !s.active,
-          value: s.id,
         }))
         .sort((x, y) => (x.disabled === y.disabled ? 0 : x.disabled ? 1 : -1))
     : [];
 
   const currentMethodInChoices = availableChoices.some(c => c.value === shippingMethod);
 
-  const unavailableMethodOption =
+  const unavailableMethodOption: Option[] =
     shippingMethod && !currentMethodInChoices
       ? [
           {
-            label: (
-              <Box display="flex" width="100%" gap={3}>
-                <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
-                  <Text as="span" color="defaultDisabled">
-                    {shippingMethodName || (
-                      <FormattedMessage
-                        id="12K83x"
-                        defaultMessage="Current method"
-                        description="shipping method option when name unknown"
-                      />
-                    )}
-                  </Text>
-                </Box>
-
+            label: shippingMethodName || unavailableMethodLabel,
+            disabled: true,
+            value: shippingMethod,
+            endAdornment: (
+              <Box display="flex" alignItems="center" gap={3}>
                 {shippingPrice && (
-                  <Box>
-                    <Text color="defaultDisabled">
-                      <Money money={shippingPrice.gross} />
-                    </Text>
-                  </Box>
+                  <Text color="defaultDisabled">
+                    <Money money={shippingPrice.gross} />
+                  </Text>
                 )}
-
                 <Text color="defaultDisabled" size={2} fontWeight="light">
-                  <FormattedMessage
-                    id="X1NCdA"
-                    defaultMessage="(not available)"
-                    description="shipping method not available label"
-                  />
+                  {notAvailableLabel}
                 </Text>
               </Box>
             ),
-            disabled: true,
-            value: shippingMethod,
           },
         ]
       : [];
 
-  const noShippingOption = {
-    label: (
-      <Box display="flex" width="100%" gap={3}>
-        <Box as="span" __flex={1} overflow="hidden" textOverflow="ellipsis">
-          <Text>
-            <FormattedMessage
-              id="7ZKQU3"
-              defaultMessage="No shipping method"
-              description="no shipping method option"
-            />
-          </Text>
-        </Box>
-      </Box>
-    ),
+  const noShippingOption: Option = {
+    label: noShippingMethodLabel,
     value: NO_SHIPPING_METHOD_ID,
     disabled: false,
   };
 
-  const choices = [
+  const choices: Option[] = [
     ...(isClearable ? [noShippingOption] : []),
     ...unavailableMethodOption,
     ...availableChoices,
@@ -171,70 +144,76 @@ const OrderShippingMethodEditDialog = (props: OrderShippingMethodEditDialogProps
           onSubmit={handleSubmit}
           mergeData={false}
         >
-          {({ change, data, submit }) => (
-            <>
-              <DashboardModal.Content size="sm">
-                <DashboardModal.Header>
-                  <FormattedMessage
-                    id="V/YxJa"
-                    defaultMessage="Edit Shipping Method"
-                    description="dialog header"
-                  />
-                </DashboardModal.Header>
+          {({ change, data, submit }) => {
+            const selectedChoice = choices.find(choice => choice.value === data.shippingMethod);
 
-                <Select
-                  options={choices as unknown as Option[]}
-                  error={!!formErrors.shippingMethod}
-                  helperText={getOrderErrorMessage(formErrors.shippingMethod, intl)}
-                  name="shippingMethod"
-                  data-test-id="shipping-method-select"
-                  value={data.shippingMethod}
-                  onChange={({ target }) => {
-                    const targetValue = target.value;
-                    const isDisabled = choices.find(
-                      choice => choice.value === targetValue,
-                    )?.disabled;
+            return (
+              <>
+                <DashboardModal.Content size="sm">
+                  <DashboardModal.Header>
+                    {intl.formatMessage(orderShippingMethodEditDialogMessages.title)}
+                  </DashboardModal.Header>
 
-                    if (isDisabled) {
-                      return;
-                    }
+                  <DashboardModal.Body>
+                    <DashboardModal.Inset>
+                      <Box display="flex" flexDirection="column" gap={4}>
+                        <Select
+                          width="100%"
+                          options={choices}
+                          endAdornment={() => selectedChoice?.endAdornment}
+                          error={!!formErrors.shippingMethod}
+                          helperText={getOrderErrorMessage(formErrors.shippingMethod, intl)}
+                          name="shippingMethod"
+                          data-test-id="shipping-method-select"
+                          value={data.shippingMethod}
+                          onChange={({ target }) => {
+                            const targetValue = target.value;
+                            const isDisabled = choices.find(
+                              choice => choice.value === targetValue,
+                            )?.disabled;
 
-                    change({
-                      target: {
-                        name: "shippingMethod",
-                        value:
-                          typeof targetValue === "string"
-                            ? targetValue
-                            : (targetValue as Option)?.value,
-                      },
-                    });
-                  }}
-                />
-                {nonFieldErrors.length > 0 && (
-                  <>
-                    <FormSpacer />
-                    {nonFieldErrors.map((err, index) => (
-                      <Text color="critical1" key={index}>
-                        {getOrderErrorMessage(err, intl)}
-                      </Text>
-                    ))}
-                  </>
-                )}
+                            if (isDisabled) {
+                              return;
+                            }
 
-                <DashboardModal.Actions>
-                  <BackButton onClick={onClose} />
-                  <ConfirmButton
-                    data-test-id="confirm-button"
-                    transitionState={confirmButtonState}
-                    onClick={submit}
-                    disabled={!isClearable && data.shippingMethod === NO_SHIPPING_METHOD_ID}
-                  >
-                    <FormattedMessage {...buttonMessages.confirm} />
-                  </ConfirmButton>
-                </DashboardModal.Actions>
-              </DashboardModal.Content>
-            </>
-          )}
+                            change({
+                              target: {
+                                name: "shippingMethod",
+                                value:
+                                  typeof targetValue === "string"
+                                    ? targetValue
+                                    : (targetValue as Option)?.value,
+                              },
+                            });
+                          }}
+                        />
+                        {nonFieldErrors.map((err, index) => (
+                          <Text display="block" color="critical1" key={index}>
+                            {getOrderErrorMessage(err, intl)}
+                          </Text>
+                        ))}
+                      </Box>
+                    </DashboardModal.Inset>
+                  </DashboardModal.Body>
+
+                  <DashboardModal.Actions>
+                    <BackButton onClick={onClose} />
+                    <ConfirmButton
+                      data-test-id="confirm-button"
+                      transitionState={confirmButtonState}
+                      onClick={submit}
+                      disabled={
+                        data.shippingMethod === initialForm.shippingMethod ||
+                        (!isClearable && data.shippingMethod === NO_SHIPPING_METHOD_ID)
+                      }
+                    >
+                      <FormattedMessage {...buttonMessages.confirm} />
+                    </ConfirmButton>
+                  </DashboardModal.Actions>
+                </DashboardModal.Content>
+              </>
+            );
+          }}
         </Form>
       )}
     </DashboardModal>

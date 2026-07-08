@@ -29,11 +29,11 @@ import omit from "lodash/omit";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
+import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
 import { AttributeMetadataDialog } from "../../components/AttributeMetadataDialog/AttributeMetadataDialog";
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
-import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog/AttributeValueEditDialog";
 import {
   attributeListUrl,
   attributeUrl,
@@ -276,7 +276,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       assignedTypes={assignedTypes}
       disabled={isInitialLoading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
-      params={params}
       onDelete={() => openModal("remove")}
       onShowMetadata={() => openModal("view-metadata", { id: undefined })}
       onSubmit={handleSubmit}
@@ -292,8 +291,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           id,
         })
       }
-      onOpenReferenceTypes={() => openModal("assign-reference-types")}
-      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeUpdateOpts.status}
       values={data?.attribute?.choices}
       settings={settings}
