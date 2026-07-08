@@ -1509,10 +1509,6 @@ export const GiftCardDataFragmentDoc = gql`
     id
     name
   }
-  usedBy {
-    ...UserBase
-  }
-  usedByEmail
   createdByEmail
   created
   expiryDate
@@ -10826,7 +10822,6 @@ export const GiftCardListDocument = gql`
     edges {
       node {
         id
-        usedByEmail
         last4CodeChars
         isActive
         expiryDate
@@ -10836,9 +10831,6 @@ export const GiftCardListDocument = gql`
         }
         tags {
           name
-        }
-        usedBy {
-          ...UserBase
         }
         currentBalance {
           ...Money
@@ -10854,8 +10846,7 @@ export const GiftCardListDocument = gql`
     }
   }
 }
-    ${UserBaseFragmentDoc}
-${MoneyFragmentDoc}`;
+    ${MoneyFragmentDoc}`;
 
 /**
  * __useGiftCardListQuery__

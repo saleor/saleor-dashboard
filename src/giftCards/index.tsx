@@ -26,7 +26,7 @@ const GiftCardList = () => {
   const params: GiftCardListUrlQueryParams = asSortParams(
     qs,
     GiftCardUrlSortField,
-    GiftCardUrlSortField.usedBy,
+    GiftCardUrlSortField.product,
   );
 
   return (

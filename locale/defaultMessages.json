@@ -9307,10 +9307,6 @@
     "context": "Suffix for show-more button when hidden problems include both active and critical",
     "string": ", including {active} active and {critical} critical"
   },
-  "kS5Qgk": {
-    "context": "used by label",
-    "string": "Used by"
-  },
   "kS9cpK": {
     "context": "customer account email-verification row label",
     "string": "Email"

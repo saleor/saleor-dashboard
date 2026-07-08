@@ -135,7 +135,7 @@ export const GiftCardsListDatagrid = () => {
       navigate(
         giftCardListUrl({
           ...params,
-          sort: GiftCardUrlSortField.usedBy,
+          sort: GiftCardUrlSortField.product,
         }),
       );
     }
