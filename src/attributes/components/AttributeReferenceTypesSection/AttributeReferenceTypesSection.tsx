@@ -1,7 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
 import type React from "react";
@@ -12,7 +11,6 @@ import { messages } from "./messages";
 type Option = { label: string; value: string };
 
 interface AttributeReferenceTypesSectionProps {
-  entityType?: AttributeEntityTypeEnum | undefined;
   selectedTypes: Option[];
   disabled?: boolean;
   onAssignClick: () => void;
@@ -20,7 +18,6 @@ interface AttributeReferenceTypesSectionProps {
 }
 
 export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSectionProps> = ({
-  entityType,
   selectedTypes,
   disabled,
   onAssignClick,
@@ -46,7 +43,7 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
           <Text size={2} color="default2" paddingBottom={2}>
             {intl.formatMessage(messages.referenceTypesHelp)}
           </Text>
-          {selectedTypes.length > 0 ? (
+          {selectedTypes.length > 0 && (
             <Box display="flex" gap={2} flexWrap="wrap">
               {selectedTypes.map(type => (
                 <ChipField
@@ -56,12 +53,6 @@ export const AttributeReferenceTypesSection: React.FC<AttributeReferenceTypesSec
                 />
               ))}
             </Box>
-          ) : (
-            <Text color="default2">
-              {entityType === AttributeEntityTypeEnum.PAGE
-                ? intl.formatMessage(messages.noModelTypesAssigned)
-                : intl.formatMessage(messages.noProductTypesAssigned)}
-            </Text>
           )}
         </Box>
       </DashboardCard.Content>

@@ -1,6 +1,12 @@
+import { type AttributeAssignedTypesCardProps } from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
 import { useAttributeValuesSearch } from "@dashboard/attributes/hooks/useAttributeValuesSearch";
 import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
+import { getAssignedModelTypesForAttribute } from "@dashboard/attributes/utils/getAssignedModelTypesForAttribute";
+import { mapAssignedTypeConnection } from "@dashboard/attributes/utils/mapAssignedTypeConnection";
 import {
+  AttributeTypeEnum,
+  OrderDirection,
+  PageTypeSortField,
   useAttributeDeleteMutation,
   useAttributeDetailsQuery,
   useAttributeUpdateMutation,
@@ -8,6 +14,7 @@ import {
   useAttributeValueDeleteMutation,
   useAttributeValueReorderMutation,
   useAttributeValueUpdateMutation,
+  usePageTypeListWithAssignedAttributeCountsQuery,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
@@ -19,7 +26,7 @@ import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
@@ -87,6 +94,50 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
 
   // Only show as "loading" for initial load, not for search refetches
   const isInitialLoading = loading && !data;
+  const attribute = data?.attribute;
+  const isModelAttribute = attribute?.type === AttributeTypeEnum.PAGE_TYPE;
+  const isProductAttribute = attribute?.type === AttributeTypeEnum.PRODUCT_TYPE;
+
+  const { data: pageTypesData, loading: pageTypesLoading } =
+    usePageTypeListWithAssignedAttributeCountsQuery({
+      fetchPolicy: "cache-first",
+      skip: !isModelAttribute,
+      variables: {
+        first: 100,
+        sort: { field: PageTypeSortField.NAME, direction: OrderDirection.ASC },
+      },
+    });
+
+  const assignedTypes = useMemo((): AttributeAssignedTypesCardProps | undefined => {
+    if (!attribute) {
+      return undefined;
+    }
+
+    if (isProductAttribute) {
+      return {
+        attributeType: AttributeTypeEnum.PRODUCT_TYPE,
+        loading: false,
+        productTypes: mapAssignedTypeConnection(attribute.productTypes),
+        variantTypes: mapAssignedTypeConnection(attribute.productVariantTypes),
+      };
+    }
+
+    if (isModelAttribute) {
+      const modelTypes = getAssignedModelTypesForAttribute(pageTypesData, id);
+
+      return {
+        attributeType: AttributeTypeEnum.PAGE_TYPE,
+        loading: pageTypesLoading && !pageTypesData,
+        modelTypes: {
+          items: modelTypes.items,
+          hasMore: false,
+        },
+        modelTypesListHasMore: modelTypes.typesListHasMore,
+      };
+    }
+
+    return undefined;
+  }, [attribute, id, isModelAttribute, isProductAttribute, pageTypesData, pageTypesLoading]);
 
   const paginateValues = useLocalPaginator(setValuesPaginationState);
   const { loadNextPage, loadPreviousPage, pageInfo } = paginateValues(
@@ -222,6 +273,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   return (
     <AttributePage
       attribute={data?.attribute}
+      assignedTypes={assignedTypes}
       disabled={isInitialLoading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
       params={params}
