@@ -4,7 +4,6 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -27,16 +26,16 @@ import {
   type ReorderEvent,
   type UserError,
 } from "@dashboard/types";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
+import { messages } from "./messages";
+import { ProductTypeDetailsTitle } from "./Title";
 
 interface ChoiceType {
   label: string;
@@ -59,7 +58,6 @@ interface ProductTypeDetailsPageProps {
   productType: ProductTypeDetailsQuery["productType"];
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
-  pageTitle: string;
   productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
   taxClasses: TaxClassBaseFragment[];
@@ -69,6 +67,7 @@ interface ProductTypeDetailsPageProps {
   onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;
   onAttributeUnassign: (id: string) => void;
   onDelete: () => void;
+  onShowMetadata: () => void;
   onHasVariantsToggle: (hasVariants: boolean) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise;
   setSelectedVariantAttributes: (data: string[]) => void;
@@ -80,7 +79,6 @@ const ProductTypeDetailsPage = ({
   defaultWeightUnit,
   disabled,
   errors,
-  pageTitle,
   productType,
   productAttributeList,
   saveButtonBarState,
@@ -91,21 +89,18 @@ const ProductTypeDetailsPage = ({
   onAttributeUnassign,
   onAttributeReorder,
   onDelete,
+  onShowMetadata,
   onHasVariantsToggle,
   onSubmit,
   setSelectedVariantAttributes,
   selectedVariantAttributes,
   onFetchMoreTaxClasses,
 }: ProductTypeDetailsPageProps) => {
+  const intl = useIntl();
   const navigate = useNavigator();
   const productTypeListBackLink = useBackLinkWithState({
     path: productTypeListPath,
   });
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
   const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps(
     productType?.taxClass?.name ?? "",
   );
@@ -116,10 +111,10 @@ const ProductTypeDetailsPage = ({
       maybe(() => productType.isShippingRequired) !== undefined
         ? productType.isShippingRequired
         : false,
-    metadata: productType?.metadata?.map(mapMetadataItemToInput),
+    metadata: [],
     name: maybe(() => productType.name) !== undefined ? productType.name : "",
     kind: productType?.kind || ProductTypeKindEnum.NORMAL,
-    privateMetadata: productType?.privateMetadata?.map(mapMetadataItemToInput),
+    privateMetadata: [],
     productAttributes:
       maybe(() => productType.productAttributes) !== undefined
         ? productType.productAttributes.map(attribute => ({
@@ -137,120 +132,120 @@ const ProductTypeDetailsPage = ({
         : [],
     weight: maybe(() => productType.weight.value),
   };
-  const handleSubmit = (data: ProductTypeForm) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified ? data.privateMetadata : undefined;
-
-    return onSubmit({
-      ...data,
-      metadata,
-      privateMetadata,
-    });
-  };
 
   return (
-    <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
+    <Form initial={formInitialData} onSubmit={onSubmit} confirmLeave disabled={disabled}>
+      {({ change, data, isSaveDisabled, submit }) => (
+        <DetailPageLayout>
+          <TopNav
+            href={productTypeListBackLink}
+            title={
+              <ProductTypeDetailsTitle
+                productType={productType ? { name: productType.name } : null}
+                loading={disabled}
+              />
+            }
+            actionsGap={3}
+          >
+            <TopNav.MetadataButton
+              onClick={onShowMetadata}
+              disabled={!productType}
+              data-test-id="show-product-type-metadata"
+              title={intl.formatMessage(messages.editProductTypeMetadata)}
+            />
+          </TopNav>
+          <DetailPageLayout.Content>
+            <ProductTypeDetails
+              data={data}
+              disabled={disabled}
+              errors={errors}
+              onChange={change}
+              onKindChange={change}
+            />
+            <CardSpacer />
+            <ProductTypeTaxes
+              disabled={disabled}
+              data={data}
+              taxClasses={taxClasses}
+              taxClassDisplayName={taxClassDisplayName}
+              onChange={event =>
+                handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
+              }
+              onFetchMore={onFetchMoreTaxClasses}
+            />
+            <CardSpacer />
+            <ProductTypeAttributes
+              testId="assign-products-attributes"
+              attributes={maybe(() => productType.productAttributes)}
+              disabled={disabled}
+              type={ProductAttributeType.PRODUCT}
+              onAttributeAssign={onAttributeAdd}
+              onAttributeCreate={onAttributeCreate}
+              onAttributeReorder={(event: ReorderEvent) =>
+                onAttributeReorder(event, ProductAttributeType.PRODUCT)
+              }
+              onAttributeUnassign={onAttributeUnassign}
+              {...productAttributeList}
+            />
+            <CardSpacer />
 
-        return (
-          <DetailPageLayout>
-            <TopNav href={productTypeListBackLink} title={pageTitle} />
-            <DetailPageLayout.Content>
-              <ProductTypeDetails
-                data={data}
+            <Box marginLeft={6}>
+              <Toggle
+                pressed={data.hasVariants}
                 disabled={disabled}
-                errors={errors}
-                onChange={change}
-                onKindChange={change}
-              />
-              <CardSpacer />
-              <ProductTypeTaxes
-                disabled={disabled}
-                data={data}
-                taxClasses={taxClasses}
-                taxClassDisplayName={taxClassDisplayName}
-                onChange={event =>
-                  handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
-                }
-                onFetchMore={onFetchMoreTaxClasses}
-              />
-              <CardSpacer />
-              <ProductTypeAttributes
-                testId="assign-products-attributes"
-                attributes={maybe(() => productType.productAttributes)}
-                disabled={disabled}
-                type={ProductAttributeType.PRODUCT}
-                onAttributeAssign={onAttributeAdd}
-                onAttributeCreate={onAttributeCreate}
-                onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, ProductAttributeType.PRODUCT)
-                }
-                onAttributeUnassign={onAttributeUnassign}
-                {...productAttributeList}
-              />
-              <CardSpacer />
-
-              <Box marginLeft={6}>
-                <Toggle
-                  pressed={data.hasVariants}
-                  disabled={disabled}
-                  name="hasVariants"
-                  onPressedChange={pressed => onHasVariantsToggle(pressed)}
-                >
-                  <Text>
-                    <FormattedMessage
-                      id="5pHBSU"
-                      defaultMessage="Product type uses Variant Attributes"
-                      description="switch button"
-                    />
-                  </Text>
-                </Toggle>
-              </Box>
-              {data.hasVariants && (
-                <>
-                  <CardSpacer />
-                  <ProductTypeVariantAttributes
-                    testId="assign-variants-attributes"
-                    assignedVariantAttributes={productType?.assignedVariantAttributes}
-                    disabled={disabled}
-                    type={ProductAttributeType.VARIANT}
-                    onAttributeAssign={onAttributeAdd}
-                    onAttributeCreate={onAttributeCreate}
-                    onAttributeReorder={(event: ReorderEvent) =>
-                      onAttributeReorder(event, ProductAttributeType.VARIANT)
-                    }
-                    onAttributeUnassign={onAttributeUnassign}
-                    setSelectedVariantAttributes={setSelectedVariantAttributes}
-                    selectedVariantAttributes={selectedVariantAttributes}
-                    {...variantAttributeList}
+                name="hasVariants"
+                onPressedChange={pressed => onHasVariantsToggle(pressed)}
+              >
+                <Text>
+                  <FormattedMessage
+                    id="5pHBSU"
+                    defaultMessage="Product type uses Variant Attributes"
+                    description="switch button"
                   />
-                </>
-              )}
-              <CardSpacer />
-              <Metadata data={data} onChange={changeMetadata} />
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <ProductTypeShipping
-                disabled={disabled}
-                data={data}
-                weightUnit={productType?.weight?.unit || defaultWeightUnit}
-                onChange={change}
-              />
-            </DetailPageLayout.RightSidebar>
-            <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} />
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(productTypeListBackLink)} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBarState}
-                onClick={submit}
-                disabled={isSaveDisabled}
-              />
-            </Savebar>
-          </DetailPageLayout>
-        );
-      }}
+                </Text>
+              </Toggle>
+            </Box>
+            {data.hasVariants && (
+              <>
+                <CardSpacer />
+                <ProductTypeVariantAttributes
+                  testId="assign-variants-attributes"
+                  assignedVariantAttributes={productType?.assignedVariantAttributes}
+                  disabled={disabled}
+                  type={ProductAttributeType.VARIANT}
+                  onAttributeAssign={onAttributeAdd}
+                  onAttributeCreate={onAttributeCreate}
+                  onAttributeReorder={(event: ReorderEvent) =>
+                    onAttributeReorder(event, ProductAttributeType.VARIANT)
+                  }
+                  onAttributeUnassign={onAttributeUnassign}
+                  setSelectedVariantAttributes={setSelectedVariantAttributes}
+                  selectedVariantAttributes={selectedVariantAttributes}
+                  {...variantAttributeList}
+                />
+              </>
+            )}
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
+            <ProductTypeShipping
+              disabled={disabled}
+              data={data}
+              weightUnit={productType?.weight?.unit || defaultWeightUnit}
+              onChange={change}
+            />
+          </DetailPageLayout.RightSidebar>
+          <Savebar>
+            <Savebar.DeleteButton onClick={onDelete} />
+            <Savebar.Spacer />
+            <Savebar.CancelButton onClick={() => navigate(productTypeListBackLink)} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={isSaveDisabled}
+            />
+          </Savebar>
+        </DetailPageLayout>
+      )}
     </Form>
   );
 };
