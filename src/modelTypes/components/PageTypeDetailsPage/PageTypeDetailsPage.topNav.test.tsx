@@ -37,7 +37,6 @@ const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
 const defaultProps = {
   disabled: false,
   errors: [],
-  pageTitle: "Blog",
   saveButtonBarState: "default" as const,
   attributeList: {
     isChecked: () => false,

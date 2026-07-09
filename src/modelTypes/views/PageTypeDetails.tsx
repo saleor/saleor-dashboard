@@ -247,7 +247,6 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
       <PageTypeDetailsPage
         disabled={loading}
         errors={updatePageTypeOpts.data?.pageTypeUpdate.errors}
-        pageTitle={data?.pageType.name}
         pageType={data?.pageType}
         saveButtonBarState={updatePageTypeOpts.status}
         onAttributeAdd={type =>

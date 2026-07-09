@@ -25,6 +25,7 @@ import { useIntl } from "react-intl";
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
 import { messages } from "./messages";
+import { PageTypeDetailsTitle } from "./Title";
 
 export interface PageTypeForm extends MetadataFormData {
   name: string;
@@ -35,7 +36,6 @@ interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
   pageType: PageTypeDetailsFragment;
   disabled: boolean;
-  pageTitle: string;
   attributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAttributeAdd: (type: AttributeTypeEnum) => void;
@@ -51,7 +51,6 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   const {
     disabled,
     errors,
-    pageTitle,
     pageType,
     attributeList,
     saveButtonBarState,
@@ -96,7 +95,16 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     <Form confirmLeave initial={formInitialData} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => (
         <DetailPageLayout>
-          <TopNav href={pageTypeListBackLink} title={pageTitle} actionsGap={3}>
+          <TopNav
+            href={pageTypeListBackLink}
+            title={
+              <PageTypeDetailsTitle
+                pageType={pageType ? { name: pageType.name } : null}
+                loading={disabled}
+              />
+            }
+            actionsGap={3}
+          >
             <TopNav.MetadataButton
               onClick={onShowMetadata}
               disabled={!pageType}
