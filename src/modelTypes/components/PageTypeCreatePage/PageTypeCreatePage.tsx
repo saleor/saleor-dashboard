@@ -51,11 +51,17 @@ const PageTypeCreatePage = (props: PageTypeCreatePageProps) => {
                 description: "header",
               })}
             />
-            <DetailPageLayout.Content>
+            <DetailPageLayout.Content paddingBottom={10}>
               <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
-              <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
+              <PageTypeDetails
+                autoFocus
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.Spacer />

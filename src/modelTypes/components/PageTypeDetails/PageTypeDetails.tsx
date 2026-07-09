@@ -4,23 +4,41 @@ import { type PageErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
+import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
+
+import { messages } from "./messages";
 
 interface PageTypeDetailsProps {
   data?: {
     name: string;
   };
+  autoFocus?: boolean;
   disabled: boolean;
-  errors: PageErrorFragment[];
+  errors?: PageErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const PageTypeDetails = (props: PageTypeDetailsProps) => {
-  const { data, disabled, errors, onChange } = props;
+const PageTypeDetails = ({
+  autoFocus = false,
+  data,
+  disabled,
+  errors = [],
+  onChange,
+}: PageTypeDetailsProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!autoFocus || disabled) {
+      return;
+    }
+
+    nameInputRef.current?.focus();
+  }, [autoFocus, disabled]);
 
   return (
     <DashboardCard>
@@ -30,15 +48,13 @@ const PageTypeDetails = (props: PageTypeDetailsProps) => {
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <TextField
+        <Input
+          ref={nameInputRef}
           disabled={disabled}
-          fullWidth
           error={!!formErrors.name}
+          width="100%"
           helperText={getPageErrorMessage(formErrors.name, intl)}
-          label={intl.formatMessage({
-            id: "DWWw3M",
-            defaultMessage: "Model type Name",
-          })}
+          label={intl.formatMessage(messages.modelTypeName)}
           name="name"
           data-test-id="page-type-name"
           onChange={onChange}
@@ -49,8 +65,5 @@ const PageTypeDetails = (props: PageTypeDetailsProps) => {
   );
 };
 
-PageTypeDetails.defaultProps = {
-  errors: [],
-};
 PageTypeDetails.displayName = "PageTypeDetails";
 export default PageTypeDetails;

@@ -137,7 +137,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
             />
             <TopNav.Menu items={menuItems} dataTestId="menu" />
           </TopNav>
-          <DetailPageLayout.Content>
+          <DetailPageLayout.Content paddingBottom={10}>
             <PageTypeAttributes
               attributes={pageType?.attributes}
               disabled={disabled}

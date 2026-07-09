@@ -1,41 +1,37 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
-import { ProductTypeKindEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Divider, Input, Text } from "@saleor/macaw-ui-next";
+import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useEffect, useRef } from "react";
+import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
 interface ProductTypeDetailsProps {
   data?: {
     name: string;
-    kind: ProductTypeKindEnum;
   };
+  autoFocus?: boolean;
   disabled: boolean;
   errors: UserError[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  onKindChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const kindOptions = [
-  {
-    title: messages.optionNormalTitle,
-    type: ProductTypeKindEnum.NORMAL,
-  },
-  {
-    title: messages.optionGiftCardTitle,
-    subtitle: messages.optionGiftCardDescription,
-    type: ProductTypeKindEnum.GIFT_CARD,
-  },
-];
 const ProductTypeDetails = (props: ProductTypeDetailsProps) => {
-  const { data, disabled, errors, onChange, onKindChange } = props;
+  const { autoFocus = false, data, disabled, errors, onChange } = props;
   const intl = useIntl();
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!autoFocus || disabled) {
+      return;
+    }
+
+    nameInputRef.current?.focus();
+  }, [autoFocus, disabled]);
 
   return (
     <DashboardCard>
@@ -46,6 +42,7 @@ const ProductTypeDetails = (props: ProductTypeDetailsProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Input
+          ref={nameInputRef}
           disabled={disabled}
           error={!!getFieldError(errors, "name")}
           width="100%"
@@ -54,28 +51,6 @@ const ProductTypeDetails = (props: ProductTypeDetailsProps) => {
           name="name"
           onChange={onChange}
           value={data.name}
-        />
-      </DashboardCard.Content>
-      <Divider />
-      <DashboardCard.Content>
-        <RadioGroupField
-          disabled={disabled}
-          choices={kindOptions.map(option => ({
-            label: (
-              <>
-                <FormattedMessage {...option.title} />
-                {option.subtitle && (
-                  <Text color="default2" size={2} fontWeight="light" display="block">
-                    <FormattedMessage {...option.subtitle} />
-                  </Text>
-                )}
-              </>
-            ),
-            value: option.type,
-          }))}
-          name="kind"
-          onChange={onKindChange}
-          value={data.kind}
         />
       </DashboardCard.Content>
     </DashboardCard>

@@ -30,16 +30,17 @@ import {
   type ReorderEvent,
   type UserError,
 } from "@dashboard/types";
-import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
+import { ProductTypeConfiguration } from "../ProductTypeConfiguration/ProductTypeConfiguration";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
+import { ProductTypeVariantMode } from "../ProductTypeVariantMode/ProductTypeVariantMode";
 import { messages } from "./messages";
 import { ProductTypeDetailsTitle } from "./Title";
 
@@ -186,25 +187,6 @@ const ProductTypeDetailsPage = ({
             <TopNav.Menu items={menuItems} dataTestId="menu" />
           </TopNav>
           <DetailPageLayout.Content paddingBottom={10}>
-            <ProductTypeDetails
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-              onKindChange={change}
-            />
-            <CardSpacer />
-            <ProductTypeTaxes
-              disabled={disabled}
-              data={data}
-              taxClasses={taxClasses}
-              taxClassDisplayName={taxClassDisplayName}
-              onChange={event =>
-                handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
-              }
-              onFetchMore={onFetchMoreTaxClasses}
-            />
-            <CardSpacer />
             <ProductTypeAttributes
               testId="assign-products-attributes"
               attributes={maybe(() => productType.productAttributes)}
@@ -219,23 +201,11 @@ const ProductTypeDetailsPage = ({
               {...productAttributeList}
             />
             <CardSpacer />
-
-            <Box marginLeft={6}>
-              <Toggle
-                pressed={data.hasVariants}
-                disabled={disabled}
-                name="hasVariants"
-                onPressedChange={pressed => onHasVariantsToggle(pressed)}
-              >
-                <Text>
-                  <FormattedMessage
-                    id="5pHBSU"
-                    defaultMessage="Product type uses Variant Attributes"
-                    description="switch button"
-                  />
-                </Text>
-              </Toggle>
-            </Box>
+            <ProductTypeVariantMode
+              hasVariants={data.hasVariants}
+              disabled={disabled}
+              onHasVariantsToggle={onHasVariantsToggle}
+            />
             {data.hasVariants && (
               <>
                 <CardSpacer />
@@ -258,11 +228,26 @@ const ProductTypeDetailsPage = ({
             )}
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
+            <ProductTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
+            <CardSpacer />
+            <ProductTypeConfiguration data={data} disabled={disabled} onKindChange={change} />
+            <CardSpacer />
             <ProductTypeShipping
               disabled={disabled}
               data={data}
               weightUnit={productType?.weight?.unit || defaultWeightUnit}
               onChange={change}
+            />
+            <CardSpacer />
+            <ProductTypeTaxes
+              disabled={disabled}
+              data={data}
+              taxClasses={taxClasses}
+              taxClassDisplayName={taxClassDisplayName}
+              onChange={event =>
+                handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
+              }
+              onFetchMore={onFetchMoreTaxClasses}
             />
           </DetailPageLayout.RightSidebar>
           <Savebar>

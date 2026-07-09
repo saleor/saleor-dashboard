@@ -87,6 +87,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     formErrors: [],
   });
   const [updateProductType, updateProductTypeOpts] = useProductTypeUpdateMutation({
+    // Field errors are rendered inline on the product type form.
+    disableErrorHandling: true,
     onCompleted: updateData => {
       if (
         !updateData.productTypeUpdate.errors ||
@@ -109,6 +111,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   });
   const [updateProductAttributes, updateProductAttributesOpts] =
     useProductAttributeAssignmentUpdateMutation({
+      // Field errors are rendered inline on the product type form.
+      disableErrorHandling: true,
       onCompleted: updateData => {
         if (
           updateData.productAttributeAssignmentUpdate.errors !== null &&

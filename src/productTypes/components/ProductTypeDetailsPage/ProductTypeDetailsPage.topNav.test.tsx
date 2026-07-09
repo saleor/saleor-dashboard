@@ -23,12 +23,18 @@ jest.mock("../ProductTypeDetails/ProductTypeDetails", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-details-mock" />,
 }));
+jest.mock("../ProductTypeConfiguration/ProductTypeConfiguration", () => ({
+  ProductTypeConfiguration: () => <div data-test-id="product-type-configuration-mock" />,
+}));
 jest.mock("../ProductTypeShipping/ProductTypeShipping", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-shipping-mock" />,
 }));
 jest.mock("../ProductTypeTaxes/ProductTypeTaxes", () => ({
   ProductTypeTaxes: () => <div data-test-id="product-type-taxes-mock" />,
+}));
+jest.mock("../ProductTypeVariantMode/ProductTypeVariantMode", () => ({
+  ProductTypeVariantMode: () => <div data-test-id="product-type-variant-mode-mock" />,
 }));
 jest.mock("../ProductTypeVariantAttributes/ProductTypeVariantAttributes", () => ({
   __esModule: true,

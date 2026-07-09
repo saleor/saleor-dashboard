@@ -72,6 +72,8 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
       text: intl.formatMessage({ id: "GVGaij", defaultMessage: "Model type updated" }),
     });
   const [updatePageType, updatePageTypeOpts] = usePageTypeUpdateMutation({
+    // Name and other field errors are rendered inline on the model type form.
+    disableErrorHandling: true,
     onCompleted: updateData => {
       if (!updateData.pageTypeUpdate.errors || updateData.pageTypeUpdate.errors.length === 0) {
         notifySaved();
