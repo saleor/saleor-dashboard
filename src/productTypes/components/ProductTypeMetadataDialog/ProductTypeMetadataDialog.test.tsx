@@ -15,7 +15,7 @@ jest.mock("@dashboard/components/MetadataDialog/useHandleMetadataSubmit", () => 
 }));
 
 const mockProductType: NonNullable<ProductTypeDetailsQuery["productType"]> = {
-  ...productType,
+  ...productType!,
   metadata: [{ key: "test-key", value: "test-value", __typename: "MetadataItem" }],
   privateMetadata: [{ key: "private-key", value: "private-value", __typename: "MetadataItem" }],
 };

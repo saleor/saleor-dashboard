@@ -3,7 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
+import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
@@ -21,6 +21,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { defaultGraphiQLQuery } from "@dashboard/modelTypes/queries";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { isPageTypeUpdateFormPristine } from "@dashboard/modelTypes/utils/pageTypePageForm";
 import { type ListActions, type ReorderEvent } from "@dashboard/types";
 import { type Option } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
@@ -39,7 +40,7 @@ export interface PageTypeForm extends MetadataFormData {
 
 interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
-  pageType: PageTypeDetailsFragment;
+  pageType: PageTypeDetailsFragment | undefined;
   disabled: boolean;
   attributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -75,16 +76,33 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     context.setVariables(`{ "id": "${pageType?.id}" }`);
     context.setDevModeVisibility(true);
   }, [context, pageType?.id]);
-  const formInitialData: PageTypeForm = {
-    attributes:
-      pageType?.attributes?.map(attribute => ({
-        label: attribute.name,
-        value: attribute.id,
-      })) || [],
-    metadata: [],
-    name: pageType?.name || "",
-    privateMetadata: [],
-  };
+  const formInitialData = useMemo<PageTypeForm>(
+    () => ({
+      attributes:
+        pageType?.attributes?.map(attribute => ({
+          label: attribute.name,
+          value: attribute.id,
+        })) || [],
+      metadata: [],
+      name: pageType?.name || "",
+      privateMetadata: [],
+    }),
+    [pageType],
+  );
+  const checkIfSaveIsDisabled = useCallback(
+    (data: PageTypeForm) => {
+      if (disabled) {
+        return true;
+      }
+
+      if (!pageType) {
+        return true;
+      }
+
+      return isPageTypeUpdateFormPristine(data, formInitialData);
+    },
+    [disabled, formInitialData, pageType],
+  );
 
   const pageTypeListBackLink = useBackLinkWithState({
     path: modelTypesPath,
@@ -116,55 +134,68 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   );
 
   return (
-    <Form confirmLeave initial={formInitialData} onSubmit={onSubmit} disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit }) => (
-        <DetailPageLayout>
-          <TopNav
-            href={pageTypeListBackLink}
-            title={
-              <PageTypeDetailsTitle
-                pageType={pageType ? { name: pageType.name } : null}
-                loading={disabled}
-              />
-            }
-            actionsGap={3}
-          >
-            <TopNav.MetadataButton
-              onClick={onShowMetadata}
-              disabled={!pageType}
-              data-test-id="show-model-type-metadata"
-              title={intl.formatMessage(messages.editModelTypeMetadata)}
-            />
-            <TopNav.Menu items={menuItems} dataTestId="menu" />
-          </TopNav>
-          <DetailPageLayout.Content paddingBottom={10}>
-            <PageTypeAttributes
-              attributes={pageType?.attributes}
-              disabled={disabled}
-              type={AttributeTypeEnum.PAGE_TYPE}
-              onAttributeAssign={onAttributeAdd}
-              onAttributeCreate={onAttributeCreate}
-              onAttributeReorder={(event: ReorderEvent) =>
-                onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={onSubmit}
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
+      {({ change, data, isSaveDisabled, submit, triggerChange }) => (
+        <>
+          <FormDirtyStateSync
+            enabled={!!pageType}
+            isSaveDisabled={isSaveDisabled}
+            triggerChange={triggerChange}
+          />
+          <DetailPageLayout>
+            <TopNav
+              href={pageTypeListBackLink}
+              title={
+                <PageTypeDetailsTitle
+                  pageType={pageType ? { name: pageType.name } : null}
+                  loading={disabled}
+                />
               }
-              onAttributeUnassign={onAttributeUnassign}
-              {...attributeList}
-            />
-          </DetailPageLayout.Content>
-          <DetailPageLayout.RightSidebar>
-            <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
-          </DetailPageLayout.RightSidebar>
-          <Savebar>
-            <Savebar.DeleteButton onClick={onDelete} />
-            <Savebar.Spacer />
-            <Savebar.CancelButton onClick={() => navigate(pageTypeListBackLink)} />
-            <Savebar.ConfirmButton
-              transitionState={saveButtonBarState}
-              onClick={submit}
-              disabled={isSaveDisabled}
-            />
-          </Savebar>
-        </DetailPageLayout>
+              actionsGap={3}
+            >
+              <TopNav.MetadataButton
+                onClick={onShowMetadata}
+                disabled={!pageType}
+                data-test-id="show-model-type-metadata"
+                title={intl.formatMessage(messages.editModelTypeMetadata)}
+              />
+              <TopNav.Menu items={menuItems} dataTestId="menu" />
+            </TopNav>
+            <DetailPageLayout.Content paddingBottom={10}>
+              <PageTypeAttributes
+                attributes={pageType?.attributes}
+                disabled={disabled}
+                type={AttributeTypeEnum.PAGE_TYPE}
+                onAttributeAssign={onAttributeAdd}
+                onAttributeCreate={onAttributeCreate}
+                onAttributeReorder={(event: ReorderEvent) =>
+                  onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
+                }
+                onAttributeUnassign={onAttributeUnassign}
+                {...attributeList}
+              />
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
+              <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
+            </DetailPageLayout.RightSidebar>
+            <Savebar>
+              <Savebar.DeleteButton onClick={onDelete} />
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(pageTypeListBackLink)} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
+          </DetailPageLayout>
+        </>
       )}
     </Form>
   );

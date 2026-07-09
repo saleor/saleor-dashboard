@@ -1,3 +1,5 @@
+import { type ProductTypeDetailsQuery, WeightUnitsEnum } from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { productType } from "@dashboard/productTypes/fixtures";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
@@ -47,8 +49,10 @@ const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
   </MemoryRouter>
 );
 
+const productTypeFixture: NonNullable<ProductTypeDetailsQuery["productType"]> = productType!;
+
 const defaultProps = {
-  defaultWeightUnit: "KG" as const,
+  defaultWeightUnit: WeightUnitsEnum.KG,
   disabled: false,
   errors: [],
   saveButtonBarState: "default" as const,
@@ -81,7 +85,7 @@ const defaultProps = {
   onDelete: jest.fn(),
   onShowMetadata: jest.fn(),
   onHasVariantsToggle: jest.fn(),
-  onSubmit: jest.fn(),
+  onSubmit: jest.fn((): SubmitPromise => Promise.resolve([])),
 };
 
 const renderPage = ({
@@ -89,14 +93,14 @@ const renderPage = ({
   onShowMetadata = jest.fn(),
   onDelete = jest.fn(),
 }: {
-  productTypeProp: typeof productType | undefined;
+  productTypeProp: NonNullable<ProductTypeDetailsQuery["productType"]> | null | undefined;
   onShowMetadata?: () => void;
   onDelete?: () => void;
 }): ReturnType<typeof render> =>
   render(
     <ProductTypeDetailsPage
       {...defaultProps}
-      productType={productTypeProp}
+      productType={productTypeProp ?? null}
       onShowMetadata={onShowMetadata}
       onDelete={onDelete}
     />,
@@ -106,7 +110,7 @@ const renderPage = ({
 describe("ProductTypeDetailsPage top nav", () => {
   it("renders the metadata button", () => {
     // Arrange & Act
-    renderPage({ productTypeProp: productType });
+    renderPage({ productTypeProp: productTypeFixture });
 
     // Assert
     expect(screen.getByTestId("show-product-type-metadata")).toBeInTheDocument();
@@ -116,7 +120,7 @@ describe("ProductTypeDetailsPage top nav", () => {
     // Arrange
     const onShowMetadata = jest.fn();
 
-    renderPage({ productTypeProp: productType, onShowMetadata });
+    renderPage({ productTypeProp: productTypeFixture, onShowMetadata });
 
     // Act
     screen.getByTestId("show-product-type-metadata").click();
@@ -138,7 +142,7 @@ describe("ProductTypeDetailsPage top nav", () => {
     const user = userEvent.setup();
     const onDelete = jest.fn();
 
-    renderPage({ productTypeProp: productType, onDelete });
+    renderPage({ productTypeProp: productTypeFixture, onDelete });
 
     // Act
     await user.click(screen.getByTestId("show-more-button"));

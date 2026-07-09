@@ -21,14 +21,12 @@ import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
 
 const PageList = ({ location }: RouteComponentProps) => {
-  const qs = parseQs(location.search.substr(1)) as Record<string, unknown>;
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: PageListUrlQueryParams = asSortParams(
     {
       ...qs,
-      ids: getArrayQueryParam(qs.ids as string | string[] | Record<string, string> | undefined),
-      pageTypes: getArrayQueryParam(
-        qs.pageTypes as string | string[] | Record<string, string> | undefined,
-      ),
+      ids: getArrayQueryParam(qs.ids),
+      pageTypes: getArrayQueryParam(qs.pageTypes),
     },
     PageListUrlSortField,
     PageListUrlSortField.title,

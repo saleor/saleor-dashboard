@@ -1,8 +1,8 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { ProductTypeKindEnum } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { Text } from "@saleor/macaw-ui-next";
-import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -24,7 +24,7 @@ interface ProductTypeConfigurationProps {
     kind: ProductTypeKindEnum;
   };
   disabled: boolean;
-  onKindChange: (event: React.ChangeEvent<any>) => void;
+  onKindChange: FormChange;
 }
 
 export const ProductTypeConfiguration = ({
