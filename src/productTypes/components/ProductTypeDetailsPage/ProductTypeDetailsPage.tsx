@@ -19,7 +19,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { maybe } from "@dashboard/misc";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
 import { defaultGraphiQLQuery } from "@dashboard/productTypes/queries";
@@ -150,7 +150,7 @@ const ProductTypeDetailsPage = ({
         label: intl.formatMessage(messages.openGraphiQL),
         onSelect: openPlaygroundURL,
         testId: "graphiql-redirect",
-        icon: <TerminalIcon />,
+        icon: <GraphqlIcon />,
       },
       {
         label: intl.formatMessage(messages.deleteProductType),
@@ -185,7 +185,7 @@ const ProductTypeDetailsPage = ({
             />
             <TopNav.Menu items={menuItems} dataTestId="menu" />
           </TopNav>
-          <DetailPageLayout.Content>
+          <DetailPageLayout.Content paddingBottom={10}>
             <ProductTypeDetails
               data={data}
               disabled={disabled}

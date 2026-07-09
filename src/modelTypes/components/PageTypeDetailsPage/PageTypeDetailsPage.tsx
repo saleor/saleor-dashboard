@@ -18,7 +18,7 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { defaultGraphiQLQuery } from "@dashboard/modelTypes/queries";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { type ListActions, type ReorderEvent } from "@dashboard/types";
@@ -102,7 +102,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
         label: intl.formatMessage(messages.openGraphiQL),
         onSelect: openPlaygroundURL,
         testId: "graphiql-redirect",
-        icon: <TerminalIcon />,
+        icon: <GraphqlIcon />,
       },
       {
         label: intl.formatMessage(messages.deleteModelType),
