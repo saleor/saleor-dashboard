@@ -9,3 +9,5 @@
 - Product type and model type pages now use a consistent layout: attribute schema in the main column, and type identity plus configuration (name, kind, shipping, taxes) in the sidebar. The variant attributes toggle stays in the main column because it controls the attribute schema below it.
 
 - Product type and model type create/update forms no longer show duplicate error toasts when validation errors are already displayed inline on the affected fields.
+
+- Product type and model type delete dialogs now follow the standard delete modal pattern: description in the header, Back + Delete actions, and consistent destructive button styling.
