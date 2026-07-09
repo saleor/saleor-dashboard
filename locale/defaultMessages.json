@@ -2368,6 +2368,10 @@
     "context": "reference types multiselect search placeholder",
     "string": "Search by name…"
   },
+  "AB4VSm": {
+    "context": "PageTypeDeleteWarningDialog single assigned items button label",
+    "string": "View models"
+  },
   "AD1PlC": {
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
@@ -3987,10 +3991,6 @@
     "context": "order refund amount",
     "string": "Max Refund"
   },
-  "I8mqqj": {
-    "context": "PageTypeDeleteWarningDialog single assigned items button label",
-    "string": "View models"
-  },
   "IBw72y": {
     "context": "switch button",
     "string": "Is this product shippable?"
@@ -5032,6 +5032,10 @@
     "context": "attribute values list: slug column header",
     "string": "Swatch"
   },
+  "NUkDAo": {
+    "context": "PageTypeDeleteWarningDialog single assigned items description",
+    "string": "You are about to delete model type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{model} other{models}}. Deleting this model type will also delete those models. Are you sure you want to do this?"
+  },
   "NVYVA+": {
     "context": "return items table, add reason button",
     "string": "Add reason"
@@ -5846,10 +5850,6 @@
   "RXbkle": {
     "context": "copy code button label",
     "string": "Copy code"
-  },
-  "RZ32u5": {
-    "context": "PageTypeDeleteWarningDialog single consent label",
-    "string": "Yes, I want to delete this model type and assigned models"
   },
   "RZDxej": {
     "context": "Popover trigger text (button)",
@@ -8919,6 +8919,10 @@
   "hAoqp6": {
     "string": "Failed to save permissions. Refresh the page and try again."
   },
+  "hGI8RO": {
+    "context": "PageTypeDeleteWarningDialog single consent label",
+    "string": "Yes, I want to delete this model type and assigned models"
+  },
   "hHOI7D": {
     "context": "product type name",
     "string": "Type Name"
@@ -9716,6 +9720,10 @@
     "context": "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
     "string": "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability."
   },
+  "kugtAu": {
+    "context": "PageTypeDeleteWarningDialog title",
+    "string": "Delete model {selectedTypesCount,plural,one{type} other{types}}"
+  },
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
@@ -10380,10 +10388,6 @@
   "oEFc87": {
     "context": "Warning when no shipping zones configured",
     "string": "No shipping zones"
-  },
-  "oHbgcK": {
-    "context": "PageTypeDeleteWarningDialog title",
-    "string": "Delete model {selectedTypesCount,plural,one{type} other{types}}"
   },
   "oIL8jk": {
     "context": "error message",
@@ -11435,10 +11439,6 @@
   "tQA//+": {
     "context": "customer overview, recent net sales tooltip",
     "string": "Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
-  },
-  "tQxBXs": {
-    "context": "PageTypeDeleteWarningDialog single assigned items description",
-    "string": "You are about to delete model type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{model} other{models}}. Deleting this model type will also delete those models. Are you sure you want to do this?"
   },
   "tR+UuE": {
     "string": "User doesn't exist. Please check your email in URL"
