@@ -5,7 +5,6 @@ export interface UseTypeDeleteData extends TypeDeleteMessages {
   isOpen: boolean;
   assignedItemsCount: number | undefined;
   viewAssignedItemsUrl: string | null;
-  isLoading: boolean | undefined;
   typesToDelete: Ids;
 }
 

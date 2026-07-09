@@ -32,6 +32,7 @@ import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import usePageTypeDelete from "@dashboard/modelTypes/hooks/usePageTypeDelete";
 import { type ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -43,7 +44,6 @@ import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttr
 import PageTypeDetailsPage, { type PageTypeForm } from "../components/PageTypeDetailsPage";
 import { PageTypeMetadataDialog } from "../components/PageTypeMetadataDialog/PageTypeMetadataDialog";
 import { executePageTypeAttributeCreate } from "../handlers/pageTypeAttributeCreateHandler";
-import usePageTypeDelete from "../hooks/usePageTypeDelete";
 import {
   pageTypeListUrl,
   pageTypeUrl,

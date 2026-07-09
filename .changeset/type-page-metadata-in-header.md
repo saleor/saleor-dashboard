@@ -11,3 +11,5 @@
 - Product type and model type create/update forms no longer show duplicate error toasts when validation errors are already displayed inline on the affected fields.
 
 - Product type and model type delete dialogs now follow the standard delete modal pattern: description in the header, Back + Delete actions, and consistent destructive button styling.
+
+- Type delete dialogs link "View products" / "View models" to lists filtered by the type being deleted, use model-type terminology consistently, and open immediately without a blocking loading spinner.

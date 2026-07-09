@@ -10,13 +10,21 @@ export function stringifyQs(
   });
 }
 
-export function getArrayQueryParam(param: string | string[]): string[] | undefined {
+export function getArrayQueryParam(
+  param: string | string[] | Record<string, string> | undefined,
+): string[] | undefined {
   if (!param) {
     return undefined;
   }
 
   if (Array.isArray(param)) {
-    return param;
+    return param.filter(Boolean);
+  }
+
+  if (typeof param === "object") {
+    const values = Object.values(param).filter(Boolean);
+
+    return values.length ? values : undefined;
   }
 
   return [param];

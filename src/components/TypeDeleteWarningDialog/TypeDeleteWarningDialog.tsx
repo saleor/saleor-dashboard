@@ -7,7 +7,7 @@ import {
 import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
-import { Box, Button, Spinner } from "@saleor/macaw-ui-next";
+import { Button } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -36,11 +36,9 @@ interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends TypeDelet
   typesToDelete: string[];
   assignedItemsCount: number | undefined;
   typesData: T[];
-  isLoading?: boolean;
 }
 
 function TypeDeleteWarningDialog<T extends TypeBaseData>({
-  isLoading = false,
   isOpen,
   baseMessages,
   singleWithItemsMessages,
@@ -74,7 +72,14 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   };
 
   const showMultiple = typesToDelete.length > 1;
-  const hasAssignedItems = !!assignedItemsCount;
+  const hasKnownNoAssignedModelItems =
+    !showMultiple &&
+    typesData.length === 1 &&
+    "hasPages" in typesData[0] &&
+    typesData[0].hasPages === false;
+  const isCountPending = assignedItemsCount === undefined && !hasKnownNoAssignedModelItems;
+  const hasAssignedItems =
+    !isCountPending && !hasKnownNoAssignedModelItems && (assignedItemsCount ?? 0) > 0;
   const selectMessages = () => {
     if (showMultiple) {
       const multipleMessages = hasAssignedItems
@@ -95,7 +100,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   const { description, consentLabel } = selectMessages();
 
   const singleItemSelectedId = typesToDelete[0];
-  const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))?.name;
+  const singleItemSelectedName =
+    typesData.find(getById(singleItemSelectedId))?.name ??
+    (typesData.length === 1 ? typesData[0]?.name : undefined);
   const shouldShowViewAssignedItemsButton = hasAssignedItems;
   const descriptionContent = intl.formatMessage(description, {
     typeName: singleItemSelectedName,
@@ -113,44 +120,35 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
           })}
         </DashboardModal.Header>
 
-        {isLoading ? (
+        {resolvedConsentLabel && (
           <DashboardModal.Body>
-            <Box display="flex" width="100%" justifyContent="center" paddingY={10}>
-              <Spinner />
-            </Box>
+            <DashboardModal.Inset>
+              <DeleteWarningDialogConsentContent
+                consentLabel={resolvedConsentLabel}
+                isConsentChecked={isConsentChecked}
+                onConsentChange={setIsConsentChecked}
+              />
+            </DashboardModal.Inset>
           </DashboardModal.Body>
-        ) : (
-          resolvedConsentLabel && (
-            <DashboardModal.Body>
-              <DashboardModal.Inset>
-                <DeleteWarningDialogConsentContent
-                  consentLabel={resolvedConsentLabel}
-                  isConsentChecked={isConsentChecked}
-                  onConsentChange={setIsConsentChecked}
-                />
-              </DashboardModal.Inset>
-            </DashboardModal.Body>
-          )
         )}
 
         <DashboardModal.Actions>
-          <BackButton disabled={isSubmitting || isLoading} onClick={handleClose} />
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
           {shouldShowViewAssignedItemsButton && (
             <Link
               to={viewAssignedItemsUrl ?? "#"}
               style={{ pointerEvents: viewAssignedItemsUrl ? undefined : "none" }}
             >
-              <Button
-                variant="secondary"
-                disabled={!viewAssignedItemsUrl || isSubmitting || isLoading}
-              >
+              <Button variant="secondary" disabled={!viewAssignedItemsUrl || isSubmitting}>
                 {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
               </Button>
             </Link>
           )}
           <ConfirmButton
             data-test-id="confirm-delete"
-            disabled={isLoading || (hasAssignedItems ? !isConsentChecked : false) || isSubmitting}
+            disabled={
+              isCountPending || (hasAssignedItems ? !isConsentChecked : false) || isSubmitting
+            }
             onClick={onDelete}
             transitionState={deleteButtonState}
             variant="error"
