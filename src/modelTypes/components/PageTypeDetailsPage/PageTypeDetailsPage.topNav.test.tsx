@@ -1,6 +1,7 @@
 import { pageType } from "@dashboard/modelTypes/fixtures";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
@@ -57,15 +58,18 @@ const defaultProps = {
 const renderPage = ({
   pageTypeProp,
   onShowMetadata = jest.fn(),
+  onDelete = jest.fn(),
 }: {
   pageTypeProp: typeof pageType | undefined;
   onShowMetadata?: () => void;
+  onDelete?: () => void;
 }): ReturnType<typeof render> =>
   render(
     <PageTypeDetailsPage
       {...defaultProps}
       pageType={pageTypeProp}
       onShowMetadata={onShowMetadata}
+      onDelete={onDelete}
     />,
     { wrapper: Wrapper },
   );
@@ -98,5 +102,20 @@ describe("PageTypeDetailsPage top nav", () => {
 
     // Assert
     expect(screen.getByTestId("show-model-type-metadata")).toBeDisabled();
+  });
+
+  it("calls onDelete from the cogs menu", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onDelete = jest.fn();
+
+    renderPage({ pageTypeProp: pageType, onDelete });
+
+    // Act
+    await user.click(screen.getByTestId("show-more-button"));
+    await user.click(screen.getByTestId("delete-model-type"));
+
+    // Assert
+    expect(onDelete).toHaveBeenCalled();
   });
 });

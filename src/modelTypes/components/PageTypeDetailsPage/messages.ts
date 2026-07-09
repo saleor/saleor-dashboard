@@ -10,4 +10,9 @@ export const messages = defineMessages({
     id: "br+OIS",
     defaultMessage: "Open this model type in GraphiQL",
   },
+  deleteModelType: {
+    id: "mn9eY+",
+    defaultMessage: "Delete model type",
+    description: "model type detail cogs menu, opens the delete-confirmation dialog",
+  },
 });

@@ -1,12 +1,20 @@
 import { productType } from "@dashboard/productTypes/fixtures";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import ProductTypeDetailsPage from "./ProductTypeDetailsPage";
 
 jest.mock("@dashboard/components/Savebar");
+jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
+  useDevModeContext: () => ({
+    setDevModeContent: jest.fn(),
+    setVariables: jest.fn(),
+    setDevModeVisibility: jest.fn(),
+  }),
+}));
 jest.mock("../ProductTypeAttributes/ProductTypeAttributes", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-attributes-mock" />,
@@ -73,15 +81,18 @@ const defaultProps = {
 const renderPage = ({
   productTypeProp,
   onShowMetadata = jest.fn(),
+  onDelete = jest.fn(),
 }: {
   productTypeProp: typeof productType | undefined;
   onShowMetadata?: () => void;
+  onDelete?: () => void;
 }): ReturnType<typeof render> =>
   render(
     <ProductTypeDetailsPage
       {...defaultProps}
       productType={productTypeProp}
       onShowMetadata={onShowMetadata}
+      onDelete={onDelete}
     />,
     { wrapper: Wrapper },
   );
@@ -114,5 +125,20 @@ describe("ProductTypeDetailsPage top nav", () => {
 
     // Assert
     expect(screen.getByTestId("show-product-type-metadata")).toBeDisabled();
+  });
+
+  it("calls onDelete from the cogs menu", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onDelete = jest.fn();
+
+    renderPage({ productTypeProp: productType, onDelete });
+
+    // Act
+    await user.click(screen.getByTestId("show-more-button"));
+    await user.click(screen.getByTestId("delete-product-type"));
+
+    // Assert
+    expect(onDelete).toHaveBeenCalled();
   });
 });

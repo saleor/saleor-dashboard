@@ -2,7 +2,9 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -17,8 +19,10 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
 import { maybe } from "@dashboard/misc";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
+import { defaultGraphiQLQuery } from "@dashboard/productTypes/queries";
 import { productTypeListPath } from "@dashboard/productTypes/urls";
 import {
   type FetchMoreProps,
@@ -27,6 +31,8 @@ import {
   type UserError,
 } from "@dashboard/types";
 import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
+import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
@@ -98,6 +104,12 @@ const ProductTypeDetailsPage = ({
 }: ProductTypeDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const context = useDevModeContext();
+  const openPlaygroundURL = useCallback(() => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${productType?.id}" }`);
+    context.setDevModeVisibility(true);
+  }, [context, productType?.id]);
   const productTypeListBackLink = useBackLinkWithState({
     path: productTypeListPath,
   });
@@ -132,6 +144,24 @@ const ProductTypeDetailsPage = ({
         : [],
     weight: maybe(() => productType.weight.value),
   };
+  const menuItems = useMemo(
+    () => [
+      {
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <TerminalIcon />,
+      },
+      {
+        label: intl.formatMessage(messages.deleteProductType),
+        onSelect: onDelete,
+        testId: "delete-product-type",
+        color: "critical1" as const,
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      },
+    ],
+    [intl, onDelete, openPlaygroundURL],
+  );
 
   return (
     <Form initial={formInitialData} onSubmit={onSubmit} confirmLeave disabled={disabled}>
@@ -153,6 +183,7 @@ const ProductTypeDetailsPage = ({
               data-test-id="show-product-type-metadata"
               title={intl.formatMessage(messages.editProductTypeMetadata)}
             />
+            <TopNav.Menu items={menuItems} dataTestId="menu" />
           </TopNav>
           <DetailPageLayout.Content>
             <ProductTypeDetails

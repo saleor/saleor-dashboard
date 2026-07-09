@@ -1,22 +1,34 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Button, Dropdown, List, Text, type TextProps } from "@saleor/macaw-ui-next";
 import { CheckSquare, Settings, Square } from "lucide-react";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import { topNavMessages } from "./messages";
 
-interface TopNavMenuItem {
+export interface TopNavMenuItem {
   label: string;
   testId?: string;
   onSelect: <T extends object>(params: T) => void;
   color?: TextProps["color"];
   checked?: boolean;
+  icon?: React.ReactNode;
 }
 
 interface TopNavMenuProps {
   items: TopNavMenuItem[];
   dataTestId?: string;
 }
+
+const menuItemIconStyle: React.CSSProperties = {
+  alignItems: "center",
+  display: "inline-flex",
+  flexShrink: 0,
+  height: iconSize.small,
+  justifyContent: "center",
+  lineHeight: 0,
+  width: iconSize.small,
+};
 
 export const Menu = ({ items, dataTestId }: TopNavMenuProps) => {
   const intl = useIntl();
@@ -35,7 +47,7 @@ export const Menu = ({ items, dataTestId }: TopNavMenuProps) => {
         <Box>
           <List padding={2} borderRadius={4} boxShadow="defaultOverlay" backgroundColor="default1">
             {items.map(item => (
-              <Dropdown.Item key={item.label}>
+              <Dropdown.Item key={item.testId ?? item.label}>
                 <List.Item
                   borderRadius={4}
                   paddingX={1.5}
@@ -50,6 +62,11 @@ export const Menu = ({ items, dataTestId }: TopNavMenuProps) => {
                       ) : (
                         <Square size={14} aria-hidden />
                       ))}
+                    {item.icon && (
+                      <Box color={item.color} style={menuItemIconStyle}>
+                        {item.icon}
+                      </Box>
+                    )}
                     <Text color={item.color}>{item.label}</Text>
                   </Box>
                 </List.Item>

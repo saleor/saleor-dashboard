@@ -1,8 +1,10 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -16,10 +18,13 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
 import { defaultGraphiQLQuery } from "@dashboard/modelTypes/queries";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
 import { type ListActions, type ReorderEvent } from "@dashboard/types";
 import { type Option } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
@@ -65,11 +70,11 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const context = useDevModeContext();
-  const openPlaygroundURL = () => {
+  const openPlaygroundURL = useCallback(() => {
     context.setDevModeContent(defaultGraphiQLQuery);
     context.setVariables(`{ "id": "${pageType?.id}" }`);
     context.setDevModeVisibility(true);
-  };
+  }, [context, pageType?.id]);
   const formInitialData: PageTypeForm = {
     attributes:
       pageType?.attributes?.map(attribute => ({
@@ -89,6 +94,25 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   const extensionMenuItems = getExtensionsItemsForPageTypeDetails(
     PAGE_TYPE_DETAILS_MORE_ACTIONS,
     pageType?.id,
+  );
+  const menuItems = useMemo(
+    () => [
+      ...mapExtensionMenuItemsToTopNavItems(extensionMenuItems),
+      {
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <TerminalIcon />,
+      },
+      {
+        label: intl.formatMessage(messages.deleteModelType),
+        onSelect: onDelete,
+        testId: "delete-model-type",
+        color: "critical1" as const,
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      },
+    ],
+    [extensionMenuItems, intl, onDelete, openPlaygroundURL],
   );
 
   return (
@@ -111,17 +135,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               data-test-id="show-model-type-metadata"
               title={intl.formatMessage(messages.editModelTypeMetadata)}
             />
-            <TopNav.Menu
-              items={[
-                ...extensionMenuItems,
-                {
-                  label: intl.formatMessage(messages.openGraphiQL),
-                  onSelect: openPlaygroundURL,
-                  testId: "graphiql-redirect",
-                },
-              ]}
-              dataTestId="menu"
-            />
+            <TopNav.Menu items={menuItems} dataTestId="menu" />
           </TopNav>
           <DetailPageLayout.Content>
             <PageTypeAttributes
