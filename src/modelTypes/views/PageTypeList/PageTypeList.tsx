@@ -132,12 +132,13 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
       },
     });
 
+  const pageTypesData = mapEdgesToItems(data?.pageTypes);
+  const typesToDeleteForDialog = params.ids?.length ? params.ids : selectedPageTypes;
+
   const pageTypeDeleteData = usePageTypeDelete({
-    selectedTypes: selectedPageTypes,
+    selectedTypes: typesToDeleteForDialog,
     params,
   });
-
-  const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -183,7 +184,7 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
         <TypeDeleteWarningDialog
           {...pageTypeDeleteData}
           typesData={pageTypesData}
-          typesToDelete={selectedPageTypes}
+          typesToDelete={typesToDeleteForDialog}
           onClose={closeModal}
           onDelete={hanldePageTypeBulkDelete}
           deleteButtonState={pageTypeBulkDeleteOpts.status}

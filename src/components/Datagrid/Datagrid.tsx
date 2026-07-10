@@ -105,6 +105,7 @@ interface DatagridProps {
   onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
   readonly?: boolean;
   hasRowHover?: boolean;
+  highlightedRow?: number;
   rowMarkers?: DataEditorProps["rowMarkers"];
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
@@ -150,6 +151,7 @@ export const Datagrid = ({
   loading,
   rowAnchor,
   hasRowHover = false,
+  highlightedRow,
   onRowSelectionChange,
   actionButtonPosition = "left",
   recentlyAddedColumn,
@@ -350,17 +352,25 @@ export const Datagrid = ({
   };
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
     (row: number) => {
-      if (row !== hoverRow) {
+      const isActiveRow = highlightedRow !== undefined && row === highlightedRow;
+      const isHoverRow = row === hoverRow;
+
+      if (!isActiveRow && !isHoverRow) {
         return undefined;
       }
 
-      const overrideTheme: Partial<Theme> = {
-        /*
-          Grid-specific colors. Transparency matters when we highlight entire row.
-        */
-        bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
-        bgCellMedium: themeValues.colors.background.default1Hovered,
-      };
+      const overrideTheme: Partial<Theme> = isActiveRow
+        ? {
+            bgCell: themeValues.colors.background.default2,
+            bgCellMedium: themeValues.colors.background.default2,
+          }
+        : {
+            /*
+              Grid-specific colors. Transparency matters when we highlight entire row.
+            */
+            bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
+            bgCellMedium: themeValues.colors.background.default1Hovered,
+          };
 
       if (readonly) {
         overrideTheme.accentLight = themeValues.colors.background.default1;
@@ -368,7 +378,7 @@ export const Datagrid = ({
 
       return overrideTheme;
     },
-    [hoverRow, readonly, themeValues],
+    [highlightedRow, hoverRow, readonly, theme, themeValues],
   );
   const handleHeaderClicked = useCallback(
     (colIndex: number, event: HeaderClickedEventArgs) => {

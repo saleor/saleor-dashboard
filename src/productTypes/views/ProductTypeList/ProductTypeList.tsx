@@ -111,9 +111,10 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
   });
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
   const productTypesData = mapEdgesToItems(data?.productTypes) ?? [];
+  const typesToDeleteForDialog = params.ids?.length ? params.ids : selectedProductTypes;
 
   const productTypeDeleteData = useProductTypeDelete({
-    selectedTypes: selectedProductTypes,
+    selectedTypes: typesToDeleteForDialog,
     params,
     typeBaseData: productTypesData,
   });
@@ -186,7 +187,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
         <TypeDeleteWarningDialog
           {...productTypeDeleteData}
           typesData={productTypesData}
-          typesToDelete={selectedProductTypes}
+          typesToDelete={typesToDeleteForDialog}
           onClose={closeModal}
           onDelete={onProductTypeBulkDelete}
           deleteButtonState={productTypeBulkDeleteOpts.status}

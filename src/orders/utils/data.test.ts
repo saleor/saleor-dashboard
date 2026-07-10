@@ -11,6 +11,7 @@ import {
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import { testIntlInstance } from "@test/intl";
 
 import { type LineItemData } from "../components/OrderReturnPage/form";
@@ -18,8 +19,10 @@ import { type OrderRefundSharedType } from "../types";
 import {
   getAllFulfillmentLinesPriceSum,
   getAttributesCaption,
+  getDefaultFulfillWarehouse,
   getDiscountTypeLabel,
   getOrderFulfillStockFormsetLineId,
+  getOrderFulfillSubmitItems,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
@@ -3543,6 +3546,108 @@ describe("getAttributesCaption", () => {
 
     // Assert
     expect(result).toBe("");
+  });
+});
+
+describe("getDefaultFulfillWarehouse", () => {
+  it("prefers the warehouse from the highest quantity allocation", () => {
+    // Arrange
+    const line = {
+      allocations: [
+        {
+          quantity: 2,
+          warehouse: { id: "warehouse-low", name: "Low stock warehouse" },
+        },
+        {
+          quantity: 5,
+          warehouse: { id: "warehouse-high", name: "Allocated warehouse" },
+        },
+      ],
+      variant: { stocks: [] },
+    } as Parameters<typeof getDefaultFulfillWarehouse>[0];
+
+    // Act // Assert
+    expect(getDefaultFulfillWarehouse(line)?.id).toBe("warehouse-high");
+  });
+
+  it("falls back to the warehouse with the most available stock when there is no allocation", () => {
+    // Arrange
+    const line = {
+      allocations: [],
+      variant: {
+        stocks: [
+          {
+            quantity: 10,
+            quantityAllocated: 0,
+            warehouse: { id: "warehouse-a", name: "Warehouse A" },
+          },
+          {
+            quantity: 50,
+            quantityAllocated: 0,
+            warehouse: { id: "warehouse-b", name: "Warehouse B" },
+          },
+        ],
+      },
+    } as Parameters<typeof getDefaultFulfillWarehouse>[0];
+
+    // Act // Assert
+    expect(getDefaultFulfillWarehouse(line)?.id).toBe("warehouse-b");
+  });
+});
+
+describe("getOrderFulfillSubmitItems", () => {
+  it("returns only lines with positive quantity and assigned warehouse", () => {
+    // Arrange
+    const formsetData = [
+      {
+        id: "line-1",
+        value: [{ quantity: 2, warehouse: warehouseList[0] }],
+      },
+      {
+        id: "line-2",
+        value: [{ quantity: 0, warehouse: undefined }],
+      },
+      {
+        id: "line-3",
+        value: [{ quantity: 1, warehouse: undefined }],
+      },
+    ];
+
+    // Act
+    const result = getOrderFulfillSubmitItems(formsetData);
+
+    // Assert
+    expect(result).toEqual([
+      {
+        id: "line-1",
+        value: [{ quantity: 2, warehouse: warehouseList[0].id }],
+      },
+    ]);
+  });
+
+  it("skips preorder lines without stock allocations", () => {
+    // Arrange
+    const formsetData = [
+      {
+        id: "line-1",
+        value: null,
+      },
+      {
+        id: "line-2",
+        value: [{ quantity: 1, warehouse: warehouseList[1] }],
+      },
+    ];
+
+    // Act
+    const result = getOrderFulfillSubmitItems(formsetData);
+
+    // Assert
+    expect(result).toEqual([
+      {
+        id: "line-2",
+        value: [{ quantity: 1, warehouse: warehouseList[1].id }],
+      },
+    ]);
   });
 });
 

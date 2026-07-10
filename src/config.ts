@@ -88,6 +88,7 @@ export interface AppListViewSettings {
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: ListSettings;
   [ListViews.GIFT_CARD_LIST]: ListSettings;
   [ListViews.ORDER_DETAILS_LIST]: ListSettings;
+  [ListViews.ORDER_LINE_MATRIX_LIST]: ListSettings;
   [ListViews.ORDER_DRAFT_DETAILS_LIST]: ListSettings;
   [ListViews.PRODUCT_DETAILS]: ListSettings;
   [ListViews.VOUCHER_CODES]: ListSettings;
@@ -192,6 +193,24 @@ export const defaultListSettings: AppListViewSettings = {
       "isGift",
       "reason",
       "metadata",
+    ],
+  },
+  [ListViews.ORDER_LINE_MATRIX_LIST]: {
+    rowNumber: PAGINATE_BY,
+    columns: [
+      "status",
+      "product",
+      "sku",
+      "variantName",
+      "ordered",
+      "allocated",
+      "toFulfill",
+      "pendingApproval",
+      "shipped",
+      "returned",
+      "refunded",
+      "price",
+      "total",
     ],
   },
   [ListViews.ORDER_DRAFT_DETAILS_LIST]: {

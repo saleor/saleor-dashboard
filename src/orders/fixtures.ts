@@ -1298,6 +1298,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
   events: [
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
@@ -1331,6 +1333,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
@@ -1391,6 +1395,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1411,6 +1417,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1431,6 +1439,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1451,6 +1461,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1471,6 +1483,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1491,6 +1505,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",

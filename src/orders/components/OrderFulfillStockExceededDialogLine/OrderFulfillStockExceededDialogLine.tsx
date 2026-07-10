@@ -11,6 +11,7 @@ import {
 import { TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 
+import { OrderFulfillProductCellContent } from "../OrderFulfillLine/OrderFulfillProductCellContent";
 import { useStyles } from "../OrderFulfillStockExceededDialog/styles";
 
 interface OrderFulfillStockExceededDialogLineProps {
@@ -38,17 +39,20 @@ export const OrderFulfillStockExceededDialogLine = (
   return (
     <TableRowLink key={line?.id}>
       <TableCellAvatar className={classes.colName} thumbnail={line?.thumbnail?.url}>
-        {line?.productName}
-        {line.variant && "attributes" in line.variant && (
-          <Text color="default2" size={2} fontWeight="light">
-            {getAttributesCaption(line.variant?.attributes)}
-          </Text>
-        )}
-        {warehouse?.name && (
-          <Text color="default2" size={2} fontWeight="light">
-            {warehouse.name}
-          </Text>
-        )}
+        <OrderFulfillProductCellContent
+          productName={line?.productName}
+          attributesCaption={
+            line.variant && "attributes" in line.variant
+              ? getAttributesCaption(line.variant?.attributes)
+              : undefined
+          }
+        >
+          {warehouse?.name ? (
+            <Text color="default2" size={2} fontWeight="light">
+              {warehouse.name}
+            </Text>
+          ) : null}
+        </OrderFulfillProductCellContent>
       </TableCellAvatar>
       <TableCell className={classes.colQuantity}>{toFulfill}</TableCell>
       <TableCell className={classes.colWarehouseStock}>

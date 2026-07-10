@@ -26,48 +26,6 @@ export const useStyles = makeStyles(
       color: theme.palette.saleor.warning.mid,
       marginRight: theme.spacing(2),
     },
-    error: {
-      color: theme.palette.error.main,
-    },
-    warning: {
-      borderColor: theme.palette.saleor.warning.dark + " !important",
-      boxShadow: `0 0 0 3px ${theme.palette.saleor.warning.light}`,
-    },
-    quantityInnerInput: {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-    },
-    quantityInnerInputNoRemaining: {
-      paddingRight: 0,
-    },
-    remainingQuantity: {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2),
-      color: theme.palette.text.secondary,
-      whiteSpace: "nowrap",
-    },
-    warehouseButton: {
-      padding: theme.spacing(1.5),
-      width: "100%",
-      justifyContent: "right",
-      cursor: "pointer",
-      border: `1px solid ${theme.palette.primary.dark}`,
-      "&:hover": {
-        borderColor: "transparent",
-      },
-    },
-    warehouseButtonContent: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      width: "100%",
-      cursor: "pointer",
-    },
-    warehouseButtonContentText: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-    },
   }),
   { name: "OrderFulfillLine" },
 );

@@ -10,6 +10,7 @@ import {
   type OrderDiscountFragment,
   OrderDiscountType,
   type OrderFulfillLineFragment,
+  type OrderFulfillStockInput,
   type OrderLineFragment,
   type OrderLineStockDataFragment,
   type OrderRefundDataQuery,
@@ -340,9 +341,37 @@ export interface OrderFulfillLineFormData {
   warehouse: WarehouseFragment;
 }
 
+type OrderFulfillLineValueInput = {
+  quantity: number;
+  warehouse?: WarehouseFragment | null;
+};
+
 export type OrderFulfillStockFormsetData = Array<
   Pick<FormsetData<null, OrderFulfillLineFormData[]>[0], "id" | "value">
 >;
+
+export const getOrderFulfillSubmitItems = <
+  TItem extends { id: string; value?: OrderFulfillLineValueInput[] | null },
+>(
+  formsetData: TItem[],
+): Array<Omit<TItem, "value"> & { value: OrderFulfillStockInput[] }> =>
+  formsetData
+    .map(item => ({
+      ...item,
+      value: (item.value ?? []).flatMap(value => {
+        if (value.quantity <= 0 || !value.warehouse?.id) {
+          return [];
+        }
+
+        return [
+          {
+            quantity: value.quantity,
+            warehouse: value.warehouse.id,
+          },
+        ];
+      }),
+    }))
+    .filter(item => item.value.length > 0);
 
 export const getOrderFulfillStockFormsetLineId = (
   line: NonNullable<FulfillmentFragment["lines"]>[number] | OrderFulfillLineFragment,
@@ -392,6 +421,29 @@ export const getLineAllocationWithHighestQuantity = (
     },
     null as NonNullable<OrderFulfillLineFragment["allocations"]>[number] | null,
   );
+
+export const getDefaultFulfillWarehouse = (
+  line: OrderFulfillLineFragment,
+): WarehouseFragment | undefined => {
+  const allocatedWarehouse = getLineAllocationWithHighestQuantity(line)?.warehouse;
+
+  if (allocatedWarehouse) {
+    return allocatedWarehouse;
+  }
+
+  const stocks = line.variant?.stocks;
+
+  if (!stocks?.length) {
+    return undefined;
+  }
+
+  return stocks.reduce((bestStock, stock) => {
+    const bestAvailable = getOrderLineAvailableQuantity(line, bestStock);
+    const stockAvailable = getOrderLineAvailableQuantity(line, stock);
+
+    return stockAvailable > bestAvailable ? stock : bestStock;
+  }).warehouse;
+};
 
 export const transformFuflillmentLinesToStockFormsetData = (
   lines: FulfillmentFragment["lines"],

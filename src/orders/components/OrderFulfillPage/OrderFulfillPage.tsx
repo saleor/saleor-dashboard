@@ -29,7 +29,8 @@ import {
 } from "@dashboard/orders/urls";
 import {
   getAttributesCaption,
-  getLineAllocationWithHighestQuantity,
+  getDefaultFulfillWarehouse,
+  getOrderFulfillSubmitItems,
   getToFulfillOrderLines,
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
@@ -40,6 +41,7 @@ import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
+import fulfillLineStyles from "../OrderFulfillLine/OrderFulfillLine.module.css";
 import { OrderFulfillStockExceededDialog } from "../OrderFulfillStockExceededDialog/OrderFulfillStockExceededDialog";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -86,8 +88,6 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const navigate = useNavigator();
   const { change: formsetChange, data: formsetData } = useFormset<null, OrderFulfillLineFormData[]>(
     (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(line => {
-      const highestQuantityAllocation = getLineAllocationWithHighestQuantity(line);
-
       return {
         data: null,
         id: line.id,
@@ -97,7 +97,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
           : [
               {
                 quantity: line.quantityToFulfill,
-                warehouse: highestQuantityAllocation?.warehouse,
+                warehouse: getDefaultFulfillWarehouse(line),
               },
             ],
       };
@@ -116,15 +116,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     return onSubmit({
       ...formData,
       allowStockToBeExceeded,
-      items: formsetData
-        .filter(item => !!item.value)
-        .map(item => ({
-          ...item,
-          value: item.value.map(value => ({
-            quantity: value.quantity,
-            warehouse: value.warehouse.id,
-          })),
-        })),
+      items: getOrderFulfillSubmitItems(formsetData),
     });
   };
 
@@ -213,8 +205,12 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                           <TableCell className={classes.colStock}>
                             <FormattedMessage {...messages.stock} />
                           </TableCell>
-                          <TableCell className={classes.colWarehouse}>
-                            <FormattedMessage {...messages.warehouse} />
+                          <TableCell
+                            className={clsx(classes.colWarehouse, fulfillLineStyles.warehouseCell)}
+                          >
+                            <Box padding={2}>
+                              <FormattedMessage {...messages.warehouse} />
+                            </Box>
                           </TableCell>
                         </TableRowLink>
                       </TableHead>

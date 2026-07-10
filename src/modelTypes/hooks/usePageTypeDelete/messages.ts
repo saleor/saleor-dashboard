@@ -2,27 +2,27 @@ import { defineMessages } from "react-intl";
 
 export const baseMessages = defineMessages({
   title: {
-    id: "oHbgcK",
-    defaultMessage: "Delete page {selectedTypesCount,plural,one{type} other{types}}",
+    id: "kugtAu",
+    defaultMessage: "Delete model {selectedTypesCount,plural,one{type} other{types}}",
     description: "PageTypeDeleteWarningDialog title",
   },
   viewAssignedItemsButtonLabel: {
-    id: "I8mqqj",
-    defaultMessage: "View pages",
+    id: "AB4VSm",
+    defaultMessage: "View models",
     description: "PageTypeDeleteWarningDialog single assigned items button label",
   },
 });
 
 export const singleWithItemsMessages = defineMessages({
   description: {
-    id: "tQxBXs",
+    id: "NUkDAo",
     defaultMessage:
-      "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?",
+      "You are about to delete model type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{model} other{models}}. Deleting this model type will also delete those models. Are you sure you want to do this?",
     description: "PageTypeDeleteWarningDialog single assigned items description",
   },
   consentLabel: {
-    id: "RZ32u5",
-    defaultMessage: "Yes, I want to delete this page type and assigned pages",
+    id: "hGI8RO",
+    defaultMessage: "Yes, I want to delete this model type and assigned models",
     description: "PageTypeDeleteWarningDialog single consent label",
   },
 });

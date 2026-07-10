@@ -29,8 +29,14 @@ export const fragmentOrderEvent = gql`
       id
       number
     }
+    composedId
     related {
       id
+      type
+    }
+    warehouse {
+      id
+      name
     }
     message
     quantity

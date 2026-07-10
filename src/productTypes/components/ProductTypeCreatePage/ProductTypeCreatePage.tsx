@@ -22,6 +22,7 @@ import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { type FetchMoreProps, type UserError } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 
+import { ProductTypeConfiguration } from "../ProductTypeConfiguration/ProductTypeConfiguration";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
@@ -85,13 +86,25 @@ const ProductTypeCreatePage = ({
         return (
           <DetailPageLayout>
             <TopNav href={productTypeListUrl()} title={pageTitle} />
-            <DetailPageLayout.Content>
+            <DetailPageLayout.Content paddingBottom={10}>
+              <Metadata data={data} onChange={changeMetadata} />
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <ProductTypeDetails
+                autoFocus
                 data={data}
                 disabled={disabled}
                 errors={errors}
                 onChange={change}
-                onKindChange={changeKind}
+              />
+              <CardSpacer />
+              <ProductTypeConfiguration data={data} disabled={disabled} onKindChange={changeKind} />
+              <CardSpacer />
+              <ProductTypeShipping
+                disabled={disabled}
+                data={data}
+                weightUnit={defaultWeightUnit}
+                onChange={change}
               />
               <CardSpacer />
               <ProductTypeTaxes
@@ -103,16 +116,6 @@ const ProductTypeCreatePage = ({
                   handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
                 }
                 onFetchMore={onFetchMoreTaxClasses}
-              />
-              <CardSpacer />
-              <Metadata data={data} onChange={changeMetadata} />
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <ProductTypeShipping
-                disabled={disabled}
-                data={data}
-                weightUnit={defaultWeightUnit}
-                onChange={change}
               />
             </DetailPageLayout.RightSidebar>
             <Savebar>
