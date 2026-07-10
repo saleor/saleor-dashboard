@@ -501,6 +501,10 @@
     "context": "countries list menu label when no countries are assigned",
     "string": "There are no countries assigned"
   },
+  "0a93bd": {
+    "context": "success message after unassigning attributes from a model type",
+    "string": "Model type updated"
+  },
   "0dCGBW": {
     "context": "button",
     "string": "Create structure"
@@ -4008,6 +4012,10 @@
   "IDwsCU": {
     "context": "onboarding step title",
     "string": "Create a new product"
+  },
+  "IEkGwG": {
+    "context": "success message after unassigning attributes from a product type",
+    "string": "Product type updated"
   },
   "IFWHn0": {
     "context": "error message",

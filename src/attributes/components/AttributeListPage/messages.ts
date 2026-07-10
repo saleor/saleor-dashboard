@@ -23,4 +23,14 @@ export const attributeListPageMessages = defineMessages({
       "Attributes are removed from this model type only. They are not deleted and remain available for other model types. Models that use other types are not affected.",
     description: "helper text in unassign dialog on model attributes list, type tab",
   },
+  productTypeUpdated: {
+    id: "IEkGwG",
+    defaultMessage: "Product type updated",
+    description: "success message after unassigning attributes from a product type",
+  },
+  modelTypeUpdated: {
+    id: "0a93bd",
+    defaultMessage: "Model type updated",
+    description: "success message after unassigning attributes from a model type",
+  },
 });
