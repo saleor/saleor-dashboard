@@ -117,14 +117,16 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
       ...formData,
       allowStockToBeExceeded,
       items: formsetData
-        .filter(item => !!item.value)
         .map(item => ({
           ...item,
-          value: item.value.map(value => ({
-            quantity: value.quantity,
-            warehouse: value.warehouse.id,
-          })),
-        })),
+          value: (item.value ?? [])
+            .filter(value => value.quantity > 0 && value.warehouse?.id)
+            .map(value => ({
+              quantity: value.quantity,
+              warehouse: value.warehouse.id,
+            })),
+        }))
+        .filter(item => item.value.length > 0),
     });
   };
 
