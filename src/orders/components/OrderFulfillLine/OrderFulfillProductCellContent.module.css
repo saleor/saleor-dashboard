@@ -1,0 +1,8 @@
+.content {
+  min-width: 0;
+}
+
+.productName {
+  font-size: var(--mu-fontSizes-3);
+  line-height: var(--mu-lineHeights-3);
+}
