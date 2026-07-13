@@ -12,6 +12,7 @@ const order = OrderFixture.fulfilled().build();
 const lifecycleRows = buildOrderLineLifecycle(order);
 
 const defaultProps = {
+  order,
   lines: lifecycleRows,
   loading: false,
   expandedLineId: null,

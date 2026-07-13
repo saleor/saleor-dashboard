@@ -22,4 +22,9 @@ export const messages = defineMessages({
     defaultMessage: "Cancel fulfillment",
     description: "cancel fulfillment action in shipment row menu",
   },
+  refundedAmount: {
+    id: "kThWsq",
+    defaultMessage: "Refunded {amount}",
+    description: "fulfillment refund amount in expanded shipment row",
+  },
 });

@@ -356,6 +356,14 @@ export const fulfillmentFragment = gql`
       id
       name
     }
+    totalRefundedAmount {
+      amount
+      currency
+    }
+    shippingRefundedAmount {
+      amount
+      currency
+    }
   }
 `;
 

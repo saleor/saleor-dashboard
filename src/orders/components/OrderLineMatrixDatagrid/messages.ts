@@ -62,6 +62,16 @@ export const messages = defineMessages({
     id: "VYK2nN",
     defaultMessage: "Product details",
   },
+  returnLine: {
+    id: "nHOEZP",
+    defaultMessage: "Return this line",
+    description: "return a single order line from matrix row menu",
+  },
+  refundLine: {
+    id: "yiJ6EO",
+    defaultMessage: "Refund this line",
+    description: "refund a single order line from matrix row menu",
+  },
   showMetadata: {
     id: "E/yzIO",
     defaultMessage: "View metadata",

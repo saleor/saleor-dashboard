@@ -71,6 +71,7 @@ interface OrderTransactionRefundPageProps {
   onSaveDraftState: ConfirmButtonTransitionState;
   onTransferFundsState?: ConfirmButtonTransitionState;
   modelForRefundReasonRefId: string | null;
+  prefilledOrderLineId?: string;
 }
 
 export interface LineToRefund {
@@ -134,6 +135,7 @@ const OrderTransactionRefundPage = ({
   onSaveDraftState,
   onTransferFundsState,
   modelForRefundReasonRefId,
+  prefilledOrderLineId,
 }: OrderTransactionRefundPageProps) => {
   const navigate = useNavigator();
   const intl = useIntl();
@@ -160,7 +162,7 @@ const OrderTransactionRefundPage = ({
     setError,
     formState: { isDirty, errors: formErrors },
   } = useForm<OrderTransactionRefundPageFormData>({
-    values: getRefundFormDefaultValues({ order, draftRefund }),
+    values: getRefundFormDefaultValues({ order, draftRefund, prefilledOrderLineId }),
   });
 
   const { fields: refundFields, update: refundFieldsUpdate } = useFieldArray({

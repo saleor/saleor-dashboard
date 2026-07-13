@@ -13,6 +13,7 @@ const meta: Meta<typeof OrderLineMatrixDatagrid> = {
   title: "Orders/OrderLineMatrixDatagrid",
   component: OrderLineMatrixDatagrid,
   args: {
+    order,
     lines: lifecycleRows,
     loading: false,
     expandedLineId: null,

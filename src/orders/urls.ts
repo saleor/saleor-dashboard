@@ -313,12 +313,23 @@ export const orderGrantRefundPath = (id: string) => urlJoin(orderPath(id), "gran
 export const orderGrantRefundEditPath = (orderId: string, refundId: string) =>
   urlJoin(orderGrantRefundPath(orderId), refundId);
 
-export const orderReturnUrl = (id: string) => orderReturnPath(encodeURIComponent(id));
+export const orderReturnUrl = (id: string, params?: OrderReturnUrlQueryParams) =>
+  orderReturnPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+type OrderReturnUrlFiltersType = "lineId";
+type OrderReturnUrlFilters = Filters<OrderReturnUrlFiltersType>;
+export type OrderReturnUrlQueryParams = OrderReturnUrlFilters;
 
 export const orderTransactionRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
 
-export const orderTransactionRefundUrl = (id: string) =>
-  orderTransactionRefundPath(encodeURIComponent(id));
+type OrderTransactionRefundUrlFiltersType = "lineId";
+type OrderTransactionRefundUrlFilters = Filters<OrderTransactionRefundUrlFiltersType>;
+export type OrderTransactionRefundUrlQueryParams = OrderTransactionRefundUrlFilters;
+
+export const orderTransactionRefundUrl = (
+  id: string,
+  params?: OrderTransactionRefundUrlQueryParams,
+) => orderTransactionRefundPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const orderTransactionRefundEditPath = (orderId: string, refundId: string) =>
   urlJoin(orderTransactionRefundPath(orderId), refundId);

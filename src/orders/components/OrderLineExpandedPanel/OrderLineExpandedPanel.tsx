@@ -1,7 +1,9 @@
 // @ts-strict-ignore
 import { FormatDate } from "@dashboard/components/Date/FormatDate";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { formatMoneyAmount } from "@dashboard/components/Money";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { StatusIndicator } from "@dashboard/orders/components/OrderCardTitle/StatusIndicator";
@@ -44,6 +46,7 @@ export const OrderLineExpandedPanel = ({
   onTrackingCodeAdd,
 }: OrderLineExpandedPanelProps) => {
   const intl = useIntl();
+  const { locale } = useLocale();
   const line = lifecycle.orderLine;
   const shipments = lifecycle.shipments;
 
@@ -165,6 +168,19 @@ export const OrderLineExpandedPanel = ({
                           trackingNumber={shipment.trackingNumber}
                           separator=""
                         />
+                      </>
+                    )}
+                    {(fulfillment.totalRefundedAmount?.amount ?? 0) > 0 && (
+                      <>
+                        <MetadataDot />
+                        <Text color="default2" size={2} as="span">
+                          <FormattedMessage
+                            {...messages.refundedAmount}
+                            values={{
+                              amount: formatMoneyAmount(fulfillment.totalRefundedAmount, locale),
+                            }}
+                          />
+                        </Text>
                       </>
                     )}
                   </Box>

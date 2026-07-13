@@ -39,6 +39,7 @@ interface OrderReturnPageProps {
   returnErrors?: OrderErrorFragment[];
   grantRefundErrors?: OrderGrantRefundCreateErrorFragment[];
   sendRefundErrors?: TransactionRequestRefundForGrantedRefundErrorFragment[];
+  prefilledOrderLineId?: string;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   submitStatus: ConfirmButtonTransitionState;
 }
@@ -50,6 +51,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
     returnErrors = [],
     grantRefundErrors = [],
     sendRefundErrors = [],
+    prefilledOrderLineId,
     onSubmit,
     submitStatus,
   } = props;
@@ -67,7 +69,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
   const [showRefundReasonError, setShowRefundReasonError] = useState(false);
 
   return (
-    <OrderRefundForm order={order} onSubmit={onSubmit}>
+    <OrderRefundForm order={order} prefilledOrderLineId={prefilledOrderLineId} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => {
         const isReasonMissing = !!reasonReferenceTypeId && !data.reasonReference;
         const isRefundReasonMissing =

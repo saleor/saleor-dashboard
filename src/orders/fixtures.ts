@@ -1695,6 +1695,16 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       status: FulfillmentStatus.FULFILLED,
       trackingNumber: "",
       warehouse: warehouseList[1],
+      totalRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
+      shippingRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
     },
     {
       __typename: "Fulfillment",
@@ -1864,6 +1874,16 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       status: FulfillmentStatus.FULFILLED,
       trackingNumber: "01nn12399su12nndfsy",
       warehouse: warehouseList[0],
+      totalRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
+      shippingRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
     },
   ],
   id: "T3JkZXI6OQ==",

@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { type CardMenuItem } from "@dashboard/components/CardMenu";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { ROW_ACTION_BAR_WIDTH } from "@dashboard/components/Datagrid/const";
@@ -9,10 +10,18 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocale from "@dashboard/hooks/useLocale";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
+import {
+  getOrderLineRefundUrl,
+  getOrderLineReturnUrl,
+  hasLineReturnableItems,
+} from "@dashboard/orders/utils/getOrderLineActionUrls";
+import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { type Item, type Theme } from "@glideapps/glide-data-grid";
@@ -37,6 +46,7 @@ import { messages } from "./messages";
 import styles from "./OrderLineMatrixDatagrid.module.css";
 
 interface OrderLineMatrixDatagridProps {
+  order: OrderDetailsFragment;
   lines: OrderLineLifecycle[];
   loading: boolean;
   expandedLineId: string | null;
@@ -50,6 +60,7 @@ interface OrderLineMatrixDatagridProps {
 const MATRIX_SCROLL_MAX_HEIGHT = "min(70vh, 720px)";
 
 export const OrderLineMatrixDatagrid = ({
+  order,
   lines,
   loading,
   expandedLineId,
@@ -60,6 +71,7 @@ export const OrderLineMatrixDatagrid = ({
   datagridCustomTheme = {},
 }: OrderLineMatrixDatagridProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const { locale } = useLocale();
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LINE_MATRIX_LIST);
@@ -120,9 +132,10 @@ export const OrderLineMatrixDatagrid = ({
   );
   const getMenuItems = useCallback(
     (index: number) => {
-      const productId = lines[index]?.orderLine.variant?.product.id;
-
-      return [
+      const lifecycle = lines[index];
+      const lineId = lifecycle?.orderLineId;
+      const productId = lifecycle?.orderLine.variant?.product.id;
+      const items: CardMenuItem[] = [
         {
           disabled: !productId,
           label: intl.formatMessage(messages.productDetails),
@@ -136,8 +149,32 @@ export const OrderLineMatrixDatagrid = ({
           onSelect: () => false,
         },
       ];
+
+      if (lineId && hasLineReturnableItems(order, lineId)) {
+        items.push({
+          label: intl.formatMessage(messages.returnLine),
+          onSelect: () => {
+            navigate(getOrderLineReturnUrl(order.id, lineId));
+
+            return true;
+          },
+        });
+      }
+
+      if (lineId && OrderDetailsViewModel.canOrderRefund(order.actions)) {
+        items.push({
+          label: intl.formatMessage(messages.refundLine),
+          onSelect: () => {
+            navigate(getOrderLineRefundUrl(order, lineId));
+
+            return true;
+          },
+        });
+      }
+
+      return items;
     },
-    [intl, lines],
+    [intl, lines, navigate, order],
   );
   const renderRowActions = useCallback(
     (index: number) => (

@@ -10118,6 +10118,10 @@
     "context": "attribute entity type helper on full attribute form",
     "string": "Which type of record merchants can link to."
   },
+  "mR4nKp": {
+    "context": "return a single order line from matrix row menu",
+    "string": "Return this line"
+  },
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
@@ -10311,6 +10315,10 @@
   "nOo0oL": {
     "context": "error message",
     "string": "Not enough items to fulfill"
+  },
+  "nQ5mRt": {
+    "context": "refund a single order line from matrix row menu",
+    "string": "Refund this line"
   },
   "nQQVdc": {
     "string": "Go to vouchers"
@@ -10696,6 +10704,10 @@
   },
   "pSqXo6": {
     "string": "Related Order"
+  },
+  "pT6vWx": {
+    "context": "fulfillment refund amount in expanded shipment row",
+    "string": "Refunded {amount}"
   },
   "pTOnzt": {
     "context": "Apply filters button text in modal picker",

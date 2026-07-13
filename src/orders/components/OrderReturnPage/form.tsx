@@ -84,6 +84,7 @@ type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
   order: OrderDetailsFragment;
+  prefilledOrderLineId?: string;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -103,6 +104,7 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
 function useOrderReturnForm(
   order: OrderDetailsFragment,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise,
+  prefilledOrderLineId?: string,
 ): UseOrderRefundFormResult {
   const {
     handleChange,
@@ -126,6 +128,7 @@ function useOrderReturnForm(
   } = useFulfillmentFormset({
     order,
     formData,
+    prefilledOrderLineId,
   });
 
   const getItemsToBeReplaced = () => {
@@ -277,8 +280,8 @@ function useOrderReturnForm(
   };
 }
 
-const OrderReturnForm = ({ children, order, onSubmit }: OrderReturnProps) => {
-  const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit);
+const OrderReturnForm = ({ children, order, prefilledOrderLineId, onSubmit }: OrderReturnProps) => {
+  const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit, prefilledOrderLineId);
 
   return <form>{children(props)}</form>;
 };

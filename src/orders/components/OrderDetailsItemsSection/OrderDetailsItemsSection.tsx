@@ -244,6 +244,7 @@ export const OrderDetailsItemsSection = ({
             )}
           </div>
           <OrderLineMatrixDatagrid
+            order={order}
             lines={lifecycleRows}
             loading={loading}
             expandedLineId={expandedLineId}

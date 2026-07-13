@@ -2305,6 +2305,14 @@ export const FulfillmentFragmentDoc = gql`
     id
     name
   }
+  totalRefundedAmount {
+    amount
+    currency
+  }
+  shippingRefundedAmount {
+    amount
+    currency
+  }
 }
     ${OrderLineFragmentDoc}`;
 export const InvoiceFragmentDoc = gql`

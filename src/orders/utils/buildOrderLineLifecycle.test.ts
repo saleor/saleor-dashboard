@@ -40,6 +40,11 @@ const createOrderWithFulfillments = (
   };
 };
 
+const emptyRefundAmounts = {
+  totalRefundedAmount: { __typename: "Money" as const, amount: 0, currency: "USD" },
+  shippingRefundedAmount: { __typename: "Money" as const, amount: 0, currency: "USD" },
+};
+
 describe("buildOrderLineLifecycle", () => {
   it("aggregates shipped quantity from fulfilled fulfillments", () => {
     // Arrange
@@ -58,6 +63,7 @@ describe("buildOrderLineLifecycle", () => {
           reasonReference: null,
           warehouse: { __typename: "Warehouse", id: "wh-1", name: "East" },
           lines: [createFulfillmentLine(line, 3)],
+          ...emptyRefundAmounts,
         },
       ],
     });
@@ -90,6 +96,7 @@ describe("buildOrderLineLifecycle", () => {
           reasonReference: null,
           warehouse: { __typename: "Warehouse", id: "wh-1", name: "East" },
           lines: [createFulfillmentLine(line, 1)],
+          ...emptyRefundAmounts,
         },
         {
           __typename: "Fulfillment",
@@ -102,6 +109,7 @@ describe("buildOrderLineLifecycle", () => {
           reasonReference: null,
           warehouse: { __typename: "Warehouse", id: "wh-1", name: "East" },
           lines: [createFulfillmentLine(line, 2)],
+          ...emptyRefundAmounts,
         },
       ],
     });
@@ -130,6 +138,7 @@ describe("buildOrderLineLifecycle", () => {
           reasonReference: null,
           warehouse: { __typename: "Warehouse", id: "wh-1", name: "East" },
           lines: [createFulfillmentLine(line, 1)],
+          ...emptyRefundAmounts,
         },
         {
           __typename: "Fulfillment",
@@ -142,6 +151,7 @@ describe("buildOrderLineLifecycle", () => {
           reasonReference: null,
           warehouse: { __typename: "Warehouse", id: "wh-1", name: "East" },
           lines: [createFulfillmentLine(line, 1)],
+          ...emptyRefundAmounts,
         },
       ],
     });
@@ -170,6 +180,7 @@ describe("buildOrderLineLifecycle", () => {
           reasonReference: null,
           warehouse: { __typename: "Warehouse", id: "wh-1", name: "East" },
           lines: [createFulfillmentLine(line, 2)],
+          ...emptyRefundAmounts,
         },
       ],
     });
@@ -200,6 +211,7 @@ describe("buildOrderLineLifecycle", () => {
           reasonReference: null,
           warehouse: { __typename: "Warehouse", id: "wh-source", name: "Europe" },
           lines: [createFulfillmentLine(line, 2)],
+          ...emptyRefundAmounts,
         },
       ],
       events: [
