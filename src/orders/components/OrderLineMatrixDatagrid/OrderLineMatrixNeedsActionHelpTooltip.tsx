@@ -1,6 +1,4 @@
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { CircleHelp } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -21,15 +19,12 @@ export const OrderLineMatrixNeedsActionHelpTooltip = (): JSX.Element => {
           padding={0}
           borderWidth={0}
           backgroundColor="transparent"
-          aria-label={intl.formatMessage(messages.needsActionHelpAriaLabel)}
           data-test-id="matrix-needs-action-help"
           onClick={event => event.stopPropagation()}
         >
-          <CircleHelp
-            size={iconSize.small}
-            strokeWidth={iconStrokeWidthBySize.small}
-            color="var(--mu-colors-text-default2)"
-          />
+          <Text size={2} fontWeight="medium">
+            {intl.formatMessage(messages.needsAction)}
+          </Text>
         </Box>
       </Tooltip.Trigger>
       <Tooltip.Content side="bottom" align="end">

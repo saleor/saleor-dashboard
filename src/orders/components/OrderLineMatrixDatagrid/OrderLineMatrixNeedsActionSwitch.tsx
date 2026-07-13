@@ -1,4 +1,4 @@
-import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
+import { Box, Toggle } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -17,9 +17,6 @@ export const OrderLineMatrixNeedsActionSwitch = ({
 
   return (
     <Box display="flex" alignItems="center" gap={2} flexShrink="0">
-      <Text size={2} fontWeight="medium">
-        {intl.formatMessage(messages.needsAction)}
-      </Text>
       <OrderLineMatrixNeedsActionHelpTooltip />
       <Toggle
         pressed={pressed}

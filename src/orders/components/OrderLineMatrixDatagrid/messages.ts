@@ -113,11 +113,6 @@ export const messages = defineMessages({
     defaultMessage: "Highlight lines that need action",
     description: "aria label for needs action toggle above line matrix",
   },
-  needsActionHelpAriaLabel: {
-    id: "CtoFry",
-    defaultMessage: "Learn what needs action includes",
-    description: "aria label for needs action help icon",
-  },
   needsActionHelpTitle: {
     id: "t53iRo",
     defaultMessage: "Needs action",
