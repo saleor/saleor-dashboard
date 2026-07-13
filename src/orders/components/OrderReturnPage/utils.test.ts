@@ -1,8 +1,69 @@
-import { TransactionActionEnum } from "@dashboard/graphql";
+import { type OrderDetailsFragment, TransactionActionEnum } from "@dashboard/graphql";
 import { orderTransactions } from "@dashboard/orders/fixtures";
+import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
 import { submitCardMessages } from "./components/TransactionSubmitCard/messages";
-import { canSendRefundDuringReturn, getReturnRefundValue } from "./utils";
+import {
+  canSendRefundDuringReturn,
+  filterFulfillmentsByOrderLineId,
+  filterOrderLinesByOrderLineId,
+  getReturnRefundValue,
+} from "./utils";
+
+describe("line-scoped returns", () => {
+  it("keeps only the selected order line", () => {
+    // Arrange
+    const order = OrderFixture.fulfilled().build();
+    const selectedLine = order.lines[0];
+    const otherLine = { ...selectedLine, id: "other-line-id" };
+    const lines: OrderDetailsFragment["lines"] = [selectedLine, otherLine];
+
+    // Act
+    const result = filterOrderLinesByOrderLineId(lines, selectedLine.id);
+
+    // Assert
+    expect(result.map(line => line.id)).toEqual([selectedLine.id]);
+  });
+
+  it("removes unrelated lines and empty fulfillments", () => {
+    // Arrange
+    const order = OrderFixture.fulfilled().build();
+    const fulfillment = order.fulfillments[0];
+
+    if (!fulfillment.lines?.[0]) {
+      throw new Error("Expected fulfillment fixture to have an order line");
+    }
+
+    const selectedLine = fulfillment.lines[0];
+    const selectedOrderLine = selectedLine.orderLine;
+
+    if (!selectedOrderLine) {
+      throw new Error("Expected fulfillment fixture line to reference an order line");
+    }
+
+    const otherLine: NonNullable<(typeof fulfillment)["lines"]>[number] = {
+      ...selectedLine,
+      id: "other-fulfillment-line-id",
+      orderLine: { ...selectedOrderLine, id: "other-order-line-id" },
+    };
+    const unrelatedFulfillment: (typeof order.fulfillments)[number] = {
+      ...fulfillment,
+      id: "unrelated-fulfillment-id",
+      lines: [otherLine],
+    };
+    const fulfillments: OrderDetailsFragment["fulfillments"] = [
+      { ...fulfillment, lines: [selectedLine, otherLine] },
+      unrelatedFulfillment,
+    ];
+
+    // Act
+    const result = filterFulfillmentsByOrderLineId(fulfillments, selectedOrderLine.id);
+
+    // Assert
+    expect(result).toHaveLength(1);
+    expect(result[0].lines?.map(line => line.id)).toEqual([selectedLine.id]);
+  });
+});
 
 describe("getReturnRefundValue", () => {
   it("should return empty string if autoGrantRefund is false", () => {

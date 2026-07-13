@@ -3734,4 +3734,16 @@ describe("getOrderLineDisplayName", () => {
     // Assert
     expect(displayName).toBe("White Parrot Cushion / Standard");
   });
+
+  it("ignores opaque global IDs in variantName and variant.name", () => {
+    // Arrange // Act
+    const displayName = getOrderLineDisplayName({
+      productName: "White Parrot Cushion",
+      variantName: "UHJvZHVjdFZHcmlhbnQ6Mzk5",
+      variant: { name: "UHJvZHVjdFZHcmlhbnQ6Mzk5" },
+    });
+
+    // Assert
+    expect(displayName).toBe("White Parrot Cushion");
+  });
 });

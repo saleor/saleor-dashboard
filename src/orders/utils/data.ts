@@ -523,9 +523,11 @@ export const getOrderLineDisplayName = (line: {
     });
   }
 
-  const variantLabel =
-    line.variantName ??
-    (line.variant?.name && !isOpaqueGlobalId(line.variant.name) ? line.variant.name : null);
+  const variantLabelFromVariantName =
+    line.variantName && !isOpaqueGlobalId(line.variantName) ? line.variantName : null;
+  const variantLabelFromVariant =
+    line.variant?.name && !isOpaqueGlobalId(line.variant.name) ? line.variant.name : null;
+  const variantLabel = variantLabelFromVariantName ?? variantLabelFromVariant;
 
   return variantLabel ? `${line.productName} / ${variantLabel}` : line.productName;
 };

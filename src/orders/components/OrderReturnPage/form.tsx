@@ -187,8 +187,14 @@ function useOrderReturnForm(
     return [...orderLinesItems, ...fulfillmentItems];
   };
   const lineReasons = useFormset<LineItemData, LineReasonValue>(getLineReasons());
-  const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(({ id }) => {
+  const handleSetMaximalUnfulfiledItemsQuantities = (orderLineId?: string) => {
+    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(item => {
+      const { id } = item;
+
+      if (orderLineId && item.data.orderLineId !== orderLineId) {
+        return item;
+      }
+
       const line = order.lines.find(getById(id));
       const initialValue = line.quantityToFulfill;
 
@@ -198,7 +204,7 @@ function useOrderReturnForm(
     triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);
   };
-  const handleSetMaximalItemsQuantities = (fulfillmentId: string) => () => {
+  const handleSetMaximalItemsQuantities = (fulfillmentId: string, orderLineId?: string) => () => {
     const fulfillment = order.fulfillments.find(getById(fulfillmentId));
     const quantities =
       fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL
@@ -213,6 +219,10 @@ function useOrderReturnForm(
       const line = parsedLines.find(getById(item.id));
 
       if (!line) {
+        return item;
+      }
+
+      if (orderLineId && line.orderLineId !== orderLineId) {
         return item;
       }
 
