@@ -169,7 +169,7 @@ export const OrderDetailsItemsSection = ({
         marginBottom={4}
         flexWrap="wrap"
       >
-        <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+        <Box className={styles.viewToggleAnchor}>
           <InsetSegmentedControl
             size="lg"
             value={viewMode}
@@ -178,7 +178,9 @@ export const OrderDetailsItemsSection = ({
             aria-label={intl.formatMessage(messages.viewModeAriaLabel)}
             data-test-id="order-items-view-toggle"
           />
-          <Ripple model={rippleOrderLineMatrixView} />
+          <Box className={styles.viewToggleRipple} data-test-id="order-items-view-ripple">
+            <Ripple model={rippleOrderLineMatrixView} />
+          </Box>
         </Box>
 
         {viewMode === "matrix" && (hasItemsToFulfill || canReturn) && (
