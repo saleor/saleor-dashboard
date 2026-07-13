@@ -111,13 +111,10 @@ export const renderLineMatrixStatusIconSvg = (
 ): string => {
   const iconPaths = ICON_PATHS[status];
   const iconTransform = getIconTransform(status);
-  const expandedRing = expanded
-    ? `<circle cx="${CIRCLE_SIZE / 2}" cy="${CIRCLE_SIZE / 2}" r="${CIRCLE_SIZE / 2 - 1}" fill="none" stroke="${selectedBorderColor}" stroke-width="2"/>`
-    : "";
+  const circleStroke = expanded ? selectedBorderColor : colors.border;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${CIRCLE_SIZE}" height="${CIRCLE_SIZE}" viewBox="0 0 ${CIRCLE_SIZE} ${CIRCLE_SIZE}">
-    ${expandedRing}
-    <circle cx="${CIRCLE_SIZE / 2}" cy="${CIRCLE_SIZE / 2}" r="${CIRCLE_SIZE / 2 - 1}" fill="${colors.base}" stroke="${expanded ? selectedBorderColor : colors.border}" stroke-width="1"/>
+    <circle cx="${CIRCLE_SIZE / 2}" cy="${CIRCLE_SIZE / 2}" r="${CIRCLE_SIZE / 2 - 1}" fill="${colors.base}" stroke="${circleStroke}" stroke-width="1"/>
     <g transform="${iconTransform}" stroke="${colors.text}" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
       ${iconPaths}
     </g>
