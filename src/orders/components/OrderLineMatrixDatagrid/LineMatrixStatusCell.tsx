@@ -80,7 +80,7 @@ export const lineMatrixStatusCellRenderer = (
   isMatch: (cell: CustomCell): cell is LineMatrixStatusCell =>
     (cell.data as LineMatrixStatusCellProps).kind === CELL_KIND,
   draw: (args, cell) => {
-    const { rect, ctx, theme, imageLoader } = args;
+    const { rect, ctx, theme, imageLoader, col, row } = args;
     const padding = (theme.cellHorizontalPadding ?? 8) + STATUS_CELL_LEADING_INSET;
     const pillType = getOrderLineRollupPillType(cell.data.rollupStatus);
     const colors = getStatusColor({ status: pillType, currentTheme });
@@ -93,8 +93,7 @@ export const lineMatrixStatusCellRenderer = (
       cell.data.expanded,
       iconColor,
     );
-    // Cache by SVG content, not grid position — avoids re-decode while horizontally scrolling.
-    const image = imageLoader.loadOrGetImage(dataUri, 0, 0);
+    const image = imageLoader.loadOrGetImage(dataUri, col, row);
     const textX = rect.x + padding + CIRCLE_ICON_SIZE + ICON_GAP;
     const font = `500 ${theme.fontFamily}`;
 

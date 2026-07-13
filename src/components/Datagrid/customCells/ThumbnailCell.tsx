@@ -26,7 +26,7 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
     const size = rect.height - xPad * 2;
     const drawX = rect.x + xPad;
     const drawY = rect.y + xPad;
-    const imageResult = imageLoader.loadOrGetImage(image, col, row);
+    const imageResult = image ? imageLoader.loadOrGetImage(image, col, row) : undefined;
 
     if (cell.data.muted) {
       ctx.globalAlpha = 0.55;

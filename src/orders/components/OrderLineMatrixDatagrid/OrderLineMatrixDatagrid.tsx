@@ -105,6 +105,16 @@ export const OrderLineMatrixDatagrid = ({
 
       const columns = settings?.columns;
 
+      if (columns === undefined) {
+        return;
+      }
+
+      if (columns.length === 0) {
+        window.localStorage.setItem(MATRIX_PRODUCT_COLUMN_MIGRATION_KEY, "1");
+
+        return;
+      }
+
       if (shouldMigrateMatrixProductColumn(columns)) {
         updateListSettings?.("columns", withMigratedProductColumn(columns));
       }
