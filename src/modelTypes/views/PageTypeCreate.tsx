@@ -21,6 +21,8 @@ const PageTypeCreate = () => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [createPageType, createPageTypeOpts] = usePageTypeCreateMutation({
+    // Name and other field errors are rendered inline on the create form.
+    disableErrorHandling: true,
     onCompleted: updateData => {
       if (updateData.pageTypeCreate.errors.length === 0) {
         notify({

@@ -32,18 +32,24 @@ import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import usePageTypeDelete from "@dashboard/modelTypes/hooks/usePageTypeDelete";
 import { type ReorderEvent } from "@dashboard/types";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
 import PageTypeDetailsPage, { type PageTypeForm } from "../components/PageTypeDetailsPage";
+import { PageTypeMetadataDialog } from "../components/PageTypeMetadataDialog/PageTypeMetadataDialog";
 import { executePageTypeAttributeCreate } from "../handlers/pageTypeAttributeCreateHandler";
-import usePageTypeDelete from "../hooks/usePageTypeDelete";
-import { pageTypeListUrl, pageTypeUrl, type PageTypeUrlQueryParams } from "../urls";
+import {
+  pageTypeListUrl,
+  pageTypeUrl,
+  type PageTypeUrlDialog,
+  type PageTypeUrlQueryParams,
+} from "../urls";
 
 interface PageTypeDetailsProps {
   id: string;
@@ -56,12 +62,18 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
   const attributeListActions = useBulkActions();
   const assignAttributesActions = useListSelectedItems<string>();
   const intl = useIntl();
+  const [openModal, closeModal] = createDialogActionHandlers<
+    PageTypeUrlDialog,
+    PageTypeUrlQueryParams
+  >(navigate, dialogParams => pageTypeUrl(id, dialogParams), params);
   const notifySaved = () =>
     notify({
       status: "success",
       text: intl.formatMessage({ id: "GVGaij", defaultMessage: "Model type updated" }),
     });
   const [updatePageType, updatePageTypeOpts] = usePageTypeUpdateMutation({
+    // Name and other field errors are rendered inline on the model type form.
+    disableErrorHandling: true,
     onCompleted: updateData => {
       if (!updateData.pageTypeUpdate.errors || updateData.pageTypeUpdate.errors.length === 0) {
         notifySaved();
@@ -229,13 +241,6 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
     return <NotFoundPage backHref={pageTypeListUrl()} />;
   }
 
-  const closeModal = () => navigate(pageTypeUrl(id), { replace: true });
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.pageType,
-    handlePageTypeUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
   const loading = updatePageTypeOpts.loading || dataLoading;
 
   return (
@@ -244,56 +249,30 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
       <PageTypeDetailsPage
         disabled={loading}
         errors={updatePageTypeOpts.data?.pageTypeUpdate.errors}
-        pageTitle={data?.pageType.name}
         pageType={data?.pageType}
         saveButtonBarState={updatePageTypeOpts.status}
         onAttributeAdd={type =>
-          navigate(
-            pageTypeUrl(id, {
-              action: "assign-attribute",
-              type,
-            }),
-          )
+          openModal("assign-attribute", {
+            type,
+          })
         }
-        onAttributeCreate={() =>
-          navigate(
-            pageTypeUrl(id, {
-              action: "create-attribute",
-            }),
-          )
-        }
+        onAttributeCreate={() => openModal("create-attribute")}
         onAttributeReorder={handleAttributeReorder}
         onAttributeUnassign={attributeId =>
-          navigate(
-            pageTypeUrl(id, {
-              action: "unassign-attribute",
-              id: attributeId,
-            }),
-          )
+          openModal("unassign-attribute", {
+            id: attributeId,
+          })
         }
-        onDelete={() =>
-          navigate(
-            pageTypeUrl(id, {
-              action: "remove",
-            }),
-          )
-        }
-        onSubmit={handleSubmit}
+        onDelete={() => openModal("remove")}
+        onShowMetadata={() => openModal("view-metadata", { id: undefined })}
+        onSubmit={handlePageTypeUpdate}
         attributeList={{
           isChecked: attributeListActions.isSelected,
           selected: attributeListActions.listElements.length,
           toggle: attributeListActions.toggle,
           toggleAll: attributeListActions.toggleAll,
           toolbar: (
-            <Button
-              onClick={() =>
-                navigate(
-                  pageTypeUrl(id, {
-                    action: "unassign-attributes",
-                  }),
-                )
-              }
-            >
+            <Button onClick={() => openModal("unassign-attributes")}>
               <FormattedMessage
                 id="Y3ELdI"
                 defaultMessage="Unassign"
@@ -306,6 +285,12 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
 
       {pageType && (
         <>
+          <PageTypeMetadataDialog
+            open={params.action === "view-metadata" && !!pageType}
+            onClose={closeModal}
+            pageType={pageType}
+            refetchPageType={refetch}
+          />
           <TypeDeleteWarningDialog
             {...pageTypeDeleteData}
             typesData={[pageType]}

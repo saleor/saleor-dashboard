@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
-import { pageListUrl } from "@dashboard/modeling/urls";
+import { pageListUrlWithPageTypes } from "@dashboard/modeling/urls";
 import {
   type PageTypeListUrlQueryParams,
   type PageTypeUrlQueryParams,
@@ -18,7 +18,13 @@ function usePageTypeDelete({
   params,
   selectedTypes,
 }: UsePageTypeDeleteProps): UseTypeDeleteData {
-  const pageTypes = selectedTypes || [singleId];
+  const pageTypes = useMemo(() => {
+    if (selectedTypes?.length) {
+      return selectedTypes.filter(Boolean);
+    }
+
+    return singleId ? [singleId] : [];
+  }, [selectedTypes, singleId]);
   const isDeleteDialogOpen = params.action === "remove";
   const pagesAssignedToSelectedTypesQueryVars = useMemo<PageCountQueryVariables>(
     () => ({
@@ -29,22 +35,18 @@ function usePageTypeDelete({
     [pageTypes],
   );
   const shouldSkipPageListQuery = !pageTypes.length || !isDeleteDialogOpen;
-  const { data: pagesAssignedToSelectedTypesData, loading: loadingPagesAssignedToSelectedTypes } =
-    usePageCountQuery({
-      variables: pagesAssignedToSelectedTypesQueryVars,
-      skip: shouldSkipPageListQuery,
-    });
-  const selectedPagesAssignedToDeleteUrl = pageListUrl({
-    pageTypes,
+  const { data: pagesAssignedToSelectedTypesData } = usePageCountQuery({
+    variables: pagesAssignedToSelectedTypesQueryVars,
+    skip: shouldSkipPageListQuery,
   });
+  const viewAssignedItemsUrl = pageListUrlWithPageTypes(pageTypes);
   const assignedItemsCount = pagesAssignedToSelectedTypesData?.pages?.totalCount;
 
   return {
     ...messages,
     isOpen: isDeleteDialogOpen,
-    assignedItemsCount,
-    viewAssignedItemsUrl: selectedPagesAssignedToDeleteUrl,
-    isLoading: loadingPagesAssignedToSelectedTypes,
+    assignedItemsCount: assignedItemsCount ?? undefined,
+    viewAssignedItemsUrl,
     typesToDelete: pageTypes,
   };
 }

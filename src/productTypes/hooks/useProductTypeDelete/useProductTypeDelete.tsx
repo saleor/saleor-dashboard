@@ -1,8 +1,5 @@
 import { type TypeBaseData } from "@dashboard/components/TypeDeleteWarningDialog/types";
-import {
-  type ProductTypeBaseData,
-  useViewProducts,
-} from "@dashboard/components/TypeDeleteWarningDialog/useViewProducts";
+import { useViewProducts } from "@dashboard/components/TypeDeleteWarningDialog/useViewProducts";
 import { type ProductCountQueryVariables, useProductCountQuery } from "@dashboard/graphql";
 import {
   type UseTypeDeleteData,
@@ -15,9 +12,14 @@ import {
 import { useMemo } from "react";
 
 import * as messages from "./messages";
+import { resolveProductTypesForViewLink } from "./resolveProductTypesForViewLink";
 
 type UseProductTypeDeleteProps<T = ProductTypeListUrlQueryParams | ProductTypeUrlQueryParams> =
   UseTypeDeleteProps<T> & { typeBaseData: ProductTypeBaseData[] | undefined };
+
+interface ProductTypeBaseData extends TypeBaseData {
+  slug?: string | null;
+}
 
 function useProductTypeDelete({
   params,
@@ -25,34 +27,36 @@ function useProductTypeDelete({
   selectedTypes,
   typeBaseData,
 }: UseProductTypeDeleteProps): UseTypeDeleteData {
-  const productTypes = useMemo(() => selectedTypes || [singleId], [selectedTypes, singleId]);
+  const productTypes = useMemo(() => {
+    if (selectedTypes?.length) {
+      return selectedTypes.filter((type): type is string => !!type);
+    }
 
-  const filteredTypes = productTypes.filter((type): type is string => !!type);
+    return singleId ? [singleId] : [];
+  }, [selectedTypes, singleId]);
 
   const isDeleteDialogOpen = params.action === "remove";
   const productsAssignedToSelectedTypesQueryVars = useMemo<ProductCountQueryVariables>(
     () =>
-      filteredTypes.length
+      productTypes.length
         ? {
             filter: {
-              productTypes: filteredTypes,
+              productTypes,
             },
           }
         : {},
     [productTypes],
   );
   const shouldSkipProductListQuery = !productTypes.length || !isDeleteDialogOpen;
-  const {
-    data: productsAssignedToSelectedTypesData,
-    loading: loadingProductsAssignedToSelectedTypes,
-  } = useProductCountQuery({
+  const { data: productsAssignedToSelectedTypesData } = useProductCountQuery({
     variables: productsAssignedToSelectedTypesQueryVars,
     skip: shouldSkipProductListQuery,
   });
 
-  const typesToLink = Array.isArray(typeBaseData)
-    ? typeBaseData.filter((type: TypeBaseData) => productTypes.includes(type.id))
-    : undefined;
+  const typesToLink = useMemo(
+    () => resolveProductTypesForViewLink(productTypes, typeBaseData),
+    [productTypes, typeBaseData],
+  );
 
   const viewProductsURL = useViewProducts({
     productTypeBaseData: typesToLink,
@@ -65,8 +69,7 @@ function useProductTypeDelete({
     isOpen: isDeleteDialogOpen,
     assignedItemsCount: assignedItemsCount ?? undefined,
     viewAssignedItemsUrl: viewProductsURL,
-    isLoading: loadingProductsAssignedToSelectedTypes,
-    typesToDelete: filteredTypes,
+    typesToDelete: productTypes,
   };
 }
 

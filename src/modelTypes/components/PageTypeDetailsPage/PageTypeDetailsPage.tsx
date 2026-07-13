@@ -1,10 +1,11 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
+import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -17,23 +18,20 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { defaultGraphiQLQuery } from "@dashboard/modelTypes/queries";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { isPageTypeUpdateFormPristine } from "@dashboard/modelTypes/utils/pageTypePageForm";
 import { type ListActions, type ReorderEvent } from "@dashboard/types";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { type Option } from "@saleor/macaw-ui-next";
-import { defineMessages, useIntl } from "react-intl";
+import { Trash2 } from "lucide-react";
+import { useCallback, useMemo } from "react";
+import { useIntl } from "react-intl";
 
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
-
-const messages = defineMessages({
-  openGraphiQL: {
-    id: "br+OIS",
-    defaultMessage: "Open this model type in GraphiQL",
-  },
-});
+import { messages } from "./messages";
+import { PageTypeDetailsTitle } from "./Title";
 
 export interface PageTypeForm extends MetadataFormData {
   name: string;
@@ -42,9 +40,8 @@ export interface PageTypeForm extends MetadataFormData {
 
 interface PageTypeDetailsPageProps {
   errors: PageErrorFragment[];
-  pageType: PageTypeDetailsFragment;
+  pageType: PageTypeDetailsFragment | undefined;
   disabled: boolean;
-  pageTitle: string;
   attributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAttributeAdd: (type: AttributeTypeEnum) => void;
@@ -52,6 +49,7 @@ interface PageTypeDetailsPageProps {
   onAttributeReorder: (event: ReorderEvent, type: AttributeTypeEnum) => void;
   onAttributeUnassign: (id: string) => void;
   onDelete: () => void;
+  onShowMetadata: () => void;
   onSubmit: (data: PageTypeForm) => void;
 }
 
@@ -59,7 +57,6 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   const {
     disabled,
     errors,
-    pageTitle,
     pageType,
     attributeList,
     saveButtonBarState,
@@ -68,41 +65,44 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     onAttributeUnassign,
     onAttributeReorder,
     onDelete,
+    onShowMetadata,
     onSubmit,
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
   const context = useDevModeContext();
-  const openPlaygroundURL = () => {
+  const openPlaygroundURL = useCallback(() => {
     context.setDevModeContent(defaultGraphiQLQuery);
     context.setVariables(`{ "id": "${pageType?.id}" }`);
     context.setDevModeVisibility(true);
-  };
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
-  const formInitialData: PageTypeForm = {
-    attributes:
-      pageType?.attributes?.map(attribute => ({
-        label: attribute.name,
-        value: attribute.id,
-      })) || [],
-    metadata: pageType?.metadata?.map(mapMetadataItemToInput),
-    name: pageType?.name || "",
-    privateMetadata: pageType?.privateMetadata?.map(mapMetadataItemToInput),
-  };
-  const handleSubmit = (data: PageTypeForm) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified ? data.privateMetadata : undefined;
+  }, [context, pageType?.id]);
+  const formInitialData = useMemo<PageTypeForm>(
+    () => ({
+      attributes:
+        pageType?.attributes?.map(attribute => ({
+          label: attribute.name,
+          value: attribute.id,
+        })) || [],
+      metadata: [],
+      name: pageType?.name || "",
+      privateMetadata: [],
+    }),
+    [pageType],
+  );
+  const checkIfSaveIsDisabled = useCallback(
+    (data: PageTypeForm) => {
+      if (disabled) {
+        return true;
+      }
 
-    onSubmit({
-      ...data,
-      metadata,
-      privateMetadata,
-    });
-  };
+      if (!pageType) {
+        return true;
+      }
+
+      return isPageTypeUpdateFormPristine(data, formInitialData);
+    },
+    [disabled, formInitialData, pageType],
+  );
 
   const pageTypeListBackLink = useBackLinkWithState({
     path: modelTypesPath,
@@ -113,28 +113,61 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     PAGE_TYPE_DETAILS_MORE_ACTIONS,
     pageType?.id,
   );
+  const menuItems = useMemo(
+    () => [
+      ...mapExtensionMenuItemsToTopNavItems(extensionMenuItems),
+      {
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <GraphqlIcon />,
+      },
+      {
+        label: intl.formatMessage(messages.deleteModelType),
+        onSelect: onDelete,
+        testId: "delete-model-type",
+        color: "critical1" as const,
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      },
+    ],
+    [extensionMenuItems, intl, onDelete, openPlaygroundURL],
+  );
 
   return (
-    <Form confirmLeave initial={formInitialData} onSubmit={handleSubmit} disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
-
-        return (
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={onSubmit}
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
+      {({ change, data, isSaveDisabled, submit, triggerChange }) => (
+        <>
+          <FormDirtyStateSync
+            enabled={!!pageType}
+            isSaveDisabled={isSaveDisabled}
+            triggerChange={triggerChange}
+          />
           <DetailPageLayout>
-            <TopNav href={pageTypeListBackLink} title={pageTitle}>
-              <TopNav.Menu
-                items={[
-                  ...extensionMenuItems,
-                  {
-                    label: intl.formatMessage(messages.openGraphiQL),
-                    onSelect: openPlaygroundURL,
-                    testId: "graphiql-redirect",
-                  },
-                ]}
-                dataTestId="menu"
+            <TopNav
+              href={pageTypeListBackLink}
+              title={
+                <PageTypeDetailsTitle
+                  pageType={pageType ? { name: pageType.name } : null}
+                  loading={disabled}
+                />
+              }
+              actionsGap={3}
+            >
+              <TopNav.MetadataButton
+                onClick={onShowMetadata}
+                disabled={!pageType}
+                data-test-id="show-model-type-metadata"
+                title={intl.formatMessage(messages.editModelTypeMetadata)}
               />
+              <TopNav.Menu items={menuItems} dataTestId="menu" />
             </TopNav>
-            <DetailPageLayout.Content>
+            <DetailPageLayout.Content paddingBottom={10}>
               <PageTypeAttributes
                 attributes={pageType?.attributes}
                 disabled={disabled}
@@ -147,7 +180,6 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
                 onAttributeUnassign={onAttributeUnassign}
                 {...attributeList}
               />
-              <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
@@ -163,8 +195,8 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               />
             </Savebar>
           </DetailPageLayout>
-        );
-      }}
+        </>
+      )}
     </Form>
   );
 };

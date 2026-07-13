@@ -53,14 +53,22 @@ interface PageListProps {
   params: PageListUrlQueryParams;
 }
 
-const normalizePageTypes = (value: string | string[] | undefined): string[] => {
+const normalizePageTypes = (
+  value: string | string[] | Record<string, string> | undefined,
+): string[] => {
   if (!value) {
     return [];
   }
 
-  const ids = Array.isArray(value) ? value.filter(Boolean) : [value];
+  if (Array.isArray(value)) {
+    return [...new Set(value.filter(Boolean))];
+  }
 
-  return [...new Set(ids)];
+  if (typeof value === "object") {
+    return [...new Set(Object.values(value).filter(Boolean))];
+  }
+
+  return [value];
 };
 
 const PageList = ({ params }: PageListProps) => {
@@ -159,21 +167,23 @@ const PageList = ({ params }: PageListProps) => {
     [pageTypesData],
   );
 
-  // Fall back to "All" if URL references unknown page types.
+  // Drop page type ids that are absent from the tab list only when some ids are still recognized.
+  // Keep the URL filter when none are in the tab list (e.g. outside the first fetched page),
+  // so deep-linked and delete-dialog links still filter the list server-side.
   useEffect(() => {
-    if (!pageTypes || pageTypesLoading) {
+    if (!pageTypes || pageTypesLoading || selectedPageTypes.length === 0) {
       return;
     }
 
     const validIds = selectedPageTypes.filter(id => pageTypes.some(pt => pt.id === id));
 
-    if (validIds.length === selectedPageTypes.length) {
+    if (validIds.length === selectedPageTypes.length || validIds.length === 0) {
       return;
     }
 
     navigate(
       pageListUrl({
-        pageTypes: validIds.length ? validIds : undefined,
+        pageTypes: validIds,
         asc: params.asc,
         sort: params.sort,
       }),
