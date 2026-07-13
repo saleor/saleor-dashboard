@@ -41,8 +41,8 @@ import useAvailableProductAttributeSearch from "@dashboard/searches/useAvailable
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type ReorderEvent } from "@dashboard/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -50,8 +50,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ProductTypeDetailsPage, {
   type ProductTypeForm,
 } from "../../components/ProductTypeDetailsPage";
+import { ProductTypeMetadataDialog } from "../../components/ProductTypeMetadataDialog/ProductTypeMetadataDialog";
 import { executeProductTypeAttributeCreate } from "../../handlers/productTypeAttributeCreateHandler";
-import { productTypeListUrl, productTypeUrl, type ProductTypeUrlQueryParams } from "../../urls";
+import {
+  productTypeListUrl,
+  productTypeUrl,
+  type ProductTypeUrlDialog,
+  type ProductTypeUrlQueryParams,
+} from "../../urls";
 
 interface ProductTypeUpdateProps {
   id: string;
@@ -61,6 +67,10 @@ interface ProductTypeUpdateProps {
 const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductTypeUrlDialog,
+    ProductTypeUrlQueryParams
+  >(navigate, dialogParams => productTypeUrl(id, dialogParams), params);
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
   const assignAttributesActions = useListSelectedItems<string>();
@@ -77,6 +87,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     formErrors: [],
   });
   const [updateProductType, updateProductTypeOpts] = useProductTypeUpdateMutation({
+    // Field errors are rendered inline on the product type form.
+    disableErrorHandling: true,
     onCompleted: updateData => {
       if (
         !updateData.productTypeUpdate.errors ||
@@ -99,6 +111,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   });
   const [updateProductAttributes, updateProductAttributesOpts] =
     useProductAttributeAssignmentUpdateMutation({
+      // Field errors are rendered inline on the product type form.
+      disableErrorHandling: true,
       onCompleted: updateData => {
         if (
           updateData.productAttributeAssignmentUpdate.errors !== null &&
@@ -148,7 +162,11 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       ...productAttributeUpdateResult.data.productAttributeAssignmentUpdate.errors,
     ];
   };
-  const { data, loading: dataLoading } = useProductTypeDetailsQuery({
+  const {
+    data,
+    loading: dataLoading,
+    refetch,
+  } = useProductTypeDetailsQuery({
     displayLoader: true,
     variables: { id },
   });
@@ -160,7 +178,6 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     params,
     typeBaseData: productType ? [productType] : undefined,
   });
-  const closeModal = () => navigate(productTypeUrl(id), { replace: true });
   const createAttributeAssignmentType = ProductAttributeType[params.type];
   const handleAttributeAssignSuccess = (data: AssignProductAttributeMutation) => {
     if (data.productAttributeAssign.errors.length === 0) {
@@ -218,12 +235,6 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       onUnassignAttribute: handleAttributeUnassignSuccess,
       productType: data?.productType,
     });
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.productType,
-    handleProductTypeUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
   const handleProductTypeDelete = () => deleteProductType.mutate({ id });
   const handleProductTypeVariantsToggle = (hasVariants: boolean) =>
     updateProductType({
@@ -344,61 +355,38 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
         defaultWeightUnit={maybe(() => data.shop.defaultWeightUnit)}
         disabled={loading}
         errors={errors.formErrors}
-        pageTitle={maybe(() => data.productType.name)}
         productType={maybe(() => data.productType)}
         saveButtonBarState={updateProductTypeOpts.status || updateProductAttributesOpts.status}
         taxClasses={taxClasses ?? []}
         selectedVariantAttributes={selectedVariantAttributes}
         setSelectedVariantAttributes={setSelectedVariantAttributes}
         onAttributeAdd={type =>
-          navigate(
-            productTypeUrl(id, {
-              action: "assign-attribute",
-              type,
-            }),
-          )
+          openModal("assign-attribute", {
+            type,
+          })
         }
         onAttributeCreate={type =>
-          navigate(
-            productTypeUrl(id, {
-              action: "create-attribute",
-              type,
-            }),
-          )
+          openModal("create-attribute", {
+            type,
+          })
         }
         onAttributeReorder={handleAttributeReorder}
         onAttributeUnassign={attributeId =>
-          navigate(
-            productTypeUrl(id, {
-              action: "unassign-attribute",
-              id: attributeId,
-            }),
-          )
+          openModal("unassign-attribute", {
+            id: attributeId,
+          })
         }
-        onDelete={() =>
-          navigate(
-            productTypeUrl(id, {
-              action: "remove",
-            }),
-          )
-        }
+        onDelete={() => openModal("remove")}
+        onShowMetadata={() => openModal("view-metadata", { id: undefined })}
         onHasVariantsToggle={handleProductTypeVariantsToggle}
-        onSubmit={handleSubmit}
+        onSubmit={handleProductTypeUpdate}
         productAttributeList={{
           isChecked: productAttributeListActions.isSelected,
           selected: productAttributeListActions.listElements.length,
           toggle: productAttributeListActions.toggle,
           toggleAll: productAttributeListActions.toggleAll,
           toolbar: (
-            <Button
-              onClick={() =>
-                navigate(
-                  productTypeUrl(id, {
-                    action: "unassign-product-attributes",
-                  }),
-                )
-              }
-            >
+            <Button onClick={() => openModal("unassign-product-attributes")}>
               <FormattedMessage
                 id="S7j+Wf"
                 defaultMessage="Unassign"
@@ -413,15 +401,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           toggle: variantAttributeListActions.toggle,
           toggleAll: variantAttributeListActions.toggleAll,
           toolbar: (
-            <Button
-              onClick={() =>
-                navigate(
-                  productTypeUrl(id, {
-                    action: "unassign-variant-attributes",
-                  }),
-                )
-              }
-            >
+            <Button onClick={() => openModal("unassign-variant-attributes")}>
               <FormattedMessage
                 id="S7j+Wf"
                 defaultMessage="Unassign"
@@ -465,20 +445,30 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
             />
           ))}
           {productType && (
-            <CreateAttributeDialog
-              attributeType={AttributeTypeEnum.PRODUCT_TYPE}
-              confirmButtonState={
-                attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
-                  ? "loading"
-                  : attributeCreateOpts.status
-              }
-              contextName={productType.name}
-              disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
-              errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
-              open={params.action === "create-attribute" && Boolean(createAttributeAssignmentType)}
-              onClose={closeModal}
-              onSubmit={handleCreateAttribute}
-            />
+            <>
+              <ProductTypeMetadataDialog
+                open={params.action === "view-metadata" && !!productType}
+                onClose={closeModal}
+                productType={productType}
+                refetchProductType={refetch}
+              />
+              <CreateAttributeDialog
+                attributeType={AttributeTypeEnum.PRODUCT_TYPE}
+                confirmButtonState={
+                  attributeCreateOpts.loading || assignCreatedAttributeOpts.loading
+                    ? "loading"
+                    : attributeCreateOpts.status
+                }
+                contextName={productType.name}
+                disabled={attributeCreateOpts.loading || assignCreatedAttributeOpts.loading}
+                errors={attributeCreateOpts.data?.attributeCreate?.errors ?? []}
+                open={
+                  params.action === "create-attribute" && Boolean(createAttributeAssignmentType)
+                }
+                onClose={closeModal}
+                onSubmit={handleCreateAttribute}
+              />
+            </>
           )}
           {productType && (
             <TypeDeleteWarningDialog

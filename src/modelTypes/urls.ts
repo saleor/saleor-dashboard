@@ -38,12 +38,13 @@ export const pageTypeAddPath = urlJoin(modelTypesSection, "add");
 export const pageTypeAddUrl = pageTypeAddPath;
 
 export const pageTypePath = (id: string) => urlJoin(modelTypesSection, id);
-type PageTypeUrlDialog =
+export type PageTypeUrlDialog =
   | "assign-attribute"
   | "create-attribute"
   | "unassign-attribute"
   | "unassign-attributes"
-  | "remove";
+  | "remove"
+  | "view-metadata";
 export type PageTypeUrlQueryParams = BulkAction &
   Dialog<PageTypeUrlDialog> &
   SingleAction & {

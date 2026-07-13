@@ -1027,6 +1027,10 @@
     "context": "button to reset cut-off date to saved value",
     "string": "Reset to saved value"
   },
+  "3IiSxs": {
+    "context": "label",
+    "string": "Model type Name"
+  },
   "3PVGWj": {
     "string": "Filter preset"
   },
@@ -2368,6 +2372,10 @@
     "context": "reference types multiselect search placeholder",
     "string": "Search by name…"
   },
+  "AB4VSm": {
+    "context": "PageTypeDeleteWarningDialog single assigned items button label",
+    "string": "View models"
+  },
   "AD1PlC": {
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
@@ -3046,9 +3054,6 @@
   "DVgMit": {
     "context": "transaction event type, transaction was chargeback by payment provider",
     "string": "Chargeback"
-  },
-  "DWWw3M": {
-    "string": "Model type Name"
   },
   "DYn8fL": {
     "context": "shipping method channel picker dialog description",
@@ -3990,10 +3995,6 @@
     "context": "order refund amount",
     "string": "Max Refund"
   },
-  "I8mqqj": {
-    "context": "PageTypeDeleteWarningDialog single assigned items button label",
-    "string": "View pages"
-  },
   "IBw72y": {
     "context": "switch button",
     "string": "Is this product shippable?"
@@ -4038,6 +4039,10 @@
   },
   "ILrXJV": {
     "string": "Press {key1} {key2} to send"
+  },
+  "IMXS9Z": {
+    "context": "model type metadata dialog header",
+    "string": "Model Type Metadata"
   },
   "IN5iJz": {
     "context": "value input helper text",
@@ -4352,6 +4357,10 @@
   "JkO0jp": {
     "context": "input description",
     "string": "{unitsLeft} units left"
+  },
+  "JkUOSW": {
+    "context": "product type detail page, top-bar metadata button tooltip",
+    "string": "Edit product type metadata"
   },
   "JmdBa3": {
     "context": "product availability publish date",
@@ -4893,6 +4902,10 @@
     "context": "dialog content",
     "string": "Are you sure you want to void this payment?"
   },
+  "MqFTyz": {
+    "context": "product type detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete product type"
+  },
   "MwfSVA": {
     "context": "input helper text",
     "string": "Customers can not add quantities to a single cart above the limit when value is provided."
@@ -5026,6 +5039,10 @@
   "NUevU9": {
     "context": "attribute values list: slug column header",
     "string": "Swatch"
+  },
+  "NUkDAo": {
+    "context": "PageTypeDeleteWarningDialog single assigned items description",
+    "string": "You are about to delete model type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{model} other{models}}. Deleting this model type will also delete those models. Are you sure you want to do this?"
   },
   "NVYVA+": {
     "context": "return items table, add reason button",
@@ -5842,10 +5859,6 @@
     "context": "copy code button label",
     "string": "Copy code"
   },
-  "RZ32u5": {
-    "context": "PageTypeDeleteWarningDialog single consent label",
-    "string": "Yes, I want to delete this page type and assigned pages"
-  },
   "RZDxej": {
     "context": "Popover trigger text (button)",
     "string": "Filters {count, plural, =0 {} other {({count})} }"
@@ -6204,6 +6217,10 @@
   },
   "TPW2tP": {
     "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "TQWDo7": {
+    "context": "model type detail page, top-bar metadata button tooltip",
+    "string": "Edit model type metadata"
   },
   "TSJRiZ": {
     "context": "channel status title",
@@ -6655,6 +6672,10 @@
     "context": "dialog subtitle explaining what user should do",
     "string": "Select attribute values to create all possible variant combinations"
   },
+  "VxRMgP": {
+    "context": "product type metadata dialog header",
+    "string": "Product Type Metadata"
+  },
   "VxStyU": {
     "context": "order history message",
     "string": "Replacement order was created"
@@ -6794,6 +6815,10 @@
   "WZ2kxO": {
     "context": "Section heading for issues that affect whether a customer can purchase (warehouses, stock, channel listing, pricing)",
     "string": "Purchasability"
+  },
+  "WaZUkL": {
+    "context": "product type configuration section header",
+    "string": "Type configuration"
   },
   "WasHjQ": {
     "context": "voucher discount",
@@ -8200,6 +8225,9 @@
   "cyR7Kh": {
     "string": "Back"
   },
+  "d+F7sb": {
+    "string": "Open this product type in GraphiQL"
+  },
   "d+Wc8t": {
     "context": "description field hint",
     "string": "Main description content for this item"
@@ -8898,6 +8926,10 @@
   },
   "hAoqp6": {
     "string": "Failed to save permissions. Refresh the page and try again."
+  },
+  "hGI8RO": {
+    "context": "PageTypeDeleteWarningDialog single consent label",
+    "string": "Yes, I want to delete this model type and assigned models"
   },
   "hHOI7D": {
     "context": "product type name",
@@ -9696,6 +9728,10 @@
     "context": "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
     "string": "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability."
   },
+  "kugtAu": {
+    "context": "PageTypeDeleteWarningDialog title",
+    "string": "Delete model {selectedTypesCount,plural,one{type} other{types}}"
+  },
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
@@ -10072,6 +10108,10 @@
   "mmcHeH": {
     "string": "Discount Value"
   },
+  "mn9eY+": {
+    "context": "model type detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete model type"
+  },
   "mqwLmD": {
     "string": "Menu updated"
   },
@@ -10356,10 +10396,6 @@
   "oEFc87": {
     "context": "Warning when no shipping zones configured",
     "string": "No shipping zones"
-  },
-  "oHbgcK": {
-    "context": "PageTypeDeleteWarningDialog title",
-    "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
   },
   "oIL8jk": {
     "context": "error message",
@@ -11411,10 +11447,6 @@
   "tQA//+": {
     "context": "customer overview, recent net sales tooltip",
     "string": "Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
-  },
-  "tQxBXs": {
-    "context": "PageTypeDeleteWarningDialog single assigned items description",
-    "string": "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?"
   },
   "tR+UuE": {
     "string": "User doesn't exist. Please check your email in URL"

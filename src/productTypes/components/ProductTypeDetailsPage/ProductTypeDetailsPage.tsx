@@ -2,9 +2,10 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
+import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -18,25 +19,34 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { maybe } from "@dashboard/misc";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
+import { defaultGraphiQLQuery } from "@dashboard/productTypes/queries";
 import { productTypeListPath } from "@dashboard/productTypes/urls";
+import {
+  getVariantSelectionFromAssigned,
+  isProductTypeUpdateFormPristine,
+} from "@dashboard/productTypes/utils/productTypePageForm";
 import {
   type FetchMoreProps,
   type ListActions,
   type ReorderEvent,
   type UserError,
 } from "@dashboard/types";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Box, Text, Toggle } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { Trash2 } from "lucide-react";
+import { useCallback, useMemo } from "react";
+import { useIntl } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
+import { ProductTypeConfiguration } from "../ProductTypeConfiguration/ProductTypeConfiguration";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
+import { ProductTypeVariantMode } from "../ProductTypeVariantMode/ProductTypeVariantMode";
+import { messages } from "./messages";
+import { ProductTypeDetailsTitle } from "./Title";
 
 interface ChoiceType {
   label: string;
@@ -59,7 +69,6 @@ interface ProductTypeDetailsPageProps {
   productType: ProductTypeDetailsQuery["productType"];
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
-  pageTitle: string;
   productAttributeList: ListActions;
   saveButtonBarState: ConfirmButtonTransitionState;
   taxClasses: TaxClassBaseFragment[];
@@ -69,6 +78,7 @@ interface ProductTypeDetailsPageProps {
   onAttributeReorder: (event: ReorderEvent, type: ProductAttributeType) => void;
   onAttributeUnassign: (id: string) => void;
   onDelete: () => void;
+  onShowMetadata: () => void;
   onHasVariantsToggle: (hasVariants: boolean) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise;
   setSelectedVariantAttributes: (data: string[]) => void;
@@ -80,7 +90,6 @@ const ProductTypeDetailsPage = ({
   defaultWeightUnit,
   disabled,
   errors,
-  pageTitle,
   productType,
   productAttributeList,
   saveButtonBarState,
@@ -91,91 +100,135 @@ const ProductTypeDetailsPage = ({
   onAttributeUnassign,
   onAttributeReorder,
   onDelete,
+  onShowMetadata,
   onHasVariantsToggle,
   onSubmit,
   setSelectedVariantAttributes,
   selectedVariantAttributes,
   onFetchMoreTaxClasses,
 }: ProductTypeDetailsPageProps) => {
+  const intl = useIntl();
   const navigate = useNavigator();
+  const context = useDevModeContext();
+  const openPlaygroundURL = useCallback(() => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${productType?.id}" }`);
+    context.setDevModeVisibility(true);
+  }, [context, productType?.id]);
   const productTypeListBackLink = useBackLinkWithState({
     path: productTypeListPath,
   });
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
   const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps(
     productType?.taxClass?.name ?? "",
   );
-  const formInitialData: ProductTypeForm = {
-    hasVariants:
-      maybe(() => productType.hasVariants) !== undefined ? productType.hasVariants : false,
-    isShippingRequired:
-      maybe(() => productType.isShippingRequired) !== undefined
-        ? productType.isShippingRequired
-        : false,
-    metadata: productType?.metadata?.map(mapMetadataItemToInput),
-    name: maybe(() => productType.name) !== undefined ? productType.name : "",
-    kind: productType?.kind || ProductTypeKindEnum.NORMAL,
-    privateMetadata: productType?.privateMetadata?.map(mapMetadataItemToInput),
-    productAttributes:
-      maybe(() => productType.productAttributes) !== undefined
-        ? productType.productAttributes.map(attribute => ({
-            label: attribute.name,
-            value: attribute.id,
-          }))
-        : [],
-    taxClassId: productType?.taxClass?.id ?? "",
-    variantAttributes:
-      maybe(() => productType.variantAttributes) !== undefined
-        ? productType.variantAttributes.map(attribute => ({
-            label: attribute.name,
-            value: attribute.id,
-          }))
-        : [],
-    weight: maybe(() => productType.weight.value),
-  };
-  const handleSubmit = (data: ProductTypeForm) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified ? data.privateMetadata : undefined;
+  const formInitialData = useMemo<ProductTypeForm>(
+    () => ({
+      hasVariants:
+        maybe(() => productType.hasVariants) !== undefined ? productType.hasVariants : false,
+      isShippingRequired:
+        maybe(() => productType.isShippingRequired) !== undefined
+          ? productType.isShippingRequired
+          : false,
+      metadata: [],
+      name: maybe(() => productType.name) !== undefined ? productType.name : "",
+      kind: productType?.kind || ProductTypeKindEnum.NORMAL,
+      privateMetadata: [],
+      productAttributes:
+        maybe(() => productType.productAttributes) !== undefined
+          ? productType.productAttributes.map(attribute => ({
+              label: attribute.name,
+              value: attribute.id,
+            }))
+          : [],
+      taxClassId: productType?.taxClass?.id ?? "",
+      variantAttributes:
+        maybe(() => productType.variantAttributes) !== undefined
+          ? productType.variantAttributes.map(attribute => ({
+              label: attribute.name,
+              value: attribute.id,
+            }))
+          : [],
+      weight: maybe(() => productType.weight.value),
+    }),
+    [productType],
+  );
+  const initialVariantSelection = useMemo(
+    () => getVariantSelectionFromAssigned(productType?.assignedVariantAttributes),
+    [productType?.assignedVariantAttributes],
+  );
+  const checkIfSaveIsDisabled = useCallback(
+    (data: ProductTypeForm) => {
+      if (disabled) {
+        return true;
+      }
 
-    return onSubmit({
-      ...data,
-      metadata,
-      privateMetadata,
-    });
-  };
+      if (!productType) {
+        return true;
+      }
+
+      return isProductTypeUpdateFormPristine(
+        data,
+        formInitialData,
+        selectedVariantAttributes,
+        initialVariantSelection,
+      );
+    },
+    [disabled, formInitialData, initialVariantSelection, productType, selectedVariantAttributes],
+  );
+  const menuItems = useMemo(
+    () => [
+      {
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <GraphqlIcon />,
+      },
+      {
+        label: intl.formatMessage(messages.deleteProductType),
+        onSelect: onDelete,
+        testId: "delete-product-type",
+        color: "critical1" as const,
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      },
+    ],
+    [intl, onDelete, openPlaygroundURL],
+  );
 
   return (
-    <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
-
-        return (
+    <Form
+      initial={formInitialData}
+      onSubmit={onSubmit}
+      confirmLeave
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
+      {({ change, data, isSaveDisabled, submit, triggerChange }) => (
+        <>
+          <FormDirtyStateSync
+            enabled={!!productType}
+            isSaveDisabled={isSaveDisabled}
+            triggerChange={triggerChange}
+          />
           <DetailPageLayout>
-            <TopNav href={productTypeListBackLink} title={pageTitle} />
-            <DetailPageLayout.Content>
-              <ProductTypeDetails
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-                onKindChange={change}
+            <TopNav
+              href={productTypeListBackLink}
+              title={
+                <ProductTypeDetailsTitle
+                  productType={productType ? { name: productType.name } : null}
+                  loading={disabled}
+                />
+              }
+              actionsGap={3}
+            >
+              <TopNav.MetadataButton
+                onClick={onShowMetadata}
+                disabled={!productType}
+                data-test-id="show-product-type-metadata"
+                title={intl.formatMessage(messages.editProductTypeMetadata)}
               />
-              <CardSpacer />
-              <ProductTypeTaxes
-                disabled={disabled}
-                data={data}
-                taxClasses={taxClasses}
-                taxClassDisplayName={taxClassDisplayName}
-                onChange={event =>
-                  handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
-                }
-                onFetchMore={onFetchMoreTaxClasses}
-              />
-              <CardSpacer />
+              <TopNav.Menu items={menuItems} dataTestId="menu" />
+            </TopNav>
+            <DetailPageLayout.Content paddingBottom={10}>
               <ProductTypeAttributes
                 testId="assign-products-attributes"
                 attributes={maybe(() => productType.productAttributes)}
@@ -190,23 +243,11 @@ const ProductTypeDetailsPage = ({
                 {...productAttributeList}
               />
               <CardSpacer />
-
-              <Box marginLeft={6}>
-                <Toggle
-                  pressed={data.hasVariants}
-                  disabled={disabled}
-                  name="hasVariants"
-                  onPressedChange={pressed => onHasVariantsToggle(pressed)}
-                >
-                  <Text>
-                    <FormattedMessage
-                      id="5pHBSU"
-                      defaultMessage="Product type uses Variant Attributes"
-                      description="switch button"
-                    />
-                  </Text>
-                </Toggle>
-              </Box>
+              <ProductTypeVariantMode
+                hasVariants={data.hasVariants}
+                disabled={disabled}
+                onHasVariantsToggle={onHasVariantsToggle}
+              />
               {data.hasVariants && (
                 <>
                   <CardSpacer />
@@ -227,15 +268,33 @@ const ProductTypeDetailsPage = ({
                   />
                 </>
               )}
-              <CardSpacer />
-              <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
+              <ProductTypeDetails
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <ProductTypeConfiguration data={data} disabled={disabled} onKindChange={change} />
+              <CardSpacer />
               <ProductTypeShipping
                 disabled={disabled}
                 data={data}
                 weightUnit={productType?.weight?.unit || defaultWeightUnit}
                 onChange={change}
+              />
+              <CardSpacer />
+              <ProductTypeTaxes
+                disabled={disabled}
+                data={data}
+                taxClasses={taxClasses}
+                taxClassDisplayName={taxClassDisplayName}
+                onChange={event =>
+                  handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
+                }
+                onFetchMore={onFetchMoreTaxClasses}
               />
             </DetailPageLayout.RightSidebar>
             <Savebar>
@@ -249,8 +308,8 @@ const ProductTypeDetailsPage = ({
               />
             </Savebar>
           </DetailPageLayout>
-        );
-      }}
+        </>
+      )}
     </Form>
   );
 };

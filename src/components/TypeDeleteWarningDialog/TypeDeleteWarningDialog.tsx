@@ -1,17 +1,17 @@
 // @ts-strict-ignore
+import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
-import { Box, Spinner } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { Button } from "@saleor/macaw-ui-next";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import DeleteButton from "../DeleteButton";
-import { DashboardModal } from "../Modal";
 import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
 import {
   type CommonTypeDeleteWarningMessages,
@@ -36,17 +36,16 @@ interface TypeDeleteWarningDialogProps<T extends TypeBaseData> extends TypeDelet
   typesToDelete: string[];
   assignedItemsCount: number | undefined;
   typesData: T[];
-  isLoading?: boolean;
 }
 
 function TypeDeleteWarningDialog<T extends TypeBaseData>({
-  isLoading = false,
   isOpen,
   baseMessages,
   singleWithItemsMessages,
   singleWithoutItemsMessages,
   multipleWithItemsMessages,
   multipleWithoutItemsMessages,
+  deleteButtonState,
   onClose,
   onDelete,
   assignedItemsCount,
@@ -56,9 +55,31 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 }: TypeDeleteWarningDialogProps<T>) {
   const intl = useIntl();
   const [isConsentChecked, setIsConsentChecked] = useState(false);
+  const isSubmitting = deleteButtonState === "loading";
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsConsentChecked(false);
+    }
+  }, [isOpen]);
+
+  const handleClose = () => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   const showMultiple = typesToDelete.length > 1;
-  const hasAssignedItems = !!assignedItemsCount;
+  const hasKnownNoAssignedModelItems =
+    !showMultiple &&
+    typesData.length === 1 &&
+    "hasPages" in typesData[0] &&
+    typesData[0].hasPages === false;
+  const isCountPending = assignedItemsCount === undefined && !hasKnownNoAssignedModelItems;
+  const hasAssignedItems =
+    !isCountPending && !hasKnownNoAssignedModelItems && (assignedItemsCount ?? 0) > 0;
   const selectMessages = () => {
     if (showMultiple) {
       const multipleMessages = hasAssignedItems
@@ -79,55 +100,62 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   const { description, consentLabel } = selectMessages();
 
   const singleItemSelectedId = typesToDelete[0];
-  const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))?.name;
+  const singleItemSelectedName =
+    typesData.find(getById(singleItemSelectedId))?.name ??
+    (typesData.length === 1 ? typesData[0]?.name : undefined);
   const shouldShowViewAssignedItemsButton = hasAssignedItems;
+  const descriptionContent = intl.formatMessage(description, {
+    typeName: singleItemSelectedName,
+    assignedItemsCount,
+    b: (...chunks) => <strong>{chunks}</strong>,
+  });
+  const resolvedConsentLabel = consentLabel ? intl.formatMessage(consentLabel) : null;
 
   return (
-    <DashboardModal open={isOpen} onChange={onClose}>
-      <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
+    <DashboardModal open={isOpen} onChange={handleClose}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header subtitle={descriptionContent}>
           {intl.formatMessage(baseMessages.title, {
             selectedTypesCount: typesToDelete.length,
           })}
         </DashboardModal.Header>
 
-        {isLoading ? (
-          <Box display="flex" width="100%" justifyContent="center" paddingY={10}>
-            <Spinner />
-          </Box>
-        ) : (
-          <>
-            <DeleteWarningDialogConsentContent
-              description={intl.formatMessage(description, {
-                typeName: singleItemSelectedName,
-                assignedItemsCount,
-                b: (...chunks) => <b>{chunks}</b>,
-              })}
-              consentLabel={consentLabel && intl.formatMessage(consentLabel)}
-              isConsentChecked={isConsentChecked}
-              onConsentChange={setIsConsentChecked}
-            />
-
-            <DashboardModal.Actions>
-              {shouldShowViewAssignedItemsButton && (
-                <Link
-                  to={viewAssignedItemsUrl}
-                  style={{ pointerEvents: viewAssignedItemsUrl ? undefined : "none" }}
-                >
-                  <ConfirmButton transitionState="default" disabled={!viewAssignedItemsUrl}>
-                    {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
-                  </ConfirmButton>
-                </Link>
-              )}
-              <DeleteButton
-                onClick={onDelete}
-                disabled={hasAssignedItems ? !isConsentChecked : false}
-                testId="confirm-delete"
-                label={intl.formatMessage(buttonMessages.delete)}
+        {resolvedConsentLabel && (
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              <DeleteWarningDialogConsentContent
+                consentLabel={resolvedConsentLabel}
+                isConsentChecked={isConsentChecked}
+                onConsentChange={setIsConsentChecked}
               />
-            </DashboardModal.Actions>
-          </>
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
         )}
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          {shouldShowViewAssignedItemsButton && (
+            <Link
+              to={viewAssignedItemsUrl ?? "#"}
+              style={{ pointerEvents: viewAssignedItemsUrl ? undefined : "none" }}
+            >
+              <Button variant="secondary" disabled={!viewAssignedItemsUrl || isSubmitting}>
+                {intl.formatMessage(baseMessages.viewAssignedItemsButtonLabel)}
+              </Button>
+            </Link>
+          )}
+          <ConfirmButton
+            data-test-id="confirm-delete"
+            disabled={
+              isCountPending || (hasAssignedItems ? !isConsentChecked : false) || isSubmitting
+            }
+            onClick={onDelete}
+            transitionState={deleteButtonState}
+            variant="error"
+          >
+            {intl.formatMessage(buttonMessages.delete)}
+          </ConfirmButton>
+        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );
