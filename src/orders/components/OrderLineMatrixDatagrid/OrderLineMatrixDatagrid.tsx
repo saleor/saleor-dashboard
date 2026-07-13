@@ -9,7 +9,6 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -25,7 +24,7 @@ import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefund
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { type Item, type Theme } from "@glideapps/glide-data-grid";
-import { Box, type vars } from "@saleor/macaw-ui-next";
+import { Box, useTheme, type vars } from "@saleor/macaw-ui-next";
 import { ExternalLink, Undo2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -53,6 +52,8 @@ interface OrderLineMatrixDatagridProps {
   onToggleExpand: (lineId: string) => void;
   onOrderLineShowMetadata: (id: string) => void;
   onShowLinePriceBreakdown?: (lineId: string) => void;
+  needsActionOnly?: boolean;
+  emptyText?: string;
   columnPickerBackgroundColor?: keyof typeof vars.colors.background;
   datagridCustomTheme?: Partial<Theme>;
 }
@@ -67,18 +68,20 @@ export const OrderLineMatrixDatagrid = ({
   onToggleExpand,
   onOrderLineShowMetadata,
   onShowLinePriceBreakdown,
+  needsActionOnly = false,
+  emptyText,
   columnPickerBackgroundColor = "default1",
   datagridCustomTheme = {},
 }: OrderLineMatrixDatagridProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { locale } = useLocale();
+  const { themeValues } = useTheme();
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LINE_MATRIX_LIST);
-  const emptyColumn = useEmptyColumn();
   const orderLineMatrixStaticColumns = useMemo(
-    () => orderLineMatrixStaticColumnsAdapter(intl, emptyColumn),
-    [intl, emptyColumn],
+    () => orderLineMatrixStaticColumnsAdapter(intl),
+    [intl],
   );
   const handleColumnChange = useCallback(
     (picked: string[]) => {
@@ -99,15 +102,12 @@ export const OrderLineMatrixDatagrid = ({
       onSave: handleColumnChange,
     });
   const columnsWithPinned = useMemo(() => {
-    const emptyColumnDef = visibleColumns.find(column => column.id === "empty");
     const pinnedColumns = PINNED_MATRIX_COLUMN_IDS.map(columnId =>
       orderLineMatrixStaticColumns.find(column => column.id === columnId),
     ).filter(Boolean);
-    const remainingColumns = visibleColumns.filter(
-      column => column.id !== "empty" && !isPinnedMatrixColumn(column.id),
-    );
+    const remainingColumns = visibleColumns.filter(column => !isPinnedMatrixColumn(column.id));
 
-    return [...(emptyColumnDef ? [emptyColumnDef] : []), ...pinnedColumns, ...remainingColumns];
+    return [...pinnedColumns, ...remainingColumns];
   }, [orderLineMatrixStaticColumns, visibleColumns]);
   const highlightedRow = useMemo(() => {
     if (!expandedLineId) {
@@ -127,8 +127,22 @@ export const OrderLineMatrixDatagrid = ({
       intl,
       expandedLineId,
       interactivePricing: Boolean(onShowLinePriceBreakdown),
+      needsActionOnly,
+      order,
+      mutedTextColor: themeValues.colors.text.default2,
     }),
-    [columnsWithPinned, lines, loading, locale, intl, expandedLineId, onShowLinePriceBreakdown],
+    [
+      columnsWithPinned,
+      lines,
+      loading,
+      locale,
+      intl,
+      expandedLineId,
+      onShowLinePriceBreakdown,
+      needsActionOnly,
+      order,
+      themeValues.colors.text.default2,
+    ],
   );
   const getLineMenuItems = useCallback(
     (index: number): TopNavMenuItem[] => {
@@ -259,11 +273,11 @@ export const OrderLineMatrixDatagrid = ({
             themeOverride={datagridCustomTheme}
             rowMarkers="none"
             columnSelect="single"
-            freezeColumns={3}
+            freezeColumns={2}
             availableColumns={columnsWithPinned}
             verticalBorder={false}
             showTopBorder={false}
-            emptyText={intl.formatMessage(orderMessages.emptyText)}
+            emptyText={emptyText ?? intl.formatMessage(orderMessages.emptyText)}
             getCellContent={getCellContent}
             getCellError={() => false}
             getColumnTooltipContent={handleGetColumnTooltipContent}

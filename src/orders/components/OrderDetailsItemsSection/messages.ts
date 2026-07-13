@@ -9,10 +9,15 @@ export const messages = defineMessages({
     id: "igoIjo",
     defaultMessage: "Line matrix",
   },
+  viewModeAriaLabel: {
+    id: "BL0Yro",
+    defaultMessage: "Order items view",
+    description: "aria label for timeline vs line matrix switch",
+  },
   matrixHelper: {
-    id: "2wBJyQ",
+    id: "oB4Eq3",
     defaultMessage:
-      "Quantities show where each unit is in the fulfillment lifecycle. Click a line's status to view and manage its shipments.",
+      "Quantities show fulfillment status per unit. Click a line's status to manage shipments.",
   },
   fulfill: {
     id: "QDxJib",

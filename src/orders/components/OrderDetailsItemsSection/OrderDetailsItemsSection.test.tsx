@@ -50,13 +50,42 @@ describe("OrderDetailsItemsSection", () => {
     mockResizeObserver();
   });
 
-  it("renders timeline view by default", () => {
+  it("renders matrix view by default", () => {
     // Arrange // Act
     renderSection();
 
     // Assert
-    expect(screen.getByTestId("order-items-view-timeline")).toBeInTheDocument();
+    expect(screen.getByTestId("order-items-view-matrix")).toBeInTheDocument();
+    expect(screen.queryByTestId("fulfilled-order-section")).not.toBeInTheDocument();
+    expect(screen.getByText("Needs action")).toBeInTheDocument();
+    expect(screen.getByTestId("matrix-needs-action-help")).toBeInTheDocument();
+  });
+
+  it("renders timeline view when selected", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    renderSection();
+
+    // Act
+    await user.click(screen.getByTestId("order-items-view-timeline"));
+
+    // Assert
     expect(screen.getByTestId("fulfilled-order-section")).toBeInTheDocument();
+    expect(screen.queryByTestId("matrix-needs-action-toggle")).not.toBeInTheDocument();
+  });
+
+  it("enables needs action filter from toggle above the table", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    renderSection();
+
+    // Act
+    await user.click(screen.getByTestId("matrix-needs-action-toggle"));
+
+    // Assert
+    expect(screen.getByTestId("matrix-needs-action-toggle")).toHaveAttribute("data-state", "on");
   });
 
   it("switches to line matrix view", async () => {
@@ -72,7 +101,7 @@ describe("OrderDetailsItemsSection", () => {
     expect(screen.queryByTestId("fulfilled-order-section")).not.toBeInTheDocument();
     expect(
       screen.getByText(
-        "Quantities show where each unit is in the fulfillment lifecycle. Click a line's status to view and manage its shipments.",
+        "Quantities show fulfillment status per unit. Click a line's status to manage shipments.",
       ),
     ).toBeInTheDocument();
   });
@@ -98,6 +127,9 @@ describe("OrderDetailsItemsSection", () => {
     const orderWithCanceled = OrderFixture.fulfilled().withCanceledFulfillment().build();
 
     renderSection({ order: orderWithCanceled });
+
+    // Act
+    await user.click(screen.getByTestId("order-items-view-timeline"));
 
     // Assert
     expect(screen.getAllByTestId("fulfilled-order-section")).toHaveLength(1);

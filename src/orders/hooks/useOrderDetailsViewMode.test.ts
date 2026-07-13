@@ -10,12 +10,12 @@ describe("useOrderDetailsViewMode", () => {
     window.localStorage.clear();
   });
 
-  it("defaults to timeline when no preference is stored", () => {
+  it("defaults to matrix when no preference is stored", () => {
     // Arrange // Act
     const { result } = renderHook(() => useOrderDetailsViewMode(), { wrapper: Wrapper });
 
     // Assert
-    expect(result.current.viewMode).toBe("timeline");
+    expect(result.current.viewMode).toBe("matrix");
   });
 
   it("persists view mode in list settings", () => {

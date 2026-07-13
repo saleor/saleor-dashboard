@@ -2,20 +2,41 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   panelTitle: {
-    id: "FoWZeK",
-    defaultMessage: "Shipments for {productName}",
+    id: "oUxBlO",
+    defaultMessage: "Line details for {productName}",
   },
-  noShipments: {
-    id: "BINR5M",
-    defaultMessage: "No shipments or returns recorded for this line yet.",
+  shipmentsSection: {
+    id: "0iF2NT",
+    defaultMessage: "Shipments",
+    description: "physical shipment section header in line expanded panel",
+  },
+  transactionRefundsSection: {
+    id: "R8R2lk",
+    defaultMessage: "Transaction refunds",
+    description: "transaction refund section header in line expanded panel",
+  },
+  noActivity: {
+    id: "u7flSd",
+    defaultMessage: "No shipments or transaction refunds recorded for this line yet.",
   },
   quantity: {
     id: "I/7E/4",
     defaultMessage: "{quantity, plural, one {# unit} other {# units}}",
   },
   grantedRefund: {
-    id: "rRpH07",
-    defaultMessage: "Transaction refund: {quantity, plural, one {# unit} other {# units}}",
+    id: "KYtsk7",
+    defaultMessage: "Transaction refund",
+    description: "transaction refund card label in line expanded panel",
+  },
+  refundAmount: {
+    id: "yMjwop",
+    defaultMessage: "Refund total {amount}",
+    description: "granted refund amount in line expanded panel",
+  },
+  editRefund: {
+    id: "xErmO2",
+    defaultMessage: "Edit & transfer",
+    description: "open granted refund editor from line expanded panel",
   },
   cancelFulfillment: {
     id: "y8hdd1",

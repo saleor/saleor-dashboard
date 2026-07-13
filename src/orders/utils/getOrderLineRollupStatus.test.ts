@@ -1,4 +1,7 @@
-import { FulfillmentStatus } from "@dashboard/graphql/types.generated";
+import {
+  FulfillmentStatus,
+  OrderGrantedRefundStatusEnum,
+} from "@dashboard/graphql/types.generated";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
 import { buildOrderLineLifecycle, type OrderLineLifecycle } from "./buildOrderLineLifecycle";
@@ -16,6 +19,7 @@ const createLifecycle = (overrides: Partial<OrderLineLifecycle>): OrderLineLifec
   refundedFulfillment: 0,
   replaced: 0,
   grantedRefund: 0,
+  grantedRefundEntries: [],
   shipments: [],
   ...overrides,
 });
@@ -82,6 +86,51 @@ describe("getOrderLineRollupStatus", () => {
 
     // Act // Assert
     expect(getOrderLineRollupStatus(lifecycle)).toBe("refunded");
+  });
+
+  it("returns refundDraft when a draft transaction refund exists for the line", () => {
+    // Arrange
+    const lifecycle = createLifecycle({
+      ordered: 2,
+      toFulfill: 0,
+      shipped: 2,
+      grantedRefund: 1,
+      grantedRefundEntries: [
+        {
+          grantedRefundId: "refund-draft",
+          status: OrderGrantedRefundStatusEnum.NONE,
+          quantity: 1,
+          amount: { amount: 10, currency: "USD" },
+          created: "2023-10-05T12:00:00Z",
+        },
+      ],
+    });
+
+    // Act // Assert
+    expect(getOrderLineRollupStatus(lifecycle)).toBe("refundDraft");
+  });
+
+  it("returns refundFailed when a failed transaction refund exists for the line", () => {
+    // Arrange
+    const lifecycle = createLifecycle({
+      ordered: 2,
+      toFulfill: 0,
+      shipped: 2,
+      grantedRefund: 1,
+      grantedRefundEntries: [
+        {
+          grantedRefundId: "refund-failed",
+          status: OrderGrantedRefundStatusEnum.FAILURE,
+          quantity: 1,
+          amount: { amount: 10, currency: "USD" },
+          created: "2023-10-05T12:00:00Z",
+        },
+      ],
+    });
+
+    // Act // Assert
+    expect(getOrderLineRollupStatus(lifecycle)).toBe("refundFailed");
+    expect(getOrderLineRollupDotStatus("refundFailed")).toBe("error");
   });
 
   it("derives partiallyFulfilled from real order data", () => {

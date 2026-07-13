@@ -407,7 +407,7 @@ export const Datagrid = ({
         ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
       }
 
-      if (isSelected && column.id !== "empty") {
+      if (isSelected && column.id !== "empty" && !columnMeta?.disableReorder) {
         const iconSize = 16;
         const padding = 8;
         const x = rect.x + rect.width - iconSize - padding;
@@ -485,9 +485,16 @@ export const Datagrid = ({
         return;
       }
 
+      const startColumn = availableColumns[startIndex];
+      const endColumn = availableColumns[endIndex];
+
+      if (startColumn?.disableReorder || endColumn?.disableReorder) {
+        return;
+      }
+
       onColumnMoved(startIndex, endIndex);
     },
-    [clearTooltip, onColumnMoved, tooltip],
+    [availableColumns, clearTooltip, onColumnMoved, tooltip],
   );
   const selectionActionsComponent = useMemo(
     () =>

@@ -10,6 +10,7 @@ export interface ThumbnailCellProps {
   readonly kind: "thumbnail-cell";
   readonly image: string;
   readonly name: string;
+  readonly muted?: boolean;
 }
 
 export type ThumbnailCell = CustomCell<ThumbnailCellProps>;
@@ -26,6 +27,10 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
     const drawX = rect.x + xPad;
     const drawY = rect.y + xPad;
     const imageResult = imageLoader.loadOrGetImage(image, col, row);
+
+    if (cell.data.muted) {
+      ctx.globalAlpha = 0.55;
+    }
 
     ctx.save();
 
@@ -52,6 +57,8 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
         rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
       );
     }
+
+    ctx.globalAlpha = 1;
 
     return true;
   },

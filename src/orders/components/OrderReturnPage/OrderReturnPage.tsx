@@ -15,8 +15,9 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
 import { TransactionSubmitCard } from "./components";
@@ -67,6 +68,12 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
   const [showReasonError, setShowReasonError] = useState(false);
   // Same for the refund reason when granting a refund during the return.
   const [showRefundReasonError, setShowRefundReasonError] = useState(false);
+  const prefilledLine = prefilledOrderLineId
+    ? order?.lines?.find(line => line.id === prefilledOrderLineId)
+    : undefined;
+  const prefilledProductName = prefilledLine
+    ? [prefilledLine.productName, prefilledLine.variant?.name].filter(Boolean).join(" / ")
+    : "";
 
   return (
     <OrderRefundForm order={order} prefilledOrderLineId={prefilledOrderLineId} onSubmit={onSubmit}>
@@ -94,6 +101,16 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
               })}
             />
             <DetailPageLayout.Content>
+              {prefilledProductName && (
+                <Box paddingBottom={4} data-test-id="return-prefilled-line-hint">
+                  <Text size={3} color="default2">
+                    <FormattedMessage
+                      {...orderReturnMessages.prefilledLineHint}
+                      values={{ productName: prefilledProductName }}
+                    />
+                  </Text>
+                </Box>
+              )}
               {!!data.unfulfilledItemsQuantities.length && (
                 <>
                   <ItemsCard

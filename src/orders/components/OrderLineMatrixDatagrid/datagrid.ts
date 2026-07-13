@@ -13,6 +13,7 @@ import {
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type Locale } from "@dashboard/components/Locale";
+import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { getDatagridRowDataIndex } from "@dashboard/misc";
 import {
   isLineDiscounted,
@@ -24,7 +25,8 @@ import {
   getOrderLineRollupStatus,
   getOrderLineRollupStatusLabel,
 } from "@dashboard/orders/utils/getOrderLineRollupStatus";
-import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { lineNeedsAction } from "@dashboard/orders/utils/lineNeedsAction";
+import { type GridCell, GridCellKind, type Item, type Theme } from "@glideapps/glide-data-grid";
 import { type IntlShape } from "react-intl";
 
 import { messages } from "./messages";
@@ -37,6 +39,7 @@ const QUANTITY_COLUMN_IDS = new Set([
   "shipped",
   "returned",
   "refunded",
+  "grantedRefund",
 ]);
 
 export const STATUS_COLUMN_ID = "status";
@@ -45,15 +48,12 @@ export const PINNED_MATRIX_COLUMN_IDS = [STATUS_COLUMN_ID];
 
 const isPinnedMatrixColumn = (columnId: string) => PINNED_MATRIX_COLUMN_IDS.includes(columnId);
 
-export const orderLineMatrixStaticColumnsAdapter = (
-  intl: IntlShape,
-  emptyColumn: AvailableColumn,
-): AvailableColumn[] => [
-  emptyColumn,
+export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableColumn[] => [
   {
     id: STATUS_COLUMN_ID,
     title: intl.formatMessage(messages.status),
     width: 200,
+    disableReorder: true,
   },
   {
     id: "product",
@@ -103,7 +103,12 @@ export const orderLineMatrixStaticColumnsAdapter = (
   {
     id: "refunded",
     title: intl.formatMessage(messages.refunded),
-    width: 90,
+    width: 120,
+  },
+  {
+    id: "grantedRefund",
+    title: intl.formatMessage(messages.grantedRefund),
+    width: 120,
   },
   {
     id: "price",
@@ -125,7 +130,40 @@ interface GetCellContentProps {
   intl: IntlShape;
   expandedLineId: string | null;
   interactivePricing?: boolean;
+  needsActionOnly?: boolean;
+  order?: OrderDetailsFragment;
+  mutedTextColor?: string;
 }
+
+const getMutedCellTheme = (mutedTextColor: string): Partial<Theme> => ({
+  textDark: mutedTextColor,
+  textMedium: mutedTextColor,
+  textLight: mutedTextColor,
+});
+
+const applyMutedCellStyle = (cell: GridCell, muted: boolean, mutedTextColor: string): GridCell => {
+  if (!muted) {
+    return cell;
+  }
+
+  const mutedTheme = getMutedCellTheme(mutedTextColor);
+
+  if (cell.kind === GridCellKind.Custom) {
+    return {
+      ...cell,
+      themeOverride: mutedTheme,
+      data: {
+        ...cell.data,
+        muted: true,
+      },
+    };
+  }
+
+  return {
+    ...cell,
+    themeOverride: mutedTheme,
+  };
+};
 
 const getSkeletonVariant = (columnId: string | undefined): SkeletonCellVariant => {
   if (columnId && QUANTITY_COLUMN_IDS.has(columnId)) {
@@ -146,6 +184,9 @@ export const createGetCellContent =
     intl,
     expandedLineId,
     interactivePricing,
+    needsActionOnly = false,
+    order,
+    mutedTextColor,
   }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     const discountedOpts: Partial<GridCell> = interactivePricing
@@ -154,10 +195,6 @@ export const createGetCellContent =
     const columnId = columns[column]?.id;
 
     if (loading) {
-      if (columnId === "empty") {
-        return readonlyTextCell("", false);
-      }
-
       return skeletonCell(getSkeletonVariant(columnId));
     }
 
@@ -167,86 +204,95 @@ export const createGetCellContent =
       return readonlyTextCell("", false);
     }
 
-    if (columnId === "empty") {
-      return readonlyTextCell("", false);
-    }
-
     const line = rowData.orderLine;
     const isExpanded = expandedLineId === rowData.orderLineId;
+    const isMuted =
+      needsActionOnly && order && mutedTextColor ? !lineNeedsAction(rowData, order) : false;
+
+    const withMutedStyle = (cell: GridCell): GridCell =>
+      applyMutedCellStyle(cell, isMuted, mutedTextColor ?? "");
 
     switch (columnId) {
       case STATUS_COLUMN_ID: {
         const rollupStatus = getOrderLineRollupStatus(rowData);
 
-        return lineMatrixStatusCell(
-          rollupStatus,
-          getOrderLineRollupStatusLabel(rollupStatus, intl),
-          isExpanded,
+        return withMutedStyle(
+          lineMatrixStatusCell(
+            rollupStatus,
+            getOrderLineRollupStatusLabel(rollupStatus, intl),
+            isExpanded,
+          ),
         );
       }
       case "product":
-        return thumbnailCell(line.productName ?? "", line.thumbnail?.url ?? "", readonlyOptions);
+        return withMutedStyle(
+          thumbnailCell(line.productName ?? "", line.thumbnail?.url ?? "", readonlyOptions),
+        );
       case "sku":
-        return readonlyTextCell(line.productSku ?? "", false);
+        return withMutedStyle(readonlyTextCell(line.productSku ?? "", false));
       case "variantName":
-        return readonlyTextCell(line.variant?.name ?? "—", false);
+        return withMutedStyle(readonlyTextCell(line.variant?.name ?? "—", false));
       case "ordered":
-        return readonlyTextCell(formatQuantity(rowData.ordered), false);
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.ordered), false));
       case "allocated":
-        return readonlyTextCell(formatQuantity(rowData.allocated), false);
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.allocated), false));
       case "toFulfill":
-        return readonlyTextCell(formatQuantity(rowData.toFulfill), false);
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.toFulfill), false));
       case "pendingApproval":
-        return readonlyTextCell(formatQuantity(rowData.pendingApproval), false);
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.pendingApproval), false));
       case "shipped":
-        return readonlyTextCell(formatQuantity(rowData.shipped), false);
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.shipped), false));
       case "returned":
-        return readonlyTextCell(formatQuantity(rowData.returned), false);
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.returned), false));
       case "refunded":
-        return readonlyTextCell(formatQuantity(rowData.refundedFulfillment), false);
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.refundedFulfillment), false));
+      case "grantedRefund":
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.grantedRefund), false));
       case "price":
         if (isLineDiscounted(line)) {
-          return moneyDiscountedCell(
-            {
-              value: line.unitPrice.gross.amount,
-              currency: line.unitPrice.gross.currency,
-              undiscounted: line.undiscountedUnitPrice.gross.amount,
-              locale,
-            },
-            discountedOpts,
+          return withMutedStyle(
+            moneyDiscountedCell(
+              {
+                value: line.unitPrice.gross.amount,
+                currency: line.unitPrice.gross.currency,
+                undiscounted: line.undiscountedUnitPrice.gross.amount,
+                locale,
+              },
+              discountedOpts,
+            ),
           );
         }
 
-        return moneyCell(
-          line.unitPrice.gross.amount,
-          line.unitPrice.gross.currency,
-          readonlyOptions,
+        return withMutedStyle(
+          moneyCell(line.unitPrice.gross.amount, line.unitPrice.gross.currency, readonlyOptions),
         );
       case "total":
         if (isLineDiscounted(line)) {
-          return moneyDiscountedCell(
-            {
-              value: line.totalPrice.gross.amount,
-              currency: line.totalPrice.gross.currency,
-              undiscounted: line.undiscountedTotalPrice.gross.amount,
-              locale,
-            },
-            discountedOpts,
+          return withMutedStyle(
+            moneyDiscountedCell(
+              {
+                value: line.totalPrice.gross.amount,
+                currency: line.totalPrice.gross.currency,
+                undiscounted: line.undiscountedTotalPrice.gross.amount,
+                locale,
+              },
+              discountedOpts,
+            ),
           );
         }
 
-        return moneyCell(
-          line.totalPrice.gross.amount,
-          line.totalPrice.gross.currency,
-          readonlyOptions,
+        return withMutedStyle(
+          moneyCell(line.totalPrice.gross.amount, line.totalPrice.gross.currency, readonlyOptions),
         );
       case "isGift":
-        return booleanCell(line.isGift, {
-          readonly: true,
-          allowOverlay: false,
-        });
+        return withMutedStyle(
+          booleanCell(line.isGift, {
+            readonly: true,
+            allowOverlay: false,
+          }),
+        );
       default:
-        return readonlyTextCell("", false);
+        return withMutedStyle(readonlyTextCell("", false));
     }
   };
 
@@ -256,6 +302,10 @@ export const getMatrixColumnTooltipContent = (
 ): string => {
   if (columnId === "refunded") {
     return intl.formatMessage(messages.refundedTooltip);
+  }
+
+  if (columnId === "grantedRefund") {
+    return intl.formatMessage(messages.grantedRefundTooltip);
   }
 
   return "";

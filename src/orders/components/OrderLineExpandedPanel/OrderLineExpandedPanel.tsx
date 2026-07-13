@@ -20,6 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import styles from "./OrderLineExpandedPanel.module.css";
+import { OrderLineGrantedRefundRow } from "./OrderLineGrantedRefundRow";
 
 const cancelableStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.WAITING_FOR_APPROVAL];
 
@@ -66,6 +67,10 @@ export const OrderLineExpandedPanel = ({
   const refundNavigation = getOrderRefundNavigation(order);
   const line = lifecycle.orderLine;
   const shipments = lifecycle.shipments;
+  const grantedRefundEntries = lifecycle.grantedRefundEntries;
+  const hasShipments = shipments.length > 0;
+  const hasGrantedRefunds = grantedRefundEntries.length > 0;
+  const productName = [line.productName, line.variant?.name].filter(Boolean).join(" / ");
 
   return (
     <Box
@@ -84,35 +89,24 @@ export const OrderLineExpandedPanel = ({
         display="flex"
         flexDirection="column"
         gap={1}
-        marginBottom={shipments.length > 0 ? 4 : 0}
+        marginBottom={hasShipments || hasGrantedRefunds ? 4 : 0}
       >
         <Text size={5} fontWeight="medium" display="block">
-          <FormattedMessage
-            {...messages.panelTitle}
-            values={{
-              productName: [line.productName, line.variant?.name].filter(Boolean).join(" / "),
-            }}
-          />
+          <FormattedMessage {...messages.panelTitle} values={{ productName }} />
         </Text>
 
-        {lifecycle.grantedRefund > 0 && (
+        {!hasShipments && !hasGrantedRefunds && (
           <Text size={3} color="default2" display="block">
-            <FormattedMessage
-              {...messages.grantedRefund}
-              values={{ quantity: lifecycle.grantedRefund }}
-            />
-          </Text>
-        )}
-
-        {shipments.length === 0 && (
-          <Text size={3} color="default2" display="block">
-            <FormattedMessage {...messages.noShipments} />
+            <FormattedMessage {...messages.noActivity} />
           </Text>
         )}
       </Box>
 
-      {shipments.length > 0 && (
-        <Box display="flex" flexDirection="column" gap={4}>
+      {hasShipments && (
+        <Box display="flex" flexDirection="column" gap={4} marginBottom={hasGrantedRefunds ? 6 : 0}>
+          <Text size={4} fontWeight="medium" display="block">
+            <FormattedMessage {...messages.shipmentsSection} />
+          </Text>
           {shipments.map(shipment => {
             const fulfillment = order.fulfillments?.find(getById(shipment.fulfillmentId));
 
@@ -253,7 +247,7 @@ export const OrderLineExpandedPanel = ({
                               onClick={() => onOrderFulfillmentCancel(fulfillment.id)}
                               data-test-id="cancel-fulfillment"
                             >
-                              <Text>
+                              <Text color="critical1">
                                 <FormattedMessage {...messages.cancelFulfillment} />
                               </Text>
                             </List.Item>
@@ -268,6 +262,22 @@ export const OrderLineExpandedPanel = ({
               </Box>
             );
           })}
+        </Box>
+      )}
+
+      {hasGrantedRefunds && (
+        <Box display="flex" flexDirection="column" gap={4}>
+          <Text size={4} fontWeight="medium" display="block">
+            <FormattedMessage {...messages.transactionRefundsSection} />
+          </Text>
+          {grantedRefundEntries.map(entry => (
+            <OrderLineGrantedRefundRow
+              key={entry.grantedRefundId}
+              entry={entry}
+              orderId={order.id}
+              locale={locale}
+            />
+          ))}
         </Box>
       )}
     </Box>

@@ -1,4 +1,5 @@
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
+import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { orderTitleMessages } from "@dashboard/orders/components/OrderCardTitle/messages";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { type IntlShape, type MessageDescriptor } from "react-intl";
@@ -7,6 +8,8 @@ import { messages } from "./messages";
 
 export type OrderLineRollupStatus =
   | "waitingForApproval"
+  | "refundFailed"
+  | "refundDraft"
   | "partiallyFulfilled"
   | "toFulfill"
   | "fulfilled"
@@ -28,11 +31,20 @@ export const getOrderLineRollupStatus = (lifecycle: OrderLineLifecycle): OrderLi
     returned,
     refundedFulfillment,
     grantedRefund,
+    grantedRefundEntries,
     replaced,
   } = lifecycle;
 
   if (pendingApproval > 0) {
     return "waitingForApproval";
+  }
+
+  if (grantedRefundEntries.some(entry => entry.status === OrderGrantedRefundStatusEnum.FAILURE)) {
+    return "refundFailed";
+  }
+
+  if (grantedRefundEntries.some(entry => entry.status === OrderGrantedRefundStatusEnum.NONE)) {
+    return "refundDraft";
   }
 
   if (toFulfill > 0 && shipped > 0) {
@@ -68,6 +80,8 @@ export const getOrderLineRollupStatus = (lifecycle: OrderLineLifecycle): OrderLi
 
 const ROLLUP_STATUS_MESSAGES: Record<OrderLineRollupStatus, MessageDescriptor> = {
   waitingForApproval: orderTitleMessages.waitingForApproval,
+  refundFailed: messages.refundFailed,
+  refundDraft: messages.refundDraft,
   partiallyFulfilled: messages.partiallyFulfilled,
   toFulfill: messages.toFulfillStatus,
   fulfilled: orderTitleMessages.fulfilled,
@@ -88,7 +102,10 @@ export const getOrderLineRollupDotStatus = (status: OrderLineRollupStatus): DotS
       return "success";
     case "returned":
     case "refunded":
+    case "refundFailed":
       return "error";
+    case "refundDraft":
+      return "warning";
     default:
       return "warning";
   }

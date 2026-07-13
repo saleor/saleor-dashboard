@@ -2,8 +2,10 @@ import { GridTable } from "@dashboard/components/GridTable";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
+import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { getUserInitials, getUserName, type User } from "@dashboard/misc";
 import { refundGridMessages } from "@dashboard/orders/components/OrderDetailsRefundTable/messages";
+import { RefundTransferFailureInfo } from "@dashboard/orders/components/RefundTransferFailureInfo/RefundTransferFailureInfo";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import {
   type OrderRefundDisplay,
@@ -74,11 +76,19 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
           )}
         </GridTable.Cell>
         <GridTable.Cell paddingTop={1} borderTopWidth={0} backgroundColor="default2">
-          <OrderTransactionRefundStatusPill
-            status={refund.status}
-            label={getGrantedRefundStatusMessage(refund.status, intl).toUpperCase()}
-            size="small"
-          />
+          <Box display="flex" alignItems="center" gap={1}>
+            <OrderTransactionRefundStatusPill
+              status={refund.status}
+              label={getGrantedRefundStatusMessage(refund.status, intl).toUpperCase()}
+              size="small"
+            />
+            {refund.status === OrderGrantedRefundStatusEnum.FAILURE && refund.failureMessage && (
+              <RefundTransferFailureInfo
+                message={refund.failureMessage}
+                testId="refund-failure-info"
+              />
+            )}
+          </Box>
         </GridTable.Cell>
         <GridTable.Cell paddingTop={1} borderTopWidth={0} backgroundColor="default2">
           <Box display="flex" justifyContent="flex-end">
@@ -86,7 +96,7 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
           </Box>
         </GridTable.Cell>
         <GridTable.Cell paddingTop={1} borderTopWidth={0} backgroundColor="default2">
-          <Box>
+          <Box __minWidth={0} overflow="hidden">
             {noReasonTypeNorNote && (
               <Text size={2}>{intl.formatMessage(refundGridMessages.manualRefund)}</Text>
             )}

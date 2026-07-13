@@ -847,7 +847,7 @@ export const fragmentOrderGrantedRefunds = gql`
       amount
     }
     transactionEvents {
-      id
+      ...TransactionBaseEvent
     }
     reason
     reasonReference {

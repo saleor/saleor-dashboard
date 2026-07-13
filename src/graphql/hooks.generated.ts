@@ -2150,7 +2150,7 @@ export const OrderGrantedRefundFragmentDoc = gql`
     amount
   }
   transactionEvents {
-    id
+    ...TransactionBaseEvent
   }
   reason
   reasonReference {
@@ -2187,7 +2187,8 @@ export const OrderGrantedRefundFragmentDoc = gql`
     }
   }
 }
-    ${UserBaseAvatarFragmentDoc}`;
+    ${TransactionBaseEventFragmentDoc}
+${UserBaseAvatarFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id

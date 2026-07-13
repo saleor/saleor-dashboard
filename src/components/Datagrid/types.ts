@@ -12,4 +12,6 @@ export interface AvailableColumn {
   themeOverride?: Partial<Theme>;
   action?: (id: string) => boolean;
   headerAlign?: "left" | "right";
+  /** When true, column header cannot be dragged to reorder. */
+  disableReorder?: boolean;
 }

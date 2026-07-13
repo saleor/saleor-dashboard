@@ -188,7 +188,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.ORDER_DETAILS_LIST]: {
     rowNumber: PAGINATE_BY,
-    viewMode: "timeline",
+    viewMode: "matrix",
     columns: [
       "product",
       "sku",
@@ -215,6 +215,7 @@ export const defaultListSettings: AppListViewSettings = {
       "shipped",
       "returned",
       "refunded",
+      "grantedRefund",
       "price",
       "total",
     ],

@@ -1,5 +1,10 @@
 // @ts-strict-ignore
 import {
+  InsetSegmentedControl,
+  type InsetSegmentedControlOption,
+  insetSegmentLabel,
+} from "@dashboard/components/InsetSegmentedControl/InsetSegmentedControl";
+import {
   FulfillmentStatus,
   type OrderDetailsFragment,
   type OrderDetailsQuery,
@@ -9,15 +14,17 @@ import { hasAnyItemsReplaceable } from "@dashboard/orders/components/OrderDetail
 import { OrderFulfillmentCard } from "@dashboard/orders/components/OrderFulfillmentCard/OrderFulfillmentCard";
 import { OrderLineExpandedPanel } from "@dashboard/orders/components/OrderLineExpandedPanel/OrderLineExpandedPanel";
 import { OrderLineMatrixDatagrid } from "@dashboard/orders/components/OrderLineMatrixDatagrid/OrderLineMatrixDatagrid";
+import { OrderLineMatrixNeedsActionSwitch } from "@dashboard/orders/components/OrderLineMatrixDatagrid/OrderLineMatrixNeedsActionSwitch";
 import { OrderUnfulfilledProductsCard } from "@dashboard/orders/components/OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { useOrderDetailsViewMode } from "@dashboard/orders/hooks/useOrderDetailsViewMode";
 import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";
 import { buildOrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { type OrderDetailsViewMode } from "@dashboard/types";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { PackageIcon, Undo2 } from "lucide-react";
+import { History, PackageIcon, Rows3, Undo2 } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import styles from "./OrderDetailsItemsSection.module.css";
@@ -55,8 +62,10 @@ export const OrderDetailsItemsSection = ({
   onFulfillmentShowMetadata,
   onShowLinePriceBreakdown,
 }: OrderDetailsItemsSectionProps) => {
+  const intl = useIntl();
   const { viewMode, setViewMode } = useOrderDetailsViewMode();
   const [expandedLineId, setExpandedLineId] = useState<string | null>(null);
+  const [needsActionOnly, setNeedsActionOnly] = useState(false);
   const [showCanceledFulfillments, setShowCanceledFulfillments] = useState(false);
   const unfulfilled = useMemo(
     () => (order.lines || []).filter(line => line.quantityToFulfill > 0),
@@ -85,12 +94,43 @@ export const OrderDetailsItemsSection = ({
   const canReturn = hasAnyItemsReplaceable(order);
 
   const handleViewModeChange = useCallback(
-    (mode: Parameters<typeof setViewMode>[0]) => {
+    (mode: OrderDetailsViewMode) => {
       setViewMode(mode);
       setExpandedLineId(null);
+      setNeedsActionOnly(false);
     },
     [setViewMode],
   );
+
+  const viewModeOptions = useMemo(
+    (): InsetSegmentedControlOption<OrderDetailsViewMode>[] => [
+      {
+        value: "timeline",
+        testId: "order-items-view-timeline",
+        label: isActive => (
+          <Box display="flex" alignItems="center" gap={1.5}>
+            <History size={14} />
+            {insetSegmentLabel(isActive, intl.formatMessage(messages.timeline))}
+          </Box>
+        ),
+      },
+      {
+        value: "matrix",
+        testId: "order-items-view-matrix",
+        label: isActive => (
+          <Box display="flex" alignItems="center" gap={1.5}>
+            <Rows3 size={14} />
+            {insetSegmentLabel(isActive, intl.formatMessage(messages.lineMatrix))}
+          </Box>
+        ),
+      },
+    ],
+    [intl],
+  );
+
+  const handleNeedsActionOnlyChange = useCallback((value: boolean) => {
+    setNeedsActionOnly(value);
+  }, []);
 
   const handleToggleExpand = useCallback((lineId: string) => {
     setExpandedLineId(current => (current === lineId ? null : lineId));
@@ -129,23 +169,15 @@ export const OrderDetailsItemsSection = ({
         marginBottom={4}
         flexWrap="wrap"
       >
-        <Box display="flex" alignItems="center" gap={2}>
-          <Box display="flex" gap={2} data-test-id="order-items-view-toggle">
-            <Button
-              variant={viewMode === "timeline" ? "primary" : "secondary"}
-              onClick={() => handleViewModeChange("timeline")}
-              data-test-id="order-items-view-timeline"
-            >
-              <FormattedMessage {...messages.timeline} />
-            </Button>
-            <Button
-              variant={viewMode === "matrix" ? "primary" : "secondary"}
-              onClick={() => handleViewModeChange("matrix")}
-              data-test-id="order-items-view-matrix"
-            >
-              <FormattedMessage {...messages.lineMatrix} />
-            </Button>
-          </Box>
+        <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
+          <InsetSegmentedControl
+            size="lg"
+            value={viewMode}
+            onChange={handleViewModeChange}
+            options={viewModeOptions}
+            aria-label={intl.formatMessage(messages.viewModeAriaLabel)}
+            data-test-id="order-items-view-toggle"
+          />
           <Ripple model={rippleOrderLineMatrixView} />
         </Box>
 
@@ -203,7 +235,7 @@ export const OrderDetailsItemsSection = ({
             renderFulfillmentCard(fulfillment, index, activeFulfillments.length),
           )}
           {canceledFulfillments.length > 0 && (
-            <Box paddingX={6} paddingBottom={showCanceledFulfillments ? 0 : 6}>
+            <Box paddingX={6} paddingTop={4} paddingBottom={showCanceledFulfillments ? 4 : 6}>
               <Button
                 variant="tertiary"
                 onClick={() => setShowCanceledFulfillments(current => !current)}
@@ -232,9 +264,15 @@ export const OrderDetailsItemsSection = ({
           aria-expanded={expandedLineId !== null}
           aria-controls={expandedLineId ? EXPANDED_PANEL_ID : undefined}
         >
-          <Text size={3} color="default2">
-            <FormattedMessage {...messages.matrixHelper} />
-          </Text>
+          <Box display="flex" alignItems="center" justifyContent="space-between" gap={4}>
+            <Text size={3} color="default2">
+              <FormattedMessage {...messages.matrixHelper} />
+            </Text>
+            <OrderLineMatrixNeedsActionSwitch
+              pressed={needsActionOnly}
+              onPressedChange={handleNeedsActionOnlyChange}
+            />
+          </Box>
           <div className={styles.srOnly} aria-live="polite">
             {expandedLifecycle && (
               <FormattedMessage
@@ -251,6 +289,7 @@ export const OrderDetailsItemsSection = ({
             onToggleExpand={handleToggleExpand}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}
+            needsActionOnly={needsActionOnly}
           />
           {expandedLifecycle && (
             <OrderLineExpandedPanel

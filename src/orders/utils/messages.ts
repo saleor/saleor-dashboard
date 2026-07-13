@@ -13,4 +13,14 @@ export const messages = defineMessages({
     id: "iWbl/h",
     defaultMessage: "Partially returned",
   },
+  refundDraft: {
+    id: "8K3PGM",
+    defaultMessage: "Refund draft",
+    description: "line rollup status when a transaction refund draft exists",
+  },
+  refundFailed: {
+    id: "YJlipb",
+    defaultMessage: "Refund failed",
+    description: "line rollup status when a transaction refund failed",
+  },
 });

@@ -5,6 +5,7 @@ import {
   OrderEventsEnum,
   OrderGrantedRefundStatusEnum,
   OrderStatus,
+  TransactionEventTypeEnum,
 } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
@@ -399,6 +400,70 @@ describe("buildOrderLineLifecycle", () => {
 
     // Assert
     expect(lifecycle.grantedRefund).toBe(2);
+    expect(lifecycle.grantedRefundEntries).toHaveLength(1);
+    expect(lifecycle.grantedRefundEntries[0]).toMatchObject({
+      grantedRefundId: "granted-refund-1",
+      status: OrderGrantedRefundStatusEnum.SUCCESS,
+      quantity: 2,
+    });
+  });
+
+  it("includes latest refund failure message on granted refund entries", () => {
+    // Arrange
+    const line = OrderFixture.fulfilled().build().lines[0];
+    const order = createOrderWithFulfillments({
+      grantedRefunds: [
+        {
+          __typename: "OrderGrantedRefund",
+          id: "granted-refund-failed",
+          status: OrderGrantedRefundStatusEnum.FAILURE,
+          amount: { __typename: "Money", amount: 45, currency: "USD" },
+          reason: "Damaged Item",
+          createdAt: "2026-07-13T12:45:00Z",
+          reasonReference: null,
+          user: null,
+          app: null,
+          shippingCostsIncluded: false,
+          transactionEvents: [
+            {
+              __typename: "TransactionEvent",
+              id: "event-failure",
+              type: TransactionEventTypeEnum.REFUND_FAILURE,
+              message: "Refund amount exceeds captured amount",
+              createdAt: "2026-07-13T12:46:00Z",
+              pspReference: "psp-1",
+              amount: { __typename: "Money", amount: 45, currency: "USD" },
+              externalUrl: "",
+              reasonReference: null,
+            },
+          ],
+          lines: [
+            {
+              __typename: "OrderGrantedRefundLine",
+              id: "granted-line-failed",
+              quantity: 1,
+              reason: null,
+              reasonReference: null,
+              orderLine: {
+                __typename: "OrderLine",
+                id: line.id,
+                productName: line.productName,
+                variantName: line.variant?.name ?? "",
+                thumbnail: null,
+              },
+            },
+          ],
+        },
+      ],
+    });
+
+    // Act
+    const [lifecycle] = buildOrderLineLifecycle(order);
+
+    // Assert
+    expect(lifecycle.grantedRefundEntries[0].failureMessage).toBe(
+      "Refund amount exceeds captured amount",
+    );
   });
 
   it("sums allocation quantities for allocated column", () => {

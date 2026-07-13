@@ -10,11 +10,12 @@ import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefund
 import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
 import { useMemo } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
+import { orderFulfillmentCancelDialogMessages } from "../OrderFulfillmentCancelDialog/messages";
 import { OrderLineGroupEnd } from "../OrderLineGroupBottomSeparator/OrderLineGroupBottomSeparator";
 import { ReasonDisplay } from "../ReasonDisplay/ReasonDisplay";
 import { ActionButtons } from "./ActionButtons";
@@ -154,7 +155,11 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                         onClick={onOrderFulfillmentCancel}
                         data-test-id="cancel-fulfillment"
                       >
-                        <Text>Cancel fulfillment</Text>
+                        <Text color="critical1">
+                          <FormattedMessage
+                            {...orderFulfillmentCancelDialogMessages.confirmButton}
+                          />
+                        </Text>
                       </List.Item>
                     </Dropdown.Item>
                   </List>

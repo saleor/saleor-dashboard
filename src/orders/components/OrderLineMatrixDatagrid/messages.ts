@@ -42,13 +42,24 @@ export const messages = defineMessages({
     defaultMessage: "Returned",
   },
   refunded: {
-    id: "Gs86nL",
-    defaultMessage: "Refunded",
+    id: "fZTOwM",
+    defaultMessage: "Fulfillment refund",
+    description: "quantity refunded via fulfillment records in line matrix",
   },
   refundedTooltip: {
-    id: "9zg27i",
-    defaultMessage:
-      "Fulfillment refunds are shown here. Transaction-based granted refunds appear in the expanded line details.",
+    id: "iJ2smT",
+    defaultMessage: "Units refunded through fulfillment records (refund/return fulfillments).",
+    description: "fulfillment refund column tooltip in line matrix",
+  },
+  grantedRefund: {
+    id: "5oaFMX",
+    defaultMessage: "Transaction refund",
+    description: "granted transaction refund quantity in line matrix",
+  },
+  grantedRefundTooltip: {
+    id: "1qmu7d",
+    defaultMessage: "Units covered by granted transaction refunds for this line.",
+    description: "transaction refund column tooltip in line matrix",
   },
   price: {
     id: "ITSq4J",
@@ -75,5 +86,55 @@ export const messages = defineMessages({
   showMetadata: {
     id: "E/yzIO",
     defaultMessage: "View metadata",
+  },
+  needsAction: {
+    id: "GTiyDh",
+    defaultMessage: "Needs action",
+    description: "filter matrix rows that need merchant attention",
+  },
+  needsActionFilterAriaLabel: {
+    id: "UZjdjP",
+    defaultMessage: "Highlight lines that need action",
+    description: "aria label for needs action toggle above line matrix",
+  },
+  needsActionHelpAriaLabel: {
+    id: "CtoFry",
+    defaultMessage: "Learn what needs action includes",
+    description: "aria label for needs action help icon",
+  },
+  needsActionHelpTitle: {
+    id: "t53iRo",
+    defaultMessage: "Needs action",
+    description: "title for needs action filter help tooltip",
+  },
+  needsActionHelpHighlightedLabel: {
+    id: "xXlmYh",
+    defaultMessage: "Highlighted lines",
+    description: "section label for lines included in needs action filter",
+  },
+  needsActionHelpPendingApproval: {
+    id: "1g1Hsn",
+    defaultMessage: "Pending shipment approval",
+    description: "needs action help bullet for pending approval",
+  },
+  needsActionHelpDraftRefund: {
+    id: "tcioFM",
+    defaultMessage: "Draft refunds not sent",
+    description: "needs action help bullet for draft refunds",
+  },
+  needsActionHelpFailedRefund: {
+    id: "34P9Lf",
+    defaultMessage: "Failed refund transfers",
+    description: "needs action help bullet for failed refunds",
+  },
+  needsActionHelpOtherLinesLabel: {
+    id: "j9r+EY",
+    defaultMessage: "Other lines",
+    description: "section label for non-highlighted lines in needs action tooltip",
+  },
+  needsActionHelpOtherLinesBody: {
+    id: "gpda9P",
+    defaultMessage: "Stay visible in the list but appear faded.",
+    description: "explains muted rows when needs action filter is on",
   },
 });

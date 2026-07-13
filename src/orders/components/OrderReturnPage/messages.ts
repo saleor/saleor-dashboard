@@ -11,4 +11,10 @@ export const orderReturnMessages = defineMessages({
     defaultMessage: "Return & replace products",
     description: "page header",
   },
+  prefilledLineHint: {
+    id: "jpxGC8",
+    defaultMessage:
+      "Returning {productName}. Quantities are prefilled for this line only — adjust amounts before submitting.",
+    description: "hint when return page opened from line matrix with lineId",
+  },
 });

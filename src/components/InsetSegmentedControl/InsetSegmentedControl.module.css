@@ -1,0 +1,39 @@
+.track {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: var(--mu-colors-background-default2);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 9999px;
+}
+
+.trackButton {
+  height: var(--mu-spacing-8);
+}
+
+.segment {
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  background: transparent;
+  font: inherit;
+}
+
+.segmentFill {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+
+.segmentActive {
+  background-color: var(--mu-colors-background-default1);
+  border-color: var(--mu-colors-border-default1);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+.segment:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
