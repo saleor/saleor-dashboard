@@ -286,6 +286,21 @@ export const withOrderLineFocus = (
   lineId: lineId ?? undefined,
 });
 
+type OrderFulfillmentDialogAction = Extract<
+  OrderUrlDialog,
+  "approve-fulfillment" | "cancel-fulfillment" | "edit-fulfillment"
+>;
+
+export const withOrderFulfillmentDialog = (
+  params: OrderUrlQueryParams | undefined,
+  action: OrderFulfillmentDialogAction,
+  fulfillmentId: string,
+): OrderUrlQueryParams => ({
+  ...params,
+  action,
+  id: fulfillmentId,
+});
+
 type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
 type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
 export type OrderFulfillUrlDialog = "change-warehouse";

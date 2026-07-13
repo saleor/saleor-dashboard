@@ -66,6 +66,7 @@ import {
   orderUrl,
   type OrderUrlDialog,
   type OrderUrlQueryParams,
+  withOrderFulfillmentDialog,
   withOrderLineFocus,
 } from "../../../urls";
 
@@ -262,26 +263,17 @@ export const OrderNormalDetails = ({
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "approve-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "approve-fulfillment", fulfillmentId)),
           )
         }
         onFulfillmentCancel={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "cancel-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "cancel-fulfillment", fulfillmentId)),
           )
         }
         onFulfillmentTrackingNumberUpdate={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "edit-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
           )
         }
         onPaymentCapture={() => openModal("capture")}
