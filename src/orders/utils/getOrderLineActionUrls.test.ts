@@ -1,14 +1,41 @@
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
 import {
+  getOrderLineFulfillUrl,
   getOrderLineRefundUrl,
   getOrderLineReturnUrl,
+  hasLineFulfillableItems,
   hasLineReturnableItems,
 } from "./getOrderLineActionUrls";
 
 describe("getOrderLineActionUrls", () => {
   const order = OrderFixture.fulfilled().build();
   const lineId = order.lines[0].id;
+
+  it("builds fulfill url with lineId query param", () => {
+    // Arrange // Act
+    const url = getOrderLineFulfillUrl(order.id, lineId);
+
+    // Assert
+    expect(url).toContain(`/orders/${encodeURIComponent(order.id)}/fulfill`);
+    expect(url).toContain(`lineId=${encodeURIComponent(lineId)}`);
+  });
+
+  it("detects fulfillable lines with remaining quantity", () => {
+    // Arrange
+    const fulfilledOrder = OrderFixture.fulfilled().build();
+    const lineId = fulfilledOrder.lines[0].id;
+    const unfulfilledOrder = {
+      ...fulfilledOrder,
+      lines: fulfilledOrder.lines.map(line =>
+        line.id === lineId ? { ...line, quantityToFulfill: 2 } : line,
+      ),
+    };
+
+    // Act // Assert
+    expect(hasLineFulfillableItems(unfulfilledOrder, lineId)).toBe(true);
+    expect(hasLineFulfillableItems(fulfilledOrder, lineId)).toBe(false);
+  });
 
   it("builds return url with lineId query param", () => {
     // Arrange // Act

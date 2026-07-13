@@ -405,7 +405,87 @@ describe("buildOrderLineLifecycle", () => {
       grantedRefundId: "granted-refund-1",
       status: OrderGrantedRefundStatusEnum.SUCCESS,
       quantity: 2,
+      shippingCostsIncluded: false,
     });
+  });
+
+  it("allocates granted refund amount proportionally per line", () => {
+    // Arrange
+    const baseOrder = OrderFixture.fulfilled().build();
+    const [firstLine, ...restLines] = baseOrder.lines;
+    const firstLinePriced = {
+      ...firstLine,
+      unitPrice: {
+        ...firstLine.unitPrice,
+        gross: { ...firstLine.unitPrice.gross, amount: 40 },
+      },
+    };
+    const secondLine = {
+      ...firstLinePriced,
+      id: "line-2",
+      unitPrice: {
+        ...firstLinePriced.unitPrice,
+        gross: { ...firstLinePriced.unitPrice.gross, amount: 20 },
+      },
+    };
+    const order = {
+      ...baseOrder,
+      lines: [firstLinePriced, secondLine, ...restLines.slice(1)],
+      grantedRefunds: [
+        {
+          __typename: "OrderGrantedRefund" as const,
+          id: "granted-refund-split",
+          status: OrderGrantedRefundStatusEnum.SUCCESS,
+          amount: { __typename: "Money" as const, amount: 100, currency: "USD" },
+          reason: "Split refund",
+          createdAt: "2026-07-13T12:00:00Z",
+          reasonReference: null,
+          user: null,
+          app: null,
+          shippingCostsIncluded: false,
+          transactionEvents: [],
+          lines: [
+            {
+              __typename: "OrderGrantedRefundLine" as const,
+              id: "granted-line-1",
+              quantity: 2,
+              reason: null,
+              reasonReference: null,
+              orderLine: {
+                __typename: "OrderLine" as const,
+                id: firstLinePriced.id,
+                productName: firstLinePriced.productName,
+                variantName: firstLinePriced.variant?.name ?? "",
+                thumbnail: null,
+              },
+            },
+            {
+              __typename: "OrderGrantedRefundLine" as const,
+              id: "granted-line-2",
+              quantity: 1,
+              reason: null,
+              reasonReference: null,
+              orderLine: {
+                __typename: "OrderLine" as const,
+                id: secondLine.id,
+                productName: secondLine.productName,
+                variantName: secondLine.variant?.name ?? "",
+                thumbnail: null,
+              },
+            },
+          ],
+        },
+      ],
+    };
+
+    // Act
+    const lifecycles = buildOrderLineLifecycle(order);
+    const firstLifecycle = lifecycles.find(row => row.orderLineId === firstLinePriced.id);
+    const secondLifecycle = lifecycles.find(row => row.orderLineId === secondLine.id);
+
+    // Assert
+    expect(firstLifecycle?.grantedRefundEntries[0]?.amount.amount).toBe(80);
+    expect(secondLifecycle?.grantedRefundEntries[0]?.amount.amount).toBe(20);
   });
 
   it("includes latest refund failure message on granted refund entries", () => {

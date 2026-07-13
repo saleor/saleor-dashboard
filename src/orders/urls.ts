@@ -266,6 +266,8 @@ export type OrderUrlDialog =
   | "view-order-metadata"
   | "view-fulfillment-metadata";
 
+type OrderDetailsFocusFilters = Filters<"lineId">;
+
 interface TransactionAction {
   action: "transaction-action" | "transaction-charge-action";
   id: string;
@@ -273,8 +275,16 @@ interface TransactionAction {
 }
 
 export type OrderUrlQueryParams =
-  | (Dialog<OrderUrlDialog> & SingleAction & { type?: never })
-  | TransactionAction;
+  | (Dialog<OrderUrlDialog> & SingleAction & OrderDetailsFocusFilters & { type?: never })
+  | (TransactionAction & OrderDetailsFocusFilters);
+
+export const withOrderLineFocus = (
+  params: OrderUrlQueryParams | undefined,
+  lineId: string | null | undefined,
+): OrderUrlQueryParams => ({
+  ...params,
+  lineId: lineId ?? undefined,
+});
 
 type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
 type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;

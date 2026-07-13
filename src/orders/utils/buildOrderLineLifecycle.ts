@@ -6,7 +6,10 @@ import {
   type OrderGrantedRefundStatusEnum,
   type OrderLineFragment,
 } from "@dashboard/graphql";
+import { type LineReasonDisplay } from "@dashboard/orders/components/OrderDetailsDatagrid/datagrid";
 import { getGrantedRefundFailureMessage } from "@dashboard/orders/utils/getGrantedRefundFailureMessage";
+import { getGrantedRefundLineAmount } from "@dashboard/orders/utils/getGrantedRefundLineAmount";
+import { getOrderLineReasonDisplay } from "@dashboard/orders/utils/getOrderLineReasonDisplay";
 
 export type LineShipmentEntry = {
   fulfillmentId: string;
@@ -25,6 +28,7 @@ export type LineGrantedRefundEntry = {
   status: OrderGrantedRefundStatusEnum;
   quantity: number;
   amount: { amount: number; currency: string };
+  shippingCostsIncluded: boolean;
   created: string;
   reason?: string | null;
   reasonReference?: string | null;
@@ -43,7 +47,10 @@ export type OrderLineLifecycle = {
   refundedFulfillment: number;
   replaced: number;
   grantedRefund: number;
+  grantedRefundAmount: { amount: number; currency: string } | null;
+  refundedFulfillmentAmount: { amount: number; currency: string } | null;
   grantedRefundEntries: LineGrantedRefundEntry[];
+  reasonDisplay: LineReasonDisplay | null;
   shipments: LineShipmentEntry[];
 };
 
@@ -98,6 +105,7 @@ const getAllocatedQuantity = (line: OrderLineFragment): number =>
 
 const buildLineGrantedRefundEntries = (
   orderLineId: string,
+  orderLines: OrderDetailsFragment["lines"],
   grantedRefunds: OrderDetailsFragment["grantedRefunds"],
 ): LineGrantedRefundEntry[] => {
   const entries: LineGrantedRefundEntry[] = [];
@@ -112,10 +120,13 @@ const buildLineGrantedRefundEntries = (
         grantedRefundId: grantedRefund.id,
         status: grantedRefund.status,
         quantity: grantedLine.quantity,
-        amount: {
-          amount: grantedRefund.amount.amount,
-          currency: grantedRefund.amount.currency,
-        },
+        amount: getGrantedRefundLineAmount({
+          grantedRefund,
+          orderLineId,
+          grantedLineQuantity: grantedLine.quantity,
+          orderLines,
+        }),
+        shippingCostsIncluded: grantedRefund.shippingCostsIncluded,
         created: grantedRefund.createdAt,
         reason: grantedLine.reason ?? grantedRefund.reason,
         reasonReference: grantedLine.reasonReference?.title ?? grantedRefund.reasonReference?.title,
@@ -129,6 +140,67 @@ const buildLineGrantedRefundEntries = (
 
 const getGrantedRefundQuantity = (entries: LineGrantedRefundEntry[]): number =>
   entries.reduce((sum, entry) => sum + entry.quantity, 0);
+
+const sumGrantedRefundAmount = (
+  entries: LineGrantedRefundEntry[],
+): { amount: number; currency: string } | null => {
+  if (entries.length === 0) {
+    return null;
+  }
+
+  const amount = entries.reduce((sum, entry) => sum + entry.amount.amount, 0);
+
+  if (amount <= 0) {
+    return null;
+  }
+
+  return {
+    amount,
+    currency: entries[0].amount.currency,
+  };
+};
+
+const getRefundedFulfillmentAmount = (
+  line: OrderLineFragment,
+  order: OrderDetailsFragment,
+): { amount: number; currency: string } | null => {
+  const unitAmount = line.unitPrice.gross.amount;
+  const currency = line.unitPrice.gross.currency;
+
+  if (unitAmount <= 0) {
+    return null;
+  }
+
+  const refundedQuantity =
+    order.fulfillments?.reduce((sum, fulfillment) => {
+      if (
+        fulfillment.status !== FulfillmentStatus.REFUNDED &&
+        fulfillment.status !== FulfillmentStatus.REFUNDED_AND_RETURNED
+      ) {
+        return sum;
+      }
+
+      const lineQuantity =
+        fulfillment.lines?.reduce((lineSum, fulfillmentLine) => {
+          if (fulfillmentLine.orderLine?.id !== line.id) {
+            return lineSum;
+          }
+
+          return lineSum + fulfillmentLine.quantity;
+        }, 0) ?? 0;
+
+      return sum + lineQuantity;
+    }, 0) ?? 0;
+
+  if (refundedQuantity <= 0) {
+    return null;
+  }
+
+  return {
+    amount: Math.round(unitAmount * refundedQuantity * 100) / 100,
+    currency,
+  };
+};
 
 const getFulfillmentComposedId = (orderNumber: string, fulfillmentOrder: number): string =>
   `${orderNumber}-${fulfillmentOrder}`;
@@ -258,7 +330,11 @@ const buildLineLifecycle = (
 
   shipments.sort((a, b) => a.fulfillmentOrder - b.fulfillmentOrder);
 
-  const grantedRefundEntries = buildLineGrantedRefundEntries(line.id, order.grantedRefunds);
+  const grantedRefundEntries = buildLineGrantedRefundEntries(
+    line.id,
+    order.lines,
+    order.grantedRefunds,
+  );
 
   return {
     orderLineId: line.id,
@@ -272,7 +348,10 @@ const buildLineLifecycle = (
     refundedFulfillment: buckets.refundedFulfillment,
     replaced: buckets.replaced,
     grantedRefund: getGrantedRefundQuantity(grantedRefundEntries),
+    grantedRefundAmount: sumGrantedRefundAmount(grantedRefundEntries),
+    refundedFulfillmentAmount: getRefundedFulfillmentAmount(line, order),
     grantedRefundEntries,
+    reasonDisplay: getOrderLineReasonDisplay(order, line.id),
     shipments,
   };
 };

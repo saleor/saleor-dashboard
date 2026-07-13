@@ -16,6 +16,7 @@ describe("useOrderDetailsViewMode", () => {
 
     // Assert
     expect(result.current.viewMode).toBe("matrix");
+    expect(result.current.showCanceledFulfillments).toBe(false);
   });
 
   it("persists view mode in list settings", () => {
@@ -33,6 +34,23 @@ describe("useOrderDetailsViewMode", () => {
     const stored = JSON.parse(window.localStorage.getItem(listSettingsStorageKey) ?? "{}");
 
     expect(stored[ListViews.ORDER_DETAILS_LIST].viewMode).toBe("matrix");
+  });
+
+  it("persists canceled fulfillments toggle in list settings", () => {
+    // Arrange
+    const { result } = renderHook(() => useOrderDetailsViewMode(), { wrapper: Wrapper });
+
+    // Act
+    act(() => {
+      result.current.setShowCanceledFulfillments(true);
+    });
+
+    // Assert
+    expect(result.current.showCanceledFulfillments).toBe(true);
+
+    const stored = JSON.parse(window.localStorage.getItem(listSettingsStorageKey) ?? "{}");
+
+    expect(stored[ListViews.ORDER_DETAILS_LIST].showCanceledFulfillments).toBe(true);
   });
 
   it("migrates legacy localStorage key into list settings", async () => {

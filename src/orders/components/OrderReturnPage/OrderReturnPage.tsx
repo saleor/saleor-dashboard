@@ -15,6 +15,7 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
+import { getOrderLineDisplayName } from "@dashboard/orders/utils/data";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -71,9 +72,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
   const prefilledLine = prefilledOrderLineId
     ? order?.lines?.find(line => line.id === prefilledOrderLineId)
     : undefined;
-  const prefilledProductName = prefilledLine
-    ? [prefilledLine.productName, prefilledLine.variant?.name].filter(Boolean).join(" / ")
-    : "";
+  const prefilledProductName = prefilledLine ? getOrderLineDisplayName(prefilledLine) : "";
 
   return (
     <OrderRefundForm order={order} prefilledOrderLineId={prefilledOrderLineId} onSubmit={onSubmit}>

@@ -59,12 +59,14 @@ import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfill
 import { OrderMarkAsPaidDialog } from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
+  orderDetailsUrl,
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
   orderReturnUrl,
   orderUrl,
   type OrderUrlDialog,
   type OrderUrlQueryParams,
+  withOrderLineFocus,
 } from "../../../urls";
 
 interface OrderNormalDetailsProps {
@@ -305,6 +307,12 @@ export const OrderNormalDetails = ({
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
         onRefundAdd={() => openModal("add-refund")}
+        focusedLineId={params.lineId}
+        onFocusedLineChange={lineId =>
+          navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
+            replace: true,
+          })
+        }
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}

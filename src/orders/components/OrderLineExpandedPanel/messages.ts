@@ -33,6 +33,11 @@ export const messages = defineMessages({
     defaultMessage: "Refund total {amount}",
     description: "granted refund amount in line expanded panel",
   },
+  refundIncludesShipping: {
+    id: "LBu3Q2",
+    defaultMessage: "(incl. shipping)",
+    description: "note when granted refund amount includes shipping costs",
+  },
   editRefund: {
     id: "xErmO2",
     defaultMessage: "Edit & transfer",
@@ -47,5 +52,20 @@ export const messages = defineMessages({
     id: "kThWsq",
     defaultMessage: "Refunded {amount}",
     description: "fulfillment refund amount in expanded shipment row",
+  },
+  fulfillmentMetadata: {
+    id: "Sbz/xB",
+    defaultMessage: "View fulfillment metadata",
+    description: "open fulfillment metadata from line expanded panel",
+  },
+  showCanceledShipments: {
+    id: "xWtZEw",
+    defaultMessage: "Show {count, plural, one {# canceled shipment} other {# canceled shipments}}",
+    description: "expand canceled shipments in line expanded panel",
+  },
+  hideCanceledShipments: {
+    id: "kHU+p8",
+    defaultMessage: "Hide canceled shipments",
+    description: "collapse canceled shipments in line expanded panel",
   },
 });

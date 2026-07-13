@@ -18,8 +18,10 @@ import {
   isLineDiscounted,
   isPriceBreakdownColumn,
 } from "@dashboard/orders/components/OrderDetailsDatagrid/datagrid";
+import { columnsMessages } from "@dashboard/orders/components/OrderDetailsDatagrid/messages";
 import { lineMatrixStatusCell } from "@dashboard/orders/components/OrderLineMatrixDatagrid/LineMatrixStatusCell";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
+import { formatRefundColumnValue } from "@dashboard/orders/utils/formatRefundColumnValue";
 import {
   getOrderLineRollupStatus,
   getOrderLineRollupStatusLabel,
@@ -39,11 +41,13 @@ const QUANTITY_COLUMN_IDS = new Set([
   "returned",
   "refunded",
   "grantedRefund",
+  "replaced",
 ]);
 
 export const STATUS_COLUMN_ID = "status";
+export const PRODUCT_COLUMN_ID = "product";
 
-export const PINNED_MATRIX_COLUMN_IDS = [STATUS_COLUMN_ID];
+export const PINNED_MATRIX_COLUMN_IDS = [STATUS_COLUMN_ID, PRODUCT_COLUMN_ID];
 
 const isPinnedMatrixColumn = (columnId: string) => PINNED_MATRIX_COLUMN_IDS.includes(columnId);
 
@@ -55,9 +59,10 @@ export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableC
     disableReorder: true,
   },
   {
-    id: "product",
+    id: PRODUCT_COLUMN_ID,
     title: intl.formatMessage(messages.product),
     width: 280,
+    disableReorder: true,
   },
   {
     id: "sku",
@@ -118,6 +123,16 @@ export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableC
     id: "total",
     title: intl.formatMessage(messages.total),
     width: 130,
+  },
+  {
+    id: "replaced",
+    title: intl.formatMessage(messages.replaced),
+    width: 90,
+  },
+  {
+    id: "reason",
+    title: intl.formatMessage(columnsMessages.reason),
+    width: 200,
   },
 ];
 
@@ -241,9 +256,32 @@ export const createGetCellContent =
       case "returned":
         return withMutedStyle(readonlyTextCell(formatQuantity(rowData.returned), false));
       case "refunded":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.refundedFulfillment), false));
+        return withMutedStyle(
+          readonlyTextCell(
+            formatRefundColumnValue(
+              rowData.refundedFulfillment,
+              rowData.refundedFulfillmentAmount,
+              locale,
+            ),
+            false,
+          ),
+        );
       case "grantedRefund":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.grantedRefund), false));
+        return withMutedStyle(
+          readonlyTextCell(
+            formatRefundColumnValue(rowData.grantedRefund, rowData.grantedRefundAmount, locale),
+            false,
+          ),
+        );
+      case "replaced":
+        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.replaced), false));
+      case "reason": {
+        const parts = [rowData.reasonDisplay?.reasonType, rowData.reasonDisplay?.reason].filter(
+          Boolean,
+        );
+
+        return withMutedStyle(readonlyTextCell(parts.join(" · ") || "—", false));
+      }
       case "price":
         if (isLineDiscounted(line)) {
           return withMutedStyle(
@@ -296,6 +334,10 @@ export const getMatrixColumnTooltipContent = (
   columnId: string | undefined,
   intl: IntlShape,
 ): string => {
+  if (columnId === STATUS_COLUMN_ID) {
+    return intl.formatMessage(messages.statusColumnTooltip);
+  }
+
   if (columnId === "refunded") {
     return intl.formatMessage(messages.refundedTooltip);
   }

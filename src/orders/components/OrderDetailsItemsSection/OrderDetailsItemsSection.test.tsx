@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
-import { WeightUnitsEnum } from "@dashboard/graphql";
+import { OrderGrantedRefundStatusEnum, WeightUnitsEnum } from "@dashboard/graphql";
 import { listSettingsStorageKey } from "@dashboard/hooks/useListSettings";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 import { ListViews } from "@dashboard/types";
@@ -101,7 +101,7 @@ describe("OrderDetailsItemsSection", () => {
     expect(screen.queryByTestId("fulfilled-order-section")).not.toBeInTheDocument();
     expect(
       screen.getByText(
-        "Quantities show fulfillment status per unit. Click a line's status to manage shipments.",
+        "Quantities show fulfillment status per unit. Click a line's status or row to manage shipments.",
       ),
     ).toBeInTheDocument();
   });
@@ -140,5 +140,53 @@ describe("OrderDetailsItemsSection", () => {
 
     // Assert
     expect(screen.getAllByTestId("fulfilled-order-section")).toHaveLength(2);
+  });
+
+  it("persists canceled fulfillments toggle across timeline and matrix views", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const orderWithCanceled = OrderFixture.fulfilled().withCanceledFulfillment().build();
+
+    renderSection({ order: orderWithCanceled });
+
+    // Act
+    await user.click(screen.getByTestId("order-items-view-timeline"));
+    await user.click(screen.getByTestId("toggle-canceled-fulfillments"));
+    await user.click(screen.getByTestId("order-items-view-matrix"));
+
+    // Assert
+    const stored = JSON.parse(window.localStorage.getItem(listSettingsStorageKey) ?? "{}");
+
+    expect(stored[ListViews.ORDER_DETAILS_LIST].showCanceledFulfillments).toBe(true);
+  });
+
+  it("shows order-level refund callout in matrix view", () => {
+    // Arrange
+    const orderWithOrderLevelRefund = {
+      ...OrderFixture.fulfilled().build(),
+      grantedRefunds: [
+        {
+          __typename: "OrderGrantedRefund" as const,
+          id: "refund-shipping",
+          status: OrderGrantedRefundStatusEnum.NONE,
+          amount: { __typename: "Money" as const, amount: 12, currency: "USD" },
+          reason: "Shipping adjustment",
+          createdAt: "2023-10-06T12:00:00Z",
+          reasonReference: null,
+          user: null,
+          app: null,
+          shippingCostsIncluded: true,
+          transactionEvents: [],
+          lines: [],
+        },
+      ],
+    };
+
+    // Act
+    renderSection({ order: orderWithOrderLevelRefund });
+
+    // Assert
+    expect(screen.getByTestId("order-level-refund-callout")).toBeInTheDocument();
+    expect(screen.getByText(/order-level refund needs attention/i)).toBeInTheDocument();
   });
 });

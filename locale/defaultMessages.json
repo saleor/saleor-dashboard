@@ -736,10 +736,6 @@
     "context": "sum of all granted refunds for an order",
     "string": "Granted refund"
   },
-  "1qmu7d": {
-    "context": "transaction refund column tooltip in line matrix",
-    "string": "Units covered by granted transaction refunds for this line."
-  },
   "1qukRr": {
     "context": "message when all selected variant combinations already exist",
     "string": "All selected combinations already exist as variants"
@@ -1458,6 +1454,10 @@
     "context": "acre-ft unit",
     "string": "acre-ft"
   },
+  "5YW/f6": {
+    "context": "fulfill a single order line from matrix row menu",
+    "string": "Fulfill this line"
+  },
   "5ZYUn5": {
     "context": "Filter and element text",
     "string": "And"
@@ -1893,6 +1893,10 @@
   "7ZKQU3": {
     "context": "no shipping method option",
     "string": "No shipping method"
+  },
+  "7az76v": {
+    "context": "tooltip for status column in line matrix",
+    "string": "Click to view shipments and refunds for this line."
   },
   "7bueG3": {
     "context": "export scope section header for gift cards",
@@ -4647,6 +4651,10 @@
     "context": "create attribute from product type, button",
     "string": "Create attribute"
   },
+  "LBu3Q2": {
+    "context": "note when granted refund amount includes shipping costs",
+    "string": "(incl. shipping)"
+  },
   "LCPfA9": {
     "string": "Open this voucher in GraphiQL"
   },
@@ -5576,6 +5584,10 @@
     "context": "check to require numeric attribute unit",
     "string": "Select unit"
   },
+  "Piivpc": {
+    "context": "transaction refund column tooltip in line matrix",
+    "string": "Units and amount covered by granted transaction refunds for this line."
+  },
   "PilTI6": {
     "context": "issue gift card button label",
     "string": "Issue"
@@ -6161,6 +6173,10 @@
   "SZyphU": {
     "string": "Product type created"
   },
+  "Sbz/xB": {
+    "context": "open fulfillment metadata from line expanded panel",
+    "string": "View fulfillment metadata"
+  },
   "SceSNp": {
     "string": "Remove following permissions:"
   },
@@ -6232,6 +6248,10 @@
   "T6dXGG": {
     "context": "header",
     "string": "Create Variant"
+  },
+  "T7Dju4": {
+    "context": "replaced quantity column in line matrix",
+    "string": "Replaced"
   },
   "T83iU7": {
     "string": "Search categories..."
@@ -7023,6 +7043,10 @@
   "XDBeA+": {
     "context": "discount type",
     "string": "Fixed amount"
+  },
+  "XExNls": {
+    "context": "callout title for granted refunds not tied to a line",
+    "string": "{count, plural, one {# order-level refund needs attention} other {# order-level refunds need attention}}"
   },
   "XFErUZ": {
     "context": "Refund pending status",
@@ -8392,6 +8416,10 @@
     "context": "Health check showing variants with stock count",
     "string": "Variants with stock: {count}/{total}"
   },
+  "dLvcnv": {
+    "context": "button to open order-level granted refund editor",
+    "string": "Review refund"
+  },
   "dM86a2": {
     "string": "No categories found"
   },
@@ -8477,6 +8505,10 @@
   },
   "e0lt+l": {
     "string": "See documentation"
+  },
+  "e3NyeN": {
+    "context": "fulfill card title for a single line",
+    "string": "Item ready to ship"
   },
   "e4UtKH": {
     "context": "Transaction event status - failure",
@@ -9225,6 +9257,10 @@
     "context": "Checkbox label for scheduling availability for a future date",
     "string": "Schedule for later"
   },
+  "i4WCUJ": {
+    "context": "inline notice for order-level granted refunds in matrix view",
+    "string": "{amount} is not tied to a specific line{includesShipping, select, true { and includes shipping} other {}}."
+  },
   "i56GGQ": {
     "context": "order refund amount",
     "string": "Replaced Products Value"
@@ -9256,10 +9292,6 @@
   "iIPThY": {
     "context": "onboarding title",
     "string": "Let’s Get Started ({count}/{total})"
-  },
-  "iJ2smT": {
-    "context": "fulfillment refund column tooltip in line matrix",
-    "string": "Units refunded through fulfillment records (refund/return fulfillments)."
   },
   "iK8hZU": {
     "context": "activate app",
@@ -9314,6 +9346,10 @@
   "iWmfMe": {
     "context": "button",
     "string": "Create promotion"
+  },
+  "iWtHOU": {
+    "context": "subtitle when fulfill page opened for a single line from matrix",
+    "string": "Opened from the line matrix for {productName}. Adjust quantity or warehouse before submitting."
   },
   "iWyoZn": {
     "context": "dialog content",
@@ -9567,10 +9603,6 @@
     "context": "automatic completion cut-off date description",
     "string": "Only checkouts created on or after this date will be automatically completed. If not set, current time will be used. {link}"
   },
-  "jpxGC8": {
-    "context": "hint when return page opened from line matrix with lineId",
-    "string": "Returning {productName}. Quantities are prefilled for this line only — adjust amounts before submitting."
-  },
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
@@ -9712,6 +9744,10 @@
   "kGW52l": {
     "context": "aria label for rest of the world quick pick help tooltip",
     "string": "About Rest of the World"
+  },
+  "kHU+p8": {
+    "context": "collapse canceled shipments in line expanded panel",
+    "string": "Hide canceled shipments"
   },
   "kIcyUo": {
     "context": "column header",
@@ -9899,6 +9935,10 @@
   "l2oVCF": {
     "context": "attributes section name",
     "string": "Attributes"
+  },
+  "l3LUAN": {
+    "context": "inline notice when multiple order-level granted refunds need attention",
+    "string": "They are not tied to specific order lines."
   },
   "l3iOju": {
     "context": "transaction event type, transaction was refunded to client",
@@ -10105,6 +10145,10 @@
   "lz7o8y": {
     "context": "tooltip when generate button is disabled because over variant limit",
     "string": "Cannot create more than {limit} variants at once"
+  },
+  "lzE5k8": {
+    "context": "hint when return page opened from line matrix with lineId",
+    "string": "Opened from the line matrix for {productName}. Quantities are prefilled — adjust before submitting."
   },
   "lzdvwp": {
     "context": "field is optional",
@@ -10530,9 +10574,6 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
-  "oB4Eq3": {
-    "string": "Quantities show fulfillment status per unit. Click a line's status to manage shipments."
-  },
   "oEFc87": {
     "context": "Warning when no shipping zones configured",
     "string": "No shipping zones"
@@ -10791,6 +10832,10 @@
   "pURrk1": {
     "context": "order status",
     "string": "Status"
+  },
+  "pV9VOI": {
+    "context": "fulfillment refund column tooltip in line matrix",
+    "string": "Units refunded through fulfillment records. Amount is estimated from the line unit price."
   },
   "pVFoOk": {
     "string": "Are you sure you want to delete {collectionName}?"
@@ -11827,6 +11872,9 @@
   "uOC/uQ": {
     "string": "Image updated"
   },
+  "uPg2BK": {
+    "string": "Quantities show fulfillment status per unit. Click a line's status or row to manage shipments."
+  },
   "uQNm59": {
     "context": "add header,button",
     "string": "Add custom request header"
@@ -12591,6 +12639,10 @@
   "xVn5B0": {
     "context": "added new attribute value",
     "string": "Added new value"
+  },
+  "xWtZEw": {
+    "context": "expand canceled shipments in line expanded panel",
+    "string": "Show {count, plural, one {# canceled shipment} other {# canceled shipments}}"
   },
   "xXlmYh": {
     "context": "section label for lines included in needs action filter",

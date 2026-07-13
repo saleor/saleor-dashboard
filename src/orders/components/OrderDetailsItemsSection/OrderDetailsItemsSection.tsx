@@ -19,15 +19,18 @@ import { OrderUnfulfilledProductsCard } from "@dashboard/orders/components/Order
 import { useOrderDetailsViewMode } from "@dashboard/orders/hooks/useOrderDetailsViewMode";
 import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";
 import { buildOrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
+import { getOrderLineDisplayName } from "@dashboard/orders/utils/data";
+import { getOrderLevelGrantedRefundsNeedingAttention } from "@dashboard/orders/utils/getOrderLevelGrantedRefunds";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type OrderDetailsViewMode } from "@dashboard/types";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { History, PackageIcon, Rows3, Undo2 } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import styles from "./OrderDetailsItemsSection.module.css";
+import { OrderLevelRefundCallout } from "./OrderLevelRefundCallout";
 
 const EXPANDED_PANEL_ID = "order-line-expanded-panel";
 
@@ -45,6 +48,8 @@ interface OrderDetailsItemsSectionProps {
   onOrderLineShowMetadata: (id: string) => void;
   onFulfillmentShowMetadata: (id: string) => void;
   onShowLinePriceBreakdown?: (lineId: string) => void;
+  focusedLineId?: string;
+  onFocusedLineChange?: (lineId: string | null) => void;
 }
 
 export const OrderDetailsItemsSection = ({
@@ -61,12 +66,14 @@ export const OrderDetailsItemsSection = ({
   onOrderLineShowMetadata,
   onFulfillmentShowMetadata,
   onShowLinePriceBreakdown,
+  focusedLineId,
+  onFocusedLineChange,
 }: OrderDetailsItemsSectionProps) => {
   const intl = useIntl();
-  const { viewMode, setViewMode } = useOrderDetailsViewMode();
+  const { viewMode, setViewMode, showCanceledFulfillments, setShowCanceledFulfillments } =
+    useOrderDetailsViewMode();
   const [expandedLineId, setExpandedLineId] = useState<string | null>(null);
   const [needsActionOnly, setNeedsActionOnly] = useState(false);
-  const [showCanceledFulfillments, setShowCanceledFulfillments] = useState(false);
   const unfulfilled = useMemo(
     () => (order.lines || []).filter(line => line.quantityToFulfill > 0),
     [order.lines],
@@ -84,11 +91,16 @@ export const OrderDetailsItemsSection = ({
     };
   }, [order.fulfillments]);
   const lifecycleRows = useMemo(() => buildOrderLineLifecycle(order), [order]);
+  const orderLevelRefunds = useMemo(
+    () => getOrderLevelGrantedRefundsNeedingAttention(order),
+    [order],
+  );
   const expandedLifecycle = lifecycleRows.find(row => row.orderLineId === expandedLineId);
   const expandedProductName = expandedLifecycle
-    ? [expandedLifecycle.orderLine.productName, expandedLifecycle.orderLine.variant?.name]
-        .filter(Boolean)
-        .join(" / ")
+    ? getOrderLineDisplayName({
+        productName: expandedLifecycle.orderLine.productName,
+        variant: expandedLifecycle.orderLine.variant,
+      })
     : "";
   const hasItemsToFulfill = lifecycleRows.some(row => row.toFulfill > 0);
   const canReturn = hasAnyItemsReplaceable(order);
@@ -97,10 +109,34 @@ export const OrderDetailsItemsSection = ({
     (mode: OrderDetailsViewMode) => {
       setViewMode(mode);
       setExpandedLineId(null);
+      onFocusedLineChange?.(null);
       setNeedsActionOnly(false);
     },
-    [setViewMode],
+    [onFocusedLineChange, setViewMode],
   );
+
+  useEffect(() => {
+    if (!onFocusedLineChange) {
+      return;
+    }
+
+    if (!focusedLineId) {
+      setExpandedLineId(null);
+
+      return;
+    }
+
+    const lineExists = lifecycleRows.some(row => row.orderLineId === focusedLineId);
+
+    if (!lineExists) {
+      onFocusedLineChange?.(null);
+
+      return;
+    }
+
+    setViewMode("matrix");
+    setExpandedLineId(focusedLineId);
+  }, [focusedLineId, lifecycleRows, onFocusedLineChange, setViewMode]);
 
   const viewModeOptions = useMemo(
     (): InsetSegmentedControlOption<OrderDetailsViewMode>[] => [
@@ -132,9 +168,15 @@ export const OrderDetailsItemsSection = ({
     setNeedsActionOnly(value);
   }, []);
 
-  const handleToggleExpand = useCallback((lineId: string) => {
-    setExpandedLineId(current => (current === lineId ? null : lineId));
-  }, []);
+  const handleToggleExpand = useCallback(
+    (lineId: string) => {
+      const nextLineId = expandedLineId === lineId ? null : lineId;
+
+      setExpandedLineId(nextLineId);
+      onFocusedLineChange?.(nextLineId);
+    },
+    [expandedLineId, onFocusedLineChange],
+  );
 
   const renderFulfillmentCard = (
     fulfillment: NonNullable<OrderDetailsFragment["fulfillments"]>[number],
@@ -240,7 +282,7 @@ export const OrderDetailsItemsSection = ({
             <Box paddingX={6} paddingTop={4} paddingBottom={showCanceledFulfillments ? 4 : 6}>
               <Button
                 variant="tertiary"
-                onClick={() => setShowCanceledFulfillments(current => !current)}
+                onClick={() => setShowCanceledFulfillments(!showCanceledFulfillments)}
                 data-test-id="toggle-canceled-fulfillments"
               >
                 <FormattedMessage
@@ -266,6 +308,7 @@ export const OrderDetailsItemsSection = ({
           aria-expanded={expandedLineId !== null}
           aria-controls={expandedLineId ? EXPANDED_PANEL_ID : undefined}
         >
+          <OrderLevelRefundCallout orderId={order.id} refunds={orderLevelRefunds} />
           <Box display="flex" alignItems="center" justifyContent="space-between" gap={4}>
             <Text size={3} color="default2">
               <FormattedMessage {...messages.matrixHelper} />
@@ -302,6 +345,9 @@ export const OrderDetailsItemsSection = ({
               onOrderFulfillmentApprove={onFulfillmentApprove}
               onOrderFulfillmentCancel={onFulfillmentCancel}
               onTrackingCodeAdd={onFulfillmentTrackingNumberUpdate}
+              onFulfillmentShowMetadata={onFulfillmentShowMetadata}
+              showCanceledShipments={showCanceledFulfillments}
+              onShowCanceledShipmentsChange={setShowCanceledFulfillments}
             />
           )}
         </Box>

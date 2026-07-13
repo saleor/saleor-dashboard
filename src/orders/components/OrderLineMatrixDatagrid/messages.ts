@@ -47,8 +47,9 @@ export const messages = defineMessages({
     description: "quantity refunded via fulfillment records in line matrix",
   },
   refundedTooltip: {
-    id: "iJ2smT",
-    defaultMessage: "Units refunded through fulfillment records (refund/return fulfillments).",
+    id: "pV9VOI",
+    defaultMessage:
+      "Units refunded through fulfillment records. Amount is estimated from the line unit price.",
     description: "fulfillment refund column tooltip in line matrix",
   },
   grantedRefund: {
@@ -57,9 +58,14 @@ export const messages = defineMessages({
     description: "granted transaction refund quantity in line matrix",
   },
   grantedRefundTooltip: {
-    id: "1qmu7d",
-    defaultMessage: "Units covered by granted transaction refunds for this line.",
+    id: "Piivpc",
+    defaultMessage: "Units and amount covered by granted transaction refunds for this line.",
     description: "transaction refund column tooltip in line matrix",
+  },
+  statusColumnTooltip: {
+    id: "7az76v",
+    defaultMessage: "Click to view shipments and refunds for this line.",
+    description: "tooltip for status column in line matrix",
   },
   price: {
     id: "ITSq4J",
@@ -82,6 +88,16 @@ export const messages = defineMessages({
     id: "yiJ6EO",
     defaultMessage: "Refund this line",
     description: "refund a single order line from matrix row menu",
+  },
+  fulfillLine: {
+    id: "5YW/f6",
+    defaultMessage: "Fulfill this line",
+    description: "fulfill a single order line from matrix row menu",
+  },
+  replaced: {
+    id: "T7Dju4",
+    defaultMessage: "Replaced",
+    description: "replaced quantity column in line matrix",
   },
   showMetadata: {
     id: "E/yzIO",

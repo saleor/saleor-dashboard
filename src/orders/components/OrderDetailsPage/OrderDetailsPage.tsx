@@ -96,6 +96,8 @@ interface OrderDetailsPageProps {
   onAddManualTransaction: () => any;
   onRefundAdd: () => void;
   onSubmit?: (data: MetadataIdSchema) => SubmitPromise;
+  focusedLineId?: string;
+  onFocusedLineChange?: (lineId: string | null) => void;
 }
 
 const OrderDetailsPage = (props: OrderDetailsPageProps) => {
@@ -137,6 +139,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onMarkAsPaid,
     onRefundAdd,
     onSubmit,
+    focusedLineId,
+    onFocusedLineChange,
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
@@ -251,6 +255,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onFulfillmentShowMetadata={onFulfillmentShowMetadata}
             onShowLinePriceBreakdown={setPricingLineId}
+            focusedLineId={focusedLineId}
+            onFocusedLineChange={onFocusedLineChange}
           />
         ) : (
           <>

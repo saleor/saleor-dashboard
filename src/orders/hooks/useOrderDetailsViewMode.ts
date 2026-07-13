@@ -35,6 +35,7 @@ export const useOrderDetailsViewMode = () => {
   );
 
   const viewMode: OrderDetailsViewMode = orderDetailsSettings.viewMode ?? "timeline";
+  const showCanceledFulfillments = orderDetailsSettings.showCanceledFulfillments ?? false;
 
   const setViewMode = useCallback(
     (mode: OrderDetailsViewMode) => {
@@ -42,6 +43,12 @@ export const useOrderDetailsViewMode = () => {
     },
     [updateOrderDetailsSettings],
   );
+  const setShowCanceledFulfillments = useCallback(
+    (value: boolean) => {
+      updateOrderDetailsSettings("showCanceledFulfillments", value);
+    },
+    [updateOrderDetailsSettings],
+  );
 
-  return { viewMode, setViewMode };
+  return { viewMode, setViewMode, showCanceledFulfillments, setShowCanceledFulfillments };
 };

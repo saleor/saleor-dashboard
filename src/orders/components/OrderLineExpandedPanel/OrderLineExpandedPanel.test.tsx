@@ -58,6 +58,9 @@ const defaultProps = {
   onOrderFulfillmentApprove: jest.fn(),
   onOrderFulfillmentCancel: jest.fn(),
   onTrackingCodeAdd: jest.fn(),
+  onFulfillmentShowMetadata: jest.fn(),
+  showCanceledShipments: false,
+  onShowCanceledShipmentsChange: jest.fn(),
 };
 
 const renderPanel = (lifecycle = buildOrderLineLifecycle(createOrderWithDraftRefund())[0]) =>

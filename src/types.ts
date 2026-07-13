@@ -24,6 +24,7 @@ export interface ListSettings<TColumn extends string = string> {
 
 export interface OrderDetailsListSettings extends ListSettings {
   viewMode?: OrderDetailsViewMode;
+  showCanceledFulfillments?: boolean;
 }
 
 export enum ListViews {

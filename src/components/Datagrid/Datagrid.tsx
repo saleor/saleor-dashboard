@@ -122,6 +122,7 @@ interface DatagridProps {
   themeOverride?: Partial<Theme>;
   rowMarkerWidth?: number;
   rowMarkerTheme?: Partial<Theme>;
+  smoothScrollX?: boolean;
 }
 
 export const Datagrid = ({
@@ -163,6 +164,7 @@ export const Datagrid = ({
   themeOverride,
   rowMarkerWidth,
   rowMarkerTheme: rowMarkerThemeOverride,
+  smoothScrollX = true,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -583,7 +585,7 @@ export const Datagrid = ({
                     columns={availableColumns}
                     rows={rowsTotal}
                     freezeColumns={freezeColumns}
-                    smoothScrollX
+                    smoothScrollX={smoothScrollX}
                     rowMarkers={rowMarkers}
                     rowSelect="multi"
                     rowSelectionMode="multi"

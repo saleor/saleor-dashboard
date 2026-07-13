@@ -19,6 +19,29 @@ const ICON_GAP = 8;
 /** Compensates for removing the matrix empty spacer column (was 20px). */
 const STATUS_CELL_LEADING_INSET = 12;
 
+const statusSvgDataUriCache = new Map<string, string>();
+
+const getStatusSvgDataUri = (
+  rollupStatus: OrderLineRollupStatus,
+  colors: { base: string; border: string; text: string },
+  expanded: boolean,
+  iconColor: string,
+): string => {
+  const cacheKey = `${rollupStatus}:${expanded}:${iconColor}:${colors.base}:${colors.border}:${colors.text}`;
+  const cached = statusSvgDataUriCache.get(cacheKey);
+
+  if (cached) {
+    return cached;
+  }
+
+  const svg = renderLineMatrixStatusIconSvg(rollupStatus, colors, expanded, iconColor);
+  const dataUri = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+
+  statusSvgDataUriCache.set(cacheKey, dataUri);
+
+  return dataUri;
+};
+
 interface LineMatrixStatusCellProps {
   readonly kind: typeof CELL_KIND;
   readonly rollupStatus: OrderLineRollupStatus;
@@ -57,21 +80,21 @@ export const lineMatrixStatusCellRenderer = (
   isMatch: (cell: CustomCell): cell is LineMatrixStatusCell =>
     (cell.data as LineMatrixStatusCellProps).kind === CELL_KIND,
   draw: (args, cell) => {
-    const { rect, ctx, theme, imageLoader, col, row } = args;
+    const { rect, ctx, theme, imageLoader } = args;
     const padding = (theme.cellHorizontalPadding ?? 8) + STATUS_CELL_LEADING_INSET;
     const pillType = getOrderLineRollupPillType(cell.data.rollupStatus);
     const colors = getStatusColor({ status: pillType, currentTheme });
     const iconColor = cell.data.muted
       ? themeValues.colors.text.default2
       : themeValues.colors.text.default1;
-    const svg = renderLineMatrixStatusIconSvg(
+    const dataUri = getStatusSvgDataUri(
       cell.data.rollupStatus,
       colors,
       cell.data.expanded,
       iconColor,
     );
-    const dataUri = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-    const image = imageLoader.loadOrGetImage(dataUri, col, row);
+    // Cache by SVG content, not grid position — avoids re-decode while horizontally scrolling.
+    const image = imageLoader.loadOrGetImage(dataUri, 0, 0);
     const textX = rect.x + padding + CIRCLE_ICON_SIZE + ICON_GAP;
     const font = `500 ${theme.fontFamily}`;
 

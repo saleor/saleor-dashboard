@@ -15,9 +15,9 @@ export const messages = defineMessages({
     description: "aria label for timeline vs line matrix switch",
   },
   matrixHelper: {
-    id: "oB4Eq3",
+    id: "uPg2BK",
     defaultMessage:
-      "Quantities show fulfillment status per unit. Click a line's status to manage shipments.",
+      "Quantities show fulfillment status per unit. Click a line's status or row to manage shipments.",
   },
   fulfill: {
     id: "QDxJib",
@@ -41,5 +41,27 @@ export const messages = defineMessages({
     id: "sZ8CgC",
     defaultMessage: "Shipments expanded for {productName}",
     description: "screen reader announcement when matrix line is expanded",
+  },
+  orderLevelRefundTitle: {
+    id: "XExNls",
+    defaultMessage:
+      "{count, plural, one {# order-level refund needs attention} other {# order-level refunds need attention}}",
+    description: "callout title for granted refunds not tied to a line",
+  },
+  orderLevelRefundBody: {
+    id: "i4WCUJ",
+    defaultMessage:
+      "{amount} is not tied to a specific line{includesShipping, select, true { and includes shipping} other {}}.",
+    description: "inline notice for order-level granted refunds in matrix view",
+  },
+  orderLevelRefundBodyMultiple: {
+    id: "l3LUAN",
+    defaultMessage: "They are not tied to specific order lines.",
+    description: "inline notice when multiple order-level granted refunds need attention",
+  },
+  reviewOrderLevelRefund: {
+    id: "dLvcnv",
+    defaultMessage: "Review refund",
+    description: "button to open order-level granted refund editor",
   },
 });

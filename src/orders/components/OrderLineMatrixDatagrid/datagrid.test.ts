@@ -41,11 +41,11 @@ describe("getMatrixColumnTooltipContent", () => {
 });
 
 describe("mapPinnedGridColumnMove", () => {
-  const pinnedColumnCount = 1;
+  const pinnedColumnCount = 2;
 
   it("maps grid indices to unpinned column indices", () => {
     // Arrange // Act
-    const mappedMove = mapPinnedGridColumnMove(2, 4, pinnedColumnCount);
+    const mappedMove = mapPinnedGridColumnMove(3, 5, pinnedColumnCount);
 
     // Assert
     expect(mappedMove).toEqual({ startIndex: 1, endIndex: 3 });
@@ -53,7 +53,7 @@ describe("mapPinnedGridColumnMove", () => {
 
   it("returns null when moving a pinned column", () => {
     // Arrange // Act
-    const mappedMove = mapPinnedGridColumnMove(0, 2, pinnedColumnCount);
+    const mappedMove = mapPinnedGridColumnMove(0, 3, pinnedColumnCount);
 
     // Assert
     expect(mappedMove).toBeNull();
@@ -61,7 +61,7 @@ describe("mapPinnedGridColumnMove", () => {
 
   it("returns null when dropping onto a pinned column", () => {
     // Arrange // Act
-    const mappedMove = mapPinnedGridColumnMove(2, 0, pinnedColumnCount);
+    const mappedMove = mapPinnedGridColumnMove(3, 1, pinnedColumnCount);
 
     // Assert
     expect(mappedMove).toBeNull();
@@ -89,7 +89,10 @@ describe("createGetCellContent refunded columns", () => {
     refundedFulfillment: 2,
     replaced: 0,
     grantedRefund: 1,
+    grantedRefundAmount: { amount: 25, currency: "USD" },
+    refundedFulfillmentAmount: { amount: 50, currency: "USD" },
     grantedRefundEntries: [],
+    reasonDisplay: null,
     shipments: [],
   };
 
@@ -118,7 +121,7 @@ describe("createGetCellContent refunded columns", () => {
     const transactionCell = getCellContent([grantedRefundColumnIndex, 0], getCellContentOpts);
 
     // Assert
-    expect(fulfillmentCell).toMatchObject({ data: "2" });
-    expect(transactionCell).toMatchObject({ data: "1" });
+    expect(fulfillmentCell).toMatchObject({ data: expect.stringMatching(/^2 · /) });
+    expect(transactionCell).toMatchObject({ data: expect.stringMatching(/^1 · /) });
   });
 });

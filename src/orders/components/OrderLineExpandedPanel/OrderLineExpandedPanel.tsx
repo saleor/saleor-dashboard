@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { FormatDate } from "@dashboard/components/Date/FormatDate";
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
@@ -12,10 +12,15 @@ import { TrackingNumberDisplay } from "@dashboard/orders/components/OrderCardTit
 import { WarehouseInfo } from "@dashboard/orders/components/OrderCardTitle/WarehouseInfo";
 import { ActionButtons } from "@dashboard/orders/components/OrderFulfillmentCard/ActionButtons";
 import { ReasonDisplay } from "@dashboard/orders/components/ReasonDisplay/ReasonDisplay";
-import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
+import {
+  type LineShipmentEntry,
+  type OrderLineLifecycle,
+} from "@dashboard/orders/utils/buildOrderLineLifecycle";
+import { getOrderLineDisplayName } from "@dashboard/orders/utils/data";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
-import { EllipsisVertical } from "lucide-react";
+import { Code, EllipsisVertical } from "lucide-react";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -50,6 +55,9 @@ interface OrderLineExpandedPanelProps {
   onOrderFulfillmentApprove: (fulfillmentId: string) => void;
   onOrderFulfillmentCancel: (fulfillmentId: string) => void;
   onTrackingCodeAdd: (fulfillmentId: string) => void;
+  onFulfillmentShowMetadata: (fulfillmentId: string) => void;
+  showCanceledShipments: boolean;
+  onShowCanceledShipmentsChange: (value: boolean) => void;
 }
 
 export const OrderLineExpandedPanel = ({
@@ -60,6 +68,9 @@ export const OrderLineExpandedPanel = ({
   onOrderFulfillmentApprove,
   onOrderFulfillmentCancel,
   onTrackingCodeAdd,
+  onFulfillmentShowMetadata,
+  showCanceledShipments,
+  onShowCanceledShipmentsChange,
 }: OrderLineExpandedPanelProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -68,9 +79,29 @@ export const OrderLineExpandedPanel = ({
   const line = lifecycle.orderLine;
   const shipments = lifecycle.shipments;
   const grantedRefundEntries = lifecycle.grantedRefundEntries;
+  const { activeShipments, canceledShipments } = useMemo(() => {
+    const active: LineShipmentEntry[] = [];
+    const canceled: LineShipmentEntry[] = [];
+
+    shipments.forEach(shipment => {
+      if (shipment.status === FulfillmentStatus.CANCELED) {
+        canceled.push(shipment);
+      } else {
+        active.push(shipment);
+      }
+    });
+
+    return { activeShipments: active, canceledShipments: canceled };
+  }, [shipments]);
+  const visibleShipments = showCanceledShipments
+    ? [...activeShipments, ...canceledShipments]
+    : activeShipments;
   const hasShipments = shipments.length > 0;
   const hasGrantedRefunds = grantedRefundEntries.length > 0;
-  const productName = [line.productName, line.variant?.name].filter(Boolean).join(" / ");
+  const productName = getOrderLineDisplayName({
+    productName: line.productName,
+    variant: line.variant,
+  });
 
   return (
     <Box
@@ -107,7 +138,7 @@ export const OrderLineExpandedPanel = ({
           <Text size={4} fontWeight="medium" display="block">
             <FormattedMessage {...messages.shipmentsSection} />
           </Text>
-          {shipments.map(shipment => {
+          {visibleShipments.map(shipment => {
             const fulfillment = order.fulfillments?.find(getById(shipment.fulfillmentId));
 
             if (!fulfillment) {
@@ -206,6 +237,13 @@ export const OrderLineExpandedPanel = ({
                   )}
                 </Box>
                 <Box className={styles.shipmentActions}>
+                  <Button
+                    variant="secondary"
+                    onClick={() => onFulfillmentShowMetadata(fulfillment.id)}
+                    data-test-id="show-fulfillment-metadata"
+                    icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+                    title={intl.formatMessage(messages.fulfillmentMetadata)}
+                  />
                   <ActionButtons
                     status={fulfillment.status}
                     trackingNumber={fulfillment.trackingNumber}
@@ -262,6 +300,20 @@ export const OrderLineExpandedPanel = ({
               </Box>
             );
           })}
+          {canceledShipments.length > 0 && (
+            <Button
+              variant="tertiary"
+              onClick={() => onShowCanceledShipmentsChange(!showCanceledShipments)}
+              data-test-id="toggle-canceled-line-shipments"
+            >
+              <FormattedMessage
+                {...(showCanceledShipments
+                  ? messages.hideCanceledShipments
+                  : messages.showCanceledShipments)}
+                values={{ count: canceledShipments.length }}
+              />
+            </Button>
+          )}
         </Box>
       )}
 

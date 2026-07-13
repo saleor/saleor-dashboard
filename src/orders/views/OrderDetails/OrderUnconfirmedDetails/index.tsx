@@ -53,11 +53,13 @@ import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
+  orderDetailsUrl,
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
   orderReturnUrl,
   orderUrl,
   type OrderUrlQueryParams,
+  withOrderLineFocus,
 } from "../../../urls";
 
 interface OrderUnconfirmedDetailsProps {
@@ -298,6 +300,12 @@ export const OrderUnconfirmedDetails = ({
             onInvoiceSend={id => openModal("invoice-send", { id })}
             onRefundAdd={() => openModal("add-refund")}
             onSubmit={handleSubmit}
+            focusedLineId={params.lineId}
+            onFocusedLineChange={lineId =>
+              navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
+                replace: true,
+              })
+            }
           />
         </OrderLineDiscountProvider>
       </OrderDiscountProvider>

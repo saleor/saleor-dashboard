@@ -17,7 +17,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import {
+  getOrderLineFulfillUrl,
   getOrderLineReturnUrl,
+  hasLineFulfillableItems,
   hasLineReturnableItems,
 } from "@dashboard/orders/utils/getOrderLineActionUrls";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
@@ -25,8 +27,8 @@ import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { type Item, type Theme } from "@glideapps/glide-data-grid";
 import { Box, useTheme, type vars } from "@saleor/macaw-ui-next";
-import { ExternalLink, Undo2 } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { ExternalLink, PackageIcon, Undo2 } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { RefundedIcon } from "../../../icons/RefundedIcon";
@@ -59,7 +61,7 @@ interface OrderLineMatrixDatagridProps {
   datagridCustomTheme?: Partial<Theme>;
 }
 
-const MATRIX_SCROLL_MAX_HEIGHT = "min(70vh, 720px)";
+const ROW_CLICK_DRAG_THRESHOLD_PX = 6;
 
 export const OrderLineMatrixDatagrid = ({
   order,
@@ -79,6 +81,13 @@ export const OrderLineMatrixDatagrid = ({
   const { locale } = useLocale();
   const { themeValues } = useTheme();
   const datagrid = useDatagridChangeState();
+  const pointerInteractionRef = useRef({
+    active: false,
+    startX: 0,
+    startY: 0,
+    dragged: false,
+  });
+  const pointerCleanupRef = useRef<(() => void) | null>(null);
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LINE_MATRIX_LIST);
   const orderLineMatrixStaticColumns = useMemo(
     () => orderLineMatrixStaticColumnsAdapter(intl),
@@ -101,6 +110,7 @@ export const OrderLineMatrixDatagrid = ({
       staticColumns: orderLineMatrixStaticColumns,
       selectedColumns: settings?.columns ?? [],
       onSave: handleColumnChange,
+      newColumnPosition: "end",
     });
   const columnsWithPinned = useMemo(() => {
     const pinnedColumns = PINNED_MATRIX_COLUMN_IDS.map(columnId =>
@@ -159,6 +169,91 @@ export const OrderLineMatrixDatagrid = ({
     },
     [handlers.onMove],
   );
+
+  useEffect(
+    () => () => {
+      pointerCleanupRef.current?.();
+    },
+    [],
+  );
+
+  const handlePointerDown = useCallback((event: React.PointerEvent) => {
+    pointerCleanupRef.current?.();
+
+    const startX = event.clientX;
+    const startY = event.clientY;
+    let dragged = false;
+
+    pointerInteractionRef.current = {
+      active: true,
+      startX,
+      startY,
+      dragged: false,
+    };
+
+    const handlePointerMove = (moveEvent: PointerEvent) => {
+      if (dragged) {
+        return;
+      }
+
+      const deltaX = Math.abs(moveEvent.clientX - startX);
+      const deltaY = Math.abs(moveEvent.clientY - startY);
+
+      if (deltaX > ROW_CLICK_DRAG_THRESHOLD_PX || deltaY > ROW_CLICK_DRAG_THRESHOLD_PX) {
+        dragged = true;
+        pointerInteractionRef.current.dragged = true;
+      }
+    };
+
+    const handlePointerEnd = () => {
+      pointerInteractionRef.current.active = false;
+      document.removeEventListener("pointermove", handlePointerMove);
+      document.removeEventListener("pointerup", handlePointerEnd);
+      document.removeEventListener("pointercancel", handlePointerEnd);
+      pointerCleanupRef.current = null;
+    };
+
+    pointerCleanupRef.current = handlePointerEnd;
+    document.addEventListener("pointermove", handlePointerMove, { passive: true });
+    document.addEventListener("pointerup", handlePointerEnd);
+    document.addEventListener("pointercancel", handlePointerEnd);
+  }, []);
+
+  const handleLineInteraction = useCallback(
+    ([col, row]: Item) => {
+      if (pointerInteractionRef.current.dragged) {
+        pointerInteractionRef.current.dragged = false;
+
+        return;
+      }
+
+      const columnId = columnsWithPinned[col]?.id;
+      const lifecycle = lines[row];
+
+      if (!lifecycle) {
+        return;
+      }
+
+      if (columnId === STATUS_COLUMN_ID) {
+        onToggleExpand(lifecycle.orderLineId);
+
+        return;
+      }
+
+      if (isPriceBreakdownColumn(columnId)) {
+        const line = lifecycle.orderLine;
+
+        if (line && isLineDiscounted(line)) {
+          onShowLinePriceBreakdown?.(line.id);
+
+          return;
+        }
+      }
+
+      onToggleExpand(lifecycle.orderLineId);
+    },
+    [columnsWithPinned, lines, onShowLinePriceBreakdown, onToggleExpand],
+  );
   const getLineMenuItems = useCallback(
     (index: number): TopNavMenuItem[] => {
       const lifecycle = lines[index];
@@ -177,6 +272,17 @@ export const OrderLineMatrixDatagrid = ({
           },
         },
       ];
+
+      if (lineId && hasLineFulfillableItems(order, lineId)) {
+        items.push({
+          label: intl.formatMessage(messages.fulfillLine),
+          testId: "matrix-fulfill-line",
+          icon: <PackageIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          onSelect: () => {
+            navigate(getOrderLineFulfillUrl(order.id, lineId));
+          },
+        });
+      }
 
       if (lineId && hasLineReturnableItems(order, lineId)) {
         items.push({
@@ -234,34 +340,6 @@ export const OrderLineMatrixDatagrid = ({
     ),
     [getLineMenuItems, lines, onOrderLineShowMetadata, loading, intl],
   );
-  const handleRowClick = useCallback(
-    ([col, row]: Item) => {
-      const columnId = columnsWithPinned[col]?.id;
-
-      if (columnId === STATUS_COLUMN_ID) {
-        const line = lines[row];
-
-        if (line) {
-          onToggleExpand(line.orderLineId);
-        }
-
-        return;
-      }
-
-      if (!isPriceBreakdownColumn(columnId)) {
-        return;
-      }
-
-      const line = lines[row]?.orderLine;
-
-      if (!line || !isLineDiscounted(line)) {
-        return;
-      }
-
-      onShowLinePriceBreakdown?.(line.id);
-    },
-    [columnsWithPinned, lines, onShowLinePriceBreakdown, onToggleExpand],
-  );
   const handleGetColumnTooltipContent = useCallback(
     (colIndex: number) => getMatrixColumnTooltipContent(columnsWithPinned[colIndex]?.id, intl),
     [columnsWithPinned, intl],
@@ -271,19 +349,16 @@ export const OrderLineMatrixDatagrid = ({
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Box
         className={styles.wrapper}
+        position="relative"
         borderWidth={1}
         borderStyle="solid"
         borderColor="default1"
         borderRadius={4}
+        onPointerDown={handlePointerDown}
       >
-        <Box
-          className={styles.scrollContainer}
-          overflow="auto"
-          __maxHeight={MATRIX_SCROLL_MAX_HEIGHT}
-        >
+        <Box className={styles.datagridContainer}>
           <Datagrid
             showEmptyDatagrid
-            hasRowHover
             highlightedRow={highlightedRow}
             themeOverride={datagridCustomTheme}
             rowMarkers="none"
@@ -313,8 +388,8 @@ export const OrderLineMatrixDatagrid = ({
             )}
             renderRowActions={renderRowActions}
             rowActionBarWidth={ROW_ACTION_BAR_WIDTH}
-            onRowClick={handleRowClick}
-            onCellActivated={handleRowClick}
+            onRowClick={handleLineInteraction}
+            onCellActivated={handleLineInteraction}
           />
         </Box>
       </Box>

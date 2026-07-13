@@ -86,6 +86,12 @@ export const OrderLineGrantedRefundRow = ({
               {...messages.refundAmount}
               values={{ amount: formatMoneyAmount(entry.amount, locale) }}
             />
+            {entry.shippingCostsIncluded && (
+              <>
+                {" "}
+                <FormattedMessage {...messages.refundIncludesShipping} />
+              </>
+            )}
           </Text>
         </Box>
         {(entry.reason || entry.reasonReference) && (
