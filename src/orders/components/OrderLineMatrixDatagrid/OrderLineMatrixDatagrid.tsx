@@ -39,9 +39,12 @@ import {
   isPinnedMatrixColumn,
   isPriceBreakdownColumn,
   mapPinnedGridColumnMove,
+  MATRIX_PRODUCT_COLUMN_MIGRATION_KEY,
   orderLineMatrixStaticColumnsAdapter,
   PINNED_MATRIX_COLUMN_IDS,
+  shouldMigrateMatrixProductColumn,
   STATUS_COLUMN_ID,
+  withMigratedProductColumn,
 } from "./datagrid";
 import { messages } from "./messages";
 import styles from "./OrderLineMatrixDatagrid.module.css";
@@ -93,6 +96,24 @@ export const OrderLineMatrixDatagrid = ({
     () => orderLineMatrixStaticColumnsAdapter(intl),
     [intl],
   );
+
+  useEffect(
+    function migrateUnpinnedProductColumn() {
+      if (window.localStorage.getItem(MATRIX_PRODUCT_COLUMN_MIGRATION_KEY)) {
+        return;
+      }
+
+      const columns = settings?.columns;
+
+      if (shouldMigrateMatrixProductColumn(columns)) {
+        updateListSettings?.("columns", withMigratedProductColumn(columns));
+      }
+
+      window.localStorage.setItem(MATRIX_PRODUCT_COLUMN_MIGRATION_KEY, "1");
+    },
+    [settings?.columns, updateListSettings],
+  );
+
   const handleColumnChange = useCallback(
     (picked: string[]) => {
       if (updateListSettings) {
@@ -104,14 +125,19 @@ export const OrderLineMatrixDatagrid = ({
     },
     [updateListSettings],
   );
-  const { handlers, visibleColumns, staticColumns, selectedColumns, recentlyAddedColumn } =
-    useColumns({
-      gridName: "order_line_matrix",
-      staticColumns: orderLineMatrixStaticColumns,
-      selectedColumns: settings?.columns ?? [],
-      onSave: handleColumnChange,
-      newColumnPosition: "end",
-    });
+  const {
+    handlers,
+    visibleColumns,
+    staticColumns,
+    selectedColumns: pickedColumns,
+    recentlyAddedColumn,
+  } = useColumns({
+    gridName: "order_line_matrix",
+    staticColumns: orderLineMatrixStaticColumns,
+    selectedColumns: settings?.columns ?? [],
+    onSave: handleColumnChange,
+    newColumnPosition: "end",
+  });
   const columnsWithPinned = useMemo(() => {
     const pinnedColumns = PINNED_MATRIX_COLUMN_IDS.map(columnId =>
       orderLineMatrixStaticColumns.find(column => column.id === columnId),
@@ -363,7 +389,7 @@ export const OrderLineMatrixDatagrid = ({
             themeOverride={datagridCustomTheme}
             rowMarkers="none"
             columnSelect="single"
-            freezeColumns={2}
+            freezeColumns={1}
             availableColumns={columnsWithPinned}
             verticalBorder={false}
             showTopBorder={false}
@@ -380,7 +406,7 @@ export const OrderLineMatrixDatagrid = ({
             renderColumnPicker={() => (
               <ColumnPicker
                 staticColumns={staticColumns.filter(column => !isPinnedMatrixColumn(column.id))}
-                selectedColumns={selectedColumns.filter(column => !isPinnedMatrixColumn(column))}
+                selectedColumns={pickedColumns.filter(column => !isPinnedMatrixColumn(column))}
                 onToggle={handlers.onToggle}
                 align="end"
                 backgroundColor={columnPickerBackgroundColor}

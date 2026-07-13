@@ -46,10 +46,22 @@ const QUANTITY_COLUMN_IDS = new Set([
 
 export const STATUS_COLUMN_ID = "status";
 export const PRODUCT_COLUMN_ID = "product";
+export const MATRIX_PRODUCT_COLUMN_MIGRATION_KEY = "orderLineMatrix.productColumnMigrated";
 
-export const PINNED_MATRIX_COLUMN_IDS = [STATUS_COLUMN_ID, PRODUCT_COLUMN_ID];
+export const PINNED_MATRIX_COLUMN_IDS = [STATUS_COLUMN_ID];
 
 const isPinnedMatrixColumn = (columnId: string) => PINNED_MATRIX_COLUMN_IDS.includes(columnId);
+
+export const withMigratedProductColumn = (columns: string[]): string[] => {
+  if (columns.includes(PRODUCT_COLUMN_ID)) {
+    return columns;
+  }
+
+  return [PRODUCT_COLUMN_ID, ...columns];
+};
+
+export const shouldMigrateMatrixProductColumn = (columns: string[] | undefined): boolean =>
+  Array.isArray(columns) && columns.length > 0 && !columns.includes(PRODUCT_COLUMN_ID);
 
 export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableColumn[] => [
   {
@@ -62,7 +74,6 @@ export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableC
     id: PRODUCT_COLUMN_ID,
     title: intl.formatMessage(messages.product),
     width: 280,
-    disableReorder: true,
   },
   {
     id: "sku",

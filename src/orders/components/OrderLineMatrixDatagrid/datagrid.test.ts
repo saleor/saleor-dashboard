@@ -4,6 +4,8 @@ import {
   createGetCellContent,
   getMatrixColumnTooltipContent,
   mapPinnedGridColumnMove,
+  shouldMigrateMatrixProductColumn,
+  withMigratedProductColumn,
 } from "@dashboard/orders/components/OrderLineMatrixDatagrid/datagrid";
 import { messages } from "@dashboard/orders/components/OrderLineMatrixDatagrid/messages";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
@@ -41,14 +43,14 @@ describe("getMatrixColumnTooltipContent", () => {
 });
 
 describe("mapPinnedGridColumnMove", () => {
-  const pinnedColumnCount = 2;
+  const pinnedColumnCount = 1;
 
   it("maps grid indices to unpinned column indices", () => {
     // Arrange // Act
     const mappedMove = mapPinnedGridColumnMove(3, 5, pinnedColumnCount);
 
     // Assert
-    expect(mappedMove).toEqual({ startIndex: 1, endIndex: 3 });
+    expect(mappedMove).toEqual({ startIndex: 2, endIndex: 4 });
   });
 
   it("returns null when moving a pinned column", () => {
@@ -61,10 +63,41 @@ describe("mapPinnedGridColumnMove", () => {
 
   it("returns null when dropping onto a pinned column", () => {
     // Arrange // Act
-    const mappedMove = mapPinnedGridColumnMove(3, 1, pinnedColumnCount);
+    const mappedMove = mapPinnedGridColumnMove(3, 0, pinnedColumnCount);
 
     // Assert
     expect(mappedMove).toBeNull();
+  });
+});
+
+describe("matrix product column migration", () => {
+  it("prepends product when legacy settings omit it", () => {
+    // Arrange
+    const columns = ["sku", "ordered", "price"];
+
+    // Act
+    const migratedColumns = withMigratedProductColumn(columns);
+
+    // Assert
+    expect(migratedColumns).toEqual(["product", "sku", "ordered", "price"]);
+  });
+
+  it("keeps custom layouts that already include product", () => {
+    // Arrange
+    const columns = ["sku", "product", "ordered"];
+
+    // Act
+    const migratedColumns = withMigratedProductColumn(columns);
+
+    // Assert
+    expect(migratedColumns).toBe(columns);
+  });
+
+  it("migrates only legacy settings without product once", () => {
+    // Arrange // Act // Assert
+    expect(shouldMigrateMatrixProductColumn(["sku", "ordered"])).toBe(true);
+    expect(shouldMigrateMatrixProductColumn(["product", "sku"])).toBe(false);
+    expect(shouldMigrateMatrixProductColumn(undefined)).toBe(false);
   });
 });
 
