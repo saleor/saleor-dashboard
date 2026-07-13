@@ -28,6 +28,7 @@ interface OrderLineExpandedPanelProps {
   lifecycle: OrderLineLifecycle;
   order: OrderDetailsFragment;
   fulfillmentAllowUnpaid: boolean;
+  panelId?: string;
   onOrderFulfillmentApprove: (fulfillmentId: string) => void;
   onOrderFulfillmentCancel: (fulfillmentId: string) => void;
   onTrackingCodeAdd: (fulfillmentId: string) => void;
@@ -37,6 +38,7 @@ export const OrderLineExpandedPanel = ({
   lifecycle,
   order,
   fulfillmentAllowUnpaid,
+  panelId,
   onOrderFulfillmentApprove,
   onOrderFulfillmentCancel,
   onTrackingCodeAdd,
@@ -47,6 +49,8 @@ export const OrderLineExpandedPanel = ({
 
   return (
     <Box
+      id={panelId}
+      role="region"
       marginTop={0}
       padding={6}
       borderWidth={1}

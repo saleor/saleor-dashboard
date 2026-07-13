@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import { OrderDetailsRowActions } from "../OrderDetailsDatagrid/OrderDetailsRowActions";
 import {
   createGetCellContent,
+  getMatrixColumnTooltipContent,
   isLineDiscounted,
   isPinnedMatrixColumn,
   isPriceBreakdownColumn,
@@ -182,6 +183,10 @@ export const OrderLineMatrixDatagrid = ({
     },
     [columnsWithPinned, lines, onShowLinePriceBreakdown, onToggleExpand],
   );
+  const handleGetColumnTooltipContent = useCallback(
+    (colIndex: number) => getMatrixColumnTooltipContent(columnsWithPinned[colIndex]?.id, intl),
+    [columnsWithPinned, intl],
+  );
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
@@ -211,6 +216,7 @@ export const OrderLineMatrixDatagrid = ({
             emptyText={intl.formatMessage(orderMessages.emptyText)}
             getCellContent={getCellContent}
             getCellError={() => false}
+            getColumnTooltipContent={handleGetColumnTooltipContent}
             menuItems={getMenuItems}
             rows={loading ? 1 : lines.length}
             selectionActions={() => null}

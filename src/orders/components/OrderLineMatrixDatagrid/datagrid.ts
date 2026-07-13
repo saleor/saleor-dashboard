@@ -250,6 +250,17 @@ export const createGetCellContent =
     }
   };
 
+export const getMatrixColumnTooltipContent = (
+  columnId: string | undefined,
+  intl: IntlShape,
+): string => {
+  if (columnId === "refunded") {
+    return intl.formatMessage(messages.refundedTooltip);
+  }
+
+  return "";
+};
+
 export { isLineDiscounted, isPinnedMatrixColumn, isPriceBreakdownColumn };
 
 const readonlyOptions: Partial<GridCell> = {

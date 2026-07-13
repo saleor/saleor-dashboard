@@ -15,9 +15,15 @@ export interface DialogProps {
   onClose: () => void;
 }
 
+export type OrderDetailsViewMode = "timeline" | "matrix";
+
 export interface ListSettings<TColumn extends string = string> {
   columns?: TColumn[];
   rowNumber: number;
+}
+
+export interface OrderDetailsListSettings extends ListSettings {
+  viewMode?: OrderDetailsViewMode;
 }
 
 export enum ListViews {

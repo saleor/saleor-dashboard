@@ -1,5 +1,7 @@
 import { WeightUnitsEnum } from "@dashboard/graphql";
+import { listSettingsStorageKey } from "@dashboard/hooks/useListSettings";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
+import { ListViews } from "@dashboard/types";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentType } from "react";
 import { fn } from "storybook/test";
@@ -43,7 +45,15 @@ export const Timeline: Story = {};
 export const LineMatrix: Story = {
   decorators: [
     (StoryComponent: ComponentType) => {
-      window.localStorage.setItem("orderDetailsViewMode", "matrix");
+      window.localStorage.setItem(
+        listSettingsStorageKey,
+        JSON.stringify({
+          [ListViews.ORDER_DETAILS_LIST]: {
+            rowNumber: 20,
+            viewMode: "matrix",
+          },
+        }),
+      );
 
       return <StoryComponent />;
     },

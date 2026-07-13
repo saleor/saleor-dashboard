@@ -1,6 +1,11 @@
 import packageInfo from "../package.json";
 import { type SearchVariables } from "./hooks/makeSearch";
-import { type ListSettings, ListViews, type Pagination } from "./types";
+import {
+  type ListSettings,
+  ListViews,
+  type OrderDetailsListSettings,
+  type Pagination,
+} from "./types";
 
 export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () => window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
@@ -87,7 +92,7 @@ export interface AppListViewSettings {
   [ListViews.WEBHOOK_LIST]: ListSettings;
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: ListSettings;
   [ListViews.GIFT_CARD_LIST]: ListSettings;
-  [ListViews.ORDER_DETAILS_LIST]: ListSettings;
+  [ListViews.ORDER_DETAILS_LIST]: OrderDetailsListSettings;
   [ListViews.ORDER_LINE_MATRIX_LIST]: ListSettings;
   [ListViews.ORDER_DRAFT_DETAILS_LIST]: ListSettings;
   [ListViews.PRODUCT_DETAILS]: ListSettings;
@@ -183,6 +188,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.ORDER_DETAILS_LIST]: {
     rowNumber: PAGINATE_BY,
+    viewMode: "timeline",
     columns: [
       "product",
       "sku",

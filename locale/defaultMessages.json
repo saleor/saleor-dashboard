@@ -114,6 +114,9 @@
   "+bhokL": {
     "string": "Search discounts..."
   },
+  "+dDyb1": {
+    "string": "Allocated"
+  },
   "+djx5u": {
     "string": "You can't give this extension permissions you don't have."
   },
@@ -170,6 +173,10 @@
   "+tIkAe": {
     "context": "status",
     "string": "Status"
+  },
+  "+vyg/Z": {
+    "context": "canceled fulfillment, restock destination warehouse info",
+    "string": "Restocked to {warehouseName}"
   },
   "+vzDH4": {
     "context": "error message used when manifest URL is incorrect (before any further validation)",
@@ -250,6 +257,9 @@
   "/C//FB": {
     "context": "header, allocated product quantity",
     "string": "Allocated"
+  },
+  "/CaREm": {
+    "string": "Pending approval"
   },
   "/DCKjx": {
     "context": "exclude postal codes helper",
@@ -484,6 +494,9 @@
   "0V1q0d": {
     "context": "add country dialog header",
     "string": "Choose country you want to add"
+  },
+  "0WJNP/": {
+    "string": "Return"
   },
   "0XHXTZ": {
     "context": "column header",
@@ -936,6 +949,9 @@
   "2sDBzg": {
     "context": "reference types multiselect label for product entity",
     "string": "Product types"
+  },
+  "2wBJyQ": {
+    "string": "Quantities show where each unit is in the fulfillment lifecycle. Click a line's status to view and manage its shipments."
   },
   "2x9ZgK": {
     "context": "card title",
@@ -1562,6 +1578,10 @@
   },
   "6D+yYX": {
     "string": "Payment status"
+  },
+  "6DJVl5": {
+    "context": "canceled fulfillment, original source warehouse info",
+    "string": "Shipped from {warehouseName}"
   },
   "6GTAm2": {
     "context": "order history message",
@@ -2350,6 +2370,9 @@
     "context": "used staff users counter",
     "string": "{count}/{max} members"
   },
+  "9zg27i": {
+    "string": "Fulfillment refunds are shown here. Transaction-based granted refunds appear in the expanded line details."
+  },
   "A+g/VP": {
     "string": "Unsaved preset"
   },
@@ -2581,6 +2604,9 @@
   "BHr3fj": {
     "context": "no warehouses info",
     "string": "There are no warehouses set up for this product. To add stock quantity to the product <a>configure a warehouse</a> or use existing one by clicking button below."
+  },
+  "BINR5M": {
+    "string": "No shipments or returns recorded for this line yet."
   },
   "BJGTFV": {
     "context": "inline add swatch attribute value name placeholder",
@@ -3440,6 +3466,9 @@
   "Fn3bE0": {
     "string": "Order line updated"
   },
+  "FoWZeK": {
+    "string": "Shipments for {productName}"
+  },
   "FopBSj": {
     "context": "error message",
     "string": "Your username and/or password are incorrect. Please try again."
@@ -3616,10 +3645,6 @@
     "context": "configuration menu item title",
     "string": "Product attributes"
   },
-  "GU+ikh": {
-    "context": "dialog description when restock warehouse must be selected",
-    "string": "Canceling a fulfillment will restock products at a selected warehouse."
-  },
   "GUeIcq": {
     "context": "edit structure, header",
     "string": "Edit Item"
@@ -3703,6 +3728,9 @@
   "GrMiRT": {
     "context": "fallback product name in remove product confirmation dialog",
     "string": "this product"
+  },
+  "Gs86nL": {
+    "string": "Refunded"
   },
   "GsBRWL": {
     "string": "Languages"
@@ -3965,6 +3993,9 @@
     "context": "VariantDetailsChannelsAvailabilityCard subtitle. Counts channel listings, not customer-facing availability or stock. Phrasing must not imply purchasability.",
     "string": "Listed in {publishedInChannelsCount} of {availableChannelsCount} channels"
   },
+  "I/7E/4": {
+    "string": "{quantity, plural, one {# unit} other {# units}}"
+  },
   "I/y4IU": {
     "context": "alert message",
     "string": "one of"
@@ -4068,6 +4099,9 @@
   },
   "IOg+Hh": {
     "string": "Refund with manual amount"
+  },
+  "ITSq4J": {
+    "string": "Unit price"
   },
   "ITYiRy": {
     "string": "Go to collections"
@@ -4755,6 +4789,10 @@
     "context": "custom app token key",
     "string": "Key"
   },
+  "MB+UTU": {
+    "context": "collapse canceled fulfillments in timeline view",
+    "string": "Hide canceled shipments"
+  },
   "MDLYPO": {
     "context": "fallback widget title when extension label and app name are missing",
     "string": "App"
@@ -4762,6 +4800,10 @@
   "MFC20a": {
     "context": "Number of warehouses configured",
     "string": "{count, plural, one {# warehouse} other {# warehouses}}"
+  },
+  "MFPCsL": {
+    "context": "expand canceled fulfillments in timeline view",
+    "string": "Show {count, plural, one {# canceled shipment} other {# canceled shipments}}"
   },
   "MFUQrr": {
     "context": "Placeholder for date picker",
@@ -5313,6 +5355,9 @@
     "context": "numeric attribute unit",
     "string": "Unit"
   },
+  "OtIOMb": {
+    "string": "Shipped"
+  },
   "OtMtzH": {
     "string": "Product unavailable in collection channels"
   },
@@ -5453,6 +5498,9 @@
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
   },
+  "PWTzkQ": {
+    "string": "Ordered"
+  },
   "PXatmC": {
     "string": "Customer Removed"
   },
@@ -5539,6 +5587,10 @@
   "PvrceS": {
     "context": "Refund draft status",
     "string": "Draft"
+  },
+  "Pw0Gd0": {
+    "context": "order history message",
+    "string": "Restocked {quantity, plural, one {# item} other {# items}} to {warehouseName}"
   },
   "PwJvsc": {
     "context": "address search input label in order address edit dialog",
@@ -5633,6 +5685,9 @@
   "QBxN6z": {
     "context": "is filter range or value",
     "string": "between"
+  },
+  "QDxJib": {
+    "string": "Fulfill"
   },
   "QEXGYB": {
     "context": "Reassurance under verification badge when product is purchasable in legacy mode",
@@ -6638,6 +6693,9 @@
   "Vdy5g7": {
     "context": "weight units type",
     "string": "Weight"
+  },
+  "Vf57Ie": {
+    "string": "Partially fulfilled"
   },
   "VkYZQ8": {
     "string": "Current Permissions"
@@ -9197,6 +9255,9 @@
     "context": "vouchers section name",
     "string": "Vouchers"
   },
+  "iWbl/h": {
+    "string": "Partially returned"
+  },
   "iWmfMe": {
     "context": "button",
     "string": "Create promotion"
@@ -9224,6 +9285,9 @@
   "if9gAZ": {
     "context": "Transaction event status - unknown status, info without event data",
     "string": "Info"
+  },
+  "igoIjo": {
+    "string": "Line matrix"
   },
   "iidznP": {
     "context": "password login mode option description",
@@ -10438,6 +10502,9 @@
   "oQY0a2": {
     "string": "Address line 2"
   },
+  "oUM6fi": {
+    "string": "To fulfill"
+  },
   "oUWADl": {
     "string": "No"
   },
@@ -11085,6 +11152,9 @@
     "context": "status label active",
     "string": "Active"
   },
+  "rRpH07": {
+    "string": "Transaction refund: {quantity, plural, one {# unit} other {# units}}"
+  },
   "rRxWkt": {
     "context": "dialog header",
     "string": "Change customer"
@@ -11297,6 +11367,10 @@
   },
   "sZ4enl": {
     "string": "Excludes results matching the term"
+  },
+  "sZ8CgC": {
+    "context": "screen reader announcement when matrix line is expanded",
+    "string": "Shipments expanded for {productName}"
   },
   "saKXY3": {
     "context": "product label",
@@ -12276,6 +12350,9 @@
     "context": "button",
     "string": "Create Webhook"
   },
+  "wm96Jx": {
+    "string": "Returned"
+  },
   "wmdHhD": {
     "context": "button",
     "string": "Create Warehouse"
@@ -12495,6 +12572,10 @@
     "context": "custom preset delete, dialog header",
     "string": "Delete preset"
   },
+  "xzgaxr": {
+    "context": "dialog description when restock warehouse must be selected",
+    "string": "Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected."
+  },
   "y+718D": {
     "context": "factor label for whole-order voucher propagated to a line",
     "string": "Voucher (order, line share)"
@@ -12526,6 +12607,10 @@
   "y8E0iG": {
     "context": "seo incomplete text",
     "string": "Incomplete"
+  },
+  "y8hdd1": {
+    "context": "cancel fulfillment action in shipment row menu",
+    "string": "Cancel fulfillment"
   },
   "y93ihJ": {
     "context": "dialog title when opening generator with unsaved changes",
@@ -12721,6 +12806,10 @@
   "zIPK5M": {
     "string": "Enable refund reasons in settings"
   },
+  "zIeG3b": {
+    "context": "dialog description when canceling unapproved fulfillment",
+    "string": "This fulfillment has not been approved yet. Canceling removes the pending shipment and does not require restocking inventory."
+  },
   "zJpP1T": {
     "context": "create new structure, header",
     "string": "Add Item"
@@ -12777,6 +12866,9 @@
   },
   "zWgbGg": {
     "string": "Today"
+  },
+  "zWkvNO": {
+    "string": "Timeline"
   },
   "zY1K7Q": {
     "context": "fulfillment status refunded and returned",

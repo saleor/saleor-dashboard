@@ -22,4 +22,19 @@ export const messages = defineMessages({
     id: "0WJNP/",
     defaultMessage: "Return",
   },
+  showCanceledShipments: {
+    id: "MFPCsL",
+    defaultMessage: "Show {count, plural, one {# canceled shipment} other {# canceled shipments}}",
+    description: "expand canceled fulfillments in timeline view",
+  },
+  hideCanceledShipments: {
+    id: "MB+UTU",
+    defaultMessage: "Hide canceled shipments",
+    description: "collapse canceled fulfillments in timeline view",
+  },
+  lineExpandedAnnouncement: {
+    id: "sZ8CgC",
+    defaultMessage: "Shipments expanded for {productName}",
+    description: "screen reader announcement when matrix line is expanded",
+  },
 });

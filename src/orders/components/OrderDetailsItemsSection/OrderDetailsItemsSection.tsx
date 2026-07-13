@@ -1,18 +1,18 @@
 // @ts-strict-ignore
-import { type OrderDetailsFragment, type OrderDetailsQuery } from "@dashboard/graphql";
+import {
+  FulfillmentStatus,
+  type OrderDetailsFragment,
+  type OrderDetailsQuery,
+} from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { hasAnyItemsReplaceable } from "@dashboard/orders/components/OrderDetailsPage/utils";
 import { OrderFulfillmentCard } from "@dashboard/orders/components/OrderFulfillmentCard/OrderFulfillmentCard";
 import { OrderLineExpandedPanel } from "@dashboard/orders/components/OrderLineExpandedPanel/OrderLineExpandedPanel";
 import { OrderLineMatrixDatagrid } from "@dashboard/orders/components/OrderLineMatrixDatagrid/OrderLineMatrixDatagrid";
 import { OrderUnfulfilledProductsCard } from "@dashboard/orders/components/OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
+import { useOrderDetailsViewMode } from "@dashboard/orders/hooks/useOrderDetailsViewMode";
 import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";
 import { buildOrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
-import {
-  getOrderDetailsViewMode,
-  type OrderDetailsViewMode,
-  setOrderDetailsViewMode,
-} from "@dashboard/orders/utils/orderDetailsViewMode";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { PackageIcon, Undo2 } from "lucide-react";
@@ -20,6 +20,9 @@ import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
+import styles from "./OrderDetailsItemsSection.module.css";
+
+const EXPANDED_PANEL_ID = "order-line-expanded-panel";
 
 interface OrderDetailsItemsSectionProps {
   order: OrderDetailsFragment;
@@ -52,26 +55,67 @@ export const OrderDetailsItemsSection = ({
   onFulfillmentShowMetadata,
   onShowLinePriceBreakdown,
 }: OrderDetailsItemsSectionProps) => {
-  const [viewMode, setViewMode] = useState<OrderDetailsViewMode>(getOrderDetailsViewMode);
+  const { viewMode, setViewMode } = useOrderDetailsViewMode();
   const [expandedLineId, setExpandedLineId] = useState<string | null>(null);
+  const [showCanceledFulfillments, setShowCanceledFulfillments] = useState(false);
   const unfulfilled = useMemo(
     () => (order.lines || []).filter(line => line.quantityToFulfill > 0),
     [order.lines],
   );
+  const { activeFulfillments, canceledFulfillments } = useMemo(() => {
+    const fulfillments = order.fulfillments ?? [];
+
+    return {
+      activeFulfillments: fulfillments.filter(
+        fulfillment => fulfillment.status !== FulfillmentStatus.CANCELED,
+      ),
+      canceledFulfillments: fulfillments.filter(
+        fulfillment => fulfillment.status === FulfillmentStatus.CANCELED,
+      ),
+    };
+  }, [order.fulfillments]);
   const lifecycleRows = useMemo(() => buildOrderLineLifecycle(order), [order]);
   const expandedLifecycle = lifecycleRows.find(row => row.orderLineId === expandedLineId);
+  const expandedProductName = expandedLifecycle
+    ? [expandedLifecycle.orderLine.productName, expandedLifecycle.orderLine.variant?.name]
+        .filter(Boolean)
+        .join(" / ")
+    : "";
   const hasItemsToFulfill = lifecycleRows.some(row => row.toFulfill > 0);
   const canReturn = hasAnyItemsReplaceable(order);
 
-  const handleViewModeChange = useCallback((mode: OrderDetailsViewMode) => {
-    setOrderDetailsViewMode(mode);
-    setViewMode(mode);
-    setExpandedLineId(null);
-  }, []);
+  const handleViewModeChange = useCallback(
+    (mode: Parameters<typeof setViewMode>[0]) => {
+      setViewMode(mode);
+      setExpandedLineId(null);
+    },
+    [setViewMode],
+  );
 
   const handleToggleExpand = useCallback((lineId: string) => {
     setExpandedLineId(current => (current === lineId ? null : lineId));
   }, []);
+
+  const renderFulfillmentCard = (
+    fulfillment: NonNullable<OrderDetailsFragment["fulfillments"]>[number],
+    index: number,
+    total: number,
+  ) => (
+    <OrderFulfillmentCard
+      key={fulfillment.id}
+      dataTestId="fulfilled-order-section"
+      fulfillment={fulfillment}
+      fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+      order={order}
+      onOrderLineShowMetadata={onOrderLineShowMetadata}
+      onShowLinePriceBreakdown={onShowLinePriceBreakdown}
+      onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
+      onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
+      onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
+      onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
+      showBottomSeparator={index < total - 1}
+    />
+  );
 
   return (
     <Box data-test-id="order-details-items-section">
@@ -153,30 +197,52 @@ export const OrderDetailsItemsSection = ({
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}
-            showBottomSeparator={(order.fulfillments?.length ?? 0) > 0}
+            showBottomSeparator={activeFulfillments.length > 0 || canceledFulfillments.length > 0}
           />
-          {order.fulfillments?.map((fulfillment, index) => (
-            <OrderFulfillmentCard
-              key={fulfillment.id}
-              dataTestId="fulfilled-order-section"
-              fulfillment={fulfillment}
-              fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-              order={order}
-              onOrderLineShowMetadata={onOrderLineShowMetadata}
-              onShowLinePriceBreakdown={onShowLinePriceBreakdown}
-              onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
-              onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
-              onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
-              onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
-              showBottomSeparator={index < (order.fulfillments?.length ?? 0) - 1}
-            />
-          ))}
+          {activeFulfillments.map((fulfillment, index) =>
+            renderFulfillmentCard(fulfillment, index, activeFulfillments.length),
+          )}
+          {canceledFulfillments.length > 0 && (
+            <Box paddingX={6} paddingBottom={showCanceledFulfillments ? 0 : 6}>
+              <Button
+                variant="tertiary"
+                onClick={() => setShowCanceledFulfillments(current => !current)}
+                data-test-id="toggle-canceled-fulfillments"
+              >
+                <FormattedMessage
+                  {...(showCanceledFulfillments
+                    ? messages.hideCanceledShipments
+                    : messages.showCanceledShipments)}
+                  values={{ count: canceledFulfillments.length }}
+                />
+              </Button>
+            </Box>
+          )}
+          {showCanceledFulfillments &&
+            canceledFulfillments.map((fulfillment, index) =>
+              renderFulfillmentCard(fulfillment, index, canceledFulfillments.length),
+            )}
         </>
       ) : (
-        <Box paddingX={6} display="flex" flexDirection="column" gap={4}>
+        <Box
+          paddingX={6}
+          display="flex"
+          flexDirection="column"
+          gap={4}
+          aria-expanded={expandedLineId !== null}
+          aria-controls={expandedLineId ? EXPANDED_PANEL_ID : undefined}
+        >
           <Text size={3} color="default2">
             <FormattedMessage {...messages.matrixHelper} />
           </Text>
+          <div className={styles.srOnly} aria-live="polite">
+            {expandedLifecycle && (
+              <FormattedMessage
+                {...messages.lineExpandedAnnouncement}
+                values={{ productName: expandedProductName }}
+              />
+            )}
+          </div>
           <OrderLineMatrixDatagrid
             lines={lifecycleRows}
             loading={loading}
@@ -190,6 +256,7 @@ export const OrderDetailsItemsSection = ({
               lifecycle={expandedLifecycle}
               order={order}
               fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+              panelId={EXPANDED_PANEL_ID}
               onOrderFulfillmentApprove={onFulfillmentApprove}
               onOrderFulfillmentCancel={onFulfillmentCancel}
               onTrackingCodeAdd={onFulfillmentTrackingNumberUpdate}
