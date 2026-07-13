@@ -11,6 +11,7 @@ import { StatusIndicator } from "@dashboard/orders/components/OrderCardTitle/Sta
 import { TrackingNumberDisplay } from "@dashboard/orders/components/OrderCardTitle/TrackingNumberDisplay";
 import { WarehouseInfo } from "@dashboard/orders/components/OrderCardTitle/WarehouseInfo";
 import { ActionButtons } from "@dashboard/orders/components/OrderFulfillmentCard/ActionButtons";
+import { ReasonDisplay } from "@dashboard/orders/components/ReasonDisplay/ReasonDisplay";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
@@ -27,6 +28,18 @@ const MetadataDot = (): JSX.Element => (
     ·
   </span>
 );
+
+const getShipmentReasonDisplay = (
+  fulfillment: NonNullable<OrderDetailsFragment["fulfillments"]>[number],
+  orderLineId: string,
+): { reason?: string | null; reasonReference?: string | null } => {
+  const fulfillmentLine = fulfillment.lines?.find(line => line.orderLine?.id === orderLineId);
+
+  return {
+    reason: fulfillmentLine?.reason ?? fulfillment.reason,
+    reasonReference: fulfillmentLine?.reasonReference?.title ?? fulfillment.reasonReference?.title,
+  };
+};
 
 interface OrderLineExpandedPanelProps {
   lifecycle: OrderLineLifecycle;
@@ -109,6 +122,12 @@ export const OrderLineExpandedPanel = ({
 
             const isCanceled = shipment.status === FulfillmentStatus.CANCELED;
             const sourceWarehouseVariant = isCanceled ? "shippedFrom" : "fulfilledFrom";
+            const { reason, reasonReference } = getShipmentReasonDisplay(
+              fulfillment,
+              lifecycle.orderLineId,
+            );
+
+            const showCancelMenu = cancelableStatuses.includes(fulfillment.status);
 
             return (
               <Box
@@ -130,7 +149,7 @@ export const OrderLineExpandedPanel = ({
                     <Text size={4} fontWeight="medium">
                       {shipment.displayId}
                     </Text>
-                    <StatusIndicator status={shipment.status} />
+                    <StatusIndicator showLabel status={shipment.status} />
                     <MetadataDot />
                     <Text size={3} color="default2">
                       <FormattedMessage
@@ -188,8 +207,11 @@ export const OrderLineExpandedPanel = ({
                       </>
                     )}
                   </Box>
+                  {(reason || reasonReference) && (
+                    <ReasonDisplay reasonReference={reasonReference} reason={reason} />
+                  )}
                 </Box>
-                <Box display="flex" alignItems="center" gap={2}>
+                <Box className={styles.shipmentActions}>
                   <ActionButtons
                     status={fulfillment.status}
                     trackingNumber={fulfillment.trackingNumber}
@@ -201,7 +223,7 @@ export const OrderLineExpandedPanel = ({
                       refundNavigation.canRefund ? () => navigate(refundNavigation.url) : undefined
                     }
                   />
-                  {cancelableStatuses.includes(fulfillment.status) && (
+                  {showCancelMenu ? (
                     <Dropdown>
                       <Dropdown.Trigger>
                         <Button
@@ -239,6 +261,8 @@ export const OrderLineExpandedPanel = ({
                         </List>
                       </Dropdown.Content>
                     </Dropdown>
+                  ) : (
+                    <Box aria-hidden className={styles.shipmentMenuPlaceholder} />
                   )}
                 </Box>
               </Box>

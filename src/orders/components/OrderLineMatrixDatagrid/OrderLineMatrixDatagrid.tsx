@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { type CardMenuItem } from "@dashboard/components/CardMenu";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
@@ -21,17 +22,15 @@ import {
   hasLineReturnableItems,
 } from "@dashboard/orders/utils/getOrderLineActionUrls";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
-import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
 import { type Item, type Theme } from "@glideapps/glide-data-grid";
 import { Box, type vars } from "@saleor/macaw-ui-next";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Undo2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
-import { OrderDetailsRowActions } from "../OrderDetailsDatagrid/OrderDetailsRowActions";
+import { RefundedIcon } from "../../../icons/RefundedIcon";
 import {
   createGetCellContent,
   getMatrixColumnTooltipContent,
@@ -44,6 +43,7 @@ import {
 } from "./datagrid";
 import { messages } from "./messages";
 import styles from "./OrderLineMatrixDatagrid.module.css";
+import { OrderLineMatrixRowActions } from "./OrderLineMatrixRowActions";
 
 interface OrderLineMatrixDatagridProps {
   order: OrderDetailsFragment;
@@ -130,59 +130,70 @@ export const OrderLineMatrixDatagrid = ({
     }),
     [columnsWithPinned, lines, loading, locale, intl, expandedLineId, onShowLinePriceBreakdown],
   );
-  const getMenuItems = useCallback(
-    (index: number) => {
+  const getLineMenuItems = useCallback(
+    (index: number): TopNavMenuItem[] => {
       const lifecycle = lines[index];
       const lineId = lifecycle?.orderLineId;
       const productId = lifecycle?.orderLine.variant?.product.id;
-      const items: CardMenuItem[] = [
+      const items: TopNavMenuItem[] = [
         {
-          disabled: !productId,
           label: intl.formatMessage(messages.productDetails),
-          Icon: productId ? (
-            <Link to={productPath(productId)} target="_blank">
-              <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-            </Link>
-          ) : (
-            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-          ),
-          onSelect: () => false,
+          testId: "matrix-product-details",
+          disabled: !productId,
+          icon: <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          onSelect: () => {
+            if (productId) {
+              window.open(productPath(productId), "_blank", "noopener,noreferrer");
+            }
+          },
         },
       ];
 
       if (lineId && hasLineReturnableItems(order, lineId)) {
         items.push({
           label: intl.formatMessage(messages.returnLine),
+          testId: "matrix-return-line",
+          icon: <Undo2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
           onSelect: () => {
             navigate(getOrderLineReturnUrl(order.id, lineId));
-
-            return true;
           },
         });
       }
 
-      if (lineId && OrderDetailsViewModel.canOrderRefund(order.actions)) {
+      if (lineId) {
         const refundNavigation = getOrderRefundNavigation(order, { lineId });
 
-        items.push({
-          label: intl.formatMessage(messages.refundLine),
-          onSelect: () => {
-            navigate(refundNavigation.url);
-
-            return true;
-          },
-        });
+        if (refundNavigation.canRefund) {
+          items.push({
+            label: intl.formatMessage(messages.refundLine),
+            testId: "matrix-refund-line",
+            icon: <RefundedIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+            onSelect: () => {
+              navigate(refundNavigation.url);
+            },
+          });
+        }
       }
 
       return items;
     },
     [intl, lines, navigate, order],
   );
+  const getMenuItems = useCallback(
+    (index: number): CardMenuItem[] =>
+      getLineMenuItems(index).map(item => ({
+        label: item.label,
+        onSelect: () => {
+          item.onSelect({});
+        },
+      })),
+    [getLineMenuItems],
+  );
   const renderRowActions = useCallback(
     (index: number) => (
-      <OrderDetailsRowActions
+      <OrderLineMatrixRowActions
         key={`matrix-row-actions-${index}`}
-        menuItems={getMenuItems(index)}
+        menuItems={getLineMenuItems(index)}
         onShowMetadata={() => {
           if (lines[index]) {
             onOrderLineShowMetadata(lines[index].orderLineId);
@@ -192,7 +203,7 @@ export const OrderLineMatrixDatagrid = ({
         intl={intl}
       />
     ),
-    [getMenuItems, lines, onOrderLineShowMetadata, loading, intl],
+    [getLineMenuItems, lines, onOrderLineShowMetadata, loading, intl],
   );
   const handleRowClick = useCallback(
     ([col, row]: Item) => {

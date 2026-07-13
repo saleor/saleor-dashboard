@@ -40,6 +40,10 @@ export const WaitingForApproval: Story = {
   args: { status: FulfillmentStatus.WAITING_FOR_APPROVAL },
 };
 
+export const WithLabel: Story = {
+  args: { status: FulfillmentStatus.RETURNED, showLabel: true },
+};
+
 const allStatuses: Array<{ label: string; status: FulfillmentStatus }> = [
   { label: "Refunded", status: FulfillmentStatus.REFUNDED },
   { label: "Returned", status: FulfillmentStatus.RETURNED },

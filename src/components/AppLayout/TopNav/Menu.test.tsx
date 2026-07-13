@@ -63,4 +63,16 @@ describe("TopNav Menu", () => {
     // Assert
     expect(onDelete).toHaveBeenCalled();
   });
+
+  it("renders a custom trigger when provided", () => {
+    // Arrange // Act
+    render(
+      <Menu items={menuItems} trigger={<button type="button" data-test-id="custom-trigger" />} />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.getByTestId("custom-trigger")).toBeInTheDocument();
+    expect(screen.queryByTestId("show-more-button")).not.toBeInTheDocument();
+  });
 });

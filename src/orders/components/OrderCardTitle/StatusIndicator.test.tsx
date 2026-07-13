@@ -138,4 +138,18 @@ describe("StatusIndicator", () => {
       expect(screen.getByLabelText("Refunded and Returned")).toBeInTheDocument();
     });
   });
+
+  describe("when showLabel is true", () => {
+    it("renders visible status text next to the icon", () => {
+      // Arrange & Act
+      render(
+        <Wrapper>
+          <StatusIndicator showLabel status={FulfillmentStatus.RETURNED} />
+        </Wrapper>,
+      );
+
+      // Assert
+      expect(screen.getByText("Returned")).toBeInTheDocument();
+    });
+  });
 });

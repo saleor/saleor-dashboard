@@ -21,3 +21,16 @@
   line-height: 1;
   user-select: none;
 }
+
+.shipmentActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--mu-spacing-2);
+}
+
+.shipmentMenuPlaceholder {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
