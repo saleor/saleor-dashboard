@@ -19,6 +19,7 @@ import { createRoot } from "react-dom/client";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 import { Redirect, Switch } from "react-router-dom";
 
 import { attributeSection } from "./attributes/urls";
@@ -26,6 +27,10 @@ import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
+// DEV-ONLY-PERMISSION-OVERRIDE: remove DevPermissionOverride mount below
+// before pushing upstream. Run `git grep DEV-ONLY-PERMISSION-OVERRIDE` to
+// find every reference to delete.
+import { isAuthOnlyPath } from "./auth/urls";
 import { channelsSection } from "./channels/urls";
 import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
@@ -58,6 +63,17 @@ import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardi
 // Lazy-loaded page sections for code splitting
 const AttributeSection = lazy(() => import("./attributes"));
 const Auth = lazy(() => import("./auth"));
+
+const permissionsDebuggerEnabled =
+  import.meta.env.DEV && import.meta.env.VITE_ENABLE_PERMISSIONS_DEBUGGER === "true";
+
+const DevPermissionOverrideLazy = permissionsDebuggerEnabled
+  ? lazy(async () => {
+      const module = await import("./__dev__/permissionOverride/DevPermissionOverride");
+
+      return { default: module.DevPermissionOverride };
+    })
+  : null;
 const CategorySection = lazy(() => import("./categories"));
 const ChannelsSection = lazy(() => import("./channels"));
 const CollectionSection = lazy(() => import("./collections"));
@@ -135,6 +151,12 @@ const App = (): JSX.Element => (
                                     <FeatureFlagsProviderWithUser>
                                       <OnboardingProvider>
                                         <Routes />
+                                        {/* DEV-ONLY-PERMISSION-OVERRIDE */}
+                                        {DevPermissionOverrideLazy && (
+                                          <Suspense fallback={null}>
+                                            <DevPermissionOverrideLazy />
+                                          </Suspense>
+                                        )}
                                       </OnboardingProvider>
                                     </FeatureFlagsProviderWithUser>
                                   </SavebarRefProvider>
@@ -157,6 +179,7 @@ const App = (): JSX.Element => (
 );
 const Routes = () => {
   const intl = useIntl();
+  const location = useLocation();
   const [, dispatchAppState] = useAppState();
   const { authenticated, authenticating } = useAuthRedirection();
   const { channel } = useAppChannel(false);
@@ -164,11 +187,16 @@ const Routes = () => {
   const homePageLoaded = channelLoaded && authenticated;
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
   const { isAppPath } = useLocationState();
+  const isAuthOnlyRoute = isAuthOnlyPath(location.pathname);
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
-      {homePageLoaded ? (
+      {isAuthOnlyRoute ? (
+        <Suspense fallback={<LoginLoading />}>
+          <Auth />
+        </Suspense>
+      ) : homePageLoaded ? (
         <AppExtensionPopupProvider>
           <AppLayout fullSize={isAppPath}>
             <ErrorBoundary

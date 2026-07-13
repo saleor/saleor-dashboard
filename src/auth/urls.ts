@@ -10,6 +10,14 @@ export const newPasswordPath = "/new-password/";
 
 export const loginCallbackPath = "/login/callback/";
 
+const AUTH_ONLY_PATHS = [newPasswordPath, passwordResetPath, passwordResetSuccessPath] as const;
+
+export const isAuthOnlyPath = (pathname: string): boolean => {
+  const normalizedPath = pathname.endsWith("/") ? pathname : `${pathname}/`;
+
+  return AUTH_ONLY_PATHS.some(path => normalizedPath.endsWith(path));
+};
+
 export interface NewPasswordUrlQueryParams {
   email: string;
   token: string;

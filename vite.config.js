@@ -59,11 +59,46 @@ export default defineConfig(({ command, mode }) => {
     ONBOARDING_USER_JOINED_DATE_THRESHOLD,
     DEPRECATED_SALEOR_VERSION,
     DEPRECATED_SALEOR_VERSION_TIMESTAMP,
+    VITE_ENABLE_PERMISSIONS_DEBUGGER,
     // Multi-schema support
     FF_USE_STAGING_SCHEMA,
 
     npm_package_version,
   } = env;
+
+  const enablePermissionsDebugger = isDev && VITE_ENABLE_PERMISSIONS_DEBUGGER === "true";
+
+  const permissionOverrideBindingPath = path.resolve(
+    __dirname,
+    enablePermissionsDebugger
+      ? "./src/auth/permissionOverrideBinding.dev.ts"
+      : "./src/auth/permissionOverrideBinding.stub.ts",
+  );
+
+  const permissionOverrideBindingPlugin = () => ({
+    name: "permission-override-binding",
+    enforce: "pre",
+    resolveId(source) {
+      const isPermissionOverrideBinding =
+        source === "./permissionOverrideBinding" ||
+        source === "./auth/permissionOverrideBinding" ||
+        source.endsWith("/auth/permissionOverrideBinding") ||
+        source.endsWith("/auth/permissionOverrideBinding.ts") ||
+        source.endsWith("/permissionOverrideBinding.ts");
+
+      if (isPermissionOverrideBinding) {
+        return permissionOverrideBindingPath;
+      }
+
+      return null;
+    },
+  });
+
+  if (enablePermissionsDebugger) {
+    console.log(
+      "[saleor-dashboard] Permission debugger enabled (VITE_ENABLE_PERMISSIONS_DEBUGGER=true)",
+    );
+  }
 
   const base = STATIC_URL ?? "/";
   const featureFlagsEnvs = Object.fromEntries(
@@ -73,6 +108,7 @@ export default defineConfig(({ command, mode }) => {
   const sourcemap = !SKIP_SOURCEMAPS;
 
   const plugins = [
+    permissionOverrideBindingPlugin(),
     react(),
     CodeInspectorPlugin({
       bundler: "vite",
@@ -203,14 +239,8 @@ export default defineConfig(({ command, mode }) => {
         "@locale": path.resolve(__dirname, "./locale"),
         "@dashboard": path.resolve(__dirname, "./src"),
         src: path.resolve(__dirname, "./src"),
-        // Force locally linked packages to use dashboard's React
         react: path.resolve(__dirname, "./node_modules/react"),
         "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
-        /*
-          Moment.js/react-moment does not fully suport ES modules.
-          Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.
-          We enforce to use a different path, ignoring jsnext:main field.
-        */
         moment: path.resolve(__dirname, "./node_modules/moment/min/moment-with-locales.js"),
       },
     },

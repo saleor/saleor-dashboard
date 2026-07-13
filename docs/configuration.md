@@ -24,6 +24,8 @@ Create or edit `.env` file in a root directory or set environment variables with
 
 - `DEPRECATED_SALEOR_VERSION_TIMESTAMP` - Optional. ISO date or timestamp (e.g. `2026-09-01`) shown in the deprecation banner as the automatic upgrade date. Only the date is rendered. Required together with `DEPRECATED_SALEOR_VERSION`.
 
+- `VITE_ENABLE_PERMISSIONS_DEBUGGER` - Optional. Set to `true` to enable the local dev permission debugger widget when running `pnpm dev`. Requires a development server (`vite` dev mode); production builds always use a no-op stub and do not bundle the debugger code.
+
 ## Fetching schema
 
 By default dashboard will use `fetch-schema` script from package.json to get Saleor schema from specific branch e.g `main` for unstable one. If you need to generate types based on your own schema use `fetch-local-schema` that will fetch it from `API_URL`.

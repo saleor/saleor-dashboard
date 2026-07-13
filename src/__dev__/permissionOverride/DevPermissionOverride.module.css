@@ -1,0 +1,133 @@
+.panel {
+  width: 440px;
+  max-width: calc(100vw - 24px);
+}
+
+.tabPanel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.tabList {
+  display: flex;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 12px;
+  margin-bottom: -1px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mu-colors-text-default2);
+  text-align: center;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.tab:hover {
+  color: var(--mu-colors-text-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--mu-colors-text-default1);
+  border-bottom-color: var(--mu-colors-text-default1);
+  background-color: transparent;
+}
+
+.panelBody {
+  height: min(70vh, 520px);
+  box-sizing: border-box;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tabContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tabBodyScroll {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.permissionList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.savedPresetPill {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.savedPresetApply {
+  border: none;
+  background: transparent;
+  padding: 4px 8px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  cursor: pointer;
+  color: var(--mu-colors-text-default1);
+}
+
+.savedPresetApply:hover {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.savedPresetRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-left: 1px solid var(--mu-colors-border-default1);
+  background: transparent;
+  padding: 4px 8px;
+  min-width: 28px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--mu-colors-text-default2);
+}
+
+.savedPresetRemove:hover {
+  background-color: var(--mu-colors-background-default2);
+  color: var(--mu-colors-text-default1);
+}
+
+.profilePermissions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 88px;
+  overflow-y: auto;
+}
