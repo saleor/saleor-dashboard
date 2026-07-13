@@ -1,8 +1,10 @@
+import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useModelsOfTypeQuery } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, Select, Text, Textarea } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { reasonReferenceModalMessages } from "./messages";
@@ -29,15 +31,19 @@ export const ReasonReferenceModal = ({
   referenceModelTypeId,
   onClose,
   onConfirm,
-}: ReasonReferenceModalProps) => {
+}: ReasonReferenceModalProps): JSX.Element => {
   const intl = useIntl();
   const [tempReason, setTempReason] = useState(reason);
   const [tempReference, setTempReference] = useState(reasonReference);
 
-  useEffect(() => {
+  const resetDraft = useCallback(() => {
     setTempReason(reason);
     setTempReference(reasonReference);
-  }, [reason, reasonReference, open]);
+  }, [reason, reasonReference]);
+
+  useModalDialogOpen(open, {
+    onOpen: resetDraft,
+  });
 
   const { data, loading } = useModelsOfTypeQuery({
     variables: {
@@ -67,7 +73,11 @@ export const ReasonReferenceModal = ({
   return (
     <DashboardModal open={open} onChange={onClose}>
       <DashboardModal.Content data-test-id="reason-reference-dialog" size="xs">
-        <DashboardModal.Header>
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceHelperText} />
+          }
+        >
           <FormattedMessage
             {...(hasExistingValue
               ? reasonReferenceModalMessages.editTitle
@@ -75,41 +85,39 @@ export const ReasonReferenceModal = ({
           />
         </DashboardModal.Header>
 
-        <Text color="default2" size={3}>
-          <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceHelperText} />
-        </Text>
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box display="flex" flexDirection="column" gap={4}>
+              <Box display="flex" flexDirection="column" gap={1}>
+                <Text fontWeight="medium" size={3}>
+                  <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceLabel} />
+                </Text>
+                <Select
+                  data-test-id="line-reason-reference-select"
+                  disabled={referenceDisabled || loading}
+                  options={referenceOptions}
+                  value={tempReference}
+                  onChange={value => setTempReference(value as string)}
+                />
+              </Box>
 
-        <Box display="flex" flexDirection="column" gap={4}>
-          <Box display="flex" flexDirection="column" gap={1}>
-            <Text fontWeight="medium" size={3}>
-              <FormattedMessage {...reasonReferenceModalMessages.reasonReferenceLabel} />
-            </Text>
-            <Select
-              data-test-id="line-reason-reference-select"
-              disabled={referenceDisabled || loading}
-              options={referenceOptions}
-              value={tempReference}
-              onChange={value => setTempReference(value as string)}
-            />
-          </Box>
-
-          <Box display="flex" flexDirection="column" gap={1}>
-            <Text fontWeight="medium" size={3}>
-              <FormattedMessage {...reasonReferenceModalMessages.reasonLabel} />
-            </Text>
-            <Textarea
-              data-test-id="line-reason-input"
-              rows={5}
-              value={tempReason}
-              onChange={event => setTempReason(event.target.value)}
-            />
-          </Box>
-        </Box>
+              <Box display="flex" flexDirection="column" gap={1}>
+                <Text fontWeight="medium" size={3}>
+                  <FormattedMessage {...reasonReferenceModalMessages.reasonLabel} />
+                </Text>
+                <Textarea
+                  data-test-id="line-reason-input"
+                  rows={5}
+                  value={tempReason}
+                  onChange={event => setTempReason(event.target.value)}
+                />
+              </Box>
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
-          <Button onClick={onClose} variant="secondary" data-test-id="reason-cancel-button">
-            <FormattedMessage {...buttonMessages.cancel} />
-          </Button>
+          <BackButton onClick={onClose} />
           <Button
             onClick={() => {
               onConfirm({ reason: tempReason, reasonReference: tempReference });
