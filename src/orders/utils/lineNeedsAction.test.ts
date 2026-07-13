@@ -1,4 +1,8 @@
-import { FulfillmentStatus, OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
+import {
+  FulfillmentStatus,
+  type OrderDetailsFragment,
+  OrderGrantedRefundStatusEnum,
+} from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
 import { buildOrderLineLifecycle } from "./buildOrderLineLifecycle";
@@ -49,14 +53,14 @@ describe("lineNeedsAction", () => {
   it("returns true when line has a draft or failed granted refund", () => {
     // Arrange
     const line = OrderFixture.fulfilled().build().lines[0];
-    const order = {
+    const order: OrderDetailsFragment = {
       ...OrderFixture.fulfilled().build(),
       grantedRefunds: [
         {
-          __typename: "OrderGrantedRefund",
+          __typename: "OrderGrantedRefund" as const,
           id: "granted-refund-draft",
           status: OrderGrantedRefundStatusEnum.NONE,
-          amount: { __typename: "Money", amount: 10, currency: "USD" },
+          amount: { __typename: "Money" as const, amount: 10, currency: "USD" },
           reason: "Test",
           createdAt: "2026-07-13T12:00:00Z",
           reasonReference: null,
@@ -66,13 +70,13 @@ describe("lineNeedsAction", () => {
           transactionEvents: [],
           lines: [
             {
-              __typename: "OrderGrantedRefundLine",
+              __typename: "OrderGrantedRefundLine" as const,
               id: "granted-line-1",
               quantity: 1,
               reason: null,
               reasonReference: null,
               orderLine: {
-                __typename: "OrderLine",
+                __typename: "OrderLine" as const,
                 id: line.id,
                 productName: line.productName,
                 variantName: line.variant?.name ?? "",

@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { OrderGrantedRefundStatusEnum, TransactionEventTypeEnum } from "@dashboard/graphql";
+import {
+  type OrderDetailsFragment,
+  OrderGrantedRefundStatusEnum,
+  TransactionEventTypeEnum,
+} from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 import { buildOrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import Wrapper from "@test/wrapper";
@@ -10,17 +14,17 @@ import { OrderLineExpandedPanel } from "./OrderLineExpandedPanel";
 
 const line = OrderFixture.fulfilled().build().lines[0];
 
-const createOrderWithDraftRefund = () => {
+const createOrderWithDraftRefund = (): OrderDetailsFragment => {
   const order = OrderFixture.fulfilled().build();
 
   return {
     ...order,
     grantedRefunds: [
       {
-        __typename: "OrderGrantedRefund",
+        __typename: "OrderGrantedRefund" as const,
         id: "granted-refund-draft",
         status: OrderGrantedRefundStatusEnum.NONE,
-        amount: { __typename: "Money", amount: 25, currency: "USD" },
+        amount: { __typename: "Money" as const, amount: 25, currency: "USD" },
         reason: "Customer changed mind",
         createdAt: "2023-10-06T12:00:00Z",
         reasonReference: null,
@@ -30,13 +34,13 @@ const createOrderWithDraftRefund = () => {
         transactionEvents: [],
         lines: [
           {
-            __typename: "OrderGrantedRefundLine",
+            __typename: "OrderGrantedRefundLine" as const,
             id: "granted-line-1",
             quantity: 1,
             reason: null,
             reasonReference: null,
             orderLine: {
-              __typename: "OrderLine",
+              __typename: "OrderLine" as const,
               id: line.id,
               productName: line.productName,
               variantName: line.variant?.name ?? "",
@@ -93,13 +97,13 @@ describe("OrderLineExpandedPanel", () => {
           status: OrderGrantedRefundStatusEnum.FAILURE,
           transactionEvents: [
             {
-              __typename: "TransactionEvent",
+              __typename: "TransactionEvent" as const,
               id: "event-failure",
               type: TransactionEventTypeEnum.REFUND_FAILURE,
               message: "Refund amount exceeds captured amount",
               createdAt: "2026-07-13T12:46:00Z",
               pspReference: "psp-1",
-              amount: { __typename: "Money", amount: 25, currency: "USD" },
+              amount: { __typename: "Money" as const, amount: 25, currency: "USD" },
               externalUrl: "",
               reasonReference: null,
             },

@@ -1,3 +1,5 @@
+import { type IntlShape } from "react-intl";
+
 import {
   getRefundFailureDisplayMessage,
   refundFailureDisplayMessages,
@@ -6,7 +8,7 @@ import {
 describe("getRefundFailureDisplayMessage", () => {
   const intl = {
     formatMessage: (descriptor: { defaultMessage: string }) => descriptor.defaultMessage,
-  };
+  } as IntlShape;
 
   it("returns provider message when present", () => {
     // Arrange // Act

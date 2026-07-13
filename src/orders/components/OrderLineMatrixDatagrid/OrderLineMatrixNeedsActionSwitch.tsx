@@ -16,7 +16,7 @@ export const OrderLineMatrixNeedsActionSwitch = ({
   const intl = useIntl();
 
   return (
-    <Box display="flex" alignItems="center" gap={2} flexShrink={0}>
+    <Box display="flex" alignItems="center" gap={2} flexShrink="0">
       <Text size={2} fontWeight="medium">
         {intl.formatMessage(messages.needsAction)}
       </Text>

@@ -263,7 +263,7 @@ describe("OrderRefundsViewModel", () => {
         id: "event-associated",
       });
       const grantedRefundWithEvent = createGrantedRefund({
-        transactionEvents: [{ __typename: "TransactionEvent", id: "event-associated" }],
+        transactionEvents: [transactionEventAssociated],
       });
 
       // Act

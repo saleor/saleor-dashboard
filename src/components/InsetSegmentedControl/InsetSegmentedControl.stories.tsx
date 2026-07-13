@@ -7,6 +7,7 @@ import { fn } from "storybook/test";
 import {
   InsetSegmentedControl,
   type InsetSegmentedControlOption,
+  type InsetSegmentedControlProps,
   insetSegmentLabel,
 } from "./InsetSegmentedControl";
 
@@ -67,11 +68,11 @@ export const TextOnly: Story = {
 };
 
 export const Interactive: Story = {
-  render: args => {
+  render: (args: InsetSegmentedControlProps<ViewMode>) => {
     const [value, setValue] = useState<ViewMode>("financial");
 
     return (
-      <InsetSegmentedControl
+      <InsetSegmentedControl<ViewMode>
         {...args}
         options={VIEW_OPTIONS}
         value={value}

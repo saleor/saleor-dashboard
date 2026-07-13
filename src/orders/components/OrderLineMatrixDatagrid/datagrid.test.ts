@@ -1,3 +1,5 @@
+import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { Locale } from "@dashboard/components/Locale";
 import {
   createGetCellContent,
   getMatrixColumnTooltipContent,
@@ -95,10 +97,16 @@ describe("createGetCellContent refunded columns", () => {
     columns,
     data: [lifecycle],
     loading: false,
-    locale: "en",
+    locale: Locale.EN,
     intl: intl as IntlShape,
     expandedLineId: null,
   });
+  const getCellContentOpts: GetCellContentOpts = {
+    changes: { current: [] },
+    added: [],
+    removed: [],
+    getChangeIndex: () => -1,
+  };
 
   it("renders fulfillment refund quantity separately from transaction refunds", () => {
     // Arrange
@@ -106,11 +114,8 @@ describe("createGetCellContent refunded columns", () => {
     const grantedRefundColumnIndex = 1;
 
     // Act
-    const fulfillmentCell = getCellContent([refundedColumnIndex, 0], { added: [], removed: [] });
-    const transactionCell = getCellContent([grantedRefundColumnIndex, 0], {
-      added: [],
-      removed: [],
-    });
+    const fulfillmentCell = getCellContent([refundedColumnIndex, 0], getCellContentOpts);
+    const transactionCell = getCellContent([grantedRefundColumnIndex, 0], getCellContentOpts);
 
     // Assert
     expect(fulfillmentCell).toMatchObject({ data: "2" });
