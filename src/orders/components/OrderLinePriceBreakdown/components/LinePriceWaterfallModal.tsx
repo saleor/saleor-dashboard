@@ -1,9 +1,9 @@
-import BackButton from "@dashboard/components/BackButton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
-import modalStyles from "@dashboard/components/Modal/DashboardModal.module.css";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Modal, Text } from "@saleor/macaw-ui-next";
-import { AlertTriangle, X } from "lucide-react";
+import { OrderLineDiscountLineDetails } from "@dashboard/orders/components/OrderDiscountModal/OrderLineDiscountLineDetails";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { AlertTriangle } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "../messages";
@@ -20,73 +20,42 @@ export const LinePriceWaterfallModal = ({ waterfall, onClose }: LinePriceWaterfa
 
   return (
     <DashboardModal open onChange={onClose}>
-      <DashboardModal.Content size="sm" className={modalStyles.modalContent}>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="flex-start"
-          gap={4}
-          overflow="hidden"
-        >
-          <Box display="flex" gap={4} alignItems="center" overflow="hidden" __minWidth={0}>
-            {waterfall.thumbnailUrl && (
-              <Box
-                as="img"
-                src={waterfall.thumbnailUrl}
-                alt=""
-                __width="48px"
-                __height="48px"
-                objectFit="cover"
-                borderRadius={2}
-                flexShrink="0"
-              />
-            )}
-            <Box display="flex" flexDirection="column" gap={0.5} overflow="hidden" __minWidth={0}>
-              <Text size={5} fontWeight="bold">
-                <FormattedMessage {...messages.modalTitle} />
-              </Text>
-              <Text size={2} color="default2" className={modalStyles.truncatedText}>
-                {waterfall.productName}
-                {waterfall.variantName && ` \u00b7 ${waterfall.variantName}`}
-              </Text>
-              <Text size={2} color="default2" className={modalStyles.truncatedText}>
-                {waterfall.productSku && (
-                  <>
-                    <FormattedMessage {...messages.skuLabel} />
-                    {`: ${waterfall.productSku} \u00b7 `}
-                  </>
-                )}
-                <FormattedMessage {...messages.quantityLabel} />
-                {`: ${waterfall.quantity}`}
-              </Text>
-            </Box>
-          </Box>
-          <Modal.Close>
-            <Button
-              data-test-id="close-button"
-              icon={<X size={20} />}
-              size="small"
-              variant="tertiary"
-              flexShrink="0"
-              aria-label={intl.formatMessage(buttonMessages.close)}
-              title={intl.formatMessage(buttonMessages.close)}
+      <DashboardModal.Content size="sm">
+        <DashboardModal.ContextHeader
+          description={
+            <OrderLineDiscountLineDetails
+              productName={waterfall.productName}
+              variantName={waterfall.variantName}
+              productSku={waterfall.productSku}
+              quantity={waterfall.quantity}
+              thumbnailUrl={waterfall.thumbnailUrl}
             />
-          </Modal.Close>
-        </Box>
+          }
+          wrapDescription={false}
+        >
+          <FormattedMessage {...messages.modalTitle} />
+        </DashboardModal.ContextHeader>
 
-        <PriceWaterfallList waterfall={waterfall} />
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box display="flex" flexDirection="column" gap={4}>
+              <PriceWaterfallList waterfall={waterfall} />
 
-        {waterfall.warnings.length > 0 && (
-          <Box display="flex" flexDirection="column" gap={2}>
-            {waterfall.warnings.map((w, i) => (
-              <WarningCallout key={i} warning={w} />
-            ))}
-          </Box>
-        )}
+              {waterfall.warnings.length > 0 && (
+                <Box display="flex" flexDirection="column" gap={2}>
+                  {waterfall.warnings.map((warning, index) => (
+                    <WarningCallout key={`${warning.id}-${index}`} warning={warning} />
+                  ))}
+                </Box>
+              )}
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
-          <Box flexGrow="1" />
-          <BackButton onClick={onClose}>{intl.formatMessage(buttonMessages.close)}</BackButton>
+          <Button data-test-id="back" variant="secondary" onClick={onClose}>
+            {intl.formatMessage(buttonMessages.close)}
+          </Button>
         </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
@@ -103,22 +72,28 @@ const WarningCallout = ({ warning }: WarningCalloutProps) => {
     switch (warning.id) {
       case "manual_overrides_automatic":
         return intl.formatMessage(messages.warningManualOverridesAutomatic);
+      default:
+        return null;
     }
   })();
+
+  if (!message) {
+    return null;
+  }
 
   return (
     <Box
       display="flex"
       alignItems="flex-start"
-      gap={2}
+      gap={3}
       padding={3}
       borderStyle="solid"
       borderColor="default1"
       borderWidth={1}
       borderRadius={3}
     >
-      <Box color="default2" __lineHeight="0" __marginTop="2px" flexShrink="0">
-        <AlertTriangle size={16} />
+      <Box color="warning1" __lineHeight="0" __marginTop="2px" flexShrink="0">
+        <AlertTriangle size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
       </Box>
       <Text size={2} color="default2">
         {message}
