@@ -13,13 +13,13 @@ const waterfall: LinePriceWaterfall = {
   thumbnailUrl: "https://example.com/thumb.png",
   quantity: 1,
   fractionDigits: 2,
-  start: { amount: 100, currency: "USD" },
-  end: { amount: 60, currency: "USD" },
+  start: { __typename: "Money", amount: 100, currency: "USD" },
+  end: { __typename: "Money", amount: 60, currency: "USD" },
   factors: [
     {
       kind: "catalogue_promotion",
       name: "Summer sale",
-      signedDelta: { amount: 40, currency: "USD" },
+      signedDelta: { __typename: "Money", amount: 40, currency: "USD" },
       sourceType: OrderDiscountType.SALE,
     },
   ],

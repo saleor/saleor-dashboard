@@ -134,9 +134,16 @@ export const OrderDetailsItemsSection = ({
       return;
     }
 
-    setViewMode("matrix");
+    // Guard against re-triggering: setViewMode always creates a new settings
+    // object (and writes to localStorage), so calling it unconditionally here
+    // would re-render and re-run this effect in an endless loop while a line
+    // is focused, saturating the main thread and making grid scroll janky.
+    if (viewMode !== "matrix") {
+      setViewMode("matrix");
+    }
+
     setExpandedLineId(focusedLineId);
-  }, [focusedLineId, lifecycleRows, onFocusedLineChange, setViewMode]);
+  }, [focusedLineId, lifecycleRows, onFocusedLineChange, setViewMode, viewMode]);
 
   const viewModeOptions = useMemo(
     (): InsetSegmentedControlOption<OrderDetailsViewMode>[] => [

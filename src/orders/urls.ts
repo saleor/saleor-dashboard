@@ -275,7 +275,7 @@ interface TransactionAction {
 }
 
 export type OrderUrlQueryParams =
-  | (Dialog<OrderUrlDialog> & SingleAction & OrderDetailsFocusFilters & { type?: never })
+  | (Dialog<OrderUrlDialog> & SingleAction & OrderDetailsFocusFilters & { type?: undefined })
   | (TransactionAction & OrderDetailsFocusFilters);
 
 export const withOrderLineFocus = (
@@ -299,6 +299,9 @@ export const withOrderFulfillmentDialog = (
   ...params,
   action,
   id: fulfillmentId,
+  // Fulfillment dialogs never carry a transaction type; drop it so the
+  // result matches the non-transaction branch of the params union.
+  type: undefined,
 });
 
 type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
