@@ -7,6 +7,7 @@ import { getUserInitials, getUserName, type User } from "@dashboard/misc";
 import { refundGridMessages } from "@dashboard/orders/components/OrderDetailsRefundTable/messages";
 import { RefundTransferFailureInfo } from "@dashboard/orders/components/RefundTransferFailureInfo/RefundTransferFailureInfo";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
+import { getRefundFailureDisplayMessage } from "@dashboard/orders/utils/getRefundFailureDisplayMessage";
 import {
   type OrderRefundDisplay,
   OrderRefundsViewModel,
@@ -82,9 +83,9 @@ export const OrderDetailsRefundLine = ({ refund, orderId }: OrderDetailsRefundLi
               label={getGrantedRefundStatusMessage(refund.status, intl).toUpperCase()}
               size="small"
             />
-            {refund.status === OrderGrantedRefundStatusEnum.FAILURE && refund.failureMessage && (
+            {refund.status === OrderGrantedRefundStatusEnum.FAILURE && (
               <RefundTransferFailureInfo
-                message={refund.failureMessage}
+                message={getRefundFailureDisplayMessage(refund.failureMessage, intl)}
                 testId="refund-failure-info"
               />
             )}

@@ -204,7 +204,6 @@ export const defaultListSettings: AppListViewSettings = {
   [ListViews.ORDER_LINE_MATRIX_LIST]: {
     rowNumber: PAGINATE_BY,
     columns: [
-      "status",
       "product",
       "sku",
       "variantName",

@@ -36,6 +36,7 @@ import {
   isLineDiscounted,
   isPinnedMatrixColumn,
   isPriceBreakdownColumn,
+  mapPinnedGridColumnMove,
   orderLineMatrixStaticColumnsAdapter,
   PINNED_MATRIX_COLUMN_IDS,
   STATUS_COLUMN_ID,
@@ -128,7 +129,6 @@ export const OrderLineMatrixDatagrid = ({
       expandedLineId,
       interactivePricing: Boolean(onShowLinePriceBreakdown),
       needsActionOnly,
-      order,
       mutedTextColor: themeValues.colors.text.default2,
     }),
     [
@@ -140,9 +140,24 @@ export const OrderLineMatrixDatagrid = ({
       expandedLineId,
       onShowLinePriceBreakdown,
       needsActionOnly,
-      order,
       themeValues.colors.text.default2,
     ],
+  );
+  const handleColumnMoved = useCallback(
+    (startIndex: number, endIndex: number) => {
+      const mappedMove = mapPinnedGridColumnMove(
+        startIndex,
+        endIndex,
+        PINNED_MATRIX_COLUMN_IDS.length,
+      );
+
+      if (!mappedMove) {
+        return;
+      }
+
+      handlers.onMove(mappedMove.startIndex, mappedMove.endIndex);
+    },
+    [handlers.onMove],
   );
   const getLineMenuItems = useCallback(
     (index: number): TopNavMenuItem[] => {
@@ -285,7 +300,7 @@ export const OrderLineMatrixDatagrid = ({
             rows={loading ? 1 : lines.length}
             selectionActions={() => null}
             onColumnResize={handlers.onResize}
-            onColumnMoved={handlers.onMove}
+            onColumnMoved={handleColumnMoved}
             recentlyAddedColumn={recentlyAddedColumn}
             renderColumnPicker={() => (
               <ColumnPicker

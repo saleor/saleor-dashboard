@@ -1,6 +1,7 @@
 import {
   createGetCellContent,
   getMatrixColumnTooltipContent,
+  mapPinnedGridColumnMove,
 } from "@dashboard/orders/components/OrderLineMatrixDatagrid/datagrid";
 import { messages } from "@dashboard/orders/components/OrderLineMatrixDatagrid/messages";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
@@ -34,6 +35,34 @@ describe("getMatrixColumnTooltipContent", () => {
 
     // Assert
     expect(tooltip).toBe("");
+  });
+});
+
+describe("mapPinnedGridColumnMove", () => {
+  const pinnedColumnCount = 1;
+
+  it("maps grid indices to unpinned column indices", () => {
+    // Arrange // Act
+    const mappedMove = mapPinnedGridColumnMove(2, 4, pinnedColumnCount);
+
+    // Assert
+    expect(mappedMove).toEqual({ startIndex: 1, endIndex: 3 });
+  });
+
+  it("returns null when moving a pinned column", () => {
+    // Arrange // Act
+    const mappedMove = mapPinnedGridColumnMove(0, 2, pinnedColumnCount);
+
+    // Assert
+    expect(mappedMove).toBeNull();
+  });
+
+  it("returns null when dropping onto a pinned column", () => {
+    // Arrange // Act
+    const mappedMove = mapPinnedGridColumnMove(2, 0, pinnedColumnCount);
+
+    // Assert
+    expect(mappedMove).toBeNull();
   });
 });
 

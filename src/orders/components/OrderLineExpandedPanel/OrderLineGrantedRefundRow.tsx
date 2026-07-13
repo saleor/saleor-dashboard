@@ -8,6 +8,7 @@ import { ReasonDisplay } from "@dashboard/orders/components/ReasonDisplay/Reason
 import { RefundTransferFailureInfo } from "@dashboard/orders/components/RefundTransferFailureInfo/RefundTransferFailureInfo";
 import { orderTransactionRefundEditUrl } from "@dashboard/orders/urls";
 import { type LineGrantedRefundEntry } from "@dashboard/orders/utils/buildOrderLineLifecycle";
+import { getRefundFailureDisplayMessage } from "@dashboard/orders/utils/getRefundFailureDisplayMessage";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Pencil } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -64,9 +65,9 @@ export const OrderLineGrantedRefundRow = ({
             label={statusLabel.toUpperCase()}
             size="small"
           />
-          {entry.status === OrderGrantedRefundStatusEnum.FAILURE && entry.failureMessage && (
+          {entry.status === OrderGrantedRefundStatusEnum.FAILURE && (
             <RefundTransferFailureInfo
-              message={entry.failureMessage}
+              message={getRefundFailureDisplayMessage(entry.failureMessage, intl)}
               testId="granted-refund-failure-info"
             />
           )}

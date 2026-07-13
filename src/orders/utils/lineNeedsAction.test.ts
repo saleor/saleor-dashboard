@@ -43,7 +43,7 @@ describe("lineNeedsAction", () => {
     const [lifecycle] = buildOrderLineLifecycle(order);
 
     // Act // Assert
-    expect(lineNeedsAction(lifecycle, order)).toBe(true);
+    expect(lineNeedsAction(lifecycle)).toBe(true);
   });
 
   it("returns true when line has a draft or failed granted refund", () => {
@@ -86,7 +86,7 @@ describe("lineNeedsAction", () => {
     const [lifecycle] = buildOrderLineLifecycle(order);
 
     // Act // Assert
-    expect(lineNeedsAction(lifecycle, order)).toBe(true);
+    expect(lineNeedsAction(lifecycle)).toBe(true);
   });
 
   it("returns false when fulfilled line has no blocking issues", () => {
@@ -95,6 +95,6 @@ describe("lineNeedsAction", () => {
     const [lifecycle] = buildOrderLineLifecycle(order);
 
     // Act // Assert
-    expect(lineNeedsAction(lifecycle, order)).toBe(false);
+    expect(lineNeedsAction(lifecycle)).toBe(false);
   });
 });

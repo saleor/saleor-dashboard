@@ -13,7 +13,6 @@ import {
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type Locale } from "@dashboard/components/Locale";
-import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { getDatagridRowDataIndex } from "@dashboard/misc";
 import {
   isLineDiscounted,
@@ -131,7 +130,6 @@ interface GetCellContentProps {
   expandedLineId: string | null;
   interactivePricing?: boolean;
   needsActionOnly?: boolean;
-  order?: OrderDetailsFragment;
   mutedTextColor?: string;
 }
 
@@ -185,7 +183,6 @@ export const createGetCellContent =
     expandedLineId,
     interactivePricing,
     needsActionOnly = false,
-    order,
     mutedTextColor,
   }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
@@ -206,8 +203,7 @@ export const createGetCellContent =
 
     const line = rowData.orderLine;
     const isExpanded = expandedLineId === rowData.orderLineId;
-    const isMuted =
-      needsActionOnly && order && mutedTextColor ? !lineNeedsAction(rowData, order) : false;
+    const isMuted = needsActionOnly && mutedTextColor ? !lineNeedsAction(rowData) : false;
 
     const withMutedStyle = (cell: GridCell): GridCell =>
       applyMutedCellStyle(cell, isMuted, mutedTextColor ?? "");
@@ -312,6 +308,21 @@ export const getMatrixColumnTooltipContent = (
 };
 
 export { isLineDiscounted, isPinnedMatrixColumn, isPriceBreakdownColumn };
+
+export const mapPinnedGridColumnMove = (
+  startIndex: number,
+  endIndex: number,
+  pinnedColumnCount: number,
+): { startIndex: number; endIndex: number } | null => {
+  if (startIndex < pinnedColumnCount || endIndex < pinnedColumnCount) {
+    return null;
+  }
+
+  return {
+    startIndex: startIndex - pinnedColumnCount,
+    endIndex: endIndex - pinnedColumnCount,
+  };
+};
 
 const readonlyOptions: Partial<GridCell> = {
   allowOverlay: false,
