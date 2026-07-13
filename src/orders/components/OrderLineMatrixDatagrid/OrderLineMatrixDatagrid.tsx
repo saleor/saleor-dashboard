@@ -17,10 +17,10 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import {
-  getOrderLineRefundUrl,
   getOrderLineReturnUrl,
   hasLineReturnableItems,
 } from "@dashboard/orders/utils/getOrderLineActionUrls";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { productPath } from "@dashboard/products/urls";
 import { ListViews } from "@dashboard/types";
@@ -162,10 +162,12 @@ export const OrderLineMatrixDatagrid = ({
       }
 
       if (lineId && OrderDetailsViewModel.canOrderRefund(order.actions)) {
+        const refundNavigation = getOrderRefundNavigation(order, { lineId });
+
         items.push({
           label: intl.formatMessage(messages.refundLine),
           onSelect: () => {
-            navigate(getOrderLineRefundUrl(order, lineId));
+            navigate(refundNavigation.url);
 
             return true;
           },

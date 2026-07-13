@@ -30,6 +30,7 @@ import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataD
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
@@ -54,9 +55,7 @@ import OrderShippingMethodEditDialog from "../../../components/OrderShippingMeth
 import {
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
-  orderPaymentRefundUrl,
   orderReturnUrl,
-  orderTransactionRefundUrl,
   orderUrl,
   type OrderUrlQueryParams,
 } from "../../../urls";
@@ -133,6 +132,7 @@ export const OrderUnconfirmedDetails = ({
   const order = data.order;
   const shop = data.shop;
   const navigate = useNavigator();
+  const refundNavigation = useMemo(() => (order ? getOrderRefundNavigation(order) : null), [order]);
   const {
     loadMore,
     search: variantSearch,
@@ -276,7 +276,7 @@ export const OrderUnconfirmedDetails = ({
             }
             onPaymentCapture={() => openModal("capture")}
             onPaymentVoid={() => openModal("void")}
-            onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
+            onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
@@ -535,7 +535,9 @@ export const OrderUnconfirmedDetails = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
+        onStandardRefund={() =>
+          refundNavigation && navigate(refundNavigation.url, { replace: true })
+        }
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
     </>

@@ -4,6 +4,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
 import { StatusIndicator } from "@dashboard/orders/components/OrderCardTitle/StatusIndicator";
@@ -11,6 +12,7 @@ import { TrackingNumberDisplay } from "@dashboard/orders/components/OrderCardTit
 import { WarehouseInfo } from "@dashboard/orders/components/OrderCardTitle/WarehouseInfo";
 import { ActionButtons } from "@dashboard/orders/components/OrderFulfillmentCard/ActionButtons";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { EllipsisVertical } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,7 +48,9 @@ export const OrderLineExpandedPanel = ({
   onTrackingCodeAdd,
 }: OrderLineExpandedPanelProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const { locale } = useLocale();
+  const refundNavigation = getOrderRefundNavigation(order);
   const line = lifecycle.orderLine;
   const shipments = lifecycle.shipments;
 
@@ -187,14 +191,15 @@ export const OrderLineExpandedPanel = ({
                 </Box>
                 <Box display="flex" alignItems="center" gap={2}>
                   <ActionButtons
-                    orderId={order.id}
                     status={fulfillment.status}
                     trackingNumber={fulfillment.trackingNumber}
                     orderIsPaid={order.isPaid}
                     fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
-                    hasTransactions={Boolean(order.transactions?.length)}
                     onTrackingCodeAdd={() => onTrackingCodeAdd(fulfillment.id)}
                     onApprove={() => onOrderFulfillmentApprove(fulfillment.id)}
+                    onRefund={
+                      refundNavigation.canRefund ? () => navigate(refundNavigation.url) : undefined
+                    }
                   />
                   {cancelableStatuses.includes(fulfillment.status) && (
                     <Dropdown>

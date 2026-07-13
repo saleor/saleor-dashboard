@@ -2,10 +2,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import { orderHasTransactions } from "@dashboard/orders/types";
 import { getFulfillmentWarehouseDisplay } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
 import { useMemo } from "react";
@@ -64,7 +65,9 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     showBottomSeparator = false,
   } = props;
   const intl = useIntl();
+  const navigate = useNavigator();
   const { themeValues } = useTheme();
+  const refundNavigation = order ? getOrderRefundNavigation(order) : null;
   const warehouseDisplay = useMemo(
     () => (order ? getFulfillmentWarehouseDisplay(order, fulfillment) : undefined),
     [fulfillment, order],
@@ -111,14 +114,15 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
               />
             )}
             <ActionButtons
-              orderId={order?.id}
               status={fulfillment?.status}
               trackingNumber={fulfillment?.trackingNumber}
               orderIsPaid={order?.isPaid}
               fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
               onTrackingCodeAdd={onTrackingCodeAdd}
               onApprove={onOrderFulfillmentApprove}
-              hasTransactions={orderHasTransactions(order)}
+              onRefund={
+                refundNavigation?.canRefund ? () => navigate(refundNavigation.url) : undefined
+              }
             />
             {cancelableStatuses.includes(fulfillment?.status) && (
               <Dropdown>

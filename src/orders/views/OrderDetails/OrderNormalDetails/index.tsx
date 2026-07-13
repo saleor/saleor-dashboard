@@ -38,6 +38,7 @@ import {
   isAnyAddressEditModalOpen,
   transformFuflillmentLinesToStockFormsetData,
 } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
 import {
   type CloseModalFunction,
@@ -60,9 +61,7 @@ import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
-  orderPaymentRefundUrl,
   orderReturnUrl,
-  orderTransactionRefundUrl,
   orderUrl,
   type OrderUrlDialog,
   type OrderUrlQueryParams,
@@ -135,6 +134,7 @@ export const OrderNormalDetails = ({
   const order = data?.order;
   const shop = data?.shop;
   const navigate = useNavigator();
+  const refundNavigation = useMemo(() => (order ? getOrderRefundNavigation(order) : null), [order]);
   const { data: warehousesData } = useWarehouseListQuery({
     displayLoader: true,
     variables: {
@@ -284,7 +284,7 @@ export const OrderNormalDetails = ({
         }
         onPaymentCapture={() => openModal("capture")}
         onPaymentVoid={() => openModal("void")}
-        onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
+        onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
@@ -516,7 +516,9 @@ export const OrderNormalDetails = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
+        onStandardRefund={() =>
+          refundNavigation && navigate(refundNavigation.url, { replace: true })
+        }
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
 

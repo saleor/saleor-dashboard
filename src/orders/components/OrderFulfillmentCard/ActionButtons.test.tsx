@@ -8,11 +8,9 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
 
 describe("ActionButtons", () => {
   const defaultProps = {
-    orderId: "order-1",
     trackingNumber: undefined,
     orderIsPaid: true,
     fulfillmentAllowUnpaid: false,
-    hasTransactions: false,
     onTrackingCodeAdd: jest.fn(),
     onApprove: jest.fn(),
   };

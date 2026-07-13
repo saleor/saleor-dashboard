@@ -1,8 +1,8 @@
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
 
 import { getUnfulfilledLines } from "../components/OrderReturnPage/utils";
-import { orderHasTransactions } from "../types";
-import { orderPaymentRefundUrl, orderReturnUrl, orderTransactionRefundUrl } from "../urls";
+import { orderReturnUrl } from "../urls";
+import { getOrderRefundNavigation } from "./getOrderRefundNavigation";
 
 const RETURNABLE_FULFILLMENT_STATUSES = new Set<FulfillmentStatus>([
   FulfillmentStatus.FULFILLED,
@@ -27,10 +27,5 @@ export const hasLineReturnableItems = (order: OrderDetailsFragment, lineId: stri
 export const getOrderLineReturnUrl = (orderId: string, lineId: string) =>
   orderReturnUrl(orderId, { lineId });
 
-export const getOrderLineRefundUrl = (order: OrderDetailsFragment, lineId: string) => {
-  if (orderHasTransactions(order)) {
-    return orderTransactionRefundUrl(order.id, { lineId });
-  }
-
-  return orderPaymentRefundUrl(order.id);
-};
+export const getOrderLineRefundUrl = (order: OrderDetailsFragment, lineId: string) =>
+  getOrderRefundNavigation(order, { lineId }).url;
