@@ -1,9 +1,9 @@
-import { type CategoryFragment } from "@dashboard/graphql";
+import { type CategoryListRow } from "@dashboard/categories/views/CategoryList/types";
 import { atom, createStore, Provider as JotaiProvider, useAtomValue } from "jotai";
 import { type PropsWithChildren, useEffect, useState } from "react";
 
 export interface CategoryListPageState {
-  categories: CategoryFragment[];
+  rows: CategoryListRow[];
   selectedCategoriesIds: string[];
   onCategoriesDelete: () => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
@@ -12,8 +12,7 @@ export interface CategoryListPageState {
   onCategoryExpandToggle?: (categoryId: string) => void;
   isCategoryChildrenLoading?: (categoryId: string) => boolean;
   getCategoryDepth?: (categoryId: string) => number;
-  subcategoryPageSize: number;
-  onSubcategoryPageSizeChange: (value: number) => void;
+  onLoadMoreSubcategories?: (parentId: string) => void;
   hasExpandedSubcategories: boolean;
   onCollapseAllSubcategories: () => void;
 }

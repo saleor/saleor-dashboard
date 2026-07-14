@@ -22,12 +22,23 @@ const makeCategory = (id: string, childrenCount: number, name = "Category"): Cat
     },
   }) as CategoryFragment;
 
+const makeCategoryRow = (
+  category: CategoryFragment,
+  depth = 0,
+  parentId: string | null = null,
+) => ({
+  type: "category" as const,
+  category,
+  depth,
+  parentId,
+});
+
 describe("CategoryListDatagrid createGetCellContent", () => {
   it("should return empty expand cell when category has no subcategories", () => {
     // Arrange
     const columns = [categoryListExpandColumn, nameColumn, subcategoriesColumn, productsColumn];
-    const categories: CategoryFragment[] = [makeCategory("cat-1", 0)];
-    const getCellContent = createGetCellContent(categories, columns);
+    const rows = [makeCategoryRow(makeCategory("cat-1", 0))];
+    const getCellContent = createGetCellContent(rows, columns);
 
     // Act
     const result = getCellContent([0, 0]);
@@ -44,8 +55,8 @@ describe("CategoryListDatagrid createGetCellContent", () => {
   it("should return loading cell for subcategories while children are loading", () => {
     // Arrange
     const columns = [categoryListExpandColumn, nameColumn, subcategoriesColumn, productsColumn];
-    const categories: CategoryFragment[] = [makeCategory("cat-1", 3)];
-    const getCellContent = createGetCellContent(categories, columns, {
+    const rows = [makeCategoryRow(makeCategory("cat-1", 3))];
+    const getCellContent = createGetCellContent(rows, columns, {
       isCategoryChildrenLoading: categoryId => categoryId === "cat-1",
     });
 
@@ -56,7 +67,7 @@ describe("CategoryListDatagrid createGetCellContent", () => {
     expect(result).toMatchObject({
       kind: GridCellKind.Custom,
       data: {
-        kind: "spinner-cell",
+        kind: "throbber-cell",
       },
     });
   });
@@ -64,11 +75,11 @@ describe("CategoryListDatagrid createGetCellContent", () => {
   it("should return expanded and collapsed chevrons", () => {
     // Arrange
     const columns = [categoryListExpandColumn, nameColumn, subcategoriesColumn, productsColumn];
-    const categories: CategoryFragment[] = [makeCategory("cat-1", 2)];
-    const getCollapsedCell = createGetCellContent(categories, columns, {
+    const rows = [makeCategoryRow(makeCategory("cat-1", 2))];
+    const getCollapsedCell = createGetCellContent(rows, columns, {
       isCategoryExpanded: () => false,
     });
-    const getExpandedCell = createGetCellContent(categories, columns, {
+    const getExpandedCell = createGetCellContent(rows, columns, {
       isCategoryExpanded: () => true,
     });
 
@@ -96,8 +107,8 @@ describe("CategoryListDatagrid createGetCellContent", () => {
   it("should indent category name based on depth", () => {
     // Arrange
     const columns = [nameColumn, subcategoriesColumn, productsColumn];
-    const categories: CategoryFragment[] = [makeCategory("cat-1", 0, "Phones")];
-    const getCellContent = createGetCellContent(categories, columns, {
+    const rows = [makeCategoryRow(makeCategory("cat-1", 0, "Phones"), 2)];
+    const getCellContent = createGetCellContent(rows, columns, {
       getCategoryDepth: () => 2,
     });
 
@@ -108,6 +119,39 @@ describe("CategoryListDatagrid createGetCellContent", () => {
     expect(result).toMatchObject({
       kind: GridCellKind.Text,
       data: "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0Phones",
+    });
+  });
+
+  it("should render load more label in name column", () => {
+    // Arrange
+    const columns = [nameColumn, subcategoriesColumn, productsColumn];
+    const rows = [
+      {
+        type: "load-more" as const,
+        parentId: "cat-1",
+        depth: 1,
+        remainingCount: 25,
+      },
+    ];
+    const loadMoreCellThemeOverride = {
+      baseFontStyle: "400 12px",
+      textDark: "#2e47ba",
+    };
+    const getCellContent = createGetCellContent(rows, columns, {
+      formatLoadMoreLabel: count => `Load ${count} more`,
+      loadMoreCellThemeOverride,
+    });
+
+    // Act
+    const result = getCellContent([0, 0]);
+
+    // Assert
+    expect(result).toMatchObject({
+      kind: GridCellKind.Text,
+      data: `${"\u00A0".repeat(4)}Load 25 more`,
+      cursor: "pointer",
+      style: "normal",
+      themeOverride: loadMoreCellThemeOverride,
     });
   });
 });

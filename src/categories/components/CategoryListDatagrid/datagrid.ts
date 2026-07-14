@@ -1,14 +1,17 @@
 import { type CategoryListUrlSortField } from "@dashboard/categories/urls";
+import { SUBCATEGORIES_PAGE_SIZE } from "@dashboard/categories/views/CategoryList/services/categoryChildrenQueries";
+import { type CategoryListRow } from "@dashboard/categories/views/CategoryList/types";
 import {
   chevronCell,
   loadingCell,
+  loadMoreTextCell,
   readonlyTextCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type CategoryFragment } from "@dashboard/graphql";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { type GridCell, type Item } from "@glideapps/glide-data-grid";
+import { type GridCell, type Item, type Theme } from "@glideapps/glide-data-grid";
 import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -17,6 +20,8 @@ interface CreateGetCellContentOptions {
   isCategoryExpanded?: (categoryId: string) => boolean;
   isCategoryChildrenLoading?: (categoryId: string) => boolean;
   getCategoryDepth?: (categoryId: string) => number;
+  formatLoadMoreLabel?: (remainingCount: number) => string;
+  loadMoreCellThemeOverride?: Partial<Theme>;
 }
 
 export const categoryListExpandColumn: AvailableColumn = {
@@ -54,48 +59,73 @@ export const categoryListStaticColumnsAdapter = (
 const getIndentedName = (name: string, depth: number): string =>
   `${"\u00A0".repeat(depth * 4)}${name}`;
 
+const getLoadMoreCount = (remainingCount: number): number =>
+  Math.min(SUBCATEGORIES_PAGE_SIZE, remainingCount);
+
 export const createGetCellContent =
   (
-    categories: CategoryFragment[],
+    rows: CategoryListRow[],
     columns: AvailableColumn[],
     {
       isCategoryExpanded,
       isCategoryChildrenLoading,
       getCategoryDepth,
+      formatLoadMoreLabel,
+      loadMoreCellThemeOverride,
     }: CreateGetCellContentOptions = {},
   ) =>
   ([column, row]: Item): GridCell => {
     const columnId = columns[column]?.id;
-    const rowData: CategoryFragment | undefined = categories[row];
+    const rowData = rows[row];
 
     if (!columnId || !rowData) {
       return readonlyTextCell("");
     }
 
+    if (rowData.type === "load-more") {
+      switch (columnId) {
+        case "expand":
+          return readonlyTextCell("", false);
+        case "name":
+          return loadMoreTextCell(
+            getIndentedName(
+              formatLoadMoreLabel?.(getLoadMoreCount(rowData.remainingCount)) ?? "",
+              rowData.depth,
+            ),
+            loadMoreCellThemeOverride,
+          );
+        default:
+          return readonlyTextCell("", false);
+      }
+    }
+
+    const categoryRow: CategoryFragment = rowData.category;
+
     switch (columnId) {
       case "expand": {
-        const subcategoriesCount = rowData.children?.totalCount ?? 0;
+        const subcategoriesCount = categoryRow.children?.totalCount ?? 0;
 
         if (!subcategoriesCount) {
           return readonlyTextCell("", false);
         }
 
-        if (isCategoryChildrenLoading?.(rowData.id)) {
+        if (isCategoryChildrenLoading?.(categoryRow.id)) {
           return loadingCell();
         }
 
-        const isExpanded = isCategoryExpanded?.(rowData.id) ?? false;
+        const isExpanded = isCategoryExpanded?.(categoryRow.id) ?? false;
 
         return chevronCell(isExpanded);
       }
-      case "name":
-        const depth = getCategoryDepth?.(rowData.id) ?? 0;
+      case "name": {
+        const depth = getCategoryDepth?.(categoryRow.id) ?? rowData.depth;
 
-        return readonlyTextCell(getIndentedName(rowData.name ?? "", depth));
+        return readonlyTextCell(getIndentedName(categoryRow.name ?? "", depth));
+      }
       case "subcategories":
-        return readonlyTextCell(rowData?.children?.totalCount?.toString() ?? "");
+        return readonlyTextCell(categoryRow?.children?.totalCount?.toString() ?? "");
       case "products":
-        return readonlyTextCell(rowData?.products?.totalCount?.toString() ?? "");
+        return readonlyTextCell(categoryRow?.products?.totalCount?.toString() ?? "");
       default:
         return readonlyTextCell("", false);
     }

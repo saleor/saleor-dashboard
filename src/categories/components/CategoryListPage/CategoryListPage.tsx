@@ -22,8 +22,8 @@ import {
   type SortPage,
   type TabPageProps,
 } from "@dashboard/types";
-import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
-import { type ChangeEvent, useCallback, useState } from "react";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
@@ -55,7 +55,7 @@ export const CategoryListPage = ({
   ...listProps
 }: CategoryTableProps): JSX.Element => {
   const {
-    categories,
+    rows,
     selectedCategoriesIds,
     onCategoriesDelete,
     onSelectCategoriesIds,
@@ -64,8 +64,7 @@ export const CategoryListPage = ({
     isCategoryChildrenLoading,
     onCategoryExpandToggle,
     getCategoryDepth,
-    subcategoryPageSize,
-    onSubcategoryPageSizeChange,
+    onLoadMoreSubcategories,
     hasExpandedSubcategories,
     onCollapseAllSubcategories,
   } = useCategoryListPageState();
@@ -82,18 +81,6 @@ export const CategoryListPage = ({
     selectedCategoriesIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(CATEGORY_OVERVIEW_CREATE);
-  const handleSubcategoryPageSizeInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const nextValue = Number.parseInt(event.target.value, 10);
-
-      if (Number.isNaN(nextValue)) {
-        return;
-      }
-
-      onSubcategoryPageSizeChange(nextValue);
-    },
-    [onSubcategoryPageSizeChange],
-  );
 
   return (
     <ListPageLayout>
@@ -157,30 +144,16 @@ export const CategoryListPage = ({
           </Box>
           <Box display="flex" alignItems="center" gap={4}>
             <Box display="flex" alignItems="center" gap={2}>
-              <Text size={2}>
-                <FormattedMessage {...messages.subcategoriesPageSizeLabel} />
-              </Text>
               <Ripple model={rippleExpandedSubcategories} />
-              <Input
-                size="small"
-                type="number"
-                min={1}
-                max={200}
-                step={1}
-                value={subcategoryPageSize}
-                onChange={handleSubcategoryPageSizeInputChange}
-                __width="104px"
-                data-test-id="subcategory-page-size-input"
-              />
+              <Button
+                variant="secondary"
+                onClick={onCollapseAllSubcategories}
+                disabled={!hasExpandedSubcategories}
+                data-test-id="collapse-all-subcategories"
+              >
+                <FormattedMessage {...messages.collapseAllSubcategories} />
+              </Button>
             </Box>
-            <Button
-              variant="secondary"
-              onClick={onCollapseAllSubcategories}
-              disabled={!hasExpandedSubcategories}
-              data-test-id="collapse-all-subcategories"
-            >
-              <FormattedMessage {...messages.collapseAllSubcategories} />
-            </Button>
             {selectedCategoriesIds.length > 0 && (
               <BulkDeleteButton onClick={onCategoriesDelete}>
                 <FormattedMessage {...messages.bulkCategoryDelete} />
@@ -190,7 +163,7 @@ export const CategoryListPage = ({
         </Box>
         <CategoryListDatagrid
           disabled={disabled}
-          categories={categories}
+          rows={rows}
           hasRowHover={!isFilterPresetOpen}
           onSelectCategoriesIds={onSelectCategoriesIds}
           selectedCategoriesIds={selectedCategoriesIds}
@@ -199,6 +172,7 @@ export const CategoryListPage = ({
           onCategoryExpandToggle={onCategoryExpandToggle}
           isCategoryChildrenLoading={isCategoryChildrenLoading}
           getCategoryDepth={getCategoryDepth}
+          onLoadMoreSubcategories={onLoadMoreSubcategories}
           {...listProps}
         />
       </DashboardCard>

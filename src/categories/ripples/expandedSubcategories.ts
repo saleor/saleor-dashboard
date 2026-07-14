@@ -8,8 +8,8 @@ export const rippleExpandedSubcategories: Ripple = {
   content: {
     oneLiner: "Expandable subcategories in category list",
     contextual:
-      "Expand category rows to browse subcategories in place. Adjust how many subcategories are loaded with this control.",
+      "Expand category rows to browse subcategories in place. Large category trees load more children as you go.",
     global:
-      "The categories list now supports expandable rows with lazy loading for child categories. You can review nested structures without leaving the list and control how many subcategories are fetched per parent.",
+      "The categories list now supports expandable rows with lazy loading for child categories. You can review nested structures without leaving the list.",
   },
 };

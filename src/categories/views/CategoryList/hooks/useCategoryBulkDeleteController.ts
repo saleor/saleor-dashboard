@@ -1,4 +1,3 @@
-import { type ApolloClient } from "@apollo/client";
 import {
   type CategoryBulkDeleteMutation,
   type CategoryFragment,
@@ -6,20 +5,18 @@ import {
 } from "@dashboard/graphql";
 import { useCallback, useRef } from "react";
 
-import { refetchParentChildren } from "../services/categoryChildrenQueries";
 import { type CategoryListRow } from "../types";
 import { buildParentByCategoryId, collectDescendantIds } from "../utils/categoryTree";
 
 interface UseCategoryBulkDeleteControllerArgs {
   selectedRowIds: string[];
   visibleRows: CategoryListRow[];
-  client: ApolloClient<object>;
-  subcategoryPageSize: number;
   getCachedChildrenByParentId: (parentId: string) => CategoryFragment[];
   pruneTreeStateAfterDelete: (
     deletedIdsWithDescendants: Set<string>,
     parentIdsToInvalidate: Set<string>,
   ) => void;
+  refreshParentChildren: (parentIds: string[]) => Promise<void>;
   clearRowSelection: () => void;
   refetchRootCategories: () => void;
   navigateToList: () => void;
@@ -35,10 +32,9 @@ interface UseCategoryBulkDeleteController {
 export const useCategoryBulkDeleteController = ({
   selectedRowIds,
   visibleRows,
-  client,
-  subcategoryPageSize,
   getCachedChildrenByParentId,
   pruneTreeStateAfterDelete,
+  refreshParentChildren,
   clearRowSelection,
   refetchRootCategories,
   navigateToList,
@@ -78,7 +74,7 @@ export const useCategoryBulkDeleteController = ({
       const parentIdsToRefetch = Array.from(parentIdsToInvalidate);
 
       if (parentIdsToRefetch.length > 0) {
-        void refetchParentChildren(client, parentIdsToRefetch, subcategoryPageSize);
+        void refreshParentChildren(parentIdsToRefetch);
       }
 
       navigateToList();
@@ -89,13 +85,12 @@ export const useCategoryBulkDeleteController = ({
     },
     [
       clearRowSelection,
-      client,
       getCachedChildrenByParentId,
       navigateToList,
       notifyDeleted,
       pruneTreeStateAfterDelete,
       refetchRootCategories,
-      subcategoryPageSize,
+      refreshParentChildren,
       visibleRows,
     ],
   );

@@ -10,7 +10,12 @@ const meta: Meta<typeof CategoryListDatagrid> = {
   component: CategoryListDatagrid,
 
   args: {
-    categories,
+    rows: categories.map(category => ({
+      type: "category" as const,
+      category,
+      depth: 0,
+      parentId: null,
+    })),
     disabled: false,
     sort: { sort: "name" as any, asc: true },
     onSort: fn(),
@@ -33,7 +38,7 @@ export const Disabled: Story = {
 };
 
 export const Empty: Story = {
-  args: { categories: [] },
+  args: { rows: [] },
 };
 
 export const WithoutSort: Story = {

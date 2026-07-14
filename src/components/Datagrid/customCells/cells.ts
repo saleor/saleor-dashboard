@@ -10,6 +10,7 @@ import {
   type GridCell,
   GridCellKind,
   type TextCell,
+  type Theme,
 } from "@glideapps/glide-data-grid";
 import { type Option } from "@saleor/macaw-ui-next";
 
@@ -49,6 +50,25 @@ export function readonlyTextCell(
     style,
   };
 }
+
+export function loadMoreTextCell(value: string, themeOverride?: Partial<Theme>): TextCell {
+  return {
+    cursor: "pointer",
+    allowOverlay: false,
+    readonly: true,
+    data: value,
+    displayData: value,
+    kind: GridCellKind.Text,
+    style: "normal",
+    themeOverride,
+  };
+}
+
+interface ThrobberCellData {
+  kind: "throbber-cell";
+}
+
+export type ThrobberCell = CustomCell<ThrobberCellData>;
 
 interface ChevronCellData {
   kind: "chevron-cell";
@@ -102,10 +122,11 @@ export function booleanCell(value: boolean, options: Partial<GridCell> = {}): Gr
 export function loadingCell(): GridCell {
   return {
     kind: GridCellKind.Custom,
-    allowOverlay: true,
+    allowOverlay: false,
+    readonly: true,
     copyData: "",
     data: {
-      kind: "spinner-cell",
+      kind: "throbber-cell",
     },
   };
 }

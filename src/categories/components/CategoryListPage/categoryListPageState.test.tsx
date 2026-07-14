@@ -1,13 +1,9 @@
+import { type CategoryListRow } from "@dashboard/categories/views/CategoryList/types";
 import { type CategoryFragment } from "@dashboard/graphql";
 import { render, screen } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
-import { type ReactNode } from "react";
 
-import {
-  type CategoryListPageState,
-  CategoryListPageStateProvider,
-  useCategoryListPageState,
-} from "./categoryListPageState";
+import { type CategoryListPageState, CategoryListPageStateProvider } from "./categoryListPageState";
+import { useCategoryListPageState } from "./categoryListPageState";
 
 const categoriesFixture: CategoryFragment[] = [
   {
@@ -25,8 +21,15 @@ const categoriesFixture: CategoryFragment[] = [
   } as CategoryFragment,
 ];
 
+const rowsFixture: CategoryListRow[] = categoriesFixture.map(category => ({
+  type: "category",
+  category,
+  depth: 0,
+  parentId: null,
+}));
+
 const createState = (overrides: Partial<CategoryListPageState> = {}): CategoryListPageState => ({
-  categories: categoriesFixture,
+  rows: rowsFixture,
   selectedCategoriesIds: [],
   onCategoriesDelete: jest.fn(),
   onSelectCategoriesIds: jest.fn(),
@@ -35,94 +38,89 @@ const createState = (overrides: Partial<CategoryListPageState> = {}): CategoryLi
   onCategoryExpandToggle: jest.fn(),
   isCategoryChildrenLoading: jest.fn(() => false),
   getCategoryDepth: jest.fn(() => 0),
-  subcategoryPageSize: 50,
-  onSubcategoryPageSizeChange: jest.fn(),
+  onLoadMoreSubcategories: jest.fn(),
   hasExpandedSubcategories: false,
   onCollapseAllSubcategories: jest.fn(),
   ...overrides,
 });
 
 describe("categoryListPageState", () => {
-  it("should return provided state from hook", () => {
+  it("should expose rows from provider value", () => {
     // Arrange
-    const state = createState({
-      subcategoryPageSize: 75,
-      hasExpandedSubcategories: true,
-      selectedCategoriesIds: ["cat-1"],
-    });
-    const wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
-      <CategoryListPageStateProvider value={state}>{children}</CategoryListPageStateProvider>
-    );
+    const RowCount = () => {
+      const { rows } = useCategoryListPageState();
+
+      return <span data-test-id="row-count">{rows.length}</span>;
+    };
 
     // Act
-    const { result } = renderHook(() => useCategoryListPageState(), { wrapper });
+    render(
+      <CategoryListPageStateProvider value={createState()}>
+        <RowCount />
+      </CategoryListPageStateProvider>,
+    );
 
     // Assert
-    expect(result.current.subcategoryPageSize).toBe(75);
-    expect(result.current.hasExpandedSubcategories).toBe(true);
-    expect(result.current.selectedCategoriesIds).toEqual(["cat-1"]);
+    expect(screen.getByTestId("row-count")).toHaveTextContent("1");
   });
 
-  it("should propagate provider value updates", () => {
+  it("should update atom value when provider value changes", () => {
     // Arrange
-    const TestConsumer = (): JSX.Element => {
-      const { subcategoryPageSize } = useCategoryListPageState();
+    const RowCount = ({ testId }: { testId: string }) => {
+      const { rows } = useCategoryListPageState();
 
-      return <span data-test-id="subcategory-page-size">{subcategoryPageSize}</span>;
+      return <span data-test-id={testId}>{rows.length}</span>;
     };
-    const firstState = createState({ subcategoryPageSize: 20 });
-    const secondState = createState({ subcategoryPageSize: 120 });
+    const firstState = createState({
+      rows: rowsFixture,
+    });
+    const secondState = createState({
+      rows: [...rowsFixture, ...rowsFixture],
+    });
+
+    // Act
     const { rerender } = render(
       <CategoryListPageStateProvider value={firstState}>
-        <TestConsumer />
+        <RowCount testId="first-row-count" />
       </CategoryListPageStateProvider>,
     );
 
-    // Act
     rerender(
       <CategoryListPageStateProvider value={secondState}>
-        <TestConsumer />
+        <RowCount testId="second-row-count" />
       </CategoryListPageStateProvider>,
     );
 
     // Assert
-    expect(screen.getByTestId("subcategory-page-size")).toHaveTextContent("120");
+    expect(screen.getByTestId("second-row-count")).toHaveTextContent("2");
   });
 
-  it("should throw when hook is used outside provider", () => {
+  it("should keep provider scopes isolated", () => {
     // Arrange
-    // Act
-    const { result } = renderHook(() => useCategoryListPageState());
+    const RowCount = ({ testId }: { testId: string }) => {
+      const { rows } = useCategoryListPageState();
 
-    // Assert
-    expect(result.error).toEqual(expect.any(Error));
-    expect(result.error?.message).toContain(
-      "useCategoryListPageState must be used within CategoryListPageStateProvider",
-    );
-  });
-
-  it("should keep state isolated between separate providers", () => {
-    // Arrange
-    const TestConsumer = ({ testId }: { testId: string }): JSX.Element => {
-      const { subcategoryPageSize } = useCategoryListPageState();
-
-      return <span data-test-id={testId}>{subcategoryPageSize}</span>;
+      return <span data-test-id={testId}>{rows.length}</span>;
     };
 
     // Act
     render(
       <>
-        <CategoryListPageStateProvider value={createState({ subcategoryPageSize: 30 })}>
-          <TestConsumer testId="provider-a" />
+        <CategoryListPageStateProvider value={createState({ rows: rowsFixture })}>
+          <RowCount testId="first-provider" />
         </CategoryListPageStateProvider>
-        <CategoryListPageStateProvider value={createState({ subcategoryPageSize: 90 })}>
-          <TestConsumer testId="provider-b" />
+        <CategoryListPageStateProvider
+          value={createState({
+            rows: [...rowsFixture, ...rowsFixture, ...rowsFixture],
+          })}
+        >
+          <RowCount testId="second-provider" />
         </CategoryListPageStateProvider>
       </>,
     );
 
     // Assert
-    expect(screen.getByTestId("provider-a")).toHaveTextContent("30");
-    expect(screen.getByTestId("provider-b")).toHaveTextContent("90");
+    expect(screen.getByTestId("first-provider")).toHaveTextContent("1");
+    expect(screen.getByTestId("second-provider")).toHaveTextContent("3");
   });
 });

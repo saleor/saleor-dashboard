@@ -19,8 +19,7 @@ jest.mock("@dashboard/components/TablePagination", () => ({
   DatagridPagination: () => null,
 }));
 jest.mock("@dashboard/components/Datagrid/Datagrid", () => ({
-  __esModule: true,
-  default: (props: Record<string, any>) => {
+  Datagrid: (props: Record<string, any>) => {
     datagridProps = props;
 
     return null;
@@ -50,6 +49,18 @@ jest.mock("react-router", () => ({
     state: undefined,
   }),
 }));
+jest.mock("@saleor/macaw-ui-next", () => ({
+  useTheme: () => ({
+    themeValues: {
+      fontWeight: { regular: 400 },
+      fontSize: { 2: "12px", 3: "14px" },
+      colors: {
+        background: { default1: "#ffffff" },
+        text: { default2: "#666666", accent1: "#2e47ba" },
+      },
+    },
+  }),
+}));
 
 const createCategory = (id: string, childrenCount: number): CategoryFragment =>
   ({
@@ -66,13 +77,24 @@ const createCategory = (id: string, childrenCount: number): CategoryFragment =>
     },
   }) as CategoryFragment;
 
+const makeCategoryRow = (category: CategoryFragment) => ({
+  type: "category" as const,
+  category,
+  depth: 0,
+  parentId: null,
+});
+
 const baseProps = {
   disabled: false,
   settings: {
     rowNumber: 20,
     columns: [],
   },
-  categories: [createCategory("cat-1", 1), createCategory("cat-2", 0), createCategory("cat-3", 2)],
+  rows: [
+    makeCategoryRow(createCategory("cat-1", 1)),
+    makeCategoryRow(createCategory("cat-2", 0)),
+    makeCategoryRow(createCategory("cat-3", 2)),
+  ],
   onSelectCategoriesIds: jest.fn(),
   onUpdateListSettings: jest.fn(),
 };
@@ -153,9 +175,37 @@ describe("CategoryListDatagrid", () => {
     render(<CategoryListDatagrid {...baseProps} />);
 
     // Act
-    datagridProps.onRowClick([0, 0]);
+    datagridProps.onRowClick([1, 0]);
 
     // Assert
     expect(navigateMock).toHaveBeenCalledWith(categoryUrl("cat-1"));
+  });
+
+  it("should trigger load more callback when clicking load more row", () => {
+    // Arrange
+    const onLoadMoreSubcategories = jest.fn();
+
+    render(
+      <CategoryListDatagrid
+        {...baseProps}
+        rows={[
+          ...baseProps.rows,
+          {
+            type: "load-more" as const,
+            parentId: "cat-1",
+            depth: 1,
+            remainingCount: 20,
+          },
+        ]}
+        onLoadMoreSubcategories={onLoadMoreSubcategories}
+      />,
+    );
+
+    // Act
+    datagridProps.onRowClick([0, 3]);
+
+    // Assert
+    expect(onLoadMoreSubcategories).toHaveBeenCalledWith("cat-1");
+    expect(navigateMock).not.toHaveBeenCalled();
   });
 });

@@ -125,16 +125,15 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
 
   const {
     visibleRows,
-    visibleCategories,
-    subcategoryPageSize,
     hasExpandedSubcategories,
     isCategoryExpanded,
     isCategoryChildrenLoading,
     getCategoryDepth,
     toggleExpanded,
-    handleSubcategoryPageSizeChange,
+    loadMoreSubcategories,
     handleCollapseAllSubcategories,
     getCachedChildrenByParentId,
+    refreshParentChildren,
     pruneTreeStateAfterDelete,
   } = useCategoryTreeController({
     client,
@@ -200,10 +199,9 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
   const { categoryBulkDeleteOpts, handleCategoryBulkDelete } = useCategoryBulkDeleteController({
     selectedRowIds,
     visibleRows,
-    client,
-    subcategoryPageSize,
     getCachedChildrenByParentId,
     pruneTreeStateAfterDelete,
+    refreshParentChildren,
     clearRowSelection,
     refetchRootCategories,
     navigateToList,
@@ -211,7 +209,7 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
   });
   const categoryListPageState = useMemo<CategoryListPageState>(
     () => ({
-      categories: visibleCategories,
+      rows: visibleRows,
       selectedCategoriesIds: selectedRowIds,
       onCategoriesDelete: handleOpenDeleteModal,
       onSelectCategoriesIds: handleSetSelectedCategoryIds,
@@ -220,8 +218,7 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
       onCategoryExpandToggle: handleCategoryExpandToggle,
       isCategoryChildrenLoading,
       getCategoryDepth,
-      subcategoryPageSize,
-      onSubcategoryPageSizeChange: handleSubcategoryPageSizeChange,
+      onLoadMoreSubcategories: loadMoreSubcategories,
       hasExpandedSubcategories,
       onCollapseAllSubcategories: handleCollapseAllSubcategories,
     }),
@@ -232,13 +229,12 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
       handleOpenDeleteModal,
       handleSelectedCategoryIdsChange,
       handleSetSelectedCategoryIds,
-      handleSubcategoryPageSizeChange,
       hasExpandedSubcategories,
       isCategoryChildrenLoading,
       isCategoryExpanded,
+      loadMoreSubcategories,
       selectedRowIds,
-      subcategoryPageSize,
-      visibleCategories,
+      visibleRows,
     ],
   );
 

@@ -1,3 +1,5 @@
+import { THROBBER_BEAM_LENGTH, THROBBER_PATH_D, THROBBER_PATH_LENGTH } from "./throbberGeometry";
+
 interface SaleorThrobberProps {
   size?: number;
   className?: string;
@@ -9,16 +11,8 @@ export function SaleorThrobber({
   className,
   "data-test-id": dataTestId,
 }: SaleorThrobberProps) {
-  const vertices = [
-    { x: 12, y: 15 },
-    { x: 36, y: 15 },
-    { x: 30, y: 25 },
-    { x: 6, y: 25 },
-  ];
-
-  const pathD = `M ${vertices.map(p => `${p.x} ${p.y}`).join(" L ")} Z`;
-  const pathLength = 89;
-  const beamLength = 20;
+  const pathLength = THROBBER_PATH_LENGTH;
+  const beamLength = THROBBER_BEAM_LENGTH;
 
   return (
     <div
@@ -50,7 +44,7 @@ export function SaleorThrobber({
 
         {/* Static faint outline */}
         <path
-          d={pathD}
+          d={THROBBER_PATH_D}
           stroke="currentColor"
           strokeWidth={0.75}
           strokeLinecap="round"
@@ -61,7 +55,7 @@ export function SaleorThrobber({
 
         {/* Main beam */}
         <path
-          d={pathD}
+          d={THROBBER_PATH_D}
           stroke="currentColor"
           strokeWidth={1.5}
           strokeLinecap="round"

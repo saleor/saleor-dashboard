@@ -119,6 +119,7 @@ interface DatagridProps {
   themeOverride?: Partial<Theme>;
   controlledSelection?: GridSelection;
   onControlledSelectionChange?: (selection: GridSelection | undefined) => void;
+  getRowThemeOverride?: GetRowThemeCallback;
 }
 
 export const Datagrid = ({
@@ -159,6 +160,7 @@ export const Datagrid = ({
   themeOverride,
   controlledSelection,
   onControlledSelectionChange,
+  getRowThemeOverride: getRowThemeOverrideProp,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -361,11 +363,13 @@ export const Datagrid = ({
   };
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
     (row: number) => {
+      const customOverride = getRowThemeOverrideProp?.(row);
+
       if (row !== hoverRow) {
-        return undefined;
+        return customOverride;
       }
 
-      const overrideTheme: Partial<Theme> = {
+      const hoverOverride: Partial<Theme> = {
         /*
           Grid-specific colors. Transparency matters when we highlight entire row.
         */
@@ -374,12 +378,15 @@ export const Datagrid = ({
       };
 
       if (readonly) {
-        overrideTheme.accentLight = themeValues.colors.background.default1;
+        hoverOverride.accentLight = themeValues.colors.background.default1;
       }
 
-      return overrideTheme;
+      return {
+        ...customOverride,
+        ...hoverOverride,
+      };
     },
-    [hoverRow, readonly, themeValues],
+    [getRowThemeOverrideProp, hoverRow, readonly, theme, themeValues],
   );
   const handleHeaderClicked = useCallback(
     (colIndex: number, event: HeaderClickedEventArgs) => {

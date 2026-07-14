@@ -2,7 +2,7 @@ import { type CategoryFragment } from "@dashboard/graphql";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect } from "react";
 
-import { type CategoryListRow } from "../types";
+import { type CategoryListRow, isCategoryListCategoryRow } from "../types";
 import {
   getSelectedWithLoadedDescendants,
   removeDescendantsFromDeselectedParents,
@@ -62,7 +62,11 @@ export const useCategorySelectionController = ({
   const handleSetSelectedCategoryIds = useCallback(
     (rows: number[], clearSelection: () => void): void => {
       const rowsIds = rows
-        .map(rowIndex => visibleRows[rowIndex]?.category.id)
+        .map(rowIndex => {
+          const row = visibleRows[rowIndex];
+
+          return isCategoryListCategoryRow(row) ? row.category.id : undefined;
+        })
         .filter((id): id is string => !!id);
 
       handleSelectedCategoryIdsChange(rowsIds);

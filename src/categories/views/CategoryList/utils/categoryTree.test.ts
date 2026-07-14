@@ -7,14 +7,14 @@ import {
   collectDescendantIds,
 } from "./categoryTree";
 
-const createCategory = (id: string, name = id): CategoryFragment =>
+const createCategory = (id: string, name = id, childrenCount = 0): CategoryFragment =>
   ({
     __typename: "Category",
     id,
     name,
     children: {
       __typename: "CategoryCountableConnection",
-      totalCount: 0,
+      totalCount: childrenCount,
     },
     products: {
       __typename: "ProductCountableConnection",
@@ -66,16 +66,55 @@ describe("categoryTree utils", () => {
     );
 
     // Assert
-    expect(rows.map(row => row.category.id)).toEqual(["a", "a-1", "a-1-1", "a-2", "b"]);
+    expect(rows.map(row => (row.type === "category" ? row.category.id : row.type))).toEqual([
+      "a",
+      "a-1",
+      "a-1-1",
+      "a-2",
+      "b",
+    ]);
     expect(rows.map(row => row.depth)).toEqual([0, 1, 2, 1, 0]);
+  });
+
+  it("should append load more row when parent has unloaded children", () => {
+    // Arrange
+    const root = createCategory("root", "root", 120);
+    const children = Array.from({ length: 50 }, (_, index) =>
+      createCategory(`child-${index}`, `Child ${index}`),
+    );
+
+    // Act
+    const rows = buildVisibleRows([root], new Set([root.id]), () => children, {
+      hasMoreChildren: () => true,
+      getRemainingChildrenCount: () => 70,
+    });
+
+    // Assert
+    expect(rows).toHaveLength(52);
+    expect(rows.at(-1)).toMatchObject({
+      type: "load-more",
+      parentId: root.id,
+      depth: 1,
+      remainingCount: 70,
+    });
   });
 
   it("should build depth map for visible rows", () => {
     // Arrange
     const rows = [
-      { category: createCategory("root"), depth: 0, parentId: null },
-      { category: createCategory("child"), depth: 1, parentId: "root" },
-      { category: createCategory("nested"), depth: 2, parentId: "child" },
+      { type: "category" as const, category: createCategory("root"), depth: 0, parentId: null },
+      {
+        type: "category" as const,
+        category: createCategory("child"),
+        depth: 1,
+        parentId: "root",
+      },
+      {
+        type: "category" as const,
+        category: createCategory("nested"),
+        depth: 2,
+        parentId: "child",
+      },
     ];
 
     // Act
@@ -92,9 +131,19 @@ describe("categoryTree utils", () => {
   it("should build parent map for visible rows", () => {
     // Arrange
     const rows = [
-      { category: createCategory("root"), depth: 0, parentId: null },
-      { category: createCategory("child"), depth: 1, parentId: "root" },
-      { category: createCategory("nested"), depth: 2, parentId: "child" },
+      { type: "category" as const, category: createCategory("root"), depth: 0, parentId: null },
+      {
+        type: "category" as const,
+        category: createCategory("child"),
+        depth: 1,
+        parentId: "root",
+      },
+      {
+        type: "category" as const,
+        category: createCategory("nested"),
+        depth: 2,
+        parentId: "child",
+      },
     ];
 
     // Act

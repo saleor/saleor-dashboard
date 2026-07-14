@@ -47,7 +47,7 @@ describe("ChevronCell", () => {
     const nonChevron = {
       ...chevronCell(false),
       data: {
-        kind: "spinner-cell",
+        kind: "throbber-cell",
       },
     };
 

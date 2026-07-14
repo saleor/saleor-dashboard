@@ -12,6 +12,7 @@ import { numberCellRenderer } from "./NumberCell";
 import { pillCellRenderer } from "./PillCell";
 import { skeletonCellRenderer } from "./SkeletonCell";
 import { statusCellRenderer } from "./StatusCell";
+import { throbberCellRenderer } from "./ThrobberCell";
 import { thumbnailCellRenderer } from "./ThumbnailCell";
 
 export function useCustomCellRenderers() {
@@ -27,6 +28,7 @@ export function useCustomCellRenderers() {
       numberCellRenderer(locale),
       dateCellRenderer(locale),
       chevronCellRenderer,
+      throbberCellRenderer,
       dropdownCellRenderer,
       skeletonCellRenderer,
       thumbnailCellRenderer,

@@ -84,10 +84,6 @@ jest.mock("@saleor/macaw-ui-next", () => ({
       {children}
     </button>
   ),
-  Input: ({ value, onChange }: { value: number; onChange: (event: any) => void }) => (
-    <input value={value} onChange={onChange} />
-  ),
-  Text: ({ children }: { children: ReactNode }) => <span>{children}</span>,
 }));
 
 const categoriesFixture: CategoryFragment[] = [
@@ -131,7 +127,12 @@ const createProps = (overrides: Partial<ComponentProps<typeof CategoryListPage>>
   ...overrides,
 });
 const createState = (overrides: Partial<CategoryListPageState> = {}): CategoryListPageState => ({
-  categories: categoriesFixture,
+  rows: categoriesFixture.map(category => ({
+    type: "category",
+    category,
+    depth: 0,
+    parentId: null,
+  })),
   selectedCategoriesIds: [],
   onCategoriesDelete: jest.fn(),
   onSelectCategoriesIds: jest.fn(),
@@ -140,8 +141,7 @@ const createState = (overrides: Partial<CategoryListPageState> = {}): CategoryLi
   onCategoryExpandToggle: jest.fn(),
   isCategoryChildrenLoading: jest.fn(() => false),
   getCategoryDepth: jest.fn(() => 0),
-  subcategoryPageSize: 50,
-  onSubcategoryPageSizeChange: jest.fn(),
+  onLoadMoreSubcategories: jest.fn(),
   hasExpandedSubcategories: false,
   onCollapseAllSubcategories: jest.fn(),
   ...overrides,
