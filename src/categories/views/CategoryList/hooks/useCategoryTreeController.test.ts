@@ -309,4 +309,75 @@ describe("useCategoryTreeController", () => {
       category: { id: "child-51" },
     });
   });
+
+  it("should distinguish initial expand loading from load-more loading", async () => {
+    // Arrange
+    const root = createCategory("root", 80);
+    const firstPageChildren = Array.from({ length: SUBCATEGORIES_PAGE_SIZE }, (_, index) =>
+      createCategory(`child-${index}`),
+    );
+    const clientMock = createApolloClientMock();
+    let resolveSecondPage: (value: unknown) => void;
+
+    clientMock.readQuery.mockImplementation(() => {
+      throw new Error("cache miss");
+    });
+    clientMock.query
+      .mockResolvedValueOnce({
+        data: {
+          category: {
+            __typename: "Category",
+            id: root.id,
+            children: createChildrenConnection(firstPageChildren, true),
+          },
+        },
+      })
+      .mockImplementationOnce(
+        () =>
+          new Promise(resolve => {
+            resolveSecondPage = resolve;
+          }),
+      );
+
+    const { result } = renderHook(() =>
+      useCategoryTreeController({
+        client: clientMock as unknown as ApolloClient<object>,
+        categories: [root],
+        locationPathname: "/categories/",
+        clearRowSelection: jest.fn(),
+        storedExpandedIds: [],
+        setStoredExpandedIds: jest.fn(),
+      }),
+    );
+
+    await act(async () => {
+      await result.current.toggleExpanded(root.id);
+    });
+
+    // Act
+    let loadMorePromise: Promise<void> | undefined;
+
+    act(() => {
+      loadMorePromise = result.current.loadMoreSubcategories(root.id);
+    });
+
+    // Assert
+    expect(result.current.isCategoryChildrenLoading(root.id)).toBe(false);
+    expect(result.current.isLoadingMoreSubcategories(root.id)).toBe(true);
+
+    await act(async () => {
+      resolveSecondPage!({
+        data: {
+          category: {
+            __typename: "Category",
+            id: root.id,
+            children: createChildrenConnection([createCategory("child-50")], false),
+          },
+        },
+      });
+      await loadMorePromise;
+    });
+
+    expect(result.current.isLoadingMoreSubcategories(root.id)).toBe(false);
+  });
 });

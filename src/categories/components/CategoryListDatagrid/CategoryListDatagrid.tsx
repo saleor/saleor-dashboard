@@ -39,6 +39,7 @@ interface CategoryListDatagridProps
   isCategoryExpanded?: (categoryId: string) => boolean;
   onCategoryExpandToggle?: (categoryId: string) => void;
   isCategoryChildrenLoading?: (categoryId: string) => boolean;
+  isLoadingMoreSubcategories?: (parentId: string) => boolean;
   getCategoryDepth?: (categoryId: string) => number;
   onLoadMoreSubcategories?: (parentId: string) => void;
 }
@@ -58,6 +59,7 @@ export const CategoryListDatagrid = ({
   isCategoryExpanded,
   onCategoryExpandToggle,
   isCategoryChildrenLoading,
+  isLoadingMoreSubcategories,
   getCategoryDepth,
   onLoadMoreSubcategories,
 }: CategoryListDatagridProps): JSX.Element => {
@@ -165,6 +167,7 @@ export const CategoryListDatagrid = ({
       createGetCellContent(rows, availableColumns, {
         isCategoryExpanded,
         isCategoryChildrenLoading,
+        isLoadingMoreSubcategories,
         getCategoryDepth,
         formatLoadMoreLabel,
         loadMoreCellThemeOverride,
@@ -174,6 +177,7 @@ export const CategoryListDatagrid = ({
       availableColumns,
       isCategoryExpanded,
       isCategoryChildrenLoading,
+      isLoadingMoreSubcategories,
       getCategoryDepth,
       formatLoadMoreLabel,
       loadMoreCellThemeOverride,
@@ -228,7 +232,9 @@ export const CategoryListDatagrid = ({
       }
 
       if (rowData.type === "load-more") {
-        if (availableColumns[col]?.id === "name" && onLoadMoreSubcategories) {
+        const isLoadingMore = isLoadingMoreSubcategories?.(rowData.parentId) ?? false;
+
+        if (availableColumns[col]?.id === "name" && onLoadMoreSubcategories && !isLoadingMore) {
           onLoadMoreSubcategories(rowData.parentId);
         }
 
@@ -256,6 +262,7 @@ export const CategoryListDatagrid = ({
       navigate,
       onCategoryExpandToggle,
       isCategoryChildrenLoading,
+      isLoadingMoreSubcategories,
       onLoadMoreSubcategories,
     ],
   );

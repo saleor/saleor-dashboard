@@ -1,3 +1,4 @@
+import { formatIndentedTreeLabel } from "@dashboard/categories/views/CategoryList/utils/treeIndent";
 import {
   chevronCell,
   loadingCell,
@@ -150,9 +151,6 @@ const flattenTree = (nodes: TreeNode[], expandedIds: Set<string>, depth = 0): Vi
     return [row, ...flattenTree(node.children, expandedIds, depth + 1)];
   });
 
-const getIndentedName = (name: string, depth: number): string =>
-  `${"\u00A0".repeat(depth * 4)}${name}`;
-
 const ChevronCellTreeGridPreview = () => {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set(initialExpandedIds));
   const visibleRows = useMemo(() => flattenTree(tree, expandedIds), [expandedIds]);
@@ -179,7 +177,7 @@ const ChevronCellTreeGridPreview = () => {
 
         return chevronCell(expandedIds.has(node.id));
       case "name":
-        return readonlyTextCell(getIndentedName(node.name, rowData.depth));
+        return readonlyTextCell(formatIndentedTreeLabel(node.name, rowData.depth));
       case "subcategories":
         return readonlyTextCell(node.subcategoriesCount.toString(), false);
       case "products":

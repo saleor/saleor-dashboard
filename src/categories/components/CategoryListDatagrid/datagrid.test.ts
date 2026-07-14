@@ -154,4 +154,38 @@ describe("CategoryListDatagrid createGetCellContent", () => {
       themeOverride: loadMoreCellThemeOverride,
     });
   });
+
+  it("should render load more loading state in expand column", () => {
+    // Arrange
+    const columns = [categoryListExpandColumn, nameColumn, subcategoriesColumn, productsColumn];
+    const rows = [
+      {
+        type: "load-more" as const,
+        parentId: "cat-1",
+        depth: 1,
+        remainingCount: 25,
+      },
+    ];
+    const getCellContent = createGetCellContent(rows, columns, {
+      isLoadingMoreSubcategories: parentId => parentId === "cat-1",
+      formatLoadMoreLabel: count => `Load ${count} more`,
+    });
+
+    // Act
+    const expandCell = getCellContent([0, 0]);
+    const nameCell = getCellContent([1, 0]);
+
+    // Assert
+    expect(expandCell).toMatchObject({
+      kind: GridCellKind.Custom,
+      data: {
+        kind: "throbber-cell",
+      },
+    });
+    expect(nameCell).toMatchObject({
+      kind: GridCellKind.Text,
+      cursor: "default",
+      style: "faded",
+    });
+  });
 });

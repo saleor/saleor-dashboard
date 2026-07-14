@@ -51,15 +51,19 @@ export function readonlyTextCell(
   };
 }
 
-export function loadMoreTextCell(value: string, themeOverride?: Partial<Theme>): TextCell {
+export function loadMoreTextCell(
+  value: string,
+  themeOverride?: Partial<Theme>,
+  options?: { loading?: boolean },
+): TextCell {
   return {
-    cursor: "pointer",
+    cursor: options?.loading ? "default" : "pointer",
     allowOverlay: false,
     readonly: true,
     data: value,
     displayData: value,
     kind: GridCellKind.Text,
-    style: "normal",
+    style: options?.loading ? "faded" : "normal",
     themeOverride,
   };
 }

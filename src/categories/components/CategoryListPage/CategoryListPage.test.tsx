@@ -140,6 +140,7 @@ const createState = (overrides: Partial<CategoryListPageState> = {}): CategoryLi
   isCategoryExpanded: jest.fn(() => false),
   onCategoryExpandToggle: jest.fn(),
   isCategoryChildrenLoading: jest.fn(() => false),
+  isLoadingMoreSubcategories: jest.fn(() => false),
   getCategoryDepth: jest.fn(() => 0),
   onLoadMoreSubcategories: jest.fn(),
   hasExpandedSubcategories: false,

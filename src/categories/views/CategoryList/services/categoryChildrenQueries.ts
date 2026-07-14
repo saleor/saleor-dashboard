@@ -43,11 +43,12 @@ const mapCategoryChildrenPageResult = (
 export const readCategoryChildrenPageFromCache = (
   client: ApolloClient<object>,
   parentId: string,
+  after: string | null = null,
 ): CategoryChildrenPageResult | null => {
   try {
     const cached = client.readQuery<CategoryChildrenQuery, CategoryChildrenQueryVariables>({
       query: CategoryChildrenDocument,
-      variables: getCategoryChildrenVariables(parentId),
+      variables: getCategoryChildrenVariables(parentId, after),
     });
 
     return mapCategoryChildrenPageResult(cached) ?? null;

@@ -62,6 +62,7 @@ export const CategoryListPage = ({
     onSelectedCategoriesIdsChange,
     isCategoryExpanded,
     isCategoryChildrenLoading,
+    isLoadingMoreSubcategories,
     onCategoryExpandToggle,
     getCategoryDepth,
     onLoadMoreSubcategories,
@@ -171,6 +172,7 @@ export const CategoryListPage = ({
           isCategoryExpanded={isCategoryExpanded}
           onCategoryExpandToggle={onCategoryExpandToggle}
           isCategoryChildrenLoading={isCategoryChildrenLoading}
+          isLoadingMoreSubcategories={isLoadingMoreSubcategories}
           getCategoryDepth={getCategoryDepth}
           onLoadMoreSubcategories={onLoadMoreSubcategories}
           {...listProps}

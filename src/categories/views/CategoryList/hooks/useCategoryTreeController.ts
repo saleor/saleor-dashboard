@@ -31,6 +31,7 @@ interface UseCategoryTreeController {
   hasExpandedSubcategories: boolean;
   isCategoryExpanded: (categoryId: string) => boolean;
   isCategoryChildrenLoading: (categoryId: string) => boolean;
+  isLoadingMoreSubcategories: (parentId: string) => boolean;
   getCategoryDepth: (categoryId: string) => number;
   toggleExpanded: (categoryId: string) => Promise<void>;
   loadMoreSubcategories: (parentId: string) => Promise<void>;
@@ -126,6 +127,12 @@ export const useCategoryTreeController = ({
       after: string | null = null,
       append = false,
     ): Promise<CategoryChildrenPageResult | undefined> => {
+      const cachedPage = readCategoryChildrenPageFromCache(client, parentId, after);
+
+      if (cachedPage) {
+        storeChildrenPage(parentId, cachedPage, append);
+      }
+
       setCategoryChildrenLoading(parentId, true);
 
       try {
@@ -133,9 +140,13 @@ export const useCategoryTreeController = ({
 
         if (page) {
           storeChildrenPage(parentId, page, append);
+
+          return page;
         }
 
-        return page;
+        return cachedPage ?? undefined;
+      } catch {
+        return cachedPage ?? undefined;
       } finally {
         setCategoryChildrenLoading(parentId, false);
       }
@@ -181,42 +192,20 @@ export const useCategoryTreeController = ({
           return;
         }
 
-        const cachedPage = readCategoryChildrenPageFromCache(client, categoryId);
+        const page = await fetchAndStoreChildrenPage(categoryId);
 
-        if (cachedPage) {
-          storeChildrenPage(categoryId, cachedPage);
-        }
+        if (!page) {
+          setExpandedIds(prev => {
+            const next = new Set(prev);
 
-        try {
-          const page = await fetchCategoryChildrenPage(client, categoryId);
+            next.delete(categoryId);
 
-          if (!page) {
-            setExpandedIds(prev => {
-              const next = new Set(prev);
-
-              next.delete(categoryId);
-
-              return next;
-            });
-
-            return;
-          }
-
-          storeChildrenPage(categoryId, page);
-        } catch {
-          if (!cachedPage) {
-            setExpandedIds(prev => {
-              const next = new Set(prev);
-
-              next.delete(categoryId);
-
-              return next;
-            });
-          }
+            return next;
+          });
         }
       }),
     );
-  }, [client, expandedIds, loadingChildrenIds, storeChildrenPage]);
+  }, [expandedIds, fetchAndStoreChildrenPage, loadingChildrenIds]);
   /* eslint-enable react-you-might-not-need-an-effect/no-event-handler */
 
   const toggleExpanded = useCallback(
@@ -236,24 +225,10 @@ export const useCategoryTreeController = ({
       }
 
       if (!loadedChildrenIds.has(categoryId) && !loadingChildrenIds.has(categoryId)) {
-        const cachedPage = readCategoryChildrenPageFromCache(client, categoryId);
-        let hasCachedData = false;
+        const page = await fetchAndStoreChildrenPage(categoryId);
 
-        if (cachedPage) {
-          storeChildrenPage(categoryId, cachedPage);
-          hasCachedData = cachedPage.children.length > 0;
-        }
-
-        try {
-          const page = await fetchAndStoreChildrenPage(categoryId);
-
-          if (!page && !hasCachedData) {
-            return;
-          }
-        } catch {
-          if (!hasCachedData) {
-            return;
-          }
+        if (!page) {
+          return;
         }
       }
 
@@ -265,27 +240,28 @@ export const useCategoryTreeController = ({
         return next;
       });
     },
-    [
-      client,
-      expandedIds,
-      fetchAndStoreChildrenPage,
-      loadedChildrenIds,
-      loadingChildrenIds,
-      storeChildrenPage,
-    ],
+    [expandedIds, fetchAndStoreChildrenPage, loadedChildrenIds, loadingChildrenIds],
   );
 
   const loadMoreSubcategories = useCallback(
     async (parentId: string): Promise<void> => {
       const pagination = childrenPaginationByParentId[parentId];
 
-      if (!pagination?.hasNextPage || loadingChildrenIds.has(parentId)) {
+      if (
+        !pagination?.hasNextPage ||
+        (loadingChildrenIds.has(parentId) && loadedChildrenIds.has(parentId))
+      ) {
         return;
       }
 
       await fetchAndStoreChildrenPage(parentId, pagination.endCursor, true);
     },
-    [childrenPaginationByParentId, fetchAndStoreChildrenPage, loadingChildrenIds],
+    [
+      childrenPaginationByParentId,
+      fetchAndStoreChildrenPage,
+      loadedChildrenIds,
+      loadingChildrenIds,
+    ],
   );
 
   const refreshParentChildrenHandler = useCallback(
@@ -327,8 +303,14 @@ export const useCategoryTreeController = ({
     [expandedIds],
   );
   const isCategoryChildrenLoading = useCallback(
-    (categoryId: string): boolean => loadingChildrenIds.has(categoryId),
-    [loadingChildrenIds],
+    (categoryId: string): boolean =>
+      loadingChildrenIds.has(categoryId) && !loadedChildrenIds.has(categoryId),
+    [loadedChildrenIds, loadingChildrenIds],
+  );
+  const isLoadingMoreSubcategories = useCallback(
+    (parentId: string): boolean =>
+      loadingChildrenIds.has(parentId) && loadedChildrenIds.has(parentId),
+    [loadedChildrenIds, loadingChildrenIds],
   );
   const getCategoryDepth = useCallback(
     (categoryId: string): number => depthByCategoryId[categoryId] ?? 0,
@@ -396,6 +378,7 @@ export const useCategoryTreeController = ({
     hasExpandedSubcategories: expandedIds.size > 0,
     isCategoryExpanded,
     isCategoryChildrenLoading,
+    isLoadingMoreSubcategories,
     getCategoryDepth,
     toggleExpanded,
     loadMoreSubcategories,

@@ -11,6 +11,7 @@ export interface CategoryListPageState {
   isCategoryExpanded?: (categoryId: string) => boolean;
   onCategoryExpandToggle?: (categoryId: string) => void;
   isCategoryChildrenLoading?: (categoryId: string) => boolean;
+  isLoadingMoreSubcategories?: (parentId: string) => boolean;
   getCategoryDepth?: (categoryId: string) => number;
   onLoadMoreSubcategories?: (parentId: string) => void;
   hasExpandedSubcategories: boolean;

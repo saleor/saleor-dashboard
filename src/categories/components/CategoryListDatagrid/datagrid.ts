@@ -1,6 +1,7 @@
 import { type CategoryListUrlSortField } from "@dashboard/categories/urls";
 import { SUBCATEGORIES_PAGE_SIZE } from "@dashboard/categories/views/CategoryList/services/categoryChildrenQueries";
 import { type CategoryListRow } from "@dashboard/categories/views/CategoryList/types";
+import { formatIndentedTreeLabel } from "@dashboard/categories/views/CategoryList/utils/treeIndent";
 import {
   chevronCell,
   loadingCell,
@@ -19,6 +20,7 @@ import { columnsMessages } from "./messages";
 interface CreateGetCellContentOptions {
   isCategoryExpanded?: (categoryId: string) => boolean;
   isCategoryChildrenLoading?: (categoryId: string) => boolean;
+  isLoadingMoreSubcategories?: (parentId: string) => boolean;
   getCategoryDepth?: (categoryId: string) => number;
   formatLoadMoreLabel?: (remainingCount: number) => string;
   loadMoreCellThemeOverride?: Partial<Theme>;
@@ -56,9 +58,6 @@ export const categoryListStaticColumnsAdapter = (
     icon: sort ? getColumnSortDirectionIcon(sort, column.id) : undefined,
   }));
 
-const getIndentedName = (name: string, depth: number): string =>
-  `${"\u00A0".repeat(depth * 4)}${name}`;
-
 const getLoadMoreCount = (remainingCount: number): number =>
   Math.min(SUBCATEGORIES_PAGE_SIZE, remainingCount);
 
@@ -69,6 +68,7 @@ export const createGetCellContent =
     {
       isCategoryExpanded,
       isCategoryChildrenLoading,
+      isLoadingMoreSubcategories,
       getCategoryDepth,
       formatLoadMoreLabel,
       loadMoreCellThemeOverride,
@@ -83,16 +83,23 @@ export const createGetCellContent =
     }
 
     if (rowData.type === "load-more") {
+      const isLoadingMore = isLoadingMoreSubcategories?.(rowData.parentId) ?? false;
+
       switch (columnId) {
         case "expand":
+          if (isLoadingMore) {
+            return loadingCell();
+          }
+
           return readonlyTextCell("", false);
         case "name":
           return loadMoreTextCell(
-            getIndentedName(
+            formatIndentedTreeLabel(
               formatLoadMoreLabel?.(getLoadMoreCount(rowData.remainingCount)) ?? "",
               rowData.depth,
             ),
             loadMoreCellThemeOverride,
+            { loading: isLoadingMore },
           );
         default:
           return readonlyTextCell("", false);
@@ -120,7 +127,7 @@ export const createGetCellContent =
       case "name": {
         const depth = getCategoryDepth?.(categoryRow.id) ?? rowData.depth;
 
-        return readonlyTextCell(getIndentedName(categoryRow.name ?? "", depth));
+        return readonlyTextCell(formatIndentedTreeLabel(categoryRow.name ?? "", depth));
       }
       case "subcategories":
         return readonlyTextCell(categoryRow?.children?.totalCount?.toString() ?? "");

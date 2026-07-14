@@ -50,6 +50,7 @@ export const CategorySubcategories = ({
     hasExpandedSubcategories,
     isCategoryExpanded,
     isCategoryChildrenLoading,
+    isLoadingMoreSubcategories,
     getCategoryDepth,
     toggleExpanded,
     loadMoreSubcategories,
@@ -137,6 +138,7 @@ export const CategorySubcategories = ({
         isCategoryExpanded={isCategoryExpanded}
         onCategoryExpandToggle={handleCategoryExpandToggle}
         isCategoryChildrenLoading={isCategoryChildrenLoading}
+        isLoadingMoreSubcategories={isLoadingMoreSubcategories}
         getCategoryDepth={getCategoryDepth}
         onLoadMoreSubcategories={loadMoreSubcategories}
         selectionActionButton={
