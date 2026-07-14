@@ -12215,13 +12215,9 @@ export const OrderDraftCancelDocument = gql`
     errors {
       ...OrderError
     }
-    order {
-      ...OrderDetails
-    }
   }
 }
-    ${OrderErrorFragmentDoc}
-${OrderDetailsFragmentDoc}`;
+    ${OrderErrorFragmentDoc}`;
 export type OrderDraftCancelMutationFn = Apollo.MutationFunction<Types.OrderDraftCancelMutation, Types.OrderDraftCancelMutationVariables>;
 
 /**

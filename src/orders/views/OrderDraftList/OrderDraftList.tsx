@@ -66,7 +66,7 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
     clearRowSelection();
     closeModal();
   });
-  const [createOrder] = useOrderDraftCreateMutation({
+  const [createOrder, createOrderOpts] = useOrderDraftCreateMutation({
     onCompleted: data => {
       notify({
         status: "success",
@@ -221,7 +221,7 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
       />
       <ChannelPickerDialog
         channelsChoices={mapNodeToChoice(channels)}
-        confirmButtonState="success"
+        confirmButtonState={createOrderOpts.status}
         defaultChoice={channel?.id}
         open={params.action === "create-order"}
         onClose={closeModal}

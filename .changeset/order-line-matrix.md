@@ -9,3 +9,5 @@ Order details *Line matrix* is the default view for working order lines in one p
 Removed the *Needs action* filter from line matrix.
 
 Order details cog menu follows the model-type pattern: extension actions first, GraphiQL with icon, and *Cancel order* as the destructive action at the bottom (Return moved to the items section header).
+
+Fixed deleting draft orders failing with an Internal Server Error. Create order channel picker Confirm button now shows loading/disabled state while the draft is being created.
