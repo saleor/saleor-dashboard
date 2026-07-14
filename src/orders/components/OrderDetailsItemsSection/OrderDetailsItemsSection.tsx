@@ -286,12 +286,9 @@ export const OrderDetailsItemsSection = ({
       {viewMode === "timeline" ? (
         <>
           <OrderUnfulfilledProductsCard
-            showFulfillmentAction={canFulfill}
-            notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
             lines={unfulfilled}
             order={order}
             lineReasons={hasUnfulfilledLineReasons ? unfulfilledLineReasons : undefined}
-            onFulfill={onOrderFulfill}
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}

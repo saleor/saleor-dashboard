@@ -200,5 +200,6 @@ describe("OrderDetailsItemsSection", () => {
     // Assert
     expect(screen.getByTestId("order-items-fulfill-button")).toBeInTheDocument();
     expect(screen.getByTestId("order-items-return-button")).toBeInTheDocument();
+    expect(screen.queryByTestId("fulfill-button")).not.toBeInTheDocument();
   });
 });
