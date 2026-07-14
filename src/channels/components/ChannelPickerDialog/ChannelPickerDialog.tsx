@@ -64,6 +64,7 @@ export const ChannelPickerDialog = ({
           <DashboardModal.Inset>
             <DynamicCombobox
               data-test-id="channel-autocomplete"
+              disabled={isSubmitting}
               label={intl.formatMessage(messages.channelName)}
               options={result}
               onInputValueChange={search}
@@ -79,7 +80,7 @@ export const ChannelPickerDialog = ({
           <BackButton disabled={isSubmitting} onClick={handleClose} />
           <ConfirmButton
             data-test-id="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !selectedOption?.value}
             onClick={() => onConfirm(selectedOption?.value ?? "")}
             transitionState={confirmButtonState}
           >

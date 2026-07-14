@@ -10,19 +10,19 @@ import { type IntlShape } from "react-intl";
 
 import { messages } from "./messages";
 
-interface OrderLineMatrixRowActionsProps {
+interface OrderLineRowActionsProps {
   menuItems: TopNavMenuItem[];
   onShowMetadata: () => void;
   disabled?: boolean;
   intl: IntlShape;
 }
 
-export const OrderLineMatrixRowActions = ({
+export const OrderLineRowActions = ({
   menuItems,
   onShowMetadata,
   disabled,
   intl,
-}: OrderLineMatrixRowActionsProps): JSX.Element => {
+}: OrderLineRowActionsProps): JSX.Element => {
   const classes = useStyles({ showMetadataButton: true });
   const hasLineActionsMenu = menuItems.length > 1;
   const productMenuItem = menuItems[0];

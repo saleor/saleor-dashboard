@@ -14,7 +14,6 @@ import { hasAnyItemsReplaceable } from "@dashboard/orders/components/OrderDetail
 import { OrderFulfillmentCard } from "@dashboard/orders/components/OrderFulfillmentCard/OrderFulfillmentCard";
 import { OrderLineExpandedPanel } from "@dashboard/orders/components/OrderLineExpandedPanel/OrderLineExpandedPanel";
 import { OrderLineMatrixDatagrid } from "@dashboard/orders/components/OrderLineMatrixDatagrid/OrderLineMatrixDatagrid";
-import { OrderLineMatrixNeedsActionSwitch } from "@dashboard/orders/components/OrderLineMatrixDatagrid/OrderLineMatrixNeedsActionSwitch";
 import { OrderUnfulfilledProductsCard } from "@dashboard/orders/components/OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { useOrderDetailsViewMode } from "@dashboard/orders/hooks/useOrderDetailsViewMode";
 import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";
@@ -73,7 +72,6 @@ export const OrderDetailsItemsSection = ({
   const { viewMode, setViewMode, showCanceledFulfillments, setShowCanceledFulfillments } =
     useOrderDetailsViewMode();
   const [expandedLineId, setExpandedLineId] = useState<string | null>(null);
-  const [needsActionOnly, setNeedsActionOnly] = useState(false);
   const unfulfilled = useMemo(
     () => (order.lines || []).filter(line => line.quantityToFulfill > 0),
     [order.lines],
@@ -104,13 +102,26 @@ export const OrderDetailsItemsSection = ({
     : "";
   const hasItemsToFulfill = lifecycleRows.some(row => row.toFulfill > 0);
   const canReturn = hasAnyItemsReplaceable(order);
+  const unfulfilledLineReasons = useMemo(() => {
+    const lifecycleByLineId = new Map(
+      lifecycleRows.map(row => [row.orderLineId, row.reasonDisplay]),
+    );
+
+    return unfulfilled.map(line => {
+      const reasonDisplay = lifecycleByLineId.get(line.id);
+
+      return reasonDisplay ?? { reason: null, reasonType: null };
+    });
+  }, [unfulfilled, lifecycleRows]);
+  const hasUnfulfilledLineReasons = unfulfilledLineReasons.some(
+    reason => reason.reason || reason.reasonType,
+  );
 
   const handleViewModeChange = useCallback(
     (mode: OrderDetailsViewMode) => {
       setViewMode(mode);
       setExpandedLineId(null);
       onFocusedLineChange?.(null);
-      setNeedsActionOnly(false);
     },
     [onFocusedLineChange, setViewMode],
   );
@@ -171,10 +182,6 @@ export const OrderDetailsItemsSection = ({
     [intl],
   );
 
-  const handleNeedsActionOnlyChange = useCallback((value: boolean) => {
-    setNeedsActionOnly(value);
-  }, []);
-
   const handleToggleExpand = useCallback(
     (lineId: string) => {
       const nextLineId = expandedLineId === lineId ? null : lineId;
@@ -232,7 +239,7 @@ export const OrderDetailsItemsSection = ({
           </Box>
         </Box>
 
-        {viewMode === "matrix" && (hasItemsToFulfill || canReturn) && (
+        {(hasItemsToFulfill || canReturn) && (
           <Box display="flex" gap={2}>
             {hasItemsToFulfill && canFulfill && (
               <Tooltip>
@@ -242,7 +249,7 @@ export const OrderDetailsItemsSection = ({
                       variant="primary"
                       onClick={onOrderFulfill}
                       disabled={notAllowedToFulfillUnpaid}
-                      data-test-id="matrix-fulfill-button"
+                      data-test-id="order-items-fulfill-button"
                     >
                       <PackageIcon size={16} />
                       <FormattedMessage {...messages.fulfill} />
@@ -260,7 +267,7 @@ export const OrderDetailsItemsSection = ({
               <Button
                 variant="secondary"
                 onClick={onOrderReturn}
-                data-test-id="matrix-return-button"
+                data-test-id="order-items-return-button"
               >
                 <Undo2 size={16} />
                 <FormattedMessage {...messages.returnOrder} />
@@ -270,13 +277,18 @@ export const OrderDetailsItemsSection = ({
         )}
       </Box>
 
+      {orderLevelRefunds.length > 0 && (
+        <Box paddingX={6} paddingBottom={4}>
+          <OrderLevelRefundCallout orderId={order.id} refunds={orderLevelRefunds} />
+        </Box>
+      )}
+
       {viewMode === "timeline" ? (
         <>
           <OrderUnfulfilledProductsCard
-            showFulfillmentAction={canFulfill}
-            notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
             lines={unfulfilled}
-            onFulfill={onOrderFulfill}
+            order={order}
+            lineReasons={hasUnfulfilledLineReasons ? unfulfilledLineReasons : undefined}
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}
@@ -315,16 +327,9 @@ export const OrderDetailsItemsSection = ({
           aria-expanded={expandedLineId !== null}
           aria-controls={expandedLineId ? EXPANDED_PANEL_ID : undefined}
         >
-          <OrderLevelRefundCallout orderId={order.id} refunds={orderLevelRefunds} />
-          <Box display="flex" alignItems="center" justifyContent="space-between" gap={4}>
-            <Text size={3} color="default2">
-              <FormattedMessage {...messages.matrixHelper} />
-            </Text>
-            <OrderLineMatrixNeedsActionSwitch
-              pressed={needsActionOnly}
-              onPressedChange={handleNeedsActionOnlyChange}
-            />
-          </Box>
+          <Text size={3} color="default2">
+            <FormattedMessage {...messages.matrixHelper} />
+          </Text>
           <div className={styles.srOnly} aria-live="polite">
             {expandedLifecycle && (
               <FormattedMessage
@@ -341,7 +346,6 @@ export const OrderDetailsItemsSection = ({
             onToggleExpand={handleToggleExpand}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}
-            needsActionOnly={needsActionOnly}
           />
           {expandedLifecycle && (
             <OrderLineExpandedPanel

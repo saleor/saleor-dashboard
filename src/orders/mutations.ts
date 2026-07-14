@@ -87,9 +87,6 @@ export const orderDraftCancelMutation = gql`
       errors {
         ...OrderError
       }
-      order {
-        ...OrderDetails
-      }
     }
   }
 `;

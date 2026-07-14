@@ -11,8 +11,7 @@ const orderLineMatrixViewContextual = (
 const orderLineMatrixViewGlobal = (
   <Text color="default2">
     Order details now open in <em>Line matrix</em> so you can work order line by order line.{" "}
-    <em>Timeline</em> is still available when you need to follow shipments. Use{" "}
-    <em>Needs action</em> to focus on lines that still need approval or refund follow-up.
+    <em>Timeline</em> is still available when you need to follow shipments.
   </Text>
 );
 

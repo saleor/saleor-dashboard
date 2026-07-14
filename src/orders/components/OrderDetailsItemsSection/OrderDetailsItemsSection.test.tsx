@@ -57,8 +57,6 @@ describe("OrderDetailsItemsSection", () => {
     // Assert
     expect(screen.getByTestId("order-items-view-matrix")).toBeInTheDocument();
     expect(screen.queryByTestId("fulfilled-order-section")).not.toBeInTheDocument();
-    expect(screen.getByText("Needs action")).toBeInTheDocument();
-    expect(screen.getByTestId("matrix-needs-action-help")).toBeInTheDocument();
   });
 
   it("renders timeline view when selected", async () => {
@@ -72,20 +70,6 @@ describe("OrderDetailsItemsSection", () => {
 
     // Assert
     expect(screen.getByTestId("fulfilled-order-section")).toBeInTheDocument();
-    expect(screen.queryByTestId("matrix-needs-action-toggle")).not.toBeInTheDocument();
-  });
-
-  it("enables needs action filter from toggle above the table", async () => {
-    // Arrange
-    const user = userEvent.setup();
-
-    renderSection();
-
-    // Act
-    await user.click(screen.getByTestId("matrix-needs-action-toggle"));
-
-    // Assert
-    expect(screen.getByTestId("matrix-needs-action-toggle")).toHaveAttribute("data-state", "on");
   });
 
   it("switches to line matrix view", async () => {
@@ -160,8 +144,9 @@ describe("OrderDetailsItemsSection", () => {
     expect(stored[ListViews.ORDER_DETAILS_LIST].showCanceledFulfillments).toBe(true);
   });
 
-  it("shows order-level refund callout in matrix view", () => {
+  it("shows order-level refund callout in both views", async () => {
     // Arrange
+    const user = userEvent.setup();
     const orderWithOrderLevelRefund = {
       ...OrderFixture.fulfilled().build(),
       grantedRefunds: [
@@ -182,11 +167,39 @@ describe("OrderDetailsItemsSection", () => {
       ],
     };
 
-    // Act
     renderSection({ order: orderWithOrderLevelRefund });
 
-    // Assert
+    // Assert — matrix (default)
     expect(screen.getByTestId("order-level-refund-callout")).toBeInTheDocument();
     expect(screen.getByText(/order-level refund needs attention/i)).toBeInTheDocument();
+
+    // Act — switch to timeline
+    await user.click(screen.getByTestId("order-items-view-timeline"));
+
+    // Assert — timeline
+    expect(screen.getByTestId("order-level-refund-callout")).toBeInTheDocument();
+  });
+
+  it("shows fulfill and return actions in timeline view header", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const baseOrder = OrderFixture.unfulfilled().build();
+    const order = {
+      ...baseOrder,
+      lines: baseOrder.lines.map(line => ({
+        ...line,
+        quantityToFulfill: line.quantity,
+      })),
+    };
+
+    renderSection({ order });
+
+    // Act
+    await user.click(screen.getByTestId("order-items-view-timeline"));
+
+    // Assert
+    expect(screen.getByTestId("order-items-fulfill-button")).toBeInTheDocument();
+    expect(screen.getByTestId("order-items-return-button")).toBeInTheDocument();
+    expect(screen.queryByTestId("fulfill-button")).not.toBeInTheDocument();
   });
 });

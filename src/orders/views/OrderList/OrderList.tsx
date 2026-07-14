@@ -78,7 +78,7 @@ const OrderList = ({ params }: OrderListProps) => {
   const { channel, availableChannels } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];
-  const [createOrder] = useOrderDraftCreateMutation({
+  const [createOrder, createOrderOpts] = useOrderDraftCreateMutation({
     onCompleted: data => {
       notify({
         status: "success",
@@ -183,7 +183,7 @@ const OrderList = ({ params }: OrderListProps) => {
       {!noChannel && (
         <ChannelPickerDialog
           channelsChoices={channelOpts}
-          confirmButtonState="success"
+          confirmButtonState={createOrderOpts.status}
           defaultChoice={channel.id}
           open={params.action === "create-order"}
           onClose={closeModal}
