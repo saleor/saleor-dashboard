@@ -82,8 +82,8 @@ describe("OrderLineMatrixDatagrid", () => {
     expect(screen.getByText("Return this line")).toBeInTheDocument();
     expect(screen.getByText("Refund this line")).toBeInTheDocument();
     expect(screen.getByText("Product details")).toBeInTheDocument();
-    expect(screen.getByTestId("matrix-return-line")).toBeInTheDocument();
-    expect(screen.getByTestId("matrix-refund-line")).toBeInTheDocument();
+    expect(screen.getByTestId("order-line-return")).toBeInTheDocument();
+    expect(screen.getByTestId("order-line-refund")).toBeInTheDocument();
   });
 
   it("renders only product link when no line actions are available", () => {

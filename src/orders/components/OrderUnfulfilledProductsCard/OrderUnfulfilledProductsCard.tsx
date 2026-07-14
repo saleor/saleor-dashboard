@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { type OrderLineFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, type OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { PackageIcon } from "lucide-react";
@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 
 import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
+import { type LineReasonDisplay } from "../OrderDetailsDatagrid/datagrid";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
 import { OrderLineGroupEnd } from "../OrderLineGroupBottomSeparator/OrderLineGroupBottomSeparator";
 import { toLineWithUnfulfilledQuantity } from "./utils";
@@ -15,6 +16,8 @@ interface OrderUnfulfilledProductsCardProps {
   showFulfillmentAction: boolean;
   notAllowedToFulfillUnpaid: boolean;
   lines: OrderLineFragment[];
+  order: OrderDetailsFragment;
+  lineReasons?: LineReasonDisplay[];
   onFulfill: () => void;
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
@@ -28,6 +31,8 @@ export const OrderUnfulfilledProductsCard = ({
   onOrderLineShowMetadata,
   onShowLinePriceBreakdown,
   lines,
+  order,
+  lineReasons,
   onFulfill,
   loading,
   showBottomSeparator = false,
@@ -70,6 +75,8 @@ export const OrderUnfulfilledProductsCard = ({
         <DashboardCard.Content paddingX={0}>
           <OrderDetailsDatagrid
             lines={toLineWithUnfulfilledQuantity(lines)}
+            order={order}
+            lineReasons={lineReasons}
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}

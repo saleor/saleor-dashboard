@@ -26,8 +26,7 @@ import {
   getOrderLineRollupStatus,
   getOrderLineRollupStatusLabel,
 } from "@dashboard/orders/utils/getOrderLineRollupStatus";
-import { lineNeedsAction } from "@dashboard/orders/utils/lineNeedsAction";
-import { type GridCell, GridCellKind, type Item, type Theme } from "@glideapps/glide-data-grid";
+import { type GridCell, type Item } from "@glideapps/glide-data-grid";
 import { type IntlShape } from "react-intl";
 
 import { messages } from "./messages";
@@ -155,39 +154,7 @@ interface GetCellContentProps {
   intl: IntlShape;
   expandedLineId: string | null;
   interactivePricing?: boolean;
-  needsActionOnly?: boolean;
-  mutedTextColor?: string;
 }
-
-const getMutedCellTheme = (mutedTextColor: string): Partial<Theme> => ({
-  textDark: mutedTextColor,
-  textMedium: mutedTextColor,
-  textLight: mutedTextColor,
-});
-
-const applyMutedCellStyle = (cell: GridCell, muted: boolean, mutedTextColor: string): GridCell => {
-  if (!muted) {
-    return cell;
-  }
-
-  const mutedTheme = getMutedCellTheme(mutedTextColor);
-
-  if (cell.kind === GridCellKind.Custom) {
-    return {
-      ...cell,
-      themeOverride: mutedTheme,
-      data: {
-        ...cell.data,
-        muted: true,
-      },
-    };
-  }
-
-  return {
-    ...cell,
-    themeOverride: mutedTheme,
-  };
-};
 
 const getSkeletonVariant = (columnId: string | undefined): SkeletonCellVariant => {
   if (columnId && QUANTITY_COLUMN_IDS.has(columnId)) {
@@ -208,8 +175,6 @@ export const createGetCellContent =
     intl,
     expandedLineId,
     interactivePricing,
-    needsActionOnly = false,
-    mutedTextColor,
   }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     const discountedOpts: Partial<GridCell> = interactivePricing
@@ -229,115 +194,101 @@ export const createGetCellContent =
 
     const line = rowData.orderLine;
     const isExpanded = expandedLineId === rowData.orderLineId;
-    const isMuted = needsActionOnly && mutedTextColor ? !lineNeedsAction(rowData) : false;
-
-    const withMutedStyle = (cell: GridCell): GridCell =>
-      applyMutedCellStyle(cell, isMuted, mutedTextColor ?? "");
 
     switch (columnId) {
       case STATUS_COLUMN_ID: {
         const rollupStatus = getOrderLineRollupStatus(rowData);
 
-        return withMutedStyle(
-          lineMatrixStatusCell(
-            rollupStatus,
-            getOrderLineRollupStatusLabel(rollupStatus, intl),
-            isExpanded,
-          ),
+        return lineMatrixStatusCell(
+          rollupStatus,
+          getOrderLineRollupStatusLabel(rollupStatus, intl),
+          isExpanded,
         );
       }
       case "product":
-        return withMutedStyle(
-          thumbnailCell(line.productName ?? "", line.thumbnail?.url ?? "", readonlyOptions),
-        );
+        return thumbnailCell(line.productName ?? "", line.thumbnail?.url ?? "", readonlyOptions);
       case "sku":
-        return withMutedStyle(readonlyTextCell(line.productSku ?? "", false));
+        return readonlyTextCell(line.productSku ?? "", false);
       case "variantName":
-        return withMutedStyle(readonlyTextCell(line.variant?.name ?? "—", false));
+        return readonlyTextCell(line.variant?.name ?? "—", false);
       case "ordered":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.ordered), false));
+        return readonlyTextCell(formatQuantity(rowData.ordered), false);
       case "allocated":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.allocated), false));
+        return readonlyTextCell(formatQuantity(rowData.allocated), false);
       case "toFulfill":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.toFulfill), false));
+        return readonlyTextCell(formatQuantity(rowData.toFulfill), false);
       case "pendingApproval":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.pendingApproval), false));
+        return readonlyTextCell(formatQuantity(rowData.pendingApproval), false);
       case "shipped":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.shipped), false));
+        return readonlyTextCell(formatQuantity(rowData.shipped), false);
       case "returned":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.returned), false));
+        return readonlyTextCell(formatQuantity(rowData.returned), false);
       case "refunded":
-        return withMutedStyle(
-          readonlyTextCell(
-            formatRefundColumnValue(
-              rowData.refundedFulfillment,
-              rowData.refundedFulfillmentAmount,
-              locale,
-            ),
-            false,
+        return readonlyTextCell(
+          formatRefundColumnValue(
+            rowData.refundedFulfillment,
+            rowData.refundedFulfillmentAmount,
+            locale,
           ),
+          false,
         );
       case "grantedRefund":
-        return withMutedStyle(
-          readonlyTextCell(
-            formatRefundColumnValue(rowData.grantedRefund, rowData.grantedRefundAmount, locale),
-            false,
-          ),
+        return readonlyTextCell(
+          formatRefundColumnValue(rowData.grantedRefund, rowData.grantedRefundAmount, locale),
+          false,
         );
       case "replaced":
-        return withMutedStyle(readonlyTextCell(formatQuantity(rowData.replaced), false));
+        return readonlyTextCell(formatQuantity(rowData.replaced), false);
       case "reason": {
         const parts = [rowData.reasonDisplay?.reasonType, rowData.reasonDisplay?.reason].filter(
           Boolean,
         );
 
-        return withMutedStyle(readonlyTextCell(parts.join(" · ") || "—", false));
+        return readonlyTextCell(parts.join(" · ") || "—", false);
       }
       case "price":
         if (isLineDiscounted(line)) {
-          return withMutedStyle(
-            moneyDiscountedCell(
-              {
-                value: line.unitPrice.gross.amount,
-                currency: line.unitPrice.gross.currency,
-                undiscounted: line.undiscountedUnitPrice.gross.amount,
-                locale,
-              },
-              discountedOpts,
-            ),
+          return moneyDiscountedCell(
+            {
+              value: line.unitPrice.gross.amount,
+              currency: line.unitPrice.gross.currency,
+              undiscounted: line.undiscountedUnitPrice.gross.amount,
+              locale,
+            },
+            discountedOpts,
           );
         }
 
-        return withMutedStyle(
-          moneyCell(line.unitPrice.gross.amount, line.unitPrice.gross.currency, readonlyOptions),
+        return moneyCell(
+          line.unitPrice.gross.amount,
+          line.unitPrice.gross.currency,
+          readonlyOptions,
         );
       case "total":
         if (isLineDiscounted(line)) {
-          return withMutedStyle(
-            moneyDiscountedCell(
-              {
-                value: line.totalPrice.gross.amount,
-                currency: line.totalPrice.gross.currency,
-                undiscounted: line.undiscountedTotalPrice.gross.amount,
-                locale,
-              },
-              discountedOpts,
-            ),
+          return moneyDiscountedCell(
+            {
+              value: line.totalPrice.gross.amount,
+              currency: line.totalPrice.gross.currency,
+              undiscounted: line.undiscountedTotalPrice.gross.amount,
+              locale,
+            },
+            discountedOpts,
           );
         }
 
-        return withMutedStyle(
-          moneyCell(line.totalPrice.gross.amount, line.totalPrice.gross.currency, readonlyOptions),
+        return moneyCell(
+          line.totalPrice.gross.amount,
+          line.totalPrice.gross.currency,
+          readonlyOptions,
         );
       case "isGift":
-        return withMutedStyle(
-          booleanCell(line.isGift, {
-            readonly: true,
-            allowOverlay: false,
-          }),
-        );
+        return booleanCell(line.isGift, {
+          readonly: true,
+          allowOverlay: false,
+        });
       default:
-        return withMutedStyle(readonlyTextCell("", false));
+        return readonlyTextCell("", false);
     }
   };
 

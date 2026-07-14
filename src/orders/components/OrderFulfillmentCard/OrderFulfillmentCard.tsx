@@ -177,12 +177,13 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
           />
         </Box>
       )}
-      {hasLines && (
+      {hasLines && order && (
         <>
           <OrderCardDatagridSeparator />
           <DashboardCard.Content paddingX={0}>
             <OrderDetailsDatagrid
               lines={lines}
+              order={order}
               lineReasons={hasLineReasons ? lineReasons : undefined}
               loading={false}
               onOrderLineShowMetadata={onOrderLineShowMetadata}
