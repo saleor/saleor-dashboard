@@ -14,6 +14,7 @@ const meta: Meta<typeof OrderDetailsDatagrid> = {
 
   args: {
     lines: orderFixture.lines,
+    order: orderFixture,
     loading: false,
     onOrderLineShowMetadata: fn(),
   },

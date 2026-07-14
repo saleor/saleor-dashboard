@@ -10,6 +10,55 @@ const RETURNABLE_FULFILLMENT_STATUSES = new Set<FulfillmentStatus>([
   FulfillmentStatus.WAITING_FOR_APPROVAL,
 ]);
 
+export type OrderLineRowMenuContext =
+  | { scope: "line" }
+  | {
+      scope: "timeline";
+      segment: "unfulfilled" | "activeFulfillment" | "historicalFulfillment";
+    };
+
+export const getTimelineFulfillmentSegment = (
+  status: FulfillmentStatus,
+): "activeFulfillment" | "historicalFulfillment" => {
+  if (status === FulfillmentStatus.FULFILLED || status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
+    return "activeFulfillment";
+  }
+
+  return "historicalFulfillment";
+};
+
+export const shouldOfferLineFulfillAction = (
+  order: OrderDetailsFragment,
+  lineId: string,
+  context?: OrderLineRowMenuContext,
+): boolean => {
+  if (!hasLineFulfillableItems(order, lineId)) {
+    return false;
+  }
+
+  if (!context || context.scope === "line") {
+    return true;
+  }
+
+  return context.segment === "unfulfilled";
+};
+
+export const shouldOfferLineReturnAction = (
+  order: OrderDetailsFragment,
+  lineId: string,
+  context?: OrderLineRowMenuContext,
+): boolean => {
+  if (!hasLineReturnableItems(order, lineId)) {
+    return false;
+  }
+
+  if (!context || context.scope === "line") {
+    return true;
+  }
+
+  return context.segment !== "historicalFulfillment";
+};
+
 export const hasLineReturnableItems = (order: OrderDetailsFragment, lineId: string): boolean => {
   const hasUnfulfilledQuantity = getUnfulfilledLines(order).some(line => line.id === lineId);
 

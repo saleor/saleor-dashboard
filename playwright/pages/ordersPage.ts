@@ -44,7 +44,7 @@ export class OrdersPage extends BasePage {
     readonly orderSummarySection = page.getByTestId("OrderSummaryCard"),
     readonly paymentSummarySection = page.getByTestId("payment-section"),
     readonly paymentStatusBadges = page.getByTestId("payment-status-badges"),
-    readonly fulfillButton = page.getByTestId("fulfill-button"),
+    readonly fulfillButton = page.getByTestId("order-items-fulfill-button"),
     readonly addProducts = page.getByTestId("add-products-button"),
     readonly orderTransactionsList = page.getByTestId("orderTransactionsList").locator("table"),
     readonly salesChannel = page.getByTestId("salesChannel"),

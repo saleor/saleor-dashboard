@@ -75,77 +75,9 @@ export const messages = defineMessages({
     id: "MJ2jZQ",
     defaultMessage: "Total",
   },
-  productDetails: {
-    id: "VYK2nN",
-    defaultMessage: "Product details",
-  },
-  returnLine: {
-    id: "nHOEZP",
-    defaultMessage: "Return this line",
-    description: "return a single order line from matrix row menu",
-  },
-  refundLine: {
-    id: "yiJ6EO",
-    defaultMessage: "Refund this line",
-    description: "refund a single order line from matrix row menu",
-  },
-  fulfillLine: {
-    id: "5YW/f6",
-    defaultMessage: "Fulfill this line",
-    description: "fulfill a single order line from matrix row menu",
-  },
   replaced: {
     id: "T7Dju4",
     defaultMessage: "Replaced",
     description: "replaced quantity column in line matrix",
-  },
-  showMetadata: {
-    id: "E/yzIO",
-    defaultMessage: "View metadata",
-  },
-  needsAction: {
-    id: "GTiyDh",
-    defaultMessage: "Needs action",
-    description: "filter matrix rows that need merchant attention",
-  },
-  needsActionFilterAriaLabel: {
-    id: "UZjdjP",
-    defaultMessage: "Highlight lines that need action",
-    description: "aria label for needs action toggle above line matrix",
-  },
-  needsActionHelpTitle: {
-    id: "t53iRo",
-    defaultMessage: "Needs action",
-    description: "title for needs action filter help tooltip",
-  },
-  needsActionHelpHighlightedLabel: {
-    id: "xXlmYh",
-    defaultMessage: "Highlighted lines",
-    description: "section label for lines included in needs action filter",
-  },
-  needsActionHelpPendingApproval: {
-    id: "1g1Hsn",
-    defaultMessage: "Pending shipment approval",
-    description: "needs action help bullet for pending approval",
-  },
-  needsActionHelpDraftRefund: {
-    id: "tcioFM",
-    defaultMessage: "Draft refunds not sent",
-    description: "needs action help bullet for draft refunds",
-  },
-  needsActionHelpFailedRefund: {
-    id: "34P9Lf",
-    defaultMessage: "Failed refund transfers",
-    description: "needs action help bullet for failed refunds",
-  },
-  needsActionHelpOtherLinesLabel: {
-    id: "j9r+EY",
-    defaultMessage: "Other lines",
-    description: "section label for non-highlighted lines in needs action tooltip",
-  },
-  needsActionHelpOtherLinesBody: {
-    id: "gpda9P",
-    defaultMessage: "Stay visible in the list but appear faded.",
-    description: "explains muted rows when needs action filter is on",
   },
 });

@@ -9,29 +9,20 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { OrderLineRowActions } from "@dashboard/orders/components/OrderLineRowActions/OrderLineRowActions";
 import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
-import {
-  getOrderLineFulfillUrl,
-  getOrderLineReturnUrl,
-  hasLineFulfillableItems,
-  hasLineReturnableItems,
-} from "@dashboard/orders/utils/getOrderLineActionUrls";
-import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
-import { productPath } from "@dashboard/products/urls";
+import { getOrderLineRowMenuItems } from "@dashboard/orders/utils/getOrderLineRowMenuItems";
 import { ListViews } from "@dashboard/types";
 import { type Item, type Theme } from "@glideapps/glide-data-grid";
-import { Box, useTheme, type vars } from "@saleor/macaw-ui-next";
-import { ExternalLink, PackageIcon, Undo2 } from "lucide-react";
+import { Box, type vars } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { RefundedIcon } from "../../../icons/RefundedIcon";
 import {
   createGetCellContent,
   getMatrixColumnTooltipContent,
@@ -46,9 +37,7 @@ import {
   STATUS_COLUMN_ID,
   withMigratedProductColumn,
 } from "./datagrid";
-import { messages } from "./messages";
 import styles from "./OrderLineMatrixDatagrid.module.css";
-import { OrderLineMatrixRowActions } from "./OrderLineMatrixRowActions";
 
 interface OrderLineMatrixDatagridProps {
   order: OrderDetailsFragment;
@@ -58,7 +47,6 @@ interface OrderLineMatrixDatagridProps {
   onToggleExpand: (lineId: string) => void;
   onOrderLineShowMetadata: (id: string) => void;
   onShowLinePriceBreakdown?: (lineId: string) => void;
-  needsActionOnly?: boolean;
   emptyText?: string;
   columnPickerBackgroundColor?: keyof typeof vars.colors.background;
   datagridCustomTheme?: Partial<Theme>;
@@ -74,7 +62,6 @@ export const OrderLineMatrixDatagrid = ({
   onToggleExpand,
   onOrderLineShowMetadata,
   onShowLinePriceBreakdown,
-  needsActionOnly = false,
   emptyText,
   columnPickerBackgroundColor = "default1",
   datagridCustomTheme = {},
@@ -82,7 +69,6 @@ export const OrderLineMatrixDatagrid = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const { locale } = useLocale();
-  const { themeValues } = useTheme();
   const datagrid = useDatagridChangeState();
   const pointerInteractionRef = useRef({
     active: false,
@@ -174,20 +160,8 @@ export const OrderLineMatrixDatagrid = ({
       intl,
       expandedLineId,
       interactivePricing: Boolean(onShowLinePriceBreakdown),
-      needsActionOnly,
-      mutedTextColor: themeValues.colors.text.default2,
     }),
-    [
-      columnsWithPinned,
-      lines,
-      loading,
-      locale,
-      intl,
-      expandedLineId,
-      onShowLinePriceBreakdown,
-      needsActionOnly,
-      themeValues.colors.text.default2,
-    ],
+    [columnsWithPinned, lines, loading, locale, intl, expandedLineId, onShowLinePriceBreakdown],
   );
   const handleColumnMoved = useCallback(
     (startIndex: number, endIndex: number) => {
@@ -293,60 +267,14 @@ export const OrderLineMatrixDatagrid = ({
   const getLineMenuItems = useCallback(
     (index: number): TopNavMenuItem[] => {
       const lifecycle = lines[index];
-      const lineId = lifecycle?.orderLineId;
-      const productId = lifecycle?.orderLine.variant?.product.id;
-      const items: TopNavMenuItem[] = [
-        {
-          label: intl.formatMessage(messages.productDetails),
-          testId: "matrix-product-details",
-          disabled: !productId,
-          icon: <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
-          onSelect: () => {
-            if (productId) {
-              window.open(productPath(productId), "_blank", "noopener,noreferrer");
-            }
-          },
-        },
-      ];
 
-      if (lineId && hasLineFulfillableItems(order, lineId)) {
-        items.push({
-          label: intl.formatMessage(messages.fulfillLine),
-          testId: "matrix-fulfill-line",
-          icon: <PackageIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
-          onSelect: () => {
-            navigate(getOrderLineFulfillUrl(order.id, lineId));
-          },
-        });
-      }
-
-      if (lineId && hasLineReturnableItems(order, lineId)) {
-        items.push({
-          label: intl.formatMessage(messages.returnLine),
-          testId: "matrix-return-line",
-          icon: <Undo2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
-          onSelect: () => {
-            navigate(getOrderLineReturnUrl(order.id, lineId));
-          },
-        });
-      }
-
-      if (lineId) {
-        const refundNavigation = getOrderRefundNavigation(order, { lineId });
-
-        if (refundNavigation.canRefund) {
-          items.push({
-            label: intl.formatMessage(messages.refundLine),
-            testId: "matrix-refund-line",
-            icon: <RefundedIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
-            onSelect: () => {
-              navigate(refundNavigation.url);
-            },
-          });
-        }
-      }
-
-      return items;
+      return getOrderLineRowMenuItems({
+        order,
+        lineId: lifecycle?.orderLineId,
+        productId: lifecycle?.orderLine.variant?.product.id,
+        intl,
+        navigate,
+      });
     },
     [intl, lines, navigate, order],
   );
@@ -362,7 +290,7 @@ export const OrderLineMatrixDatagrid = ({
   );
   const renderRowActions = useCallback(
     (index: number) => (
-      <OrderLineMatrixRowActions
+      <OrderLineRowActions
         key={`matrix-row-actions-${index}`}
         menuItems={getLineMenuItems(index)}
         onShowMetadata={() => {
