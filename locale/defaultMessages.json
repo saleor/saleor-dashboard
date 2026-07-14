@@ -62,10 +62,6 @@
     "context": "Dry run dialog object title",
     "string": "Select object type to perform dry run on provided query"
   },
-  "+RjQjs": {
-    "context": "return button",
-    "string": "Return / Replace order"
-  },
   "+SYLEL": {
     "context": "refunded fulfillment, section header",
     "string": "Refunded"
@@ -291,10 +287,6 @@
   "/WXs6H": {
     "context": "collection name",
     "string": "Name"
-  },
-  "/Xwjww": {
-    "context": "button",
-    "string": "Fulfill"
   },
   "/dnWE8": {
     "context": "products in collection",
@@ -713,10 +705,6 @@
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
   },
-  "1g1Hsn": {
-    "context": "needs action help bullet for pending approval",
-    "string": "Pending shipment approval"
-  },
   "1lk/oS": {
     "context": "button",
     "string": "Add postal code range"
@@ -896,6 +884,10 @@
   "2atspc": {
     "string": "Drafts"
   },
+  "2cFaF8": {
+    "context": "fulfill a single order line from row menu",
+    "string": "Fulfill this line"
+  },
   "2dgbGR": {
     "string": "Those codes already exist"
   },
@@ -997,10 +989,6 @@
   "34F7Jk": {
     "context": "filter range separator",
     "string": "and"
-  },
-  "34P9Lf": {
-    "context": "needs action help bullet for failed refunds",
-    "string": "Failed refund transfers"
   },
   "37IPJQ": {
     "context": "return items table, edit reason button",
@@ -1453,10 +1441,6 @@
   "5XG1CO": {
     "context": "acre-ft unit",
     "string": "acre-ft"
-  },
-  "5YW/f6": {
-    "context": "fulfill a single order line from matrix row menu",
-    "string": "Fulfill this line"
   },
   "5ZYUn5": {
     "context": "Filter and element text",
@@ -3474,6 +3458,10 @@
     "context": "label",
     "string": "Shipping rate name"
   },
+  "FkHonS": {
+    "context": "refund a single order line from row menu",
+    "string": "Refund this line"
+  },
   "FkRNk+": {
     "context": "field placeholder",
     "string": "Description of a shipping zone."
@@ -3664,10 +3652,6 @@
   "GTg7rP": {
     "context": "configuration menu item title",
     "string": "Product attributes"
-  },
-  "GTiyDh": {
-    "context": "filter matrix rows that need merchant attention",
-    "string": "Needs action"
   },
   "GUeIcq": {
     "context": "edit structure, header",
@@ -5455,10 +5439,6 @@
     "context": "save preset, header",
     "string": "Save view preset"
   },
-  "PAqicb": {
-    "context": "button",
-    "string": "Cancel order"
-  },
   "PBd/e+": {
     "context": "dialog header",
     "string": "Change address for order"
@@ -6531,10 +6511,6 @@
   "UYKEsx": {
     "context": "collection filter published",
     "string": "Published"
-  },
-  "UZjdjP": {
-    "context": "aria label for needs action toggle above line matrix",
-    "string": "Highlight lines that need action"
   },
   "UcrXYE": {
     "context": "Description for scheduled status when publication date is in the future",
@@ -7785,6 +7761,10 @@
     "context": "label",
     "string": "Link type"
   },
+  "ab8LMF": {
+    "context": "return a single order line from row menu",
+    "string": "Return this line"
+  },
   "abTH5q": {
     "context": "error message",
     "string": "Email address is not set"
@@ -8988,10 +8968,6 @@
     "context": "dialog content",
     "string": "This customer doesn't have any addresses in the address book. Provide address for order."
   },
-  "gpda9P": {
-    "context": "explains muted rows when needs action filter is on",
-    "string": "Stay visible in the list but appear faded."
-  },
   "gr+oXW": {
     "context": "page title",
     "string": "Title"
@@ -9480,10 +9456,6 @@
   "j5r4iT": {
     "context": "bulk issue gift cards quantity section header",
     "string": "Gift cards to issue"
-  },
-  "j9r+EY": {
-    "context": "section label for non-highlighted lines in needs action tooltip",
-    "string": "Other lines"
   },
   "jBl05c": {
     "context": "Badge shown when channel has validation errors",
@@ -10377,10 +10349,6 @@
   "nG1+Cz": {
     "context": "staff members status active",
     "string": "Active"
-  },
-  "nHOEZP": {
-    "context": "return a single order line from matrix row menu",
-    "string": "Return this line"
   },
   "nIuKz3": {
     "context": "Refund status none",
@@ -11602,10 +11570,6 @@
     "context": "Shown while verification is in progress",
     "string": "Verifying..."
   },
-  "t53iRo": {
-    "context": "title for needs action filter help tooltip",
-    "string": "Needs action"
-  },
   "t7UwLY": {
     "context": "voucher status",
     "string": "Expired"
@@ -11692,10 +11656,6 @@
   "taS/08": {
     "context": "variant stocks section subtitle",
     "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
-  },
-  "tcioFM": {
-    "context": "needs action help bullet for draft refunds",
-    "string": "Draft refunds not sent"
   },
   "teWSsc": {
     "context": "assign warehouse dialog search label",
@@ -12644,10 +12604,6 @@
     "context": "expand canceled shipments in line expanded panel",
     "string": "Show {count, plural, one {# canceled shipment} other {# canceled shipments}}"
   },
-  "xXlmYh": {
-    "context": "section label for lines included in needs action filter",
-    "string": "Highlighted lines"
-  },
   "xeMcID": {
     "string": "Warehouse created"
   },
@@ -12859,10 +12815,6 @@
   },
   "yi1HSj": {
     "string": "({numberOfCharacters} of {maxCharacters} characters)"
-  },
-  "yiJ6EO": {
-    "context": "refund a single order line from matrix row menu",
-    "string": "Refund this line"
   },
   "yivxZJ": {
     "context": "order payment",
