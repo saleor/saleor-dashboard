@@ -2975,10 +2975,6 @@
   "CrnqOK": {
     "string": "Country tax rates updated"
   },
-  "CtoFry": {
-    "context": "aria label for needs action help icon",
-    "string": "Learn what needs action includes"
-  },
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
