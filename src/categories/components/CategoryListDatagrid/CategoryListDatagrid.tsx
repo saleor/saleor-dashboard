@@ -198,7 +198,7 @@ export const CategoryListDatagrid = ({
       const rowData = rows[row];
 
       if (!isCategoryListCategoryRow(rowData)) {
-        return undefined;
+        return "";
       }
 
       return categoryUrl(rowData.category.id);

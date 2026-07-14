@@ -51,7 +51,7 @@ export const readCategoryChildrenPageFromCache = (
       variables: getCategoryChildrenVariables(parentId, after),
     });
 
-    return mapCategoryChildrenPageResult(cached) ?? null;
+    return mapCategoryChildrenPageResult(cached ?? undefined) ?? null;
   } catch {
     return null;
   }

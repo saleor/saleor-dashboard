@@ -5,11 +5,15 @@ import {
   readonlyTextCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
+import {
+  DatagridChangeStateContext,
+  useDatagridChangeState,
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useMemo, useState } from "react";
+import { type ReactElement, useMemo, useState } from "react";
 
 interface TreeNode {
   id: string;
@@ -140,6 +144,16 @@ const tree: TreeNode[] = [
 
 const initialExpandedIds = new Set(["electronics", "home"]);
 
+const DatagridChangeProvider = ({ children }: { children: ReactElement }) => {
+  const state = useDatagridChangeState();
+
+  return (
+    <DatagridChangeStateContext.Provider value={state}>
+      {children}
+    </DatagridChangeStateContext.Provider>
+  );
+};
+
 const flattenTree = (nodes: TreeNode[], expandedIds: Set<string>, depth = 0): VisibleRow[] =>
   nodes.flatMap(node => {
     const row: VisibleRow = { node, depth };
@@ -213,20 +227,22 @@ const ChevronCellTreeGridPreview = () => {
 
   return (
     <Box padding={6}>
-      <Datagrid
-        readonly
-        showTopBorder={false}
-        verticalBorder={false}
-        rowMarkers="checkbox-visible"
-        availableColumns={columns}
-        rows={visibleRows.length}
-        getCellContent={getCellContent}
-        getCellError={() => false}
-        emptyText="No categories found"
-        menuItems={() => []}
-        selectionActions={() => null}
-        onRowClick={handleRowClick}
-      />
+      <DatagridChangeProvider>
+        <Datagrid
+          readonly
+          showTopBorder={false}
+          verticalBorder={false}
+          rowMarkers="checkbox-visible"
+          availableColumns={columns}
+          rows={visibleRows.length}
+          getCellContent={getCellContent}
+          getCellError={() => false}
+          emptyText="No categories found"
+          menuItems={() => []}
+          selectionActions={() => null}
+          onRowClick={handleRowClick}
+        />
+      </DatagridChangeProvider>
     </Box>
   );
 };
