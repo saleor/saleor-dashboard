@@ -35,6 +35,7 @@ import { useIntl } from "react-intl";
 import { getMutationErrors, maybe } from "../../../misc";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
+import { OrderDetailsItemsSection } from "../OrderDetailsItemsSection/OrderDetailsItemsSection";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
@@ -44,7 +45,6 @@ import { LinePriceWaterfallModal } from "../OrderLinePriceBreakdown/components/L
 import { useOrderLinePriceWaterfall } from "../OrderLinePriceBreakdown/hooks/useOrderLinePriceWaterfall";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
-import { OrderUnfulfilledProductsCard } from "../OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import Title from "./Title";
 import {
@@ -96,6 +96,8 @@ interface OrderDetailsPageProps {
   onAddManualTransaction: () => any;
   onRefundAdd: () => void;
   onSubmit?: (data: MetadataIdSchema) => SubmitPromise;
+  focusedLineId?: string;
+  onFocusedLineChange?: (lineId: string | null) => void;
 }
 
 const OrderDetailsPage = (props: OrderDetailsPageProps) => {
@@ -137,6 +139,8 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onMarkAsPaid,
     onRefundAdd,
     onSubmit,
+    focusedLineId,
+    onFocusedLineChange,
   } = props;
   const navigate = useNavigator();
   const intl = useIntl();
@@ -237,15 +241,22 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
 
       <DetailPageLayout.Content data-test-id="order-fulfillment">
         {!isOrderUnconfirmed ? (
-          <OrderUnfulfilledProductsCard
-            showFulfillmentAction={canFulfill}
-            notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
-            lines={unfulfilled}
-            onFulfill={onOrderFulfill}
+          <OrderDetailsItemsSection
+            order={order}
+            shop={shop}
             loading={loading}
+            canFulfill={canFulfill}
+            notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
+            onOrderFulfill={onOrderFulfill}
+            onOrderReturn={onOrderReturn}
+            onFulfillmentApprove={onFulfillmentApprove}
+            onFulfillmentCancel={onFulfillmentCancel}
+            onFulfillmentTrackingNumberUpdate={onFulfillmentTrackingNumberUpdate}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
+            onFulfillmentShowMetadata={onFulfillmentShowMetadata}
             onShowLinePriceBreakdown={setPricingLineId}
-            showBottomSeparator={(order?.fulfillments?.length ?? 0) > 0}
+            focusedLineId={focusedLineId}
+            onFocusedLineChange={onFocusedLineChange}
           />
         ) : (
           <>
@@ -263,22 +274,23 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             <CardSpacer />
           </>
         )}
-        {order?.fulfillments?.map((fulfillment, index) => (
-          <OrderFulfillmentCard
-            key={fulfillment.id}
-            dataTestId="fulfilled-order-section"
-            fulfillment={fulfillment}
-            fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-            order={order}
-            onOrderLineShowMetadata={onOrderLineShowMetadata}
-            onShowLinePriceBreakdown={setPricingLineId}
-            onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
-            onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
-            onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
-            onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
-            showBottomSeparator={index < (order.fulfillments?.length ?? 0) - 1}
-          />
-        ))}
+        {isOrderUnconfirmed &&
+          order?.fulfillments?.map((fulfillment, index) => (
+            <OrderFulfillmentCard
+              key={fulfillment.id}
+              dataTestId="fulfilled-order-section"
+              fulfillment={fulfillment}
+              fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+              order={order}
+              onOrderLineShowMetadata={onOrderLineShowMetadata}
+              onShowLinePriceBreakdown={setPricingLineId}
+              onFulfillmentShowMetadata={() => onFulfillmentShowMetadata(fulfillment.id)}
+              onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
+              onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
+              onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
+              showBottomSeparator={index < (order.fulfillments?.length ?? 0) - 1}
+            />
+          ))}
 
         {order && !isOrderUnconfirmed && (
           <>

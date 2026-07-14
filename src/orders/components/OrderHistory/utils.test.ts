@@ -82,6 +82,8 @@ describe("groupEventsByDate", () => {
       discount: null,
       relatedOrder: null,
       related: null,
+      composedId: null,
+      warehouse: null,
       user: null,
       app: null,
       lines: null,

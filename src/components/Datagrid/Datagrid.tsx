@@ -105,6 +105,7 @@ interface DatagridProps {
   onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
   readonly?: boolean;
   hasRowHover?: boolean;
+  highlightedRow?: number;
   rowMarkers?: DataEditorProps["rowMarkers"];
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
@@ -121,6 +122,7 @@ interface DatagridProps {
   themeOverride?: Partial<Theme>;
   rowMarkerWidth?: number;
   rowMarkerTheme?: Partial<Theme>;
+  smoothScrollX?: boolean;
 }
 
 export const Datagrid = ({
@@ -150,6 +152,7 @@ export const Datagrid = ({
   loading,
   rowAnchor,
   hasRowHover = false,
+  highlightedRow,
   onRowSelectionChange,
   actionButtonPosition = "left",
   recentlyAddedColumn,
@@ -161,6 +164,7 @@ export const Datagrid = ({
   themeOverride,
   rowMarkerWidth,
   rowMarkerTheme: rowMarkerThemeOverride,
+  smoothScrollX = true,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -350,17 +354,25 @@ export const Datagrid = ({
   };
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
     (row: number) => {
-      if (row !== hoverRow) {
+      const isActiveRow = highlightedRow !== undefined && row === highlightedRow;
+      const isHoverRow = row === hoverRow;
+
+      if (!isActiveRow && !isHoverRow) {
         return undefined;
       }
 
-      const overrideTheme: Partial<Theme> = {
-        /*
-          Grid-specific colors. Transparency matters when we highlight entire row.
-        */
-        bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
-        bgCellMedium: themeValues.colors.background.default1Hovered,
-      };
+      const overrideTheme: Partial<Theme> = isActiveRow
+        ? {
+            bgCell: themeValues.colors.background.default2,
+            bgCellMedium: themeValues.colors.background.default2,
+          }
+        : {
+            /*
+              Grid-specific colors. Transparency matters when we highlight entire row.
+            */
+            bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
+            bgCellMedium: themeValues.colors.background.default1Hovered,
+          };
 
       if (readonly) {
         overrideTheme.accentLight = themeValues.colors.background.default1;
@@ -368,7 +380,7 @@ export const Datagrid = ({
 
       return overrideTheme;
     },
-    [hoverRow, readonly, themeValues],
+    [highlightedRow, hoverRow, readonly, theme, themeValues],
   );
   const handleHeaderClicked = useCallback(
     (colIndex: number, event: HeaderClickedEventArgs) => {
@@ -397,7 +409,7 @@ export const Datagrid = ({
         ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
       }
 
-      if (isSelected && column.id !== "empty") {
+      if (isSelected && column.id !== "empty" && !columnMeta?.disableReorder) {
         const iconSize = 16;
         const padding = 8;
         const x = rect.x + rect.width - iconSize - padding;
@@ -475,9 +487,16 @@ export const Datagrid = ({
         return;
       }
 
+      const startColumn = availableColumns[startIndex];
+      const endColumn = availableColumns[endIndex];
+
+      if (startColumn?.disableReorder || endColumn?.disableReorder) {
+        return;
+      }
+
       onColumnMoved(startIndex, endIndex);
     },
-    [clearTooltip, onColumnMoved, tooltip],
+    [availableColumns, clearTooltip, onColumnMoved, tooltip],
   );
   const selectionActionsComponent = useMemo(
     () =>
@@ -566,7 +585,7 @@ export const Datagrid = ({
                     columns={availableColumns}
                     rows={rowsTotal}
                     freezeColumns={freezeColumns}
-                    smoothScrollX
+                    smoothScrollX={smoothScrollX}
                     rowMarkers={rowMarkers}
                     rowSelect="multi"
                     rowSelectionMode="multi"

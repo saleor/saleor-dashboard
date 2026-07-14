@@ -1,9 +1,7 @@
 // @ts-strict-ignore
 import { FulfillmentStatus } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { DEFAULT_ICON_SIZE } from "@dashboard/icons/utils";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { Box, Button, Tooltip } from "@saleor/macaw-ui-next";
 import { CheckIcon, TruckIcon } from "lucide-react";
 import { FormattedMessage } from "react-intl";
@@ -12,14 +10,13 @@ import { RefundedIcon } from "../../../icons/RefundedIcon";
 import { actionButtonsMessages } from "./messages";
 
 interface ActionButtonsProps {
-  orderId: string;
   status: FulfillmentStatus;
   trackingNumber?: string;
   orderIsPaid?: boolean;
   fulfillmentAllowUnpaid: boolean;
-  hasTransactions: boolean;
   onTrackingCodeAdd: () => any;
   onApprove: () => any;
+  onRefund?: () => void;
 }
 
 const statusesToShow = [
@@ -29,21 +26,15 @@ const statusesToShow = [
 ];
 
 export const ActionButtons = ({
-  orderId,
   status,
   trackingNumber,
   orderIsPaid,
   fulfillmentAllowUnpaid,
-  hasTransactions,
   onTrackingCodeAdd,
   onApprove,
+  onRefund,
 }: ActionButtonsProps) => {
-  const navigate = useNavigator();
   const hasTrackingNumber = !!trackingNumber;
-
-  const handleRefundClick = () => {
-    navigate(orderPaymentRefundUrl(orderId));
-  };
 
   if (!statusesToShow.includes(status)) {
     return null;
@@ -69,10 +60,10 @@ export const ActionButtons = ({
     );
   }
 
-  if (status === FulfillmentStatus.RETURNED && !hasTransactions) {
+  if (status === FulfillmentStatus.RETURNED && onRefund) {
     return (
       <Box>
-        <Button onClick={handleRefundClick} variant="primary">
+        <Button onClick={onRefund} variant="primary">
           <RefundedIcon size={DEFAULT_ICON_SIZE} />
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>

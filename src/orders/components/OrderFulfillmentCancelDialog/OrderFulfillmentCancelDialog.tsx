@@ -30,13 +30,10 @@ interface OrderFulfillmentCancelDialogProps {
   open: boolean;
   warehouses: WarehouseFragment[];
   fulfillmentStatus: string;
+  defaultWarehouseId?: string | null;
   onClose: () => any;
   onConfirm: (data: OrderFulfillmentCancelDialogFormData) => any;
 }
-
-const INITIAL_FORM_DATA: OrderFulfillmentCancelDialogFormData = {
-  warehouseId: null,
-};
 
 const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) => {
   const {
@@ -45,6 +42,7 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
     open,
     warehouses,
     fulfillmentStatus,
+    defaultWarehouseId = null,
     onConfirm,
     onClose,
   } = props;
@@ -67,7 +65,10 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
   });
 
   const subtitle = waitingForApproval ? (
-    <FormattedMessage {...messages.description} />
+    <>
+      <FormattedMessage {...messages.description} />{" "}
+      <FormattedMessage {...messages.waitingForApprovalHint} />
+    </>
   ) : (
     <>
       <FormattedMessage {...messages.description} /> <FormattedMessage {...messages.restockHint} />
@@ -76,7 +77,7 @@ const OrderFulfillmentCancelDialog = (props: OrderFulfillmentCancelDialogProps) 
 
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <Form key={formKey} initial={INITIAL_FORM_DATA} onSubmit={onConfirm}>
+      <Form key={formKey} initial={{ warehouseId: defaultWarehouseId }} onSubmit={onConfirm}>
         {({ change, data: formData, submit }) => {
           const selectedWarehouse =
             warehouseOptions.find(option => option.value === formData.warehouseId) ?? null;

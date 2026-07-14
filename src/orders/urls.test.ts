@@ -4,6 +4,7 @@ import {
   orderListUrlWithChannel,
   orderListUrlWithCustomerEmail,
   orderListUrlWithCustomerId,
+  withOrderFulfillmentDialog,
 } from "./urls";
 
 describe("Order URLs", () => {
@@ -92,6 +93,45 @@ describe("Order URLs", () => {
       expect(result).toContain("/orders?");
       expect(result).toContain("channel");
       expect(result).toContain("channel-usd");
+    });
+  });
+});
+
+describe("withOrderFulfillmentDialog", () => {
+  const focusedParams = { lineId: "line-1" };
+
+  it.each([
+    ["edit-fulfillment", "fulfillment-1"],
+    ["cancel-fulfillment", "fulfillment-2"],
+    ["approve-fulfillment", "fulfillment-3"],
+  ] as const)("preserves lineId when opening %s", (action, fulfillmentId) => {
+    // Arrange // Act
+    const result = withOrderFulfillmentDialog(focusedParams, action, fulfillmentId);
+
+    // Assert
+    expect(result).toEqual({
+      lineId: "line-1",
+      action,
+      id: fulfillmentId,
+    });
+  });
+
+  it("replaces a previous dialog action while keeping line focus", () => {
+    // Arrange
+    const params = {
+      lineId: "line-1",
+      action: "view-fulfillment-metadata" as const,
+      id: "fulfillment-old",
+    };
+
+    // Act
+    const result = withOrderFulfillmentDialog(params, "cancel-fulfillment", "fulfillment-new");
+
+    // Assert
+    expect(result).toEqual({
+      lineId: "line-1",
+      action: "cancel-fulfillment",
+      id: "fulfillment-new",
     });
   });
 });

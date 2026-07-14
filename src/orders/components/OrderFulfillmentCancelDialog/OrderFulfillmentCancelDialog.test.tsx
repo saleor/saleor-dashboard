@@ -38,11 +38,26 @@ describe("OrderFulfillmentCancelDialog", () => {
     // Assert
     expect(screen.getByText("Cancel Fulfillment")).toBeInTheDocument();
     expect(
-      screen.getByText(/Canceling a fulfillment will restock products at a selected warehouse/),
+      screen.getByText(
+        /Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected./,
+      ),
     ).toBeInTheDocument();
     expect(screen.getByTestId("cancel-fulfillment-select-field")).toBeInTheDocument();
     expect(screen.getByTestId("submit")).toBeDisabled();
     expect(screen.getByTestId("submit")).toHaveTextContent("Cancel fulfillment");
+  });
+
+  it("pre-selects the fulfillment warehouse when provided", () => {
+    // Arrange // Act
+    render(
+      <Wrapper>
+        <OrderFulfillmentCancelDialog {...defaultProps} defaultWarehouseId="wh-2" />
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("submit")).not.toBeDisabled();
+    expect(screen.getByDisplayValue("Warehouse B")).toBeInTheDocument();
   });
 
   it("hides warehouse select when fulfillment is waiting for approval", () => {
@@ -57,6 +72,12 @@ describe("OrderFulfillmentCancelDialog", () => {
     );
 
     // Assert
+    expect(screen.getByText("Cancel Fulfillment")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /This fulfillment has not been approved yet. Canceling removes the pending shipment/,
+      ),
+    ).toBeInTheDocument();
     expect(screen.queryByTestId("cancel-fulfillment-select-field")).not.toBeInTheDocument();
     expect(screen.getByTestId("submit")).not.toBeDisabled();
   });

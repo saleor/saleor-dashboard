@@ -2150,7 +2150,7 @@ export const OrderGrantedRefundFragmentDoc = gql`
     amount
   }
   transactionEvents {
-    id
+    ...TransactionBaseEvent
   }
   reason
   reasonReference {
@@ -2187,7 +2187,8 @@ export const OrderGrantedRefundFragmentDoc = gql`
     }
   }
 }
-    ${UserBaseAvatarFragmentDoc}`;
+    ${TransactionBaseEventFragmentDoc}
+${UserBaseAvatarFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -2216,8 +2217,14 @@ export const OrderEventFragmentDoc = gql`
     id
     number
   }
+  composedId
   related {
     id
+    type
+  }
+  warehouse {
+    id
+    name
   }
   message
   quantity
@@ -2298,6 +2305,14 @@ export const FulfillmentFragmentDoc = gql`
   warehouse {
     id
     name
+  }
+  totalRefundedAmount {
+    amount
+    currency
+  }
+  shippingRefundedAmount {
+    amount
+    currency
   }
 }
     ${OrderLineFragmentDoc}`;

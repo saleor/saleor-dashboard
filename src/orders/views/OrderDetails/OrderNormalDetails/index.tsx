@@ -38,6 +38,7 @@ import {
   isAnyAddressEditModalOpen,
   transformFuflillmentLinesToStockFormsetData,
 } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
 import {
   type CloseModalFunction,
@@ -58,14 +59,15 @@ import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfill
 import { OrderMarkAsPaidDialog } from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
+  orderDetailsUrl,
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
-  orderPaymentRefundUrl,
   orderReturnUrl,
-  orderTransactionRefundUrl,
   orderUrl,
   type OrderUrlDialog,
   type OrderUrlQueryParams,
+  withOrderFulfillmentDialog,
+  withOrderLineFocus,
 } from "../../../urls";
 
 interface OrderNormalDetailsProps {
@@ -135,6 +137,7 @@ export const OrderNormalDetails = ({
   const order = data?.order;
   const shop = data?.shop;
   const navigate = useNavigator();
+  const refundNavigation = useMemo(() => (order ? getOrderRefundNavigation(order) : null), [order]);
   const { data: warehousesData } = useWarehouseListQuery({
     displayLoader: true,
     variables: {
@@ -260,31 +263,22 @@ export const OrderNormalDetails = ({
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "approve-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "approve-fulfillment", fulfillmentId)),
           )
         }
         onFulfillmentCancel={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "cancel-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "cancel-fulfillment", fulfillmentId)),
           )
         }
         onFulfillmentTrackingNumberUpdate={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "edit-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
           )
         }
         onPaymentCapture={() => openModal("capture")}
         onPaymentVoid={() => openModal("void")}
-        onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
+        onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
@@ -305,6 +299,12 @@ export const OrderNormalDetails = ({
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
         onRefundAdd={() => openModal("add-refund")}
+        focusedLineId={params.lineId}
+        onFocusedLineChange={lineId =>
+          navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
+            replace: true,
+          })
+        }
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}
@@ -454,6 +454,7 @@ export const OrderNormalDetails = ({
         open={params.action === "cancel-fulfillment"}
         warehouses={warehouses || []}
         fulfillmentStatus={order?.fulfillments.find(getById(params.id))?.status}
+        defaultWarehouseId={order?.fulfillments.find(getById(params.id))?.warehouse?.id}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
@@ -515,7 +516,9 @@ export const OrderNormalDetails = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
+        onStandardRefund={() =>
+          refundNavigation && navigate(refundNavigation.url, { replace: true })
+        }
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
 

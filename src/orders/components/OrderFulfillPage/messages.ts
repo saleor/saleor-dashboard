@@ -76,4 +76,15 @@ export const messages = defineMessages({
     id: "J0lNnk",
     description: "column label",
   },
+  prefilledLineHint: {
+    id: "iWtHOU",
+    defaultMessage:
+      "Opened from the line matrix for {productName}. Adjust quantity or warehouse before submitting.",
+    description: "subtitle when fulfill page opened for a single line from matrix",
+  },
+  itemReadyToShip: {
+    id: "e3NyeN",
+    defaultMessage: "Item ready to ship",
+    description: "fulfill card title for a single line",
+  },
 });

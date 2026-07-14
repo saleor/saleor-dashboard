@@ -38,6 +38,28 @@ export const getWaitingFulfillments = (order: OrderDetailsFragment) =>
 export const getUnfulfilledLines = (order?: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
+export const filterOrderLinesByOrderLineId = (
+  lines: OrderDetailsFragment["lines"],
+  orderLineId?: string,
+): OrderDetailsFragment["lines"] =>
+  orderLineId ? lines.filter(line => line.id === orderLineId) : lines;
+
+export const filterFulfillmentsByOrderLineId = (
+  fulfillments: OrderDetailsFragment["fulfillments"],
+  orderLineId?: string,
+): OrderDetailsFragment["fulfillments"] => {
+  if (!orderLineId) {
+    return fulfillments;
+  }
+
+  return fulfillments
+    .map(fulfillment => ({
+      ...fulfillment,
+      lines: fulfillment.lines?.filter(line => line.orderLine?.id === orderLineId) ?? [],
+    }))
+    .filter(fulfillment => fulfillment.lines.length > 0);
+};
+
 export const getAllOrderFulfilledLines = (order?: OrderDetailsFragment): ParsedFulfillmentLine[] =>
   getFulfilledFulfillemnts(order).reduce(
     (result, { lines }) => [...result, ...getParsedLines(lines)],

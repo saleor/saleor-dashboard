@@ -16,7 +16,9 @@ export const useScrollRight = () => {
       const isScrolledToRight =
         scroller.scrollWidth - scroller.clientWidth - scroller.scrollLeft < 2;
 
-      setScrolledToRight(isScrolledToRight);
+      setScrolledToRight(previous =>
+        previous === isScrolledToRight ? previous : isScrolledToRight,
+      );
     }, 100);
 
     scroller.addEventListener("scroll", handler);

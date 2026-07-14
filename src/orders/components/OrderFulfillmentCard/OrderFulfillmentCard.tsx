@@ -2,16 +2,20 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import { orderHasTransactions } from "@dashboard/orders/types";
+import { getFulfillmentWarehouseDisplay } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
-import { useIntl } from "react-intl";
+import { useMemo } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderCardDatagridSeparator } from "../OrderCardTitle/OrderCardDatagridSeparator";
 import { OrderCardTitle } from "../OrderCardTitle/OrderCardTitle";
 import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid/OrderDetailsDatagrid";
+import { orderFulfillmentCancelDialogMessages } from "../OrderFulfillmentCancelDialog/messages";
 import { OrderLineGroupEnd } from "../OrderLineGroupBottomSeparator/OrderLineGroupBottomSeparator";
 import { ReasonDisplay } from "../ReasonDisplay/ReasonDisplay";
 import { ActionButtons } from "./ActionButtons";
@@ -62,7 +66,13 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
     showBottomSeparator = false,
   } = props;
   const intl = useIntl();
+  const navigate = useNavigator();
   const { themeValues } = useTheme();
+  const refundNavigation = order ? getOrderRefundNavigation(order) : null;
+  const warehouseDisplay = useMemo(
+    () => (order ? getFulfillmentWarehouseDisplay(order, fulfillment) : undefined),
+    [fulfillment, order],
+  );
 
   if (!fulfillment) {
     return null;
@@ -85,11 +95,13 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
       <OrderCardTitle
         withStatus
         status={fulfillment?.status}
-        warehouseName={fulfillment?.warehouse?.name}
+        warehouseName={warehouseDisplay?.sourceWarehouse?.name}
+        warehouseId={warehouseDisplay?.sourceWarehouse?.id}
+        restockWarehouseName={warehouseDisplay?.restockWarehouse?.name}
+        restockWarehouseId={warehouseDisplay?.restockWarehouse?.id}
         backgroundColor={"default2"}
         createdDate={fulfillment?.created}
         trackingNumber={fulfillment.trackingNumber}
-        warehouseId={fulfillment?.warehouse?.id}
         hasToolbarMenu={cancelableStatuses.includes(fulfillment?.status)}
         toolbar={
           <Box display="flex" alignItems="center" gap={3}>
@@ -103,14 +115,15 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
               />
             )}
             <ActionButtons
-              orderId={order?.id}
               status={fulfillment?.status}
               trackingNumber={fulfillment?.trackingNumber}
               orderIsPaid={order?.isPaid}
               fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
               onTrackingCodeAdd={onTrackingCodeAdd}
               onApprove={onOrderFulfillmentApprove}
-              hasTransactions={orderHasTransactions(order)}
+              onRefund={
+                refundNavigation?.canRefund ? () => navigate(refundNavigation.url) : undefined
+              }
             />
             {cancelableStatuses.includes(fulfillment?.status) && (
               <Dropdown>
@@ -142,7 +155,11 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
                         onClick={onOrderFulfillmentCancel}
                         data-test-id="cancel-fulfillment"
                       >
-                        <Text>Cancel fulfillment</Text>
+                        <Text color="critical1">
+                          <FormattedMessage
+                            {...orderFulfillmentCancelDialogMessages.confirmButton}
+                          />
+                        </Text>
                       </List.Item>
                     </Dropdown.Item>
                   </List>

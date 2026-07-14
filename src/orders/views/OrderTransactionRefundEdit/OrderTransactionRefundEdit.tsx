@@ -129,7 +129,7 @@ const OrderTransactionRefund = ({ orderId, refundId }: OrderTransactionRefundPro
       if (submitData.transactionRequestRefundForGrantedRefund?.errors.length === 0) {
         notify({
           status: "success",
-          text: "Refund has been sent",
+          text: intl.formatMessage(transactionRefundEditMessages.refundRequestSent),
         });
         navigate(orderUrl(orderId));
       }

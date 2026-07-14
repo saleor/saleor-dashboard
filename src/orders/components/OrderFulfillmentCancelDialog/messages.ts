@@ -12,9 +12,16 @@ export const orderFulfillmentCancelDialogMessages = defineMessages({
     description: "dialog description",
   },
   restockHint: {
-    id: "GU+ikh",
-    defaultMessage: "Canceling a fulfillment will restock products at a selected warehouse.",
+    id: "xzgaxr",
+    defaultMessage:
+      "Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected.",
     description: "dialog description when restock warehouse must be selected",
+  },
+  waitingForApprovalHint: {
+    id: "zIeG3b",
+    defaultMessage:
+      "This fulfillment has not been approved yet. Canceling removes the pending shipment and does not require restocking inventory.",
+    description: "dialog description when canceling unapproved fulfillment",
   },
   warehouseLabel: {
     id: "aHc89n",

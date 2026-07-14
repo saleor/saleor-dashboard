@@ -16,4 +16,9 @@ export const transactionRefundEditMessages = defineMessages({
     id: "vpTyL1",
     description: "error message",
   },
+  refundRequestSent: {
+    id: "kVKMLf",
+    defaultMessage: "Refund request sent to payment provider",
+    description: "notifier after transfer funds mutation succeeds",
+  },
 });

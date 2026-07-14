@@ -476,6 +476,62 @@ export const getAttributesCaption = (
   return `${separator}${names.join(separator)}`;
 };
 
+export const isOpaqueGlobalId = (value: string | null | undefined): boolean => {
+  if (!value || !/^[A-Za-z0-9+/]+=*$/.test(value) || value.length < 8) {
+    return false;
+  }
+
+  try {
+    return atob(value).includes(":");
+  } catch {
+    return false;
+  }
+};
+
+export const getOrderFulfillLineDisplayName = (
+  line: Pick<OrderFulfillLineFragment, "productName" | "variant">,
+): string => {
+  const attributesCaption = getAttributesCaption(line.variant?.attributes);
+
+  if (attributesCaption) {
+    return `${line.productName}${attributesCaption}`;
+  }
+
+  const variantName = line.variant?.name;
+
+  if (variantName && !isOpaqueGlobalId(variantName) && variantName !== line.productName) {
+    return `${line.productName} / ${variantName}`;
+  }
+
+  return line.productName;
+};
+
+type OrderLineVariantDisplay = {
+  name?: string | null;
+  attributes?: NonNullable<OrderFulfillLineFragment["variant"]>["attributes"];
+};
+
+export const getOrderLineDisplayName = (line: {
+  productName: string;
+  variantName?: string | null;
+  variant?: OrderLineVariantDisplay | null;
+}): string => {
+  if (line.variant?.attributes?.length) {
+    return getOrderFulfillLineDisplayName({
+      productName: line.productName,
+      variant: line.variant as OrderFulfillLineFragment["variant"],
+    });
+  }
+
+  const variantLabelFromVariantName =
+    line.variantName && !isOpaqueGlobalId(line.variantName) ? line.variantName : null;
+  const variantLabelFromVariant =
+    line.variant?.name && !isOpaqueGlobalId(line.variant.name) ? line.variant.name : null;
+  const variantLabel = variantLabelFromVariantName ?? variantLabelFromVariant;
+
+  return variantLabel ? `${line.productName} / ${variantLabel}` : line.productName;
+};
+
 export const prepareMoney = (
   amount: number,
   currency: string,
