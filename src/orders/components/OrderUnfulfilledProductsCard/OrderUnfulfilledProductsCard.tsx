@@ -77,6 +77,7 @@ export const OrderUnfulfilledProductsCard = ({
             lines={toLineWithUnfulfilledQuantity(lines)}
             order={order}
             lineReasons={lineReasons}
+            lineRowMenuContext={{ scope: "timeline", segment: "unfulfilled" }}
             loading={loading}
             onOrderLineShowMetadata={onOrderLineShowMetadata}
             onShowLinePriceBreakdown={onShowLinePriceBreakdown}

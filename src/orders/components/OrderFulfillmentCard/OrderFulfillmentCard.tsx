@@ -6,6 +6,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
 import { getFulfillmentWarehouseDisplay } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
+import { getTimelineFulfillmentSegment } from "@dashboard/orders/utils/getOrderLineActionUrls";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
@@ -185,6 +186,10 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
               lines={lines}
               order={order}
               lineReasons={hasLineReasons ? lineReasons : undefined}
+              lineRowMenuContext={{
+                scope: "timeline",
+                segment: getTimelineFulfillmentSegment(fulfillment.status),
+              }}
               loading={false}
               onOrderLineShowMetadata={onOrderLineShowMetadata}
               onShowLinePriceBreakdown={onShowLinePriceBreakdown}

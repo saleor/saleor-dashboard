@@ -14,6 +14,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { OrderLineRowActions } from "@dashboard/orders/components/OrderLineRowActions/OrderLineRowActions";
 import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
+import { type OrderLineRowMenuContext } from "@dashboard/orders/utils/getOrderLineActionUrls";
 import { getOrderLineRowMenuItems } from "@dashboard/orders/utils/getOrderLineRowMenuItems";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { ListViews } from "@dashboard/types";
@@ -44,6 +45,8 @@ interface OrderDetailsDatagridProps {
   columnPickerBackgroundColor?: keyof typeof vars.colors.background;
   /** Per-line reasons aligned by index with `lines`; when set, a `reason` column is shown. */
   lineReasons?: LineReasonDisplay[];
+  /** Timeline cards scope row actions to the shipment bucket; matrix omits this. */
+  lineRowMenuContext?: OrderLineRowMenuContext;
 }
 
 export const OrderDetailsDatagrid = ({
@@ -55,6 +58,7 @@ export const OrderDetailsDatagrid = ({
   datagridCustomTheme = {},
   columnPickerBackgroundColor = "default1",
   lineReasons,
+  lineRowMenuContext,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -121,9 +125,10 @@ export const OrderDetailsDatagrid = ({
         productId: line.variant?.product.id,
         intl,
         navigate,
+        context: lineRowMenuContext,
       });
     },
-    [intl, lines, navigate, order],
+    [intl, lines, navigate, order, lineRowMenuContext],
   );
   const getMenuItems = useCallback(
     (index: number) =>

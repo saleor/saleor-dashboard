@@ -5,8 +5,9 @@ import { messages } from "@dashboard/orders/components/OrderLineRowActions/messa
 import {
   getOrderLineFulfillUrl,
   getOrderLineReturnUrl,
-  hasLineFulfillableItems,
-  hasLineReturnableItems,
+  type OrderLineRowMenuContext,
+  shouldOfferLineFulfillAction,
+  shouldOfferLineReturnAction,
 } from "@dashboard/orders/utils/getOrderLineActionUrls";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { productPath } from "@dashboard/products/urls";
@@ -21,6 +22,7 @@ interface GetOrderLineRowMenuItemsParams {
   productId: string | undefined;
   intl: IntlShape;
   navigate: (url: string) => void;
+  context?: OrderLineRowMenuContext;
 }
 
 export const getOrderLineRowMenuItems = ({
@@ -29,6 +31,7 @@ export const getOrderLineRowMenuItems = ({
   productId,
   intl,
   navigate,
+  context,
 }: GetOrderLineRowMenuItemsParams): TopNavMenuItem[] => {
   const items: TopNavMenuItem[] = [
     {
@@ -44,7 +47,7 @@ export const getOrderLineRowMenuItems = ({
     },
   ];
 
-  if (lineId && hasLineFulfillableItems(order, lineId)) {
+  if (lineId && shouldOfferLineFulfillAction(order, lineId, context)) {
     items.push({
       label: intl.formatMessage(messages.fulfillLine),
       testId: "order-line-fulfill",
@@ -55,7 +58,7 @@ export const getOrderLineRowMenuItems = ({
     });
   }
 
-  if (lineId && hasLineReturnableItems(order, lineId)) {
+  if (lineId && shouldOfferLineReturnAction(order, lineId, context)) {
     items.push({
       label: intl.formatMessage(messages.returnLine),
       testId: "order-line-return",
