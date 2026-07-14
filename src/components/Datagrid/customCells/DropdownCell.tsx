@@ -1,7 +1,5 @@
-import {
-  type AttributeSwatchData,
-  SwatchPreview,
-} from "@dashboard/components/Attributes/SwatchPreview";
+import { DatagridSwatchPreview } from "@dashboard/components/Attributes/DatagridSwatchPreview";
+import { type AttributeSwatchData } from "@dashboard/components/Attributes/getAttributeSwatchData";
 import {
   type CustomCell,
   type CustomRenderer,
@@ -68,9 +66,7 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
       onFocus={() => props.fetchChoices("")}
       loading={false}
       name=""
-      startAdornment={() =>
-        selectedSwatch ? <SwatchPreview {...selectedSwatch} size={8} /> : null
-      }
+      startAdornment={() => (selectedSwatch ? <DatagridSwatchPreview {...selectedSwatch} /> : null)}
       /**
        * There is a bug - looks like it's properly changing with keyobard, but mouse event is somehow not passed
        * to the dropdown layer @fixme

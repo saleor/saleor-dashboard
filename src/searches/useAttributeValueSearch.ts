@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { gql, useApolloClient } from "@apollo/client";
-import { getAttributeSwatchData } from "@dashboard/components/Attributes/SwatchPreview";
+import { getAttributeSwatchData } from "@dashboard/components/Attributes/getAttributeSwatchData";
 import {
   SearchAttributeValuesDocument,
   type SearchAttributeValuesQuery,

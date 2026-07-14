@@ -1,9 +1,7 @@
 // @ts-strict-ignore
 import { type ChannelData } from "@dashboard/channels/utils";
-import {
-  getAttributeSwatchData,
-  SwatchPreview,
-} from "@dashboard/components/Attributes/SwatchPreview";
+import { DatagridSwatchPreview } from "@dashboard/components/Attributes/DatagridSwatchPreview";
+import { getAttributeSwatchData } from "@dashboard/components/Attributes/getAttributeSwatchData";
 import {
   booleanCell,
   dropdownCell,
@@ -104,7 +102,7 @@ const enrichSwatchSearchOptions = (options: Option[]): AttributeSearchOption[] =
 
     return {
       ...option,
-      startAdornment: <SwatchPreview {...swatch} size={8} />,
+      startAdornment: <DatagridSwatchPreview {...swatch} />,
     };
   });
 
