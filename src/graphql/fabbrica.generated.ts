@@ -19782,6 +19782,12 @@ export type OptionalOrderLine = {
   metafield?: OrderLine['metafield'] | undefined;
   /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
   metafields?: OrderLine['metafields'] | undefined;
+  /**
+ * Reason explaining why a custom `price` was set on the line, for debugging and auditing.
+ *
+ * Added in Saleor 3.23.
+ */
+  priceOverrideReason?: OrderLine['priceOverrideReason'] | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata?: OptionalMetadataItem[] | undefined;
   /**

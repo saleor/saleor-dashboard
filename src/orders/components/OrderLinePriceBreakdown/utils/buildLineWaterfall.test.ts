@@ -100,6 +100,7 @@ function makeLine({
     quantityToFulfill: quantity,
     unitDiscountValue: 0,
     unitDiscountReason: null,
+    priceOverrideReason: null,
     unitDiscountType: null,
     taxRate,
     voucherCode,

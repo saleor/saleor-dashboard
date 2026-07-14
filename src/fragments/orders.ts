@@ -147,6 +147,7 @@ export const fragmentOrderLine = gql`
     }
     unitDiscountValue
     unitDiscountReason
+    priceOverrideReason
     unitDiscountType
     undiscountedUnitPrice {
       currency

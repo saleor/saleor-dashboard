@@ -7700,6 +7700,10 @@
     "context": "submit button",
     "string": "Add manual capture"
   },
+  "aG9dQ2": {
+    "context": "order line price override reason",
+    "string": "Price override reason"
+  },
   "aHIrs/": {
     "string": "Failed to load filter data. Please refresh page to try again."
   },

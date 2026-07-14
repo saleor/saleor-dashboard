@@ -1732,6 +1732,7 @@ export const OrderLineFragmentDoc = gql`
   }
   unitDiscountValue
   unitDiscountReason
+  priceOverrideReason
   unitDiscountType
   undiscountedUnitPrice {
     currency

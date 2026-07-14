@@ -18204,6 +18204,12 @@ export type OrderLine = Node & ObjectWithMetadata & {
   metafield: Maybe<Scalars['String']['output']>;
   /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
   metafields: Maybe<Scalars['Metadata']['output']>;
+  /**
+   * Reason explaining why a custom `price` was set on the line, for debugging and auditing.
+   *
+   * Added in Saleor 3.23.
+   */
+  priceOverrideReason: Maybe<Scalars['String']['output']>;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata: Array<MetadataItem>;
   /**

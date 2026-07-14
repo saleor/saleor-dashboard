@@ -634,6 +634,7 @@ describe("Get the total value of all replaced products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -783,6 +784,7 @@ describe("Get the total value of all replaced products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -932,6 +934,7 @@ describe("Get the total value of all replaced products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -1086,6 +1089,7 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1242,6 +1246,7 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1398,6 +1403,7 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1554,6 +1560,7 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1710,6 +1717,7 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1995,6 +2003,7 @@ describe("Get the total value of all selected products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2144,6 +2153,7 @@ describe("Get the total value of all selected products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2293,6 +2303,7 @@ describe("Get the total value of all selected products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2447,6 +2458,7 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2603,6 +2615,7 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2759,6 +2772,7 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3037,6 +3051,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3193,6 +3208,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3349,6 +3365,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {

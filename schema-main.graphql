@@ -12312,6 +12312,13 @@ type OrderLine implements Node & ObjectWithMetadata @doc(category: "Orders") {
   unitDiscountReason: String
 
   """
+  Reason explaining why a custom `price` was set on the line, for debugging and auditing.
+
+  Added in Saleor 3.23.
+  """
+  priceOverrideReason: String
+
+  """
   Value of the discount. Can store fixed value or percent value. This field shouldn't be used when multiple discounts affect the line. There is a limitation, that after running `checkoutComplete` mutation the field always stores fixed value.
   """
   unitDiscountValue: PositiveDecimal!

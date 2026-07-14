@@ -68,6 +68,11 @@ export const orderDetailsStaticColumnsAdapter = (
     title: intl.formatMessage(columnsMessages.isGift),
     width: 150,
   },
+  {
+    id: "priceOverrideReason",
+    title: intl.formatMessage(columnsMessages.priceOverrideReason),
+    width: 200,
+  },
   ...(withReasonColumn
     ? [
         {
@@ -212,6 +217,8 @@ export const createGetCellContent =
           readonly: true,
           allowOverlay: false,
         });
+      case "priceOverrideReason":
+        return readonlyTextCell(rowData.priceOverrideReason ?? "", false);
       case "metadata":
         return buttonCell(intl.formatMessage(commonMessages.viewMetadata), () => {
           onOrderLineShowMetadata(rowData.id);

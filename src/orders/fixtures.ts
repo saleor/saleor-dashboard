@@ -1629,6 +1629,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               currency: "USD",
             },
             unitDiscountReason: null,
+            priceOverrideReason: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1808,6 +1809,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               currency: "USD",
             },
             unitDiscountReason: null,
+            priceOverrideReason: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1989,6 +1991,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2138,6 +2141,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2449,6 +2453,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2598,6 +2603,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
