@@ -1,8 +1,10 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
@@ -23,7 +25,8 @@ import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMe
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Divider } from "@saleor/macaw-ui-next";
-import { useContext } from "react";
+import { Trash2 } from "lucide-react";
+import { useContext, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import OrderCustomer from "../OrderCustomer";
@@ -103,6 +106,19 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     DRAFT_ORDER_DETAILS_MORE_ACTIONS,
     order?.id,
   );
+  const menuItems = useMemo(
+    () => [
+      ...mapExtensionMenuItemsToTopNavItems(extensionMenuItems),
+      {
+        label: intl.formatMessage(orderDetailsPageMessages.cancelOrder),
+        onSelect: onDraftRemove,
+        testId: "cancel-order",
+        color: "critical1" as const,
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      },
+    ],
+    [extensionMenuItems, intl, onDraftRemove],
+  );
 
   return (
     <DetailPageLayout>
@@ -114,21 +130,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           title={intl.formatMessage(orderDetailsPageMessages.editOrderMetadata)}
           ripple={rippleDraftOrderMetadata}
         />
-        <TopNav.Menu
-          items={[
-            {
-              label: intl.formatMessage({
-                id: "PAqicb",
-                defaultMessage: "Cancel order",
-                description: "button",
-              }),
-              onSelect: onDraftRemove,
-              color: "critical1" as const,
-            },
-            ...extensionMenuItems,
-          ]}
-          dataTestId="menu"
-        />
+        <TopNav.Menu items={menuItems} dataTestId="menu" />
       </TopNav>
       <DetailPageLayout.Content>
         <OrderDraftAlert order={order} channelUsabilityData={channelUsabilityData} />
