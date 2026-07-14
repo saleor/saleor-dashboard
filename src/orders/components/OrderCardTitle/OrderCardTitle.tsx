@@ -1,5 +1,5 @@
 import { FormatDate } from "@dashboard/components/Date/FormatDate";
-import { type FulfillmentStatus } from "@dashboard/graphql";
+import { FulfillmentStatus } from "@dashboard/graphql";
 import { Box, Text, type vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import type { ReactNode } from "react";
@@ -22,23 +22,14 @@ type BaseOrderCardTitleProps = {
   hasToolbarMenu?: boolean;
 };
 
-type OrderCardTitleWithWarehouseProps = BaseOrderCardTitleProps & {
-  warehouseName: string;
-  warehouseId: string;
-  createdDate: string;
-  trackingNumber?: string;
-};
-
-type OrderCardTitleWithoutWarehouseProps = BaseOrderCardTitleProps & {
-  warehouseName?: never;
-  warehouseId?: never;
+export type OrderCardTitleProps = BaseOrderCardTitleProps & {
   createdDate?: string;
   trackingNumber?: string;
+  warehouseName?: string;
+  warehouseId?: string;
+  restockWarehouseName?: string;
+  restockWarehouseId?: string;
 };
-
-export type OrderCardTitleProps =
-  | OrderCardTitleWithWarehouseProps
-  | OrderCardTitleWithoutWarehouseProps;
 
 export const OrderCardTitle = ({
   status,
@@ -49,11 +40,20 @@ export const OrderCardTitle = ({
   className,
   trackingNumber,
   warehouseId,
+  restockWarehouseName,
+  restockWarehouseId,
   backgroundColor = "default1",
   hasToolbarMenu = false,
 }: OrderCardTitleProps): JSX.Element => {
   const intl = useIntl();
-  const hasEyebrow = Boolean(createdDate || (warehouseName && warehouseId) || trackingNumber);
+  const sourceWarehouseVariant =
+    status === FulfillmentStatus.CANCELED ? "shippedFrom" : "fulfilledFrom";
+  const hasEyebrow = Boolean(
+    createdDate ||
+      (warehouseName && warehouseId) ||
+      (restockWarehouseName && restockWarehouseId) ||
+      trackingNumber,
+  );
 
   return (
     <Box
@@ -68,7 +68,18 @@ export const OrderCardTitle = ({
             </Text>
           )}
           {warehouseName && warehouseId && (
-            <WarehouseInfo warehouseName={warehouseName} warehouseId={warehouseId} />
+            <WarehouseInfo
+              warehouseName={warehouseName}
+              warehouseId={warehouseId}
+              variant={sourceWarehouseVariant}
+            />
+          )}
+          {restockWarehouseName && restockWarehouseId && (
+            <WarehouseInfo
+              warehouseName={restockWarehouseName}
+              warehouseId={restockWarehouseId}
+              variant="restockedTo"
+            />
           )}
           {trackingNumber && <TrackingNumberDisplay trackingNumber={trackingNumber} />}
         </Box>

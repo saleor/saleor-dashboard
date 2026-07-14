@@ -30,6 +30,7 @@ import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataD
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
@@ -52,13 +53,14 @@ import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
+  orderDetailsUrl,
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
-  orderPaymentRefundUrl,
   orderReturnUrl,
-  orderTransactionRefundUrl,
   orderUrl,
   type OrderUrlQueryParams,
+  withOrderFulfillmentDialog,
+  withOrderLineFocus,
 } from "../../../urls";
 
 interface OrderUnconfirmedDetailsProps {
@@ -133,6 +135,7 @@ export const OrderUnconfirmedDetails = ({
   const order = data.order;
   const shop = data.shop;
   const navigate = useNavigator();
+  const refundNavigation = useMemo(() => (order ? getOrderRefundNavigation(order) : null), [order]);
   const {
     loadMore,
     search: variantSearch,
@@ -252,31 +255,28 @@ export const OrderUnconfirmedDetails = ({
             onOrderFulfill={() => navigate(orderFulfillUrl(id))}
             onFulfillmentApprove={fulfillmentId =>
               navigate(
-                orderUrl(id, {
-                  action: "approve-fulfillment",
-                  id: fulfillmentId,
-                }),
+                orderUrl(
+                  id,
+                  withOrderFulfillmentDialog(params, "approve-fulfillment", fulfillmentId),
+                ),
               )
             }
             onFulfillmentCancel={fulfillmentId =>
               navigate(
-                orderUrl(id, {
-                  action: "cancel-fulfillment",
-                  id: fulfillmentId,
-                }),
+                orderUrl(
+                  id,
+                  withOrderFulfillmentDialog(params, "cancel-fulfillment", fulfillmentId),
+                ),
               )
             }
             onFulfillmentTrackingNumberUpdate={fulfillmentId =>
               navigate(
-                orderUrl(id, {
-                  action: "edit-fulfillment",
-                  id: fulfillmentId,
-                }),
+                orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
               )
             }
             onPaymentCapture={() => openModal("capture")}
             onPaymentVoid={() => openModal("void")}
-            onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
+            onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
@@ -298,6 +298,12 @@ export const OrderUnconfirmedDetails = ({
             onInvoiceSend={id => openModal("invoice-send", { id })}
             onRefundAdd={() => openModal("add-refund")}
             onSubmit={handleSubmit}
+            focusedLineId={params.lineId}
+            onFocusedLineChange={lineId =>
+              navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
+                replace: true,
+              })
+            }
           />
         </OrderLineDiscountProvider>
       </OrderDiscountProvider>
@@ -460,6 +466,7 @@ export const OrderUnconfirmedDetails = ({
         open={params.action === "cancel-fulfillment"}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         fulfillmentStatus={order?.fulfillments.find(getById(params.id))?.status}
+        defaultWarehouseId={order?.fulfillments.find(getById(params.id))?.warehouse?.id}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
@@ -534,7 +541,9 @@ export const OrderUnconfirmedDetails = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
+        onStandardRefund={() =>
+          refundNavigation && navigate(refundNavigation.url, { replace: true })
+        }
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
     </>

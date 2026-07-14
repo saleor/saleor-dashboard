@@ -1,5 +1,6 @@
 import { dateCellRenderer } from "@dashboard/components/Datagrid/customCells/DateCell";
 import useLocale from "@dashboard/hooks/useLocale";
+import { lineMatrixStatusCellRenderer } from "@dashboard/orders/components/OrderLineMatrixDatagrid/LineMatrixStatusCell";
 import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useTheme } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
@@ -18,7 +19,7 @@ import { thumbnailCellRenderer } from "./ThumbnailCell";
 export function useCustomCellRenderers() {
   const { locale } = useLocale();
   const { customRenderers } = useExtraCells();
-  const { themeValues } = useTheme();
+  const { themeValues, theme: currentTheme } = useTheme();
   const renderers = useMemo(
     () => [
       pillCellRenderer(),
@@ -29,12 +30,13 @@ export function useCustomCellRenderers() {
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),
       dateCellRenderer(locale),
+      lineMatrixStatusCellRenderer(themeValues, currentTheme),
       dropdownCellRenderer,
       skeletonCellRenderer,
       thumbnailCellRenderer,
       ...customRenderers,
     ],
-    [customRenderers, locale, themeValues],
+    [customRenderers, currentTheme, locale, themeValues],
   );
 
   return renderers;

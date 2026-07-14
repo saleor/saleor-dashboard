@@ -18,6 +18,7 @@ import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReaso
 import { rippleNewReturnReasons } from "@dashboard/orders/ripples/newReturnReasons";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
 import { rippleOrderLineDiscountDiscoverability } from "@dashboard/orders/ripples/orderLineDiscountDiscoverability";
+import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
@@ -50,6 +51,7 @@ export const allRipples: Ripple[] = [
   rippleOrderLineDiscountDiscoverability,
   rippleRefreshedOrderSections,
   rippleOrderLinePriceBreakdown,
+  rippleOrderLineMatrixView,
   rippleOrderChannelInHeader,
 
   // Warehouses

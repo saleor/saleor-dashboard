@@ -29,8 +29,14 @@ export const fragmentOrderEvent = gql`
       id
       number
     }
+    composedId
     related {
       id
+      type
+    }
+    warehouse {
+      id
+      name
     }
     message
     quantity
@@ -349,6 +355,14 @@ export const fulfillmentFragment = gql`
     warehouse {
       id
       name
+    }
+    totalRefundedAmount {
+      amount
+      currency
+    }
+    shippingRefundedAmount {
+      amount
+      currency
     }
   }
 `;
@@ -833,7 +847,7 @@ export const fragmentOrderGrantedRefunds = gql`
       amount
     }
     transactionEvents {
-      id
+      ...TransactionBaseEvent
     }
     reason
     reasonReference {

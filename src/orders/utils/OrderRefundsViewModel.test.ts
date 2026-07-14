@@ -97,6 +97,7 @@ const createOrderRefundDisplay = (overrides: Partial<OrderRefundDisplay>): Order
       currency: "USD",
     },
     creator: null,
+    failureMessage: null,
     ...overrides,
   };
 };
@@ -190,8 +191,37 @@ describe("OrderRefundsViewModel", () => {
           },
           reason: "Customer return",
           createdAt: "2023-01-02T10:00:00Z",
+          failureMessage: null,
         }),
       ]);
+    });
+
+    it("should include latest refund failure message for granted refunds", () => {
+      // Arrange
+      const grantedRefunds = [
+        createGrantedRefund({
+          status: OrderGrantedRefundStatusEnum.FAILURE,
+          transactionEvents: [
+            {
+              __typename: "TransactionEvent",
+              id: "event-failure",
+              type: TransactionEventTypeEnum.REFUND_FAILURE,
+              message: "Insufficient funds to refund",
+              createdAt: "2026-07-13T12:45:00Z",
+              pspReference: "psp-1",
+              amount: { __typename: "Money", amount: 45, currency: "USD" },
+              externalUrl: "",
+              reasonReference: null,
+            },
+          ],
+        }),
+      ];
+
+      // Act
+      const result = OrderRefundsViewModel.prepareOrderRefundDisplayList([], grantedRefunds);
+
+      // Assert
+      expect(result[0].failureMessage).toBe("Insufficient funds to refund");
     });
 
     it("should convert manual refunds from transaction events", () => {
@@ -233,7 +263,7 @@ describe("OrderRefundsViewModel", () => {
         id: "event-associated",
       });
       const grantedRefundWithEvent = createGrantedRefund({
-        transactionEvents: [{ __typename: "TransactionEvent", id: "event-associated" }],
+        transactionEvents: [transactionEventAssociated],
       });
 
       // Act

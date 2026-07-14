@@ -30,6 +30,7 @@ import {
 import {
   getAttributesCaption,
   getDefaultFulfillWarehouse,
+  getOrderFulfillLineDisplayName,
   getOrderFulfillSubmitItems,
   getToFulfillOrderLines,
   type OrderFulfillLineFormData,
@@ -37,7 +38,7 @@ import {
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
@@ -86,9 +87,23 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const intl = useIntl();
   const classes = useStyles(props);
   const navigate = useNavigator();
-  const { change: formsetChange, data: formsetData } = useFormset<null, OrderFulfillLineFormData[]>(
-    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(line => {
-      return {
+  const linesToFulfill = useMemo(() => {
+    const lines = getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[];
+
+    if (!params.lineId) {
+      return lines;
+    }
+
+    return lines.filter(line => line.id === params.lineId);
+  }, [order?.lines, params.lineId]);
+  const prefilledLine = params.lineId
+    ? linesToFulfill.find(orderLine => orderLine.id === params.lineId)
+    : undefined;
+  const prefilledProductName = prefilledLine ? getOrderFulfillLineDisplayName(prefilledLine) : "";
+  const isSingleLineFulfillment = linesToFulfill.length === 1;
+  const formsetInitial = useMemo(
+    () =>
+      linesToFulfill.map(line => ({
         data: null,
         id: line.id,
         label: getAttributesCaption(line?.variant?.attributes),
@@ -100,8 +115,11 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                 warehouse: getDefaultFulfillWarehouse(line),
               },
             ],
-      };
-    }),
+      })),
+    [linesToFulfill],
+  );
+  const { change: formsetChange, data: formsetData } = useFormset<null, OrderFulfillLineFormData[]>(
+    formsetInitial,
   );
   const [displayStockExceededDialog, setDisplayStockExceededDialog] = useState(false);
   const handleSubmit = ({
@@ -182,9 +200,23 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
             <>
               <DashboardCard>
                 <DashboardCard.Header>
-                  <DashboardCard.Title>
-                    {intl.formatMessage(messages.itemsReadyToShip)}
-                  </DashboardCard.Title>
+                  <Box display="flex" flexDirection="column">
+                    <DashboardCard.Title>
+                      {intl.formatMessage(
+                        isSingleLineFulfillment
+                          ? messages.itemReadyToShip
+                          : messages.itemsReadyToShip,
+                      )}
+                    </DashboardCard.Title>
+                    {prefilledLine && (
+                      <DashboardCard.Subtitle fontSize={3} color="default2">
+                        <FormattedMessage
+                          {...messages.prefilledLineHint}
+                          values={{ productName: prefilledProductName }}
+                        />
+                      </DashboardCard.Subtitle>
+                    )}
+                  </Box>
                 </DashboardCard.Header>
                 {order ? (
                   <DashboardCard.Content>
@@ -216,7 +248,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                       </TableHead>
                       <TableBody>
                         {renderCollection(
-                          getToFulfillOrderLines(order.lines),
+                          linesToFulfill,
                           (line: OrderFulfillLineFragment, lineIndex) => (
                             <OrderFulfillLine
                               key={line.id}

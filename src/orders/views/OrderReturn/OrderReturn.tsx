@@ -9,7 +9,7 @@ import { extractMutationErrors } from "@dashboard/misc";
 import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
 import { type OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
 import { orderHasTransactions } from "@dashboard/orders/types";
-import { orderUrl } from "@dashboard/orders/urls";
+import { type OrderReturnUrlQueryParams, orderUrl } from "@dashboard/orders/urls";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -19,9 +19,10 @@ import ReturnFormDataParser, { getSuccessMessage } from "./utils";
 
 interface OrderReturnProps {
   orderId: string;
+  params: OrderReturnUrlQueryParams;
 }
 
-const OrderReturn = ({ orderId }: OrderReturnProps) => {
+const OrderReturn = ({ orderId, params }: OrderReturnProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -104,6 +105,7 @@ const OrderReturn = ({ orderId }: OrderReturnProps) => {
       sendRefundErrors={sendRefundErrors}
       order={orderData}
       loading={loading || returnCreateOpts.loading}
+      prefilledOrderLineId={params.lineId}
       onSubmit={handleSubmit}
       submitStatus={returnCreateOpts.status}
     />

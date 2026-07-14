@@ -176,6 +176,21 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape): str
         },
       );
     case OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS:
+      if (event.warehouse?.name) {
+        return intl.formatMessage(
+          {
+            id: "Pw0Gd0",
+            defaultMessage:
+              "Restocked {quantity, plural, one {# item} other {# items}} to {warehouseName}",
+            description: "order history message",
+          },
+          {
+            quantity: event.quantity ?? 0,
+            warehouseName: event.warehouse.name,
+          },
+        );
+      }
+
       return intl.formatMessage(
         {
           id: "RUS52q",

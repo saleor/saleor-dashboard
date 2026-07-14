@@ -21,13 +21,16 @@ import {
   getAttributesCaption,
   getDefaultFulfillWarehouse,
   getDiscountTypeLabel,
+  getOrderFulfillLineDisplayName,
   getOrderFulfillStockFormsetLineId,
   getOrderFulfillSubmitItems,
+  getOrderLineDisplayName,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
   getReturnSelectedProductsAmount,
   getWarehousesFromOrderLines,
+  isOpaqueGlobalId,
   mergeRepeatedOrderLines,
   type OrderLineWithStockWarehouses,
   type OrderWithTotalAndTotalCaptured,
@@ -3671,5 +3674,76 @@ describe("getOrderFulfillStockFormsetLineId", () => {
 
     // Act // Assert
     expect(getOrderFulfillStockFormsetLineId(orderLine)).toBe("OrderLine:2");
+  });
+});
+
+describe("isOpaqueGlobalId", () => {
+  it("detects base64-encoded Saleor global IDs", () => {
+    // Arrange // Act // Assert
+    expect(isOpaqueGlobalId("UHJvZHVjdFZHcmlhbnQ6Mzk5")).toBe(true);
+    expect(isOpaqueGlobalId("White Parrot Cushion")).toBe(false);
+  });
+});
+
+describe("getOrderFulfillLineDisplayName", () => {
+  it("uses attribute captions like the fulfill table", () => {
+    // Arrange
+    const line: Pick<OrderFulfillLineFragment, "productName" | "variant"> = {
+      productName: "White Parrot Cushion",
+      variant: {
+        name: "UHJvZHVjdFZHcmlhbnQ6Mzk5",
+        attributes: [
+          {
+            values: [{ name: "Standard" }],
+          },
+        ],
+      } as OrderFulfillLineFragment["variant"],
+    };
+
+    // Act
+    const displayName = getOrderFulfillLineDisplayName(line);
+
+    // Assert
+    expect(displayName).toBe("White Parrot Cushion / Standard");
+  });
+
+  it("falls back to product name when variant name is an opaque global id", () => {
+    // Arrange
+    const line: Pick<OrderFulfillLineFragment, "productName" | "variant"> = {
+      productName: "White Parrot Cushion",
+      variant: {
+        name: "UHJvZHVjdFZHcmlhbnQ6Mzk5",
+        attributes: [],
+      } as OrderFulfillLineFragment["variant"],
+    };
+
+    // Act // Assert
+    expect(getOrderFulfillLineDisplayName(line)).toBe("White Parrot Cushion");
+  });
+});
+
+describe("getOrderLineDisplayName", () => {
+  it("prefers variantName for order detail lines", () => {
+    // Arrange // Act
+    const displayName = getOrderLineDisplayName({
+      productName: "White Parrot Cushion",
+      variantName: "Standard",
+      variant: { name: "UHJvZHVjdFZHcmlhbnQ6Mzk5" },
+    });
+
+    // Assert
+    expect(displayName).toBe("White Parrot Cushion / Standard");
+  });
+
+  it("ignores opaque global IDs in variantName and variant.name", () => {
+    // Arrange // Act
+    const displayName = getOrderLineDisplayName({
+      productName: "White Parrot Cushion",
+      variantName: "UHJvZHVjdFZHcmlhbnQ6Mzk5",
+      variant: { name: "UHJvZHVjdFZHcmlhbnQ6Mzk5" },
+    });
+
+    // Assert
+    expect(displayName).toBe("White Parrot Cushion");
   });
 });

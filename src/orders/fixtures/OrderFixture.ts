@@ -361,7 +361,7 @@ export class OrderFixture {
         reasonReference: null,
         orderLine: {
           __typename: "OrderLine",
-          id: "",
+          id: "line-id-1",
           isShippingRequired: false,
           productName: "",
           productSku: "",
@@ -486,6 +486,16 @@ export class OrderFixture {
     },
     reason: null,
     reasonReference: null,
+    totalRefundedAmount: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD",
+    },
+    shippingRefundedAmount: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD",
+    },
   } satisfies FulfillmentFragment;
 
   private static giftCards = [
