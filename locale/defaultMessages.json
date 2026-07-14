@@ -11996,12 +11996,12 @@
     "context": "Summary of diagnostic issues found",
     "string": "{errorCount, plural, =0 {} one {# problem} other {# problems}}{hasWarnings, select, true {{hasErrors, select, true {, } other {}}} other {}}{warningCount, plural, =0 {} one {# warning} other {# warnings}} found"
   },
+  "v0fBOU": {
+    "string": "Collapse all"
+  },
   "v17EX7": {
     "context": "built-in attribute list filter preset",
     "string": "Model attributes"
-  },
-  "v0fBOU": {
-    "string": "Collapse all"
   },
   "v17Lly": {
     "context": "label",
