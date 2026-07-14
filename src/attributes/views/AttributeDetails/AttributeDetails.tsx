@@ -1,6 +1,12 @@
+import { type AttributeAssignedTypesCardProps } from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
 import { useAttributeValuesSearch } from "@dashboard/attributes/hooks/useAttributeValuesSearch";
 import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
+import { getAssignedModelTypesForAttribute } from "@dashboard/attributes/utils/getAssignedModelTypesForAttribute";
+import { mapAssignedTypeConnection } from "@dashboard/attributes/utils/mapAssignedTypeConnection";
 import {
+  AttributeTypeEnum,
+  OrderDirection,
+  PageTypeSortField,
   useAttributeDeleteMutation,
   useAttributeDetailsQuery,
   useAttributeUpdateMutation,
@@ -8,8 +14,7 @@ import {
   useAttributeValueDeleteMutation,
   useAttributeValueReorderMutation,
   useAttributeValueUpdateMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
+  usePageTypeListWithAssignedAttributeCountsQuery,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
@@ -19,16 +24,16 @@ import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, type ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
+import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
+import { AttributeMetadataDialog } from "../../components/AttributeMetadataDialog/AttributeMetadataDialog";
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
-import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog/AttributeValueEditDialog";
 import {
   attributeListUrl,
   attributeUrl,
@@ -45,8 +50,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeUrlDialog,
     AttributeUrlQueryParams
@@ -73,6 +76,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     data: currentData,
     previousData,
     loading,
+    refetch,
   } = useAttributeDetailsQuery({
     variables: {
       id,
@@ -90,6 +94,50 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
 
   // Only show as "loading" for initial load, not for search refetches
   const isInitialLoading = loading && !data;
+  const attribute = data?.attribute;
+  const isModelAttribute = attribute?.type === AttributeTypeEnum.PAGE_TYPE;
+  const isProductAttribute = attribute?.type === AttributeTypeEnum.PRODUCT_TYPE;
+
+  const { data: pageTypesData, loading: pageTypesLoading } =
+    usePageTypeListWithAssignedAttributeCountsQuery({
+      fetchPolicy: "cache-first",
+      skip: !isModelAttribute,
+      variables: {
+        first: 100,
+        sort: { field: PageTypeSortField.NAME, direction: OrderDirection.ASC },
+      },
+    });
+
+  const assignedTypes = useMemo((): AttributeAssignedTypesCardProps | undefined => {
+    if (!attribute) {
+      return undefined;
+    }
+
+    if (isProductAttribute) {
+      return {
+        attributeType: AttributeTypeEnum.PRODUCT_TYPE,
+        loading: false,
+        productTypes: mapAssignedTypeConnection(attribute.productTypes),
+        variantTypes: mapAssignedTypeConnection(attribute.productVariantTypes),
+      };
+    }
+
+    if (isModelAttribute) {
+      const modelTypes = getAssignedModelTypesForAttribute(pageTypesData, id);
+
+      return {
+        attributeType: AttributeTypeEnum.PAGE_TYPE,
+        loading: pageTypesLoading && !pageTypesData,
+        modelTypes: {
+          items: modelTypes.items,
+          hasMore: false,
+        },
+        modelTypesListHasMore: modelTypes.typesListHasMore,
+      };
+    }
+
+    return undefined;
+  }, [attribute, id, isModelAttribute, isProductAttribute, pageTypesData, pageTypesLoading]);
 
   const paginateValues = useLocalPaginator(setValuesPaginationState);
   const { loadNextPage, loadPreviousPage, pageInfo } = paginateValues(
@@ -208,7 +256,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
         beforeValues: valuesPaginationState.before,
       },
     });
-  const handleUpdate = async (data: AttributePageFormData) =>
+  const handleSubmit = async (data: AttributePageFormData) =>
     extractMutationErrors(
       attributeUpdate({
         variables: {
@@ -221,20 +269,15 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
         },
       }),
     );
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.attribute!,
-    handleUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
 
   return (
     <AttributePage
       attribute={data?.attribute}
+      assignedTypes={assignedTypes}
       disabled={isInitialLoading}
       errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
-      params={params}
       onDelete={() => openModal("remove")}
+      onShowMetadata={() => openModal("view-metadata", { id: undefined })}
       onSubmit={handleSubmit}
       onValueAdd={() => openModal("add-value")}
       onValueDelete={id =>
@@ -248,8 +291,6 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           id,
         })
       }
-      onOpenReferenceTypes={() => openModal("assign-reference-types")}
-      onCloseAssignReferenceTypes={closeModal}
       saveButtonBarState={attributeUpdateOpts.status}
       values={data?.attribute?.choices}
       settings={settings}
@@ -262,6 +303,12 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
     >
       {attributeFormData => (
         <>
+          <AttributeMetadataDialog
+            open={params.action === "view-metadata" && !!data?.attribute}
+            onClose={closeModal}
+            attribute={data?.attribute}
+            refetchAttribute={refetch}
+          />
           <AttributeDeleteDialog
             open={params.action === "remove"}
             name={data?.attribute?.name ?? "..."}

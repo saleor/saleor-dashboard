@@ -86,3 +86,12 @@ export const modelsOfTypeQuery = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query ModelDetails($id: ID!) {
+  page(id: $id) {
+    id
+    title
+    slug
+    isPublished
+  }
+}`;

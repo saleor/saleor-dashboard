@@ -37,6 +37,12 @@ jest.mock(
 jest.mock("@dashboard/hooks/useNotifier", () => ({
   useNotifier: () => mockNotify,
 }));
+
+const mockTriggerEntityRefresh = jest.fn();
+
+jest.mock("@dashboard/extensions/entity-refresh", () => ({
+  useTriggerEntityRefresh: () => mockTriggerEntityRefresh,
+}));
 jest.spyOn(ExternalAppContext, "useExternalApp").mockImplementation(() => ({
   close: mockCloseExternalApp,
   openApp: jest.fn(),
@@ -116,6 +122,34 @@ describe("AppActionsHandler", function () {
         status: "success",
         text: "Test content",
         title: "Test title",
+      });
+    });
+  });
+  describe("useHandleRefreshEntityAction", () => {
+    it("Triggers entity refresh and acks with ok", () => {
+      // Arrange
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleRefreshEntityAction());
+
+      // Act
+      const response = handle({
+        type: "refreshEntity",
+        payload: {
+          actionId: "refresh-action-id",
+        },
+      });
+
+      // Assert
+      expect(mockTriggerEntityRefresh).toHaveBeenCalledTimes(1);
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "refresh-action-id",
+          ok: true,
+        },
       });
     });
   });
@@ -360,6 +394,86 @@ describe("AppActionsHandler", function () {
           "",
           "/dashboard/extensions/app/XYZ/config?",
         );
+      });
+    });
+  });
+  describe("useHandleWidgetResizeAction", () => {
+    it("Sets iframe height and returns ok response", () => {
+      const iframe = document.createElement("iframe");
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleWidgetResizeAction(iframe));
+
+      const response = handle({
+        type: "widgetResize",
+        payload: {
+          actionId: "resize-1",
+          height: 321.4,
+        },
+      });
+
+      expect(iframe.style.height).toBe("322px");
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "resize-1",
+          ok: true,
+        },
+      });
+    });
+
+    it("Returns ok when frame element is missing", () => {
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleWidgetResizeAction(null));
+
+      const response = handle({
+        type: "widgetResize",
+        payload: {
+          actionId: "resize-2",
+          height: 100,
+        },
+      });
+
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "resize-2",
+          ok: true,
+        },
+      });
+    });
+
+    it("Returns ok without changing height for invalid heights", () => {
+      const iframe = document.createElement("iframe");
+
+      iframe.style.height = "200px";
+
+      const {
+        result: {
+          current: { handle },
+        },
+      } = renderHook(() => AppActionsHandler.useHandleWidgetResizeAction(iframe));
+
+      const response = handle({
+        type: "widgetResize",
+        payload: {
+          actionId: "resize-3",
+          height: -10,
+        },
+      });
+
+      expect(iframe.style.height).toBe("200px");
+      expect(response).toEqual({
+        type: "response",
+        payload: {
+          actionId: "resize-3",
+          ok: true,
+        },
       });
     });
   });

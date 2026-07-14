@@ -29,6 +29,8 @@ jest.mock("./appActionsHandler", () => ({
     useHandlePermissionRequest: jest.fn(),
     useHandleAppFormUpdate: jest.fn(),
     useHandlePopupCloseAction: jest.fn(),
+    useHandleWidgetResizeAction: jest.fn(),
+    useHandleRefreshEntityAction: jest.fn(),
   },
 }));
 
@@ -53,6 +55,8 @@ describe("useAppActions", () => {
   const mockHandlePermissionRequest = jest.fn();
   const mockHandleAppFormUpdate = jest.fn();
   const mockHandlePopupClose = jest.fn();
+  const mockHandleWidgetResize = jest.fn();
+  const mockHandleRefreshEntity = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -80,6 +84,12 @@ describe("useAppActions", () => {
     });
     (AppActionsHandler.useHandlePopupCloseAction as jest.Mock).mockReturnValue({
       handle: mockHandlePopupClose,
+    });
+    (AppActionsHandler.useHandleWidgetResizeAction as jest.Mock).mockReturnValue({
+      handle: mockHandleWidgetResize,
+    });
+    (AppActionsHandler.useHandleRefreshEntityAction as jest.Mock).mockReturnValue({
+      handle: mockHandleRefreshEntity,
     });
 
     // Reset capture message mock to return a proper scope
@@ -141,6 +151,32 @@ describe("useAppActions", () => {
         appId: mockAppId,
       });
     }
+  });
+
+  it("should route refreshEntity action to the refresh entity handler", () => {
+    // Arrange
+    const refreshAction = {
+      type: "refreshEntity",
+      payload: { actionId: "refresh-1" },
+    } as unknown as Actions;
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+    );
+
+    // Act
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: refreshAction,
+        }),
+      );
+    });
+
+    // Assert
+    expect(mockHandleRefreshEntity).toHaveBeenCalledWith(refreshAction);
+    expect(mockCaptureMessage).not.toHaveBeenCalled();
   });
 
   it("should ignore messages without type and actionId (e.g., from browser extensions)", () => {
@@ -234,6 +270,39 @@ describe("useAppActions", () => {
 
     // Assert
     expect(mockHandleNotification).toHaveBeenCalledWith(notificationAction);
+    expect(mockPostToExtension).toHaveBeenCalledWith(mockResponse);
+  });
+
+  it("should handle widgetResize action", () => {
+    const widgetResizeAction = {
+      type: "widgetResize",
+      payload: {
+        actionId: "resize-1",
+        height: 300,
+      },
+    } as Actions;
+
+    const mockResponse = {
+      type: "response",
+      payload: { actionId: "resize-1", ok: true },
+    };
+
+    mockHandleWidgetResize.mockReturnValue(mockResponse);
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+    );
+
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: widgetResizeAction,
+        }),
+      );
+    });
+
+    expect(mockHandleWidgetResize).toHaveBeenCalledWith(widgetResizeAction);
     expect(mockPostToExtension).toHaveBeenCalledWith(mockResponse);
   });
 

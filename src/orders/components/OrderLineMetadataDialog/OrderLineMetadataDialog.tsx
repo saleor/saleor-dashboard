@@ -3,18 +3,19 @@ import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
 import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
+import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { ModalDivider } from "@dashboard/components/Modal/ModalDivider";
+import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import { type OrderLinesMetadataQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { useHasManageProductsPermission } from "@dashboard/orders/hooks/useHasManageProductsPermission";
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import { Box, Button, Divider, Text } from "@saleor/macaw-ui-next";
-import { X } from "lucide-react";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
-import { Link } from "react-router-dom";
 
 import { OrderLineDetails } from "./OrderLineDetails/OrderLineDetails";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
@@ -37,6 +38,8 @@ interface OrderLineMetadataDialogProps {
   orderId: string;
 }
 
+const ORDER_LINE_METADATA_FORM_ID = "order-line-metadata-form";
+
 export const OrderLineMetadataDialog = ({
   onClose,
   open,
@@ -51,11 +54,9 @@ export const OrderLineMetadataDialog = ({
   const hasManageProducts = useHasManageProductsPermission();
 
   const formMethods = useForm<OrderLineAndVariantMetadataFormData>({
-    // Display last submitted data while re-fetching to avoid flicker on UI
     values: submitInProgress
       ? lastSubmittedData
       : {
-          // Removes __typename from metadata item object
           orderLine: {
             metadata: (data?.metadata ?? []).map(mapMetadataItemToInput),
             privateMetadata: (data?.privateMetadata ?? [])?.map(mapMetadataItemToInput),
@@ -108,66 +109,46 @@ export const OrderLineMetadataDialog = ({
 
   return (
     <DashboardModal open={open} onChange={handleClose}>
-      <DashboardModal.Content size="md" overflowY="hidden">
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="flex-start"
-          gap={4}
-          overflow="hidden"
+      <DashboardModal.Content size="md">
+        <DashboardModal.ContextHeader
+          description={<OrderLineDetails data={data} loading={loading} />}
+          wrapDescription={false}
         >
-          <OrderLineDetails data={data} loading={loading} />
-          <Button
-            data-test-id="close-button"
-            icon={<X size={20} />}
-            size="small"
-            variant="tertiary"
-            onClick={handleClose}
-            flexShrink="0"
+          <FormattedMessage
+            defaultMessage="Order line metadata"
+            id="QSTD5z"
+            description="dialog title for order line metadata"
           />
-        </Box>
+        </DashboardModal.ContextHeader>
 
-        {/* This is scroll container so that Save and title are always visible */}
-        <Box
-          style={{
-            // Max height calculated so that there's no scroll on modal itself
-            maxHeight: "calc(-320px + 100vh)",
-            // Remove right margin (DashboardModal.Content has 6 units padding)
-            // It has to be removed to avoid spacing out horizontal scroll in weird way
-            marginRight: "calc(var(--mu-spacing-6) * -1)",
-          }}
-          // Re-add back removed padding via negative marginRight
-          paddingRight={6}
-          overflowY="auto"
-        >
-          <Box as="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box display="flex" flexDirection="column" gap={5}>
+        <DashboardModal.Body>
+          <Box
+            as="form"
+            id={ORDER_LINE_METADATA_FORM_ID}
+            onSubmit={handleSubmit(onSubmit)}
+            display="flex"
+            flexDirection="column"
+          >
+            <DashboardModal.Inset>
               <Box display="flex" flexDirection="column" data-test-id={TEST_ID_ORDER_LINE_METADATA}>
-                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                  <Text as="h2" size={5} fontWeight="bold">
-                    <FormattedMessage
-                      defaultMessage="Order line metadata"
-                      description="dialog, editing order line metadata"
-                      id="B54f/g"
-                    />
-                  </Text>
-                  <Text>
-                    <FormattedMessage
-                      defaultMessage="Represents the metadata of the given ordered item"
-                      description="dialog , editing order line metadata"
-                      id="7WrRzs"
-                    />
-                  </Text>
-                </Box>
+                <Text size={2} color="default2">
+                  <FormattedMessage
+                    defaultMessage="Metadata stored on this order line only. Changes here do not update the product variant."
+                    description="scope helper for editable order line metadata section"
+                    id="2m2Xi9"
+                  />
+                </Text>
 
                 {loading && !data ? (
-                  <Box display="grid" gap={2}>
-                    <MetadataLoadingCard />
-                    <MetadataLoadingCard isPrivate />
-                  </Box>
+                  <>
+                    <MetadataLoadingCard inModal marginTop={4} />
+                    <MetadataLoadingCard isPrivate inModal />
+                  </>
                 ) : (
-                  <Box display="grid" gap={2}>
+                  <>
                     <MetadataCard
+                      inModal
+                      marginTop={4}
                       data={mapFieldArrayToMetadataInput(orderLineMetadataFields)}
                       isPrivate={false}
                       disabled={loading || submitInProgress}
@@ -180,6 +161,7 @@ export const OrderLineMetadataDialog = ({
                     />
 
                     <MetadataCard
+                      inModal
                       data={mapFieldArrayToMetadataInput(orderLinePrivateMetadataFields)}
                       isPrivate={true}
                       disabled={loading || submitInProgress}
@@ -190,40 +172,41 @@ export const OrderLineMetadataDialog = ({
                           : undefined
                       }
                     />
-                  </Box>
+                  </>
                 )}
               </Box>
-              <Divider />
+            </DashboardModal.Inset>
 
+            <ModalDivider />
+
+            <DashboardModal.Inset>
               <Box
                 display="flex"
                 flexDirection="column"
                 data-test-id={TEST_ID_PRODUCT_VARIANT_METADATA}
               >
-                <Box display="flex" flexDirection="column" marginLeft={6} gap={2}>
-                  <Text as="h2" size={5} fontWeight="bold">
+                <Box display="flex" flexDirection="column" gap={2}>
+                  <ModalSectionHeader>
                     <FormattedMessage
                       defaultMessage="Product variant metadata"
                       description="modal header, editable product variant metadata"
                       id="hQDWIw"
                     />
-                  </Text>
-                  <Text>
+                  </ModalSectionHeader>
+                  <Text size={2} color="default2">
                     <FormattedMessage
                       defaultMessage="The read-only metadata of the actual variant used in this order. {link}"
                       description="info about variant metadata with link to edit"
                       id="00d8GP"
                       values={{
                         link: data?.variant?.id ? (
-                          <Link to={productVariantEditUrl(data.variant.id)}>
-                            <Text as="span" color="accent1" textDecoration="underline">
-                              <FormattedMessage
-                                defaultMessage="Edit on variant page"
-                                description="link to edit variant metadata"
-                                id="tf+OkY"
-                              />
-                            </Text>
-                          </Link>
+                          <MicrocopyLink to={productVariantEditUrl(data.variant.id)}>
+                            <FormattedMessage
+                              defaultMessage="Edit on variant page"
+                              description="link to edit variant metadata"
+                              id="tf+OkY"
+                            />
+                          </MicrocopyLink>
                         ) : null,
                       }}
                     />
@@ -231,13 +214,15 @@ export const OrderLineMetadataDialog = ({
                 </Box>
 
                 {loading && !data ? (
-                  <Box display="grid" gap={2}>
-                    <MetadataLoadingCard />
-                    {!hasManageProducts ? null : <MetadataLoadingCard isPrivate />}
-                  </Box>
+                  <>
+                    <MetadataLoadingCard inModal marginTop={4} />
+                    {!hasManageProducts ? null : <MetadataLoadingCard isPrivate inModal />}
+                  </>
                 ) : (
-                  <Box display="grid" gap={2}>
+                  <>
                     <MetadataCard
+                      inModal
+                      marginTop={4}
                       data={mapFieldArrayToMetadataInput(variantMetadataFields)}
                       isPrivate={false}
                       readonly={true}
@@ -247,6 +232,7 @@ export const OrderLineMetadataDialog = ({
 
                     {hasManageProducts && (
                       <MetadataCard
+                        inModal
                         data={mapFieldArrayToMetadataInput(variantPrivateMetadataFields)}
                         isPrivate={true}
                         readonly={true}
@@ -254,20 +240,14 @@ export const OrderLineMetadataDialog = ({
                         onChange={handleVariantPrivateMetadataChange}
                       />
                     )}
-                  </Box>
+                  </>
                 )}
               </Box>
-            </Box>
+            </DashboardModal.Inset>
           </Box>
-        </Box>
+        </DashboardModal.Body>
 
-        <DashboardModal.Actions
-          paddingTop={4}
-          paddingX={6}
-          bottom={6}
-          width="100%"
-          backgroundColor="default1"
-        >
+        <DashboardModal.Actions>
           <Button data-test-id="back" variant="secondary" onClick={handleClose}>
             <FormattedMessage {...buttonMessages.close} />
           </Button>
@@ -277,7 +257,7 @@ export const OrderLineMetadataDialog = ({
             variant="primary"
             disabled={submitInProgress || !formState.isDirty}
             type="submit"
-            onClick={handleSubmit(onSubmit)}
+            form={ORDER_LINE_METADATA_FORM_ID}
           >
             <FormattedMessage {...buttonMessages.save} />
           </ButtonWithLoader>

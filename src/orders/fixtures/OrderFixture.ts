@@ -33,7 +33,6 @@ export class OrderFixture {
     number: "12345",
     created: "2023-10-01T12:00:00Z",
     isShippingRequired: true,
-    canFinalize: false,
     customerNote: "",
     isPaid: true,
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
@@ -173,8 +172,6 @@ export class OrderFixture {
     },
     shippingMethods: [],
     invoices: [],
-    metadata: [],
-    privateMetadata: [],
     voucherCode: null,
   } satisfies Partial<OrderDetailsFragment>;
 
@@ -360,9 +357,11 @@ export class OrderFixture {
         __typename: "FulfillmentLine",
         id: "",
         quantity: 0,
+        reason: null,
+        reasonReference: null,
         orderLine: {
           __typename: "OrderLine",
-          id: "",
+          id: "line-id-1",
           isShippingRequired: false,
           productName: "",
           productSku: "",
@@ -485,8 +484,18 @@ export class OrderFixture {
       id: "warehouse-id-1",
       name: "Americas",
     },
-    metadata: [],
-    privateMetadata: [],
+    reason: null,
+    reasonReference: null,
+    totalRefundedAmount: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD",
+    },
+    shippingRefundedAmount: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD",
+    },
   } satisfies FulfillmentFragment;
 
   private static giftCards = [

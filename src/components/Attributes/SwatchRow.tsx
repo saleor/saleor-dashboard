@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
-import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
+import {
+  getAttributeRowLabelProps,
+  getErrorMessage,
+  getSingleDisplayValue,
+} from "@dashboard/components/Attributes/utils";
 import { useComboboxHandlers } from "@dashboard/components/Combobox/hooks/useComboboxHandlers";
 import { getBySlug } from "@dashboard/misc";
 import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
@@ -55,7 +59,7 @@ export const SwatchRow = ({
   );
 
   return (
-    <BasicAttributeRow label={attribute.label}>
+    <BasicAttributeRow label={attribute.label} {...getAttributeRowLabelProps(attribute)}>
       <DynamicCombobox
         disabled={disabled}
         options={options}

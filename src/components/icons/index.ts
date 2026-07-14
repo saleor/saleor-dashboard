@@ -31,4 +31,26 @@ export const iconStrokeWidthBySize = {
  */
 export const iconStrokeWidth = 1.5;
 
+const LUCIDE_VIEWBOX_SIZE = 24;
+
+/** Shared Lucide props for sidebar navigation, shortcuts, and related controls (16px in a 20px slot). */
+export const navigationLucideIconProps = {
+  size: iconSize.small,
+  strokeWidth: iconStrokeWidthBySize.small,
+} as const;
+
+/** Shared Lucide props for configuration page navigation cards (32px). */
+export const configurationLucideIconProps = {
+  size: 32,
+  strokeWidth: iconStrokeWidth,
+} as const;
+
+/** Match Lucide stroke weight for custom SVG icons on configuration cards. */
+export const getConfigurationCustomIconStrokeWidth = (viewBoxSize: number) =>
+  iconStrokeWidth * (viewBoxSize / LUCIDE_VIEWBOX_SIZE);
+
+/** Match Lucide stroke weight for custom SVG icons rendered at navigation icon size. */
+export const getNavigationCustomIconStrokeWidth = (viewBoxSize: number) =>
+  iconStrokeWidthBySize.small * (viewBoxSize / LUCIDE_VIEWBOX_SIZE);
+
 export type IconSize = keyof typeof iconSize;

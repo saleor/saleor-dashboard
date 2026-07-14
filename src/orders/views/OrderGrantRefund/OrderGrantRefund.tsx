@@ -44,6 +44,7 @@ const OrderGrantRefund = ({ orderId }: OrderGrantRefundProps) => {
   const handleSubmit = async ({
     amount,
     reason,
+    reasonReference,
     lines,
     grantRefundForShipping,
     transactionId,
@@ -60,6 +61,7 @@ const OrderGrantRefund = ({ orderId }: OrderGrantRefundProps) => {
           orderId,
           amount,
           reason,
+          reasonReferenceId: reasonReference || undefined,
           lines: squashLines(lines),
           grantRefundForShipping,
           transactionId,

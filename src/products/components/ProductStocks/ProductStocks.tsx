@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { type ChannelData } from "@dashboard/channels/utils";
+import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
@@ -17,7 +18,6 @@ import { Trash2 } from "lucide-react";
 import * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductStocksAssignWarehouses } from "./components/ProductStocksAssignWarehouses";
 import { messages } from "./messages";
 import { StockVisibilityHint } from "./StockVisibilityHint";
 import { WarehouseInformationMessage } from "./WarehouseInformationMessage";
@@ -159,7 +159,7 @@ export const ProductStocks = ({
                   variant="secondary"
                   data-test-id="assign-warehouse-button"
                 >
-                  <FormattedMessage defaultMessage="Assign Warehouses" id="mFC5Rq" />
+                  <FormattedMessage {...messages.assignWarehouses} />
                 </Button>
               )}
             </Box>
@@ -247,15 +247,19 @@ export const ProductStocks = ({
           </Box>
         )}
 
-        <ProductStocksAssignWarehouses
-          warehousesToAssign={warehousesToAssign}
-          hasMoreWarehouses={hasMoreWarehouses}
-          loadMoreWarehouses={fetchMoreWarehouses}
-          onWarehouseSelect={handleWarehouseStockAdd}
+        <AssignWarehouseDialog
+          warehouses={warehousesToAssign}
+          hasMore={hasMoreWarehouses}
+          onFetchMore={fetchMoreWarehouses}
           loading={loading}
-          searchWarehouses={searchWarehouses}
+          onFetch={searchWarehouses}
           open={isAssignWarehousesOpen}
           onClose={() => setIsAssignWarehousesOpen(false)}
+          onSubmit={selectedWarehouses => {
+            selectedWarehouses.forEach(warehouse => {
+              handleWarehouseStockAdd(warehouse.id, warehouse.name);
+            });
+          }}
         />
       </DashboardCard.Content>
     </DashboardCard>

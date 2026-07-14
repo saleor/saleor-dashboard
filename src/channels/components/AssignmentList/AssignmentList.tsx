@@ -17,7 +17,7 @@ const messages = defineMessages({
 });
 
 export const AssignmentList = (props: AssignmentListProps) => {
-  const { items, itemsName, totalCount = 0, loading, removeItem, reorderItem } = props;
+  const { items, itemsName, totalCount = 0, loading, removeItem, reorderItem, getItemHref } = props;
   const intl = useIntl();
   const classes = useStyles();
   const handleSortStart = () => {
@@ -63,12 +63,13 @@ export const AssignmentList = (props: AssignmentListProps) => {
                 <div>
                   {items.map((item, itemIndex) => (
                     <Item
-                      key={itemIndex}
+                      key={item.id}
                       index={itemIndex}
                       // @ts-expect-error legacy types
                       item={item}
                       onDelete={removeItem}
                       sortable={!!reorderItem}
+                      getItemHref={getItemHref}
                     />
                   ))}
                 </div>

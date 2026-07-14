@@ -1,4 +1,5 @@
 import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import {
   type ExportInfoInput,
@@ -17,7 +18,7 @@ export class ProductsExportParameters {
 
   private readonly filter?: InputMaybe<ProductFilterInput>;
 
-  private readonly ids?: InputMaybe<Array<Scalars["ID"]>>;
+  private readonly ids?: InputMaybe<Array<Scalars["ID"]["input"]>>;
 
   private readonly scope: ExportScope;
 
@@ -42,19 +43,24 @@ export class ProductsExportParameters {
 
     // Include filter when exporting filtered products
     if (exportData.scope === ExportScope.FILTER) {
-      const filter = createProductExportQueryVariables(filterContainer);
-      const hasConditionalFilters =
-        filter && typeof filter === "object" && Object.keys(filter).length > 0;
-      const hasSearchQuery = searchQuery;
-
-      if (!hasConditionalFilters && !hasSearchQuery) {
+      if (
+        !hasActiveListFilters({
+          filterContainer,
+          searchQuery,
+          createFilterVariables: createProductExportQueryVariables,
+        })
+      ) {
         // Fall back to exporting all when no filters or search query are applied
         exportInput.scope = ExportScope.ALL;
       } else {
+        const filter = createProductExportQueryVariables(filterContainer);
+        const hasConditionalFilters =
+          filter && typeof filter === "object" && Object.keys(filter).length > 0;
+
         // Build complete filter with both conditional filters and search query
         exportInput.filter = {
           ...(hasConditionalFilters ? filter : {}),
-          ...(hasSearchQuery ? { search: searchQuery } : {}),
+          ...(searchQuery ? { search: searchQuery } : {}),
         };
       }
     }

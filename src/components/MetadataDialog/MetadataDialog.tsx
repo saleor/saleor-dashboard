@@ -1,6 +1,7 @@
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
 import { MetadataCard } from "@dashboard/components/Metadata/MetadataCard";
+import { MetadataLoadingCard } from "@dashboard/components/Metadata/MetadataLoadingCard";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type MetadataInput } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
@@ -20,6 +21,8 @@ export interface MetadataDialogProps {
   };
   onChange: (event: ChangeEvent, isPrivate: boolean) => void;
   loading?: boolean;
+  /** Shows skeleton cards while the metadata is being fetched (e.g. lazily loaded dialogs) */
+  contentLoading?: boolean;
   disabled?: boolean;
   errors?: {
     metadata?: string;
@@ -36,6 +39,7 @@ export const MetadataDialog = ({
   data,
   onChange,
   loading = false,
+  contentLoading = false,
   disabled = false,
   errors = {},
   formIsDirty = false,
@@ -58,50 +62,46 @@ export const MetadataDialog = ({
 
   return (
     <DashboardModal open={open} onChange={handleClose}>
-      <DashboardModal.Content size="md" overflowY="hidden">
-        <DashboardModal.Header paddingLeft={6}>
+      <DashboardModal.Content size="md">
+        <DashboardModal.Header>
           {title ?? intl.formatMessage(commonMessages.metadata)}
         </DashboardModal.Header>
 
-        {/* This is scroll container so that Save and title are always visible */}
-        <Box
-          style={{
-            // Max height calculated so that there's no scroll on modal itself
-            maxHeight: "calc(-320px + 100vh)",
-            // Remove right margin (DashboardModal.Content has 6 units padding)
-            // It has to be removed to avoid spacing out horizontal scroll in weird way
-            marginRight: "calc(var(--mu-spacing-6) * -1)",
-          }}
-          // Re-add back removed padding via negative marginRight
-          paddingRight={6}
-          overflowY="auto"
-        >
-          <Box display="flex" flexDirection="column" gap={2}>
-            <MetadataCard
-              data={data.metadata}
-              isPrivate={false}
-              disabled={disabled || loading}
-              onChange={event => onChange(event, false)}
-              error={errors.metadata}
-            />
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box display="flex" flexDirection="column">
+              {contentLoading ? (
+                <>
+                  <MetadataLoadingCard inModal marginTop={0} />
+                  <MetadataLoadingCard isPrivate inModal />
+                </>
+              ) : (
+                <>
+                  <MetadataCard
+                    inModal
+                    marginTop={0}
+                    data={data.metadata}
+                    isPrivate={false}
+                    disabled={disabled || loading}
+                    onChange={event => onChange(event, false)}
+                    error={errors.metadata}
+                  />
 
-            <MetadataCard
-              data={data.privateMetadata}
-              isPrivate={true}
-              disabled={disabled || loading}
-              onChange={event => onChange(event, true)}
-              error={errors.privateMetadata}
-            />
-          </Box>
-        </Box>
+                  <MetadataCard
+                    inModal
+                    data={data.privateMetadata}
+                    isPrivate={true}
+                    disabled={disabled || loading}
+                    onChange={event => onChange(event, true)}
+                    error={errors.privateMetadata}
+                  />
+                </>
+              )}
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
-        <DashboardModal.Actions
-          paddingTop={4}
-          paddingX={6}
-          bottom={6}
-          width="100%"
-          backgroundColor="default1"
-        >
+        <DashboardModal.Actions>
           <Button data-test-id="back" variant="secondary" onClick={handleClose}>
             <FormattedMessage {...buttonMessages.close} />
           </Button>

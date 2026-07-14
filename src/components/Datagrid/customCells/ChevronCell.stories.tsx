@@ -4,7 +4,7 @@ import {
   loadingCell,
   readonlyTextCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
-import Datagrid from "@dashboard/components/Datagrid/Datagrid";
+import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui-next";

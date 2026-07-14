@@ -123,7 +123,7 @@ export function booleanCell(value: boolean, options: Partial<GridCell> = {}): Gr
   };
 }
 
-export function loadingCell(): GridCell {
+export function loadingCell(): ThrobberCell {
   return {
     kind: GridCellKind.Custom,
     allowOverlay: false,
@@ -217,7 +217,7 @@ export function moneyDiscountedCell(
 
 export function dropdownCell(
   value: Option,
-  dataOpts: Pick<DropdownCellProps, "allowCustomValues" | "emptyOption"> &
+  dataOpts: Pick<DropdownCellProps, "allowCustomValues" | "emptyOption" | "swatch"> &
     ({ choices: Option[] } | { update: (text: string) => Promise<Option[]> }),
   opts?: Partial<GridCell>,
 ): DropdownCell {

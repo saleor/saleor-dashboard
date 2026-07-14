@@ -30,6 +30,22 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
   type: AttributeTypeEnum.PRODUCT_TYPE,
   valueRequired: true,
   unit: null,
+  productTypes: {
+    __typename: "ProductTypeCountableConnection" as const,
+    edges: [],
+    pageInfo: {
+      __typename: "PageInfo" as const,
+      hasNextPage: false,
+    },
+  },
+  productVariantTypes: {
+    __typename: "ProductTypeCountableConnection" as const,
+    edges: [],
+    pageInfo: {
+      __typename: "PageInfo" as const,
+      hasNextPage: false,
+    },
+  },
   choices: {
     __typename: "AttributeValueCountableConnection" as const,
     pageInfo: {

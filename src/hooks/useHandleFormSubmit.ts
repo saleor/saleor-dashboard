@@ -26,7 +26,13 @@ function useHandleFormSubmit<TData, TErrors>({
 
     const result = onSubmit ? onSubmit(data) : null;
 
+    // When onSubmit is synchronous/void (e.g. dialog forms that only dispatch
+    // local state), there is no promise to await. We must still clear the
+    // global submitting flag, otherwise setEnableExitDialog stays gated off and
+    // the exit/leave dialog silently stops blocking navigation for every form.
     if (!result) {
+      setIsSubmitting(false);
+
       return [];
     }
 

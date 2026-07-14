@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
+import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog";
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";

@@ -1,24 +1,16 @@
-// @ts-strict-ignore
 import {
   type LanguageCodeEnum,
+  type MenuItemTranslationFragment,
   useMenuItemTranslationDetailsQuery,
   useUpdateMenuItemTranslationsMutation,
 } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { type OutputData } from "@editorjs/editorjs";
-import { useIntl } from "react-intl";
 
-import TranslationsMenuItemPage from "../components/TranslationsMenuItemPage";
-import { type TranslationField, type TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import { TranslationsMenuItemPage } from "../components/TranslationsMenuItemPage/TranslationsMenuItemPage";
+import { useTranslationEntityView } from "../hooks/useTranslationEntityView";
+import { type TranslationDetailQueryParams } from "../translationQueryParams";
 
-interface TranslationsMenuItemQueryParams {
-  activeField: string;
-}
+export interface TranslationsMenuItemQueryParams extends TranslationDetailQueryParams {}
+
 interface TranslationsMenuItemProps {
   id: string;
   languageCode: LanguageCodeEnum;
@@ -26,66 +18,21 @@ interface TranslationsMenuItemProps {
 }
 
 const TranslationsMenuItem = ({ id, languageCode, params }: TranslationsMenuItemProps) => {
-  const navigate = useNavigator();
-  const notify = useNotifier();
-  const shop = useShop();
-  const intl = useIntl();
   const menuItemTranslations = useMenuItemTranslationDetailsQuery({
     variables: { id, language: languageCode },
   });
-  const [updateTranslations, updateTranslationsOpts] = useUpdateMenuItemTranslationsMutation({
-    onCompleted: data => {
-      if ((data.menuItemTranslate?.errors ?? []).length === 0) {
-        menuItemTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage({ id: "WLyKAQ", defaultMessage: "Translation saved" }),
-        });
-        navigate("?", { replace: true });
-      }
-    },
+  const entityMutation = useUpdateMenuItemTranslationsMutation();
+  const viewProps = useTranslationEntityView<MenuItemTranslationFragment>({
+    id,
+    languageCode,
+    params,
+    translatableContentTypename: "MenuItemTranslatableContent",
+    detailsQuery: menuItemTranslations,
+    entityMutation,
   });
-  const onEdit = (field: string) =>
-    navigate(
-      "?" +
-        stringifyQs({
-          activeField: field,
-        }),
-      { replace: true },
-    );
-  const onDiscard = () => {
-    navigate("?", { replace: true });
-  };
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string | OutputData,
-  ) =>
-    extractMutationErrors(
-      updateTranslations({
-        variables: {
-          id,
-          input: getParsedTranslationInputData({ fieldName, data }),
-          language: languageCode,
-        },
-      }),
-    );
-  const translation = menuItemTranslations?.data?.translation;
 
-  return (
-    <TranslationsMenuItemPage
-      translationId={id}
-      activeField={params.activeField}
-      disabled={menuItemTranslations.loading || updateTranslationsOpts.loading}
-      languages={shop?.languages || []}
-      languageCode={languageCode}
-      saveButtonState={updateTranslationsOpts.status}
-      onEdit={onEdit}
-      onDiscard={onDiscard}
-      onSubmit={handleSubmit}
-      data={translation?.__typename === "MenuItemTranslatableContent" ? translation : null}
-    />
-  );
+  return <TranslationsMenuItemPage translationId={id} {...viewProps} />;
 };
 
 TranslationsMenuItem.displayName = "TranslationsMenuItem";
-export default TranslationsMenuItem;
+export { TranslationsMenuItem };

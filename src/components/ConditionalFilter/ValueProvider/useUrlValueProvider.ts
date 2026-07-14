@@ -15,6 +15,10 @@ import { type InitialVoucherAPIState } from "../API/initialState/vouchers/useIni
 import { type FilterContainer, FilterElement } from "../FilterElement";
 import { type FilterValueProvider } from "../FilterValueProvider";
 import { type FilterProviderType, type InitialAPIState } from "../types";
+import {
+  getAttributeListNavigationQueryParams,
+  stripNavigationQueryParams,
+} from "./navigationQueryParams";
 import { TokenArray } from "./TokenArray";
 import {
   type AttributesFetchingParams,
@@ -49,6 +53,7 @@ export const useUrlValueProvider = (
   params.delete("query");
   params.delete("before");
   params.delete("after");
+  stripNavigationQueryParams(params, type);
 
   const tokenizedUrl = useMemo(() => new TokenArray(params.toString()), [params.toString()]);
   const paramsFromType = getEmptyFetchingPrams(type);
@@ -122,6 +127,9 @@ export const useUrlValueProvider = (
   }, [locationSearch, tokenizedUrl, initialState]);
 
   const persist = (filterValue: FilterContainer) => {
+    const navigationParams =
+      type === "attributes" ? getAttributeListNavigationQueryParams(router.location.search) : {};
+
     router.history.replace({
       pathname: router.location.pathname,
       search: stringify({
@@ -130,14 +138,22 @@ export const useUrlValueProvider = (
         ...{ query: query || undefined },
         ...{ before: before || undefined },
         ...{ after: after || undefined },
+        ...navigationParams,
       }),
     });
     setValue(filterValue);
   };
 
   const clear = () => {
+    const navigationParams =
+      type === "attributes" ? getAttributeListNavigationQueryParams(router.location.search) : {};
+
     router.history.replace({
       pathname: router.location.pathname,
+      search: stringify({
+        ...{ activeTab: activeTab || undefined },
+        ...navigationParams,
+      }),
     });
     setValue([]);
   };

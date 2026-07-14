@@ -1,16 +1,22 @@
 import { type ChannelsAction } from "@dashboard/channels/urls";
-import { type Channel } from "@dashboard/channels/utils";
+import { type Channel, sortChannelShippingDataByName } from "@dashboard/channels/utils";
+import { areSelectedChannelIdsEqual } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { useExitFormDialog, type WithFormId } from "@dashboard/components/Form";
 import useListActions from "@dashboard/hooks/useListActions";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import isEqual from "lodash/isEqual";
+import { useMemo } from "react";
 
 interface Modal {
   openModal: (action: ChannelsAction) => void;
   closeModal: () => void;
 }
 
+const getChannelIds = <T extends Channel>(channels: T[] | undefined | null) =>
+  (channels ?? []).map(channel => channel.id);
+
 function useChannels<T extends Channel, A>(
-  channels: T[],
+  channels: T[] | undefined,
   action: A | ChannelsAction,
   { closeModal, openModal }: Modal,
   opts: WithFormId,
@@ -19,7 +25,8 @@ function useChannels<T extends Channel, A>(
   const { setIsDirty } = useExitFormDialog({
     formId,
   });
-  const [currentChannels, setCurrentChannels] = useStateFromProps(channels);
+  const normalizedChannels = channels ?? [];
+  const [currentChannels, setCurrentChannels] = useStateFromProps(normalizedChannels);
   const {
     isSelected: isChannelSelected,
     listElements: channelListElements,
@@ -32,14 +39,15 @@ function useChannels<T extends Channel, A>(
   };
   const handleChannelsModalOpen = () => openModal("open-channels-picker");
   const handleChannelsConfirm = () => {
-    const sortedChannelListElements = channelListElements.sort((channel, nextChannel) =>
-      channel.name.localeCompare(nextChannel.name),
-    );
+    const nextChannels = sortChannelShippingDataByName(channelListElements);
 
-    setCurrentChannels(sortedChannelListElements);
-    // hack so channels also update exit form dalog provider
-    // despite not setting page's form data "changed" prop
-    setIsDirty(true);
+    if (!isEqual(currentChannels, nextChannels)) {
+      setCurrentChannels(nextChannels);
+      // hack so channels also update exit form dialog provider
+      // despite not setting page's form data "changed" prop
+      setIsDirty(true);
+    }
+
     closeModal();
   };
   const toggleAllChannels = (items: T[], selected: number) => {
@@ -49,6 +57,14 @@ function useChannels<T extends Channel, A>(
       setChannels([]);
     }
   };
+  const hasChannelSelectionChanged = useMemo(
+    () =>
+      !areSelectedChannelIdsEqual(
+        getChannelIds(channelListElements),
+        getChannelIds(currentChannels),
+      ),
+    [channelListElements, currentChannels],
+  );
 
   return {
     channelListElements,
@@ -57,6 +73,7 @@ function useChannels<T extends Channel, A>(
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen: action === "open-channels-picker",
     setCurrentChannels,

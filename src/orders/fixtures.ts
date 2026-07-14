@@ -12,7 +12,6 @@ import {
   OrderChargeStatusEnum,
   type OrderDetailsFragment,
   type OrderDetailsQuery,
-  type OrderDetailsWithMetadataFragment,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   type OrderFulfillLineFragment,
@@ -255,6 +254,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 305.17,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -297,6 +304,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 1215.89,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -321,6 +336,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.DRAFT,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 321.71,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -363,6 +386,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 271.95,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -405,6 +436,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 335.84,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -447,6 +486,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 1042.15,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -489,6 +536,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 213.69,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -531,6 +586,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 367.03,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -573,6 +636,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 298.76,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -615,6 +686,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.UNFULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 663.69,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -657,6 +736,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.CANCELED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 280.41,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -699,6 +786,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 234.93,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -741,6 +836,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 485.19,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -783,6 +886,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 223.54,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -825,6 +936,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 237.55,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -867,6 +986,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 453.55,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -909,6 +1036,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 812.67,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -951,6 +1086,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
     chargeStatus: OrderChargeStatusEnum.NONE,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 481.41,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -993,6 +1136,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 569.19,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -1035,6 +1186,14 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
     chargeStatus: OrderChargeStatusEnum.FULL,
     status: OrderStatus.PARTIALLY_FULFILLED,
+    subtotal: {
+      __typename: "TaxedMoney",
+      net: {
+        __typename: "Money",
+        amount: 557,
+        currency: "USD",
+      },
+    },
     total: {
       __typename: "TaxedMoney",
       gross: {
@@ -1054,7 +1213,7 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
 
 export const ORDER_AMOUNT = 234.93;
 
-export const order = (placeholder: string): OrderDetailsWithMetadataFragment => ({
+export const order = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order",
   voucher: null,
   giftCards: [],
@@ -1117,7 +1276,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     streetAddress1: "487 Roberto Shores",
     streetAddress2: "",
   },
-  canFinalize: true,
   channel: {
     __typename: "Channel",
     slug: "channel-default",
@@ -1140,6 +1298,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   events: [
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
@@ -1173,6 +1333,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2018-09-17T13:22:24.376193+00:00",
@@ -1191,6 +1353,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             id: "h47gfncfgwegfehfhj",
             productName: "Milk",
             variantName: "Cow's milk",
+            thumbnail: { __typename: "Image", url: "https://placehold.co/64x64" },
           },
           quantity: 4,
         },
@@ -1203,6 +1366,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             id: "7846f857t4t84y8fgh",
             productName: "Milk",
             variantName: "Goat's milk",
+            thumbnail: { __typename: "Image", url: "https://placehold.co/64x64" },
           },
           quantity: 4,
         },
@@ -1231,6 +1395,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1251,6 +1417,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1271,6 +1439,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1291,6 +1461,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1311,6 +1483,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1331,6 +1505,8 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
     },
     {
       __typename: "OrderEvent",
+      composedId: null,
+      warehouse: null,
       related: null,
       amount: null,
       date: "2019-09-17T13:22:24.376193+00:00",
@@ -1355,13 +1531,15 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       __typename: "Fulfillment",
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
-      metadata: [],
+      reason: null,
+      reasonReference: null,
       created: "2019-09-17T13:22:24.376193+00:00",
-      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
           id: "RnVsZmlsbG1lbnRMaW5lOjM5",
+          reason: null,
+          reasonReference: null,
           orderLine: {
             __typename: "OrderLine",
             id: "T3JkZXJMaW5lOjIz",
@@ -1372,8 +1550,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             quantityFulfilled: 2,
             quantityToFulfill: 0,
             isGift: false,
-            metadata: [],
-            privateMetadata: [],
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1479,8 +1655,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
-              metadata: [],
-              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1521,18 +1695,30 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       status: FulfillmentStatus.FULFILLED,
       trackingNumber: "",
       warehouse: warehouseList[1],
+      totalRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
+      shippingRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
     },
     {
       __typename: "Fulfillment",
       fulfillmentOrder: 1,
       id: "RnVsZmlsbG1lbnQ6OQ==",
-      metadata: [],
-      privateMetadata: [],
+      reason: null,
+      reasonReference: null,
       created: "2019-09-17T13:22:24.376193+00:00",
       lines: [
         {
           __typename: "FulfillmentLine",
           id: "RnVsZmlsbG1lbnRMaW5lOjE1",
+          reason: null,
+          reasonReference: null,
           orderLine: {
             __typename: "OrderLine",
             id: "T3JkZXJMaW5lOjIz",
@@ -1543,8 +1729,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
             quantityFulfilled: 2,
             quantityToFulfill: 0,
             isGift: false,
-            metadata: [],
-            privateMetadata: [],
             allocations: [
               {
                 id: "allocation_test_id",
@@ -1650,8 +1834,6 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
               name: "XS",
               quantityAvailable: 10,
               preorder: null,
-              metadata: [],
-              privateMetadata: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1692,6 +1874,16 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       status: FulfillmentStatus.FULFILLED,
       trackingNumber: "01nn12399su12nndfsy",
       warehouse: warehouseList[0],
+      totalRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
+      shippingRefundedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+      },
     },
   ],
   id: "T3JkZXI6OQ==",
@@ -2007,18 +2199,10 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
       taxClass: null,
     },
   ],
-  metadata: [
-    {
-      __typename: "MetadataItem",
-      key: "integration.key",
-      value: "some-value",
-    },
-  ],
   number: "9",
   paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED,
   chargeStatus: OrderChargeStatusEnum.NONE,
   authorizeStatus: OrderAuthorizeStatusEnum.NONE,
-  privateMetadata: [],
   shippingAddress: {
     __typename: "Address",
     city: "West Patriciastad",
@@ -2119,7 +2303,7 @@ export const order = (placeholder: string): OrderDetailsWithMetadataFragment => 
   voucherCode: null,
 });
 
-export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragment => ({
+export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order" as const,
   voucher: null,
   chargeStatus: OrderChargeStatusEnum.NONE,
@@ -2129,7 +2313,6 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
   actions: [OrderAction.CAPTURE],
   shippingMethods: [],
   billingAddress: null,
-  canFinalize: true,
   grantedRefunds: [],
   totalGrantedRefund: prepareMoney(0),
   totalAuthorizePending: prepareMoney(0),
@@ -2476,10 +2659,8 @@ export const draftOrder = (placeholder: string): OrderDetailsWithMetadataFragmen
       taxClass: null,
     },
   ],
-  metadata: [],
   number: "24",
   paymentStatus: null,
-  privateMetadata: [],
   shippingAddress: null,
   shippingMethod: null,
   shippingMethodName: null,
@@ -3825,9 +4006,17 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
       {
         __typename: "OrderGrantedRefundLine" as const,
         id: "grantedRefund1",
+        reason: null,
+        reasonReference: null,
         orderLine: {
           __typename: "OrderLine" as const,
           id: "orderLine1",
+          productName: "Test product",
+          variantName: "Test variant",
+          thumbnail: {
+            __typename: "Image" as const,
+            url: "https://example.com/thumbnail.png",
+          },
         },
         quantity: 1,
       },
@@ -3856,9 +4045,17 @@ export const grantedRefunds: OrderGrantedRefundFragment[] = [
       {
         __typename: "OrderGrantedRefundLine" as const,
         id: "grantedRefund2",
+        reason: null,
+        reasonReference: null,
         orderLine: {
           __typename: "OrderLine" as const,
           id: "orderLine1",
+          productName: "Test product",
+          variantName: "Test variant",
+          thumbnail: {
+            __typename: "Image" as const,
+            url: "https://example.com/thumbnail.png",
+          },
         },
         quantity: 1,
       },

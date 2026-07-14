@@ -1,6 +1,5 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import modalStyles from "@dashboard/components/Modal/DashboardModal.module.css";
 import { type MoneyFragment } from "@dashboard/graphql";
 import { type AutomaticDiscountInfo } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -9,6 +8,7 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DiscountModalBase } from "./DiscountModalBase";
 import { formatDiscountSource } from "./formatDiscountSource";
+import { OrderLineDiscountLineDetails } from "./OrderLineDiscountLineDetails";
 import { type OrderDiscountCommonInput } from "./types";
 
 const discountMessages = defineMessages({
@@ -89,52 +89,6 @@ export const OrderLineDiscountModal = ({
     </Box>
   ) : null;
 
-  const preFormContent = automaticDiscountCallout;
-
-  const header = (
-    <Box display="flex" gap={4} alignItems="center" overflow="hidden" __minWidth={0}>
-      {lineData?.thumbnail?.url && (
-        <Box
-          as="img"
-          src={lineData.thumbnail.url}
-          alt=""
-          __width="48px"
-          __height="48px"
-          objectFit="cover"
-          borderRadius={2}
-          flexShrink="0"
-        />
-      )}
-      <Box display="flex" flexDirection="column" gap={0.5} overflow="hidden" __minWidth={0}>
-        <Text size={5} fontWeight="bold">
-          <FormattedMessage
-            defaultMessage="Line discount"
-            id="SIrDwV"
-            description="dialog title for order line discount"
-          />
-        </Text>
-        {lineData && (
-          <>
-            <Text size={2} color="default2" className={modalStyles.truncatedText}>
-              {lineData.productName}
-              {lineData.variantName && ` · ${lineData.variantName}`}
-            </Text>
-            <Text size={2} color="default2" className={modalStyles.truncatedText}>
-              {lineData.productSku && (
-                <>
-                  <FormattedMessage defaultMessage="SKU" id="k4brJy" />
-                  {`: ${lineData.productSku} · `}
-                </>
-              )}
-              <FormattedMessage defaultMessage="Qty" id="7gXPhB" />
-              {`: ${lineData.quantity}`}
-            </Text>
-          </>
-        )}
-      </Box>
-    </Box>
-  );
-
   return (
     <DiscountModalBase
       open={open}
@@ -145,8 +99,26 @@ export const OrderLineDiscountModal = ({
       onConfirm={onConfirm}
       onRemove={onRemove}
       onClose={onClose}
-      header={header}
-      preFormContent={preFormContent}
+      title={
+        <FormattedMessage
+          defaultMessage="Line discount"
+          id="SIrDwV"
+          description="dialog title for order line discount"
+        />
+      }
+      description={
+        lineData ? (
+          <OrderLineDiscountLineDetails
+            productName={lineData.productName}
+            variantName={lineData.variantName}
+            productSku={lineData.productSku}
+            quantity={lineData.quantity}
+            thumbnailUrl={lineData.thumbnail?.url}
+          />
+        ) : null
+      }
+      wrapDescription={false}
+      preFormContent={automaticDiscountCallout}
     />
   );
 };

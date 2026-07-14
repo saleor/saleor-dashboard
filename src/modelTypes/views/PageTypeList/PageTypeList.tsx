@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
 import { usePageTypeBulkDeleteMutation, usePageTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
@@ -132,12 +132,13 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
       },
     });
 
+  const pageTypesData = mapEdgesToItems(data?.pageTypes);
+  const typesToDeleteForDialog = params.ids?.length ? params.ids : selectedPageTypes;
+
   const pageTypeDeleteData = usePageTypeDelete({
-    selectedTypes: selectedPageTypes,
+    selectedTypes: typesToDeleteForDialog,
     params,
   });
-
-  const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -183,7 +184,7 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
         <TypeDeleteWarningDialog
           {...pageTypeDeleteData}
           typesData={pageTypesData}
-          typesToDelete={selectedPageTypes}
+          typesToDelete={typesToDeleteForDialog}
           onClose={closeModal}
           onDelete={hanldePageTypeBulkDelete}
           deleteButtonState={pageTypeBulkDeleteOpts.status}

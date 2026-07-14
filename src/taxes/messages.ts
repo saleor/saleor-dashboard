@@ -156,6 +156,11 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Choose country you want to add",
     description: "add country dialog header",
   },
+  chooseCountryNotFound: {
+    id: "wgOP2K",
+    defaultMessage: "No countries found",
+    description: "empty state in add country dialog search results",
+  },
   country: {
     id: "UBuKZ9",
     defaultMessage: "Country",
@@ -206,5 +211,15 @@ export const taxesMessages = defineMessages({
     id: "Rfk+8B",
     defaultMessage: "There are no tax classes",
     description: "tax classes menu label when there are no tax classes",
+  },
+  createTaxClassHint: {
+    id: "m66R1V",
+    defaultMessage: "You can create new tax classes in {taxSettingsLink}.",
+    description: "hint below tax class selector",
+  },
+  taxSettingsLink: {
+    id: "X4+lB+",
+    defaultMessage: "Tax settings",
+    description: "link to tax classes settings",
   },
 });

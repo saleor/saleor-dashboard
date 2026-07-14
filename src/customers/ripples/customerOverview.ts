@@ -8,8 +8,8 @@ export const rippleCustomerOverview: Ripple = {
   content: {
     oneLiner: "Customer Overview",
     contextual:
-      "Customer profiles now start with a quick overview of order activity, login history, recent spend, and average order value.",
+      "Customer profiles now start with channel-scoped order KPIs: net product sales, shipping and refunds shown separately, plus login history.",
     global:
-      "Customer profiles now include a compact overview with total orders, last login, recent spend, and average order value. When a customer has recent orders in multiple currencies, spend and average order value are shown separately for each currency so each figure stays clear.",
+      "Customer profiles now include a compact overview with total orders, last login, recent net sales, and average order value. Stats are scoped per channel — use the channel selector when a customer shops in multiple stores. Net sales exclude shipping and tax; hover the amount for shipping and refund details from the same orders.",
   },
 };

@@ -1,6 +1,11 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
+import { FormattedMessage } from "react-intl";
 
 interface AttributeValueDeleteDialogProps {
   attributeName: string;
@@ -12,7 +17,7 @@ interface AttributeValueDeleteDialogProps {
   onClose: () => void;
 }
 
-const AttributeValueDeleteDialog = ({
+export const AttributeValueDeleteDialog = ({
   attributeName,
   name,
   confirmButtonState,
@@ -21,44 +26,65 @@ const AttributeValueDeleteDialog = ({
   onConfirm,
   open,
 }: AttributeValueDeleteDialogProps) => {
-  const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      open={open}
-      onClose={onClose}
-      confirmButtonState={confirmButtonState}
-      onConfirm={onConfirm}
-      variant="delete"
-      title={intl.formatMessage({
-        id: "WWV8aZ",
-        defaultMessage: "Delete attribute value",
-        description: "dialog title",
-      })}
-    >
-      {useName ? (
-        <FormattedMessage
-          data-test-id="delete-attribute-value-dialog-text"
-          id="no3Ygn"
-          defaultMessage='Are you sure you want to delete "{name}" value? If you delete it you won’t be able to assign it to any of the products with "{attributeName}" attribute.'
-          values={{
-            attributeName,
-            name,
-          }}
-        />
-      ) : (
-        <FormattedMessage
-          id="JyQoES"
-          defaultMessage='Are you sure you want to delete "{name}" value?'
-          description="delete attribute value"
-          values={{
-            name,
-          }}
-        />
-      )}
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            useName ? (
+              <FormattedMessage
+                data-test-id="delete-attribute-value-dialog-text"
+                defaultMessage='Are you sure you want to delete "{name}" value? If you delete it you won’t be able to assign it to any of the products with "{attributeName}" attribute.'
+                id="no3Ygn"
+                values={{
+                  attributeName,
+                  name,
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                id="JyQoES"
+                defaultMessage='Are you sure you want to delete "{name}" value?'
+                description="delete attribute value"
+                values={{
+                  name,
+                }}
+              />
+            )
+          }
+        >
+          <FormattedMessage
+            id="WWV8aZ"
+            defaultMessage="Delete attribute value"
+            description="dialog title"
+          />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 AttributeValueDeleteDialog.displayName = "AttributeValueDeleteDialog";
-export default AttributeValueDeleteDialog;

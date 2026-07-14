@@ -1,12 +1,17 @@
-import ActionDialog, { type ActionDialogProps } from "@dashboard/components/ActionDialog";
-import DeleteWarningDialogConsentContent from "@dashboard/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { type GiftCardsListConsumerProps } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { type GiftCardDataFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { getById } from "@dashboard/misc";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Checkbox, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { giftCardDeleteDialogMessages as messages } from "./messages";
 
@@ -17,15 +22,30 @@ type DeleteDialogContentGiftCard = Pick<
   "currentBalance" | "id"
 >;
 
-interface GiftCardDeleteDialogContentProps<TGiftCard extends DeleteDialogContentGiftCard>
-  extends Pick<ActionDialogProps, "open" | "onClose" | "onConfirm" | "confirmButtonState">,
-    Partial<Pick<GiftCardsListConsumerProps, "selectedRowIds" | "giftCards" | "loading">> {
-  ids?: string[];
+interface GiftCardDeleteDialogContentProps<TGiftCard extends DeleteDialogContentGiftCard> {
+  confirmButtonState: ConfirmButtonTransitionState;
   giftCard?: TGiftCard;
+  giftCards?: GiftCardsListConsumerProps["giftCards"];
+  ids?: string[];
+  loading?: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  open: boolean;
+  selectedRowIds?: GiftCardsListConsumerProps["selectedRowIds"];
   singleDeletion: boolean;
 }
 
-function GiftCardDeleteDialogContent<TGiftCard extends DeleteDialogContentGiftCard>({
+const hasGiftCardBalance = (
+  giftCards: GiftCardsListConsumerProps["giftCards"] | undefined,
+  giftCard: DeleteDialogContentGiftCard | undefined,
+  id: string,
+): boolean => {
+  const card = giftCards?.find(getById(id)) || giftCard;
+
+  return (card?.currentBalance?.amount ?? 0) > 0;
+};
+
+export function GiftCardDeleteDialogContent<TGiftCard extends DeleteDialogContentGiftCard>({
   ids,
   open,
   onClose,
@@ -37,9 +57,11 @@ function GiftCardDeleteDialogContent<TGiftCard extends DeleteDialogContentGiftCa
   giftCard,
   loading,
 }: GiftCardDeleteDialogContentProps<TGiftCard>) {
-  const intl = useIntl();
   const [isConsentChecked, setConsentChecked] = useState(false);
-  const selectedItemsCount = useMemo(() => selectedRowIds?.length || SINGLE, [open]);
+  const selectedItemsCount = useMemo(
+    () => selectedRowIds?.length ?? ids?.length ?? SINGLE,
+    [ids, selectedRowIds],
+  );
 
   useEffect(() => {
     if (!open) {
@@ -47,59 +69,75 @@ function GiftCardDeleteDialogContent<TGiftCard extends DeleteDialogContentGiftCa
     }
   }, [open]);
 
-  const hasSelectedAnyGiftCardsWithBalance = () => {
-    if (!giftCards) {
+  const deletingCardsWithBalance = useMemo(() => {
+    if (singleDeletion) {
+      return hasGiftCardBalance(giftCards, giftCard, ids?.[0] ?? "");
+    }
+
+    if (!giftCards || !selectedRowIds?.length) {
       return false;
     }
 
-    return selectedRowIds?.some(hasSelectedGiftCardBalance);
-  };
-  const hasSelectedGiftCardBalance = (id: string) => {
-    const card = giftCards?.find(getById(id)) || giftCard;
+    return selectedRowIds.some(id => hasGiftCardBalance(giftCards, giftCard, id));
+  }, [giftCard, giftCards, ids, selectedRowIds, singleDeletion]);
 
-    return (card?.currentBalance?.amount ?? 0) > 0;
-  };
-  const deletingCardsWithBalance = useMemo(
-    () =>
-      singleDeletion
-        ? hasSelectedGiftCardBalance(ids?.[0] ?? "")
-        : hasSelectedAnyGiftCardsWithBalance(),
-    [open],
-  );
+  const isSubmitting = loading || confirmButtonState === "loading";
   const submitEnabled = deletingCardsWithBalance ? isConsentChecked : true;
 
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
+
+  const subtitle = deletingCardsWithBalance ? (
+    <FormattedMessage {...messages.withBalanceSubtitle} values={{ selectedItemsCount }} />
+  ) : (
+    <FormattedMessage {...messages.defaultDescription} values={{ selectedItemsCount }} />
+  );
+
   return (
-    <ActionDialog
-      open={open}
-      onClose={onClose}
-      variant="delete"
-      title={intl.formatMessage(messages.title, { selectedItemsCount })}
-      onConfirm={onConfirm}
-      confirmButtonState={loading ? "loading" : confirmButtonState}
-      disabled={!submitEnabled}
-    >
-      {deletingCardsWithBalance ? (
-        <Box display="flex" gap={6} flexDirection="column">
-          <DeleteWarningDialogConsentContent
-            isConsentChecked={isConsentChecked}
-            onConsentChange={setConsentChecked}
-            description={intl.formatMessage(messages.withBalanceDescription, {
-              selectedItemsCount,
-            })}
-            consentLabel={intl.formatMessage(messages.consentLabel, {
-              selectedItemsCount,
-            })}
-          />
-        </Box>
-      ) : (
-        <Text>
-          {intl.formatMessage(messages.defaultDescription, {
-            selectedItemsCount,
-          })}
-        </Text>
-      )}
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header subtitle={subtitle}>
+          <FormattedMessage {...messages.title} values={{ selectedItemsCount }} />
+        </DashboardModal.Header>
+
+        {deletingCardsWithBalance ? (
+          <DashboardModal.Body>
+            <DashboardModal.Inset>
+              <Checkbox
+                checked={isConsentChecked}
+                data-test-id="delete-assigned-items-consent"
+                disabled={isSubmitting}
+                name="delete-gift-cards-with-balance-consent"
+                onCheckedChange={value => setConsentChecked(!!value)}
+              >
+                <Text>
+                  <FormattedMessage {...messages.consentLabel} values={{ selectedItemsCount }} />
+                </Text>
+              </Checkbox>
+            </DashboardModal.Inset>
+          </DashboardModal.Body>
+        ) : null}
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={!submitEnabled || isSubmitting}
+            onClick={onConfirm}
+            transitionState={loading ? "loading" : confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 }
 
-export default GiftCardDeleteDialogContent;
+GiftCardDeleteDialogContent.displayName = "GiftCardDeleteDialogContent";

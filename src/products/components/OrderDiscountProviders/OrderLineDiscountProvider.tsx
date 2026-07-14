@@ -3,8 +3,8 @@ import { useApolloClient } from "@apollo/client";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   type MoneyFragment,
+  OrderDetailsDocument,
   type OrderDetailsFragment,
-  OrderDetailsWithMetadataDocument,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation,
 } from "@dashboard/graphql";
@@ -87,7 +87,7 @@ export const OrderLineDiscountProvider = ({ children, order }: DiscountProviderP
   const handleDiscountDataSubmission = async (errors: unknown[]) => {
     if (errors.length === 0) {
       await apolloClient.refetchQueries({
-        include: [OrderDetailsWithMetadataDocument],
+        include: [OrderDetailsDocument],
       });
     }
 

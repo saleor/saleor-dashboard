@@ -9,6 +9,7 @@ import DataEditor, {
   type DataEditorRef,
   type DrawHeaderCallback,
   type EditableGridCell,
+  getMiddleCenterBias,
   type GridCell,
   type GridColumn,
   type GridSelection,
@@ -38,6 +39,7 @@ import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
+import { DEFAULT_ROW_MARKER_WIDTH } from "./const";
 import { useCustomCellRenderers } from "./customCells/useCustomCellRenderers";
 import { headerIcons } from "./headerIcons";
 import useDatagridChange, {
@@ -103,6 +105,7 @@ interface DatagridProps {
   onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
   readonly?: boolean;
   hasRowHover?: boolean;
+  highlightedRow?: number;
   rowMarkers?: DataEditorProps["rowMarkers"];
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
@@ -120,6 +123,9 @@ interface DatagridProps {
   controlledSelection?: GridSelection;
   onControlledSelectionChange?: (selection: GridSelection | undefined) => void;
   getRowThemeOverride?: GetRowThemeCallback;
+  rowMarkerWidth?: number;
+  rowMarkerTheme?: Partial<Theme>;
+  smoothScrollX?: boolean;
 }
 
 export const Datagrid = ({
@@ -149,6 +155,7 @@ export const Datagrid = ({
   loading,
   rowAnchor,
   hasRowHover = false,
+  highlightedRow,
   onRowSelectionChange,
   actionButtonPosition = "left",
   recentlyAddedColumn,
@@ -161,6 +168,9 @@ export const Datagrid = ({
   controlledSelection,
   onControlledSelectionChange,
   getRowThemeOverride: getRowThemeOverrideProp,
+  rowMarkerWidth,
+  rowMarkerTheme: rowMarkerThemeOverride,
+  smoothScrollX = true,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -177,8 +187,9 @@ export const Datagrid = ({
       accentColor: themeValues.colors.background.accent1,
       accentFg: themeValues.colors.background.default1,
       accentLight: themeValues.colors.background.default2,
+      ...rowMarkerThemeOverride,
     }),
-    [themeValues],
+    [themeValues, rowMarkerThemeOverride],
   );
   const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
@@ -364,29 +375,40 @@ export const Datagrid = ({
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
     (row: number) => {
       const customOverride = getRowThemeOverrideProp?.(row);
+      const isActiveRow = highlightedRow !== undefined && row === highlightedRow;
+      const isHoverRow = row === hoverRow;
 
-      if (row !== hoverRow) {
-        return customOverride;
+      if (!customOverride && !isActiveRow && !isHoverRow) {
+        return undefined;
       }
 
-      const hoverOverride: Partial<Theme> = {
-        /*
-          Grid-specific colors. Transparency matters when we highlight entire row.
-        */
-        bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
-        bgCellMedium: themeValues.colors.background.default1Hovered,
-      };
+      let stateOverride: Partial<Theme> = {};
 
-      if (readonly) {
-        hoverOverride.accentLight = themeValues.colors.background.default1;
+      if (isActiveRow) {
+        stateOverride = {
+          bgCell: themeValues.colors.background.default2,
+          bgCellMedium: themeValues.colors.background.default2,
+        };
+      } else if (isHoverRow) {
+        stateOverride = {
+          /*
+            Grid-specific colors. Transparency matters when we highlight entire row.
+          */
+          bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
+          bgCellMedium: themeValues.colors.background.default1Hovered,
+        };
+
+        if (readonly) {
+          stateOverride.accentLight = themeValues.colors.background.default1;
+        }
       }
 
       return {
         ...customOverride,
-        ...hoverOverride,
+        ...stateOverride,
       };
     },
-    [getRowThemeOverrideProp, hoverRow, readonly, theme, themeValues],
+    [getRowThemeOverrideProp, highlightedRow, hoverRow, readonly, theme, themeValues],
   );
   const handleHeaderClicked = useCallback(
     (colIndex: number, event: HeaderClickedEventArgs) => {
@@ -407,13 +429,15 @@ export const Datagrid = ({
   const drawHeader: DrawHeaderCallback = useCallback(
     args => {
       const { ctx, rect, isSelected, spriteManager, theme, column } = args;
+      const columnMeta = availableColumns.find(col => col.id === column.id);
+      const isRightAligned = columnMeta?.headerAlign === "right";
 
       if (isSelected) {
         ctx.fillStyle = themeValues.colors.background.default1;
         ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
       }
 
-      if (isSelected && column.id !== "empty") {
+      if (isSelected && column.id !== "empty" && !columnMeta?.disableReorder) {
         const iconSize = 16;
         const padding = 8;
         const x = rect.x + rect.width - iconSize - padding;
@@ -422,9 +446,41 @@ export const Datagrid = ({
         spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
       }
 
+      if (isRightAligned && column.id !== "empty") {
+        const xPad = theme.cellHorizontalPadding;
+        const gripReserved = isSelected ? 24 : 0;
+        const drawX = rect.x + rect.width - xPad - gripReserved;
+        const font = `${theme.headerFontStyle} ${theme.fontFamily}`;
+
+        ctx.font = font;
+        ctx.fillStyle = isSelected ? theme.textHeaderSelected : theme.textHeader;
+
+        const textY = rect.y + rect.height / 2 + getMiddleCenterBias(ctx, font);
+
+        ctx.textAlign = "right";
+        ctx.fillText(column.title, drawX, textY);
+        ctx.textAlign = "left";
+
+        if (column.icon !== undefined) {
+          const headerSize = theme.headerIconSize;
+
+          spriteManager.drawSprite(
+            column.icon,
+            isSelected ? "selected" : "normal",
+            ctx,
+            rect.x + xPad,
+            rect.y + (rect.height - headerSize) / 2,
+            headerSize,
+            theme,
+          );
+        }
+
+        return true;
+      }
+
       return false;
     },
-    [themeValues],
+    [themeValues, availableColumns],
   );
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
@@ -459,9 +515,16 @@ export const Datagrid = ({
         return;
       }
 
+      const startColumn = availableColumns[startIndex];
+      const endColumn = availableColumns[endIndex];
+
+      if (startColumn?.disableReorder || endColumn?.disableReorder) {
+        return;
+      }
+
       onColumnMoved(startIndex, endIndex);
     },
-    [clearTooltip, onColumnMoved, tooltip],
+    [availableColumns, clearTooltip, onColumnMoved, tooltip],
   );
   const selectionActionsComponent = useMemo(
     () =>
@@ -550,7 +613,7 @@ export const Datagrid = ({
                     columns={availableColumns}
                     rows={rowsTotal}
                     freezeColumns={freezeColumns}
-                    smoothScrollX
+                    smoothScrollX={smoothScrollX}
                     rowMarkers={rowMarkers}
                     rowSelect="multi"
                     rowSelectionMode="multi"
@@ -616,7 +679,7 @@ export const Datagrid = ({
                             )}
                       </div>
                     }
-                    rowMarkerWidth={48}
+                    rowMarkerWidth={rowMarkerWidth ?? DEFAULT_ROW_MARKER_WIDTH}
                   />
                   {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
                   {hasColumnGroups && <div className={classes.columnGroupFixer} />}

@@ -40,6 +40,11 @@ export const columnsMessages = defineMessages({
     id: "NWxomz",
     defaultMessage: "Fulfillment status",
   },
+  net: {
+    id: "rU2b3o",
+    defaultMessage: "Net",
+    description: "orders list column: net product value (excludes tax and shipping)",
+  },
   total: {
     id: "MJ2jZQ",
     defaultMessage: "Total",

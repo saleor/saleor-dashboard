@@ -1,4 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,9 +25,9 @@ const OrderCustomerNote = ({ note }: OrderCustomerNoteProps) => {
         {note === undefined ? (
           <Skeleton />
         ) : note === "" ? (
-          <Text color="default2">
+          <Placeholder>
             <FormattedMessage id="VrFy8e" defaultMessage="No notes from customer" />
-          </Text>
+          </Placeholder>
         ) : (
           <Text>{note}</Text>
         )}

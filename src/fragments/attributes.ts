@@ -39,6 +39,59 @@ export const attributeFragment = gql`
   }
 `;
 
+export const attributeAssignedListFragment = gql`
+  fragment AttributeAssignedList on Attribute {
+    ...Attribute
+    valueRequired
+  }
+`;
+
+export const attributeUpdateResultFragment = gql`
+  fragment AttributeUpdateResult on Attribute {
+    ...Attribute
+    availableInGrid
+    storefrontSearchPosition
+    valueRequired
+    referenceTypes {
+      ... on ProductType {
+        id
+        name
+      }
+      ... on PageType {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const attributeAssignedTypesFragment = gql`
+  fragment AttributeAssignedTypes on Attribute {
+    productTypes(first: 100) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+    productVariantTypes(first: 100) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`;
+
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
@@ -87,5 +140,6 @@ export const availableAttributeFragment = gql`
     id
     name
     slug
+    inputType
   }
 `;

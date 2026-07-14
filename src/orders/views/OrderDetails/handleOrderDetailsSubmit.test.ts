@@ -41,8 +41,8 @@ describe("handleOrderDetailsSubmit", () => {
     });
     const formData = {
       [order.id]: {
-        metadata: order.metadata,
-        privateMetadata: order.privateMetadata,
+        metadata: [],
+        privateMetadata: [],
       },
     };
 
@@ -78,8 +78,8 @@ describe("handleOrderDetailsSubmit", () => {
     });
     const formData = {
       [order.id]: {
-        metadata: order.metadata,
-        privateMetadata: order.privateMetadata,
+        metadata: [],
+        privateMetadata: [],
       },
     };
 
@@ -105,8 +105,8 @@ describe("handleOrderDetailsSubmit", () => {
     const orderConfirm = jest.fn();
     const formData = {
       [order.id]: {
-        metadata: order.metadata,
-        privateMetadata: order.privateMetadata,
+        metadata: [],
+        privateMetadata: [],
       },
     };
 

@@ -1,12 +1,13 @@
 import {
-  AssignReferenceTypesDialog,
-  type ReferenceTypes,
-} from "@dashboard/attributes/components/AssignReferenceTypesDialog/AssignReferenceTypesDialog";
+  AttributeAssignedTypesCard,
+  type AttributeAssignedTypesCardProps,
+} from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
+import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
+import { attributeListPath } from "@dashboard/attributes/urls";
 import {
-  type AttributeAddUrlQueryParams,
-  attributeListPath,
-  type AttributeUrlQueryParams,
-} from "@dashboard/attributes/urls";
+  getAttributePageInitialForm,
+  isAttributeUpdateFormPristine,
+} from "@dashboard/attributes/utils/attributePageForm";
 import {
   ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES,
   ENTITY_TYPES_WITH_TYPES_RESTRICTION,
@@ -28,8 +29,8 @@ import {
   type AttributeDetailsQuery,
   AttributeEntityTypeEnum,
   type AttributeErrorFragment,
-  AttributeInputTypeEnum,
-  AttributeTypeEnum,
+  type AttributeInputTypeEnum,
+  type AttributeTypeEnum,
   type MeasurementUnitsEnum,
   PermissionEnum,
 } from "@dashboard/graphql";
@@ -44,10 +45,11 @@ import { TranslationsButton } from "@dashboard/translations/components/Translati
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type ListSettings, type ReorderAction } from "@dashboard/types";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { type Option } from "@saleor/macaw-ui-next";
 import type * as React from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -56,22 +58,47 @@ import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "../AttributeValues/AttributeValues";
+import { messages } from "./messages";
+import { AttributeDetailsTitle } from "./Title";
+
+function AttributePageDirtyStateSync({
+  attribute,
+  isSaveDisabled,
+  triggerChange,
+}: {
+  attribute?: AttributePageProps["attribute"];
+  isSaveDisabled?: boolean;
+  triggerChange: (value?: boolean) => void;
+}) {
+  // Derive the exit-dialog dirty flag from the pristine comparison instead of
+  // marking it imperatively. Running it in an effect (after render/navigation)
+  // is important: marking the form dirty synchronously inside a handler that
+  // also navigates would make the exit-form guard block that same-page navigation.
+  useEffect(() => {
+    if (!attribute) {
+      return;
+    }
+
+    triggerChange(!isSaveDisabled);
+  }, [attribute, isSaveDisabled, triggerChange]);
+
+  return null;
+}
 
 interface AttributePageProps {
   attribute?: AttributeDetailsQuery["attribute"] | null | undefined;
+  assignedTypes?: AttributeAssignedTypesCardProps;
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   values?: NonNullable<AttributeDetailsQuery["attribute"]>["choices"] | undefined;
-  params: AttributeAddUrlQueryParams | AttributeUrlQueryParams;
   onDelete: () => void;
+  onShowMetadata?: () => void;
   onSubmit: (data: AttributePageFormData) => SubmitPromise;
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
-  onOpenReferenceTypes: () => void;
-  onCloseAssignReferenceTypes: () => void;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
   pageInfo: {
@@ -83,6 +110,7 @@ interface AttributePageProps {
   searchQuery?: string;
   onSearchChange?: (query: string) => void;
   children: (data: AttributePageFormData) => React.ReactNode;
+  defaultAttributeType?: AttributeTypeEnum;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -103,19 +131,18 @@ export interface AttributePageFormData extends MetadataFormData {
 
 const AttributePage = ({
   attribute,
+  assignedTypes,
   disabled,
   errors: apiErrors,
   saveButtonBarState,
   values,
-  params,
   onDelete,
+  onShowMetadata,
   onSubmit,
   onValueAdd,
   onValueDelete,
   onValueReorder,
   onValueUpdate,
-  onOpenReferenceTypes,
-  onCloseAssignReferenceTypes,
   settings,
   onUpdateListSettings,
   pageInfo,
@@ -124,6 +151,7 @@ const AttributePage = ({
   searchQuery,
   onSearchChange,
   children,
+  defaultAttributeType,
 }: AttributePageProps) => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
@@ -131,42 +159,29 @@ const AttributePage = ({
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
-  const initialForm: AttributePageFormData = !attribute
-    ? {
-        availableInGrid: true,
-        entityType: null,
-        filterableInDashboard: true,
-        filterableInStorefront: true,
-        inputType: AttributeInputTypeEnum.DROPDOWN,
-        metadata: [],
-        name: "",
-        privateMetadata: [],
-        slug: "",
-        storefrontSearchPosition: "",
-        type: AttributeTypeEnum.PRODUCT_TYPE,
-        valueRequired: true,
-        visibleInStorefront: true,
-        unit: undefined,
-        referenceTypes: [],
+  const isCreate = attribute === null;
+  const initialForm = useMemo(
+    () => getAttributePageInitialForm(attribute, defaultAttributeType),
+    [attribute, defaultAttributeType],
+  );
+  const checkIfSaveIsDisabled = useCallback(
+    (data: AttributePageFormData) => {
+      if (disabled) {
+        return true;
       }
-    : {
-        availableInGrid: attribute.availableInGrid,
-        entityType: attribute.entityType,
-        filterableInDashboard: attribute.filterableInDashboard,
-        filterableInStorefront: attribute.filterableInStorefront,
-        inputType: attribute?.inputType ?? AttributeInputTypeEnum.DROPDOWN,
-        metadata: attribute.metadata.map(mapMetadataItemToInput),
-        name: attribute?.name ?? "",
-        privateMetadata: attribute.privateMetadata.map(mapMetadataItemToInput),
-        slug: attribute?.slug ?? "",
-        storefrontSearchPosition: attribute.storefrontSearchPosition.toString(),
-        type: attribute?.type ?? AttributeTypeEnum.PRODUCT_TYPE,
-        valueRequired: !!attribute.valueRequired,
-        visibleInStorefront: attribute.visibleInStorefront,
-        unit: attribute?.unit ?? null,
-        referenceTypes:
-          attribute?.referenceTypes?.map(ref => ({ value: ref.id, label: ref.name })) || [],
-      };
+
+      if (isCreate) {
+        return false;
+      }
+
+      if (!attribute) {
+        return true;
+      }
+
+      return isAttributeUpdateFormPristine(data, initialForm);
+    },
+    [attribute, disabled, initialForm, isCreate],
+  );
   const handleSubmit = (data: AttributePageFormData) => {
     const type = attribute === null ? data.type : undefined;
 
@@ -184,8 +199,25 @@ const AttributePage = ({
   const pageRefSearch = usePageTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
-      {({ change, set, data, isSaveDisabled, submit, errors, setError, clearErrors }) => {
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
+      {({
+        change,
+        set,
+        data,
+        isSaveDisabled,
+        isSubmitting,
+        submit,
+        errors,
+        setError,
+        clearErrors,
+        triggerChange,
+      }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
         const activeRefSearch =
           data.entityType === AttributeEntityTypeEnum.PAGE ? pageRefSearch : productRefSearch;
@@ -199,30 +231,21 @@ const AttributePage = ({
           activeRefSearch.loadMore,
         );
 
+        const referenceTypeOptions = (referenceTypes ?? []).map(type => ({
+          label: type.name,
+          value: type.id,
+        }));
+
         // Clear reference types in case entityType changes, as it may affect available options
         const handleChange = (event: ChangeEvent) => {
           const fieldName = event.target?.name;
 
-          if (attribute === null && fieldName === "entityType") {
+          if (isCreate && fieldName === "entityType") {
             set({ referenceTypes: [] });
+            triggerChange();
           }
 
           change(event);
-        };
-        const setReferenceTypes = (selected: Array<{ id: string; name: string }>) => {
-          const toAdd = selected
-            .map(ref => ({ value: ref.id, label: ref.name }))
-            .filter(
-              newRef =>
-                !data.referenceTypes.some(existingRef => existingRef.value === newRef.value),
-            );
-          const mergedReferenceTypes = [...data.referenceTypes, ...toAdd];
-
-          set({ referenceTypes: mergedReferenceTypes });
-          onCloseAssignReferenceTypes();
-        };
-        const handleRemoveReferenceType = (id: string) => {
-          set({ referenceTypes: data.referenceTypes.filter(ref => ref.value !== id) });
         };
         const showReferenceTypes = data.entityType
           ? REFERENCE_ATTRIBUTE_TYPES.includes(data.inputType) &&
@@ -231,19 +254,46 @@ const AttributePage = ({
 
         return (
           <>
+            <AttributePageDirtyStateSync
+              attribute={attribute}
+              isSaveDisabled={isSaveDisabled}
+              triggerChange={triggerChange}
+            />
             <DetailPageLayout>
               <TopNav
                 href={attributePageBackLink}
                 title={
-                  attribute === null
-                    ? intl.formatMessage({
-                        id: "8cUEPV",
-                        defaultMessage: "Create New Attribute",
-                        description: "page title",
-                      })
-                    : attribute?.name
+                  attribute === null ? (
+                    intl.formatMessage({
+                      id: "8cUEPV",
+                      defaultMessage: "Create New Attribute",
+                      description: "page title",
+                    })
+                  ) : (
+                    <AttributeDetailsTitle
+                      attribute={
+                        attribute
+                          ? {
+                              name: attribute.name,
+                              type: attribute.type,
+                            }
+                          : null
+                      }
+                      loading={disabled}
+                    />
+                  )
                 }
+                actionsGap={3}
               >
+                {attribute !== null && onShowMetadata && (
+                  <TopNav.MetadataButton
+                    onClick={onShowMetadata}
+                    disabled={!attribute}
+                    data-test-id="show-attribute-metadata"
+                    title={intl.formatMessage(messages.editAttributeMetadata)}
+                    ripple={rippleAttributeViewOverhaul}
+                  />
+                )}
                 {canTranslate && (
                   <TranslationsButton
                     onClick={() =>
@@ -260,12 +310,17 @@ const AttributePage = ({
               </TopNav>
               <DetailPageLayout.Content>
                 <AttributeDetails
-                  canChangeType={attribute === null}
+                  canChangeType={isCreate}
                   data={data}
                   disabled={disabled}
                   apiErrors={apiErrors}
                   onChange={handleChange}
-                  set={set}
+                  onUnitChange={unit => {
+                    if ((data.unit ?? null) !== (unit ?? null)) {
+                      set({ unit });
+                      triggerChange();
+                    }
+                  }}
                   errors={errors}
                   setError={setError}
                   clearErrors={clearErrors}
@@ -273,11 +328,14 @@ const AttributePage = ({
                 <CardSpacer />
                 {showReferenceTypes && (
                   <AttributeReferenceTypesSection
-                    entityType={data.entityType ?? undefined}
-                    selectedTypes={data.referenceTypes}
                     disabled={disabled}
-                    onAssignClick={onOpenReferenceTypes}
-                    onRemoveType={handleRemoveReferenceType}
+                    entityType={data.entityType ?? undefined}
+                    fetchMore={fetchMoreReferenceTypes}
+                    fetchOptions={activeRefSearch.search}
+                    loading={Boolean(fetchMoreReferenceTypes?.loading)}
+                    onChange={event => set({ referenceTypes: event.target.value })}
+                    options={referenceTypeOptions}
+                    value={data.referenceTypes}
                   />
                 )}
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
@@ -300,47 +358,41 @@ const AttributePage = ({
                     />
                   </>
                 )}
-                <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
+                {attribute === null && (
+                  <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
+                )}
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
-                <AttributeOrganization
-                  canChangeType={attribute === null}
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <CardSpacer />
+                {attribute === null && (
+                  <>
+                    <AttributeOrganization data={data} disabled={disabled} onChange={change} />
+                    <CardSpacer />
+                  </>
+                )}
                 <AttributeProperties
                   data={data}
                   errors={apiErrors}
                   disabled={disabled}
                   onChange={change}
                 />
+                {assignedTypes && (
+                  <>
+                    <CardSpacer />
+                    <AttributeAssignedTypesCard {...assignedTypes} />
+                  </>
+                )}
               </DetailPageLayout.RightSidebar>
               <Savebar>
                 {attribute !== null && <Savebar.DeleteButton onClick={onDelete} />}
                 <Savebar.Spacer />
                 <Savebar.CancelButton onClick={() => navigate(attributePageBackLink)} />
                 <Savebar.ConfirmButton
-                  transitionState={saveButtonBarState}
+                  transitionState={isSubmitting ? "loading" : saveButtonBarState}
                   onClick={submit}
                   disabled={!!isSaveDisabled}
                 />
               </Savebar>
             </DetailPageLayout>
-            <AssignReferenceTypesDialog
-              open={params.action === "assign-reference-types"}
-              confirmButtonState="default"
-              onClose={onCloseAssignReferenceTypes}
-              loading={Boolean(fetchMoreReferenceTypes?.loading)}
-              selectedReferenceTypesIds={data.referenceTypes.map(ref => ref.value)}
-              referenceTypes={(referenceTypes ?? []) as ReferenceTypes}
-              hasMore={fetchMoreReferenceTypes?.hasMore}
-              onFetchMore={fetchMoreReferenceTypes?.onFetchMore}
-              onFetch={activeRefSearch.search}
-              onSubmit={setReferenceTypes}
-              entityType={data.entityType}
-            />
             {children(data)}
           </>
         );

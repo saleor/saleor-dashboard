@@ -198,6 +198,39 @@ describe("useColumns", () => {
       },
     ]);
   });
+  it("should apply mapColumnsOnSave before calling onSave", () => {
+    // Arrange
+    const mapColumnsOnSave = (columns: string[]) => [...columns].reverse();
+    const { result } = renderHook(() =>
+      useColumns({
+        staticColumns: mockedColumns,
+        selectedColumns: ["name"],
+        onSave,
+        mapColumnsOnSave,
+      }),
+    );
+
+    // Act
+    act(() => result.current.handlers.onToggle("description"));
+
+    // Assert
+    expect(onSave).toHaveBeenCalledWith(["name", "description"]);
+  });
+  it("should apply mapColumnsOnSave to selected columns", () => {
+    // Arrange
+    const mapColumnsOnSave = (columns: string[]) => [...columns].reverse();
+    const { result } = renderHook(() =>
+      useColumns({
+        staticColumns: mockedColumns,
+        selectedColumns: ["name", "description"],
+        onSave,
+        mapColumnsOnSave,
+      }),
+    );
+
+    // Assert
+    expect(result.current.selectedColumns).toEqual(["description", "name"]);
+  });
   it("should call onSave when column is toggled", () => {
     // Arrange
     const { result } = renderHook(() =>

@@ -9,10 +9,12 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
+import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type AttributeErrorFragment,
   type AttributeValueInput,
@@ -25,27 +27,28 @@ import {
   usePageDetailsQuery,
   usePageRemoveMutation,
   usePageUpdateMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getStringOrPlaceholder, maybe } from "../../misc";
+import { PageDeleteDialog } from "../components/PageDeleteDialog/PageDeleteDialog";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { type PageData, type PageSubmitData } from "../components/PageDetailsPage/form";
+import { PageMetadataDialog } from "../components/PageMetadataDialog/PageMetadataDialog";
 import { pageListUrl, pageUrl, type PageUrlQueryParams } from "../urls";
 import { getAttributeInputFromPage } from "../utils/data";
 
@@ -79,16 +82,24 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+  const [openModal, closeModal] = createDialogActionHandlers(
+    navigate,
+    dialogParams => pageUrl(id, dialogParams),
+    params,
+  );
   const pageDetails = usePageDetailsQuery({
     variables: {
       id,
       firstValues: VALUES_PAGINATE_BY,
     },
   });
+
+  useRegisterEntityRefresh(pageDetails.refetch);
+
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
-  const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({});
+  const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({
+    disableErrorHandling: true,
+  });
   const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
@@ -102,13 +113,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     },
   });
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
-    navigate(
-      pageUrl(id, {
-        ...params,
-        action: "assign-attribute-value",
-        id: attribute.id,
-      }),
-    );
+    openModal("assign-attribute-value", { id: attribute.id });
   const handleUpdate = async (data: PageSubmitData) => {
     let errors: Array<AttributeErrorFragment | UploadErrorFragment | PageErrorFragment> = [];
 
@@ -142,16 +147,16 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
 
     return errors;
   };
-  const handleSubmit = createMetadataUpdateHandler(
-    pageDetails.data?.page,
-    handleUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
   const refAttr =
     params.action === "assign-attribute-value" && params.id
       ? pageDetails?.data?.page?.attributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -166,20 +171,12 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  } = useReferenceCollectionSearch(refAttr);
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
-  });
+  } = useReferenceCategorySearch(refAttr);
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
@@ -218,6 +215,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchCategoriesOpts.refetch,
     refetchCollections: searchCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
 
   return (
@@ -234,14 +232,9 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}
         attributeValues={attributeValues}
-        onRemove={() =>
-          navigate(
-            pageUrl(id, {
-              action: "remove",
-            }),
-          )
-        }
-        onSubmit={handleSubmit}
+        onRemove={() => openModal("remove", { id: undefined })}
+        onShowMetadata={() => openModal("view-metadata", { id: undefined })}
+        onSubmit={handleUpdate}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
@@ -258,31 +251,33 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
         fetchMoreReferenceCollections={fetchMoreReferenceCollections}
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(pageUrl(id))}
+        onCloseDialog={closeModal}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
-      <ActionDialog
-        open={params.action === "remove"}
+      <PageMetadataDialog
+        open={params.action === "view-metadata" && !!pageDetails.data?.page}
+        onClose={closeModal}
+        page={pageDetails.data?.page}
+        refetchPage={pageDetails.refetch}
+      />
+      <PageDeleteDialog
         confirmButtonState={pageRemoveOpts.status}
-        title={intl.formatMessage({
-          id: "0B0HS2",
-          defaultMessage: "Delete model",
-          description: "dialog header",
-        })}
-        onClose={() => navigate(pageUrl(id))}
+        onClose={closeModal}
         onConfirm={() => pageRemove({ variables: { id } })}
-        variant="delete"
-      >
-        <FormattedMessage
-          id="knO/IN"
-          defaultMessage="Are you sure you want to delete {title}?"
-          description="delete model"
-          values={{
-            title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove"}
+        title={
+          <FormattedMessage
+            description="delete model"
+            id="knO/IN"
+            defaultMessage="Are you sure you want to delete {title}?"
+            values={{
+              title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
+            }}
+          />
+        }
+      />
     </>
   );
 };

@@ -5,7 +5,6 @@ import {
 
 interface PostalCodesState {
   codesToDelete?: string[];
-  havePostalCodesChanged?: boolean;
   inclusionType?: PostalCodeRuleInclusionTypeEnum;
   originalCodes?: ShippingMethodWithPostalCodesFragment["postalCodeRules"];
   postalCodeRules?: ShippingMethodWithPostalCodesFragment["postalCodeRules"];

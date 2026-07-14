@@ -44,3 +44,25 @@ export const refundReasonReferenceClear = gql`
     }
   }
 `;
+
+export const returnSettingsUpdate = gql`
+  mutation ReturnSettingsUpdate($returnSettingsInput: ReturnSettingsUpdateInput!) {
+    returnSettingsUpdate(input: $returnSettingsInput) {
+      errors {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const returnReasonReferenceClear = gql`
+  mutation ReturnReasonReferenceClear {
+    returnReasonReferenceClear {
+      errors {
+        code
+        message
+      }
+    }
+  }
+`;

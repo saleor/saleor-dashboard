@@ -1,0 +1,36 @@
+.metadataRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.summaryRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--mu-spacing-2);
+}
+
+.metadataDot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--mu-spacing-1);
+  color: var(--mu-colors-text-default2);
+  font-size: var(--mu-fontSizes-2);
+  line-height: 1;
+  user-select: none;
+}
+
+.shipmentActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--mu-spacing-2);
+}
+
+.shipmentMenuPlaceholder {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}

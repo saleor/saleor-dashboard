@@ -1,3 +1,4 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { Multiselect } from "@dashboard/components/Combobox";
 import { type ChannelFragment } from "@dashboard/graphql";
@@ -42,7 +43,9 @@ const ChannelsSection = ({
 
   return (
     <>
-      <FormattedMessage {...messages.subtitle} />
+      <DashboardCard.Subtitle fontSize={3} color="default2">
+        <FormattedMessage {...messages.subtitle} />
+      </DashboardCard.Subtitle>
       <CardSpacer />
 
       <Multiselect

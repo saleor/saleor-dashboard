@@ -14,10 +14,11 @@ import { ErrorCircle } from "./ErrorCircle";
 import ErrorExclamationCircle from "./ErrorExclamationCircle";
 import { ExclamationIcon } from "./ExclamationIcon";
 import { ExclamationIconFilled } from "./ExclamationIconFilled";
+import { GiftIcon } from "./GiftIcon";
 import { GraphqlIcon } from "./GraphqlIcon";
 import { HomeIcon } from "./Home";
 import { MarketplaceIcon } from "./Marketplace";
-import ModelingIcon from "./Modeling";
+import { ModelingIcon } from "./Modeling";
 import { OrdersIcon } from "./Orders";
 import PermissionGroups from "./PermissionGroups";
 import { PluginIcon } from "./PluginIcon";
@@ -79,6 +80,7 @@ const icons: IconEntry[] = [
   { name: "PluginIcon", group: "extension", render: () => <PluginIcon /> },
   { name: "WebhookIcon", group: "extension", render: () => <WebhookIcon /> },
   { name: "TerminalIcon", group: "extension", render: () => <TerminalIcon /> },
+  { name: "GiftIcon", group: "extension", render: () => <GiftIcon /> },
   { name: "GraphqlIcon", group: "extension", render: () => <GraphqlIcon /> },
 ];
 
@@ -146,7 +148,7 @@ const Showcase = () => (
 );
 
 const meta: Meta<typeof Showcase> = {
-  title: "Icons/Legacy Icon Showcase",
+  title: "Icons/Icon Showcase",
   component: Showcase,
 };
 

@@ -7,6 +7,8 @@ import { NoValue } from "./NoValue";
 import type { Error, FilterEvent, LeftOperatorOption, Row } from "./types";
 import { useEventEmitter } from "./useEvents";
 
+export type ConditionalFiltersLayout = "popover" | "inline";
+
 export interface ExperimentalFiltersProps {
   value: Array<Row | string>;
   leftOptions: LeftOperatorOption[];
@@ -14,6 +16,7 @@ export interface ExperimentalFiltersProps {
   onChange?: (event: FilterEvent["detail"]) => void;
   locale?: Record<string, string>;
   error?: Error[];
+  layout?: ConditionalFiltersLayout;
 }
 
 export const Root = ({
@@ -21,6 +24,7 @@ export const Root = ({
   onChange,
   leftOptions,
   children,
+  layout = "popover",
   locale = {
     WHERE: "Where",
     AND: "and",
@@ -35,21 +39,41 @@ export const Root = ({
 
   return (
     <FilterContext.Provider value={{ emitter, actionButtonsDisabled: value.length === 0 }}>
-      <Box height="100%" display="grid" __gridTemplateRows="1fr">
-        {value.length > 0 ? (
-          <Filters
-            value={value}
-            leftOptions={leftOptions}
-            emitter={emitter}
-            locale={locale}
-            error={error}
-          />
-        ) : (
-          <NoValue locale={locale} />
-        )}
-        <Divider />
-        {children}
-      </Box>
+      {layout === "inline" ? (
+        <Box display="flex" flexDirection="column" gap={3} width="100%" __minWidth="0">
+          {value.length > 0 ? (
+            <>
+              <Filters
+                value={value}
+                leftOptions={leftOptions}
+                emitter={emitter}
+                locale={locale}
+                error={error}
+                layout={layout}
+              />
+              <Divider />
+            </>
+          ) : null}
+          {children}
+        </Box>
+      ) : (
+        <Box height="100%" display="grid" __gridTemplateRows="1fr">
+          {value.length > 0 ? (
+            <Filters
+              value={value}
+              leftOptions={leftOptions}
+              emitter={emitter}
+              locale={locale}
+              error={error}
+              layout={layout}
+            />
+          ) : (
+            <NoValue locale={locale} />
+          )}
+          <Divider />
+          {children}
+        </Box>
+      )}
     </FilterContext.Provider>
   );
 };

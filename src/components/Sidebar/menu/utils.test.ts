@@ -42,6 +42,7 @@ describe("mapToExtensionsItems", () => {
     targetName: "APP_PAGE",
     settings: {},
     isSaleorOfficial: false,
+    fromCache: false,
   };
 
   const mockHeader: SidebarMenuItem = {
@@ -205,14 +206,23 @@ describe("isMenuActive", () => {
     expect(result).toBe(true);
   });
 
-  it("should identify Home menu item (URL '/') as active when current path is root ('/')", () => {
+  it("should identify Home menu item (URL '/home') as active when current path is '/home'", () => {
     const homeMenuItem: SidebarMenuItem = {
       ...mockMenuItem,
-      url: "/",
+      url: "/home",
     };
-    const result = isMenuActive("/", homeMenuItem);
+    const result = isMenuActive("/home", homeMenuItem);
 
     expect(result).toBe(true);
+  });
+
+  it("should identify Home menu item (URL '/home') as active on home sub-routes", () => {
+    const homeMenuItem: SidebarMenuItem = {
+      ...mockMenuItem,
+      url: "/home",
+    };
+
+    expect(isMenuActive("/home/widgets", homeMenuItem)).toBe(true);
   });
 
   it("should identify item as inactive if its main URL is undefined and no alternative URLs match", () => {
@@ -282,6 +292,7 @@ describe("getMenuItemExtension", () => {
     settings: {},
     targetName: "POPUP",
     isSaleorOfficial: false,
+    fromCache: false,
   };
 
   const mockExtension: Extension = {

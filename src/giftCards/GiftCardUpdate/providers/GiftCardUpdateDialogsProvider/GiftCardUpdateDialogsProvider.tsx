@@ -1,13 +1,13 @@
 // @ts-strict-ignore
-import GiftCardUpdatePageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardUpdatePageDeleteDialog";
+import { GiftCardUpdatePageDeleteDialog } from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardUpdatePageDeleteDialog";
 import { giftCardsListPath, giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import type * as React from "react";
 import { createContext } from "react";
 
-import GiftCardResendCodeDialog from "../../GiftCardResendCodeDialog";
-import GiftCardUpdateBalanceDialog from "../../GiftCardUpdateBalanceDialog";
+import { GiftCardResendCodeDialog } from "../../GiftCardResendCodeDialog/GiftCardResendCodeDialog";
+import { GiftCardUpdateBalanceDialog } from "../../GiftCardUpdateBalanceDialog/GiftCardUpdateBalanceDialog";
 import {
   GiftCardUpdatePageActionParamsEnum,
   type GiftCardUpdatePageUrlQueryParams,

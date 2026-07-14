@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { useState } from "react";
 import { IntlProvider } from "react-intl";
 
 import { CustomerEditForm } from "./CustomerEditForm";
@@ -17,6 +18,7 @@ jest.mock("@saleor/macaw-ui-next", () => ({
     onInputValueChange,
     onFocus,
     options,
+    value,
     "data-test-id": testId,
   }: any) => (
     <div>
@@ -29,6 +31,7 @@ jest.mock("@saleor/macaw-ui-next", () => ({
           onInputValueChange?.(e.target.value);
         }}
       />
+      {value ? <div data-test-id="selected-value">{value.value}</div> : null}
       <ul data-test-id="options-list">
         {(options || []).map((opt: any) => (
           <li key={opt.value} data-test-id={`option-${opt.value}`} onClick={() => onChange?.(opt)}>
@@ -41,9 +44,8 @@ jest.mock("@saleor/macaw-ui-next", () => ({
 }));
 
 const defaultProps = {
-  currentUser: { __typename: "User" as const, id: "user-1", email: "user@example.com" },
-  currentUserEmail: "user@example.com",
-  toggleEditMode: jest.fn(),
+  value: null,
+  onChange: jest.fn(),
   loading: false,
   hasMore: false,
   onFetchMore: jest.fn(),
@@ -52,6 +54,21 @@ const defaultProps = {
 const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <IntlProvider locale="en">{children}</IntlProvider>
 );
+
+const CustomerEditFormHarness = (
+  props: Partial<React.ComponentProps<typeof CustomerEditForm>> = {},
+) => {
+  const [value, setValue] = useState<React.ComponentProps<typeof CustomerEditForm>["value"]>(null);
+
+  return (
+    <CustomerEditForm
+      {...defaultProps}
+      {...props}
+      value={props.value ?? value}
+      onChange={props.onChange ?? setValue}
+    />
+  );
+};
 
 describe("CustomerEditForm", () => {
   beforeEach(() => {
@@ -71,47 +88,30 @@ describe("CustomerEditForm", () => {
     expect(screen.getByTestId("select-customer")).toBeInTheDocument();
   });
 
-  it("calls onCustomerEdit with email when email option is selected", async () => {
-    // Arrange
-    const onCustomerEditMock = jest.fn();
-    const toggleEditModeMock = jest.fn();
-
-    // Act
+  it("updates selected value when an email option is chosen", async () => {
+    // Arrange // Act
     render(
       <Wrapper>
-        <CustomerEditForm
-          {...defaultProps}
-          onCustomerEdit={onCustomerEditMock}
-          toggleEditMode={toggleEditModeMock}
-        />
+        <CustomerEditFormHarness />
       </Wrapper>,
     );
 
-    const input = screen.getByTestId("select-customer");
+    fireEvent.change(screen.getByTestId("select-customer"), {
+      target: { value: "newemail@example.com" },
+    });
 
-    fireEvent.change(input, { target: { value: "newemail@example.com" } });
-
-    // Assert - "Use email" option should appear
     await waitFor(() => {
       expect(screen.getByTestId("option-newemail@example.com")).toBeInTheDocument();
     });
 
-    // Act - click the "Use email" option
     fireEvent.click(screen.getByTestId("option-newemail@example.com"));
 
     // Assert
-    expect(onCustomerEditMock).toHaveBeenCalledWith({
-      prevUser: "user-1",
-      prevUserEmail: "user@example.com",
-      userEmail: "newemail@example.com",
-    });
-    expect(toggleEditModeMock).toHaveBeenCalled();
+    expect(screen.getByTestId("selected-value")).toHaveTextContent("newemail@example.com");
   });
 
-  it("calls onCustomerEdit with user ID when existing user is selected", () => {
+  it("updates selected value when an existing user is chosen", () => {
     // Arrange
-    const onCustomerEditMock = jest.fn();
-    const toggleEditModeMock = jest.fn();
     const users = [
       { id: "user-2", email: "user2@example.com" },
       { id: "user-3", email: "user3@example.com" },
@@ -120,46 +120,14 @@ describe("CustomerEditForm", () => {
     // Act
     render(
       <Wrapper>
-        <CustomerEditForm
-          {...defaultProps}
-          allUsers={users}
-          onCustomerEdit={onCustomerEditMock}
-          toggleEditMode={toggleEditModeMock}
-        />
+        <CustomerEditFormHarness allUsers={users} />
       </Wrapper>,
     );
 
-    // Act - click an existing user option
     fireEvent.click(screen.getByTestId("option-user-2"));
 
     // Assert
-    expect(onCustomerEditMock).toHaveBeenCalledWith({
-      prevUser: "user-1",
-      prevUserEmail: "user@example.com",
-      user: "user-2",
-    });
-    expect(toggleEditModeMock).toHaveBeenCalled();
-  });
-
-  it("does not call callbacks when null option is selected", () => {
-    // Arrange
-    const onCustomerEditMock = jest.fn();
-    const toggleEditModeMock = jest.fn();
-
-    // Act
-    render(
-      <Wrapper>
-        <CustomerEditForm
-          {...defaultProps}
-          onCustomerEdit={onCustomerEditMock}
-          toggleEditMode={toggleEditModeMock}
-        />
-      </Wrapper>,
-    );
-
-    // Assert - no options to click, no callbacks should fire
-    expect(onCustomerEditMock).not.toHaveBeenCalled();
-    expect(toggleEditModeMock).not.toHaveBeenCalled();
+    expect(screen.getByTestId("selected-value")).toHaveTextContent("user-2");
   });
 
   it("renders user choices when allUsers are provided", () => {
@@ -192,9 +160,9 @@ describe("CustomerEditForm", () => {
       </Wrapper>,
     );
 
-    const input = screen.getByTestId("select-customer");
-
-    fireEvent.change(input, { target: { value: "new@example.com" } });
+    fireEvent.change(screen.getByTestId("select-customer"), {
+      target: { value: "new@example.com" },
+    });
 
     // Assert
     await waitFor(() => {
@@ -215,75 +183,17 @@ describe("CustomerEditForm", () => {
       </Wrapper>,
     );
 
-    const input = screen.getByTestId("select-customer");
+    fireEvent.change(screen.getByTestId("select-customer"), {
+      target: { value: "existing@example.com" },
+    });
 
-    fireEvent.change(input, { target: { value: "existing@example.com" } });
-
-    // Assert - should only have the existing user option, not a "Use email" option
+    // Assert
     await waitFor(() => {
       const optionsList = screen.getByTestId("options-list");
       const options = optionsList.querySelectorAll("li");
 
       expect(options).toHaveLength(1);
       expect(options[0]).toHaveTextContent("existing@example.com");
-    });
-  });
-
-  it("handles null currentUserEmail correctly", () => {
-    // Arrange
-    const onCustomerEditMock = jest.fn();
-    const toggleEditModeMock = jest.fn();
-    const users = [{ id: "user-2", email: "user2@example.com" }] as any;
-
-    // Act
-    render(
-      <Wrapper>
-        <CustomerEditForm
-          {...defaultProps}
-          currentUserEmail={null}
-          allUsers={users}
-          onCustomerEdit={onCustomerEditMock}
-          toggleEditMode={toggleEditModeMock}
-        />
-      </Wrapper>,
-    );
-
-    fireEvent.click(screen.getByTestId("option-user-2"));
-
-    // Assert
-    expect(onCustomerEditMock).toHaveBeenCalledWith({
-      prevUser: "user-1",
-      prevUserEmail: undefined,
-      user: "user-2",
-    });
-  });
-
-  it("handles null currentUser correctly", () => {
-    // Arrange
-    const onCustomerEditMock = jest.fn();
-    const toggleEditModeMock = jest.fn();
-    const users = [{ id: "user-2", email: "user2@example.com" }] as any;
-
-    // Act
-    render(
-      <Wrapper>
-        <CustomerEditForm
-          {...defaultProps}
-          currentUser={null}
-          allUsers={users}
-          onCustomerEdit={onCustomerEditMock}
-          toggleEditMode={toggleEditModeMock}
-        />
-      </Wrapper>,
-    );
-
-    fireEvent.click(screen.getByTestId("option-user-2"));
-
-    // Assert
-    expect(onCustomerEditMock).toHaveBeenCalledWith({
-      prevUser: undefined,
-      prevUserEmail: "user@example.com",
-      user: "user-2",
     });
   });
 });

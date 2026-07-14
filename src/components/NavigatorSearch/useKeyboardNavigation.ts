@@ -21,9 +21,8 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
   const { updateAriaActiveDescendant, clearActiveDescendant, resetInput } = useCommandMenuInput();
   const {
     resetFocus,
-    collectLinks,
-    collectTableRows,
-    focusFirst,
+    collectItems,
+    restoreFocus,
     focusNext,
     focusPrevious,
     getActiveFocusedElement,
@@ -42,9 +41,18 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
     clearActiveDescendant();
   };
 
-  useEffect(() => {
-    focusFirst();
+  const refreshItems = ({
+    resetFocus: shouldResetFocus = false,
+  }: { resetFocus?: boolean } = {}) => {
+    const previouslyFocusedId = shouldResetFocus ? undefined : getActiveFocusedElement()?.id;
+
+    collectItems(scope.current);
+    restoreFocus(previouslyFocusedId);
     updateDescendant();
+  };
+
+  useEffect(() => {
+    refreshItems({ resetFocus: true });
   }, [query]);
 
   useHotkeys(
@@ -122,7 +130,6 @@ export const useKeyboardNavigation = ({ query }: { query: string }) => {
   return {
     scope,
     resetFocus,
-    collectLinks,
-    collectTableRows,
+    refreshItems,
   };
 };

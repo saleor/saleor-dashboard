@@ -1,4 +1,4 @@
-import Hr from "@dashboard/components/Hr";
+import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
 import {
   NewRadioGroupField as RadioGroupField,
   type RadioGroupFieldChoice,
@@ -7,37 +7,80 @@ import { type ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
-import { Text } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import {
+  defineMessages,
+  FormattedMessage,
+  type IntlShape,
+  type MessageDescriptor,
+  useIntl,
+} from "react-intl";
 
 import { type ExportSettingsInput } from "./types";
 
 export type ExportItemsQuantity = Record<"all" | "filter", number>;
 
-interface ExportScopeLabels {
+export interface ExportScopeLabels {
   allItems: string;
+  filteredItems: string;
   selectedItems: string;
 }
+
+export const exportDialogScopeMessages = defineMessages({
+  filteredItems: {
+    id: "F2fOM7",
+    defaultMessage: "List view filters ({number})",
+    description: "export scope option for items matching list view filters and search",
+  },
+  productsToInclude: {
+    id: "bbSkxt",
+    defaultMessage: "Products to include",
+    description: "export scope section header for products",
+  },
+  giftCardsToInclude: {
+    id: "7bueG3",
+    defaultMessage: "Gift cards to include",
+    description: "export scope section header for gift cards",
+  },
+  fileFormat: {
+    id: "wqaEMQ",
+    defaultMessage: "File format",
+    description: "export file type section header",
+  },
+  listFiltersDisabledHint: {
+    id: "JB7OuS",
+    defaultMessage: "Apply filters or search on the list to enable this option.",
+    description: "export scope option disabled when list has no active filters",
+  },
+});
+
+export const getFilteredItemsScopeLabel = (intl: IntlShape, count?: number): string =>
+  intl.formatMessage(exportDialogScopeMessages.filteredItems, {
+    number: count ?? "...",
+  });
 
 interface ExportDialogSettingsProps {
   data: ExportSettingsInput;
   errors: ExportErrorFragment[];
-  itemsQuantity: ExportItemsQuantity;
   selectedItems: number;
   exportScopeLabels: ExportScopeLabels;
   onChange: (event: ChangeEvent) => void;
   allowScopeSelection?: boolean;
+  hasListFilters: boolean;
+  scopeSectionMessage?: MessageDescriptor;
 }
 
 const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
-const ExportDialogSettings = ({
+
+export const ExportDialogSettings = ({
   data,
   errors,
   onChange,
   selectedItems,
-  itemsQuantity,
   exportScopeLabels,
   allowScopeSelection = true,
+  hasListFilters,
+  scopeSectionMessage = exportDialogScopeMessages.productsToInclude,
 }: ExportDialogSettingsProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(formFields, errors);
@@ -70,31 +113,19 @@ const ExportDialogSettings = ({
       value: ExportScope.IDS,
     },
     {
-      label: intl.formatMessage(
-        {
-          id: "SZt9kC",
-          defaultMessage: "Current search ({number})",
-          description: "export filtered items to csv file",
-        },
-        {
-          number: itemsQuantity.filter || "...",
-        },
-      ),
+      disabled: !hasListFilters,
+      label: exportScopeLabels.filteredItems,
       value: ExportScope.FILTER,
     },
   ];
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" gap={6}>
       {allowScopeSelection && (
-        <>
-          <Text>
-            {intl.formatMessage({
-              id: "g6yuk2",
-              defaultMessage: "Export information for:",
-              description: "export items to csv file, choice field label",
-            })}
-          </Text>
+        <Box display="flex" flexDirection="column" gap={3}>
+          <ModalSectionHeader>
+            <FormattedMessage {...scopeSectionMessage} />
+          </ModalSectionHeader>
 
           <RadioGroupField
             name="scope"
@@ -104,28 +135,29 @@ const ExportDialogSettings = ({
             choices={exportScopeChoices}
             errorMessage={getExportErrorMessage(formErrors.scope, intl)}
           />
-          <Hr />
-        </>
+
+          {!hasListFilters && (
+            <Text size={2} color="default2">
+              <FormattedMessage {...exportDialogScopeMessages.listFiltersDisabledHint} />
+            </Text>
+          )}
+        </Box>
       )}
 
-      <Text>
-        {intl.formatMessage({
-          id: "z1puMb",
-          defaultMessage: "Export as:",
-          description: "export items as csv or spreadsheet file",
-        })}
-      </Text>
+      <Box display="flex" flexDirection="column" gap={3}>
+        <ModalSectionHeader>
+          <FormattedMessage {...exportDialogScopeMessages.fileFormat} />
+        </ModalSectionHeader>
 
-      <RadioGroupField
-        name="fileType"
-        value={data.fileType}
-        error={!!formErrors.fileType}
-        onChange={onChange}
-        choices={productExportTypeChoices}
-        errorMessage={getExportErrorMessage(formErrors.fileType, intl)}
-      />
-    </>
+        <RadioGroupField
+          name="fileType"
+          value={data.fileType}
+          error={!!formErrors.fileType}
+          onChange={onChange}
+          choices={productExportTypeChoices}
+          errorMessage={getExportErrorMessage(formErrors.fileType, intl)}
+        />
+      </Box>
+    </Box>
   );
 };
-
-export default ExportDialogSettings;

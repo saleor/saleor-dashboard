@@ -1,0 +1,54 @@
+.modalTable {
+  table-layout: fixed;
+}
+
+.columnHeaderBar {
+  display: grid;
+  background-color: var(--mu-colors-background-default2);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.columnHeaderBarWithActions {
+  grid-template-columns: 1fr 1fr auto;
+}
+
+.columnHeaderBarReadonly {
+  grid-template-columns: 1fr 1fr;
+}
+
+.columnHeaderValueLabel {
+  padding-left: var(--mu-spacing-8);
+}
+
+.modalTable tbody td {
+  padding: var(--mu-spacing-3) var(--mu-spacing-5) !important;
+  vertical-align: top;
+}
+
+.modalTable tbody td:first-child {
+  padding-left: var(--mu-spacing-5) !important;
+}
+
+.modalTable tbody td:last-child {
+  padding-right: var(--mu-spacing-5) !important;
+}
+
+.modalTable tbody td:nth-child(2) {
+  padding-left: var(--mu-spacing-8) !important;
+}
+
+.modalTable tbody td.fieldCellWithError {
+  padding-bottom: var(--mu-spacing-4) !important;
+}
+
+.fieldCell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-1);
+  min-width: 0;
+}
+
+.actionsCell {
+  display: flex;
+  justify-content: flex-end;
+}

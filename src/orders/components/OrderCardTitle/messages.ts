@@ -51,4 +51,14 @@ export const orderTitleMessages = defineMessages({
     defaultMessage: "From {warehouseName}",
     description: "fulfilled fulfillment, warehouse info",
   },
+  shippedFromWarehouse: {
+    id: "6DJVl5",
+    defaultMessage: "Shipped from {warehouseName}",
+    description: "canceled fulfillment, original source warehouse info",
+  },
+  restockedToWarehouse: {
+    id: "+vyg/Z",
+    defaultMessage: "Restocked to {warehouseName}",
+    description: "canceled fulfillment, restock destination warehouse info",
+  },
 });

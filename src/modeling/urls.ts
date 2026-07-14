@@ -41,8 +41,36 @@ export type PageListUrlQueryParams = BulkAction &
 export const pageListUrl = (params?: PageListUrlQueryParams) =>
   pageListPath + "?" + stringifyQs(params);
 
+/**
+ * Builds the model list URL pre-filtered by a single model type.
+ */
+export const pageListUrlWithPageType = (pageType?: { id: string }) => {
+  if (!pageType?.id) {
+    return pageListPath;
+  }
+
+  return pageListUrl({ pageTypes: [pageType.id] });
+};
+
+/**
+ * Builds the model list URL pre-filtered by one or more model types.
+ */
+export const pageListUrlWithPageTypes = (pageTypeIds?: string[]): string | null => {
+  const ids = pageTypeIds?.filter(Boolean) ?? [];
+
+  if (!ids.length) {
+    return null;
+  }
+
+  if (ids.length === 1) {
+    return pageListUrlWithPageType({ id: ids[0] });
+  }
+
+  return pageListUrl({ pageTypes: ids });
+};
+
 export const pagePath = (id: string) => urlJoin(modelingSection, id);
-type PageUrlDialog = "remove" | "assign-attribute-value";
+type PageUrlDialog = "remove" | "assign-attribute-value" | "view-metadata";
 interface PageCreateUrlPageType {
   "page-type-id"?: string;
 }

@@ -1,6 +1,11 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { buttonMessages } from "@dashboard/intl";
+import { FormattedMessage } from "react-intl";
 
 interface WarehouseDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -10,39 +15,60 @@ interface WarehouseDeleteDialogProps {
   name: string;
 }
 
-const WarehouseDeleteDialog = ({
+export const WarehouseDeleteDialog = ({
   name,
   confirmButtonState,
   onClose,
   onConfirm,
   open,
 }: WarehouseDeleteDialogProps) => {
-  const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      open={open}
-      onClose={onClose}
-      confirmButtonState={confirmButtonState}
-      onConfirm={onConfirm}
-      variant="delete"
-      title={intl.formatMessage({
-        id: "ny4zrH",
-        defaultMessage: "Delete Warehouse",
-        description: "dialog title",
-      })}
-    >
-      <FormattedMessage
-        id="DTL7sE"
-        defaultMessage="Are you sure you want to delete {warehouseName}?"
-        description="dialog content"
-        values={{
-          warehouseName: <strong>{name}</strong>,
-        }}
-      />
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              id="DTL7sE"
+              defaultMessage="Are you sure you want to delete {warehouseName}?"
+              description="dialog content"
+              values={{
+                warehouseName: <strong>{name}</strong>,
+              }}
+            />
+          }
+        >
+          <FormattedMessage
+            id="ny4zrH"
+            defaultMessage="Delete Warehouse"
+            description="dialog title"
+          />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 WarehouseDeleteDialog.displayName = "WarehouseDeleteDialog";
-export default WarehouseDeleteDialog;

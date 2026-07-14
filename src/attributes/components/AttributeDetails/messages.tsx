@@ -16,25 +16,72 @@ export const messages = defineMessages({
     defaultMessage: "This is used internally. Make sure you don’t use spaces",
     description: "attribute slug input field helper text",
   },
+  embeddedAttributeLabel: {
+    id: "bFb5U5",
+    defaultMessage: "Label",
+    description: "attribute label field in embedded create form",
+  },
+  embeddedAttributeLabelPlaceholder: {
+    id: "RFbzxF",
+    defaultMessage: "e.g. Gift wrap style",
+    description: "attribute label placeholder in embedded create form",
+  },
+  embeddedAttributeLabelHelper: {
+    id: "7/0owK",
+    defaultMessage: "Shown to merchants when editing models of this type.",
+    description: "attribute label helper in embedded create form",
+  },
+  embeddedAttributeSlug: {
+    id: "CN3QZu",
+    defaultMessage: "Code",
+    description: "attribute slug field in embedded create form",
+  },
+  embeddedAttributeSlugHelper: {
+    id: "JbRIRr",
+    defaultMessage:
+      "Used in the API. Generated from the label — change only if you need a specific slug.",
+    description: "attribute slug helper in embedded create form",
+  },
+  embeddedInputType: {
+    id: "VNHzIF",
+    defaultMessage: "Input type",
+    description: "attribute input type field in embedded create form",
+  },
+  embeddedInputTypeHelper: {
+    id: "b6J/B9",
+    defaultMessage: "How merchants enter values for this attribute.",
+    description: "attribute input type helper in embedded create form",
+  },
   entityType: {
     id: "LnRlch",
     defaultMessage: "Entity",
     description: "attribute's editor component entity",
+  },
+  entityTypeHelper: {
+    id: "mN/S07",
+    defaultMessage: "Which type of record merchants can link to.",
+    description: "attribute entity type helper on full attribute form",
+  },
+  embeddedEntityTypeHelper: {
+    id: "+SlRlz",
+    defaultMessage: "Which kind of record merchants can link to.",
+    description: "attribute entity type helper in embedded create form",
   },
   inputType: {
     id: "oIvtua",
     defaultMessage: "Catalog Input type for Store Owner",
     description: "attribute's editor component",
   },
-  valueRequired: {
-    id: "njBulj",
-    defaultMessage: "Value Required",
-    description: "check to require attribute to have value",
-  },
   selectUnit: {
     id: "PiSXjb",
     defaultMessage: "Select unit",
     description: "check to require numeric attribute unit",
+  },
+  selectUnitCaption: {
+    id: "g1KZlx",
+    defaultMessage:
+      "If enabled, values for this attribute will be stored together with a measurement unit (e.g. kg, cm).",
+    description: "caption explaining numeric attribute unit",
   },
   unitSystem: {
     id: "ghje1I",

@@ -88,7 +88,9 @@ test("TC: SALEOR_34 Delete a single shipping rate from the shipping zone details
   await shippingMethodsPage.clickDeletePriceBasedShippingMethod();
   await shippingMethodsPage.deleteShippingMethodDialog.clickDeleteButton();
   await shippingMethodsPage.expectSuccessBanner();
-  await expect(shippingMethodsPage.priceBasedRatesSection).toContainText("No shipping rates found");
+  await expect(shippingMethodsPage.priceBasedRatesSection).toContainText(
+    "No shipping methods in this zone",
+  );
   await expect(shippingMethodsPage.priceBasedRatesSection).not.toContainText(priceBasedRate);
 });
 test("TC: SALEOR_35 Delete a single shipping rate from its details page #shipping-method #e2e", async () => {
@@ -111,7 +113,7 @@ test("TC: SALEOR_35 Delete a single shipping rate from its details page #shippin
     shippingMethodsPage.weightBasedRatesSection.getByRole("link", { name: weightBasedRate }),
   ).toBeHidden({ timeout: 30000 });
   await expect(shippingMethodsPage.weightBasedRatesSection).toContainText(
-    "No shipping rates found",
+    "No shipping methods in this zone",
   );
 });
 test("TC: SALEOR_36 Delete shipping zones in bulk #shipping-method #e2e", async () => {

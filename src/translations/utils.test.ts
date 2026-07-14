@@ -2,11 +2,13 @@ import {
   AttributeInputTypeEnum,
   type AttributeTranslationDetailsFragment,
   type AttributeValueTranslatableFragment,
+  LanguageCodeEnum,
 } from "@dashboard/graphql";
 import { type IntlShape } from "react-intl";
 
 import { TranslationInputFieldName } from "./types";
 import {
+  getAttributeValueTranslationContent,
   getAttributeValueTranslationsInputData,
   getParsedTranslationInputData,
   getTranslationFields,
@@ -160,8 +162,17 @@ describe("mapAttributeValuesToTranslationFields", () => {
   ): AttributeValueTranslatableFragment =>
     ({
       __typename: "AttributeValueTranslatableContent",
-      attributeValue: { __typename: "AttributeValue", id: "av-1" },
-      attribute: { __typename: "AttributeTranslatableContent", id: "attr-1", name: "Color" },
+      id: "translatable-content-1",
+      attributeValue: {
+        __typename: "AttributeValue",
+        id: "av-1",
+        inputType: AttributeInputTypeEnum.PLAIN_TEXT,
+      },
+      attribute: {
+        __typename: "AttributeTranslatableContent",
+        id: "attr-1",
+        name: "Color",
+      },
       name: "color-value",
       richText: null,
       plainText: null,
@@ -173,6 +184,11 @@ describe("mapAttributeValuesToTranslationFields", () => {
     // Arrange
     const attributeValues = [
       makeAttrValue({
+        attributeValue: {
+          __typename: "AttributeValue",
+          id: "av-1",
+          inputType: AttributeInputTypeEnum.RICH_TEXT,
+        },
         richText: '{"blocks":[]}',
         translation: {
           __typename: "AttributeValueTranslation",
@@ -191,10 +207,40 @@ describe("mapAttributeValuesToTranslationFields", () => {
     expect(result[0]).toEqual(
       expect.objectContaining({
         id: "av-1",
-        name: "color-value",
+        name: "av-1",
         type: "rich",
         value: '{"blocks":[]}',
         translation: '{"blocks":[{"text":"translated"}]}',
+      }),
+    );
+  });
+
+  it("maps empty rich text attribute values as rich type based on input type", () => {
+    // Arrange
+    const attributeValues = [
+      makeAttrValue({
+        attributeValue: {
+          __typename: "AttributeValue",
+          id: "av-1",
+          inputType: AttributeInputTypeEnum.RICH_TEXT,
+        },
+        name: "",
+        richText: null,
+        plainText: null,
+      }),
+    ];
+
+    // Act
+    const result = mapAttributeValuesToTranslationFields(attributeValues, mockIntl);
+
+    // Assert
+    expect(result[0]).toEqual(
+      expect.objectContaining({
+        id: "av-1",
+        name: "av-1",
+        type: "rich",
+        value: "",
+        translation: null,
       }),
     );
   });
@@ -203,7 +249,11 @@ describe("mapAttributeValuesToTranslationFields", () => {
     // Arrange
     const attributeValues = [
       makeAttrValue({
-        attributeValue: { __typename: "AttributeValue", id: "av-2" },
+        attributeValue: {
+          __typename: "AttributeValue",
+          id: "av-2",
+          inputType: AttributeInputTypeEnum.PLAIN_TEXT,
+        },
         attribute: { __typename: "AttributeTranslatableContent", id: "attr-2", name: "Size" },
         name: "size-value",
         plainText: "Large",
@@ -224,6 +274,7 @@ describe("mapAttributeValuesToTranslationFields", () => {
     expect(result[0]).toEqual(
       expect.objectContaining({
         id: "av-2",
+        name: "av-2",
         type: "short",
         value: "Large",
         translation: "Duży",
@@ -235,7 +286,7 @@ describe("mapAttributeValuesToTranslationFields", () => {
     // Arrange
     const attributeValues = [
       makeAttrValue({
-        attributeValue: { __typename: "AttributeValue", id: "av-3" },
+        attributeValue: { __typename: "AttributeValue", id: "av-3", inputType: null },
         plainText: "Cotton",
       }),
     ];
@@ -245,6 +296,71 @@ describe("mapAttributeValuesToTranslationFields", () => {
 
     // Assert
     expect(result[0].translation).toBeNull();
+  });
+
+  it("uses translatable content id when attribute value id is missing", () => {
+    // Arrange
+    const attributeValues = [
+      makeAttrValue({
+        id: "translatable-content-99",
+        attributeValue: null,
+        plainText: "Wool",
+      }),
+    ];
+
+    // Act
+    const result = mapAttributeValuesToTranslationFields(attributeValues, mockIntl);
+
+    // Assert
+    expect(result[0].name).toBe("translatable-content-99");
+  });
+});
+
+describe("getAttributeValueTranslationContent", () => {
+  it("returns rich text translation when available", () => {
+    // Arrange & Act
+    const result = getAttributeValueTranslationContent({
+      __typename: "AttributeValueTranslation",
+      id: "t-1",
+      name: "",
+      richText: '{"blocks":[]}',
+      plainText: null,
+      language: {
+        __typename: "LanguageDisplay",
+        code: LanguageCodeEnum.PL,
+        language: "Polish",
+      },
+    });
+
+    // Assert
+    expect(result).toBe('{"blocks":[]}');
+  });
+
+  it("returns plain text translation when rich text is absent", () => {
+    // Arrange & Act
+    const result = getAttributeValueTranslationContent({
+      __typename: "AttributeValueTranslation",
+      id: "t-2",
+      name: "",
+      richText: null,
+      plainText: "Bawełna",
+      language: {
+        __typename: "LanguageDisplay",
+        code: LanguageCodeEnum.PL,
+        language: "Polish",
+      },
+    });
+
+    // Assert
+    expect(result).toBe("Bawełna");
+  });
+
+  it("returns null when translation is missing", () => {
+    // Arrange & Act
+    const result = getAttributeValueTranslationContent(null);
+
+    // Assert
+    expect(result).toBeNull();
   });
 });
 

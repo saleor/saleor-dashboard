@@ -93,4 +93,144 @@ describe("useChannels", () => {
     // Then
     expect(result.current.currentChannels).toStrictEqual(channels);
   });
+
+  it("does not update channels when confirming an unchanged selection", () => {
+    // Given
+    const closeModal = jest.fn();
+    const { result } = renderHook(() =>
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal,
+          openModal: jest.fn(),
+        },
+        { formId: Symbol("channel-test-form-id") },
+      ),
+    );
+    const channelsBefore = result.current.currentChannels;
+
+    // When
+    act(() => {
+      result.current.handleChannelsConfirm();
+    });
+
+    // Then
+    expect(result.current.currentChannels).toBe(channelsBefore);
+    expect(closeModal).toHaveBeenCalled();
+  });
+
+  it("reports unchanged selection as not dirty", () => {
+    // Given
+    const { result } = renderHook(() =>
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal: jest.fn(),
+          openModal: jest.fn(),
+        },
+        { formId: Symbol("channel-test-form-id") },
+      ),
+    );
+
+    // Then
+    expect(result.current.hasChannelSelectionChanged).toBe(false);
+  });
+
+  it("reports changed selection as dirty", () => {
+    // Given
+    const { result } = renderHook(() =>
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal: jest.fn(),
+          openModal: jest.fn(),
+        },
+        { formId: Symbol("channel-test-form-id") },
+      ),
+    );
+
+    // When
+    act(() => {
+      result.current.channelsToggle(channels[0]);
+    });
+
+    // Then
+    expect(result.current.hasChannelSelectionChanged).toBe(true);
+  });
+
+  it("resets dirty state after confirming changes", () => {
+    // Given
+    const { result } = renderHook(() =>
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal: jest.fn(),
+          openModal: jest.fn(),
+        },
+        { formId: Symbol("channel-test-form-id") },
+      ),
+    );
+
+    act(() => {
+      result.current.channelsToggle(channels[0]);
+    });
+
+    // When
+    act(() => {
+      result.current.handleChannelsConfirm();
+    });
+
+    // Then
+    expect(result.current.hasChannelSelectionChanged).toBe(false);
+  });
+
+  it("resets dirty state when closing without confirm", () => {
+    // Given
+    const { result } = renderHook(() =>
+      useChannels(
+        channels,
+        "",
+        {
+          closeModal: jest.fn(),
+          openModal: jest.fn(),
+        },
+        { formId: Symbol("channel-test-form-id") },
+      ),
+    );
+
+    act(() => {
+      result.current.channelsToggle(channels[0]);
+    });
+
+    // When
+    act(() => {
+      result.current.handleChannelsModalClose();
+    });
+
+    // Then
+    expect(result.current.hasChannelSelectionChanged).toBe(false);
+  });
+
+  it("handles undefined initial channels", () => {
+    // Given
+    const { result } = renderHook(() =>
+      useChannels(
+        undefined,
+        "",
+        {
+          closeModal: jest.fn(),
+          openModal: jest.fn(),
+        },
+        { formId: Symbol("channel-test-form-id") },
+      ),
+    );
+
+    // Then
+    expect(result.current.currentChannels).toStrictEqual([]);
+    expect(result.current.hasChannelSelectionChanged).toBe(false);
+  });
 });

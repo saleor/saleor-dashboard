@@ -336,3 +336,17 @@ export const Component = ({ title, onDelete }: ComponentProps) => {
   );
 };
 ```
+
+## Agent skills
+
+### Issue tracker
+
+Issues are **not tracked with agents** in this repo — the issue/PR-facing skills (`to-issues`, `triage`, `to-prd`, `qa`) have no tracker to write to. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Not applicable — no agent-driven issue tracker is configured.
+
+### Domain docs
+
+Single-context: one `CONTEXT.md` + `docs/adr/` at the repo root (created lazily by `/domain-modeling`). See `docs/agents/domain.md`.

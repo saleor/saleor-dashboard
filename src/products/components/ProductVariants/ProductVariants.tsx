@@ -1,5 +1,6 @@
 import { type ChannelData } from "@dashboard/channels/utils";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import BackButton from "@dashboard/components/BackButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { Datagrid, type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -8,8 +9,8 @@ import {
   DatagridChangeStateContext,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { DashboardModal } from "@dashboard/components/Modal";
 import {
-  AttributeInputTypeEnum,
   type ProductDetailsVariantFragment,
   type ProductFragment,
   type ProductVariantBulkCreateInput,
@@ -23,7 +24,7 @@ import { type ProductVariantListError } from "@dashboard/products/views/ProductU
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { type Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { type Option, Text } from "@saleor/macaw-ui-next";
+import { type Option } from "@saleor/macaw-ui-next";
 import { Pencil } from "lucide-react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -35,6 +36,7 @@ import {
 } from "../ProductVariantGenerator/types";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
 import {
+  isVariantDatagridSupportedAttribute,
   useAttributesAdapter,
   useChannelAdapter,
   useChannelAvailabilityAdapter,
@@ -183,11 +185,7 @@ export const ProductVariants = ({
             ]),
             ...warehouses.map(warehouse => `warehouse:${warehouse.id}`),
             ...(variantAttributes
-              ?.filter(
-                attribute =>
-                  attribute.inputType === AttributeInputTypeEnum.DROPDOWN ||
-                  attribute.inputType === AttributeInputTypeEnum.PLAIN_TEXT,
-              )
+              ?.filter(attribute => isVariantDatagridSupportedAttribute(attribute.inputType))
               .map(attribute => `attribute:${attribute.id}`) ?? []),
           ]
         : undefined,
@@ -256,10 +254,11 @@ export const ProductVariants = ({
         row,
         channels,
         variants,
+        variantAttributes,
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [channels, visibleColumns, onAttributeValuesSearch, variants],
+    [channels, visibleColumns, onAttributeValuesSearch, variantAttributes, variants],
   );
   const getCellError = useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
@@ -343,17 +342,24 @@ export const ProductVariants = ({
       )}
 
       {/* Warning dialog when trying to open generator with unsaved changes */}
-      <ActionDialog
-        open={showUnsavedWarning}
-        onClose={handleCloseUnsavedWarning}
-        onConfirm={handleCloseUnsavedWarning}
-        title={intl.formatMessage(messages.unsavedChangesTitle)}
-        confirmButtonLabel={intl.formatMessage(buttonMessages.ok)}
-        confirmButtonState="default"
-        variant="default"
-      >
-        <Text>{intl.formatMessage(messages.unsavedChangesDescription)}</Text>
-      </ActionDialog>
+      <DashboardModal onChange={handleCloseUnsavedWarning} open={showUnsavedWarning}>
+        <DashboardModal.Content size="xs">
+          <DashboardModal.Header subtitle={intl.formatMessage(messages.unsavedChangesDescription)}>
+            {intl.formatMessage(messages.unsavedChangesTitle)}
+          </DashboardModal.Header>
+
+          <DashboardModal.Actions>
+            <BackButton onClick={handleCloseUnsavedWarning} />
+            <ConfirmButton
+              data-test-id="submit"
+              onClick={handleCloseUnsavedWarning}
+              transitionState="default"
+            >
+              {intl.formatMessage(buttonMessages.ok)}
+            </ConfirmButton>
+          </DashboardModal.Actions>
+        </DashboardModal.Content>
+      </DashboardModal>
     </>
   );
 };

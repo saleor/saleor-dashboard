@@ -1,9 +1,32 @@
-import { renderHook } from "@testing-library/react";
+import { render, renderHook, screen } from "@testing-library/react";
 import type React from "react";
 import { MemoryRouter, Route } from "react-router-dom";
 
-import { useHomeRouteParams } from "./HomePage";
+import { HomePage, useHomeRouteParams } from "./HomePage";
 import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
+
+jest.mock("@dashboard/extensions/hooks/useExtensions", () => ({
+  useExtensionsWithLoadingState: jest.fn(),
+}));
+
+jest.mock("@dashboard/auth/useUser", () => ({
+  useUser: () => ({
+    user: { firstName: "Ada", email: "ada@example.com", userPermissions: [] },
+  }),
+}));
+
+import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
+
+const useExtensionsWithLoadingStateMock = useExtensionsWithLoadingState as jest.Mock;
+
+const renderHomePage = (path = "/home/widgets") =>
+  render(
+    <MemoryRouter initialEntries={[path]}>
+      <Route path={["/home/widget/:extensionId", "/home/widgets", "/home"]}>
+        <HomePage />
+      </Route>
+    </MemoryRouter>,
+  );
 
 const renderRouteHook = (initialPath: string) =>
   renderHook(() => useHomeRouteParams(), {
@@ -83,5 +106,36 @@ describe("useHomeRouteParams", () => {
     expect(result.current.extensionId).toBe(id);
     expect(result.current.extensionId).not.toContain("%3D");
     expect(result.current.extensionId).not.toContain("%2B");
+  });
+});
+
+describe("HomePage states", () => {
+  it("renders neither Welcome nor tabs while loading", () => {
+    // Arrange
+    useExtensionsWithLoadingStateMock.mockReturnValue({
+      extensions: { HOMEPAGE_WIDGETS: [] },
+      loading: true,
+    });
+
+    // Act
+    renderHomePage();
+
+    // Assert
+    expect(screen.queryByText("Welcome")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("home-widgets-grid")).not.toBeInTheDocument();
+  });
+
+  it("renders the Welcome empty state when loaded with no extensions", () => {
+    // Arrange
+    useExtensionsWithLoadingStateMock.mockReturnValue({
+      extensions: { HOMEPAGE_WIDGETS: [] },
+      loading: false,
+    });
+
+    // Act
+    renderHomePage();
+
+    // Assert
+    expect(screen.getByText("Welcome")).toBeInTheDocument();
   });
 });

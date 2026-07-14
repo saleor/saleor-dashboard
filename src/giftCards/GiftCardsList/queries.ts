@@ -23,7 +23,6 @@ export const giftCardList = gql`
       edges {
         node {
           id
-          usedByEmail
           last4CodeChars
           isActive
           expiryDate
@@ -33,9 +32,6 @@ export const giftCardList = gql`
           }
           tags {
             name
-          }
-          usedBy {
-            ...UserBase
           }
           currentBalance {
             ...Money
@@ -58,14 +54,6 @@ export const GIFT_CARD_LIST_QUERY = getOperationAST(giftCardList)!.name!.value;
 export const giftCardTotalCount = gql`
   query GiftCardTotalCount {
     giftCards {
-      totalCount
-    }
-  }
-`;
-
-export const giftCardProductsCount = gql`
-  query GiftCardProductsCount {
-    giftCardProductTypes: productTypes(filter: { kind: GIFT_CARD }) {
       totalCount
     }
   }

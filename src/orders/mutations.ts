@@ -87,9 +87,6 @@ export const orderDraftCancelMutation = gql`
       errors {
         ...OrderError
       }
-      order {
-        ...OrderDetails
-      }
     }
   }
 `;
@@ -551,6 +548,7 @@ export const orderGrantRefundAddWithOrderMutation = gql`
     $orderId: ID!
     $amount: Decimal
     $reason: String
+    $reasonReferenceId: ID
     $lines: [OrderGrantRefundCreateLineInput!]
     $grantRefundForShipping: Boolean
     $transactionId: ID!
@@ -563,6 +561,7 @@ export const orderGrantRefundAddWithOrderMutation = gql`
         lines: $lines
         grantRefundForShipping: $grantRefundForShipping
         transactionId: $transactionId
+        reasonReference: $reasonReferenceId
       }
     ) {
       errors {

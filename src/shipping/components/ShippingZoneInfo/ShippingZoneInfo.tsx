@@ -109,7 +109,7 @@ const ShippingZoneInfo = ({ data, disabled, errors, onChange }: ShippingZoneInfo
           fullWidth
           multiline
           placeholder={intl.formatMessage(messages.descriptionPlaceholder)}
-          rows={10}
+          rows={3}
         />
       </DashboardCard.Content>
     </DashboardCard>

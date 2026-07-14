@@ -29,4 +29,35 @@ describe("OrderManualTransactionDialog", () => {
     // Assert
     expect(onClose).toHaveBeenCalled();
   });
+
+  it("should call onAddTransaction when submit button is clicked", async () => {
+    // Arrange
+    const onAddTransaction = jest.fn();
+
+    render(
+      <OrderManualTransactionDialog
+        error={undefined}
+        dialogProps={{
+          open: true,
+          onClose: jest.fn(),
+        }}
+        submitState="default"
+        currency="USD"
+        onAddTransaction={onAddTransaction}
+      />,
+    );
+
+    // Act
+    await act(async () => {
+      await userEvent.type(screen.getByTestId("transactAmountInput"), "10");
+      await userEvent.click(screen.getByTestId("manualTransactionSubmit"));
+    });
+
+    // Assert
+    expect(onAddTransaction).toHaveBeenCalledWith({
+      amount: 10,
+      description: "",
+      pspReference: undefined,
+    });
+  });
 });

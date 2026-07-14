@@ -12,11 +12,11 @@ export const giftCardDeleteDialogMessages = defineMessages({
       "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} gift cards?}}",
     description: "default gift card delete description",
   },
-  withBalanceDescription: {
-    id: "RLZ1jd",
+  withBalanceSubtitle: {
+    id: "zCjsF7",
     defaultMessage:
-      "{selectedItemsCount,plural,one{The gift card you are about to delete has available balance. By deleting this card you may remove balance available to your customer.} other{You are about to delete gift cards with available balance. Are you sure you want to do that?}}",
-    description: "delete gift cards with balance description",
+      "{selectedItemsCount,plural,one{This gift card has available balance. Deleting it will remove funds the customer can still redeem.} other{These gift cards have available balance. Deleting them will remove funds customers can still redeem.}}",
+    description: "delete gift cards with balance subtitle",
   },
   consentLabel: {
     id: "Yxihwg",

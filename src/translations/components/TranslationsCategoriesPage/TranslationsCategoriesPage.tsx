@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
@@ -8,34 +7,40 @@ import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/g
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { type CategoryTranslationFragment, LanguageCodeEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
+import { TranslationsDetailLayout } from "@dashboard/translations/components/TranslationsDetailLayout/TranslationsDetailLayout";
 import {
-  TranslationInputFieldName,
-  type TranslationsEntitiesPageProps,
-} from "@dashboard/translations/types";
+  createGeneralNameDescriptionSection,
+  createSeoTranslationSection,
+} from "@dashboard/translations/translationSectionBuilders";
+import { type TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities,
 } from "@dashboard/translations/urls";
 import { Box } from "@saleor/macaw-ui-next";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import TranslationFields from "../TranslationFields";
-
 interface TranslationsCategoriesPageProps extends TranslationsEntitiesPageProps {
-  data: CategoryTranslationFragment;
+  data: CategoryTranslationFragment | null;
 }
 
-const TranslationsCategoriesPage = ({
+export const TranslationsCategoriesPage = ({
   translationId,
   activeField,
+  bulk,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
+  fieldErrors,
+  onBulkChange,
+  onBulkSubmit,
+  onClearFieldError,
+  onClearFieldErrors,
   onDiscard,
   onEdit,
   onSubmit,
@@ -47,11 +52,27 @@ const TranslationsCategoriesPage = ({
     categoryId: data?.category?.id,
     translationLanguage: languageCode,
   });
-
   const navigate = useNavigator();
+  const sections = useMemo(
+    () => [
+      createGeneralNameDescriptionSection(intl, {
+        description: data?.category?.description,
+        name: data?.category?.name,
+        translationDescription: data?.translation?.description,
+        translationName: data?.translation?.name,
+      }),
+      createSeoTranslationSection(intl, {
+        seoDescription: data?.category?.seoDescription,
+        seoTitle: data?.category?.seoTitle,
+        translationSeoDescription: data?.translation?.seoDescription,
+        translationSeoTitle: data?.translation?.seoTitle,
+      }),
+    ],
+    [data, intl],
+  );
 
   return (
-    <DetailPageLayout gridTemplateColumns={1}>
+    <DetailPageLayout gridTemplateColumns={1} withSavebar={bulk}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.categories,
@@ -90,71 +111,21 @@ const TranslationsCategoriesPage = ({
         </Box>
       </TopNav>
       <DetailPageLayout.Content>
-        <TranslationFields
+        <TranslationsDetailLayout
+          sections={sections}
           activeField={activeField}
+          bulk={bulk}
           disabled={disabled}
-          initialState={true}
-          title={intl.formatMessage(commonMessages.generalInformations)}
-          fields={[
-            {
-              displayName: intl.formatMessage({
-                id: "vEYtiq",
-                defaultMessage: "Category Name",
-              }),
-              name: TranslationInputFieldName.name,
-              translation: data?.translation?.name || null,
-              type: "short" as const,
-              value: data?.category?.name,
-            },
-            {
-              displayName: intl.formatMessage(commonMessages.description),
-              name: TranslationInputFieldName.description,
-              translation: data?.translation?.description || null,
-              type: "rich" as const,
-              value: data?.category?.description,
-            },
-          ]}
+          languageCode={languageCode}
+          languages={languages}
           saveButtonState={saveButtonState}
-          richTextResetKey={languageCode}
-          onEdit={onEdit}
+          fieldErrors={fieldErrors}
+          onBulkChange={onBulkChange}
+          onBulkSubmit={onBulkSubmit}
+          onClearFieldError={onClearFieldError}
+          onClearFieldErrors={onClearFieldErrors}
           onDiscard={onDiscard}
-          onSubmit={onSubmit}
-        />
-        <CardSpacer />
-        <TranslationFields
-          activeField={activeField}
-          disabled={disabled}
-          initialState={true}
-          title={intl.formatMessage({
-            id: "TGX4T1",
-            defaultMessage: "Search Engine Preview",
-          })}
-          fields={[
-            {
-              displayName: intl.formatMessage({
-                id: "HlEpii",
-                defaultMessage: "Search Engine Title",
-              }),
-              name: TranslationInputFieldName.seoTitle,
-              translation: data?.translation?.seoTitle || null,
-              type: "short" as const,
-              value: data?.category?.seoTitle,
-            },
-            {
-              displayName: intl.formatMessage({
-                id: "US3IPU",
-                defaultMessage: "Search Engine Description",
-              }),
-              name: TranslationInputFieldName.seoDescription,
-              translation: data?.translation?.seoDescription || null,
-              type: "long" as const,
-              value: data?.category?.seoDescription,
-            },
-          ]}
-          saveButtonState={saveButtonState}
-          richTextResetKey={languageCode}
           onEdit={onEdit}
-          onDiscard={onDiscard}
           onSubmit={onSubmit}
         />
       </DetailPageLayout.Content>
@@ -163,4 +134,3 @@ const TranslationsCategoriesPage = ({
 };
 
 TranslationsCategoriesPage.displayName = "TranslationsCategoriesPage";
-export default TranslationsCategoriesPage;

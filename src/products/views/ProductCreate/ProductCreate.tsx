@@ -1,6 +1,8 @@
 // @ts-strict-ignore
 import { type ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -23,7 +25,6 @@ import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { getMutationErrors } from "@dashboard/misc";
 import ProductCreatePage, {
   type ProductCreateData,
 } from "@dashboard/products/components/ProductCreatePage";
@@ -33,10 +34,13 @@ import {
   type ProductCreateUrlQueryParams,
   productUrl,
 } from "@dashboard/products/urls";
+import { splitProductSubmitErrors } from "@dashboard/products/utils/splitSubmitErrors";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -49,7 +53,7 @@ import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
@@ -66,7 +70,10 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
   const shop = useShop();
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const intl = useIntl();
-  const [productCreateComplete, setProductCreateComplete] = useState(false);
+  const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
+  const [submitChannelsErrors, setSubmitChannelsErrors] = useState<
+    ProductChannelListingErrorFragment[]
+  >([]);
   const selectedProductTypeId = params["product-type-id"];
   const handleSelectProductType = (productTypeId: string) =>
     navigate(
@@ -130,6 +137,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -180,7 +188,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
       const errors = data.productVariantCreate.errors;
 
       if (errors.length) {
-        errors.map(error =>
+        errors.forEach(error =>
           notify({
             status: "error",
             text: getProductErrorMessage(error, intl),
@@ -190,6 +198,9 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     },
   });
   const handleSubmit = async (data: ProductCreateData) => {
+    setSubmitErrors([]);
+    setSubmitChannelsErrors([]);
+
     const errors = await createMetadataCreateHandler(
       createHandler(
         selectedProductType?.productType,
@@ -202,14 +213,20 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
       ),
       updateMetadata,
       updatePrivateMetadata,
+      productId => {
+        markOnboardingStepAsCompleted("create-product");
+        handleSuccess(productId);
+      },
     )(data);
 
-    if (!errors?.length) {
-      markOnboardingStepAsCompleted("create-product");
-      setProductCreateComplete(true);
+    if (errors?.length) {
+      const { productErrors, channelsErrors } = splitProductSubmitErrors(errors);
+
+      setSubmitErrors(productErrors);
+      setSubmitChannelsErrors(channelsErrors);
     }
 
-    return errors;
+    return errors ?? [];
   };
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
@@ -220,18 +237,16 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
       }),
     );
 
-  useEffect(() => {
-    const productId = productCreateOpts.data?.productCreate?.product?.id;
-
-    if (productCreateComplete && productId) {
-      handleSuccess(productId);
-    }
-  }, [productCreateComplete]);
-
   const refAttr =
     params.action === "assign-attribute-value" && params.id
       ? selectedProductType?.productType.productAttributes?.find(a => a.id === params.id)
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -244,11 +259,24 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
+  const {
+    loadMore: loadMoreReferenceCategories,
+    search: searchReferenceCategories,
+    result: searchReferenceCategoriesOpts,
+  } = useReferenceCategorySearch(refAttr);
+
+  const {
+    loadMore: loadMoreReferenceCollections,
+    search: searchReferenceCollections,
+    result: searchReferenceCollectionsOpts,
+  } = useReferenceCollectionSearch(refAttr);
+
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
     refetchProducts: searchProductsOpts.refetch,
     refetchPages: searchPagesOpts.refetch,
-    refetchCategories: searchCategoriesOpts.refetch,
-    refetchCollections: searchCollectionsOpts.refetch,
+    refetchCategories: searchReferenceCategoriesOpts.refetch,
+    refetchCollections: searchReferenceCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
 
   const fetchMoreProductTypes = {
@@ -268,6 +296,14 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
   };
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
+  const fetchMoreReferenceCategories = getSearchFetchMoreProps(
+    searchReferenceCategoriesOpts,
+    loadMoreReferenceCategories,
+  );
+  const fetchMoreReferenceCollections = getSearchFetchMoreProps(
+    searchReferenceCollectionsOpts,
+    loadMoreReferenceCollections,
+  );
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
@@ -279,14 +315,8 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     productVariantCreateOpts.loading ||
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading;
-  const channelsErrors = [
-    ...getMutationErrors(updateVariantChannelsOpts),
-    ...getMutationErrors(updateChannelsOpts),
-  ] as ProductChannelListingErrorFragment[];
-  const errors = [
-    ...getMutationErrors(productCreateOpts),
-    ...getMutationErrors(productVariantCreateOpts),
-  ] as ProductErrorWithAttributesFragment[];
+  const channelsErrors = submitChannelsErrors;
+  const errors = submitErrors;
 
   return (
     <>
@@ -310,6 +340,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
           toggleAll={toggleAllChannels}
         />
@@ -348,16 +379,16 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
-        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
-        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
+        referenceCategories={mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search) || []}
+        referenceCollections={mapEdgesToItems(searchReferenceCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-        fetchReferenceCategories={searchCategories}
-        fetchMoreReferenceCategories={fetchMoreCategories}
-        fetchReferenceCollections={searchCollections}
-        fetchMoreReferenceCollections={fetchMoreCollections}
+        fetchReferenceCategories={searchReferenceCategories}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+        fetchReferenceCollections={searchReferenceCollections}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={currentParams => navigate(productAddUrl(currentParams))}
         selectedProductType={selectedProductType?.productType}
@@ -367,6 +398,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
     </>
   );

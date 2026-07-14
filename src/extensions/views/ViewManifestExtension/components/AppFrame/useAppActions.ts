@@ -31,6 +31,8 @@ export const useAppActions = (
   const { handle: handlePermissionRequest } = AppActionsHandler.useHandlePermissionRequest(appId);
   const { handle: handleAppFormUpdate } = AppActionsHandler.useHandleAppFormUpdate();
   const { handle: handlePopupClose } = AppActionsHandler.useHandlePopupCloseAction();
+  const { handle: handleWidgetResize } = AppActionsHandler.useHandleWidgetResizeAction(frameEl);
+  const { handle: handleRefreshEntity } = AppActionsHandler.useHandleRefreshEntityAction();
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -64,6 +66,12 @@ export const useAppActions = (
       }
       case "popupClose": {
         return handlePopupClose(action);
+      }
+      case "widgetResize": {
+        return handleWidgetResize(action);
+      }
+      case "refreshEntity": {
+        return handleRefreshEntity(action);
       }
       default: {
         const actionType = (action as unknown as { type?: string })?.type;

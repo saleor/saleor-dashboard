@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const transactionRefundReasonMessages = defineMessages({
   reasonForRefund: {
-    defaultMessage: "Reason notes",
-    id: "s3jmO9",
+    defaultMessage: "Reason note",
+    id: "G+tGzh",
     description: "input label",
   },
   optionalPlaceholder: {

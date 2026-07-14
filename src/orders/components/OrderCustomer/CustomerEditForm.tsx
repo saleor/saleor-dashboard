@@ -1,4 +1,4 @@
-import { type OrderDetailsFragment, type SearchCustomersQuery } from "@dashboard/graphql";
+import { type SearchCustomersQuery } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
@@ -6,27 +6,21 @@ import type React from "react";
 import { useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { type CustomerEditData } from "./OrderCustomer";
-
 interface CustomerEditFormProps extends FetchMoreProps {
-  currentUser: OrderDetailsFragment["user"] | null;
-  currentUserEmail: string | null;
   allUsers?: RelayToFlat<SearchCustomersQuery["search"]>;
   fetchUsers?: (query: string) => void;
-  onCustomerEdit?: (data: CustomerEditData) => void;
-  toggleEditMode: () => void;
+  value: Option | null;
+  onChange: (option: Option | null) => void;
 }
 
 export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
-  currentUser,
-  currentUserEmail,
   allUsers,
   fetchUsers,
-  onCustomerEdit,
+  onChange,
   onFetchMore,
   hasMore,
   loading,
-  toggleEditMode,
+  value,
 }) => {
   const intl = useIntl();
   const [inputValue, setInputValue] = useState("");
@@ -59,21 +53,6 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
     return opts;
   }, [allUsers, inputValue, intl]);
 
-  const handleSelect = (option: Option | null) => {
-    if (!option?.value) {
-      return;
-    }
-
-    const value = String(option.value);
-
-    onCustomerEdit?.({
-      prevUser: currentUser?.id,
-      prevUserEmail: currentUserEmail || undefined,
-      [value.includes("@") ? "userEmail" : "user"]: value,
-    });
-    toggleEditMode();
-  };
-
   return (
     <DynamicCombobox
       data-test-id="select-customer"
@@ -82,11 +61,11 @@ export const CustomerEditForm: React.FC<CustomerEditFormProps> = ({
         defaultMessage: "Search Customers",
       })}
       options={options}
-      value={null}
-      onChange={handleSelect}
-      onInputValueChange={value => {
-        setInputValue(value);
-        debouncedFetch(value);
+      value={value}
+      onChange={onChange}
+      onInputValueChange={nextValue => {
+        setInputValue(nextValue);
+        debouncedFetch(nextValue);
       }}
       onFocus={() => {
         if (!hasFetchedRef.current) {

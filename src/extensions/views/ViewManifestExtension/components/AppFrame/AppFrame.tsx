@@ -1,10 +1,12 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { useWidgetIframeAutoHeight } from "@dashboard/extensions/hooks/useWidgetIframeAutoHeight";
 import { useAppFrameReferences } from "@dashboard/extensions/popup-frame-reference";
 import { type AppDetailsUrlQueryParams } from "@dashboard/extensions/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
+import { useNodeRef } from "@dashboard/hooks/useNodeRef";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
@@ -24,6 +26,12 @@ interface Props {
   coreVersion?: string;
   onError?: () => void;
   target: "POPUP" | "WIDGET" | "APP_PAGE";
+  /**
+   * Let the iframe height follow the app's reported content height instead of
+   * filling its container. Used by detail-page sidebar widgets so they flow
+   * naturally one after another. See {@link useWidgetIframeAutoHeight}.
+   */
+  autoHeight?: boolean;
 }
 
 const getOrigin = (url: string) => new URL(url).origin;
@@ -39,8 +47,9 @@ export const AppFrame = ({
   dashboardVersion,
   coreVersion = "",
   target,
+  autoHeight = false,
 }: Props) => {
-  const frameRef = useRef<HTMLIFrameElement | null>(null);
+  const { ref: frameRef, node: frameEl, setRef: setFrameRef } = useNodeRef<HTMLIFrameElement>();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
@@ -58,6 +67,8 @@ export const AppFrame = ({
       dashboard: dashboardVersion,
     },
   );
+
+  useWidgetIframeAutoHeight(frameEl, autoHeight, { listenForResize: false });
 
   /**
    * Listen to Dashboard context like theme or locale and inform app about it
@@ -102,14 +113,14 @@ export const AppFrame = ({
         </div>
       )}
       <AppIFrame
-        ref={frameRef}
+        ref={setFrameRef}
         src={src}
         appId={appId}
         featureFlags={flags}
         params={params}
         onLoad={handleLoad}
         onError={onError}
-        className={clsx(classes.iframe, className, {
+        className={clsx(autoHeight ? classes.iframeWidget : classes.iframe, className, {
           [classes.iframeHidden]: !handshakeDone,
         })}
       />

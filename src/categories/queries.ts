@@ -80,3 +80,11 @@ export const categoryChildren = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query CategoryDetails($id: ID!) {
+  category(id: $id) {
+    id
+    name
+    slug
+  }
+}`;

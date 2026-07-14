@@ -36,6 +36,12 @@ export interface LineItemData {
 export type FormsetQuantityData = FormsetData<LineItemData, number>;
 export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 
+export interface LineReasonValue {
+  reason: string;
+  reasonReference: string;
+}
+export type FormsetLineReasonData = FormsetData<LineItemData, LineReasonValue>;
+
 export interface OrderReturnData {
   transactionId: string;
   amount: number;
@@ -43,6 +49,10 @@ export interface OrderReturnData {
   autoGrantRefund: boolean;
   autoSendRefund: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
+  reason: string;
+  reasonReference: string;
+  refundReason: string;
+  refundReasonReference: string;
 }
 
 interface OrderReturnHandlers {
@@ -50,6 +60,7 @@ interface OrderReturnHandlers {
   changeWaitingItemsQuantity: FormsetChange<number>;
   changeUnfulfiledItemsQuantity: FormsetChange<number>;
   changeItemsToBeReplaced: FormsetChange<boolean>;
+  changeLineReason: FormsetChange<LineReasonValue>;
   handleSetMaximalItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
   handleAmountChange: (value: number) => void;
@@ -60,6 +71,7 @@ export interface OrderReturnFormData extends OrderReturnData {
   fulfilledItemsQuantities: FormsetQuantityData;
   waitingItemsQuantities: FormsetQuantityData;
   unfulfilledItemsQuantities: FormsetQuantityData;
+  lineReasons: FormsetLineReasonData;
 }
 
 export type OrderRefundSubmitData = OrderReturnFormData;
@@ -72,6 +84,7 @@ type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
   order: OrderDetailsFragment;
+  prefilledOrderLineId?: string;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -82,11 +95,16 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   autoGrantRefund: false,
   autoSendRefund: false,
   transactionId: "",
+  reason: "",
+  reasonReference: "",
+  refundReason: "",
+  refundReasonReference: "",
 });
 
 function useOrderReturnForm(
   order: OrderDetailsFragment,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise,
+  prefilledOrderLineId?: string,
 ): UseOrderRefundFormResult {
   const {
     handleChange,
@@ -110,6 +128,7 @@ function useOrderReturnForm(
   } = useFulfillmentFormset({
     order,
     formData,
+    prefilledOrderLineId,
   });
 
   const getItemsToBeReplaced = () => {
@@ -144,8 +163,38 @@ function useOrderReturnForm(
     ];
   };
   const itemsToBeReplaced = useFormset<LineItemData, boolean>(getItemsToBeReplaced());
-  const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(({ id }) => {
+  const getLineReasons = (): FormsetLineReasonData => {
+    const emptyReason: LineReasonValue = { reason: "", reasonReference: "" };
+
+    if (!order) {
+      return [];
+    }
+
+    const orderLinesItems = getOrderUnfulfilledLines(order).map(
+      getParsedLineData({ initialValue: emptyReason }),
+    );
+    const fulfillmentItems = [
+      FulfillmentStatus.REFUNDED,
+      FulfillmentStatus.FULFILLED,
+      FulfillmentStatus.WAITING_FOR_APPROVAL,
+    ].flatMap(status =>
+      getParsedLineDataForFulfillmentStatus(order, status, {
+        initialValue: emptyReason,
+        isFulfillment: true,
+      }),
+    );
+
+    return [...orderLinesItems, ...fulfillmentItems];
+  };
+  const lineReasons = useFormset<LineItemData, LineReasonValue>(getLineReasons());
+  const handleSetMaximalUnfulfiledItemsQuantities = (orderLineId?: string) => {
+    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(item => {
+      const { id } = item;
+
+      if (orderLineId && item.data.orderLineId !== orderLineId) {
+        return item;
+      }
+
       const line = order.lines.find(getById(id));
       const initialValue = line.quantityToFulfill;
 
@@ -155,7 +204,7 @@ function useOrderReturnForm(
     triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);
   };
-  const handleSetMaximalItemsQuantities = (fulfillmentId: string) => () => {
+  const handleSetMaximalItemsQuantities = (fulfillmentId: string, orderLineId?: string) => () => {
     const fulfillment = order.fulfillments.find(getById(fulfillmentId));
     const quantities =
       fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL
@@ -170,6 +219,10 @@ function useOrderReturnForm(
       const line = parsedLines.find(getById(item.id));
 
       if (!line) {
+        return item;
+      }
+
+      if (orderLineId && line.orderLineId !== orderLineId) {
         return item;
       }
 
@@ -197,6 +250,7 @@ function useOrderReturnForm(
     waitingItemsQuantities: waitingItemsQuantities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
     unfulfilledItemsQuantities: unfulfiledItemsQuantites.data,
+    lineReasons: lineReasons.data,
     ...formData,
   };
   const handleFormSubmit = useHandleFormSubmit({
@@ -225,6 +279,7 @@ function useOrderReturnForm(
       changeFulfiledItemsQuantity: handleHandlerChange(fulfiledItemsQuatities.change),
       changeWaitingItemsQuantity: handleHandlerChange(waitingItemsQuantities.change),
       changeItemsToBeReplaced: handleHandlerChange(itemsToBeReplaced.change),
+      changeLineReason: handleHandlerChange(lineReasons.change),
       changeUnfulfiledItemsQuantity: handleHandlerChange(unfulfiledItemsQuantites.change),
       handleSetMaximalItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities,
@@ -235,8 +290,8 @@ function useOrderReturnForm(
   };
 }
 
-const OrderReturnForm = ({ children, order, onSubmit }: OrderReturnProps) => {
-  const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit);
+const OrderReturnForm = ({ children, order, prefilledOrderLineId, onSubmit }: OrderReturnProps) => {
+  const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit, prefilledOrderLineId);
 
   return <form>{children(props)}</form>;
 };

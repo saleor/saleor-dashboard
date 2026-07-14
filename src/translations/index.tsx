@@ -7,40 +7,53 @@ import { useIntl } from "react-intl";
 import { type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
+import { parseTranslationDetailQueryParams } from "./translationQueryParams";
 import {
   languageEntitiesPath,
   languageEntityPath,
   languageListPath,
   TranslatableEntities,
 } from "./urls";
-import TranslationsAttributesComponent, {
+import {
+  TranslationsAttributes as TranslationsAttributesView,
   type TranslationsAttributesQueryParams,
 } from "./views/TranslationsAttributes";
-import TranslationsCategoriesComponent, {
+import {
+  TranslationsCategories as TranslationsCategoriesView,
   type TranslationsCategoriesQueryParams,
 } from "./views/TranslationsCategories";
-import TranslationsCollectionsComponent, {
+import {
+  TranslationsCollections as TranslationsCollectionsView,
   type TranslationsCollectionsQueryParams,
 } from "./views/TranslationsCollections";
 import TranslationsEntitiesComponent from "./views/TranslationsEntities";
 import TranslationsLanguageList from "./views/TranslationsLanguageList";
-import TranslationsMenuItemComponent from "./views/TranslationsMenuItem";
-import TranslationsPagesComponent, {
+import {
+  TranslationsMenuItem as TranslationsMenuItemView,
+  type TranslationsMenuItemQueryParams,
+} from "./views/TranslationsMenuItem";
+import {
+  TranslationsPages as TranslationsPagesView,
   type TranslationsPagesQueryParams,
 } from "./views/TranslationsPages";
-import TranslationsProductsComponent, {
+import {
+  TranslationsProducts as TranslationsProductsView,
   type TranslationsProductsQueryParams,
 } from "./views/TranslationsProducts";
-import TranslationsProductVariantsComponent, {
+import {
+  TranslationsProductVariants as TranslationsProductVariantsView,
   type TranslationsProductVariantsQueryParams,
 } from "./views/TranslationsProductVariants";
-import TranslationsSaleComponent, {
+import {
+  TranslationsSales as TranslationsSalesView,
   type TranslationsSalesQueryParams,
 } from "./views/TranslationsSales";
-import TranslationsShippingMethodComponent, {
+import {
+  TranslationsShippingMethod as TranslationsShippingMethodView,
   type TranslationsShippingMethodQueryParams,
 } from "./views/TranslationsShippingMethod";
-import TranslationsVouchersComponent, {
+import {
+  TranslationsVouchers as TranslationsVouchersView,
   type TranslationsVouchersQueryParams,
 } from "./views/TranslationsVouchers";
 
@@ -61,12 +74,13 @@ type TranslationsEntityRouteProps = RouteComponentProps<{
 
 const TranslationsCategories = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsCategoriesQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsCategoriesQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsCategoriesComponent
+    <TranslationsCategoriesView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -75,12 +89,13 @@ const TranslationsCategories = ({ location, match }: TranslationsEntityRouteProp
 };
 const TranslationsCollections = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsCollectionsQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsCollectionsQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsCollectionsComponent
+    <TranslationsCollectionsView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -89,12 +104,13 @@ const TranslationsCollections = ({ location, match }: TranslationsEntityRoutePro
 };
 const TranslationsProducts = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsProductsQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsProductsQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsProductsComponent
+    <TranslationsProductsView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -110,12 +126,13 @@ type TranslationsProductVariantProps = RouteComponentProps<{
 
 const TranslationsProductVariants = ({ location, match }: TranslationsProductVariantProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsProductVariantsQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsProductVariantsQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsProductVariantsComponent
+    <TranslationsProductVariantsView
       id={decodeURIComponent(match.params.id)}
       productId={decodeURIComponent(match.params.productId)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
@@ -125,12 +142,13 @@ const TranslationsProductVariants = ({ location, match }: TranslationsProductVar
 };
 const TranslationsSales = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsSalesQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsSalesQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsSaleComponent
+    <TranslationsSalesView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -139,12 +157,13 @@ const TranslationsSales = ({ location, match }: TranslationsEntityRouteProps) =>
 };
 const TranslationsVouchers = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsVouchersQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsVouchersQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsVouchersComponent
+    <TranslationsVouchersView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -153,12 +172,13 @@ const TranslationsVouchers = ({ location, match }: TranslationsEntityRouteProps)
 };
 const TranslationsPages = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsPagesQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsPagesQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsPagesComponent
+    <TranslationsPagesView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -167,12 +187,13 @@ const TranslationsPages = ({ location, match }: TranslationsEntityRouteProps) =>
 };
 const TranslationsAttributes = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsAttributesQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsAttributesQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsAttributesComponent
+    <TranslationsAttributesView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -181,12 +202,13 @@ const TranslationsAttributes = ({ location, match }: TranslationsEntityRouteProp
 };
 const TranslationsShippingMethod = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsShippingMethodQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsShippingMethodQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsShippingMethodComponent
+    <TranslationsShippingMethodView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
@@ -195,12 +217,13 @@ const TranslationsShippingMethod = ({ location, match }: TranslationsEntityRoute
 };
 const TranslationsMenuItem = ({ location, match }: TranslationsEntityRouteProps) => {
   const qs = parseQs(location.search.substr(1));
-  const params: TranslationsShippingMethodQueryParams = {
-    activeField: qs.activeField as string,
-  };
+  const params: TranslationsMenuItemQueryParams = parseTranslationDetailQueryParams(
+    qs,
+    location.search,
+  );
 
   return (
-    <TranslationsMenuItemComponent
+    <TranslationsMenuItemView
       id={decodeURIComponent(match.params.id)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}

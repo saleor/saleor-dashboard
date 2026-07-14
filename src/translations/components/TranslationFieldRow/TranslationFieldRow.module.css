@@ -1,0 +1,59 @@
+.translationFieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.translationFieldRow:last-child {
+  border-bottom: none;
+}
+
+.fieldColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fieldHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fieldMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fieldValue {
+  word-break: break-word;
+}
+
+.langChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--mu-colors-text-default2);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .translationFieldRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

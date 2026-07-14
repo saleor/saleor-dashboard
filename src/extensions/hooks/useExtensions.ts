@@ -12,16 +12,24 @@ import { newTabActions } from "@dashboard/extensions/new-tab-actions";
 import { type ExtensionListQuery, useExtensionListQuery } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useEffect, useRef, useState } from "react";
 
 import { type Extension, type ExtensionWithParams } from "../types";
 import { type AppDetailsUrlMountQueryParams } from "../urls";
+import {
+  getExtensionsSnapshotKey,
+  readExtensionsSnapshot,
+  writeExtensionsSnapshot,
+} from "./extensionsSnapshotStorage";
 
 const prepareExtensionsWithActions = ({
   extensions,
   openAppInContext,
+  fromCache,
 }: {
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
   openAppInContext: (appData: AppExtensionActiveParams) => void;
+  fromCache: boolean;
 }): ExtensionWithParams[] =>
   extensions
     .filter(({ id, url, label, mountName, app }) => {
@@ -61,11 +69,17 @@ const prepareExtensionsWithActions = ({
         targetName: AppExtensionManifestTarget.parse(targetName),
         settings,
         isSaleorOfficial: isSaleorOfficialAppUrl(resolvedUrl),
+        fromCache,
         /**
          * Only available for NEW_TAB, POPUP, APP_PAGE
          * TODO: Change interface to *not* contain this method if type is WIDGET
          */
         open: (params: AppDetailsUrlMountQueryParams) => {
+          if (fromCache) {
+            // No real access token yet — do not POST/redirect with an empty token.
+            return;
+          }
+
           if (!settingsValidation.success) {
             console.error("Invalid extension configuration", settingsValidation.error);
 
@@ -119,12 +133,41 @@ const prepareExtensionsWithActions = ({
       };
     });
 
-export const useExtensions = <T extends AllAppExtensionMounts>(
+const buildExtensionsMap = <T extends AllAppExtensionMounts>(
+  extensions: ExtensionWithParams[],
   mountList: readonly T[],
 ): Record<T, Extension[]> => {
+  const extensionsMap: Record<AllAppExtensionMounts, Extension[]> = mountList.reduce(
+    (acc, mount) => ({ ...acc, [mount]: [] }),
+    {} as Record<AllAppExtensionMounts, Extension[]>,
+  );
+
+  return extensions.reduce(
+    (acc, extension) => ({
+      ...acc,
+      [extension.mountName]: [...(acc[extension.mountName] || []), extension],
+    }),
+    extensionsMap,
+  );
+};
+
+const useExtensionsCore = <T extends AllAppExtensionMounts>(
+  mountList: readonly T[],
+): { extensions: Record<T, Extension[]>; loading: boolean } => {
   const { activate } = useActiveAppExtension();
-  const { data } = useExtensionListQuery({
-    fetchPolicy: "cache-first",
+
+  const snapshotKey = getExtensionsSnapshotKey(mountList);
+  // Read once, synchronously, so cached structure paints on the first frame.
+  const snapshotRef = useRef<ReturnType<typeof readExtensionsSnapshot>>(null);
+
+  const [snapshot] = useState(() => {
+    snapshotRef.current = readExtensionsSnapshot(snapshotKey);
+
+    return snapshotRef.current;
+  });
+
+  const { data, error } = useExtensionListQuery({
+    fetchPolicy: "cache-and-network",
     variables: {
       filter: {
         // @ts-expect-error - type is fine, but generated type is mutable instead of readonly. We must fix codegen
@@ -132,20 +175,34 @@ export const useExtensions = <T extends AllAppExtensionMounts>(
       },
     },
   });
-  const extensions = prepareExtensionsWithActions({
-    extensions: mapEdgesToItems(data?.appExtensions ?? undefined) || [],
-    openAppInContext: activate,
-  });
-  const extensionsMap: Record<AllAppExtensionMounts, Extension[]> = mountList.reduce(
-    (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
-    {} as Record<AllAppExtensionMounts, Extension[]>,
-  );
 
-  return extensions.reduce(
-    (prevExtensionsMap, extension) => ({
-      ...prevExtensionsMap,
-      [extension.mountName]: [...(prevExtensionsMap[extension.mountName] || []), extension],
-    }),
-    extensionsMap,
-  );
+  const hasLiveData = Boolean(data);
+  const liveNodes = mapEdgesToItems(data?.appExtensions ?? undefined) || [];
+  const fromCache = !hasLiveData && Boolean(snapshot);
+  const sourceNodes = hasLiveData ? liveNodes : (snapshot ?? []);
+  const loading = !hasLiveData && !snapshot && !error;
+
+  // Persist a fresh, token-free snapshot whenever live data arrives.
+  useEffect(() => {
+    if (hasLiveData) {
+      writeExtensionsSnapshot(snapshotKey, liveNodes);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const extensions = prepareExtensionsWithActions({
+    extensions: sourceNodes,
+    openAppInContext: activate,
+    fromCache,
+  });
+
+  return { extensions: buildExtensionsMap(extensions, mountList), loading };
 };
+
+export const useExtensions = <T extends AllAppExtensionMounts>(
+  mountList: readonly T[],
+): Record<T, Extension[]> => useExtensionsCore(mountList).extensions;
+
+export const useExtensionsWithLoadingState = <T extends AllAppExtensionMounts>(
+  mountList: readonly T[],
+): { extensions: Record<T, Extension[]>; loading: boolean } => useExtensionsCore(mountList);

@@ -130,6 +130,59 @@ export const productListUrlWithProductType = (productType?: {
   return urlJoin(productListPath, "?" + stringify(queryParams));
 };
 
+/**
+ * Builds the product list URL pre-filtered by one or more product types.
+ */
+export const productListUrlWithProductTypes = (
+  productTypes?: Array<{
+    id: string;
+    name: string;
+    slug?: string | null;
+  }>,
+): string | null => {
+  if (!productTypes?.length) {
+    return null;
+  }
+
+  if (productTypes.length === 1) {
+    const [productType] = productTypes;
+
+    if (!productType.slug) {
+      return null;
+    }
+
+    return productListUrlWithProductType({
+      id: productType.id,
+      name: productType.name,
+      slug: productType.slug,
+    });
+  }
+
+  const productTypesWithSlug = productTypes.filter(
+    (productType): productType is typeof productType & { slug: string } => !!productType.slug,
+  );
+
+  if (!productTypesWithSlug.length) {
+    return null;
+  }
+
+  const productFilterElement = FilterElement.createStaticBySlug("productType");
+  const condition = productFilterElement.condition.options[1];
+
+  productFilterElement.updateCondition(condition);
+  productFilterElement.updateRightOperator(
+    productTypesWithSlug.map(productType => ({
+      label: productType.name,
+      slug: productType.slug,
+      value: productType.id,
+    })),
+  );
+
+  const queryParams = prepareStructure([productFilterElement]);
+
+  return urlJoin(productListPath, "?" + stringify(queryParams));
+};
+
 export const productPath = (id: string) => urlJoin(productSection + id);
 export type ProductUrlDialog =
   | "remove"

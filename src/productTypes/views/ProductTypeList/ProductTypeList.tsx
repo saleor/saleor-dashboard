@@ -1,8 +1,8 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createProductTypesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
@@ -111,9 +111,10 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
   });
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
   const productTypesData = mapEdgesToItems(data?.productTypes) ?? [];
+  const typesToDeleteForDialog = params.ids?.length ? params.ids : selectedProductTypes;
 
   const productTypeDeleteData = useProductTypeDelete({
-    selectedTypes: selectedProductTypes,
+    selectedTypes: typesToDeleteForDialog,
     params,
     typeBaseData: productTypesData,
   });
@@ -186,7 +187,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
         <TypeDeleteWarningDialog
           {...productTypeDeleteData}
           typesData={productTypesData}
-          typesToDelete={selectedProductTypes}
+          typesToDelete={typesToDeleteForDialog}
           onClose={closeModal}
           onDelete={onProductTypeBulkDelete}
           deleteButtonState={productTypeBulkDeleteOpts.status}

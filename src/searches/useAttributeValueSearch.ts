@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { gql, useApolloClient } from "@apollo/client";
+import { getAttributeSwatchData } from "@dashboard/components/Attributes/getAttributeSwatchData";
 import {
   SearchAttributeValuesDocument,
   type SearchAttributeValuesQuery,
@@ -40,9 +41,10 @@ export function useSearchAttributeValuesSuggestions() {
         },
       })
       .then(({ data }) =>
-        mapEdgesToItems(data.attribute.choices).map(({ name, slug }) => ({
+        mapEdgesToItems(data.attribute.choices).map(({ name, slug, value, file }) => ({
           label: name,
           value: slug,
+          swatch: getAttributeSwatchData({ file, value }),
         })),
       );
 }
