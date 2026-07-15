@@ -237,6 +237,7 @@ export enum AnnouncementImportanceEnum {
 }
 
 export enum AppErrorCode {
+  DUPLICATED_EXTENSION_IDENTIFIER = 'DUPLICATED_EXTENSION_IDENTIFIER',
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -1279,8 +1280,8 @@ export type CheckoutCreateInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** Checkout language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
-  /** A list of checkout lines, each containing information about an item in the checkout. */
-  lines: Array<CheckoutLineInput>;
+  /** A list of checkout lines, each containing information about an item in the checkout. When omitted, a checkout with no lines is created. */
+  lines?: InputMaybe<Array<CheckoutLineInput>>;
   /**
    * Checkout public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -5718,10 +5719,6 @@ export type OrderReturnProductsInput = {
   refund?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export enum OrderSettingsErrorCode {
-  INVALID = 'INVALID'
-}
-
 export type OrderSettingsInput = {
   /** Determine if it is possible to place unpaid order by calling `checkoutComplete` mutation. */
   allowUnpaidOrders?: InputMaybe<Scalars['Boolean']['input']>;
@@ -5760,13 +5757,6 @@ export type OrderSettingsInput = {
    * In future releases, `OrderLineDiscount` will become the default behavior, and this flag will be deprecated and removed.
    */
   useLegacyLineDiscountPropagation?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type OrderSettingsUpdateInput = {
-  /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. By default set to True */
-  automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']['input']>;
-  /** When enabled, all non-shippable gift card orders will be fulfilled automatically. By default set to True. */
-  automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum OrderSortField {
@@ -6342,6 +6332,7 @@ export enum PermissionEnum {
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
+  /** @deprecated The observability feature is no longer supported. This permission will be removed in Saleor 3.24. */
   MANAGE_OBSERVABILITY = 'MANAGE_OBSERVABILITY',
   MANAGE_ORDERS = 'MANAGE_ORDERS',
   MANAGE_ORDERS_IMPORT = 'MANAGE_ORDERS_IMPORT',
@@ -7938,6 +7929,12 @@ export type ShopSettingsInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
+   * Shop's name.
+   *
+   * Added in Saleor 3.23.
+   */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /**
    * Controls whether password-based authentication is allowed.
    *
    * Added in Saleor 3.23.
@@ -9257,7 +9254,10 @@ export enum WebhookEventTypeAsyncEnum {
    * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
-  /** An observability event is created. */
+  /**
+   * An observability event is created.
+   * @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24.
+   */
   OBSERVABILITY = 'OBSERVABILITY',
   /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
@@ -9594,7 +9594,10 @@ export enum WebhookEventTypeEnum {
    * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
-  /** An observability event is created. */
+  /**
+   * An observability event is created.
+   * @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24.
+   */
   OBSERVABILITY = 'OBSERVABILITY',
   /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
@@ -9918,7 +9921,9 @@ export enum WebhookSampleEventTypeEnum {
   MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
   MENU_ITEM_UPDATED = 'MENU_ITEM_UPDATED',
   MENU_UPDATED = 'MENU_UPDATED',
+  /** @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user */
   NOTIFY_USER = 'NOTIFY_USER',
+  /** @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24. */
   OBSERVABILITY = 'OBSERVABILITY',
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
   ORDER_CANCELLED = 'ORDER_CANCELLED',

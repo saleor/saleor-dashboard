@@ -352,11 +352,12 @@ export type AppErrorFieldPolicy = {
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppExtensionKeySpecifier = ('accessToken' | 'app' | 'id' | 'label' | 'mountName' | 'permissions' | 'settings' | 'targetName' | 'url' | AppExtensionKeySpecifier)[];
+export type AppExtensionKeySpecifier = ('accessToken' | 'app' | 'id' | 'identifier' | 'label' | 'mountName' | 'permissions' | 'settings' | 'targetName' | 'url' | AppExtensionKeySpecifier)[];
 export type AppExtensionFieldPolicy = {
 	accessToken?: FieldPolicy<any> | FieldReadFunction<any>,
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	identifier?: FieldPolicy<any> | FieldReadFunction<any>,
 	label?: FieldPolicy<any> | FieldReadFunction<any>,
 	mountName?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -414,8 +415,9 @@ export type AppManifestBrandLogoKeySpecifier = ('default' | AppManifestBrandLogo
 export type AppManifestBrandLogoFieldPolicy = {
 	default?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppManifestExtensionKeySpecifier = ('label' | 'mountName' | 'permissions' | 'settings' | 'targetName' | 'url' | AppManifestExtensionKeySpecifier)[];
+export type AppManifestExtensionKeySpecifier = ('identifier' | 'label' | 'mountName' | 'permissions' | 'settings' | 'targetName' | 'url' | AppManifestExtensionKeySpecifier)[];
 export type AppManifestExtensionFieldPolicy = {
+	identifier?: FieldPolicy<any> | FieldReadFunction<any>,
 	label?: FieldPolicy<any> | FieldReadFunction<any>,
 	mountName?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>,

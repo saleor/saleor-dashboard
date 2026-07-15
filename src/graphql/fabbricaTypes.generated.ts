@@ -1128,6 +1128,7 @@ export type AppError = {
 };
 
 export type AppErrorCode =
+  | 'DUPLICATED_EXTENSION_IDENTIFIER'
   | 'FORBIDDEN'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
@@ -1153,6 +1154,12 @@ export type AppExtension = Node & {
   app: App;
   /** The ID of the app extension. */
   id: Scalars['ID']['output'];
+  /**
+   * Extension identifier, unique per app. Null when the app does not declare one.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier: Maybe<Scalars['String']['output']>;
   /** Label of the extension to show in the dashboard. */
   label: Scalars['String']['output'];
   /**
@@ -1323,6 +1330,12 @@ export type AppManifestBrandLogoDefaultArgs = {
 
 export type AppManifestExtension = {
   __typename: 'AppManifestExtension';
+  /**
+   * Extension identifier, unique per app. Null when the app does not declare one.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier: Maybe<Scalars['String']['output']>;
   /** Label of the extension to show in the dashboard. */
   label: Scalars['String']['output'];
   /**
@@ -28061,6 +28074,12 @@ export type ShopSettingsInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Shop's name.
+   *
+   * Added in Saleor 3.23.
+   */
+  name: InputMaybe<Scalars['String']['input']>;
   /**
    * Controls whether password-based authentication is allowed.
    *
