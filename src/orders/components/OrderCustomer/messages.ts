@@ -1,6 +1,11 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
+  changeCustomer: {
+    id: "kKxHG9",
+    defaultMessage: "Change customer",
+    description: "button to open change customer dialog on draft order",
+  },
   orderCustomerFulfillmentAll: {
     id: "R98JLZ",
     defaultMessage: "Fulfill from All Warehouses",
@@ -14,3 +19,5 @@ const messages = defineMessages({
 });
 
 export default messages;
+
+export { messages as orderCustomerMessages };

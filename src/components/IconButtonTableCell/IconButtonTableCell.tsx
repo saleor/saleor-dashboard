@@ -18,7 +18,7 @@ const IconButtonTableCell = (props: IconButtonTableCellProps) => {
     <TableCell className={className}>
       <Button
         data-test-id="delete-button"
-        variant="secondary"
+        variant="tertiary"
         disabled={disabled}
         onClick={stopPropagation(onClick)}
         icon={children}

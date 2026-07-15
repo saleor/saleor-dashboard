@@ -1,12 +1,17 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { buttonMessages } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
 import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
@@ -20,7 +25,7 @@ interface ProductTypePickerDialogProps {
   onConfirm: (choice: string) => void;
 }
 
-const ProductTypePickerDialog = ({
+export const ProductTypePickerDialog = ({
   confirmButtonState,
   open,
   productTypes,
@@ -48,31 +53,44 @@ const ProductTypePickerDialog = ({
   };
 
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={() => onConfirm(selectedOption?.value ?? "")}
-      title={intl.formatMessage(messages.selectProductType)}
-      disabled={!selectedOption}
-      size="xs"
-    >
-      <DynamicCombobox
-        data-test-id="dialog-product-type"
-        label={intl.formatMessage(messages.productType)}
-        options={productTypes ?? []}
-        name="productType"
-        size="small"
-        value={selectedOption}
-        onChange={setSelectedOption}
-        onInputValueChange={debouncedFetchProductTypes}
-        onFocus={() => fetchProductTypes("")}
-        onScrollEnd={handleScrollEnd}
-        loading={fetchMoreProductTypes?.loading}
-      />
-    </ActionDialog>
+    <DashboardModal open={open} onChange={onClose}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header>
+          <FormattedMessage {...messages.selectProductType} />
+        </DashboardModal.Header>
+
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <DynamicCombobox
+              data-test-id="dialog-product-type"
+              label={intl.formatMessage(messages.productType)}
+              options={productTypes ?? []}
+              name="productType"
+              size="small"
+              value={selectedOption}
+              onChange={setSelectedOption}
+              onInputValueChange={debouncedFetchProductTypes}
+              onFocus={() => fetchProductTypes("")}
+              onScrollEnd={handleScrollEnd}
+              loading={fetchMoreProductTypes?.loading}
+            />
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            transitionState={confirmButtonState}
+            onClick={() => onConfirm(selectedOption?.value ?? "")}
+            disabled={!selectedOption}
+          >
+            <FormattedMessage {...buttonMessages.confirm} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 ProductTypePickerDialog.displayName = "ProductTypePickerDialog";
-export default ProductTypePickerDialog;

@@ -2,10 +2,12 @@ import { AttributeTypeEnum } from "@dashboard/graphql";
 
 import {
   attributeListPath,
+  type AttributeListUrlQueryParams,
   attributeListUrlWithAttributeType,
   attributeListUrlWithAttributeTypePreset,
   getAttributeTypeFromBuiltInPresetTab,
   parseAttributeTypeFromQueryParam,
+  withAttributeListTypeTabSelection,
 } from "./urls";
 
 describe("attributeListUrlWithAttributeType", () => {
@@ -81,6 +83,47 @@ describe("getAttributeTypeFromBuiltInPresetTab", () => {
 
     // Assert
     expect(result).toBeUndefined();
+  });
+});
+
+describe("withAttributeListTypeTabSelection", () => {
+  it("should set typeIds and clear legacy pageTypes", () => {
+    // Arrange
+    const params: AttributeListUrlQueryParams = {
+      activeTab: "2",
+      pageTypes: ["legacy-type-id"],
+      query: "color",
+    };
+
+    // Act
+    const result = withAttributeListTypeTabSelection(params, ["type-1", "type-2"]);
+
+    // Assert
+    expect(result).toEqual({
+      activeTab: "2",
+      typeIds: ["type-1", "type-2"],
+      pageTypes: undefined,
+      query: "color",
+    });
+  });
+
+  it("should clear both typeIds and legacy pageTypes when selection is empty", () => {
+    // Arrange
+    const params: AttributeListUrlQueryParams = {
+      activeTab: "2",
+      typeIds: ["type-1"],
+      pageTypes: ["legacy-type-id"],
+    };
+
+    // Act
+    const result = withAttributeListTypeTabSelection(params, undefined);
+
+    // Assert
+    expect(result).toEqual({
+      activeTab: "2",
+      typeIds: undefined,
+      pageTypes: undefined,
+    });
   });
 });
 

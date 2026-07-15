@@ -15,7 +15,7 @@ type GiftCardCreateCommonFormErrors = Record<
   GiftCardErrorFragment
 >;
 
-type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
+export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
   Record<"customer", GiftCardErrorFragment>;
 
 export interface GiftCardCreateFormCommonProps {

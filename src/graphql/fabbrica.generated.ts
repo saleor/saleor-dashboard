@@ -2595,6 +2595,12 @@ export type OptionalAppExtension = {
   app?: OptionalApp | undefined;
   /** The ID of the app extension. */
   id?: AppExtension['id'] | undefined;
+  /**
+ * Extension identifier, unique per app. Null when the app does not declare one.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: AppExtension['identifier'] | undefined;
   /** Label of the extension to show in the dashboard. */
   label?: AppExtension['label'] | undefined;
   /**
@@ -2903,6 +2909,12 @@ export const defineAppManifestBrandLogoFactory: DefineTypeFactoryInterface<
 
 export type OptionalAppManifestExtension = {
   __typename?: 'AppManifestExtension';
+  /**
+ * Extension identifier, unique per app. Null when the app does not declare one.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: AppManifestExtension['identifier'] | undefined;
   /** Label of the extension to show in the dashboard. */
   label?: AppManifestExtension['label'] | undefined;
   /**
@@ -32271,6 +32283,12 @@ export type OptionalShopSettingsInput = {
  * Warning: never store sensitive information, including financial data such as credit card details.
  */
   metadata?: Maybe<OptionalMetadataInput[]> | undefined;
+  /**
+ * Shop's name.
+ *
+ * Added in Saleor 3.23.
+ */
+  name?: ShopSettingsInput['name'] | undefined;
   /**
  * Controls whether password-based authentication is allowed.
  *

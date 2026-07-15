@@ -10,16 +10,19 @@ import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
+import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
+import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
 import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
+import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "../BackButton";
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { ModalFilters } from "../ModalFilters/ModalFilters";
@@ -41,6 +44,7 @@ interface AssignVariantDialogSingleProps extends FetchMoreProps {
   selectedId?: string;
   labels?: Partial<AssignContainerDialogProps["labels"]>;
   open: boolean;
+  skipFetchOnOpen?: boolean;
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -58,15 +62,18 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
     onSubmit,
     selectedId,
     open,
+    skipFetchOnOpen = false,
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const [selectedVariantId, setSelectedVariantId] = useState<string>(selectedId ?? "");
+  const [initialSelection, setInitialSelection] = useState<string>(selectedId ?? "");
   const { combinedFilters, clearFilters } = useModalProductFilterContext();
 
   const { query, onQueryChange, resetQuery } = useModalSearchWithFilters({
     filterVariables: combinedFilters,
     open,
+    skipFetchOnOpen,
     onFetch: (filters, query) => onFilterChange?.(filters.where, filters.channel, query),
   });
 
@@ -80,9 +87,16 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
     onOpen: () => {
       resetQuery();
       clearFilters();
+
+      const nextInitialSelection = selectedId ?? "";
+
+      setInitialSelection(nextInitialSelection);
+      setSelectedVariantId(nextInitialSelection);
     },
     onClose: handleClose,
   });
+
+  const hasSelectionChanged = selectedVariantId !== initialSelection;
 
   const productChoices = useMemo(
     () =>
@@ -92,6 +106,11 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
   const productVariantChoices = useMemo(
     () => productChoices.flatMap(product => product.variants || []),
     [productChoices],
+  );
+  const displayedProductChoices = useStalePickerList(productChoices, loading, open);
+  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
+    loading,
+    displayedProductChoices.length,
   );
 
   const handleSubmit = () => {
@@ -124,117 +143,137 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
   };
 
   return (
-    <>
-      <TextField
-        name="query"
-        value={query}
-        onChange={onQueryChange}
-        label={intl.formatMessage(messages.assignVariantDialogSearch)}
-        placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
-        }}
-      />
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="picker">
+        <DashboardModal.PickerHeader
+          toolbar={
+            <>
+              <TextField
+                name="query"
+                value={query}
+                onChange={onQueryChange}
+                label={intl.formatMessage(messages.assignVariantDialogSearch)}
+                placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
+                fullWidth
+                InputProps={{
+                  autoComplete: "off",
+                  endAdornment: loading && <SaleorThrobber size={16} />,
+                }}
+              />
 
-      <ModalFilters />
+              <ModalFilters />
+            </>
+          }
+        >
+          <FormattedMessage {...messages.assignVariantDialogHeader} />
+        </DashboardModal.PickerHeader>
 
-      <InfiniteScroll
-        id={scrollableTargetId}
-        dataLength={productChoices.reduce(
-          (acc, product) => acc + (product.variants?.length || 0),
-          0,
-        )}
-        next={onFetchMore}
-        hasMore={hasMore}
-        scrollThreshold="100px"
-        scrollableTarget={scrollableTargetId}
-      >
-        <ResponsiveTable key="table">
-          <TableBody>
-            {renderCollection(
-              productChoices,
-              product => (
-                <Fragment key={product ? product.id : "skeleton"}>
-                  {/* Product header row (non-selectable) */}
-                  <TableRowLink>
-                    <TableCell padding="checkbox">
-                      {/* No checkbox for products in single mode */}
-                    </TableCell>
-                    <TableCellAvatar
-                      className={classes.avatar}
-                      thumbnail={product ? maybe(() => product.thumbnail?.url) : undefined}
-                    />
-                    <TableCell colSpan={2}>{product ? maybe(() => product.name) : null}</TableCell>
-                  </TableRowLink>
-                  {/* Variant rows (selectable) */}
-                  {(product?.variants || [])
-                    .filter(v => v !== null)
-                    .map(variant => {
-                      const isSelected = selectedVariantId === variant.id;
-
-                      return (
-                        <TableRowLink
-                          key={variant.id}
-                          data-test-id="assign-variant-table-row"
-                          onClick={() => handleVariantSelect(variant.id)}
-                        >
-                          <TableCell />
-                          <TableCell className={classes.colVariantCheckbox}>
-                            <Radio
-                              className={classes.variantCheckbox}
-                              checked={isSelected}
-                              disabled={loading}
-                              onChange={() => handleVariantSelect(variant.id)}
-                              value={variant.id}
-                              name="variant-selection"
-                            />
+        <DashboardModal.Body fill id={scrollableTargetId}>
+          <InfiniteScroll
+            flush
+            dataLength={displayedProductChoices.reduce(
+              (acc, product) => acc + (product.variants?.length || 0),
+              0,
+            )}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            scrollableTarget={scrollableTargetId}
+          >
+            <ResponsiveTable bleed fillHeight key="table">
+              <TableBody>
+                {showListLoading ? (
+                  <AssignPickerListLoadingRow colSpan={4} />
+                ) : (
+                  renderCollection(
+                    displayedProductChoices,
+                    product => (
+                      <Fragment key={product ? product.id : "skeleton"}>
+                        {/* Product header row (non-selectable) */}
+                        <TableRowLink>
+                          <TableCell padding="checkbox">
+                            {/* No checkbox for products in single mode */}
                           </TableCell>
-                          <TableCell>
-                            <div>{variant.name}</div>
-                            <div className={classes.grayText}>
-                              <FormattedMessage
-                                {...messages.assignVariantDialogSKU}
-                                values={{
-                                  sku: variant.sku,
-                                }}
-                              />
-                            </div>
-                          </TableCell>
-                          <TableCell className={classes.textRight}>
-                            {variant?.channelListings?.[0]?.price && (
-                              <Money money={variant.channelListings[0].price} />
-                            )}
+                          <TableCellAvatar
+                            className={classes.avatar}
+                            thumbnail={product ? maybe(() => product.thumbnail?.url) : undefined}
+                          />
+                          <TableCell colSpan={2}>
+                            {product ? maybe(() => product.name) : null}
                           </TableCell>
                         </TableRowLink>
-                      );
-                    })}
-                </Fragment>
-              ),
-              () => (
-                <Text className={classes.noContentText}>
-                  {query
-                    ? intl.formatMessage(messages.noProductsInQuery)
-                    : intl.formatMessage(messages.noProductsInChannel)}
-                </Text>
-              ),
-            )}
-          </TableBody>
-        </ResponsiveTable>
-      </InfiniteScroll>
+                        {/* Variant rows (selectable) */}
+                        {(product?.variants || [])
+                          .filter(v => v !== null)
+                          .map(variant => {
+                            const isSelected = selectedVariantId === variant.id;
 
-      <DashboardModal.Actions>
-        <BackButton onClick={handleClose} />
-        <ConfirmButton
-          data-test-id="submit"
-          transitionState={confirmButtonState}
-          type="submit"
-          onClick={handleSubmit}
-        >
-          {labels?.confirmBtn ?? <FormattedMessage {...messages.assignVariantDialogButton} />}
-        </ConfirmButton>
-      </DashboardModal.Actions>
-    </>
+                            return (
+                              <TableRowLink
+                                key={variant.id}
+                                data-test-id="assign-variant-table-row"
+                                onClick={() => handleVariantSelect(variant.id)}
+                              >
+                                <TableCell />
+                                <TableCell className={classes.colVariantCheckbox}>
+                                  <Radio
+                                    className={classes.variantCheckbox}
+                                    checked={isSelected}
+                                    disabled={loading}
+                                    onChange={() => handleVariantSelect(variant.id)}
+                                    value={variant.id}
+                                    name="variant-selection"
+                                  />
+                                </TableCell>
+                                <TableCell>
+                                  <div>{variant.name}</div>
+                                  <div className={classes.grayText}>
+                                    <FormattedMessage
+                                      {...messages.assignVariantDialogSKU}
+                                      values={{
+                                        sku: variant.sku,
+                                      }}
+                                    />
+                                  </div>
+                                </TableCell>
+                                <TableCell className={classes.textRight}>
+                                  {variant?.channelListings?.[0]?.price && (
+                                    <Money money={variant.channelListings[0].price} />
+                                  )}
+                                </TableCell>
+                              </TableRowLink>
+                            );
+                          })}
+                      </Fragment>
+                    ),
+                    () =>
+                      showEmptyState && (
+                        <AssignPickerListEmptyStateRow colSpan={4}>
+                          {query
+                            ? intl.formatMessage(messages.noProductsInQuery)
+                            : intl.formatMessage(messages.noProductsInChannel)}
+                        </AssignPickerListEmptyStateRow>
+                      ),
+                  )
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={!hasSelectionChanged}
+            transitionState={confirmButtonState}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            {labels?.confirmBtn ?? <FormattedMessage {...messages.assignVariantDialogButton} />}
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };

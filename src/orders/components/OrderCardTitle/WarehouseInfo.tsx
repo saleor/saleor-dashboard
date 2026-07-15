@@ -5,13 +5,29 @@ import { useIntl } from "react-intl";
 import { orderTitleMessages } from "./messages";
 import { UnderlineLink } from "./UnderlineLink";
 
+type WarehouseInfoVariant = "fulfilledFrom" | "shippedFrom" | "restockedTo";
+
 interface WarehouseInfoProps {
   warehouseName: string;
   warehouseId: string;
+  separator?: string;
+  variant?: WarehouseInfoVariant;
 }
 
-export const WarehouseInfo = ({ warehouseName, warehouseId }: WarehouseInfoProps): JSX.Element => {
+const warehouseMessageByVariant = {
+  fulfilledFrom: orderTitleMessages.fulfilledFromWarehouse,
+  shippedFrom: orderTitleMessages.shippedFromWarehouse,
+  restockedTo: orderTitleMessages.restockedToWarehouse,
+} as const;
+
+export const WarehouseInfo = ({
+  warehouseName,
+  warehouseId,
+  separator = ", ",
+  variant = "fulfilledFrom",
+}: WarehouseInfoProps): JSX.Element => {
   const intl = useIntl();
+  const message = warehouseMessageByVariant[variant];
 
   return (
     <Text
@@ -22,8 +38,8 @@ export const WarehouseInfo = ({ warehouseName, warehouseId }: WarehouseInfoProps
       style={{ maxWidth: "250px" }}
       as="span"
     >
-      {", "}
-      {intl.formatMessage(orderTitleMessages.fulfilledFromWarehouse, {
+      {separator}
+      {intl.formatMessage(message, {
         warehouseName: (
           <UnderlineLink to={warehouseUrl(warehouseId)}>{warehouseName}</UnderlineLink>
         ),

@@ -6,7 +6,7 @@ import {
 } from "@dashboard/graphql";
 
 import { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
-import { type MenuItemDialogFormData } from "../../components/MenuItemDialog";
+import { type MenuItemDialogFormData } from "../../components/MenuItemDialog/types";
 import { unknownTypeError } from "../../components/MenuItemsSortableTree/utils";
 
 export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInput {

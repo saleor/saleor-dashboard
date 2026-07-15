@@ -1,11 +1,11 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth/useUser";
-import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
+import { ChannelPickerDialog } from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { useOrderDraftCreateMutation, useOrderListQuery } from "@dashboard/graphql";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
@@ -78,7 +78,7 @@ const OrderList = ({ params }: OrderListProps) => {
   const { channel, availableChannels } = useAppChannel(false);
   const user = useUser();
   const channels = user?.user?.accessibleChannels ?? [];
-  const [createOrder] = useOrderDraftCreateMutation({
+  const [createOrder, createOrderOpts] = useOrderDraftCreateMutation({
     onCompleted: data => {
       notify({
         status: "success",
@@ -183,7 +183,7 @@ const OrderList = ({ params }: OrderListProps) => {
       {!noChannel && (
         <ChannelPickerDialog
           channelsChoices={channelOpts}
-          confirmButtonState="success"
+          confirmButtonState={createOrderOpts.status}
           defaultChoice={channel.id}
           open={params.action === "create-order"}
           onClose={closeModal}

@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -59,6 +60,7 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   testId?: string;
   selectedVariantAttributes: string[];
   onAttributeAssign: (type: ProductAttributeType) => void;
+  onAttributeCreate: (type: ProductAttributeType) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
   setSelectedVariantAttributes: (data: string[]) => void;
@@ -92,6 +94,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
     type,
     testId,
     onAttributeAssign,
+    onAttributeCreate,
     onAttributeReorder,
     onAttributeUnassign,
     setSelectedVariantAttributes,
@@ -99,6 +102,10 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const attributeType = ProductAttributeType[type];
+  const handleAssignAttribute = () => onAttributeAssign(attributeType);
+  const handleCreateAttribute = () => onAttributeCreate(attributeType);
 
   useEffect(() => {
     // Populate initial selection - populated inside this component to preserve it's state between data reloads
@@ -120,13 +127,25 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
           })}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button
-            data-test-id={testId}
+          <ButtonGroupWithDropdown
             variant="secondary"
-            onClick={() => onAttributeAssign(ProductAttributeType[type])}
+            disabled={disabled}
+            onClick={handleAssignAttribute}
+            testId={testId}
+            options={[
+              {
+                label: intl.formatMessage({
+                  id: "LApQsw",
+                  defaultMessage: "Create attribute",
+                  description: "create attribute from product type, button",
+                }),
+                testId: "create-variant-attribute",
+                onSelect: handleCreateAttribute,
+              },
+            ]}
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
-          </Button>
+          </ButtonGroupWithDropdown>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <Box paddingX={6}>
@@ -297,7 +316,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                         <Button
                           data-test-id="delete-icon"
                           disabled={disabled}
-                          variant="secondary"
+                          variant="tertiary"
                           onClick={() => onAttributeUnassign(attribute.id)}
                           icon={
                             <Trash2

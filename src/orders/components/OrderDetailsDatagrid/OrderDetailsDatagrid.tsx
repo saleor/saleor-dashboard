@@ -7,22 +7,22 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { type OrderLineFragment } from "@dashboard/graphql";
+import { type OrderDetailsFragment, type OrderLineFragment } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocale from "@dashboard/hooks/useLocale";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { OrderLineRowActions } from "@dashboard/orders/components/OrderLineRowActions/OrderLineRowActions";
+import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
-import { productPath } from "@dashboard/products/urls";
+import { type OrderLineRowMenuContext } from "@dashboard/orders/utils/getOrderLineActionUrls";
+import { getOrderLineRowMenuItems } from "@dashboard/orders/utils/getOrderLineRowMenuItems";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { ListViews } from "@dashboard/types";
 import { type Item, type Theme } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui-next";
-import { ExternalLink } from "lucide-react";
+import { Box, type vars } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
-import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import {
   createGetCellContent,
   isLineDiscounted,
@@ -30,11 +30,10 @@ import {
   type LineReasonDisplay,
   orderDetailsStaticColumnsAdapter,
 } from "./datagrid";
-import { messages } from "./messages";
-import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
 
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
+  order: OrderDetailsFragment;
   loading: boolean;
   onOrderLineShowMetadata: (id: string) => void;
   /** Optional callback to open the per-line price-waterfall modal. When set,
@@ -42,19 +41,27 @@ interface OrderDetailsDatagridProps {
    *  the strikethrough on the original price is the only visual affordance. */
   onShowLinePriceBreakdown?: (lineId: string) => void;
   datagridCustomTheme?: Partial<Theme>;
+  /** Matches the datagrid header surface so the sticky column picker masks scrolled cells. */
+  columnPickerBackgroundColor?: keyof typeof vars.colors.background;
   /** Per-line reasons aligned by index with `lines`; when set, a `reason` column is shown. */
   lineReasons?: LineReasonDisplay[];
+  /** Timeline cards scope row actions to the shipment bucket; matrix omits this. */
+  lineRowMenuContext?: OrderLineRowMenuContext;
 }
 
 export const OrderDetailsDatagrid = ({
   lines,
+  order,
   loading,
   onOrderLineShowMetadata,
   onShowLinePriceBreakdown,
   datagridCustomTheme = {},
+  columnPickerBackgroundColor = "default1",
   lineReasons,
+  lineRowMenuContext,
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const { locale } = useLocale();
 
   const datagrid = useDatagridChangeState();
@@ -104,33 +111,41 @@ export const OrderDetailsDatagrid = ({
       lineReasons,
     ],
   );
-  const getMenuItems = useCallback(
+  const getLineMenuItems = useCallback(
     (index: number) => {
-      const productId = lines[index]?.variant?.product.id;
+      const line = lines[index];
 
-      return [
-        {
-          disabled: !productId,
-          label: intl.formatMessage(messages.productDetails),
-          Icon: productId ? (
-            <Link to={productPath(productId)} target="_blank">
-              <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-            </Link>
-          ) : (
-            <ExternalLink size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-          ),
-          onSelect: () => false,
-        },
-      ];
+      if (!line) {
+        return [];
+      }
+
+      return getOrderLineRowMenuItems({
+        order,
+        lineId: line.id,
+        productId: line.variant?.product.id,
+        intl,
+        navigate,
+        context: lineRowMenuContext,
+      });
     },
-    [intl, lines],
+    [intl, lines, navigate, order, lineRowMenuContext],
+  );
+  const getMenuItems = useCallback(
+    (index: number) =>
+      getLineMenuItems(index).map(item => ({
+        label: item.label,
+        onSelect: () => {
+          item.onSelect({});
+        },
+      })),
+    [getLineMenuItems],
   );
 
   const renderRowActions = useCallback(
     (index: number) => (
-      <OrderDetailsRowActions
+      <OrderLineRowActions
         key={`row-actions-${index}`}
-        menuItems={getMenuItems(index)}
+        menuItems={getLineMenuItems(index)}
         onShowMetadata={() => {
           if (lines[index]) {
             onOrderLineShowMetadata(lines[index].id);
@@ -140,7 +155,7 @@ export const OrderDetailsDatagrid = ({
         intl={intl}
       />
     ),
-    [getMenuItems, lines, onOrderLineShowMetadata, loading, intl],
+    [getLineMenuItems, lines, onOrderLineShowMetadata, loading, intl],
   );
 
   const handleRowClick = useCallback(
@@ -194,6 +209,7 @@ export const OrderDetailsDatagrid = ({
               selectedColumns={selectedColumns}
               onToggle={handlers.onToggle}
               align="end"
+              backgroundColor={columnPickerBackgroundColor}
             />
           )}
           renderRowActions={renderRowActions}

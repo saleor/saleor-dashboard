@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   type CreateManualTransactionCaptureMutation,
@@ -7,6 +8,7 @@ import {
   type FulfillmentFragment,
   FulfillmentStatus,
   type OrderDetailsQueryResult,
+  OrderErrorCode,
   type OrderFulfillmentApproveMutation,
   type OrderFulfillmentApproveMutationVariables,
   type OrderNoteUpdateMutation,
@@ -21,11 +23,11 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { extractMutationErrors, getById, getStringOrPlaceholder } from "@dashboard/misc";
-import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
+import { OrderCannotCancelOrderDialog } from "@dashboard/orders/components/OrderCannotCancelOrderDialog/OrderCannotCancelOrderDialog";
 import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
-import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
+import { OrderFulfillmentApproveDialog } from "@dashboard/orders/components/OrderFulfillmentApproveDialog/OrderFulfillmentApproveDialog";
 import { OrderFulfillmentMetadataDialog } from "@dashboard/orders/components/OrderFulfillmentMetadataDialog/OrderFulfillmentMetadataDialog";
-import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderFulfillStockExceededDialog";
+import { OrderFulfillStockExceededDialog } from "@dashboard/orders/components/OrderFulfillStockExceededDialog/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
@@ -36,34 +38,36 @@ import {
   isAnyAddressEditModalOpen,
   transformFuflillmentLinesToStockFormsetData,
 } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
 import {
   type CloseModalFunction,
   type OpenModalFunction,
 } from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
-import OrderCancelDialog from "../../../components/OrderCancelDialog";
+import { OrderCancelDialog } from "../../../components/OrderCancelDialog";
 import { OrderCaptureDialog } from "../../../components/OrderCaptureDialog/OrderCaptureDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
 import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
-import OrderFulfillmentTrackingDialog from "../../../components/OrderFulfillmentTrackingDialog";
-import OrderMarkAsPaidDialog from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
+import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog";
+import { OrderMarkAsPaidDialog } from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
+  orderDetailsUrl,
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
-  orderPaymentRefundUrl,
   orderReturnUrl,
-  orderTransactionRefundUrl,
   orderUrl,
   type OrderUrlDialog,
   type OrderUrlQueryParams,
+  withOrderFulfillmentDialog,
+  withOrderLineFocus,
 } from "../../../urls";
 
 interface OrderNormalDetailsProps {
@@ -105,6 +109,9 @@ interface ApprovalState {
   notifyCustomer: boolean;
 }
 
+const isInsufficientStockApprovalErrors = (errors: Array<{ code: OrderErrorCode }>): boolean =>
+  errors.length > 0 && errors.every(error => error.code === OrderErrorCode.INSUFFICIENT_STOCK);
+
 export const OrderNormalDetails = ({
   id,
   params,
@@ -130,6 +137,7 @@ export const OrderNormalDetails = ({
   const order = data?.order;
   const shop = data?.shop;
   const navigate = useNavigator();
+  const refundNavigation = useMemo(() => (order ? getOrderRefundNavigation(order) : null), [order]);
   const { data: warehousesData } = useWarehouseListQuery({
     displayLoader: true,
     variables: {
@@ -154,13 +162,35 @@ export const OrderNormalDetails = ({
   const [transactionReference, setTransactionReference] = useState("");
   const [currentApproval, setCurrentApproval] = useState<ApprovalState | null>(null);
   const [stockExceeded, setStockExceeded] = useState(false);
+  const previousApproveStatus = useRef<ConfirmButtonTransitionState>(
+    orderFulfillmentApprove.opts.status,
+  );
   const approvalErrors = orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || [];
+  const approveDialogErrors = stockExceeded
+    ? []
+    : approvalErrors.filter(error => error.code !== OrderErrorCode.INSUFFICIENT_STOCK);
 
   useEffect(() => {
-    if (approvalErrors.length && approvalErrors.every(err => err.code === "INSUFFICIENT_STOCK")) {
+    if (params.action === "approve-fulfillment" && params.id) {
+      setStockExceeded(false);
+    }
+  }, [params.action, params.id]);
+
+  useEffect(() => {
+    const previousStatus = previousApproveStatus.current;
+
+    previousApproveStatus.current = orderFulfillmentApprove.opts.status;
+
+    if (previousStatus !== "loading" || orderFulfillmentApprove.opts.status === "loading") {
+      return;
+    }
+
+    const errors = orderFulfillmentApprove.opts.data?.orderFulfillmentApprove?.errors ?? [];
+
+    if (isInsufficientStockApprovalErrors(errors)) {
       setStockExceeded(true);
     }
-  }, [approvalErrors]);
+  }, [orderFulfillmentApprove.opts.data, orderFulfillmentApprove.opts.status]);
 
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
 
@@ -233,31 +263,22 @@ export const OrderNormalDetails = ({
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "approve-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "approve-fulfillment", fulfillmentId)),
           )
         }
         onFulfillmentCancel={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "cancel-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "cancel-fulfillment", fulfillmentId)),
           )
         }
         onFulfillmentTrackingNumberUpdate={fulfillmentId =>
           navigate(
-            orderUrl(id, {
-              action: "edit-fulfillment",
-              id: fulfillmentId,
-            }),
+            orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
           )
         }
         onPaymentCapture={() => openModal("capture")}
         onPaymentVoid={() => openModal("void")}
-        onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
+        onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
@@ -278,6 +299,12 @@ export const OrderNormalDetails = ({
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
         onRefundAdd={() => openModal("add-refund")}
+        focusedLineId={params.lineId}
+        onFocusedLineChange={lineId =>
+          navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
+            replace: true,
+          })
+        }
       />
       <OrderCannotCancelOrderDialog
         onClose={closeModal}
@@ -387,8 +414,8 @@ export const OrderNormalDetails = ({
       )}
       <OrderFulfillmentApproveDialog
         confirmButtonState={orderFulfillmentApprove.opts.status}
-        errors={orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || []}
-        open={params.action === "approve-fulfillment"}
+        errors={approveDialogErrors}
+        open={params.action === "approve-fulfillment" && !stockExceeded}
         onConfirm={({ notifyCustomer }) => {
           setCurrentApproval({
             fulfillment: order?.fulfillments.find(getById(params.id)),
@@ -403,14 +430,14 @@ export const OrderNormalDetails = ({
         onClose={closeModal}
       />
       <OrderFulfillStockExceededDialog
-        lines={currentApproval?.fulfillment.lines}
+        lines={currentApproval?.fulfillment?.lines}
         formsetData={transformFuflillmentLinesToStockFormsetData(
-          currentApproval?.fulfillment.lines,
-          currentApproval?.fulfillment.warehouse,
+          currentApproval?.fulfillment?.lines,
+          currentApproval?.fulfillment?.warehouse,
         )}
         open={stockExceeded}
         onClose={() => setStockExceeded(false)}
-        confirmButtonState="default"
+        confirmButtonState={orderFulfillmentApprove.opts.status}
         onSubmit={() => {
           setStockExceeded(false);
 
@@ -427,6 +454,7 @@ export const OrderNormalDetails = ({
         open={params.action === "cancel-fulfillment"}
         warehouses={warehouses || []}
         fulfillmentStatus={order?.fulfillments.find(getById(params.id))?.status}
+        defaultWarehouseId={order?.fulfillments.find(getById(params.id))?.warehouse?.id}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
@@ -488,7 +516,9 @@ export const OrderNormalDetails = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
+        onStandardRefund={() =>
+          refundNavigation && navigate(refundNavigation.url, { replace: true })
+        }
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
 

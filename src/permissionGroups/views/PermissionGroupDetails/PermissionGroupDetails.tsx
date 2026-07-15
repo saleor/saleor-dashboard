@@ -15,8 +15,8 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
-import PermissionGroupDeleteDialog from "@dashboard/permissionGroups/components/PermissionGroupDeleteDialog";
+import { MembersErrorDialog } from "@dashboard/permissionGroups/components/MembersErrorDialog";
+import { PermissionGroupDeleteDialog } from "@dashboard/permissionGroups/components/PermissionGroupDeleteDialog";
 import useStaffMemberSearch from "@dashboard/searches/useStaffMemberSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -30,7 +30,7 @@ import {
   PermissionGroupDetailsPage,
   type PermissionGroupDetailsPageFormData,
 } from "../../components/PermissionGroupDetailsPage";
-import UnassignMembersDialog from "../../components/UnassignMembersDialog";
+import { UnassignMembersDialog } from "../../components/UnassignMembersDialog";
 import {
   permissionGroupDetailsUrl,
   type PermissionGroupDetailsUrlDialog,

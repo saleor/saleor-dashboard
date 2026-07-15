@@ -1,10 +1,9 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -25,8 +24,9 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { CollectionBulkDeleteDialog } from "../../components/CollectionBulkDeleteDialog/CollectionBulkDeleteDialog";
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
 import {
   collectionListUrl,
@@ -204,27 +204,13 @@ const CollectionList = ({ params }: CollectionListProps) => {
           })
         }
       />
-      <ActionDialog
-        open={params.action === "remove" && maybe(() => selectedRowIds.length > 0)}
-        onClose={closeModal}
+      <CollectionBulkDeleteDialog
         confirmButtonState={collectionBulkDeleteOpts.status}
+        count={maybe(() => selectedRowIds.length) ?? 0}
+        onClose={closeModal}
         onConfirm={handleCollectionBulkDelete}
-        variant="delete"
-        title={intl.formatMessage({
-          id: "Ykw8k5",
-          defaultMessage: "Delete collections",
-          description: "dialog title",
-        })}
-      >
-        <FormattedMessage
-          id="yT5zvU"
-          defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
-          values={{
-            counter: maybe(() => selectedRowIds.length),
-            displayQuantity: <strong>{maybe(() => selectedRowIds.length)}</strong>,
-          }}
-        />
-      </ActionDialog>
+        open={params.action === "remove" && maybe(() => selectedRowIds.length > 0)}
+      />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

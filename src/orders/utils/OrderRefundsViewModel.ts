@@ -10,6 +10,7 @@ import {
   type UserBaseAvatarFragment,
 } from "@dashboard/graphql";
 import { getUserInitials } from "@dashboard/misc";
+import { getGrantedRefundFailureMessage } from "@dashboard/orders/utils/getGrantedRefundFailureMessage";
 
 export type OrderRefundLine = {
   id: string;
@@ -32,6 +33,7 @@ export type OrderRefundDisplay = {
   };
   reasonNote: string | null;
   reasonType: string | null;
+  failureMessage: string | null;
   // Per-line refund details, populated for granted (standard) refunds only.
   lines: OrderRefundLine[];
   createdAt: string;
@@ -170,6 +172,7 @@ export abstract class OrderRefundsViewModel {
         ),
         reasonNote: null,
         reasonType: null,
+        failureMessage: getGrantedRefundFailureMessage(sortedEvents),
         lines: [],
         creator: this.getCreator(latestEvent.createdBy),
       };
@@ -181,6 +184,8 @@ export abstract class OrderRefundsViewModel {
         resultModel.reasonNote = eventRequestType.message ?? null;
         resultModel.reasonType = eventRequestType.reasonReference?.title ?? null;
       }
+
+      resultModel.failureMessage = getGrantedRefundFailureMessage(sortedEvents);
 
       return resultModel;
     });
@@ -220,6 +225,7 @@ export abstract class OrderRefundsViewModel {
       type: "standard",
       reasonType: refund.reasonReference?.title ?? null,
       reasonNote: refund.reason,
+      failureMessage: getGrantedRefundFailureMessage(refund.transactionEvents),
       lines: (refund.lines ?? [])
         .filter(line => line.quantity > 0)
         .map(line => ({

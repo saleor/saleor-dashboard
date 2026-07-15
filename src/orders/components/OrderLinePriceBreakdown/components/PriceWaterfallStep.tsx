@@ -55,7 +55,7 @@ export const PriceWaterfallStep = ({
           {label}
         </Text>
         {detail && (
-          <Text size={1} color="default1">
+          <Text size={1} color="default2">
             {detail}
           </Text>
         )}

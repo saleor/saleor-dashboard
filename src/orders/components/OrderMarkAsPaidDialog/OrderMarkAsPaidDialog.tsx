@@ -1,12 +1,20 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { type OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { transactionActionMessages } from "../OrderTransaction/messages";
+import { orderMarkAsPaidDialogMessages as messages } from "./messages";
 
 interface OrderMarkAsPaidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -18,7 +26,12 @@ interface OrderMarkAsPaidDialogProps {
   handleTransactionReference: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const OrderMarkAsPaidDialog = ({
+const formFields = ["transactionReference"] as const;
+
+const isTransactionReferenceField = (field: string | null): field is (typeof formFields)[number] =>
+  field !== null && formFields.includes(field as (typeof formFields)[number]);
+
+export const OrderMarkAsPaidDialog = ({
   confirmButtonState,
   errors: apiErrors,
   handleTransactionReference,
@@ -29,50 +42,60 @@ const OrderMarkAsPaidDialog = ({
 }: OrderMarkAsPaidDialogProps) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
+  const formErrors = getFormErrors([...formFields], errors);
 
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      open={open}
-      title={intl.formatMessage({
-        id: "+B25o/",
-        defaultMessage: "Mark Order as Paid",
-        description: "dialog header",
-      })}
-      onClose={onClose}
-      onConfirm={onConfirm}
-    >
-      <Box display="grid" gap={4}>
-        <FormattedMessage id="sfEbeB" defaultMessage="You're going to mark this order as paid." />{" "}
-        <FormattedMessage
-          id="rwOx2s"
-          defaultMessage="Please provide a transaction reference using the input below:"
-        />
-        <TextField
-          fullWidth
-          name="transactionReference"
-          label={intl.formatMessage({
-            id: "EbVf0Z",
-            defaultMessage: "Transaction reference",
-            description: "transaction reference",
-          })}
-          value={transactionReference}
-          onChange={handleTransactionReference}
-          data-test-id="transaction-reference-input"
-        />
-        {errors.length > 0 && (
-          <Box display="grid" gap={1}>
-            {errors.map((err, index) => (
-              <Text color="critical1" key={index}>
-                {getOrderErrorMessage(err, intl)}
-              </Text>
-            ))}
-          </Box>
-        )}
-      </Box>
-    </ActionDialog>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <>
+              <FormattedMessage {...messages.intro} />{" "}
+              <FormattedMessage {...messages.transactionReferenceHint} />
+            </>
+          }
+        >
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.Header>
+
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box display="flex" flexDirection="column" gap={4}>
+              <TextField
+                error={!!formErrors.transactionReference}
+                helperText={getOrderErrorMessage(formErrors.transactionReference, intl)}
+                fullWidth
+                name="transactionReference"
+                label={intl.formatMessage(messages.transactionReference)}
+                value={transactionReference}
+                onChange={handleTransactionReference}
+                data-test-id="transaction-reference-input"
+              />
+
+              {errors
+                .filter(err => !isTransactionReferenceField(err.field))
+                .map((err, index) => (
+                  <Text display="block" color="critical1" key={index} data-test-id="dialog-error">
+                    {getOrderErrorMessage(err, intl)}
+                  </Text>
+                ))}
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+          >
+            <FormattedMessage {...transactionActionMessages.markAsPaid} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 OrderMarkAsPaidDialog.displayName = "OrderMarkAsPaidDialog";
-export default OrderMarkAsPaidDialog;

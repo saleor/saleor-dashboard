@@ -1,6 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { GripVertical } from "lucide-react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
@@ -32,7 +33,9 @@ const SortableHandle = SortableHandleHoc(() => {
 
   return (
     <TableCell className={clsx(classes.columnDrag, disabled && classes.disabled)}>
-      <GripVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+      <Box display="flex" alignItems="center" height="100%">
+        <GripVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+      </Box>
     </TableCell>
   );
 });

@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import {
   ProductMediaType,
@@ -10,8 +9,9 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { ProductMediaDeleteDialog } from "../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMediaMetadataDialog } from "../components/ProductMediaMetadataDialog/ProductMediaMetadataDialog";
 import ProductMediaPage from "../components/ProductMediaPage";
 import {
@@ -21,28 +21,6 @@ import {
   productListUrl,
   productUrl,
 } from "../urls";
-
-const messages = defineMessages({
-  deleteImageTitle: {
-    id: "uCn/rd",
-    defaultMessage: "Delete Image",
-    description: "dialog header",
-  },
-  deleteVideoTitle: {
-    id: "dGlDp6",
-    defaultMessage: "Delete Video",
-    description: "product media delete dialog header",
-  },
-  deleteImageConfirmation: {
-    id: "VEext+",
-    defaultMessage: "Are you sure you want to delete this image?",
-  },
-  deleteVideoConfirmation: {
-    id: "/uu/aV",
-    defaultMessage: "Are you sure you want to delete this video?",
-    description: "product media delete dialog content",
-  },
-});
 
 interface ProductMediaProps {
   mediaId: string;
@@ -126,18 +104,13 @@ const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
         onClose={closeModal}
         media={mediaObj}
       />
-      <ActionDialog
+      <ProductMediaDeleteDialog
         onClose={() => navigate(productImageUrl(productId, mediaId), { replace: true })}
         onConfirm={handleDelete}
         open={params.action === "remove"}
-        title={intl.formatMessage(isVideo ? messages.deleteVideoTitle : messages.deleteImageTitle)}
-        variant="delete"
+        isVideo={isVideo}
         confirmButtonState={deleteResult.status}
-      >
-        <FormattedMessage
-          {...(isVideo ? messages.deleteVideoConfirmation : messages.deleteImageConfirmation)}
-        />
-      </ActionDialog>
+      />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import { Tabs } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import type * as React from "react";
 
 const useStyles = makeStyles(
@@ -8,21 +9,33 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       paddingLeft: theme.spacing(4),
     },
+    tabsRootFlush: {
+      paddingLeft: 0,
+      "& .MuiTabs-flexContainer": {
+        paddingLeft: 0,
+      },
+    },
   }),
   { name: "FilterTabs" },
 );
 
 interface FilterTabsProps {
   children?: React.ReactNode;
+  className?: string;
   currentTab: number | undefined;
+  /** Removes default page-level left padding — use inside modals or other padded containers. */
+  flush?: boolean;
 }
 
-const FilterTabs = (props: FilterTabsProps) => {
-  const { children, currentTab } = props;
-  const classes = useStyles(props);
+const FilterTabs = ({ children, className, currentTab, flush = false }: FilterTabsProps) => {
+  const classes = useStyles();
 
   return (
-    <Tabs className={classes.tabsRoot} value={currentTab} indicatorColor={"primary"}>
+    <Tabs
+      className={clsx(classes.tabsRoot, flush && classes.tabsRootFlush, className)}
+      value={currentTab}
+      indicatorColor="primary"
+    >
       {children}
     </Tabs>
   );

@@ -27,6 +27,7 @@ const mockContainerState = {
   removeAt: jest.fn(),
   clearEmpty: jest.fn(),
   clear: jest.fn(),
+  resetToProvider: jest.fn(),
 };
 
 const mockValueProvider: FilterValueProvider = {
@@ -326,6 +327,31 @@ describe("useModalFilters", () => {
   });
 
   describe("lockedFilter option", () => {
+    it("should initialize container state without global restriction rows", () => {
+      // Arrange
+      const wrapper = createWrapper();
+      const config = createMockConfig({
+        lockedFilterField: "productType",
+      });
+      const options: UseModalFiltersOptions = {
+        lockedFilter: createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]),
+      };
+      const { useContainerState } = jest.requireMock("../ConditionalFilter/useContainerState") as {
+        useContainerState: jest.Mock;
+      };
+
+      useContainerState.mockClear();
+
+      // Act
+      const { result } = renderHook(() => useModalFilters(config, options), { wrapper });
+
+      // Assert
+      const containerProvider = useContainerState.mock.calls[0]?.[0] as FilterValueProvider;
+
+      expect(containerProvider.value).toEqual([]);
+      expect(result.current.filterContext.valueProvider.value).toHaveLength(1);
+    });
+
     it("should wrap value provider when lockedFilter is provided", () => {
       // Arrange
       const wrapper = createWrapper();
@@ -423,10 +449,19 @@ describe("useModalFilters", () => {
   });
 
   describe("clearFilters behavior", () => {
-    it("should call both valueProvider.clear and containerState.clear when clearFilters is called", () => {
+    it("should clear filter state and collapse the filter panel when clearFilters is called", () => {
       // Arrange
       const wrapper = createWrapper();
       const config = createMockConfig();
+      const { useFilterWindow } = jest.requireMock("../ConditionalFilter/useFilterWindow") as {
+        useFilterWindow: jest.Mock;
+      };
+      const setOpen = jest.fn();
+
+      useFilterWindow.mockReturnValue({
+        isOpen: true,
+        setOpen,
+      });
 
       // Act
       const { result } = renderHook(() => useModalFilters(config), { wrapper });
@@ -435,7 +470,8 @@ describe("useModalFilters", () => {
 
       // Assert
       expect(mockValueProvider.clear).toHaveBeenCalled();
-      expect(mockContainerState.clear).toHaveBeenCalled();
+      expect(mockContainerState.resetToProvider).toHaveBeenCalled();
+      expect(setOpen).toHaveBeenCalledWith(false);
     });
   });
 

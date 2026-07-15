@@ -42,6 +42,7 @@ interface UseColumnsProps {
   selectedColumns: string[];
   onSave: (columns: string[]) => void;
   mapColumnsOnSave?: (columns: string[]) => string[];
+  newColumnPosition?: "start" | "end";
 }
 
 export const useColumns = ({
@@ -51,6 +52,7 @@ export const useColumns = ({
   columnCategories,
   onSave: handleSave,
   mapColumnsOnSave,
+  newColumnPosition = "start",
 }: UseColumnsProps) => {
   const [dynamicColumns, updateDynamicColumns] = useState<AvailableColumn[] | null>(null);
 
@@ -157,7 +159,11 @@ export const useColumns = ({
 
     if (!isDynamic) {
       if (isAdded) {
-        onSave([columnId, ...selectedColumns]);
+        onSave(
+          newColumnPosition === "end"
+            ? [...selectedColumns, columnId]
+            : [columnId, ...selectedColumns],
+        );
         setRecentlyAddedColumn(columnId);
       } else {
         onSave(selectedColumns.filter(id => id !== columnId));

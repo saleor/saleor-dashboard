@@ -1,8 +1,10 @@
 import type { UserContext as UserContextType } from "@dashboard/auth/types";
 import { UserContext } from "@dashboard/auth/useUser";
 import type { UserFragment } from "@dashboard/graphql";
+import { TerminalIcon } from "@dashboard/icons/TerminalIcon";
 import { Button } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Trash2 } from "lucide-react";
 import type { ComponentType } from "react";
 import { fn } from "storybook/test";
 
@@ -72,8 +74,8 @@ export const WithMenu: Story = {
     <TopNav title="Product Details" href="/products">
       <TopNav.Menu
         items={[
-          { label: "Edit", onSelect: fn() },
-          { label: "Delete", onSelect: fn(), color: "critical1" },
+          { label: "Edit", onSelect: fn(), icon: <TerminalIcon /> },
+          { label: "Delete", onSelect: fn(), color: "critical1", icon: <Trash2 size={16} /> },
         ]}
       />
     </TopNav>
@@ -86,8 +88,19 @@ export const WithDetailPageActions: Story = {
       <TopNav.MetadataButton title="Edit product metadata" onClick={fn()} />
       <TopNav.Menu
         items={[
-          { label: "Open in GraphiQL", onSelect: fn() },
-          { label: "Delete", onSelect: fn(), color: "critical1" },
+          {
+            label: "Open in GraphiQL",
+            onSelect: fn(),
+            testId: "graphiql-redirect",
+            icon: <TerminalIcon />,
+          },
+          {
+            label: "Delete",
+            onSelect: fn(),
+            testId: "delete-item",
+            color: "critical1",
+            icon: <Trash2 size={16} />,
+          },
         ]}
       />
     </TopNav>

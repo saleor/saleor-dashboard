@@ -1,6 +1,5 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type MoneyFragment } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import { DiscountModalBase } from "./DiscountModalBase";
@@ -27,25 +26,6 @@ export const OrderDiscountModal = ({
   onRemove,
   onClose,
 }: OrderDiscountModalProps) => {
-  const header = (
-    <Box display="flex" flexDirection="column" gap={0.5} overflow="hidden" __minWidth={0}>
-      <Text size={5} fontWeight="bold">
-        <FormattedMessage
-          defaultMessage="Order discount"
-          id="oO2fji"
-          description="dialog title for order discount"
-        />
-      </Text>
-      <Text size={2} color="default2">
-        <FormattedMessage
-          defaultMessage="Discount this order by a percentage or fixed amount"
-          id="ous0aA"
-          description="dialog subtitle for order discount"
-        />
-      </Text>
-    </Box>
-  );
-
   return (
     <DiscountModalBase
       open={open}
@@ -56,7 +36,20 @@ export const OrderDiscountModal = ({
       onConfirm={onConfirm}
       onRemove={onRemove}
       onClose={onClose}
-      header={header}
+      title={
+        <FormattedMessage
+          defaultMessage="Order discount"
+          id="oO2fji"
+          description="dialog title for order discount"
+        />
+      }
+      description={
+        <FormattedMessage
+          defaultMessage="Discount this order by a percentage or fixed amount"
+          id="ous0aA"
+          description="dialog subtitle for order discount"
+        />
+      }
     />
   );
 };

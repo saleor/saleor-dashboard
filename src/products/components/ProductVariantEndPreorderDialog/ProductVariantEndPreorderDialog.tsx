@@ -1,8 +1,12 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { useIntl } from "react-intl";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
+import { FormattedMessage } from "react-intl";
 
-import { productVariantEndPreorderDialogMessages } from "./messages";
+import { productVariantEndPreorderDialogMessages as messages } from "./messages";
 
 interface ProductVariantEndPreorderDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -12,33 +16,37 @@ interface ProductVariantEndPreorderDialogProps {
   variantGlobalSoldUnits?: number;
 }
 
-const ProductVariantEndPreorderDialog = ({
+export const ProductVariantEndPreorderDialog = ({
   confirmButtonState,
   open,
   onClose,
   onConfirm,
   variantGlobalSoldUnits,
 }: ProductVariantEndPreorderDialogProps) => {
-  const intl = useIntl();
-
   return (
-    <ActionDialog
-      confirmButtonLabel={intl.formatMessage(
-        productVariantEndPreorderDialogMessages.dialogConfirmButtonLabel,
-      )}
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={onConfirm}
-      title={intl.formatMessage(productVariantEndPreorderDialogMessages.dialogTitle)}
-      variant="default"
-    >
-      {intl.formatMessage(productVariantEndPreorderDialogMessages.dialogMessage, {
-        variantGlobalSoldUnits,
-      })}
-    </ActionDialog>
+    <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage {...messages.dialogMessage} values={{ variantGlobalSoldUnits }} />
+          }
+        >
+          <FormattedMessage {...messages.dialogTitle} />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton onClick={onClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+          >
+            <FormattedMessage {...messages.dialogConfirmButtonLabel} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 ProductVariantEndPreorderDialog.displayName = "ProductVariantEndPreorderDialog";
-export default ProductVariantEndPreorderDialog;

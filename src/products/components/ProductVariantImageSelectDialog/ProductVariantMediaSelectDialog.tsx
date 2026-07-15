@@ -1,15 +1,20 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
+import { areMediaSelectionsEqual } from "@dashboard/products/utils/handlers";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
-import { Box } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import clsx from "clsx";
+import { useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-interface ProductVariantImageSelectDialogProps {
+import { productVariantMediaSelectDialogMessages as messages } from "./messages";
+import styles from "./ProductVariantMediaSelectDialog.module.css";
+
+interface ProductVariantMediaSelectDialogProps {
   media?: ProductMediaFragment[];
   selectedMedia?: string[];
   open: boolean;
@@ -17,91 +22,105 @@ interface ProductVariantImageSelectDialogProps {
   onConfirm: (selectedIds: string[]) => void;
 }
 
-const ProductVariantMediaSelectDialog = (props: ProductVariantImageSelectDialogProps) => {
-  const { media, open, selectedMedia: initialMedia, onClose, onConfirm } = props;
-  const [selectedMedia, setSelectedMedia] = useState(initialMedia);
+export const ProductVariantMediaSelectDialog = ({
+  media,
+  open,
+  selectedMedia: initialMedia,
+  onClose,
+  onConfirm,
+}: ProductVariantMediaSelectDialogProps) => {
+  const committedMediaRef = useRef(initialMedia ?? []);
+
+  committedMediaRef.current = initialMedia ?? [];
+
+  const [selectedMedia, setSelectedMedia] = useState(initialMedia ?? []);
 
   useModalDialogOpen(open, {
-    onOpen: () => setSelectedMedia(initialMedia),
-    onClose: () => setSelectedMedia(initialMedia),
+    onOpen: () => setSelectedMedia(committedMediaRef.current),
+    onClose: () => setSelectedMedia(committedMediaRef.current),
   });
 
-  const handleMediaSelect = (id: string) => {
-    const isMediaAssigned = selectedMedia?.includes(id);
+  const sortedMedia = useMemo(
+    () => [...(media ?? [])].sort((prev, next) => (prev.sortOrder ?? 0) - (next.sortOrder ?? 0)),
+    [media],
+  );
 
-    if (isMediaAssigned) {
-      setSelectedMedia(selectedMedia => selectedMedia?.filter(mediaId => mediaId !== id));
-    } else {
-      setSelectedMedia(selectedMedia => [...(selectedMedia ?? []), id]);
-    }
+  const hasSelectionChanges = useMemo(
+    () => !areMediaSelectionsEqual(selectedMedia, committedMediaRef.current),
+    [selectedMedia, initialMedia],
+  );
+
+  const handleMediaSelect = (id: string) => {
+    setSelectedMedia(current =>
+      current.includes(id) ? current.filter(mediaId => mediaId !== id) : [...current, id],
+    );
   };
+
   const handleConfirm = () => {
-    onConfirm(selectedMedia ?? []);
+    if (hasSelectionChanges) {
+      onConfirm(selectedMedia);
+    }
+
     onClose();
   };
 
+  const selectedCount = selectedMedia.length;
+
   return (
     <DashboardModal onChange={onClose} open={open}>
-      <DashboardModal.Content size="md" __gridTemplateRows="auto 1fr">
-        <DashboardModal.Header>
-          <FormattedMessage
-            id="iPk640"
-            defaultMessage="Media Selection"
-            description="dialog header"
-          />
-        </DashboardModal.Header>
-
-        <Box
-          overflowY="auto"
-          display="grid"
-          gap={2}
-          gridTemplateColumns={{
-            desktop: 4,
-            tablet: 3,
-            mobile: 2,
-          }}
-          width="100%"
+      <DashboardModal.Content size="picker">
+        <DashboardModal.ContextHeader
+          description={<FormattedMessage {...messages.subtitle} />}
+          contextLabel={
+            sortedMedia.length > 0 ? (
+              <FormattedMessage {...messages.selectedCount} values={{ count: selectedCount }} />
+            ) : undefined
+          }
         >
-          {media
-            ?.sort((prev, next) => (prev.sortOrder! > next.sortOrder! ? 1 : -1))
-            .map(mediaObj => {
-              const mediaUrl = parseOembedData(mediaObj.oembedData).thumbnail_url || mediaObj.url;
-              const isSelected = selectedMedia?.includes(mediaObj.id);
+          <FormattedMessage {...messages.title} />
+        </DashboardModal.ContextHeader>
 
-              return (
-                <Box
-                  backgroundColor="transparent"
-                  borderStyle="solid"
-                  __borderWidth={isSelected ? 2 : 1}
-                  borderColor={isSelected ? "info1" : "default1"}
-                  cursor="pointer"
-                  __height={140}
-                  overflow="hidden"
-                  padding={3}
-                  position="relative"
-                  borderRadius={2}
-                  onClick={() => handleMediaSelect(mediaObj.id)}
-                  key={mediaObj.id}
-                >
-                  <Box
-                    width="100%"
-                    height="100%"
-                    objectFit="contain"
-                    as="img"
-                    src={mediaUrl}
-                    alt={mediaObj.alt}
-                    style={{
-                      userSelect: "none",
-                    }}
-                  />
-                </Box>
-              );
-            })}
-        </Box>
+        <DashboardModal.Body fill>
+          <DashboardModal.Inset>
+            {sortedMedia.length === 0 ? (
+              <FormattedMessage {...messages.empty} />
+            ) : (
+              <div className={styles.grid}>
+                {sortedMedia.map(mediaObj => {
+                  const mediaUrl =
+                    parseOembedData(mediaObj.oembedData).thumbnail_url || mediaObj.url;
+                  const isSelected = selectedMedia.includes(mediaObj.id);
+
+                  return (
+                    <button
+                      type="button"
+                      className={clsx(styles.tile, isSelected && styles.tileSelected)}
+                      onClick={() => handleMediaSelect(mediaObj.id)}
+                      key={mediaObj.id}
+                      data-test-id="variant-media-option"
+                      aria-pressed={isSelected}
+                    >
+                      <MediaWithFallback
+                        className={styles.image}
+                        src={mediaUrl}
+                        alt={mediaObj.alt ?? ""}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
           <BackButton onClick={onClose} />
-          <ConfirmButton transitionState="default" onClick={handleConfirm} data-test-id="submit">
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={!hasSelectionChanges}
+            onClick={handleConfirm}
+            transitionState="default"
+          >
             <FormattedMessage {...buttonMessages.confirm} />
           </ConfirmButton>
         </DashboardModal.Actions>
@@ -111,4 +130,3 @@ const ProductVariantMediaSelectDialog = (props: ProductVariantImageSelectDialogP
 };
 
 ProductVariantMediaSelectDialog.displayName = "ProductVariantMediaSelectDialog";
-export default ProductVariantMediaSelectDialog;

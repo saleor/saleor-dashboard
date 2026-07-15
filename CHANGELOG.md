@@ -1,5 +1,50 @@
 # Changelog
 
+## 3.23.15
+
+### Patch Changes
+
+- [#6714](https://github.com/saleor/saleor-dashboard/pull/6714) [`15463b9`](https://github.com/saleor/saleor-dashboard/commit/15463b9973fc242af8c8d9dee702745086b27867) Thanks [@mirekm](https://github.com/mirekm)! - Attributes list for model and product classes can optionally be grouped by type, with tabs, bulk unassign from a single type, and filters that stay above the tab strip. Attribute detail pages show a compact Usage summary of which types include the attribute.
+
+- [#6709](https://github.com/saleor/saleor-dashboard/pull/6709) [`761e4b9`](https://github.com/saleor/saleor-dashboard/commit/761e4b925030d780e267a92e500ae164be6368c7) Thanks [@mirekm](https://github.com/mirekm)! - - Create attributes directly on product and model type pages. Open the menu next to Assign attribute, choose Create attribute, and the new attribute is added to that type automatically — no need to leave the page or set up the link separately.
+  - Standardized dialog layouts across the dashboard. Forms, pickers, and confirmations now share consistent headers, content spacing, scrolling, and action buttons — replacing one-off layouts that varied by section.
+
+- [#6721](https://github.com/saleor/saleor-dashboard/pull/6721) [`bde648b`](https://github.com/saleor/saleor-dashboard/commit/bde648bc3229ac2b6943e94d0a7f98c6b0502c0f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - On the order details page, fulfillments with no lines no longer show an empty table with just column headers. The fulfillment card is now rendered without the empty product grid.
+
+- [#6731](https://github.com/saleor/saleor-dashboard/pull/6731) [`a695985`](https://github.com/saleor/saleor-dashboard/commit/a695985dfa32a388cc80e5b33e44bf15e18ae8de) Thanks [@mirekm](https://github.com/mirekm)! - _Timeline_ now matches line matrix for day-to-day work: order-level refund callout, _Fulfill_ and _Return_ in the items section header, per-line row actions, and return/replace reasons on unfulfilled lines when present. _Return_ and _Fulfill_ on a timeline row apply only within that shipment's context — not on already returned, refunded, or replaced fulfillments.
+
+  Reorganized the order details cog menu: extension actions and GraphiQL (with icons) first, _Cancel order_ last as the destructive action. _Return / Replace order_ is in the items section header only.
+
+  Draft orders: deleting a draft no longer shows Internal Server Error notification. The _Select a channel_ confirm button in _Create order_ shows a loading state while the draft is created.
+
+- [#6726](https://github.com/saleor/saleor-dashboard/pull/6726) [`fe2c0ef`](https://github.com/saleor/saleor-dashboard/commit/fe2c0ef4a78281a4fca77a920465fa039a251777) Thanks [@mirekm](https://github.com/mirekm)! - Fixed order fulfillment crashing when fulfilling a single line from a multi-line order. The fulfill page now uses consistent quantity and warehouse controls, disables warehouse selection for zero-quantity lines, pre-selects a warehouse from stock when no allocation exists, and truncates long variant details with a tooltip.
+
+- [#6713](https://github.com/saleor/saleor-dashboard/pull/6713) [`5acf47e`](https://github.com/saleor/saleor-dashboard/commit/5acf47eb27a71f67b24444f026a3cb85c5098ace) Thanks [@mirekm](https://github.com/mirekm)! - Fixed product create and update requiring a second save after assigning a category when publishing to channels. Assigning a category and saving now succeeds on the first try.
+
+- [#6727](https://github.com/saleor/saleor-dashboard/pull/6727) [`f2625e2`](https://github.com/saleor/saleor-dashboard/commit/f2625e238c0b92c607880707bc7f75d606436e0e) Thanks [@mirekm](https://github.com/mirekm)! - Align the add/edit reason modal with dashboard modal patterns: helper text in the header subtitle, inset body layout, and Back button for dismiss.
+
+- [#6733](https://github.com/saleor/saleor-dashboard/pull/6733) [`b5e262e`](https://github.com/saleor/saleor-dashboard/commit/b5e262ef4713059b273a5103d1ba5e63ea072b67) Thanks [@mirekm](https://github.com/mirekm)! - Added expandable rows to the Category list with lazy loading of subcategories and improved nested selection logic.
+
+- [#6705](https://github.com/saleor/saleor-dashboard/pull/6705) [`8300fe8`](https://github.com/saleor/saleor-dashboard/commit/8300fe8669de1d7fc89fac97086809553b8bc2d5) Thanks [@mirekm](https://github.com/mirekm)! - Swatch variant attributes now appear in the product variants grid with color previews, so merchants can edit color-style variant values alongside other variant columns.
+
+- [#6725](https://github.com/saleor/saleor-dashboard/pull/6725) [`c272fc4`](https://github.com/saleor/saleor-dashboard/commit/c272fc4d66c10bea3446ba44b86af881bbb24eac) Thanks [@mirekm](https://github.com/mirekm)! - Product type and model type detail pages now match the refreshed layout used elsewhere in the dashboard: metadata is edited from a header button, attributes sit in the main column, and type settings (name, shipping, taxes, etc.) move to the sidebar.
+
+## 3.23.14
+
+### Patch Changes
+
+- [#6703](https://github.com/saleor/saleor-dashboard/pull/6703) [`f26158a`](https://github.com/saleor/saleor-dashboard/commit/f26158a7e1a404f3b21e447c192353a44fc456a3) Thanks [@mirekm](https://github.com/mirekm)! - Customer profiles now show channel-scoped order statistics: total orders, recent net sales, and average order value. Net sales use product revenue after discounts and exclude shipping and tax; hover the amount for shipping and refund details from the same orders. The recent orders table shows net and gross amounts per order, with a hint explaining how net relates to the overview figures.
+
+- [#6716](https://github.com/saleor/saleor-dashboard/pull/6716) [`ce87ab7`](https://github.com/saleor/saleor-dashboard/commit/ce87ab711dfa71f5ab8cc7f1350cb856d8eecfc1) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed the "Used by" column from the gift cards list and the "Used by" field from the gift card details page. These relied on the `GiftCard.usedBy` / `usedByEmail` API fields, which have been deprecated and no longer behave as intended since Saleor 3.14 — `usedBy` became mutable and points to the last usage rather than a reliable single user, so the displayed value was misleading. Filtering gift cards by the customer who used them is unaffected.
+
+- [#6700](https://github.com/saleor/saleor-dashboard/pull/6700) [`260b3ab`](https://github.com/saleor/saleor-dashboard/commit/260b3ab37891d59443717d3b2306b0e848e6d893) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed a flash on the homepage where an empty "Welcome" screen briefly appeared before the app extension tabs and widgets loaded on every page refresh. The homepage now caches the last-known extensions locally and renders their tabs immediately on load while refreshing in the background. On the very first load (before anything is cached) the page stays blank until extensions resolve, instead of flashing the "Welcome" message.
+
+- [#6708](https://github.com/saleor/saleor-dashboard/pull/6708) [`b216b81`](https://github.com/saleor/saleor-dashboard/commit/b216b814a291a263fc846cfbf4d4b7c80021e829) Thanks [@mirekm](https://github.com/mirekm)! - Moved Model Types and Product Types to the bottom of their sidebar sections, separated by a dashed line from daily-use items. Both open the same settings views as Configuration, with a small settings icon and lighter label styling.
+
+- [#6704](https://github.com/saleor/saleor-dashboard/pull/6704) [`4036943`](https://github.com/saleor/saleor-dashboard/commit/40369430a5e3d7cb91d966b1de623919f631ca1b) Thanks [@mirekm](https://github.com/mirekm)! - Added a **Net** column to the orders list showing post-discount product value (excluding tax and shipping), placed before the existing **Total** column. The Net column is shown by default for new layouts and can be enabled from the column picker for customized views.
+
+- [#6712](https://github.com/saleor/saleor-dashboard/pull/6712) [`5b4f22d`](https://github.com/saleor/saleor-dashboard/commit/5b4f22db145c9e0b7d16ffa4345bc87804ce7097) Thanks [@mirekm](https://github.com/mirekm)! - Fixed saving a webhook from the create view incorrectly showing the "Leave without saving changes?" dialog instead of navigating to the new webhook.
+
 ## 3.23.13
 
 ### Patch Changes

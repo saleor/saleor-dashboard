@@ -20,9 +20,9 @@ import {
   useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
+import { OrderCannotCancelOrderDialog } from "@dashboard/orders/components/OrderCannotCancelOrderDialog/OrderCannotCancelOrderDialog";
 import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
-import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
+import { OrderFulfillmentApproveDialog } from "@dashboard/orders/components/OrderFulfillmentApproveDialog/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
@@ -30,6 +30,7 @@ import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataD
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
+import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
@@ -42,23 +43,24 @@ import { customerUrl } from "../../../../customers/urls";
 import { extractMutationErrors, getById, getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
-import OrderCancelDialog from "../../../components/OrderCancelDialog";
+import { OrderCancelDialog } from "../../../components/OrderCancelDialog";
 import { OrderCaptureDialog } from "../../../components/OrderCaptureDialog/OrderCaptureDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
 import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
-import OrderFulfillmentTrackingDialog from "../../../components/OrderFulfillmentTrackingDialog";
-import OrderMarkAsPaidDialog from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
+import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog";
+import { OrderMarkAsPaidDialog } from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
-import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
+import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
+  orderDetailsUrl,
   orderFulfillUrl,
   orderManualTransactionRefundUrl,
-  orderPaymentRefundUrl,
   orderReturnUrl,
-  orderTransactionRefundUrl,
   orderUrl,
   type OrderUrlQueryParams,
+  withOrderFulfillmentDialog,
+  withOrderLineFocus,
 } from "../../../urls";
 
 interface OrderUnconfirmedDetailsProps {
@@ -133,6 +135,7 @@ export const OrderUnconfirmedDetails = ({
   const order = data.order;
   const shop = data.shop;
   const navigate = useNavigator();
+  const refundNavigation = useMemo(() => (order ? getOrderRefundNavigation(order) : null), [order]);
   const {
     loadMore,
     search: variantSearch,
@@ -240,6 +243,8 @@ export const OrderUnconfirmedDetails = ({
               })
             }
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
+            orderLineRemoveConfirmState={orderLineDelete.opts.status}
+            orderLineRemoveErrors={orderLineDelete.opts.data?.orderLineDelete?.errors ?? []}
             onShippingMethodEdit={() => openModal("edit-shipping")}
             onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
             onOrderShowMetadata={() => openModal("view-order-metadata")}
@@ -250,31 +255,28 @@ export const OrderUnconfirmedDetails = ({
             onOrderFulfill={() => navigate(orderFulfillUrl(id))}
             onFulfillmentApprove={fulfillmentId =>
               navigate(
-                orderUrl(id, {
-                  action: "approve-fulfillment",
-                  id: fulfillmentId,
-                }),
+                orderUrl(
+                  id,
+                  withOrderFulfillmentDialog(params, "approve-fulfillment", fulfillmentId),
+                ),
               )
             }
             onFulfillmentCancel={fulfillmentId =>
               navigate(
-                orderUrl(id, {
-                  action: "cancel-fulfillment",
-                  id: fulfillmentId,
-                }),
+                orderUrl(
+                  id,
+                  withOrderFulfillmentDialog(params, "cancel-fulfillment", fulfillmentId),
+                ),
               )
             }
             onFulfillmentTrackingNumberUpdate={fulfillmentId =>
               navigate(
-                orderUrl(id, {
-                  action: "edit-fulfillment",
-                  id: fulfillmentId,
-                }),
+                orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
               )
             }
             onPaymentCapture={() => openModal("capture")}
             onPaymentVoid={() => openModal("void")}
-            onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
+            onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
@@ -296,6 +298,12 @@ export const OrderUnconfirmedDetails = ({
             onInvoiceSend={id => openModal("invoice-send", { id })}
             onRefundAdd={() => openModal("add-refund")}
             onSubmit={handleSubmit}
+            focusedLineId={params.lineId}
+            onFocusedLineChange={lineId =>
+              navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
+                replace: true,
+              })
+            }
           />
         </OrderLineDiscountProvider>
       </OrderDiscountProvider>
@@ -458,6 +466,7 @@ export const OrderUnconfirmedDetails = ({
         open={params.action === "cancel-fulfillment"}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         fulfillmentStatus={order?.fulfillments.find(getById(params.id))?.status}
+        defaultWarehouseId={order?.fulfillments.find(getById(params.id))?.warehouse?.id}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,
@@ -532,7 +541,9 @@ export const OrderUnconfirmedDetails = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
-        onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
+        onStandardRefund={() =>
+          refundNavigation && navigate(refundNavigation.url, { replace: true })
+        }
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
     </>

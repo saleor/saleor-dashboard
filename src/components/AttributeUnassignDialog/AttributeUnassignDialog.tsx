@@ -1,5 +1,9 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -14,7 +18,7 @@ interface AttributeUnassignDialogProps {
   onConfirm: () => void;
 }
 
-const AttributeUnassignDialog = ({
+export const AttributeUnassignDialog = ({
   title,
   attributeName,
   confirmButtonState,
@@ -24,26 +28,47 @@ const AttributeUnassignDialog = ({
   onConfirm,
 }: AttributeUnassignDialogProps) => {
   const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      confirmButtonState={confirmButtonState}
-      open={open}
-      onClose={onClose}
-      onConfirm={onConfirm}
-      title={title}
-      confirmButtonLabel={intl.formatMessage(messages.confirmBtn)}
-    >
-      <FormattedMessage
-        {...messages.content}
-        values={{
-          attributeName: <strong>{attributeName}</strong>,
-          itemTypeName: <strong>{itemTypeName}</strong>,
-        }}
-      />
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              {...messages.content}
+              values={{
+                attributeName: <strong>{attributeName}</strong>,
+                itemTypeName: <strong>{itemTypeName}</strong>,
+              }}
+            />
+          }
+        >
+          {title}
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onConfirm}
+            transitionState={confirmButtonState}
+          >
+            {intl.formatMessage(messages.confirmBtn)}
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 AttributeUnassignDialog.displayName = "AttributeUnassignDialog";
-export default AttributeUnassignDialog;

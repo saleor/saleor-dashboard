@@ -19,6 +19,7 @@ import {
   type BulkAction,
   type Dialog,
   type Filters,
+  type FiltersWithMultipleValues,
   type Pagination,
   type SingleAction,
   type Sort,
@@ -35,7 +36,13 @@ export enum AttributeListUrlFiltersEnum {
   query = "query",
 }
 export type AttributeListUrlFilters = Filters<AttributeListUrlFiltersEnum>;
-export type AttributeListUrlDialog = "remove" | TabActionDialog;
+
+enum AttributeListUrlFiltersWithMultipleValues {
+  typeIds = "typeIds",
+  pageTypes = "pageTypes",
+}
+
+export type AttributeListUrlDialog = "remove" | "unassign" | TabActionDialog;
 export enum AttributeListUrlSortField {
   name = "name",
   slug = "slug",
@@ -45,6 +52,7 @@ export enum AttributeListUrlSortField {
 type AttributeListUrlSort = Sort<AttributeListUrlSortField>;
 export type AttributeListUrlQueryParams = ActiveTab &
   AttributeListUrlFilters &
+  FiltersWithMultipleValues<AttributeListUrlFiltersWithMultipleValues> &
   AttributeListUrlSort &
   BulkAction &
   Dialog<AttributeListUrlDialog> &
@@ -52,6 +60,19 @@ export type AttributeListUrlQueryParams = ActiveTab &
 export const attributeListPath = attributeSection;
 export const attributeListUrl = (params?: AttributeListUrlQueryParams) =>
   attributeListPath + "?" + stringifyQs(params);
+
+/**
+ * Updates attribute list type-tab selection in URL params.
+ * Always clears legacy `pageTypes` so bookmarks cannot re-apply a stale tab.
+ */
+export const withAttributeListTypeTabSelection = (
+  params: AttributeListUrlQueryParams,
+  typeIds: string[] | undefined,
+): AttributeListUrlQueryParams => ({
+  ...params,
+  typeIds: typeIds?.length ? typeIds : undefined,
+  pageTypes: undefined,
+});
 
 const createAttributeTypeFilterElement = (attributeType: AttributeTypeEnum): FilterElement => {
   const expressionValue = new ExpressionValue("attributeType", "Type", "attributeType");
@@ -103,12 +124,7 @@ export const getAttributeTypeFromBuiltInPresetTab = (
 export const attributeListUrlWithAttributeTypePreset = (attributeType: AttributeTypeEnum) =>
   `${attributeListUrlWithAttributeType(attributeType)}&activeTab=${builtInAttributeTypePresetTabIndex[attributeType]}`;
 
-export type AttributeAddUrlDialog =
-  | "add-value"
-  | "edit-value"
-  | "remove-value"
-  | "remove-values"
-  | "assign-reference-types";
+export type AttributeAddUrlDialog = "add-value" | "edit-value" | "remove-value" | "remove-values";
 export type AttributeAddUrlQueryParams = Dialog<AttributeAddUrlDialog> &
   SingleAction & {
     type?: AttributeTypeEnum;
@@ -135,7 +151,6 @@ export type AttributeUrlDialog =
   | "remove"
   | "remove-value"
   | "remove-values"
-  | "assign-reference-types"
   | "view-metadata";
 export type AttributeUrlQueryParams = BulkAction & Dialog<AttributeUrlDialog> & SingleAction;
 export const attributePath = (id: string) => urlJoin(attributeSection, id);

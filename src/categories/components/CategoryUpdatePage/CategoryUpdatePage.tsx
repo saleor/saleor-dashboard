@@ -28,7 +28,7 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import { Fragment } from "react";
+import { type Dispatch, Fragment, type SetStateAction } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -61,7 +61,11 @@ interface CategoryUpdatePageProps
   onCategoriesDelete: () => void;
   onProductsDelete: () => void;
   onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
-  onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
+  selectedCategoryIds: string[];
+  setSelectedCategoryIds: Dispatch<SetStateAction<string[]>>;
+  clearCategoryRowSelection: () => void;
+  excludeCategoryFromSelected: (ids: string[]) => void;
+  setClearCategoryDatagridRowSelectionCallback: (callback: () => void) => void;
   onImageUpload: (file: File | null) => any;
   onDelete: () => any;
 }
@@ -90,10 +94,14 @@ export const CategoryUpdatePage = ({
   onSubmit,
   onImageDelete,
   onImageUpload,
-  onSelectCategoriesIds,
   onCategoriesDelete,
   onProductsDelete,
   onSelectProductsIds,
+  selectedCategoryIds,
+  setSelectedCategoryIds,
+  clearCategoryRowSelection,
+  excludeCategoryFromSelected,
+  setClearCategoryDatagridRowSelectionCallback,
   settings,
   onUpdateListSettings,
 }: CategoryUpdatePageProps) => {
@@ -251,9 +259,13 @@ export const CategoryUpdatePage = ({
                 onUpdateListSettings={onUpdateListSettings}
                 settings={settings}
                 subcategories={subcategories!}
-                onCategoriesDelete={onCategoriesDelete}
-                onSelectCategoriesIds={onSelectCategoriesIds}
                 categoryId={categoryId}
+                selectedCategoryIds={selectedCategoryIds}
+                setSelectedCategoryIds={setSelectedCategoryIds}
+                clearRowSelection={clearCategoryRowSelection}
+                excludeFromSelected={excludeCategoryFromSelected}
+                setClearDatagridRowSelectionCallback={setClearCategoryDatagridRowSelectionCallback}
+                onCategoriesDelete={onCategoriesDelete}
               />
             )}
 

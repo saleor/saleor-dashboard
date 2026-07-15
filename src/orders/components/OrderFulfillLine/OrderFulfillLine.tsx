@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { QuantityInput } from "@dashboard/components/QuantityInput";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type OrderFulfillLineFragment } from "@dashboard/graphql";
@@ -9,13 +10,16 @@ import {
   getWarehouseStock,
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
-import { TableCell, TextField } from "@material-ui/core";
-import { ChevronIcon, IconButton, WarningIcon } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { TableCell } from "@material-ui/core";
+import { WarningIcon } from "@saleor/macaw-ui";
+import { Box, Input, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { ChevronDown } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import styles from "./OrderFulfillLine.module.css";
+import { OrderFulfillProductCellContent } from "./OrderFulfillProductCellContent";
 import { useStyles } from "./styles";
 
 interface OrderFulfillLineProps {
@@ -34,10 +38,10 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
   const isPreorder = !!line.variant?.preorder;
   const lineFormQuantity = isPreorder ? 0 : formsetData[lineIndex]?.value?.[0]?.quantity;
   const lineFormWarehouse = formsetData[lineIndex]?.value?.[0]?.warehouse;
+  const isFulfillingLine = (lineFormQuantity ?? 0) > 0;
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
   const warehouseStock = getWarehouseStock(line?.variant?.stocks, lineFormWarehouse?.id);
   const availableQuantity = getOrderLineAvailableQuantity(line, warehouseStock);
-  const isStockExceeded = lineFormQuantity > availableQuantity;
 
   if (!line) {
     return (
@@ -54,7 +58,7 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
         <TableCell className={classes.colStock}>
           <Skeleton />
         </TableCell>
-        <TableCell className={classes.colWarehouse}>
+        <TableCell className={clsx(classes.colWarehouse, styles.warehouseCell)}>
           <Skeleton />
         </TableCell>
       </TableRowLink>
@@ -86,10 +90,10 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
           ) : undefined
         }
       >
-        {line.productName}
-        <Text color="default2" size={2} fontWeight="light">
-          {getAttributesCaption(line.variant?.attributes)}
-        </Text>
+        <OrderFulfillProductCellContent
+          productName={line.productName}
+          attributesCaption={getAttributesCaption(line.variant?.attributes)}
+        />
       </TableCellAvatar>
       <TableCell className={classes.colSku}>{line.variant?.sku}</TableCell>
       {isPreorder ? (
@@ -99,37 +103,19 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
           className={classes.colQuantity}
           key={warehouseStock?.id ?? "deletedVariant" + lineIndex}
         >
-          <TextField
-            type="number"
-            inputProps={{
-              className: clsx(classes.quantityInnerInput, {
-                [classes.quantityInnerInputNoRemaining]: !line.variant?.trackInventory,
-              }),
-              min: 0,
-              style: { textAlign: "right" },
-            }}
-            fullWidth
-            value={lineFormQuantity}
-            onChange={event =>
+          <QuantityInput
+            value={lineFormQuantity ?? 0}
+            max={line.quantityToFulfill}
+            isError={overfulfill}
+            onChange={event => {
+              const quantity = parseInt(event.target.value, 10);
+
               formsetChange(line.id, [
                 {
-                  quantity: parseInt(event.target.value, 10),
+                  quantity: Number.isNaN(quantity) ? 0 : quantity,
                   warehouse: lineFormWarehouse,
                 },
-              ])
-            }
-            error={overfulfill}
-            variant="outlined"
-            InputProps={{
-              classes: {
-                ...(isStockExceeded &&
-                  !overfulfill && {
-                    notchedOutline: classes.warning,
-                  }),
-              },
-              endAdornment: (
-                <div className={classes.remainingQuantity}>/ {line.quantityToFulfill}</div>
-              ),
+              ]);
             }}
           />
         </TableCell>
@@ -137,25 +123,41 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
       <TableCell className={classes.colStock} key="total">
         {lineFormWarehouse ? (isPreorder || isDeletedVariant ? undefined : availableQuantity) : "-"}
       </TableCell>
-      <TableCell className={classes.colWarehouse}>
+      <TableCell className={clsx(classes.colWarehouse, styles.warehouseCell)}>
         {isPreorder ? (
           "-"
         ) : (
-          <IconButton
-            onClick={onWarehouseChange}
-            className={clsx(
-              classes.warehouseButton,
-              "MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd",
-            )}
-            data-test-id="select-warehouse-button"
+          <Box
+            role="button"
+            tabIndex={isFulfillingLine ? 0 : -1}
+            aria-disabled={!isFulfillingLine}
+            onClick={isFulfillingLine ? onWarehouseChange : undefined}
+            onKeyDown={event => {
+              if (!isFulfillingLine) {
+                return;
+              }
+
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onWarehouseChange();
+              }
+            }}
+            className={isFulfillingLine ? styles.warehouseInput : styles.warehouseInputDisabled}
+            padding={2}
+            width="100%"
           >
-            <div className={classes.warehouseButtonContent}>
-              <Text className={classes.warehouseButtonContentText}>
-                {lineFormWarehouse?.name ?? intl.formatMessage(messages.selectWarehouse)}
-              </Text>
-              <ChevronIcon onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-            </div>
-          </IconButton>
+            <Input
+              readOnly
+              disabled={!isFulfillingLine}
+              size="small"
+              width="100%"
+              aria-label={intl.formatMessage(messages.warehouse)}
+              placeholder={intl.formatMessage(messages.selectWarehouse)}
+              value={lineFormWarehouse?.name}
+              endAdornment={<ChevronDown size={16} />}
+              data-test-id="select-warehouse-button"
+            />
+          </Box>
         )}
       </TableCell>
     </TableRowLink>

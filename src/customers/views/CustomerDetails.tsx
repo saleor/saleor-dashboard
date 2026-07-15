@@ -1,17 +1,18 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useRemoveCustomerMutation, useUpdateCustomerMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { CustomerDeleteDialog } from "../components/CustomerDeleteDialog/CustomerDeleteDialog";
 import CustomerDetailsPage, {
   type CustomerDetailsPageFormData,
 } from "../components/CustomerDetailsPage";
 import { CustomerMetadataDialog } from "../components/CustomerMetadataDialog/CustomerMetadataDialog";
+import { CustomerStatusChangeDialog } from "../components/CustomerStatusChangeDialog/CustomerStatusChangeDialog";
 import { useCustomerDetails } from "../hooks/useCustomerDetails";
 import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
 import { customerListUrl, customerUrl, type CustomerUrlQueryParams } from "../urls";
@@ -97,6 +98,8 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   };
 
   const closeDialog = () => navigate(customerUrl(id), { replace: true });
+  const customerEmail = <strong>{getStringOrPlaceholder(user?.email)}</strong>;
+  const isStatusDialogOpen = params.action === "activate" || params.action === "deactivate";
 
   // Run the mutation, then emit an action-specific toast and close the dialog
   // on success. The confirm button still transitions through its loading state
@@ -174,8 +177,9 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
         onClose={closeDialog}
         customer={user}
       />
-      <ActionDialog
+      <CustomerDeleteDialog
         confirmButtonState={removeCustomerOpts.status}
+        email={customerEmail}
         onClose={closeDialog}
         onConfirm={() =>
           removeCustomer({
@@ -184,74 +188,16 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             },
           })
         }
-        title={intl.formatMessage({
-          id: "ey0lZj",
-          defaultMessage: "Delete Customer",
-          description: "dialog header",
-        })}
-        variant="delete"
         open={params.action === "remove"}
-      >
-        <FormattedMessage
-          id="2p0tZx"
-          defaultMessage="Are you sure you want to delete {email}?"
-          description="delete customer, dialog content"
-          values={{
-            email: <strong>{getStringOrPlaceholder(user?.email)}</strong>,
-          }}
-        />
-      </ActionDialog>
-      <ActionDialog
-        confirmButtonState={updateCustomerOpts.status}
-        confirmButtonLabel={intl.formatMessage({
-          defaultMessage: "Deactivate",
-          description: "deactivate customer dialog, confirm button label",
-          id: "weguIe",
-        })}
+      />
+      <CustomerStatusChangeDialog
+        confirmButtonState={isStatusDialogOpen ? updateCustomerOpts.status : "default"}
+        email={customerEmail}
         onClose={closeDialog}
-        onConfirm={handleDeactivateConfirm}
-        title={intl.formatMessage({
-          defaultMessage: "Deactivate customer",
-          description: "deactivate customer dialog, header",
-          id: "8maISA",
-        })}
-        variant="delete"
-        open={params.action === "deactivate"}
-      >
-        <FormattedMessage
-          defaultMessage="Are you sure you want to deactivate {email}? They will no longer be able to sign in or place new orders."
-          description="deactivate customer dialog, content"
-          id="genRi+"
-          values={{
-            email: <strong>{getStringOrPlaceholder(user?.email)}</strong>,
-          }}
-        />
-      </ActionDialog>
-      <ActionDialog
-        confirmButtonState={updateCustomerOpts.status}
-        confirmButtonLabel={intl.formatMessage({
-          defaultMessage: "Activate",
-          description: "activate customer dialog, confirm button label",
-          id: "Ruw3iJ",
-        })}
-        onClose={closeDialog}
-        onConfirm={handleActivateConfirm}
-        title={intl.formatMessage({
-          defaultMessage: "Activate customer",
-          description: "activate customer dialog, header",
-          id: "Le6/M7",
-        })}
-        open={params.action === "activate"}
-      >
-        <FormattedMessage
-          defaultMessage="Are you sure you want to activate {email}? They will be able to sign in and place new orders."
-          description="activate customer dialog, content"
-          id="6a075o"
-          values={{
-            email: <strong>{getStringOrPlaceholder(user?.email)}</strong>,
-          }}
-        />
-      </ActionDialog>
+        onConfirm={params.action === "deactivate" ? handleDeactivateConfirm : handleActivateConfirm}
+        open={isStatusDialogOpen}
+        variant={params.action === "deactivate" ? "deactivate" : "activate"}
+      />
     </>
   );
 };

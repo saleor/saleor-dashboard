@@ -14,8 +14,8 @@ export const usePromotionDelete = () => {
         notify({
           status: "success",
           text: intl.formatMessage({
-            id: "4LRapg",
-            defaultMessage: "Discount removed",
+            id: "p2EAP0",
+            defaultMessage: "Promotion removed",
           }),
         });
         navigate(discountListUrl());

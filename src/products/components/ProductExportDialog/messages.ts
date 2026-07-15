@@ -12,6 +12,26 @@ export const productExportDialogMessages = defineMessages({
     defaultMessage: "Export products",
     description: "export products to csv file, button",
   },
+  infoStep: {
+    id: "/68iG8",
+    defaultMessage: "Information exported",
+    description: "product export to csv file, header",
+  },
+  settingsStep: {
+    id: "ki7Mr8",
+    defaultMessage: "Export Settings",
+    description: "product export to csv file, header",
+  },
+  infoStepDescription: {
+    id: "CVVSkC",
+    defaultMessage: "Select the columns and details to include in your export file.",
+    description: "product export dialog step one intro",
+  },
+  settingsStepDescription: {
+    id: "KAhzcY",
+    defaultMessage: "Choose which products to export and the file format.",
+    description: "product export dialog step two intro",
+  },
   productsLabel: {
     id: "dc5KWn",
     defaultMessage: "products",

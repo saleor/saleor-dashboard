@@ -39,6 +39,8 @@ const ProductTypeCreate = ({ params }: ProductTypeCreateProps) => {
   });
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const [createProductType, createProductTypeOpts] = useProductTypeCreateMutation({
+    // Name and other field errors are rendered inline on the create form.
+    disableErrorHandling: true,
     onCompleted: data => {
       if (data.productTypeCreate.errors.length === 0) {
         notify({

@@ -63,6 +63,24 @@ export const categoryDetails = gql`
   }
 `;
 
+export const categoryChildren = gql`
+  query CategoryChildren($id: ID!, $first: Int!, $after: String) {
+    category(id: $id) {
+      id
+      children(first: $first, after: $after) {
+        edges {
+          node {
+            ...Category
+          }
+        }
+        pageInfo {
+          ...PageInfo
+        }
+      }
+    }
+  }
+`;
+
 export const defaultGraphiQLQuery = `query CategoryDetails($id: ID!) {
   category(id: $id) {
     id

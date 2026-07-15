@@ -6,15 +6,20 @@ export const messages = defineMessages({
     defaultMessage: "Reference Types",
     description: "section title for reference types selector",
   },
-  noProductTypesAssigned: {
-    id: "M3aMq+",
-    defaultMessage: "No product types assigned",
-    description: "empty state for reference types",
+  productTypesLabel: {
+    id: "2sDBzg",
+    defaultMessage: "Product types",
+    description: "reference types multiselect label for product entity",
   },
-  noModelTypesAssigned: {
-    id: "4DkQt1",
-    defaultMessage: "No model types assigned",
-    description: "empty state for model types",
+  modelTypesLabel: {
+    id: "oKUPKP",
+    defaultMessage: "Model types",
+    description: "reference types multiselect label for model entity",
+  },
+  searchPlaceholder: {
+    id: "A9bJg6",
+    defaultMessage: "Search by name…",
+    description: "reference types multiselect search placeholder",
   },
   referenceTypesHelp: {
     id: "COWJSG",

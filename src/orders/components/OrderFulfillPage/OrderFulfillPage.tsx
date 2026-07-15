@@ -21,7 +21,7 @@ import useFormset, { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
-import OrderChangeWarehouseDialog from "@dashboard/orders/components/OrderChangeWarehouseDialog";
+import { OrderChangeWarehouseDialog } from "@dashboard/orders/components/OrderChangeWarehouseDialog/OrderChangeWarehouseDialog";
 import {
   type OrderFulfillUrlDialog,
   type OrderFulfillUrlQueryParams,
@@ -29,18 +29,21 @@ import {
 } from "@dashboard/orders/urls";
 import {
   getAttributesCaption,
-  getLineAllocationWithHighestQuantity,
+  getDefaultFulfillWarehouse,
+  getOrderFulfillLineDisplayName,
+  getOrderFulfillSubmitItems,
   getToFulfillOrderLines,
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
-import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
+import fulfillLineStyles from "../OrderFulfillLine/OrderFulfillLine.module.css";
+import { OrderFulfillStockExceededDialog } from "../OrderFulfillStockExceededDialog/OrderFulfillStockExceededDialog";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
@@ -84,11 +87,23 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const intl = useIntl();
   const classes = useStyles(props);
   const navigate = useNavigator();
-  const { change: formsetChange, data: formsetData } = useFormset<null, OrderFulfillLineFormData[]>(
-    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(line => {
-      const highestQuantityAllocation = getLineAllocationWithHighestQuantity(line);
+  const linesToFulfill = useMemo(() => {
+    const lines = getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[];
 
-      return {
+    if (!params.lineId) {
+      return lines;
+    }
+
+    return lines.filter(line => line.id === params.lineId);
+  }, [order?.lines, params.lineId]);
+  const prefilledLine = params.lineId
+    ? linesToFulfill.find(orderLine => orderLine.id === params.lineId)
+    : undefined;
+  const prefilledProductName = prefilledLine ? getOrderFulfillLineDisplayName(prefilledLine) : "";
+  const isSingleLineFulfillment = linesToFulfill.length === 1;
+  const formsetInitial = useMemo(
+    () =>
+      linesToFulfill.map(line => ({
         data: null,
         id: line.id,
         label: getAttributesCaption(line?.variant?.attributes),
@@ -97,11 +112,14 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
           : [
               {
                 quantity: line.quantityToFulfill,
-                warehouse: highestQuantityAllocation?.warehouse,
+                warehouse: getDefaultFulfillWarehouse(line),
               },
             ],
-      };
-    }),
+      })),
+    [linesToFulfill],
+  );
+  const { change: formsetChange, data: formsetData } = useFormset<null, OrderFulfillLineFormData[]>(
+    formsetInitial,
   );
   const [displayStockExceededDialog, setDisplayStockExceededDialog] = useState(false);
   const handleSubmit = ({
@@ -116,15 +134,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     return onSubmit({
       ...formData,
       allowStockToBeExceeded,
-      items: formsetData
-        .filter(item => !!item.value)
-        .map(item => ({
-          ...item,
-          value: item.value.map(value => ({
-            quantity: value.quantity,
-            warehouse: value.warehouse.id,
-          })),
-        })),
+      items: getOrderFulfillSubmitItems(formsetData),
     });
   };
 
@@ -162,6 +172,11 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };
 
+  const changeWarehouseLine =
+    params.action === "change-warehouse"
+      ? order?.lines.find(orderLine => orderLine.id === params.lineId)
+      : undefined;
+
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
@@ -185,9 +200,23 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
             <>
               <DashboardCard>
                 <DashboardCard.Header>
-                  <DashboardCard.Title>
-                    {intl.formatMessage(messages.itemsReadyToShip)}
-                  </DashboardCard.Title>
+                  <Box display="flex" flexDirection="column">
+                    <DashboardCard.Title>
+                      {intl.formatMessage(
+                        isSingleLineFulfillment
+                          ? messages.itemReadyToShip
+                          : messages.itemsReadyToShip,
+                      )}
+                    </DashboardCard.Title>
+                    {prefilledLine && (
+                      <DashboardCard.Subtitle fontSize={3} color="default2">
+                        <FormattedMessage
+                          {...messages.prefilledLineHint}
+                          values={{ productName: prefilledProductName }}
+                        />
+                      </DashboardCard.Subtitle>
+                    )}
+                  </Box>
                 </DashboardCard.Header>
                 {order ? (
                   <DashboardCard.Content>
@@ -208,14 +237,18 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                           <TableCell className={classes.colStock}>
                             <FormattedMessage {...messages.stock} />
                           </TableCell>
-                          <TableCell className={classes.colWarehouse}>
-                            <FormattedMessage {...messages.warehouse} />
+                          <TableCell
+                            className={clsx(classes.colWarehouse, fulfillLineStyles.warehouseCell)}
+                          >
+                            <Box padding={2}>
+                              <FormattedMessage {...messages.warehouse} />
+                            </Box>
                           </TableCell>
                         </TableRowLink>
                       </TableHead>
                       <TableBody>
                         {renderCollection(
-                          getToFulfillOrderLines(order.lines),
+                          linesToFulfill,
                           (line: OrderFulfillLineFragment, lineIndex) => (
                             <OrderFulfillLine
                               key={line.id}
@@ -306,23 +339,29 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
             </>
           )}
         </Form>
-        <OrderChangeWarehouseDialog
-          open={params.action === "change-warehouse"}
-          line={order?.lines.find(line => line.id === params.lineId)}
-          currentWarehouseId={params.warehouseId}
-          onConfirm={warehouse => {
-            const lineFormQuantity = formsetData.find(item => item.id === params.lineId)?.value?.[0]
-              ?.quantity;
+        {changeWarehouseLine ? (
+          <OrderChangeWarehouseDialog
+            open={params.action === "change-warehouse"}
+            line={changeWarehouseLine}
+            currentWarehouseId={params.warehouseId}
+            onConfirm={warehouse => {
+              if (!params.lineId || !warehouse) {
+                return;
+              }
 
-            formsetChange(params.lineId, [
-              {
-                quantity: lineFormQuantity,
-                warehouse,
-              },
-            ]);
-          }}
-          onClose={closeModal}
-        />
+              const lineFormQuantity = formsetData.find(item => item.id === params.lineId)
+                ?.value?.[0]?.quantity;
+
+              formsetChange(params.lineId, [
+                {
+                  quantity: lineFormQuantity,
+                  warehouse,
+                },
+              ]);
+            }}
+            onClose={closeModal}
+          />
+        ) : null}
       </DetailPageLayout.Content>
     </DetailPageLayout>
   );

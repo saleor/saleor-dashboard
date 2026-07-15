@@ -14,9 +14,12 @@ import {
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import { orderHasTransactions } from "@dashboard/orders/types";
-import { orderUrl } from "@dashboard/orders/urls";
+import { orderReturnUrl, orderUrl } from "@dashboard/orders/urls";
+import { getOrderLineDisplayName } from "@dashboard/orders/utils/data";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
 import { TransactionSubmitCard } from "./components";
@@ -27,6 +30,8 @@ import OrderRefundForm, { type OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
+  filterFulfillmentsByOrderLineId,
+  filterOrderLinesByOrderLineId,
   getFulfilledFulfillemnts,
   getParsedLines,
   getUnfulfilledLines,
@@ -39,6 +44,7 @@ interface OrderReturnPageProps {
   returnErrors?: OrderErrorFragment[];
   grantRefundErrors?: OrderGrantRefundCreateErrorFragment[];
   sendRefundErrors?: TransactionRequestRefundForGrantedRefundErrorFragment[];
+  prefilledOrderLineId?: string;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   submitStatus: ConfirmButtonTransitionState;
 }
@@ -50,6 +56,7 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
     returnErrors = [],
     grantRefundErrors = [],
     sendRefundErrors = [],
+    prefilledOrderLineId,
     onSubmit,
     submitStatus,
   } = props;
@@ -65,9 +72,25 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
   const [showReasonError, setShowReasonError] = useState(false);
   // Same for the refund reason when granting a refund during the return.
   const [showRefundReasonError, setShowRefundReasonError] = useState(false);
+  const prefilledLine = prefilledOrderLineId
+    ? order?.lines?.find(line => line.id === prefilledOrderLineId)
+    : undefined;
+  const prefilledProductName = prefilledLine ? getOrderLineDisplayName(prefilledLine) : "";
+  const unfulfilledLines = filterOrderLinesByOrderLineId(
+    getUnfulfilledLines(order),
+    prefilledOrderLineId,
+  );
+  const waitingFulfillments = filterFulfillmentsByOrderLineId(
+    getWaitingFulfillments(order as OrderDetailsFragment),
+    prefilledOrderLineId,
+  );
+  const fulfilledFulfillments = filterFulfillmentsByOrderLineId(
+    getFulfilledFulfillemnts(order as OrderDetailsFragment),
+    prefilledOrderLineId,
+  );
 
   return (
-    <OrderRefundForm order={order} onSubmit={onSubmit}>
+    <OrderRefundForm order={order} prefilledOrderLineId={prefilledOrderLineId} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => {
         const isReasonMissing = !!reasonReferenceTypeId && !data.reasonReference;
         const isRefundReasonMissing =
@@ -92,16 +115,42 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
               })}
             />
             <DetailPageLayout.Content>
-              {!!data.unfulfilledItemsQuantities.length && (
+              {prefilledLine && (
+                <Box
+                  paddingX={6}
+                  paddingY={3}
+                  data-test-id="return-prefilled-line-hint"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  gap={3}
+                  flexWrap="wrap"
+                >
+                  <Text size={3} color="default2">
+                    <FormattedMessage
+                      {...orderReturnMessages.prefilledLineHint}
+                      values={{ productName: prefilledProductName }}
+                    />
+                  </Text>
+                  <Link to={orderReturnUrl(order?.id ?? "")}>
+                    <Button variant="tertiary" size="small">
+                      <FormattedMessage {...orderReturnMessages.showAllLines} />
+                    </Button>
+                  </Link>
+                </Box>
+              )}
+              {unfulfilledLines.length > 0 && (
                 <>
                   <ItemsCard
                     errors={returnErrors}
                     order={order}
-                    lines={getUnfulfilledLines(order as OrderDetailsFragment)}
+                    lines={unfulfilledLines}
                     itemsQuantities={data.unfulfilledItemsQuantities}
                     itemsSelections={data.itemsToBeReplaced}
                     onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
-                    onSetMaxQuantity={handlers.handleSetMaximalUnfulfiledItemsQuantities}
+                    onSetMaxQuantity={() =>
+                      handlers.handleSetMaximalUnfulfiledItemsQuantities(prefilledOrderLineId)
+                    }
                     onChangeSelected={handlers.changeItemsToBeReplaced}
                     lineReasons={data.lineReasons}
                     onChangeLineReason={handlers.changeLineReason}
@@ -110,50 +159,50 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
                   <CardSpacer />
                 </>
               )}
-              {renderCollection(
-                getWaitingFulfillments(order as OrderDetailsFragment),
-                ({ id, lines }) => (
-                  <Fragment key={id}>
-                    <ItemsCard
-                      errors={returnErrors}
-                      order={order}
-                      fulfilmentId={id}
-                      lines={getParsedLines(lines)}
-                      itemsQuantities={data.waitingItemsQuantities}
-                      itemsSelections={data.itemsToBeReplaced}
-                      onChangeQuantity={handlers.changeWaitingItemsQuantity}
-                      onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
-                      onChangeSelected={handlers.changeItemsToBeReplaced}
-                      lineReasons={data.lineReasons}
-                      onChangeLineReason={handlers.changeLineReason}
-                      reasonReferenceTypeId={reasonReferenceTypeId}
-                    />
-                    <CardSpacer />
-                  </Fragment>
-                ),
-              )}
-              {renderCollection(
-                getFulfilledFulfillemnts(order as OrderDetailsFragment),
-                ({ id, lines }) => (
-                  <Fragment key={id}>
-                    <ItemsCard
-                      errors={returnErrors}
-                      order={order}
-                      fulfilmentId={id}
-                      lines={getParsedLines(lines)}
-                      itemsQuantities={data.fulfilledItemsQuantities}
-                      itemsSelections={data.itemsToBeReplaced}
-                      onChangeQuantity={handlers.changeFulfiledItemsQuantity}
-                      onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(id)}
-                      onChangeSelected={handlers.changeItemsToBeReplaced}
-                      lineReasons={data.lineReasons}
-                      onChangeLineReason={handlers.changeLineReason}
-                      reasonReferenceTypeId={reasonReferenceTypeId}
-                    />
-                    <CardSpacer />
-                  </Fragment>
-                ),
-              )}
+              {renderCollection(waitingFulfillments, ({ id, lines }) => (
+                <Fragment key={id}>
+                  <ItemsCard
+                    errors={returnErrors}
+                    order={order}
+                    fulfilmentId={id}
+                    lines={getParsedLines(lines)}
+                    itemsQuantities={data.waitingItemsQuantities}
+                    itemsSelections={data.itemsToBeReplaced}
+                    onChangeQuantity={handlers.changeWaitingItemsQuantity}
+                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
+                      id,
+                      prefilledOrderLineId,
+                    )}
+                    onChangeSelected={handlers.changeItemsToBeReplaced}
+                    lineReasons={data.lineReasons}
+                    onChangeLineReason={handlers.changeLineReason}
+                    reasonReferenceTypeId={reasonReferenceTypeId}
+                  />
+                  <CardSpacer />
+                </Fragment>
+              ))}
+              {renderCollection(fulfilledFulfillments, ({ id, lines }) => (
+                <Fragment key={id}>
+                  <ItemsCard
+                    errors={returnErrors}
+                    order={order}
+                    fulfilmentId={id}
+                    lines={getParsedLines(lines)}
+                    itemsQuantities={data.fulfilledItemsQuantities}
+                    itemsSelections={data.itemsToBeReplaced}
+                    onChangeQuantity={handlers.changeFulfiledItemsQuantity}
+                    onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
+                      id,
+                      prefilledOrderLineId,
+                    )}
+                    onChangeSelected={handlers.changeItemsToBeReplaced}
+                    lineReasons={data.lineReasons}
+                    onChangeLineReason={handlers.changeLineReason}
+                    reasonReferenceTypeId={reasonReferenceTypeId}
+                  />
+                  <CardSpacer />
+                </Fragment>
+              ))}
               <OrderReturnReasonCard
                 reason={data.reason}
                 reasonReference={data.reasonReference}

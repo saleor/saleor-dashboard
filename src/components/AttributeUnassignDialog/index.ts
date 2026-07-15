@@ -1,2 +1,2 @@
-export { default } from "./AttributeUnassignDialog";
+export { AttributeUnassignDialog } from "./AttributeUnassignDialog";
 export * from "./AttributeUnassignDialog";

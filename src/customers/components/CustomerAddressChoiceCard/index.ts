@@ -1,2 +1,1 @@
-export { default } from "./CustomerAddressChoiceCard";
-export * from "./CustomerAddressChoiceCard";
+export { CustomerAddressChoiceCard } from "./CustomerAddressChoiceCard";

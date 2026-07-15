@@ -4,11 +4,11 @@ import { expect, type Page } from "@playwright/test";
 export class AssignProductsDialog extends BasePage {
   constructor(
     page: Page,
-    readonly productRow = page.getByTestId("product-row"),
+    readonly productRow = page.getByTestId("assign-product-table-row"),
     readonly backButton = page.getByTestId("back"),
-    readonly assignButton = page.getByTestId("assign-and-save-button"),
-    readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
-    readonly searchInput = page.getByTestId("search-bar").locator("input"),
+    readonly assignButton = page.getByTestId("submit"),
+    readonly assignAndSaveButton = page.getByTestId("submit"),
+    readonly searchInput = page.getByTestId("product-search-input").locator("input"),
   ) {
     super(page);
   }

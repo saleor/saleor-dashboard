@@ -11,6 +11,7 @@ import {
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
 import { testIntlInstance } from "@test/intl";
 
 import { type LineItemData } from "../components/OrderReturnPage/form";
@@ -18,12 +19,18 @@ import { type OrderRefundSharedType } from "../types";
 import {
   getAllFulfillmentLinesPriceSum,
   getAttributesCaption,
+  getDefaultFulfillWarehouse,
   getDiscountTypeLabel,
+  getOrderFulfillLineDisplayName,
+  getOrderFulfillStockFormsetLineId,
+  getOrderFulfillSubmitItems,
+  getOrderLineDisplayName,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
   getReturnSelectedProductsAmount,
   getWarehousesFromOrderLines,
+  isOpaqueGlobalId,
   mergeRepeatedOrderLines,
   type OrderLineWithStockWarehouses,
   type OrderWithTotalAndTotalCaptured,
@@ -3542,5 +3549,201 @@ describe("getAttributesCaption", () => {
 
     // Assert
     expect(result).toBe("");
+  });
+});
+
+describe("getDefaultFulfillWarehouse", () => {
+  it("prefers the warehouse from the highest quantity allocation", () => {
+    // Arrange
+    const line = {
+      allocations: [
+        {
+          quantity: 2,
+          warehouse: { id: "warehouse-low", name: "Low stock warehouse" },
+        },
+        {
+          quantity: 5,
+          warehouse: { id: "warehouse-high", name: "Allocated warehouse" },
+        },
+      ],
+      variant: { stocks: [] },
+    } as Parameters<typeof getDefaultFulfillWarehouse>[0];
+
+    // Act // Assert
+    expect(getDefaultFulfillWarehouse(line)?.id).toBe("warehouse-high");
+  });
+
+  it("falls back to the warehouse with the most available stock when there is no allocation", () => {
+    // Arrange
+    const line = {
+      allocations: [],
+      variant: {
+        stocks: [
+          {
+            quantity: 10,
+            quantityAllocated: 0,
+            warehouse: { id: "warehouse-a", name: "Warehouse A" },
+          },
+          {
+            quantity: 50,
+            quantityAllocated: 0,
+            warehouse: { id: "warehouse-b", name: "Warehouse B" },
+          },
+        ],
+      },
+    } as Parameters<typeof getDefaultFulfillWarehouse>[0];
+
+    // Act // Assert
+    expect(getDefaultFulfillWarehouse(line)?.id).toBe("warehouse-b");
+  });
+});
+
+describe("getOrderFulfillSubmitItems", () => {
+  it("returns only lines with positive quantity and assigned warehouse", () => {
+    // Arrange
+    const formsetData = [
+      {
+        id: "line-1",
+        value: [{ quantity: 2, warehouse: warehouseList[0] }],
+      },
+      {
+        id: "line-2",
+        value: [{ quantity: 0, warehouse: undefined }],
+      },
+      {
+        id: "line-3",
+        value: [{ quantity: 1, warehouse: undefined }],
+      },
+    ];
+
+    // Act
+    const result = getOrderFulfillSubmitItems(formsetData);
+
+    // Assert
+    expect(result).toEqual([
+      {
+        id: "line-1",
+        value: [{ quantity: 2, warehouse: warehouseList[0].id }],
+      },
+    ]);
+  });
+
+  it("skips preorder lines without stock allocations", () => {
+    // Arrange
+    const formsetData = [
+      {
+        id: "line-1",
+        value: null,
+      },
+      {
+        id: "line-2",
+        value: [{ quantity: 1, warehouse: warehouseList[1] }],
+      },
+    ];
+
+    // Act
+    const result = getOrderFulfillSubmitItems(formsetData);
+
+    // Assert
+    expect(result).toEqual([
+      {
+        id: "line-2",
+        value: [{ quantity: 1, warehouse: warehouseList[1].id }],
+      },
+    ]);
+  });
+});
+
+describe("getOrderFulfillStockFormsetLineId", () => {
+  it("returns order line id for fulfillment lines", () => {
+    // Arrange
+    const fulfillmentLine = {
+      id: "FulfillmentLine:1",
+      orderLine: { id: "OrderLine:1" },
+    } as Parameters<typeof getOrderFulfillStockFormsetLineId>[0];
+
+    // Act // Assert
+    expect(getOrderFulfillStockFormsetLineId(fulfillmentLine)).toBe("OrderLine:1");
+  });
+
+  it("returns line id for order fulfill lines", () => {
+    // Arrange
+    const orderLine = { id: "OrderLine:2" } as Parameters<
+      typeof getOrderFulfillStockFormsetLineId
+    >[0];
+
+    // Act // Assert
+    expect(getOrderFulfillStockFormsetLineId(orderLine)).toBe("OrderLine:2");
+  });
+});
+
+describe("isOpaqueGlobalId", () => {
+  it("detects base64-encoded Saleor global IDs", () => {
+    // Arrange // Act // Assert
+    expect(isOpaqueGlobalId("UHJvZHVjdFZHcmlhbnQ6Mzk5")).toBe(true);
+    expect(isOpaqueGlobalId("White Parrot Cushion")).toBe(false);
+  });
+});
+
+describe("getOrderFulfillLineDisplayName", () => {
+  it("uses attribute captions like the fulfill table", () => {
+    // Arrange
+    const line: Pick<OrderFulfillLineFragment, "productName" | "variant"> = {
+      productName: "White Parrot Cushion",
+      variant: {
+        name: "UHJvZHVjdFZHcmlhbnQ6Mzk5",
+        attributes: [
+          {
+            values: [{ name: "Standard" }],
+          },
+        ],
+      } as OrderFulfillLineFragment["variant"],
+    };
+
+    // Act
+    const displayName = getOrderFulfillLineDisplayName(line);
+
+    // Assert
+    expect(displayName).toBe("White Parrot Cushion / Standard");
+  });
+
+  it("falls back to product name when variant name is an opaque global id", () => {
+    // Arrange
+    const line: Pick<OrderFulfillLineFragment, "productName" | "variant"> = {
+      productName: "White Parrot Cushion",
+      variant: {
+        name: "UHJvZHVjdFZHcmlhbnQ6Mzk5",
+        attributes: [],
+      } as OrderFulfillLineFragment["variant"],
+    };
+
+    // Act // Assert
+    expect(getOrderFulfillLineDisplayName(line)).toBe("White Parrot Cushion");
+  });
+});
+
+describe("getOrderLineDisplayName", () => {
+  it("prefers variantName for order detail lines", () => {
+    // Arrange // Act
+    const displayName = getOrderLineDisplayName({
+      productName: "White Parrot Cushion",
+      variantName: "Standard",
+      variant: { name: "UHJvZHVjdFZHcmlhbnQ6Mzk5" },
+    });
+
+    // Assert
+    expect(displayName).toBe("White Parrot Cushion / Standard");
+  });
+
+  it("ignores opaque global IDs in variantName and variant.name", () => {
+    // Arrange // Act
+    const displayName = getOrderLineDisplayName({
+      productName: "White Parrot Cushion",
+      variantName: "UHJvZHVjdFZHcmlhbnQ6Mzk5",
+      variant: { name: "UHJvZHVjdFZHcmlhbnQ6Mzk5" },
+    });
+
+    // Assert
+    expect(displayName).toBe("White Parrot Cushion");
   });
 });

@@ -1,6 +1,11 @@
 import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { getDotColor } from "@dashboard/misc";
-import { type CustomCell, type CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
+import {
+  type CustomCell,
+  type CustomRenderer,
+  getMiddleCenterBias,
+  GridCellKind,
+} from "@glideapps/glide-data-grid";
 import { type ThemeTokensValues } from "@saleor/macaw-ui-next";
 
 interface StatusCellProps {
@@ -16,14 +21,20 @@ export const statusCellRenderer = (themeValues: ThemeTokensValues): CustomRender
   draw: (args, cell) => {
     const { rect, ctx, theme } = args;
     const { x, y, height } = rect;
+    const padding = theme.cellHorizontalPadding ?? 8;
+    const dotRadius = 4;
+    const dotX = x + padding + dotRadius;
+    const textX = dotX + dotRadius + 8;
+    const textY = y + height / 2 + getMiddleCenterBias(ctx, theme);
+    const font = `500 ${theme.fontFamily}`;
 
     ctx.fillStyle = theme.textDark;
-    ctx.font = `500 ${theme.fontFamily}`;
-    ctx.fillText(cell.data.value, x + 30, y + height / 2);
+    ctx.font = font;
+    ctx.fillText(cell.data.value, textX, textY);
 
     const circle = new Path2D();
 
-    circle.arc(x + 15, y + height / 2, 4, 0, 2 * Math.PI);
+    circle.arc(dotX, y + height / 2, dotRadius, 0, 2 * Math.PI);
 
     const color = getDotColor(cell.data.status, themeValues);
 

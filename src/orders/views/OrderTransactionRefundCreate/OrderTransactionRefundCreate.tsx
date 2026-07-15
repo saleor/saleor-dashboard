@@ -9,6 +9,7 @@ import OrderTransactionRefundPage, {
   type OrderTransactionRefundError,
   type OrderTransactionRefundPageFormData,
 } from "@dashboard/orders/components/OrderTransactionRefundPage/OrderTransactionRefundPage";
+import { type OrderTransactionRefundUrlQueryParams } from "@dashboard/orders/urls";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -21,9 +22,10 @@ import {
 
 interface OrderTransactionRefundCreateProps {
   orderId: string;
+  params: OrderTransactionRefundUrlQueryParams;
 }
 
-const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) => {
+const OrderTransactionRefund = ({ orderId, params }: OrderTransactionRefundCreateProps) => {
   const notify = useNotifier();
   const navigate = useNavigator();
   const intl = useIntl();
@@ -95,6 +97,7 @@ const OrderTransactionRefund = ({ orderId }: OrderTransactionRefundCreateProps) 
       onSaveDraft={handleCreateRefund}
       onSaveDraftState={createRefundOpts.status}
       modelForRefundReasonRefId={requiredModelForRefundReason?.id ?? null}
+      prefilledOrderLineId={params.lineId}
     />
   );
 };

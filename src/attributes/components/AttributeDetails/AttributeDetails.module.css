@@ -1,0 +1,3 @@
+.codeInput input {
+  font-family: var(--mu-fonts-mono, ui-monospace, monospace);
+}

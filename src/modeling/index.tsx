@@ -2,6 +2,7 @@ import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
+import { getArrayQueryParam } from "@dashboard/utils/urls";
 import { useIntl } from "react-intl";
 import { type RouteComponentProps, Switch } from "react-router-dom";
 
@@ -19,10 +20,14 @@ import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList";
 
-const PageList = () => {
+const PageList = ({ location }: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: PageListUrlQueryParams = asSortParams(
-    qs,
+    {
+      ...qs,
+      ids: getArrayQueryParam(qs.ids),
+      pageTypes: getArrayQueryParam(qs.pageTypes),
+    },
     PageListUrlSortField,
     PageListUrlSortField.title,
   );
