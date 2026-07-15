@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.16
+
+### Patch Changes
+
+- [#6738](https://github.com/saleor/saleor-dashboard/pull/6738) [`0c43a5a`](https://github.com/saleor/saleor-dashboard/commit/0c43a5ad1777f3096479bdd8cb0b3cc988a34cbb) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added a "Store details" section at the top of the Site Settings page where you can edit your store's name and description. The store name was previously not editable from the dashboard, and the description had no dedicated field.
+
 ## 3.23.15
 
 ### Patch Changes
