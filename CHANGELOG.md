@@ -1,5 +1,34 @@
 # Changelog
 
+## 3.23.15
+
+### Patch Changes
+
+- [#6714](https://github.com/saleor/saleor-dashboard/pull/6714) [`15463b9`](https://github.com/saleor/saleor-dashboard/commit/15463b9973fc242af8c8d9dee702745086b27867) Thanks [@mirekm](https://github.com/mirekm)! - Attributes list for model and product classes can optionally be grouped by type, with tabs, bulk unassign from a single type, and filters that stay above the tab strip. Attribute detail pages show a compact Usage summary of which types include the attribute.
+
+- [#6709](https://github.com/saleor/saleor-dashboard/pull/6709) [`761e4b9`](https://github.com/saleor/saleor-dashboard/commit/761e4b925030d780e267a92e500ae164be6368c7) Thanks [@mirekm](https://github.com/mirekm)! - - Create attributes directly on product and model type pages. Open the menu next to Assign attribute, choose Create attribute, and the new attribute is added to that type automatically — no need to leave the page or set up the link separately.
+  - Standardized dialog layouts across the dashboard. Forms, pickers, and confirmations now share consistent headers, content spacing, scrolling, and action buttons — replacing one-off layouts that varied by section.
+
+- [#6721](https://github.com/saleor/saleor-dashboard/pull/6721) [`bde648b`](https://github.com/saleor/saleor-dashboard/commit/bde648bc3229ac2b6943e94d0a7f98c6b0502c0f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - On the order details page, fulfillments with no lines no longer show an empty table with just column headers. The fulfillment card is now rendered without the empty product grid.
+
+- [#6731](https://github.com/saleor/saleor-dashboard/pull/6731) [`a695985`](https://github.com/saleor/saleor-dashboard/commit/a695985dfa32a388cc80e5b33e44bf15e18ae8de) Thanks [@mirekm](https://github.com/mirekm)! - _Timeline_ now matches line matrix for day-to-day work: order-level refund callout, _Fulfill_ and _Return_ in the items section header, per-line row actions, and return/replace reasons on unfulfilled lines when present. _Return_ and _Fulfill_ on a timeline row apply only within that shipment's context — not on already returned, refunded, or replaced fulfillments.
+
+  Reorganized the order details cog menu: extension actions and GraphiQL (with icons) first, _Cancel order_ last as the destructive action. _Return / Replace order_ is in the items section header only.
+
+  Draft orders: deleting a draft no longer shows Internal Server Error notification. The _Select a channel_ confirm button in _Create order_ shows a loading state while the draft is created.
+
+- [#6726](https://github.com/saleor/saleor-dashboard/pull/6726) [`fe2c0ef`](https://github.com/saleor/saleor-dashboard/commit/fe2c0ef4a78281a4fca77a920465fa039a251777) Thanks [@mirekm](https://github.com/mirekm)! - Fixed order fulfillment crashing when fulfilling a single line from a multi-line order. The fulfill page now uses consistent quantity and warehouse controls, disables warehouse selection for zero-quantity lines, pre-selects a warehouse from stock when no allocation exists, and truncates long variant details with a tooltip.
+
+- [#6713](https://github.com/saleor/saleor-dashboard/pull/6713) [`5acf47e`](https://github.com/saleor/saleor-dashboard/commit/5acf47eb27a71f67b24444f026a3cb85c5098ace) Thanks [@mirekm](https://github.com/mirekm)! - Fixed product create and update requiring a second save after assigning a category when publishing to channels. Assigning a category and saving now succeeds on the first try.
+
+- [#6727](https://github.com/saleor/saleor-dashboard/pull/6727) [`f2625e2`](https://github.com/saleor/saleor-dashboard/commit/f2625e238c0b92c607880707bc7f75d606436e0e) Thanks [@mirekm](https://github.com/mirekm)! - Align the add/edit reason modal with dashboard modal patterns: helper text in the header subtitle, inset body layout, and Back button for dismiss.
+
+- [#6733](https://github.com/saleor/saleor-dashboard/pull/6733) [`b5e262e`](https://github.com/saleor/saleor-dashboard/commit/b5e262ef4713059b273a5103d1ba5e63ea072b67) Thanks [@mirekm](https://github.com/mirekm)! - Added expandable rows to the Category list with lazy loading of subcategories and improved nested selection logic.
+
+- [#6705](https://github.com/saleor/saleor-dashboard/pull/6705) [`8300fe8`](https://github.com/saleor/saleor-dashboard/commit/8300fe8669de1d7fc89fac97086809553b8bc2d5) Thanks [@mirekm](https://github.com/mirekm)! - Swatch variant attributes now appear in the product variants grid with color previews, so merchants can edit color-style variant values alongside other variant columns.
+
+- [#6725](https://github.com/saleor/saleor-dashboard/pull/6725) [`c272fc4`](https://github.com/saleor/saleor-dashboard/commit/c272fc4d66c10bea3446ba44b86af881bbb24eac) Thanks [@mirekm](https://github.com/mirekm)! - Product type and model type detail pages now match the refreshed layout used elsewhere in the dashboard: metadata is edited from a header button, attributes sit in the main column, and type settings (name, shipping, taxes, etc.) move to the sidebar.
+
 ## 3.23.14
 
 ### Patch Changes
