@@ -239,6 +239,7 @@ export enum AnnouncementImportanceEnum {
 }
 
 export enum AppErrorCode {
+  DUPLICATED_EXTENSION_IDENTIFIER = 'DUPLICATED_EXTENSION_IDENTIFIER',
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6462,6 +6463,7 @@ export enum PermissionEnum {
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
+  /** @deprecated The observability feature is no longer supported. This permission will be removed in Saleor 3.24. */
   MANAGE_OBSERVABILITY = 'MANAGE_OBSERVABILITY',
   MANAGE_ORDERS = 'MANAGE_ORDERS',
   MANAGE_ORDERS_IMPORT = 'MANAGE_ORDERS_IMPORT',
@@ -8074,6 +8076,12 @@ export type ShopSettingsInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
+   * Shop's name.
+   *
+   * Added in Saleor 3.23.
+   */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /**
    * Controls whether password-based authentication is allowed.
    *
    * Added in Saleor 3.23.
@@ -9419,7 +9427,10 @@ export enum WebhookEventTypeAsyncEnum {
    * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
-  /** An observability event is created. */
+  /**
+   * An observability event is created.
+   * @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24.
+   */
   OBSERVABILITY = 'OBSERVABILITY',
   /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
@@ -9754,7 +9765,10 @@ export enum WebhookEventTypeEnum {
    * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
-  /** An observability event is created. */
+  /**
+   * An observability event is created.
+   * @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24.
+   */
   OBSERVABILITY = 'OBSERVABILITY',
   /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
@@ -10076,7 +10090,9 @@ export enum WebhookSampleEventTypeEnum {
   MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
   MENU_ITEM_UPDATED = 'MENU_ITEM_UPDATED',
   MENU_UPDATED = 'MENU_UPDATED',
+  /** @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user */
   NOTIFY_USER = 'NOTIFY_USER',
+  /** @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24. */
   OBSERVABILITY = 'OBSERVABILITY',
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
   ORDER_CANCELLED = 'ORDER_CANCELLED',
