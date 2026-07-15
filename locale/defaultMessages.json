@@ -2831,6 +2831,10 @@
     "context": "page header",
     "string": "Order no. {orderNumber} - Add Fulfillment"
   },
+  "CJu4Rl": {
+    "context": "store details card title",
+    "string": "Store details"
+  },
   "CKP9+i": {
     "string": "Webhook errors detected."
   },
@@ -5382,6 +5386,10 @@
     "context": "Label prefix for the last occurrence date of a recurring problem",
     "string": "last occurred at"
   },
+  "Owgj18": {
+    "context": "section description",
+    "string": "Your store's public name and description, used across the storefront and in SEO metadata."
+  },
   "Oy1LhB": {
     "context": "button error state label",
     "string": "Try again"
@@ -6356,6 +6364,10 @@
   "TfzIXS": {
     "context": "tax classes card header",
     "string": "General information"
+  },
+  "TihW9+": {
+    "context": "section title",
+    "string": "Store details"
   },
   "TjGYna": {
     "context": "product inventory, checkbox",
@@ -10650,6 +10662,10 @@
     "context": "translation context bar without known source language",
     "string": "Translating original content to {targetLanguage}"
   },
+  "omdhZg": {
+    "context": "store name field label",
+    "string": "Store name"
+  },
   "opSGsa": {
     "context": "create attribute dialog step one label",
     "string": "General"
@@ -12026,6 +12042,10 @@
   },
   "v8UngX": {
     "string": "Search warehouses..."
+  },
+  "v8cgy/": {
+    "context": "store description field label",
+    "string": "Store description"
   },
   "v8e93p": {
     "context": "hint for order total option",
