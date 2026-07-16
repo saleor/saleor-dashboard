@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.22.44
+
+### Patch Changes
+
+- [#6744](https://github.com/saleor/saleor-dashboard/pull/6744) [`956f19f`](https://github.com/saleor/saleor-dashboard/commit/956f19fdc19e3da7692ec52d1e4a8a8aa42a8fea) Thanks [@przlada](https://github.com/przlada)! - Custom headers are now saved when creating a webhook. Previously they were only persisted when editing an existing webhook.
+
 ## 3.22.43
 
 ### Patch Changes
