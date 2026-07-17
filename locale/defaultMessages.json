@@ -4602,6 +4602,10 @@
     "context": "quantity of fulfilled products",
     "string": "Quantity to fulfill"
   },
+  "KkQkcu": {
+    "context": "Short tooltip for OrderSettings.deleteExpiredOrdersAfter (docs: order expiration)",
+    "string": "Days after an order expires before it is permanently deleted. Allowed range: 1–120."
+  },
   "KkufwD": {
     "string": "No voucher codes found"
   },
@@ -10220,10 +10224,6 @@
   "lz7o8y": {
     "context": "tooltip when generate button is disabled because over variant limit",
     "string": "Cannot create more than {limit} variants at once"
-  },
-  "lzUwmf": {
-    "context": "Short tooltip for OrderSettings.deleteExpiredOrdersAfter + delete_expired_orders_task",
-    "string": "Days after expiry before deletion (unpaid expired orders only). 0 keeps them."
   },
   "lzdvwp": {
     "context": "field is optional",

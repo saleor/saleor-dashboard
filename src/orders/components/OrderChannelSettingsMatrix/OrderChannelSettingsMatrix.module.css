@@ -118,11 +118,6 @@
   line-height: 1.4;
 }
 
-.tooltipBody {
-  /* Macaw Tooltip.Content padding is tight on the right — balance all sides */
-  padding: var(--mu-spacing-2) var(--mu-spacing-3);
-}
-
 .autoConfirmTooltip {
   display: flex;
   flex-direction: column;

@@ -33,10 +33,11 @@ export const orderChannelSettingsMatrixMessages = defineMessages({
       "Short merchant-facing tooltip for OrderSettings.allowUnpaidOrders (avoid GraphQL mutation names)",
   },
   deleteExpiredTooltip: {
-    id: "lzUwmf",
-    defaultMessage: "Days after expiry before deletion (unpaid expired orders only). 0 keeps them.",
+    id: "KkQkcu",
+    defaultMessage:
+      "Days after an order expires before it is permanently deleted. Allowed range: 1–120.",
     description:
-      "Short tooltip for OrderSettings.deleteExpiredOrdersAfter + delete_expired_orders_task",
+      "Short tooltip for OrderSettings.deleteExpiredOrdersAfter (docs: order expiration)",
   },
   columnHelpAriaLabel: {
     id: "GkJBnh",

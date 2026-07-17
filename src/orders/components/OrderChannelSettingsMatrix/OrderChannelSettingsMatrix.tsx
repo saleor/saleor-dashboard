@@ -72,15 +72,13 @@ const HeaderWithHelp = ({
         </Tooltip.Trigger>
         <Tooltip.Content side="bottom" align="start">
           <Tooltip.Arrow />
-          <Box className={styles.tooltipBody}>
-            {tooltipContent ?? (
-              <Box className={styles.tooltipContent}>
-                <Text size={2} color="default1">
-                  {tooltip ? <FormattedMessage {...tooltip} /> : null}
-                </Text>
-              </Box>
-            )}
-          </Box>
+          {tooltipContent ?? (
+            <Box className={styles.tooltipContent}>
+              <Text size={2} color="default1">
+                {tooltip ? <FormattedMessage {...tooltip} /> : null}
+              </Text>
+            </Box>
+          )}
         </Tooltip.Content>
       </Tooltip>
     </span>
