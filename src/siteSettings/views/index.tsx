@@ -33,7 +33,11 @@ const SiteSettings = () => {
     ) {
       notify({
         status: "success",
-        text: intl.formatMessage({ id: "jvz9Mr", defaultMessage: "Site settings updated" }),
+        text: intl.formatMessage({
+          id: "I6Bv55",
+          defaultMessage: "Store settings updated",
+          description: "success notification after saving store settings",
+        }),
       });
     }
   };

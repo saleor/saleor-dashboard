@@ -593,9 +593,9 @@ export const sectionNames = defineMessages({
     description: "shipping zones section name",
   },
   siteSettings: {
-    id: "viFkCw",
-    defaultMessage: "Site Settings",
-    description: "site settings section name",
+    id: "HKC6aF",
+    defaultMessage: "Store",
+    description: "store settings section name (formerly site settings)",
   },
   staff: {
     id: "AQFMYU",

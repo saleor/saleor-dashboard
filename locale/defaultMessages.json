@@ -1106,9 +1106,6 @@
     "context": "Message when no issues found",
     "string": "No availability issues detected"
   },
-  "3fKAKV": {
-    "string": "Configure refunds and returns behavior"
-  },
   "3fgyFh": {
     "context": "order history message",
     "string": "Payment was refunded"
@@ -1386,9 +1383,6 @@
     "context": "section header",
     "string": "Availability"
   },
-  "5BajZK": {
-    "string": "View and update your site settings"
-  },
   "5FSIZp": {
     "string": "Create new attribute"
   },
@@ -1413,10 +1407,6 @@
   "5MtM5w": {
     "context": "model label",
     "string": "Hidden"
-  },
-  "5NDXVR": {
-    "context": "configuration menu item description for order settings",
-    "string": "Configure order processing, fulfillment, and checkout stock"
   },
   "5O8EIz": {
     "context": "Authorize transactions instead of charging",
@@ -2106,6 +2096,10 @@
   "8jirr+": {
     "context": "order header date, same year and older than yesterday",
     "string": "Created {date} at {time}"
+  },
+  "8liGHT": {
+    "context": "configuration menu item description for order settings",
+    "string": "Configure order processing, fulfillment, checkout stock, and returns"
   },
   "8maISA": {
     "context": "deactivate customer dialog, header",
@@ -3882,6 +3876,10 @@
     "context": "successfully created gift card alert title",
     "string": "Gift card created"
   },
+  "HKC6aF": {
+    "context": "store settings section name (formerly site settings)",
+    "string": "Store"
+  },
   "HLqWXA": {
     "context": "voucher value requirement",
     "string": "Usage Limit"
@@ -4070,6 +4068,10 @@
   "I5vC7T": {
     "context": "button label",
     "string": "Edit reason"
+  },
+  "I6Bv55": {
+    "context": "success notification after saving store settings",
+    "string": "Store settings updated"
   },
   "I7HyJZ": {
     "context": "order refund amount",
@@ -7005,6 +7007,10 @@
   "Wm+KUd": {
     "string": "Headers"
   },
+  "WmVIJi": {
+    "context": "configuration menu item description for store settings",
+    "string": "Manage your store name, address, and customer accounts"
+  },
   "Wr5UOV": {
     "context": "error message",
     "string": "Login went wrong. Please try again."
@@ -7395,9 +7401,6 @@
   "YVsbL4": {
     "context": "Tooltip showing which user dismissed a problem",
     "string": "Dismissed by {email}"
-  },
-  "YZl6cv": {
-    "string": "Miscellaneous"
   },
   "YaCu4U": {
     "context": "Health check status when product can be purchased",
@@ -7956,6 +7959,10 @@
   "b810WJ": {
     "context": "product price",
     "string": "Price"
+  },
+  "bADvk1": {
+    "context": "configuration section label for store identity and accounts",
+    "string": "Store"
   },
   "bBiDNg": {
     "context": "order history message",
@@ -9683,9 +9690,6 @@
   },
   "jvo0vs": {
     "string": "Save"
-  },
-  "jvz9Mr": {
-    "string": "Site settings updated"
   },
   "jwTwhf": {
     "context": "app privacy policy link",
@@ -12325,10 +12329,6 @@
   "vh9a5S": {
     "context": "Tooltip CTA on the direct-stock-mode-only badge in the webhook event picker. Links to the page where the legacy stock-availability flag can be toggled.",
     "string": "Open shop settings"
-  },
-  "viFkCw": {
-    "context": "site settings section name",
-    "string": "Site Settings"
   },
   "vitgwA": {
     "string": "Search syntax"

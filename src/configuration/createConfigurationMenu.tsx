@@ -10,14 +10,12 @@ import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderSettingsPath } from "@dashboard/orders/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
-import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { shippingZonesListUrl } from "@dashboard/shipping/urls";
 import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import {
-  CreditCard,
   Package,
   Radio,
   Receipt,
@@ -39,12 +37,32 @@ const ConfigurationPermissionGroupsIcon = createConfigurationLucideIcon(Shield);
 const ConfigurationShippingIcon = createConfigurationLucideIcon(Truck);
 const ConfigurationWarehousesIcon = createConfigurationLucideIcon(Warehouse);
 const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
-const ConfigurationRefundsSettingsIcon = createConfigurationLucideIcon(CreditCard);
 const ConfigurationChannelsIcon = createConfigurationLucideIcon(Radio);
-const ConfigurationSiteSettingsIcon = createConfigurationLucideIcon(Settings);
+const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
+    {
+      label: intl.formatMessage({
+        id: "bADvk1",
+        defaultMessage: "Store",
+        description: "configuration section label for store identity and accounts",
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            id: "WmVIJi",
+            defaultMessage: "Manage your store name, address, and customer accounts",
+            description: "configuration menu item description for store settings",
+          }),
+          icon: <ConfigurationStoreIcon />,
+          permissions: [PermissionEnum.MANAGE_SETTINGS],
+          title: intl.formatMessage(sectionNames.siteSettings),
+          url: siteSettingsUrl(),
+          testId: "configuration-menu-site-settings",
+        },
+      ],
+    },
     {
       label: intl.formatMessage({
         id: "ZCUS72",
@@ -206,8 +224,8 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
       menuItems: [
         {
           description: intl.formatMessage({
-            id: "5NDXVR",
-            defaultMessage: "Configure order processing, fulfillment, and checkout stock",
+            id: "8liGHT",
+            defaultMessage: "Configure order processing, fulfillment, checkout stock, and returns",
             description: "configuration menu item description for order settings",
           }),
           icon: <ConfigurationOrderSettingsIcon />,
@@ -215,17 +233,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.ordersAndFulfillment),
           url: orderSettingsPath,
           testId: "configuration-menu-order-settings",
-        },
-        {
-          description: intl.formatMessage({
-            id: "3fKAKV",
-            defaultMessage: "Configure refunds and returns behavior",
-          }),
-          icon: <ConfigurationRefundsSettingsIcon />,
-          permissions: [PermissionEnum.MANAGE_SETTINGS],
-          title: intl.formatMessage(sectionNames.refundsSettings),
-          url: refundsSettingsPath,
-          testId: "configuration-menu-refunds-settings",
         },
       ],
     },
@@ -245,25 +252,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.channels),
           url: channelsListUrl(),
           testId: "configuration-menu-channels",
-        },
-      ],
-    },
-    {
-      label: intl.formatMessage({
-        id: "YZl6cv",
-        defaultMessage: "Miscellaneous",
-      }),
-      menuItems: [
-        {
-          description: intl.formatMessage({
-            id: "5BajZK",
-            defaultMessage: "View and update your site settings",
-          }),
-          icon: <ConfigurationSiteSettingsIcon />,
-          permissions: [PermissionEnum.MANAGE_SETTINGS],
-          title: intl.formatMessage(sectionNames.siteSettings),
-          url: siteSettingsUrl(),
-          testId: "configuration-menu-site-settings",
         },
       ],
     },

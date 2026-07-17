@@ -2,8 +2,8 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
-import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { orderSettingsPath } from "@dashboard/orders/urls";
 import { refundsSettingsPageMessages } from "@dashboard/refundsSettings/components/RefundsSettingsPage/messages";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,7 +40,7 @@ export const RefundsSettingsPage = ({
 
   return (
     <SettingsHubLayout
-      backHref={configurationMenuUrl}
+      backHref={orderSettingsPath}
       title={intl.formatMessage(refundsSettingsPageMessages.pageTitle)}
     >
       <form
@@ -93,7 +93,7 @@ export const RefundsSettingsPage = ({
         </SettingsPageContent>
         <Savebar>
           <Savebar.Spacer />
-          <Savebar.CancelButton onClick={() => navigate(configurationMenuUrl)} />
+          <Savebar.CancelButton onClick={() => navigate(orderSettingsPath)} />
           <Savebar.ConfirmButton
             form="refund-reason-settings-form"
             transitionState={saveButtonBarState}
