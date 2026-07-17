@@ -1,9 +1,9 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { type ShopErrorFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getShopErrorMessage from "@dashboard/utils/errors/shop";
 import { Box, Input, Textarea } from "@saleor/macaw-ui-next";
-import { type ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { type SiteSettingsPageFormData } from "../SiteSettingsPage";
@@ -13,7 +13,7 @@ interface StoreDetailsFieldsProps {
   data: Pick<SiteSettingsPageFormData, "name" | "description">;
   errors: ShopErrorFragment[];
   disabled: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: FormChange;
 }
 
 /** Form fields for store name/description — used inside SettingsSection. */
