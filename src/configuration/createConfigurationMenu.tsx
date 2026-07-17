@@ -1,18 +1,10 @@
 // @ts-strict-ignore
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
-import { configurationLucideIconProps } from "@dashboard/components/icons";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
-import Attributes from "@dashboard/icons/Attributes";
-import Channels from "@dashboard/icons/Channels";
+import { createConfigurationLucideIcon } from "@dashboard/icons/createNavigationLucideIcon";
 import { ConfigurationModelingIcon } from "@dashboard/icons/Modeling";
-import PermissionGroups from "@dashboard/icons/PermissionGroups";
 import { ConfigurationProductsIcon } from "@dashboard/icons/Products";
-import ShippingMethods from "@dashboard/icons/ShippingMethods";
-import SiteSettings from "@dashboard/icons/SiteSettings";
-import StaffMembers from "@dashboard/icons/StaffMembers";
-import Taxes from "@dashboard/icons/Taxes";
-import Warehouses from "@dashboard/icons/Warehouses";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { orderSettingsPath } from "@dashboard/orders/urls";
@@ -24,10 +16,32 @@ import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
-import { CreditCard, Package } from "lucide-react";
+import {
+  CreditCard,
+  Package,
+  Radio,
+  Receipt,
+  Settings,
+  Shield,
+  Tags,
+  Truck,
+  Users,
+  Warehouse,
+} from "lucide-react";
 import { type IntlShape } from "react-intl";
 
 import { type MenuSection } from "./types";
+
+const ConfigurationAttributesIcon = createConfigurationLucideIcon(Tags);
+const ConfigurationTaxesIcon = createConfigurationLucideIcon(Receipt);
+const ConfigurationStaffIcon = createConfigurationLucideIcon(Users);
+const ConfigurationPermissionGroupsIcon = createConfigurationLucideIcon(Shield);
+const ConfigurationShippingIcon = createConfigurationLucideIcon(Truck);
+const ConfigurationWarehousesIcon = createConfigurationLucideIcon(Warehouse);
+const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
+const ConfigurationRefundsSettingsIcon = createConfigurationLucideIcon(CreditCard);
+const ConfigurationChannelsIcon = createConfigurationLucideIcon(Radio);
+const ConfigurationSiteSettingsIcon = createConfigurationLucideIcon(Settings);
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
@@ -55,7 +69,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage attributes used for product types",
             description: "configuration menu item description",
           }),
-          icon: <Attributes />,
+          icon: <ConfigurationAttributesIcon />,
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage({
             id: "GTg7rP",
@@ -92,7 +106,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage attributes used for model types",
             description: "configuration menu item description",
           }),
-          icon: <Attributes />,
+          icon: <ConfigurationAttributesIcon />,
           permissions: [PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage({
             id: "I0975K",
@@ -116,7 +130,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "EIULpW",
             defaultMessage: "Manage how your store charges tax",
           }),
-          icon: <Taxes />,
+          icon: <ConfigurationTaxesIcon />,
           title: intl.formatMessage(sectionNames.taxes),
           url: taxConfigurationListUrl(),
           testId: "configuration-menu-taxes",
@@ -134,7 +148,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "RQUkVW",
             defaultMessage: "Manage your employees and their permissions",
           }),
-          icon: <StaffMembers />,
+          icon: <ConfigurationStaffIcon />,
           permissions: [PermissionEnum.MANAGE_STAFF],
           title: intl.formatMessage(sectionNames.staff),
           url: staffListUrl(),
@@ -145,7 +159,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "ivJ1qt",
             defaultMessage: "Manage your permission groups and their permissions",
           }),
-          icon: <PermissionGroups />,
+          icon: <ConfigurationPermissionGroupsIcon />,
           permissions: [PermissionEnum.MANAGE_STAFF],
           title: intl.formatMessage(sectionNames.permissionGroups),
           url: permissionGroupListUrl(),
@@ -164,7 +178,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "zxs6G3",
             defaultMessage: "Manage how you ship out orders",
           }),
-          icon: <ShippingMethods />,
+          icon: <ConfigurationShippingIcon />,
           permissions: [PermissionEnum.MANAGE_SHIPPING],
           title: intl.formatMessage(sectionNames.shipping),
           url: shippingZonesListUrl(),
@@ -175,7 +189,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "5RmuD+",
             defaultMessage: "Manage and update your warehouse information",
           }),
-          icon: <Warehouses />,
+          icon: <ConfigurationWarehousesIcon />,
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           title: intl.formatMessage(sectionNames.warehouses),
           url: warehouseSection,
@@ -196,7 +210,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Configure order processing, fulfillment, and checkout stock",
             description: "configuration menu item description for order settings",
           }),
-          icon: <Package {...configurationLucideIconProps} />,
+          icon: <ConfigurationOrderSettingsIcon />,
           permissions: [PermissionEnum.MANAGE_ORDERS],
           title: intl.formatMessage(sectionNames.ordersAndFulfillment),
           url: orderSettingsPath,
@@ -207,7 +221,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "3fKAKV",
             defaultMessage: "Configure refunds and returns behavior",
           }),
-          icon: <CreditCard {...configurationLucideIconProps} />,
+          icon: <ConfigurationRefundsSettingsIcon />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.refundsSettings),
           url: refundsSettingsPath,
@@ -226,7 +240,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "8vJCJ4",
             defaultMessage: "Define and manage your sales channels",
           }),
-          icon: <Channels />,
+          icon: <ConfigurationChannelsIcon />,
           permissions: [PermissionEnum.MANAGE_CHANNELS],
           title: intl.formatMessage(sectionNames.channels),
           url: channelsListUrl(),
@@ -245,7 +259,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "5BajZK",
             defaultMessage: "View and update your site settings",
           }),
-          icon: <SiteSettings />,
+          icon: <ConfigurationSiteSettingsIcon />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl(),
