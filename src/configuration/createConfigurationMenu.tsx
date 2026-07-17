@@ -41,7 +41,7 @@ const ConfigurationChannelsIcon = createConfigurationLucideIcon(Radio);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 
 /**
- * Configuration IA: merchant jobs (Shopify-style), not engineering modules.
+ * Configuration IA: merchant jobs, not engineering modules.
  * Order: Store → Markets → Catalog → Content → Shipping → Orders → Users.
  */
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {

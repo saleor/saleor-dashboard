@@ -1,3 +1,4 @@
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import {
   useModelTypesQuery,
   useRefundReasonReferenceClearMutation,
@@ -17,12 +18,16 @@ import {
 import { refundsSettingsPageMessages } from "@dashboard/refundsSettings/components/RefundsSettingsPage/messages";
 import { RefundsSettingsPage } from "@dashboard/refundsSettings/components/RefundsSettingsPage/RefundsSettingsPage";
 import { submitRefundsSettingsForm } from "@dashboard/refundsSettings/components/RefundsSettingsPage/submitRefundsSettingsForm";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 export const RefundsSettings = (): JSX.Element => {
   const intl = useIntl();
   const notify = useNotifier();
+  const formId = useRef(Symbol("refunds-settings-form")).current;
+  const { setIsDirty, setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId,
+  });
   const {
     loading: refundSettingsLoading,
     data: refundSettingsData,
@@ -109,6 +114,7 @@ export const RefundsSettings = (): JSX.Element => {
 
       if (!result.allErrors.length) {
         await Promise.all([refetchRefundSettings(), refetchReturnSettings()]);
+        setIsDirty(false);
         notify({
           status: "success",
           text: intl.formatMessage(refundsSettingsPageMessages.saveSuccess),
@@ -131,9 +137,31 @@ export const RefundsSettings = (): JSX.Element => {
     notify,
     refetchRefundSettings,
     refetchReturnSettings,
+    setIsDirty,
     updateRefundSettings,
     updateReturnSettings,
   ]);
+
+  useEffect(
+    function enableExitPrompt() {
+      setEnableExitDialog(true);
+    },
+    [setEnableExitDialog],
+  );
+
+  useEffect(
+    function syncExitPromptDirtyState() {
+      setIsDirty(!isSaveDisabled);
+    },
+    [isSaveDisabled, setIsDirty],
+  );
+
+  useLayoutEffect(
+    function registerExitDialogSubmit() {
+      setExitDialogSubmitRef(handleSubmit);
+    },
+    [handleSubmit, setExitDialogSubmitRef],
+  );
 
   const mutationLoading =
     updateRefundSettingsOpts.loading ||

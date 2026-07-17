@@ -13,9 +13,19 @@ interface SettingsToggleRowProps {
   "data-test-id"?: string;
 }
 
+const isInteractiveTarget = (target: EventTarget | null): boolean => {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+
+  return Boolean(
+    target.closest("a, button, input, textarea, select, [role='checkbox'], [role='link']"),
+  );
+};
+
 /**
  * Settings row with label stack on the left and control on the right.
- * Shopify Admin–style; scales to other Settings hubs without layout change.
+ * Shared across Settings hubs without layout change.
  */
 export const SettingsToggleRow = ({
   name,
@@ -26,6 +36,14 @@ export const SettingsToggleRow = ({
   onCheckedChange,
   "data-test-id": dataTestId,
 }: SettingsToggleRowProps): JSX.Element => {
+  const handleRowClick = (event: MouseEvent): void => {
+    if (disabled || isInteractiveTarget(event.target)) {
+      return;
+    }
+
+    onCheckedChange(!checked);
+  };
+
   return (
     <Box
       className={styles.row}
@@ -36,7 +54,7 @@ export const SettingsToggleRow = ({
       gap={4}
       paddingX={6}
       paddingY={4}
-      onClick={disabled ? undefined : () => onCheckedChange(!checked)}
+      onClick={disabled ? undefined : handleRowClick}
       cursor={disabled ? "not-allowed" : "pointer"}
     >
       <Box display="flex" flexDirection="column" gap={1} __minWidth={0} flexGrow="1">

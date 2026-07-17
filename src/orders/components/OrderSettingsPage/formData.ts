@@ -161,6 +161,14 @@ export function buildChannelOrderSettingsInput(channelSettings: ChannelOrderSett
   };
 }
 
+const SHOP_SETTING_KEYS = [
+  "fulfillmentAutoApprove",
+  "fulfillmentAllowUnpaid",
+  "reserveStockDurationAnonymousUser",
+  "reserveStockDurationAuthenticatedUser",
+  "limitQuantityPerCheckout",
+] as const;
+
 /**
  * Preserve dirty per-channel edits when Apollo updates the channel map after a
  * partial save (one channel succeeds, another still dirty).
@@ -172,16 +180,12 @@ export function mergeOrderSettingsFormData(
 ): OrderSettingsFormData {
   const next: OrderSettingsFormData = { ...prevState };
 
-  (Object.keys(data) as Array<keyof OrderSettingsFormData>).forEach(key => {
-    if (key === "channels") {
-      return;
-    }
-
+  for (const key of SHOP_SETTING_KEYS) {
     if (data[key] !== prevData[key]) {
       // Shop scalars — take server when baseline changed.
-      (next as Record<string, unknown>)[key] = data[key];
+      next[key] = data[key];
     }
-  });
+  }
 
   const mergedChannels: ChannelOrderSettingsFormMap = { ...prevState.channels };
 

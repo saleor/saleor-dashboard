@@ -59,7 +59,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   useLegacyUpdateWebhookEmission: boolean;
   useLegacyShippingZoneStockAvailability: boolean;
   preserveAllAddressFields: boolean;
-  passwordLoginMode: PasswordLoginModeEnum | undefined;
+  passwordLoginMode: PasswordLoginModeEnum;
 }
 
 interface SiteSettingsPageProps {
@@ -118,7 +118,7 @@ export const SiteSettingsPage = ({
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     useLegacyShippingZoneStockAvailability: shop?.useLegacyShippingZoneStockAvailability ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
-    passwordLoginMode: shop?.passwordLoginMode,
+    passwordLoginMode: shop?.passwordLoginMode ?? PasswordLoginModeEnum.ENABLED,
   };
 
   return (

@@ -11,7 +11,10 @@ import {
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { orderListUrl, type OrderSettingsUrlQueryParams } from "@dashboard/orders/urls";
+import { parseQs } from "@dashboard/url-utils";
 import { FormattedMessage, useIntl } from "react-intl";
+import useRouter from "use-react-router";
 
 import { OrderChannelSettingsMatrix } from "../OrderChannelSettingsMatrix/OrderChannelSettingsMatrix";
 import { OrderCheckoutStockSettings } from "../OrderCheckoutStockSettings/OrderCheckoutStockSettings";
@@ -30,6 +33,14 @@ interface OrderSettingsPageProps {
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
+const getOrdersSettingsExitHref = (search: string): string => {
+  const params = parseQs(
+    search.startsWith("?") ? search.slice(1) : search,
+  ) as OrderSettingsUrlQueryParams;
+
+  return params.from === "orders" ? orderListUrl() : configurationMenuUrl;
+};
+
 /**
  * Orders & fulfillment hub — uses SettingsHubLayout + SettingsPageContent like Refunds settings.
  */
@@ -44,12 +55,16 @@ const OrderSettingsPage = ({
 }: OrderSettingsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const {
+    location: { search },
+  } = useRouter();
+  const exitHref = getOrdersSettingsExitHref(search);
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.ordersAndFulfillment)} />
       <SettingsHubLayout
-        backHref={configurationMenuUrl}
+        backHref={exitHref}
         title={intl.formatMessage({
           id: "anS/X1",
           defaultMessage: "Orders & fulfillment",
@@ -87,7 +102,7 @@ const OrderSettingsPage = ({
               </SettingsPageContent>
               <Savebar>
                 <Savebar.Spacer />
-                <Savebar.CancelButton onClick={() => navigate(configurationMenuUrl)} />
+                <Savebar.CancelButton onClick={() => navigate(exitHref)} />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}
                   onClick={submit}
