@@ -167,7 +167,17 @@ const SHOP_SETTING_KEYS = [
   "reserveStockDurationAnonymousUser",
   "reserveStockDurationAuthenticatedUser",
   "limitQuantityPerCheckout",
-] as const;
+] as const satisfies ReadonlyArray<keyof OrderSettingsFormData>;
+
+type ShopSettingKey = (typeof SHOP_SETTING_KEYS)[number];
+
+function assignShopSetting<K extends ShopSettingKey>(
+  target: OrderSettingsFormData,
+  key: K,
+  value: OrderSettingsFormData[K],
+): void {
+  target[key] = value;
+}
 
 /**
  * Preserve dirty per-channel edits when Apollo updates the channel map after a
@@ -183,7 +193,7 @@ export function mergeOrderSettingsFormData(
   for (const key of SHOP_SETTING_KEYS) {
     if (data[key] !== prevData[key]) {
       // Shop scalars — take server when baseline changed.
-      next[key] = data[key];
+      assignShopSetting(next, key, data[key]);
     }
   }
 

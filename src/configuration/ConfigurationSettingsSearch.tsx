@@ -148,7 +148,7 @@ export const ConfigurationSettingsSearchResults = ({
         role="listbox"
         margin={0}
         padding={0}
-        __listStyle="none"
+        listStyleType="none"
       >
         {results.length === 0 ? (
           <Box as="li" paddingY={6} paddingX={5}>
