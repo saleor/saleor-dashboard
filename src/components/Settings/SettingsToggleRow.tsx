@@ -10,6 +10,7 @@ interface SettingsToggleRowProps {
   checked: boolean;
   disabled?: boolean;
   onCheckedChange: (checked: boolean) => void;
+  id?: string;
   "data-test-id"?: string;
 }
 
@@ -34,6 +35,7 @@ export const SettingsToggleRow = ({
   checked,
   disabled = false,
   onCheckedChange,
+  id,
   "data-test-id": dataTestId,
 }: SettingsToggleRowProps): JSX.Element => {
   const handleRowClick = (event: MouseEvent): void => {
@@ -46,6 +48,7 @@ export const SettingsToggleRow = ({
 
   return (
     <Box
+      id={id}
       className={styles.row}
       data-disabled={disabled ? "true" : undefined}
       display="flex"

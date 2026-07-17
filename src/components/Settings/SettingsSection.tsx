@@ -9,6 +9,7 @@ interface SettingsSectionProps {
   description?: ReactNode;
   ownership?: SettingsOwnership;
   children: ReactNode;
+  id?: string;
   "data-test-id"?: string;
 }
 
@@ -21,11 +22,13 @@ export const SettingsSection = ({
   description,
   ownership,
   children,
+  id,
   "data-test-id": dataTestId,
 }: SettingsSectionProps): JSX.Element => {
   return (
     <Box
       as="section"
+      id={id}
       className={styles.section}
       data-test-id={dataTestId}
       backgroundColor="default1"

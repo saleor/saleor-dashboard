@@ -1,4 +1,5 @@
 import { SettingsLinkCard } from "@dashboard/components/Settings/SettingsLinkCard";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { sectionNames } from "@dashboard/intl";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -8,6 +9,7 @@ export const OrderReturnsRefundsSettingsCard = (): JSX.Element => {
 
   return (
     <SettingsLinkCard
+      id={settingsHashes.ordersRefundsLink}
       data-test-id="order-returns-refunds-settings"
       ownership="shop"
       to={refundsSettingsPath}

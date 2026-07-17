@@ -9,6 +9,7 @@ import { type ModelTypeOption } from "./types";
 
 interface ReasonSettingsSectionProps {
   "data-test-id": string;
+  id?: string;
   title: string;
   description: string;
   selectLabel: string;
@@ -26,6 +27,7 @@ interface ReasonSettingsSectionProps {
 
 export const ReasonSettingsSection = ({
   "data-test-id": dataTestId,
+  id,
   title,
   description,
   selectLabel,
@@ -44,6 +46,7 @@ export const ReasonSettingsSection = ({
 
   return (
     <SettingsSection
+      id={id}
       data-test-id={dataTestId}
       ownership="shop"
       title={title}

@@ -4,6 +4,7 @@ import { channelAvailabilityMessages } from "@dashboard/components/ChannelAvaila
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Pill } from "@dashboard/components/Pill";
 import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { type OrderSettingsChannelsQuery, OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import {
@@ -46,6 +47,7 @@ interface HeaderWithHelpProps {
   tooltip?: MessageDescriptor;
   /** Custom tooltip body when pills / layout need more structure. */
   tooltipContent?: ReactNode;
+  id?: string;
 }
 
 const HeaderWithHelp = ({
@@ -53,11 +55,12 @@ const HeaderWithHelp = ({
   labelText,
   tooltip,
   tooltipContent,
+  id,
 }: HeaderWithHelpProps): JSX.Element => {
   const intl = useIntl();
 
   return (
-    <span className={styles.headerCell}>
+    <span className={styles.headerCell} id={id}>
       {label}
       <Tooltip>
         <Tooltip.Trigger>
@@ -188,6 +191,7 @@ export const OrderChannelSettingsMatrix = ({
 
   return (
     <SettingsSection
+      id={settingsHashes.ordersChannelSettings}
       data-test-id="order-channel-settings-matrix"
       ownership="channel"
       title={intl.formatMessage({
@@ -197,6 +201,16 @@ export const OrderChannelSettingsMatrix = ({
       })}
       description={<FormattedMessage {...messages.matrixDescription} />}
     >
+      {/*
+        Stable deep-link targets for settings search — always mounted so hash
+        scroll works before/without the channel table (loading or empty).
+      */}
+      <div className={styles.hashAnchors} data-hash-anchors aria-hidden>
+        <span id={settingsHashes.ordersAutoConfirm} />
+        <span id={settingsHashes.ordersAutoFulfillGiftCards} />
+        <span id={settingsHashes.ordersAllowUnpaid} />
+        <span id={settingsHashes.ordersDeleteExpired} />
+      </div>
       {showToolbar ? (
         <Box className={styles.toolbar} data-test-id="order-channel-matrix-toolbar">
           {showSearch ? (

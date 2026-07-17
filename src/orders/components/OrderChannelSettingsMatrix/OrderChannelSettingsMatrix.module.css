@@ -112,6 +112,14 @@
   color: var(--mu-colors-text-default1);
 }
 
+.hashAnchors {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .tooltipContent {
   max-width: 15rem;
   white-space: normal;

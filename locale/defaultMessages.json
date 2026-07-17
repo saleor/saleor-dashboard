@@ -398,6 +398,10 @@
     "context": "info about variant metadata with link to edit",
     "string": "The read-only metadata of the actual variant used in this order. {link}"
   },
+  "00ll1/": {
+    "context": "Cmd+K section heading for settings catalog results",
+    "string": "Settings"
+  },
   "02a84g": {
     "context": "grant refund within return, structured reason select label",
     "string": "Reason"
@@ -409,6 +413,10 @@
   "033/zW": {
     "context": "explore extensions section name",
     "string": "Explore"
+  },
+  "04Ljji": {
+    "context": "settings search alias",
+    "string": "cleanup orders"
   },
   "05hqq6": {
     "context": "checkbox label",
@@ -431,6 +439,10 @@
   "0B0HS2": {
     "context": "dialog header",
     "string": "Delete model"
+  },
+  "0BXL1v": {
+    "context": "settings search alias",
+    "string": "shipping zone stock"
   },
   "0DRBjg": {
     "string": "Token Note"
@@ -675,6 +687,10 @@
   "1J/bhZ": {
     "context": "expiry date section header",
     "string": "Expiry date"
+  },
+  "1LCFJM": {
+    "context": "settings search hint when deep links are not yet available",
+    "string": "Configured per channel — open a channel to edit."
   },
   "1LiVhv": {
     "context": "section header",
@@ -1010,6 +1026,10 @@
     "context": "hint under returns and refunds card on order settings",
     "string": "Choose model types used as refund and return reason references."
   },
+  "367xKd": {
+    "context": "settings search alias",
+    "string": "authorize"
+  },
   "37IPJQ": {
     "context": "return items table, edit reason button",
     "string": "Edit reason"
@@ -1021,6 +1041,10 @@
   "38dc43": {
     "context": "Features preview",
     "string": "Features preview"
+  },
+  "38izkC": {
+    "context": "placeholder for configuration settings search",
+    "string": "Search settings…"
   },
   "39yi8w": {
     "context": "selected currency",
@@ -1098,6 +1122,10 @@
   },
   "3eR8iC": {
     "string": "Show me"
+  },
+  "3eV79b": {
+    "context": "settings search result kind badge",
+    "string": "Hub"
   },
   "3evXPj": {
     "string": "Leave your note here..."
@@ -1177,6 +1205,10 @@
   "43QkTW": {
     "context": "Transaction capture button - charge preauthorized transaction amount",
     "string": "Capture"
+  },
+  "43USpF": {
+    "context": "settings search alias",
+    "string": "company address"
   },
   "43b+ts": {
     "context": "extensions list has been installed",
@@ -2746,6 +2778,10 @@
     "context": "matrix section title on orders and fulfillment settings",
     "string": "Per-channel order settings"
   },
+  "BxRnKL": {
+    "context": "settings search alias",
+    "string": "reason model type"
+  },
   "BxuhWZ": {
     "string": "No extension (app or plugin) is configured to handle requested transaction action"
   },
@@ -2993,6 +3029,10 @@
   "CrnqOK": {
     "string": "Country tax rates updated"
   },
+  "CvRYXC": {
+    "context": "settings search alias",
+    "string": "delete expired orders"
+  },
   "Cxkzpg": {
     "context": "page title - installing app with manifestUrl form",
     "string": "Add extension from manifest"
@@ -3033,6 +3073,10 @@
   "D5Wtf/": {
     "context": "table header column",
     "string": "Country name"
+  },
+  "D6LyvQ": {
+    "context": "settings search alias",
+    "string": "prioritize warehouses"
   },
   "D77hf0": {
     "context": "configuration section for product types and attributes",
@@ -3121,6 +3165,10 @@
   "DVgMit": {
     "context": "transaction event type, transaction was chargeback by payment provider",
     "string": "Chargeback"
+  },
+  "DY3rsj": {
+    "context": "settings search alias",
+    "string": "automatic checkout completion"
   },
   "DYn8fL": {
     "context": "shipping method channel picker dialog description",
@@ -3301,6 +3349,10 @@
   "Eh6KYS": {
     "context": "info card title",
     "string": "Card information"
+  },
+  "EjrHaT": {
+    "context": "settings search alias",
+    "string": "address validation"
   },
   "En8pZE": {
     "context": "intro under store settings page title",
@@ -4291,6 +4343,10 @@
     "context": "success notification after saving refunds settings hub",
     "string": "Refunds and returns settings updated"
   },
+  "J71slC": {
+    "context": "settings search alias",
+    "string": "customer registration"
+  },
   "J7mFhU": {
     "context": "currency code select",
     "string": "{code} - {countries}"
@@ -4366,6 +4422,10 @@
   "JRfJD9": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
   },
+  "JSr+vB": {
+    "context": "settings search alias",
+    "string": "unconfirmed"
+  },
   "JTcz2G": {
     "context": "csv file exporting has finished, header",
     "string": "Exporting CSV finished"
@@ -4417,6 +4477,10 @@
   "JfKvrV": {
     "context": "select variant media",
     "string": "Select a specific variant media from product media"
+  },
+  "JfTnk+": {
+    "context": "settings search alias",
+    "string": "expire orders"
   },
   "JftRtx": {
     "context": "issue gift card dialog title",
@@ -4822,6 +4886,10 @@
     "context": "name placeholder",
     "string": "Unnamed webhook"
   },
+  "LmmOfO": {
+    "context": "settings search alias",
+    "string": "gift card fulfillment"
+  },
   "LnRlch": {
     "context": "attribute's editor component entity",
     "string": "Entity"
@@ -4958,6 +5026,10 @@
   "MTGT8E": {
     "context": "column header",
     "string": "No. of orders"
+  },
+  "MTbQXl": {
+    "context": "settings search alias",
+    "string": "checkout complete"
   },
   "MTl5o6": {
     "context": "new discount label",
@@ -5128,6 +5200,10 @@
   },
   "NGWTE4": {
     "string": "Create webhook/extension manually"
+  },
+  "NISCwn": {
+    "context": "settings search alias",
+    "string": "unpaid orders"
   },
   "NJ9ngY": {
     "string": "Visible Action"
@@ -5469,6 +5545,10 @@
     "context": "button error state label",
     "string": "Try again"
   },
+  "OyxX4P": {
+    "context": "settings search alias",
+    "string": "checkout quantity limit"
+  },
   "OzHN0Z": {
     "context": "order history message",
     "string": "Links to the order's digital goods were sent"
@@ -5729,6 +5809,10 @@
   },
   "Q1Uzbb": {
     "string": "No products found"
+  },
+  "Q2GiTL": {
+    "context": "settings search alias",
+    "string": "email confirmation"
   },
   "Q2UXlW": {
     "context": "modal button url upload",
@@ -6173,6 +6257,10 @@
   "SM+yG0": {
     "context": "input label",
     "string": "SKU (Stock Keeping Unit)"
+  },
+  "SNSHFa": {
+    "context": "settings search alias",
+    "string": "approve fulfillments"
   },
   "SNiyXb": {
     "context": "numeric attribute type",
@@ -6764,6 +6852,10 @@
   "VKb1MS": {
     "string": "Categories"
   },
+  "VMJa9n": {
+    "context": "settings search alias",
+    "string": "mark as paid"
+  },
   "VNHzIF": {
     "context": "attribute input type field in embedded create form",
     "string": "Input type"
@@ -6999,6 +7091,10 @@
     "context": "voucher discount",
     "string": "Shipment"
   },
+  "WcEwji": {
+    "context": "settings search alias",
+    "string": "returns"
+  },
   "WhKGPA": {
     "context": "page title",
     "string": "Set up new password"
@@ -7156,6 +7252,10 @@
   "XMvH/d": {
     "context": "button label",
     "string": "ACCEPT"
+  },
+  "XNQPEn": {
+    "context": "settings search alias",
+    "string": "store name"
   },
   "XNeJay": {
     "context": "section header",
@@ -7791,6 +7891,10 @@
   "aI80kg": {
     "string": "Properties"
   },
+  "aIaNJa": {
+    "context": "settings search alias",
+    "string": "automatically confirm"
+  },
   "aJm/by": {
     "context": "Taxes section title",
     "string": "Tax classes"
@@ -7939,6 +8043,10 @@
   "azych5": {
     "context": "Message when no diagnostic issues found",
     "string": "All channels configured correctly"
+  },
+  "b/z/5G": {
+    "context": "settings search alias",
+    "string": "customer login"
   },
   "b1j4K6": {
     "context": "select label",
@@ -8440,6 +8548,10 @@
     "context": "description field hint",
     "string": "Main description content for this item"
   },
+  "d+XiBg": {
+    "context": "settings search alias",
+    "string": "stock reservation"
+  },
   "d+qgix": {
     "string": "Next step"
   },
@@ -8465,6 +8577,10 @@
   "d6ZaoI": {
     "context": "shipping method types help tooltip title",
     "string": "Price-based vs weight-based methods"
+  },
+  "d7EsgY": {
+    "context": "settings search alias",
+    "string": "warehouse stock allocation"
   },
   "d7dT8o": {
     "context": "button, sets granted refund amount in input",
@@ -9618,6 +9734,14 @@
   "jOgiMP": {
     "string": "NOT"
   },
+  "jPVqOL": {
+    "context": "settings search alias",
+    "string": "order confirmation"
+  },
+  "jSGYms": {
+    "context": "settings search alias",
+    "string": "invoice address"
+  },
   "jUuHVn": {
     "context": "description",
     "string": "No members found"
@@ -9681,6 +9805,10 @@
     "context": "automatic completion cut-off date description",
     "string": "Only checkouts created on or after this date will be automatically completed. If not set, current time will be used. {link}"
   },
+  "jpY7Ne": {
+    "context": "settings search alias",
+    "string": "payment capture"
+  },
   "jpyNZL": {
     "context": "section description for customer accounts",
     "string": "Control how customers register and sign in to your storefront."
@@ -9705,6 +9833,10 @@
   },
   "jvo0vs": {
     "string": "Save"
+  },
+  "jwDaI+": {
+    "context": "settings search alias",
+    "string": "charge"
   },
   "jwTwhf": {
     "context": "app privacy policy link",
@@ -10218,6 +10350,10 @@
   "ltSmln": {
     "string": "Shipping zone deleted"
   },
+  "ltbVdP": {
+    "context": "settings search alias",
+    "string": "password authentication"
+  },
   "lwjzVj": {
     "string": "Edit order"
   },
@@ -10526,9 +10662,17 @@
     "context": "number of order",
     "string": "No. of Order"
   },
+  "nTkUAI": {
+    "context": "settings search alias",
+    "string": "metadata webhooks"
+  },
   "nUp0Lp": {
     "context": "tab label for variant selection attributes",
     "string": "Selection Attributes"
+  },
+  "nVIFGq": {
+    "context": "empty state when settings search has no results",
+    "string": "No settings match “{query}”."
   },
   "nX2pCU": {
     "context": "window title",
@@ -10739,6 +10883,10 @@
   "oZFssJ": {
     "context": "tooltip when generate button is disabled because required attributes are not filled",
     "string": "Fill in all required attributes in the Required Attributes tab"
+  },
+  "oZrwSn": {
+    "context": "settings search alias",
+    "string": "return reasons"
   },
   "obHpf0": {
     "string": "No extensions found"
@@ -11162,6 +11310,10 @@
     "context": "extensions list ready to be used",
     "string": "{name} is ready to be used"
   },
+  "qRsNn3": {
+    "context": "settings search alias",
+    "string": "return reason"
+  },
   "qSCmIG": {
     "string": "lower than {value}"
   },
@@ -11410,6 +11562,10 @@
   "ra2O4j": {
     "string": "Deleted draft orders"
   },
+  "ranzuN": {
+    "context": "settings search alias",
+    "string": "transaction flow"
+  },
   "rbkmfG": {
     "context": "button",
     "string": "Delete variant"
@@ -11488,6 +11644,10 @@
     "context": "set expiry date selected label",
     "string": "Set gift card expiry date"
   },
+  "s+u2mc": {
+    "context": "settings search alias",
+    "string": "stock availability mode"
+  },
   "s17U7u": {
     "context": "discount type",
     "string": "Percentage"
@@ -11510,6 +11670,10 @@
   "s51tHd": {
     "context": "limit voucher",
     "string": "Limit of Uses"
+  },
+  "s5Huhi": {
+    "context": "settings search result kind badge",
+    "string": "Setting"
   },
   "s6Wgi3": {
     "context": "role label for product-level type assignment",
@@ -11848,6 +12012,10 @@
     "context": "usage summary when attribute is only on variant types",
     "string": "{count, plural, one {# variant type} other {# variant types}}"
   },
+  "trx0Os": {
+    "context": "settings search result kind badge",
+    "string": "Section"
+  },
   "tsL3IW": {
     "context": "gift card history message",
     "string": "Gift card was sent to customer"
@@ -12166,6 +12334,10 @@
   "v5yLSE": {
     "context": "section title",
     "string": "Stock availability"
+  },
+  "v6GMvG": {
+    "context": "settings search alias",
+    "string": "confirm orders"
   },
   "v8UngX": {
     "string": "Search warehouses..."
@@ -13153,6 +13325,10 @@
   },
   "zehNKT": {
     "string": "Rule has error, open rule to see details"
+  },
+  "zf1lqt": {
+    "context": "settings search alias",
+    "string": "refund reason"
   },
   "zf48rQ": {
     "context": "sum of captured amount of all transactions",

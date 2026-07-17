@@ -10,6 +10,7 @@ import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPage
 import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
 import { SettingsToggleRow } from "@dashboard/components/Settings/SettingsToggleRow";
 import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   PasswordLoginModeEnum,
@@ -159,6 +160,7 @@ export const SiteSettingsPage = ({
                 }
               >
                 <SettingsSection
+                  id={settingsHashes.storeDetails}
                   data-test-id="store-details-settings"
                   ownership="shop"
                   title={intl.formatMessage(messages.sectionStoreDetailsTitle)}
@@ -175,6 +177,7 @@ export const SiteSettingsPage = ({
                 </SettingsSection>
 
                 <SettingsSection
+                  id={settingsHashes.storeCompany}
                   data-test-id="company-address-settings"
                   ownership="shop"
                   title={intl.formatMessage(messages.sectionCompanyTitle)}
@@ -194,12 +197,14 @@ export const SiteSettingsPage = ({
                 </SettingsSection>
 
                 <SettingsSection
+                  id={settingsHashes.storeCustomerAccounts}
                   data-test-id="customer-accounts-settings"
                   ownership="shop"
                   title={intl.formatMessage(messages.sectionCustomerAccountsTitle)}
                   description={intl.formatMessage(messages.sectionCustomerAccountsDescription)}
                 >
                   <SettingsToggleRow
+                    id={settingsHashes.storeEmailConfirmation}
                     name="emailConfirmation"
                     title={intl.formatMessage(messages.sectionEmailConfirmationHeader)}
                     description={intl.formatMessage(messages.sectionEmailConfirmationDescription)}
@@ -210,63 +215,71 @@ export const SiteSettingsPage = ({
                     }
                     data-test-id="require-email-confirmation-checkbox"
                   />
-                  <SettingsFieldStack
-                    intro={
-                      <Text size={3} fontWeight="medium">
-                        {intl.formatMessage(passwordLoginMessages.cardHeader)}
-                      </Text>
-                    }
-                  >
-                    <SimpleRadioGroupField
-                      name="passwordLoginMode"
-                      value={data.passwordLoginMode}
-                      onChange={change}
-                      choices={[
-                        {
-                          label: (
-                            <Box>
-                              <Text>{intl.formatMessage(passwordLoginMessages.enabled)}</Text>
-                              <Text size={2} color="default2" display="block">
-                                {intl.formatMessage(passwordLoginMessages.enabledDescription)}
-                              </Text>
-                            </Box>
-                          ),
-                          value: PasswordLoginModeEnum.ENABLED,
-                        },
-                        {
-                          label: (
-                            <Box>
-                              <Text>{intl.formatMessage(passwordLoginMessages.customersOnly)}</Text>
-                              <Text size={2} color="default2" display="block">
-                                {intl.formatMessage(passwordLoginMessages.customersOnlyDescription)}
-                              </Text>
-                            </Box>
-                          ),
-                          value: PasswordLoginModeEnum.CUSTOMERS_ONLY,
-                        },
-                        {
-                          label: (
-                            <Box>
-                              <Text>{intl.formatMessage(passwordLoginMessages.disabled)}</Text>
-                              <Text size={2} color="default2" display="block">
-                                {intl.formatMessage(passwordLoginMessages.disabledDescription)}
-                              </Text>
-                            </Box>
-                          ),
-                          value: PasswordLoginModeEnum.DISABLED,
-                        },
-                      ]}
-                    />
-                  </SettingsFieldStack>
+                  <Box id={settingsHashes.storePasswordLogin}>
+                    <SettingsFieldStack
+                      intro={
+                        <Text size={3} fontWeight="medium">
+                          {intl.formatMessage(passwordLoginMessages.cardHeader)}
+                        </Text>
+                      }
+                    >
+                      <SimpleRadioGroupField
+                        name="passwordLoginMode"
+                        value={data.passwordLoginMode}
+                        onChange={change}
+                        choices={[
+                          {
+                            label: (
+                              <Box>
+                                <Text>{intl.formatMessage(passwordLoginMessages.enabled)}</Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(passwordLoginMessages.enabledDescription)}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.ENABLED,
+                          },
+                          {
+                            label: (
+                              <Box>
+                                <Text>
+                                  {intl.formatMessage(passwordLoginMessages.customersOnly)}
+                                </Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(
+                                    passwordLoginMessages.customersOnlyDescription,
+                                  )}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.CUSTOMERS_ONLY,
+                          },
+                          {
+                            label: (
+                              <Box>
+                                <Text>{intl.formatMessage(passwordLoginMessages.disabled)}</Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(passwordLoginMessages.disabledDescription)}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.DISABLED,
+                          },
+                        ]}
+                      />
+                    </SettingsFieldStack>
+                  </Box>
                 </SettingsSection>
 
                 <SettingsSection
+                  id={settingsHashes.storeAdvanced}
                   data-test-id="store-advanced-settings"
                   ownership="shop"
                   title={intl.formatMessage(messages.sectionAdvancedTitle)}
                   description={intl.formatMessage(messages.sectionAdvancedDescription)}
                 >
                   <SettingsToggleRow
+                    id={settingsHashes.storeWebhookEmission}
                     name="useLegacyUpdateWebhookEmission"
                     title={intl.formatMessage(messages.sectionWebhookEmissionHeader)}
                     description={intl.formatMessage(messages.sectionWebhookEmissionDescription)}
@@ -280,6 +293,7 @@ export const SiteSettingsPage = ({
                     data-test-id="legacy-webhook-emission-checkbox"
                   />
                   <SettingsToggleRow
+                    id={settingsHashes.storeStockAvailability}
                     name="useLegacyShippingZoneStockAvailability"
                     title={intl.formatMessage(messages.sectionStockAvailabilityHeader)}
                     description={
@@ -321,6 +335,7 @@ export const SiteSettingsPage = ({
                     </Box>
                   ) : null}
                   <SettingsToggleRow
+                    id={settingsHashes.storeAddressValidation}
                     name="preserveAllAddressFields"
                     title={intl.formatMessage(messages.sectionAddressValidationHeader)}
                     description={intl.formatMessage(messages.sectionAddressValidationDescription)}

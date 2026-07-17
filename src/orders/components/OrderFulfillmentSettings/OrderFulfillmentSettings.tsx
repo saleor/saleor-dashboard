@@ -1,5 +1,6 @@
 import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
 import { SettingsToggleRow } from "@dashboard/components/Settings/SettingsToggleRow";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { type ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -20,6 +21,7 @@ const OrderFulfillmentSettings = ({ data, disabled, onChange }: OrderFulfillment
 
   return (
     <SettingsSection
+      id={settingsHashes.ordersFulfillment}
       data-test-id="order-fulfillment-settings"
       ownership="shop"
       title={intl.formatMessage({
@@ -36,6 +38,7 @@ const OrderFulfillmentSettings = ({ data, disabled, onChange }: OrderFulfillment
       }
     >
       <SettingsToggleRow
+        id={settingsHashes.ordersFulfillmentAutoApprove}
         name="fulfillmentAutoApprove"
         title={
           <FormattedMessage
@@ -57,6 +60,7 @@ const OrderFulfillmentSettings = ({ data, disabled, onChange }: OrderFulfillment
         data-test-id="fulfillment-auto-approve-checkbox"
       />
       <SettingsToggleRow
+        id={settingsHashes.ordersFulfillmentAllowUnpaid}
         name="fulfillmentAllowUnpaid"
         title={
           <FormattedMessage

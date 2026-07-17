@@ -1,5 +1,6 @@
 import { SettingsFieldStack } from "@dashboard/components/Settings/SettingsFieldStack";
 import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { Box, Input } from "@saleor/macaw-ui-next";
 import { type ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,6 +24,7 @@ export const OrderCheckoutStockSettings = ({
   return (
     <Box display="flex" flexDirection="column" gap={5}>
       <SettingsSection
+        id={settingsHashes.ordersReservedStock}
         data-test-id="order-checkout-stock-settings"
         ownership="shop"
         title={intl.formatMessage(messages.reservedStock)}
@@ -63,6 +65,7 @@ export const OrderCheckoutStockSettings = ({
       </SettingsSection>
 
       <SettingsSection
+        id={settingsHashes.ordersCheckoutLimits}
         data-test-id="order-checkout-limits-settings"
         ownership="shop"
         title={intl.formatMessage(messages.checkoutLimits)}

@@ -2,6 +2,8 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type ReactNode } from "react";
 
+import { useScrollToSettingsHash } from "./useScrollToSettingsHash";
+
 interface SettingsHubLayoutProps {
   title: ReactNode;
   backHref: string;
@@ -17,6 +19,8 @@ export const SettingsHubLayout = ({
   backHref,
   children,
 }: SettingsHubLayoutProps): JSX.Element => {
+  useScrollToSettingsHash();
+
   return (
     <DetailPageLayout gridTemplateColumns={1} width="100%">
       <TopNav href={backHref} title={title} gridColumn="full" />

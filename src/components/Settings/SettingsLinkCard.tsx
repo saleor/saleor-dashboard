@@ -11,6 +11,7 @@ interface SettingsLinkCardProps {
   description: ReactNode;
   to: string;
   ownership?: SettingsOwnership;
+  id?: string;
   "data-test-id"?: string;
 }
 
@@ -23,10 +24,11 @@ export const SettingsLinkCard = ({
   description,
   to,
   ownership,
+  id,
   "data-test-id": dataTestId,
 }: SettingsLinkCardProps): JSX.Element => {
   return (
-    <Link to={to} className={styles.link} data-test-id={dataTestId}>
+    <Link to={to} className={styles.link} data-test-id={dataTestId} id={id}>
       <Box
         className={styles.card}
         display="flex"
