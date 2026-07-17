@@ -1,6 +1,10 @@
 // @ts-strict-ignore
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import {
   type ChannelErrorFragment,
+  PermissionEnum,
+  type ShopErrorFragment,
   useChannelUpdateMutation,
   useOrderSettingsChannelsQuery,
   useOrderSettingsQuery,
@@ -20,12 +24,22 @@ import { useIntl } from "react-intl";
 const OrderSettings = () => {
   const intl = useIntl();
   const notify = useNotifier();
-  const { data, loading } = useOrderSettingsQuery({});
-  const { data: channelsData, loading: channelsLoading } = useOrderSettingsChannelsQuery({});
+  const userPermissions = useUserPermissions();
+  const canManageSettings = hasPermissions(userPermissions ?? [], [PermissionEnum.MANAGE_SETTINGS]);
+  const canManageOrders = hasPermissions(userPermissions ?? [], [PermissionEnum.MANAGE_ORDERS]);
+  const { data, loading } = useOrderSettingsQuery({
+    skip: !canManageSettings,
+  });
+  const { data: channelsData, loading: channelsLoading } = useOrderSettingsChannelsQuery({
+    skip: !canManageOrders,
+  });
   const channels = useMemo(() => channelsData?.channels ?? [], [channelsData?.channels]);
   const [channelUpdate] = useChannelUpdateMutation();
   const [orderSettingsUpdate, orderSettingsUpdateOpts] = useOrderSettingsUpdateMutation();
-  const [channelSaveErrors, setChannelSaveErrors] = useState<ChannelErrorFragment[]>([]);
+  const [lastSubmitErrors, setLastSubmitErrors] = useState<
+    Array<ChannelErrorFragment | ShopErrorFragment>
+  >([]);
+  const [saveAttempted, setSaveAttempted] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const initialFormData = useMemo(
@@ -46,7 +60,8 @@ const OrderSettings = () => {
   const handleSubmit = useCallback(
     async (formData: OrderSettingsFormData) => {
       setIsSaving(true);
-      setChannelSaveErrors([]);
+      setSaveAttempted(true);
+      setLastSubmitErrors([]);
 
       try {
         const result = await submitOrderSettingsForm({
@@ -54,9 +69,11 @@ const OrderSettings = () => {
           initialFormData,
           orderSettingsUpdate,
           channelUpdate,
+          canUpdateShop: canManageSettings,
+          canUpdateChannels: canManageOrders,
         });
 
-        setChannelSaveErrors(result.channelErrors);
+        setLastSubmitErrors(result.allErrors);
 
         if (!result.allErrors.length) {
           notify({
@@ -75,21 +92,36 @@ const OrderSettings = () => {
         setIsSaving(false);
       }
     },
-    [channelNameById, channelUpdate, initialFormData, intl, notify, orderSettingsUpdate],
+    [
+      canManageOrders,
+      canManageSettings,
+      channelNameById,
+      channelUpdate,
+      initialFormData,
+      intl,
+      notify,
+      orderSettingsUpdate,
+    ],
   );
 
-  const pageLoading = loading || channelsLoading || orderSettingsUpdateOpts.loading || isSaving;
+  const pageLoading =
+    (canManageSettings && loading) ||
+    (canManageOrders && channelsLoading) ||
+    orderSettingsUpdateOpts.loading ||
+    isSaving;
 
   const saveButtonBarState = getMutationState(
-    orderSettingsUpdateOpts.called || isSaving,
-    orderSettingsUpdateOpts.loading || isSaving,
-    [...(orderSettingsUpdateOpts.data?.shopSettingsUpdate?.errors || []), ...channelSaveErrors],
+    saveAttempted || isSaving,
+    isSaving || orderSettingsUpdateOpts.loading,
+    lastSubmitErrors,
   );
 
   return (
     <OrderSettingsPage
       shop={data?.shop}
       channels={channels}
+      canManageOrders={canManageOrders}
+      canManageSettings={canManageSettings}
       disabled={pageLoading}
       onSubmit={handleSubmit}
       saveButtonBarState={saveButtonBarState}

@@ -160,3 +160,59 @@ export function buildChannelOrderSettingsInput(channelSettings: ChannelOrderSett
     markAsPaidStrategy: normalized.markAsPaidStrategy,
   };
 }
+
+/**
+ * Preserve dirty per-channel edits when Apollo updates the channel map after a
+ * partial save (one channel succeeds, another still dirty).
+ */
+export function mergeOrderSettingsFormData(
+  prevData: OrderSettingsFormData,
+  prevState: OrderSettingsFormData,
+  data: OrderSettingsFormData,
+): OrderSettingsFormData {
+  const next: OrderSettingsFormData = { ...prevState };
+
+  (Object.keys(data) as Array<keyof OrderSettingsFormData>).forEach(key => {
+    if (key === "channels") {
+      return;
+    }
+
+    if (data[key] !== prevData[key]) {
+      // Shop scalars — take server when baseline changed.
+      (next as Record<string, unknown>)[key] = data[key];
+    }
+  });
+
+  const mergedChannels: ChannelOrderSettingsFormMap = { ...prevState.channels };
+
+  Object.keys(data.channels).forEach(channelId => {
+    const previousChannel = prevData.channels[channelId];
+    const stateChannel = prevState.channels[channelId];
+    const nextChannel = data.channels[channelId];
+
+    if (!previousChannel || !stateChannel) {
+      mergedChannels[channelId] = nextChannel;
+
+      return;
+    }
+
+    if (!areChannelOrderSettingsEqual(stateChannel, previousChannel)) {
+      // Keep in-progress edits for this channel.
+      mergedChannels[channelId] = stateChannel;
+
+      return;
+    }
+
+    mergedChannels[channelId] = nextChannel;
+  });
+
+  Object.keys(mergedChannels).forEach(channelId => {
+    if (!data.channels[channelId]) {
+      delete mergedChannels[channelId];
+    }
+  });
+
+  next.channels = mergedChannels;
+
+  return next;
+}

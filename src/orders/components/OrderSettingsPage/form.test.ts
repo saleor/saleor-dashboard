@@ -7,6 +7,7 @@ import {
   getOrderSettingsFormData,
   isOrderSettingsFormPristine,
   isShopSettingsPristine,
+  mergeOrderSettingsFormData,
   normalizeOrderSettingsFormData,
 } from "./formData";
 import { type OrderSettingsFormData } from "./types";
@@ -147,5 +148,43 @@ describe("OrderSettings form dirty helpers", () => {
 
     // Act / Assert
     expect(isOrderSettingsFormPristine(current, base)).toBe(false);
+  });
+
+  it("preserves dirty channel edits when merging a partial server update", () => {
+    // Arrange
+    const prevData = base;
+    const prevState: OrderSettingsFormData = {
+      ...base,
+      channels: {
+        "ch-1": {
+          ...base.channels["ch-1"],
+          allowUnpaidOrders: true,
+        },
+        "ch-2": {
+          automaticallyConfirmAllNewOrders: true,
+          automaticallyFulfillNonShippableGiftCard: true,
+          allowUnpaidOrders: false,
+          deleteExpiredOrdersAfter: 10,
+          markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+        },
+      },
+    };
+    const serverData: OrderSettingsFormData = {
+      ...base,
+      channels: {
+        "ch-1": base.channels["ch-1"],
+        "ch-2": {
+          ...prevState.channels["ch-2"],
+          deleteExpiredOrdersAfter: 14,
+        },
+      },
+    };
+
+    // Act
+    const merged = mergeOrderSettingsFormData(prevData, prevState, serverData);
+
+    // Assert — ch-1 stayed dirty; ch-2 was pristine so took the server value
+    expect(merged.channels["ch-1"].allowUnpaidOrders).toBe(true);
+    expect(merged.channels["ch-2"].deleteExpiredOrdersAfter).toBe(14);
   });
 });

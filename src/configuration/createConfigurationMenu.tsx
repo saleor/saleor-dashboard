@@ -211,7 +211,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             description: "configuration menu item description for order settings",
           }),
           icon: <ConfigurationOrderSettingsIcon />,
-          permissions: [PermissionEnum.MANAGE_ORDERS],
+          permissions: [PermissionEnum.MANAGE_ORDERS, PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.ordersAndFulfillment),
           url: orderSettingsPath,
           testId: "configuration-menu-order-settings",

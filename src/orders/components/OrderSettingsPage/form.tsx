@@ -13,6 +13,7 @@ import {
   getDirtyChannelIds,
   getOrderSettingsFormData,
   isOrderSettingsFormPristine,
+  mergeOrderSettingsFormData,
 } from "./formData";
 import {
   type ChannelOrderSettingsFormData,
@@ -67,6 +68,7 @@ function useOrderSettingsForm(
     useForm(initialData, onSubmit, {
       confirmLeave: true,
       disabled,
+      mergeFunc: mergeOrderSettingsFormData,
       checkIfSaveIsDisabled: formData =>
         disabled || isOrderSettingsFormPristine(formData, initialData),
     });

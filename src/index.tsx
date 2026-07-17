@@ -10,6 +10,7 @@ import useAppState from "@dashboard/hooks/useAppState";
 import { SaleorProvider } from "@dashboard/legacy-sdk";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { orderSettingsPath } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
@@ -72,6 +73,7 @@ const GiftCardSection = lazy(() => import("./giftCards"));
 const PageSection = lazy(() => import("./modeling"));
 const PageTypesSection = lazy(() => import("./modelTypes"));
 const OrdersSection = lazy(() => import("./orders"));
+const OrderSettingsSection = lazy(() => import("./orders/views/OrderSettings"));
 const PermissionGroupSection = lazy(() => import("./permissionGroups"));
 const ProductSection = lazy(() => import("./products"));
 const ProductTypesSection = lazy(() => import("./productTypes"));
@@ -244,6 +246,13 @@ const Routes = () => {
                     permissions={[PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES]}
                     path={modelTypesPath}
                     component={PageTypesSection}
+                  />
+                  <SectionRoute
+                    exact
+                    permissions={[PermissionEnum.MANAGE_ORDERS, PermissionEnum.MANAGE_SETTINGS]}
+                    matchPermission="any"
+                    path={orderSettingsPath}
+                    component={OrderSettingsSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_ORDERS]}

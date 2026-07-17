@@ -25,6 +25,10 @@ interface SubmitOrderSettingsFormParams {
   initialFormData: OrderSettingsFormData;
   orderSettingsUpdate: OrderSettingsUpdateMutationFn;
   channelUpdate: ChannelUpdateMutationFn;
+  /** Shop settings require MANAGE_SETTINGS — skip when the user cannot update them. */
+  canUpdateShop?: boolean;
+  /** Channel orderSettings require MANAGE_ORDERS (or channels) — skip when unauthorized. */
+  canUpdateChannels?: boolean;
 }
 
 export async function submitOrderSettingsForm({
@@ -32,9 +36,13 @@ export async function submitOrderSettingsForm({
   initialFormData,
   orderSettingsUpdate,
   channelUpdate,
+  canUpdateShop = true,
+  canUpdateChannels = true,
 }: SubmitOrderSettingsFormParams): Promise<OrderSettingsSubmitResult> {
-  const dirtyChannelIds = getDirtyChannelIds(formData.channels, initialFormData.channels);
-  const shouldUpdateShop = !isShopSettingsPristine(formData, initialFormData);
+  const dirtyChannelIds = canUpdateChannels
+    ? getDirtyChannelIds(formData.channels, initialFormData.channels)
+    : [];
+  const shouldUpdateShop = canUpdateShop && !isShopSettingsPristine(formData, initialFormData);
 
   const shopUpdatePromise = shouldUpdateShop
     ? extractMutationErrors(
