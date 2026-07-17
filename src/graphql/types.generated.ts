@@ -12770,16 +12770,6 @@ export type DevModeRunQueryVariables = Exact<{
 
 export type DevModeRunQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, paymentStatus: PaymentChargeStatusEnum, userEmail: string | null, isPaid: boolean } }> } | null };
 
-export type RefundSettingsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type RefundSettingsQuery = { __typename: 'Query', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
-
-export type ReturnSettingsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ReturnSettingsQuery = { __typename: 'Query', returnSettings: { __typename: 'ReturnSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
-
 export type PermissionGroupDeleteMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -13208,10 +13198,39 @@ export type ChannelDiagnosticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ChannelDiagnosticsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, useLegacyShippingZoneStockAvailability: boolean }, channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string, currencyCode: string, isActive: boolean, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }> }> | null, shippingZones: { __typename: 'ShippingZoneCountableConnection', edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, name: string, channels: Array<{ __typename: 'Channel', id: string }>, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> } }> } | null };
 
-export type RefundsSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+export type RefundSettingsUpdateMutationVariables = Exact<{
+  refundSettingsInput: RefundSettingsUpdateInput;
+}>;
 
 
-export type RefundsSettingsQuery = { __typename: 'Query', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
+export type RefundSettingsUpdateMutation = { __typename: 'Mutation', refundSettingsUpdate: { __typename: 'RefundSettingsUpdate', errors: Array<{ __typename: 'RefundSettingsUpdateError', code: RefundSettingsErrorCode, message: string | null }> } | null };
+
+export type RefundReasonReferenceClearMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RefundReasonReferenceClearMutation = { __typename: 'Mutation', refundReasonReferenceClear: { __typename: 'RefundReasonReferenceTypeClear', errors: Array<{ __typename: 'RefundReasonReferenceTypeClearError', code: RefundSettingsErrorCode, message: string | null }> } | null };
+
+export type ReturnSettingsUpdateMutationVariables = Exact<{
+  returnSettingsInput: ReturnSettingsUpdateInput;
+}>;
+
+
+export type ReturnSettingsUpdateMutation = { __typename: 'Mutation', returnSettingsUpdate: { __typename: 'ReturnSettingsUpdate', errors: Array<{ __typename: 'ReturnSettingsUpdateError', code: ReturnSettingsErrorCode, message: string | null }> } | null };
+
+export type ReturnReasonReferenceClearMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReturnReasonReferenceClearMutation = { __typename: 'Mutation', returnReasonReferenceClear: { __typename: 'ReturnReasonReferenceTypeClear', errors: Array<{ __typename: 'ReturnReasonReferenceTypeClearError', code: ReturnSettingsErrorCode, message: string | null }> } | null };
+
+export type RefundSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RefundSettingsQuery = { __typename: 'Query', refundSettings: { __typename: 'RefundSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
+
+export type ReturnSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReturnSettingsQuery = { __typename: 'Query', returnSettings: { __typename: 'ReturnSettings', reasonReferenceType: { __typename: 'PageType', id: string, name: string } | null } };
 
 export type ModelTypesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -13579,30 +13598,6 @@ export type ShopSettingsUpdateMutationVariables = Exact<{
 
 
 export type ShopSettingsUpdateMutation = { __typename: 'Mutation', shopSettingsUpdate: { __typename: 'ShopSettingsUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, enableAccountConfirmationByEmail: boolean | null, useLegacyUpdateWebhookEmission: boolean | null, useLegacyShippingZoneStockAvailability: boolean, preserveAllAddressFields: boolean, passwordLoginMode: PasswordLoginModeEnum, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } } | null } | null, shopAddressUpdate: { __typename: 'ShopAddressUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null } | null };
-
-export type RefundSettingsUpdateMutationVariables = Exact<{
-  refundSettingsInput: RefundSettingsUpdateInput;
-}>;
-
-
-export type RefundSettingsUpdateMutation = { __typename: 'Mutation', refundSettingsUpdate: { __typename: 'RefundSettingsUpdate', errors: Array<{ __typename: 'RefundSettingsUpdateError', code: RefundSettingsErrorCode, message: string | null }> } | null };
-
-export type RefundReasonReferenceClearMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type RefundReasonReferenceClearMutation = { __typename: 'Mutation', refundReasonReferenceClear: { __typename: 'RefundReasonReferenceTypeClear', errors: Array<{ __typename: 'RefundReasonReferenceTypeClearError', code: RefundSettingsErrorCode, message: string | null }> } | null };
-
-export type ReturnSettingsUpdateMutationVariables = Exact<{
-  returnSettingsInput: ReturnSettingsUpdateInput;
-}>;
-
-
-export type ReturnSettingsUpdateMutation = { __typename: 'Mutation', returnSettingsUpdate: { __typename: 'ReturnSettingsUpdate', errors: Array<{ __typename: 'ReturnSettingsUpdateError', code: ReturnSettingsErrorCode, message: string | null }> } | null };
-
-export type ReturnReasonReferenceClearMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ReturnReasonReferenceClearMutation = { __typename: 'Mutation', returnReasonReferenceClear: { __typename: 'ReturnReasonReferenceTypeClear', errors: Array<{ __typename: 'ReturnReasonReferenceTypeClearError', code: ReturnSettingsErrorCode, message: string | null }> } | null };
 
 export type SiteSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 

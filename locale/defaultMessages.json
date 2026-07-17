@@ -4273,6 +4273,10 @@
   "J4E+jp": {
     "string": "Variant name"
   },
+  "J5+lYc": {
+    "context": "success notification after saving refunds settings hub",
+    "string": "Refunds and returns settings updated"
+  },
   "J7mFhU": {
     "context": "currency code select",
     "string": "{code} - {countries}"
@@ -5358,6 +5362,10 @@
   "OUX4LB": {
     "context": "input label",
     "string": "Model type"
+  },
+  "OZ5c64": {
+    "context": "intro under refunds and returns settings page title",
+    "string": "Choose Model Types whose instances appear as structured refund and return reasons on orders."
   },
   "OZc365": {
     "context": "single reference attribute type",
@@ -11205,6 +11213,10 @@
   "qjT9IB": {
     "context": "savebar label shown on detail pages where the current user lacks permission to edit",
     "string": "Read-only"
+  },
+  "qjdfEH": {
+    "context": "loading state for reason models preview on refunds settings",
+    "string": "Loading models…"
   },
   "qkRuT0": {
     "context": "attribute type",

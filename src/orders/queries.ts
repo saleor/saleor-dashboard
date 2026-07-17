@@ -337,25 +337,3 @@ export const DevModeQuery = /* GraphQL */ `
     }
   }
 `;
-
-export const refundSettings = gql`
-  query RefundSettings {
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
-    }
-  }
-`;
-
-export const returnSettings = gql`
-  query ReturnSettings {
-    returnSettings {
-      reasonReferenceType {
-        id
-        name
-      }
-    }
-  }
-`;

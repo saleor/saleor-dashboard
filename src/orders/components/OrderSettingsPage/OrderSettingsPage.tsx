@@ -1,7 +1,6 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
@@ -28,9 +27,7 @@ interface OrderSettingsPageProps {
 }
 
 /**
- * Layout mirrors RefundsSettingsPage / SiteSettingsPage:
- * DetailPageLayout (1-col) → TopNav + Content → form inside Content (not wrapping the layout).
- * TopNav/Content use gridColumn="full" because macaw defaults them to span 8.
+ * Orders & fulfillment hub — uses SettingsHubLayout + SettingsPageContent like Refunds settings.
  */
 const OrderSettingsPage = ({
   shop,
@@ -43,54 +40,50 @@ const OrderSettingsPage = ({
   const navigate = useNavigator();
 
   return (
-    <DetailPageLayout gridTemplateColumns={1} width="100%">
-      <TopNav
-        href={configurationMenuUrl}
-        title={intl.formatMessage({
-          id: "anS/X1",
-          defaultMessage: "Orders & fulfillment",
-          description: "order settings hub page title",
-        })}
-        gridColumn="full"
-      />
-      <DetailPageLayout.Content gridColumn="full" width="100%">
-        <OrderSettingsForm shop={shop} channels={channels} onSubmit={onSubmit} disabled={disabled}>
-          {({ data, submit, change, isSaveDisabled, dirtyChannelIds, onChannelChange }) => (
-            <>
-              <SettingsPageContent
-                description={
-                  <FormattedMessage
-                    id="mShMMI"
-                    defaultMessage="Compare and adjust shop-wide and per-channel order policies on one page. Open a channel for checkout and payment settings."
-                    description="intro under orders and fulfillment settings page title"
-                  />
-                }
-              >
-                <OrderChannelSettingsMatrix
-                  channels={channels}
-                  channelSettings={data.channels}
-                  dirtyChannelIds={dirtyChannelIds}
-                  disabled={disabled}
-                  onChannelChange={onChannelChange}
+    <SettingsHubLayout
+      backHref={configurationMenuUrl}
+      title={intl.formatMessage({
+        id: "anS/X1",
+        defaultMessage: "Orders & fulfillment",
+        description: "order settings hub page title",
+      })}
+    >
+      <OrderSettingsForm shop={shop} channels={channels} onSubmit={onSubmit} disabled={disabled}>
+        {({ data, submit, change, isSaveDisabled, dirtyChannelIds, onChannelChange }) => (
+          <>
+            <SettingsPageContent
+              description={
+                <FormattedMessage
+                  id="mShMMI"
+                  defaultMessage="Compare and adjust shop-wide and per-channel order policies on one page. Open a channel for checkout and payment settings."
+                  description="intro under orders and fulfillment settings page title"
                 />
-                <OrderFulfillmentSettings data={data} disabled={disabled} onChange={change} />
-                <OrderCheckoutStockSettings data={data} disabled={disabled} onChange={change} />
-                <OrderReturnsRefundsSettingsCard />
-              </SettingsPageContent>
-              <Savebar>
-                <Savebar.Spacer />
-                <Savebar.CancelButton onClick={() => navigate(configurationMenuUrl)} />
-                <Savebar.ConfirmButton
-                  transitionState={saveButtonBarState}
-                  onClick={submit}
-                  disabled={isSaveDisabled}
-                />
-              </Savebar>
-            </>
-          )}
-        </OrderSettingsForm>
-      </DetailPageLayout.Content>
-    </DetailPageLayout>
+              }
+            >
+              <OrderChannelSettingsMatrix
+                channels={channels}
+                channelSettings={data.channels}
+                dirtyChannelIds={dirtyChannelIds}
+                disabled={disabled}
+                onChannelChange={onChannelChange}
+              />
+              <OrderFulfillmentSettings data={data} disabled={disabled} onChange={change} />
+              <OrderCheckoutStockSettings data={data} disabled={disabled} onChange={change} />
+              <OrderReturnsRefundsSettingsCard />
+            </SettingsPageContent>
+            <Savebar>
+              <Savebar.Spacer />
+              <Savebar.CancelButton onClick={() => navigate(configurationMenuUrl)} />
+              <Savebar.ConfirmButton
+                transitionState={saveButtonBarState}
+                onClick={submit}
+                disabled={isSaveDisabled}
+              />
+            </Savebar>
+          </>
+        )}
+      </OrderSettingsForm>
+    </SettingsHubLayout>
   );
 };
 
