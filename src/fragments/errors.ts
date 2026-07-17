@@ -127,14 +127,6 @@ export const orderErrorFragment = gql`
   }
 `;
 
-export const orderSettingsErrorFragment = gql`
-  fragment OrderSettingsError on OrderSettingsError {
-    code
-    field
-    message
-  }
-`;
-
 export const pageErrorFragment = gql`
   fragment PageError on PageError {
     code

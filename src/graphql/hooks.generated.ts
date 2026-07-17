@@ -1033,13 +1033,6 @@ export const OrderErrorFragmentDoc = gql`
   orderLines
 }
     `;
-export const OrderSettingsErrorFragmentDoc = gql`
-    fragment OrderSettingsError on OrderSettingsError {
-  code
-  field
-  message
-}
-    `;
 export const PageErrorFragmentDoc = gql`
     fragment PageError on PageError {
   code

@@ -11580,8 +11580,6 @@ export type MenuErrorFragment = { __typename: 'MenuError', code: MenuErrorCode, 
 
 export type OrderErrorFragment = { __typename: 'OrderError', code: OrderErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, orderLines: Array<string> | null };
 
-export type OrderSettingsErrorFragment = { __typename: 'OrderSettingsError', code: OrderSettingsErrorCode, field: string | null, message: string | null };
-
 export type PageErrorFragment = { __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null };
 
 export type PageErrorWithAttributesFragment = { __typename: 'PageError', attributes: Array<string> | null, code: PageErrorCode, field: string | null, message: string | null };
