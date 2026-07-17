@@ -17,14 +17,22 @@ import {
 import { refundsSettingsPageMessages } from "@dashboard/refundsSettings/components/RefundsSettingsPage/messages";
 import { RefundsSettingsPage } from "@dashboard/refundsSettings/components/RefundsSettingsPage/RefundsSettingsPage";
 import { submitRefundsSettingsForm } from "@dashboard/refundsSettings/components/RefundsSettingsPage/submitRefundsSettingsForm";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 export const RefundsSettings = (): JSX.Element => {
   const intl = useIntl();
   const notify = useNotifier();
-  const { loading: refundSettingsLoading, data: refundSettingsData } = useRefundSettingsQuery();
-  const { loading: returnSettingsLoading, data: returnSettingsData } = useReturnSettingsQuery();
+  const {
+    loading: refundSettingsLoading,
+    data: refundSettingsData,
+    refetch: refetchRefundSettings,
+  } = useRefundSettingsQuery();
+  const {
+    loading: returnSettingsLoading,
+    data: returnSettingsData,
+    refetch: refetchReturnSettings,
+  } = useReturnSettingsQuery();
   const { loading: modelTypesLoading, data: modelsList } = useModelTypesQuery();
 
   const [updateRefundSettings, updateRefundSettingsOpts] = useRefundSettingsUpdateMutation();
@@ -51,10 +59,17 @@ export const RefundsSettings = (): JSX.Element => {
   );
 
   const [formData, setFormData] = useState(initialFormData);
+  const previousInitialRef = useRef(initialFormData);
 
   useEffect(
-    function syncFormWithServer() {
-      setFormData(initialFormData);
+    function syncFormWithServerWhenPristine() {
+      setFormData(current => {
+        const wasPristine = isRefundsSettingsFormPristine(current, previousInitialRef.current);
+
+        previousInitialRef.current = initialFormData;
+
+        return wasPristine ? initialFormData : current;
+      });
     },
     [initialFormData],
   );
@@ -80,28 +95,32 @@ export const RefundsSettings = (): JSX.Element => {
     setIsSaving(true);
     setSaveErrors([]);
 
-    const result = await submitRefundsSettingsForm({
-      formData,
-      initialFormData,
-      updateRefundSettings,
-      clearRefundReferenceType,
-      updateReturnSettings,
-      clearReturnReferenceType,
-    });
-
-    setSaveErrors(result.allErrors);
-    setIsSaving(false);
-
-    if (!result.allErrors.length) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(refundsSettingsPageMessages.saveSuccess),
+    try {
+      const result = await submitRefundsSettingsForm({
+        formData,
+        initialFormData,
+        updateRefundSettings,
+        clearRefundReferenceType,
+        updateReturnSettings,
+        clearReturnReferenceType,
       });
-    } else {
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong),
-      });
+
+      setSaveErrors(result.allErrors);
+
+      if (!result.allErrors.length) {
+        await Promise.all([refetchRefundSettings(), refetchReturnSettings()]);
+        notify({
+          status: "success",
+          text: intl.formatMessage(refundsSettingsPageMessages.saveSuccess),
+        });
+      } else {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+      }
+    } finally {
+      setIsSaving(false);
     }
   }, [
     clearRefundReferenceType,
@@ -110,6 +129,8 @@ export const RefundsSettings = (): JSX.Element => {
     initialFormData,
     intl,
     notify,
+    refetchRefundSettings,
+    refetchReturnSettings,
     updateRefundSettings,
     updateReturnSettings,
   ]);

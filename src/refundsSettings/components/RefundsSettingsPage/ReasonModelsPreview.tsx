@@ -1,6 +1,6 @@
 import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { useModelsOfTypeQuery } from "@dashboard/graphql";
-import { pageCreateUrl } from "@dashboard/modeling/urls";
+import { pageCreateUrl, pageUrl } from "@dashboard/modeling/urls";
 import { pageTypeUrl } from "@dashboard/modelTypes/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
@@ -49,7 +49,7 @@ export const ReasonModelsPreview = ({
           {exampleModels.map(model => (
             <Box as="li" key={model.id} className={styles.listItem}>
               <Text size={2} color="default2">
-                {model.title}
+                <MicrocopyLink to={pageUrl(model.id)}>{model.title}</MicrocopyLink>
               </Text>
             </Box>
           ))}

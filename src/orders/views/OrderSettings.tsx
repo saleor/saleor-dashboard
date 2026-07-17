@@ -48,29 +48,32 @@ const OrderSettings = () => {
       setIsSaving(true);
       setChannelSaveErrors([]);
 
-      const result = await submitOrderSettingsForm({
-        formData,
-        initialFormData,
-        orderSettingsUpdate,
-        channelUpdate,
-      });
-
-      setChannelSaveErrors(result.channelErrors);
-      setIsSaving(false);
-
-      if (!result.allErrors.length) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "lL57q7",
-            defaultMessage: "Order settings updated",
-          }),
+      try {
+        const result = await submitOrderSettingsForm({
+          formData,
+          initialFormData,
+          orderSettingsUpdate,
+          channelUpdate,
         });
-      } else {
-        notifySaveErrors(result, channelNameById, notify, intl);
-      }
 
-      return result.allErrors;
+        setChannelSaveErrors(result.channelErrors);
+
+        if (!result.allErrors.length) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "lL57q7",
+              defaultMessage: "Order settings updated",
+            }),
+          });
+        } else {
+          notifySaveErrors(result, channelNameById, notify, intl);
+        }
+
+        return result.allErrors;
+      } finally {
+        setIsSaving(false);
+      }
     },
     [channelNameById, channelUpdate, initialFormData, intl, notify, orderSettingsUpdate],
   );
