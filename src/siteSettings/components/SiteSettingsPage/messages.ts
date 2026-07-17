@@ -23,6 +23,16 @@ export const messages = defineMessages({
       "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers.",
     description: "section description",
   },
+  sectionCustomerAccountsTitle: {
+    id: "bKlRVC",
+    defaultMessage: "Customer accounts",
+    description: "section title for customer login and registration settings",
+  },
+  sectionCustomerAccountsDescription: {
+    id: "jpyNZL",
+    defaultMessage: "Control how customers register and sign in to your storefront.",
+    description: "section description for customer accounts",
+  },
   sectionEmailConfirmationTitle: {
     id: "qNeXG1",
     defaultMessage: "User registration",
@@ -44,6 +54,17 @@ export const messages = defineMessages({
       "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
     description:
       "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
+  },
+  sectionAdvancedTitle: {
+    id: "BgEWXq",
+    defaultMessage: "Advanced",
+    description: "section title for legacy and developer store settings",
+  },
+  sectionAdvancedDescription: {
+    id: "OP3Fgn",
+    defaultMessage:
+      "Legacy API options that may change in future Saleor versions. Prefer defaults unless you know you need these.",
+    description: "section description for advanced store settings",
   },
   sectionWebhookEmissionTitle: {
     id: "R8+DNv",

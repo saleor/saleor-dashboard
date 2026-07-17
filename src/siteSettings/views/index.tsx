@@ -11,8 +11,9 @@ import { sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";
-import SiteSettingsPage, {
+import {
   areAddressInputFieldsModified,
+  SiteSettingsPage,
   type SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage";
 

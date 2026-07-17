@@ -135,10 +135,6 @@
     "context": "assign attribute value button",
     "string": "Assign value"
   },
-  "+jCDvp": {
-    "context": "section header",
-    "string": "Store Information"
-  },
   "+jHXT3": {
     "context": "limit voucher",
     "string": "Limit to staff only"
@@ -691,6 +687,10 @@
   "1T1fP8": {
     "context": "range input label",
     "string": "Postal codes (start)"
+  },
+  "1T8Vun": {
+    "context": "configuration section for order lifecycle policies",
+    "string": "Orders"
   },
   "1UKx20": {
     "context": "header",
@@ -1821,10 +1821,6 @@
     "context": "Number of variants that have stock available",
     "string": "{count, plural, one {# variant in stock} other {# variants in stock}}"
   },
-  "7GcWC8": {
-    "context": "configuration section label",
-    "string": "Tax Settings"
-  },
   "7H2D5m": {
     "context": "attribute value deleted",
     "string": "Value deleted"
@@ -2720,6 +2716,10 @@
     "context": "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=false",
     "string": "Stock availability uses direct warehouse-channel link"
   },
+  "BgEWXq": {
+    "context": "section title for legacy and developer store settings",
+    "string": "Advanced"
+  },
   "Bkxrhw": {
     "context": "no webhooks message",
     "string": "No webhooks found"
@@ -3034,6 +3034,10 @@
     "context": "table header column",
     "string": "Country name"
   },
+  "D77hf0": {
+    "context": "configuration section for product types and attributes",
+    "string": "Products & catalog"
+  },
   "D95l71": {
     "context": "tab name",
     "string": "All customers"
@@ -3297,6 +3301,10 @@
   "Eh6KYS": {
     "context": "info card title",
     "string": "Card information"
+  },
+  "En8pZE": {
+    "context": "intro under store settings page title",
+    "string": "Store identity, company address, and how customers sign in. Advanced options cover legacy API behavior."
   },
   "EoNN9v": {
     "context": "Label for visible in listings toggle",
@@ -3792,6 +3800,10 @@
   "GuihaP": {
     "context": "order transaction refund summary label",
     "string": "Shipping"
+  },
+  "Gw+vb5": {
+    "context": "configuration section for sales channels and tax markets",
+    "string": "Markets & channels"
   },
   "Gxo/XC": {
     "context": "header",
@@ -4560,10 +4572,6 @@
   "KTjTMW": {
     "string": "Installation is pending..."
   },
-  "KVfAmX": {
-    "context": "configuration section label for orders and fulfillment",
-    "string": "Orders & Fulfillment"
-  },
   "KWXwFo": {
     "context": "grant refund table, column header",
     "string": "Unit price"
@@ -4713,6 +4721,10 @@
   },
   "LKD6fB": {
     "string": "Remove product"
+  },
+  "LKgNzC": {
+    "context": "configuration section for model types and attributes",
+    "string": "Content"
   },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
@@ -4950,9 +4962,6 @@
   "MVU6ol": {
     "context": "exceeded permissions description",
     "string": "This groups permissions exceeds your own. You are able only to manage permissions that you have."
-  },
-  "MWSacl": {
-    "string": "Multichannel"
   },
   "MXZuVP": {
     "context": "remove country from shipping zone and save, button",
@@ -5343,6 +5352,10 @@
     "context": "order history message",
     "string": "Order was created from draft"
   },
+  "OP3Fgn": {
+    "context": "section description for advanced store settings",
+    "string": "Legacy API options that may change in future Saleor versions. Prefer defaults unless you know you need these."
+  },
   "OPtrMg": {
     "context": "header",
     "string": "{webhookName} Details"
@@ -5693,10 +5706,6 @@
   "Q+oKl+": {
     "context": "confirmation dialog description",
     "string": "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone."
-  },
-  "Q/8Uby": {
-    "context": "configuration section label for model types and attributes",
-    "string": "Model Settings"
   },
   "Q/Nbku": {
     "context": "product field",
@@ -6485,6 +6494,10 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
+  "U353oB": {
+    "context": "configuration section for staff and permission groups",
+    "string": "Users & permissions"
+  },
   "U5CH0u": {
     "string": "Are you sure you want to delete {name} preset?"
   },
@@ -6552,9 +6565,6 @@
   "ULBvyx": {
     "context": "order header date, yesterday",
     "string": "Placed yesterday at {time}"
-  },
-  "UN+yTt": {
-    "string": "Staff Settings"
   },
   "UQ4Kuh": {
     "context": "input label",
@@ -7540,10 +7550,6 @@
   "ZCSOaS": {
     "string": "Limit to voucher code use once"
   },
-  "ZCUS72": {
-    "context": "configuration section label for product types and attributes",
-    "string": "Product Settings"
-  },
   "ZDJEat": {
     "context": "button",
     "string": "Load More"
@@ -8002,6 +8008,10 @@
   "bKTEnb": {
     "context": "button to cancel order",
     "string": "Cancel order"
+  },
+  "bKlRVC": {
+    "context": "section title for customer login and registration settings",
+    "string": "Customer accounts"
   },
   "bL/Wrc": {
     "context": "plugin status",
@@ -9005,9 +9015,6 @@
   "gSQ0Ge": {
     "string": "Variant {name} has been set as default."
   },
-  "gTr0qE": {
-    "string": "Shipping Settings"
-  },
   "gaOXvo": {
     "context": "notification, form submitted",
     "string": "Refund grant for order #{orderNumber} was updated"
@@ -9670,6 +9677,10 @@
     "context": "automatic completion cut-off date description",
     "string": "Only checkouts created on or after this date will be automatically completed. If not set, current time will be used. {link}"
   },
+  "jpyNZL": {
+    "context": "section description for customer accounts",
+    "string": "Control how customers register and sign in to your storefront."
+  },
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
@@ -9751,6 +9762,10 @@
   "k6sfZr": {
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
+  },
+  "k6uom3": {
+    "context": "configuration section for shipping zones and warehouses",
+    "string": "Shipping & delivery"
   },
   "k80FoQ": {
     "context": "gift card resend dialog default recipient radio option",

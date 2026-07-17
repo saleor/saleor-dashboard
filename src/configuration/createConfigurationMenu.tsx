@@ -40,6 +40,10 @@ const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
 const ConfigurationChannelsIcon = createConfigurationLucideIcon(Radio);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 
+/**
+ * Configuration IA: merchant jobs (Shopify-style), not engineering modules.
+ * Order: Store → Markets → Catalog → Content → Shipping → Orders → Users.
+ */
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
     {
@@ -65,9 +69,39 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
-        id: "ZCUS72",
-        defaultMessage: "Product Settings",
-        description: "configuration section label for product types and attributes",
+        id: "Gw+vb5",
+        defaultMessage: "Markets & channels",
+        description: "configuration section for sales channels and tax markets",
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            id: "8vJCJ4",
+            defaultMessage: "Define and manage your sales channels",
+          }),
+          icon: <ConfigurationChannelsIcon />,
+          permissions: [PermissionEnum.MANAGE_CHANNELS],
+          title: intl.formatMessage(sectionNames.channels),
+          url: channelsListUrl(),
+          testId: "configuration-menu-channels",
+        },
+        {
+          description: intl.formatMessage({
+            id: "EIULpW",
+            defaultMessage: "Manage how your store charges tax",
+          }),
+          icon: <ConfigurationTaxesIcon />,
+          title: intl.formatMessage(sectionNames.taxes),
+          url: taxConfigurationListUrl(),
+          testId: "configuration-menu-taxes",
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage({
+        id: "D77hf0",
+        defaultMessage: "Products & catalog",
+        description: "configuration section for product types and attributes",
       }),
       menuItems: [
         {
@@ -101,9 +135,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
-        id: "Q/8Uby",
-        defaultMessage: "Model Settings",
-        description: "configuration section label for model types and attributes",
+        id: "LKgNzC",
+        defaultMessage: "Content",
+        description: "configuration section for model types and attributes",
       }),
       menuItems: [
         {
@@ -138,57 +172,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
-        id: "7GcWC8",
-        defaultMessage: "Tax Settings",
-        description: "configuration section label",
-      }),
-      menuItems: [
-        {
-          description: intl.formatMessage({
-            id: "EIULpW",
-            defaultMessage: "Manage how your store charges tax",
-          }),
-          icon: <ConfigurationTaxesIcon />,
-          title: intl.formatMessage(sectionNames.taxes),
-          url: taxConfigurationListUrl(),
-          testId: "configuration-menu-taxes",
-        },
-      ],
-    },
-    {
-      label: intl.formatMessage({
-        id: "UN+yTt",
-        defaultMessage: "Staff Settings",
-      }),
-      menuItems: [
-        {
-          description: intl.formatMessage({
-            id: "RQUkVW",
-            defaultMessage: "Manage your employees and their permissions",
-          }),
-          icon: <ConfigurationStaffIcon />,
-          permissions: [PermissionEnum.MANAGE_STAFF],
-          title: intl.formatMessage(sectionNames.staff),
-          url: staffListUrl(),
-          testId: "configuration-menu-staff",
-        },
-        {
-          description: intl.formatMessage({
-            id: "ivJ1qt",
-            defaultMessage: "Manage your permission groups and their permissions",
-          }),
-          icon: <ConfigurationPermissionGroupsIcon />,
-          permissions: [PermissionEnum.MANAGE_STAFF],
-          title: intl.formatMessage(sectionNames.permissionGroups),
-          url: permissionGroupListUrl(),
-          testId: "configuration-menu-permission-groups",
-        },
-      ],
-    },
-    {
-      label: intl.formatMessage({
-        id: "gTr0qE",
-        defaultMessage: "Shipping Settings",
+        id: "k6uom3",
+        defaultMessage: "Shipping & delivery",
+        description: "configuration section for shipping zones and warehouses",
       }),
       menuItems: [
         {
@@ -217,9 +203,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
-        id: "KVfAmX",
-        defaultMessage: "Orders & Fulfillment",
-        description: "configuration section label for orders and fulfillment",
+        id: "1T8Vun",
+        defaultMessage: "Orders",
+        description: "configuration section for order lifecycle policies",
       }),
       menuItems: [
         {
@@ -238,20 +224,32 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
-        id: "MWSacl",
-        defaultMessage: "Multichannel",
+        id: "U353oB",
+        defaultMessage: "Users & permissions",
+        description: "configuration section for staff and permission groups",
       }),
       menuItems: [
         {
           description: intl.formatMessage({
-            id: "8vJCJ4",
-            defaultMessage: "Define and manage your sales channels",
+            id: "RQUkVW",
+            defaultMessage: "Manage your employees and their permissions",
           }),
-          icon: <ConfigurationChannelsIcon />,
-          permissions: [PermissionEnum.MANAGE_CHANNELS],
-          title: intl.formatMessage(sectionNames.channels),
-          url: channelsListUrl(),
-          testId: "configuration-menu-channels",
+          icon: <ConfigurationStaffIcon />,
+          permissions: [PermissionEnum.MANAGE_STAFF],
+          title: intl.formatMessage(sectionNames.staff),
+          url: staffListUrl(),
+          testId: "configuration-menu-staff",
+        },
+        {
+          description: intl.formatMessage({
+            id: "ivJ1qt",
+            defaultMessage: "Manage your permission groups and their permissions",
+          }),
+          icon: <ConfigurationPermissionGroupsIcon />,
+          permissions: [PermissionEnum.MANAGE_STAFF],
+          title: intl.formatMessage(sectionNames.permissionGroups),
+          url: permissionGroupListUrl(),
+          testId: "configuration-menu-permission-groups",
         },
       ],
     },
