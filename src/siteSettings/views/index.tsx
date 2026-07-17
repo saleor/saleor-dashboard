@@ -68,10 +68,7 @@ const SiteSettings = () => {
     const shopSettingsInput: ShopSettingsInput = {
       name: data.name,
       description: data.description,
-      reserveStockDurationAnonymousUser: data.reserveStockDurationAnonymousUser || null,
-      reserveStockDurationAuthenticatedUser: data.reserveStockDurationAuthenticatedUser || null,
       enableAccountConfirmationByEmail: data.emailConfirmation,
-      limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
       useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
       useLegacyShippingZoneStockAvailability: data.useLegacyShippingZoneStockAvailability,
       preserveAllAddressFields: data.preserveAllAddressFields,

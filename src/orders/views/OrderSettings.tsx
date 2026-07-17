@@ -1,22 +1,64 @@
 // @ts-strict-ignore
-import { useOrderSettingsQuery, useOrderSettingsUpdateMutation } from "@dashboard/graphql";
+import {
+  type ChannelErrorFragment,
+  useChannelUpdateMutation,
+  useOrderSettingsChannelsQuery,
+  useOrderSettingsQuery,
+  useOrderSettingsUpdateMutation,
+} from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors, getMutationState } from "@dashboard/misc";
+import { getMutationState } from "@dashboard/misc";
 import OrderSettingsPage from "@dashboard/orders/components/OrderSettingsPage";
+import { getOrderSettingsFormData } from "@dashboard/orders/components/OrderSettingsPage/formData";
+import { orderSettingsPageMessages } from "@dashboard/orders/components/OrderSettingsPage/messages";
+import { submitOrderSettingsForm } from "@dashboard/orders/components/OrderSettingsPage/submitOrderSettingsForm";
+import { type OrderSettingsFormData } from "@dashboard/orders/components/OrderSettingsPage/types";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-
-import { type OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 
 const OrderSettings = () => {
   const intl = useIntl();
   const notify = useNotifier();
   const { data, loading } = useOrderSettingsQuery({});
-  const [orderSettingsUpdate, orderSettingsUpdateOpts] = useOrderSettingsUpdateMutation({
-    onCompleted: ({ orderSettingsUpdate }) => {
-      const errors = orderSettingsUpdate?.errors ?? [];
+  const { data: channelsData, loading: channelsLoading } = useOrderSettingsChannelsQuery({});
+  const channels = useMemo(() => channelsData?.channels ?? [], [channelsData?.channels]);
+  const [channelUpdate] = useChannelUpdateMutation();
+  const [orderSettingsUpdate, orderSettingsUpdateOpts] = useOrderSettingsUpdateMutation();
+  const [channelSaveErrors, setChannelSaveErrors] = useState<ChannelErrorFragment[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
 
-      if (!errors.length) {
+  const initialFormData = useMemo(
+    () => getOrderSettingsFormData(data?.shop, channels),
+    [channels, data?.shop],
+  );
+
+  const channelNameById = useMemo(
+    () =>
+      channels.reduce<Record<string, string>>((accumulator, channel) => {
+        accumulator[channel.id] = channel.name;
+
+        return accumulator;
+      }, {}),
+    [channels],
+  );
+
+  const handleSubmit = useCallback(
+    async (formData: OrderSettingsFormData) => {
+      setIsSaving(true);
+      setChannelSaveErrors([]);
+
+      const result = await submitOrderSettingsForm({
+        formData,
+        initialFormData,
+        orderSettingsUpdate,
+        channelUpdate,
+      });
+
+      setChannelSaveErrors(result.channelErrors);
+      setIsSaving(false);
+
+      if (!result.allErrors.length) {
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -24,50 +66,74 @@ const OrderSettings = () => {
             defaultMessage: "Order settings updated",
           }),
         });
-
-        return;
+      } else {
+        notifySaveErrors(result, channelNameById, notify, intl);
       }
 
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong),
-      });
+      return result.allErrors;
     },
-  });
-  const handleSubmit = async ({
-    automaticallyConfirmAllNewOrders,
-    automaticallyFulfillNonShippableGiftCard,
-    fulfillmentAutoApprove,
-    fulfillmentAllowUnpaid,
-  }: OrderSettingsFormData) =>
-    extractMutationErrors(
-      orderSettingsUpdate({
-        variables: {
-          orderSettingsInput: {
-            automaticallyFulfillNonShippableGiftCard,
-            automaticallyConfirmAllNewOrders,
-          },
-          shopSettingsInput: {
-            fulfillmentAutoApprove,
-            fulfillmentAllowUnpaid,
-          },
-        },
-      }),
-    );
+    [channelNameById, channelUpdate, initialFormData, intl, notify, orderSettingsUpdate],
+  );
+
+  const pageLoading = loading || channelsLoading || orderSettingsUpdateOpts.loading || isSaving;
+
+  const saveButtonBarState = getMutationState(
+    orderSettingsUpdateOpts.called || isSaving,
+    orderSettingsUpdateOpts.loading || isSaving,
+    [...(orderSettingsUpdateOpts.data?.shopSettingsUpdate?.errors || []), ...channelSaveErrors],
+  );
 
   return (
     <OrderSettingsPage
-      orderSettings={data?.orderSettings}
       shop={data?.shop}
-      disabled={loading || orderSettingsUpdateOpts.loading}
+      channels={channels}
+      disabled={pageLoading}
       onSubmit={handleSubmit}
-      saveButtonBarState={getMutationState(
-        orderSettingsUpdateOpts.called,
-        orderSettingsUpdateOpts.loading,
-        [...(orderSettingsUpdateOpts.data?.orderSettingsUpdate.errors || [])],
-      )}
+      saveButtonBarState={saveButtonBarState}
     />
   );
 };
+
+function notifySaveErrors(
+  result: Awaited<ReturnType<typeof submitOrderSettingsForm>>,
+  channelNameById: Record<string, string>,
+  notify: ReturnType<typeof useNotifier>,
+  intl: ReturnType<typeof useIntl>,
+): void {
+  const hasShopErrors = result.shopErrors.length > 0;
+  const hasChannelErrors = result.channelErrors.length > 0;
+
+  if (hasShopErrors && hasChannelErrors) {
+    notify({
+      status: "error",
+      text: intl.formatMessage(orderSettingsPageMessages.partialSaveFailed),
+    });
+
+    return;
+  }
+
+  if (hasChannelErrors) {
+    const channelNames = result.failedChannelIds
+      .map(channelId => channelNameById[channelId])
+      .filter(Boolean)
+      .join(", ");
+
+    if (channelNames) {
+      notify({
+        status: "error",
+        text: intl.formatMessage(orderSettingsPageMessages.channelSaveFailed, {
+          channels: channelNames,
+        }),
+      });
+
+      return;
+    }
+  }
+
+  notify({
+    status: "error",
+    text: intl.formatMessage(commonMessages.somethingWentWrong),
+  });
+}
 
 export default OrderSettings;

@@ -1,0 +1,17 @@
+.section {
+  box-shadow: none;
+}
+
+.header {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default1);
+}
+
+.description {
+  max-width: 42rem;
+  line-height: 1.45;
+}
+
+.body > * + * {
+  border-top: 1px solid var(--mu-colors-border-default1);
+}

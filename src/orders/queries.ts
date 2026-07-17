@@ -214,11 +214,27 @@ export const orderFulfillSettingsQuery = gql`
 
 export const orderSettingsQuery = gql`
   query OrderSettings {
-    orderSettings {
-      ...OrderSettings
-    }
     shop {
       ...ShopOrderSettings
+    }
+  }
+`;
+
+export const orderSettingsChannelsQuery = gql`
+  query OrderSettingsChannels {
+    channels {
+      id
+      name
+      slug
+      currencyCode
+      isActive
+      orderSettings {
+        automaticallyConfirmAllNewOrders
+        automaticallyFulfillNonShippableGiftCard
+        allowUnpaidOrders
+        deleteExpiredOrdersAfter
+        markAsPaidStrategy
+      }
     }
   }
 `;

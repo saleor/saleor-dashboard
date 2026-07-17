@@ -657,6 +657,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Refunds & returns settings",
     description: "configuration section name for refund and return settings",
   },
+  ordersAndFulfillment: {
+    id: "Cganz5",
+    defaultMessage: "Orders & fulfillment",
+    description: "configuration section name for orders and fulfillment settings",
+  },
 });
 
 export const commonStatusMessages = defineMessages({

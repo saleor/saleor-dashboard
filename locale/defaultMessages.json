@@ -62,6 +62,10 @@
     "context": "Dry run dialog object title",
     "string": "Select object type to perform dry run on provided query"
   },
+  "+S0U0R": {
+    "context": "error when both shop and channel saves partially fail on orders hub",
+    "string": "Some order settings could not be saved. Review the form and try again."
+  },
   "+SYLEL": {
     "context": "refunded fulfillment, section header",
     "string": "Refunded"
@@ -287,6 +291,10 @@
   "/WXs6H": {
     "context": "collection name",
     "string": "Name"
+  },
+  "/ayo3Z": {
+    "context": "error when channel order settings fail to save from orders hub",
+    "string": "Could not save channel settings for: {channels}"
   },
   "/dnWE8": {
     "context": "products in collection",
@@ -849,6 +857,10 @@
     "context": "search modal shipping title",
     "string": "Shipping address"
   },
+  "2R4joj": {
+    "context": "settings ownership badge — shop-scoped setting",
+    "string": "Shop"
+  },
   "2RYRdr": {
     "context": "webhooks active label",
     "string": "Active"
@@ -883,6 +895,10 @@
   },
   "2atspc": {
     "string": "Drafts"
+  },
+  "2biVb2": {
+    "context": "Toggle to filter inactive channels out of the order settings matrix",
+    "string": "Hide inactive channels"
   },
   "2cFaF8": {
     "context": "fulfill a single order line from row menu",
@@ -989,6 +1005,10 @@
   "34F7Jk": {
     "context": "filter range separator",
     "string": "and"
+  },
+  "34QbG4": {
+    "context": "hint under returns and refunds card on order settings",
+    "string": "Choose model types used as refund and return reason references."
   },
   "37IPJQ": {
     "context": "return items table, edit reason button",
@@ -1393,6 +1413,10 @@
   "5MtM5w": {
     "context": "model label",
     "string": "Hidden"
+  },
+  "5NDXVR": {
+    "context": "configuration menu item description for order settings",
+    "string": "Configure order processing, fulfillment, and checkout stock"
   },
   "5O8EIz": {
     "context": "Authorize transactions instead of charging",
@@ -1956,6 +1980,10 @@
   },
   "87NGDZ": {
     "string": "Plugin doesn't have any configuration fields"
+  },
+  "87rPKi": {
+    "context": "Label for disabled auto-confirm row in tooltip",
+    "string": "Off"
   },
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
@@ -2533,9 +2561,9 @@
   "AuwpCm": {
     "string": "Country area"
   },
-  "Av74Fa": {
-    "context": "section description",
-    "string": "You can set basic checkout rules that will be applied globally to all your channels"
+  "Av27o5": {
+    "context": "Short merchant-facing tooltip for OrderSettings.allowUnpaidOrders (avoid GraphQL mutation names)",
+    "string": "Lets checkout finish and create an order before payment fully covers the total."
   },
   "AyQkmp": {
     "string": "Sorting by this column is not available"
@@ -2719,6 +2747,10 @@
   },
   "BvGp1I": {
     "string": "between"
+  },
+  "BvUJzF": {
+    "context": "matrix section title on orders and fulfillment settings",
+    "string": "Per-channel order settings"
   },
   "BxuhWZ": {
     "string": "No extension (app or plugin) is configured to handle requested transaction action"
@@ -2906,6 +2938,10 @@
     "context": "Info box title when product is not published",
     "string": "Hidden from public API."
   },
+  "Cganz5": {
+    "context": "configuration section name for orders and fulfillment settings",
+    "string": "Orders & fulfillment"
+  },
   "ChAjJu": {
     "context": "character limit",
     "string": "{numberOfCharacters} of {maxCharacters} characters"
@@ -3015,10 +3051,6 @@
   "D9ie4n": {
     "context": "shipping section name",
     "string": "Shipping Methods"
-  },
-  "DASYUF": {
-    "context": "section title",
-    "string": "Checkout Configuration"
   },
   "DDYrvn": {
     "string": "Rule reward value must be less than 100"
@@ -3231,6 +3263,10 @@
   "ESft7g": {
     "context": "Warning when warehouse with stock not in shipping zone",
     "string": "Stock unreachable in \"{channelName}\""
+  },
+  "EXPRMd": {
+    "context": "channel form card title for channel-owned order and checkout settings",
+    "string": "Orders & fulfillment"
   },
   "EXqb2l": {
     "string": "Go to Saleor Cloud"
@@ -3728,6 +3764,10 @@
   "GiJm1v": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+  },
+  "GkJBnh": {
+    "context": "Accessible label for matrix column help icon",
+    "string": "More information about {column}"
   },
   "Gkip05": {
     "context": "button",
@@ -4507,8 +4547,16 @@
   "KRqgfo": {
     "string": "User is out of your permissions scope"
   },
+  "KS1nhQ": {
+    "context": "Intro line for auto-confirm matrix tooltip",
+    "string": "Status of new storefront orders:"
+  },
   "KTjTMW": {
     "string": "Installation is pending..."
+  },
+  "KVfAmX": {
+    "context": "configuration section label for orders and fulfillment",
+    "string": "Orders & Fulfillment"
   },
   "KWXwFo": {
     "context": "grant refund table, column header",
@@ -6325,6 +6373,10 @@
   "TTWEc9": {
     "string": "Reason is required"
   },
+  "TTbx89": {
+    "context": "Short tooltip for OrderSettings.automaticallyFulfillNonShippableGiftCard",
+    "string": "Auto-fulfills non-shippable gift card lines when the order is created."
+  },
   "TV940D": {
     "string": "{count, plural, one {# voucher code deleted} other {# voucher codes deleted}}"
   },
@@ -6706,6 +6758,10 @@
     "context": "page title",
     "string": "All installed"
   },
+  "VRT9cG": {
+    "context": "orders list menu shortcut to settings hub",
+    "string": "Orders & fulfillment settings"
+  },
   "VS0YOp": {
     "context": "Request extension",
     "string": "Request Extension"
@@ -6758,10 +6814,6 @@
   "VtlDMr": {
     "context": "returned event title",
     "string": "Products were returned"
-  },
-  "Vu9nol": {
-    "context": "header",
-    "string": "Order settings"
   },
   "VvhNCi": {
     "context": "command menu shortcut",
@@ -6923,10 +6975,6 @@
     "context": "voucher discount",
     "string": "Shipment"
   },
-  "WbV1Xm": {
-    "context": "button",
-    "string": "Order Settings"
-  },
   "WhKGPA": {
     "context": "page title",
     "string": "Set up new password"
@@ -6988,6 +7036,10 @@
     "context": "entity (product, collection, shipping method) name",
     "string": "Name"
   },
+  "X6Ql+m": {
+    "context": "empty state for channel settings matrix",
+    "string": "No channels yet."
+  },
   "X7fqfM": {
     "context": "title",
     "string": "Reserved stock"
@@ -7043,6 +7095,10 @@
   "XGBsoK": {
     "context": "dialog content",
     "string": "Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?"
+  },
+  "XGY+yQ": {
+    "context": "matrix column header",
+    "string": "Auto-confirm"
   },
   "XJSRDK": {
     "context": "payment status",
@@ -7258,6 +7314,10 @@
   "YBqLHs": {
     "context": "expiry date label",
     "string": "Exact date"
+  },
+  "YC5bAx": {
+    "context": "inactive channel label in matrix",
+    "string": "Inactive"
   },
   "YDIpJq": {
     "context": "product media detail page header",
@@ -7506,6 +7566,10 @@
   },
   "ZLcjD2": {
     "string": "Password reset failed"
+  },
+  "ZMT099": {
+    "context": "matrix column header",
+    "string": "Allow unpaid"
   },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -7816,6 +7880,10 @@
   },
   "anK7jD": {
     "string": "Product Type"
+  },
+  "anS/X1": {
+    "context": "order settings hub page title",
+    "string": "Orders & fulfillment"
   },
   "aq5ZiN": {
     "context": "order history message",
@@ -9851,10 +9919,6 @@
     "context": "gift card history message",
     "string": "Gift card was refunded in an order"
   },
-  "kn7jjd": {
-    "context": "section header",
-    "string": "General settings"
-  },
   "knO/IN": {
     "context": "delete model",
     "string": "Are you sure you want to delete {title}?"
@@ -10130,6 +10194,10 @@
     "context": "tooltip when generate button is disabled because over variant limit",
     "string": "Cannot create more than {limit} variants at once"
   },
+  "lzUwmf": {
+    "context": "Short tooltip for OrderSettings.deleteExpiredOrdersAfter + delete_expired_orders_task",
+    "string": "Days after expiry before deletion (unpaid expired orders only). 0 keeps them."
+  },
   "lzdvwp": {
     "context": "field is optional",
     "string": "Optional"
@@ -10217,6 +10285,10 @@
   },
   "mSS92b": {
     "string": "Untitled rule"
+  },
+  "mShMMI": {
+    "context": "intro under orders and fulfillment settings page title",
+    "string": "Compare and adjust shop-wide and per-channel order policies on one page. Open a channel for checkout and payment settings."
   },
   "mSxdrx": {
     "context": "section heading for notes in model type tab grouping help tooltip",
@@ -10309,12 +10381,20 @@
   "n+Gwbu": {
     "string": "Discounts"
   },
+  "n/iFou": {
+    "context": "ownership hint for shop fulfillment settings",
+    "string": "These settings apply store-wide (shop settings), not per channel."
+  },
   "n0RwMK": {
     "string": "Define types of products you sell"
   },
   "n0w2ZT": {
     "context": "label for currently selected warehouse",
     "string": "currently selected"
+  },
+  "n2eKUn": {
+    "context": "channel form hint linking to orders and fulfillment settings hub",
+    "string": "Settings for this channel only. Compare all channels or edit shop-wide policies in {link}."
   },
   "n4wLTL": {
     "context": "create attribute dialog step two intro for product types",
@@ -10587,6 +10667,10 @@
   "oO2fji": {
     "context": "dialog title for order discount",
     "string": "Order discount"
+  },
+  "oOjtA5": {
+    "context": "settings ownership badge — channel-scoped setting",
+    "string": "Channel"
   },
   "oQ27V4": {
     "context": "order history message",
@@ -11248,6 +11332,10 @@
     "context": "dialog title",
     "string": "Delete attributes"
   },
+  "rKk1Fx": {
+    "context": "matrix column header",
+    "string": "Auto-fulfill gift cards"
+  },
   "rLnEAj": {
     "context": "Health check error when product not available",
     "string": "Unable to verify"
@@ -11442,6 +11530,10 @@
   "sOlOZB": {
     "context": "gift cards page subheader",
     "string": "Learn more about {giftCards}"
+  },
+  "sOyNKE": {
+    "context": "matrix column header",
+    "string": "Channel"
   },
   "sQMS4n": {
     "context": "Tooltip for the dismiss problem button",
@@ -11676,6 +11768,10 @@
   "taS/08": {
     "context": "variant stocks section subtitle",
     "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
+  },
+  "tcOGcd": {
+    "context": "matrix section description on editable orders hub",
+    "string": "Edit per-channel values here or open a channel for checkout, payment, and other channel settings."
   },
   "teWSsc": {
     "context": "assign warehouse dialog search label",
@@ -12648,6 +12744,10 @@
   "xgPXGD": {
     "string": "Customers deleted"
   },
+  "xipkZ1": {
+    "context": "matrix column header",
+    "string": "Delete expired (days)"
+  },
   "xjpTLF": {
     "context": "informations about product stock, header",
     "string": "Inventory Information"
@@ -12786,6 +12886,10 @@
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
+  },
+  "yPMIz3": {
+    "context": "Label for enabled auto-confirm row in tooltip",
+    "string": "On"
   },
   "ySqncG": {
     "context": "ExitFormPrompt keep editing button",

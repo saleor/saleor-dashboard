@@ -1,0 +1,63 @@
+import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { type MouseEvent, type ReactNode } from "react";
+
+import styles from "./SettingsToggleRow.module.css";
+
+interface SettingsToggleRowProps {
+  name: string;
+  title: ReactNode;
+  description?: ReactNode;
+  checked: boolean;
+  disabled?: boolean;
+  onCheckedChange: (checked: boolean) => void;
+  "data-test-id"?: string;
+}
+
+/**
+ * Settings row with label stack on the left and control on the right.
+ * Shopify Admin–style; scales to other Settings hubs without layout change.
+ */
+export const SettingsToggleRow = ({
+  name,
+  title,
+  description,
+  checked,
+  disabled = false,
+  onCheckedChange,
+  "data-test-id": dataTestId,
+}: SettingsToggleRowProps): JSX.Element => {
+  return (
+    <Box
+      className={styles.row}
+      data-disabled={disabled ? "true" : undefined}
+      display="flex"
+      alignItems="flex-start"
+      justifyContent="space-between"
+      gap={4}
+      paddingX={6}
+      paddingY={4}
+      onClick={disabled ? undefined : () => onCheckedChange(!checked)}
+      cursor={disabled ? "not-allowed" : "pointer"}
+    >
+      <Box display="flex" flexDirection="column" gap={1} __minWidth={0} flexGrow="1">
+        <Text size={3} fontWeight="medium" color="default1">
+          {title}
+        </Text>
+        {description ? (
+          <Text size={2} color="default2" className={styles.description}>
+            {description}
+          </Text>
+        ) : null}
+      </Box>
+      <Box flexShrink="0" paddingTop={0.5} onClick={(event: MouseEvent) => event.stopPropagation()}>
+        <Checkbox
+          name={name}
+          checked={checked}
+          disabled={disabled}
+          onCheckedChange={value => onCheckedChange(value === true)}
+          data-test-id={dataTestId}
+        />
+      </Box>
+    </Box>
+  );
+};

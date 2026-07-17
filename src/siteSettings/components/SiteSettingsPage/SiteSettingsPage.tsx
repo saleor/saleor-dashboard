@@ -27,7 +27,6 @@ import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
 import { StoreDetailsCard } from "./StoreDetailsCard/StoreDetailsCard";
@@ -56,9 +55,6 @@ interface SiteSettingsPageAddressFormData {
 export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormData {
   name: string;
   description: string;
-  reserveStockDurationAnonymousUser: number;
-  reserveStockDurationAuthenticatedUser: number;
-  limitQuantityPerCheckout: number;
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
   useLegacyShippingZoneStockAvailability: boolean;
@@ -113,9 +109,6 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     ...initialFormAddress,
     name: shop?.name || "",
     description: shop?.description || "",
-    reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser ?? 0,
-    reserveStockDurationAuthenticatedUser: shop?.reserveStockDurationAuthenticatedUser ?? 0,
-    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     useLegacyShippingZoneStockAvailability: shop?.useLegacyShippingZoneStockAvailability ?? true,
@@ -169,19 +162,6 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                     description={intl.formatMessage(messages.sectionStoreDetailsDescription)}
                   />
                   <StoreDetailsCard
-                    data={data}
-                    errors={errors}
-                    disabled={disabled}
-                    onChange={change}
-                  />
-                </Box>
-                <Divider />
-                <Box display="grid" __gridTemplateColumns="1fr 3fr" paddingLeft={6}>
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionCheckoutTitle)}
-                    description={intl.formatMessage(messages.sectionCheckoutDescription)}
-                  />
-                  <SiteCheckoutSettingsCard
                     data={data}
                     errors={errors}
                     disabled={disabled}

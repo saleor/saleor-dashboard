@@ -455,6 +455,8 @@ export const ChannelDetailsFragmentDoc = gql`
     markAsPaidStrategy
     deleteExpiredOrdersAfter
     allowUnpaidOrders
+    automaticallyConfirmAllNewOrders
+    automaticallyFulfillNonShippableGiftCard
   }
   paymentSettings {
     defaultTransactionFlowStrategy
@@ -2514,16 +2516,13 @@ export const FulfillmentMetadataFragmentDoc = gql`
   ...Metadata
 }
     ${MetadataFragmentDoc}`;
-export const OrderSettingsFragmentDoc = gql`
-    fragment OrderSettings on OrderSettings {
-  automaticallyConfirmAllNewOrders
-  automaticallyFulfillNonShippableGiftCard
-}
-    `;
 export const ShopOrderSettingsFragmentDoc = gql`
     fragment ShopOrderSettings on Shop {
   fulfillmentAutoApprove
   fulfillmentAllowUnpaid
+  reserveStockDurationAnonymousUser
+  reserveStockDurationAuthenticatedUser
+  limitQuantityPerCheckout
 }
     `;
 export const OrderLineStockDataFragmentDoc = gql`
@@ -13301,15 +13300,7 @@ export type InvoiceEmailSendMutationHookResult = ReturnType<typeof useInvoiceEma
 export type InvoiceEmailSendMutationResult = Apollo.MutationResult<Types.InvoiceEmailSendMutation>;
 export type InvoiceEmailSendMutationOptions = Apollo.BaseMutationOptions<Types.InvoiceEmailSendMutation, Types.InvoiceEmailSendMutationVariables>;
 export const OrderSettingsUpdateDocument = gql`
-    mutation OrderSettingsUpdate($orderSettingsInput: OrderSettingsUpdateInput!, $shopSettingsInput: ShopSettingsInput!) {
-  orderSettingsUpdate(input: $orderSettingsInput) {
-    errors {
-      ...OrderSettingsError
-    }
-    orderSettings {
-      ...OrderSettings
-    }
-  }
+    mutation OrderSettingsUpdate($shopSettingsInput: ShopSettingsInput!) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
       ...ShopError
@@ -13319,9 +13310,7 @@ export const OrderSettingsUpdateDocument = gql`
     }
   }
 }
-    ${OrderSettingsErrorFragmentDoc}
-${OrderSettingsFragmentDoc}
-${ShopErrorFragmentDoc}
+    ${ShopErrorFragmentDoc}
 ${ShopOrderSettingsFragmentDoc}`;
 export type OrderSettingsUpdateMutationFn = Apollo.MutationFunction<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>;
 
@@ -13338,7 +13327,6 @@ export type OrderSettingsUpdateMutationFn = Apollo.MutationFunction<Types.OrderS
  * @example
  * const [orderSettingsUpdateMutation, { data, loading, error }] = useOrderSettingsUpdateMutation({
  *   variables: {
- *      orderSettingsInput: // value for 'orderSettingsInput'
  *      shopSettingsInput: // value for 'shopSettingsInput'
  *   },
  * });
@@ -14205,15 +14193,11 @@ export type OrderFulfillSettingsLazyQueryHookResult = ReturnType<typeof useOrder
 export type OrderFulfillSettingsQueryResult = Apollo.QueryResult<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>;
 export const OrderSettingsDocument = gql`
     query OrderSettings {
-  orderSettings {
-    ...OrderSettings
-  }
   shop {
     ...ShopOrderSettings
   }
 }
-    ${OrderSettingsFragmentDoc}
-${ShopOrderSettingsFragmentDoc}`;
+    ${ShopOrderSettingsFragmentDoc}`;
 
 /**
  * __useOrderSettingsQuery__
@@ -14241,6 +14225,51 @@ export function useOrderSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type OrderSettingsQueryHookResult = ReturnType<typeof useOrderSettingsQuery>;
 export type OrderSettingsLazyQueryHookResult = ReturnType<typeof useOrderSettingsLazyQuery>;
 export type OrderSettingsQueryResult = Apollo.QueryResult<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>;
+export const OrderSettingsChannelsDocument = gql`
+    query OrderSettingsChannels {
+  channels {
+    id
+    name
+    slug
+    currencyCode
+    isActive
+    orderSettings {
+      automaticallyConfirmAllNewOrders
+      automaticallyFulfillNonShippableGiftCard
+      allowUnpaidOrders
+      deleteExpiredOrdersAfter
+      markAsPaidStrategy
+    }
+  }
+}
+    `;
+
+/**
+ * __useOrderSettingsChannelsQuery__
+ *
+ * To run a query within a React component, call `useOrderSettingsChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderSettingsChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderSettingsChannelsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOrderSettingsChannelsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>(OrderSettingsChannelsDocument, options);
+      }
+export function useOrderSettingsChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>(OrderSettingsChannelsDocument, options);
+        }
+export type OrderSettingsChannelsQueryHookResult = ReturnType<typeof useOrderSettingsChannelsQuery>;
+export type OrderSettingsChannelsLazyQueryHookResult = ReturnType<typeof useOrderSettingsChannelsLazyQuery>;
+export type OrderSettingsChannelsQueryResult = Apollo.QueryResult<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>;
 export const OrderRefundDataDocument = gql`
     query OrderRefundData($orderId: ID!) {
   order(id: $orderId) {

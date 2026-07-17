@@ -12,17 +12,6 @@ export const messages = defineMessages({
       "Your store's public name and description, used across the storefront and in SEO metadata.",
     description: "section description",
   },
-  sectionCheckoutTitle: {
-    id: "DASYUF",
-    defaultMessage: "Checkout Configuration",
-    description: "section title",
-  },
-  sectionCheckoutDescription: {
-    id: "Av74Fa",
-    defaultMessage:
-      "You can set basic checkout rules that will be applied globally to all your channels",
-    description: "section description",
-  },
   sectionCompanyTitle: {
     id: "rPX1f2",
     defaultMessage: "Company Information",

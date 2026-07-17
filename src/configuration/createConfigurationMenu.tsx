@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
+import { configurationLucideIconProps } from "@dashboard/components/icons";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import Attributes from "@dashboard/icons/Attributes";
 import Channels from "@dashboard/icons/Channels";
@@ -14,6 +15,7 @@ import Taxes from "@dashboard/icons/Taxes";
 import Warehouses from "@dashboard/icons/Warehouses";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
+import { orderSettingsPath } from "@dashboard/orders/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
@@ -22,7 +24,7 @@ import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
-import { CreditCard } from "lucide-react";
+import { CreditCard, Package } from "lucide-react";
 import { type IntlShape } from "react-intl";
 
 import { type MenuSection } from "./types";
@@ -183,6 +185,38 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        id: "KVfAmX",
+        defaultMessage: "Orders & Fulfillment",
+        description: "configuration section label for orders and fulfillment",
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            id: "5NDXVR",
+            defaultMessage: "Configure order processing, fulfillment, and checkout stock",
+            description: "configuration menu item description for order settings",
+          }),
+          icon: <Package {...configurationLucideIconProps} />,
+          permissions: [PermissionEnum.MANAGE_ORDERS],
+          title: intl.formatMessage(sectionNames.ordersAndFulfillment),
+          url: orderSettingsPath,
+          testId: "configuration-menu-order-settings",
+        },
+        {
+          description: intl.formatMessage({
+            id: "3fKAKV",
+            defaultMessage: "Configure refunds and returns behavior",
+          }),
+          icon: <CreditCard {...configurationLucideIconProps} />,
+          permissions: [PermissionEnum.MANAGE_SETTINGS],
+          title: intl.formatMessage(sectionNames.refundsSettings),
+          url: refundsSettingsPath,
+          testId: "configuration-menu-refunds-settings",
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage({
         id: "MWSacl",
         defaultMessage: "Multichannel",
       }),
@@ -216,17 +250,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl(),
           testId: "configuration-menu-site-settings",
-        },
-        {
-          description: intl.formatMessage({
-            id: "3fKAKV",
-            defaultMessage: "Configure refunds and returns behavior",
-          }),
-          icon: <CreditCard />,
-          permissions: [PermissionEnum.MANAGE_SETTINGS],
-          title: intl.formatMessage(sectionNames.refundsSettings),
-          url: refundsSettingsPath,
-          testId: "configuration-menu-refunds-settings",
         },
       ],
     },
