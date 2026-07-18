@@ -5,6 +5,7 @@ import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Trash2 } from "lucide-react";
 import { type InputHTMLAttributes, useEffect, useState } from "react";
+import type { DropzoneState } from "react-dropzone";
 import { defineMessages, FormattedMessage } from "react-intl";
 
 import styles from "./FileUploadField.module.css";
@@ -87,7 +88,7 @@ export const FileUploadField = ({
         multiple={false}
         onDrop={handleDrop}
       >
-        {({ isDragActive, getInputProps, getRootProps }) => {
+        {({ isDragActive, getInputProps, getRootProps }: DropzoneState) => {
           const dropzoneInputProps = getInputProps();
 
           return (

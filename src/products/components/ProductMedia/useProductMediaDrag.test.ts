@@ -1,35 +1,35 @@
-import { ProductMediaType } from "@dashboard/graphql";
+import { type ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react";
 
 import { useProductMediaDrag } from "./useProductMediaDrag";
 
-const media = [
+const media: ProductMediaFragment[] = [
   {
-    __typename: "ProductMedia" as const,
+    __typename: "ProductMedia",
     id: "a",
     alt: "",
     sortOrder: 0,
     type: ProductMediaType.IMAGE,
     url: "https://example.com/a.png",
-    oembedData: null,
+    oembedData: "{}",
   },
   {
-    __typename: "ProductMedia" as const,
+    __typename: "ProductMedia",
     id: "b",
     alt: "",
     sortOrder: 1,
     type: ProductMediaType.IMAGE,
     url: "https://example.com/b.png",
-    oembedData: null,
+    oembedData: "{}",
   },
   {
-    __typename: "ProductMedia" as const,
+    __typename: "ProductMedia",
     id: "c",
     alt: "",
     sortOrder: 2,
     type: ProductMediaType.IMAGE,
     url: "https://example.com/c.png",
-    oembedData: null,
+    oembedData: "{}",
   },
 ];
 
@@ -112,16 +112,16 @@ describe("useProductMediaDrag", () => {
     });
 
     // Act — upload completed while dragging
-    const mediaWithUpload = [
+    const mediaWithUpload: ProductMediaFragment[] = [
       ...media,
       {
-        __typename: "ProductMedia" as const,
+        __typename: "ProductMedia",
         id: "d",
         alt: "",
         sortOrder: 3,
         type: ProductMediaType.IMAGE,
         url: "https://example.com/d.png",
-        oembedData: null,
+        oembedData: "{}",
       },
     ];
 

@@ -1,4 +1,5 @@
-import { ProductMediaType } from "@dashboard/graphql";
+import { type FetchResult } from "@apollo/client";
+import { type ProductMediaCreateMutation, ProductMediaType } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -6,6 +7,22 @@ import { type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import ProductMedia from "./ProductMedia";
+
+const uploadSuccessResult = (mediaId: string): FetchResult<ProductMediaCreateMutation> => ({
+  data: {
+    __typename: "Mutation",
+    productMediaCreate: {
+      __typename: "ProductMediaCreate",
+      media: { __typename: "ProductMedia", id: mediaId },
+      product: {
+        __typename: "Product",
+        id: "product-1",
+        media: [],
+      },
+      errors: [],
+    },
+  },
+});
 
 const TestWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
   <MemoryRouter>
@@ -20,7 +37,7 @@ const savedMedia = {
   sortOrder: 0,
   type: ProductMediaType.IMAGE,
   url: "https://example.com/existing.png",
-  oembedData: null,
+  oembedData: "{}",
 };
 
 describe("ProductMedia", () => {
@@ -41,9 +58,9 @@ describe("ProductMedia", () => {
 
   it("shows uploading tiles immediately when files are selected on an empty gallery", async () => {
     // Arrange
-    let resolveUpload: (value?: unknown) => void = () => undefined;
+    let resolveUpload: (value: FetchResult<ProductMediaCreateMutation>) => void = () => undefined;
     const onImageUpload = jest.fn(
-      () =>
+      (): Promise<FetchResult<ProductMediaCreateMutation>> =>
         new Promise(resolve => {
           resolveUpload = resolve;
         }),
@@ -81,15 +98,7 @@ describe("ProductMedia", () => {
 
     // Act — upload finishes with created media id, but saved media has not arrived yet
     await act(async () => {
-      resolveUpload({
-        data: {
-          productMediaCreate: {
-            media: { id: "media-uploaded" },
-            product: { id: "product-1", media: [] },
-            errors: [],
-          },
-        },
-      });
+      resolveUpload(uploadSuccessResult("media-uploaded"));
     });
 
     // Assert — keep the pending tile until media prop updates (no empty flash)
@@ -113,7 +122,7 @@ describe("ProductMedia", () => {
               sortOrder: 0,
               type: ProductMediaType.IMAGE,
               url: "https://example.com/uploaded.png",
-              oembedData: null,
+              oembedData: "{}",
             },
           ]}
           getImageEditUrl={(id): string => `/media/${id}`}
@@ -147,7 +156,9 @@ describe("ProductMedia", () => {
 
   it("appends uploading tiles next to existing media", async () => {
     // Arrange
-    const onImageUpload = jest.fn(() => new Promise(() => undefined));
+    const onImageUpload = jest.fn(
+      (): Promise<FetchResult<ProductMediaCreateMutation>> => new Promise(() => undefined),
+    );
 
     render(
       <TestWrapper>
@@ -189,7 +200,10 @@ describe("ProductMedia", () => {
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
           onImagesDelete={onImagesDelete}
-          onImageUpload={jest.fn()}
+          onImageUpload={jest.fn(
+            (): Promise<FetchResult<ProductMediaCreateMutation>> =>
+              Promise.resolve(uploadSuccessResult("unused")),
+          )}
           openMediaUrlModal={() => undefined}
         />
       </TestWrapper>,
@@ -209,7 +223,9 @@ describe("ProductMedia", () => {
 
   it("removes the pending tile when upload fails", async () => {
     // Arrange
-    const onImageUpload = jest.fn(() => Promise.reject(new Error("network")));
+    const onImageUpload = jest.fn(
+      (): Promise<FetchResult<ProductMediaCreateMutation>> => Promise.reject(new Error("network")),
+    );
     const onImagesUploadComplete = jest.fn();
 
     jest.spyOn(console, "error").mockImplementation(() => undefined);
@@ -248,17 +264,7 @@ describe("ProductMedia", () => {
 
   it("skips invalid files and uploads only valid images", async () => {
     // Arrange
-    const onImageUpload = jest.fn(() =>
-      Promise.resolve({
-        data: {
-          productMediaCreate: {
-            media: { id: "media-new" },
-            product: { id: "product-1", media: [] },
-            errors: [],
-          },
-        },
-      }),
-    );
+    const onImageUpload = jest.fn(() => Promise.resolve(uploadSuccessResult("media-new")));
 
     render(
       <TestWrapper>
