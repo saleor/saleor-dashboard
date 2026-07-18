@@ -56,4 +56,9 @@ export const productUpdatePageMessages = defineMessages({
       "{success, plural, one {# image} other {# images}} added, {failed, plural, one {# failed} other {# failed}}",
     description: "warning notification when some product image uploads in a batch failed",
   },
+  mediaDeleteSuccess: {
+    id: "F2xa5K",
+    defaultMessage: "{counter,plural,one{Media deleted} other{# media items deleted}}",
+    description: "success notification when product media items are deleted",
+  },
 });

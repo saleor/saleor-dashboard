@@ -1,6 +1,6 @@
 import { ProductMediaType } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
@@ -56,6 +56,7 @@ describe("ProductMedia", () => {
           media={[]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
           onImageUpload={onImageUpload}
           onImagesUploadComplete={onImagesUploadComplete}
           openMediaUrlModal={() => undefined}
@@ -78,9 +79,17 @@ describe("ProductMedia", () => {
     expect(screen.queryByTestId("product-media-dropzone")).not.toBeInTheDocument();
     expect(onImageUpload).toHaveBeenCalledWith(file, 0);
 
-    // Act — upload finishes, but saved media has not arrived yet
+    // Act — upload finishes with created media id, but saved media has not arrived yet
     await act(async () => {
-      resolveUpload();
+      resolveUpload({
+        data: {
+          productMediaCreate: {
+            media: { id: "media-uploaded" },
+            product: { id: "product-1", media: [] },
+            errors: [],
+          },
+        },
+      });
     });
 
     // Assert — keep the pending tile until media prop updates (no empty flash)
@@ -109,6 +118,7 @@ describe("ProductMedia", () => {
           ]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
           onImageUpload={onImageUpload}
           onImagesUploadComplete={onImagesUploadComplete}
           openMediaUrlModal={() => undefined}
@@ -145,6 +155,7 @@ describe("ProductMedia", () => {
           media={[savedMedia]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
           onImageUpload={onImageUpload}
           openMediaUrlModal={() => undefined}
         />
@@ -162,6 +173,40 @@ describe("ProductMedia", () => {
     expect(screen.getByTestId("media-tile-loading")).toBeInTheDocument();
   });
 
+  it("calls onImagesDelete with selected media ids", async () => {
+    // Arrange
+    const onImagesDelete = jest.fn();
+    const secondMedia = {
+      ...savedMedia,
+      id: "media-2",
+      url: "https://example.com/second.png",
+    };
+
+    render(
+      <TestWrapper>
+        <ProductMedia
+          media={[savedMedia, secondMedia]}
+          getImageEditUrl={(id): string => `/media/${id}`}
+          onImageDelete={() => () => undefined}
+          onImagesDelete={onImagesDelete}
+          onImageUpload={jest.fn()}
+          openMediaUrlModal={() => undefined}
+        />
+      </TestWrapper>,
+    );
+
+    const user = userEvent.setup({ pointerEventsCheck: 0 });
+    const selectionControls = screen.getAllByTestId("product-media-select");
+
+    // Act — checkboxes are hover-only in the UI; jsdom does not apply :hover
+    await user.click(within(selectionControls[0]).getByRole("checkbox"));
+    await user.click(within(selectionControls[1]).getByRole("checkbox"));
+    await user.click(screen.getByTestId("product-media-delete-selected"));
+
+    // Assert
+    expect(onImagesDelete).toHaveBeenCalledWith(["media-1", "media-2"]);
+  });
+
   it("removes the pending tile when upload fails", async () => {
     // Arrange
     const onImageUpload = jest.fn(() => Promise.reject(new Error("network")));
@@ -175,6 +220,7 @@ describe("ProductMedia", () => {
           media={[]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
           onImageUpload={onImageUpload}
           onImagesUploadComplete={onImagesUploadComplete}
           openMediaUrlModal={() => undefined}
@@ -198,5 +244,45 @@ describe("ProductMedia", () => {
       successCount: 0,
       failureCount: 1,
     });
+  });
+
+  it("skips invalid files and uploads only valid images", async () => {
+    // Arrange
+    const onImageUpload = jest.fn(() =>
+      Promise.resolve({
+        data: {
+          productMediaCreate: {
+            media: { id: "media-new" },
+            product: { id: "product-1", media: [] },
+            errors: [],
+          },
+        },
+      }),
+    );
+
+    render(
+      <TestWrapper>
+        <ProductMedia
+          media={[savedMedia]}
+          getImageEditUrl={(id): string => `/media/${id}`}
+          onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
+          onImageUpload={onImageUpload}
+          openMediaUrlModal={() => undefined}
+        />
+      </TestWrapper>,
+    );
+
+    const pdf = new File(["pdf-bytes"], "doc.pdf", { type: "application/pdf" });
+    const image = new File(["image-bytes"], "new.png", { type: "image/png" });
+    const input = screen.getByTestId("product-media-file-input");
+
+    // Act
+    await userEvent.upload(input, [pdf, image]);
+
+    // Assert
+    expect(onImageUpload).toHaveBeenCalledTimes(1);
+    expect(onImageUpload).toHaveBeenCalledWith(image, 0);
+    expect(screen.getByTestId("media-tile-loading")).toBeInTheDocument();
   });
 });

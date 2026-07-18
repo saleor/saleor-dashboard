@@ -127,6 +127,7 @@ const renderPage = (onShowMetadata = jest.fn()) =>
           onDelete={jest.fn()}
           onShowMetadata={onShowMetadata}
           onImageDelete={jest.fn()}
+          onImagesDelete={jest.fn()}
           onImageUpload={jest.fn()}
           onMediaUrlUpload={jest.fn()}
           onVariantShow={jest.fn()}
@@ -194,6 +195,7 @@ describe("ProductUpdatePage top nav", () => {
             onDelete={jest.fn()}
             onShowMetadata={jest.fn()}
             onImageDelete={jest.fn()}
+            onImagesDelete={jest.fn()}
             onImageUpload={jest.fn()}
             onMediaUrlUpload={jest.fn()}
             onVariantShow={jest.fn()}

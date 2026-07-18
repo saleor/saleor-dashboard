@@ -15224,6 +15224,9 @@ export const ProductMediaCreateDocument = gql`
     errors {
       ...ProductError
     }
+    media {
+      id
+    }
     product {
       id
       media {
@@ -15671,6 +15674,42 @@ export function useProductMediaDeleteMutation(baseOptions?: ApolloReactHooks.Mut
 export type ProductMediaDeleteMutationHookResult = ReturnType<typeof useProductMediaDeleteMutation>;
 export type ProductMediaDeleteMutationResult = Apollo.MutationResult<Types.ProductMediaDeleteMutation>;
 export type ProductMediaDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductMediaDeleteMutation, Types.ProductMediaDeleteMutationVariables>;
+export const ProductMediaBulkDeleteDocument = gql`
+    mutation ProductMediaBulkDelete($ids: [ID!]!) {
+  productMediaBulkDelete(ids: $ids) {
+    errors {
+      ...ProductError
+    }
+    count
+  }
+}
+    ${ProductErrorFragmentDoc}`;
+export type ProductMediaBulkDeleteMutationFn = Apollo.MutationFunction<Types.ProductMediaBulkDeleteMutation, Types.ProductMediaBulkDeleteMutationVariables>;
+
+/**
+ * __useProductMediaBulkDeleteMutation__
+ *
+ * To run a mutation, you first call `useProductMediaBulkDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProductMediaBulkDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [productMediaBulkDeleteMutation, { data, loading, error }] = useProductMediaBulkDeleteMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useProductMediaBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductMediaBulkDeleteMutation, Types.ProductMediaBulkDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ProductMediaBulkDeleteMutation, Types.ProductMediaBulkDeleteMutationVariables>(ProductMediaBulkDeleteDocument, options);
+      }
+export type ProductMediaBulkDeleteMutationHookResult = ReturnType<typeof useProductMediaBulkDeleteMutation>;
+export type ProductMediaBulkDeleteMutationResult = Apollo.MutationResult<Types.ProductMediaBulkDeleteMutation>;
+export type ProductMediaBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.ProductMediaBulkDeleteMutation, Types.ProductMediaBulkDeleteMutationVariables>;
 export const ProductMediaUpdateDocument = gql`
     mutation ProductMediaUpdate($id: ID!, $alt: String!) {
   productMediaUpdate(id: $id, input: {alt: $alt}) {
@@ -16545,7 +16584,7 @@ export const ProductMediaByIdDocument = gql`
     }
     media {
       id
-      url(size: 48)
+      url(size: 128, format: WEBP)
       alt
       type
       oembedData

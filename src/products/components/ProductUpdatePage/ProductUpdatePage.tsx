@@ -131,6 +131,7 @@ interface ProductUpdatePageProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onImageDelete: (id: string) => () => void;
+  onImagesDelete: (ids: string[]) => void;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   onVariantShow: (id: string) => void;
   onAttributeSelectBlur: () => void;
@@ -176,6 +177,7 @@ const ProductUpdatePage = ({
   onDelete,
   onShowMetadata,
   onImageDelete,
+  onImagesDelete,
   onImageReorder,
   onImageUpload,
   onImagesUploadComplete,
@@ -497,6 +499,7 @@ const ProductUpdatePage = ({
                 <ProductMedia
                   media={media}
                   onImageDelete={onImageDelete}
+                  onImagesDelete={onImagesDelete}
                   onImageReorder={onImageReorder}
                   onImageUpload={onImageUpload}
                   onImagesUploadComplete={onImagesUploadComplete}
