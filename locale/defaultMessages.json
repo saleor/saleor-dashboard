@@ -962,6 +962,10 @@
     "context": "order history message",
     "string": "Payment was captured"
   },
+  "2z3+WY": {
+    "context": "error notification when all product image uploads in a batch failed",
+    "string": "{count, plural, one {Failed to upload image} other {Failed to upload # images}}"
+  },
   "2zCmiR": {
     "context": "tabel column header",
     "string": "Cost price"
@@ -2052,6 +2056,10 @@
     "context": "Warning when channel has no shipping zones",
     "string": "No shipping zones for \"{channelName}\""
   },
+  "8XSZSL": {
+    "context": "product media bulk delete dialog content",
+    "string": "{counter,plural,one{Are you sure you want to delete this media item?} other{Are you sure you want to delete {displayQuantity} media items?}}"
+  },
   "8a4uf/": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this model?} other{Are you sure you want to delete {displayQuantity} models?}}"
@@ -2790,6 +2798,10 @@
     "context": "address removed from a customer's address book, success toast",
     "string": "Address deleted"
   },
+  "C87+/n": {
+    "context": "button to select all product media items",
+    "string": "Select all"
+  },
   "C90nKP": {
     "context": "error with deactivatation alert message",
     "string": "Errors deactivating gift {count,plural,one{card} other{cards}}"
@@ -3177,6 +3189,10 @@
   "EAGfdH": {
     "string": "Page updated"
   },
+  "ECnjbS": {
+    "context": "product media bulk delete dialog header",
+    "string": "Delete Media"
+  },
   "ECpTeb": {
     "context": "Add filter button text",
     "string": "Add filter"
@@ -3208,6 +3224,10 @@
   },
   "EM730i": {
     "string": "Manage Channel Availability"
+  },
+  "EMQgvH": {
+    "context": "file attribute empty dropzone hint",
+    "string": "Drag and drop or click to upload"
   },
   "EP+jcU": {
     "context": "checkbox",
@@ -3328,6 +3348,10 @@
   },
   "F2kF9e": {
     "string": "You must select transaction that you want to refund"
+  },
+  "F2xa5K": {
+    "context": "success notification when product media items are deleted",
+    "string": "{counter,plural,one{Media deleted} other{# media items deleted}}"
   },
   "F3Upht": {
     "string": "Product type deleted"
@@ -3718,9 +3742,6 @@
     "context": "header",
     "string": "Create Warehouse"
   },
-  "Gi8zwc": {
-    "string": "Image deleted"
-  },
   "GiDxS4": {
     "context": "add metadata field,button",
     "string": "Add Field"
@@ -4034,6 +4055,10 @@
   "I7HyJZ": {
     "context": "order refund amount",
     "string": "Max Refund"
+  },
+  "I7X2uK": {
+    "context": "button to clear selected product media items",
+    "string": "Clear"
   },
   "IBw72y": {
     "context": "switch button",
@@ -4514,6 +4539,10 @@
     "context": "grant refund table, column header",
     "string": "Unit price"
   },
+  "KXX8oX": {
+    "context": "product media gallery dropzone hint when click-to-upload is disabled",
+    "string": "Drag and drop to upload"
+  },
   "KYMCYg": {
     "string": "Shipping rate deleted"
   },
@@ -4782,6 +4811,10 @@
   "Lx1ima": {
     "context": "button",
     "string": "Upload image"
+  },
+  "LzdG4r": {
+    "context": "warning when client-side validation rejects product media files before upload",
+    "string": "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image or larger than {maxSize} MB)"
   },
   "M3OlSr": {
     "context": "error message",
@@ -6130,6 +6163,10 @@
   "SRMNCS": {
     "string": "Pending & failed deliveries (last 10)"
   },
+  "SRnxlw": {
+    "context": "button to delete selected product media items",
+    "string": "Delete ({quantity})"
+  },
   "SSWFo8": {
     "context": "window title",
     "string": "Create Product Type"
@@ -7418,6 +7455,10 @@
   "Yxnwa3": {
     "context": "dialog content",
     "string": "Are you sure you want to send this invoice: <strong>{invoiceNumber}</strong> to the customer?"
+  },
+  "Yxoq3Y": {
+    "context": "success notification when one or more product images finish uploading",
+    "string": "{count, plural, one {# image added} other {# images added}}"
   },
   "Yy/yDL": {
     "string": "Reset password"
@@ -10126,6 +10167,10 @@
   "lwjzVj": {
     "string": "Edit order"
   },
+  "lxP7Rb": {
+    "context": "warning notification when some product image uploads in a batch failed",
+    "string": "{success, plural, one {# image} other {# images}} added, {failed, plural, one {# failed} other {# failed}}"
+  },
   "lz7o8y": {
     "context": "tooltip when generate button is disabled because over variant limit",
     "string": "Cannot create more than {limit} variants at once"
@@ -12363,6 +12408,10 @@
   },
   "wFVOKJ": {
     "string": "Go to warehouses"
+  },
+  "wFsAkW": {
+    "context": "file attribute dropzone hint when replacing an existing file",
+    "string": "Drop to replace"
   },
   "wJep/X": {
     "context": "refund amounts were settled",
