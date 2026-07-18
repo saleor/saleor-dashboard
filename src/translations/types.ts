@@ -11,6 +11,7 @@ export enum TranslationInputFieldName {
   name = "name",
   seoDescription = "seoDescription",
   seoTitle = "seoTitle",
+  slug = "slug",
   richText = "richText",
 }
 
@@ -19,6 +20,7 @@ export enum PageTranslationInputFieldName {
   title = "title",
   seoDescription = "seoDescription",
   seoTitle = "seoTitle",
+  slug = "slug",
   richText = "richText",
 }
 
