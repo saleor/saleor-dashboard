@@ -2,6 +2,7 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import { type LanguageFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type Ripple } from "@dashboard/ripples/types";
 import { type BulkTranslationSubmitResult } from "@dashboard/translations/bulkSubmitResult";
 import { type ListSettings } from "@dashboard/types";
 import { type OutputData } from "@editorjs/editorjs";
@@ -42,6 +43,7 @@ export interface TranslationField<T extends string = string> {
   type: TranslationFieldType;
   value: string;
   hint?: string;
+  ripple?: Ripple;
 }
 
 export const TranslationSubmitScope = {

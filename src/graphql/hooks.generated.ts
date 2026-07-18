@@ -20185,6 +20185,7 @@ export const UpdateProductTranslationsDocument = gql`
       description
       seoDescription
       seoTitle
+      slug
       translation(languageCode: $language) {
         id
         description
@@ -20195,6 +20196,7 @@ export const UpdateProductTranslationsDocument = gql`
         name
         seoDescription
         seoTitle
+        slug
       }
     }
   }
@@ -20289,6 +20291,7 @@ export const UpdateCategoryTranslationsDocument = gql`
       description
       seoDescription
       seoTitle
+      slug
       translation(languageCode: $language) {
         id
         description
@@ -20298,6 +20301,7 @@ export const UpdateCategoryTranslationsDocument = gql`
         name
         seoDescription
         seoTitle
+        slug
       }
     }
   }
@@ -20343,6 +20347,7 @@ export const UpdateCollectionTranslationsDocument = gql`
       description
       seoDescription
       seoTitle
+      slug
       translation(languageCode: $language) {
         id
         description
@@ -20352,6 +20357,7 @@ export const UpdateCollectionTranslationsDocument = gql`
         name
         seoDescription
         seoTitle
+        slug
       }
     }
   }

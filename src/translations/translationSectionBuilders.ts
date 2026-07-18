@@ -1,4 +1,5 @@
 import { commonMessages } from "@dashboard/intl";
+import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import {
   PageTranslationInputFieldName,
   type TranslationField,
@@ -81,6 +82,7 @@ export function createSeoTranslationSection(
         }),
         hint: intl.formatMessage(translationDetailMessages.seoSlugFieldHint),
         name: TranslationInputFieldName.slug,
+        ripple: rippleSlugTranslation,
         translation: data.translationSlug ?? null,
         type: TranslationFieldType.SHORT,
         value: data.slug ?? "",
