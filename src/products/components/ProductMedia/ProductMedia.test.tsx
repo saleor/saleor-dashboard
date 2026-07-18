@@ -48,6 +48,7 @@ describe("ProductMedia", () => {
           resolveUpload = resolve;
         }),
     );
+    const onImagesUploadComplete = jest.fn();
 
     const { rerender } = render(
       <TestWrapper>
@@ -56,6 +57,7 @@ describe("ProductMedia", () => {
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
           onImageUpload={onImageUpload}
+          onImagesUploadComplete={onImagesUploadComplete}
           openMediaUrlModal={() => undefined}
         />
       </TestWrapper>,
@@ -83,6 +85,12 @@ describe("ProductMedia", () => {
 
     // Assert — keep the pending tile until media prop updates (no empty flash)
     expect(screen.getByTestId("media-tile-loading")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(onImagesUploadComplete).toHaveBeenCalledWith({
+        successCount: 1,
+        failureCount: 0,
+      });
+    });
 
     // Act — Apollo cache delivers the saved media
     rerender(
@@ -102,6 +110,7 @@ describe("ProductMedia", () => {
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
           onImageUpload={onImageUpload}
+          onImagesUploadComplete={onImagesUploadComplete}
           openMediaUrlModal={() => undefined}
         />
       </TestWrapper>,
@@ -156,6 +165,7 @@ describe("ProductMedia", () => {
   it("removes the pending tile when upload fails", async () => {
     // Arrange
     const onImageUpload = jest.fn(() => Promise.reject(new Error("network")));
+    const onImagesUploadComplete = jest.fn();
 
     jest.spyOn(console, "error").mockImplementation(() => undefined);
 
@@ -166,6 +176,7 @@ describe("ProductMedia", () => {
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
           onImageUpload={onImageUpload}
+          onImagesUploadComplete={onImagesUploadComplete}
           openMediaUrlModal={() => undefined}
         />
       </TestWrapper>,
@@ -183,5 +194,9 @@ describe("ProductMedia", () => {
     });
     expect(screen.getByTestId("product-media-dropzone")).toBeInTheDocument();
     expect(revokeObjectURL).toHaveBeenCalledWith("blob:pending-preview");
+    expect(onImagesUploadComplete).toHaveBeenCalledWith({
+      successCount: 0,
+      failureCount: 1,
+    });
   });
 });

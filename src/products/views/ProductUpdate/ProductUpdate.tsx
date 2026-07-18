@@ -55,7 +55,11 @@ import {
   type ProductUrlQueryParams,
   productVariantEditUrl,
 } from "../../urls";
-import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
+import {
+  createImageReorderHandler,
+  createImagesUploadCompleteHandler,
+  createImageUploadHandler,
+} from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
 import { productUpdatePageMessages as messages } from "./messages";
 
@@ -182,9 +186,9 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
     [intl, notify],
   );
-  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
-    onCompleted: handleProductMediaCreateCompleted,
-  });
+  // File uploads report a single batch toast from ProductMedia; keep per-upload
+  // notifications only for URL/oEmbed uploads via createProductMedia.
+  const [createProductImage] = useProductMediaCreateMutation();
   const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
@@ -381,6 +385,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
+  const handleImagesUploadComplete = createImagesUploadCompleteHandler(notify, intl);
   const handleImageReorder = createImageReorderHandler(product, options =>
     reorderProductImages(options),
   );
@@ -388,10 +393,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     openModal("assign-attribute-value", { id: attribute.id });
   const disableFormSave =
     submitOpts.loading ||
-    createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
-    createProductMediaOpts.loading ||
     (loading && !product);
   const formTransitionState = getMutationState(
     submitOpts.called,
@@ -506,6 +509,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           })
         }
         onImageUpload={handleImageUpload}
+        onImagesUploadComplete={handleImagesUploadComplete}
         onImageDelete={handleImageDelete}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}

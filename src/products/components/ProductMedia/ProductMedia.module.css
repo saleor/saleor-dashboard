@@ -22,6 +22,12 @@
   background-color: var(--mu-colors-background-default2);
 }
 
+.dropzoneDisabled {
+  cursor: default;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
 .dropzoneContent {
   padding: 16px;
   text-align: center;

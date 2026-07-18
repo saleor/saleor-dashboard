@@ -138,6 +138,7 @@ interface ProductUpdatePageProps {
   onShowMetadata: () => void;
   onImageReorder?: (event: { oldIndex: number; newIndex: number }) => any;
   onImageUpload: (file: File) => any;
+  onImagesUploadComplete?: (result: { successCount: number; failureCount: number }) => void;
   onMediaUrlUpload: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
   onSeoClick?: () => any;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
@@ -177,6 +178,7 @@ const ProductUpdatePage = ({
   onImageDelete,
   onImageReorder,
   onImageUpload,
+  onImagesUploadComplete,
   onMediaUrlUpload,
   onVariantShow,
   onSeoClick,
@@ -497,6 +499,7 @@ const ProductUpdatePage = ({
                   onImageDelete={onImageDelete}
                   onImageReorder={onImageReorder}
                   onImageUpload={onImageUpload}
+                  onImagesUploadComplete={onImagesUploadComplete}
                   openMediaUrlModal={() => setMediaUrlModalStatus(true)}
                   getImageEditUrl={imageId => productImageUrl(productId, imageId)}
                 />

@@ -11,6 +11,7 @@ import styles from "./ProductMedia.module.css";
 interface ProductMediaGalleryDropzoneProps {
   onImageUpload: (files: FileList | File[]) => void;
   disableClick?: boolean;
+  disabled?: boolean;
   variant: "empty" | "gallery";
   children?: (props: { isDragActive: boolean }) => React.ReactNode;
 }
@@ -18,16 +19,21 @@ interface ProductMediaGalleryDropzoneProps {
 export const ProductMediaGalleryDropzone = ({
   onImageUpload,
   disableClick = false,
+  disabled = false,
   variant,
   children,
 }: ProductMediaGalleryDropzoneProps) => (
-  <Dropzone noClick={disableClick} onDrop={onImageUpload}>
+  <Dropzone noClick={disableClick || disabled} disabled={disabled} onDrop={onImageUpload}>
     {({ isDragActive, getInputProps, getRootProps }: DropzoneState) => {
       if (variant === "empty") {
         return (
           <div
             {...getRootProps()}
-            className={clsx(styles.dropzone, isDragActive && styles.dropzoneActive)}
+            className={clsx(
+              styles.dropzone,
+              isDragActive && styles.dropzoneActive,
+              disabled && styles.dropzoneDisabled,
+            )}
             data-test-id="product-media-dropzone"
           >
             <input {...getInputProps()} className={styles.hiddenInput} accept="image/*" multiple />
@@ -47,8 +53,8 @@ export const ProductMediaGalleryDropzone = ({
           data-test-id="product-media-gallery"
         >
           <input {...getInputProps()} className={styles.hiddenInput} accept="image/*" multiple />
-          {children?.({ isDragActive })}
-          {isDragActive && (
+          {children?.({ isDragActive: disabled ? false : isDragActive })}
+          {isDragActive && !disabled && (
             <div className={styles.dropOverlayWrapper}>
               <div className={styles.dropOverlay}>
                 <Text size={2} color="default2">

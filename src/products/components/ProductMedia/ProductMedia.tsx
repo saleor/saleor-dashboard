@@ -76,6 +76,7 @@ interface ProductMediaProps {
   onImageDelete: (id: string) => () => void;
   onImageReorder?: ReorderAction;
   onImageUpload: (file: File) => any;
+  onImagesUploadComplete?: (result: { successCount: number; failureCount: number }) => void;
   openMediaUrlModal: () => any;
 }
 
@@ -118,6 +119,7 @@ const ProductMedia = (props: ProductMediaProps) => {
     onImageDelete,
     onImageReorder,
     onImageUpload,
+    onImagesUploadComplete,
     openMediaUrlModal,
   } = props;
   const intl = useIntl();
@@ -125,6 +127,7 @@ const ProductMedia = (props: ProductMediaProps) => {
   const anchor = React.useRef<HTMLButtonElement>();
   const [pendingMedia, setPendingMedia] = React.useState<ProductMediaFragment[]>([]);
   const [placeholders, setPlaceholders] = React.useState<Record<string, string>>({});
+  const [isUploadBatchInFlight, setIsUploadBatchInFlight] = React.useState(false);
   const pendingMediaRef = React.useRef(pendingMedia);
   const placeholdersRef = React.useRef(placeholders);
   const previousMediaIdsRef = React.useRef<string[] | null>(null);
@@ -209,22 +212,37 @@ const ProductMedia = (props: ProductMediaProps) => {
     (files: FileList | File[]) => {
       const fileArray = Array.from(files);
 
-      if (fileArray.length === 0) {
+      if (fileArray.length === 0 || isUploadBatchInFlight) {
         return;
       }
 
       const pendingItems = fileArray.map((file, fileIndex) => createPendingMedia(file, fileIndex));
       const clientIds = pendingItems.map(item => item.id);
+      let successCount = 0;
+      let failureCount = 0;
 
+      setIsUploadBatchInFlight(true);
       setPendingMedia(prev => [...prev, ...pendingItems]);
 
       return createMultiFileUploadHandler(onImageUpload, {
-        onError: index => removePendingMedia(clientIds[index]),
-      })(fileArray);
+        onAfterUpload: () => {
+          successCount += 1;
+        },
+        onError: index => {
+          failureCount += 1;
+          removePendingMedia(clientIds[index]);
+        },
+        onCompleted: () => {
+          onImagesUploadComplete?.({ successCount, failureCount });
+        },
+      })(fileArray).finally(() => {
+        setIsUploadBatchInFlight(false);
+      });
     },
-    [onImageUpload, removePendingMedia],
+    [isUploadBatchInFlight, onImageUpload, onImagesUploadComplete, removePendingMedia],
   );
 
+  const isUploading = isUploadBatchInFlight || pendingMedia.length > 0;
   const showGallery = (media?.length ?? 0) > 0 || pendingMedia.length > 0;
 
   return (
@@ -241,6 +259,7 @@ const ProductMedia = (props: ProductMediaProps) => {
                 type="button"
                 data-test-id="button-upload-image"
                 ref={anchor}
+                disabled={isUploading}
               >
                 {intl.formatMessage(messages.upload)}
               </Button>
@@ -296,6 +315,7 @@ const ProductMedia = (props: ProductMediaProps) => {
           type="file"
           ref={imagesUpload}
           accept="image/*"
+          disabled={isUploading}
         />
         <Box position="relative">
           {media === undefined ? (
@@ -306,6 +326,7 @@ const ProductMedia = (props: ProductMediaProps) => {
             <ProductMediaGalleryDropzone
               variant="gallery"
               disableClick={true}
+              disabled={isUploading}
               onImageUpload={handleImageUpload}
             >
               {({ isDragActive }) => (
@@ -313,6 +334,7 @@ const ProductMedia = (props: ProductMediaProps) => {
                   distance={20}
                   helperClass="dragged"
                   axis="xy"
+                  shouldCancelStart={isUploading ? () => true : undefined}
                   media={media ?? []}
                   preview={pendingMedia}
                   placeholders={placeholders}
@@ -325,7 +347,11 @@ const ProductMedia = (props: ProductMediaProps) => {
               )}
             </ProductMediaGalleryDropzone>
           ) : (
-            <ProductMediaGalleryDropzone variant="empty" onImageUpload={handleImageUpload} />
+            <ProductMediaGalleryDropzone
+              variant="empty"
+              disabled={isUploading}
+              onImageUpload={handleImageUpload}
+            />
           )}
         </Box>
       </DashboardCard.Content>

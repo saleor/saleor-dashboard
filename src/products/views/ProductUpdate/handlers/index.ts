@@ -9,10 +9,14 @@ import {
   type ProductMediaReorderMutationVariables,
   type ProductVariantReorderMutationFn,
 } from "@dashboard/graphql";
+import { errorMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
 import { type ReorderEvent } from "@dashboard/types";
 import { move } from "@dashboard/utils/lists";
+import { type IntlShape } from "react-intl";
 import { arrayMove } from "react-sortable-hoc";
+
+import { productUpdatePageMessages } from "../messages";
 
 export function createImageUploadHandler(
   id: string,
@@ -33,6 +37,57 @@ export function createImageUploadHandler(
     }
 
     return result;
+  };
+}
+
+export interface ImagesUploadCompleteResult {
+  successCount: number;
+  failureCount: number;
+}
+
+export function createImagesUploadCompleteHandler(
+  notify: (notification: {
+    status: "success" | "error" | "warning";
+    title?: string;
+    text: string;
+  }) => void,
+  intl: Pick<IntlShape, "formatMessage">,
+) {
+  return ({ successCount, failureCount }: ImagesUploadCompleteResult) => {
+    if (successCount === 0 && failureCount === 0) {
+      return;
+    }
+
+    if (failureCount === 0) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(productUpdatePageMessages.mediaUploadSuccessCount, {
+          count: successCount,
+        }),
+      });
+
+      return;
+    }
+
+    if (successCount === 0) {
+      notify({
+        status: "error",
+        title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+        text: intl.formatMessage(productUpdatePageMessages.mediaUploadAllFailed, {
+          count: failureCount,
+        }),
+      });
+
+      return;
+    }
+
+    notify({
+      status: "warning",
+      text: intl.formatMessage(productUpdatePageMessages.mediaUploadPartial, {
+        success: successCount,
+        failed: failureCount,
+      }),
+    });
   };
 }
 
