@@ -1,4 +1,7 @@
 .dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-style: dashed;
   border-width: 1px;
   border-color: var(--mu-colors-border-default1);
@@ -20,10 +23,7 @@
 }
 
 .dropzoneContent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 16px;
+  padding: 16px;
   text-align: center;
 }
 

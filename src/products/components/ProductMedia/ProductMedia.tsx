@@ -22,22 +22,34 @@ interface SortableMediaProps {
   };
   editHref: string;
   onDelete: () => void;
+  placeholderSrc?: string | null;
+  onPlaceholderUnused?: () => void;
 }
 
-const SortableMedia = SortableElement<SortableMediaProps>(({ media, editHref, onDelete }) => (
-  <MediaTile media={media} editHref={editHref} onDelete={onDelete} />
-));
+const SortableMedia = SortableElement<SortableMediaProps>(
+  ({ media, editHref, onDelete, placeholderSrc, onPlaceholderUnused }) => (
+    <MediaTile
+      media={media}
+      editHref={editHref}
+      onDelete={onDelete}
+      placeholderSrc={placeholderSrc}
+      onPlaceholderUnused={onPlaceholderUnused}
+    />
+  ),
+);
 
 interface MediaListContainerProps {
   className: string;
   media: ProductMediaFragment[];
   preview: ProductMediaFragment[];
+  placeholders: Record<string, string>;
   onDelete: (id: string) => () => void;
   getEditHref: (id: string) => string;
+  onPlaceholderUnused: (id: string) => void;
 }
 
 const MediaListContainer = SortableContainer<MediaListContainerProps>(
-  ({ media, preview, onDelete, getEditHref, ...props }) => (
+  ({ media, preview, placeholders, onDelete, getEditHref, onPlaceholderUnused, ...props }) => (
     <div {...props}>
       {media.map((mediaObj, index) => (
         <SortableMedia
@@ -46,13 +58,13 @@ const MediaListContainer = SortableContainer<MediaListContainerProps>(
           media={mediaObj}
           editHref={getEditHref(mediaObj.id)}
           onDelete={onDelete(mediaObj.id)}
+          placeholderSrc={placeholders[mediaObj.id]}
+          onPlaceholderUnused={() => onPlaceholderUnused(mediaObj.id)}
         />
       ))}
-      {preview
-        .sort((a, b) => (a.sortOrder > b.sortOrder ? 1 : -1))
-        .map((mediaObj, index) => (
-          <MediaTile loading={true} media={mediaObj} key={index} />
-        ))}
+      {preview.map(mediaObj => (
+        <MediaTile loading={true} media={mediaObj} key={mediaObj.id} />
+      ))}
     </div>
   ),
 );
@@ -67,6 +79,37 @@ interface ProductMediaProps {
   openMediaUrlModal: () => any;
 }
 
+let pendingMediaIdCounter = 0;
+
+const createPendingMediaId = () => {
+  pendingMediaIdCounter += 1;
+
+  return `pending-${Date.now()}-${pendingMediaIdCounter}`;
+};
+
+const createPendingMedia = (file: File, sortOrder: number): ProductMediaFragment => {
+  const clientId = createPendingMediaId();
+
+  return {
+    __typename: "ProductMedia",
+    alt: "",
+    id: clientId,
+    sortOrder,
+    type: ProductMediaType.IMAGE,
+    url: URL.createObjectURL(file),
+    oembedData: null,
+  };
+};
+
+const revokeObjectUrl = (url: string) => {
+  if (url.startsWith("blob:")) {
+    URL.revokeObjectURL(url);
+  }
+};
+
+const getMediaIdsSignature = (media: ProductMediaFragment[] | undefined) =>
+  media === undefined ? null : media.map(item => item.id).join("\0");
+
 /** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
 const ProductMedia = (props: ProductMediaProps) => {
   const {
@@ -80,31 +123,109 @@ const ProductMedia = (props: ProductMediaProps) => {
   const intl = useIntl();
   const imagesUpload = React.useRef<HTMLInputElement>(null);
   const anchor = React.useRef<HTMLButtonElement>();
-  const [imagesToUpload, setImagesToUpload] = React.useState<ProductMediaFragment[]>([]);
-  const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
-    onAfterUpload: () => setImagesToUpload(prevImagesToUpload => prevImagesToUpload.slice(1)),
-    onStart: files => {
-      Array.from(files).forEach((file, fileIndex) => {
-        const reader = new FileReader();
+  const [pendingMedia, setPendingMedia] = React.useState<ProductMediaFragment[]>([]);
+  const [placeholders, setPlaceholders] = React.useState<Record<string, string>>({});
+  const pendingMediaRef = React.useRef(pendingMedia);
+  const placeholdersRef = React.useRef(placeholders);
+  const previousMediaIdsRef = React.useRef<string[] | null>(null);
+  const [mediaIdsSignature, setMediaIdsSignature] = React.useState(() =>
+    getMediaIdsSignature(media),
+  );
 
-        reader.onload = event => {
-          setImagesToUpload(prevImagesToUpload => [
-            ...prevImagesToUpload,
-            {
-              __typename: "ProductMedia",
-              alt: "",
-              id: "",
-              sortOrder: fileIndex,
-              type: ProductMediaType.IMAGE,
-              url: event.target.result as string,
-              oembedData: null,
-            },
-          ]);
-        };
-        reader.readAsDataURL(file);
-      });
+  React.useEffect(
+    function syncObjectUrlRefs() {
+      pendingMediaRef.current = pendingMedia;
+      placeholdersRef.current = placeholders;
     },
-  });
+    [pendingMedia, placeholders],
+  );
+
+  // Adjust pending/placeholder state during render when saved media arrives,
+  // so React re-renders before paint and never shows pending + saved tiles together.
+  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  const nextMediaIdsSignature = getMediaIdsSignature(media);
+
+  if (nextMediaIdsSignature !== null && media && nextMediaIdsSignature !== mediaIdsSignature) {
+    const currentIds = media.map(item => item.id);
+    const previousIds = previousMediaIdsRef.current;
+    const addedIds = previousIds === null ? [] : currentIds.filter(id => !previousIds.includes(id));
+
+    previousMediaIdsRef.current = currentIds;
+    setMediaIdsSignature(nextMediaIdsSignature);
+
+    if (addedIds.length > 0 && pendingMedia.length > 0) {
+      const removeCount = Math.min(addedIds.length, pendingMedia.length);
+      const handedOff = pendingMedia.slice(0, removeCount);
+      const nextPlaceholders = { ...placeholders };
+
+      handedOff.forEach((item, index) => {
+        nextPlaceholders[addedIds[index]] = item.url;
+      });
+
+      setPlaceholders(nextPlaceholders);
+      setPendingMedia(pendingMedia.slice(removeCount));
+    }
+  } else if (nextMediaIdsSignature !== null && media && previousMediaIdsRef.current === null) {
+    previousMediaIdsRef.current = media.map(item => item.id);
+    setMediaIdsSignature(nextMediaIdsSignature);
+  }
+
+  React.useEffect(function revokeObjectUrlsOnUnmount() {
+    return function revokeObjectUrls() {
+      pendingMediaRef.current.forEach(item => revokeObjectUrl(item.url));
+      Object.values(placeholdersRef.current).forEach(revokeObjectUrl);
+    };
+  }, []);
+
+  const removePendingMedia = React.useCallback((clientId: string) => {
+    setPendingMedia(prev => {
+      const item = prev.find(mediaItem => mediaItem.id === clientId);
+
+      if (item) {
+        revokeObjectUrl(item.url);
+      }
+
+      return prev.filter(mediaItem => mediaItem.id !== clientId);
+    });
+  }, []);
+
+  const handlePlaceholderUnused = React.useCallback((mediaId: string) => {
+    setPlaceholders(prev => {
+      const url = prev[mediaId];
+
+      if (!url) {
+        return prev;
+      }
+
+      revokeObjectUrl(url);
+
+      const { [mediaId]: _, ...rest } = prev;
+
+      return rest;
+    });
+  }, []);
+
+  const handleImageUpload = React.useCallback(
+    (files: FileList | File[]) => {
+      const fileArray = Array.from(files);
+
+      if (fileArray.length === 0) {
+        return;
+      }
+
+      const pendingItems = fileArray.map((file, fileIndex) => createPendingMedia(file, fileIndex));
+      const clientIds = pendingItems.map(item => item.id);
+
+      setPendingMedia(prev => [...prev, ...pendingItems]);
+
+      return createMultiFileUploadHandler(onImageUpload, {
+        onError: index => removePendingMedia(clientIds[index]),
+      })(fileArray);
+    },
+    [onImageUpload, removePendingMedia],
+  );
+
+  const showGallery = (media?.length ?? 0) > 0 || pendingMedia.length > 0;
 
   return (
     <DashboardCard>
@@ -159,26 +280,29 @@ const ProductMedia = (props: ProductMediaProps) => {
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <Box>
-          <Box
-            as="input"
-            display="none"
-            id="fileUpload"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              handleImageUpload(event.target.files)
+        <input
+          className={styles.hiddenInput}
+          data-test-id="product-media-file-input"
+          id="product-media-file-upload"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            if (event.target.files) {
+              handleImageUpload(event.target.files);
             }
-            multiple
-            type="file"
-            ref={imagesUpload}
-            accept="image/*"
-          />
-        </Box>
+
+            // Allow selecting the same file again
+            event.target.value = "";
+          }}
+          multiple
+          type="file"
+          ref={imagesUpload}
+          accept="image/*"
+        />
         <Box position="relative">
           {media === undefined ? (
             <Box padding={5}>
               <Skeleton />
             </Box>
-          ) : media.length > 0 ? (
+          ) : showGallery ? (
             <ProductMediaGalleryDropzone
               variant="gallery"
               disableClick={true}
@@ -189,12 +313,14 @@ const ProductMedia = (props: ProductMediaProps) => {
                   distance={20}
                   helperClass="dragged"
                   axis="xy"
-                  media={media}
-                  preview={imagesToUpload}
+                  media={media ?? []}
+                  preview={pendingMedia}
+                  placeholders={placeholders}
                   onSortEnd={onImageReorder}
                   className={clsx(styles.mediaList, isDragActive && styles.mediaListDimmed)}
                   onDelete={onImageDelete}
                   getEditHref={getImageEditUrl}
+                  onPlaceholderUnused={handlePlaceholderUnused}
                 />
               )}
             </ProductMediaGalleryDropzone>

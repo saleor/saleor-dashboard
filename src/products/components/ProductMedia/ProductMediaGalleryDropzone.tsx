@@ -9,7 +9,7 @@ import { messages } from "./messages";
 import styles from "./ProductMedia.module.css";
 
 interface ProductMediaGalleryDropzoneProps {
-  onImageUpload: (files: FileList) => void;
+  onImageUpload: (files: FileList | File[]) => void;
   disableClick?: boolean;
   variant: "empty" | "gallery";
   children?: (props: { isDragActive: boolean }) => React.ReactNode;
@@ -52,7 +52,7 @@ export const ProductMediaGalleryDropzone = ({
             <div className={styles.dropOverlayWrapper}>
               <div className={styles.dropOverlay}>
                 <Text size={2} color="default2">
-                  <FormattedMessage {...messages.uploadHint} />
+                  <FormattedMessage {...messages.uploadHintDrop} />
                 </Text>
               </div>
             </div>

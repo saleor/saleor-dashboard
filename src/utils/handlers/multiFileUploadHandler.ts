@@ -40,7 +40,7 @@ function createMultiFileUploadHandler<T>(
     }
   }
 
-  return async (files: FileList): Promise<void> => {
+  return async (files: FileList | File[]): Promise<void> => {
     const fileArray = Array.from(files);
 
     if (onStart) {

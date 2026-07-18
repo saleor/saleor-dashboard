@@ -49,12 +49,10 @@ const useStyles = makeStyles(
         display: "none !important",
       },
     },
-    mediaOverlayShadow: {
-      $mediaOverlay: {
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
-      },
+    mediaOverlayLoading: {
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "center",
     },
     mediaOverlayToolbar: {
       display: "flex",
@@ -88,6 +86,8 @@ interface MediaTileBaseProps {
   };
   disableOverlay?: boolean;
   loading?: boolean;
+  placeholderSrc?: string | null;
+  onPlaceholderUnused?: () => void;
   onDelete?: () => void;
   onEdit?: (event: React.ChangeEvent<any>) => void;
 }
@@ -105,7 +105,16 @@ type MediaTileProps = MediaTileBaseProps &
   );
 
 const MediaTile = (props: MediaTileProps) => {
-  const { loading, onDelete, onEdit, editHref, media, disableOverlay = false } = props;
+  const {
+    loading,
+    onDelete,
+    onEdit,
+    editHref,
+    media,
+    disableOverlay = false,
+    placeholderSrc,
+    onPlaceholderUnused,
+  } = props;
   const classes = useStyles(props);
   const mediaUrl = parseOembedData(media.oembedData).thumbnail_url || media.url;
 
@@ -113,12 +122,12 @@ const MediaTile = (props: MediaTileProps) => {
     <div className={classes.mediaContainer} data-test-id="product-image">
       <div
         className={clsx(classes.mediaOverlay, {
-          [classes.mediaOverlayShadow]: loading,
+          [classes.mediaOverlayLoading]: loading,
           [classes.disableOverlay]: disableOverlay,
         })}
       >
         {loading ? (
-          <SaleorThrobber size={32} />
+          <SaleorThrobber size={32} data-test-id="media-tile-loading" />
         ) : (
           <div className={classes.mediaOverlayToolbar}>
             {(onEdit || editHref) && (
@@ -145,7 +154,14 @@ const MediaTile = (props: MediaTileProps) => {
           </div>
         )}
       </div>
-      <MediaWithFallback key={mediaUrl} className={classes.media} src={mediaUrl} alt={media.alt} />
+      <MediaWithFallback
+        key={mediaUrl}
+        className={classes.media}
+        src={mediaUrl}
+        alt={media.alt}
+        placeholderSrc={placeholderSrc}
+        onPlaceholderUnused={onPlaceholderUnused}
+      />
     </div>
   );
 };

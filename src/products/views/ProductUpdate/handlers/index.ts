@@ -1,27 +1,39 @@
 // @ts-strict-ignore
-import { type MutationFunctionOptions } from "@apollo/client";
+import { type FetchResult, type MutationFunctionOptions } from "@apollo/client";
 import {
   type Node,
   type ProductFragment,
+  type ProductMediaCreateMutation,
   type ProductMediaCreateMutationVariables,
   type ProductMediaReorderMutation,
   type ProductMediaReorderMutationVariables,
   type ProductVariantReorderMutationFn,
 } from "@dashboard/graphql";
+import { getMutationErrors } from "@dashboard/misc";
 import { type ReorderEvent } from "@dashboard/types";
 import { move } from "@dashboard/utils/lists";
 import { arrayMove } from "react-sortable-hoc";
 
 export function createImageUploadHandler(
   id: string,
-  createProductImage: (variables: ProductMediaCreateMutationVariables) => void,
+  createProductImage: (
+    variables: ProductMediaCreateMutationVariables,
+  ) => Promise<FetchResult<ProductMediaCreateMutation>>,
 ) {
-  return (file: File) =>
-    createProductImage({
+  return async (file: File) => {
+    const result = await createProductImage({
       alt: "",
       image: file,
       product: id,
     });
+    const errors = getMutationErrors(result);
+
+    if (errors.length > 0 || !result.data?.productMediaCreate?.product) {
+      throw new Error("Failed to upload product media");
+    }
+
+    return result;
+  };
 }
 
 type ProductMediaReorderOptions = Pick<

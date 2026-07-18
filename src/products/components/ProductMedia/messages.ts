@@ -26,4 +26,9 @@ export const messages = defineMessages({
     defaultMessage: "Drag and drop or click to upload",
     description: "product media gallery dropzone hint",
   },
+  uploadHintDrop: {
+    id: "KXX8oX",
+    defaultMessage: "Drag and drop to upload",
+    description: "product media gallery dropzone hint when click-to-upload is disabled",
+  },
 });
