@@ -45,6 +45,11 @@ const messages = defineMessages({
     defaultMessage: "Delete ({count})",
     description: "bulk delete selected variants, including count for cross-page selection",
   },
+  rangeWithPendingDeletes: {
+    id: "YG29Na",
+    defaultMessage: "{range} ({count} pending delete)",
+    description: "variants grid range label with count of unsaved staged deletions",
+  },
   empty: {
     defaultMessage: "Use button above to add new product variants",
     id: "IH47ID",

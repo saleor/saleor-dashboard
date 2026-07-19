@@ -71,6 +71,7 @@ interface ProductVariantsProps {
   variantsRangeLabel?: string | null;
   variantsTotalCount?: number | null;
   variantsLoading?: boolean;
+  pendingVariantDeleteCount?: number;
   productName: string;
   productId: string;
   productTypeId: string;
@@ -94,6 +95,7 @@ export const ProductVariants = ({
   onVariantsPreviousPage,
   variantsRangeLabel,
   variantsLoading = false,
+  pendingVariantDeleteCount = 0,
   variantAttributes,
   selectionVariantAttributes,
   nonSelectionVariantAttributes,
@@ -470,6 +472,7 @@ export const ProductVariants = ({
         selectedCount={selectedCount}
         onDeleteSelected={handleBulkDeleteSelected}
         deleteDisabled={variantsLoading}
+        pendingVariantDeleteCount={pendingVariantDeleteCount}
       />
     ),
     [
@@ -490,6 +493,7 @@ export const ProductVariants = ({
       selectedCount,
       handleBulkDeleteSelected,
       variantsLoading,
+      pendingVariantDeleteCount,
     ],
   );
 

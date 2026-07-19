@@ -44,7 +44,7 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as React from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
@@ -95,10 +95,15 @@ export function useProductUpdateForm(
   });
   const stagedEdits = useRef<VariantGridStagedEditsState>(createEmptyVariantGridStagedEdits());
   const previousVariantsPageKey = useRef<string | null>(null);
+  const [pendingVariantDeleteCount, setPendingVariantDeleteCount] = useState(0);
   const variantsPageKey = useMemo(
     () => productVariants.map(variant => variant.id).join("\0"),
     [productVariants],
   );
+
+  const refreshPendingVariantDeleteCount = useCallback(() => {
+    setPendingVariantDeleteCount(stagedEdits.current.removedIds.size);
+  }, []);
 
   const applyRehydratedDatagridState = useCallback(
     (pageVariants: ProductDetailsVariantFragment[]) => {
@@ -143,9 +148,10 @@ export function useProductUpdateForm(
         productVariants,
         prepared,
       );
+      refreshPendingVariantDeleteCount();
       triggerChange();
     },
-    [locale, product, productVariants, triggerChange],
+    [locale, product, productVariants, refreshPendingVariantDeleteCount, triggerChange],
   );
 
   const handleStageVariantRemovals = React.useCallback(
@@ -166,9 +172,10 @@ export function useProductUpdateForm(
         removed: rehydrated.removed,
         updates: rehydrated.updates,
       };
+      refreshPendingVariantDeleteCount();
       triggerChange();
     },
-    [datagrid, productVariants, triggerChange],
+    [datagrid, productVariants, refreshPendingVariantDeleteCount, triggerChange],
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
@@ -334,6 +341,7 @@ export function useProductUpdateForm(
       updates: [],
     };
     stagedEdits.current = createEmptyVariantGridStagedEdits();
+    setPendingVariantDeleteCount(0);
 
     return result;
   }, [datagrid, handleFormSubmit, getSubmitData]);
@@ -382,6 +390,7 @@ export function useProductUpdateForm(
     },
     submit,
     isSaveDisabled,
+    pendingVariantDeleteCount,
     richText,
     attributeRichTextGetters,
     touchedChannels: touchedChannels.current,

@@ -13131,5 +13131,13 @@
   "zzfj8H": {
     "context": "label",
     "string": "No refund"
+  },
+  "w0m9Jc": {
+    "context": "savebar hint when variants are marked for deletion but not saved yet",
+    "string": "{count, plural, one {# variant pending delete} other {# variants pending delete}}"
+  },
+  "8VRyo7": {
+    "context": "variants grid range label with count of unsaved staged deletions",
+    "string": "{range} ({count} pending delete)"
   }
 }

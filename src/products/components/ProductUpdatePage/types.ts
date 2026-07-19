@@ -96,6 +96,8 @@ export interface UseProductUpdateFormOutput
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
   touchedChannels: string[];
+  /** Staged variant deletes waiting for Save (cross-page). */
+  pendingVariantDeleteCount: number;
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;

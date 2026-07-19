@@ -157,6 +157,7 @@ interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
   selectedCount?: number;
   onDeleteSelected?: () => void;
   deleteDisabled?: boolean;
+  pendingVariantDeleteCount?: number;
 }
 
 export const ProductVariantsHeader = ({
@@ -181,6 +182,7 @@ export const ProductVariantsHeader = ({
   selectedCount = 0,
   onDeleteSelected,
   deleteDisabled = false,
+  pendingVariantDeleteCount = 0,
 }: ProductVariantsHeaderProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -241,7 +243,7 @@ export const ProductVariantsHeader = ({
           paddingBottom={4}
         >
           {onVariantsSearchChange ? (
-            <Box __maxWidth="320px" width="100%">
+            <Box __maxWidth="260px" width="100%">
               <Input
                 size="small"
                 value={variantsSearch}
@@ -276,8 +278,13 @@ export const ProductVariantsHeader = ({
               </Button>
             )}
             {variantsRangeLabel && (
-              <Text size={2} color="default2">
-                {variantsRangeLabel}
+              <Text size={2} color="default2" data-test-id="variants-range-label">
+                {pendingVariantDeleteCount > 0
+                  ? intl.formatMessage(messages.rangeWithPendingDeletes, {
+                      range: variantsRangeLabel,
+                      count: pendingVariantDeleteCount,
+                    })
+                  : variantsRangeLabel}
               </Text>
             )}
             {variantsPageInfo && (

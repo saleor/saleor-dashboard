@@ -63,9 +63,9 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
+import { Box, Divider, type Option, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
@@ -459,7 +459,16 @@ const ProductUpdatePage = ({
       refetch={refetch}
       variants={variants}
     >
-      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
+      {({
+        change,
+        data,
+        handlers,
+        submit,
+        isSaveDisabled,
+        pendingVariantDeleteCount,
+        attributeRichTextGetters,
+        richText,
+      }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
         // Store richText so it can be accessed from useEffect
@@ -579,6 +588,7 @@ const ProductUpdatePage = ({
                   variantsRangeLabel={variantsRangeLabel}
                   variantsTotalCount={variantsTotalCount}
                   variantsLoading={variantsLoading}
+                  pendingVariantDeleteCount={pendingVariantDeleteCount}
                   variantAttributes={product?.productType.variantAttributes}
                   selectionVariantAttributes={product?.productType.selectionVariantAttributes}
                   nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}
@@ -663,6 +673,14 @@ const ProductUpdatePage = ({
               <Savebar>
                 <Savebar.DeleteButton onClick={onDelete} />
                 <Savebar.Spacer />
+                {pendingVariantDeleteCount > 0 && (
+                  <Text size={2} color="default2" data-test-id="pending-variant-deletes">
+                    <FormattedMessage
+                      {...messages.pendingVariantDeletes}
+                      values={{ count: pendingVariantDeleteCount }}
+                    />
+                  </Text>
+                )}
                 <Savebar.CancelButton onClick={() => navigate(productListUrl())} />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}
