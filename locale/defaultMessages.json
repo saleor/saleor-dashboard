@@ -1615,6 +1615,10 @@
     "context": "order history message",
     "string": "Invoice no. {invoiceNumber} was updated"
   },
+  "6Rowmg": {
+    "context": "dialog description when navigating away from dirty variants grid",
+    "string": "You have unsaved changes to variants. Please save or discard them before searching, changing page, or generating new variants."
+  },
   "6SL46U": {
     "string": "by {author}"
   },
@@ -4775,10 +4779,6 @@
     "context": "datagrid title label",
     "string": "Select quantities to refund"
   },
-  "LwWT6O": {
-    "context": "dialog description when navigating away from dirty variants grid",
-    "string": "You have unsaved changes to variants. Please save or discard them before searching, changing page, or generating new variants."
-  },
   "Lx1ima": {
     "context": "button",
     "string": "Upload image"
@@ -6816,6 +6816,10 @@
     "context": "staff member full name",
     "string": "Name"
   },
+  "W5DAXI": {
+    "context": "product variants grid search placeholder",
+    "string": "Search variants by name or SKU"
+  },
   "W5hb5H": {
     "context": "warehouse input",
     "string": "Warehouse"
@@ -7504,6 +7508,10 @@
     "context": "bulk translation save success",
     "string": "All translations saved"
   },
+  "ZJib9I": {
+    "context": "empty state when variants grid search returns no results",
+    "string": "No variants match \"{query}\""
+  },
   "ZLcjD2": {
     "string": "Password reset failed"
   },
@@ -8079,6 +8087,10 @@
   },
   "bsP4f3": {
     "string": "No tokens found"
+  },
+  "bsxEP7": {
+    "context": "dialog title when navigating away from dirty variants grid",
+    "string": "Unsaved changes"
   },
   "bu/fC1": {
     "context": "button",
@@ -9675,10 +9687,6 @@
   "k80FoQ": {
     "context": "gift card resend dialog default recipient radio option",
     "string": "Default recipient: {recipient}"
-  },
-  "k8ZdB0": {
-    "context": "product variants grid search placeholder",
-    "string": "Search variants by name or SKU"
   },
   "k8k07f": {
     "context": "order header date, less than an hour ago",
@@ -12745,10 +12753,6 @@
   "y8hdd1": {
     "context": "cancel fulfillment action in shipment row menu",
     "string": "Cancel fulfillment"
-  },
-  "y93ihJ": {
-    "context": "dialog title when navigating away from dirty variants grid",
-    "string": "Unsaved changes"
   },
   "yAFaVK": {
     "context": "Webhook details synchronous events",

@@ -44,6 +44,11 @@ const messages = defineMessages({
     defaultMessage: "Use button above to add new product variants",
     id: "IH47ID",
   },
+  emptySearch: {
+    defaultMessage: 'No variants match "{query}"',
+    id: "ZJib9I",
+    description: "empty state when variants grid search returns no results",
+  },
   warehouses: {
     defaultMessage: "Warehouses",
     id: "U5Da30",

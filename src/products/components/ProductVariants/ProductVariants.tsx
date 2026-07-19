@@ -3,7 +3,11 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
-import { Datagrid, type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import {
+  Datagrid,
+  type DatagridRenderHeaderProps,
+  type GetCellContentOpts,
+} from "@dashboard/components/Datagrid/Datagrid";
 import {
   type DatagridChangeOpts,
   DatagridChangeStateContext,
@@ -306,40 +310,74 @@ export const ProductVariants = ({
     [errors, visibleColumns, channels, variants, onAttributeValuesSearch],
   );
 
+  const renderHeader = useCallback(
+    (props: DatagridRenderHeaderProps) => (
+      <ProductVariantsHeader
+        {...props}
+        productId={productId}
+        productTypeId={productTypeId}
+        productName={productName}
+        hasVariants={hasVariants}
+        hasVariantAttributes={hasSelectionVariantAttributes}
+        unsupportedRequiredAttributes={unsupportedRequiredAttributes}
+        onGenerateVariants={handleOpenGenerator}
+        variantsSearch={variantsSearch}
+        onVariantsSearchChange={onVariantsSearchChange}
+        variantsPageInfo={variantsPageInfo}
+        onVariantsNextPage={onVariantsNextPage}
+        onVariantsPreviousPage={onVariantsPreviousPage}
+        variantsRangeLabel={variantsRangeLabel}
+        onGuardUnsavedAction={guardUnsavedThen}
+      />
+    ),
+    [
+      productId,
+      productTypeId,
+      productName,
+      hasVariants,
+      hasSelectionVariantAttributes,
+      unsupportedRequiredAttributes,
+      handleOpenGenerator,
+      variantsSearch,
+      onVariantsSearchChange,
+      variantsPageInfo,
+      onVariantsNextPage,
+      onVariantsPreviousPage,
+      variantsRangeLabel,
+      guardUnsavedThen,
+    ],
+  );
+
+  const editVariantIcon = useMemo(
+    () => <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+    [],
+  );
+
+  const menuItems = useCallback(
+    (index: number) => [
+      {
+        label: "Edit Variant",
+        onSelect: () => onRowClick(variants[index].id),
+        Icon: editVariantIcon,
+      },
+    ],
+    [editVariantIcon, onRowClick, variants],
+  );
+
   return (
     <>
       <Datagrid
         fillHandle={true}
-        renderHeader={props => (
-          <ProductVariantsHeader
-            {...props}
-            productId={productId}
-            productTypeId={productTypeId}
-            productName={productName}
-            hasVariants={hasVariants}
-            hasVariantAttributes={hasSelectionVariantAttributes}
-            unsupportedRequiredAttributes={unsupportedRequiredAttributes}
-            onGenerateVariants={handleOpenGenerator}
-            variantsSearch={variantsSearch}
-            onVariantsSearchChange={onVariantsSearchChange}
-            variantsPageInfo={variantsPageInfo}
-            onVariantsNextPage={onVariantsNextPage}
-            onVariantsPreviousPage={onVariantsPreviousPage}
-            variantsRangeLabel={variantsRangeLabel}
-            onGuardUnsavedAction={guardUnsavedThen}
-          />
-        )}
+        renderHeader={renderHeader}
         availableColumns={visibleColumns}
-        emptyText={intl.formatMessage(messages.empty)}
+        emptyText={
+          variantsSearch.trim()
+            ? intl.formatMessage(messages.emptySearch, { query: variantsSearch.trim() })
+            : intl.formatMessage(messages.empty)
+        }
         getCellContent={getCellContent}
         getCellError={getCellError}
-        menuItems={index => [
-          {
-            label: "Edit Variant",
-            onSelect: () => onRowClick(variants[index].id),
-            Icon: <Pencil size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
-          },
-        ]}
+        menuItems={menuItems}
         rows={variants?.length ?? 0}
         selectionActions={(indexes, { removeRows }) => (
           <Button

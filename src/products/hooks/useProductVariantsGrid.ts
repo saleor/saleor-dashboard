@@ -4,17 +4,21 @@ import {
   useProductVariantsGridQuery,
 } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
-import useLocalPaginator, {
-  type PaginationState,
-  useLocalPaginationState,
-} from "@dashboard/hooks/useLocalPaginator";
+import { type PaginationState, useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 interface UseProductVariantsGridProps {
   productId: string;
   pageSize?: number;
   skip?: boolean;
+}
+
+interface VariantsGridPageInfo {
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+  endCursor: string | null;
 }
 
 interface UseProductVariantsGridResult {
@@ -25,12 +29,7 @@ interface UseProductVariantsGridResult {
   search: string;
   setSearch: (query: string) => void;
   paginationState: PaginationState;
-  pageInfo: {
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    startCursor: string | null;
-    endCursor: string | null;
-  } | null;
+  pageInfo: VariantsGridPageInfo | null;
   loadNextPage: () => void;
   loadPreviousPage: () => void;
   resetPagination: () => void;
@@ -46,7 +45,16 @@ export const useProductVariantsGrid = ({
   const [searchInput, setSearchInput] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [paginationState, setPaginationState] = useLocalPaginationState(pageSize);
-  const paginate = useLocalPaginator(setPaginationState);
+  const [prevProductId, setPrevProductId] = useState(productId);
+
+  // Reset grid filters when navigating to a different product (render-time adjust,
+  // not an effect — avoids a setState cascade and pairs with stable setPaginationState).
+  if (productId !== prevProductId) {
+    setPrevProductId(productId);
+    setSearchInput("");
+    setDebouncedSearch("");
+    setPaginationState({});
+  }
 
   const debounceSearch = useDebounce((query: string) => {
     setDebouncedSearch(query);
@@ -62,7 +70,7 @@ export const useProductVariantsGrid = ({
   );
 
   const { data, loading, refetch } = useProductVariantsGridQuery({
-    displayLoader: true,
+    displayLoader: false,
     skip: skip || !productId,
     variables: {
       id: productId,
@@ -75,20 +83,49 @@ export const useProductVariantsGrid = ({
   const variants = useMemo(() => mapEdgesToItems(connection) ?? [], [connection]);
   const totalCount = connection?.totalCount ?? null;
 
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    connection?.pageInfo,
-    paginationState,
-  );
+  const connectionPageInfo = connection?.pageInfo;
+  const endCursor = connectionPageInfo?.endCursor ?? null;
+  const startCursor = connectionPageInfo?.startCursor ?? null;
+
+  // Mirror useLocalPaginator pageInfo flags so "after/before in flight" still enables buttons.
+  const pageInfo = useMemo((): VariantsGridPageInfo | null => {
+    if (!connectionPageInfo) {
+      return null;
+    }
+
+    return {
+      hasNextPage: Boolean(paginationState.before) || connectionPageInfo.hasNextPage,
+      hasPreviousPage: Boolean(paginationState.after) || connectionPageInfo.hasPreviousPage,
+      startCursor,
+      endCursor,
+    };
+  }, [connectionPageInfo, endCursor, paginationState.after, paginationState.before, startCursor]);
+
+  const loadNextPage = useCallback(() => {
+    if (!endCursor) {
+      return;
+    }
+
+    setPaginationState({
+      after: endCursor,
+      before: undefined,
+    });
+  }, [endCursor, setPaginationState]);
+
+  const loadPreviousPage = useCallback(() => {
+    if (!startCursor) {
+      return;
+    }
+
+    setPaginationState({
+      after: undefined,
+      before: startCursor,
+    });
+  }, [startCursor, setPaginationState]);
 
   const resetPagination = useCallback(() => {
     setPaginationState({});
   }, [setPaginationState]);
-
-  useEffect(() => {
-    setSearchInput("");
-    setDebouncedSearch("");
-    setPaginationState({});
-  }, [productId, setPaginationState]);
 
   const rangeLabel = useMemo(() => {
     if (totalCount === null) {
@@ -122,14 +159,7 @@ export const useProductVariantsGrid = ({
     search: searchInput,
     setSearch,
     paginationState,
-    pageInfo: pageInfo
-      ? {
-          hasNextPage: pageInfo.hasNextPage,
-          hasPreviousPage: pageInfo.hasPreviousPage,
-          startCursor: pageInfo.startCursor,
-          endCursor: pageInfo.endCursor,
-        }
-      : null,
+    pageInfo,
     loadNextPage,
     loadPreviousPage,
     resetPagination,
