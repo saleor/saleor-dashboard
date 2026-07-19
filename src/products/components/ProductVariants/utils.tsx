@@ -198,7 +198,7 @@ export function getData({
       : emptyDropdownCellValue;
     const cellValue = (change?.value as AttributeSearchOption | undefined) ?? initialValue;
     const swatch = isSwatchAttribute
-      ? (cellValue.swatch ?? getAttributeSwatchData(attributeValue))
+      ? (change?.swatch ?? cellValue.swatch ?? getAttributeSwatchData(attributeValue))
       : undefined;
 
     return dropdownCell(cellValue, {
