@@ -204,7 +204,13 @@ describe("getFilteredProductVariants", () => {
             {
               node: {
                 id: "prod-1",
-                variants: [{ id: "variant-1" }, { id: "variant-2" }, { id: "variant-3" }],
+                productVariants: {
+                  edges: [
+                    { node: { id: "variant-1" } },
+                    { node: { id: "variant-2" } },
+                    { node: { id: "variant-3" } },
+                  ],
+                },
               },
             },
           ],
@@ -217,8 +223,8 @@ describe("getFilteredProductVariants", () => {
 
     // Assert
     expect(result).toHaveLength(1);
-    expect(result![0].variants).toHaveLength(1);
-    expect(result![0].variants[0].id).toBe("variant-2");
+    expect(result![0].productVariants!.edges).toHaveLength(1);
+    expect(result![0].productVariants!.edges[0].node.id).toBe("variant-2");
   });
 
   it("should handle null variants in products", () => {
@@ -234,7 +240,7 @@ describe("getFilteredProductVariants", () => {
             {
               node: {
                 id: "prod-1",
-                variants: null,
+                productVariants: null,
               },
             },
           ],
@@ -247,7 +253,7 @@ describe("getFilteredProductVariants", () => {
 
     // Assert
     expect(result).toHaveLength(1);
-    expect(result![0].variants).toEqual([]);
+    expect(result![0].productVariants).toBeNull();
   });
 
   it("should maintain product structure while filtering variants", () => {
@@ -264,7 +270,9 @@ describe("getFilteredProductVariants", () => {
               node: {
                 id: "prod-1",
                 name: "Test Product",
-                variants: [{ id: "variant-1" }, { id: "variant-2" }],
+                productVariants: {
+                  edges: [{ node: { id: "variant-1" } }, { node: { id: "variant-2" } }],
+                },
               },
             },
           ],
@@ -279,7 +287,9 @@ describe("getFilteredProductVariants", () => {
     expect(result![0]).toMatchObject({
       id: "prod-1",
       name: "Test Product",
-      variants: [{ id: "variant-2" }],
+      productVariants: {
+        edges: [{ node: { id: "variant-2" } }],
+      },
     });
   });
 });

@@ -71,10 +71,14 @@ export const getFilteredProductVariants = (
 
   return products?.map(product => ({
     ...product,
-    variants:
-      product?.variants?.filter(
-        suggestedVariant => !excludedVariantIds.includes(suggestedVariant.id),
-      ) ?? [],
+    productVariants: product.productVariants
+      ? {
+          ...product.productVariants,
+          edges: product.productVariants.edges.filter(
+            edge => !excludedVariantIds.includes(edge.node.id),
+          ),
+        }
+      : null,
   }));
 };
 

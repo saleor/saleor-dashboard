@@ -28,7 +28,7 @@ import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/Moda
 import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import { getCompositeLabel, type VariantWithProductLabel } from "./utils";
+import { getCompositeLabel, toAssignableProducts, type VariantWithProductLabel } from "./utils";
 
 interface AssignVariantDialogSingleProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -98,13 +98,13 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
 
   const hasSelectionChanged = selectedVariantId !== initialSelection;
 
-  const productChoices = useMemo(
-    () =>
-      products?.filter(product => product && product.variants && product.variants.length > 0) || [],
-    [products],
-  );
+  const productChoices = useMemo(() => {
+    const assignableProducts = toAssignableProducts(products);
+
+    return assignableProducts.filter(product => product.variants.length > 0);
+  }, [products]);
   const productVariantChoices = useMemo(
-    () => productChoices.flatMap(product => product.variants || []),
+    () => productChoices.flatMap(product => product.variants),
     [productChoices],
   );
   const displayedProductChoices = useStalePickerList(productChoices, loading, open);

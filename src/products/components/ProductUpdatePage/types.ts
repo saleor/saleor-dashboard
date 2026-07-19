@@ -8,6 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   type ProductChannelListingUpdateInput,
+  type ProductDetailsVariantFragment,
   type ProductFragment,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
@@ -111,6 +112,7 @@ export interface UseProductUpdateFormOpts
   fetchMoreReferenceCategories?: FetchMoreProps;
   assignReferencesAttributeId?: string;
   isSimpleProduct: boolean;
+  variants: ProductDetailsVariantFragment[];
 }
 
 export type SubmitResult = SubmitPromise<Array<UseProductUpdateHandlerError>>;

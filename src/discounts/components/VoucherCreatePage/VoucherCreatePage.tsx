@@ -39,6 +39,7 @@ import {
   type SearchProductFragment,
   type SearchProductsQuery,
   type SearchProductsQueryVariables,
+  type SearchProductVariantFragment,
   type VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
@@ -98,6 +99,11 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
     channel: string | undefined,
     query: string,
   ) => void;
+  onVariantFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
   onCategoryFilterChange?: (filterVariables: CategoryFilterInput, query: string) => void;
   onCollectionFilterChange?: (
     filterVariables: CollectionFilterInput,
@@ -140,6 +146,7 @@ const VoucherCreatePage = ({
   collectionsSearch,
   variantsSearch,
   onProductFilterChange,
+  onVariantFilterChange,
   onCategoryFilterChange,
   onCollectionFilterChange,
   countries,
@@ -527,13 +534,13 @@ const VoucherCreatePage = ({
             confirmButtonState="default"
             hasMore={variantsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-variant"}
-            onFilterChange={onProductFilterChange}
+            onFilterChange={onVariantFilterChange}
             onFetchMore={variantsSearch.loadMore}
             loading={variantsSearch.result.loading}
             onClose={closeModal}
             onSubmit={(variants: unknown) => {
               assignItem(
-                variants as SearchProductFragment[],
+                variants as SearchProductVariantFragment[],
                 VoucherCreatePageTab.variants,
                 onModalClose,
               );
@@ -567,6 +574,7 @@ const VoucherCreatePage = ({
           loading={productsSearch.result.loading}
           open={action === "assign-product"}
           onClose={closeModal}
+          onFilterChange={onProductFilterChange}
           onSubmit={data =>
             assignItem(data as SearchProductFragment[], VoucherCreatePageTab.products, onModalClose)
           }

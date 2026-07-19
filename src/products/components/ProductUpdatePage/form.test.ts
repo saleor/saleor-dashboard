@@ -26,17 +26,19 @@ const baseData = {
   description: undefined,
 };
 
+const formOpts = { variants: [] } as unknown as UseProductUpdateFormOpts;
+
 describe("useProductUpdateForm", () => {
   it("should clear datagrid change set after submitting the form", async () => {
     // Arrange
     const mockOnSubmit = jest.fn();
     const { result } = renderHook(() =>
       useProductUpdateForm(
-        { variants: [], channelListings: [] } as unknown as ProductFragment,
+        { channelListings: [] } as unknown as ProductFragment,
         mockOnSubmit,
         false,
         jest.fn(),
-        {} as UseProductUpdateFormOpts,
+        formOpts,
       ),
     );
 
@@ -80,11 +82,11 @@ describe("useProductUpdateForm", () => {
     const mockOnSubmit = jest.fn();
     const { result } = renderHook(() =>
       useProductUpdateForm(
-        { variants: [], channelListings: [] } as unknown as ProductFragment,
+        { channelListings: [] } as unknown as ProductFragment,
         mockOnSubmit,
         false,
         jest.fn(),
-        {} as UseProductUpdateFormOpts,
+        formOpts,
       ),
     );
 

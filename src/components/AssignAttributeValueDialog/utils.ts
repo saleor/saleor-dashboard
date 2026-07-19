@@ -33,8 +33,14 @@ export const filterProductsByAttributeValues = (
       return (
         products?.map(product => ({
           ...product,
-          variants:
-            product.variants?.filter(variant => !attribute.value.includes(variant.id)) ?? [],
+          productVariants: product.productVariants
+            ? {
+                ...product.productVariants,
+                edges: product.productVariants.edges.filter(
+                  edge => !attribute.value.includes(edge.node.id),
+                ),
+              }
+            : null,
         })) ?? []
       );
     default:

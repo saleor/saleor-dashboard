@@ -1,15 +1,24 @@
-// @ts-strict-ignore
-import { type SearchProductsQuery } from "@dashboard/graphql";
+import { type SearchProductsQuery, type SearchProductVariantFragment } from "@dashboard/graphql";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
+import {
+  type AssignableSearchProduct,
+  mapSearchProductsForVariantAssign,
+} from "@dashboard/searches/mapSearchProductsForVariantAssign";
 import { type RelayToFlat } from "@dashboard/types";
 
-type SearchVariant = RelayToFlat<SearchProductsQuery["search"]>[0]["variants"][0];
+export type { AssignableSearchProduct };
+
+export type SearchVariant = SearchProductVariantFragment;
 
 export interface VariantWithProductLabel extends SearchVariant {
   productName: string;
 }
 
 type SetVariantsAction = (data: VariantWithProductLabel[]) => void;
+
+export const toAssignableProducts = (
+  products: RelayToFlat<SearchProductsQuery["search"]> | undefined | null,
+): AssignableSearchProduct[] => mapSearchProductsForVariantAssign(products);
 
 export function isVariantSelected(
   variant: SearchVariant,
@@ -18,14 +27,24 @@ export function isVariantSelected(
   return !!selectedVariantsToProductsMap.find(getById(variant.id));
 }
 
+export const isVariantsListTruncated = (
+  product: Pick<AssignableSearchProduct, "variants" | "variantsTotalCount">,
+): boolean =>
+  product.variantsTotalCount !== null && product.variants.length < product.variantsTotalCount;
+
 export const handleProductAssign = (
-  product: RelayToFlat<SearchProductsQuery["search"]>[0],
+  product: AssignableSearchProduct,
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
   variants: VariantWithProductLabel[],
   setVariants: SetVariantsAction,
-) =>
-  productsWithAllVariantsSelected[productIndex]
+) => {
+  // Select-all only covers the loaded page; refuse when the catalog is truncated.
+  if (isVariantsListTruncated(product)) {
+    return;
+  }
+
+  return productsWithAllVariantsSelected[productIndex]
     ? setVariants(
         variants.filter(selectedVariant => !product.variants.find(getById(selectedVariant.id))),
       )
@@ -35,10 +54,11 @@ export const handleProductAssign = (
           .filter(productVariant => !variants.find(getById(productVariant.id)))
           .map(variant => ({ ...variant, productName: product.name })),
       ]);
+};
 
 export const handleVariantAssign = (
   variant: SearchVariant,
-  product: RelayToFlat<SearchProductsQuery["search"]>[0],
+  product: AssignableSearchProduct,
   variantIndex: number,
   productIndex: number,
   variants: VariantWithProductLabel[],

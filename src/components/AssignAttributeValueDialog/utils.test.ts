@@ -22,8 +22,26 @@ const createMockProduct = (id: string, name: string): NonNullable<ProductsToFilt
     url: "https://example.com/image.jpg",
   },
   channelListings: [],
-  variants: [],
   collections: [],
+});
+
+const createMockVariant = (
+  id: string,
+  name: string,
+  product: NonNullable<ProductsToFilter>[number],
+) => ({
+  __typename: "ProductVariant" as const,
+  id,
+  name,
+  sku: null,
+  product: {
+    __typename: "Product" as const,
+    id: product.id,
+    name: product.name,
+    thumbnail: product.thumbnail,
+    productType: product.productType,
+  },
+  channelListings: [],
 });
 
 const createMockPage = (id: string, title: string): NonNullable<PagesToFilter>[number] => ({
@@ -108,52 +126,42 @@ describe("AssignAttributeValueDialog/utils", () => {
 
     it("should filter out selected variants in REFERENCE attribute with PRODUCT_VARIANT entity type", () => {
       // Arrange
+      const product1 = createMockProduct("prod-1", "Product 1");
+      const product2 = createMockProduct("prod-2", "Product 2");
       const productsWithVariants = [
         {
-          ...createMockProduct("prod-1", "Product 1"),
-          variants: [
-            // This variant is already selected
-            {
-              __typename: "ProductVariant" as const,
-              id: "var-1",
-              name: "Variant 1",
-              sku: null,
-              product: createMockProduct("prod-1", "Product 1"),
-              channelListings: [],
-            },
-            // This variant is not selected
-            {
-              __typename: "ProductVariant" as const,
-              id: "var-2",
-              name: "Variant 2",
-              sku: null,
-              product: createMockProduct("prod-1", "Product 1"),
-              channelListings: [],
-            },
-          ],
+          ...product1,
+          productVariants: {
+            __typename: "ProductVariantCountableConnection" as const,
+            totalCount: 2,
+            edges: [
+              {
+                __typename: "ProductVariantCountableEdge" as const,
+                node: createMockVariant("var-1", "Variant 1", product1),
+              },
+              {
+                __typename: "ProductVariantCountableEdge" as const,
+                node: createMockVariant("var-2", "Variant 2", product1),
+              },
+            ],
+          },
         },
         {
-          ...createMockProduct("prod-2", "Product 2"),
-          variants: [
-            // This variant is already selected
-            {
-              __typename: "ProductVariant" as const,
-              id: "var-3",
-              name: "Variant 3",
-              sku: null,
-              product: createMockProduct("prod-2", "Product 2"),
-              channelListings: [],
-            },
-            // This variant is not selected
-            {
-              __typename: "ProductVariant" as const,
-              id: "var-4",
-              name: "Variant 4",
-              sku: null,
-              product: createMockProduct("prod-2", "Product 2"),
-              channelListings: [],
-            },
-          ],
+          ...product2,
+          productVariants: {
+            __typename: "ProductVariantCountableConnection" as const,
+            totalCount: 2,
+            edges: [
+              {
+                __typename: "ProductVariantCountableEdge" as const,
+                node: createMockVariant("var-3", "Variant 3", product2),
+              },
+              {
+                __typename: "ProductVariantCountableEdge" as const,
+                node: createMockVariant("var-4", "Variant 4", product2),
+              },
+            ],
+          },
         },
       ];
 
@@ -174,25 +182,11 @@ describe("AssignAttributeValueDialog/utils", () => {
 
       // Assert
       expect(result).toHaveLength(2);
-      expect(result?.[0].variants).toEqual([
-        {
-          __typename: "ProductVariant",
-          id: "var-2",
-          name: "Variant 2",
-          sku: null,
-          product: createMockProduct("prod-1", "Product 1"),
-          channelListings: [],
-        },
+      expect(result?.[0].productVariants?.edges.map(edge => edge.node)).toEqual([
+        createMockVariant("var-2", "Variant 2", product1),
       ]);
-      expect(result?.[1].variants).toEqual([
-        {
-          __typename: "ProductVariant",
-          id: "var-4",
-          name: "Variant 4",
-          sku: null,
-          product: createMockProduct("prod-2", "Product 2"),
-          channelListings: [],
-        },
+      expect(result?.[1].productVariants?.edges.map(edge => edge.node)).toEqual([
+        createMockVariant("var-4", "Variant 4", product2),
       ]);
     });
   });

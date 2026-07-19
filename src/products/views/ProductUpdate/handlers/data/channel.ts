@@ -4,7 +4,7 @@ import {
   type DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
-  type ProductFragment,
+  type ProductDetailsVariantFragment,
   type ProductVariantChannelListingAddInput,
   type ProductVariantChannelListingUpdateInput,
 } from "@dashboard/graphql";
@@ -13,7 +13,7 @@ import { getColumnChannel, getColumnChannelAvailability } from "@dashboard/produ
 export function getUpdateVariantChannelInputs(
   data: DatagridChangeOpts,
   index: number,
-  variant: ProductFragment["variants"][number],
+  variant: ProductDetailsVariantFragment,
 ): ProductVariantChannelListingUpdateInput {
   return data.updates
     .filter(byCurrentRowByIndex(index))
@@ -89,7 +89,7 @@ function byNotNullPrice(change: ReturnType<typeof dataGridChangeToFlatChannel>) 
   return change.price !== null;
 }
 
-function toUpdateChannelData(variant: ProductFragment["variants"][number]) {
+function toUpdateChannelData(variant: ProductDetailsVariantFragment) {
   return (
     acc: ProductVariantChannelListingUpdateInput,
     channel: ReturnType<typeof dataGridChangeToFlatChannel>,

@@ -3,11 +3,12 @@ import {
   type CollectionWithTotalProductsFragment,
   type CountryWithCodeFragment,
   type SearchProductFragment,
+  type SearchProductVariantFragment,
 } from "@dashboard/graphql";
 
 import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
-export type VoucherCreateProductVariant = NonNullable<SearchProductFragment["variants"]>[number];
+export type VoucherCreateProductVariant = SearchProductVariantFragment;
 
 export interface FormData extends VoucherDetailsPageFormData {
   value: number;

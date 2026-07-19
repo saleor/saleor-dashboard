@@ -57,8 +57,13 @@ export function useProductUpdateForm(
   refetch: () => Promise<any>,
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
+  const { variants: productVariants } = opts;
   const initial = useMemo(
-    () => getProductUpdatePageFormData(product, product?.variants),
+    () => getProductUpdatePageFormData(product, productVariants),
+    // Intentionally omit productVariants: simple-product fields come from
+    // product.defaultVariant. Re-binding to the paginated grid would reset
+    // SKU/preorder when the user searches or pages the variants table.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [product],
   );
   const form = useForm(initial, undefined, {
@@ -232,7 +237,7 @@ export function useProductUpdateForm(
             error =>
               error.__typename === "DatagridError" &&
               error.type !== "create" &&
-              error.variantId === product.variants[change.row].id,
+              error.variantId === productVariants[change.row]?.id,
           ),
     );
     datagrid.setRemoved([]);

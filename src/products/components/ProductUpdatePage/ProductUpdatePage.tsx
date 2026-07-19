@@ -102,6 +102,16 @@ interface ProductUpdatePageProps {
   isMediaUrlModalVisible?: boolean;
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
+  variantsSearch?: string;
+  onVariantsSearchChange?: (query: string) => void;
+  variantsPageInfo?: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  } | null;
+  onVariantsNextPage?: () => void;
+  onVariantsPreviousPage?: () => void;
+  variantsRangeLabel?: string | null;
+  variantsTotalCount?: number | null;
   media: ProductFragment["media"];
   product?: ProductDetailsQuery["product"];
   loading?: boolean;
@@ -166,6 +176,13 @@ const ProductUpdatePage = ({
   loading,
   saveButtonBarState,
   variants,
+  variantsSearch,
+  onVariantsSearchChange,
+  variantsPageInfo,
+  onVariantsNextPage,
+  onVariantsPreviousPage,
+  variantsRangeLabel,
+  variantsTotalCount,
   taxClasses,
   fetchMoreTaxClasses,
   referencePages = [],
@@ -304,7 +321,19 @@ const ProductUpdatePage = ({
   });
 
   // Availability diagnostics for the new AvailabilityCard
-  const productDiagnosticData = useMemo(() => mapProductToDiagnosticData(product), [product]);
+  const productDiagnosticData = useMemo(
+    () =>
+      mapProductToDiagnosticData(
+        product
+          ? {
+              ...product,
+              variants,
+              variantsTotalCount: variantsTotalCount ?? null,
+            }
+          : null,
+      ),
+    [product, variants, variantsTotalCount],
+  );
   const availabilityDiagnostics = useProductAvailabilityDiagnostics({
     product: productDiagnosticData,
     enabled: Boolean(product),
@@ -426,6 +455,7 @@ const ProductUpdatePage = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
       refetch={refetch}
+      variants={variants}
     >
       {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
         // Store change handler so it can be accessed from useEffect
@@ -539,6 +569,13 @@ const ProductUpdatePage = ({
                   channels={listings}
                   limits={limits}
                   variants={variants}
+                  variantsSearch={variantsSearch}
+                  onVariantsSearchChange={onVariantsSearchChange}
+                  variantsPageInfo={variantsPageInfo}
+                  onVariantsNextPage={onVariantsNextPage}
+                  onVariantsPreviousPage={onVariantsPreviousPage}
+                  variantsRangeLabel={variantsRangeLabel}
+                  variantsTotalCount={variantsTotalCount}
                   variantAttributes={product?.productType.variantAttributes}
                   selectionVariantAttributes={product?.productType.selectionVariantAttributes}
                   nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}

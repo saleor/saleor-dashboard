@@ -19,9 +19,7 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
           }),
         );
       } else {
-        const defaultVariant = data.productVariantSetDefault?.product?.variants?.find(
-          variant => variant.id === data.productVariantSetDefault?.product?.defaultVariant?.id,
-        );
+        const defaultVariant = data.productVariantSetDefault?.product?.defaultVariant;
 
         if (defaultVariant) {
           notify({

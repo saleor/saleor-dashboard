@@ -28,44 +28,55 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
   </IntlProvider>
 );
 
-const createMockProduct = (overrides?: Partial<ProductDiagnosticData>): ProductDiagnosticData => ({
-  id: "product-123",
-  name: "Test Product",
-  isShippingRequired: true,
-  channelListings: [
-    {
-      channel: {
-        id: "channel-1",
-        name: "Default Channel",
-        slug: "default-channel",
+const createMockProduct = (overrides?: Partial<ProductDiagnosticData>): ProductDiagnosticData => {
+  const product: ProductDiagnosticData = {
+    id: "product-123",
+    name: "Test Product",
+    isShippingRequired: true,
+    channelListings: [
+      {
+        channel: {
+          id: "channel-1",
+          name: "Default Channel",
+          slug: "default-channel",
+        },
+        isPublished: true,
+        publishedAt: "2024-01-01T00:00:00Z",
+        isAvailableForPurchase: true,
+        availableForPurchaseAt: null,
+        visibleInListings: true,
       },
-      isPublished: true,
-      publishedAt: "2024-01-01T00:00:00Z",
-      isAvailableForPurchase: true,
-      availableForPurchaseAt: null,
-      visibleInListings: true,
-    },
-  ],
-  variants: [
-    {
-      id: "variant-1",
-      name: "Variant 1",
-      channelListings: [
-        {
-          channel: { id: "channel-1" },
-          price: { amount: 10 },
-        },
-      ],
-      stocks: [
-        {
-          warehouse: { id: "warehouse-1" },
-          quantity: 100,
-        },
-      ],
-    },
-  ],
-  ...overrides,
-});
+    ],
+    variants: [
+      {
+        id: "variant-1",
+        name: "Variant 1",
+        channelListings: [
+          {
+            channel: { id: "channel-1" },
+            price: { amount: 10 },
+          },
+        ],
+        stocks: [
+          {
+            warehouse: { id: "warehouse-1" },
+            quantity: 100,
+          },
+        ],
+      },
+    ],
+    variantsTotalCount: null,
+    ...overrides,
+  };
+
+  return {
+    ...product,
+    variantsTotalCount:
+      overrides?.variantsTotalCount !== undefined
+        ? overrides.variantsTotalCount
+        : product.variants.length,
+  };
+};
 
 const createMockChannelData = (
   overrides: { useLegacyShippingZoneStockAvailability?: boolean } = {},

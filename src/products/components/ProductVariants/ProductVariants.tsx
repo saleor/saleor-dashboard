@@ -56,6 +56,16 @@ interface ProductVariantsProps {
   /** Attributes that are NOT used for variant selection but may still be required on variants */
   nonSelectionVariantAttributes: ProductFragment["productType"]["nonSelectionVariantAttributes"];
   variants: ProductDetailsVariantFragment[];
+  variantsSearch?: string;
+  onVariantsSearchChange?: (query: string) => void;
+  variantsPageInfo?: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  } | null;
+  onVariantsNextPage?: () => void;
+  onVariantsPreviousPage?: () => void;
+  variantsRangeLabel?: string | null;
+  variantsTotalCount?: number | null;
   productName: string;
   productId: string;
   productTypeId: string;
@@ -71,6 +81,12 @@ export const ProductVariants = ({
   channels,
   errors,
   variants,
+  variantsSearch = "",
+  onVariantsSearchChange,
+  variantsPageInfo,
+  onVariantsNextPage,
+  onVariantsPreviousPage,
+  variantsRangeLabel,
   variantAttributes,
   selectionVariantAttributes,
   nonSelectionVariantAttributes,
@@ -90,7 +106,23 @@ export const ProductVariants = ({
   // Access datagrid state to check for unsaved changes
   const datagridState = useContext(DatagridChangeStateContext);
   const hasUnsavedChanges =
-    datagridState && (datagridState.removed.length > 0 || datagridState.added.length > 0);
+    datagridState &&
+    (datagridState.removed.length > 0 ||
+      datagridState.added.length > 0 ||
+      datagridState.changes.current.length > 0);
+
+  const guardUnsavedThen = useCallback(
+    (action: () => void) => {
+      if (hasUnsavedChanges) {
+        setShowUnsavedWarning(true);
+
+        return;
+      }
+
+      action();
+    },
+    [hasUnsavedChanges],
+  );
 
   // https://github.com/saleor/saleor-dashboard/issues/4165
   const { data: warehousesData } = useWarehouseListQuery({
@@ -288,6 +320,13 @@ export const ProductVariants = ({
             hasVariantAttributes={hasSelectionVariantAttributes}
             unsupportedRequiredAttributes={unsupportedRequiredAttributes}
             onGenerateVariants={handleOpenGenerator}
+            variantsSearch={variantsSearch}
+            onVariantsSearchChange={onVariantsSearchChange}
+            variantsPageInfo={variantsPageInfo}
+            onVariantsNextPage={onVariantsNextPage}
+            onVariantsPreviousPage={onVariantsPreviousPage}
+            variantsRangeLabel={variantsRangeLabel}
+            onGuardUnsavedAction={guardUnsavedThen}
           />
         )}
         availableColumns={visibleColumns}

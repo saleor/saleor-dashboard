@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { type ProductFragment } from "@dashboard/graphql";
+import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 
 import { getStockData, getVaraintUpdateStockData } from "./stock";
 
@@ -79,7 +79,7 @@ describe("getVaraintUpdateStockData", () => {
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(variantStocks).toEqual({
@@ -114,7 +114,7 @@ describe("getVaraintUpdateStockData", () => {
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(variantStocks).toEqual({
@@ -135,7 +135,7 @@ describe("getVaraintUpdateStockData", () => {
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(variantStocks).toEqual({
@@ -161,7 +161,7 @@ describe("getVaraintUpdateStockData", () => {
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(variantStocks).toEqual({ create: [], remove: [], update: [] });
@@ -172,7 +172,7 @@ describe("getVaraintUpdateStockData", () => {
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, {
       stocks,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(variantStocks).toEqual({ create: [], remove: [], update: [] });

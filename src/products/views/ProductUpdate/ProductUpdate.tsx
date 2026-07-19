@@ -48,6 +48,7 @@ import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/Produc
 import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
+import { useProductVariantsGrid } from "../../hooks/useProductVariantsGrid";
 import {
   productListUrl,
   productUrl,
@@ -96,7 +97,22 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
   });
 
-  useRegisterEntityRefresh(refetch);
+  const {
+    variants,
+    loading: variantsLoading,
+    refetch: refetchVariants,
+    search: variantsSearch,
+    setSearch: setVariantsSearch,
+    pageInfo: variantsPageInfo,
+    loadNextPage: loadNextVariantsPage,
+    loadPreviousPage: loadPreviousVariantsPage,
+    rangeLabel: variantsRangeLabel,
+    totalCount: variantsTotalCount,
+  } = useProductVariantsGrid({ productId: id });
+
+  useRegisterEntityRefresh(async () => {
+    await Promise.all([refetch(), refetchVariants()]);
+  });
 
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
   const { availableChannels } = useAppChannel(false);
@@ -317,6 +333,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           text: intl.formatMessage(messages.variantBulkCreateSuccess, { count: successCount }),
         });
         refetch();
+        refetchVariants();
       } else if (successCount > 0 && failedCount > 0) {
         notify({
           status: "warning",
@@ -326,6 +343,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           }),
         });
         refetch();
+        refetchVariants();
       } else if (attributeErrors.length === 0 && otherErrors.length > 0) {
         const uniqueMessages = [...new Set(otherErrors.map(e => e.message).filter(Boolean))];
 
@@ -345,7 +363,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         otherErrors,
       };
     },
-    [bulkCreateVariants, id, intl, notify, refetch],
+    [bulkCreateVariants, id, intl, notify, refetch, refetchVariants],
   );
   const handleImageDelete = (mediaId: string) => () => {
     const media = product?.media?.find(item => item.id === mediaId);
@@ -377,7 +395,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       },
     });
   };
-  const [submit, submitOpts] = useProductUpdateHandler(product);
+  const [submit, submitOpts] = useProductUpdateHandler(product, variants);
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
@@ -486,15 +504,24 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}
-        refetch={refetch}
+        refetch={async () => {
+          await Promise.all([refetch(), refetchVariants()]);
+        }}
         limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
         media={data?.product?.media}
         product={product}
-        loading={loading}
+        loading={loading || variantsLoading}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
-        variants={product?.variants}
+        variants={variants}
+        variantsSearch={variantsSearch}
+        onVariantsSearchChange={setVariantsSearch}
+        variantsPageInfo={variantsPageInfo}
+        onVariantsNextPage={loadNextVariantsPage}
+        onVariantsPreviousPage={loadPreviousVariantsPage}
+        variantsRangeLabel={variantsRangeLabel}
+        variantsTotalCount={variantsTotalCount}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata")}
         onImageReorder={handleImageReorder}

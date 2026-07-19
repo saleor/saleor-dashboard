@@ -56,10 +56,6 @@ export const productVariantSetDefault = gql`
           id
           name
         }
-        variants {
-          id
-          name
-        }
       }
     }
   }
@@ -235,14 +231,6 @@ export const variantMediaAssignMutation = gql`
           media {
             ...ProductMedia
           }
-          variants {
-            id
-            name
-            sku
-            media {
-              ...ProductMedia
-            }
-          }
         }
       }
     }
@@ -264,14 +252,6 @@ export const variantMediaUnassignMutation = gql`
           id
           media {
             ...ProductMedia
-          }
-          variants {
-            id
-            name
-            sku
-            media {
-              ...ProductMedia
-            }
           }
         }
       }

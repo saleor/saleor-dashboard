@@ -92,9 +92,14 @@ export function getFilteredProductVariants(
 
   return products?.map(suggestedProduct => ({
     ...suggestedProduct,
-    variants: suggestedProduct.variants?.filter(
-      variant => !excludedVariantsIds.includes(variant.id),
-    ),
+    productVariants: suggestedProduct.productVariants
+      ? {
+          ...suggestedProduct.productVariants,
+          edges: suggestedProduct.productVariants.edges.filter(
+            edge => !excludedVariantsIds.includes(edge.node.id),
+          ),
+        }
+      : null,
   }));
 }
 

@@ -3021,6 +3021,66 @@ export const ProductWithChannelListingsFragmentDoc = gql`
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PriceRangeFragmentDoc}`;
+export const PreorderFragmentDoc = gql`
+    fragment Preorder on PreorderData {
+  globalThreshold
+  globalSoldUnits
+  endDate
+}
+    `;
+export const ChannelListingProductVariantFragmentDoc = gql`
+    fragment ChannelListingProductVariant on ProductVariantChannelListing {
+  id
+  channel {
+    id
+    name
+    currencyCode
+  }
+  price {
+    ...Money
+  }
+  costPrice {
+    ...Money
+  }
+  preorderThreshold {
+    quantity
+    soldUnits
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const ProductDetailsVariantFragmentDoc = gql`
+    fragment ProductDetailsVariant on ProductVariant {
+  id
+  sku
+  name
+  attributes {
+    attribute {
+      id
+      name
+    }
+    values {
+      ...AttributeValueDetails
+    }
+  }
+  media {
+    url(size: 200)
+  }
+  stocks {
+    ...Stock
+  }
+  trackInventory
+  preorder {
+    ...Preorder
+  }
+  channelListings {
+    ...ChannelListingProductVariant
+  }
+  quantityLimitPerCustomer
+}
+    ${AttributeValueDetailsFragmentDoc}
+${StockFragmentDoc}
+${PreorderFragmentDoc}
+${ChannelListingProductVariantFragmentDoc}`;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
@@ -3098,66 +3158,6 @@ export const ProductMediaFragmentDoc = gql`
   oembedData
 }
     `;
-export const PreorderFragmentDoc = gql`
-    fragment Preorder on PreorderData {
-  globalThreshold
-  globalSoldUnits
-  endDate
-}
-    `;
-export const ChannelListingProductVariantFragmentDoc = gql`
-    fragment ChannelListingProductVariant on ProductVariantChannelListing {
-  id
-  channel {
-    id
-    name
-    currencyCode
-  }
-  price {
-    ...Money
-  }
-  costPrice {
-    ...Money
-  }
-  preorderThreshold {
-    quantity
-    soldUnits
-  }
-}
-    ${MoneyFragmentDoc}`;
-export const ProductDetailsVariantFragmentDoc = gql`
-    fragment ProductDetailsVariant on ProductVariant {
-  id
-  sku
-  name
-  attributes {
-    attribute {
-      id
-      name
-    }
-    values {
-      ...AttributeValueDetails
-    }
-  }
-  media {
-    url(size: 200)
-  }
-  stocks {
-    ...Stock
-  }
-  trackInventory
-  preorder {
-    ...Preorder
-  }
-  channelListings {
-    ...ChannelListingProductVariant
-  }
-  quantityLimitPerCustomer
-}
-    ${AttributeValueDetailsFragmentDoc}
-${StockFragmentDoc}
-${PreorderFragmentDoc}
-${ChannelListingProductVariantFragmentDoc}`;
 export const WeightFragmentDoc = gql`
     fragment Weight on Weight {
   unit
@@ -3176,6 +3176,11 @@ export const ProductFragmentDoc = gql`
   rating
   defaultVariant {
     id
+    sku
+    trackInventory
+    preorder {
+      ...Preorder
+    }
   }
   category {
     id
@@ -3192,9 +3197,6 @@ export const ProductFragmentDoc = gql`
     ...ProductMedia
   }
   isAvailable
-  variants {
-    ...ProductDetailsVariant
-  }
   productType {
     id
     name
@@ -3212,9 +3214,9 @@ export const ProductFragmentDoc = gql`
 }
     ${ProductVariantAttributesFragmentDoc}
 ${MetadataFragmentDoc}
+${PreorderFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${ProductMediaFragmentDoc}
-${ProductDetailsVariantFragmentDoc}
 ${WeightFragmentDoc}`;
 export const SelectedVariantAttributeFragmentDoc = gql`
     fragment SelectedVariantAttribute on SelectedAttribute {
@@ -3320,41 +3322,43 @@ export const SearchProductFragmentDoc = gql`
   channelListings {
     ...ChannelListingProductWithoutPricing
   }
-  variants {
-    id
-    name
-    sku
-    product {
-      id
-      name
-      thumbnail {
-        url
-        __typename
-      }
-      productType {
-        id
-        name
-        __typename
-      }
-    }
-    channelListings {
-      channel {
-        id
-        isActive
-        name
-        currencyCode
-      }
-      price {
-        amount
-        currency
-      }
-    }
-  }
   collections {
     id
   }
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}`;
+export const SearchProductVariantFragmentDoc = gql`
+    fragment SearchProductVariant on ProductVariant {
+  id
+  name
+  sku
+  product {
+    id
+    name
+    thumbnail {
+      url
+      __typename
+    }
+    productType {
+      id
+      name
+      __typename
+    }
+  }
+  channelListings {
+    channel {
+      id
+      isActive
+      name
+      currencyCode
+    }
+    price {
+      amount
+      currency
+    }
+  }
+}
+    `;
 export const ExportFileFragmentDoc = gql`
     fragment ExportFile on ExportFile {
   id
@@ -15353,10 +15357,6 @@ export const ProductVariantSetDefaultDocument = gql`
         id
         name
       }
-      variants {
-        id
-        name
-      }
     }
   }
 }
@@ -15730,14 +15730,6 @@ export const VariantMediaAssignDocument = gql`
         media {
           ...ProductMedia
         }
-        variants {
-          id
-          name
-          sku
-          media {
-            ...ProductMedia
-          }
-        }
       }
     }
   }
@@ -15786,14 +15778,6 @@ export const VariantMediaUnassignDocument = gql`
         id
         media {
           ...ProductMedia
-        }
-        variants {
-          id
-          name
-          sku
-          media {
-            ...ProductMedia
-          }
         }
       }
     }
@@ -16789,6 +16773,66 @@ export function useChannelDiagnosticsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ChannelDiagnosticsQueryHookResult = ReturnType<typeof useChannelDiagnosticsQuery>;
 export type ChannelDiagnosticsLazyQueryHookResult = ReturnType<typeof useChannelDiagnosticsLazyQuery>;
 export type ChannelDiagnosticsQueryResult = Apollo.QueryResult<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>;
+export const ProductVariantsGridDocument = gql`
+    query ProductVariantsGrid($id: ID!, $first: Int, $after: String, $last: Int, $before: String, $search: String) {
+  product(id: $id) {
+    id
+    productVariants(
+      first: $first
+      after: $after
+      last: $last
+      before: $before
+      filter: {search: $search}
+    ) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          ...ProductDetailsVariant
+        }
+      }
+    }
+  }
+}
+    ${ProductDetailsVariantFragmentDoc}`;
+
+/**
+ * __useProductVariantsGridQuery__
+ *
+ * To run a query within a React component, call `useProductVariantsGridQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductVariantsGridQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductVariantsGridQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useProductVariantsGridQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>(ProductVariantsGridDocument, options);
+      }
+export function useProductVariantsGridLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>(ProductVariantsGridDocument, options);
+        }
+export type ProductVariantsGridQueryHookResult = ReturnType<typeof useProductVariantsGridQuery>;
+export type ProductVariantsGridLazyQueryHookResult = ReturnType<typeof useProductVariantsGridLazyQuery>;
+export type ProductVariantsGridQueryResult = Apollo.QueryResult<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>;
 export const RefundsSettingsDocument = gql`
     query RefundsSettings {
   refundSettings {
@@ -17774,7 +17818,7 @@ export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchP
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
 export const SearchProductsDocument = gql`
-    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput) {
+    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput, $includeVariants: Boolean! = false) {
   search: products(
     after: $after
     first: $first
@@ -17785,6 +17829,14 @@ export const SearchProductsDocument = gql`
     edges {
       node {
         ...SearchProduct
+        productVariants(first: 20) @include(if: $includeVariants) {
+          totalCount
+          edges {
+            node {
+              ...SearchProductVariant
+            }
+          }
+        }
       }
     }
     pageInfo {
@@ -17793,6 +17845,7 @@ export const SearchProductsDocument = gql`
   }
 }
     ${SearchProductFragmentDoc}
+${SearchProductVariantFragmentDoc}
 ${PageInfoFragmentDoc}`;
 
 /**
@@ -17812,6 +17865,7 @@ ${PageInfoFragmentDoc}`;
  *      query: // value for 'query'
  *      channel: // value for 'channel'
  *      where: // value for 'where'
+ *      includeVariants: // value for 'includeVariants'
  *   },
  * });
  */

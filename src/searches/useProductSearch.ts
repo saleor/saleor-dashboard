@@ -14,6 +14,7 @@ export const searchProducts = gql`
     $query: String!
     $channel: String
     $where: ProductWhereInput
+    $includeVariants: Boolean! = false
   ) {
     search: products(
       after: $after
@@ -25,6 +26,14 @@ export const searchProducts = gql`
       edges {
         node {
           ...SearchProduct
+          productVariants(first: 20) @include(if: $includeVariants) {
+            totalCount
+            edges {
+              node {
+                ...SearchProductVariant
+              }
+            }
+          }
         }
       }
       pageInfo {

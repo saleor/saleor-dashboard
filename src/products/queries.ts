@@ -322,3 +322,38 @@ export const channelDiagnosticsQuery = gql`
     }
   }
 `;
+
+export const productVariantsGridQuery = gql`
+  query ProductVariantsGrid(
+    $id: ID!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $search: String
+  ) {
+    product(id: $id) {
+      id
+      productVariants(
+        first: $first
+        after: $after
+        last: $last
+        before: $before
+        filter: { search: $search }
+      ) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          node {
+            ...ProductDetailsVariant
+          }
+        }
+      }
+    }
+  }
+`;

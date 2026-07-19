@@ -205,6 +205,11 @@ export const productFragmentDetails = gql`
     rating
     defaultVariant {
       id
+      sku
+      trackInventory
+      preorder {
+        ...Preorder
+      }
     }
     category {
       id
@@ -221,9 +226,6 @@ export const productFragmentDetails = gql`
       ...ProductMedia
     }
     isAvailable
-    variants {
-      ...ProductDetailsVariant
-    }
     productType {
       id
       name
@@ -365,38 +367,47 @@ export const searchProduct = gql`
     channelListings {
       ...ChannelListingProductWithoutPricing
     }
-    variants {
-      id
-      name
-      sku
-      product {
-        id
-        name
-        thumbnail {
-          url
-          __typename
-        }
-        productType {
-          id
-          name
-          __typename
-        }
-      }
-      channelListings {
-        channel {
-          id
-          isActive
-          name
-          currencyCode
-        }
-        price {
-          amount
-          currency
-        }
-      }
-    }
     collections {
       id
+    }
+  }
+`;
+
+/**
+ * Cap for variants embedded in product search results used by assign-variant
+ * dialogs. Full lazy expansion lands in Phase 3 of variants-at-scale.
+ */
+export const SEARCH_PRODUCT_VARIANTS_PAGE_SIZE = 20;
+
+export const searchProductVariant = gql`
+  fragment SearchProductVariant on ProductVariant {
+    id
+    name
+    sku
+    product {
+      id
+      name
+      thumbnail {
+        url
+        __typename
+      }
+      productType {
+        id
+        name
+        __typename
+      }
+    }
+    channelListings {
+      channel {
+        id
+        isActive
+        name
+        currencyCode
+      }
+      price {
+        amount
+        currency
+      }
     }
   }
 `;

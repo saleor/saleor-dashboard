@@ -18,7 +18,7 @@ import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Fragment, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AssignContainerDialogProps } from "../AssignContainerDialog";
@@ -36,6 +36,8 @@ import {
   handleVariantAssign,
   hasAllVariantsSelected,
   isVariantSelected,
+  isVariantsListTruncated,
+  toAssignableProducts,
   type VariantWithProductLabel,
 } from "./utils";
 
@@ -84,7 +86,8 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
   });
 
   const [variants, setVariants] = useState<VariantWithProductLabel[]>([]);
-  const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
+  const assignableProducts = useMemo(() => toAssignableProducts(products), [products]);
+  const productChoices = assignableProducts.filter(product => product.variants.length > 0);
   const displayedProductChoices = useStalePickerList(productChoices, loading, open);
   const selectedVariantsToProductsMap = displayedProductChoices.map(product =>
     product.variants.map(variant => isVariantSelected(variant, variants)),
@@ -173,8 +176,11 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                         <TableRowLink>
                           <TableCell padding="checkbox">
                             <Checkbox
-                              checked={productsWithAllVariantsSelected[productIndex]}
-                              disabled={loading}
+                              checked={
+                                !isVariantsListTruncated(product) &&
+                                productsWithAllVariantsSelected[productIndex]
+                              }
+                              disabled={loading || isVariantsListTruncated(product)}
                               onChange={() =>
                                 handleProductAssign(
                                   product,
@@ -190,7 +196,20 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                             className={classes.avatar}
                             thumbnail={maybe(() => product.thumbnail.url)}
                           />
-                          <TableCell colSpan={2}>{maybe(() => product.name)}</TableCell>
+                          <TableCell colSpan={2}>
+                            {maybe(() => product.name)}
+                            {isVariantsListTruncated(product) && (
+                              <span className={classes.truncatedHint}>
+                                <FormattedMessage
+                                  {...messages.variantsListTruncated}
+                                  values={{
+                                    shown: product.variants.length,
+                                    total: product.variantsTotalCount,
+                                  }}
+                                />
+                              </span>
+                            )}
+                          </TableCell>
                         </TableRowLink>
                         {maybe(() => product.variants, []).map((variant, variantIndex) => (
                           <TableRowLink key={variant.id} data-test-id="assign-variant-table-row">

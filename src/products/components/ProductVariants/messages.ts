@@ -3,14 +3,14 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   unsavedChangesTitle: {
     defaultMessage: "Unsaved changes",
-    id: "y93ihJ",
-    description: "dialog title when opening generator with unsaved changes",
+    id: "bsxEP7",
+    description: "dialog title when navigating away from dirty variants grid",
   },
   unsavedChangesDescription: {
     defaultMessage:
-      "You have unsaved changes to variants. Please save your changes before generating new variants.",
-    id: "LwWT6O",
-    description: "dialog description when opening generator with unsaved changes",
+      "You have unsaved changes to variants. Please save or discard them before searching, changing page, or generating new variants.",
+    id: "6Rowmg",
+    description: "dialog description when navigating away from dirty variants grid",
   },
   name: {
     defaultMessage: "Variant name",

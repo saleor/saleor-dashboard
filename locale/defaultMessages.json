@@ -4776,8 +4776,8 @@
     "string": "Select quantities to refund"
   },
   "LwWT6O": {
-    "context": "dialog description when opening generator with unsaved changes",
-    "string": "You have unsaved changes to variants. Please save your changes before generating new variants."
+    "context": "dialog description when navigating away from dirty variants grid",
+    "string": "You have unsaved changes to variants. Please save or discard them before searching, changing page, or generating new variants."
   },
   "Lx1ima": {
     "context": "button",
@@ -9676,6 +9676,10 @@
     "context": "gift card resend dialog default recipient radio option",
     "string": "Default recipient: {recipient}"
   },
+  "k8ZdB0": {
+    "context": "product variants grid search placeholder",
+    "string": "Search variants by name or SKU"
+  },
   "k8k07f": {
     "context": "order header date, less than an hour ago",
     "string": "Created {minutes, plural, one {# minute} other {# minutes}} ago"
@@ -12743,7 +12747,7 @@
     "string": "Cancel fulfillment"
   },
   "y93ihJ": {
-    "context": "dialog title when opening generator with unsaved changes",
+    "context": "dialog title when navigating away from dirty variants grid",
     "string": "Unsaved changes"
   },
   "yAFaVK": {
@@ -12760,6 +12764,10 @@
   "yDkmX7": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+  },
+  "yEc/Bv": {
+    "context": "hint when product has more variants than the search query loads",
+    "string": "Showing {shown} of {total} variants — select individually"
   },
   "yH56V+": {
     "string": "Ooops!..."

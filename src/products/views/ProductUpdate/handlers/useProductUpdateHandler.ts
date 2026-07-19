@@ -11,6 +11,7 @@ import {
   type AttributeErrorFragment,
   ErrorPolicyEnum,
   type ProductChannelListingErrorFragment,
+  type ProductDetailsVariantFragment,
   type ProductErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductFragment,
@@ -67,6 +68,7 @@ interface UseProductUpdateHandlerOpts {
 
 export function useProductUpdateHandler(
   product: ProductFragment | undefined,
+  variants: ProductDetailsVariantFragment[] = [],
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
@@ -129,7 +131,7 @@ export function useProductUpdateHandler(
     if (data.variants.removed.length > 0) {
       const deleteVaraintsResult = await deleteVariants({
         variables: {
-          ids: data.variants.removed.map(index => product.variants[index].id),
+          ids: data.variants.removed.map(index => variants[index].id),
         },
       });
 
@@ -157,7 +159,7 @@ export function useProductUpdateHandler(
 
     if (data.variants.updates.length > 0) {
       const updateInputdData = getBulkVariantUpdateInputs(
-        product.variants,
+        variants,
         data.variants,
         product?.productType?.variantAttributes ?? [],
       );
