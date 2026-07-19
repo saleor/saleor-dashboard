@@ -6,7 +6,7 @@ import {
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { type PaginationState, useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 interface UseProductVariantsGridProps {
   productId: string;
@@ -33,7 +33,7 @@ interface UseProductVariantsGridResult {
   loadNextPage: () => void;
   loadPreviousPage: () => void;
   resetPagination: () => void;
-  /** Label for current page, e.g. "100 of 4231" or "1–100 of 4231" on first page. */
+  /** Label for current page, e.g. "1–5 of 16" or "6–10 of 16". */
   rangeLabel: string | null;
 }
 
@@ -46,6 +46,14 @@ export const useProductVariantsGrid = ({
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [paginationState, setPaginationState] = useLocalPaginationState(pageSize);
   const [prevProductId, setPrevProductId] = useState(productId);
+  /** 0-based index of the first row on the current page within the full result set. */
+  const [rangeStart, setRangeStart] = useState(0);
+  const rangeStartStackRef = useRef<number[]>([]);
+
+  const resetRangeTracking = useCallback(() => {
+    rangeStartStackRef.current = [];
+    setRangeStart(0);
+  }, []);
 
   // Reset grid filters when navigating to a different product (render-time adjust,
   // not an effect — avoids a setState cascade and pairs with stable setPaginationState).
@@ -54,11 +62,14 @@ export const useProductVariantsGrid = ({
     setSearchInput("");
     setDebouncedSearch("");
     setPaginationState({});
+    rangeStartStackRef.current = [];
+    setRangeStart(0);
   }
 
   const debounceSearch = useDebounce((query: string) => {
     setDebouncedSearch(query);
     setPaginationState({});
+    resetRangeTracking();
   }, 300);
 
   const setSearch = useCallback(
@@ -106,26 +117,32 @@ export const useProductVariantsGrid = ({
       return;
     }
 
+    rangeStartStackRef.current.push(rangeStart);
+    setRangeStart(rangeStart + variants.length);
     setPaginationState({
       after: endCursor,
       before: undefined,
     });
-  }, [endCursor, setPaginationState]);
+  }, [endCursor, rangeStart, setPaginationState, variants.length]);
 
   const loadPreviousPage = useCallback(() => {
     if (!startCursor) {
       return;
     }
 
+    const previousStart = rangeStartStackRef.current.pop() ?? 0;
+
+    setRangeStart(previousStart);
     setPaginationState({
       after: undefined,
       before: startCursor,
     });
-  }, [startCursor, setPaginationState]);
+  }, [setPaginationState, startCursor]);
 
   const resetPagination = useCallback(() => {
+    resetRangeTracking();
     setPaginationState({});
-  }, [setPaginationState]);
+  }, [resetRangeTracking, setPaginationState]);
 
   const rangeLabel = useMemo(() => {
     if (totalCount === null) {
@@ -142,14 +159,12 @@ export const useProductVariantsGrid = ({
       return `0 of ${totalCount}`;
     }
 
-    const onFirstPage = !pageInfo?.hasPreviousPage;
+    // Cursor pagination can land on the first page without us knowing; force start to 1.
+    const start = (!pageInfo?.hasPreviousPage ? 0 : rangeStart) + 1;
+    const end = start + pageSizeActual - 1;
 
-    if (onFirstPage) {
-      return `1–${pageSizeActual} of ${totalCount}`;
-    }
-
-    return `${pageSizeActual} of ${totalCount}`;
-  }, [pageInfo?.hasPreviousPage, totalCount, variants.length]);
+    return `${start}–${end} of ${totalCount}`;
+  }, [pageInfo?.hasPreviousPage, rangeStart, totalCount, variants.length]);
 
   return {
     variants,

@@ -16833,6 +16833,47 @@ export function useProductVariantsGridLazyQuery(baseOptions?: ApolloReactHooks.L
 export type ProductVariantsGridQueryHookResult = ReturnType<typeof useProductVariantsGridQuery>;
 export type ProductVariantsGridLazyQueryHookResult = ReturnType<typeof useProductVariantsGridLazyQuery>;
 export type ProductVariantsGridQueryResult = Apollo.QueryResult<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>;
+export const ProductVariantSkusExistDocument = gql`
+    query ProductVariantSkusExist($skus: [String!]!, $first: Int!) {
+  productVariants(first: $first, where: {sku: {oneOf: $skus}}) {
+    edges {
+      node {
+        id
+        sku
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductVariantSkusExistQuery__
+ *
+ * To run a query within a React component, call `useProductVariantSkusExistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductVariantSkusExistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductVariantSkusExistQuery({
+ *   variables: {
+ *      skus: // value for 'skus'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useProductVariantSkusExistQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantSkusExistQuery, Types.ProductVariantSkusExistQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductVariantSkusExistQuery, Types.ProductVariantSkusExistQueryVariables>(ProductVariantSkusExistDocument, options);
+      }
+export function useProductVariantSkusExistLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantSkusExistQuery, Types.ProductVariantSkusExistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantSkusExistQuery, Types.ProductVariantSkusExistQueryVariables>(ProductVariantSkusExistDocument, options);
+        }
+export type ProductVariantSkusExistQueryHookResult = ReturnType<typeof useProductVariantSkusExistQuery>;
+export type ProductVariantSkusExistLazyQueryHookResult = ReturnType<typeof useProductVariantSkusExistLazyQuery>;
+export type ProductVariantSkusExistQueryResult = Apollo.QueryResult<Types.ProductVariantSkusExistQuery, Types.ProductVariantSkusExistQueryVariables>;
 export const RefundsSettingsDocument = gql`
     query RefundsSettings {
   refundSettings {

@@ -357,3 +357,16 @@ export const productVariantsGridQuery = gql`
     }
   }
 `;
+
+export const productVariantSkusExistQuery = gql`
+  query ProductVariantSkusExist($skus: [String!]!, $first: Int!) {
+    productVariants(first: $first, where: { sku: { oneOf: $skus } }) {
+      edges {
+        node {
+          id
+          sku
+        }
+      }
+    }
+  }
+`;

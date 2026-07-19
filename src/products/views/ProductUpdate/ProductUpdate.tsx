@@ -511,7 +511,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         saveButtonBarState={formTransitionState}
         media={data?.product?.media}
         product={product}
-        loading={loading || variantsLoading}
+        loading={loading && !product}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
         variants={variants}
@@ -522,6 +522,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onVariantsPreviousPage={loadPreviousVariantsPage}
         variantsRangeLabel={variantsRangeLabel}
         variantsTotalCount={variantsTotalCount}
+        variantsLoading={variantsLoading}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata")}
         onImageReorder={handleImageReorder}

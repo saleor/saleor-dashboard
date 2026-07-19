@@ -1,3 +1,4 @@
+import { useApolloClient } from "@apollo/client";
 import BackButton from "@dashboard/components/BackButton";
 import { Callout } from "@dashboard/components/Callout/Callout";
 import {
@@ -7,7 +8,12 @@ import {
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
-import { useWarehouseListQuery } from "@dashboard/graphql";
+import {
+  ProductVariantSkusExistDocument,
+  type ProductVariantSkusExistQuery,
+  useWarehouseListQuery,
+} from "@dashboard/graphql";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
@@ -61,6 +67,8 @@ export const ProductVariantGenerator = ({
   onSubmit,
 }: ProductVariantGeneratorProps) => {
   const intl = useIntl();
+  const notify = useNotifier();
+  const apolloClient = useApolloClient();
   const [confirmState, setConfirmState] = useState<ConfirmButtonTransitionState>("default");
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showMissingDefaultsWarning, setShowMissingDefaultsWarning] = useState(false);
@@ -206,6 +214,64 @@ export const ProductVariantGenerator = ({
         nonSelectionVariantAttributes ?? [],
       );
 
+      const generatedSkus = inputs
+        .map(input => input.sku)
+        .filter((sku): sku is string => Boolean(sku));
+
+      if (generatedSkus.length > 0) {
+        const duplicateInBatch = generatedSkus.filter(
+          (sku, index) => generatedSkus.indexOf(sku) !== index,
+        );
+
+        if (duplicateInBatch.length > 0) {
+          notify({
+            status: "error",
+            title: intl.formatMessage(messages.skuCollisionTitle),
+            text: intl.formatMessage(messages.skuDuplicateInBatch, {
+              skus: [...new Set(duplicateInBatch)].join(", "),
+            }),
+          });
+          setConfirmState("error");
+
+          return;
+        }
+
+        const collidingSkus = new Set<string>();
+        const chunkSize = 100;
+
+        for (let offset = 0; offset < generatedSkus.length; offset += chunkSize) {
+          const chunk = generatedSkus.slice(offset, offset + chunkSize);
+          const result = await apolloClient.query<ProductVariantSkusExistQuery>({
+            query: ProductVariantSkusExistDocument,
+            variables: {
+              skus: chunk,
+              first: chunk.length,
+            },
+            fetchPolicy: "network-only",
+          });
+          const existing = mapEdgesToItems(result.data?.productVariants) ?? [];
+
+          existing.forEach(variant => {
+            if (variant?.sku) {
+              collidingSkus.add(variant.sku);
+            }
+          });
+        }
+
+        if (collidingSkus.size > 0) {
+          notify({
+            status: "error",
+            title: intl.formatMessage(messages.skuCollisionTitle),
+            text: intl.formatMessage(messages.skuCollisionDescription, {
+              skus: [...collidingSkus].join(", "),
+            }),
+          });
+          setConfirmState("error");
+
+          return;
+        }
+      }
+
       const result = await onSubmit(inputs);
 
       if (result.attributeErrors.length > 0) {
@@ -236,6 +302,9 @@ export const ProductVariantGenerator = ({
     nonSelectionVariantAttributes,
     onSubmit,
     hasRequiredTab,
+    apolloClient,
+    intl,
+    notify,
   ]);
 
   const isMissingDefaults = !defaults.skuEnabled && !defaults.stockEnabled;

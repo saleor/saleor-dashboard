@@ -76,6 +76,23 @@ export const messages = defineMessages({
     defaultMessage: "SKU will not be set",
     description: "message when no SKU prefix is provided",
   },
+  skuCollisionTitle: {
+    id: "bhcIMr",
+    defaultMessage: "SKU conflict",
+    description: "notification title when generated SKUs already exist",
+  },
+  skuCollisionDescription: {
+    id: "PRfF2J",
+    defaultMessage:
+      "These SKUs already exist and cannot be generated: {skus}. Change the SKU prefix or selection and try again.",
+    description: "notification body listing colliding SKUs",
+  },
+  skuDuplicateInBatch: {
+    id: "3vWwSN",
+    defaultMessage:
+      "Your selection would create duplicate SKUs in this batch: {skus}. Adjust the prefix or selected values.",
+    description: "notification when the same SKU would be generated twice in one batch",
+  },
   generate: {
     id: "T61cLQ",
     defaultMessage: "Generate {count} {count, plural, one {variant} other {variants}}",

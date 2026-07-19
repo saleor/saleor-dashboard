@@ -154,6 +154,9 @@ interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
   onVariantsPreviousPage?: () => void;
   variantsRangeLabel?: string | null;
   onGuardUnsavedAction?: (action: () => void) => void;
+  selectedCount?: number;
+  onDeleteSelected?: () => void;
+  deleteDisabled?: boolean;
 }
 
 export const ProductVariantsHeader = ({
@@ -175,6 +178,9 @@ export const ProductVariantsHeader = ({
   onVariantsPreviousPage,
   variantsRangeLabel,
   onGuardUnsavedAction,
+  selectedCount = 0,
+  onDeleteSelected,
+  deleteDisabled = false,
 }: ProductVariantsHeaderProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -259,6 +265,16 @@ export const ProductVariantsHeader = ({
             <Box />
           )}
           <Box display="flex" alignItems="center" gap={3}>
+            {selectedCount > 0 && onDeleteSelected && (
+              <Button
+                data-test-id="bulk-delete-button"
+                variant="secondary"
+                onClick={onDeleteSelected}
+                disabled={deleteDisabled}
+              >
+                <FormattedMessage {...messages.deleteSelected} values={{ count: selectedCount }} />
+              </Button>
+            )}
             {variantsRangeLabel && (
               <Text size={2} color="default2">
                 {variantsRangeLabel}

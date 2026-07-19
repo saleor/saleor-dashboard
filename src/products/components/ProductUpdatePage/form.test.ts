@@ -60,6 +60,13 @@ describe("useProductUpdateForm", () => {
         added: [0, 1],
         removed: [],
         updates: [],
+        removedVariantIds: [],
+        stagedUpdateVariants: [],
+        stagedUpdateChanges: {
+          added: [],
+          removed: [],
+          updates: [],
+        },
       },
     });
     // Act
@@ -73,6 +80,13 @@ describe("useProductUpdateForm", () => {
         added: [],
         removed: [],
         updates: [],
+        removedVariantIds: [],
+        stagedUpdateVariants: [],
+        stagedUpdateChanges: {
+          added: [],
+          removed: [],
+          updates: [],
+        },
       },
     });
   });
@@ -119,6 +133,13 @@ describe("useProductUpdateForm", () => {
         added: [],
         removed: [],
         updates: [],
+        removedVariantIds: [],
+        stagedUpdateVariants: [],
+        stagedUpdateChanges: {
+          added: [],
+          removed: [],
+          updates: [],
+        },
       },
       rating: 4,
       seoTitle: "seo-title-1",

@@ -8,8 +8,8 @@ const messages = defineMessages({
   },
   unsavedChangesDescription: {
     defaultMessage:
-      "You have unsaved changes to variants. Please save or discard them before searching, changing page, or generating new variants.",
-    id: "6Rowmg",
+      "Save or discard your unsaved variant changes before continuing. Newly added rows must be saved before you can search or change page.",
+    id: "8cQf6w",
     description: "dialog description when navigating away from dirty variants grid",
   },
   name: {
@@ -39,6 +39,11 @@ const messages = defineMessages({
     defaultMessage: "Available",
     id: "BbP+k3",
     description: "variant availability in channel",
+  },
+  deleteSelected: {
+    id: "HO4jvE",
+    defaultMessage: "Delete ({count})",
+    description: "bulk delete selected variants, including count for cross-page selection",
   },
   empty: {
     defaultMessage: "Use button above to add new product variants",

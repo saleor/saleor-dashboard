@@ -112,6 +112,7 @@ interface ProductUpdatePageProps {
   onVariantsPreviousPage?: () => void;
   variantsRangeLabel?: string | null;
   variantsTotalCount?: number | null;
+  variantsLoading?: boolean;
   media: ProductFragment["media"];
   product?: ProductDetailsQuery["product"];
   loading?: boolean;
@@ -183,6 +184,7 @@ const ProductUpdatePage = ({
   onVariantsPreviousPage,
   variantsRangeLabel,
   variantsTotalCount,
+  variantsLoading,
   taxClasses,
   fetchMoreTaxClasses,
   referencePages = [],
@@ -576,12 +578,14 @@ const ProductUpdatePage = ({
                   onVariantsPreviousPage={onVariantsPreviousPage}
                   variantsRangeLabel={variantsRangeLabel}
                   variantsTotalCount={variantsTotalCount}
+                  variantsLoading={variantsLoading}
                   variantAttributes={product?.productType.variantAttributes}
                   selectionVariantAttributes={product?.productType.selectionVariantAttributes}
                   nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}
                   hasVariants={hasVariants ?? false}
                   onAttributeValuesSearch={onAttributeValuesSearch}
                   onChange={handlers.changeVariants}
+                  onStageVariantRemovals={handlers.stageVariantRemovals}
                   onRowClick={onVariantShow}
                   onBulkCreate={onBulkCreateVariants}
                 />

@@ -1123,6 +1123,10 @@
     "context": "attributes, section header",
     "string": "Attributes"
   },
+  "3vWwSN": {
+    "context": "notification when the same SKU would be generated twice in one batch",
+    "string": "Your selection would create duplicate SKUs in this batch: {skus}. Adjust the prefix or selected values."
+  },
   "3xv4ez": {
     "string": "Go to users/staff members"
   },
@@ -1617,7 +1621,7 @@
   },
   "6Rowmg": {
     "context": "dialog description when navigating away from dirty variants grid",
-    "string": "You have unsaved changes to variants. Please save or discard them before searching, changing page, or generating new variants."
+    "string": "Save or discard your unsaved variant changes before continuing. Newly added rows must be saved before you can search or change page."
   },
   "6SL46U": {
     "string": "by {author}"
@@ -5507,6 +5511,10 @@
     "context": "Message when entity is not in any channel",
     "string": "Not listed in any channel"
   },
+  "PRfF2J": {
+    "context": "notification body listing colliding SKUs",
+    "string": "These SKUs already exist and cannot be generated: {skus}. Change the SKU prefix or selection and try again."
+  },
   "PTW56s": {
     "context": "alert",
     "string": "Channel limit reached"
@@ -8021,6 +8029,10 @@
   "bh9+8A": {
     "context": "voucher requirement",
     "string": "Minimal order value"
+  },
+  "bhcIMr": {
+    "context": "notification title when generated SKUs already exist",
+    "string": "SKU conflict"
   },
   "biDgQS": {
     "context": "button, opens modal to create transaction in order",
@@ -10883,6 +10895,10 @@
   "pr/aHj": {
     "context": "success gift card disable message",
     "string": "Gift card disabled"
+  },
+  "vN/WFg": {
+    "context": "bulk delete selected variants, including count for cross-page selection",
+    "string": "Delete ({count})"
   },
   "ps+h1G": {
     "context": "checkbox label description",
