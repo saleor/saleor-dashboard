@@ -405,6 +405,8 @@ import type {
   GiftCardActivate,
   GiftCardAddNote,
   GiftCardAddNoteInput,
+  GiftCardAssignUser,
+  GiftCardBalanceAdjust,
   GiftCardBulkActivate,
   GiftCardBulkCreate,
   GiftCardBulkCreateInput,
@@ -420,6 +422,7 @@ import type {
   GiftCardDeleted,
   GiftCardError,
   GiftCardEvent,
+  GiftCardEventAssignment,
   GiftCardEventBalance,
   GiftCardEventFilterInput,
   GiftCardExportCompleted,
@@ -440,6 +443,7 @@ import type {
   GiftCardTagCountableConnection,
   GiftCardTagCountableEdge,
   GiftCardTagFilterInput,
+  GiftCardUnassignUser,
   GiftCardUpdate,
   GiftCardUpdateInput,
   GiftCardUpdated,
@@ -5995,6 +5999,11 @@ export const defineCalculateTaxesFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Card data used to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalCardInput = {
   __typename?: 'CardInput';
   /** Payment method nonce, a token returned by the appropriate provider's SDK. */
@@ -8100,6 +8109,14 @@ export type OptionalCheckoutLine = {
   /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
   metafields?: CheckoutLine['metafields'] | undefined;
   /**
+ * Reason explaining why a custom price was set on the line, provided by the app that set the price override.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_CHECKOUTS.
+ */
+  priceOverrideReason?: CheckoutLine['priceOverrideReason'] | undefined;
+  /**
  * The sum of the checkout line price prior to promotion.
  *
  * Added in Saleor 3.21.
@@ -8236,6 +8253,12 @@ export type OptionalCheckoutLineInput = {
   metadata?: Maybe<OptionalMetadataInput[]> | undefined;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: CheckoutLineInput['price'] | undefined;
+  /**
+ * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+ *
+ * Added in Saleor 3.23.
+ */
+  priceOverrideReason?: CheckoutLineInput['priceOverrideReason'] | undefined;
   /** The number of items purchased. */
   quantity?: CheckoutLineInput['quantity'] | undefined;
   /** ID of the product variant. */
@@ -8310,6 +8333,12 @@ export type OptionalCheckoutLineUpdateInput = {
   metadata?: Maybe<OptionalMetadataInput[]> | undefined;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: CheckoutLineUpdateInput['price'] | undefined;
+  /**
+ * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+ *
+ * Added in Saleor 3.23.
+ */
+  priceOverrideReason?: CheckoutLineUpdateInput['priceOverrideReason'] | undefined;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: CheckoutLineUpdateInput['quantity'] | undefined;
   /** ID of the product variant. */
@@ -12347,6 +12376,22 @@ export type OptionalGiftCard = {
  * Requires one of the following permissions: MANAGE_APPS, OWNER.
  */
   app?: Maybe<OptionalApp> | undefined;
+  /**
+ * The customer the gift card usage is restricted to.
+ *
+ * Requires one of the following permissions: MANAGE_USERS, OWNER.
+ *
+ * Added in Saleor 3.23.
+ */
+  assignedTo?: Maybe<OptionalUser> | undefined;
+  /**
+ * Email of the customer the gift card is restricted to.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD, OWNER.
+ *
+ * Added in Saleor 3.23.
+ */
+  assignedToEmail?: GiftCard['assignedToEmail'] | undefined;
   /** Slug of the channel where the gift card was bought. */
   boughtInChannel?: GiftCard['boughtInChannel'] | undefined;
   /**
@@ -12504,6 +12549,64 @@ export type OptionalGiftCardAddNoteInput = {
  */
 export const defineGiftCardAddNoteInputFactory: DefineTypeFactoryInterface<
   OptionalGiftCardAddNoteInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Restrict a gift card so only the given customer can use it.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+export type OptionalGiftCardAssignUser = {
+  __typename?: 'GiftCardAssignUser';
+  errors?: OptionalGiftCardError[] | undefined;
+  /** The assigned gift card. */
+  giftCard?: Maybe<OptionalGiftCard> | undefined;
+  giftCardErrors?: OptionalGiftCardError[] | undefined;
+};
+
+/**
+ * Define factory for {@link GiftCardAssignUser} model.
+ *
+ * @param options
+ * @returns factory {@link GiftCardAssignUserFactoryInterface}
+ */
+export const defineGiftCardAssignUserFactory: DefineTypeFactoryInterface<
+  OptionalGiftCardAssignUser,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Adjust a gift card's balance by a delta.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+export type OptionalGiftCardBalanceAdjust = {
+  __typename?: 'GiftCardBalanceAdjust';
+  errors?: OptionalGiftCardError[] | undefined;
+  /** The adjusted gift card. */
+  giftCard?: Maybe<OptionalGiftCard> | undefined;
+  giftCardErrors?: OptionalGiftCardError[] | undefined;
+};
+
+/**
+ * Define factory for {@link GiftCardBalanceAdjust} model.
+ *
+ * @param options
+ * @returns factory {@link GiftCardBalanceAdjustFactoryInterface}
+ */
+export const defineGiftCardBalanceAdjustFactory: DefineTypeFactoryInterface<
+  OptionalGiftCardBalanceAdjust,
   {}
 > = defineTypeFactory;
 
@@ -12709,6 +12812,12 @@ export type OptionalGiftCardCreateInput = {
   __typename?: 'GiftCardCreateInput';
   /** The gift card tags to add. */
   addTags?: GiftCardCreateInput['addTags'] | undefined;
+  /**
+ * ID of the customer the gift card is restricted to.
+ *
+ * Added in Saleor 3.23.
+ */
+  assignedTo?: GiftCardCreateInput['assignedTo'] | undefined;
   /** Balance of the gift card. */
   balance?: OptionalPriceInput | undefined;
   /** Slug of a channel from which the email should be sent. */
@@ -12889,6 +12998,12 @@ export type OptionalGiftCardEvent = {
   __typename?: 'GiftCardEvent';
   /** App that performed the action. Requires one of the following permissions: MANAGE_APPS, OWNER. */
   app?: Maybe<OptionalApp> | undefined;
+  /**
+ * The customer assignment change recorded by the event. Only set for ASSIGNED_TO_USER and UNASSIGNED_FROM_USER events.
+ *
+ * Added in Saleor 3.23.
+ */
+  assignedTo?: Maybe<OptionalGiftCardEventAssignment> | undefined;
   /** The gift card balance. */
   balance?: Maybe<OptionalGiftCardEventBalance> | undefined;
   /** Date when event happened at in ISO 8601 format. */
@@ -12925,6 +13040,37 @@ export type OptionalGiftCardEvent = {
  */
 export const defineGiftCardEventFactory: DefineTypeFactoryInterface<
   OptionalGiftCardEvent,
+  {}
+> = defineTypeFactory;
+
+export type OptionalGiftCardEventAssignment = {
+  __typename?: 'GiftCardEventAssignment';
+  /**
+ * The customer the gift card is assigned to after this event.
+ *
+ * Requires one of the following permissions: MANAGE_USERS, MANAGE_STAFF, OWNER.
+ */
+  currentAssignedTo?: Maybe<OptionalUser> | undefined;
+  /** Email of the customer the gift card is assigned to after this event. */
+  currentAssignedToEmail?: GiftCardEventAssignment['currentAssignedToEmail'] | undefined;
+  /**
+ * The customer the gift card was assigned to before this event.
+ *
+ * Requires one of the following permissions: MANAGE_USERS, MANAGE_STAFF, OWNER.
+ */
+  oldAssignedTo?: Maybe<OptionalUser> | undefined;
+  /** Email of the customer the gift card was assigned to before this event. */
+  oldAssignedToEmail?: GiftCardEventAssignment['oldAssignedToEmail'] | undefined;
+};
+
+/**
+ * Define factory for {@link GiftCardEventAssignment} model.
+ *
+ * @param options
+ * @returns factory {@link GiftCardEventAssignmentFactoryInterface}
+ */
+export const defineGiftCardEventAssignmentFactory: DefineTypeFactoryInterface<
+  OptionalGiftCardEventAssignment,
   {}
 > = defineTypeFactory;
 
@@ -12996,6 +13142,12 @@ export const defineGiftCardExportCompletedFactory: DefineTypeFactoryInterface<
 
 export type OptionalGiftCardFilterInput = {
   __typename?: 'GiftCardFilterInput';
+  /**
+ * Filter by the customer the gift card usage is restricted to.
+ *
+ * Added in Saleor 3.23.
+ */
+  assignedTo?: GiftCardFilterInput['assignedTo'] | undefined;
   code?: GiftCardFilterInput['code'] | undefined;
   createdByEmail?: GiftCardFilterInput['createdByEmail'] | undefined;
   currency?: GiftCardFilterInput['currency'] | undefined;
@@ -13006,6 +13158,7 @@ export type OptionalGiftCardFilterInput = {
   products?: GiftCardFilterInput['products'] | undefined;
   tags?: GiftCardFilterInput['tags'] | undefined;
   used?: GiftCardFilterInput['used'] | undefined;
+  /** Filter by the customer who used a gift card. */
   usedBy?: GiftCardFilterInput['usedBy'] | undefined;
 };
 
@@ -13396,6 +13549,35 @@ export type OptionalGiftCardTagFilterInput = {
  */
 export const defineGiftCardTagFilterInputFactory: DefineTypeFactoryInterface<
   OptionalGiftCardTagFilterInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Remove a customer restriction from a gift card.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+export type OptionalGiftCardUnassignUser = {
+  __typename?: 'GiftCardUnassignUser';
+  errors?: OptionalGiftCardError[] | undefined;
+  /** The unassigned gift card. */
+  giftCard?: Maybe<OptionalGiftCard> | undefined;
+  giftCardErrors?: OptionalGiftCardError[] | undefined;
+};
+
+/**
+ * Define factory for {@link GiftCardUnassignUser} model.
+ *
+ * @param options
+ * @returns factory {@link GiftCardUnassignUserFactoryInterface}
+ */
+export const defineGiftCardUnassignUserFactory: DefineTypeFactoryInterface<
+  OptionalGiftCardUnassignUser,
   {}
 > = defineTypeFactory;
 
@@ -16175,6 +16357,28 @@ export type OptionalMutation = {
  */
   giftCardAddNote?: Maybe<OptionalGiftCardAddNote> | undefined;
   /**
+ * Restrict a gift card so only the given customer can use it.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+  giftCardAssignUser?: Maybe<OptionalGiftCardAssignUser> | undefined;
+  /**
+ * Adjust a gift card's balance by a delta.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+  giftCardBalanceAdjust?: Maybe<OptionalGiftCardBalanceAdjust> | undefined;
+  /**
  * Activate gift cards.
  *
  * Requires one of the following permissions: MANAGE_GIFT_CARD.
@@ -16254,6 +16458,17 @@ export type OptionalMutation = {
  * Requires one of the following permissions: MANAGE_GIFT_CARD.
  */
   giftCardSettingsUpdate?: Maybe<OptionalGiftCardSettingsUpdate> | undefined;
+  /**
+ * Remove a customer restriction from a gift card.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+  giftCardUnassignUser?: Maybe<OptionalGiftCardUnassignUser> | undefined;
   /**
  * Update a gift card.
  *
@@ -19175,6 +19390,7 @@ export type OptionalOrderFilterInput = {
   isPreorder?: OrderFilterInput['isPreorder'] | undefined;
   metadata?: Maybe<OptionalMetadataFilter[]> | undefined;
   numbers?: OrderFilterInput['numbers'] | undefined;
+  /** Filter orders by payment charge status. */
   paymentStatus?: OrderFilterInput['paymentStatus'] | undefined;
   search?: OrderFilterInput['search'] | undefined;
   status?: OrderFilterInput['status'] | undefined;
@@ -19794,6 +20010,14 @@ export type OptionalOrderLine = {
   metafield?: OrderLine['metafield'] | undefined;
   /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
   metafields?: OrderLine['metafields'] | undefined;
+  /**
+ * Reason explaining why a custom price was set on the line, copied from the checkout line when the order was created from a checkout.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_ORDERS.
+ */
+  priceOverrideReason?: OrderLine['priceOverrideReason'] | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata?: OptionalMetadataItem[] | undefined;
   /**
@@ -22112,7 +22336,11 @@ export const definePasswordChangeFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Represents a payment of a given type. */
+/**
+ * Represents a payment of a given type.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPayment = {
   __typename?: 'Payment';
   /**
@@ -22206,7 +22434,11 @@ export const definePaymentFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Authorize payment. */
+/**
+ * Authorize payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentAuthorize = {
   __typename?: 'PaymentAuthorize';
   /** Time of the event. */
@@ -22256,7 +22488,11 @@ export const definePaymentCaptureFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Capture payment. */
+/**
+ * Capture payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentCaptureEvent = {
   __typename?: 'PaymentCaptureEvent';
   /** Time of the event. */
@@ -22302,6 +22538,11 @@ export const definePaymentCheckBalanceFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Fields required to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentCheckBalanceInput = {
   __typename?: 'PaymentCheckBalanceInput';
   /** Information about card. */
@@ -22325,7 +22566,11 @@ export const definePaymentCheckBalanceInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Confirm payment. */
+/**
+ * Confirm payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentConfirmEvent = {
   __typename?: 'PaymentConfirmEvent';
   /** Time of the event. */
@@ -22413,6 +22658,11 @@ export const definePaymentErrorFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Filtering options for payments.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentFilterInput = {
   __typename?: 'PaymentFilterInput';
   checkouts?: PaymentFilterInput['checkouts'] | undefined;
@@ -22684,7 +22934,11 @@ export const definePaymentInitializeFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Server-side data generated by a payment gateway. Optional step when the payment provider requires an additional action to initialize payment session. */
+/**
+ * Server-side data generated by a payment gateway. Optional step when the payment provider requires an additional action to initialize payment session.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentInitialized = {
   __typename?: 'PaymentInitialized';
   /** Initialized data by gateway. */
@@ -22706,6 +22960,11 @@ export const definePaymentInitializedFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Fields required to create a payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentInput = {
   __typename?: 'PaymentInput';
   /** Total amount of the transaction, including all taxes and discounts. If no amount is provided, the checkout total will be used. */
@@ -22737,7 +22996,11 @@ export const definePaymentInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** List payment gateways. */
+/**
+ * List payment gateways.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentListGateways = {
   __typename?: 'PaymentListGateways';
   /** The checkout the event relates to. */
@@ -23042,7 +23305,11 @@ export const definePaymentMethodTypeEnumFilterInputFactory: DefineTypeFactoryInt
   {}
 > = defineTypeFactory;
 
-/** Process payment. */
+/**
+ * Process payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentProcessEvent = {
   __typename?: 'PaymentProcessEvent';
   /** Time of the event. */
@@ -23092,7 +23359,11 @@ export const definePaymentRefundFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Refund payment. */
+/**
+ * Refund payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentRefundEvent = {
   __typename?: 'PaymentRefundEvent';
   /** Time of the event. */
@@ -23189,7 +23460,11 @@ export const definePaymentSettingsInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Represents a payment source stored for user in payment gateway, such as credit card. */
+/**
+ * Represents a payment source stored for user in payment gateway, such as credit card.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentSource = {
   __typename?: 'PaymentSource';
   /** Stored credit card details if available. */
@@ -23241,7 +23516,11 @@ export const definePaymentVoidFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Void payment. */
+/**
+ * Void payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalPaymentVoidEvent = {
   __typename?: 'PaymentVoidEvent';
   /** Time of the event. */
@@ -34111,7 +34390,11 @@ export const defineTimePeriodInputTypeFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** An object representing a single payment. */
+/**
+ * An object representing a single payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type OptionalTransaction = {
   __typename?: 'Transaction';
   /** Total amount of the transaction. */
