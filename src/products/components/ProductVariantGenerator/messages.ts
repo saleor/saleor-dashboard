@@ -104,6 +104,12 @@ export const messages = defineMessages({
     defaultMessage: "Loading existing variants…",
     description: "shown while fetching all variants for duplicate detection",
   },
+  existingVariantsLoadFailed: {
+    id: "/QIOpX",
+    defaultMessage:
+      "Could not load existing variants. Close the dialog and try again before generating.",
+    description: "error when fetching all variants for duplicate detection fails",
+  },
   generate: {
     id: "T61cLQ",
     defaultMessage: "Generate {count} {count, plural, one {variant} other {variants}}",

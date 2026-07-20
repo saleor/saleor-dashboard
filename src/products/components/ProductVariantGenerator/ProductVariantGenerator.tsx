@@ -78,6 +78,7 @@ export const ProductVariantGenerator = ({
   const [activeTab, setActiveTab] = useState(TAB_SELECTION);
   const [existingVariants, setExistingVariants] = useState<ExistingVariantData>([]);
   const [existingVariantsLoading, setExistingVariantsLoading] = useState(false);
+  const [existingVariantsLoadFailed, setExistingVariantsLoadFailed] = useState(false);
 
   // State for non-selection required attribute values
   const [nonSelectionValues, setNonSelectionValues] = useState<NonSelectionAttributeValues>({});
@@ -175,11 +176,14 @@ export const ProductVariantGenerator = ({
       setAttributeErrors([]);
       setActiveTab(TAB_SELECTION);
       setViewMode(variantAttributes.length === 2 ? "grid" : "list");
+      setExistingVariants([]);
+      setExistingVariantsLoadFailed(false);
     },
     [open, reset, variantAttributes.length],
   );
 
-  // Load every existing variant (all pages) so off-page combos are marked Exists and skipped
+  // Load every existing variant (all pages) so off-page combos are marked Exists and skipped.
+  // Fail closed on errors — an empty list must not be treated as "nothing exists".
   const selectionAttributeIdsKey = variantAttributes.map(attr => attr.id).join("\0");
 
   useEffect(
@@ -193,17 +197,20 @@ export const ProductVariantGenerator = ({
         selectionAttributeIdsKey ? selectionAttributeIdsKey.split("\0") : [],
       );
 
-      setExistingVariants([]);
+      // Keep prior data while reloading to avoid flashing every cell as "New".
+      setExistingVariantsLoadFailed(false);
       setExistingVariantsLoading(true);
       fetchAllExistingVariantsForGenerator(apolloClient, productId, selectionAttributeIds)
         .then(variants => {
           if (!cancelled) {
             setExistingVariants(variants);
+            setExistingVariantsLoadFailed(false);
           }
         })
         .catch(() => {
           if (!cancelled) {
             setExistingVariants([]);
+            setExistingVariantsLoadFailed(true);
           }
         })
         .finally(() => {
@@ -383,7 +390,11 @@ export const ProductVariantGenerator = ({
   }, [needsConfirmation, executeGenerate]);
 
   // Combined generation readiness check
-  const canGenerateVariants = canGenerate && hasAllRequiredAttributes && !existingVariantsLoading;
+  const canGenerateVariants =
+    canGenerate &&
+    hasAllRequiredAttributes &&
+    !existingVariantsLoading &&
+    !existingVariantsLoadFailed;
 
   const handleGenerate = useCallback(() => {
     if (!canGenerateVariants || isOverLimit) return;
@@ -425,6 +436,10 @@ export const ProductVariantGenerator = ({
       return intl.formatMessage(messages.loadingExistingVariants);
     }
 
+    if (existingVariantsLoadFailed) {
+      return intl.formatMessage(messages.existingVariantsLoadFailed);
+    }
+
     if (isOverLimit) {
       return intl.formatMessage(messages.disabledOverLimit, { limit: VARIANT_LIMIT });
     }
@@ -448,6 +463,7 @@ export const ProductVariantGenerator = ({
     hasUnsupportedRequiredAttributes,
     unsupportedRequiredAttributes,
     existingVariantsLoading,
+    existingVariantsLoadFailed,
     hasSelectionPerAttribute,
     newVariantsCount,
     hasAllRequiredAttributes,
@@ -574,7 +590,11 @@ export const ProductVariantGenerator = ({
                   </Box>
 
                   {/* Warnings */}
-                  {(existingVariantsLoading || existingCount > 0 || isTruncated || isOverLimit) && (
+                  {(existingVariantsLoading ||
+                    existingVariantsLoadFailed ||
+                    existingCount > 0 ||
+                    isTruncated ||
+                    isOverLimit) && (
                     <Box className={styles.callouts}>
                       {existingVariantsLoading && (
                         <Callout
@@ -582,6 +602,16 @@ export const ProductVariantGenerator = ({
                           title={
                             <Text size={2}>
                               {intl.formatMessage(messages.loadingExistingVariants)}
+                            </Text>
+                          }
+                        />
+                      )}
+                      {existingVariantsLoadFailed && (
+                        <Callout
+                          type="error"
+                          title={
+                            <Text size={2}>
+                              {intl.formatMessage(messages.existingVariantsLoadFailed)}
                             </Text>
                           }
                         />

@@ -3496,6 +3496,10 @@
   "FpIcp9": {
     "string": "No customers found"
   },
+  "Fpx9fQ": {
+    "context": "error when fetching all variants for duplicate detection fails",
+    "string": "Could not load existing variants. Close the dialog and try again before generating."
+  },
   "Ftz7VI": {
     "context": "input label, transaction amount",
     "string": "Transaction amount"
