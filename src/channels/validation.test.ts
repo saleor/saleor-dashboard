@@ -25,6 +25,8 @@ describe("validateChannelFormData", () => {
     markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
     deleteExpiredOrdersAfter: 30,
     allowUnpaidOrders: false,
+    automaticallyConfirmAllNewOrders: true,
+    automaticallyFulfillNonShippableGiftCard: true,
     defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.AUTHORIZATION,
     automaticallyCompleteCheckouts: false,
     automaticCompletionDelay: null,

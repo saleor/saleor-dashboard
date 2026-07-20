@@ -41,6 +41,8 @@ interface UseFormOpts<T> {
   checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<T>;
   disabled?: boolean;
   mergeData?: boolean;
+  /** Override default deep merge when `mergeData` is true. */
+  mergeFunc?: (prevData: T, prevState: T, data: T) => T;
 }
 
 /** @deprecated Use react-hook-form instead */
@@ -101,12 +103,13 @@ function useForm<T extends FormData, TErrors>(
     checkIfSaveIsDisabled,
     disabled,
     mergeData = true,
+    mergeFunc,
   } = opts;
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isSubmittingRef = useRef(false);
   const [data, setData] = useStateFromProps(initialData, {
-    mergeFunc: mergeData ? merge : undefined,
+    mergeFunc: mergeData ? (mergeFunc ?? merge) : undefined,
   });
 
   const { add: addChanged, clean: cleanChanged, data: changed } = useChangedData<T>(data);

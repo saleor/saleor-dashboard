@@ -583,17 +583,13 @@ export const fragmentFulfillmentMetadata = gql`
   }
 `;
 
-export const fragmentOrderSettings = gql`
-  fragment OrderSettings on OrderSettings {
-    automaticallyConfirmAllNewOrders
-    automaticallyFulfillNonShippableGiftCard
-  }
-`;
-
 export const fragmentShopOrderSettings = gql`
   fragment ShopOrderSettings on Shop {
     fulfillmentAutoApprove
     fulfillmentAllowUnpaid
+    reserveStockDurationAnonymousUser
+    reserveStockDurationAuthenticatedUser
+    limitQuantityPerCheckout
   }
 `;
 

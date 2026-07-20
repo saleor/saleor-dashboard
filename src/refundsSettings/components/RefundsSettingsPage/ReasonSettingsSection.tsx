@@ -1,11 +1,15 @@
-import Link from "@dashboard/components/Link";
-import PageSectionHeader from "@dashboard/components/PageSectionHeader";
-import { useModelsOfTypeQuery } from "@dashboard/graphql";
-import { pageCreateUrl } from "@dashboard/modeling/urls";
-import { pageTypeAddUrl, pageTypeUrl } from "@dashboard/modelTypes/urls";
+import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
+import { SettingsFieldStack } from "@dashboard/components/Settings/SettingsFieldStack";
+import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
+import { pageTypeAddUrl } from "@dashboard/modelTypes/urls";
 import { Box, Combobox, Skeleton, Text } from "@saleor/macaw-ui-next";
 
+import { ReasonModelsPreview } from "./ReasonModelsPreview";
+import { type ModelTypeOption } from "./types";
+
 interface ReasonSettingsSectionProps {
+  "data-test-id": string;
+  id?: string;
   title: string;
   description: string;
   selectLabel: string;
@@ -14,13 +18,16 @@ interface ReasonSettingsSectionProps {
   emptyModelsLabel: string;
   createModelTypeLabel: string;
   createModelLabel: string;
-  modelTypesOptions: Array<{ value: string; label: string }>;
+  modelTypesOptions: ModelTypeOption[];
   value: string;
   onChange: (value: string) => void;
   loading: boolean;
+  disabled?: boolean;
 }
 
 export const ReasonSettingsSection = ({
+  "data-test-id": dataTestId,
+  id,
   title,
   description,
   selectLabel,
@@ -33,65 +40,49 @@ export const ReasonSettingsSection = ({
   value,
   onChange,
   loading,
-}: ReasonSettingsSectionProps) => {
-  const { data: exampleModelData } = useModelsOfTypeQuery({
-    variables: {
-      pageTypeId: value,
-    },
-    skip: !value,
-  });
-
+  disabled = false,
+}: ReasonSettingsSectionProps): JSX.Element => {
   const selectedTypeLabel = modelTypesOptions.find(option => option.value === value)?.label;
-  const exampleModels = exampleModelData?.pages?.edges.map(edge => edge.node) ?? [];
 
   return (
-    <Box display="grid" __gridTemplateColumns="1fr 2fr 1fr" gap={6} paddingX={6}>
-      <PageSectionHeader title={title} description={description} />
-      <Box marginTop={6} __maxWidth="700px">
+    <SettingsSection
+      id={id}
+      data-test-id={dataTestId}
+      ownership="shop"
+      title={title}
+      description={description}
+    >
+      <SettingsFieldStack>
         {loading ? (
-          <Skeleton />
+          <Skeleton __height="2.5rem" />
         ) : (
-          <>
-            <Text fontWeight="medium" display="block" marginBottom={2}>
+          <Box>
+            <Text size={2} fontWeight="medium" display="block" marginBottom={2}>
               {selectLabel}
             </Text>
             <Combobox
               options={modelTypesOptions}
               value={value}
+              disabled={disabled}
               onChange={changed => onChange(changed as string)}
+              data-test-id={`${dataTestId}-model-type-select`}
             />
-            <Box marginTop={2}>
-              <Text color="default2">{selectHelper} </Text>
-              <Link target="_blank" href={pageTypeAddUrl}>
-                <Text color="inherit">{createModelTypeLabel}</Text>
-              </Link>
-            </Box>
-          </>
-        )}
-      </Box>
-      {!!value && (
-        <Box marginTop={6}>
-          <Text fontWeight="medium" display="block" marginBottom={2}>
-            {previewTitle} <Link href={pageTypeUrl(value)}>{selectedTypeLabel}</Link>
-          </Text>
-          {exampleModels.length > 0 ? (
-            <Box marginTop={4}>
-              <Box marginTop={6} display="flex" flexDirection="column">
-                {exampleModels.map(model => (
-                  <Text disabled key={model.id}>
-                    - {model.title}
-                  </Text>
-                ))}
-              </Box>
-            </Box>
-          ) : (
-            <Text>
-              {emptyModelsLabel}{" "}
-              <Link href={pageCreateUrl({ "page-type-id": value })}>{createModelLabel}</Link>
+            <Text size={2} color="default2" display="block" marginTop={2}>
+              {selectHelper}{" "}
+              <MicrocopyLink to={pageTypeAddUrl}>{createModelTypeLabel}</MicrocopyLink>
             </Text>
-          )}
-        </Box>
-      )}
-    </Box>
+          </Box>
+        )}
+      </SettingsFieldStack>
+      {value && selectedTypeLabel ? (
+        <ReasonModelsPreview
+          pageTypeId={value}
+          pageTypeLabel={selectedTypeLabel}
+          previewTitle={previewTitle}
+          emptyModelsLabel={emptyModelsLabel}
+          createModelLabel={createModelLabel}
+        />
+      ) : null}
+    </SettingsSection>
   );
 };

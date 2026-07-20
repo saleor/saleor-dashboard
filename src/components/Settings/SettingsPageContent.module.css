@@ -1,0 +1,37 @@
+.root {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mu-spacing-6);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .root {
+    /* Site Settings / Refunds: narrow rail + wide forms */
+    grid-template-columns: minmax(14rem, 1fr) minmax(0, 3fr);
+    gap: var(--mu-spacing-8);
+  }
+}
+
+.aside {
+  min-width: 0;
+}
+
+@media (min-width: 960px) {
+  .aside {
+    position: sticky;
+    top: var(--mu-spacing-6);
+  }
+}
+
+.description {
+  line-height: 1.5;
+  /* Fill the left rail — don't cap narrower than the column */
+  max-width: none;
+}
+
+.main {
+  min-width: 0;
+  width: 100%;
+}

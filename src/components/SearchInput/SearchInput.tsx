@@ -1,6 +1,6 @@
 import { Box } from "@saleor/macaw-ui-next";
 import { Search, X } from "lucide-react";
-import { useRef } from "react";
+import { type KeyboardEvent, useRef } from "react";
 
 import styles from "./SearchInput.module.css";
 
@@ -8,6 +8,9 @@ interface SearchInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  "aria-controls"?: string;
+  "aria-activedescendant"?: string;
   "data-test-id"?: string;
 }
 
@@ -15,9 +18,14 @@ export const SearchInput = ({
   value,
   onChange,
   placeholder,
+  onKeyDown,
+  "aria-controls": ariaControls,
+  "aria-activedescendant": ariaActiveDescendant,
   "data-test-id": dataTestId = "search-input",
 }: SearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const hasQuery = value.trim().length > 0;
+  const isCombobox = Boolean(ariaControls);
 
   return (
     <Box
@@ -41,6 +49,12 @@ export const SearchInput = ({
         value={value}
         onChange={e => onChange(e.target.value)}
         onKeyDown={e => {
+          onKeyDown?.(e);
+
+          if (e.defaultPrevented) {
+            return;
+          }
+
           if (e.key === "Escape") {
             onChange("");
             inputRef.current?.blur();
@@ -49,6 +63,11 @@ export const SearchInput = ({
         placeholder={placeholder}
         data-test-id={dataTestId}
         className={styles.input}
+        role={isCombobox ? "combobox" : undefined}
+        aria-autocomplete={isCombobox ? "list" : undefined}
+        aria-expanded={isCombobox ? hasQuery : undefined}
+        aria-controls={ariaControls}
+        aria-activedescendant={isCombobox ? ariaActiveDescendant : undefined}
       />
       {value && (
         <Box

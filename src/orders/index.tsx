@@ -28,7 +28,6 @@ import {
   orderReturnPath,
   type OrderReturnUrlQueryParams,
   orderSendRefundPath,
-  orderSettingsPath,
   orderTransactionRefundEditPath,
   orderTransactionRefundPath,
   type OrderTransactionRefundUrlQueryParams,
@@ -44,7 +43,6 @@ import OrderManualTransactionRefundComponent from "./views/OrderManualTransactio
 import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
 import OrderSendRefundComponent from "./views/OrderSendRefund";
-import OrderSettings from "./views/OrderSettings";
 import OrderTransactionRefundCreateComponent from "./views/OrderTransactionRefundCreate";
 import OrderTransactionRefundEditComponent from "./views/OrderTransactionRefundEdit";
 
@@ -149,7 +147,6 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.orders)} />
       <Switch>
-        <Route exact path={orderSettingsPath} component={OrderSettings} />
         <Route exact path={orderDraftListPath} component={OrderDraftList} />
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
