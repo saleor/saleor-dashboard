@@ -80,7 +80,6 @@ const orderDiscount = (
   value: 0,
   reason: null as string | null,
   calculationMode: DiscountValueTypeEnum.FIXED,
-  amount: { __typename: "Money" as const, amount: 0, currency: "USD" },
   total: { __typename: "Money" as const, amount: 0, currency: "USD" },
 });
 

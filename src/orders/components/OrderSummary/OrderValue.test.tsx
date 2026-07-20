@@ -158,13 +158,12 @@ describe("OrderValue", () => {
             __typename: "OrderDiscount" as const,
             id: "discount-1",
             name: "Summer Sale",
-            amount: { __typename: "Money" as const, amount: 15, currency: "USD" },
             type: OrderDiscountType.MANUAL,
             calculationMode: DiscountValueTypeEnum.FIXED,
             value: 15,
             reason: null,
             translatedName: null,
-            total: { __typename: "Money" as const, amount: 0, currency: "USD" },
+            total: { __typename: "Money" as const, amount: 15, currency: "USD" },
           },
         ],
       };
@@ -406,7 +405,7 @@ describe("OrderValue", () => {
       const orderDiscount: OrderDiscountData = {
         value: 10,
         calculationMode: DiscountValueTypeEnum.PERCENTAGE,
-        amount: { __typename: "Money", amount: 11, currency: "USD" },
+        total: { __typename: "Money", amount: 11, currency: "USD" },
         reason: "Loyalty discount",
       };
       const props = createEditableProps({
@@ -436,7 +435,7 @@ describe("OrderValue", () => {
       const orderDiscount: OrderDiscountData = {
         value: 15,
         calculationMode: DiscountValueTypeEnum.FIXED,
-        amount: { __typename: "Money", amount: 15, currency: "USD" },
+        total: { __typename: "Money", amount: 15, currency: "USD" },
         reason: "Special offer",
       };
       const props = createEditableProps({
@@ -467,7 +466,7 @@ describe("OrderValue", () => {
       const orderDiscount: OrderDiscountData = {
         value: 10,
         calculationMode: DiscountValueTypeEnum.PERCENTAGE,
-        amount: { __typename: "Money", amount: 11, currency: "USD" },
+        total: { __typename: "Money", amount: 11, currency: "USD" },
         reason: "Loyalty discount",
       };
       const props = createEditableProps({
@@ -497,7 +496,7 @@ describe("OrderValue", () => {
       const orderDiscount: OrderDiscountData = {
         value: 20,
         calculationMode: DiscountValueTypeEnum.FIXED,
-        amount: { __typename: "Money", amount: 20, currency: "USD" },
+        total: { __typename: "Money", amount: 20, currency: "USD" },
         reason: "",
       };
       const props = createEditableProps({
@@ -509,13 +508,12 @@ describe("OrderValue", () => {
             __typename: "OrderDiscount" as const,
             id: "od-1",
             name: null,
-            amount: { __typename: "Money" as const, amount: 20, currency: "USD" },
             type: OrderDiscountType.MANUAL,
             calculationMode: DiscountValueTypeEnum.FIXED,
             value: 20,
             reason: null,
             translatedName: null,
-            total: { __typename: "Money" as const, amount: 0, currency: "USD" },
+            total: { __typename: "Money" as const, amount: 20, currency: "USD" },
           },
         ],
         lineDiscountsSummary: [{ type: OrderDiscountType.PROMOTION, lineCount: 1, totalAmount: 5 }],
@@ -540,7 +538,7 @@ describe("OrderValue", () => {
       const orderDiscount: OrderDiscountData = {
         value: 10,
         calculationMode: DiscountValueTypeEnum.PERCENTAGE,
-        amount: { __typename: "Money", amount: 11, currency: "USD" },
+        total: { __typename: "Money", amount: 11, currency: "USD" },
         reason: "",
       };
       const props = createEditableProps({

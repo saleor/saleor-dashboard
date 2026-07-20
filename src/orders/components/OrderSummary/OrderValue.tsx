@@ -211,7 +211,7 @@ const getOrderDiscountLabel = (
     return { value: "---" };
   }
 
-  const { value: discountValue, calculationMode, amount: discountAmount } = orderDiscount;
+  const { value: discountValue, calculationMode, total: discountAmount } = orderDiscount;
 
   if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
     return {
@@ -444,7 +444,7 @@ export const OrderValue = (props: Props): ReactNode => {
                       {discount.name}
                     </Text>
                   ),
-                amount: discount.amount.amount,
+                amount: discount.total.amount,
                 amountTitle: discountAmountTitle,
               }),
             )}
@@ -512,7 +512,7 @@ export const OrderValue = (props: Props): ReactNode => {
                       {discount.name}
                     </Text>
                   ),
-                amount: discount.amount.amount,
+                amount: discount.total.amount,
                 amountTitle: discountAmountTitle,
               }),
             )}
@@ -592,7 +592,7 @@ export const OrderValue = (props: Props): ReactNode => {
       );
     }
 
-    const orderDiscountTotal = discounts.reduce((sum, d) => sum + d.amount.amount, 0);
+    const orderDiscountTotal = discounts.reduce((sum, d) => sum + d.total.amount, 0);
     const lineDiscountTotal = lineDiscountsSummary.reduce((sum, e) => sum + e.totalAmount, 0);
     const totalDiscountAmount = Math.round((orderDiscountTotal + lineDiscountTotal) * 100) / 100;
     const ToggleIcon = discountsExpanded ? ChevronUp : ChevronDown;

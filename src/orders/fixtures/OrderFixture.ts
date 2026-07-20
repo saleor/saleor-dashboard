@@ -122,11 +122,6 @@ export class OrderFixture {
       amount: 0,
       currency: "USD",
     },
-    totalCaptured: {
-      __typename: "Money",
-      amount: 110,
-      currency: "USD",
-    },
     totalCharged: {
       __typename: "Money",
       amount: 110,
@@ -607,11 +602,6 @@ export class OrderFixture {
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
       lines: OrderFixture.lines,
-      totalCaptured: {
-        __typename: "Money",
-        amount: 0,
-        currency: "USD",
-      },
       totalCharged: {
         __typename: "Money",
         amount: 0,

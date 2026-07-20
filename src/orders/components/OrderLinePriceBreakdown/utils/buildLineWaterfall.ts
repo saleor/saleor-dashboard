@@ -169,7 +169,7 @@ export function buildLineWaterfall(
     const orderRecords = (order.discounts ?? []).filter(od => {
       if (od.type === OrderDiscountType.VOUCHER && isShippingVoucher(order)) return false;
 
-      const t = od.total ?? od.amount;
+      const t = od.total;
 
       return Boolean(t && Math.abs(t.amount) > 0);
     });

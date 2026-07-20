@@ -156,7 +156,7 @@ export const OrderSummary = (props: Props) => {
           hasNoPayment={hasNoPayment}
           orderAmounts={{
             totalAuthorized: order.totalAuthorized,
-            totalCaptured: order.totalCaptured,
+            totalCharged: order.totalCharged,
             totalBalance: order.totalBalance,
           }}
           order={order}

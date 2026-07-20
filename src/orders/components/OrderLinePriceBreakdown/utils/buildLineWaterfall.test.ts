@@ -825,7 +825,6 @@ describe("buildLineWaterfall", () => {
             calculationMode: DiscountValueTypeEnum.FIXED,
             value: 100,
             reason: null,
-            amount: money(100, "JPY"),
             total: money(100, "JPY"),
           },
         ],

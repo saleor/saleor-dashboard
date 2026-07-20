@@ -30,9 +30,9 @@ import {
 import { orderDiscountTypeLabelMessages } from "../messages";
 import { type OrderRefundSharedType } from "../types";
 
-export type OrderWithTotalAndTotalCaptured = Pick<
+export type OrderWithTotalAndTotalCharged = Pick<
   NonNullable<OrderRefundDataQuery["order"]>,
-  "total" | "totalCaptured"
+  "total" | "totalCharged"
 >;
 
 export interface OrderLineWithStockWarehouses {
@@ -42,11 +42,7 @@ export interface OrderLineWithStockWarehouses {
 }
 
 export function getOrderCharged(order: OrderDetailsFragment) {
-  if (order?.totalCharged) {
-    return order.totalCharged;
-  }
-
-  return order?.totalCaptured;
+  return order?.totalCharged;
 }
 
 export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
@@ -535,7 +531,7 @@ export const getOrderLineDisplayName = (line: {
 export const prepareMoney = (
   amount: number,
   currency: string,
-): NonNullable<OrderDetailsQuery["order"]>["totalCaptured"] => ({
+): NonNullable<OrderDetailsQuery["order"]>["totalCharged"] => ({
   __typename: "Money",
   amount,
   currency: currency ?? "USD",

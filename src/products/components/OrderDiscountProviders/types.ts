@@ -8,7 +8,7 @@ import { type OrderDiscountCommonInput } from "@dashboard/orders/components/Orde
 import { type OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProvider";
 
 export interface OrderDiscountData extends OrderDiscountCommonInput {
-  amount: MoneyFragment;
+  total: MoneyFragment;
 }
 
 export type GetOrderLineDiscountContextConsumerProps = (

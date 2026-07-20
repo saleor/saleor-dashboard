@@ -386,9 +386,6 @@ export const orderDiscount = gql`
     calculationMode: valueType
     value
     reason
-    amount {
-      ...Money
-    }
     total {
       ...Money
     }
@@ -494,10 +491,6 @@ export const fragmentOrderDetails = gql`
       ...Money
     }
     totalAuthorized {
-      ...Money
-    }
-    # TODO: Remove me
-    totalCaptured {
       ...Money
     }
     totalCharged {

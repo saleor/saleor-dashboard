@@ -2267,7 +2267,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
   },
   totalAuthorized: prepareMoney(234.93),
-  totalCaptured: prepareMoney(0),
   totalBalance: {
     __typename: "Money",
     amount: 0,
@@ -2707,7 +2706,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
     },
   },
   totalAuthorized: prepareMoney(234.93),
-  totalCaptured: prepareMoney(0),
   totalBalance: {
     __typename: "Money" as const,
     amount: 168.3,

@@ -58,7 +58,6 @@ describe("OrderModel", () => {
       totalBalance: prepareMoney(15),
       totalCanceled: prepareMoney(0),
       totalCancelPending: prepareMoney(0),
-      totalCaptured: prepareMoney(0),
       totalCharged: prepareMoney(0),
       totalChargePending: prepareMoney(0),
       totalRefunded: prepareMoney(0),
