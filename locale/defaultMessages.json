@@ -13155,5 +13155,9 @@
   "cP9nYd": {
     "context": "loading state for sibling variants load more",
     "string": "Loading…"
+  },
+  "JUK2So": {
+    "context": "loading state while fetching more sibling variants on scroll",
+    "string": "Loading…"
   }
 }

@@ -16,8 +16,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { renderCollection } from "../../../misc";
 import { ProductVariantEmptyItem } from "./components/ProductVariantEmptyItem";
 import { VariantItem } from "./components/ProductVariantItem";
+import { useLoadMoreOnScroll } from "./hooks/useLoadMoreOnScroll";
 import { useVariantDrag, type VariantReorderMove } from "./hooks/useVariantDrag";
 import { messages } from "./messages";
+import styles from "./ProductVariantNavigation.module.css";
 
 interface ProductVariantNavigationProps {
   current?: string;
@@ -71,6 +73,13 @@ export const ProductVariantNavigation = ({
   const { items, sensors, isSaving, handleDragEnd } = useVariantDrag({
     variants,
     onReorder: handleReorder,
+  });
+
+  const { scrollContainerRef, handleScroll } = useLoadMoreOnScroll({
+    hasNextPage,
+    loadingMore,
+    onLoadMore: loadMore,
+    loadedCount,
   });
 
   const hasVariants = variants.length > 0;
@@ -143,7 +152,12 @@ export const ProductVariantNavigation = ({
         )}
       </Box>
 
-      <Box __maxHeight="calc(100vh - 280px)" overflowY="auto" paddingBottom={4}>
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        data-test-id="variant-siblings-scroll"
+        className={styles.scrollContainer}
+      >
         {loading ? (
           <Box data-test-id="variants-list">
             <Divider />
@@ -204,22 +218,16 @@ export const ProductVariantNavigation = ({
               </ProductVariantEmptyItem>
             )}
 
-            {hasNextPage && (
-              <Box paddingX={6} paddingTop={2}>
-                <Button
-                  variant="secondary"
-                  width="100%"
-                  onClick={loadMore}
-                  disabled={loadingMore}
-                  data-test-id="variant-siblings-load-more"
-                >
-                  <FormattedMessage {...(loadingMore ? messages.loadingMore : messages.loadMore)} />
-                </Button>
+            {loadingMore && (
+              <Box paddingX={6} paddingY={3} display="flex" justifyContent="center">
+                <Text size={2} color="default2">
+                  <FormattedMessage {...messages.loadingMore} />
+                </Text>
               </Box>
             )}
           </>
         )}
-      </Box>
+      </div>
     </DashboardCard>
   );
 };

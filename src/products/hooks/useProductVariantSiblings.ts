@@ -5,7 +5,7 @@ import {
 } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 export type ProductVariantSibling = ProductVariantSiblingFragment;
 
@@ -45,6 +45,7 @@ export const useProductVariantSiblings = ({
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [prevProductId, setPrevProductId] = useState(productId);
   const [loadingMore, setLoadingMore] = useState(false);
+  const loadMoreInFlightRef = useRef(false);
 
   if (productId !== prevProductId) {
     setPrevProductId(productId);
@@ -105,14 +106,18 @@ export const useProductVariantSiblings = ({
   const canReorder = !searchInput.trim() && !isCurrentPinned;
 
   const loadMore = useCallback(() => {
-    if (!endCursor || loadingMore || !hasNextPage) {
+    if (!endCursor || loadMoreInFlightRef.current || !hasNextPage) {
       return;
     }
 
+    loadMoreInFlightRef.current = true;
     setLoadingMore(true);
     fetchMore({
       variables: {
+        id: productId,
+        first: pageSize,
         after: endCursor,
+        search: debouncedSearch || undefined,
       },
       updateQuery: (previous, { fetchMoreResult }) => {
         const previousConnection = previous.product?.productVariants;
@@ -134,9 +139,10 @@ export const useProductVariantSiblings = ({
         };
       },
     }).finally(() => {
+      loadMoreInFlightRef.current = false;
       setLoadingMore(false);
     });
-  }, [endCursor, fetchMore, hasNextPage, loadingMore]);
+  }, [debouncedSearch, endCursor, fetchMore, hasNextPage, pageSize, productId]);
 
   return {
     variants,
