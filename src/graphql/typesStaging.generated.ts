@@ -967,6 +967,11 @@ export type BulkAttributeValueInput = {
   values?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
+/**
+ * Card data used to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type CardInput = {
   /** Payment method nonce, a token returned by the appropriate provider's SDK. */
   code: Scalars['String']['input'];
@@ -1419,7 +1424,10 @@ export enum CheckoutSortField {
   CREATION_DATE = 'CREATION_DATE',
   /** Sort checkouts by customer. */
   CUSTOMER = 'CUSTOMER',
-  /** Sort checkouts by payment. */
+  /**
+   * Sort checkouts by payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT = 'PAYMENT',
   /** Sort checkouts by rank. Note: This option is available only with the `search` filter. */
   RANK = 'RANK'
@@ -2815,6 +2823,12 @@ export type GiftCardBulkCreateInput = {
 export type GiftCardCreateInput = {
   /** The gift card tags to add. */
   addTags?: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * ID of the customer the gift card is restricted to.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo?: InputMaybe<Scalars['ID']['input']>;
   /** Balance of the gift card. */
   balance: PriceInput;
   /** Slug of a channel from which the email should be sent. */
@@ -2858,6 +2872,7 @@ export type GiftCardCreateInput = {
 
 export enum GiftCardErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
+  CANNOT_ASSIGN = 'CANNOT_ASSIGN',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   EXPIRED_GIFT_CARD = 'EXPIRED_GIFT_CARD',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -2874,6 +2889,8 @@ export type GiftCardEventFilterInput = {
 
 export enum GiftCardEventsEnum {
   ACTIVATED = 'ACTIVATED',
+  ASSIGNED_TO_USER = 'ASSIGNED_TO_USER',
+  BALANCE_ADJUSTED = 'BALANCE_ADJUSTED',
   BALANCE_RESET = 'BALANCE_RESET',
   BOUGHT = 'BOUGHT',
   DEACTIVATED = 'DEACTIVATED',
@@ -2884,11 +2901,18 @@ export enum GiftCardEventsEnum {
   RESENT = 'RESENT',
   SENT_TO_CUSTOMER = 'SENT_TO_CUSTOMER',
   TAGS_UPDATED = 'TAGS_UPDATED',
+  UNASSIGNED_FROM_USER = 'UNASSIGNED_FROM_USER',
   UPDATED = 'UPDATED',
   USED_IN_ORDER = 'USED_IN_ORDER'
 }
 
 export type GiftCardFilterInput = {
+  /**
+   * Filter by the customer the gift card usage is restricted to.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo?: InputMaybe<Array<Scalars['ID']['input']>>;
   code?: InputMaybe<Scalars['String']['input']>;
   createdByEmail?: InputMaybe<Scalars['String']['input']>;
   currency?: InputMaybe<Scalars['String']['input']>;
@@ -2899,6 +2923,10 @@ export type GiftCardFilterInput = {
   products?: InputMaybe<Array<Scalars['ID']['input']>>;
   tags?: InputMaybe<Array<Scalars['String']['input']>>;
   used?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Filter by the customer who used a gift card.
+   * @deprecated Field no longer supported
+   */
   usedBy?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
@@ -4659,6 +4687,7 @@ export type LinesFilterInput = {
  *     `Payment` object, that will cover the `order.total`.
  */
 export enum MarkAsPaidStrategyEnum {
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   PAYMENT_FLOW = 'PAYMENT_FLOW',
   TRANSACTION_FLOW = 'TRANSACTION_FLOW'
 }
@@ -4907,13 +4936,22 @@ export enum NavigationType {
 }
 
 export enum OrderAction {
-  /** Represents the capture action. */
+  /**
+   * Represents the capture action.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   CAPTURE = 'CAPTURE',
   /** Represents a mark-as-paid action. */
   MARK_AS_PAID = 'MARK_AS_PAID',
-  /** Represents a refund action. */
+  /**
+   * Represents a refund action.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   REFUND = 'REFUND',
-  /** Represents a void action. */
+  /**
+   * Represents a void action.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   VOID = 'VOID'
 }
 
@@ -5419,6 +5457,10 @@ export type OrderFilterInput = {
   isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   numbers?: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * Filter orders by payment charge status.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   paymentStatus?: InputMaybe<Array<PaymentChargeStatusEnum>>;
   search?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Array<OrderStatusFilter>>;
@@ -5778,7 +5820,10 @@ export enum OrderSortField {
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort orders by number. */
   NUMBER = 'NUMBER',
-  /** Sort orders by payment status. */
+  /**
+   * Sort orders by payment status.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT = 'PAYMENT',
   /** Sort orders by rank. Note: This option is available only with the `search` filter. */
   RANK = 'RANK',
@@ -6126,6 +6171,11 @@ export enum PaymentChargeStatusEnum {
   REFUSED = 'REFUSED'
 }
 
+/**
+ * Fields required to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentCheckBalanceInput = {
   /** Information about card. */
   card: CardInput;
@@ -6159,6 +6209,11 @@ export enum PaymentErrorCode {
   UNIQUE = 'UNIQUE'
 }
 
+/**
+ * Filtering options for payments.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentFilterInput = {
   checkouts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by ids. */
@@ -6206,6 +6261,11 @@ export type PaymentGatewayToInitialize = {
   id: Scalars['String']['input'];
 };
 
+/**
+ * Fields required to create a payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentInput = {
   /** Total amount of the transaction, including all taxes and discounts. If no amount is provided, the checkout total will be used. */
   amount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
@@ -7978,13 +8038,6 @@ export type ShopSettingsTranslationInput = {
   headerText?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type SiteDomainInput = {
-  /** Domain name for shop. */
-  domain?: InputMaybe<Scalars['String']['input']>;
-  /** Shop site name. */
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** Fields required to create a staff user. */
 export type StaffCreateInput = {
   /** List of permission group IDs to which user should be assigned. */
@@ -8141,11 +8194,20 @@ export enum StockUpdatePolicyEnum {
 
 /** Enum representing the type of a payment storage in a gateway. */
 export enum StorePaymentMethodEnum {
-  /** Storage is disabled. The payment is not stored. */
+  /**
+   * Storage is disabled. The payment is not stored.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   NONE = 'NONE',
-  /** Off session storage type. The payment is stored to be reused even if the customer is absent. */
+  /**
+   * Off session storage type. The payment is stored to be reused even if the customer is absent.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   OFF_SESSION = 'OFF_SESSION',
-  /** On session storage type. The payment is stored only to be reused when the customer is present in the checkout flow. */
+  /**
+   * On session storage type. The payment is stored only to be reused when the customer is present in the checkout flow.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   ON_SESSION = 'ON_SESSION'
 }
 
@@ -8541,15 +8603,25 @@ export enum TransactionInitializeErrorCode {
 }
 
 export enum TransactionKind {
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   ACTION_TO_CONFIRM = 'ACTION_TO_CONFIRM',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   AUTH = 'AUTH',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   CANCEL = 'CANCEL',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   CAPTURE = 'CAPTURE',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   CONFIRM = 'CONFIRM',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   EXTERNAL = 'EXTERNAL',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   PENDING = 'PENDING',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   REFUND = 'REFUND',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   REFUND_ONGOING = 'REFUND_ONGOING',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   VOID = 'VOID'
 }
 
@@ -9639,23 +9711,44 @@ export enum WebhookEventTypeEnum {
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   /** A page is updated. */
   PAGE_UPDATED = 'PAGE_UPDATED',
-  /** Authorize payment. */
+  /**
+   * Authorize payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
-  /** Capture payment. */
+  /**
+   * Capture payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
-  /** Confirm payment. */
+  /**
+   * Confirm payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
   PAYMENT_GATEWAY_INITIALIZE_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_SESSION',
   PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION',
-  /** Listing available payment gateways. */
+  /**
+   * Listing available payment gateways.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
   PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION',
   PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION = 'PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION',
-  /** Process payment. */
+  /**
+   * Process payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
-  /** Refund payment. */
+  /**
+   * Refund payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
-  /** Void payment. */
+  /**
+   * Void payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_VOID = 'PAYMENT_VOID',
   /** A new permission group is created. */
   PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
@@ -9824,23 +9917,44 @@ export enum WebhookEventTypeSyncEnum {
   ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
   /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
-  /** Authorize payment. */
+  /**
+   * Authorize payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
-  /** Capture payment. */
+  /**
+   * Capture payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
-  /** Confirm payment. */
+  /**
+   * Confirm payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
   PAYMENT_GATEWAY_INITIALIZE_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_SESSION',
   PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION',
-  /** Listing available payment gateways. */
+  /**
+   * Listing available payment gateways.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
   PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION',
   PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION = 'PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION',
-  /** Process payment. */
+  /**
+   * Process payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
-  /** Refund payment. */
+  /**
+   * Refund payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
-  /** Void payment. */
+  /**
+   * Void payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_VOID = 'PAYMENT_VOID',
   /** Fetch external shipping methods for checkout. */
   SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
