@@ -929,10 +929,6 @@
     "context": "Info box title when product is not available for purchase",
     "string": "Visible but not purchasable."
   },
-  "2nsiFJ": {
-    "context": "Hint under the pinned current variant when it is out of the scroll viewport or not loaded yet",
-    "string": "Not visible in the list — scroll or search."
-  },
   "2ob30/": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
   },
@@ -6334,6 +6330,10 @@
     "context": "model type detail page, top-bar metadata button tooltip",
     "string": "Edit model type metadata"
   },
+  "TQph+r": {
+    "context": "progress under load more variants in assign variant dialog",
+    "string": "{loaded} of {total} loaded"
+  },
   "TSJRiZ": {
     "context": "channel status title",
     "string": "Channel Status"
@@ -6881,6 +6881,10 @@
   "WE8IFE": {
     "context": "product name",
     "string": "Product"
+  },
+  "WGHw5Q": {
+    "context": "Hint under the pinned current variant when it is out of the scroll viewport or not loaded yet",
+    "string": "Not visible in the list — scroll or search."
   },
   "WGp+Fw": {
     "context": "order refund amount",
@@ -8777,6 +8781,10 @@
   "fXdkiI": {
     "string": "is"
   },
+  "fYRCRL": {
+    "context": "button to fetch the next page of variants in assign variant dialog",
+    "string": "Load more variants"
+  },
   "fZTOwM": {
     "context": "quantity refunded via fulfillment records in line matrix",
     "string": "Fulfillment refund"
@@ -8984,6 +8992,10 @@
     "context": "deactivate customer dialog, content",
     "string": "Are you sure you want to deactivate {email}? They will no longer be able to sign in or place new orders."
   },
+  "gf1eAF": {
+    "context": "Explains that only priced variants are listed, while loaded counts every fetched variant page",
+    "string": "Showing {shown} with a price in this channel · {loaded} of {total} loaded"
+  },
   "gfRbEV": {
     "string": "Note updated"
   },
@@ -9180,6 +9192,10 @@
   },
   "hjEkEH": {
     "string": "All webhooks registered by this extension. In case of failed webhook delivery, list of attempts is displayed."
+  },
+  "hjamEg": {
+    "context": "loading state on load more variants button in assign variant dialog",
+    "string": "Loading more"
   },
   "hkENym": {
     "string": "Customer"
@@ -10054,6 +10070,10 @@
   "lNZuWl": {
     "string": "All orders"
   },
+  "lNfSYi": {
+    "context": "button to fetch the next page of variants for a product in order add-line",
+    "string": "Load more variants"
+  },
   "lQRnYK": {
     "context": "selectt all options",
     "string": "Select All"
@@ -10088,6 +10108,10 @@
   "lXq4EE": {
     "context": "checkbox",
     "string": "Refund shipment: {currency} {amount}"
+  },
+  "lXs9kz": {
+    "context": "Error when Product Doctor variant catalog walk fails",
+    "string": "Could not load all variants for availability checks. Refresh the page to try again."
   },
   "lZC/1a": {
     "string": "greater than {value}"
@@ -12298,6 +12322,10 @@
   "vlVTmY": {
     "string": "Product removed"
   },
+  "vmX9L4": {
+    "context": "loading state label on the load more variants button",
+    "string": "Loading more"
+  },
   "vof5TR": {
     "context": "button",
     "string": "Create category"
@@ -12816,10 +12844,6 @@
   "yDkmX7": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
-  },
-  "yEc/Bv": {
-    "context": "hint when product has more variants than the search query loads",
-    "string": "Showing {shown} of {total} variants — select individually"
   },
   "yH56V+": {
     "string": "Ooops!..."
