@@ -8,6 +8,9 @@ import { mediaFallbackMessages } from "./messages";
 interface MediaWithFallbackProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "alt"> {
   // Extend to allow "null" because GraphQL can return it. It's suger to avoid extra mapping in parents
   alt?: string | null;
+  /** Shown instead of a skeleton while `src` is loading (e.g. local blob preview after upload). */
+  placeholderSrc?: string | null;
+  onPlaceholderUnused?: () => void;
 }
 
 export const MediaWithFallback = ({
@@ -15,6 +18,8 @@ export const MediaWithFallback = ({
   alt,
   className,
   style,
+  placeholderSrc,
+  onPlaceholderUnused,
   ...rest
 }: MediaWithFallbackProps) => {
   const [loadingStatus, setLoadingStatus] = useState<"loading" | "loaded" | "error">("loading");
@@ -42,15 +47,33 @@ export const MediaWithFallback = ({
     );
   }
 
+  const handleLoad = () => {
+    setLoadingStatus("loaded");
+    onPlaceholderUnused?.();
+  };
+
   return (
     <>
-      {!isLoaded && <Skeleton __width="100%" __height="100%" />}
+      {!isLoaded && placeholderSrc ? (
+        <img
+          className={className}
+          src={placeholderSrc}
+          alt=""
+          aria-hidden
+          style={style}
+          data-test-id="media-placeholder"
+        />
+      ) : null}
+      {!isLoaded && !placeholderSrc ? <Skeleton __width="100%" __height="100%" /> : null}
       <img
         className={className}
         src={src}
         alt={alt ?? undefined}
-        onLoad={() => setLoadingStatus("loaded")}
-        onError={() => setLoadingStatus("error")}
+        onLoad={handleLoad}
+        onError={() => {
+          setLoadingStatus("error");
+          onPlaceholderUnused?.();
+        }}
         style={isLoaded ? { ...style } : { ...style, display: "none" }}
         {...rest}
       />

@@ -108,6 +108,7 @@ const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
         onClose={() => navigate(productImageUrl(productId, mediaId), { replace: true })}
         onConfirm={handleDelete}
         open={params.action === "remove"}
+        quantity={1}
         isVideo={isVideo}
         confirmButtonState={deleteResult.status}
       />

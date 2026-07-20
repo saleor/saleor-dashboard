@@ -1,0 +1,28 @@
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card {
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.link:hover .card {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.link:hover .chevron {
+  color: var(--mu-colors-text-default1);
+}
+
+.chevron {
+  transition: color 0.12s ease;
+}
+
+.description {
+  line-height: 1.45;
+  max-width: 40rem;
+}

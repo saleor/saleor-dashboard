@@ -97,6 +97,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const handleSubmit = async ({
     allocationStrategy,
     allowUnpaidOrders,
+    automaticallyConfirmAllNewOrders,
+    automaticallyFulfillNonShippableGiftCard,
     defaultCountry,
     defaultTransactionFlowStrategy,
     deleteExpiredOrdersAfter,
@@ -171,6 +173,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
             markAsPaidStrategy,
             deleteExpiredOrdersAfter,
             allowUnpaidOrders,
+            automaticallyConfirmAllNewOrders,
+            automaticallyFulfillNonShippableGiftCard,
           },
         },
       },

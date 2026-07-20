@@ -1,2 +1,2 @@
-export { default } from "./FileUploadField";
-export * from "./FileUploadField";
+export type { FileChoiceType } from "./FileUploadField";
+export { default, FileUploadField } from "./FileUploadField";

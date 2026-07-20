@@ -11,8 +11,9 @@ import { sectionNames } from "@dashboard/intl";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, findInEnum } from "../../misc";
-import SiteSettingsPage, {
+import {
   areAddressInputFieldsModified,
+  SiteSettingsPage,
   type SiteSettingsPageFormData,
 } from "../components/SiteSettingsPage";
 
@@ -33,7 +34,11 @@ const SiteSettings = () => {
     ) {
       notify({
         status: "success",
-        text: intl.formatMessage({ id: "jvz9Mr", defaultMessage: "Site settings updated" }),
+        text: intl.formatMessage({
+          id: "I6Bv55",
+          defaultMessage: "Store settings updated",
+          description: "success notification after saving store settings",
+        }),
       });
     }
   };
@@ -68,10 +73,7 @@ const SiteSettings = () => {
     const shopSettingsInput: ShopSettingsInput = {
       name: data.name,
       description: data.description,
-      reserveStockDurationAnonymousUser: data.reserveStockDurationAnonymousUser || null,
-      reserveStockDurationAuthenticatedUser: data.reserveStockDurationAuthenticatedUser || null,
       enableAccountConfirmationByEmail: data.emailConfirmation,
-      limitQuantityPerCheckout: data.limitQuantityPerCheckout || null,
       useLegacyUpdateWebhookEmission: data.useLegacyUpdateWebhookEmission,
       useLegacyShippingZoneStockAvailability: data.useLegacyShippingZoneStockAvailability,
       preserveAllAddressFields: data.preserveAllAddressFields,

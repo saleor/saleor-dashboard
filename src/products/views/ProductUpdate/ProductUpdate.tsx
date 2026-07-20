@@ -16,8 +16,8 @@ import {
   type ProductVariantBulkCreateInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
+  useProductMediaBulkDeleteMutation,
   useProductMediaCreateMutation,
-  useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
   useProductVariantBulkCreateMutation,
 } from "@dashboard/graphql";
@@ -55,7 +55,11 @@ import {
   type ProductUrlQueryParams,
   productVariantEditUrl,
 } from "../../urls";
-import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
+import {
+  createImageReorderHandler,
+  createImagesUploadCompleteHandler,
+  createImageUploadHandler,
+} from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
 import { productUpdatePageMessages as messages } from "./messages";
 
@@ -182,17 +186,17 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
     [intl, notify],
   );
-  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
-    onCompleted: handleProductMediaCreateCompleted,
-  });
+  // File uploads report a single batch toast from ProductMedia; keep per-upload
+  // notifications only for URL/oEmbed uploads via createProductMedia.
+  const [createProductImage] = useProductMediaCreateMutation();
   const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
-  const [deleteProductImage, deleteProductImageOpts] = useProductMediaDeleteMutation({
+  const [bulkDeleteProductMedia, bulkDeleteProductMediaOpts] = useProductMediaBulkDeleteMutation({
     onCompleted: data => {
-      const result = data.productMediaDelete;
+      const result = data.productMediaBulkDelete;
 
       if (!result) {
         notify({
@@ -219,15 +223,15 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       closeModal();
       notify({
         status: "success",
-        text: intl.formatMessage({
-          id: "Gi8zwc",
-          defaultMessage: "Image deleted",
+        text: intl.formatMessage(messages.mediaDeleteSuccess, {
+          counter: result.count,
         }),
       });
     },
   });
   const product = data?.product;
   const [deleteMediaType, setDeleteMediaType] = useState<ProductMediaType | null>(null);
+  const mediaIdsToDelete = params.ids ?? [];
 
   useEffect(() => {
     if (params.action !== "remove-media") {
@@ -235,7 +239,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     }
   }, [params.action]);
 
-  const isVideoMediaToDelete = deleteMediaType === ProductMediaType.VIDEO;
+  const isVideoMediaToDelete =
+    mediaIdsToDelete.length === 1 && deleteMediaType === ProductMediaType.VIDEO;
   const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
   const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
     onCompleted: handleProductMediaCreateCompleted,
@@ -348,32 +353,56 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     [bulkCreateVariants, id, intl, notify, refetch],
   );
   const handleImageDelete = (mediaId: string) => () => {
-    const media = product?.media?.find(item => item.id === mediaId);
+    const mediaItem = product?.media?.find(item => item.id === mediaId);
 
-    setDeleteMediaType(media?.type ?? null);
-    openModal("remove-media", { id: mediaId });
+    setDeleteMediaType(mediaItem?.type ?? null);
+    openModal("remove-media", { ids: [mediaId] });
   };
-  const handleConfirmMediaDelete = () => {
-    const mediaId = params.id;
-    const currentMedia = product?.media;
-
-    if (!mediaId || !product || !currentMedia) {
+  const handleImagesDelete = (mediaIds: string[]) => {
+    if (mediaIds.length === 0) {
       return;
     }
 
-    deleteProductImage({
-      variables: { id: mediaId },
+    if (mediaIds.length === 1) {
+      const mediaItem = product?.media?.find(item => item.id === mediaIds[0]);
+
+      setDeleteMediaType(mediaItem?.type ?? null);
+    } else {
+      setDeleteMediaType(null);
+    }
+
+    openModal("remove-media", { ids: mediaIds });
+  };
+  const handleConfirmMediaDelete = () => {
+    const currentMedia = product?.media;
+
+    if (!product || !currentMedia || mediaIdsToDelete.length === 0) {
+      return;
+    }
+
+    const idsToDelete = new Set(mediaIdsToDelete);
+
+    bulkDeleteProductMedia({
+      variables: { ids: mediaIdsToDelete },
       optimisticResponse: {
         __typename: "Mutation",
-        productMediaDelete: {
-          __typename: "ProductMediaDelete",
+        productMediaBulkDelete: {
+          __typename: "ProductMediaBulkDelete",
           errors: [],
-          product: {
-            __typename: "Product",
-            id: product.id,
-            media: currentMedia.filter(media => media.id !== mediaId),
-          },
+          count: mediaIdsToDelete.length,
         },
+      },
+      update: cache => {
+        cache.modify({
+          id: cache.identify(product),
+          fields: {
+            media(existingMedia = [], { readField }) {
+              return existingMedia.filter(
+                mediaRef => !idsToDelete.has(readField("id", mediaRef) as string),
+              );
+            },
+          },
+        });
       },
     });
   };
@@ -381,6 +410,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
+  const handleImagesUploadComplete = createImagesUploadCompleteHandler(notify, intl);
   const handleImageReorder = createImageReorderHandler(product, options =>
     reorderProductImages(options),
   );
@@ -388,10 +418,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     openModal("assign-attribute-value", { id: attribute.id });
   const disableFormSave =
     submitOpts.loading ||
-    createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
-    createProductMediaOpts.loading ||
     (loading && !product);
   const formTransitionState = getMutationState(
     submitOpts.called,
@@ -506,7 +534,9 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           })
         }
         onImageUpload={handleImageUpload}
+        onImagesUploadComplete={handleImagesUploadComplete}
         onImageDelete={handleImageDelete}
+        onImagesDelete={handleImagesDelete}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
@@ -544,9 +574,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onConfirm={() => deleteProduct({ variables: { id } })}
       />
       <ProductMediaDeleteDialog
-        open={params.action === "remove-media" && !!params.id}
+        open={params.action === "remove-media" && mediaIdsToDelete.length > 0}
         onClose={closeModal}
-        confirmButtonState={deleteProductImageOpts.status}
+        confirmButtonState={bulkDeleteProductMediaOpts.status}
+        quantity={mediaIdsToDelete.length}
         isVideo={isVideoMediaToDelete}
         onConfirm={handleConfirmMediaDelete}
       />
