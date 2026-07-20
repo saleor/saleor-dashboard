@@ -2,8 +2,11 @@ import { type SearchOrderVariantQuery } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
 
 import {
+  appendOrderProductVariantsPage,
   isOrderVariantsListTruncated,
   mapSearchOrderVariantsForAdd,
+  type OrderSearchProduct,
+  type OrderSearchVariant,
 } from "./mapSearchOrderVariantsForAdd";
 
 type SearchProduct = NonNullable<RelayToFlat<SearchOrderVariantQuery["search"]>>[number];
@@ -20,34 +23,35 @@ const createSearchProduct = (
   ...overrides,
 });
 
+const createVariant = (id: string): OrderSearchVariant => ({
+  __typename: "ProductVariant",
+  id,
+  name: id,
+  sku: id,
+  pricing: null,
+});
+
 describe("mapSearchOrderVariantsForAdd", () => {
-  it("flattens productVariants edges into variants and totalCount", () => {
+  it("flattens productVariants edges into variants and page info", () => {
     // Arrange
     const products: SearchProduct[] = [
       createSearchProduct({
         productVariants: {
           __typename: "ProductVariantCountableConnection",
-          totalCount: 2,
+          totalCount: 40,
+          pageInfo: {
+            __typename: "PageInfo",
+            hasNextPage: true,
+            endCursor: "cursor-1",
+          },
           edges: [
             {
               __typename: "ProductVariantCountableEdge",
-              node: {
-                __typename: "ProductVariant",
-                id: "v1",
-                name: "S",
-                sku: "s",
-                pricing: null,
-              },
+              node: createVariant("v1"),
             },
             {
               __typename: "ProductVariantCountableEdge",
-              node: {
-                __typename: "ProductVariant",
-                id: "v2",
-                name: "M",
-                sku: "m",
-                pricing: null,
-              },
+              node: createVariant("v2"),
             },
           ],
         },
@@ -61,7 +65,9 @@ describe("mapSearchOrderVariantsForAdd", () => {
     expect(mapped).toEqual([
       expect.objectContaining({
         id: "product-1",
-        variantsTotalCount: 2,
+        variantsTotalCount: 40,
+        variantsHasNextPage: true,
+        variantsEndCursor: "cursor-1",
         variants: [expect.objectContaining({ id: "v1" }), expect.objectContaining({ id: "v2" })],
       }),
     ]);
@@ -75,27 +81,60 @@ describe("mapSearchOrderVariantsForAdd", () => {
     // Assert
     expect(mapped[0].variants).toEqual([]);
     expect(mapped[0].variantsTotalCount).toBeNull();
+    expect(mapped[0].variantsHasNextPage).toBe(false);
+    expect(mapped[0].variantsEndCursor).toBeNull();
   });
 
   it("detects truncated variant lists", () => {
     // Arrange // Act // Assert
     expect(
       isOrderVariantsListTruncated({
-        variants: [{ id: "v1" } as never],
+        variants: [createVariant("v1")],
         variantsTotalCount: 20,
+        variantsHasNextPage: true,
       }),
     ).toBe(true);
     expect(
       isOrderVariantsListTruncated({
-        variants: [{ id: "v1" } as never],
+        variants: [createVariant("v1")],
         variantsTotalCount: 1,
+        variantsHasNextPage: false,
       }),
     ).toBe(false);
     expect(
       isOrderVariantsListTruncated({
         variants: [],
         variantsTotalCount: null,
+        variantsHasNextPage: false,
       }),
     ).toBe(false);
+  });
+
+  it("appends the next variants page without duplicates", () => {
+    // Arrange
+    const product: OrderSearchProduct = {
+      __typename: "Product",
+      id: "product-1",
+      name: "Product 1",
+      thumbnail: null,
+      variants: [createVariant("v1"), createVariant("v2")],
+      variantsTotalCount: 4,
+      variantsHasNextPage: true,
+      variantsEndCursor: "cursor-1",
+    };
+
+    // Act
+    const next = appendOrderProductVariantsPage(product, {
+      variants: [createVariant("v2"), createVariant("v3"), createVariant("v4")],
+      totalCount: 4,
+      hasNextPage: false,
+      endCursor: "cursor-2",
+    });
+
+    // Assert
+    expect(next.variants.map(variant => variant.id)).toEqual(["v1", "v2", "v3", "v4"]);
+    expect(next.variantsHasNextPage).toBe(false);
+    expect(next.variantsEndCursor).toBe("cursor-2");
+    expect(next.variantsTotalCount).toBe(4);
   });
 });

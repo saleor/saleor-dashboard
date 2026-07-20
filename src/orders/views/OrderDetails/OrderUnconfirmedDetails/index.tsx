@@ -29,7 +29,7 @@ import { OrderManualTransactionDialog } from "@dashboard/orders/components/Order
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
-import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
+import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
@@ -355,6 +355,8 @@ export const OrderUnconfirmedDetails = ({
         onFetch={variantSearch}
         onFetchMore={loadMore}
         channelName={order.channel?.name}
+        channel={order.channel?.slug}
+        address={getVariantSearchAddress(order)}
         onSubmit={variants =>
           orderLinesAdd.mutate({
             id,

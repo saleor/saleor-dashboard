@@ -2840,6 +2840,8 @@ export const orderLineSearch = (placeholderImage: string): OrderSearchProduct[] 
       url: placeholderImage,
     },
     variantsTotalCount: 3,
+    variantsHasNextPage: false,
+    variantsEndCursor: null,
     variants: [
       {
         __typename: "ProductVariant" as const,
@@ -2930,6 +2932,8 @@ export const orderLineSearch = (placeholderImage: string): OrderSearchProduct[] 
       url: placeholderImage,
     },
     variantsTotalCount: 3,
+    variantsHasNextPage: false,
+    variantsEndCursor: null,
     variants: [
       {
         __typename: "ProductVariant" as const,

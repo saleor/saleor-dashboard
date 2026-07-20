@@ -7,8 +7,15 @@ import {
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 /**
- * Caps variants per product in order add-line search (same page size as
- * SEARCH_PRODUCT_VARIANTS_PAGE_SIZE). Truncated lists show a hint in the dialog.
+ * Variants page size for the order add-line dialog (initial search embed and
+ * Load more). Keep in sync with `productVariants(first: …)` below — codegen
+ * cannot interpolate JS constants into the document.
+ */
+export const ORDER_PRODUCT_ADD_VARIANTS_PAGE_SIZE = 50;
+
+/**
+ * Caps variants per product in order add-line search. Further pages load via
+ * OrderProductVariantsForAdd in the dialog.
  */
 export const searchOrderVariant = gql`
   query SearchOrderVariant(
@@ -33,8 +40,12 @@ export const searchOrderVariant = gql`
           thumbnail {
             url
           }
-          productVariants(first: 20) {
+          productVariants(first: 50) {
             totalCount
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
             edges {
               node {
                 id

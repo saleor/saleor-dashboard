@@ -284,6 +284,8 @@ export const OrderDraftDetails = ({
         onFetch={variantSearch}
         onFetchMore={loadMore}
         channelName={order.channel.name}
+        channel={order.channel.slug}
+        address={getVariantSearchAddress(order)}
         onSubmit={variants =>
           extractMutationErrors(
             orderLinesAdd.mutate({

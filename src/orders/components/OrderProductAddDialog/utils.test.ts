@@ -33,6 +33,8 @@ describe("OrderProductAddDialog utils", () => {
     name: "Product 1",
     thumbnail: null,
     variantsTotalCount: 2,
+    variantsHasNextPage: false,
+    variantsEndCursor: null,
     variants: [createVariant("variant-priced", true), createVariant("variant-unpriced", false)],
   };
 
@@ -54,6 +56,8 @@ describe("OrderProductAddDialog utils", () => {
     const truncated: OrderSearchProduct = {
       ...product,
       variantsTotalCount: 50,
+      variantsHasNextPage: true,
+      variantsEndCursor: "cursor-1",
     };
 
     // Act

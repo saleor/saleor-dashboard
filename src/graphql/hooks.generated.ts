@@ -17214,6 +17214,72 @@ export function useGlobalSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GlobalSearchQueryHookResult = ReturnType<typeof useGlobalSearchQuery>;
 export type GlobalSearchLazyQueryHookResult = ReturnType<typeof useGlobalSearchLazyQuery>;
 export type GlobalSearchQueryResult = Apollo.QueryResult<Types.GlobalSearchQuery, Types.GlobalSearchQueryVariables>;
+export const OrderProductVariantsForAddDocument = gql`
+    query OrderProductVariantsForAdd($id: ID!, $first: Int!, $after: String, $channel: String!, $address: AddressInput) {
+  product(id: $id, channel: $channel) {
+    id
+    productVariants(first: $first, after: $after) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          name
+          sku
+          pricing(address: $address) {
+            priceUndiscounted {
+              gross {
+                ...Money
+              }
+            }
+            price {
+              gross {
+                ...Money
+              }
+            }
+            onSale
+          }
+        }
+      }
+    }
+  }
+}
+    ${MoneyFragmentDoc}`;
+
+/**
+ * __useOrderProductVariantsForAddQuery__
+ *
+ * To run a query within a React component, call `useOrderProductVariantsForAddQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderProductVariantsForAddQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderProductVariantsForAddQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      channel: // value for 'channel'
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useOrderProductVariantsForAddQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderProductVariantsForAddQuery, Types.OrderProductVariantsForAddQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderProductVariantsForAddQuery, Types.OrderProductVariantsForAddQueryVariables>(OrderProductVariantsForAddDocument, options);
+      }
+export function useOrderProductVariantsForAddLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderProductVariantsForAddQuery, Types.OrderProductVariantsForAddQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderProductVariantsForAddQuery, Types.OrderProductVariantsForAddQueryVariables>(OrderProductVariantsForAddDocument, options);
+        }
+export type OrderProductVariantsForAddQueryHookResult = ReturnType<typeof useOrderProductVariantsForAddQuery>;
+export type OrderProductVariantsForAddLazyQueryHookResult = ReturnType<typeof useOrderProductVariantsForAddLazyQuery>;
+export type OrderProductVariantsForAddQueryResult = Apollo.QueryResult<Types.OrderProductVariantsForAddQuery, Types.OrderProductVariantsForAddQueryVariables>;
 export const SearchAttributesDocument = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {
@@ -17764,8 +17830,12 @@ export const SearchOrderVariantDocument = gql`
         thumbnail {
           url
         }
-        productVariants(first: 20) {
+        productVariants(first: 50) {
           totalCount
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           edges {
             node {
               id

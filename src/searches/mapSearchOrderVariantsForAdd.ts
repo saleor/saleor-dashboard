@@ -12,6 +12,27 @@ export type OrderSearchVariant = NonNullable<
 export type OrderSearchProduct = Omit<SearchOrderProductNode, "productVariants"> & {
   variants: OrderSearchVariant[];
   variantsTotalCount: number | null;
+  variantsHasNextPage: boolean;
+  variantsEndCursor: string | null;
+};
+
+const mapProductVariantsConnection = (
+  productVariants: SearchOrderProductNode["productVariants"],
+): Pick<
+  OrderSearchProduct,
+  "variants" | "variantsTotalCount" | "variantsHasNextPage" | "variantsEndCursor"
+> => {
+  const variants = productVariants?.edges.map(edge => edge.node) ?? [];
+  const totalCount = productVariants?.totalCount ?? null;
+  const hasNextPage =
+    productVariants?.pageInfo?.hasNextPage ?? (totalCount !== null && variants.length < totalCount);
+
+  return {
+    variants,
+    variantsTotalCount: totalCount,
+    variantsHasNextPage: hasNextPage,
+    variantsEndCursor: productVariants?.pageInfo?.endCursor ?? null,
+  };
 };
 
 /**
@@ -23,11 +44,32 @@ export const mapSearchOrderVariantsForAdd = (
 ): OrderSearchProduct[] =>
   products?.map(({ productVariants, ...product }) => ({
     ...product,
-    variants: productVariants?.edges.map(edge => edge.node) ?? [],
-    variantsTotalCount: productVariants?.totalCount ?? null,
+    ...mapProductVariantsConnection(productVariants),
   })) ?? [];
 
 export const isOrderVariantsListTruncated = (
-  product: Pick<OrderSearchProduct, "variants" | "variantsTotalCount">,
+  product: Pick<OrderSearchProduct, "variantsHasNextPage" | "variants" | "variantsTotalCount">,
 ): boolean =>
-  product.variantsTotalCount !== null && product.variants.length < product.variantsTotalCount;
+  product.variantsHasNextPage ||
+  (product.variantsTotalCount !== null && product.variants.length < product.variantsTotalCount);
+
+export const appendOrderProductVariantsPage = (
+  product: OrderSearchProduct,
+  page: {
+    variants: OrderSearchVariant[];
+    totalCount: number | null;
+    hasNextPage: boolean;
+    endCursor: string | null;
+  },
+): OrderSearchProduct => {
+  const existingIds = new Set(product.variants.map(variant => variant.id));
+  const appended = page.variants.filter(variant => !existingIds.has(variant.id));
+
+  return {
+    ...product,
+    variants: [...product.variants, ...appended],
+    variantsTotalCount: page.totalCount ?? product.variantsTotalCount,
+    variantsHasNextPage: page.hasNextPage,
+    variantsEndCursor: page.endCursor,
+  };
+};
