@@ -348,6 +348,42 @@ export const productVariantsGridQuery = gql`
   }
 `;
 
+/** Slim catalog walk for Product Doctor (uncoupled from the variants grid). */
+export const productDoctorVariantsQuery = gql`
+  query ProductDoctorVariants($id: ID!, $first: Int!, $after: String) {
+    product(id: $id) {
+      id
+      productVariants(first: $first, after: $after) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            id
+            name
+            channelListings {
+              channel {
+                id
+              }
+              price {
+                amount
+              }
+            }
+            stocks {
+              warehouse {
+                id
+              }
+              quantity
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const productVariantSiblingsQuery = gql`
   query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String) {
     product(id: $id) {

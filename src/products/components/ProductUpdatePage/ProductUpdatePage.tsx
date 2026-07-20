@@ -64,13 +64,14 @@ import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
 import { Box, Divider, type Option, Text } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { AvailabilityCard } from "../ProductDoctor/AvailabilityCard";
 import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/useProductAvailabilityDiagnostics";
+import { useProductDoctorVariants } from "../ProductDoctor/hooks/useProductDoctorVariants";
 import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToDiagnosticData";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
@@ -322,24 +323,59 @@ const ProductUpdatePage = ({
     path: productListPath,
   });
 
-  // Availability diagnostics for the new AvailabilityCard
+  // Product Doctor catalog is walked separately from the paginated/searchable grid
+  // so diagnostics are not polluted by the current page or search filter.
+  const {
+    variants: doctorVariantList,
+    totalCount: doctorVariantsTotalCount,
+    loading: doctorVariantsLoading,
+    error: doctorVariantsError,
+    complete: doctorVariantsComplete,
+    refetch: refetchDoctorVariants,
+  } = useProductDoctorVariants({
+    productId,
+    skip: !product,
+  });
   const productDiagnosticData = useMemo(
     () =>
       mapProductToDiagnosticData(
         product
           ? {
               ...product,
-              variants,
-              variantsTotalCount: variantsTotalCount ?? null,
+              variants: doctorVariantList,
+              variantsTotalCount: doctorVariantsTotalCount,
             }
           : null,
       ),
-    [product, variants, variantsTotalCount],
+    [doctorVariantList, doctorVariantsTotalCount, product],
   );
   const availabilityDiagnostics = useProductAvailabilityDiagnostics({
     product: productDiagnosticData,
-    enabled: Boolean(product),
+    enabled: Boolean(product) && doctorVariantsComplete,
   });
+
+  // Keep the card in a loading skeleton while the doctor catalog walks, and
+  // avoid a false “no issues” flash when diagnostics are still disabled.
+  const diagnosticsForCard = useMemo(
+    () => ({
+      ...availabilityDiagnostics,
+      isLoading:
+        doctorVariantsLoading ||
+        (Boolean(product) && !doctorVariantsComplete && !doctorVariantsError) ||
+        availabilityDiagnostics.isLoading,
+    }),
+    [
+      availabilityDiagnostics,
+      doctorVariantsComplete,
+      doctorVariantsError,
+      doctorVariantsLoading,
+      product,
+    ],
+  );
+
+  const refetchWithDoctorCatalog = useCallback(async () => {
+    await Promise.all([refetch(), refetchDoctorVariants()]);
+  }, [refetch, refetchDoctorVariants]);
 
   const { attachFormState, active, framesByFormType } = useActiveAppExtension();
 
@@ -456,7 +492,7 @@ const ProductUpdatePage = ({
       fetchMoreReferenceCollections={fetchMoreReferenceCollections}
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
-      refetch={refetch}
+      refetch={refetchWithDoctorCatalog}
       variants={variants}
     >
       {({
@@ -639,7 +675,7 @@ const ProductUpdatePage = ({
                   selectedProductCategory={selectedProductCategory}
                 />
                 <AvailabilityCard
-                  diagnostics={availabilityDiagnostics}
+                  diagnostics={diagnosticsForCard}
                   totalChannelsCount={channels?.length ?? 0}
                   onManageClick={() => setChannelPickerOpen(true)}
                   onChannelChange={handlers.changeChannels}
@@ -649,6 +685,7 @@ const ProductUpdatePage = ({
                   channels={channels}
                   errors={channelsErrors}
                   productId={product?.id}
+                  variantsCatalogError={Boolean(doctorVariantsError)}
                 />
                 {showProductDetailsWidgets ? (
                   <>

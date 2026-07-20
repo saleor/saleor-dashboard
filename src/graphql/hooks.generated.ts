@@ -16840,6 +16840,70 @@ export function useProductVariantsGridLazyQuery(baseOptions?: ApolloReactHooks.L
 export type ProductVariantsGridQueryHookResult = ReturnType<typeof useProductVariantsGridQuery>;
 export type ProductVariantsGridLazyQueryHookResult = ReturnType<typeof useProductVariantsGridLazyQuery>;
 export type ProductVariantsGridQueryResult = Apollo.QueryResult<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>;
+export const ProductDoctorVariantsDocument = gql`
+    query ProductDoctorVariants($id: ID!, $first: Int!, $after: String) {
+  product(id: $id) {
+    id
+    productVariants(first: $first, after: $after) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          name
+          channelListings {
+            channel {
+              id
+            }
+            price {
+              amount
+            }
+          }
+          stocks {
+            warehouse {
+              id
+            }
+            quantity
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductDoctorVariantsQuery__
+ *
+ * To run a query within a React component, call `useProductDoctorVariantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductDoctorVariantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductDoctorVariantsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useProductDoctorVariantsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductDoctorVariantsQuery, Types.ProductDoctorVariantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductDoctorVariantsQuery, Types.ProductDoctorVariantsQueryVariables>(ProductDoctorVariantsDocument, options);
+      }
+export function useProductDoctorVariantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductDoctorVariantsQuery, Types.ProductDoctorVariantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductDoctorVariantsQuery, Types.ProductDoctorVariantsQueryVariables>(ProductDoctorVariantsDocument, options);
+        }
+export type ProductDoctorVariantsQueryHookResult = ReturnType<typeof useProductDoctorVariantsQuery>;
+export type ProductDoctorVariantsLazyQueryHookResult = ReturnType<typeof useProductDoctorVariantsLazyQuery>;
+export type ProductDoctorVariantsQueryResult = Apollo.QueryResult<Types.ProductDoctorVariantsQuery, Types.ProductDoctorVariantsQueryVariables>;
 export const ProductVariantSiblingsDocument = gql`
     query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String) {
   product(id: $id) {
