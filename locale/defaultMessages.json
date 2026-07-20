@@ -93,6 +93,10 @@
     "context": "discount type percentage",
     "string": "Percentage"
   },
+  "+ZVimo": {
+    "context": "fallback detail when a price override has no reason recorded",
+    "string": "Custom price set for this line"
+  },
   "+ZwF+1": {
     "context": "Description for live status when product is visible but purchase is scheduled",
     "string": "Visible but not purchasable"
@@ -841,6 +845,10 @@
   "2HfSiT": {
     "context": "pagination",
     "string": "No. of rows"
+  },
+  "2IHDvg": {
+    "context": "badge marking that the base price was set custom (overridden)",
+    "string": "Overridden"
   },
   "2J6EFz": {
     "context": "button",
@@ -11012,10 +11020,6 @@
   "p2EAP0": {
     "string": "Promotion removed"
   },
-  "p3Xg8k": {
-    "context": "badge marking that the base price was set custom (overridden)",
-    "string": "Overridden"
-  },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
     "string": "Assign and save"
@@ -12119,10 +12123,6 @@
   "u2KDfU": {
     "context": "hint linking to product types settings",
     "string": "Assign this attribute from a {link}."
-  },
-  "u2Vd0m": {
-    "context": "fallback detail when a price override has no reason recorded",
-    "string": "Custom price set for this line"
   },
   "u2zyiB": {
     "context": "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
