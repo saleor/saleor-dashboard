@@ -3,7 +3,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui-next";
+import { Checkbox, vars } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Pencil, Trash2 } from "lucide-react";
 import type * as React from "react";
@@ -23,6 +23,10 @@ const useStyles = makeStyles(
         "& $mediaOverlay": {
           display: "block",
         },
+        "& $selectionCheckbox": {
+          opacity: 1,
+          pointerEvents: "auto",
+        },
       },
       background: theme.palette.background.paper,
       border: `1px solid ${theme.palette.divider}`,
@@ -32,6 +36,10 @@ const useStyles = makeStyles(
       padding: vars.spacing[1],
       position: "relative",
       width: 148,
+    },
+    mediaContainerSelected: {
+      borderColor: theme.palette.saleor.active[1],
+      boxShadow: `0 0 0 1px ${theme.palette.saleor.active[1]}`,
     },
     mediaOverlay: {
       background: theme.palette.background.default,
@@ -49,16 +57,31 @@ const useStyles = makeStyles(
         display: "none !important",
       },
     },
-    mediaOverlayShadow: {
-      $mediaOverlay: {
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
-      },
+    mediaOverlayLoading: {
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "center",
     },
     mediaOverlayToolbar: {
       display: "flex",
       justifyContent: "flex-end",
+    },
+    selectionCheckbox: {
+      position: "absolute",
+      top: theme.spacing(2),
+      left: theme.spacing(2),
+      zIndex: 2,
+      background: theme.palette.background.paper,
+      borderRadius: theme.spacing(0.5),
+      opacity: 0,
+      pointerEvents: "none",
+      transition: theme.transitions.create("opacity", {
+        duration: theme.transitions.duration.shorter,
+      }),
+    },
+    selectionCheckboxVisible: {
+      opacity: 1,
+      pointerEvents: "auto",
     },
     controlButton: {
       color: theme.palette.saleor.main[1],
@@ -88,6 +111,10 @@ interface MediaTileBaseProps {
   };
   disableOverlay?: boolean;
   loading?: boolean;
+  selected?: boolean;
+  onSelectionChange?: (selected: boolean) => void;
+  placeholderSrc?: string | null;
+  onPlaceholderUnused?: () => void;
   onDelete?: () => void;
   onEdit?: (event: React.ChangeEvent<any>) => void;
 }
@@ -105,20 +132,53 @@ type MediaTileProps = MediaTileBaseProps &
   );
 
 const MediaTile = (props: MediaTileProps) => {
-  const { loading, onDelete, onEdit, editHref, media, disableOverlay = false } = props;
+  const {
+    loading,
+    onDelete,
+    onEdit,
+    editHref,
+    media,
+    disableOverlay = false,
+    placeholderSrc,
+    onPlaceholderUnused,
+    selected = false,
+    onSelectionChange,
+  } = props;
   const classes = useStyles(props);
   const mediaUrl = parseOembedData(media.oembedData).thumbnail_url || media.url;
 
   return (
-    <div className={classes.mediaContainer} data-test-id="product-image">
+    <div
+      className={clsx(classes.mediaContainer, {
+        [classes.mediaContainerSelected]: selected,
+      })}
+      data-test-id="product-image"
+      data-test-selected={selected ? "true" : "false"}
+    >
+      {onSelectionChange && !loading ? (
+        <div
+          className={clsx(classes.selectionCheckbox, {
+            [classes.selectionCheckboxVisible]: selected,
+          })}
+          onClick={event => event.stopPropagation()}
+          onMouseDown={event => event.stopPropagation()}
+          data-test-id="product-media-select"
+        >
+          <Checkbox
+            checked={selected}
+            onCheckedChange={checked => onSelectionChange(checked === true)}
+            tabIndex={-1}
+          />
+        </div>
+      ) : null}
       <div
         className={clsx(classes.mediaOverlay, {
-          [classes.mediaOverlayShadow]: loading,
+          [classes.mediaOverlayLoading]: loading,
           [classes.disableOverlay]: disableOverlay,
         })}
       >
         {loading ? (
-          <SaleorThrobber size={32} />
+          <SaleorThrobber size={32} data-test-id="media-tile-loading" />
         ) : (
           <div className={classes.mediaOverlayToolbar}>
             {(onEdit || editHref) && (
@@ -145,7 +205,14 @@ const MediaTile = (props: MediaTileProps) => {
           </div>
         )}
       </div>
-      <MediaWithFallback key={mediaUrl} className={classes.media} src={mediaUrl} alt={media.alt} />
+      <MediaWithFallback
+        key={mediaUrl}
+        className={classes.media}
+        src={mediaUrl}
+        alt={media.alt}
+        placeholderSrc={placeholderSrc}
+        onPlaceholderUnused={onPlaceholderUnused}
+      />
     </div>
   );
 };

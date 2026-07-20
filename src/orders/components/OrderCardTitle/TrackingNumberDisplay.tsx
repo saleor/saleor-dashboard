@@ -1,4 +1,5 @@
 import { useClipboard } from "@dashboard/hooks/useClipboard";
+import { isExternalURL } from "@dashboard/utils/urls";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
@@ -17,6 +18,21 @@ export const TrackingNumberDisplay = ({
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const [showCopyButton, setShowCopyButton] = useState(false);
+  const isUrl = isExternalURL(trackingNumber);
+
+  const trackingNumberContent = (
+    <Text
+      as={isUrl ? "a" : "span"}
+      {...(isUrl ? { href: trackingNumber, target: "_blank", rel: "noopener noreferrer" } : {})}
+      size={2}
+      color={showCopyButton ? "default1" : "default2"}
+      fontWeight="medium"
+      textDecoration={isUrl ? { default: "none", hover: "underline" } : undefined}
+      __transition="color 0.15s ease-in-out"
+    >
+      {trackingNumber}
+    </Text>
+  );
 
   return (
     <Box
@@ -41,16 +57,7 @@ export const TrackingNumberDisplay = ({
             id: "vMo6/3",
           },
           {
-            trackingNumber: (
-              <Text
-                size={2}
-                color={showCopyButton ? "default1" : "default2"}
-                fontWeight="medium"
-                __transition="color 0.15s ease-in-out"
-              >
-                {trackingNumber}
-              </Text>
-            ),
+            trackingNumber: trackingNumberContent,
           },
         )}
       </Text>
