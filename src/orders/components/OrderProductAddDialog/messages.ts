@@ -37,4 +37,9 @@ export const messages = defineMessages({
       "No products are available matching query in the channel assigned to this order.",
     description: "no products placeholder",
   },
+  variantsListTruncated: {
+    id: "yEc/Bv",
+    defaultMessage: "Showing {shown} of {total} variants — select individually",
+    description: "hint when product has more variants than the search query loads",
+  },
 });

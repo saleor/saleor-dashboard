@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import {
   SearchOrderVariantDocument,
@@ -7,6 +6,10 @@ import {
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
+/**
+ * Caps variants per product in order add-line search (same page size as
+ * SEARCH_PRODUCT_VARIANTS_PAGE_SIZE). Truncated lists show a hint in the dialog.
+ */
 export const searchOrderVariant = gql`
   query SearchOrderVariant(
     $channel: String!
@@ -30,22 +33,27 @@ export const searchOrderVariant = gql`
           thumbnail {
             url
           }
-          variants {
-            id
-            name
-            sku
-            pricing(address: $address) {
-              priceUndiscounted {
-                gross {
-                  ...Money
+          productVariants(first: 20) {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                sku
+                pricing(address: $address) {
+                  priceUndiscounted {
+                    gross {
+                      ...Money
+                    }
+                  }
+                  price {
+                    gross {
+                      ...Money
+                    }
+                  }
+                  onSale
                 }
               }
-              price {
-                gross {
-                  ...Money
-                }
-              }
-              onSale
             }
           }
         }

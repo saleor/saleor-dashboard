@@ -379,7 +379,7 @@ export const searchProduct = gql`
 
 /**
  * Cap for variants embedded in product search results used by assign-variant
- * dialogs. Full lazy expansion lands in Phase 3 of variants-at-scale.
+ * and order add-line dialogs. Per-product lazy expansion is a later Phase 3 step.
  */
 export const SEARCH_PRODUCT_VARIANTS_PAGE_SIZE = 20;
 

@@ -33,6 +33,7 @@ import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -349,7 +350,7 @@ export const OrderUnconfirmedDetails = ({
         loading={variantSearchOpts.loading}
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
-        products={mapEdgesToItems(variantSearchOpts?.data?.search)}
+        products={mapSearchOrderVariantsForAdd(mapEdgesToItems(variantSearchOpts?.data?.search))}
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}

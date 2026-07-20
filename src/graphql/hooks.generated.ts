@@ -17701,22 +17701,27 @@ export const SearchOrderVariantDocument = gql`
         thumbnail {
           url
         }
-        variants {
-          id
-          name
-          sku
-          pricing(address: $address) {
-            priceUndiscounted {
-              gross {
-                ...Money
+        productVariants(first: 20) {
+          totalCount
+          edges {
+            node {
+              id
+              name
+              sku
+              pricing(address: $address) {
+                priceUndiscounted {
+                  gross {
+                    ...Money
+                  }
+                }
+                price {
+                  gross {
+                    ...Money
+                  }
+                }
+                onSale
               }
             }
-            price {
-              gross {
-                ...Money
-              }
-            }
-            onSale
           }
         }
       }

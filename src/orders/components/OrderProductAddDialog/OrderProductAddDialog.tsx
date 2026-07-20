@@ -13,7 +13,7 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { type OrderErrorFragment, type SearchOrderVariantQuery } from "@dashboard/graphql";
+import { type OrderErrorFragment } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -21,7 +21,12 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { buttonMessages } from "@dashboard/intl";
 import { maybe, renderCollection } from "@dashboard/misc";
-import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
+import {
+  isOrderVariantsListTruncated,
+  type OrderSearchProduct,
+  type OrderSearchVariant,
+} from "@dashboard/searches/mapSearchOrderVariantsForAdd";
+import { type FetchMoreProps } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -43,10 +48,10 @@ interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  products: RelayToFlat<SearchOrderVariantQuery["search"]>;
+  products: OrderSearchProduct[];
   onClose: () => void;
   onFetch: (query: string) => void;
-  onSubmit: (data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]) => void;
+  onSubmit: (data: OrderSearchVariant[]) => void;
   channelName?: string;
 }
 
@@ -68,9 +73,7 @@ export const OrderProductAddDialog = ({
   const classes = useStyles({});
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
-  const [variants, setVariants] = useState<
-    SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
-  >([]);
+  const [variants, setVariants] = useState<OrderSearchVariant[]>([]);
   const errors = useModalDialogErrors(apiErrors, open);
 
   const handleClose = () => {
@@ -90,10 +93,8 @@ export const OrderProductAddDialog = ({
   });
 
   const isValidVariant = hasVariantPricing;
-  const getValidProductVariants = ({
-    variants: productVariants,
-  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]) =>
-    productVariants.filter(isValidVariant);
+  const getValidProductVariants = (product: OrderSearchProduct) =>
+    product.variants.filter(isValidVariant);
   const productChoices =
     products?.filter(product => getValidProductVariants(product).length > 0) || [];
   const displayedProductChoices = useStalePickerList(productChoices, loading, open);
@@ -103,8 +104,8 @@ export const OrderProductAddDialog = ({
   const productsWithAllVariantsSelected = displayedProductChoices.map(product =>
     hasAllVariantsSelected(getValidProductVariants(product), variants),
   );
-  const productChoicesWithValidVariants = displayedProductChoices.filter(
-    ({ variants: productVariants }) => productVariants.some(isValidVariant),
+  const productChoicesWithValidVariants = displayedProductChoices.filter(({ variants }) =>
+    variants.some(isValidVariant),
   );
   const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
     loading,
@@ -164,8 +165,11 @@ export const OrderProductAddDialog = ({
                         <TableRowLink data-test-id="product">
                           <TableCell padding="checkbox">
                             <Checkbox
-                              checked={productsWithAllVariantsSelected[productIndex]}
-                              disabled={loading}
+                              checked={
+                                !isOrderVariantsListTruncated(product) &&
+                                productsWithAllVariantsSelected[productIndex]
+                              }
+                              disabled={loading || isOrderVariantsListTruncated(product)}
                               onChange={() =>
                                 onProductAdd(
                                   product,
@@ -183,6 +187,17 @@ export const OrderProductAddDialog = ({
                           />
                           <TableCell colSpan={2} data-test-id="product-name">
                             {maybe(() => product.name)}
+                            {isOrderVariantsListTruncated(product) && (
+                              <span className={classes.truncatedHint}>
+                                <FormattedMessage
+                                  {...messages.variantsListTruncated}
+                                  values={{
+                                    shown: product.variants.length,
+                                    total: product.variantsTotalCount,
+                                  }}
+                                />
+                              </span>
+                            )}
                           </TableCell>
                         </TableRowLink>
                         {maybe(() => product.variants, [])
