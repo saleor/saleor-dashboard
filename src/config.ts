@@ -57,8 +57,8 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
 
 export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
-/** Max page size for product variants grid (Saleor GraphQL pagination limit). */
-export const PRODUCT_VARIANTS_PAGINATE_BY = 100;
+/** Page size for the product variants datagrid (embedded Glide paints all loaded rows). */
+export const PRODUCT_VARIANTS_PAGINATE_BY = 50;
 /** Page size for variant detail/create sibling navigator (infinite scroll). */
 export const PRODUCT_VARIANT_SIBLINGS_PAGINATE_BY = 30;
 

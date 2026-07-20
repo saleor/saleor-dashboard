@@ -277,6 +277,10 @@
     "context": "section header",
     "string": "Media"
   },
+  "/QIOpX": {
+    "context": "error when fetching all variants for duplicate detection fails",
+    "string": "Could not load existing variants. Close the dialog and try again before generating."
+  },
   "/U8FUp": {
     "string": "Couldn't load activities"
   },
@@ -924,6 +928,10 @@
   "2nnp9+": {
     "context": "Info box title when product is not available for purchase",
     "string": "Visible but not purchasable."
+  },
+  "2nsiFJ": {
+    "context": "Hint under the pinned current variant when it is out of the scroll viewport or not loaded yet",
+    "string": "Not visible in the list — scroll or search."
   },
   "2ob30/": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
@@ -3495,10 +3503,6 @@
   },
   "FpIcp9": {
     "string": "No customers found"
-  },
-  "Fpx9fQ": {
-    "context": "error when fetching all variants for duplicate detection fails",
-    "string": "Could not load existing variants. Close the dialog and try again before generating."
   },
   "Ftz7VI": {
     "context": "input label, transaction amount",

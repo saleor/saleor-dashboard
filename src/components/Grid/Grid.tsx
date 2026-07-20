@@ -44,9 +44,8 @@ const useStyles = makeStyles(
   { name: "Grid" },
 );
 
-export const Grid = (props: GridProps) => {
-  const { className, children, variant, richText } = props;
-  const classes = useStyles(props);
+export const Grid = ({ className, children, variant = "default", richText }: GridProps) => {
+  const classes = useStyles({ className, children, variant, richText });
 
   return (
     <div
@@ -62,7 +61,4 @@ export const Grid = (props: GridProps) => {
   );
 };
 Grid.displayName = "Grid";
-Grid.defaultProps = {
-  variant: "default",
-};
 export default Grid;

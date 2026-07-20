@@ -1,51 +1,77 @@
 import { useCallback, useEffect, useRef } from "react";
 
+import { shouldLoadMoreFromScrollMetrics } from "./shouldLoadMoreFromScrollMetrics";
+
 interface UseLoadMoreOnScrollProps {
   hasNextPage: boolean;
   loadingMore: boolean;
   onLoadMore: () => void;
-  /** Re-check when the loaded set grows (list may still not fill the viewport). */
-  loadedCount: number;
 }
 
-const LOAD_MORE_THRESHOLD_PX = 80;
+/** Set on the scroll container while we adjust scrollTop for the active item. */
+export const SUPPRESS_SCROLL_LOAD_ATTR = "data-suppress-scroll-load";
 
 /**
- * Loads the next page when the user scrolls near the bottom of the list, and
- * also when the current items don't fill the scroll viewport yet.
+ * Loads the next page when the user scrolls near the bottom.
+ * Scroll checks are coalesced to one per animation frame.
  */
 export const useLoadMoreOnScroll = ({
   hasNextPage,
   loadingMore,
   onLoadMore,
-  loadedCount,
 }: UseLoadMoreOnScrollProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number | null>(null);
+  const hasNextPageRef = useRef(hasNextPage);
+  const loadingMoreRef = useRef(loadingMore);
+  const onLoadMoreRef = useRef(onLoadMore);
 
-  const maybeLoadMore = useCallback(() => {
-    const element = scrollContainerRef.current;
+  useEffect(
+    function syncLoadMoreScrollRefs() {
+      hasNextPageRef.current = hasNextPage;
+      loadingMoreRef.current = loadingMore;
+      onLoadMoreRef.current = onLoadMore;
+    },
+    [hasNextPage, loadingMore, onLoadMore],
+  );
 
-    if (!element || !hasNextPage || loadingMore) {
+  useEffect(function cancelPendingScrollFrameOnUnmount() {
+    return () => {
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    if (frameRef.current !== null) {
       return;
     }
 
-    const distanceFromBottom = element.scrollHeight - element.scrollTop - element.clientHeight;
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
 
-    if (distanceFromBottom <= LOAD_MORE_THRESHOLD_PX) {
-      onLoadMore();
-    }
-  }, [hasNextPage, loadingMore, onLoadMore]);
+      const element = scrollContainerRef.current;
 
-  const handleScroll = useCallback(() => {
-    maybeLoadMore();
-  }, [maybeLoadMore]);
+      if (!element || element.hasAttribute(SUPPRESS_SCROLL_LOAD_ATTR)) {
+        return;
+      }
 
-  useEffect(
-    function loadMoreWhenListDoesNotFillViewport() {
-      maybeLoadMore();
-    },
-    [loadedCount, maybeLoadMore],
-  );
+      if (
+        shouldLoadMoreFromScrollMetrics({
+          scrollHeight: element.scrollHeight,
+          scrollTop: element.scrollTop,
+          clientHeight: element.clientHeight,
+          maxHeightPx: element.clientHeight,
+          hasNextPage: hasNextPageRef.current,
+          loadingMore: loadingMoreRef.current,
+          userScroll: true,
+        })
+      ) {
+        onLoadMoreRef.current();
+      }
+    });
+  }, []);
 
   return { scrollContainerRef, handleScroll };
 };

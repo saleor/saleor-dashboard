@@ -5,7 +5,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { type ProductVariantItem } from "../types";
 
@@ -56,7 +56,7 @@ export const useVariantDrag = ({ variants, onReorder }: UseVariantDragProps) => 
     setIsSaving(false);
   };
 
-  const items = extractVariantIds(variants);
+  const items = useMemo(() => extractVariantIds(variants), [variants]);
 
   return {
     items,

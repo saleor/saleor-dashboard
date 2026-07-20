@@ -1,5 +1,9 @@
+/* Scroll area fills the flex card under header/search/pin.
+   Card height (TopNav + savebar aware) is set on DashboardCard in TS. */
 .scrollContainer {
-  max-height: calc(100vh - 280px);
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
-  padding-bottom: 16px;
+  overscroll-behavior: contain;
+  padding-bottom: 32px;
 }

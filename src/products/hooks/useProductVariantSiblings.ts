@@ -18,20 +18,25 @@ interface UseProductVariantSiblingsProps {
 }
 
 interface UseProductVariantSiblingsResult {
+  /** Loaded sibling pages in catalog order (never includes an off-page current prepend). */
   variants: ProductVariantSibling[];
-  /** Count from the server connection (excludes a locally pinned current variant). */
+  /**
+   * Current variant when it is not in `variants` yet — render outside the scroll
+   * list so pinning does not fight scroll order.
+   */
+  offPageCurrent: ProductVariantSibling | null;
+  /** Count from the server connection. */
   loadedCount: number;
   totalCount: number | null;
-  loading: boolean;
+  /** True only before the first usable result for this product (skeletons). */
+  initialLoading: boolean;
   loadingMore: boolean;
   search: string;
   setSearch: (query: string) => void;
   hasNextPage: boolean;
   loadMore: () => void;
   refetch: () => Promise<unknown>;
-  /** True when the current variant was prepended because it isn't in loaded results. */
-  isCurrentPinned: boolean;
-  /** Reorder is only safe on a contiguous unfiltered page slice. */
+  /** Reorder is only safe when not filtering by search. */
   canReorder: boolean;
 }
 
@@ -47,11 +52,15 @@ export const useProductVariantSiblings = ({
   const [loadingMore, setLoadingMore] = useState(false);
   const loadMoreInFlightRef = useRef(false);
 
-  if (productId !== prevProductId) {
+  // Only treat a real product change as a reset. A brief empty productId while
+  // variant details load must not clear search or skip the siblings query.
+  if (productId && productId !== prevProductId) {
     setPrevProductId(productId);
     setSearchInput("");
     setDebouncedSearch("");
   }
+
+  const queryProductId = productId || prevProductId;
 
   const debounceSearch = useDebounce((query: string) => {
     setDebouncedSearch(query);
@@ -73,37 +82,40 @@ export const useProductVariantSiblings = ({
     [debounceSearch],
   );
 
-  const { data, loading, fetchMore, refetch } = useProductVariantSiblingsQuery({
+  const { data, previousData, loading, fetchMore, refetch } = useProductVariantSiblingsQuery({
     displayLoader: false,
-    skip: skip || !productId,
+    skip: skip || !queryProductId,
     variables: {
-      id: productId,
+      id: queryProductId,
       first: pageSize,
       search: debouncedSearch || undefined,
     },
   });
 
-  const connection = data?.product?.productVariants;
+  // Prefer the current result; while a search/refetch is in flight keep the last
+  // result for *this* product so the list updates in place instead of flashing.
+  const resolvedData =
+    data?.product?.id === queryProductId
+      ? data
+      : previousData?.product?.id === queryProductId
+        ? previousData
+        : (data ?? previousData);
+
+  const connection = resolvedData?.product?.productVariants;
   const loadedVariants = useMemo(() => mapEdgesToItems(connection) ?? [], [connection]);
   const totalCount = connection?.totalCount ?? null;
   const hasNextPage = Boolean(connection?.pageInfo?.hasNextPage);
   const endCursor = connection?.pageInfo?.endCursor ?? null;
+  const initialLoading = loading && !loadingMore && loadedVariants.length === 0 && !connection;
 
-  const isCurrentPinned = Boolean(
+  const offPageCurrent =
     currentVariant &&
-      !debouncedSearch.trim() &&
-      !loadedVariants.some(variant => variant.id === currentVariant.id),
-  );
+    !debouncedSearch.trim() &&
+    !loadedVariants.some(variant => variant.id === currentVariant.id)
+      ? currentVariant
+      : null;
 
-  const variants = useMemo(() => {
-    if (!isCurrentPinned || !currentVariant) {
-      return loadedVariants;
-    }
-
-    return [currentVariant, ...loadedVariants];
-  }, [currentVariant, isCurrentPinned, loadedVariants]);
-
-  const canReorder = !searchInput.trim() && !isCurrentPinned;
+  const canReorder = !searchInput.trim();
 
   const loadMore = useCallback(() => {
     if (!endCursor || loadMoreInFlightRef.current || !hasNextPage) {
@@ -114,7 +126,7 @@ export const useProductVariantSiblings = ({
     setLoadingMore(true);
     fetchMore({
       variables: {
-        id: productId,
+        id: queryProductId,
         first: pageSize,
         after: endCursor,
         search: debouncedSearch || undefined,
@@ -127,13 +139,16 @@ export const useProductVariantSiblings = ({
           return previous;
         }
 
+        const seen = new Set(previousConnection.edges.map(edge => edge.node.id));
+        const appendedEdges = nextConnection.edges.filter(edge => !seen.has(edge.node.id));
+
         return {
           ...previous,
           product: {
             ...previous.product,
             productVariants: {
               ...nextConnection,
-              edges: [...previousConnection.edges, ...nextConnection.edges],
+              edges: [...previousConnection.edges, ...appendedEdges],
             },
           },
         };
@@ -142,20 +157,20 @@ export const useProductVariantSiblings = ({
       loadMoreInFlightRef.current = false;
       setLoadingMore(false);
     });
-  }, [debouncedSearch, endCursor, fetchMore, hasNextPage, pageSize, productId]);
+  }, [debouncedSearch, endCursor, fetchMore, hasNextPage, pageSize, queryProductId]);
 
   return {
-    variants,
+    variants: loadedVariants,
+    offPageCurrent,
     loadedCount: loadedVariants.length,
     totalCount,
-    loading: loading && !loadingMore,
+    initialLoading,
     loadingMore,
     search: searchInput,
     setSearch,
     hasNextPage,
     loadMore,
     refetch,
-    isCurrentPinned,
     canReorder,
   };
 };
