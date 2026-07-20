@@ -1,0 +1,6 @@
+/* Note: `borderStyle: "dashed"` lives in a CSS module because
+   macaw-ui-next's `borderStyle` sprinkle only ships `"none" | "solid"`. */
+.card {
+  border-style: dashed;
+  max-width: 480px;
+}

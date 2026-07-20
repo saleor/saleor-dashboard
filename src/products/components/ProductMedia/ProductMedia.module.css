@@ -1,4 +1,7 @@
 .dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-style: dashed;
   border-width: 1px;
   border-color: var(--mu-colors-border-default1);
@@ -19,11 +22,14 @@
   background-color: var(--mu-colors-background-default2);
 }
 
+.dropzoneDisabled {
+  cursor: default;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
 .dropzoneContent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 16px;
+  padding: 16px;
   text-align: center;
 }
 
@@ -60,6 +66,37 @@
 .mediaListDimmed {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.sortableTile {
+  outline: none;
+}
+
+.sortableTile:focus,
+.sortableTile:focus-visible {
+  outline: none;
+}
+
+/* In-list ghost while DragOverlay holds the floating tile */
+.sortableTilePlaceholder {
+  opacity: 0.35;
+}
+
+.sortableTilePlaceholder > * {
+  pointer-events: none;
+}
+
+.dragOverlayTile {
+  cursor: grabbing;
+  border-radius: 8px;
+  background-color: var(--mu-colors-background-default1);
+  /* Barely-there multi-layer elevation */
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.03),
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 8px 16px rgba(0, 0, 0, 0.03),
+    0 16px 32px rgba(0, 0, 0, 0.03);
+  transform: scale(1.02);
 }
 
 .hiddenInput {
