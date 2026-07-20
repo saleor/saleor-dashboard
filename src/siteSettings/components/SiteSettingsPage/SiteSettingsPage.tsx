@@ -1,18 +1,19 @@
-// @ts-strict-ignore
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { DashboardCard } from "@dashboard/components/Card";
-import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
+import { CompanyAddressForm } from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Link } from "@dashboard/components/Link";
-import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import { Savebar } from "@dashboard/components/Savebar";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import { SettingsFieldStack } from "@dashboard/components/Settings/SettingsFieldStack";
+import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
+import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
+import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
+import { SettingsToggleRow } from "@dashboard/components/Settings/SettingsToggleRow";
+import { SimpleRadioGroupField } from "@dashboard/components/SimpleRadioGroupField";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
-  type PasswordLoginModeEnum,
+  PasswordLoginModeEnum,
   type ShopErrorFragment,
   type SiteSettingsQuery,
   WebhookEventTypeAsyncEnum,
@@ -21,16 +22,15 @@ import useAddressValidation from "@dashboard/hooks/useAddressValidation";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { commonMessages } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
-import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
+import { messages as passwordLoginMessages } from "../SitePasswordLoginCard/messages";
 import { messages } from "./messages";
-import { StoreDetailsCard } from "./StoreDetailsCard/StoreDetailsCard";
+import { StoreDetailsFields } from "./StoreDetailsCard/StoreDetailsCard";
 
 const stockAvailabilityWebhooks = [
   WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL,
@@ -56,9 +56,6 @@ interface SiteSettingsPageAddressFormData {
 export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormData {
   name: string;
   description: string;
-  reserveStockDurationAnonymousUser: number;
-  reserveStockDurationAuthenticatedUser: number;
-  limitQuantityPerCheckout: number;
   emailConfirmation: boolean;
   useLegacyUpdateWebhookEmission: boolean;
   useLegacyShippingZoneStockAvailability: boolean;
@@ -90,8 +87,13 @@ export function areAddressInputFieldsModified(data: SiteSettingsPageAddressFormD
     .some(field => field !== "");
 }
 
-const SiteSettingsPage = (props: SiteSettingsPageProps) => {
-  const { disabled, errors, saveButtonBarState, shop, onSubmit } = props;
+export const SiteSettingsPage = ({
+  disabled,
+  errors,
+  saveButtonBarState,
+  shop,
+  onSubmit,
+}: SiteSettingsPageProps): JSX.Element => {
   const intl = useIntl();
   const navigate = useNavigator();
   const [displayCountry, setDisplayCountry] = useStateFromProps(
@@ -113,190 +115,188 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
     ...initialFormAddress,
     name: shop?.name || "",
     description: shop?.description || "",
-    reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser ?? 0,
-    reserveStockDurationAuthenticatedUser: shop?.reserveStockDurationAuthenticatedUser ?? 0,
-    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
     emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
     useLegacyUpdateWebhookEmission: shop?.useLegacyUpdateWebhookEmission ?? true,
     useLegacyShippingZoneStockAvailability: shop?.useLegacyShippingZoneStockAvailability ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
-    passwordLoginMode: shop?.passwordLoginMode,
+    passwordLoginMode: shop?.passwordLoginMode ?? PasswordLoginModeEnum.ENABLED,
   };
 
   return (
-    <Form
-      initial={initialForm}
-      onSubmit={data => {
-        const submitFunc = areAddressInputFieldsModified(data) ? handleSubmitWithAddress : onSubmit;
-
-        return submitFunc(data);
-      }}
-      confirmLeave
-      disabled={disabled}
+    <SettingsHubLayout
+      backHref={configurationMenuUrl}
+      title={intl.formatMessage(sectionNames.siteSettings)}
     >
-      {({ change, data, set, isSaveDisabled, submit }) => {
-        const countryChoices = mapCountriesToChoices(shop?.countries || []);
-        const countrySelect = createSingleAutocompleteSelectHandler(
-          change,
-          setDisplayCountry,
-          countryChoices,
-        );
-        const handleCountrySelect = createCountryHandler(countrySelect, set);
-        const handleEmailConfirmationChange = isEnabled => {
-          change({ target: { name: "emailConfirmation", value: isEnabled } });
-        };
-        const handleWebhookEmissionChange = isEnabled => {
-          change({ target: { name: "useLegacyUpdateWebhookEmission", value: isEnabled } });
-        };
-        const handlePreserveAddressFieldsChange = isEnabled => {
-          change({ target: { name: "preserveAllAddressFields", value: isEnabled } });
-        };
-        const handleLegacyStockAvailabilityChange = isEnabled => {
-          change({ target: { name: "useLegacyShippingZoneStockAvailability", value: isEnabled } });
-        };
+      <Form
+        initial={initialForm}
+        onSubmit={data => {
+          const submitFunc = areAddressInputFieldsModified(data)
+            ? handleSubmitWithAddress
+            : onSubmit;
 
-        return (
-          <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav
-              href={configurationMenuUrl}
-              title={intl.formatMessage(commonMessages.generalInformations)}
-            />
-            <DetailPageLayout.Content>
-              <Box gap={2}>
-                <Box display="grid" __gridTemplateColumns="1fr 3fr" paddingLeft={6}>
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionStoreDetailsTitle)}
-                    description={intl.formatMessage(messages.sectionStoreDetailsDescription)}
+          return submitFunc(data);
+        }}
+        confirmLeave
+        disabled={disabled}
+      >
+        {({ change, data, set, isSaveDisabled, submit }) => {
+          const countryChoices = mapCountriesToChoices(shop?.countries || []);
+          const countrySelect = createSingleAutocompleteSelectHandler(
+            change,
+            setDisplayCountry,
+            countryChoices,
+          );
+          const handleCountrySelect = createCountryHandler(countrySelect, set);
+
+          return (
+            <>
+              <SettingsPageContent
+                description={
+                  <FormattedMessage
+                    id="En8pZE"
+                    defaultMessage="Store identity, company address, and how customers sign in. Advanced options cover legacy API behavior."
+                    description="intro under store settings page title"
                   />
-                  <StoreDetailsCard
-                    data={data}
-                    errors={errors}
-                    disabled={disabled}
-                    onChange={change}
-                  />
-                </Box>
-                <Divider />
-                <Box display="grid" __gridTemplateColumns="1fr 3fr" paddingLeft={6}>
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionCheckoutTitle)}
-                    description={intl.formatMessage(messages.sectionCheckoutDescription)}
-                  />
-                  <SiteCheckoutSettingsCard
-                    data={data}
-                    errors={errors}
-                    disabled={disabled}
-                    onChange={change}
-                  />
-                </Box>
-                <Divider />
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                  paddingBottom={8}
+                }
+              >
+                <SettingsSection
+                  id={settingsHashes.storeDetails}
+                  data-test-id="store-details-settings"
+                  ownership="shop"
+                  title={intl.formatMessage(messages.sectionStoreDetailsTitle)}
+                  description={intl.formatMessage(messages.sectionStoreDetailsDescription)}
                 >
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionCompanyTitle)}
-                    description={intl.formatMessage(messages.sectionCompanyDescription)}
-                  />
-                  <CompanyAddressInput
-                    data={data}
-                    displayCountry={displayCountry}
-                    countries={countryChoices}
-                    errors={[...errors, ...validationErrors]}
-                    disabled={disabled}
-                    header={intl.formatMessage({
-                      id: "+jCDvp",
-                      defaultMessage: "Store Information",
-                      description: "section header",
-                    })}
-                    onChange={change}
-                    onCountryChange={handleCountrySelect}
-                  />
-                </Box>
-                <Divider />
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                  paddingBottom={8}
+                  <SettingsFieldStack>
+                    <StoreDetailsFields
+                      data={data}
+                      errors={errors}
+                      disabled={disabled}
+                      onChange={change}
+                    />
+                  </SettingsFieldStack>
+                </SettingsSection>
+
+                <SettingsSection
+                  id={settingsHashes.storeCompany}
+                  data-test-id="company-address-settings"
+                  ownership="shop"
+                  title={intl.formatMessage(messages.sectionCompanyTitle)}
+                  description={intl.formatMessage(messages.sectionCompanyDescription)}
                 >
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionEmailConfirmationTitle)}
+                  <SettingsFieldStack>
+                    <CompanyAddressForm
+                      data={data}
+                      displayCountry={displayCountry}
+                      countries={countryChoices}
+                      errors={[...errors, ...validationErrors]}
+                      disabled={disabled}
+                      onChange={change}
+                      onCountryChange={handleCountrySelect}
+                    />
+                  </SettingsFieldStack>
+                </SettingsSection>
+
+                <SettingsSection
+                  id={settingsHashes.storeCustomerAccounts}
+                  data-test-id="customer-accounts-settings"
+                  ownership="shop"
+                  title={intl.formatMessage(messages.sectionCustomerAccountsTitle)}
+                  description={intl.formatMessage(messages.sectionCustomerAccountsDescription)}
+                >
+                  <SettingsToggleRow
+                    id={settingsHashes.storeEmailConfirmation}
+                    name="emailConfirmation"
+                    title={intl.formatMessage(messages.sectionEmailConfirmationHeader)}
                     description={intl.formatMessage(messages.sectionEmailConfirmationDescription)}
+                    checked={data.emailConfirmation}
+                    disabled={disabled}
+                    onCheckedChange={isEnabled =>
+                      change({ target: { name: "emailConfirmation", value: isEnabled } })
+                    }
+                    data-test-id="require-email-confirmation-checkbox"
                   />
-                  <DashboardCard>
-                    <DashboardCard.Header>
-                      <DashboardCard.Title>
-                        {intl.formatMessage(messages.sectionEmailConfirmationHeader)}
-                      </DashboardCard.Title>
-                    </DashboardCard.Header>
-                    <DashboardCard.Content>
-                      <Checkbox
-                        data-test-id="require-email-confirmation-checkbox"
-                        checked={data.emailConfirmation}
-                        onCheckedChange={handleEmailConfirmationChange}
-                      >
-                        <Text>{intl.formatMessage(messages.sectionEmailConfirmationHeader)}</Text>
-                      </Checkbox>
-                    </DashboardCard.Content>
-                  </DashboardCard>
-                </Box>
-                <Divider />
+                  <Box id={settingsHashes.storePasswordLogin}>
+                    <SettingsFieldStack
+                      intro={
+                        <Text size={3} fontWeight="medium">
+                          {intl.formatMessage(passwordLoginMessages.cardHeader)}
+                        </Text>
+                      }
+                    >
+                      <SimpleRadioGroupField
+                        name="passwordLoginMode"
+                        value={data.passwordLoginMode}
+                        onChange={change}
+                        choices={[
+                          {
+                            label: (
+                              <Box>
+                                <Text>{intl.formatMessage(passwordLoginMessages.enabled)}</Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(passwordLoginMessages.enabledDescription)}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.ENABLED,
+                          },
+                          {
+                            label: (
+                              <Box>
+                                <Text>
+                                  {intl.formatMessage(passwordLoginMessages.customersOnly)}
+                                </Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(
+                                    passwordLoginMessages.customersOnlyDescription,
+                                  )}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.CUSTOMERS_ONLY,
+                          },
+                          {
+                            label: (
+                              <Box>
+                                <Text>{intl.formatMessage(passwordLoginMessages.disabled)}</Text>
+                                <Text size={2} color="default2" display="block">
+                                  {intl.formatMessage(passwordLoginMessages.disabledDescription)}
+                                </Text>
+                              </Box>
+                            ),
+                            value: PasswordLoginModeEnum.DISABLED,
+                          },
+                        ]}
+                      />
+                    </SettingsFieldStack>
+                  </Box>
+                </SettingsSection>
 
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                  paddingBottom={8}
+                <SettingsSection
+                  id={settingsHashes.storeAdvanced}
+                  data-test-id="store-advanced-settings"
+                  ownership="shop"
+                  title={intl.formatMessage(messages.sectionAdvancedTitle)}
+                  description={intl.formatMessage(messages.sectionAdvancedDescription)}
                 >
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionPasswordLoginTitle)}
-                    description={intl.formatMessage(messages.sectionPasswordLoginDescription)}
-                  />
-                  <SitePasswordLoginCard value={data.passwordLoginMode} onChange={change} />
-                </Box>
-                <Divider />
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                  paddingBottom={8}
-                >
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionWebhookEmissionTitle)}
+                  <SettingsToggleRow
+                    id={settingsHashes.storeWebhookEmission}
+                    name="useLegacyUpdateWebhookEmission"
+                    title={intl.formatMessage(messages.sectionWebhookEmissionHeader)}
                     description={intl.formatMessage(messages.sectionWebhookEmissionDescription)}
+                    checked={data.useLegacyUpdateWebhookEmission}
+                    disabled={disabled}
+                    onCheckedChange={isEnabled =>
+                      change({
+                        target: { name: "useLegacyUpdateWebhookEmission", value: isEnabled },
+                      })
+                    }
+                    data-test-id="legacy-webhook-emission-checkbox"
                   />
-                  <DashboardCard>
-                    <DashboardCard.Header>
-                      <DashboardCard.Title>
-                        {intl.formatMessage(messages.sectionWebhookEmissionHeader)}
-                      </DashboardCard.Title>
-                    </DashboardCard.Header>
-                    <DashboardCard.Content>
-                      <Checkbox
-                        data-test-id="legacy-webhook-emission-checkbox"
-                        checked={data.useLegacyUpdateWebhookEmission}
-                        onCheckedChange={handleWebhookEmissionChange}
-                      >
-                        <Text>{intl.formatMessage(messages.sectionWebhookEmissionHeader)}</Text>
-                      </Checkbox>
-                    </DashboardCard.Content>
-                  </DashboardCard>
-                </Box>
-                <Divider />
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                  paddingBottom={8}
-                >
-                  <Box paddingTop={6}>
-                    <Text size={3} fontWeight="bold" lineHeight={2}>
-                      {intl.formatMessage(messages.sectionStockAvailabilityTitle)}
-                    </Text>
-                    <VerticalSpacer />
-                    <Text size={3} fontWeight="regular">
+                  <SettingsToggleRow
+                    id={settingsHashes.storeStockAvailability}
+                    name="useLegacyShippingZoneStockAvailability"
+                    title={intl.formatMessage(messages.sectionStockAvailabilityHeader)}
+                    description={
                       <FormattedMessage
                         {...messages.sectionStockAvailabilityDescription}
                         values={{
@@ -307,68 +307,49 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                           ),
                         }}
                       />
-                    </Text>
-                  </Box>
-                  <DashboardCard>
-                    <DashboardCard.Header>
-                      <DashboardCard.Title>
-                        {intl.formatMessage(messages.sectionStockAvailabilityHeader)}
-                      </DashboardCard.Title>
-                    </DashboardCard.Header>
-                    <DashboardCard.Content>
-                      <Box display="flex" flexDirection="column" gap={3}>
-                        <Checkbox
-                          data-test-id="legacy-shipping-zone-stock-availability-checkbox"
-                          checked={data.useLegacyShippingZoneStockAvailability}
-                          onCheckedChange={handleLegacyStockAvailabilityChange}
-                        >
-                          <Text>{intl.formatMessage(messages.sectionStockAvailabilityHeader)}</Text>
-                        </Checkbox>
-                        <Box display="flex" flexDirection="column" gap={1}>
-                          <Text size={2} color="default2">
-                            {intl.formatMessage(messages.sectionStockAvailabilityWebhooksIntro)}
-                          </Text>
-                          <Box as="ul" margin={0} paddingLeft={5}>
-                            {stockAvailabilityWebhooks.map(name => (
-                              <Box as="li" key={name}>
-                                <Text size={2}>{name}</Text>
-                              </Box>
-                            ))}
-                          </Box>
-                        </Box>
-                      </Box>
-                    </DashboardCard.Content>
-                  </DashboardCard>
-                </Box>
-                <Divider />
-                <Box
-                  display="grid"
-                  __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={6}
-                  paddingBottom={8}
-                >
-                  <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionAddressValidationTitle)}
-                    description={intl.formatMessage(messages.sectionAddressValidationDescription)}
+                    }
+                    checked={data.useLegacyShippingZoneStockAvailability}
+                    disabled={disabled}
+                    onCheckedChange={isEnabled =>
+                      change({
+                        target: {
+                          name: "useLegacyShippingZoneStockAvailability",
+                          value: isEnabled,
+                        },
+                      })
+                    }
+                    data-test-id="legacy-shipping-zone-stock-availability-checkbox"
                   />
-                  <DashboardCard>
-                    <DashboardCard.Header>
-                      <DashboardCard.Title>
-                        {intl.formatMessage(messages.sectionAddressValidationHeader)}
-                      </DashboardCard.Title>
-                    </DashboardCard.Header>
-                    <DashboardCard.Content>
-                      <Checkbox
-                        data-test-id="preserve-all-address-fields-checkbox"
-                        checked={data.preserveAllAddressFields}
-                        onCheckedChange={handlePreserveAddressFieldsChange}
-                      >
-                        <Text>{intl.formatMessage(messages.sectionAddressValidationHeader)}</Text>
-                      </Checkbox>
-                    </DashboardCard.Content>
-                  </DashboardCard>
-                </Box>
-              </Box>
+                  {!data.useLegacyShippingZoneStockAvailability ? (
+                    <Box paddingX={6} paddingY={4} display="flex" flexDirection="column" gap={1}>
+                      <Text size={2} color="default2">
+                        {intl.formatMessage(messages.sectionStockAvailabilityWebhooksIntro)}
+                      </Text>
+                      <Box as="ul" margin={0} paddingLeft={5}>
+                        {stockAvailabilityWebhooks.map(name => (
+                          <Box as="li" key={name}>
+                            <Text size={2}>{name}</Text>
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                  ) : null}
+                  <SettingsToggleRow
+                    id={settingsHashes.storeAddressValidation}
+                    name="preserveAllAddressFields"
+                    title={intl.formatMessage(messages.sectionAddressValidationHeader)}
+                    description={intl.formatMessage(messages.sectionAddressValidationDescription)}
+                    checked={data.preserveAllAddressFields}
+                    disabled={disabled}
+                    onCheckedChange={isEnabled =>
+                      change({
+                        target: { name: "preserveAllAddressFields", value: isEnabled },
+                      })
+                    }
+                    data-test-id="preserve-all-address-fields-checkbox"
+                  />
+                </SettingsSection>
+              </SettingsPageContent>
 
               <Savebar>
                 <Savebar.Spacer />
@@ -379,13 +360,10 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
                   disabled={!!isSaveDisabled}
                 />
               </Savebar>
-            </DetailPageLayout.Content>
-          </DetailPageLayout>
-        );
-      }}
-    </Form>
+            </>
+          );
+        }}
+      </Form>
+    </SettingsHubLayout>
   );
 };
-
-SiteSettingsPage.displayName = "SiteSettingsPage";
-export default SiteSettingsPage;

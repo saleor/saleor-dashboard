@@ -66,4 +66,15 @@ export const refundsSettingsPageMessages = defineMessages({
     defaultMessage: "Create a Model",
     id: "6J1m2c",
   },
+  pageDescription: {
+    id: "OZ5c64",
+    defaultMessage:
+      "Choose Model Types whose instances appear as structured refund and return reasons on orders.",
+    description: "intro under refunds and returns settings page title",
+  },
+  saveSuccess: {
+    id: "J5+lYc",
+    defaultMessage: "Refunds and returns settings updated",
+    description: "success notification after saving refunds settings hub",
+  },
 });

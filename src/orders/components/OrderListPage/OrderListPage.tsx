@@ -143,9 +143,9 @@ const OrderListPage = ({
                   },
                   {
                     label: intl.formatMessage({
-                      id: "WbV1Xm",
-                      defaultMessage: "Order Settings",
-                      description: "button",
+                      id: "VRT9cG",
+                      defaultMessage: "Orders & fulfillment settings",
+                      description: "orders list menu shortcut to settings hub",
                     }),
                     onSelect: onSettingsOpen,
                   },

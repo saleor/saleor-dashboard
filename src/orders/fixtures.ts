@@ -19,7 +19,6 @@ import {
   OrderGrantedRefundStatusEnum,
   type OrderListQuery,
   type OrderPaymentFragment,
-  type OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
   type PaymentGatewayFragment,
@@ -3048,16 +3047,13 @@ export const invoices: InvoiceFragment[] = [
   },
 ];
 
-export const orderSettings: OrderSettingsFragment = {
-  __typename: "OrderSettings",
-  automaticallyConfirmAllNewOrders: true,
-  automaticallyFulfillNonShippableGiftCard: false,
-};
-
 export const shopOrderSettings: ShopOrderSettingsFragment = {
   __typename: "Shop",
   fulfillmentAutoApprove: true,
   fulfillmentAllowUnpaid: true,
+  reserveStockDurationAnonymousUser: 10,
+  reserveStockDurationAuthenticatedUser: 10,
+  limitQuantityPerCheckout: 50,
 };
 
 export const warehouseSearch: SearchWarehousesQuery["search"] = {

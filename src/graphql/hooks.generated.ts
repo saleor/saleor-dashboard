@@ -455,6 +455,8 @@ export const ChannelDetailsFragmentDoc = gql`
     markAsPaidStrategy
     deleteExpiredOrdersAfter
     allowUnpaidOrders
+    automaticallyConfirmAllNewOrders
+    automaticallyFulfillNonShippableGiftCard
   }
   paymentSettings {
     defaultTransactionFlowStrategy
@@ -1029,13 +1031,6 @@ export const OrderErrorFragmentDoc = gql`
   addressType
   message
   orderLines
-}
-    `;
-export const OrderSettingsErrorFragmentDoc = gql`
-    fragment OrderSettingsError on OrderSettingsError {
-  code
-  field
-  message
 }
     `;
 export const PageErrorFragmentDoc = gql`
@@ -2522,16 +2517,13 @@ export const FulfillmentMetadataFragmentDoc = gql`
   ...Metadata
 }
     ${MetadataFragmentDoc}`;
-export const OrderSettingsFragmentDoc = gql`
-    fragment OrderSettings on OrderSettings {
-  automaticallyConfirmAllNewOrders
-  automaticallyFulfillNonShippableGiftCard
-}
-    `;
 export const ShopOrderSettingsFragmentDoc = gql`
     fragment ShopOrderSettings on Shop {
   fulfillmentAutoApprove
   fulfillmentAllowUnpaid
+  reserveStockDurationAnonymousUser
+  reserveStockDurationAuthenticatedUser
+  limitQuantityPerCheckout
 }
     `;
 export const OrderLineStockDataFragmentDoc = gql`
@@ -13397,15 +13389,7 @@ export type InvoiceEmailSendMutationHookResult = ReturnType<typeof useInvoiceEma
 export type InvoiceEmailSendMutationResult = Apollo.MutationResult<Types.InvoiceEmailSendMutation>;
 export type InvoiceEmailSendMutationOptions = Apollo.BaseMutationOptions<Types.InvoiceEmailSendMutation, Types.InvoiceEmailSendMutationVariables>;
 export const OrderSettingsUpdateDocument = gql`
-    mutation OrderSettingsUpdate($orderSettingsInput: OrderSettingsUpdateInput!, $shopSettingsInput: ShopSettingsInput!) {
-  orderSettingsUpdate(input: $orderSettingsInput) {
-    errors {
-      ...OrderSettingsError
-    }
-    orderSettings {
-      ...OrderSettings
-    }
-  }
+    mutation OrderSettingsUpdate($shopSettingsInput: ShopSettingsInput!) {
   shopSettingsUpdate(input: $shopSettingsInput) {
     errors {
       ...ShopError
@@ -13415,9 +13399,7 @@ export const OrderSettingsUpdateDocument = gql`
     }
   }
 }
-    ${OrderSettingsErrorFragmentDoc}
-${OrderSettingsFragmentDoc}
-${ShopErrorFragmentDoc}
+    ${ShopErrorFragmentDoc}
 ${ShopOrderSettingsFragmentDoc}`;
 export type OrderSettingsUpdateMutationFn = Apollo.MutationFunction<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>;
 
@@ -13434,7 +13416,6 @@ export type OrderSettingsUpdateMutationFn = Apollo.MutationFunction<Types.OrderS
  * @example
  * const [orderSettingsUpdateMutation, { data, loading, error }] = useOrderSettingsUpdateMutation({
  *   variables: {
- *      orderSettingsInput: // value for 'orderSettingsInput'
  *      shopSettingsInput: // value for 'shopSettingsInput'
  *   },
  * });
@@ -14301,15 +14282,11 @@ export type OrderFulfillSettingsLazyQueryHookResult = ReturnType<typeof useOrder
 export type OrderFulfillSettingsQueryResult = Apollo.QueryResult<Types.OrderFulfillSettingsQuery, Types.OrderFulfillSettingsQueryVariables>;
 export const OrderSettingsDocument = gql`
     query OrderSettings {
-  orderSettings {
-    ...OrderSettings
-  }
   shop {
     ...ShopOrderSettings
   }
 }
-    ${OrderSettingsFragmentDoc}
-${ShopOrderSettingsFragmentDoc}`;
+    ${ShopOrderSettingsFragmentDoc}`;
 
 /**
  * __useOrderSettingsQuery__
@@ -14337,6 +14314,51 @@ export function useOrderSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQue
 export type OrderSettingsQueryHookResult = ReturnType<typeof useOrderSettingsQuery>;
 export type OrderSettingsLazyQueryHookResult = ReturnType<typeof useOrderSettingsLazyQuery>;
 export type OrderSettingsQueryResult = Apollo.QueryResult<Types.OrderSettingsQuery, Types.OrderSettingsQueryVariables>;
+export const OrderSettingsChannelsDocument = gql`
+    query OrderSettingsChannels {
+  channels {
+    id
+    name
+    slug
+    currencyCode
+    isActive
+    orderSettings {
+      automaticallyConfirmAllNewOrders
+      automaticallyFulfillNonShippableGiftCard
+      allowUnpaidOrders
+      deleteExpiredOrdersAfter
+      markAsPaidStrategy
+    }
+  }
+}
+    `;
+
+/**
+ * __useOrderSettingsChannelsQuery__
+ *
+ * To run a query within a React component, call `useOrderSettingsChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderSettingsChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderSettingsChannelsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOrderSettingsChannelsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>(OrderSettingsChannelsDocument, options);
+      }
+export function useOrderSettingsChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>(OrderSettingsChannelsDocument, options);
+        }
+export type OrderSettingsChannelsQueryHookResult = ReturnType<typeof useOrderSettingsChannelsQuery>;
+export type OrderSettingsChannelsLazyQueryHookResult = ReturnType<typeof useOrderSettingsChannelsLazyQuery>;
+export type OrderSettingsChannelsQueryResult = Apollo.QueryResult<Types.OrderSettingsChannelsQuery, Types.OrderSettingsChannelsQueryVariables>;
 export const OrderRefundDataDocument = gql`
     query OrderRefundData($orderId: ID!) {
   order(id: $orderId) {
@@ -14575,80 +14597,6 @@ export function useDevModeRunLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type DevModeRunQueryHookResult = ReturnType<typeof useDevModeRunQuery>;
 export type DevModeRunLazyQueryHookResult = ReturnType<typeof useDevModeRunLazyQuery>;
 export type DevModeRunQueryResult = Apollo.QueryResult<Types.DevModeRunQuery, Types.DevModeRunQueryVariables>;
-export const RefundSettingsDocument = gql`
-    query RefundSettings {
-  refundSettings {
-    reasonReferenceType {
-      id
-      name
-    }
-  }
-}
-    `;
-
-/**
- * __useRefundSettingsQuery__
- *
- * To run a query within a React component, call `useRefundSettingsQuery` and pass it any options that fit your needs.
- * When your component renders, `useRefundSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useRefundSettingsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useRefundSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsDocument, options);
-      }
-export function useRefundSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsDocument, options);
-        }
-export type RefundSettingsQueryHookResult = ReturnType<typeof useRefundSettingsQuery>;
-export type RefundSettingsLazyQueryHookResult = ReturnType<typeof useRefundSettingsLazyQuery>;
-export type RefundSettingsQueryResult = Apollo.QueryResult<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>;
-export const ReturnSettingsDocument = gql`
-    query ReturnSettings {
-  returnSettings {
-    reasonReferenceType {
-      id
-      name
-    }
-  }
-}
-    `;
-
-/**
- * __useReturnSettingsQuery__
- *
- * To run a query within a React component, call `useReturnSettingsQuery` and pass it any options that fit your needs.
- * When your component renders, `useReturnSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useReturnSettingsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useReturnSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>(ReturnSettingsDocument, options);
-      }
-export function useReturnSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>(ReturnSettingsDocument, options);
-        }
-export type ReturnSettingsQueryHookResult = ReturnType<typeof useReturnSettingsQuery>;
-export type ReturnSettingsLazyQueryHookResult = ReturnType<typeof useReturnSettingsLazyQuery>;
-export type ReturnSettingsQueryResult = Apollo.QueryResult<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>;
 export const PermissionGroupDeleteDocument = gql`
     mutation PermissionGroupDelete($id: ID!) {
   permissionGroupDelete(id: $id) {
@@ -16924,8 +16872,150 @@ export function useChannelDiagnosticsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ChannelDiagnosticsQueryHookResult = ReturnType<typeof useChannelDiagnosticsQuery>;
 export type ChannelDiagnosticsLazyQueryHookResult = ReturnType<typeof useChannelDiagnosticsLazyQuery>;
 export type ChannelDiagnosticsQueryResult = Apollo.QueryResult<Types.ChannelDiagnosticsQuery, Types.ChannelDiagnosticsQueryVariables>;
-export const RefundsSettingsDocument = gql`
-    query RefundsSettings {
+export const RefundSettingsUpdateDocument = gql`
+    mutation RefundSettingsUpdate($refundSettingsInput: RefundSettingsUpdateInput!) {
+  refundSettingsUpdate(input: $refundSettingsInput) {
+    errors {
+      code
+      message
+    }
+  }
+}
+    `;
+export type RefundSettingsUpdateMutationFn = Apollo.MutationFunction<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>;
+
+/**
+ * __useRefundSettingsUpdateMutation__
+ *
+ * To run a mutation, you first call `useRefundSettingsUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefundSettingsUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refundSettingsUpdateMutation, { data, loading, error }] = useRefundSettingsUpdateMutation({
+ *   variables: {
+ *      refundSettingsInput: // value for 'refundSettingsInput'
+ *   },
+ * });
+ */
+export function useRefundSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>(RefundSettingsUpdateDocument, options);
+      }
+export type RefundSettingsUpdateMutationHookResult = ReturnType<typeof useRefundSettingsUpdateMutation>;
+export type RefundSettingsUpdateMutationResult = Apollo.MutationResult<Types.RefundSettingsUpdateMutation>;
+export type RefundSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>;
+export const RefundReasonReferenceClearDocument = gql`
+    mutation RefundReasonReferenceClear {
+  refundReasonReferenceClear {
+    errors {
+      code
+      message
+    }
+  }
+}
+    `;
+export type RefundReasonReferenceClearMutationFn = Apollo.MutationFunction<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>;
+
+/**
+ * __useRefundReasonReferenceClearMutation__
+ *
+ * To run a mutation, you first call `useRefundReasonReferenceClearMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefundReasonReferenceClearMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refundReasonReferenceClearMutation, { data, loading, error }] = useRefundReasonReferenceClearMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRefundReasonReferenceClearMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>(RefundReasonReferenceClearDocument, options);
+      }
+export type RefundReasonReferenceClearMutationHookResult = ReturnType<typeof useRefundReasonReferenceClearMutation>;
+export type RefundReasonReferenceClearMutationResult = Apollo.MutationResult<Types.RefundReasonReferenceClearMutation>;
+export type RefundReasonReferenceClearMutationOptions = Apollo.BaseMutationOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>;
+export const ReturnSettingsUpdateDocument = gql`
+    mutation ReturnSettingsUpdate($returnSettingsInput: ReturnSettingsUpdateInput!) {
+  returnSettingsUpdate(input: $returnSettingsInput) {
+    errors {
+      code
+      message
+    }
+  }
+}
+    `;
+export type ReturnSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>;
+
+/**
+ * __useReturnSettingsUpdateMutation__
+ *
+ * To run a mutation, you first call `useReturnSettingsUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReturnSettingsUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [returnSettingsUpdateMutation, { data, loading, error }] = useReturnSettingsUpdateMutation({
+ *   variables: {
+ *      returnSettingsInput: // value for 'returnSettingsInput'
+ *   },
+ * });
+ */
+export function useReturnSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>(ReturnSettingsUpdateDocument, options);
+      }
+export type ReturnSettingsUpdateMutationHookResult = ReturnType<typeof useReturnSettingsUpdateMutation>;
+export type ReturnSettingsUpdateMutationResult = Apollo.MutationResult<Types.ReturnSettingsUpdateMutation>;
+export type ReturnSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>;
+export const ReturnReasonReferenceClearDocument = gql`
+    mutation ReturnReasonReferenceClear {
+  returnReasonReferenceClear {
+    errors {
+      code
+      message
+    }
+  }
+}
+    `;
+export type ReturnReasonReferenceClearMutationFn = Apollo.MutationFunction<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>;
+
+/**
+ * __useReturnReasonReferenceClearMutation__
+ *
+ * To run a mutation, you first call `useReturnReasonReferenceClearMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReturnReasonReferenceClearMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [returnReasonReferenceClearMutation, { data, loading, error }] = useReturnReasonReferenceClearMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReturnReasonReferenceClearMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>(ReturnReasonReferenceClearDocument, options);
+      }
+export type ReturnReasonReferenceClearMutationHookResult = ReturnType<typeof useReturnReasonReferenceClearMutation>;
+export type ReturnReasonReferenceClearMutationResult = Apollo.MutationResult<Types.ReturnReasonReferenceClearMutation>;
+export type ReturnReasonReferenceClearMutationOptions = Apollo.BaseMutationOptions<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>;
+export const RefundSettingsDocument = gql`
+    query RefundSettings {
   refundSettings {
     reasonReferenceType {
       id
@@ -16936,31 +17026,68 @@ export const RefundsSettingsDocument = gql`
     `;
 
 /**
- * __useRefundsSettingsQuery__
+ * __useRefundSettingsQuery__
  *
- * To run a query within a React component, call `useRefundsSettingsQuery` and pass it any options that fit your needs.
- * When your component renders, `useRefundsSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useRefundSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRefundSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useRefundsSettingsQuery({
+ * const { data, loading, error } = useRefundSettingsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useRefundsSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>) {
+export function useRefundSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>(RefundsSettingsDocument, options);
+        return ApolloReactHooks.useQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsDocument, options);
       }
-export function useRefundsSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>) {
+export function useRefundSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>(RefundsSettingsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>(RefundSettingsDocument, options);
         }
-export type RefundsSettingsQueryHookResult = ReturnType<typeof useRefundsSettingsQuery>;
-export type RefundsSettingsLazyQueryHookResult = ReturnType<typeof useRefundsSettingsLazyQuery>;
-export type RefundsSettingsQueryResult = Apollo.QueryResult<Types.RefundsSettingsQuery, Types.RefundsSettingsQueryVariables>;
+export type RefundSettingsQueryHookResult = ReturnType<typeof useRefundSettingsQuery>;
+export type RefundSettingsLazyQueryHookResult = ReturnType<typeof useRefundSettingsLazyQuery>;
+export type RefundSettingsQueryResult = Apollo.QueryResult<Types.RefundSettingsQuery, Types.RefundSettingsQueryVariables>;
+export const ReturnSettingsDocument = gql`
+    query ReturnSettings {
+  returnSettings {
+    reasonReferenceType {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useReturnSettingsQuery__
+ *
+ * To run a query within a React component, call `useReturnSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReturnSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReturnSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReturnSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>(ReturnSettingsDocument, options);
+      }
+export function useReturnSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>(ReturnSettingsDocument, options);
+        }
+export type ReturnSettingsQueryHookResult = ReturnType<typeof useReturnSettingsQuery>;
+export type ReturnSettingsLazyQueryHookResult = ReturnType<typeof useReturnSettingsLazyQuery>;
+export type ReturnSettingsQueryResult = Apollo.QueryResult<Types.ReturnSettingsQuery, Types.ReturnSettingsQueryVariables>;
 export const ModelTypesDocument = gql`
     query ModelTypes {
   pageTypes(first: 100, sortBy: {field: NAME, direction: ASC}) {
@@ -18971,148 +19098,6 @@ export function useShopSettingsUpdateMutation(baseOptions?: ApolloReactHooks.Mut
 export type ShopSettingsUpdateMutationHookResult = ReturnType<typeof useShopSettingsUpdateMutation>;
 export type ShopSettingsUpdateMutationResult = Apollo.MutationResult<Types.ShopSettingsUpdateMutation>;
 export type ShopSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ShopSettingsUpdateMutation, Types.ShopSettingsUpdateMutationVariables>;
-export const RefundSettingsUpdateDocument = gql`
-    mutation RefundSettingsUpdate($refundSettingsInput: RefundSettingsUpdateInput!) {
-  refundSettingsUpdate(input: $refundSettingsInput) {
-    errors {
-      code
-      message
-    }
-  }
-}
-    `;
-export type RefundSettingsUpdateMutationFn = Apollo.MutationFunction<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>;
-
-/**
- * __useRefundSettingsUpdateMutation__
- *
- * To run a mutation, you first call `useRefundSettingsUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRefundSettingsUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [refundSettingsUpdateMutation, { data, loading, error }] = useRefundSettingsUpdateMutation({
- *   variables: {
- *      refundSettingsInput: // value for 'refundSettingsInput'
- *   },
- * });
- */
-export function useRefundSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>(RefundSettingsUpdateDocument, options);
-      }
-export type RefundSettingsUpdateMutationHookResult = ReturnType<typeof useRefundSettingsUpdateMutation>;
-export type RefundSettingsUpdateMutationResult = Apollo.MutationResult<Types.RefundSettingsUpdateMutation>;
-export type RefundSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.RefundSettingsUpdateMutation, Types.RefundSettingsUpdateMutationVariables>;
-export const RefundReasonReferenceClearDocument = gql`
-    mutation RefundReasonReferenceClear {
-  refundReasonReferenceClear {
-    errors {
-      code
-      message
-    }
-  }
-}
-    `;
-export type RefundReasonReferenceClearMutationFn = Apollo.MutationFunction<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>;
-
-/**
- * __useRefundReasonReferenceClearMutation__
- *
- * To run a mutation, you first call `useRefundReasonReferenceClearMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRefundReasonReferenceClearMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [refundReasonReferenceClearMutation, { data, loading, error }] = useRefundReasonReferenceClearMutation({
- *   variables: {
- *   },
- * });
- */
-export function useRefundReasonReferenceClearMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>(RefundReasonReferenceClearDocument, options);
-      }
-export type RefundReasonReferenceClearMutationHookResult = ReturnType<typeof useRefundReasonReferenceClearMutation>;
-export type RefundReasonReferenceClearMutationResult = Apollo.MutationResult<Types.RefundReasonReferenceClearMutation>;
-export type RefundReasonReferenceClearMutationOptions = Apollo.BaseMutationOptions<Types.RefundReasonReferenceClearMutation, Types.RefundReasonReferenceClearMutationVariables>;
-export const ReturnSettingsUpdateDocument = gql`
-    mutation ReturnSettingsUpdate($returnSettingsInput: ReturnSettingsUpdateInput!) {
-  returnSettingsUpdate(input: $returnSettingsInput) {
-    errors {
-      code
-      message
-    }
-  }
-}
-    `;
-export type ReturnSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>;
-
-/**
- * __useReturnSettingsUpdateMutation__
- *
- * To run a mutation, you first call `useReturnSettingsUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useReturnSettingsUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [returnSettingsUpdateMutation, { data, loading, error }] = useReturnSettingsUpdateMutation({
- *   variables: {
- *      returnSettingsInput: // value for 'returnSettingsInput'
- *   },
- * });
- */
-export function useReturnSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>(ReturnSettingsUpdateDocument, options);
-      }
-export type ReturnSettingsUpdateMutationHookResult = ReturnType<typeof useReturnSettingsUpdateMutation>;
-export type ReturnSettingsUpdateMutationResult = Apollo.MutationResult<Types.ReturnSettingsUpdateMutation>;
-export type ReturnSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ReturnSettingsUpdateMutation, Types.ReturnSettingsUpdateMutationVariables>;
-export const ReturnReasonReferenceClearDocument = gql`
-    mutation ReturnReasonReferenceClear {
-  returnReasonReferenceClear {
-    errors {
-      code
-      message
-    }
-  }
-}
-    `;
-export type ReturnReasonReferenceClearMutationFn = Apollo.MutationFunction<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>;
-
-/**
- * __useReturnReasonReferenceClearMutation__
- *
- * To run a mutation, you first call `useReturnReasonReferenceClearMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useReturnReasonReferenceClearMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [returnReasonReferenceClearMutation, { data, loading, error }] = useReturnReasonReferenceClearMutation({
- *   variables: {
- *   },
- * });
- */
-export function useReturnReasonReferenceClearMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>(ReturnReasonReferenceClearDocument, options);
-      }
-export type ReturnReasonReferenceClearMutationHookResult = ReturnType<typeof useReturnReasonReferenceClearMutation>;
-export type ReturnReasonReferenceClearMutationResult = Apollo.MutationResult<Types.ReturnReasonReferenceClearMutation>;
-export type ReturnReasonReferenceClearMutationOptions = Apollo.BaseMutationOptions<Types.ReturnReasonReferenceClearMutation, Types.ReturnReasonReferenceClearMutationVariables>;
 export const SiteSettingsDocument = gql`
     query SiteSettings {
   shop {

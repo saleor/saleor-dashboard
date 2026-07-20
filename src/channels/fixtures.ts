@@ -39,6 +39,8 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
+      automaticallyConfirmAllNewOrders: true,
+      automaticallyFulfillNonShippableGiftCard: true,
       __typename: "OrderSettings",
     },
     paymentSettings: {
@@ -86,6 +88,8 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
+      automaticallyConfirmAllNewOrders: true,
+      automaticallyFulfillNonShippableGiftCard: true,
       __typename: "OrderSettings",
     },
     paymentSettings: {
@@ -133,6 +137,8 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
+      automaticallyConfirmAllNewOrders: true,
+      automaticallyFulfillNonShippableGiftCard: true,
       __typename: "OrderSettings",
     },
     paymentSettings: {
@@ -180,6 +186,8 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
+      automaticallyConfirmAllNewOrders: true,
+      automaticallyFulfillNonShippableGiftCard: true,
       __typename: "OrderSettings",
     },
     paymentSettings: {
@@ -227,6 +235,8 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
+      automaticallyConfirmAllNewOrders: true,
+      automaticallyFulfillNonShippableGiftCard: true,
       __typename: "OrderSettings",
     },
     paymentSettings: {
@@ -274,6 +284,8 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
+      automaticallyConfirmAllNewOrders: true,
+      automaticallyFulfillNonShippableGiftCard: true,
       __typename: "OrderSettings",
     },
     paymentSettings: {
@@ -321,6 +333,8 @@ export const channelsList: ChannelDetailsFragment[] = [
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
+      automaticallyConfirmAllNewOrders: true,
+      automaticallyFulfillNonShippableGiftCard: true,
       __typename: "OrderSettings",
     },
     paymentSettings: {
@@ -370,6 +384,8 @@ export const channel: ChannelDetailsFragment = {
     markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
     deleteExpiredOrdersAfter: 60,
     allowUnpaidOrders: false,
+    automaticallyConfirmAllNewOrders: true,
+    automaticallyFulfillNonShippableGiftCard: true,
     __typename: "OrderSettings",
   },
   paymentSettings: {

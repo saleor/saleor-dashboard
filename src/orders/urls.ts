@@ -330,6 +330,18 @@ export const orderFulfillUrl = (id: string, params?: OrderFulfillUrlQueryParams)
 
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
+export type OrderSettingsUrlQueryParams = {
+  from?: "orders" | "configuration";
+};
+
+export const orderSettingsUrl = (params?: OrderSettingsUrlQueryParams): string => {
+  if (!params?.from) {
+    return orderSettingsPath;
+  }
+
+  return orderSettingsPath + "?" + stringifyQs(params);
+};
+
 export const orderPaymentRefundPath = (id: string) => urlJoin(orderPath(id), "payment-refund");
 
 export const orderSendRefundPath = (id: string) => urlJoin(orderPath(id), "send-refund");
