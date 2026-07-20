@@ -124,7 +124,7 @@ describe("AssignAttributeValueDialog/utils", () => {
       expect(result).toHaveLength(3);
     });
 
-    it("should filter out selected variants in REFERENCE attribute with PRODUCT_VARIANT entity type", () => {
+    it("should keep selected variants visible for REFERENCE PRODUCT_VARIANT (dialog disables them)", () => {
       // Arrange
       const product1 = createMockProduct("prod-1", "Product 1");
       const product2 = createMockProduct("prod-2", "Product 2");
@@ -180,14 +180,8 @@ describe("AssignAttributeValueDialog/utils", () => {
       // Act
       const result = filterProductsByAttributeValues(productsWithVariants, attribute);
 
-      // Assert
-      expect(result).toHaveLength(2);
-      expect(result?.[0].productVariants?.edges.map(edge => edge.node)).toEqual([
-        createMockVariant("var-2", "Variant 2", product1),
-      ]);
-      expect(result?.[1].productVariants?.edges.map(edge => edge.node)).toEqual([
-        createMockVariant("var-4", "Variant 4", product2),
-      ]);
+      // Assert — list stays intact; selectedIds on the dialog locks already-assigned rows
+      expect(result).toEqual(productsWithVariants);
     });
   });
 

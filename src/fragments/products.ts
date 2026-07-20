@@ -395,10 +395,18 @@ export const searchProduct = gql`
 `;
 
 /**
- * Cap for variants embedded in product search results used by assign-variant
- * dialogs. Order add-line uses ORDER_PRODUCT_ADD_VARIANTS_PAGE_SIZE instead.
+ * Cap for variants embedded in SearchProducts when includeVariants is true.
+ * Keep in sync with SearchProducts `productVariants(first: …)` — codegen
+ * cannot interpolate this constant.
+ *
+ * Stay conservative: cost ≈ products.first × this × SearchProductVariant.
+ * Cloud rejects the query (HTTP 400) when this is too high (e.g. 50).
+ * Load-more uses ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE (single product).
  */
 export const SEARCH_PRODUCT_VARIANTS_PAGE_SIZE = 20;
+
+/** Page size for AssignVariant Load more (one product — safe at 50). */
+export const ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE = 50;
 
 export const searchProductVariant = gql`
   fragment SearchProductVariant on ProductVariant {

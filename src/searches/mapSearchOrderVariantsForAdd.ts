@@ -24,14 +24,14 @@ const mapProductVariantsConnection = (
 > => {
   const variants = productVariants?.edges.map(edge => edge.node) ?? [];
   const totalCount = productVariants?.totalCount ?? null;
-  const hasNextPage =
-    productVariants?.pageInfo?.hasNextPage ?? (totalCount !== null && variants.length < totalCount);
+  const endCursor = productVariants?.pageInfo?.endCursor ?? null;
+  const hasNextPage = Boolean(productVariants?.pageInfo?.hasNextPage && endCursor);
 
   return {
     variants,
     variantsTotalCount: totalCount,
     variantsHasNextPage: hasNextPage,
-    variantsEndCursor: productVariants?.pageInfo?.endCursor ?? null,
+    variantsEndCursor: endCursor,
   };
 };
 
@@ -48,10 +48,8 @@ export const mapSearchOrderVariantsForAdd = (
   })) ?? [];
 
 export const isOrderVariantsListTruncated = (
-  product: Pick<OrderSearchProduct, "variantsHasNextPage" | "variants" | "variantsTotalCount">,
-): boolean =>
-  product.variantsHasNextPage ||
-  (product.variantsTotalCount !== null && product.variants.length < product.variantsTotalCount);
+  product: Pick<OrderSearchProduct, "variantsHasNextPage">,
+): boolean => product.variantsHasNextPage;
 
 export const appendOrderProductVariantsPage = (
   product: OrderSearchProduct,
@@ -69,7 +67,7 @@ export const appendOrderProductVariantsPage = (
     ...product,
     variants: [...product.variants, ...appended],
     variantsTotalCount: page.totalCount ?? product.variantsTotalCount,
-    variantsHasNextPage: page.hasNextPage,
+    variantsHasNextPage: Boolean(page.hasNextPage && page.endCursor),
     variantsEndCursor: page.endCursor,
   };
 };

@@ -73,6 +73,7 @@ import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant }
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
+  getAssignedVariantIdsFromForm,
   getFilteredCategories,
   getFilteredCollections,
   getFilteredProducts,
@@ -546,6 +547,7 @@ const VoucherCreatePage = ({
               );
             }}
             products={getFilteredProductVariants(data, variantsSearch.result) || []}
+            selectedIds={getAssignedVariantIdsFromForm(data)}
             labels={{
               confirmBtn: intl.formatMessage(buttonMessages.assign),
             }}

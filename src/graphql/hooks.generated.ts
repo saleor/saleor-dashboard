@@ -17280,6 +17280,56 @@ export function useOrderProductVariantsForAddLazyQuery(baseOptions?: ApolloReact
 export type OrderProductVariantsForAddQueryHookResult = ReturnType<typeof useOrderProductVariantsForAddQuery>;
 export type OrderProductVariantsForAddLazyQueryHookResult = ReturnType<typeof useOrderProductVariantsForAddLazyQuery>;
 export type OrderProductVariantsForAddQueryResult = Apollo.QueryResult<Types.OrderProductVariantsForAddQuery, Types.OrderProductVariantsForAddQueryVariables>;
+export const SearchProductVariantsForAssignDocument = gql`
+    query SearchProductVariantsForAssign($id: ID!, $first: Int!, $after: String, $channel: String) {
+  product(id: $id, channel: $channel) {
+    id
+    productVariants(first: $first, after: $after) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          ...SearchProductVariant
+        }
+      }
+    }
+  }
+}
+    ${SearchProductVariantFragmentDoc}`;
+
+/**
+ * __useSearchProductVariantsForAssignQuery__
+ *
+ * To run a query within a React component, call `useSearchProductVariantsForAssignQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchProductVariantsForAssignQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchProductVariantsForAssignQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useSearchProductVariantsForAssignQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.SearchProductVariantsForAssignQuery, Types.SearchProductVariantsForAssignQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.SearchProductVariantsForAssignQuery, Types.SearchProductVariantsForAssignQueryVariables>(SearchProductVariantsForAssignDocument, options);
+      }
+export function useSearchProductVariantsForAssignLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.SearchProductVariantsForAssignQuery, Types.SearchProductVariantsForAssignQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.SearchProductVariantsForAssignQuery, Types.SearchProductVariantsForAssignQueryVariables>(SearchProductVariantsForAssignDocument, options);
+        }
+export type SearchProductVariantsForAssignQueryHookResult = ReturnType<typeof useSearchProductVariantsForAssignQuery>;
+export type SearchProductVariantsForAssignLazyQueryHookResult = ReturnType<typeof useSearchProductVariantsForAssignLazyQuery>;
+export type SearchProductVariantsForAssignQueryResult = Apollo.QueryResult<Types.SearchProductVariantsForAssignQuery, Types.SearchProductVariantsForAssignQueryVariables>;
 export const SearchAttributesDocument = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {
@@ -18040,7 +18090,7 @@ export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchP
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
 export const SearchProductsDocument = gql`
-    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput, $includeVariants: Boolean! = false) {
+    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput, $includeVariants: Boolean = false) {
   search: products(
     after: $after
     first: $first
@@ -18053,6 +18103,10 @@ export const SearchProductsDocument = gql`
         ...SearchProduct
         productVariants(first: 20) @include(if: $includeVariants) {
           totalCount
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           edges {
             node {
               ...SearchProductVariant

@@ -1,8 +1,8 @@
-import { type AddressInput } from "@dashboard/graphql";
-import { type OrderSearchProduct } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
+import { ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE } from "@dashboard/fragments/products";
+import { type AssignableSearchProduct } from "@dashboard/searches/mapSearchProductsForVariantAssign";
 import { act, renderHook } from "@testing-library/react";
 
-import { useOrderProductAddDialogProducts } from "./useOrderProductAddDialogProducts";
+import { useAssignVariantDialogProducts } from "./useAssignVariantDialogProducts";
 
 const mockQuery = jest.fn();
 
@@ -17,18 +17,36 @@ jest.mock("@apollo/client", () => {
   };
 });
 
-const baseProduct = (overrides: Partial<OrderSearchProduct> = {}): OrderSearchProduct => ({
+const baseProduct = (
+  overrides: Partial<AssignableSearchProduct> = {},
+): AssignableSearchProduct => ({
   __typename: "Product",
   id: "product-1",
   name: "Product 1",
   thumbnail: null,
+  productType: {
+    __typename: "ProductType",
+    id: "type-1",
+    name: "Type",
+  },
   variants: [
     {
       __typename: "ProductVariant",
       id: "v1",
       name: "v1",
       sku: "v1",
-      pricing: null,
+      product: {
+        __typename: "Product",
+        id: "product-1",
+        name: "Product 1",
+        thumbnail: null,
+        productType: {
+          __typename: "ProductType",
+          id: "type-1",
+          name: "Type",
+        },
+      },
+      channelListings: [],
     },
   ],
   variantsTotalCount: 3,
@@ -37,7 +55,7 @@ const baseProduct = (overrides: Partial<OrderSearchProduct> = {}): OrderSearchPr
   ...overrides,
 });
 
-describe("useOrderProductAddDialogProducts", () => {
+describe("useAssignVariantDialogProducts", () => {
   beforeEach(() => {
     mockQuery.mockReset();
   });
@@ -58,7 +76,18 @@ describe("useOrderProductAddDialogProducts", () => {
                   id: "v2",
                   name: "v2",
                   sku: "v2",
-                  pricing: null,
+                  product: {
+                    __typename: "Product",
+                    id: "product-1",
+                    name: "Product 1",
+                    thumbnail: null,
+                    productType: {
+                      __typename: "ProductType",
+                      id: "type-1",
+                      name: "Type",
+                    },
+                  },
+                  channelListings: [],
                 },
               },
               {
@@ -67,7 +96,18 @@ describe("useOrderProductAddDialogProducts", () => {
                   id: "v3",
                   name: "v3",
                   sku: "v3",
-                  pricing: null,
+                  product: {
+                    __typename: "Product",
+                    id: "product-1",
+                    name: "Product 1",
+                    thumbnail: null,
+                    productType: {
+                      __typename: "ProductType",
+                      id: "type-1",
+                      name: "Type",
+                    },
+                  },
+                  channelListings: [],
                 },
               },
             ],
@@ -77,11 +117,10 @@ describe("useOrderProductAddDialogProducts", () => {
     });
 
     const { result } = renderHook(() =>
-      useOrderProductAddDialogProducts({
+      useAssignVariantDialogProducts({
         products: [baseProduct()],
         searchQuery: "",
         channel: "default-channel",
-        address: undefined as AddressInput | undefined,
         open: true,
       }),
     );
@@ -96,6 +135,7 @@ describe("useOrderProductAddDialogProducts", () => {
       expect.objectContaining({
         variables: expect.objectContaining({
           id: "product-1",
+          first: ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE,
           after: "cursor-1",
           channel: "default-channel",
         }),
@@ -110,7 +150,7 @@ describe("useOrderProductAddDialogProducts", () => {
     expect(result.current.products[0].variantsHasNextPage).toBe(false);
   });
 
-  it("ignores in-flight load more after search clear", async () => {
+  it("ignores in-flight load more after search/channel clear", async () => {
     // Arrange
     let resolveQuery: (value: unknown) => void = () => undefined;
     const pending = new Promise(resolve => {
@@ -120,15 +160,16 @@ describe("useOrderProductAddDialogProducts", () => {
     mockQuery.mockReturnValue(pending);
 
     const { result, rerender } = renderHook(
-      ({ searchQuery }) =>
-        useOrderProductAddDialogProducts({
+      ({ searchQuery, channel }) =>
+        useAssignVariantDialogProducts({
           products: [baseProduct()],
           searchQuery,
-          channel: "default-channel",
-          address: undefined as AddressInput | undefined,
+          channel,
           open: true,
         }),
-      { initialProps: { searchQuery: "" } },
+      {
+        initialProps: { searchQuery: "", channel: "default-channel" as string | undefined },
+      },
     );
 
     let loadPromise: Promise<void> = Promise.resolve();
@@ -137,7 +178,8 @@ describe("useOrderProductAddDialogProducts", () => {
       loadPromise = result.current.loadMoreVariants("product-1");
     });
 
-    rerender({ searchQuery: "boots" });
+    // Act — clear overrides mid-flight
+    rerender({ searchQuery: "shoes", channel: "default-channel" });
 
     await act(async () => {
       resolveQuery({
@@ -154,7 +196,18 @@ describe("useOrderProductAddDialogProducts", () => {
                     id: "v2",
                     name: "v2",
                     sku: "v2",
-                    pricing: null,
+                    product: {
+                      __typename: "Product",
+                      id: "product-1",
+                      name: "Product 1",
+                      thumbnail: null,
+                      productType: {
+                        __typename: "ProductType",
+                        id: "type-1",
+                        name: "Type",
+                      },
+                    },
+                    channelListings: [],
                   },
                 },
               ],
@@ -165,7 +218,7 @@ describe("useOrderProductAddDialogProducts", () => {
       await loadPromise;
     });
 
-    // Assert
+    // Assert — stale page must not reappear as an override
     expect(result.current.products[0].variants.map(variant => variant.id)).toEqual(["v1"]);
     expect(result.current.loadingProductIds.has("product-1")).toBe(false);
   });

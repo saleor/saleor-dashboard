@@ -1,45 +1,42 @@
 import { useApolloClient } from "@apollo/client";
+import { ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE } from "@dashboard/fragments/products";
 import {
-  type AddressInput,
-  OrderProductVariantsForAddDocument,
-  type OrderProductVariantsForAddQuery,
-  type OrderProductVariantsForAddQueryVariables,
+  SearchProductVariantsForAssignDocument,
+  type SearchProductVariantsForAssignQuery,
+  type SearchProductVariantsForAssignQueryVariables,
 } from "@dashboard/graphql";
 import {
-  appendOrderProductVariantsPage,
-  type OrderSearchProduct,
-} from "@dashboard/searches/mapSearchOrderVariantsForAdd";
-import { ORDER_PRODUCT_ADD_VARIANTS_PAGE_SIZE } from "@dashboard/searches/useOrderVariantSearch";
+  appendSearchProductVariantsPage,
+  type AssignableSearchProduct,
+} from "@dashboard/searches/mapSearchProductsForVariantAssign";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-interface UseOrderProductAddDialogProductsArgs {
-  products: OrderSearchProduct[];
+interface UseAssignVariantDialogProductsArgs {
+  products: AssignableSearchProduct[];
   searchQuery: string;
   channel: string | undefined;
-  address: AddressInput | undefined;
   open: boolean;
 }
 
-interface UseOrderProductAddDialogProductsResult {
-  products: OrderSearchProduct[];
+interface UseAssignVariantDialogProductsResult {
+  products: AssignableSearchProduct[];
   loadMoreVariants: (productId: string) => Promise<void>;
   loadingProductIds: ReadonlySet<string>;
 }
 
 /**
- * Keeps per-product variant pages that were loaded after the initial search.
- * Uses `client.query` with `no-cache` so Apollo does not overwrite SearchOrderVariant's
- * embedded productVariants (Apollo 3.4 lazy queries also do not return a Promise).
+ * Keeps per-product variant pages loaded after AssignVariant search.
+ * Uses client.query + no-cache so Apollo does not overwrite SearchProducts'
+ * embedded productVariants (Apollo 3.4 lazy queries do not return a Promise).
  */
-export const useOrderProductAddDialogProducts = ({
+export const useAssignVariantDialogProducts = ({
   products: productsFromSearch,
   searchQuery,
   channel,
-  address,
   open,
-}: UseOrderProductAddDialogProductsArgs): UseOrderProductAddDialogProductsResult => {
+}: UseAssignVariantDialogProductsArgs): UseAssignVariantDialogProductsResult => {
   const client = useApolloClient();
-  const [overrides, setOverrides] = useState<Record<string, OrderSearchProduct>>({});
+  const [overrides, setOverrides] = useState<Record<string, AssignableSearchProduct>>({});
   const [loadingProductIds, setLoadingProductIds] = useState<ReadonlySet<string>>(() => new Set());
   const loadingProductIdsRef = useRef(new Set<string>());
   const overridesRef = useRef(overrides);
@@ -66,7 +63,7 @@ export const useOrderProductAddDialogProducts = ({
 
   const loadMoreVariants = useCallback(
     async (productId: string) => {
-      if (!channel || loadingProductIdsRef.current.has(productId)) {
+      if (loadingProductIdsRef.current.has(productId)) {
         return;
       }
 
@@ -85,16 +82,15 @@ export const useOrderProductAddDialogProducts = ({
 
       try {
         const result = await client.query<
-          OrderProductVariantsForAddQuery,
-          OrderProductVariantsForAddQueryVariables
+          SearchProductVariantsForAssignQuery,
+          SearchProductVariantsForAssignQueryVariables
         >({
-          query: OrderProductVariantsForAddDocument,
+          query: SearchProductVariantsForAssignDocument,
           variables: {
             id: productId,
-            first: ORDER_PRODUCT_ADD_VARIANTS_PAGE_SIZE,
+            first: ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE,
             after: current.variantsEndCursor,
             channel,
-            address,
           },
           fetchPolicy: "no-cache",
         });
@@ -118,7 +114,7 @@ export const useOrderProductAddDialogProducts = ({
 
           return {
             ...previous,
-            [productId]: appendOrderProductVariantsPage(base, {
+            [productId]: appendSearchProductVariantsPage(base, {
               variants: connection.edges.map(edge => edge.node),
               totalCount: connection.totalCount ?? null,
               hasNextPage: connection.pageInfo.hasNextPage,
@@ -127,7 +123,7 @@ export const useOrderProductAddDialogProducts = ({
           };
         });
       } catch {
-        // Keep the already-loaded page; button returns to an idle state via finally.
+        // Keep the already-loaded page; button returns to idle via finally.
       } finally {
         if (generation === loadGenerationRef.current) {
           loadingProductIdsRef.current.delete(productId);
@@ -135,7 +131,7 @@ export const useOrderProductAddDialogProducts = ({
         }
       }
     },
-    [address, channel, client],
+    [channel, client],
   );
 
   return {

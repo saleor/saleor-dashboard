@@ -26,6 +26,7 @@ import {
   type VoucherUrlQueryParams,
 } from "@dashboard/discounts/urls";
 import {
+  getAssignedVariantIds,
   getFilteredCategories,
   getFilteredCollections,
   getFilteredProducts,
@@ -633,6 +634,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           });
         }}
         products={getFilteredProductVariants(data?.voucher?.variants, searchVariantsOpts)}
+        selectedIds={getAssignedVariantIds(data?.voucher?.variants)}
       />
       <AssignProductDialog
         selectedChannels={currentChannels}

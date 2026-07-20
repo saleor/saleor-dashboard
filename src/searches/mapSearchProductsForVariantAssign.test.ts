@@ -1,15 +1,33 @@
-import { type SearchOrderVariantQuery } from "@dashboard/graphql";
+import { type SearchProductsQuery, type SearchProductVariantFragment } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
 
 import {
-  appendOrderProductVariantsPage,
-  isOrderVariantsListTruncated,
-  mapSearchOrderVariantsForAdd,
-  type OrderSearchProduct,
-  type OrderSearchVariant,
-} from "./mapSearchOrderVariantsForAdd";
+  appendSearchProductVariantsPage,
+  type AssignableSearchProduct,
+  isVariantsListTruncated,
+  mapSearchProductsForVariantAssign,
+} from "./mapSearchProductsForVariantAssign";
 
-type SearchProduct = NonNullable<RelayToFlat<SearchOrderVariantQuery["search"]>>[number];
+type SearchProduct = NonNullable<RelayToFlat<SearchProductsQuery["search"]>>[number];
+
+const createVariant = (id: string): SearchProductVariantFragment => ({
+  __typename: "ProductVariant",
+  id,
+  name: id,
+  sku: id,
+  product: {
+    __typename: "Product",
+    id: "product-1",
+    name: "Product 1",
+    thumbnail: null,
+    productType: {
+      __typename: "ProductType",
+      id: "type-1",
+      name: "Type",
+    },
+  },
+  channelListings: [],
+});
 
 const createSearchProduct = (
   overrides: Partial<SearchProduct> & {
@@ -20,18 +38,15 @@ const createSearchProduct = (
   id: "product-1",
   name: "Product 1",
   thumbnail: null,
+  productType: {
+    __typename: "ProductType",
+    id: "type-1",
+    name: "Type",
+  },
   ...overrides,
 });
 
-const createVariant = (id: string): OrderSearchVariant => ({
-  __typename: "ProductVariant",
-  id,
-  name: id,
-  sku: id,
-  pricing: null,
-});
-
-describe("mapSearchOrderVariantsForAdd", () => {
+describe("mapSearchProductsForVariantAssign", () => {
   it("flattens productVariants edges into variants and page info", () => {
     // Arrange
     const products: SearchProduct[] = [
@@ -59,7 +74,7 @@ describe("mapSearchOrderVariantsForAdd", () => {
     ];
 
     // Act
-    const mapped = mapSearchOrderVariantsForAdd(products);
+    const mapped = mapSearchProductsForVariantAssign(products);
 
     // Assert
     expect(mapped).toEqual([
@@ -76,7 +91,9 @@ describe("mapSearchOrderVariantsForAdd", () => {
 
   it("treats missing productVariants as an empty list", () => {
     // Arrange // Act
-    const mapped = mapSearchOrderVariantsForAdd([createSearchProduct({ productVariants: null })]);
+    const mapped = mapSearchProductsForVariantAssign([
+      createSearchProduct({ productVariants: null }),
+    ]);
 
     // Assert
     expect(mapped[0].variants).toEqual([]);
@@ -88,24 +105,65 @@ describe("mapSearchOrderVariantsForAdd", () => {
   it("detects truncated variant lists from pageInfo only", () => {
     // Arrange // Act // Assert
     expect(
-      isOrderVariantsListTruncated({
+      isVariantsListTruncated({
         variantsHasNextPage: true,
       }),
     ).toBe(true);
     expect(
-      isOrderVariantsListTruncated({
+      isVariantsListTruncated({
+        variantsHasNextPage: false,
+      }),
+    ).toBe(false);
+    // Filtered-away assigned variants must not look truncated when hasNextPage is false
+    expect(
+      isVariantsListTruncated({
         variantsHasNextPage: false,
       }),
     ).toBe(false);
   });
 
+  it("does not treat totalCount skew as hasNextPage without a cursor", () => {
+    // Arrange
+    const products = [
+      createSearchProduct({
+        productVariants: {
+          __typename: "ProductVariantCountableConnection",
+          totalCount: 10,
+          pageInfo: {
+            __typename: "PageInfo",
+            hasNextPage: false,
+            endCursor: null,
+          },
+          edges: [
+            {
+              __typename: "ProductVariantCountableEdge",
+              node: createVariant("v1"),
+            },
+          ],
+        },
+      }),
+    ];
+
+    // Act
+    const mapped = mapSearchProductsForVariantAssign(products);
+
+    // Assert
+    expect(mapped[0].variantsHasNextPage).toBe(false);
+    expect(isVariantsListTruncated(mapped[0])).toBe(false);
+  });
+
   it("appends the next variants page without duplicates", () => {
     // Arrange
-    const product: OrderSearchProduct = {
+    const product: AssignableSearchProduct = {
       __typename: "Product",
       id: "product-1",
       name: "Product 1",
       thumbnail: null,
+      productType: {
+        __typename: "ProductType",
+        id: "type-1",
+        name: "Type",
+      },
       variants: [createVariant("v1"), createVariant("v2")],
       variantsTotalCount: 4,
       variantsHasNextPage: true,
@@ -113,7 +171,7 @@ describe("mapSearchOrderVariantsForAdd", () => {
     };
 
     // Act
-    const next = appendOrderProductVariantsPage(product, {
+    const next = appendSearchProductVariantsPage(product, {
       variants: [createVariant("v2"), createVariant("v3"), createVariant("v4")],
       totalCount: 4,
       hasNextPage: false,

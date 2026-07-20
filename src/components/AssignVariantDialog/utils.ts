@@ -2,11 +2,13 @@ import { type SearchProductsQuery, type SearchProductVariantFragment } from "@da
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import {
   type AssignableSearchProduct,
+  isVariantsListTruncated,
   mapSearchProductsForVariantAssign,
 } from "@dashboard/searches/mapSearchProductsForVariantAssign";
 import { type RelayToFlat } from "@dashboard/types";
 
 export type { AssignableSearchProduct };
+export { isVariantsListTruncated };
 
 export type SearchVariant = SearchProductVariantFragment;
 
@@ -27,30 +29,32 @@ export function isVariantSelected(
   return !!selectedVariantsToProductsMap.find(getById(variant.id));
 }
 
-export const isVariantsListTruncated = (
-  product: Pick<AssignableSearchProduct, "variants" | "variantsTotalCount">,
-): boolean =>
-  product.variantsTotalCount !== null && product.variants.length < product.variantsTotalCount;
-
 export const handleProductAssign = (
   product: AssignableSearchProduct,
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
   variants: VariantWithProductLabel[],
   setVariants: SetVariantsAction,
+  lockedVariantIds: ReadonlySet<string> = new Set(),
 ) => {
   // Select-all only covers the loaded page; refuse when the catalog is truncated.
   if (isVariantsListTruncated(product)) {
     return;
   }
 
+  const assignableVariants = product.variants.filter(variant => !lockedVariantIds.has(variant.id));
+
+  if (assignableVariants.length === 0) {
+    return;
+  }
+
   return productsWithAllVariantsSelected[productIndex]
     ? setVariants(
-        variants.filter(selectedVariant => !product.variants.find(getById(selectedVariant.id))),
+        variants.filter(selectedVariant => !assignableVariants.find(getById(selectedVariant.id))),
       )
     : setVariants([
         ...variants,
-        ...product.variants
+        ...assignableVariants
           .filter(productVariant => !variants.find(getById(productVariant.id)))
           .map(variant => ({ ...variant, productName: product.name })),
       ]);
@@ -64,19 +68,30 @@ export const handleVariantAssign = (
   variants: VariantWithProductLabel[],
   selectedVariantsToProductsMap: boolean[][],
   setVariants: SetVariantsAction,
-) =>
-  selectedVariantsToProductsMap[productIndex][variantIndex]
+  lockedVariantIds: ReadonlySet<string> = new Set(),
+) => {
+  if (lockedVariantIds.has(variant.id)) {
+    return;
+  }
+
+  return selectedVariantsToProductsMap[productIndex][variantIndex]
     ? setVariants(variants.filter(getByUnmatchingId(variant.id)))
     : setVariants([...variants, { ...variant, productName: product.name }]);
+};
 
 export function hasAllVariantsSelected(
   productVariants: SearchVariant[],
   selectedVariantsToProductsMap: VariantWithProductLabel[],
+  lockedVariantIds: ReadonlySet<string> = new Set(),
 ): boolean {
-  return productVariants.reduce(
-    (acc, productVariant) =>
-      acc && !!selectedVariantsToProductsMap.find(getById(productVariant.id)),
-    true,
+  const assignableVariants = productVariants.filter(variant => !lockedVariantIds.has(variant.id));
+
+  if (assignableVariants.length === 0) {
+    return false;
+  }
+
+  return assignableVariants.every(
+    productVariant => !!selectedVariantsToProductsMap.find(getById(productVariant.id)),
   );
 }
 

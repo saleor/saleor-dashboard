@@ -16,19 +16,6 @@ export const useStyles = makeStyles(
     grayText: {
       color: theme.palette.text.disabled,
     },
-    truncatedHint: {
-      color: theme.palette.text.secondary,
-      display: "block",
-      fontSize: "0.75rem",
-      marginTop: theme.spacing(0.5),
-    },
-    loadMoreLoaderContainer: {
-      alignItems: "center",
-      display: "flex",
-      height: theme.spacing(3),
-      justifyContent: "center",
-      marginTop: theme.spacing(3),
-    },
     overflow: {
       overflowY: "hidden",
     },

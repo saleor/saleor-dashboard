@@ -30,19 +30,8 @@ export const filterProductsByAttributeValues = (
     case "PRODUCT":
       return products?.filter(product => !attribute.value.includes(product.id)) ?? [];
     case "PRODUCT_VARIANT":
-      return (
-        products?.map(product => ({
-          ...product,
-          productVariants: product.productVariants
-            ? {
-                ...product.productVariants,
-                edges: product.productVariants.edges.filter(
-                  edge => !attribute.value.includes(edge.node.id),
-                ),
-              }
-            : null,
-        })) ?? []
-      );
+      // Keep already-assigned variants visible; AssignVariantDialog disables them via selectedIds.
+      return products;
     default:
       return products;
   }
