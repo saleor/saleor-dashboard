@@ -1619,10 +1619,6 @@
     "context": "order history message",
     "string": "Invoice no. {invoiceNumber} was updated"
   },
-  "6Rowmg": {
-    "context": "dialog description when navigating away from dirty variants grid",
-    "string": "Save or discard your unsaved variant changes before continuing. Newly added rows must be saved before you can search or change page."
-  },
   "6SL46U": {
     "string": "by {author}"
   },
@@ -2066,6 +2062,10 @@
   },
   "8a7vg2": {
     "string": "Staff member invited"
+  },
+  "8cQf6w": {
+    "context": "dialog description when navigating away from dirty variants grid",
+    "string": "Save or discard your unsaved variant changes before continuing. Newly added rows must be saved before you can search or change page."
   },
   "8cUEPV": {
     "context": "page title",
@@ -3866,6 +3866,10 @@
     "context": "seo description field hint",
     "string": "Meta description shown in search engine previews"
   },
+  "HO4jvE": {
+    "context": "bulk delete selected variants, including count for cross-page selection",
+    "string": "Delete ({count})"
+  },
   "HQR2y0": {
     "context": "attribute value is required",
     "string": "Value Required"
@@ -4323,6 +4327,10 @@
   "JTjg1r": {
     "context": "onboarding step title",
     "string": "Discover extension capabilities"
+  },
+  "JUK2So": {
+    "context": "loading state while fetching more sibling variants on scroll",
+    "string": "Loading…"
   },
   "JUaiTB": {
     "context": "address search input placeholder in order address edit dialog",
@@ -5511,10 +5519,6 @@
     "context": "Message when entity is not in any channel",
     "string": "Not listed in any channel"
   },
-  "PRfF2J": {
-    "context": "notification body listing colliding SKUs",
-    "string": "These SKUs already exist and cannot be generated: {skus}. Change the SKU prefix or selection and try again."
-  },
   "PTW56s": {
     "context": "alert",
     "string": "Channel limit reached"
@@ -6556,6 +6560,10 @@
     "context": "gift card bulk create success dialog export button",
     "string": "Export to email"
   },
+  "Uj/iBz": {
+    "context": "shown while fetching all variants for duplicate detection",
+    "string": "Loading existing variants…"
+  },
   "UjoSZB": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
@@ -7289,6 +7297,10 @@
   "YFQBs1": {
     "context": "product availability date label",
     "string": "Set availability date"
+  },
+  "YG29Na": {
+    "context": "variants grid range label with count of unsaved staged deletions",
+    "string": "{range} ({count} pending delete)"
   },
   "YI6Fhj": {
     "context": "no address is set in draft order",
@@ -9523,6 +9535,10 @@
   "jGvclB": {
     "string": "Transaction Reference"
   },
+  "jHoIFG": {
+    "context": "how many sibling variants are loaded vs total",
+    "string": "{loaded} of {total}"
+  },
   "jKm3k/": {
     "context": "issue gift card success dialog intro",
     "string": "Copy the code below to share with the customer."
@@ -10896,10 +10912,6 @@
     "context": "success gift card disable message",
     "string": "Gift card disabled"
   },
-  "vN/WFg": {
-    "context": "bulk delete selected variants, including count for cross-page selection",
-    "string": "Delete ({count})"
-  },
   "ps+h1G": {
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
@@ -10930,6 +10942,10 @@
     "context": "button to clear lineId filter on return page",
     "string": "Show all lines"
   },
+  "pxh49C": {
+    "context": "notification when colliding SKUs are skipped and the rest are generated",
+    "string": "Skipped {count} {count, plural, one {variant} other {variants}} with existing SKUs: {skus}"
+  },
   "pyiyxe": {
     "context": "button",
     "string": "Create model"
@@ -10937,6 +10953,10 @@
   "pzSF+b": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
+  },
+  "pznlvs": {
+    "context": "variant sibling navigator search placeholder",
+    "string": "Search variants"
   },
   "q/FMPM": {
     "context": "dialog header",
@@ -12334,6 +12354,10 @@
     "context": "refund section header",
     "string": "Refunds"
   },
+  "w0m9Jc": {
+    "context": "savebar hint when variants are marked for deletion but not saved yet",
+    "string": "{count, plural, one {# variant pending delete} other {# variants pending delete}}"
+  },
   "w1puHO": {
     "context": "caption",
     "string": "If enabled, a value must be provided when this attribute is used."
@@ -12799,6 +12823,10 @@
     "context": "voucher uses",
     "string": "Uses"
   },
+  "yIgYca": {
+    "context": "notification when every generated SKU already exists",
+    "string": "All selected variants conflict with existing SKUs ({skus}). Change the SKU prefix or selection and try again."
+  },
   "yJqbYv": {
     "context": "Asynchronous events description",
     "string": "Asynchronous webhook sends payload and continues processing."
@@ -13131,33 +13159,5 @@
   "zzfj8H": {
     "context": "label",
     "string": "No refund"
-  },
-  "w0m9Jc": {
-    "context": "savebar hint when variants are marked for deletion but not saved yet",
-    "string": "{count, plural, one {# variant pending delete} other {# variants pending delete}}"
-  },
-  "8VRyo7": {
-    "context": "variants grid range label with count of unsaved staged deletions",
-    "string": "{range} ({count} pending delete)"
-  },
-  "nKs8Vp": {
-    "context": "variant sibling navigator search placeholder",
-    "string": "Search variants"
-  },
-  "rT4mLx": {
-    "context": "how many sibling variants are loaded vs total",
-    "string": "{loaded} of {total}"
-  },
-  "bW7hKc": {
-    "context": "button to load more sibling variants",
-    "string": "Load more"
-  },
-  "cP9nYd": {
-    "context": "loading state for sibling variants load more",
-    "string": "Loading…"
-  },
-  "JUK2So": {
-    "context": "loading state while fetching more sibling variants on scroll",
-    "string": "Loading…"
   }
 }

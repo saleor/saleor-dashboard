@@ -310,26 +310,6 @@ export const ProductVariants = ({
     [onBulkCreate],
   );
 
-  // Transform variants for the generator (only SELECTION attributes matter for uniqueness)
-  // Non-selection attributes don't determine variant uniqueness in Saleor
-  const selectionAttributeIds = useMemo(
-    () => new Set((selectionVariantAttributes ?? []).map(attr => attr.id)),
-    [selectionVariantAttributes],
-  );
-
-  const existingVariantsForGenerator = useMemo(
-    () =>
-      (variants ?? []).map(variant => ({
-        attributes: variant.attributes
-          .filter(attr => selectionAttributeIds.has(attr.attribute.id))
-          .map(attr => ({
-            attribute: { id: attr.attribute.id },
-            values: attr.values.map(v => ({ slug: v.slug })),
-          })),
-      })),
-    [variants, selectionAttributeIds],
-  );
-
   const hasSelectionVariantAttributes = (selectionVariantAttributes?.length ?? 0) > 0;
 
   // Check for required non-selection attributes with unsupported types
@@ -557,12 +537,12 @@ export const ProductVariants = ({
         <ProductVariantGenerator
           open={generatorOpen}
           onClose={handleCloseGenerator}
+          productId={productId}
           productName={productName}
           variantAttributes={selectionVariantAttributes as VariantAttributeFragment[]}
           nonSelectionVariantAttributes={
             nonSelectionVariantAttributes as VariantAttributeFragment[]
           }
-          existingVariants={existingVariantsForGenerator}
           onAttributeValuesSearch={onAttributeValuesSearch}
           onSubmit={handleGenerateVariants}
         />

@@ -3094,6 +3094,21 @@ export const ProductVariantSiblingFragmentDoc = gql`
   }
 }
     `;
+export const ProductVariantGeneratorExistingFragmentDoc = gql`
+    fragment ProductVariantGeneratorExisting on ProductVariant {
+  id
+  sku
+  attributes {
+    attribute {
+      id
+    }
+    values {
+      id
+      slug
+    }
+  }
+}
+    `;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
@@ -16917,6 +16932,54 @@ export function useProductVariantSkusExistLazyQuery(baseOptions?: ApolloReactHoo
 export type ProductVariantSkusExistQueryHookResult = ReturnType<typeof useProductVariantSkusExistQuery>;
 export type ProductVariantSkusExistLazyQueryHookResult = ReturnType<typeof useProductVariantSkusExistLazyQuery>;
 export type ProductVariantSkusExistQueryResult = Apollo.QueryResult<Types.ProductVariantSkusExistQuery, Types.ProductVariantSkusExistQueryVariables>;
+export const ProductVariantGeneratorExistingVariantsDocument = gql`
+    query ProductVariantGeneratorExistingVariants($id: ID!, $first: Int!, $after: String) {
+  product(id: $id) {
+    id
+    productVariants(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          ...ProductVariantGeneratorExisting
+        }
+      }
+    }
+  }
+}
+    ${ProductVariantGeneratorExistingFragmentDoc}`;
+
+/**
+ * __useProductVariantGeneratorExistingVariantsQuery__
+ *
+ * To run a query within a React component, call `useProductVariantGeneratorExistingVariantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductVariantGeneratorExistingVariantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductVariantGeneratorExistingVariantsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useProductVariantGeneratorExistingVariantsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantGeneratorExistingVariantsQuery, Types.ProductVariantGeneratorExistingVariantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductVariantGeneratorExistingVariantsQuery, Types.ProductVariantGeneratorExistingVariantsQueryVariables>(ProductVariantGeneratorExistingVariantsDocument, options);
+      }
+export function useProductVariantGeneratorExistingVariantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantGeneratorExistingVariantsQuery, Types.ProductVariantGeneratorExistingVariantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantGeneratorExistingVariantsQuery, Types.ProductVariantGeneratorExistingVariantsQueryVariables>(ProductVariantGeneratorExistingVariantsDocument, options);
+        }
+export type ProductVariantGeneratorExistingVariantsQueryHookResult = ReturnType<typeof useProductVariantGeneratorExistingVariantsQuery>;
+export type ProductVariantGeneratorExistingVariantsLazyQueryHookResult = ReturnType<typeof useProductVariantGeneratorExistingVariantsLazyQuery>;
+export type ProductVariantGeneratorExistingVariantsQueryResult = Apollo.QueryResult<Types.ProductVariantGeneratorExistingVariantsQuery, Types.ProductVariantGeneratorExistingVariantsQueryVariables>;
 export const RefundsSettingsDocument = gql`
     query RefundsSettings {
   refundSettings {

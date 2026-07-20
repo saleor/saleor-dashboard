@@ -26,17 +26,19 @@ import { DefaultsSection } from "./components/DefaultsSection";
 import { RequiredAttributesSection } from "./components/RequiredAttributesSection";
 import { VariantMatrix } from "./components/VariantMatrix";
 import { VariantPreviewList } from "./components/VariantPreviewList";
+import { fetchAllExistingVariantsForGenerator } from "./fetchExistingVariants";
 import { messages } from "./messages";
 import styles from "./ProductVariantGenerator.module.css";
 import {
   type AttributeError,
+  type ExistingVariantData,
   getUnsupportedRequiredAttributes,
   isGeneratorSupportedType,
   type NonSelectionAttributeValues,
   type ProductVariantGeneratorProps,
 } from "./types";
 import { useVariantGenerator } from "./useVariantGenerator";
-import { toBulkCreateInputs } from "./utils";
+import { excludeInputsWithCollidingSkus, toBulkCreateInputs } from "./utils";
 
 // Maximum variants that can be created in a single batch (API performance consideration)
 const VARIANT_LIMIT = 100;
@@ -59,10 +61,10 @@ const toSkuPrefix = (name: string): string =>
 export const ProductVariantGenerator = ({
   open,
   onClose,
+  productId,
   productName,
   variantAttributes,
   nonSelectionVariantAttributes,
-  existingVariants,
   onAttributeValuesSearch,
   onSubmit,
 }: ProductVariantGeneratorProps) => {
@@ -74,6 +76,8 @@ export const ProductVariantGenerator = ({
   const [showMissingDefaultsWarning, setShowMissingDefaultsWarning] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [activeTab, setActiveTab] = useState(TAB_SELECTION);
+  const [existingVariants, setExistingVariants] = useState<ExistingVariantData>([]);
+  const [existingVariantsLoading, setExistingVariantsLoading] = useState(false);
 
   // State for non-selection required attribute values
   const [nonSelectionValues, setNonSelectionValues] = useState<NonSelectionAttributeValues>({});
@@ -158,18 +162,62 @@ export const ProductVariantGenerator = ({
   // Check if we should show the Required tab
   const hasRequiredTab = supportedRequiredAttributes.length > 0;
 
-  // Reset state when modal opens
-  useEffect(() => {
-    if (open) {
+  // Reset form state when modal opens
+  useEffect(
+    function resetGeneratorOnOpen() {
+      if (!open) {
+        return;
+      }
+
       reset();
       setConfirmState("default");
       setNonSelectionValues({});
       setAttributeErrors([]);
       setActiveTab(TAB_SELECTION);
-      // Default to grid view if 2 attributes, otherwise list
       setViewMode(variantAttributes.length === 2 ? "grid" : "list");
-    }
-  }, [open, reset, variantAttributes.length]);
+    },
+    [open, reset, variantAttributes.length],
+  );
+
+  // Load every existing variant (all pages) so off-page combos are marked Exists and skipped
+  const selectionAttributeIdsKey = variantAttributes.map(attr => attr.id).join("\0");
+
+  useEffect(
+    function loadExistingVariantsForGenerator() {
+      if (!open) {
+        return;
+      }
+
+      let cancelled = false;
+      const selectionAttributeIds = new Set(
+        selectionAttributeIdsKey ? selectionAttributeIdsKey.split("\0") : [],
+      );
+
+      setExistingVariants([]);
+      setExistingVariantsLoading(true);
+      fetchAllExistingVariantsForGenerator(apolloClient, productId, selectionAttributeIds)
+        .then(variants => {
+          if (!cancelled) {
+            setExistingVariants(variants);
+          }
+        })
+        .catch(() => {
+          if (!cancelled) {
+            setExistingVariants([]);
+          }
+        })
+        .finally(() => {
+          if (!cancelled) {
+            setExistingVariantsLoading(false);
+          }
+        });
+
+      return () => {
+        cancelled = true;
+      };
+    },
+    [open, apolloClient, productId, selectionAttributeIdsKey],
+  );
 
   // Auto-close modal after successful generation
   useEffect(() => {
@@ -204,7 +252,7 @@ export const ProductVariantGenerator = ({
     setAttributeErrors([]); // Clear previous errors
 
     try {
-      const inputs = toBulkCreateInputs(
+      let inputs = toBulkCreateInputs(
         attributes,
         selections,
         defaults,
@@ -259,16 +307,31 @@ export const ProductVariantGenerator = ({
         }
 
         if (collidingSkus.size > 0) {
+          const { kept, skippedSkus } = excludeInputsWithCollidingSkus(inputs, collidingSkus);
+          const skippedLabel = [...new Set(skippedSkus)].join(", ");
+
+          if (kept.length === 0) {
+            notify({
+              status: "error",
+              title: intl.formatMessage(messages.skuCollisionTitle),
+              text: intl.formatMessage(messages.skuCollisionAllSkipped, {
+                skus: skippedLabel,
+              }),
+            });
+            setConfirmState("error");
+
+            return;
+          }
+
           notify({
-            status: "error",
+            status: "warning",
             title: intl.formatMessage(messages.skuCollisionTitle),
-            text: intl.formatMessage(messages.skuCollisionDescription, {
-              skus: [...collidingSkus].join(", "),
+            text: intl.formatMessage(messages.skuCollisionSkipped, {
+              count: skippedSkus.length,
+              skus: skippedLabel,
             }),
           });
-          setConfirmState("error");
-
-          return;
+          inputs = kept;
         }
       }
 
@@ -320,7 +383,7 @@ export const ProductVariantGenerator = ({
   }, [needsConfirmation, executeGenerate]);
 
   // Combined generation readiness check
-  const canGenerateVariants = canGenerate && hasAllRequiredAttributes;
+  const canGenerateVariants = canGenerate && hasAllRequiredAttributes && !existingVariantsLoading;
 
   const handleGenerate = useCallback(() => {
     if (!canGenerateVariants || isOverLimit) return;
@@ -358,6 +421,10 @@ export const ProductVariantGenerator = ({
       });
     }
 
+    if (existingVariantsLoading) {
+      return intl.formatMessage(messages.loadingExistingVariants);
+    }
+
     if (isOverLimit) {
       return intl.formatMessage(messages.disabledOverLimit, { limit: VARIANT_LIMIT });
     }
@@ -380,6 +447,7 @@ export const ProductVariantGenerator = ({
     isOverLimit,
     hasUnsupportedRequiredAttributes,
     unsupportedRequiredAttributes,
+    existingVariantsLoading,
     hasSelectionPerAttribute,
     newVariantsCount,
     hasAllRequiredAttributes,
@@ -506,8 +574,18 @@ export const ProductVariantGenerator = ({
                   </Box>
 
                   {/* Warnings */}
-                  {(existingCount > 0 || isTruncated || isOverLimit) && (
+                  {(existingVariantsLoading || existingCount > 0 || isTruncated || isOverLimit) && (
                     <Box className={styles.callouts}>
+                      {existingVariantsLoading && (
+                        <Callout
+                          type="info"
+                          title={
+                            <Text size={2}>
+                              {intl.formatMessage(messages.loadingExistingVariants)}
+                            </Text>
+                          }
+                        />
+                      )}
                       {existingCount > 0 && (
                         <Callout
                           type="warning"

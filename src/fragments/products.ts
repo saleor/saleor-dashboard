@@ -208,6 +208,23 @@ export const productVariantSibling = gql`
   }
 `;
 
+/** Minimal variant shape for Generate Variants duplicate detection (all pages). */
+export const productVariantGeneratorExisting = gql`
+  fragment ProductVariantGeneratorExisting on ProductVariant {
+    id
+    sku
+    attributes {
+      attribute {
+        id
+      }
+      values {
+        id
+        slug
+      }
+    }
+  }
+`;
+
 export const productFragmentDetails = gql`
   fragment Product on Product {
     ...ProductVariantAttributes

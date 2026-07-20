@@ -381,3 +381,23 @@ export const productVariantSkusExistQuery = gql`
     }
   }
 `;
+
+/** All variant attribute combinations for the generator (paginated; caller walks pages). */
+export const productVariantGeneratorExistingQuery = gql`
+  query ProductVariantGeneratorExistingVariants($id: ID!, $first: Int!, $after: String) {
+    product(id: $id) {
+      id
+      productVariants(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            ...ProductVariantGeneratorExisting
+          }
+        }
+      }
+    }
+  }
+`;
