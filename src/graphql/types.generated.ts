@@ -14099,13 +14099,6 @@ export type ProductTranslationDetailsQueryVariables = Exact<{
 
 export type ProductTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: string | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, description: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: string | null, attributeValue: { __typename: 'AttributeValue', id: string, inputType: AttributeInputTypeEnum | null } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
-export type ProductVariantListQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type ProductVariantListQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, variants: Array<{ __typename: 'ProductVariant', id: string, name: string, sku: string | null }> | null } | null };
-
 export type ProductVariantTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
   language: LanguageCodeEnum;

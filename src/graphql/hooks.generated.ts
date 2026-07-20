@@ -21550,46 +21550,6 @@ export function useProductTranslationDetailsLazyQuery(baseOptions?: ApolloReactH
 export type ProductTranslationDetailsQueryHookResult = ReturnType<typeof useProductTranslationDetailsQuery>;
 export type ProductTranslationDetailsLazyQueryHookResult = ReturnType<typeof useProductTranslationDetailsLazyQuery>;
 export type ProductTranslationDetailsQueryResult = Apollo.QueryResult<Types.ProductTranslationDetailsQuery, Types.ProductTranslationDetailsQueryVariables>;
-export const ProductVariantListDocument = gql`
-    query ProductVariantList($id: ID!) {
-  product(id: $id) {
-    id
-    variants {
-      id
-      name
-      sku
-    }
-  }
-}
-    `;
-
-/**
- * __useProductVariantListQuery__
- *
- * To run a query within a React component, call `useProductVariantListQuery` and pass it any options that fit your needs.
- * When your component renders, `useProductVariantListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProductVariantListQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useProductVariantListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>(ProductVariantListDocument, options);
-      }
-export function useProductVariantListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>(ProductVariantListDocument, options);
-        }
-export type ProductVariantListQueryHookResult = ReturnType<typeof useProductVariantListQuery>;
-export type ProductVariantListLazyQueryHookResult = ReturnType<typeof useProductVariantListLazyQuery>;
-export type ProductVariantListQueryResult = Apollo.QueryResult<Types.ProductVariantListQuery, Types.ProductVariantListQueryVariables>;
 export const ProductVariantTranslationDetailsDocument = gql`
     query ProductVariantTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
   translation(kind: VARIANT, id: $id) {
