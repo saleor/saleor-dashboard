@@ -193,6 +193,21 @@ export const productDetailsVariant = gql`
   }
 `;
 
+/** Slim variant row for the detail/create sibling navigator. */
+export const productVariantSibling = gql`
+  fragment ProductVariantSibling on ProductVariant {
+    id
+    name
+    sku
+    media {
+      id
+      url(size: 200)
+      type
+      oembedData
+    }
+  }
+`;
+
 export const productFragmentDetails = gql`
   fragment Product on Product {
     ...ProductVariantAttributes
@@ -321,17 +336,6 @@ export const fragmentVariant = gql`
           id
           name
           currencyCode
-        }
-      }
-      variants {
-        id
-        name
-        sku
-        media {
-          id
-          url(size: 200)
-          type
-          oembedData
         }
       }
     }

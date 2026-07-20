@@ -127,6 +127,7 @@ interface DatagridProps {
   rowMarkerWidth?: number;
   rowMarkerTheme?: Partial<Theme>;
   smoothScrollX?: boolean;
+  rowSelectionBlending?: DataEditorProps["rowSelectionBlending"];
 }
 
 export const Datagrid = ({

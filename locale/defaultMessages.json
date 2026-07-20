@@ -13139,5 +13139,21 @@
   "8VRyo7": {
     "context": "variants grid range label with count of unsaved staged deletions",
     "string": "{range} ({count} pending delete)"
+  },
+  "nKs8Vp": {
+    "context": "variant sibling navigator search placeholder",
+    "string": "Search variants"
+  },
+  "rT4mLx": {
+    "context": "how many sibling variants are loaded vs total",
+    "string": "{loaded} of {total}"
+  },
+  "bW7hKc": {
+    "context": "button to load more sibling variants",
+    "string": "Load more"
+  },
+  "cP9nYd": {
+    "context": "loading state for sibling variants load more",
+    "string": "Loading…"
   }
 }

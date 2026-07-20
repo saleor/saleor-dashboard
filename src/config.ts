@@ -59,6 +59,8 @@ export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
 /** Max page size for product variants grid (Saleor GraphQL pagination limit). */
 export const PRODUCT_VARIANTS_PAGINATE_BY = 100;
+/** Page size for variant detail/create sibling navigator (infinite scroll). */
+export const PRODUCT_VARIANT_SIBLINGS_PAGINATE_BY = 30;
 
 export type ProductListColumns =
   | "name"

@@ -151,10 +151,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const handleDeactivateVariantPreorder = (id: string) => deactivatePreorder({ variables: { id } });
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
-  const handleVariantReorder = createVariantReorderHandler(
-    variant?.product,
-    reorderProductVariants,
-  );
+  const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
   const disableFormSave =
     loading ||
     uploadFileOpts.loading ||

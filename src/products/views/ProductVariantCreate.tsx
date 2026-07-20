@@ -108,7 +108,7 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
-  const handleVariantReorder = createVariantReorderHandler(product, reorderProductVariants);
+  const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
   const handleCreate = async (formData: ProductVariantCreateData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,

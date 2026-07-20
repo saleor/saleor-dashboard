@@ -153,16 +153,6 @@ export const productVariantCreateQuery = gql`
       defaultVariant {
         id
       }
-      variants {
-        id
-        name
-        sku
-        media {
-          id
-          url
-          type
-        }
-      }
     }
   }
 `;
@@ -351,6 +341,27 @@ export const productVariantsGridQuery = gql`
         edges {
           node {
             ...ProductDetailsVariant
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const productVariantSiblingsQuery = gql`
+  query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String) {
+    product(id: $id) {
+      id
+      productVariants(first: $first, after: $after, filter: { search: $search }) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          endCursor
+        }
+        edges {
+          node {
+            ...ProductVariantSibling
           }
         }
       }

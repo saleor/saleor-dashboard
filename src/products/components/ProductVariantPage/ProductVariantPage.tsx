@@ -46,12 +46,7 @@ import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import {
-  type Container,
-  type FetchMoreProps,
-  type RelayToFlat,
-  type ReorderAction,
-} from "@dashboard/types";
+import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CircleHelp } from "lucide-react";
@@ -68,6 +63,7 @@ import { ProductVariantMediaSelectDialog } from "../ProductVariantImageSelectDia
 import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
+import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
 import { ProductVariantPrice } from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import {
@@ -136,7 +132,7 @@ interface ProductVariantPageProps {
   initialConstraints?: InitialConstraints & InitialPageConstraints;
   onVariantPreorderDeactivate: (id: string) => void;
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
-  onVariantReorder: ReorderAction;
+  onVariantReorder: (move: VariantReorderMove) => void;
   onAttributeSelectBlur: () => void;
   onDelete: () => any;
   onShowMetadata: () => void;
@@ -317,10 +313,19 @@ export const ProductVariantPage = ({
                     <ProductVariantNavigation
                       productId={productId}
                       current={variant?.id}
+                      currentVariant={
+                        variant
+                          ? {
+                              __typename: "ProductVariant" as const,
+                              id: variant.id,
+                              name: variant.name,
+                              sku: variant.sku,
+                              media: variant.media,
+                            }
+                          : null
+                      }
                       defaultVariantId={defaultVariantId}
                       fallbackThumbnail={variant?.product?.thumbnail?.url}
-                      variants={variant?.product.variants}
-                      loading={loading}
                       onReorder={onVariantReorder}
                     />
                   </div>

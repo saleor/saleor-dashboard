@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { type MutationFunctionOptions } from "@apollo/client";
 import {
-  type Node,
   type ProductFragment,
   type ProductMediaCreateMutationVariables,
   type ProductMediaReorderMutation,
@@ -9,7 +8,6 @@ import {
   type ProductVariantReorderMutationFn,
 } from "@dashboard/graphql";
 import { type ReorderEvent } from "@dashboard/types";
-import { move } from "@dashboard/utils/lists";
 import { arrayMove } from "react-sortable-hoc";
 
 export function createImageUploadHandler(
@@ -69,44 +67,24 @@ export function createImageReorderHandler(
   };
 }
 
-function areVariantsEqual(a: Node, b: Node) {
-  return a.id === b.id;
-}
-
-export function createVariantReorderHandler<T extends { id: string; variants: any[] }>(
-  product: T,
+export function createVariantReorderHandler(
+  productId: string | undefined,
   reorderProductVariants: ProductVariantReorderMutationFn,
 ) {
-  return ({ newIndex, oldIndex }: ReorderEvent) => {
-    const oldVariantOrder = [...product.variants];
+  return ({ id, sortOrder }: { id: string; sortOrder: number }) => {
+    if (!productId) {
+      return;
+    }
 
     reorderProductVariants({
       variables: {
         move: {
-          id: oldVariantOrder[oldIndex].id,
-          sortOrder: newIndex - oldIndex,
+          id,
+          sortOrder,
         },
-        productId: product.id,
+        productId,
       },
-      optimisticResponse: () => ({
-        __typename: "Mutation",
-        productVariantReorder: {
-          __typename: "ProductVariantReorder",
-          errors: [],
-          product: {
-            __typename: "Product",
-            id: product.id,
-            variants: [
-              ...move<T["variants"][0]>(
-                product.variants[oldIndex],
-                product!.variants,
-                areVariantsEqual,
-                newIndex,
-              ),
-            ],
-          },
-        },
-      }),
+      refetchQueries: ["ProductVariantSiblings"],
     });
   };
 }

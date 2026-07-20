@@ -75,9 +75,19 @@ export const useProductVariantsGrid = ({
   const setSearch = useCallback(
     (query: string) => {
       setSearchInput(query);
+
+      // Clear immediately so Esc / explicit reset doesn't wait on debounce.
+      if (!query.trim()) {
+        setDebouncedSearch("");
+        setPaginationState({});
+        resetRangeTracking();
+
+        return;
+      }
+
       debounceSearch(query);
     },
-    [debounceSearch],
+    [debounceSearch, resetRangeTracking, setPaginationState],
   );
 
   const { data, loading, refetch } = useProductVariantsGridQuery({

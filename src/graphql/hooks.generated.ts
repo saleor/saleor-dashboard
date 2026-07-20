@@ -3081,6 +3081,19 @@ export const ProductDetailsVariantFragmentDoc = gql`
 ${StockFragmentDoc}
 ${PreorderFragmentDoc}
 ${ChannelListingProductVariantFragmentDoc}`;
+export const ProductVariantSiblingFragmentDoc = gql`
+    fragment ProductVariantSibling on ProductVariant {
+  id
+  name
+  sku
+  media {
+    id
+    url(size: 200)
+    type
+    oembedData
+  }
+}
+    `;
 export const VariantAttributeFragmentDoc = gql`
     fragment VariantAttribute on Attribute {
   id
@@ -3271,17 +3284,6 @@ export const ProductVariantFragmentDoc = gql`
         id
         name
         currencyCode
-      }
-    }
-    variants {
-      id
-      name
-      sku
-      media {
-        id
-        url(size: 200)
-        type
-        oembedData
       }
     }
   }
@@ -16469,16 +16471,6 @@ export const ProductVariantCreateDataDocument = gql`
     defaultVariant {
       id
     }
-    variants {
-      id
-      name
-      sku
-      media {
-        id
-        url
-        type
-      }
-    }
   }
 }
     ${VariantAttributeFragmentDoc}`;
@@ -16833,6 +16825,57 @@ export function useProductVariantsGridLazyQuery(baseOptions?: ApolloReactHooks.L
 export type ProductVariantsGridQueryHookResult = ReturnType<typeof useProductVariantsGridQuery>;
 export type ProductVariantsGridLazyQueryHookResult = ReturnType<typeof useProductVariantsGridLazyQuery>;
 export type ProductVariantsGridQueryResult = Apollo.QueryResult<Types.ProductVariantsGridQuery, Types.ProductVariantsGridQueryVariables>;
+export const ProductVariantSiblingsDocument = gql`
+    query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String) {
+  product(id: $id) {
+    id
+    productVariants(first: $first, after: $after, filter: {search: $search}) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        endCursor
+      }
+      edges {
+        node {
+          ...ProductVariantSibling
+        }
+      }
+    }
+  }
+}
+    ${ProductVariantSiblingFragmentDoc}`;
+
+/**
+ * __useProductVariantSiblingsQuery__
+ *
+ * To run a query within a React component, call `useProductVariantSiblingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductVariantSiblingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductVariantSiblingsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useProductVariantSiblingsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ProductVariantSiblingsQuery, Types.ProductVariantSiblingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ProductVariantSiblingsQuery, Types.ProductVariantSiblingsQueryVariables>(ProductVariantSiblingsDocument, options);
+      }
+export function useProductVariantSiblingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductVariantSiblingsQuery, Types.ProductVariantSiblingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ProductVariantSiblingsQuery, Types.ProductVariantSiblingsQueryVariables>(ProductVariantSiblingsDocument, options);
+        }
+export type ProductVariantSiblingsQueryHookResult = ReturnType<typeof useProductVariantSiblingsQuery>;
+export type ProductVariantSiblingsLazyQueryHookResult = ReturnType<typeof useProductVariantSiblingsLazyQuery>;
+export type ProductVariantSiblingsQueryResult = Apollo.QueryResult<Types.ProductVariantSiblingsQuery, Types.ProductVariantSiblingsQueryVariables>;
 export const ProductVariantSkusExistDocument = gql`
     query ProductVariantSkusExist($skus: [String!]!, $first: Int!) {
   productVariants(first: $first, where: {sku: {oneOf: $skus}}) {

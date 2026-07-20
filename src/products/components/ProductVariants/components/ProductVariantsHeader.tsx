@@ -256,6 +256,15 @@ export const ProductVariantsHeader = ({
 
                   runGuarded(() => onVariantsSearchChange(nextQuery));
                 }}
+                onKeyDown={event => {
+                  if (event.key !== "Escape" || !variantsSearch) {
+                    return;
+                  }
+
+                  event.preventDefault();
+                  runGuarded(() => onVariantsSearchChange(""));
+                  event.currentTarget.blur();
+                }}
                 placeholder={intl.formatMessage({
                   id: "W5DAXI",
                   defaultMessage: "Search variants by name or SKU",

@@ -58,7 +58,7 @@ export const VariantItem = ({
       __borderColor={isActive ? undefined : "transparent"}
       __borderLeftWidth={2}
     >
-      <Box maxWidth="100%" paddingX={2} paddingY={1} display="flex" alignItems="center" gap={5}>
+      <Box maxWidth="100%" paddingX={2} paddingY={2} display="flex" alignItems="center" gap={5}>
         <Box
           {...attributes}
           {...listeners}

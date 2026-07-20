@@ -38,12 +38,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import {
-  type Container,
-  type FetchMoreProps,
-  type RelayToFlat,
-  type ReorderAction,
-} from "@dashboard/types";
+import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -55,6 +50,7 @@ import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannels
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
+import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
 import { ProductVariantPrice } from "../ProductVariantPrice";
 import {
   type ProductVariantCreateData,
@@ -107,7 +103,7 @@ interface ProductVariantCreatePageProps {
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
-  onVariantReorder: ReorderAction;
+  onVariantReorder: (move: VariantReorderMove) => void;
   onWarehouseConfigure: () => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
@@ -229,7 +225,6 @@ export const ProductVariantCreatePage = ({
                 <div>
                   <ProductVariantNavigation
                     fallbackThumbnail={product?.thumbnail?.url}
-                    variants={product?.variants}
                     productId={productId}
                     defaultVariantId={defaultVariantId}
                     onReorder={onVariantReorder}
