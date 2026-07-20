@@ -56,6 +56,7 @@ export const AddCustomExtensionWebhook = ({ appId }: CustomAppWebhookCreateProps
             secretKey: data.secretKey,
             targetUrl: data.targetUrl,
             query: data.subscriptionQuery,
+            customHeaders: data.customHeaders,
           },
         },
       }),
