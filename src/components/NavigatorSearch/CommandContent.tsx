@@ -8,6 +8,7 @@ import { getShortcutLeadingKey } from "../Sidebar/shortcuts/utils";
 import { Actions } from "./Actions";
 import NavigatorSearchInput from "./NavigatorSearchInput";
 import { ResourcesTable } from "./ResourcesTable";
+import { SearchActions } from "./SearchActions";
 import { SettingsActions } from "./SettingsActions";
 import { useKeyboardNavigation } from "./useKeyboardNavigation";
 import { useNavigatorSearchContext } from "./useNavigatorSearchContext";
@@ -45,6 +46,11 @@ export const CommandContent = () => {
         paddingTop={2}
         paddingBottom={2}
       >
+        <SearchActions
+          query={query}
+          onActionSelected={handleClick}
+          onActionsChange={handleItemsChange}
+        />
         <Actions query={query} onActionClick={handleClick} />
         <SettingsActions query={query} onActionClick={handleClick} />
         <Box marginTop={3}>
