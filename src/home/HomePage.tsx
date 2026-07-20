@@ -1,11 +1,11 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
-import { Box, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { Box } from "@saleor/macaw-ui-next";
 import { useParams, useRouteMatch } from "react-router";
 import { Redirect } from "react-router-dom";
 
 import { filterHomeExtensions } from "./filterHomeExtensions";
+import { HomeEmptyState } from "./HomeEmptyState";
 import { HomeWidgetsGrid } from "./HomeWidgetsGrid";
 import { type HomeActiveTab, HomeWidgetTabs } from "./HomeWidgetTabs";
 import { HomeWidgetView } from "./HomeWidgetView";
@@ -56,26 +56,7 @@ export const HomePage = () => {
   }
 
   if (fullscreen.length === 0 && widgets.length === 0) {
-    return (
-      <Box paddingX={8} paddingY={9}>
-        <Text size={6} fontWeight="bold">
-          <FormattedMessage
-            id="fTLvHX"
-            defaultMessage="Welcome"
-            description="empty home page title"
-          />
-        </Text>
-        <Box marginTop={4}>
-          <Text>
-            <FormattedMessage
-              id="cxUBO1"
-              defaultMessage="Install an app that registers a HOMEPAGE_WIDGETS extension to see it here."
-              description="empty home page description"
-            />
-          </Text>
-        </Box>
-      </Box>
-    );
+    return <HomeEmptyState />;
   }
 
   const leftmostUrl = resolveLeftmostTabUrl(fullscreen, widgets);

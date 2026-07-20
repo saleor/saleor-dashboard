@@ -19,7 +19,6 @@ import {
   OrderGrantedRefundStatusEnum,
   type OrderListQuery,
   type OrderPaymentFragment,
-  type OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
   type PaymentGatewayFragment,
@@ -1629,6 +1628,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               currency: "USD",
             },
             unitDiscountReason: null,
+            priceOverrideReason: null,
+            isPriceOverridden: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1808,6 +1809,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               currency: "USD",
             },
             unitDiscountReason: null,
+            priceOverrideReason: null,
+            isPriceOverridden: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1989,6 +1992,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2138,6 +2143,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2449,6 +2456,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2598,6 +2607,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -3052,16 +3063,13 @@ export const invoices: InvoiceFragment[] = [
   },
 ];
 
-export const orderSettings: OrderSettingsFragment = {
-  __typename: "OrderSettings",
-  automaticallyConfirmAllNewOrders: true,
-  automaticallyFulfillNonShippableGiftCard: false,
-};
-
 export const shopOrderSettings: ShopOrderSettingsFragment = {
   __typename: "Shop",
   fulfillmentAutoApprove: true,
   fulfillmentAllowUnpaid: true,
+  reserveStockDurationAnonymousUser: 10,
+  reserveStockDurationAuthenticatedUser: 10,
+  limitQuantityPerCheckout: 50,
 };
 
 export const warehouseSearch: SearchWarehousesQuery["search"] = {

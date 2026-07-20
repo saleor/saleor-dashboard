@@ -5,13 +5,6 @@ import type { Page } from "@playwright/test";
 export class SiteSettingsPage extends BasePage {
   constructor(
     page: Page,
-    readonly stockReservationForAuthUserInput = page
-      .getByTestId("reserve-stock-duration-for-auth-user-input")
-      .locator("input"),
-    readonly stockReservationForAnonUserInput = page
-      .getByTestId("reserve-stock-duration-for-anon-user-input")
-      .locator("input"),
-    readonly checkoutLineLimitInput = page.getByTestId("checkout-limits-input").locator("input"),
     readonly companyInput = page.getByTestId("company-name-input").locator("input"),
     readonly addressLine1Input = page.getByTestId("company-address-line-1-input").locator("input"),
     readonly addressLine2Input = page.getByTestId("company-address-line-2-input").locator("input"),
@@ -34,18 +27,6 @@ export class SiteSettingsPage extends BasePage {
 
   async gotoSiteSettings() {
     await this.page.goto(URL_LIST.siteSettings);
-  }
-
-  async fillStockReservationForAuthUser(value: string) {
-    await this.stockReservationForAuthUserInput.fill(value);
-  }
-
-  async fillStockReservationForAnonUser(value: string) {
-    await this.stockReservationForAnonUserInput.fill(value);
-  }
-
-  async fillCheckoutLineLimitInput(value: string) {
-    await this.checkoutLineLimitInput.fill(value);
   }
 
   async completeAddressForm(

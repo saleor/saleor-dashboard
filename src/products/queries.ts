@@ -172,7 +172,7 @@ export const productMediaQuery = gql`
       }
       media {
         id
-        url(size: 48)
+        url(size: 128, format: WEBP)
         alt
         type
         oembedData

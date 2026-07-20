@@ -1,0 +1,36 @@
+.toolbarInner {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.resultItem {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.resultItem:last-child {
+  border-bottom: none;
+}
+
+.resultLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.resultRow {
+  padding: var(--mu-spacing-5) var(--mu-spacing-5);
+}
+
+.resultLink:hover,
+.resultLinkActive {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.resultDescription {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

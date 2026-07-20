@@ -55,6 +55,8 @@ const line: OrderLineFragment = {
   },
   unitDiscountValue: 0,
   unitDiscountReason: null,
+  priceOverrideReason: null,
+  isPriceOverridden: null,
   unitDiscountType: null,
   undiscountedUnitPrice: {
     __typename: "TaxedMoney",

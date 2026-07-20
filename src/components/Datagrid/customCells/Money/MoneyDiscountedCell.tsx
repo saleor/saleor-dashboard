@@ -1,7 +1,13 @@
 import { type Locale } from "@dashboard/components/Locale";
 import { type CustomCell, type CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
 
-import { drawCurrency, drawLineCrossedPrice, drawPrice, getFormattedMoney } from "./utils";
+import {
+  drawBreakdownMarker,
+  drawCurrency,
+  drawLineCrossedPrice,
+  drawPrice,
+  getFormattedMoney,
+} from "./utils";
 
 interface MoneyDiscountedCellProps {
   readonly kind: "money-discounted-cell";
@@ -9,6 +15,8 @@ interface MoneyDiscountedCellProps {
   readonly undiscounted?: string | number;
   readonly value: number | string | null;
   readonly locale: Locale;
+  /** When true, draws a subtle dot signalling the price has a breakdown. */
+  readonly hasBreakdown?: boolean;
 }
 
 export type MoneyDiscuntedCell = CustomCell<MoneyDiscountedCellProps>;
@@ -18,7 +26,7 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
   isMatch: (c): c is MoneyDiscuntedCell => (c.data as any).kind === "money-discounted-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
-    const { currency, value, undiscounted, locale } = cell.data;
+    const { currency, value, undiscounted, locale, hasBreakdown } = cell.data;
     const hasValue = value === 0 ? true : !!value;
     // When the value is unknown we leave the price area blank; `drawCurrency`
     // below already renders a single "-" in the currency column, so emitting
@@ -41,6 +49,10 @@ export const moneyDiscountedCellRenderer = (): CustomRenderer<MoneyDiscuntedCell
     ctx.save();
     drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
     ctx.restore();
+
+    if (hasBreakdown) {
+      drawBreakdownMarker(ctx, theme, rect);
+    }
 
     return true;
   },

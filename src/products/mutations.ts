@@ -8,6 +8,9 @@ export const productMediaCreateMutation = gql`
       errors {
         ...ProductError
       }
+      media {
+        id
+      }
       product {
         id
         media {
@@ -195,6 +198,17 @@ export const productMediaDeleteMutation = gql`
           ...ProductMedia
         }
       }
+    }
+  }
+`;
+
+export const productMediaBulkDeleteMutation = gql`
+  mutation ProductMediaBulkDelete($ids: [ID!]!) {
+    productMediaBulkDelete(ids: $ids) {
+      errors {
+        ...ProductError
+      }
+      count
     }
   }
 `;

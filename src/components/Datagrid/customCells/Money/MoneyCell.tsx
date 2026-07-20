@@ -8,12 +8,14 @@ import {
 } from "@glideapps/glide-data-grid";
 
 import { usePriceField } from "../../../PriceField/usePriceField";
-import { hasDiscountValue } from "./utils";
+import { drawBreakdownMarker, hasDiscountValue } from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
   readonly currency: string;
   readonly value: number | number[] | null;
+  /** When true, draws a subtle dot signalling the price has a breakdown. */
+  readonly hasBreakdown?: boolean;
 }
 
 export type MoneyCell = CustomCell<MoneyCellProps>;
@@ -52,7 +54,7 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
-    const { currency, value } = cell.data;
+    const { currency, value, hasBreakdown } = cell.data;
     const isRange = Array.isArray(value);
     const displayValue = isRange ? value[0] : value;
 
@@ -111,6 +113,10 @@ export const moneyCellRenderer = (locale: Locale): CustomRenderer<MoneyCell> => 
 
         drawingPosition -= textWidth;
       }
+    }
+
+    if (hasBreakdown) {
+      drawBreakdownMarker(ctx, theme, rect);
     }
 
     return true;

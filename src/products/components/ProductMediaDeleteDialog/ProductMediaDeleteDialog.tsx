@@ -11,7 +11,8 @@ import { productMediaDeleteDialogMessages as messages } from "./messages";
 
 interface ProductMediaDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  isVideo: boolean;
+  quantity: number;
+  isVideo?: boolean;
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -19,20 +20,36 @@ interface ProductMediaDeleteDialogProps {
 
 export const ProductMediaDeleteDialog = ({
   confirmButtonState,
-  isVideo,
+  quantity,
+  isVideo = false,
   open,
   onClose,
   onConfirm,
 }: ProductMediaDeleteDialogProps) => {
-  const titleMessage = isVideo ? messages.deleteVideoTitle : messages.deleteImageTitle;
-  const subtitleMessage = isVideo
-    ? messages.deleteVideoConfirmation
-    : messages.deleteImageConfirmation;
+  const isBulk = quantity > 1;
+  const titleMessage = isBulk
+    ? messages.deleteMediaTitle
+    : isVideo
+      ? messages.deleteVideoTitle
+      : messages.deleteImageTitle;
+  const subtitle = isBulk ? (
+    <FormattedMessage
+      {...messages.deleteMediaConfirmation}
+      values={{
+        counter: quantity,
+        displayQuantity: <strong>{quantity}</strong>,
+      }}
+    />
+  ) : isVideo ? (
+    <FormattedMessage {...messages.deleteVideoConfirmation} />
+  ) : (
+    <FormattedMessage {...messages.deleteImageConfirmation} />
+  );
 
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="xs">
-        <DashboardModal.Header subtitle={<FormattedMessage {...subtitleMessage} />}>
+        <DashboardModal.Header subtitle={subtitle}>
           <FormattedMessage {...titleMessage} />
         </DashboardModal.Header>
 

@@ -3517,6 +3517,11 @@ export type CalculateTaxes = Event & {
   version: Maybe<Scalars['String']['output']>;
 };
 
+/**
+ * Card data used to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type CardInput = {
   /** Payment method nonce, a token returned by the appropriate provider's SDK. */
   code: Scalars['String']['input'];
@@ -4441,6 +4446,7 @@ export type Checkout = Node & ObjectWithMetadata & {
    *
    * Triggers the following webhook events:
    * - PAYMENT_LIST_GATEWAYS (sync): Fetch payment gateways available for checkout.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   availablePaymentGateways: Array<PaymentGateway>;
   /**
@@ -5042,6 +5048,7 @@ export type CheckoutErrorCode =
   | 'NOT_FOUND'
   | 'NO_LINES'
   | 'PAYMENT_ERROR'
+  | 'PRICE_OVERRIDE_REASON_WITHOUT_OVERRIDE'
   | 'PRODUCT_NOT_PUBLISHED'
   | 'PRODUCT_UNAVAILABLE_FOR_PURCHASE'
   | 'QUANTITY_GREATER_THAN_LIMIT'
@@ -5162,6 +5169,14 @@ export type CheckoutLine = Node & ObjectWithMetadata & {
   /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
   metafields: Maybe<Scalars['Metadata']['output']>;
   /**
+   * Reason explaining why a custom price was set on the line, provided by the app that set the price override.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_CHECKOUTS.
+   */
+  priceOverrideReason: Maybe<Scalars['String']['output']>;
+  /**
    * The sum of the checkout line price prior to promotion.
    *
    * Added in Saleor 3.21.
@@ -5278,6 +5293,12 @@ export type CheckoutLineInput = {
   metadata: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  /**
+   * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  priceOverrideReason: InputMaybe<Scalars['String']['input']>;
   /** The number of items purchased. */
   quantity: Scalars['Int']['input'];
   /** ID of the product variant. */
@@ -5318,6 +5339,12 @@ export type CheckoutLineUpdateInput = {
   metadata: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  /**
+   * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  priceOverrideReason: InputMaybe<Scalars['String']['input']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity: InputMaybe<Scalars['Int']['input']>;
   /**
@@ -8551,6 +8578,22 @@ export type GiftCard = Node & ObjectWithMetadata & {
    * Requires one of the following permissions: MANAGE_APPS, OWNER.
    */
   app: Maybe<App>;
+  /**
+   * The customer the gift card usage is restricted to.
+   *
+   * Requires one of the following permissions: MANAGE_USERS, OWNER.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo: Maybe<User>;
+  /**
+   * Email of the customer the gift card is restricted to.
+   *
+   * Requires one of the following permissions: MANAGE_GIFT_CARD, OWNER.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedToEmail: Maybe<Scalars['String']['output']>;
   /** Slug of the channel where the gift card was bought. */
   boughtInChannel: Maybe<Scalars['String']['output']>;
   /**
@@ -8713,6 +8756,44 @@ export type GiftCardAddNoteInput = {
 };
 
 /**
+ * Restrict a gift card so only the given customer can use it.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+export type GiftCardAssignUser = {
+  __typename: 'GiftCardAssignUser';
+  errors: Array<GiftCardError>;
+  /** The assigned gift card. */
+  giftCard: Maybe<GiftCard>;
+  /** @deprecated Use `errors` field instead. */
+  giftCardErrors: Array<GiftCardError>;
+};
+
+/**
+ * Adjust a gift card's balance by a delta.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+export type GiftCardBalanceAdjust = {
+  __typename: 'GiftCardBalanceAdjust';
+  errors: Array<GiftCardError>;
+  /** The adjusted gift card. */
+  giftCard: Maybe<GiftCard>;
+  /** @deprecated Use `errors` field instead. */
+  giftCardErrors: Array<GiftCardError>;
+};
+
+/**
  * Activate gift cards.
  *
  * Requires one of the following permissions: MANAGE_GIFT_CARD.
@@ -8825,6 +8906,12 @@ export type GiftCardCreate = {
 export type GiftCardCreateInput = {
   /** The gift card tags to add. */
   addTags: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * ID of the customer the gift card is restricted to.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo: InputMaybe<Scalars['ID']['input']>;
   /** Balance of the gift card. */
   balance: PriceInput;
   /** Slug of a channel from which the email should be sent. */
@@ -8947,6 +9034,7 @@ export type GiftCardError = {
 
 export type GiftCardErrorCode =
   | 'ALREADY_EXISTS'
+  | 'CANNOT_ASSIGN'
   | 'DUPLICATED_INPUT_ITEM'
   | 'EXPIRED_GIFT_CARD'
   | 'GRAPHQL_ERROR'
@@ -8960,6 +9048,12 @@ export type GiftCardEvent = Node & {
   __typename: 'GiftCardEvent';
   /** App that performed the action. Requires one of the following permissions: MANAGE_APPS, OWNER. */
   app: Maybe<App>;
+  /**
+   * The customer assignment change recorded by the event. Only set for ASSIGNED_TO_USER and UNASSIGNED_FROM_USER events.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo: Maybe<GiftCardEventAssignment>;
   /** The gift card balance. */
   balance: Maybe<GiftCardEventBalance>;
   /** Date when event happened at in ISO 8601 format. */
@@ -8988,6 +9082,26 @@ export type GiftCardEvent = Node & {
   user: Maybe<User>;
 };
 
+export type GiftCardEventAssignment = {
+  __typename: 'GiftCardEventAssignment';
+  /**
+   * The customer the gift card is assigned to after this event.
+   *
+   * Requires one of the following permissions: MANAGE_USERS, MANAGE_STAFF, OWNER.
+   */
+  currentAssignedTo: Maybe<User>;
+  /** Email of the customer the gift card is assigned to after this event. */
+  currentAssignedToEmail: Maybe<Scalars['String']['output']>;
+  /**
+   * The customer the gift card was assigned to before this event.
+   *
+   * Requires one of the following permissions: MANAGE_USERS, MANAGE_STAFF, OWNER.
+   */
+  oldAssignedTo: Maybe<User>;
+  /** Email of the customer the gift card was assigned to before this event. */
+  oldAssignedToEmail: Maybe<Scalars['String']['output']>;
+};
+
 export type GiftCardEventBalance = {
   __typename: 'GiftCardEventBalance';
   /** Current balance of the gift card. */
@@ -9007,6 +9121,8 @@ export type GiftCardEventFilterInput = {
 
 export type GiftCardEventsEnum =
   | 'ACTIVATED'
+  | 'ASSIGNED_TO_USER'
+  | 'BALANCE_ADJUSTED'
   | 'BALANCE_RESET'
   | 'BOUGHT'
   | 'DEACTIVATED'
@@ -9017,6 +9133,7 @@ export type GiftCardEventsEnum =
   | 'RESENT'
   | 'SENT_TO_CUSTOMER'
   | 'TAGS_UPDATED'
+  | 'UNASSIGNED_FROM_USER'
   | 'UPDATED'
   | 'USED_IN_ORDER';
 
@@ -9036,6 +9153,12 @@ export type GiftCardExportCompleted = Event & {
 };
 
 export type GiftCardFilterInput = {
+  /**
+   * Filter by the customer the gift card usage is restricted to.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo: InputMaybe<Array<Scalars['ID']['input']>>;
   code: InputMaybe<Scalars['String']['input']>;
   createdByEmail: InputMaybe<Scalars['String']['input']>;
   currency: InputMaybe<Scalars['String']['input']>;
@@ -9046,6 +9169,10 @@ export type GiftCardFilterInput = {
   products: InputMaybe<Array<Scalars['ID']['input']>>;
   tags: InputMaybe<Array<Scalars['String']['input']>>;
   used: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Filter by the customer who used a gift card.
+   * @deprecated Field no longer supported
+   */
   usedBy: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
@@ -9266,6 +9393,25 @@ export type GiftCardTagCountableEdge = {
 
 export type GiftCardTagFilterInput = {
   search: InputMaybe<Scalars['String']['input']>;
+};
+
+/**
+ * Remove a customer restriction from a gift card.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_GIFT_CARD.
+ *
+ * Triggers the following webhook events:
+ * - GIFT_CARD_UPDATED (async): A gift card was updated.
+ */
+export type GiftCardUnassignUser = {
+  __typename: 'GiftCardUnassignUser';
+  errors: Array<GiftCardError>;
+  /** The unassigned gift card. */
+  giftCard: Maybe<GiftCard>;
+  /** @deprecated Use `errors` field instead. */
+  giftCardErrors: Array<GiftCardError>;
 };
 
 /**
@@ -12707,7 +12853,10 @@ export type Mutation = {
    * - CHECKOUT_UPDATED (async): A checkout was updated.
    */
   checkoutLinesUpdate: Maybe<CheckoutLinesUpdate>;
-  /** Creates a new payment for given checkout. */
+  /**
+   * Creates a new payment for given checkout.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   checkoutPaymentCreate: Maybe<CheckoutPaymentCreate>;
   /**
    * Remove a gift card or a voucher from a checkout.
@@ -13008,6 +13157,28 @@ export type Mutation = {
    */
   giftCardAddNote: Maybe<GiftCardAddNote>;
   /**
+   * Restrict a gift card so only the given customer can use it.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_GIFT_CARD.
+   *
+   * Triggers the following webhook events:
+   * - GIFT_CARD_UPDATED (async): A gift card was updated.
+   */
+  giftCardAssignUser: Maybe<GiftCardAssignUser>;
+  /**
+   * Adjust a gift card's balance by a delta.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_GIFT_CARD.
+   *
+   * Triggers the following webhook events:
+   * - GIFT_CARD_UPDATED (async): A gift card was updated.
+   */
+  giftCardBalanceAdjust: Maybe<GiftCardBalanceAdjust>;
+  /**
    * Activate gift cards.
    *
    * Requires one of the following permissions: MANAGE_GIFT_CARD.
@@ -13087,6 +13258,17 @@ export type Mutation = {
    * Requires one of the following permissions: MANAGE_GIFT_CARD.
    */
   giftCardSettingsUpdate: Maybe<GiftCardSettingsUpdate>;
+  /**
+   * Remove a customer restriction from a gift card.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_GIFT_CARD.
+   *
+   * Triggers the following webhook events:
+   * - GIFT_CARD_UPDATED (async): A gift card was updated.
+   */
+  giftCardUnassignUser: Maybe<GiftCardUnassignUser>;
   /**
    * Update a gift card.
    *
@@ -13258,6 +13440,7 @@ export type Mutation = {
    * Capture an order.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   orderCapture: Maybe<OrderCapture>;
   /**
@@ -13412,6 +13595,7 @@ export type Mutation = {
    * Refund an order.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   orderRefund: Maybe<OrderRefund>;
   /**
@@ -13437,6 +13621,7 @@ export type Mutation = {
    * Void an order.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   orderVoid: Maybe<OrderVoid>;
   /**
@@ -13533,9 +13718,13 @@ export type Mutation = {
    * Captures the authorized payment amount.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   paymentCapture: Maybe<PaymentCapture>;
-  /** Check payment balance. */
+  /**
+   * Check payment balance.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   paymentCheckBalance: Maybe<PaymentCheckBalance>;
   /** Initializes a payment gateway session. It triggers the webhook `PAYMENT_GATEWAY_INITIALIZE_SESSION`, to the requested `paymentGateways`. If `paymentGateways` is not provided, the webhook will be send to all subscribed payment gateways. There is a limit of 100 transaction items per checkout / order. */
   paymentGatewayInitialize: Maybe<PaymentGatewayInitialize>;
@@ -13548,7 +13737,10 @@ export type Mutation = {
    * - PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION (sync): The customer requested to initialize payment gateway for tokenization.
    */
   paymentGatewayInitializeTokenization: Maybe<PaymentGatewayInitializeTokenization>;
-  /** Initializes payment process when it is required by gateway. */
+  /**
+   * Initializes payment process when it is required by gateway.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   paymentInitialize: Maybe<PaymentInitialize>;
   /**
    * Tokenize payment method.
@@ -13572,12 +13764,14 @@ export type Mutation = {
    * Refunds the captured payment amount.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   paymentRefund: Maybe<PaymentRefund>;
   /**
    * Voids the authorized payment.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   paymentVoid: Maybe<PaymentVoid>;
   /**
@@ -15234,6 +15428,18 @@ export type MutationGiftCardAddNoteArgs = {
 };
 
 
+export type MutationGiftCardAssignUserArgs = {
+  id: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
+export type MutationGiftCardBalanceAdjustArgs = {
+  amount: Scalars['Decimal']['input'];
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationGiftCardBulkActivateArgs = {
   ids: Array<Scalars['ID']['input']>;
 };
@@ -15276,6 +15482,11 @@ export type MutationGiftCardResendArgs = {
 
 export type MutationGiftCardSettingsUpdateArgs = {
   input: GiftCardSettingsUpdateInput;
+};
+
+
+export type MutationGiftCardUnassignUserArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -16675,7 +16886,10 @@ export type Order = Node & ObjectWithMetadata & {
   paymentStatus: PaymentChargeStatusEnum;
   /** User-friendly payment status. */
   paymentStatusDisplay: Scalars['String']['output'];
-  /** List of payments for the order. */
+  /**
+   * List of payments for the order.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   payments: Array<Payment>;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata: Array<MetadataItem>;
@@ -17789,6 +18003,10 @@ export type OrderFilterInput = {
   isPreorder: InputMaybe<Scalars['Boolean']['input']>;
   metadata: InputMaybe<Array<MetadataFilter>>;
   numbers: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * Filter orders by payment charge status.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   paymentStatus: InputMaybe<Array<PaymentChargeStatusEnum>>;
   search: InputMaybe<Scalars['String']['input']>;
   status: InputMaybe<Array<OrderStatusFilter>>;
@@ -18217,6 +18435,14 @@ export type OrderLine = Node & ObjectWithMetadata & {
   metafield: Maybe<Scalars['String']['output']>;
   /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
   metafields: Maybe<Scalars['Metadata']['output']>;
+  /**
+   * Reason explaining why a custom price was set on the line, copied from the checkout line when the order was created from a checkout.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_ORDERS.
+   */
+  priceOverrideReason: Maybe<Scalars['String']['output']>;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata: Array<MetadataItem>;
   /**
@@ -19869,7 +20095,11 @@ export type PasswordLoginModeEnum =
   | 'DISABLED'
   | 'ENABLED';
 
-/** Represents a payment of a given type. */
+/**
+ * Represents a payment of a given type.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type Payment = Node & ObjectWithMetadata & {
   __typename: 'Payment';
   /**
@@ -19953,37 +20183,60 @@ export type Payment = Node & ObjectWithMetadata & {
 };
 
 
-/** Represents a payment of a given type. */
+/**
+ * Represents a payment of a given type.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentMetafieldArgs = {
   key: Scalars['String']['input'];
 };
 
 
-/** Represents a payment of a given type. */
+/**
+ * Represents a payment of a given type.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentMetafieldsArgs = {
   keys: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 
-/** Represents a payment of a given type. */
+/**
+ * Represents a payment of a given type.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentPrivateMetafieldArgs = {
   key: Scalars['String']['input'];
 };
 
 
-/** Represents a payment of a given type. */
+/**
+ * Represents a payment of a given type.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentPrivateMetafieldsArgs = {
   keys: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
-/** Authorize payment. */
+/**
+ * Authorize payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentAuthorize = Event & {
   __typename: 'PaymentAuthorize';
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
   issuingPrincipal: Maybe<IssuingPrincipal>;
-  /** Look up a payment. */
+  /**
+   * Look up a payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   payment: Maybe<Payment>;
   /** The application receiving the webhook. */
   recipient: Maybe<App>;
@@ -20005,14 +20258,21 @@ export type PaymentCapture = {
   paymentErrors: Array<PaymentError>;
 };
 
-/** Capture payment. */
+/**
+ * Capture payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentCaptureEvent = Event & {
   __typename: 'PaymentCaptureEvent';
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
   issuingPrincipal: Maybe<IssuingPrincipal>;
-  /** Look up a payment. */
+  /**
+   * Look up a payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   payment: Maybe<Payment>;
   /** The application receiving the webhook. */
   recipient: Maybe<App>;
@@ -20040,6 +20300,11 @@ export type PaymentCheckBalance = {
   paymentErrors: Array<PaymentError>;
 };
 
+/**
+ * Fields required to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentCheckBalanceInput = {
   /** Information about card. */
   card: CardInput;
@@ -20051,14 +20316,21 @@ export type PaymentCheckBalanceInput = {
   method: Scalars['String']['input'];
 };
 
-/** Confirm payment. */
+/**
+ * Confirm payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentConfirmEvent = Event & {
   __typename: 'PaymentConfirmEvent';
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
   issuingPrincipal: Maybe<IssuingPrincipal>;
-  /** Look up a payment. */
+  /**
+   * Look up a payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   payment: Maybe<Payment>;
   /** The application receiving the webhook. */
   recipient: Maybe<App>;
@@ -20116,6 +20388,11 @@ export type PaymentErrorCode =
   | 'UNAVAILABLE_VARIANT_IN_CHANNEL'
   | 'UNIQUE';
 
+/**
+ * Filtering options for payments.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentFilterInput = {
   checkouts: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by ids. */
@@ -20284,7 +20561,11 @@ export type PaymentInitialize = {
   paymentErrors: Array<PaymentError>;
 };
 
-/** Server-side data generated by a payment gateway. Optional step when the payment provider requires an additional action to initialize payment session. */
+/**
+ * Server-side data generated by a payment gateway. Optional step when the payment provider requires an additional action to initialize payment session.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentInitialized = {
   __typename: 'PaymentInitialized';
   /** Initialized data by gateway. */
@@ -20295,6 +20576,11 @@ export type PaymentInitialized = {
   name: Scalars['String']['output'];
 };
 
+/**
+ * Fields required to create a payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentInput = {
   /** Total amount of the transaction, including all taxes and discounts. If no amount is provided, the checkout total will be used. */
   amount: InputMaybe<Scalars['PositiveDecimal']['input']>;
@@ -20314,7 +20600,11 @@ export type PaymentInput = {
   token: InputMaybe<Scalars['String']['input']>;
 };
 
-/** List payment gateways. */
+/**
+ * List payment gateways.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentListGateways = Event & {
   __typename: 'PaymentListGateways';
   /** The checkout the event relates to. */
@@ -20530,14 +20820,21 @@ export type PaymentMethodTypeEnumFilterInput = {
   oneOf: InputMaybe<Array<PaymentMethodTypeEnum>>;
 };
 
-/** Process payment. */
+/**
+ * Process payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentProcessEvent = Event & {
   __typename: 'PaymentProcessEvent';
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
   issuingPrincipal: Maybe<IssuingPrincipal>;
-  /** Look up a payment. */
+  /**
+   * Look up a payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   payment: Maybe<Payment>;
   /** The application receiving the webhook. */
   recipient: Maybe<App>;
@@ -20559,14 +20856,21 @@ export type PaymentRefund = {
   paymentErrors: Array<PaymentError>;
 };
 
-/** Refund payment. */
+/**
+ * Refund payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentRefundEvent = Event & {
   __typename: 'PaymentRefundEvent';
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
   issuingPrincipal: Maybe<IssuingPrincipal>;
-  /** Look up a payment. */
+  /**
+   * Look up a payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   payment: Maybe<Payment>;
   /** The application receiving the webhook. */
   recipient: Maybe<App>;
@@ -20622,7 +20926,11 @@ export type PaymentSettingsInput = {
   releaseFundsForExpiredCheckouts: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** Represents a payment source stored for user in payment gateway, such as credit card. */
+/**
+ * Represents a payment source stored for user in payment gateway, such as credit card.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentSource = {
   __typename: 'PaymentSource';
   /** Stored credit card details if available. */
@@ -20653,14 +20961,21 @@ export type PaymentVoid = {
   paymentErrors: Array<PaymentError>;
 };
 
-/** Void payment. */
+/**
+ * Void payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentVoidEvent = Event & {
   __typename: 'PaymentVoidEvent';
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
   /** The user or application that triggered the event. */
   issuingPrincipal: Maybe<IssuingPrincipal>;
-  /** Look up a payment. */
+  /**
+   * Look up a payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   payment: Maybe<Payment>;
   /** The application receiving the webhook. */
   recipient: Maybe<App>;
@@ -25121,12 +25436,14 @@ export type Query = {
    * Look up a payment by ID.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   payment: Maybe<Payment>;
   /**
    * List of payments.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   payments: Maybe<PaymentCountableConnection>;
   /**
@@ -27729,7 +28046,10 @@ export type Shop = ObjectWithMetadata & {
   announcements: Array<Announcement>;
   /** List of available external authentications. */
   availableExternalAuthentications: Array<ExternalAuthentication>;
-  /** List of available payment gateways. */
+  /**
+   * List of available payment gateways.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   availablePaymentGateways: Array<PaymentGateway>;
   /** Shipping methods that are available for the shop. */
   availableShippingMethods: Maybe<Array<ShippingMethod>>;
@@ -29718,7 +30038,11 @@ export type TimePeriodTypeEnum =
 export type TokenizedPaymentFlowEnum =
   | 'INTERACTIVE';
 
-/** An object representing a single payment. */
+/**
+ * An object representing a single payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type Transaction = Node & {
   __typename: 'Transaction';
   /** Total amount of the transaction. */
@@ -29729,7 +30053,7 @@ export type Transaction = Node & {
   error: Maybe<Scalars['String']['output']>;
   /**
    * Response returned by payment gateway.
-   * @deprecated This field is a part of a legacy Payments API. Please use apps instead.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
    */
   gatewayResponse: Scalars['JSONString']['output'];
   /** ID of the transaction. */
@@ -30773,7 +31097,10 @@ export type User = Node & ObjectWithMetadata & {
   restrictedAccessToChannels: Scalars['Boolean']['output'];
   /** Returns a list of user's stored payment methods that can be used in provided channel. The field returns a list of stored payment methods by payment apps. When `amount` is not provided, 0 will be used as default value. */
   storedPaymentMethods: Maybe<Array<StoredPaymentMethod>>;
-  /** List of stored payment sources. The field returns a list of payment sources stored for payment plugins. */
+  /**
+   * List of stored payment sources. The field returns a list of payment sources stored for payment plugins.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   storedPaymentSources: Maybe<Array<PaymentSource>>;
   /** The data when the user last update the account information. */
   updatedAt: Scalars['DateTime']['output'];
