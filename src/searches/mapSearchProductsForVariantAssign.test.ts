@@ -33,18 +33,26 @@ const createSearchProduct = (
   overrides: Partial<SearchProduct> & {
     productVariants: SearchProduct["productVariants"];
   },
-): SearchProduct => ({
-  __typename: "Product",
-  id: "product-1",
-  name: "Product 1",
-  thumbnail: null,
-  productType: {
-    __typename: "ProductType",
-    id: "type-1",
-    name: "Type",
-  },
-  ...overrides,
-});
+): SearchProduct => {
+  const { channelListings = [], collections = [], productVariants, ...rest } = overrides;
+  const product: SearchProduct = {
+    __typename: "Product",
+    id: "product-1",
+    name: "Product 1",
+    thumbnail: null,
+    productType: {
+      __typename: "ProductType",
+      id: "type-1",
+      name: "Type",
+    },
+    channelListings,
+    collections,
+    productVariants,
+    ...rest,
+  };
+
+  return product;
+};
 
 describe("mapSearchProductsForVariantAssign", () => {
   it("flattens productVariants edges into variants and page info", () => {
@@ -164,6 +172,8 @@ describe("mapSearchProductsForVariantAssign", () => {
         id: "type-1",
         name: "Type",
       },
+      channelListings: [],
+      collections: [],
       variants: [createVariant("v1"), createVariant("v2")],
       variantsTotalCount: 4,
       variantsHasNextPage: true,

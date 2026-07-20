@@ -17,43 +17,48 @@ jest.mock("@apollo/client", () => {
   };
 });
 
-const baseProduct = (
-  overrides: Partial<AssignableSearchProduct> = {},
-): AssignableSearchProduct => ({
-  __typename: "Product",
-  id: "product-1",
-  name: "Product 1",
-  thumbnail: null,
-  productType: {
-    __typename: "ProductType",
-    id: "type-1",
-    name: "Type",
-  },
-  variants: [
-    {
-      __typename: "ProductVariant",
-      id: "v1",
-      name: "v1",
-      sku: "v1",
-      product: {
-        __typename: "Product",
-        id: "product-1",
-        name: "Product 1",
-        thumbnail: null,
-        productType: {
-          __typename: "ProductType",
-          id: "type-1",
-          name: "Type",
-        },
-      },
-      channelListings: [],
+const baseProduct = (overrides: Partial<AssignableSearchProduct> = {}): AssignableSearchProduct => {
+  const { channelListings = [], collections = [], ...rest } = overrides;
+  const product: AssignableSearchProduct = {
+    __typename: "Product",
+    id: "product-1",
+    name: "Product 1",
+    thumbnail: null,
+    productType: {
+      __typename: "ProductType",
+      id: "type-1",
+      name: "Type",
     },
-  ],
-  variantsTotalCount: 3,
-  variantsHasNextPage: true,
-  variantsEndCursor: "cursor-1",
-  ...overrides,
-});
+    channelListings,
+    collections,
+    variants: [
+      {
+        __typename: "ProductVariant",
+        id: "v1",
+        name: "v1",
+        sku: "v1",
+        product: {
+          __typename: "Product",
+          id: "product-1",
+          name: "Product 1",
+          thumbnail: null,
+          productType: {
+            __typename: "ProductType",
+            id: "type-1",
+            name: "Type",
+          },
+        },
+        channelListings: [],
+      },
+    ],
+    variantsTotalCount: 3,
+    variantsHasNextPage: true,
+    variantsEndCursor: "cursor-1",
+    ...rest,
+  };
+
+  return product;
+};
 
 describe("useAssignVariantDialogProducts", () => {
   beforeEach(() => {

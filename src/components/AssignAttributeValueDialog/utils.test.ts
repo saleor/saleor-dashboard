@@ -134,6 +134,11 @@ describe("AssignAttributeValueDialog/utils", () => {
           productVariants: {
             __typename: "ProductVariantCountableConnection" as const,
             totalCount: 2,
+            pageInfo: {
+              __typename: "PageInfo" as const,
+              hasNextPage: false,
+              endCursor: null,
+            },
             edges: [
               {
                 __typename: "ProductVariantCountableEdge" as const,
@@ -151,6 +156,11 @@ describe("AssignAttributeValueDialog/utils", () => {
           productVariants: {
             __typename: "ProductVariantCountableConnection" as const,
             totalCount: 2,
+            pageInfo: {
+              __typename: "PageInfo" as const,
+              hasNextPage: false,
+              endCursor: null,
+            },
             edges: [
               {
                 __typename: "ProductVariantCountableEdge" as const,

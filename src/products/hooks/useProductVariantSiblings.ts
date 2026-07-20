@@ -133,7 +133,7 @@ export const useProductVariantSiblings = ({
       },
       updateQuery: (previous, { fetchMoreResult }) => {
         const previousConnection = previous.product?.productVariants;
-        const nextConnection = fetchMoreResult.product?.productVariants;
+        const nextConnection = fetchMoreResult?.product?.productVariants;
 
         if (!previous.product || !previousConnection || !nextConnection) {
           return previous;

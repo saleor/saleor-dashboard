@@ -12,16 +12,17 @@ interface OrderPriceLabelProps {
 const OrderPriceLabel = ({ pricing }: OrderPriceLabelProps) => {
   const classes = useStyles();
 
-  if (!pricing) {
+  if (!pricing?.priceUndiscounted) {
     return null;
   }
 
-  if (pricing.onSale) {
-    const { price, priceUndiscounted } = pricing;
-
+  if (pricing.onSale && pricing.price) {
     return (
       <div className={classes.percentDiscountLabelContainer}>
-        <DiscountedPrice discountedPrice={price.gross} regularPrice={priceUndiscounted.gross} />
+        <DiscountedPrice
+          discountedPrice={pricing.price.gross}
+          regularPrice={pricing.priceUndiscounted.gross}
+        />
       </div>
     );
   }

@@ -301,7 +301,7 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
                           <AssignVariantLoadMoreRow
                             product={product}
                             loading={loading}
-                            loadingProduct={loadingProductIds.has(product.id)}
+                            loadingProduct={Boolean(product && loadingProductIds.has(product.id))}
                             onLoadMore={loadMoreVariants}
                           />
                         </Fragment>

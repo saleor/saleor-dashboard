@@ -7,7 +7,6 @@ import {
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { useComboboxHandlers } from "@dashboard/components/Combobox/hooks/useComboboxHandlers";
-import { getBySlug } from "@dashboard/misc";
 import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -35,7 +34,10 @@ export const SwatchRow = ({
   onChange,
 }: SwatchRowProps): JSX.Element => {
   const intl = useIntl();
-  const value = attribute.data.values.find(getBySlug(attribute.value[0]));
+  const selectedValueSlug = attribute.value[0];
+  const value = selectedValueSlug
+    ? attribute.data.values.find(attributeValue => attributeValue.slug === selectedValueSlug)
+    : undefined;
   const selectedSwatch = getAttributeSwatchData(value);
 
   const { handleFetchMore, handleFocus, handleInputChange } = useComboboxHandlers({
@@ -46,14 +48,20 @@ export const SwatchRow = ({
 
   const options = useMemo(
     () =>
-      attributeValues.map(attributeValue => {
+      attributeValues.flatMap(attributeValue => {
+        if (!attributeValue.name || !attributeValue.slug) {
+          return [];
+        }
+
         const swatch = getAttributeSwatchData(attributeValue);
 
-        return {
-          label: attributeValue.name,
-          value: attributeValue.slug,
-          startAdornment: swatch ? <DatagridSwatchPreview {...swatch} /> : null,
-        };
+        return [
+          {
+            label: attributeValue.name,
+            value: attributeValue.slug,
+            startAdornment: swatch ? <DatagridSwatchPreview {...swatch} /> : null,
+          },
+        ];
       }),
     [attributeValues],
   );

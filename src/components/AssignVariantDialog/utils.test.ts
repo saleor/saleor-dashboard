@@ -37,6 +37,8 @@ const product: AssignableSearchProduct = {
     id: "type-1",
     name: "Type",
   },
+  channelListings: [],
+  collections: [],
   variants: [createVariant("v1"), createVariant("v2"), createVariant("v3")],
   variantsTotalCount: 3,
   variantsHasNextPage: false,
