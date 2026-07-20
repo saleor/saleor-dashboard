@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.23.18
+
+### Patch Changes
+
+- [#6753](https://github.com/saleor/saleor-dashboard/pull/6753) [`c5e5f7c`](https://github.com/saleor/saleor-dashboard/commit/c5e5f7c1c85cdc8f31489f3396a63adb56d694c3) Thanks [@mirekm](https://github.com/mirekm)! - Improved product media and file attribute uploads:
+  - Dropping or selecting images shows upload previews immediately, including on an empty gallery
+  - Multiple uploads report one summary notification instead of a toast per file
+  - Product media can be selected and deleted in bulk
+  - Reordering media is smoother, with clearer drag feedback; reordering is blocked while uploads are still in progress
+  - Invalid or oversized files are rejected before upload, with a clear warning
+  - File attributes (for example images on products and models) support drag and drop to upload or replace, and show a thumbnail when the file is an image
+
+- [#6751](https://github.com/saleor/saleor-dashboard/pull/6751) [`0176999`](https://github.com/saleor/saleor-dashboard/commit/0176999884852cd5509ab6eb5184ede4c568caae) Thanks [@mirekm](https://github.com/mirekm)! - Fixed settings toggle rows so links in descriptions no longer flip the setting. Refunds & returns settings now warn before leaving with unsaved changes, and Orders & fulfillment opened from the orders list returns there on cancel/back.
+
+- [#6751](https://github.com/saleor/saleor-dashboard/pull/6751) [`0176999`](https://github.com/saleor/saleor-dashboard/commit/0176999884852cd5509ab6eb5184ede4c568caae) Thanks [@mirekm](https://github.com/mirekm)! - Reorganized Configuration by merchant job (Store, Markets & channels, Products & catalog, Content, Shipping & delivery, Orders, Users & permissions). Store settings now use the shared Settings hub layout, with legacy webhook, stock, and address options under Advanced.
+
+- [#6751](https://github.com/saleor/saleor-dashboard/pull/6751) [`0176999`](https://github.com/saleor/saleor-dashboard/commit/0176999884852cd5509ab6eb5184ede4c568caae) Thanks [@mirekm](https://github.com/mirekm)! - Reorganized Configuration: Store replaces Miscellaneous/Site Settings, and Refunds & returns is reached from Orders & fulfillment instead of as a separate Configuration card.
+
+- [#6757](https://github.com/saleor/saleor-dashboard/pull/6757) [`23994f7`](https://github.com/saleor/saleor-dashboard/commit/23994f7566ddb011f078bca58de1d01a6046e128) Thanks [@xseignard](https://github.com/xseignard)! - On the order details page, fulfillment tracking numbers that are URLs are now clickable links that open in a new tab. Non-URL tracking numbers keep their plain-text display, and copying to clipboard still works in both cases.
+
 ## 3.23.17
 
 ### Patch Changes
