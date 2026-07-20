@@ -11,7 +11,6 @@ import {
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
-  AttributeInputTypeEnum,
   type ProductDetailsVariantFragment,
   type ProductFragment,
   type ProductVariantBulkCreateInput,
@@ -37,6 +36,7 @@ import {
 } from "../ProductVariantGenerator/types";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
 import {
+  isVariantDatagridSupportedAttribute,
   useAttributesAdapter,
   useChannelAdapter,
   useChannelAvailabilityAdapter,
@@ -185,11 +185,7 @@ export const ProductVariants = ({
             ]),
             ...warehouses.map(warehouse => `warehouse:${warehouse.id}`),
             ...(variantAttributes
-              ?.filter(
-                attribute =>
-                  attribute.inputType === AttributeInputTypeEnum.DROPDOWN ||
-                  attribute.inputType === AttributeInputTypeEnum.PLAIN_TEXT,
-              )
+              ?.filter(attribute => isVariantDatagridSupportedAttribute(attribute.inputType))
               .map(attribute => `attribute:${attribute.id}`) ?? []),
           ]
         : undefined,
@@ -258,10 +254,11 @@ export const ProductVariants = ({
         row,
         channels,
         variants,
+        variantAttributes,
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [channels, visibleColumns, onAttributeValuesSearch, variants],
+    [channels, visibleColumns, onAttributeValuesSearch, variantAttributes, variants],
   );
   const getCellError = useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>

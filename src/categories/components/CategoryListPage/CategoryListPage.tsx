@@ -1,3 +1,4 @@
+import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { categoryAddUrl, type CategoryListUrlSortField } from "@dashboard/categories/urls";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -12,9 +13,9 @@ import {
   getExtensionsItemsForCategoryOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { type CategoryFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import {
   type PageListProps,
   type SearchPageProps,
@@ -26,6 +27,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
+import { useCategoryListPageState } from "./categoryListPageState";
 import { messages } from "./messages";
 
 interface CategoryTableProps
@@ -33,17 +35,12 @@ interface CategoryTableProps
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
     Omit<TabPageProps, "onTabDelete"> {
-  categories: CategoryFragment[];
   hasPresetsChanged: boolean;
-  selectedCategoriesIds: string[];
   onTabDelete: (tabIndex: number) => void;
   onTabUpdate: (tabName: string) => void;
-  onCategoriesDelete: () => void;
-  onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
 }
 
 export const CategoryListPage = ({
-  categories,
   currentTab,
   disabled,
   initialSearch,
@@ -55,10 +52,23 @@ export const CategoryListPage = ({
   onTabSave,
   onTabUpdate,
   hasPresetsChanged,
-  onCategoriesDelete,
-  selectedCategoriesIds,
   ...listProps
-}: CategoryTableProps) => {
+}: CategoryTableProps): JSX.Element => {
+  const {
+    rows,
+    selectedCategoriesIds,
+    onCategoriesDelete,
+    onSelectCategoriesIds,
+    onSelectedCategoriesIdsChange,
+    isCategoryExpanded,
+    isCategoryChildrenLoading,
+    isLoadingMoreSubcategories,
+    onCategoryExpandToggle,
+    getCategoryDepth,
+    onLoadMoreSubcategories,
+    hasExpandedSubcategories,
+    onCollapseAllSubcategories,
+  } = useCategoryListPageState();
   const navigate = useNavigator();
 
   const intl = useIntl();
@@ -133,16 +143,38 @@ export const CategoryListPage = ({
               onSearchChange={onSearchChange}
             />
           </Box>
-          {selectedCategoriesIds.length > 0 && (
-            <BulkDeleteButton onClick={onCategoriesDelete}>
-              <FormattedMessage {...messages.bulkCategoryDelete} />
-            </BulkDeleteButton>
-          )}
+          <Box display="flex" alignItems="center" gap={4}>
+            <Box display="flex" alignItems="center" gap={2}>
+              <Ripple model={rippleExpandedSubcategories} />
+              <Button
+                variant="secondary"
+                onClick={onCollapseAllSubcategories}
+                disabled={!hasExpandedSubcategories}
+                data-test-id="collapse-all-subcategories"
+              >
+                <FormattedMessage {...messages.collapseAllSubcategories} />
+              </Button>
+            </Box>
+            {selectedCategoriesIds.length > 0 && (
+              <BulkDeleteButton onClick={onCategoriesDelete}>
+                <FormattedMessage {...messages.bulkCategoryDelete} />
+              </BulkDeleteButton>
+            )}
+          </Box>
         </Box>
         <CategoryListDatagrid
           disabled={disabled}
-          categories={categories}
+          rows={rows}
           hasRowHover={!isFilterPresetOpen}
+          onSelectCategoriesIds={onSelectCategoriesIds}
+          selectedCategoriesIds={selectedCategoriesIds}
+          onSelectedCategoriesIdsChange={onSelectedCategoriesIdsChange}
+          isCategoryExpanded={isCategoryExpanded}
+          onCategoryExpandToggle={onCategoryExpandToggle}
+          isCategoryChildrenLoading={isCategoryChildrenLoading}
+          isLoadingMoreSubcategories={isLoadingMoreSubcategories}
+          getCategoryDepth={getCategoryDepth}
+          onLoadMoreSubcategories={onLoadMoreSubcategories}
           {...listProps}
         />
       </DashboardCard>

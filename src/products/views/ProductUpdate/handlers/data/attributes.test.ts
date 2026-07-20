@@ -1,7 +1,20 @@
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { AttributeInputTypeEnum, type VariantAttributeFragment } from "@dashboard/graphql";
 import { variantAttributes } from "@dashboard/products/fixtures";
 
 import { getAttributeData } from "./attributes";
+
+const swatchAttributeId = "swatch-attribute-id";
+const swatchVariantAttributes: VariantAttributeFragment[] = [
+  ...variantAttributes,
+  {
+    ...variantAttributes[0],
+    id: swatchAttributeId,
+    name: "Color",
+    slug: "color",
+    inputType: AttributeInputTypeEnum.SWATCH,
+  },
+];
 
 describe("getAttributeData", () => {
   test("should filter and map data to attribute format", () => {
@@ -55,5 +68,33 @@ describe("getAttributeData", () => {
 
     // Assert
     expect(attributes).toEqual([]);
+  });
+  test("should return swatch input for swatch attribute change", () => {
+    // Arrange
+    const changeData: DatagridChange[] = [
+      {
+        column: `attribute:${swatchAttributeId}`,
+        row: 1,
+        data: {
+          value: {
+            label: "Red",
+            value: "red",
+          },
+        },
+      },
+    ];
+
+    // Act
+    const attributes = getAttributeData(changeData, 1, swatchVariantAttributes);
+
+    // Assert
+    expect(attributes).toEqual([
+      {
+        id: swatchAttributeId,
+        swatch: {
+          value: "red",
+        },
+      },
+    ]);
   });
 });

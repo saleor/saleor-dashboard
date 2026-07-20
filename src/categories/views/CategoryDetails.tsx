@@ -72,6 +72,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
     selectedRowIds: selectedCategoryRowIds,
     setClearDatagridRowSelectionCallback: setClearCategoryDatagridRowSelectionCallback,
     setSelectedRowIds: setSelectedCategoryRowIds,
+    excludeFromSelected: excludeCategoryFromSelected,
   } = useRowSelection();
   const [activeTab, setActiveTab] = useState<CategoryPageTab>(CategoryPageTab.categories);
   const [paginationState, setPaginationState] = useSectionLocalPaginationState(
@@ -194,28 +195,6 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
         },
       }),
     );
-  const handleSetSelectedCategoryIds = useCallback(
-    (rows: number[], clearSelection: () => void) => {
-      if (!subcategories) {
-        return;
-      }
-
-      const rowsIds = rows.map(row => subcategories[row].id);
-      const haveSaveValues = isEqual(rowsIds, selectedCategoryRowIds);
-
-      if (!haveSaveValues) {
-        setSelectedCategoryRowIds(rowsIds);
-      }
-
-      setClearCategoryDatagridRowSelectionCallback(clearSelection);
-    },
-    [
-      selectedCategoryRowIds,
-      setClearCategoryDatagridRowSelectionCallback,
-      setSelectedCategoryRowIds,
-      subcategories,
-    ],
-  );
   const handleSetSelectedPrductIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!products) {
@@ -287,7 +266,11 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
         products={products}
         saveButtonBarState={updateResult.status}
         subcategories={subcategories}
-        onSelectCategoriesIds={handleSetSelectedCategoryIds}
+        selectedCategoryIds={selectedCategoryRowIds}
+        setSelectedCategoryIds={setSelectedCategoryRowIds}
+        clearCategoryRowSelection={clearCategryRowSelection}
+        excludeCategoryFromSelected={excludeCategoryFromSelected}
+        setClearCategoryDatagridRowSelectionCallback={setClearCategoryDatagridRowSelectionCallback}
         onSelectProductsIds={handleSetSelectedPrductIds}
         onCategoriesDelete={() => {
           openModal("delete-categories");

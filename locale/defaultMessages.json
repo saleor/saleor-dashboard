@@ -2831,6 +2831,10 @@
     "context": "page header",
     "string": "Order no. {orderNumber} - Add Fulfillment"
   },
+  "CJu4Rl": {
+    "context": "store details card title",
+    "string": "Store details"
+  },
   "CKP9+i": {
     "string": "Webhook errors detected."
   },
@@ -5382,6 +5386,10 @@
     "context": "Label prefix for the last occurrence date of a recurring problem",
     "string": "last occurred at"
   },
+  "Owgj18": {
+    "context": "section description",
+    "string": "Your store's public name and description, used across the storefront and in SEO metadata."
+  },
   "Oy1LhB": {
     "context": "button error state label",
     "string": "Try again"
@@ -6356,6 +6364,10 @@
   "TfzIXS": {
     "context": "tax classes card header",
     "string": "General information"
+  },
+  "TihW9+": {
+    "context": "section title",
+    "string": "Store details"
   },
   "TjGYna": {
     "context": "product inventory, checkbox",
@@ -9241,6 +9253,10 @@
     "context": "order refund amount",
     "string": "Replaced Products Value"
   },
+  "i8FLQQ": {
+    "context": "load more subcategories in category tree",
+    "string": "Load {count, plural, one {# more subcategory} other {# more subcategories}}"
+  },
   "iAaYh4": {
     "context": "Info box description for unavailable products",
     "string": "Customers can view this product but cannot add it to cart."
@@ -10650,6 +10666,10 @@
     "context": "translation context bar without known source language",
     "string": "Translating original content to {targetLanguage}"
   },
+  "omdhZg": {
+    "context": "store name field label",
+    "string": "Store name"
+  },
   "opSGsa": {
     "context": "create attribute dialog step one label",
     "string": "General"
@@ -11996,6 +12016,9 @@
     "context": "Summary of diagnostic issues found",
     "string": "{errorCount, plural, =0 {} one {# problem} other {# problems}}{hasWarnings, select, true {{hasErrors, select, true {, } other {}}} other {}}{warningCount, plural, =0 {} one {# warning} other {# warnings}} found"
   },
+  "v0fBOU": {
+    "string": "Collapse all"
+  },
   "v17EX7": {
     "context": "built-in attribute list filter preset",
     "string": "Model attributes"
@@ -12023,6 +12046,10 @@
   },
   "v8UngX": {
     "string": "Search warehouses..."
+  },
+  "v8cgy/": {
+    "context": "store description field label",
+    "string": "Store description"
   },
   "v8e93p": {
     "context": "hint for order total option",

@@ -2,6 +2,7 @@ import { rippleAttributeListGroupByType } from "@dashboard/attributes/ripples/at
 import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import { rippleTypePageCreateAttribute } from "@dashboard/attributes/ripples/typePageCreateAttribute";
+import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
@@ -42,6 +43,9 @@ export const allRipples: Ripple[] = [
   rippleModelTypeTabs,
   rippleGroupedModelTypeTabs,
   rippleModelMetadata,
+
+  // Categories
+  rippleExpandedSubcategories,
 
   // Orders
   rippleNewRefundReasons,

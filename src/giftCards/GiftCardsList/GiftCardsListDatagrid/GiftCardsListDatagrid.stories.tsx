@@ -85,6 +85,8 @@ const defaultContextValue: GiftCardsListConsumerProps = {
   updateListSettings: fn(),
   selectedRowIds: [],
   setSelectedRowIds: fn(),
+  setSelectedRows: fn(),
+  excludeFromSelected: fn(),
   setClearDatagridRowSelectionCallback: fn(),
   clearRowSelection: fn(),
   sort: { sort: GiftCardUrlSortField.product, asc: true },

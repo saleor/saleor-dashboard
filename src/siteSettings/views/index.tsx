@@ -66,6 +66,7 @@ const SiteSettings = () => {
         };
 
     const shopSettingsInput: ShopSettingsInput = {
+      name: data.name,
       description: data.description,
       reserveStockDurationAnonymousUser: data.reserveStockDurationAnonymousUser || null,
       reserveStockDurationAuthenticatedUser: data.reserveStockDurationAuthenticatedUser || null,

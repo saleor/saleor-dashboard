@@ -7,6 +7,7 @@ import { useMemo } from "react";
 
 import { attributeInputTypeCellRenderer } from "./AttributeInputTypeCell"; // canvas-only
 import { attributeTypeCellRenderer } from "./AttributeTypeCell"; // canvas-only
+import { chevronCellRenderer } from "./ChevronCell";
 import { dropdownCellRenderer } from "./DropdownCell";
 import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
@@ -14,6 +15,7 @@ import { numberCellRenderer } from "./NumberCell";
 import { pillCellRenderer } from "./PillCell";
 import { skeletonCellRenderer } from "./SkeletonCell";
 import { statusCellRenderer } from "./StatusCell";
+import { throbberCellRenderer } from "./ThrobberCell";
 import { thumbnailCellRenderer } from "./ThumbnailCell";
 
 export function useCustomCellRenderers() {
@@ -30,6 +32,8 @@ export function useCustomCellRenderers() {
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),
       dateCellRenderer(locale),
+      chevronCellRenderer,
+      throbberCellRenderer,
       lineMatrixStatusCellRenderer(themeValues, currentTheme),
       dropdownCellRenderer,
       skeletonCellRenderer,

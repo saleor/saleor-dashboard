@@ -237,6 +237,7 @@ export enum AnnouncementImportanceEnum {
 }
 
 export enum AppErrorCode {
+  DUPLICATED_EXTENSION_IDENTIFIER = 'DUPLICATED_EXTENSION_IDENTIFIER',
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -966,6 +967,11 @@ export type BulkAttributeValueInput = {
   values?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
+/**
+ * Card data used to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type CardInput = {
   /** Payment method nonce, a token returned by the appropriate provider's SDK. */
   code: Scalars['String']['input'];
@@ -1279,8 +1285,8 @@ export type CheckoutCreateInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** Checkout language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
-  /** A list of checkout lines, each containing information about an item in the checkout. */
-  lines: Array<CheckoutLineInput>;
+  /** A list of checkout lines, each containing information about an item in the checkout. When omitted, a checkout with no lines is created. */
+  lines?: InputMaybe<Array<CheckoutLineInput>>;
   /**
    * Checkout public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
@@ -1324,6 +1330,7 @@ export enum CheckoutErrorCode {
   NOT_FOUND = 'NOT_FOUND',
   NO_LINES = 'NO_LINES',
   PAYMENT_ERROR = 'PAYMENT_ERROR',
+  PRICE_OVERRIDE_REASON_WITHOUT_OVERRIDE = 'PRICE_OVERRIDE_REASON_WITHOUT_OVERRIDE',
   PRODUCT_NOT_PUBLISHED = 'PRODUCT_NOT_PUBLISHED',
   PRODUCT_UNAVAILABLE_FOR_PURCHASE = 'PRODUCT_UNAVAILABLE_FOR_PURCHASE',
   QUANTITY_GREATER_THAN_LIMIT = 'QUANTITY_GREATER_THAN_LIMIT',
@@ -1362,6 +1369,12 @@ export type CheckoutLineInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  /**
+   * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  priceOverrideReason?: InputMaybe<Scalars['String']['input']>;
   /** The number of items purchased. */
   quantity: Scalars['Int']['input'];
   /** ID of the product variant. */
@@ -1379,6 +1392,12 @@ export type CheckoutLineUpdateInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  /**
+   * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  priceOverrideReason?: InputMaybe<Scalars['String']['input']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: InputMaybe<Scalars['Int']['input']>;
   /**
@@ -1418,7 +1437,10 @@ export enum CheckoutSortField {
   CREATION_DATE = 'CREATION_DATE',
   /** Sort checkouts by customer. */
   CUSTOMER = 'CUSTOMER',
-  /** Sort checkouts by payment. */
+  /**
+   * Sort checkouts by payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT = 'PAYMENT',
   /** Sort checkouts by rank. Note: This option is available only with the `search` filter. */
   RANK = 'RANK'
@@ -2814,6 +2836,12 @@ export type GiftCardBulkCreateInput = {
 export type GiftCardCreateInput = {
   /** The gift card tags to add. */
   addTags?: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * ID of the customer the gift card is restricted to.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo?: InputMaybe<Scalars['ID']['input']>;
   /** Balance of the gift card. */
   balance: PriceInput;
   /** Slug of a channel from which the email should be sent. */
@@ -2857,6 +2885,7 @@ export type GiftCardCreateInput = {
 
 export enum GiftCardErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
+  CANNOT_ASSIGN = 'CANNOT_ASSIGN',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   EXPIRED_GIFT_CARD = 'EXPIRED_GIFT_CARD',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -2873,6 +2902,8 @@ export type GiftCardEventFilterInput = {
 
 export enum GiftCardEventsEnum {
   ACTIVATED = 'ACTIVATED',
+  ASSIGNED_TO_USER = 'ASSIGNED_TO_USER',
+  BALANCE_ADJUSTED = 'BALANCE_ADJUSTED',
   BALANCE_RESET = 'BALANCE_RESET',
   BOUGHT = 'BOUGHT',
   DEACTIVATED = 'DEACTIVATED',
@@ -2883,11 +2914,18 @@ export enum GiftCardEventsEnum {
   RESENT = 'RESENT',
   SENT_TO_CUSTOMER = 'SENT_TO_CUSTOMER',
   TAGS_UPDATED = 'TAGS_UPDATED',
+  UNASSIGNED_FROM_USER = 'UNASSIGNED_FROM_USER',
   UPDATED = 'UPDATED',
   USED_IN_ORDER = 'USED_IN_ORDER'
 }
 
 export type GiftCardFilterInput = {
+  /**
+   * Filter by the customer the gift card usage is restricted to.
+   *
+   * Added in Saleor 3.23.
+   */
+  assignedTo?: InputMaybe<Array<Scalars['ID']['input']>>;
   code?: InputMaybe<Scalars['String']['input']>;
   createdByEmail?: InputMaybe<Scalars['String']['input']>;
   currency?: InputMaybe<Scalars['String']['input']>;
@@ -2898,6 +2936,10 @@ export type GiftCardFilterInput = {
   products?: InputMaybe<Array<Scalars['ID']['input']>>;
   tags?: InputMaybe<Array<Scalars['String']['input']>>;
   used?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Filter by the customer who used a gift card.
+   * @deprecated Field no longer supported
+   */
   usedBy?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
@@ -4658,6 +4700,7 @@ export type LinesFilterInput = {
  *     `Payment` object, that will cover the `order.total`.
  */
 export enum MarkAsPaidStrategyEnum {
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   PAYMENT_FLOW = 'PAYMENT_FLOW',
   TRANSACTION_FLOW = 'TRANSACTION_FLOW'
 }
@@ -4906,13 +4949,22 @@ export enum NavigationType {
 }
 
 export enum OrderAction {
-  /** Represents the capture action. */
+  /**
+   * Represents the capture action.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   CAPTURE = 'CAPTURE',
   /** Represents a mark-as-paid action. */
   MARK_AS_PAID = 'MARK_AS_PAID',
-  /** Represents a refund action. */
+  /**
+   * Represents a refund action.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   REFUND = 'REFUND',
-  /** Represents a void action. */
+  /**
+   * Represents a void action.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   VOID = 'VOID'
 }
 
@@ -5418,6 +5470,10 @@ export type OrderFilterInput = {
   isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   numbers?: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * Filter orders by payment charge status.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   paymentStatus?: InputMaybe<Array<PaymentChargeStatusEnum>>;
   search?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Array<OrderStatusFilter>>;
@@ -5718,10 +5774,6 @@ export type OrderReturnProductsInput = {
   refund?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export enum OrderSettingsErrorCode {
-  INVALID = 'INVALID'
-}
-
 export type OrderSettingsInput = {
   /** Determine if it is possible to place unpaid order by calling `checkoutComplete` mutation. */
   allowUnpaidOrders?: InputMaybe<Scalars['Boolean']['input']>;
@@ -5762,13 +5814,6 @@ export type OrderSettingsInput = {
   useLegacyLineDiscountPropagation?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type OrderSettingsUpdateInput = {
-  /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. By default set to True */
-  automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']['input']>;
-  /** When enabled, all non-shippable gift card orders will be fulfilled automatically. By default set to True. */
-  automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export enum OrderSortField {
   /** Sort orders by creation date. */
   CREATED_AT = 'CREATED_AT',
@@ -5788,7 +5833,10 @@ export enum OrderSortField {
   LAST_MODIFIED_AT = 'LAST_MODIFIED_AT',
   /** Sort orders by number. */
   NUMBER = 'NUMBER',
-  /** Sort orders by payment status. */
+  /**
+   * Sort orders by payment status.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT = 'PAYMENT',
   /** Sort orders by rank. Note: This option is available only with the `search` filter. */
   RANK = 'RANK',
@@ -6136,6 +6184,11 @@ export enum PaymentChargeStatusEnum {
   REFUSED = 'REFUSED'
 }
 
+/**
+ * Fields required to check a payment balance.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentCheckBalanceInput = {
   /** Information about card. */
   card: CardInput;
@@ -6169,6 +6222,11 @@ export enum PaymentErrorCode {
   UNIQUE = 'UNIQUE'
 }
 
+/**
+ * Filtering options for payments.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentFilterInput = {
   checkouts?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Filter by ids. */
@@ -6216,6 +6274,11 @@ export type PaymentGatewayToInitialize = {
   id: Scalars['String']['input'];
 };
 
+/**
+ * Fields required to create a payment.
+ *
+ * The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+ */
 export type PaymentInput = {
   /** Total amount of the transaction, including all taxes and discounts. If no amount is provided, the checkout total will be used. */
   amount?: InputMaybe<Scalars['PositiveDecimal']['input']>;
@@ -6342,6 +6405,7 @@ export enum PermissionEnum {
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
+  /** @deprecated The observability feature is no longer supported. This permission will be removed in Saleor 3.24. */
   MANAGE_OBSERVABILITY = 'MANAGE_OBSERVABILITY',
   MANAGE_ORDERS = 'MANAGE_ORDERS',
   MANAGE_ORDERS_IMPORT = 'MANAGE_ORDERS_IMPORT',
@@ -7938,6 +8002,12 @@ export type ShopSettingsInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
+   * Shop's name.
+   *
+   * Added in Saleor 3.23.
+   */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /**
    * Controls whether password-based authentication is allowed.
    *
    * Added in Saleor 3.23.
@@ -7979,13 +8049,6 @@ export type ShopSettingsInput = {
 export type ShopSettingsTranslationInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   headerText?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type SiteDomainInput = {
-  /** Domain name for shop. */
-  domain?: InputMaybe<Scalars['String']['input']>;
-  /** Shop site name. */
-  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Fields required to create a staff user. */
@@ -8144,11 +8207,20 @@ export enum StockUpdatePolicyEnum {
 
 /** Enum representing the type of a payment storage in a gateway. */
 export enum StorePaymentMethodEnum {
-  /** Storage is disabled. The payment is not stored. */
+  /**
+   * Storage is disabled. The payment is not stored.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   NONE = 'NONE',
-  /** Off session storage type. The payment is stored to be reused even if the customer is absent. */
+  /**
+   * Off session storage type. The payment is stored to be reused even if the customer is absent.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   OFF_SESSION = 'OFF_SESSION',
-  /** On session storage type. The payment is stored only to be reused when the customer is present in the checkout flow. */
+  /**
+   * On session storage type. The payment is stored only to be reused when the customer is present in the checkout flow.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   ON_SESSION = 'ON_SESSION'
 }
 
@@ -8544,15 +8616,25 @@ export enum TransactionInitializeErrorCode {
 }
 
 export enum TransactionKind {
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   ACTION_TO_CONFIRM = 'ACTION_TO_CONFIRM',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   AUTH = 'AUTH',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   CANCEL = 'CANCEL',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   CAPTURE = 'CAPTURE',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   CONFIRM = 'CONFIRM',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   EXTERNAL = 'EXTERNAL',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   PENDING = 'PENDING',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   REFUND = 'REFUND',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   REFUND_ONGOING = 'REFUND_ONGOING',
+  /** @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead. */
   VOID = 'VOID'
 }
 
@@ -9257,7 +9339,10 @@ export enum WebhookEventTypeAsyncEnum {
    * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
-  /** An observability event is created. */
+  /**
+   * An observability event is created.
+   * @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24.
+   */
   OBSERVABILITY = 'OBSERVABILITY',
   /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
@@ -9594,7 +9679,10 @@ export enum WebhookEventTypeEnum {
    * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
-  /** An observability event is created. */
+  /**
+   * An observability event is created.
+   * @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24.
+   */
   OBSERVABILITY = 'OBSERVABILITY',
   /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
@@ -9636,23 +9724,44 @@ export enum WebhookEventTypeEnum {
   PAGE_TYPE_UPDATED = 'PAGE_TYPE_UPDATED',
   /** A page is updated. */
   PAGE_UPDATED = 'PAGE_UPDATED',
-  /** Authorize payment. */
+  /**
+   * Authorize payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
-  /** Capture payment. */
+  /**
+   * Capture payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
-  /** Confirm payment. */
+  /**
+   * Confirm payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
   PAYMENT_GATEWAY_INITIALIZE_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_SESSION',
   PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION',
-  /** Listing available payment gateways. */
+  /**
+   * Listing available payment gateways.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
   PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION',
   PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION = 'PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION',
-  /** Process payment. */
+  /**
+   * Process payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
-  /** Refund payment. */
+  /**
+   * Refund payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
-  /** Void payment. */
+  /**
+   * Void payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_VOID = 'PAYMENT_VOID',
   /** A new permission group is created. */
   PERMISSION_GROUP_CREATED = 'PERMISSION_GROUP_CREATED',
@@ -9821,23 +9930,44 @@ export enum WebhookEventTypeSyncEnum {
   ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
   /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
-  /** Authorize payment. */
+  /**
+   * Authorize payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_AUTHORIZE = 'PAYMENT_AUTHORIZE',
-  /** Capture payment. */
+  /**
+   * Capture payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CAPTURE = 'PAYMENT_CAPTURE',
-  /** Confirm payment. */
+  /**
+   * Confirm payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_CONFIRM = 'PAYMENT_CONFIRM',
   PAYMENT_GATEWAY_INITIALIZE_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_SESSION',
   PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_TOKENIZATION_SESSION',
-  /** Listing available payment gateways. */
+  /**
+   * Listing available payment gateways.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_LIST_GATEWAYS = 'PAYMENT_LIST_GATEWAYS',
   PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION = 'PAYMENT_METHOD_INITIALIZE_TOKENIZATION_SESSION',
   PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION = 'PAYMENT_METHOD_PROCESS_TOKENIZATION_SESSION',
-  /** Process payment. */
+  /**
+   * Process payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_PROCESS = 'PAYMENT_PROCESS',
-  /** Refund payment. */
+  /**
+   * Refund payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_REFUND = 'PAYMENT_REFUND',
-  /** Void payment. */
+  /**
+   * Void payment.
+   * @deprecated The legacy Payments API is deprecated and will be removed. Use the Transactions API instead.
+   */
   PAYMENT_VOID = 'PAYMENT_VOID',
   /** Fetch external shipping methods for checkout. */
   SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
@@ -9918,7 +10048,9 @@ export enum WebhookSampleEventTypeEnum {
   MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
   MENU_ITEM_UPDATED = 'MENU_ITEM_UPDATED',
   MENU_UPDATED = 'MENU_UPDATED',
+  /** @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user */
   NOTIFY_USER = 'NOTIFY_USER',
+  /** @deprecated The observability feature is no longer supported. This event will be removed in Saleor 3.24. */
   OBSERVABILITY = 'OBSERVABILITY',
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
   ORDER_CANCELLED = 'ORDER_CANCELLED',

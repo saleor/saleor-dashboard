@@ -1,6 +1,17 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  sectionStoreDetailsTitle: {
+    id: "TihW9+",
+    defaultMessage: "Store details",
+    description: "section title",
+  },
+  sectionStoreDetailsDescription: {
+    id: "Owgj18",
+    defaultMessage:
+      "Your store's public name and description, used across the storefront and in SEO metadata.",
+    description: "section description",
+  },
   sectionCheckoutTitle: {
     id: "DASYUF",
     defaultMessage: "Checkout Configuration",

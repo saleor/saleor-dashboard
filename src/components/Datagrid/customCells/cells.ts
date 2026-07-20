@@ -10,6 +10,7 @@ import {
   type GridCell,
   GridCellKind,
   type TextCell,
+  type Theme,
 } from "@glideapps/glide-data-grid";
 import { type Option } from "@saleor/macaw-ui-next";
 
@@ -50,6 +51,50 @@ export function readonlyTextCell(
   };
 }
 
+export function loadMoreTextCell(
+  value: string,
+  themeOverride?: Partial<Theme>,
+  options?: { loading?: boolean },
+): TextCell {
+  return {
+    cursor: options?.loading ? "default" : "pointer",
+    allowOverlay: false,
+    readonly: true,
+    data: value,
+    displayData: value,
+    kind: GridCellKind.Text,
+    style: options?.loading ? "faded" : "normal",
+    themeOverride,
+  };
+}
+
+interface ThrobberCellData {
+  kind: "throbber-cell";
+}
+
+export type ThrobberCell = CustomCell<ThrobberCellData>;
+
+interface ChevronCellData {
+  kind: "chevron-cell";
+  direction: "down" | "right";
+}
+
+export type ChevronCell = CustomCell<ChevronCellData>;
+
+export function chevronCell(expanded: boolean, hasCursorPointer = true): ChevronCell {
+  return {
+    cursor: hasCursorPointer ? "pointer" : "default",
+    allowOverlay: false,
+    readonly: true,
+    kind: GridCellKind.Custom,
+    copyData: "",
+    data: {
+      kind: "chevron-cell",
+      direction: expanded ? "down" : "right",
+    },
+  };
+}
+
 export function tagsCell(
   tags: Array<{ tag: string; color: string }>,
   selectedTags: string[],
@@ -78,13 +123,14 @@ export function booleanCell(value: boolean, options: Partial<GridCell> = {}): Gr
   };
 }
 
-export function loadingCell(): GridCell {
+export function loadingCell(): ThrobberCell {
   return {
     kind: GridCellKind.Custom,
-    allowOverlay: true,
+    allowOverlay: false,
+    readonly: true,
     copyData: "",
     data: {
-      kind: "spinner-cell",
+      kind: "throbber-cell",
     },
   };
 }
@@ -171,7 +217,7 @@ export function moneyDiscountedCell(
 
 export function dropdownCell(
   value: Option,
-  dataOpts: Pick<DropdownCellProps, "allowCustomValues" | "emptyOption"> &
+  dataOpts: Pick<DropdownCellProps, "allowCustomValues" | "emptyOption" | "swatch"> &
     ({ choices: Option[] } | { update: (text: string) => Promise<Option[]> }),
   opts?: Partial<GridCell>,
 ): DropdownCell {

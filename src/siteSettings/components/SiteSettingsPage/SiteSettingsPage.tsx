@@ -30,6 +30,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { SitePasswordLoginCard } from "../SitePasswordLoginCard/SitePasswordLoginCard";
 import { messages } from "./messages";
+import { StoreDetailsCard } from "./StoreDetailsCard/StoreDetailsCard";
 
 const stockAvailabilityWebhooks = [
   WebhookEventTypeAsyncEnum.PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL,
@@ -53,6 +54,7 @@ interface SiteSettingsPageAddressFormData {
 }
 
 export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormData {
+  name: string;
   description: string;
   reserveStockDurationAnonymousUser: number;
   reserveStockDurationAuthenticatedUser: number;
@@ -109,6 +111,7 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
   };
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
+    name: shop?.name || "",
     description: shop?.description || "",
     reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser ?? 0,
     reserveStockDurationAuthenticatedUser: shop?.reserveStockDurationAuthenticatedUser ?? 0,
@@ -160,6 +163,19 @@ const SiteSettingsPage = (props: SiteSettingsPageProps) => {
             />
             <DetailPageLayout.Content>
               <Box gap={2}>
+                <Box display="grid" __gridTemplateColumns="1fr 3fr" paddingLeft={6}>
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionStoreDetailsTitle)}
+                    description={intl.formatMessage(messages.sectionStoreDetailsDescription)}
+                  />
+                  <StoreDetailsCard
+                    data={data}
+                    errors={errors}
+                    disabled={disabled}
+                    onChange={change}
+                  />
+                </Box>
+                <Divider />
                 <Box display="grid" __gridTemplateColumns="1fr 3fr" paddingLeft={6}>
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}

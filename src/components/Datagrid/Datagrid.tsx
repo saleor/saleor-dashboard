@@ -120,6 +120,9 @@ interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
   showTopBorder?: boolean;
   themeOverride?: Partial<Theme>;
+  controlledSelection?: GridSelection;
+  onControlledSelectionChange?: (selection: GridSelection | undefined) => void;
+  getRowThemeOverride?: GetRowThemeCallback;
   rowMarkerWidth?: number;
   rowMarkerTheme?: Partial<Theme>;
   smoothScrollX?: boolean;
@@ -162,6 +165,9 @@ export const Datagrid = ({
   navigatorOpts,
   showTopBorder = true,
   themeOverride,
+  controlledSelection,
+  onControlledSelectionChange,
+  getRowThemeOverride: getRowThemeOverrideProp,
   rowMarkerWidth,
   rowMarkerTheme: rowMarkerThemeOverride,
   smoothScrollX = true,
@@ -191,7 +197,21 @@ export const Datagrid = ({
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
   const { clearTooltip, tooltip, setTooltip } = useTooltipContainer();
-  const [selection, setSelection] = useState<GridSelection>();
+  const [uncontrolledSelection, setUncontrolledSelection] = useState<GridSelection>();
+  const isSelectionControlled = typeof onControlledSelectionChange === "function";
+  const selection = isSelectionControlled ? controlledSelection : uncontrolledSelection;
+  const setSelectionState = useCallback(
+    (newSelection: GridSelection | undefined) => {
+      if (isSelectionControlled) {
+        onControlledSelectionChange?.(newSelection);
+
+        return;
+      }
+
+      setUncontrolledSelection(newSelection);
+    },
+    [isSelectionControlled, onControlledSelectionChange],
+  );
   const [areCellsDirty, setCellsDirty] = useState(true);
 
   const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
@@ -211,10 +231,10 @@ export const Datagrid = ({
     if (onRowSelectionChange && selection) {
       // Second parameter is callback to clear selection from parent component
       onRowSelectionChange(Array.from(selection.rows), () => {
-        setSelection(undefined);
+        setSelectionState(undefined);
       });
     }
-  }, [onRowSelectionChange, selection]);
+  }, [onRowSelectionChange, selection, setSelectionState]);
   useEffect(() => {
     if (recentlyAddedColumn && editor.current) {
       const columnIndex = availableColumns.findIndex(column => column.id === recentlyAddedColumn);
@@ -345,42 +365,50 @@ export const Datagrid = ({
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
     if (readonly && !gridSelection.current) {
-      setSelection(gridSelection);
+      setSelectionState(gridSelection);
     }
 
     if (!readonly) {
-      setSelection(gridSelection);
+      setSelectionState(gridSelection);
     }
   };
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
     (row: number) => {
+      const customOverride = getRowThemeOverrideProp?.(row);
       const isActiveRow = highlightedRow !== undefined && row === highlightedRow;
       const isHoverRow = row === hoverRow;
 
-      if (!isActiveRow && !isHoverRow) {
+      if (!customOverride && !isActiveRow && !isHoverRow) {
         return undefined;
       }
 
-      const overrideTheme: Partial<Theme> = isActiveRow
-        ? {
-            bgCell: themeValues.colors.background.default2,
-            bgCellMedium: themeValues.colors.background.default2,
-          }
-        : {
-            /*
-              Grid-specific colors. Transparency matters when we highlight entire row.
-            */
-            bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
-            bgCellMedium: themeValues.colors.background.default1Hovered,
-          };
+      let stateOverride: Partial<Theme> = {};
 
-      if (readonly) {
-        overrideTheme.accentLight = themeValues.colors.background.default1;
+      if (isActiveRow) {
+        stateOverride = {
+          bgCell: themeValues.colors.background.default2,
+          bgCellMedium: themeValues.colors.background.default2,
+        };
+      } else if (isHoverRow) {
+        stateOverride = {
+          /*
+            Grid-specific colors. Transparency matters when we highlight entire row.
+          */
+          bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
+          bgCellMedium: themeValues.colors.background.default1Hovered,
+        };
+
+        if (readonly) {
+          stateOverride.accentLight = themeValues.colors.background.default1;
+        }
       }
 
-      return overrideTheme;
+      return {
+        ...customOverride,
+        ...stateOverride,
+      };
     },
-    [highlightedRow, hoverRow, readonly, theme, themeValues],
+    [getRowThemeOverrideProp, highlightedRow, hoverRow, readonly, theme, themeValues],
   );
   const handleHeaderClicked = useCallback(
     (colIndex: number, event: HeaderClickedEventArgs) => {
@@ -458,10 +486,10 @@ export const Datagrid = ({
     (rows: number[]) => {
       if (selection?.rows) {
         onRowsRemoved(rows);
-        setSelection(undefined);
+        setSelectionState(undefined);
       }
     },
-    [selection, onRowsRemoved],
+    [selection, onRowsRemoved, setSelectionState],
   );
   const handleColumnResize = useCallback(
     (column: GridColumn, newSize: number) => {

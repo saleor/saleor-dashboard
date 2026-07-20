@@ -12,6 +12,13 @@ import { type IntlShape } from "react-intl";
 
 import messages from "./messages";
 
+export const isVariantDatagridSupportedAttribute = (
+  inputType: AttributeInputTypeEnum | null | undefined,
+) =>
+  inputType === AttributeInputTypeEnum.DROPDOWN ||
+  inputType === AttributeInputTypeEnum.PLAIN_TEXT ||
+  inputType === AttributeInputTypeEnum.SWATCH;
+
 export const variantsStaticColumnsAdapter = (intl: IntlShape) => [
   {
     id: "name",
@@ -126,15 +133,9 @@ export const useAttributesAdapter = ({
   selectedColumns: string[] | undefined;
   attributes: ProductFragment["productType"]["variantAttributes"];
 }) => {
-  const supportedAttributes = attributes?.filter(attribute => {
-    if (!attribute.inputType) {
-      return false;
-    }
-
-    return [AttributeInputTypeEnum.DROPDOWN, AttributeInputTypeEnum.PLAIN_TEXT].includes(
-      attribute.inputType,
-    );
-  });
+  const supportedAttributes = attributes?.filter(attribute =>
+    isVariantDatagridSupportedAttribute(attribute.inputType),
+  );
   const [attributeQuery, setAttributeQuery] = useState("");
   const { paginate, currentPage, changeCurrentPage } = useClientPagination();
   const paginatedAttributes = paginate(
