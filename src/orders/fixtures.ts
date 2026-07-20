@@ -1630,6 +1630,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             },
             unitDiscountReason: null,
             priceOverrideReason: null,
+            isPriceOverridden: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1810,6 +1811,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             },
             unitDiscountReason: null,
             priceOverrideReason: null,
+            isPriceOverridden: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1992,6 +1994,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       },
       unitDiscountReason: null,
       priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2142,6 +2145,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       },
       unitDiscountReason: null,
       priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2454,6 +2458,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       },
       unitDiscountReason: null,
       priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2604,6 +2609,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       },
       unitDiscountReason: null,
       priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {

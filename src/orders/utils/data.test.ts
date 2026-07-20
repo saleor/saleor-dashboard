@@ -635,6 +635,7 @@ describe("Get the total value of all replaced products", () => {
         },
         unitDiscountReason: null,
         priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -785,6 +786,7 @@ describe("Get the total value of all replaced products", () => {
         },
         unitDiscountReason: null,
         priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -935,6 +937,7 @@ describe("Get the total value of all replaced products", () => {
         },
         unitDiscountReason: null,
         priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -1090,6 +1093,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1247,6 +1251,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1404,6 +1409,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1561,6 +1567,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1718,6 +1725,7 @@ describe("Get the total value of all replaced products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2004,6 +2012,7 @@ describe("Get the total value of all selected products", () => {
         },
         unitDiscountReason: null,
         priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2154,6 +2163,7 @@ describe("Get the total value of all selected products", () => {
         },
         unitDiscountReason: null,
         priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2304,6 +2314,7 @@ describe("Get the total value of all selected products", () => {
         },
         unitDiscountReason: null,
         priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2459,6 +2470,7 @@ describe("Get the total value of all selected products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2616,6 +2628,7 @@ describe("Get the total value of all selected products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2773,6 +2786,7 @@ describe("Get the total value of all selected products", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3052,6 +3066,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3209,6 +3224,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3366,6 +3382,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           },
           unitDiscountReason: null,
           priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {

@@ -25,7 +25,7 @@ import { useIntl } from "react-intl";
 
 import {
   createGetCellContent,
-  isLineDiscounted,
+  isLineExplainable,
   isPriceBreakdownColumn,
   type LineReasonDisplay,
   orderDetailsStaticColumnsAdapter,
@@ -164,7 +164,7 @@ export const OrderDetailsDatagrid = ({
 
       const line = lines[row];
 
-      if (!line || !isLineDiscounted(line)) return;
+      if (!line || !isLineExplainable(line)) return;
 
       onShowLinePriceBreakdown?.(line.id);
     },
@@ -175,7 +175,7 @@ export const OrderDetailsDatagrid = ({
   // top-right of the datagrid wrapper, roughly above the price/total columns.
   // The strikethrough on a discounted price is the only persistent affordance;
   // the ripple is a one-time discovery hint for the click-to-explain behavior.
-  const showPricingRipple = Boolean(onShowLinePriceBreakdown) && lines.some(isLineDiscounted);
+  const showPricingRipple = Boolean(onShowLinePriceBreakdown) && lines.some(isLineExplainable);
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>

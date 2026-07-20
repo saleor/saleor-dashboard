@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Order details now expose a "Price override reason" column for order lines. When an app sets a custom price on a line, the reason it recorded is shown in the products table (available in both the list and matrix views, and toggleable via the column picker).
+Order details now surface price overrides for order lines. A "Price override reason" column is available in the products table (list and matrix views, toggleable via the column picker). Opening a line's price breakdown now also works for overridden lines — even when no discount applies — and marks the base-price row as "Overridden" with the recorded reason. Lines with a breakdown (discounted or overridden) show a subtle dot on the price so they're discoverable.

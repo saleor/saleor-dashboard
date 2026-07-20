@@ -4138,6 +4138,10 @@
   "IWP25U": {
     "string": "You cannot issue a granted refund for this order. None of your transactions have authorized or charged amount."
   },
+  "IX6V42": {
+    "context": "order line price override reason",
+    "string": "Price override reason"
+  },
   "IXCA8O": {
     "string": "Permission group updated"
   },
@@ -7688,10 +7692,6 @@
     "context": "submit button",
     "string": "Add manual capture"
   },
-  "aG9dQ2": {
-    "context": "order line price override reason",
-    "string": "Price override reason"
-  },
   "aHIrs/": {
     "string": "Failed to load filter data. Please refresh page to try again."
   },
@@ -10708,6 +10708,10 @@
   "p2EAP0": {
     "string": "Promotion removed"
   },
+  "p3Xg8k": {
+    "context": "badge marking that the base price was set custom (overridden)",
+    "string": "Overridden"
+  },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
     "string": "Assign and save"
@@ -11775,6 +11779,10 @@
   "u2KDfU": {
     "context": "hint linking to product types settings",
     "string": "Assign this attribute from a {link}."
+  },
+  "u2Vd0m": {
+    "context": "fallback detail when a price override has no reason recorded",
+    "string": "Custom price set for this line"
   },
   "u2zyiB": {
     "context": "secondary helper text in line discount modal, explaining what happens when a manual discount is added on top of an automatic one",
