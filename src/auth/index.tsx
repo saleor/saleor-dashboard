@@ -3,14 +3,8 @@ import { parseQs } from "@dashboard/url-utils";
 import { Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
-import {
-  type LoginUrlQueryParams,
-  newPasswordPath,
-  passwordResetPath,
-  passwordResetSuccessPath,
-} from "./urls";
+import { type LoginUrlQueryParams, passwordResetPath, passwordResetSuccessPath } from "./urls";
 import LoginViewComponent from "./views/Login";
-import NewPassword from "./views/NewPassword";
 import ResetPassword from "./views/ResetPassword";
 import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
 
@@ -26,7 +20,6 @@ const AuthRouter = () => (
     <Switch>
       <Route path={passwordResetSuccessPath} component={ResetPasswordSuccess} />
       <Route path={passwordResetPath} component={ResetPassword} />
-      <Route path={newPasswordPath} component={NewPassword} />
       <Route component={LoginView} />
     </Switch>
   </Layout>
