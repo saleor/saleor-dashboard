@@ -22,6 +22,7 @@ describe("useTranslationProductFormAppResponse", () => {
     id: "product-1",
     name: "Original Product Name",
     description: "Original Description",
+    slug: "original-product-name",
     seoDescription: "Original SEO Description",
     seoTitle: "Original SEO Title",
   };

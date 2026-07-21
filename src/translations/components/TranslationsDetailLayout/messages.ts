@@ -108,8 +108,8 @@ export const translationDetailMessages = defineMessages({
     description: "page content field hint",
   },
   seoSlugFieldHint: {
-    id: "IXYinP",
-    defaultMessage: "Slug for URL",
+    id: "mVcZkr",
+    defaultMessage: "URL path used in localized storefront links",
     description: "seo slug field hint",
   },
   seoTitleFieldHint: {

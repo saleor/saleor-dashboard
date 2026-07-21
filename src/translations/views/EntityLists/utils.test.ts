@@ -196,10 +196,11 @@ describe("getGeneralEntityTranslationCompletion", () => {
       description: JSON.stringify({ blocks: [] }),
       seoDescription: null,
       seoTitle: null,
+      slug: null,
     });
 
     // Assert
-    expect(result).toEqual({ current: 1, max: 4 });
+    expect(result).toEqual({ current: 1, max: 5 });
   });
 });
 
@@ -211,10 +212,11 @@ describe("getPageTranslationCompletion", () => {
       content: JSON.stringify({ blocks: [] }),
       seoDescription: null,
       seoTitle: null,
+      slug: null,
     });
 
     // Assert
-    expect(result).toEqual({ current: 1, max: 4 });
+    expect(result).toEqual({ current: 1, max: 5 });
   });
 });
 
@@ -229,13 +231,14 @@ describe("getProductTranslationCompletion", () => {
         description: JSON.stringify({ blocks: [] }),
         seoDescription: null,
         seoTitle: null,
+        slug: null,
         language: { __typename: "LanguageDisplay", code: LanguageCodeEnum.PL, language: "Polish" },
       },
       attributeValues: [],
     });
 
     // Assert
-    expect(result).toEqual({ current: 1, max: 4 });
+    expect(result).toEqual({ current: 1, max: 5 });
   });
 
   it("counts plain text attribute translations toward completion", () => {
@@ -248,6 +251,7 @@ describe("getProductTranslationCompletion", () => {
         description: null,
         seoDescription: null,
         seoTitle: null,
+        slug: null,
         language: { __typename: "LanguageDisplay", code: LanguageCodeEnum.PL, language: "Polish" },
       },
       attributeValues: [
@@ -280,7 +284,7 @@ describe("getProductTranslationCompletion", () => {
     });
 
     // Assert
-    expect(result).toEqual({ current: 2, max: 5 });
+    expect(result).toEqual({ current: 2, max: 6 });
   });
 
   it("does not count rich text attribute with empty blocks as complete", () => {
@@ -293,6 +297,7 @@ describe("getProductTranslationCompletion", () => {
         description: null,
         seoDescription: null,
         seoTitle: null,
+        slug: null,
         language: { __typename: "LanguageDisplay", code: LanguageCodeEnum.PL, language: "Polish" },
       },
       attributeValues: [
@@ -325,6 +330,6 @@ describe("getProductTranslationCompletion", () => {
     });
 
     // Assert
-    expect(result).toEqual({ current: 0, max: 5 });
+    expect(result).toEqual({ current: 0, max: 6 });
   });
 });
