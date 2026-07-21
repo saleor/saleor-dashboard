@@ -18,7 +18,7 @@ import DataEditor, {
   type Theme,
 } from "@glideapps/glide-data-grid";
 import { type GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
 import {
@@ -34,6 +34,7 @@ import {
 
 import { DashboardCard } from "../Card";
 import { type CardMenuItem } from "../CardMenu";
+import { Placeholder } from "../Placeholder";
 import { SaleorThrobber } from "../Throbber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
@@ -126,6 +127,7 @@ interface DatagridProps {
   rowMarkerWidth?: number;
   rowMarkerTheme?: Partial<Theme>;
   smoothScrollX?: boolean;
+  rowSelectionBlending?: DataEditorProps["rowSelectionBlending"];
 }
 
 export const Datagrid = ({
@@ -255,6 +257,23 @@ export const Datagrid = ({
     }
   }, [recentlyAddedColumn, availableColumns, editor]);
   usePortalClasses({ className: classes.portal });
+
+  // Macaw DynamicCombobox lists portal to document.body; Glide would treat those
+  // clicks as “outside” and close the editor before onChange. Returning false
+  // tells Glide to ignore the click for outside-detection.
+  // Match options via data-test-id too: data-portal-for is only set when Combobox
+  // has an `id`, and clicks can land on nested text/adornment nodes.
+  const isMacawPortalOutsideClick = useCallback((event: MouseEvent | TouchEvent): boolean => {
+    const target = event.target;
+    const element =
+      target instanceof Element ? target : target instanceof Node ? target.parentElement : null;
+
+    if (!element) {
+      return true;
+    }
+
+    return !element.closest("[data-portal-for], [data-test-id='select-option']");
+  }, []);
 
   const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } =
     useDatagridChange(availableColumns, rows, onChange, (areCellsDirty: boolean) =>
@@ -633,6 +652,7 @@ export const Datagrid = ({
                     headerHeight={cellHeight}
                     ref={editor}
                     onPaste
+                    isOutsideClick={isMacawPortalOutsideClick}
                     rightElementProps={{
                       sticky: true,
                     }}
@@ -686,10 +706,10 @@ export const Datagrid = ({
                 </div>
               </>
             ) : (
-              <Box padding={6} textAlign="center">
-                <Text data-test-id="empty-data-grid-text" size={3}>
-                  {emptyText}
-                </Text>
+              <Box padding={6}>
+                <Placeholder>
+                  <span data-test-id="empty-data-grid-text">{emptyText}</span>
+                </Placeholder>
               </Box>
             )}
           </DashboardCard.Content>

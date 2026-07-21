@@ -23,6 +23,7 @@ export const giftCardList = gql`
       edges {
         node {
           id
+          assignedToEmail
           last4CodeChars
           isActive
           expiryDate

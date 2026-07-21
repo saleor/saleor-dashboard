@@ -13,7 +13,9 @@ import { withApolloMocks } from "../../../../storybookUtils/apollo";
 import { ProductVariants } from "./ProductVariants";
 
 const placeholderImage = "https://via.placeholder.com/64";
-const productData = productFixture(placeholderImage);
+const productData = productFixture(placeholderImage) as ReturnType<typeof productFixture> & {
+  variants: Array<{ id: string }>;
+};
 
 const channels = channelsList.map(channel => ({
   ...channel,

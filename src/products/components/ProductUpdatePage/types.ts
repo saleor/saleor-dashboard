@@ -8,6 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   type ProductChannelListingUpdateInput,
+  type ProductDetailsVariantFragment,
   type ProductFragment,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
@@ -63,7 +64,14 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   channels: ProductChannelListingUpdateInput;
   collections: Option[];
   description: OutputData;
-  variants: DatagridChangeOpts;
+  variants: DatagridChangeOpts & {
+    /** Cross-page staged deletes. Preferred over `removed` indices when present. */
+    removedVariantIds?: string[];
+    /** Snapshots used to build bulk updates for variants edited off the current page. */
+    stagedUpdateVariants?: ProductDetailsVariantFragment[];
+    /** Index-based updates aligned with `stagedUpdateVariants`. */
+    stagedUpdateChanges?: DatagridChangeOpts;
+  };
 }
 
 export interface ProductUpdateHandlers
@@ -75,6 +83,8 @@ export interface ProductUpdateHandlers
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
+  /** Stage variant deletes by id (supports multi-page selection). */
+  stageVariantRemovals: (ids: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
   updateChannelList: ProductChannelsListingDialogSubmit;
@@ -86,6 +96,8 @@ export interface UseProductUpdateFormOutput
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
   touchedChannels: string[];
+  /** Staged variant deletes waiting for Save (cross-page). */
+  pendingVariantDeleteCount: number;
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;
@@ -111,6 +123,7 @@ export interface UseProductUpdateFormOpts
   fetchMoreReferenceCategories?: FetchMoreProps;
   assignReferencesAttributeId?: string;
   isSimpleProduct: boolean;
+  variants: ProductDetailsVariantFragment[];
 }
 
 export type SubmitResult = SubmitPromise<Array<UseProductUpdateHandlerError>>;

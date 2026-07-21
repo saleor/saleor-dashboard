@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { type ProductFragment } from "@dashboard/graphql";
+import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 
 import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from "./channel";
 
@@ -49,7 +49,7 @@ describe("getUpdateVariantChannelInputs", () => {
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(channels).toEqual({
@@ -88,7 +88,7 @@ describe("getUpdateVariantChannelInputs", () => {
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(channels).toEqual({
@@ -125,7 +125,7 @@ describe("getUpdateVariantChannelInputs", () => {
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(channels).toEqual({
@@ -159,7 +159,7 @@ describe("getUpdateVariantChannelInputs", () => {
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(channels).toEqual({
@@ -181,7 +181,7 @@ describe("getUpdateVariantChannelInputs", () => {
     // Act
     const channels = getUpdateVariantChannelInputs(changeData, 1, {
       channelListings,
-    } as ProductFragment["variants"][number]);
+    } as ProductDetailsVariantFragment);
 
     // Assert
     expect(channels).toEqual({

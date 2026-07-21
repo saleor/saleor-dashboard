@@ -56,6 +56,17 @@ export const giftCardCreateMessages = defineMessages({
     defaultMessage: "Use email:",
     description: "option label prefix for using a typed email address",
   },
+  restrictToCustomerLabel: {
+    id: "bBhgtd",
+    defaultMessage: "Restrict to customer",
+    description: "restrict gift card to customer field label",
+  },
+  restrictToCustomerSubtitle: {
+    id: "8zFkHk",
+    defaultMessage:
+      "Only the selected customer will be able to use this gift card. Leave empty to allow any customer.",
+    description: "restrict gift card to customer field subtitle",
+  },
   noteLabel: {
     id: "UKgP89",
     defaultMessage: "Note",

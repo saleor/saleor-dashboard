@@ -9,7 +9,7 @@ import {
   type Sort,
 } from "@dashboard/types";
 
-export type GiftCardListColummns = "giftCardCode" | "tag" | "balance" | "product";
+export type GiftCardListColummns = "giftCardCode" | "tag" | "balance" | "assignedTo" | "product";
 
 export enum GiftCardUrlSortField {
   balance = "balance",

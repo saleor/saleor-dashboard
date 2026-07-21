@@ -14,6 +14,10 @@ import { Box, Text, Textarea } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import {
+  type AssignedCustomer,
+  GiftCardAssignCustomerSelect,
+} from "../components/GiftCardAssignCustomerSelect/GiftCardAssignCustomerSelect";
 import { GiftCardSendToCustomer } from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { type GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
@@ -49,7 +53,11 @@ export const initialData: GiftCardCreateFormData = {
 
 interface UseGiftCardCreateDialogFormProps {
   initialCustomer?: GiftCardCreateFormCustomer | null;
-  onSubmit: (data: GiftCardCreateFormData, selectedCustomer: GiftCardCreateFormCustomer) => void;
+  onSubmit: (
+    data: GiftCardCreateFormData,
+    selectedCustomer: GiftCardCreateFormCustomer,
+    assignedCustomer: AssignedCustomer | null,
+  ) => void;
   open: boolean;
 }
 
@@ -64,12 +72,13 @@ export const useGiftCardCreateDialogForm = ({
   const [selectedCustomer, setSelectedCustomer] = useState<GiftCardCreateFormCustomer>(
     initialCustomer ?? defaultInitialCustomer,
   );
+  const [assignedCustomer, setAssignedCustomer] = useState<AssignedCustomer | null>(null);
   const { submit, toggleValue, change, data, set, reset } = useForm(
     {
       ...initialData,
       balanceCurrency: "",
     },
-    formData => onSubmit(formData, selectedCustomer),
+    formData => onSubmit(formData, selectedCustomer, assignedCustomer),
   );
 
   useEffect(() => {
@@ -94,6 +103,7 @@ export const useGiftCardCreateDialogForm = ({
     onClose: () => {
       reset();
       setSelectedCustomer(initialCustomer ?? defaultInitialCustomer);
+      setAssignedCustomer(null);
     },
   });
 
@@ -105,11 +115,13 @@ export const useGiftCardCreateDialogForm = ({
     (!sendToCustomerSelected || (!!selectedCustomer.email && !!data.channelSlug));
 
   return {
+    assignedCustomer,
     change,
     data,
     loadingSettings,
     selectedCustomer,
     set,
+    setAssignedCustomer,
     setSelectedCustomer,
     shouldEnableSubmitButton,
     submit,
@@ -118,23 +130,27 @@ export const useGiftCardCreateDialogForm = ({
 };
 
 interface GiftCardCreateDialogFieldsProps {
+  assignedCustomer: AssignedCustomer | null;
   change: GiftCardCreateFormCommonProps["change"];
   data: GiftCardCreateFormData;
   formErrors: ReturnType<typeof getFormErrors> | null;
   initialCustomer?: GiftCardCreateFormCustomer | null;
   selectedCustomer: GiftCardCreateFormCustomer;
   set: (data: Partial<GiftCardCreateFormData>) => void;
+  setAssignedCustomer: (customer: AssignedCustomer | null) => void;
   setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
   toggleValue: GiftCardCreateFormCommonProps["toggleValue"];
 }
 
 export const GiftCardCreateDialogFields = ({
+  assignedCustomer,
   change,
   data,
   formErrors = null,
   initialCustomer,
   selectedCustomer,
   set,
+  setAssignedCustomer,
   setSelectedCustomer,
   toggleValue,
 }: GiftCardCreateDialogFieldsProps) => {
@@ -181,6 +197,14 @@ export const GiftCardCreateDialogFields = ({
           <FormattedMessage {...messages.optionsSection} />
         </ModalSectionHeader>
         <Box display="flex" flexDirection="column" gap={4}>
+          <Box display="flex" flexDirection="column" gap={1}>
+            <GiftCardAssignCustomerSelect
+              selectedCustomer={assignedCustomer}
+              onChange={setAssignedCustomer}
+              label={intl.formatMessage(messages.restrictToCustomerLabel)}
+            />
+            <Label text={intl.formatMessage(messages.restrictToCustomerSubtitle)} />
+          </Box>
           <GiftCardCreateExpirySelect {...commonFormProps} />
           <Box display="flex" flexDirection="column" gap={1}>
             <Text fontWeight="medium" size={3}>

@@ -16,6 +16,7 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import { useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { type AssignedCustomer } from "../components/GiftCardAssignCustomerSelect/GiftCardAssignCustomerSelect";
 import { GiftCardCreateDialogCodeContent } from "./GiftCardCreateDialogCodeContent";
 import {
   GiftCardCreateDialogFields,
@@ -71,6 +72,7 @@ export const GiftCardCreateDialogContent = ({
   const handleSubmit = async (
     data: GiftCardCreateFormData,
     selectedCustomer: GiftCardCreateFormCustomer,
+    assignedCustomer: AssignedCustomer | null,
   ) => {
     const result = await createGiftCard({
       variables: {
@@ -79,6 +81,7 @@ export const GiftCardCreateDialogContent = ({
           selectedCustomer,
           currentDate,
           data.channelSlug || channel?.slug,
+          assignedCustomer,
         ),
       },
     });
@@ -94,11 +97,13 @@ export const GiftCardCreateDialogContent = ({
   };
 
   const {
+    assignedCustomer,
     change,
     data,
     loadingSettings,
     selectedCustomer,
     set,
+    setAssignedCustomer,
     setSelectedCustomer,
     shouldEnableSubmitButton,
     submit,
@@ -150,12 +155,14 @@ export const GiftCardCreateDialogContent = ({
                     </Box>
                   ) : (
                     <GiftCardCreateDialogFields
+                      assignedCustomer={assignedCustomer}
                       change={change}
                       data={data}
                       formErrors={formErrors}
                       initialCustomer={initialCustomer}
                       selectedCustomer={selectedCustomer}
                       set={set}
+                      setAssignedCustomer={setAssignedCustomer}
                       setSelectedCustomer={setSelectedCustomer}
                       toggleValue={toggleValue}
                     />

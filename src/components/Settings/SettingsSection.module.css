@@ -1,0 +1,23 @@
+.section {
+  box-shadow: none;
+  position: relative;
+}
+
+.header {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default1);
+}
+
+.description {
+  max-width: 46rem;
+  line-height: 1.45;
+}
+
+.body > * + * {
+  border-top: 1px solid var(--mu-colors-border-default1);
+}
+
+/* Deep-link anchor wrappers are zero-size; don't treat them as a body row */
+.body > [data-hash-anchors] + * {
+  border-top: none;
+}

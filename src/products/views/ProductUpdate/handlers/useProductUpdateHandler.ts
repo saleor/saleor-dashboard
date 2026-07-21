@@ -11,6 +11,7 @@ import {
   type AttributeErrorFragment,
   ErrorPolicyEnum,
   type ProductChannelListingErrorFragment,
+  type ProductDetailsVariantFragment,
   type ProductErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductFragment,
@@ -67,6 +68,7 @@ interface UseProductUpdateHandlerOpts {
 
 export function useProductUpdateHandler(
   product: ProductFragment | undefined,
+  variants: ProductDetailsVariantFragment[] = [],
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
@@ -126,14 +128,22 @@ export function useProductUpdateHandler(
       }
     }
 
-    if (data.variants.removed.length > 0) {
-      const deleteVaraintsResult = await deleteVariants({
-        variables: {
-          ids: data.variants.removed.map(index => product.variants[index].id),
-        },
-      });
+    if (data.variants.removedVariantIds?.length || data.variants.removed.length > 0) {
+      const idsFromIndexes = data.variants.removed
+        .map(index => variants[index]?.id)
+        .filter((id): id is string => Boolean(id));
+      // Prefer staged cross-page ids; fall back / union with page-local indexes.
+      const ids = Array.from(
+        new Set([...(data.variants.removedVariantIds ?? []), ...idsFromIndexes]),
+      );
 
-      errors = [...errors, ...deleteVaraintsResult.data.productVariantBulkDelete.errors];
+      if (ids.length > 0) {
+        const deleteVaraintsResult = await deleteVariants({
+          variables: { ids },
+        });
+
+        errors = [...errors, ...deleteVaraintsResult.data.productVariantBulkDelete.errors];
+      }
     }
 
     if (data.variants.added.length > 0) {
@@ -155,28 +165,37 @@ export function useProductUpdateHandler(
       variantErrors.push(...createVariantsErrors);
     }
 
-    if (data.variants.updates.length > 0) {
+    const updateChanges = data.variants.stagedUpdateChanges ?? data.variants;
+    const variantsForBulkUpdate = data.variants.stagedUpdateVariants ?? variants;
+
+    if (updateChanges.updates.length > 0) {
       const updateInputdData = getBulkVariantUpdateInputs(
-        product.variants,
-        data.variants,
+        variantsForBulkUpdate,
+        updateChanges,
         product?.productType?.variantAttributes ?? [],
       );
 
       if (updateInputdData.length) {
-        const updateVariantsResults = await updateVariants({
-          variables: {
-            product: product.id,
-            input: updateInputdData,
-            errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
-          },
-        });
-        const updateVariantsErrors = getVariantUpdateMutationErrors(
-          updateVariantsResults,
-          updateInputdData.map(data => data.id),
-        );
+        // Chunk to stay within API comfort zone for large catalogs.
+        const CHUNK_SIZE = 100;
 
-        variantErrors.push(...updateVariantsErrors);
-        errors.push(...updateVariantsErrors);
+        for (let offset = 0; offset < updateInputdData.length; offset += CHUNK_SIZE) {
+          const chunk = updateInputdData.slice(offset, offset + CHUNK_SIZE);
+          const updateVariantsResults = await updateVariants({
+            variables: {
+              product: product.id,
+              input: chunk,
+              errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
+            },
+          });
+          const updateVariantsErrors = getVariantUpdateMutationErrors(
+            updateVariantsResults,
+            chunk.map(row => row.id),
+          );
+
+          variantErrors.push(...updateVariantsErrors);
+          errors.push(...updateVariantsErrors);
+        }
       }
     }
 

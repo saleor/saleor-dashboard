@@ -20,6 +20,11 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Product",
     description: "column title product",
   },
+  assignedTo: {
+    id: "Tbaoeu",
+    defaultMessage: "Assigned to",
+    description: "column title assigned to customer",
+  },
   balance: {
     id: "MbZHXE",
     defaultMessage: "Balance",

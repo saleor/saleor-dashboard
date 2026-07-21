@@ -21,11 +21,19 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { type ProductFragment } from "@dashboard/graphql";
+import { type ProductDetailsVariantFragment, type ProductFragment } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useLocale from "@dashboard/hooks/useLocale";
+import {
+  buildVariantGridSubmitPayload,
+  createEmptyVariantGridStagedEdits,
+  rehydrateVariantGridDatagridOpts,
+  stageVariantRemovalsInStore,
+  syncVariantGridStagedEditsFromPage,
+  type VariantGridStagedEditsState,
+} from "@dashboard/products/hooks/variantGridStagedEdits";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
@@ -36,7 +44,7 @@ import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/sin
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as React from "react";
 
 import { useProductChannelListingsForm } from "./formChannels";
@@ -57,8 +65,13 @@ export function useProductUpdateForm(
   refetch: () => Promise<any>,
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
+  const { variants: productVariants } = opts;
   const initial = useMemo(
-    () => getProductUpdatePageFormData(product, product?.variants),
+    () => getProductUpdatePageFormData(product, productVariants),
+    // Intentionally omit productVariants: simple-product fields come from
+    // product.defaultVariant. Re-binding to the paginated grid would reset
+    // SKU/preorder when the user searches or pages the variants table.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [product],
   );
   const form = useForm(initial, undefined, {
@@ -80,12 +93,89 @@ export function useProductUpdateForm(
     removed: [],
     updates: [],
   });
+  const stagedEdits = useRef<VariantGridStagedEditsState>(createEmptyVariantGridStagedEdits());
+  const previousVariantsPageKey = useRef<string | null>(null);
+  const [pendingVariantDeleteCount, setPendingVariantDeleteCount] = useState(0);
+  const variantsPageKey = useMemo(
+    () => productVariants.map(variant => variant.id).join("\0"),
+    [productVariants],
+  );
+
+  const refreshPendingVariantDeleteCount = useCallback(() => {
+    setPendingVariantDeleteCount(stagedEdits.current.removedIds.size);
+  }, []);
+
+  const applyRehydratedDatagridState = useCallback(
+    (pageVariants: ProductDetailsVariantFragment[]) => {
+      const rehydrated = rehydrateVariantGridDatagridOpts(stagedEdits.current, pageVariants);
+
+      datagrid.setAdded([]);
+      datagrid.setRemoved(rehydrated.removed);
+      datagrid.changes.current = rehydrated.updates;
+      variants.current = rehydrated;
+    },
+    [datagrid],
+  );
+
+  useEffect(
+    function rehydrateStagedEditsOnVariantsPageChange() {
+      if (previousVariantsPageKey.current === variantsPageKey) {
+        return;
+      }
+
+      const isFirstPageLoad = previousVariantsPageKey.current === null;
+
+      previousVariantsPageKey.current = variantsPageKey;
+
+      if (isFirstPageLoad) {
+        return;
+      }
+
+      // Added rows are page-local and cannot follow pagination/search.
+      datagrid.setAdded([]);
+      applyRehydratedDatagridState(productVariants);
+    },
+    [applyRehydratedDatagridState, datagrid, productVariants, variantsPageKey],
+  );
+
   const handleVariantChange = React.useCallback(
     (data: DatagridChangeOpts) => {
-      variants.current = prepareVariantChangeData(data, locale, product);
+      const prepared = prepareVariantChangeData(data, locale, product);
+
+      variants.current = prepared;
+      stagedEdits.current = syncVariantGridStagedEditsFromPage(
+        stagedEdits.current,
+        productVariants,
+        prepared,
+      );
+      refreshPendingVariantDeleteCount();
       triggerChange();
     },
-    [locale, product, triggerChange],
+    [locale, product, productVariants, refreshPendingVariantDeleteCount, triggerChange],
+  );
+
+  const handleStageVariantRemovals = React.useCallback(
+    (ids: string[]) => {
+      if (ids.length === 0) {
+        return;
+      }
+
+      stagedEdits.current = stageVariantRemovalsInStore(stagedEdits.current, ids);
+
+      const rehydrated = rehydrateVariantGridDatagridOpts(stagedEdits.current, productVariants);
+      const keptAdded = datagrid.added;
+
+      datagrid.setRemoved(rehydrated.removed);
+      datagrid.changes.current = rehydrated.updates;
+      variants.current = {
+        added: keptAdded,
+        removed: rehydrated.removed,
+        updates: rehydrated.updates,
+      };
+      refreshPendingVariantDeleteCount();
+      triggerChange();
+    },
+    [datagrid, productVariants, refreshPendingVariantDeleteCount, triggerChange],
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
@@ -176,22 +266,31 @@ export function useProductUpdateForm(
     description: null,
   };
 
-  const getSubmitData = async (): Promise<ProductUpdateSubmitData> => ({
-    ...form.changedData,
-    attributes: mergeAttributes(
-      attributes.data,
-      getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
-    ),
-    attributesWithNewFileValue: attributesWithNewFileValue.data,
-    channels: {
-      ...channels,
-      updateChannels: channels.updateChannels.filter(listing =>
-        touchedChannels.current.includes(listing.channelId),
+  const getSubmitData = async (): Promise<ProductUpdateSubmitData> => {
+    const stagedPayload = buildVariantGridSubmitPayload(stagedEdits.current);
+
+    return {
+      ...form.changedData,
+      attributes: mergeAttributes(
+        attributes.data,
+        getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
       ),
-    },
-    description: richText.isDirty ? await richText.getValue() : undefined,
-    variants: variants.current,
-  });
+      attributesWithNewFileValue: attributesWithNewFileValue.data,
+      channels: {
+        ...channels,
+        updateChannels: channels.updateChannels.filter(listing =>
+          touchedChannels.current.includes(listing.channelId),
+        ),
+      },
+      description: richText.isDirty ? await richText.getValue() : undefined,
+      variants: {
+        ...variants.current,
+        removedVariantIds: stagedPayload.removedVariantIds,
+        stagedUpdateVariants: stagedPayload.updateVariants,
+        stagedUpdateChanges: stagedPayload.updateChanges,
+      },
+    };
+  };
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
     const errors = await onSubmit(data);
 
@@ -232,7 +331,7 @@ export function useProductUpdateForm(
             error =>
               error.__typename === "DatagridError" &&
               error.type !== "create" &&
-              error.variantId === product.variants[change.row].id,
+              error.variantId === productVariants[change.row]?.id,
           ),
     );
     datagrid.setRemoved([]);
@@ -241,6 +340,8 @@ export function useProductUpdateForm(
       removed: [],
       updates: [],
     };
+    stagedEdits.current = createEmptyVariantGridStagedEdits();
+    setPendingVariantDeleteCount(0);
 
     return result;
   }, [datagrid, handleFormSubmit, getSubmitData]);
@@ -273,6 +374,7 @@ export function useProductUpdateForm(
     handlers: {
       changeChannels: handleChannelChange,
       changeVariants: handleVariantChange,
+      stageVariantRemovals: handleStageVariantRemovals,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,
@@ -288,6 +390,7 @@ export function useProductUpdateForm(
     },
     submit,
     isSaveDisabled,
+    pendingVariantDeleteCount,
     richText,
     attributeRichTextGetters,
     touchedChannels: touchedChannels.current,

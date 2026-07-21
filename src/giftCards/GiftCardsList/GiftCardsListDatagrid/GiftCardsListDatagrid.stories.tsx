@@ -30,6 +30,7 @@ const mockGiftCards: GiftCardNode[] = [
       id: "prod-1",
       name: "Gift Card $50",
     },
+    assignedToEmail: "vip@example.com",
     currentBalance: {
       __typename: "Money" as const,
       amount: 50,
@@ -45,6 +46,7 @@ const mockGiftCards: GiftCardNode[] = [
     isExpired: true,
     tags: [],
     product: null,
+    assignedToEmail: null,
     currentBalance: {
       __typename: "Money" as const,
       amount: 0,
@@ -67,6 +69,7 @@ const mockGiftCards: GiftCardNode[] = [
       id: "prod-2",
       name: "Gift Card $100",
     },
+    assignedToEmail: null,
     currentBalance: {
       __typename: "Money" as const,
       amount: 75,
@@ -79,7 +82,7 @@ const defaultContextValue: GiftCardsListConsumerProps = {
   loading: false,
   giftCards: mockGiftCards,
   settings: {
-    columns: ["giftCardCode", "tag", "product", "balance"],
+    columns: ["giftCardCode", "tag", "product", "assignedTo", "balance"],
     rowNumber: 20,
   },
   updateListSettings: fn(),

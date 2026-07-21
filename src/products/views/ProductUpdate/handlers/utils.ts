@@ -8,6 +8,7 @@ import {
   type ProductChannelListingAddInput,
   type ProductChannelListingUpdateInput,
   type ProductChannelListingUpdateMutationVariables,
+  type ProductDetailsVariantFragment,
   type ProductFragment,
   type ProductUpdateMutationVariables,
   type ProductVariantBulkUpdateInput,
@@ -166,12 +167,13 @@ export function hasProductChannelsUpdate(data: ProductChannelListingUpdateInput)
 }
 
 export function getBulkVariantUpdateInputs(
-  variants: ProductFragment["variants"],
+  variants: ProductDetailsVariantFragment[],
   data: DatagridChangeOpts,
   variantsAttributes: VariantAttributeFragment[],
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data, variantsAttributes);
 
+  // `removed` uses original indices; `updates`/`added` use post-removal grid indices.
   return variants
     .filter((_, index) => !data.removed.includes(index))
     .map(toUpdateInput)
@@ -182,7 +184,7 @@ export function getBulkVariantUpdateInputs(
 const createToUpdateInput =
   (data: DatagridChangeOpts, variantsAttributes: VariantAttributeFragment[]) =>
   (
-    variant: ProductFragment["variants"][number],
+    variant: ProductDetailsVariantFragment,
     variantIndex: number,
   ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
@@ -195,7 +197,7 @@ const createToUpdateInput =
 const getVariantAttributesForUpdate = (
   data: DatagridChangeOpts,
   variantIndex: number,
-  variant: ProductFragment["variants"][number],
+  variant: ProductDetailsVariantFragment,
   variantsAttributes: VariantAttributeFragment[],
 ) => {
   const updatedAttributes = getAttributeData(data.updates, variantIndex, variantsAttributes);

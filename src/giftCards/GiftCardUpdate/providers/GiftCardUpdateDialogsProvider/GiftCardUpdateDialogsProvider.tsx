@@ -6,6 +6,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import type * as React from "react";
 import { createContext } from "react";
 
+import { GiftCardAssignCustomerDialog } from "../../GiftCardAssignCustomerDialog/GiftCardAssignCustomerDialog";
 import { GiftCardResendCodeDialog } from "../../GiftCardResendCodeDialog/GiftCardResendCodeDialog";
 import { GiftCardUpdateBalanceDialog } from "../../GiftCardUpdateBalanceDialog/GiftCardUpdateBalanceDialog";
 import {
@@ -25,6 +26,7 @@ export interface GiftCardUpdateDialogsConsumerProps {
   openSetBalanceDialog: () => void;
   openDeleteDialog: () => void;
   openResendCodeDialog: () => void;
+  openAssignCustomerDialog: () => void;
 }
 
 export const GiftCardUpdateDialogsContext = createContext<GiftCardUpdateDialogsConsumerProps>(null);
@@ -36,7 +38,7 @@ const GiftCardUpdateDialogsProvider = ({
 }: GiftCardUpdateDialogsProviderProps) => {
   const navigate = useNavigator();
   const { loading: loadingGiftCard } = useGiftCardDetails();
-  const { SET_BALANCE, DELETE, RESEND_CODE } = GiftCardUpdatePageActionParamsEnum;
+  const { SET_BALANCE, DELETE, RESEND_CODE, ASSIGN_CUSTOMER } = GiftCardUpdatePageActionParamsEnum;
   const [openDialog, onClose] = createDialogActionHandlers<
     GiftCardUpdatePageActionParamsEnum,
     GiftCardUpdatePageUrlQueryParams
@@ -47,6 +49,7 @@ const GiftCardUpdateDialogsProvider = ({
     openSetBalanceDialog: () => openDialog(SET_BALANCE),
     openDeleteDialog: () => openDialog(DELETE),
     openResendCodeDialog: () => openDialog(RESEND_CODE),
+    openAssignCustomerDialog: () => openDialog(ASSIGN_CUSTOMER),
     onClose,
   };
 
@@ -62,6 +65,7 @@ const GiftCardUpdateDialogsProvider = ({
             onDelete={navigateBack}
           />
           <GiftCardResendCodeDialog open={isDialogOpen(RESEND_CODE)} onClose={onClose} />
+          <GiftCardAssignCustomerDialog open={isDialogOpen(ASSIGN_CUSTOMER)} onClose={onClose} />
         </>
       )}
     </GiftCardUpdateDialogsContext.Provider>

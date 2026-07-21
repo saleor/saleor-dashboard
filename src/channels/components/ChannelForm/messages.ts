@@ -16,6 +16,38 @@ export const messages = defineMessages({
     defaultMessage: "Channel Settings",
     description: "channel settings",
   },
+  orderAndCheckoutSettings: {
+    id: "EXPRMd",
+    defaultMessage: "Orders & fulfillment",
+    description: "channel form card title for channel-owned order and checkout settings",
+  },
+  orderAndCheckoutSettingsHint: {
+    id: "n2eKUn",
+    defaultMessage:
+      "Settings for this channel only. Compare all channels or edit shop-wide policies in {link}.",
+    description: "channel form hint linking to orders and fulfillment settings hub",
+  },
+  automaticallyConfirmAllNewOrdersLabel: {
+    id: "RLYfMF",
+    defaultMessage: "Automatically confirm all orders",
+    description: "checkbox label",
+  },
+  automaticallyConfirmAllNewOrdersDescription: {
+    id: "wpAXKX",
+    defaultMessage: "All orders will be automatically confirmed and all payments will be captured.",
+    description: "checkbox label description",
+  },
+  automaticallyFulfillNonShippableGiftCardLabel: {
+    id: "7UG1Lx",
+    defaultMessage: "Automatically fulfill non shippable gift cards",
+    description: "checkbox gift cards label",
+  },
+  automaticallyFulfillNonShippableGiftCardDescription: {
+    id: "EewziG",
+    defaultMessage:
+      "When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer",
+    description: "checkbox gift cards label description",
+  },
   channelCurrency: {
     id: "9Sz0By",
     defaultMessage: "Currency",

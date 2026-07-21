@@ -222,6 +222,8 @@ export class OrderFixture {
       quantityFulfilled: 2,
       quantityToFulfill: 0,
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       allocations: [],
       unitDiscount: {
@@ -371,6 +373,8 @@ export class OrderFixture {
           quantityToFulfill: 0,
           unitDiscountValue: undefined,
           unitDiscountReason: "",
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: DiscountValueTypeEnum.FIXED,
           allocations: [],
           variant: {

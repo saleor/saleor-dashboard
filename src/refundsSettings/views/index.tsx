@@ -1,15 +1,15 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { sectionNames } from "@dashboard/intl";
-import { RefundsSettingsPage } from "@dashboard/refundsSettings/components/RefundsSettingsPage/RefundsSettingsPage";
+import { RefundsSettings } from "@dashboard/refundsSettings/views/RefundsSettings";
 import { useIntl } from "react-intl";
 
-export const RefundsSettingsView = () => {
+export const RefundsSettingsView = (): JSX.Element => {
   const intl = useIntl();
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.refundsSettings)} />
-      <RefundsSettingsPage />
+      <RefundsSettings />
     </>
   );
 };

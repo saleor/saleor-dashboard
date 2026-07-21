@@ -1,2 +1,2 @@
-export { default } from "./ProductVariantNavigation";
-export * from "./ProductVariantNavigation";
+export { ProductVariantNavigation as default } from "./ProductVariantNavigation";
+export { ProductVariantNavigation } from "./ProductVariantNavigation";

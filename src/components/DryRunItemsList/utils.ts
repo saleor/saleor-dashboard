@@ -38,8 +38,6 @@ import {
   ProductListDocument,
   type ProductListQuery,
   type ProductListQueryVariables,
-  type ProductVariantListQuery,
-  type ProductVariantListQueryVariables,
   RootCategoriesDocument,
   type RootCategoriesQuery,
   type RootCategoriesQueryVariables,
@@ -81,7 +79,6 @@ export type TData =
   | OrderListQuery
   | PageListQuery
   | ProductListQuery
-  | ProductVariantListQuery
   | RootCategoriesQuery
   | SaleListQuery
   | StaffListQuery
@@ -106,7 +103,6 @@ export type TVariables =
   | OrderListQueryVariables
   | PageListQueryVariables
   | ProductListQueryVariables
-  | ProductVariantListQueryVariables
   | RootCategoriesQueryVariables
   | SaleListQueryVariables
   | StaffListQueryVariables

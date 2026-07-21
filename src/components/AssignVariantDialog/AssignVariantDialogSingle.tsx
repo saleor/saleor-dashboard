@@ -26,9 +26,11 @@ import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPic
 import BackButton from "../BackButton";
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { ModalFilters } from "../ModalFilters/ModalFilters";
+import { AssignVariantLoadMoreRow } from "./AssignVariantLoadMoreRow";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
-import { getCompositeLabel, type VariantWithProductLabel } from "./utils";
+import { useAssignVariantDialogProducts } from "./useAssignVariantDialogProducts";
+import { getCompositeLabel, toAssignableProducts, type VariantWithProductLabel } from "./utils";
 
 interface AssignVariantDialogSingleProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -98,13 +100,23 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
 
   const hasSelectionChanged = selectedVariantId !== initialSelection;
 
+  const assignableFromSearch = useMemo(() => toAssignableProducts(products), [products]);
+  const {
+    products: assignableProducts,
+    loadMoreVariants,
+    loadingProductIds,
+  } = useAssignVariantDialogProducts({
+    products: assignableFromSearch,
+    searchQuery: query,
+    channel: combinedFilters.channel,
+    open,
+  });
   const productChoices = useMemo(
-    () =>
-      products?.filter(product => product && product.variants && product.variants.length > 0) || [],
-    [products],
+    () => assignableProducts.filter(product => product.variants.length > 0),
+    [assignableProducts],
   );
   const productVariantChoices = useMemo(
-    () => productChoices.flatMap(product => product.variants || []),
+    () => productChoices.flatMap(product => product.variants),
     [productChoices],
   );
   const displayedProductChoices = useStalePickerList(productChoices, loading, open);
@@ -244,6 +256,12 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
                               </TableRowLink>
                             );
                           })}
+                        <AssignVariantLoadMoreRow
+                          product={product}
+                          loading={loading}
+                          loadingProduct={Boolean(product && loadingProductIds.has(product.id))}
+                          onLoadMore={loadMoreVariants}
+                        />
                       </Fragment>
                     ),
                     () =>

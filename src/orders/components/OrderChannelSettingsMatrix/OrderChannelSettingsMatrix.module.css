@@ -1,0 +1,169 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mu-spacing-4);
+  padding: var(--mu-spacing-4) var(--mu-spacing-6) var(--mu-spacing-3);
+}
+
+.toolbarSearch {
+  flex: 1;
+  min-width: 12rem;
+  max-width: 20rem;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.scrollLimited {
+  --matrix-header-height: 2.75rem;
+  --matrix-row-height: 4rem;
+  max-height: calc(var(--matrix-header-height) + var(--matrix-row-height) * 5);
+  overflow-y: auto;
+}
+
+.emptyFiltered {
+  padding: var(--mu-spacing-5) var(--mu-spacing-6);
+}
+
+.table {
+  width: 100%;
+  min-width: 44rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.channelCol {
+  width: 32%;
+}
+
+.optionCol {
+  width: 17%;
+}
+
+.table th,
+.table td {
+  padding: var(--mu-spacing-3) var(--mu-spacing-6);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.table th:not(:first-child),
+.table td:not(:first-child) {
+  padding-left: var(--mu-spacing-4);
+  padding-right: var(--mu-spacing-4);
+  text-align: center;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  font-size: var(--mu-fontSizes-1);
+  font-weight: 500;
+  color: var(--mu-colors-text-default2);
+  background-color: var(--mu-colors-background-default1);
+  white-space: nowrap;
+}
+
+.table td:not(:first-child) {
+  white-space: nowrap;
+}
+
+.headerCell {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+}
+
+.table th:not(:first-child) .headerCell {
+  justify-content: center;
+}
+
+.matrixControl {
+  display: flex;
+  justify-content: center;
+}
+
+.dirtyRow td {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.table tbody tr.dirtyRow:hover td {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.helpButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--mu-colors-text-default2);
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.helpButton:hover,
+.helpButton:focus-visible {
+  opacity: 1;
+  color: var(--mu-colors-text-default1);
+}
+
+.hashAnchors {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tooltipContent {
+  max-width: 15rem;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.autoConfirmTooltip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-2);
+  min-width: 12rem;
+  max-width: 15rem;
+}
+
+.autoConfirmRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-1);
+}
+
+.autoConfirmRow {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+}
+
+.statusPill {
+  display: inline-flex;
+  width: fit-content;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover td {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.channelLink {
+  text-decoration: none;
+}
+
+.channelLink:hover :global(*) {
+  text-decoration: underline;
+}

@@ -1,5 +1,37 @@
 # Changelog
 
+## 3.23.18
+
+### Patch Changes
+
+- [#6753](https://github.com/saleor/saleor-dashboard/pull/6753) [`c5e5f7c`](https://github.com/saleor/saleor-dashboard/commit/c5e5f7c1c85cdc8f31489f3396a63adb56d694c3) Thanks [@mirekm](https://github.com/mirekm)! - Improved product media and file attribute uploads:
+  - Dropping or selecting images shows upload previews immediately, including on an empty gallery
+  - Multiple uploads report one summary notification instead of a toast per file
+  - Product media can be selected and deleted in bulk
+  - Reordering media is smoother, with clearer drag feedback; reordering is blocked while uploads are still in progress
+  - Invalid or oversized files are rejected before upload, with a clear warning
+  - File attributes (for example images on products and models) support drag and drop to upload or replace, and show a thumbnail when the file is an image
+
+- [#6717](https://github.com/saleor/saleor-dashboard/pull/6717) [`35580bf`](https://github.com/saleor/saleor-dashboard/commit/35580bfbee58a8d4ad571a27f20934ed13abfff2) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Gift cards can now be restricted to a specific customer, so that only that customer can redeem them.
+  - When issuing a gift card, you can optionally pick a customer to restrict it to.
+  - On the gift card details page, the card information now shows the assigned customer, with actions to assign, change, or unassign them.
+  - The gift card list has a new "Assigned to" column.
+  - The gift card timeline now shows when a card is assigned to or unassigned from a customer (with the acting staff member or app), and displays the old and new balance for balance reset and balance adjustment events.
+
+- [#6751](https://github.com/saleor/saleor-dashboard/pull/6751) [`0176999`](https://github.com/saleor/saleor-dashboard/commit/0176999884852cd5509ab6eb5184ede4c568caae) Thanks [@mirekm](https://github.com/mirekm)! - Fixed settings toggle rows so links in descriptions no longer flip the setting. Refunds & returns settings now warn before leaving with unsaved changes, and Orders & fulfillment opened from the orders list returns there on cancel/back.
+
+- [#6758](https://github.com/saleor/saleor-dashboard/pull/6758) [`80a29af`](https://github.com/saleor/saleor-dashboard/commit/80a29af5986c85b186abfc98f1538b502e234876) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed a 404 when opening the set/new password link (`/new-password`) while already signed in. Users authenticated via OIDC can now follow the link to set a password instead of hitting a "page not found" screen — the page is now reachable whether you're logged in or out.
+
+- [#6732](https://github.com/saleor/saleor-dashboard/pull/6732) [`ed669ff`](https://github.com/saleor/saleor-dashboard/commit/ed669ff060818e33bc036d02b7edd67f1da7e825) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Order details now surface price overrides for order lines. A "Price override reason" column is available in the products table (list and matrix views, toggleable via the column picker). Opening a line's price breakdown now also works for overridden lines — even when no discount applies — and marks the base-price row as "Overridden" with the recorded reason. Lines with a breakdown (discounted or overridden) show a subtle dot on the price so they're discoverable.
+
+- [#6751](https://github.com/saleor/saleor-dashboard/pull/6751) [`0176999`](https://github.com/saleor/saleor-dashboard/commit/0176999884852cd5509ab6eb5184ede4c568caae) Thanks [@mirekm](https://github.com/mirekm)! - Reorganized Configuration by merchant job (Store, Markets & channels, Products & catalog, Content, Shipping & delivery, Orders, Users & permissions). Store settings now use the shared Settings hub layout, with legacy webhook, stock, and address options under Advanced.
+
+- [#6751](https://github.com/saleor/saleor-dashboard/pull/6751) [`0176999`](https://github.com/saleor/saleor-dashboard/commit/0176999884852cd5509ab6eb5184ede4c568caae) Thanks [@mirekm](https://github.com/mirekm)! - Reorganized Configuration: Store replaces Miscellaneous/Site Settings, and Refunds & returns is reached from Orders & fulfillment instead of as a separate Configuration card.
+
+- [#6757](https://github.com/saleor/saleor-dashboard/pull/6757) [`23994f7`](https://github.com/saleor/saleor-dashboard/commit/23994f7566ddb011f078bca58de1d01a6046e128) Thanks [@xseignard](https://github.com/xseignard)! - On the order details page, fulfillment tracking numbers that are URLs are now clickable links that open in a new tab. Non-URL tracking numbers keep their plain-text display, and copying to clipboard still works in both cases.
+
+- [#6754](https://github.com/saleor/saleor-dashboard/pull/6754) [`10ae2a8`](https://github.com/saleor/saleor-dashboard/commit/10ae2a8744005885b4ad81d79cf1dda4b76d6dfa) Thanks [@mirekm](https://github.com/mirekm)! - Dashboard stays usable with large variant catalogs: product variants load in pages with search, sibling navigation and the translations context switcher paginate instead of fetching every variant, order “add product” and Assign Variant dialogs offer Load more with clear progress, and Product Doctor walks a slim variant catalog for availability checks.
+
 ## 3.23.17
 
 ### Patch Changes

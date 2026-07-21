@@ -23,6 +23,10 @@ export const giftCardEventsFragment = gql`
     orderNumber
     tags
     oldTags
+    assignedTo {
+      oldAssignedToEmail
+      currentAssignedToEmail
+    }
     balance {
       initialBalance {
         ...Money
@@ -52,6 +56,10 @@ export const giftCardDataFragment = gql`
       id
       name
     }
+    assignedTo {
+      ...UserBase
+    }
+    assignedToEmail
     createdByEmail
     created
     expiryDate

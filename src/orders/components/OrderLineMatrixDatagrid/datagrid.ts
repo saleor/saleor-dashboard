@@ -140,6 +140,11 @@ export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableC
     width: 90,
   },
   {
+    id: "priceOverrideReason",
+    title: intl.formatMessage(columnsMessages.priceOverrideReason),
+    width: 200,
+  },
+  {
     id: "reason",
     title: intl.formatMessage(columnsMessages.reason),
     width: 200,
@@ -287,6 +292,8 @@ export const createGetCellContent =
           readonly: true,
           allowOverlay: false,
         });
+      case "priceOverrideReason":
+        return readonlyTextCell(line.priceOverrideReason ?? "—", false);
       default:
         return readonlyTextCell("", false);
     }

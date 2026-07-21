@@ -29,10 +29,11 @@ import { OrderManualTransactionDialog } from "@dashboard/orders/components/Order
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
-import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
+import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -349,11 +350,13 @@ export const OrderUnconfirmedDetails = ({
         loading={variantSearchOpts.loading}
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
-        products={mapEdgesToItems(variantSearchOpts?.data?.search)}
+        products={mapSearchOrderVariantsForAdd(mapEdgesToItems(variantSearchOpts?.data?.search))}
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
         channelName={order.channel?.name}
+        channel={order.channel?.slug}
+        address={getVariantSearchAddress(order)}
         onSubmit={variants =>
           orderLinesAdd.mutate({
             id,

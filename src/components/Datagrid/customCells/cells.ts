@@ -174,6 +174,7 @@ export function moneyCell(
   value: number | number[] | null,
   currency: string,
   opts?: Partial<GridCell>,
+  dataOpts?: { hasBreakdown?: boolean },
 ): MoneyCell {
   return {
     ...common,
@@ -183,6 +184,7 @@ export function moneyCell(
       kind: "money-cell",
       value,
       currency,
+      hasBreakdown: dataOpts?.hasBreakdown,
     },
     copyData: value?.toString() ?? "",
   };
@@ -194,10 +196,11 @@ interface MoneyDiscountedCellData {
   undiscounted?: string | number;
   currency: string;
   locale: Locale;
+  hasBreakdown?: boolean;
 }
 
 export function moneyDiscountedCell(
-  { value, undiscounted, currency, locale }: MoneyDiscountedCellData,
+  { value, undiscounted, currency, locale, hasBreakdown }: MoneyDiscountedCellData,
   opts?: Partial<GridCell>,
 ): MoneyDiscuntedCell {
   return {
@@ -210,6 +213,7 @@ export function moneyDiscountedCell(
       currency,
       undiscounted,
       locale,
+      hasBreakdown,
     },
     copyData: value?.toString() ?? "",
   };

@@ -57,6 +57,10 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
 
 export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
+/** Page size for the product variants datagrid (embedded Glide paints all loaded rows). */
+export const PRODUCT_VARIANTS_PAGINATE_BY = 50;
+/** Page size for variant detail/create sibling navigator (infinite scroll). */
+export const PRODUCT_VARIANT_SIBLINGS_PAGINATE_BY = 30;
 
 export type ProductListColumns =
   | "name"
@@ -184,7 +188,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.GIFT_CARD_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["giftCardCode", "status", "tag", "product", "balance"],
+    columns: ["giftCardCode", "status", "tag", "product", "assignedTo", "balance"],
   },
   [ListViews.ORDER_DETAILS_LIST]: {
     rowNumber: PAGINATE_BY,
@@ -198,6 +202,7 @@ export const defaultListSettings: AppListViewSettings = {
       "price",
       "total",
       "isGift",
+      "priceOverrideReason",
       "reason",
       "metadata",
     ],
@@ -219,6 +224,7 @@ export const defaultListSettings: AppListViewSettings = {
       "price",
       "total",
       "replaced",
+      "priceOverrideReason",
       "reason",
     ],
   },

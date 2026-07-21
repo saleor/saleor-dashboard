@@ -263,6 +263,8 @@ export function buildLineWaterfall(
     start,
     factors,
     end,
+    isPriceOverridden: Boolean(line.isPriceOverridden),
+    priceOverrideReason: line.priceOverrideReason ?? null,
     warnings,
   };
 }

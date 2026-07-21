@@ -36,4 +36,29 @@ export const giftCardUpdateInfoCardMessages = defineMessages({
     defaultMessage: "Bought by",
     description: "bought by label",
   },
+  assignedToLabel: {
+    id: "LD4Vnf",
+    defaultMessage: "Assigned to",
+    description: "gift card assigned customer label",
+  },
+  assignButton: {
+    id: "w/fKY5",
+    defaultMessage: "Assign customer",
+    description: "assign gift card to customer button",
+  },
+  changeButton: {
+    id: "MLIPQX",
+    defaultMessage: "Change",
+    description: "change assigned gift card customer button",
+  },
+  unassignButton: {
+    id: "KOx6cY",
+    defaultMessage: "Unassign",
+    description: "unassign gift card from customer button",
+  },
+  unassignSuccess: {
+    id: "ZD3/vJ",
+    defaultMessage: "Customer unassigned",
+    description: "gift card customer unassigned success message",
+  },
 });

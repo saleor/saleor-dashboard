@@ -1,14 +1,17 @@
 import CardMenu, { type CardMenuItem } from "@dashboard/components/CardMenu";
+import Link from "@dashboard/components/Link";
 import {
   bulkEnableDisableSectionMessages,
   giftCardsListTableMessages,
 } from "@dashboard/giftCards/GiftCardsList/messages";
 import useGiftCardActivateToggle from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
 import { type ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { giftCardUrl } from "@dashboard/giftCards/urls";
 import { type CustomerGiftCardFragment } from "@dashboard/graphql";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { useGiftCardPermissions } from "../../hooks/useGiftCardPermissions";
 import { GiftCardDeleteDialogContent } from "../GiftCardDeleteDialog/GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "../GiftCardDeleteDialog/useGiftCardSingleDelete";
 import GiftCardStatusChip from "../GiftCardStatusChip/GiftCardStatusChip";
@@ -22,6 +25,7 @@ interface CustomerGiftCardsCardListItemProps {
 const CustomerGiftCardsCardListItem = ({ giftCard }: CustomerGiftCardsCardListItemProps) => {
   const intl = useIntl();
   const classes = useListWrapperStyles();
+  const { canManageGiftCards } = useGiftCardPermissions();
   const [openDeleteGiftCard, setOpenDeleteGiftCard] = useState(false);
   const { isExpired, isActive, last4CodeChars } = giftCard;
   const onGiftCardDeleteDialogClose = () => setOpenDeleteGiftCard(false);
@@ -83,12 +87,23 @@ const CustomerGiftCardsCardListItem = ({ giftCard }: CustomerGiftCardsCardListIt
   return (
     <>
       <div className={classes.listingWrapper}>
-        <FormattedMessage
-          values={{
-            last4CodeChars,
-          }}
-          {...giftCardsListTableMessages.codeEndingWithLabel}
-        />
+        {canManageGiftCards ? (
+          <Link href={giftCardUrl(giftCard.id)}>
+            <FormattedMessage
+              values={{
+                last4CodeChars,
+              }}
+              {...giftCardsListTableMessages.codeEndingWithLabel}
+            />
+          </Link>
+        ) : (
+          <FormattedMessage
+            values={{
+              last4CodeChars,
+            }}
+            {...giftCardsListTableMessages.codeEndingWithLabel}
+          />
+        )}
         <GiftCardStatusChip giftCard={giftCard} />
         <CardMenu className={classes.listingMenu} menuItems={getMenuItems()} />
       </div>

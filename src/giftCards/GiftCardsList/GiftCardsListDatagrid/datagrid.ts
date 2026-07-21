@@ -44,6 +44,11 @@ export const getColumns = (intl: IntlShape, sort?: Sort<GiftCardUrlSortField>): 
       width: 200,
     },
     {
+      id: "assignedTo",
+      title: intl.formatMessage(columnsMessages.assignedTo),
+      width: 200,
+    },
+    {
       id: "balance",
       title: intl.formatMessage(columnsMessages.balance),
       width: 200,
@@ -117,6 +122,8 @@ export const createGetCellContent =
         return readonlyTextCell(getTagCellText(rowData?.tags ?? []));
       case "product":
         return readonlyTextCell(rowData?.product?.name ?? PLACEHOLDER);
+      case "assignedTo":
+        return readonlyTextCell(rowData?.assignedToEmail ?? PLACEHOLDER);
       case "balance":
         return moneyCell(
           rowData.currentBalance.amount,

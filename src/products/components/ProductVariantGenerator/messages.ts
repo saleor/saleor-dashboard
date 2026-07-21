@@ -76,6 +76,40 @@ export const messages = defineMessages({
     defaultMessage: "SKU will not be set",
     description: "message when no SKU prefix is provided",
   },
+  skuCollisionTitle: {
+    id: "bhcIMr",
+    defaultMessage: "SKU conflict",
+    description: "notification title when generated SKUs already exist",
+  },
+  skuCollisionSkipped: {
+    id: "pxh49C",
+    defaultMessage:
+      "Skipped {count} {count, plural, one {variant} other {variants}} with existing SKUs: {skus}",
+    description: "notification when colliding SKUs are skipped and the rest are generated",
+  },
+  skuCollisionAllSkipped: {
+    id: "yIgYca",
+    defaultMessage:
+      "All selected variants conflict with existing SKUs ({skus}). Change the SKU prefix or selection and try again.",
+    description: "notification when every generated SKU already exists",
+  },
+  skuDuplicateInBatch: {
+    id: "3vWwSN",
+    defaultMessage:
+      "Your selection would create duplicate SKUs in this batch: {skus}. Adjust the prefix or selected values.",
+    description: "notification when the same SKU would be generated twice in one batch",
+  },
+  loadingExistingVariants: {
+    id: "Uj/iBz",
+    defaultMessage: "Loading existing variants…",
+    description: "shown while fetching all variants for duplicate detection",
+  },
+  existingVariantsLoadFailed: {
+    id: "/QIOpX",
+    defaultMessage:
+      "Could not load existing variants. Close the dialog and try again before generating.",
+    description: "error when fetching all variants for duplicate detection fails",
+  },
   generate: {
     id: "T61cLQ",
     defaultMessage: "Generate {count} {count, plural, one {variant} other {variants}}",

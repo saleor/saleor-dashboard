@@ -41,6 +41,7 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
           ),
           channel,
           query,
+          includeVariants: false,
         });
       },
       [AttributeEntityTypeEnum.PRODUCT_VARIANT]: (where, channel, query): void => {
@@ -52,6 +53,7 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
           ),
           channel,
           query,
+          includeVariants: true,
         });
       },
       [AttributeEntityTypeEnum.PAGE]: (where, query): void => {

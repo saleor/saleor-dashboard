@@ -1,5 +1,9 @@
-import { DatagridSwatchPreview } from "@dashboard/components/Attributes/DatagridSwatchPreview";
+import {
+  DATAGRID_SWATCH_SIZE,
+  DatagridSwatchPreview,
+} from "@dashboard/components/Attributes/DatagridSwatchPreview";
 import { type AttributeSwatchData } from "@dashboard/components/Attributes/getAttributeSwatchData";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import {
   type CustomCell,
   type CustomRenderer,
@@ -9,7 +13,7 @@ import {
   type ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 type DropdownCellGetSuggestionsFn = (text: string) => Promise<Option[]>;
 
@@ -34,57 +38,98 @@ export const emptyDropdownCellValue: Option = {
   value: "",
 };
 
-const SWATCH_SIZE = 14;
-const SWATCH_TEXT_GAP = 6;
+/** Ensures Macaw sets data-portal-for so Glide isOutsideClick can keep the list open. */
+const DROPDOWN_CELL_COMBOBOX_ID = "datagrid-dropdown-cell";
+
+const SWATCH_SIZE = DATAGRID_SWATCH_SIZE;
+const SWATCH_TEXT_GAP = 8;
 
 const getOptionSwatch = (option: Option | null | undefined): AttributeSwatchData | undefined =>
   (option as AttributeSearchOption | null | undefined)?.swatch;
+
+const toStoredOption = (
+  option: Option | null | undefined,
+  swatch?: AttributeSwatchData,
+): AttributeSearchOption => ({
+  label: option?.label ?? "",
+  value: option?.value ?? "",
+  ...(swatch ? { swatch } : {}),
+});
 
 const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   value: cell,
   onFinishedEditing,
 }) => {
   const [data, setData] = useState<Option[]>([]);
+  const [loading, setLoading] = useState(false);
+  const fetchRequestId = useRef(0);
 
   const getChoices = useCallback(
     async (text: string) => {
-      setData((await cell.data?.update?.(text)) ?? []);
+      if (!cell.data?.update) {
+        return;
+      }
+
+      const requestId = ++fetchRequestId.current;
+
+      setLoading(true);
+
+      try {
+        const nextOptions = (await cell.data.update(text)) ?? [];
+
+        if (requestId === fetchRequestId.current) {
+          setData(nextOptions);
+        }
+      } finally {
+        if (requestId === fetchRequestId.current) {
+          setLoading(false);
+        }
+      }
     },
     [cell.data],
   );
 
-  const props = cell.data.update
-    ? { fetchOnFocus: true, fetchChoices: getChoices, choices: data }
-    : { fetchOnFocus: false, fetchChoices: () => Promise.resolve([]), choices: cell.data.choices };
+  const debouncedGetChoices = useDebounce((text: string) => {
+    void getChoices(text);
+  }, 500);
 
+  const choices = cell.data.update ? data : (cell.data.choices ?? []);
   const selectedSwatch = cell.data.swatch ?? getOptionSwatch(cell.data.value);
 
   return (
     <DynamicCombobox
-      options={props.choices ?? []}
+      id={DROPDOWN_CELL_COMBOBOX_ID}
+      options={choices}
       value={cell.data.value}
-      onFocus={() => props.fetchChoices("")}
-      loading={false}
+      onFocus={() => {
+        if (cell.data.update) {
+          void getChoices("");
+        }
+      }}
+      onInputValueChange={value => {
+        if (cell.data.update) {
+          // Show Macaw's list throbber immediately; fetch after debounce.
+          setLoading(true);
+          debouncedGetChoices(value);
+        }
+      }}
+      loading={loading}
       name=""
-      startAdornment={() => (selectedSwatch ? <DatagridSwatchPreview {...selectedSwatch} /> : null)}
-      /**
-       * There is a bug - looks like it's properly changing with keyobard, but mouse event is somehow not passed
-       * to the dropdown layer @fixme
-       */
+      startAdornment={() =>
+        selectedSwatch ? <DatagridSwatchPreview {...selectedSwatch} placement="input" /> : null
+      }
       onChange={option => {
-        const matchedOption =
-          props.choices?.find(choice => choice.value === option?.value) ??
-          ({
-            label: option?.label ?? "",
-            value: option?.value ?? "",
-          } satisfies Option);
+        const matchedOption = choices.find(choice => choice.value === option?.value) ?? option;
+        const swatch = getOptionSwatch(matchedOption);
+        const storedOption = toStoredOption(matchedOption, swatch);
 
         return onFinishedEditing({
           ...cell,
+          copyData: storedOption.label,
           data: {
             ...cell.data,
-            value: matchedOption,
-            swatch: getOptionSwatch(matchedOption),
+            value: storedOption,
+            swatch,
           },
         });
       }}

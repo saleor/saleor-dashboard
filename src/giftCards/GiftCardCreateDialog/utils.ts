@@ -101,6 +101,7 @@ export const getCreateGiftCardInputData = (
   selectedCustomer: GiftCardCreateFormCustomer,
   currentDate: number,
   defaultChannelSlug?: string | null,
+  assignedCustomer?: { id: string } | null,
 ): GiftCardCreateInput => {
   const {
     balanceAmount,
@@ -115,6 +116,7 @@ export const getCreateGiftCardInputData = (
 
   return {
     addTags: tags?.map(tag => tag.value) || null,
+    assignedTo: assignedCustomer?.id || null,
     balance: {
       amount: balanceAmount,
       currency: balanceCurrency,

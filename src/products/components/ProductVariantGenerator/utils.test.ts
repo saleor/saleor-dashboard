@@ -1,4 +1,8 @@
-import { AttributeInputTypeEnum, type VariantAttributeFragment } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  type ProductVariantBulkCreateInput,
+  type VariantAttributeFragment,
+} from "@dashboard/graphql";
 
 import {
   type AttributeData,
@@ -9,9 +13,11 @@ import {
 } from "./types";
 import {
   cartesianProduct,
+  excludeInputsWithCollidingSkus,
   extractExistingCombinations,
   generateVariantPreviews,
   toBulkCreateInputs,
+  toExistingVariantData,
 } from "./utils";
 
 describe("ProductVariantGenerator utils", () => {
@@ -140,6 +146,84 @@ describe("ProductVariantGenerator utils", () => {
           { attributeId: "color", valueSlug: "blue" },
         ],
       ]);
+    });
+  });
+
+  describe("toExistingVariantData", () => {
+    it("keeps only selection attributes", () => {
+      // Arrange
+      const variants: ExistingVariantData = [
+        {
+          attributes: [
+            { attribute: { id: "size" }, values: [{ slug: "small" }] },
+            { attribute: { id: "material" }, values: [{ slug: "cotton" }] },
+          ],
+        },
+      ];
+
+      // Act
+      const result = toExistingVariantData(variants, new Set(["size"]));
+
+      // Assert
+      expect(result).toEqual([
+        {
+          attributes: [{ attribute: { id: "size" }, values: [{ slug: "small" }] }],
+        },
+      ]);
+    });
+  });
+
+  describe("excludeInputsWithCollidingSkus", () => {
+    it("returns inputs unchanged when there are no collisions", () => {
+      // Arrange
+      const inputs: ProductVariantBulkCreateInput[] = [
+        { attributes: [], name: "A", sku: "A-1" },
+        { attributes: [], name: "B", sku: "B-1" },
+      ];
+
+      // Act
+      const result = excludeInputsWithCollidingSkus(inputs, new Set());
+
+      // Assert
+      expect(result.kept).toEqual(inputs);
+      expect(result.skippedSkus).toEqual([]);
+    });
+
+    it("skips inputs whose SKU already exists and keeps the rest", () => {
+      // Arrange
+      const inputs: ProductVariantBulkCreateInput[] = [
+        { attributes: [], name: "A", sku: "WHITEPLIMSOLLS-42-black" },
+        { attributes: [], name: "B", sku: "WHITEPLIMSOLLS-39-white" },
+        { attributes: [], name: "C", sku: "WHITEPLIMSOLLS-42-pure-blue" },
+      ];
+
+      // Act
+      const result = excludeInputsWithCollidingSkus(
+        inputs,
+        new Set(["WHITEPLIMSOLLS-42-black", "WHITEPLIMSOLLS-42-pure-blue"]),
+      );
+
+      // Assert
+      expect(result.kept).toEqual([{ attributes: [], name: "B", sku: "WHITEPLIMSOLLS-39-white" }]);
+      expect(result.skippedSkus).toEqual([
+        "WHITEPLIMSOLLS-42-black",
+        "WHITEPLIMSOLLS-42-pure-blue",
+      ]);
+    });
+
+    it("keeps inputs without a SKU even when collisions exist", () => {
+      // Arrange
+      const inputs: ProductVariantBulkCreateInput[] = [
+        { attributes: [], name: "A", sku: "COLLIDE" },
+        { attributes: [], name: "B" },
+      ];
+
+      // Act
+      const result = excludeInputsWithCollidingSkus(inputs, new Set(["COLLIDE"]));
+
+      // Assert
+      expect(result.kept).toEqual([{ attributes: [], name: "B" }]);
+      expect(result.skippedSkus).toEqual(["COLLIDE"]);
     });
   });
 

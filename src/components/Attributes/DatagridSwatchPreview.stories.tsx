@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { DatagridSwatchPreview } from "./DatagridSwatchPreview";
+import { DATAGRID_SWATCH_SIZE, DatagridSwatchPreview } from "./DatagridSwatchPreview";
 
 const meta: Meta<typeof DatagridSwatchPreview> = {
   title: "Components/DatagridSwatchPreview",
   component: DatagridSwatchPreview,
   args: {
-    colorValue: "#E53935",
-    size: 8,
+    colorValue: "#2563EB",
+    size: DATAGRID_SWATCH_SIZE,
   },
 };
 
@@ -16,11 +16,16 @@ type Story = StoryObj<typeof DatagridSwatchPreview>;
 
 export const Color: Story = {};
 
+export const LightColor: Story = {
+  args: {
+    colorValue: "#FFFFFF",
+  },
+};
+
 export const Image: Story = {
   args: {
     colorValue: null,
     fileUrl: "https://placehold.co/32x32/png",
-    size: 14,
   },
 };
 

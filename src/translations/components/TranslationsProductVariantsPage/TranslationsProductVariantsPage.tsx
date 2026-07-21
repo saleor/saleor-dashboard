@@ -126,6 +126,15 @@ export const TranslationsProductVariantsPage = ({
             }}
             productId={productId}
             selectedId={variantId}
+            selectedVariant={
+              data
+                ? {
+                    id: variantId,
+                    name: data.name,
+                    sku: null,
+                  }
+                : null
+            }
           />
           <LanguageSwitchWithCaching
             currentLanguage={LanguageCodeEnum[languageCode]}
