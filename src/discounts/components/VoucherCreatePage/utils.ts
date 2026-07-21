@@ -63,20 +63,15 @@ export const getFilteredProducts = (data: FormData, searchProductsOpts: SearchPr
 };
 
 export const getFilteredProductVariants = (
-  data: FormData,
+  _data: FormData,
   searchProductsOpts: SearchProductsOpts,
 ) => {
-  const products = mapEdgesToItems(searchProductsOpts?.data?.search);
-  const excludedVariantIds = data.variants.map(variant => variant.id);
-
-  return products?.map(product => ({
-    ...product,
-    variants:
-      product?.variants?.filter(
-        suggestedVariant => !excludedVariantIds.includes(suggestedVariant.id),
-      ) ?? [],
-  }));
+  // Keep already-assigned variants visible; AssignVariantDialog disables them via selectedIds.
+  return mapEdgesToItems(searchProductsOpts?.data?.search);
 };
+
+export const getAssignedVariantIdsFromForm = (data: Pick<FormData, "variants">): string[] =>
+  data.variants.map(variant => variant.id);
 
 export const mapLocalVariantsToSavedVariants = (variants: FormData["variants"]) => {
   return {

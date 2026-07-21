@@ -3,14 +3,14 @@ import { defineMessages } from "react-intl";
 const messages = defineMessages({
   unsavedChangesTitle: {
     defaultMessage: "Unsaved changes",
-    id: "y93ihJ",
-    description: "dialog title when opening generator with unsaved changes",
+    id: "bsxEP7",
+    description: "dialog title when navigating away from dirty variants grid",
   },
   unsavedChangesDescription: {
     defaultMessage:
-      "You have unsaved changes to variants. Please save your changes before generating new variants.",
-    id: "LwWT6O",
-    description: "dialog description when opening generator with unsaved changes",
+      "Save or discard your unsaved variant changes before continuing. Newly added rows must be saved before you can search or change page.",
+    id: "8cQf6w",
+    description: "dialog description when navigating away from dirty variants grid",
   },
   name: {
     defaultMessage: "Variant name",
@@ -40,9 +40,24 @@ const messages = defineMessages({
     id: "BbP+k3",
     description: "variant availability in channel",
   },
+  deleteSelected: {
+    id: "HO4jvE",
+    defaultMessage: "Delete ({count})",
+    description: "bulk delete selected variants, including count for cross-page selection",
+  },
+  rangeWithPendingDeletes: {
+    id: "YG29Na",
+    defaultMessage: "{range} ({count} pending delete)",
+    description: "variants grid range label with count of unsaved staged deletions",
+  },
   empty: {
     defaultMessage: "Use button above to add new product variants",
     id: "IH47ID",
+  },
+  emptySearch: {
+    defaultMessage: 'No variants match "{query}"',
+    id: "ZJib9I",
+    description: "empty state when variants grid search returns no results",
   },
   warehouses: {
     defaultMessage: "Warehouses",

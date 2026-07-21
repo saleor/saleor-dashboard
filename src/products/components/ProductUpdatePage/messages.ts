@@ -16,4 +16,10 @@ export const messages = defineMessages({
     defaultMessage: "Open this product in GraphiQL",
     description: "open new window button",
   },
+  pendingVariantDeletes: {
+    id: "w0m9Jc",
+    defaultMessage:
+      "{count, plural, one {# variant pending delete} other {# variants pending delete}}",
+    description: "savebar hint when variants are marked for deletion but not saved yet",
+  },
 });

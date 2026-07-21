@@ -193,6 +193,38 @@ export const productDetailsVariant = gql`
   }
 `;
 
+/** Slim variant row for the detail/create sibling navigator. */
+export const productVariantSibling = gql`
+  fragment ProductVariantSibling on ProductVariant {
+    id
+    name
+    sku
+    media {
+      id
+      url(size: 200)
+      type
+      oembedData
+    }
+  }
+`;
+
+/** Minimal variant shape for Generate Variants duplicate detection (all pages). */
+export const productVariantGeneratorExisting = gql`
+  fragment ProductVariantGeneratorExisting on ProductVariant {
+    id
+    sku
+    attributes {
+      attribute {
+        id
+      }
+      values {
+        id
+        slug
+      }
+    }
+  }
+`;
+
 export const productFragmentDetails = gql`
   fragment Product on Product {
     ...ProductVariantAttributes
@@ -205,6 +237,11 @@ export const productFragmentDetails = gql`
     rating
     defaultVariant {
       id
+      sku
+      trackInventory
+      preorder {
+        ...Preorder
+      }
     }
     category {
       id
@@ -221,9 +258,6 @@ export const productFragmentDetails = gql`
       ...ProductMedia
     }
     isAvailable
-    variants {
-      ...ProductDetailsVariant
-    }
     productType {
       id
       name
@@ -321,17 +355,6 @@ export const fragmentVariant = gql`
           currencyCode
         }
       }
-      variants {
-        id
-        name
-        sku
-        media {
-          id
-          url(size: 200)
-          type
-          oembedData
-        }
-      }
     }
     channelListings {
       ...ChannelListingProductVariant
@@ -365,38 +388,55 @@ export const searchProduct = gql`
     channelListings {
       ...ChannelListingProductWithoutPricing
     }
-    variants {
-      id
-      name
-      sku
-      product {
-        id
-        name
-        thumbnail {
-          url
-          __typename
-        }
-        productType {
-          id
-          name
-          __typename
-        }
-      }
-      channelListings {
-        channel {
-          id
-          isActive
-          name
-          currencyCode
-        }
-        price {
-          amount
-          currency
-        }
-      }
-    }
     collections {
       id
+    }
+  }
+`;
+
+/**
+ * Cap for variants embedded in SearchProducts when includeVariants is true.
+ * Keep in sync with SearchProducts `productVariants(first: …)` — codegen
+ * cannot interpolate this constant.
+ *
+ * Stay conservative: cost ≈ products.first × this × SearchProductVariant.
+ * Cloud rejects the query (HTTP 400) when this is too high (e.g. 50).
+ * Load-more uses ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE (single product).
+ */
+export const SEARCH_PRODUCT_VARIANTS_PAGE_SIZE = 20;
+
+/** Page size for AssignVariant Load more (one product — safe at 50). */
+export const ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE = 50;
+
+export const searchProductVariant = gql`
+  fragment SearchProductVariant on ProductVariant {
+    id
+    name
+    sku
+    product {
+      id
+      name
+      thumbnail {
+        url
+        __typename
+      }
+      productType {
+        id
+        name
+        __typename
+      }
+    }
+    channelListings {
+      channel {
+        id
+        isActive
+        name
+        currencyCode
+      }
+      price {
+        amount
+        currency
+      }
     }
   }
 `;

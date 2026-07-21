@@ -1,17 +1,16 @@
-// @ts-strict-ignore
-import { type SearchOrderVariantQuery } from "@dashboard/graphql";
+import {
+  isOrderVariantsListTruncated,
+  type OrderSearchProduct,
+  type OrderSearchVariant,
+} from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 
-type SetVariantsAction = (
-  data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-) => void;
+type SetVariantsAction = (data: OrderSearchVariant[]) => void;
 
-type OrderVariant = SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0];
-
-export const hasVariantPricing = (variant: OrderVariant): boolean => !!variant.pricing;
+export const hasVariantPricing = (variant: OrderSearchVariant): boolean => !!variant.pricing;
 
 export function hasAllVariantsSelected(
-  productVariants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  productVariants: OrderSearchVariant[],
+  selectedVariantsToProductsMap: OrderSearchVariant[],
 ): boolean {
   return productVariants.reduce(
     (acc, productVariant) =>
@@ -24,19 +23,23 @@ export function hasAllVariantsSelected(
 }
 
 export function isVariantSelected(
-  variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  variant: OrderSearchVariant,
+  selectedVariantsToProductsMap: OrderSearchVariant[],
 ): boolean {
   return !!selectedVariantsToProductsMap.find(selectedVariant => selectedVariant.id === variant.id);
 }
 
 export const onProductAdd = (
-  product: SearchOrderVariantQuery["search"]["edges"][0]["node"],
+  product: OrderSearchProduct,
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
-  variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  variants: OrderSearchVariant[],
   setVariants: SetVariantsAction,
 ) => {
+  if (isOrderVariantsListTruncated(product)) {
+    return;
+  }
+
   const productVariants = product.variants.filter(hasVariantPricing);
 
   return productsWithAllVariantsSelected[productIndex]
@@ -56,10 +59,10 @@ export const onProductAdd = (
 };
 
 export const onVariantAdd = (
-  variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
+  variant: OrderSearchVariant,
   variantIndex: number,
   productIndex: number,
-  variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  variants: OrderSearchVariant[],
   selectedVariantsToProductsMap: boolean[][],
   setVariants: SetVariantsAction,
 ) =>

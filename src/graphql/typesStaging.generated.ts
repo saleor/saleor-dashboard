@@ -1330,6 +1330,7 @@ export enum CheckoutErrorCode {
   NOT_FOUND = 'NOT_FOUND',
   NO_LINES = 'NO_LINES',
   PAYMENT_ERROR = 'PAYMENT_ERROR',
+  PRICE_OVERRIDE_REASON_WITHOUT_OVERRIDE = 'PRICE_OVERRIDE_REASON_WITHOUT_OVERRIDE',
   PRODUCT_NOT_PUBLISHED = 'PRODUCT_NOT_PUBLISHED',
   PRODUCT_UNAVAILABLE_FOR_PURCHASE = 'PRODUCT_UNAVAILABLE_FOR_PURCHASE',
   QUANTITY_GREATER_THAN_LIMIT = 'QUANTITY_GREATER_THAN_LIMIT',
@@ -1368,6 +1369,12 @@ export type CheckoutLineInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  /**
+   * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  priceOverrideReason?: InputMaybe<Scalars['String']['input']>;
   /** The number of items purchased. */
   quantity: Scalars['Int']['input'];
   /** ID of the product variant. */
@@ -1385,6 +1392,12 @@ export type CheckoutLineUpdateInput = {
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']['input']>;
+  /**
+   * Reason explaining why a custom `price` was set on the line, for debugging and auditing. Can be set only by apps with `HANDLE_CHECKOUTS` permission and only when the line has a `price` override. Setting a new `price` without a reason clears the previous reason. Blank values are stored as no reason. Limited to 255 characters; longer values are truncated.
+   *
+   * Added in Saleor 3.23.
+   */
+  priceOverrideReason?: InputMaybe<Scalars['String']['input']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: InputMaybe<Scalars['Int']['input']>;
   /**

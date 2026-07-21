@@ -112,7 +112,18 @@ export const ProductFactory = defineProductFactory({
     productType: dynamic(() => ProductTypeFactory.build()),
     thumbnail: dynamic(() => ImageFactory.build()),
     channelListings: dynamic(async () => [await ProductChannelListingFactory.build()]),
-    variants: dynamic(async () => ProductVariantFactory.buildList(2)),
+    productVariants: dynamic(async () => {
+      const variants = await ProductVariantFactory.buildList(2);
+
+      return {
+        __typename: "ProductVariantCountableConnection" as const,
+        totalCount: variants.length,
+        edges: variants.map(node => ({
+          __typename: "ProductVariantCountableEdge" as const,
+          node,
+        })),
+      };
+    }),
     collections: [],
   },
 });

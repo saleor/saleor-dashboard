@@ -40,6 +40,8 @@ export interface ProductDiagnosticInput {
       quantity: number;
     }> | null;
   }> | null;
+  /** Total variant count for the product when the passed list is a page. */
+  variantsTotalCount?: number | null;
 }
 
 /**
@@ -52,6 +54,26 @@ export function mapProductToDiagnosticData(
   if (!product) {
     return null;
   }
+
+  const variants =
+    product.variants?.map(variant => ({
+      id: variant.id,
+      name: variant.name,
+      channelListings:
+        variant.channelListings?.map(listing => ({
+          channel: {
+            id: listing.channel.id,
+          },
+          price: listing.price,
+        })) ?? [],
+      stocks:
+        variant.stocks?.map(stock => ({
+          warehouse: {
+            id: stock.warehouse.id,
+          },
+          quantity: stock.quantity,
+        })) ?? [],
+    })) ?? [];
 
   return {
     id: product.id,
@@ -70,24 +92,7 @@ export function mapProductToDiagnosticData(
         availableForPurchaseAt: listing.availableForPurchaseAt ?? null,
         visibleInListings: listing.visibleInListings,
       })) ?? [],
-    variants:
-      product.variants?.map(variant => ({
-        id: variant.id,
-        name: variant.name,
-        channelListings:
-          variant.channelListings?.map(listing => ({
-            channel: {
-              id: listing.channel.id,
-            },
-            price: listing.price,
-          })) ?? [],
-        stocks:
-          variant.stocks?.map(stock => ({
-            warehouse: {
-              id: stock.warehouse.id,
-            },
-            quantity: stock.quantity,
-          })) ?? [],
-      })) ?? [],
+    variants,
+    variantsTotalCount: product.variantsTotalCount ?? variants.length,
   };
 }

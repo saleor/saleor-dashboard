@@ -1,3 +1,5 @@
+import { DatagridSwatchPreview } from "@dashboard/components/Attributes/DatagridSwatchPreview";
+import { getAttributeSwatchData } from "@dashboard/components/Attributes/getAttributeSwatchData";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, DynamicMultiselect, type Option, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
@@ -28,31 +30,15 @@ export const AttributeValueMultiselect = ({
 
   const options: Option[] = useMemo(
     () =>
-      attribute.values.map(v => ({
-        value: v.id,
-        label: v.name ?? "",
-        ...(isSwatch && (v.file?.url || v.value)
-          ? {
-              startAdornment: (
-                <Box
-                  as="span"
-                  __width="14px"
-                  __height="14px"
-                  borderRadius={3}
-                  __flexShrink={0}
-                  style={
-                    v.file?.url
-                      ? {
-                          backgroundImage: `url(${v.file.url})`,
-                          backgroundSize: "cover",
-                        }
-                      : { backgroundColor: v.value ?? undefined }
-                  }
-                />
-              ),
-            }
-          : {}),
-      })),
+      attribute.values.map(v => {
+        const swatch = isSwatch ? getAttributeSwatchData(v) : undefined;
+
+        return {
+          value: v.id,
+          label: v.name ?? "",
+          ...(swatch ? { startAdornment: <DatagridSwatchPreview {...swatch} /> } : {}),
+        };
+      }),
     [attribute.values, isSwatch],
   );
 

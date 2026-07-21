@@ -26,6 +26,7 @@ import {
   type VoucherUrlQueryParams,
 } from "@dashboard/discounts/urls";
 import {
+  getAssignedVariantIds,
   getFilteredCategories,
   getFilteredCollections,
   getFilteredProducts,
@@ -103,7 +104,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     },
   });
   const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: false },
+  });
+  const { loadMore: loadMoreVariants, result: searchVariantsOpts } = useProductSearch({
+    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: true },
   });
 
   const handleProductFilterChange = (
@@ -116,6 +120,21 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       where: filterVariables,
       channel,
       query,
+      includeVariants: false,
+    });
+  };
+
+  const handleVariantFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    searchVariantsOpts.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+      channel,
+      query,
+      includeVariants: true,
     });
   };
 
@@ -592,11 +611,11 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       />
       <AssignVariantDialog
         confirmButtonState={voucherUpdateOpts.status}
-        hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
+        hasMore={searchVariantsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-variant"}
-        onFilterChange={handleProductFilterChange}
-        onFetchMore={loadMoreProducts}
-        loading={searchProductsOpts.loading}
+        onFilterChange={handleVariantFilterChange}
+        onFetchMore={loadMoreVariants}
+        loading={searchVariantsOpts.loading}
         onClose={closeModal}
         onSubmit={variants => {
           const variantsIdsFromModal = variants.map(variant => variant.id);
@@ -614,7 +633,8 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
             },
           });
         }}
-        products={getFilteredProductVariants(data?.voucher?.variants, searchProductsOpts)}
+        products={getFilteredProductVariants(data?.voucher?.variants, searchVariantsOpts)}
+        selectedIds={getAssignedVariantIds(data?.voucher?.variants)}
       />
       <AssignProductDialog
         selectedChannels={currentChannels}

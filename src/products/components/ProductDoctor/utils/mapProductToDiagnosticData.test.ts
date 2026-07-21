@@ -118,6 +118,7 @@ describe("mapProductToDiagnosticData", () => {
           ],
         },
       ],
+      variantsTotalCount: 1,
     });
   });
 
@@ -153,7 +154,30 @@ describe("mapProductToDiagnosticData", () => {
       isShippingRequired: true,
       channelListings: [],
       variants: [],
+      variantsTotalCount: 0,
     });
+  });
+
+  it("should preserve variantsTotalCount when the loaded list is a page", () => {
+    // Arrange
+    const product = createTestProduct({
+      variants: [
+        {
+          id: "variant-1",
+          name: "Variant A",
+          channelListings: [],
+          stocks: [],
+        },
+      ],
+      variantsTotalCount: 250,
+    });
+
+    // Act
+    const result = mapProductToDiagnosticData(product);
+
+    // Assert
+    expect(result?.variants).toHaveLength(1);
+    expect(result?.variantsTotalCount).toBe(250);
   });
 
   it("should convert undefined dates to null", () => {

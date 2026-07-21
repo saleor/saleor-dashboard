@@ -34,23 +34,35 @@ const createMockReferenceData = (data: {
       productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" },
       thumbnail: null,
       channelListings: null,
-      variants: p.variants
-        ? p.variants.map(v => ({
-            __typename: "ProductVariant" as const,
-            id: v.id,
-            name: v.name,
-            sku: null,
-            product: {
-              __typename: "Product" as const,
-              id: p.id,
-              name: p.name,
-              thumbnail: null,
-              productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" },
-            },
-            channelListings: null,
-          }))
-        : null,
       collections: null,
+      productVariants: p.variants
+        ? {
+            __typename: "ProductVariantCountableConnection" as const,
+            totalCount: p.variants.length,
+            pageInfo: {
+              __typename: "PageInfo" as const,
+              hasNextPage: false,
+              endCursor: null,
+            },
+            edges: p.variants.map(v => ({
+              __typename: "ProductVariantCountableEdge" as const,
+              node: {
+                __typename: "ProductVariant" as const,
+                id: v.id,
+                name: v.name,
+                sku: null,
+                product: {
+                  __typename: "Product" as const,
+                  id: p.id,
+                  name: p.name,
+                  thumbnail: null,
+                  productType: { __typename: "ProductType" as const, id: "type-1", name: "Type" },
+                },
+                channelListings: null,
+              },
+            })),
+          }
+        : null,
     }));
   }
 
@@ -527,27 +539,64 @@ describe("attributes/utils/data", () => {
     });
 
     describe("product variant caching", () => {
+      const installProductVariantsGetter = (
+        product: NonNullable<ReferenceEntitiesSearch["products"]>[number],
+        variants: Array<{ id: string; name: string }>,
+        onAccess: () => void,
+      ) => {
+        Object.defineProperty(product, "productVariants", {
+          configurable: true,
+          get() {
+            onAccess();
+
+            return {
+              __typename: "ProductVariantCountableConnection" as const,
+              totalCount: variants.length,
+              pageInfo: {
+                __typename: "PageInfo" as const,
+                hasNextPage: false,
+                endCursor: null,
+              },
+              edges: variants.map(variant => ({
+                __typename: "ProductVariantCountableEdge" as const,
+                node: {
+                  __typename: "ProductVariant" as const,
+                  id: variant.id,
+                  name: variant.name,
+                  sku: null,
+                  product: {
+                    __typename: "Product" as const,
+                    id: product.id,
+                    name: product.name,
+                    thumbnail: null,
+                    productType: product.productType,
+                  },
+                  channelListings: null,
+                },
+              })),
+            };
+          },
+        });
+      };
+
       it("should use cache and not re-parse variants on multiple calls", () => {
         // Arrange
-        let variantGetterCallCount = 0;
-        const products = [
-          {
-            id: "cache-test-product",
-            name: "Cache Test Product",
-            get variants() {
-              // Check how many times we access this
-              variantGetterCallCount++;
+        let productVariantsGetterCallCount = 0;
+        const references = createMockReferenceData({
+          products: [{ id: "cache-test-product", name: "Cache Test Product", variants: [] }],
+        });
 
-              return [
-                { id: "cache-variant-1", name: "Cache Variant 1" },
-                { id: "cache-variant-2", name: "Cache Variant 2" },
-                { id: "cache-variant-3", name: "Cache Variant 3" },
-              ];
-            },
+        installProductVariantsGetter(
+          references.products![0],
+          [
+            { id: "cache-variant-1", name: "Cache Variant 1" },
+            { id: "cache-variant-2", name: "Cache Variant 2" },
+            { id: "cache-variant-3", name: "Cache Variant 3" },
+          ],
+          () => {
+            productVariantsGetterCallCount++;
           },
-        ];
-
-        const references = createMockReferenceData({ products });
+        );
 
         // Create multiple attributes requesting different variants from same product
         const attribute1 = {
@@ -606,10 +655,8 @@ describe("attributes/utils/data", () => {
           { value: "cache-variant-1", label: "Cache Test Product Cache Variant 1" },
         ]);
 
-        // Variants getter should only be called TWICE
-        // Once for truthy check, once for iteration to build the cache
-        // All subsequent lookups should use cache
-        expect(variantGetterCallCount).toBe(2);
+        // productVariants is read once while building the cache; later lookups reuse it
+        expect(productVariantsGetterCallCount).toBe(1);
       });
 
       it("should maintain separate caches for different products", () => {
@@ -617,34 +664,33 @@ describe("attributes/utils/data", () => {
         let product1GetterCalls = 0;
         let product2GetterCalls = 0;
 
-        const products = [
-          {
-            id: "separate-cache-product-1",
-            name: "Separate Cache Product 1",
-            get variants() {
-              product1GetterCalls++;
+        const references = createMockReferenceData({
+          products: [
+            { id: "separate-cache-product-1", name: "Separate Cache Product 1", variants: [] },
+            { id: "separate-cache-product-2", name: "Separate Cache Product 2", variants: [] },
+          ],
+        });
 
-              return [
-                { id: "sep-p1-v1", name: "P1 Variant 1" },
-                { id: "sep-p1-v2", name: "P1 Variant 2" },
-              ];
-            },
+        installProductVariantsGetter(
+          references.products![0],
+          [
+            { id: "sep-p1-v1", name: "P1 Variant 1" },
+            { id: "sep-p1-v2", name: "P1 Variant 2" },
+          ],
+          () => {
+            product1GetterCalls++;
           },
-          {
-            id: "separate-cache-product-2",
-            name: "Separate Cache Product 2",
-            get variants() {
-              product2GetterCalls++;
-
-              return [
-                { id: "sep-p2-v1", name: "P2 Variant 1" },
-                { id: "sep-p2-v2", name: "P2 Variant 2" },
-              ];
-            },
+        );
+        installProductVariantsGetter(
+          references.products![1],
+          [
+            { id: "sep-p2-v1", name: "P2 Variant 1" },
+            { id: "sep-p2-v2", name: "P2 Variant 2" },
+          ],
+          () => {
+            product2GetterCalls++;
           },
-        ];
-
-        const references = createMockReferenceData({ products });
+        );
 
         const attribute = {
           id: "attr-separate-cache",
@@ -670,8 +716,8 @@ describe("attributes/utils/data", () => {
           { value: "sep-p2-v2", label: "Separate Cache Product 2 P2 Variant 2" },
         ]);
 
-        expect(product1GetterCalls).toBe(2); // truthy check + iteration for product 1
-        expect(product2GetterCalls).toBe(2); // truthy check + iteration for product 2
+        expect(product1GetterCalls).toBe(1);
+        expect(product2GetterCalls).toBe(1);
       });
     });
   });

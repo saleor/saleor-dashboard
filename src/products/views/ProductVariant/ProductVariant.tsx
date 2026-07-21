@@ -83,14 +83,19 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     setErrors([]);
   }, [variantId]);
 
-  const { data, loading } = useProductVariantDetailsQuery({
-    displayLoader: true,
+  const { data, previousData, loading } = useProductVariantDetailsQuery({
+    // Avoid a full-page loader flash on every sibling click; the form already
+    // uses `loading` for disabled/skeleton state.
+    displayLoader: false,
     variables: {
       id: variantId,
       firstValues: 10,
     },
   });
-  const productId = data?.productVariant?.product.id;
+  // Keep productId stable while the next variant details load (cache-and-network
+  // briefly clears `data` for uncached ids). Otherwise the siblings list skips
+  // and appears to remount on every click.
+  const productId = data?.productVariant?.product.id ?? previousData?.productVariant?.product.id;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
@@ -130,6 +135,8 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
 
   const variant = data?.productVariant;
+  // Selection follows the URL immediately; pending until details for that id exist.
+  const selectionPending = data?.productVariant?.id !== variantId;
   const channels = createVariantChannels(variant);
 
   const {
@@ -151,10 +158,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const handleDeactivateVariantPreorder = (id: string) => deactivatePreorder({ variables: { id } });
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
-  const handleVariantReorder = createVariantReorderHandler(
-    variant?.product,
-    reorderProductVariants,
-  );
+  const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
   const disableFormSave =
     loading ||
     uploadFileOpts.loading ||
@@ -313,7 +317,10 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
       <ProductVariantPage
         productId={productId}
         defaultWeightUnit={shop?.defaultWeightUnit}
-        defaultVariantId={data?.productVariant.product.defaultVariant?.id}
+        defaultVariantId={
+          data?.productVariant?.product.defaultVariant?.id ??
+          previousData?.productVariant?.product.defaultVariant?.id
+        }
         errors={errors}
         hasVariants={variant?.product?.productType?.hasVariants ?? true}
         attributeValues={attributeValues}
@@ -322,6 +329,8 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onSetDefaultVariant={onSetDefaultVariant}
         saveButtonBarState={updateVariantOpts.status}
         loading={disableFormSave}
+        currentVariantId={variantId}
+        selectionPending={selectionPending}
         placeholderImage={placeholderImg}
         variant={variant}
         header={variant?.name || variant?.sku}

@@ -52,6 +52,8 @@ interface AvailabilityCardProps {
   errors?: ProductChannelListingErrorFragment[];
   /** Product ID - needed for public API verification */
   productId?: string;
+  /** When set, variant catalog walk failed — show instead of a false “healthy” state */
+  variantsCatalogError?: boolean;
 }
 
 export const AvailabilityCard = ({
@@ -65,6 +67,7 @@ export const AvailabilityCard = ({
   channels = [],
   errors = [],
   productId,
+  variantsCatalogError = false,
 }: AvailabilityCardProps) => {
   const intl = useIntl();
   const [expandedChannel, setExpandedChannel] = useState<string | undefined>(undefined);
@@ -191,6 +194,12 @@ export const AvailabilityCard = ({
           <Box padding={4}>
             <Skeleton height={4} marginBottom={2} />
             <Skeleton height={4} __width="60%" />
+          </Box>
+        ) : variantsCatalogError ? (
+          <Box padding={4}>
+            <Text size={2} color="critical1">
+              {intl.formatMessage(messages.variantsCatalogUnavailable)}
+            </Text>
           </Box>
         ) : mergedSummaries.length === 0 ? (
           <Box padding={4}>

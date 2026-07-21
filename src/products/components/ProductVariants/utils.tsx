@@ -12,6 +12,7 @@ import {
 import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/customCells/DropdownCell";
 import { type AttributeSearchOption } from "@dashboard/components/Datagrid/customCells/DropdownCell";
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
+import { skeletonCell } from "@dashboard/components/Datagrid/customCells/SkeletonCell";
 import { type DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import {
@@ -86,6 +87,7 @@ interface GetDataOrError {
   removed: number[];
   searchAttributeValues: (id: string, text: string) => Promise<Option[]>;
   getChangeIndex: (column: string, row: number) => number;
+  loading?: boolean;
 }
 
 interface GetDataParams extends GetDataOrError {
@@ -126,10 +128,15 @@ export function getData({
   variants,
   variantAttributes,
   searchAttributeValues,
+  loading,
 }: GetDataParams): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
     return textCell("");
+  }
+
+  if (loading) {
+    return skeletonCell();
   }
 
   const columnId = availableColumns[column]?.id;
@@ -198,7 +205,7 @@ export function getData({
       : emptyDropdownCellValue;
     const cellValue = (change?.value as AttributeSearchOption | undefined) ?? initialValue;
     const swatch = isSwatchAttribute
-      ? (cellValue.swatch ?? getAttributeSwatchData(attributeValue))
+      ? (change?.swatch ?? cellValue.swatch ?? getAttributeSwatchData(attributeValue))
       : undefined;
 
     return dropdownCell(cellValue, {

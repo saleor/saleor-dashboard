@@ -37,4 +37,20 @@ export const messages = defineMessages({
       "No products are available matching query in the channel assigned to this order.",
     description: "no products placeholder",
   },
+  loadMoreVariants: {
+    id: "lNfSYi",
+    defaultMessage: "Load more variants",
+    description: "button to fetch the next page of variants for a product in order add-line",
+  },
+  loadingMoreVariants: {
+    id: "vmX9L4",
+    defaultMessage: "Loading more",
+    description: "loading state label on the load more variants button",
+  },
+  loadMoreVariantsProgress: {
+    id: "gf1eAF",
+    defaultMessage: "Showing {shown} with a price in this channel · {loaded} of {total} loaded",
+    description:
+      "Explains that only priced variants are listed, while loaded counts every fetched variant page",
+  },
 });

@@ -38,6 +38,8 @@ interface MakeLineOpts {
   currency?: string;
   discounts?: OrderLineDiscountFragment[];
   isGift?: boolean;
+  isPriceOverridden?: boolean | null;
+  priceOverrideReason?: string | null;
 }
 
 function makeLineDiscount(opts: {
@@ -82,6 +84,8 @@ function makeLine({
   currency = "USD",
   discounts = [],
   isGift = false,
+  isPriceOverridden = null,
+  priceOverrideReason = null,
 }: MakeLineOpts = {}): OrderLineFragment {
   const undiscountedTotalAmount = undiscountedTotal ?? undiscountedUnit * quantity;
   const totalAmount =
@@ -100,6 +104,8 @@ function makeLine({
     quantityToFulfill: quantity,
     unitDiscountValue: 0,
     unitDiscountReason: null,
+    priceOverrideReason,
+    isPriceOverridden,
     unitDiscountType: null,
     taxRate,
     voucherCode,
@@ -1088,6 +1094,60 @@ describe("buildLineWaterfall", () => {
       if (f && f.kind === "catalogue_promotion") {
         expect(f.name).toBeNull();
       }
+    });
+  });
+
+  describe("price override", () => {
+    it("propagates the override flag and reason onto the waterfall", () => {
+      // Arrange
+      const line = makeLine({
+        undiscountedUnit: 90,
+        quantity: 1,
+        unit: 90,
+        isPriceOverridden: true,
+        priceOverrideReason: "Loyalty pricing",
+      });
+      const order = makeOrder({ lines: [line] });
+
+      // Act
+      const wf = buildLineWaterfall(line, order);
+
+      // Assert
+      expect(wf.isPriceOverridden).toBe(true);
+      expect(wf.priceOverrideReason).toBe("Loyalty pricing");
+    });
+
+    it("yields no factors (start === end) for an override-only line without discounts", () => {
+      // Arrange
+      const line = makeLine({
+        undiscountedUnit: 120,
+        quantity: 2,
+        unit: 120,
+        isPriceOverridden: true,
+        priceOverrideReason: "Manual price",
+      });
+      const order = makeOrder({ lines: [line] });
+
+      // Act
+      const wf = buildLineWaterfall(line, order);
+
+      // Assert
+      expect(wf.factors).toHaveLength(0);
+      expect(wf.start.amount).toBe(wf.end.amount);
+      expect(wf.isPriceOverridden).toBe(true);
+    });
+
+    it("defaults to not-overridden with null reason when the flag is absent", () => {
+      // Arrange
+      const line = makeLine({ undiscountedUnit: 100, quantity: 1, unit: 100 });
+      const order = makeOrder({ lines: [line] });
+
+      // Act
+      const wf = buildLineWaterfall(line, order);
+
+      // Assert
+      expect(wf.isPriceOverridden).toBe(false);
+      expect(wf.priceOverrideReason).toBeNull();
     });
   });
 });

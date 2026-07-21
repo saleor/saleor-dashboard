@@ -46,12 +46,7 @@ import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productVariantUrl } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import {
-  type Container,
-  type FetchMoreProps,
-  type RelayToFlat,
-  type ReorderAction,
-} from "@dashboard/types";
+import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { CircleHelp } from "lucide-react";
@@ -68,6 +63,7 @@ import { ProductVariantMediaSelectDialog } from "../ProductVariantImageSelectDia
 import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
+import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
 import { ProductVariantPrice } from "../ProductVariantPrice";
 import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import {
@@ -112,6 +108,13 @@ interface ProductVariantPageProps {
   /** Whether the product type supports variant attributes */
   hasVariants: boolean;
   loading?: boolean;
+  /**
+   * URL variant id — drives the siblings list selection indicator even while
+   * details for that id are still loading.
+   */
+  currentVariantId?: string;
+  /** True while details for `currentVariantId` have not arrived yet. */
+  selectionPending?: boolean;
   placeholderImage?: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariantFragment;
@@ -136,7 +139,7 @@ interface ProductVariantPageProps {
   initialConstraints?: InitialConstraints & InitialPageConstraints;
   onVariantPreorderDeactivate: (id: string) => void;
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
-  onVariantReorder: ReorderAction;
+  onVariantReorder: (move: VariantReorderMove) => void;
   onAttributeSelectBlur: () => void;
   onDelete: () => any;
   onShowMetadata: () => void;
@@ -158,6 +161,8 @@ export const ProductVariantPage = ({
   hasVariants,
   header,
   loading,
+  currentVariantId,
+  selectionPending = false,
   placeholderImage,
   saveButtonBarState,
   variant,
@@ -271,60 +276,74 @@ export const ProductVariantPage = ({
         )}
       </TopNav>
       <DetailPageLayout.Content paddingBottom={10}>
-        <ProductVariantUpdateForm
-          key={variant?.id}
-          variant={variant}
-          onSubmit={onSubmit}
-          currentChannels={channels}
-          referencePages={referencePages}
-          referenceProducts={referenceProducts}
-          referenceCategories={referenceCategories}
-          referenceCollections={referenceCollections}
-          fetchReferencePages={fetchReferencePages}
-          fetchMoreReferencePages={fetchMoreReferencePages}
-          fetchReferenceProducts={fetchReferenceProducts}
-          fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-          fetchReferenceCategories={fetchReferenceCategories}
-          fetchMoreReferenceCategories={fetchMoreReferenceCategories}
-          fetchReferenceCollections={fetchReferenceCollections}
-          fetchMoreReferenceCollections={fetchMoreReferenceCollections}
-          assignReferencesAttributeId={assignReferencesAttributeId}
-          loading={loading}
-        >
-          {({
-            change,
-            data,
-            validationErrors,
-            isSaveDisabled,
-            handlers,
-            submit,
-            attributeRichTextGetters,
-          }) => {
-            const nonSelectionAttributes = data.attributes.filter(
-              byAttributeScope(VariantAttributeScope.NOT_VARIANT_SELECTION),
-            );
-            const selectionAttributes = data.attributes.filter(
-              byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
-            );
-            const media = getSelectedMedia(productMedia, data.media);
-            const errors = [...apiErrors, ...validationErrors];
-            const priceVariantErrors = [...channelErrors, ...validationErrors];
+        {/*
+          Keep the siblings list outside ProductVariantUpdateForm's key={variant.id}
+          remount boundary so loaded pages, scroll, and search survive variant clicks.
+        */}
+        <Grid variant="inverted">
+          <div>
+            <ProductVariantNavigation
+              productId={productId}
+              current={currentVariantId ?? variant?.id}
+              selectionPending={selectionPending}
+              currentVariant={
+                variant && variant.id === (currentVariantId ?? variant.id)
+                  ? {
+                      __typename: "ProductVariant" as const,
+                      id: variant.id,
+                      name: variant.name,
+                      sku: variant.sku,
+                      media: variant.media,
+                    }
+                  : null
+              }
+              defaultVariantId={defaultVariantId}
+              fallbackThumbnail={variant?.product?.thumbnail?.url}
+              onReorder={onVariantReorder}
+            />
+          </div>
+          <div>
+            <ProductVariantUpdateForm
+              key={variant?.id}
+              variant={variant}
+              onSubmit={onSubmit}
+              currentChannels={channels}
+              referencePages={referencePages}
+              referenceProducts={referenceProducts}
+              referenceCategories={referenceCategories}
+              referenceCollections={referenceCollections}
+              fetchReferencePages={fetchReferencePages}
+              fetchMoreReferencePages={fetchMoreReferencePages}
+              fetchReferenceProducts={fetchReferenceProducts}
+              fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+              fetchReferenceCategories={fetchReferenceCategories}
+              fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+              fetchReferenceCollections={fetchReferenceCollections}
+              fetchMoreReferenceCollections={fetchMoreReferenceCollections}
+              assignReferencesAttributeId={assignReferencesAttributeId}
+              loading={loading}
+            >
+              {({
+                change,
+                data,
+                validationErrors,
+                isSaveDisabled,
+                handlers,
+                submit,
+                attributeRichTextGetters,
+              }) => {
+                const nonSelectionAttributes = data.attributes.filter(
+                  byAttributeScope(VariantAttributeScope.NOT_VARIANT_SELECTION),
+                );
+                const selectionAttributes = data.attributes.filter(
+                  byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
+                );
+                const media = getSelectedMedia(productMedia, data.media);
+                const errors = [...apiErrors, ...validationErrors];
+                const priceVariantErrors = [...channelErrors, ...validationErrors];
 
-            return (
-              <>
-                <Grid variant="inverted">
-                  <div>
-                    <ProductVariantNavigation
-                      productId={productId}
-                      current={variant?.id}
-                      defaultVariantId={defaultVariantId}
-                      fallbackThumbnail={variant?.product?.thumbnail?.url}
-                      variants={variant?.product.variants}
-                      loading={loading}
-                      onReorder={onVariantReorder}
-                    />
-                  </div>
-                  <div>
+                return (
+                  <>
                     <ProductVariantName
                       value={data.variantName}
                       onChange={change}
@@ -475,65 +494,67 @@ export const ProductVariantPage = ({
                       isCreate={false}
                       searchWarehouses={searchWarehouses}
                     />
-                  </div>
-                </Grid>
-                <Savebar>
-                  <Savebar.DeleteButton onClick={onDelete} />
-                  <Savebar.Spacer />
-                  <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />
-                  <Savebar.ConfirmButton
-                    transitionState={saveButtonBarState}
-                    onClick={submit}
-                    disabled={isSaveDisabled}
-                  />
-                </Savebar>
-                {canOpenAssignReferencesAttributeDialog && (
-                  <AssignAttributeValueDialog
-                    entityType={getReferenceAttributeEntityTypeFromAttribute(
-                      assignReferencesAttributeId,
-                      data.attributes,
+                    <Savebar>
+                      <Savebar.DeleteButton onClick={onDelete} />
+                      <Savebar.Spacer />
+                      <Savebar.CancelButton onClick={() => navigate(productUrl(productId))} />
+                      <Savebar.ConfirmButton
+                        transitionState={saveButtonBarState}
+                        onClick={submit}
+                        disabled={isSaveDisabled}
+                      />
+                    </Savebar>
+                    {canOpenAssignReferencesAttributeDialog && (
+                      <AssignAttributeValueDialog
+                        entityType={getReferenceAttributeEntityTypeFromAttribute(
+                          assignReferencesAttributeId,
+                          data.attributes,
+                        )}
+                        confirmButtonState={"default"}
+                        products={referenceProducts}
+                        pages={referencePages}
+                        collections={referenceCollections}
+                        categories={referenceCategories}
+                        attribute={data.attributes.find(
+                          ({ id }) => id === assignReferencesAttributeId,
+                        )}
+                        hasMore={handlers.fetchMoreReferences?.hasMore}
+                        open={canOpenAssignReferencesAttributeDialog}
+                        onFetch={handlers.fetchReferences}
+                        onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
+                        loading={handlers.fetchMoreReferences?.loading}
+                        onClose={onCloseDialog}
+                        onSubmit={attributeValues =>
+                          handleAssignReferenceAttribute(attributeValues, data, handlers)
+                        }
+                        onFilterChange={onFilterChange}
+                        initialConstraints={initialConstraints}
+                      />
                     )}
-                    confirmButtonState={"default"}
-                    products={referenceProducts}
-                    pages={referencePages}
-                    collections={referenceCollections}
-                    categories={referenceCategories}
-                    attribute={data.attributes.find(({ id }) => id === assignReferencesAttributeId)}
-                    hasMore={handlers.fetchMoreReferences?.hasMore}
-                    open={canOpenAssignReferencesAttributeDialog}
-                    onFetch={handlers.fetchReferences}
-                    onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
-                    loading={handlers.fetchMoreReferences?.loading}
-                    onClose={onCloseDialog}
-                    onSubmit={attributeValues =>
-                      handleAssignReferenceAttribute(attributeValues, data, handlers)
-                    }
-                    onFilterChange={onFilterChange}
-                    initialConstraints={initialConstraints}
-                  />
-                )}
-                {variant && (
-                  <>
-                    <VariantChannelsDialog
-                      channelListings={variant.product.channelListings}
-                      selectedChannelListings={data.channelListings}
-                      open={isManageChannelsModalOpen}
-                      onClose={toggleManageChannels}
-                      onConfirm={handlers.updateChannels}
-                    />
-                    <ProductVariantMediaSelectDialog
-                      onClose={toggleModal}
-                      onConfirm={handlers.changeMedia}
-                      open={isModalOpened}
-                      media={productMedia}
-                      selectedMedia={data.media}
-                    />
+                    {variant && (
+                      <>
+                        <VariantChannelsDialog
+                          channelListings={variant.product.channelListings}
+                          selectedChannelListings={data.channelListings}
+                          open={isManageChannelsModalOpen}
+                          onClose={toggleManageChannels}
+                          onConfirm={handlers.updateChannels}
+                        />
+                        <ProductVariantMediaSelectDialog
+                          onClose={toggleModal}
+                          onConfirm={handlers.changeMedia}
+                          open={isModalOpened}
+                          media={productMedia}
+                          selectedMedia={data.media}
+                        />
+                      </>
+                    )}
                   </>
-                )}
-              </>
-            );
-          }}
-        </ProductVariantUpdateForm>
+                );
+              }}
+            </ProductVariantUpdateForm>
+          </div>
+        </Grid>
       </DetailPageLayout.Content>
       {!!variant?.preorder && (
         <ProductVariantEndPreorderDialog

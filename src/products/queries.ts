@@ -153,16 +153,6 @@ export const productVariantCreateQuery = gql`
       defaultVariant {
         id
       }
-      variants {
-        id
-        name
-        sku
-        media {
-          id
-          url
-          type
-        }
-      }
     }
   }
 `;
@@ -316,6 +306,131 @@ export const channelDiagnosticsQuery = gql`
           countries {
             code
             country
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const productVariantsGridQuery = gql`
+  query ProductVariantsGrid(
+    $id: ID!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $search: String
+  ) {
+    product(id: $id) {
+      id
+      productVariants(
+        first: $first
+        after: $after
+        last: $last
+        before: $before
+        filter: { search: $search }
+      ) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        edges {
+          node {
+            ...ProductDetailsVariant
+          }
+        }
+      }
+    }
+  }
+`;
+
+/** Slim catalog walk for Product Doctor (uncoupled from the variants grid). */
+export const productDoctorVariantsQuery = gql`
+  query ProductDoctorVariants($id: ID!, $first: Int!, $after: String) {
+    product(id: $id) {
+      id
+      productVariants(first: $first, after: $after) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            id
+            name
+            channelListings {
+              channel {
+                id
+              }
+              price {
+                amount
+              }
+            }
+            stocks {
+              warehouse {
+                id
+              }
+              quantity
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const productVariantSiblingsQuery = gql`
+  query ProductVariantSiblings($id: ID!, $first: Int!, $after: String, $search: String) {
+    product(id: $id) {
+      id
+      productVariants(first: $first, after: $after, filter: { search: $search }) {
+        totalCount
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          endCursor
+        }
+        edges {
+          node {
+            ...ProductVariantSibling
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const productVariantSkusExistQuery = gql`
+  query ProductVariantSkusExist($skus: [String!]!, $first: Int!) {
+    productVariants(first: $first, where: { sku: { oneOf: $skus } }) {
+      edges {
+        node {
+          id
+          sku
+        }
+      }
+    }
+  }
+`;
+
+/** All variant attribute combinations for the generator (paginated; caller walks pages). */
+export const productVariantGeneratorExistingQuery = gql`
+  query ProductVariantGeneratorExistingVariants($id: ID!, $first: Int!, $after: String) {
+    product(id: $id) {
+      id
+      productVariants(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        edges {
+          node {
+            ...ProductVariantGeneratorExisting
           }
         }
       }

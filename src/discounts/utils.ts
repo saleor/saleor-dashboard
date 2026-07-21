@@ -79,23 +79,17 @@ export function getFilteredProducts(
 }
 
 export function getFilteredProductVariants(
-  variants: NonNullable<SaleDetailsQuery["sale"]>["variants"] | null,
+  _variants: NonNullable<SaleDetailsQuery["sale"]>["variants"] | null,
   searchProductsOpts: SearchProductsOpts,
 ) {
-  const products = mapEdgesToItems(searchProductsOpts?.data?.search);
+  // Keep already-assigned variants visible; AssignVariantDialog disables them via selectedIds.
+  return mapEdgesToItems(searchProductsOpts?.data?.search);
+}
 
-  if (!variants?.edges) {
-    return products;
-  }
-
-  const excludedVariantsIds = variants?.edges.map(variant => variant.node.id);
-
-  return products?.map(suggestedProduct => ({
-    ...suggestedProduct,
-    variants: suggestedProduct.variants?.filter(
-      variant => !excludedVariantsIds.includes(variant.id),
-    ),
-  }));
+export function getAssignedVariantIds(
+  variants: NonNullable<SaleDetailsQuery["sale"]>["variants"] | null | undefined,
+): string[] {
+  return variants?.edges.map(variant => variant.node.id) ?? [];
 }
 
 export function sortRules(rules: Rule[]) {

@@ -63,14 +63,15 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useIntl } from "react-intl";
+import { Box, Divider, type Option, Text } from "@saleor/macaw-ui-next";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { AvailabilityCard } from "../ProductDoctor/AvailabilityCard";
 import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/useProductAvailabilityDiagnostics";
+import { useProductDoctorVariants } from "../ProductDoctor/hooks/useProductDoctorVariants";
 import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToDiagnosticData";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
@@ -102,6 +103,17 @@ interface ProductUpdatePageProps {
   isMediaUrlModalVisible?: boolean;
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
+  variantsSearch?: string;
+  onVariantsSearchChange?: (query: string) => void;
+  variantsPageInfo?: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  } | null;
+  onVariantsNextPage?: () => void;
+  onVariantsPreviousPage?: () => void;
+  variantsRangeLabel?: string | null;
+  variantsTotalCount?: number | null;
+  variantsLoading?: boolean;
   media: ProductFragment["media"];
   product?: ProductDetailsQuery["product"];
   loading?: boolean;
@@ -168,6 +180,14 @@ const ProductUpdatePage = ({
   loading,
   saveButtonBarState,
   variants,
+  variantsSearch,
+  onVariantsSearchChange,
+  variantsPageInfo,
+  onVariantsNextPage,
+  onVariantsPreviousPage,
+  variantsRangeLabel,
+  variantsTotalCount,
+  variantsLoading,
   taxClasses,
   fetchMoreTaxClasses,
   referencePages = [],
@@ -307,12 +327,59 @@ const ProductUpdatePage = ({
     path: productListPath,
   });
 
-  // Availability diagnostics for the new AvailabilityCard
-  const productDiagnosticData = useMemo(() => mapProductToDiagnosticData(product), [product]);
+  // Product Doctor catalog is walked separately from the paginated/searchable grid
+  // so diagnostics are not polluted by the current page or search filter.
+  const {
+    variants: doctorVariantList,
+    totalCount: doctorVariantsTotalCount,
+    loading: doctorVariantsLoading,
+    error: doctorVariantsError,
+    complete: doctorVariantsComplete,
+    refetch: refetchDoctorVariants,
+  } = useProductDoctorVariants({
+    productId,
+    skip: !product,
+  });
+  const productDiagnosticData = useMemo(
+    () =>
+      mapProductToDiagnosticData(
+        product
+          ? {
+              ...product,
+              variants: doctorVariantList,
+              variantsTotalCount: doctorVariantsTotalCount,
+            }
+          : null,
+      ),
+    [doctorVariantList, doctorVariantsTotalCount, product],
+  );
   const availabilityDiagnostics = useProductAvailabilityDiagnostics({
     product: productDiagnosticData,
-    enabled: Boolean(product),
+    enabled: Boolean(product) && doctorVariantsComplete,
   });
+
+  // Keep the card in a loading skeleton while the doctor catalog walks, and
+  // avoid a false “no issues” flash when diagnostics are still disabled.
+  const diagnosticsForCard = useMemo(
+    () => ({
+      ...availabilityDiagnostics,
+      isLoading:
+        doctorVariantsLoading ||
+        (Boolean(product) && !doctorVariantsComplete && !doctorVariantsError) ||
+        availabilityDiagnostics.isLoading,
+    }),
+    [
+      availabilityDiagnostics,
+      doctorVariantsComplete,
+      doctorVariantsError,
+      doctorVariantsLoading,
+      product,
+    ],
+  );
+
+  const refetchWithDoctorCatalog = useCallback(async () => {
+    await Promise.all([refetch(), refetchDoctorVariants()]);
+  }, [refetch, refetchDoctorVariants]);
 
   const { attachFormState, active, framesByFormType } = useActiveAppExtension();
 
@@ -429,9 +496,19 @@ const ProductUpdatePage = ({
       fetchMoreReferenceCollections={fetchMoreReferenceCollections}
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
-      refetch={refetch}
+      refetch={refetchWithDoctorCatalog}
+      variants={variants}
     >
-      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
+      {({
+        change,
+        data,
+        handlers,
+        submit,
+        isSaveDisabled,
+        pendingVariantDeleteCount,
+        attributeRichTextGetters,
+        richText,
+      }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
         // Store richText so it can be accessed from useEffect
@@ -545,12 +622,22 @@ const ProductUpdatePage = ({
                   channels={listings}
                   limits={limits}
                   variants={variants}
+                  variantsSearch={variantsSearch}
+                  onVariantsSearchChange={onVariantsSearchChange}
+                  variantsPageInfo={variantsPageInfo}
+                  onVariantsNextPage={onVariantsNextPage}
+                  onVariantsPreviousPage={onVariantsPreviousPage}
+                  variantsRangeLabel={variantsRangeLabel}
+                  variantsTotalCount={variantsTotalCount}
+                  variantsLoading={variantsLoading}
+                  pendingVariantDeleteCount={pendingVariantDeleteCount}
                   variantAttributes={product?.productType.variantAttributes}
                   selectionVariantAttributes={product?.productType.selectionVariantAttributes}
                   nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}
                   hasVariants={hasVariants ?? false}
                   onAttributeValuesSearch={onAttributeValuesSearch}
                   onChange={handlers.changeVariants}
+                  onStageVariantRemovals={handlers.stageVariantRemovals}
                   onRowClick={onVariantShow}
                   onBulkCreate={onBulkCreateVariants}
                 />
@@ -594,7 +681,7 @@ const ProductUpdatePage = ({
                   selectedProductCategory={selectedProductCategory}
                 />
                 <AvailabilityCard
-                  diagnostics={availabilityDiagnostics}
+                  diagnostics={diagnosticsForCard}
                   totalChannelsCount={channels?.length ?? 0}
                   onManageClick={() => setChannelPickerOpen(true)}
                   onChannelChange={handlers.changeChannels}
@@ -604,6 +691,7 @@ const ProductUpdatePage = ({
                   channels={channels}
                   errors={channelsErrors}
                   productId={product?.id}
+                  variantsCatalogError={Boolean(doctorVariantsError)}
                 />
                 {showProductDetailsWidgets ? (
                   <>
@@ -628,6 +716,14 @@ const ProductUpdatePage = ({
               <Savebar>
                 <Savebar.DeleteButton onClick={onDelete} />
                 <Savebar.Spacer />
+                {pendingVariantDeleteCount > 0 && (
+                  <Text size={2} color="default2" data-test-id="pending-variant-deletes">
+                    <FormattedMessage
+                      {...messages.pendingVariantDeletes}
+                      values={{ count: pendingVariantDeleteCount }}
+                    />
+                  </Text>
+                )}
                 <Savebar.CancelButton onClick={() => navigate(productListUrl())} />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}

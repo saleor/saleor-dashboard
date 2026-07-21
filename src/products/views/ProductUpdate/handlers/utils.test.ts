@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { type ProductFragment } from "@dashboard/graphql";
+import { type ProductDetailsVariantFragment, type ProductFragment } from "@dashboard/graphql";
 import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 
 import { product, variantAttributes } from "../../../fixtures";
@@ -212,7 +212,9 @@ describe("getCreateVariantInput", () => {
 describe("getBulkVariantUpdateInputs", () => {
   test("should return input data base on datagrid change data for multiple variants", () => {
     // Arrange
-    const variants: ProductFragment["variants"] = product("http://google.com").variants;
+    const variants = (
+      product("http://google.com") as unknown as { variants: ProductDetailsVariantFragment[] }
+    ).variants;
     const inputData: DatagridChangeOpts = {
       updates: [
         {
@@ -339,7 +341,9 @@ describe("getBulkVariantUpdateInputs", () => {
   });
   test("should return input data base on datagrid change data for simultaneous bulk operations", () => {
     // Arrange
-    const variants: ProductFragment["variants"] = product("http://google.com").variants;
+    const variants = (
+      product("http://google.com") as unknown as { variants: ProductDetailsVariantFragment[] }
+    ).variants;
     const inputData: DatagridChangeOpts = {
       updates: [
         {

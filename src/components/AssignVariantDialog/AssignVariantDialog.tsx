@@ -29,19 +29,31 @@ interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   labels?: Partial<AssignContainerDialogProps["labels"]>;
   selectionMode?: "single" | "multiple";
   selectedId?: string;
+  /** Variant ids already assigned when the dialog opened — shown checked and disabled. */
+  selectedIds?: string[];
   excludedFilters?: string[];
   initialConstraints?: InitialConstraints;
 }
 
 const AssignVariantDialog = (props: AssignVariantDialogProps) => {
-  const { selectionMode = "multiple", excludedFilters, initialConstraints, ...restProps } = props;
+  const {
+    selectionMode = "multiple",
+    excludedFilters,
+    initialConstraints,
+    selectedIds,
+    ...restProps
+  } = props;
   const skipFetchOnOpen = hasReferenceTypeConstraints(initialConstraints);
 
   const dialogContent =
     selectionMode === "single" ? (
       <AssignVariantDialogSingle skipFetchOnOpen={skipFetchOnOpen} {...restProps} />
     ) : (
-      <AssignVariantDialogMulti skipFetchOnOpen={skipFetchOnOpen} {...restProps} />
+      <AssignVariantDialogMulti
+        skipFetchOnOpen={skipFetchOnOpen}
+        selectedIds={selectedIds}
+        {...restProps}
+      />
     );
 
   return (

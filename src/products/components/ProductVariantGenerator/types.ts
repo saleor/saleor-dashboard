@@ -110,11 +110,11 @@ export interface BulkCreateResult {
 export interface ProductVariantGeneratorProps {
   open: boolean;
   onClose: () => void;
+  productId: string;
   productName: string;
   variantAttributes: VariantAttributeFragment[];
   /** Non-selection variant attributes (may include required ones that need default values) */
   nonSelectionVariantAttributes: VariantAttributeFragment[];
-  existingVariants: ExistingVariantData;
   /** Search function for attribute values (used by DynamicCombobox for DROPDOWN attributes) */
   onAttributeValuesSearch: (attributeId: string, query: string) => Promise<Option[]>;
   /** Returns result with error details for inline display */

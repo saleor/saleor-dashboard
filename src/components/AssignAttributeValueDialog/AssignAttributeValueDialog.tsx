@@ -156,8 +156,13 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
           onFilterChange={variantFilterChange}
           labels={dialogLabels}
           loading={referencePickerLoading}
-          {...getSingleOrMultipleDialogProps(attribute)}
           {...rest}
+          {...getSingleOrMultipleDialogProps(attribute)}
+          selectedIds={
+            attribute.data.inputType === AttributeInputTypeEnum.REFERENCE
+              ? (attribute.value ?? [])
+              : undefined
+          }
         />
       );
     case AttributeEntityTypeEnum.COLLECTION:

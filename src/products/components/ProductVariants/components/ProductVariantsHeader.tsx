@@ -5,8 +5,8 @@ import { type VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
-import { CopyPlus } from "lucide-react";
+import { Box, Button, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { ChevronLeft, ChevronRight, CopyPlus } from "lucide-react";
 import { useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -144,6 +144,20 @@ interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
   /** Required non-selection attributes with unsupported types that block the generator */
   unsupportedRequiredAttributes: VariantAttributeFragment[];
   onGenerateVariants: () => void;
+  variantsSearch?: string;
+  onVariantsSearchChange?: (query: string) => void;
+  variantsPageInfo?: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  } | null;
+  onVariantsNextPage?: () => void;
+  onVariantsPreviousPage?: () => void;
+  variantsRangeLabel?: string | null;
+  onGuardUnsavedAction?: (action: () => void) => void;
+  selectedCount?: number;
+  onDeleteSelected?: () => void;
+  deleteDisabled?: boolean;
+  pendingVariantDeleteCount?: number;
 }
 
 export const ProductVariantsHeader = ({
@@ -158,6 +172,17 @@ export const ProductVariantsHeader = ({
   hasVariantAttributes,
   unsupportedRequiredAttributes,
   onGenerateVariants,
+  variantsSearch = "",
+  onVariantsSearchChange,
+  variantsPageInfo,
+  onVariantsNextPage,
+  onVariantsPreviousPage,
+  variantsRangeLabel,
+  onGuardUnsavedAction,
+  selectedCount = 0,
+  onDeleteSelected,
+  deleteDisabled = false,
+  pendingVariantDeleteCount = 0,
 }: ProductVariantsHeaderProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -177,6 +202,9 @@ export const ProductVariantsHeader = ({
         name: productName,
       })
     : intl.formatMessage(messages.title);
+
+  const showToolbar = Boolean(onVariantsSearchChange || variantsPageInfo);
+  const runGuarded = onGuardUnsavedAction ?? ((action: () => void) => action());
 
   return (
     <div className={styles.header}>
@@ -205,6 +233,98 @@ export const ProductVariantsHeader = ({
           />
         )}
       </DatagridHeader>
+      {showToolbar && (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={3}
+          paddingX={6}
+          paddingBottom={4}
+        >
+          {onVariantsSearchChange ? (
+            <Box __maxWidth="260px" width="100%">
+              <Input
+                size="small"
+                value={variantsSearch}
+                onChange={event => {
+                  const nextQuery = event.target.value;
+
+                  if (nextQuery === variantsSearch) {
+                    return;
+                  }
+
+                  runGuarded(() => onVariantsSearchChange(nextQuery));
+                }}
+                onKeyDown={event => {
+                  if (event.key !== "Escape" || !variantsSearch) {
+                    return;
+                  }
+
+                  event.preventDefault();
+                  runGuarded(() => onVariantsSearchChange(""));
+                  event.currentTarget.blur();
+                }}
+                placeholder={intl.formatMessage({
+                  id: "W5DAXI",
+                  defaultMessage: "Search variants by name or SKU",
+                  description: "product variants grid search placeholder",
+                })}
+              />
+            </Box>
+          ) : (
+            <Box />
+          )}
+          <Box display="flex" alignItems="center" gap={3}>
+            {selectedCount > 0 && onDeleteSelected && (
+              <Button
+                data-test-id="bulk-delete-button"
+                variant="secondary"
+                onClick={onDeleteSelected}
+                disabled={deleteDisabled}
+              >
+                <FormattedMessage {...messages.deleteSelected} values={{ count: selectedCount }} />
+              </Button>
+            )}
+            {variantsRangeLabel && (
+              <Text size={2} color="default2" data-test-id="variants-range-label">
+                {pendingVariantDeleteCount > 0
+                  ? intl.formatMessage(messages.rangeWithPendingDeletes, {
+                      range: variantsRangeLabel,
+                      count: pendingVariantDeleteCount,
+                    })
+                  : variantsRangeLabel}
+              </Text>
+            )}
+            {variantsPageInfo && (
+              <Box display="flex" gap={2}>
+                <Button
+                  variant="secondary"
+                  disabled={!variantsPageInfo.hasPreviousPage}
+                  onClick={() => runGuarded(() => onVariantsPreviousPage?.())}
+                  icon={
+                    <ChevronLeft
+                      size={iconSize.medium}
+                      strokeWidth={iconStrokeWidthBySize.medium}
+                    />
+                  }
+                />
+                <Button
+                  variant="secondary"
+                  disabled={!variantsPageInfo.hasNextPage}
+                  onClick={() => runGuarded(() => onVariantsNextPage?.())}
+                  icon={
+                    <ChevronRight
+                      size={iconSize.medium}
+                      strokeWidth={iconStrokeWidthBySize.medium}
+                    />
+                  }
+                />
+              </Box>
+            )}
+          </Box>
+        </Box>
+      )}
     </div>
   );
 };

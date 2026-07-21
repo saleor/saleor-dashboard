@@ -37,30 +37,41 @@ const createMockIntl = (): IntlShape =>
 const mockIntl = createMockIntl();
 
 // Helper to create a minimal product diagnostic data
-const createProduct = (overrides: Partial<ProductDiagnosticData> = {}): ProductDiagnosticData => ({
-  id: "product-1",
-  name: "Test Product",
-  isShippingRequired: true,
-  channelListings: [
-    {
-      channel: { id: "channel-1", name: "Default Channel", slug: "default-channel" },
-      isPublished: true,
-      publishedAt: "2024-01-01T00:00:00Z",
-      isAvailableForPurchase: true,
-      availableForPurchaseAt: "2024-01-01T00:00:00Z",
-      visibleInListings: true,
-    },
-  ],
-  variants: [
-    {
-      id: "variant-1",
-      name: "Variant A",
-      channelListings: [{ channel: { id: "channel-1" }, price: { amount: 10.0 } }],
-      stocks: [{ warehouse: { id: "warehouse-1" }, quantity: 100 }],
-    },
-  ],
-  ...overrides,
-});
+const createProduct = (overrides: Partial<ProductDiagnosticData> = {}): ProductDiagnosticData => {
+  const product: ProductDiagnosticData = {
+    id: "product-1",
+    name: "Test Product",
+    isShippingRequired: true,
+    channelListings: [
+      {
+        channel: { id: "channel-1", name: "Default Channel", slug: "default-channel" },
+        isPublished: true,
+        publishedAt: "2024-01-01T00:00:00Z",
+        isAvailableForPurchase: true,
+        availableForPurchaseAt: "2024-01-01T00:00:00Z",
+        visibleInListings: true,
+      },
+    ],
+    variants: [
+      {
+        id: "variant-1",
+        name: "Variant A",
+        channelListings: [{ channel: { id: "channel-1" }, price: { amount: 10.0 } }],
+        stocks: [{ warehouse: { id: "warehouse-1" }, quantity: 100 }],
+      },
+    ],
+    variantsTotalCount: null,
+    ...overrides,
+  };
+
+  return {
+    ...product,
+    variantsTotalCount:
+      overrides.variantsTotalCount !== undefined
+        ? overrides.variantsTotalCount
+        : product.variants.length,
+  };
+};
 
 // Helper to create channel diagnostic data
 const createChannelData = (
@@ -230,6 +241,68 @@ describe("runAvailabilityChecks", () => {
 
       expect(noVariantsIssue).toBeDefined();
       expect(noVariantsIssue?.severity).toBe("error");
+    });
+  });
+
+  describe("paginated / incomplete variant catalog", () => {
+    it("should not report no-variants when the page is empty but totalCount > 0", () => {
+      // Arrange
+      const product = createProduct({
+        variants: [],
+        variantsTotalCount: 150,
+      });
+      const channelData = createChannelData();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      expect(issues.find(i => i.id === "no-variants")).toBeUndefined();
+      expect(issues.find(i => i.id === "no-variant-in-channel")).toBeUndefined();
+      expect(issues.find(i => i.id === "no-variant-priced")).toBeUndefined();
+      expect(issues.find(i => i.id === "no-stock")).toBeUndefined();
+    });
+
+    it("should not claim catalog-wide absence from a partial page", () => {
+      // Arrange - page has a variant without channel listing / price / stock
+      const product = createProduct({
+        variants: [
+          {
+            id: "variant-page-1",
+            name: "Partial page variant",
+            channelListings: [],
+            stocks: [],
+          },
+        ],
+        variantsTotalCount: 200,
+      });
+      const channelData = createChannelData();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      expect(issues.find(i => i.id === "no-variant-in-channel")).toBeUndefined();
+      expect(issues.find(i => i.id === "no-variant-priced")).toBeUndefined();
+      expect(issues.find(i => i.id === "no-stock")).toBeUndefined();
+    });
+
+    it("should still report no-variants when totalCount is explicitly 0", () => {
+      // Arrange
+      const product = createProduct({
+        variants: [],
+        variantsTotalCount: 0,
+      });
+      const channelData = createChannelData();
+      const channelListing = product.channelListings[0];
+
+      // Act
+      const issues = runAvailabilityChecks(product, channelData, channelListing, mockIntl);
+
+      // Assert
+      expect(issues.find(i => i.id === "no-variants")).toBeDefined();
     });
   });
 

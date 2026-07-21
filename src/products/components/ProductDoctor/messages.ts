@@ -389,6 +389,12 @@ export const messages = defineMessages({
     defaultMessage: "Product is not listed in any channel",
     description: "Message when product is not in any channel",
   },
+  variantsCatalogUnavailable: {
+    id: "lXs9kz",
+    defaultMessage:
+      "Could not load all variants for availability checks. Refresh the page to try again.",
+    description: "Error when Product Doctor variant catalog walk fails",
+  },
   status_live: {
     id: "F0BhK/",
     defaultMessage: "Live",

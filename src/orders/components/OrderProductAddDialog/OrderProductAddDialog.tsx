@@ -13,7 +13,7 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { type OrderErrorFragment, type SearchOrderVariantQuery } from "@dashboard/graphql";
+import { type AddressInput, type OrderErrorFragment } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -21,16 +21,22 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { buttonMessages } from "@dashboard/intl";
 import { maybe, renderCollection } from "@dashboard/misc";
-import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
+import {
+  isOrderVariantsListTruncated,
+  type OrderSearchProduct,
+  type OrderSearchVariant,
+} from "@dashboard/searches/mapSearchOrderVariantsForAdd";
+import { type FetchMoreProps } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TableBody, TableCell, TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
+import { useOrderProductAddDialogProducts } from "./useOrderProductAddDialogProducts";
 import {
   hasAllVariantsSelected,
   hasVariantPricing,
@@ -43,11 +49,14 @@ interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  products: RelayToFlat<SearchOrderVariantQuery["search"]>;
+  products: OrderSearchProduct[];
   onClose: () => void;
   onFetch: (query: string) => void;
-  onSubmit: (data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]) => void;
+  onSubmit: (data: OrderSearchVariant[]) => void;
   channelName?: string;
+  /** Channel slug used for paginated variant loads and pricing. */
+  channel?: string;
+  address?: AddressInput;
 }
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
@@ -58,20 +67,27 @@ export const OrderProductAddDialog = ({
   open,
   loading,
   hasMore,
-  products,
+  products: productsFromSearch,
   onFetch,
   onFetchMore,
   onClose,
   onSubmit,
   channelName,
+  channel,
+  address,
 }: OrderProductAddDialogProps) => {
   const classes = useStyles({});
   const intl = useIntl();
   const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
-  const [variants, setVariants] = useState<
-    SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
-  >([]);
+  const [variants, setVariants] = useState<OrderSearchVariant[]>([]);
   const errors = useModalDialogErrors(apiErrors, open);
+  const { products, loadMoreVariants, loadingProductIds } = useOrderProductAddDialogProducts({
+    products: productsFromSearch,
+    searchQuery: query,
+    channel,
+    address,
+    open,
+  });
 
   const handleClose = () => {
     resetQuery();
@@ -90,10 +106,8 @@ export const OrderProductAddDialog = ({
   });
 
   const isValidVariant = hasVariantPricing;
-  const getValidProductVariants = ({
-    variants: productVariants,
-  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]) =>
-    productVariants.filter(isValidVariant);
+  const getValidProductVariants = (product: OrderSearchProduct) =>
+    product.variants.filter(isValidVariant);
   const productChoices =
     products?.filter(product => getValidProductVariants(product).length > 0) || [];
   const displayedProductChoices = useStalePickerList(productChoices, loading, open);
@@ -103,8 +117,8 @@ export const OrderProductAddDialog = ({
   const productsWithAllVariantsSelected = displayedProductChoices.map(product =>
     hasAllVariantsSelected(getValidProductVariants(product), variants),
   );
-  const productChoicesWithValidVariants = displayedProductChoices.filter(
-    ({ variants: productVariants }) => productVariants.some(isValidVariant),
+  const productChoicesWithValidVariants = displayedProductChoices.filter(({ variants }) =>
+    variants.some(isValidVariant),
   );
   const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
     loading,
@@ -164,8 +178,11 @@ export const OrderProductAddDialog = ({
                         <TableRowLink data-test-id="product">
                           <TableCell padding="checkbox">
                             <Checkbox
-                              checked={productsWithAllVariantsSelected[productIndex]}
-                              disabled={loading}
+                              checked={
+                                !isOrderVariantsListTruncated(product) &&
+                                productsWithAllVariantsSelected[productIndex]
+                              }
+                              disabled={loading || isOrderVariantsListTruncated(product)}
                               onChange={() =>
                                 onProductAdd(
                                   product,
@@ -227,6 +244,53 @@ export const OrderProductAddDialog = ({
                               </TableCell>
                             </TableRowLink>
                           ))}
+                        {isOrderVariantsListTruncated(product) && (
+                          <TableRowLink data-test-id="load-more-variants">
+                            <TableCell />
+                            <TableCell colSpan={3}>
+                              <Box
+                                display="flex"
+                                flexDirection="column"
+                                alignItems="flex-start"
+                                gap={3}
+                                paddingY={4}
+                              >
+                                <Button
+                                  type="button"
+                                  variant="secondary"
+                                  disabled={
+                                    loading || loadingProductIds.has(product.id) || !channel
+                                  }
+                                  onClick={() => {
+                                    void loadMoreVariants(product.id);
+                                  }}
+                                >
+                                  {loadingProductIds.has(product.id) ? (
+                                    <Box display="flex" alignItems="center" gap={2}>
+                                      <SaleorThrobber size={16} />
+                                      {intl.formatMessage(messages.loadingMoreVariants)}
+                                    </Box>
+                                  ) : (
+                                    intl.formatMessage(messages.loadMoreVariants)
+                                  )}
+                                </Button>
+                                {product.variantsTotalCount !== null && (
+                                  <Text
+                                    size={3}
+                                    color="default2"
+                                    data-test-id="load-more-variants-progress"
+                                  >
+                                    {intl.formatMessage(messages.loadMoreVariantsProgress, {
+                                      shown: product.variants.filter(isValidVariant).length,
+                                      loaded: product.variants.length,
+                                      total: product.variantsTotalCount,
+                                    })}
+                                  </Text>
+                                )}
+                              </Box>
+                            </TableCell>
+                          </TableRowLink>
+                        )}
                       </Fragment>
                     ),
                     () =>

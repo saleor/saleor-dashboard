@@ -1,11 +1,5 @@
-import {
-  type ProductVariantCreateDataQuery,
-  type ProductVariantDetailsQuery,
-} from "@dashboard/graphql";
+import { type ProductVariantSiblingFragment } from "@dashboard/graphql";
 
-export type ProductVariantItem = NonNullable<
-  | ProductVariantDetailsQuery["productVariant"]
-  | NonNullable<NonNullable<ProductVariantCreateDataQuery["product"]>["variants"]>[number]
->;
+export type ProductVariantItem = ProductVariantSiblingFragment;
 
 export type ProductVariantItemThumbnail = NonNullable<ProductVariantItem["media"]>[number];

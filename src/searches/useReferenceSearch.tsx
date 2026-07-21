@@ -55,9 +55,13 @@ export const useReferenceProductSearch = (refAttr: AttributeWithReferenceTypes |
     () => getAllowedReferenceTypeIds(refAttr, ReferenceType.ProductType),
     [refAttr],
   );
+  const includeVariants = refAttr?.entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT;
   const variables = useMemo(
-    () => buildReferenceSearchVariables(ids, ReferenceWhereKey.ProductType),
-    [ids],
+    () => ({
+      ...buildReferenceSearchVariables(ids, ReferenceWhereKey.ProductType),
+      includeVariants,
+    }),
+    [ids, includeVariants],
   );
 
   return useProductSearch({
