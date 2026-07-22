@@ -1,10 +1,7 @@
-import {
-  PRODUCT_MEDIA_MAX_FILE_SIZE_BYTES,
-  validateProductMediaFiles,
-} from "./validateProductMediaFiles";
+import { validateProductMediaFiles } from "./validateProductMediaFiles";
 
 describe("validateProductMediaFiles", () => {
-  it("accepts image files under the size limit", () => {
+  it("accepts image files", () => {
     // Arrange
     const file = new File(["bytes"], "photo.png", { type: "image/png" });
 
@@ -28,17 +25,17 @@ describe("validateProductMediaFiles", () => {
     expect(result.rejected).toEqual([{ file, reason: "invalidType" }]);
   });
 
-  it("rejects files over the size limit", () => {
-    // Arrange
-    const largeContent = new Uint8Array(PRODUCT_MEDIA_MAX_FILE_SIZE_BYTES + 1);
+  it("does not reject large image files (size is enforced by Core)", () => {
+    // Arrange — larger than Core's default 10 MiB; Cloud/prod may allow more
+    const largeContent = new Uint8Array(20 * 1024 * 1024);
     const file = new File([largeContent], "huge.png", { type: "image/png" });
 
     // Act
     const result = validateProductMediaFiles([file]);
 
     // Assert
-    expect(result.validFiles).toEqual([]);
-    expect(result.rejected).toEqual([{ file, reason: "tooLarge" }]);
+    expect(result.validFiles).toEqual([file]);
+    expect(result.rejected).toEqual([]);
   });
 
   it("accepts images with an empty mime type when the extension is known", () => {

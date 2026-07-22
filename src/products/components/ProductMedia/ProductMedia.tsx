@@ -23,10 +23,7 @@ import { messages } from "./messages";
 import styles from "./ProductMedia.module.css";
 import { ProductMediaGalleryDropzone } from "./ProductMediaGalleryDropzone";
 import { useProductMediaDrag } from "./useProductMediaDrag";
-import {
-  PRODUCT_MEDIA_MAX_FILE_SIZE_BYTES,
-  validateProductMediaFiles,
-} from "./validateProductMediaFiles";
+import { validateProductMediaFiles } from "./validateProductMediaFiles";
 
 const UPLOAD_CONCURRENCY = 3;
 
@@ -349,7 +346,6 @@ const ProductMedia = (props: ProductMediaProps) => {
           status: "warning",
           text: intl.formatMessage(messages.uploadRejected, {
             count: rejected.length,
-            maxSize: Math.round(PRODUCT_MEDIA_MAX_FILE_SIZE_BYTES / (1024 * 1024)),
           }),
         });
       }

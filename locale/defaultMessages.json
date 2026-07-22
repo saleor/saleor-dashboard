@@ -5021,10 +5021,6 @@
     "context": "button",
     "string": "Upload image"
   },
-  "LzdG4r": {
-    "context": "warning when client-side validation rejects product media files before upload",
-    "string": "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image or larger than {maxSize} MB)"
-  },
   "M3OlSr": {
     "context": "error message",
     "string": "Maximum weight must be higher than minimum"
@@ -8746,6 +8742,10 @@
   "d1PvC8": {
     "context": "checkbox",
     "string": "Grant refund for returned items"
+  },
+  "d3IQVN": {
+    "context": "warning when client-side validation rejects product media files before upload",
+    "string": "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image)"
   },
   "d3jlO3": {
     "context": "Label prefix for the creation date of a recurring problem",
