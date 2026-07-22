@@ -1,11 +1,14 @@
 import { Input as MacawInput } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { type ComponentProps, forwardRef } from "react";
 
 import styles from "./InputWithPlaceholder.module.css";
 
 export const InputWithPlaceholder = forwardRef<HTMLInputElement, ComponentProps<typeof MacawInput>>(
-  (props, ref) => {
-    return <MacawInput className={styles.inputWithPlaceholder} {...props} ref={ref} />;
+  ({ className, ...props }, ref) => {
+    return (
+      <MacawInput {...props} className={clsx(styles.inputWithPlaceholder, className)} ref={ref} />
+    );
   },
 );
 

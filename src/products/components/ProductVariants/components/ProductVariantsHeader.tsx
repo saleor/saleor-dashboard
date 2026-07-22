@@ -1,11 +1,12 @@
 import { Header as DatagridHeader } from "@dashboard/components/Datagrid/components/Header";
 import { type DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import { type VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import { Box, Button, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { ChevronLeft, ChevronRight, CopyPlus } from "lucide-react";
 import { useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -244,7 +245,7 @@ export const ProductVariantsHeader = ({
         >
           {onVariantsSearchChange ? (
             <Box __maxWidth="260px" width="100%">
-              <Input
+              <InputWithPlaceholder
                 size="small"
                 value={variantsSearch}
                 onChange={event => {
