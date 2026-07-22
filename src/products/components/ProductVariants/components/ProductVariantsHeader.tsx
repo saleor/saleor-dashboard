@@ -13,7 +13,6 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import messages from "../messages";
-import styles from "./ProductVariantsHeader.module.css";
 
 const localMessages = defineMessages({
   generatorRequiresConfig: {
@@ -207,15 +206,16 @@ export const ProductVariantsHeader = ({
       })
     : intl.formatMessage(messages.title);
 
-  // Search filters totalCount, so keep the bar while a query is active (even at 0 hits).
+  // Search filters totalCount — keep the bar while a query is active (even at 0 hits).
+  // Hide when empty or still unknown so empty products don't flash a useless "0 of 0" bar.
   const hasActiveSearch = Boolean(variantsSearch.trim());
   const showToolbar =
     Boolean(onVariantsSearchChange || variantsPageInfo) &&
-    (hasActiveSearch || variantsTotalCount === null || variantsTotalCount > 0);
+    (hasActiveSearch || (variantsTotalCount !== null && variantsTotalCount > 0));
   const runGuarded = onGuardUnsavedAction ?? ((action: () => void) => action());
 
   return (
-    <div className={styles.header}>
+    <>
       <DatagridHeader title={headerTitle}>
         <DatagridHeader.ButtonFullScreen isOpen={isFullscreenOpen} onToggle={toggleFullscreen}>
           {isFullscreenOpen ? (
@@ -333,6 +333,6 @@ export const ProductVariantsHeader = ({
           </Box>
         </Box>
       )}
-    </div>
+    </>
   );
 };
