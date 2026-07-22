@@ -16,6 +16,7 @@ export const updateProductTranslations = gql`
         description
         seoDescription
         seoTitle
+        slug
         translation(languageCode: $language) {
           id
           description
@@ -26,6 +27,7 @@ export const updateProductTranslations = gql`
           name
           seoDescription
           seoTitle
+          slug
         }
       }
     }
@@ -74,6 +76,7 @@ export const updateCategoryTranslations = gql`
         description
         seoDescription
         seoTitle
+        slug
         translation(languageCode: $language) {
           id
           description
@@ -83,6 +86,7 @@ export const updateCategoryTranslations = gql`
           name
           seoDescription
           seoTitle
+          slug
         }
       }
     }
@@ -105,6 +109,7 @@ export const updateCollectionTranslations = gql`
         description
         seoDescription
         seoTitle
+        slug
         translation(languageCode: $language) {
           id
           description
@@ -114,6 +119,7 @@ export const updateCollectionTranslations = gql`
           name
           seoDescription
           seoTitle
+          slug
         }
       }
     }

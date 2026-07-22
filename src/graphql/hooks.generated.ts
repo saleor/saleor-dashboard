@@ -3667,6 +3667,7 @@ export const CategoryTranslationFragmentDoc = gql`
       language
     }
     name
+    slug
     seoDescription
     seoTitle
   }
@@ -3674,6 +3675,7 @@ export const CategoryTranslationFragmentDoc = gql`
     id
     name
     description
+    slug
     seoDescription
     seoTitle
   }
@@ -3685,6 +3687,7 @@ export const CollectionTranslationFragmentDoc = gql`
     id
     name
     description
+    slug
     seoDescription
     seoTitle
   }
@@ -3695,6 +3698,7 @@ export const CollectionTranslationFragmentDoc = gql`
       language
     }
     name
+    slug
     seoDescription
     seoTitle
   }
@@ -3732,11 +3736,13 @@ export const ProductTranslationFragmentDoc = gql`
     id
     name
     description
+    slug
     seoDescription
     seoTitle
   }
   translation(languageCode: $language) {
     id
+    slug
     seoTitle
     seoDescription
     name
@@ -3828,6 +3834,7 @@ export const PageTranslationFragmentDoc = gql`
   page {
     id
     content
+    slug
     seoDescription
     seoTitle
     title
@@ -3838,6 +3845,7 @@ export const PageTranslationFragmentDoc = gql`
     seoDescription
     seoTitle
     title
+    slug
     language {
       code
       language
@@ -20693,6 +20701,7 @@ export const UpdateProductTranslationsDocument = gql`
       description
       seoDescription
       seoTitle
+      slug
       translation(languageCode: $language) {
         id
         description
@@ -20703,6 +20712,7 @@ export const UpdateProductTranslationsDocument = gql`
         name
         seoDescription
         seoTitle
+        slug
       }
     }
   }
@@ -20797,6 +20807,7 @@ export const UpdateCategoryTranslationsDocument = gql`
       description
       seoDescription
       seoTitle
+      slug
       translation(languageCode: $language) {
         id
         description
@@ -20806,6 +20817,7 @@ export const UpdateCategoryTranslationsDocument = gql`
         name
         seoDescription
         seoTitle
+        slug
       }
     }
   }
@@ -20851,6 +20863,7 @@ export const UpdateCollectionTranslationsDocument = gql`
       description
       seoDescription
       seoTitle
+      slug
       translation(languageCode: $language) {
         id
         description
@@ -20860,6 +20873,7 @@ export const UpdateCollectionTranslationsDocument = gql`
         name
         seoDescription
         seoTitle
+        slug
       }
     }
   }

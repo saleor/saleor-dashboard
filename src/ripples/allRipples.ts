@@ -31,6 +31,7 @@ import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRi
 import { type Ripple } from "@dashboard/ripples/types";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
+import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import { rippleTranslationDetailRefresh } from "@dashboard/translations/ripples/translationDetailRefresh";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
@@ -99,6 +100,7 @@ export const allRipples: Ripple[] = [
   rippleStaffCustomerProfiles,
 
   // Translations
+  rippleSlugTranslation,
   rippleTranslationDetailRefresh,
 
   // Sidebar

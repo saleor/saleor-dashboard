@@ -3525,6 +3525,9 @@
     "context": "payment status",
     "string": "Unpaid"
   },
+  "FDaFNL": {
+    "string": "Search Engine Slug"
+  },
   "FEWgh/": {
     "context": "column title tag",
     "string": "Tag"
@@ -10673,6 +10676,10 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
+  },
+  "mVcZkr": {
+    "context": "seo slug field hint",
+    "string": "URL path used in localized storefront links"
   },
   "mWQt3s": {
     "string": "No. of Products"

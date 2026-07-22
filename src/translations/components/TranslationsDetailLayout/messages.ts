@@ -107,6 +107,11 @@ export const translationDetailMessages = defineMessages({
     defaultMessage: "Main body content of the model page",
     description: "page content field hint",
   },
+  seoSlugFieldHint: {
+    id: "mVcZkr",
+    defaultMessage: "URL path used in localized storefront links",
+    description: "seo slug field hint",
+  },
   seoTitleFieldHint: {
     id: "wS1Wms",
     defaultMessage: "Title tag shown in browser tabs and search results",

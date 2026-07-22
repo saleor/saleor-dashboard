@@ -147,8 +147,10 @@ export const TranslationsProductsPage = ({
       createSeoTranslationSection(intl, {
         seoDescription: data?.product?.seoDescription,
         seoTitle: data?.product?.seoTitle,
+        slug: data?.product?.slug,
         translationSeoDescription: data?.translation?.seoDescription ?? null,
         translationSeoTitle: data?.translation?.seoTitle ?? null,
+        translationSlug: data?.translation?.slug ?? null,
       }),
     ];
 
