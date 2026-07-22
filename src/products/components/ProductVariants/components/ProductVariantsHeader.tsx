@@ -154,6 +154,8 @@ interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
   onVariantsNextPage?: () => void;
   onVariantsPreviousPage?: () => void;
   variantsRangeLabel?: string | null;
+  /** Absolute/filtered connection total — hide browse toolbar when 0 and not searching. */
+  variantsTotalCount?: number | null;
   onGuardUnsavedAction?: (action: () => void) => void;
   selectedCount?: number;
   onDeleteSelected?: () => void;
@@ -179,6 +181,7 @@ export const ProductVariantsHeader = ({
   onVariantsNextPage,
   onVariantsPreviousPage,
   variantsRangeLabel,
+  variantsTotalCount = null,
   onGuardUnsavedAction,
   selectedCount = 0,
   onDeleteSelected,
@@ -204,7 +207,11 @@ export const ProductVariantsHeader = ({
       })
     : intl.formatMessage(messages.title);
 
-  const showToolbar = Boolean(onVariantsSearchChange || variantsPageInfo);
+  // Search filters totalCount, so keep the bar while a query is active (even at 0 hits).
+  const hasActiveSearch = Boolean(variantsSearch.trim());
+  const showToolbar =
+    Boolean(onVariantsSearchChange || variantsPageInfo) &&
+    (hasActiveSearch || variantsTotalCount === null || variantsTotalCount > 0);
   const runGuarded = onGuardUnsavedAction ?? ((action: () => void) => action());
 
   return (
