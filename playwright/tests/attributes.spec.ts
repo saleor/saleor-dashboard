@@ -16,7 +16,7 @@ test.beforeEach(({ page }) => {
 });
 
 const SALEOR_124_uuid = faker.datatype.uuid();
-const attributeClasses = ["PRODUCT_TYPE", "PAGE_TYPE"];
+const attributeClasses: ("PRODUCT_TYPE" | "PAGE_TYPE")[] = ["PRODUCT_TYPE", "PAGE_TYPE"];
 
 for (const attr of attributeClasses) {
   for (const type of ATTRIBUTES.attributeTypesWithAbilityToAddValues.names) {
@@ -27,7 +27,7 @@ for (const attr of attributeClasses) {
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
       await configurationPage.goToConfigurationView();
-      await configurationPage.openAttributes();
+      await configurationPage.openAttributes(attr);
       await attributesPage.clickCreateAttributeButton();
       await attributesPage.selectAttributeType(attr);
       await attributesPage.typeAttributeDefaultLabel(`${attr} - ${type}`);
@@ -64,7 +64,7 @@ for (const attr of attributeClasses) {
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
       await configurationPage.goToConfigurationView();
-      await configurationPage.openAttributes();
+      await configurationPage.openAttributes(attr);
       await attributesPage.waitForDOMToFullyLoad();
       await attributesPage.clickCreateAttributeButton();
       await attributesPage.selectAttributeType(attr);
@@ -102,7 +102,7 @@ for (const attr of attributeClasses) {
     }) => {
       await page.context().storageState({ path: "./playwright/.auth/admin.json" });
       await configurationPage.goToConfigurationView();
-      await configurationPage.openAttributes();
+      await configurationPage.openAttributes(attr);
       await attributesPage.waitForDOMToFullyLoad();
       await attributesPage.clickCreateAttributeButton();
       await attributesPage.selectAttributeType(attr);
