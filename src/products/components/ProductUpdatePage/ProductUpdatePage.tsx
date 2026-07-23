@@ -55,6 +55,7 @@ import { rippleProductMetadata } from "@dashboard/products/ripples/productMetada
 import { productImageUrl, productListPath, productListUrl } from "@dashboard/products/urls";
 import { type ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { type ProductSaveStepResult } from "@dashboard/products/views/ProductUpdate/handlers/productSaveSteps";
 import { type UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
@@ -63,9 +64,9 @@ import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
-import { Box, Divider, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { type AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
@@ -81,6 +82,8 @@ import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
+import { ProductSaveCompositionHint } from "./ProductSaveCompositionHint";
+import { ProductSaveStepsBanner } from "./ProductSaveStepsBanner";
 import { ProductDetailsTitle } from "./Title";
 import {
   type ProductUpdateData,
@@ -118,6 +121,8 @@ interface ProductUpdatePageProps {
   product?: ProductDetailsQuery["product"];
   loading?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  saveSteps?: ProductSaveStepResult[];
+  onDismissSaveSteps?: () => void;
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
@@ -179,6 +184,8 @@ const ProductUpdatePage = ({
   product,
   loading,
   saveButtonBarState,
+  saveSteps = [],
+  onDismissSaveSteps,
   variants,
   variantsSearch,
   onVariantsSearchChange,
@@ -506,6 +513,7 @@ const ProductUpdatePage = ({
         submit,
         isSaveDisabled,
         pendingVariantDeleteCount,
+        saveComposition,
         attributeRichTextGetters,
         richText,
       }) => {
@@ -564,6 +572,9 @@ const ProductUpdatePage = ({
               </TopNav>
 
               <DetailPageLayout.Content paddingBottom={10}>
+                {saveSteps.length > 0 && onDismissSaveSteps ? (
+                  <ProductSaveStepsBanner steps={saveSteps} onDismiss={onDismissSaveSteps} />
+                ) : null}
                 <ProductDetailsForm
                   data={data}
                   disabled={disabled}
@@ -716,14 +727,7 @@ const ProductUpdatePage = ({
               <Savebar>
                 <Savebar.DeleteButton onClick={onDelete} />
                 <Savebar.Spacer />
-                {pendingVariantDeleteCount > 0 && (
-                  <Text size={2} color="default2" data-test-id="pending-variant-deletes">
-                    <FormattedMessage
-                      {...messages.pendingVariantDeletes}
-                      values={{ count: pendingVariantDeleteCount }}
-                    />
-                  </Text>
-                )}
+                <ProductSaveCompositionHint composition={saveComposition} />
                 <Savebar.CancelButton onClick={() => navigate(productListUrl())} />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}

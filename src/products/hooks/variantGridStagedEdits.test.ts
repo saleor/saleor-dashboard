@@ -3,6 +3,7 @@ import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 
 import {
   buildVariantGridSubmitPayload,
+  countPendingVariantGridEdits,
   createEmptyVariantGridStagedEdits,
   hasPendingVariantGridEdits,
   rehydrateVariantGridDatagridOpts,
@@ -130,5 +131,61 @@ describe("variantGridStagedEdits", () => {
     expect(state.removedIds.has("v2")).toBe(true);
     expect(state.removedIds.has("v3")).toBe(true);
     expect(state.updatesById.get("v1")).toEqual([{ column: "name", data: { value: "Keep me" } }]);
+  });
+
+  describe("countPendingVariantGridEdits", () => {
+    it("counts distinct variants, not individual cell edits", () => {
+      // Arrange — two columns edited on the same variant
+      let state = createEmptyVariantGridStagedEdits();
+
+      state = syncVariantGridStagedEditsFromPage(state, [createVariant("v1")], {
+        added: [],
+        removed: [],
+        updates: [
+          { column: "sku", row: 0, data: { value: "A" } },
+          { column: "name", row: 0, data: { value: "Renamed" } },
+        ],
+      });
+
+      // Act / Assert
+      expect(countPendingVariantGridEdits(state)).toBe(1);
+    });
+
+    it("counts each edited and deleted variant once", () => {
+      // Arrange
+      let state = createEmptyVariantGridStagedEdits();
+
+      state = syncVariantGridStagedEditsFromPage(
+        state,
+        [createVariant("v1"), createVariant("v2"), createVariant("v3")],
+        {
+          added: [],
+          removed: [2],
+          updates: [
+            { column: "sku", row: 0, data: { value: "A" } },
+            { column: "sku", row: 1, data: { value: "B" } },
+          ],
+        },
+      );
+
+      // Act / Assert — v1 + v2 edited, v3 deleted
+      expect(countPendingVariantGridEdits(state)).toBe(3);
+    });
+
+    it("does not double-count a variant that is both updated and deleted", () => {
+      // Arrange
+      let state = createEmptyVariantGridStagedEdits();
+
+      state = syncVariantGridStagedEditsFromPage(state, [createVariant("v1")], {
+        added: [],
+        removed: [],
+        updates: [{ column: "sku", row: 0, data: { value: "A" } }],
+      });
+      state = stageVariantRemovalsInStore(state, ["v1"]);
+
+      // Act / Assert
+      expect(state.updatesById.has("v1")).toBe(false);
+      expect(countPendingVariantGridEdits(state)).toBe(1);
+    });
   });
 });

@@ -52,4 +52,9 @@ export const messages = defineMessages({
       "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image)",
     description: "warning when client-side validation rejects product media files before upload",
   },
+  savesImmediately: {
+    id: "xxazeW",
+    defaultMessage: "Saves immediately",
+    description: "Product media card subtitle — uploads persist without product Save",
+  },
 });

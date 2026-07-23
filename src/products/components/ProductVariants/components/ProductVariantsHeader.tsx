@@ -241,6 +241,13 @@ export const ProductVariantsHeader = ({
           />
         )}
       </DatagridHeader>
+      {!isFullscreenOpen && (
+        <Box paddingX={6} paddingBottom={2}>
+          <Text size={2} color="default2">
+            <FormattedMessage {...messages.savesWithProduct} />
+          </Text>
+        </Box>
+      )}
       {showToolbar && (
         <Box
           display="flex"

@@ -537,6 +537,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         }}
         limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
+        saveSteps={submitOpts.saveSteps}
+        onDismissSaveSteps={submitOpts.clearSaveSteps}
         media={data?.product?.media}
         product={product}
         loading={loading && !product}

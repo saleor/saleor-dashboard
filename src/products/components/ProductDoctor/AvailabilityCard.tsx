@@ -169,12 +169,18 @@ export const AvailabilityCard = ({
             {intl.formatMessage(messages.availabilityTitle)}
           </DashboardCard.Title>
           {!isLoading && (
-            <Text size={2} color="default2">
+            <DashboardCard.Subtitle fontSize={3} color="default2">
               {intl.formatMessage(messages.availabilitySubtitle, {
                 listed: listedChannelsCount,
                 total: totalChannelsCount,
               })}
-            </Text>
+              {" · "}
+              {dirtyChannels.length > 0
+                ? intl.formatMessage(messages.unsavedChannelChanges, {
+                    count: dirtyChannels.length,
+                  })
+                : intl.formatMessage(messages.savesWithProduct)}
+            </DashboardCard.Subtitle>
           )}
         </Box>
         {onManageClick && (

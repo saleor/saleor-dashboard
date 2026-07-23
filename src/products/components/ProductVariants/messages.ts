@@ -77,6 +77,11 @@ const messages = defineMessages({
     id: "64aQXZ",
     description: "product variants, full-screen title",
   },
+  savesWithProduct: {
+    id: "ODD7yW",
+    defaultMessage: "Saves with the product",
+    description: "Variants grid persist-mode hint under the section title",
+  },
 });
 
 export default messages;

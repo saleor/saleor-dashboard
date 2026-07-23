@@ -379,6 +379,17 @@ export const messages = defineMessages({
     defaultMessage: "In {listed} of {total} channels",
     description: "Availability card subtitle showing channel count",
   },
+  savesWithProduct: {
+    id: "sOGWqM",
+    defaultMessage: "Saves with the product",
+    description: "Availability card persist-mode hint",
+  },
+  unsavedChannelChanges: {
+    id: "xOrtMG",
+    defaultMessage:
+      "{count, plural, one {# channel has unsaved changes} other {# channels have unsaved changes}}",
+    description: "Availability card hint when channel listings are dirty",
+  },
   manageButton: {
     id: "E3SyRJ",
     defaultMessage: "Manage",

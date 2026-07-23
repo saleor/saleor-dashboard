@@ -33,6 +33,7 @@ import { type OutputData } from "@editorjs/editorjs";
 import { type Option } from "@saleor/macaw-ui-next";
 
 import { type ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
+import { type ProductSaveComposition } from "./saveComposition";
 
 export interface ProductUpdateFormData {
   category: string | null;
@@ -98,6 +99,8 @@ export interface UseProductUpdateFormOutput
   touchedChannels: string[];
   /** Staged variant deletes waiting for Save (cross-page). */
   pendingVariantDeleteCount: number;
+  /** What the Savebar will persist on the next Save. */
+  saveComposition: ProductSaveComposition;
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;

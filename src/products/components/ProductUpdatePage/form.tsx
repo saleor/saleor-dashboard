@@ -28,6 +28,7 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   buildVariantGridSubmitPayload,
+  countPendingVariantGridEdits,
   createEmptyVariantGridStagedEdits,
   rehydrateVariantGridDatagridOpts,
   stageVariantRemovalsInStore,
@@ -46,8 +47,11 @@ import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichTe
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as React from "react";
+import { useIntl } from "react-intl";
 
-import { useProductChannelListingsForm } from "./formChannels";
+import { countDirtyChannels, useProductChannelListingsForm } from "./formChannels";
+import { messages } from "./messages";
+import { buildProductSaveComposition, hasProductSaveComposition } from "./saveComposition";
 import {
   type ProductUpdateData,
   type ProductUpdateFormProps,
@@ -96,13 +100,21 @@ export function useProductUpdateForm(
   const stagedEdits = useRef<VariantGridStagedEditsState>(createEmptyVariantGridStagedEdits());
   const previousVariantsPageKey = useRef<string | null>(null);
   const [pendingVariantDeleteCount, setPendingVariantDeleteCount] = useState(0);
+  const [pendingVariantEditCount, setPendingVariantEditCount] = useState(0);
+  const [pendingVariantCreateCount, setPendingVariantCreateCount] = useState(0);
+  const [attributesDirty, setAttributesDirty] = useState(false);
   const variantsPageKey = useMemo(
     () => productVariants.map(variant => variant.id).join("\0"),
     [productVariants],
   );
 
-  const refreshPendingVariantDeleteCount = useCallback(() => {
-    setPendingVariantDeleteCount(stagedEdits.current.removedIds.size);
+  const refreshVariantCompositionCounts = useCallback(() => {
+    const deleteCount = stagedEdits.current.removedIds.size;
+    const pendingTotal = countPendingVariantGridEdits(stagedEdits.current);
+
+    setPendingVariantDeleteCount(deleteCount);
+    setPendingVariantEditCount(Math.max(0, pendingTotal - deleteCount));
+    setPendingVariantCreateCount(variants.current.added.length);
   }, []);
 
   const applyRehydratedDatagridState = useCallback(
@@ -113,8 +125,9 @@ export function useProductUpdateForm(
       datagrid.setRemoved(rehydrated.removed);
       datagrid.changes.current = rehydrated.updates;
       variants.current = rehydrated;
+      refreshVariantCompositionCounts();
     },
-    [datagrid],
+    [datagrid, refreshVariantCompositionCounts],
   );
 
   useEffect(
@@ -148,10 +161,10 @@ export function useProductUpdateForm(
         productVariants,
         prepared,
       );
-      refreshPendingVariantDeleteCount();
+      refreshVariantCompositionCounts();
       triggerChange();
     },
-    [locale, product, productVariants, refreshPendingVariantDeleteCount, triggerChange],
+    [locale, product, productVariants, refreshVariantCompositionCounts, triggerChange],
   );
 
   const handleStageVariantRemovals = React.useCallback(
@@ -172,10 +185,10 @@ export function useProductUpdateForm(
         removed: rehydrated.removed,
         updates: rehydrated.updates,
       };
-      refreshPendingVariantDeleteCount();
+      refreshVariantCompositionCounts();
       triggerChange();
     },
-    [datagrid, productVariants, refreshPendingVariantDeleteCount, triggerChange],
+    [datagrid, productVariants, refreshVariantCompositionCounts, triggerChange],
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
@@ -189,9 +202,20 @@ export function useProductUpdateForm(
     loading: !product,
     triggerChange,
   });
-  const { setExitDialogSubmitRef } = useExitFormDialog({
+  const { setExitDialogSubmitRef, setExitDialogDescription, setIsDirty } = useExitFormDialog({
     formId: PRODUCT_UPDATE_FORM_ID,
   });
+  const intl = useIntl();
+
+  useEffect(
+    function setProductExitDialogDescription() {
+      setExitDialogDescription(intl.formatMessage(messages.leaveDialogDescription));
+
+      return () => setExitDialogDescription(null);
+    },
+    [intl, setExitDialogDescription],
+  );
+
   const {
     channels,
     handleChannelChange,
@@ -207,15 +231,26 @@ export function useProductUpdateForm(
     opts.setSelectedCategory,
     opts.categories,
   );
-  const handleAttributeChange = createAttributeChangeHandler(attributes, triggerChange);
+  const attributeChangeHandler = createAttributeChangeHandler(attributes, triggerChange);
+  const handleAttributeChange = (...args: Parameters<typeof attributeChangeHandler>) => {
+    setAttributesDirty(true);
+
+    return attributeChangeHandler(...args);
+  };
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
-    triggerChange,
+    (value?: boolean) => {
+      setAttributesDirty(true);
+      triggerChange(value);
+    },
   );
   const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
     attributes,
-    triggerChange,
+    (value?: boolean) => {
+      setAttributesDirty(true);
+      triggerChange(value);
+    },
   );
   const handleAttributeMetadataChange = createAttributeReferenceAdditionalDataHandler(
     attributes,
@@ -242,12 +277,18 @@ export function useProductUpdateForm(
     attributesWithNewFileValue.data,
     attributesWithNewFileValue.add,
     attributesWithNewFileValue.change,
-    triggerChange,
+    (value?: boolean) => {
+      setAttributesDirty(true);
+      triggerChange(value);
+    },
   );
   const handleAttributeValueReorder = createAttributeValueReorderHandler(
     attributes.change,
     attributes.data,
-    triggerChange,
+    (value?: boolean) => {
+      setAttributesDirty(true);
+      triggerChange(value);
+    },
   );
   const handleTaxClassSelect = createSingleAutocompleteSelectHandler(
     handleChange,
@@ -291,11 +332,30 @@ export function useProductUpdateForm(
       },
     };
   };
+  const saveComposition = buildProductSaveComposition({
+    changedFieldNames: Object.keys(form.changedData),
+    descriptionDirty: richText.isDirty,
+    attributesDirty: attributesDirty || attributesWithNewFileValue.data.length > 0,
+    dirtyChannelCount: countDirtyChannels(channels, product?.channelListings),
+    variantEditCount: pendingVariantEditCount,
+    variantCreateCount: pendingVariantCreateCount,
+    variantDeleteCount: pendingVariantDeleteCount,
+  });
+  const hasUnsavedChanges = hasProductSaveComposition(saveComposition);
+
+  useEffect(
+    function syncExitDialogDirtyFromSaveComposition() {
+      setIsDirty(hasUnsavedChanges);
+    },
+    [hasUnsavedChanges, setIsDirty],
+  );
+
   const handleSubmit = async (data: ProductUpdateSubmitData) => {
     const errors = await onSubmit(data);
 
     if (!errors?.length) {
       attributesWithNewFileValue.set([]);
+      setAttributesDirty(false);
     }
 
     return errors;
@@ -306,45 +366,82 @@ export function useProductUpdateForm(
   });
   const submit = useCallback(async () => {
     const result = await handleFormSubmit(await getSubmitData());
+    const succeeded = !result?.length;
 
-    cleanChanged();
     await refetch();
-    datagrid.setAdded(prevAdded =>
-      prevAdded.filter((_, index) =>
+
+    if (succeeded) {
+      cleanChanged();
+      datagrid.setAdded([]);
+      datagrid.changes.current = [];
+      datagrid.setRemoved([]);
+      variants.current = {
+        added: [],
+        removed: [],
+        updates: [],
+      };
+      stagedEdits.current = createEmptyVariantGridStagedEdits();
+      setPendingVariantDeleteCount(0);
+      setPendingVariantEditCount(0);
+      setPendingVariantCreateCount(0);
+
+      return result;
+    }
+
+    // Keep draft state for retry. Only trim variant grid rows that the API accepted
+    // when bulk create/update returned row-level DatagridErrors.
+    const hasDatagridErrors = result.some(error => error.__typename === "DatagridError");
+
+    if (hasDatagridErrors) {
+      const nextAdded = datagrid.added.filter((_, index) =>
         result.some(
           error =>
             error.__typename === "DatagridError" &&
             error.type === "create" &&
             error.index === index,
         ),
-      ),
-    );
-    datagrid.changes.current = datagrid.changes.current.filter(change =>
-      datagrid.added.includes(change.row)
-        ? result.some(
-            error =>
-              error.__typename === "DatagridError" &&
-              error.type === "create" &&
-              error.index === datagrid.added.findIndex(r => r === change.row),
-          )
-        : result.some(
-            error =>
-              error.__typename === "DatagridError" &&
-              error.type !== "create" &&
-              error.variantId === productVariants[change.row]?.id,
-          ),
-    );
-    datagrid.setRemoved([]);
-    variants.current = {
-      added: [],
-      removed: [],
-      updates: [],
-    };
-    stagedEdits.current = createEmptyVariantGridStagedEdits();
-    setPendingVariantDeleteCount(0);
+      );
+      const nextUpdates = datagrid.changes.current.filter(change =>
+        nextAdded.includes(change.row)
+          ? result.some(
+              error =>
+                error.__typename === "DatagridError" &&
+                error.type === "create" &&
+                error.index === nextAdded.findIndex(r => r === change.row),
+            )
+          : result.some(
+              error =>
+                error.__typename === "DatagridError" &&
+                error.type !== "create" &&
+                error.variantId === productVariants[change.row]?.id,
+            ),
+      );
+
+      datagrid.setAdded(nextAdded);
+      datagrid.changes.current = nextUpdates;
+      variants.current = {
+        added: nextAdded,
+        updates: nextUpdates,
+        removed: datagrid.removed,
+      };
+      stagedEdits.current = syncVariantGridStagedEditsFromPage(
+        stagedEdits.current,
+        productVariants,
+        variants.current,
+      );
+      refreshVariantCompositionCounts();
+    }
 
     return result;
-  }, [datagrid, handleFormSubmit, getSubmitData]);
+  }, [
+    cleanChanged,
+    datagrid,
+    getSubmitData,
+    handleFormSubmit,
+    productVariants,
+    refetch,
+    refreshVariantCompositionCounts,
+  ]);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
@@ -359,8 +456,8 @@ export function useProductUpdateForm(
 
     return true;
   };
-  const isSaveDisabled = disabled;
-  const isSubmitDisabled = isSaveDisabled || !isValid();
+  const isSaveDisabled = disabled || !hasUnsavedChanges || !isValid();
+  const isSubmitDisabled = isSaveDisabled;
 
   useEffect(() => {
     setIsSubmitDisabled(isSubmitDisabled);
@@ -391,6 +488,7 @@ export function useProductUpdateForm(
     submit,
     isSaveDisabled,
     pendingVariantDeleteCount,
+    saveComposition,
     richText,
     attributeRichTextGetters,
     touchedChannels: touchedChannels.current,

@@ -395,9 +395,14 @@ const ProductMedia = (props: ProductMediaProps) => {
   return (
     <DashboardCard>
       <DashboardCard.Header>
-        <DashboardCard.Title>
-          <FormattedMessage {...messages.media} />
-        </DashboardCard.Title>
+        <Box display="flex" flexDirection="column" gap={1}>
+          <DashboardCard.Title>
+            <FormattedMessage {...messages.media} />
+          </DashboardCard.Title>
+          <DashboardCard.Subtitle fontSize={3} color="default2">
+            <FormattedMessage {...messages.savesImmediately} />
+          </DashboardCard.Subtitle>
+        </Box>
         <DashboardCard.Toolbar>
           <Box display="flex" gap={2} alignItems="center">
             {hasSelection ? (
