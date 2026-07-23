@@ -35,6 +35,8 @@ import {
   clearStagedVariantCreates,
   createEmptyVariantGridStagedEdits,
   rehydrateVariantGridDatagridOpts,
+  removeStagedVariantCreatesAtIndexes,
+  replaceStagedVariantCreates,
   stageVariantCreatesInStore,
   stageVariantRemovalsInStore,
   syncVariantGridStagedEditsFromPage,
@@ -229,6 +231,30 @@ export function useProductUpdateForm(
         attributeErrors: [],
         otherErrors: [],
       };
+    },
+    [refreshVariantCompositionCounts, triggerChange],
+  );
+
+  const handleRemoveStagedVariantCreates = React.useCallback(
+    (indexes: number[]) => {
+      stagedEdits.current = removeStagedVariantCreatesAtIndexes(stagedEdits.current, indexes);
+      refreshVariantCompositionCounts();
+      triggerChange();
+    },
+    [refreshVariantCompositionCounts, triggerChange],
+  );
+
+  const handleClearStagedVariantCreates = React.useCallback(() => {
+    stagedEdits.current = clearStagedVariantCreates(stagedEdits.current);
+    refreshVariantCompositionCounts();
+    triggerChange();
+  }, [refreshVariantCompositionCounts, triggerChange]);
+
+  const handleReplaceStagedVariantCreates = React.useCallback(
+    (creates: ProductVariantBulkCreateInput[]) => {
+      stagedEdits.current = replaceStagedVariantCreates(stagedEdits.current, creates);
+      refreshVariantCompositionCounts();
+      triggerChange();
     },
     [refreshVariantCompositionCounts, triggerChange],
   );
@@ -530,6 +556,9 @@ export function useProductUpdateForm(
       changeVariants: handleVariantChange,
       stageVariantRemovals: handleStageVariantRemovals,
       stageVariantCreates: handleStageVariantCreates,
+      removeStagedVariantCreates: handleRemoveStagedVariantCreates,
+      clearStagedVariantCreates: handleClearStagedVariantCreates,
+      replaceStagedVariantCreates: handleReplaceStagedVariantCreates,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,

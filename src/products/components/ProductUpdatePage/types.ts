@@ -97,6 +97,12 @@ export interface ProductUpdateHandlers
     attributeErrors: Array<{ attributeId: string; code: string; message: string | null }>;
     otherErrors: Array<{ message: string | null }>;
   };
+  /** Remove staged generator creates by index (draft list). */
+  removeStagedVariantCreates: (indexes: number[]) => void;
+  /** Drop all staged generator creates. */
+  clearStagedVariantCreates: () => void;
+  /** Replace staged generator creates after draft datagrid edits. */
+  replaceStagedVariantCreates: (creates: ProductVariantBulkCreateInput[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
   updateChannelList: ProductChannelsListingDialogSubmit;

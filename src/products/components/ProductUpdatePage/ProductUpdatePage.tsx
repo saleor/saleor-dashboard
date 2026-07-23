@@ -649,6 +649,9 @@ const ProductUpdatePage = ({
                   onRowClick={onVariantShow}
                   onStageVariantCreates={handlers.stageVariantCreates}
                   stagedVariantCreates={stagedVariantCreates}
+                  onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
+                  onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
+                  onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
                 />
                 <CardSpacer />
                 <SeoForm

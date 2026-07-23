@@ -9,6 +9,7 @@ import {
   dedupeBulkCreateInputs,
   hasPendingVariantGridEdits,
   rehydrateVariantGridDatagridOpts,
+  removeStagedVariantCreatesAtIndexes,
   stageVariantCreatesInStore,
   stageVariantRemovalsInStore,
   syncVariantGridStagedEditsFromPage,
@@ -197,6 +198,25 @@ describe("variantGridStagedEdits", () => {
     // Assert
     expect(state.creates).toEqual([]);
     expect(state.removedIds.has("v-keep-removal")).toBe(true);
+  });
+
+  it("removes staged creates by index for the draft list", () => {
+    // Arrange
+    let state = createEmptyVariantGridStagedEdits();
+
+    state = stageVariantCreatesInStore(state, [
+      { name: "Red", sku: "RED", attributes: [{ id: "color", values: ["red"] }] },
+      { name: "Blue", sku: "BLUE", attributes: [{ id: "color", values: ["blue"] }] },
+      { name: "Green", sku: "GREEN", attributes: [{ id: "color", values: ["green"] }] },
+    ]).state;
+
+    // Act
+    state = removeStagedVariantCreatesAtIndexes(state, [0, 2]);
+
+    // Assert
+    expect(state.creates).toEqual([
+      { name: "Blue", sku: "BLUE", attributes: [{ id: "color", values: ["blue"] }] },
+    ]);
   });
 
   it("stages removals by id without requiring the variant to be on the current page", () => {

@@ -359,3 +359,29 @@ export const clearStagedVariantCreates = (
   ...state,
   creates: [],
 });
+
+/** Replace the full staged creates list (draft datagrid edits). */
+export const replaceStagedVariantCreates = (
+  state: VariantGridStagedEditsState,
+  creates: ProductVariantBulkCreateInput[],
+): VariantGridStagedEditsState => ({
+  ...state,
+  creates,
+});
+
+/** Drop staged creates by index (draft-grid remove selected). */
+export const removeStagedVariantCreatesAtIndexes = (
+  state: VariantGridStagedEditsState,
+  indexes: number[],
+): VariantGridStagedEditsState => {
+  if (indexes.length === 0) {
+    return state;
+  }
+
+  const toRemove = new Set(indexes);
+
+  return {
+    ...state,
+    creates: state.creates.filter((_, index) => !toRemove.has(index)),
+  };
+};

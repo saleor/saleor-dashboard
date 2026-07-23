@@ -39,6 +39,7 @@ import {
   getUnsupportedRequiredAttributes,
 } from "../ProductVariantGenerator/types";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
+import { StagedVariantCreatesDatagrid } from "./components/StagedVariantCreatesDatagrid";
 import {
   isVariantDatagridSupportedAttribute,
   useAttributesAdapter,
@@ -86,6 +87,9 @@ interface ProductVariantsProps {
   ) => Promise<BulkCreateResult> | BulkCreateResult;
   /** Already-staged generator creates for Exists / skip detection. */
   stagedVariantCreates?: ProductVariantBulkCreateInput[];
+  onRemoveStagedVariantCreates?: (indexes: number[]) => void;
+  onClearStagedVariantCreates?: () => void;
+  onReplaceStagedVariantCreates?: (creates: ProductVariantBulkCreateInput[]) => void;
 }
 
 export const ProductVariants = ({
@@ -114,6 +118,9 @@ export const ProductVariants = ({
   onRowClick,
   onStageVariantCreates,
   stagedVariantCreates = [],
+  onRemoveStagedVariantCreates,
+  onClearStagedVariantCreates,
+  onReplaceStagedVariantCreates,
 }: ProductVariantsProps) => {
   const intl = useIntl();
   const [generatorOpen, setGeneratorOpen] = useState(false);
@@ -528,6 +535,19 @@ export const ProductVariants = ({
         onControlledSelectionChange={handleGridSelectionChange}
         rowSelectionBlending="mixed"
       />
+      {stagedVariantCreates.length > 0 &&
+      onRemoveStagedVariantCreates &&
+      onClearStagedVariantCreates &&
+      onReplaceStagedVariantCreates ? (
+        <StagedVariantCreatesDatagrid
+          creates={stagedVariantCreates}
+          channels={channels}
+          warehouses={warehouses ?? []}
+          onReplaceCreates={onReplaceStagedVariantCreates}
+          onRemoveIndexes={onRemoveStagedVariantCreates}
+          onClearAll={onClearStagedVariantCreates}
+        />
+      ) : null}
       {hasVariants && hasSelectionVariantAttributes && onStageVariantCreates && (
         <ProductVariantGenerator
           open={generatorOpen}
