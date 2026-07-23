@@ -32,6 +32,7 @@ import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   buildVariantGridSubmitPayload,
+  clearStagedVariantCreates,
   createEmptyVariantGridStagedEdits,
   rehydrateVariantGridDatagridOpts,
   stageVariantCreatesInStore,
@@ -106,6 +107,9 @@ export function useProductUpdateForm(
   const [pendingVariantDeleteCount, setPendingVariantDeleteCount] = useState(0);
   const [pendingVariantEditCount, setPendingVariantEditCount] = useState(0);
   const [pendingVariantCreateCount, setPendingVariantCreateCount] = useState(0);
+  const [stagedVariantCreates, setStagedVariantCreates] = useState<ProductVariantBulkCreateInput[]>(
+    [],
+  );
   const [attributesDirty, setAttributesDirty] = useState(false);
   const variantsPageKey = useMemo(
     () => productVariants.map(variant => variant.id).join("\0"),
@@ -123,6 +127,7 @@ export function useProductUpdateForm(
     setPendingVariantCreateCount(
       variants.current.added.length + stagedEdits.current.creates.length,
     );
+    setStagedVariantCreates([...stagedEdits.current.creates]);
   }, []);
 
   const applyRehydratedDatagridState = useCallback(
@@ -201,7 +206,10 @@ export function useProductUpdateForm(
 
   const handleStageVariantCreates = React.useCallback(
     (inputs: ProductVariantBulkCreateInput[]) => {
-      const { state, stagedCount } = stageVariantCreatesInStore(stagedEdits.current, inputs);
+      const { state, stagedCount, skippedCount } = stageVariantCreatesInStore(
+        stagedEdits.current,
+        inputs,
+      );
 
       stagedEdits.current = state;
       refreshVariantCompositionCounts();
@@ -210,10 +218,14 @@ export function useProductUpdateForm(
         triggerChange();
       }
 
+      // Already-staged duplicates are not failures — close the modal cleanly.
+      const onlyDuplicatesSkipped =
+        stagedCount === 0 && skippedCount > 0 && skippedCount === inputs.length;
+
       return {
-        success: stagedCount > 0,
+        success: stagedCount > 0 || onlyDuplicatesSkipped,
         successCount: stagedCount,
-        failedCount: inputs.length - stagedCount,
+        failedCount: onlyDuplicatesSkipped ? 0 : inputs.length - stagedCount,
         attributeErrors: [],
         otherErrors: [],
       };
@@ -396,8 +408,10 @@ export function useProductUpdateForm(
     onSubmit: handleSubmit,
   });
   const submit = useCallback(async () => {
-    const result = await handleFormSubmit(await getSubmitData());
+    const submitData = await getSubmitData();
+    const result = await handleFormSubmit(submitData);
     const succeeded = !result?.length;
+    const submittedStagedCreateCount = submitData.variants.stagedCreates?.length ?? 0;
 
     await refetch();
 
@@ -415,6 +429,7 @@ export function useProductUpdateForm(
       setPendingVariantDeleteCount(0);
       setPendingVariantEditCount(0);
       setPendingVariantCreateCount(0);
+      setStagedVariantCreates([]);
 
       return result;
     }
@@ -422,6 +437,16 @@ export function useProductUpdateForm(
     // Keep draft state for retry. Only trim variant grid rows that the API accepted
     // when bulk create/update returned row-level DatagridErrors.
     const hasDatagridErrors = result.some(error => error.__typename === "DatagridError");
+    const createFailed = result.some(
+      error => error.__typename === "DatagridError" && error.type === "create",
+    );
+
+    // Create runs even when earlier steps fail. If BulkCreate succeeded (no create
+    // errors) but a later step failed, drop staged creates so retry does not duplicate
+    // variants that refetch already returned.
+    if (submittedStagedCreateCount > 0 && !createFailed) {
+      stagedEdits.current = clearStagedVariantCreates(stagedEdits.current);
+    }
 
     if (hasDatagridErrors) {
       const nextAdded = datagrid.added.filter((_, index) =>
@@ -460,8 +485,9 @@ export function useProductUpdateForm(
         productVariants,
         variants.current,
       );
-      refreshVariantCompositionCounts();
     }
+
+    refreshVariantCompositionCounts();
 
     return result;
   }, [
@@ -524,6 +550,7 @@ export function useProductUpdateForm(
     richText,
     attributeRichTextGetters,
     touchedChannels: touchedChannels.current,
+    stagedVariantCreates,
   };
 }
 

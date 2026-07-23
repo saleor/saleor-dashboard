@@ -84,6 +84,8 @@ interface ProductVariantsProps {
   onStageVariantCreates?: (
     inputs: ProductVariantBulkCreateInput[],
   ) => Promise<BulkCreateResult> | BulkCreateResult;
+  /** Already-staged generator creates for Exists / skip detection. */
+  stagedVariantCreates?: ProductVariantBulkCreateInput[];
 }
 
 export const ProductVariants = ({
@@ -111,6 +113,7 @@ export const ProductVariants = ({
   onStageVariantRemovals,
   onRowClick,
   onStageVariantCreates,
+  stagedVariantCreates = [],
 }: ProductVariantsProps) => {
   const intl = useIntl();
   const [generatorOpen, setGeneratorOpen] = useState(false);
@@ -537,6 +540,7 @@ export const ProductVariants = ({
           }
           onAttributeValuesSearch={onAttributeValuesSearch}
           onSubmit={handleGenerateVariants}
+          stagedCreates={stagedVariantCreates}
         />
       )}
 

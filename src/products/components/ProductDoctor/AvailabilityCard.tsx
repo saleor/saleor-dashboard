@@ -174,12 +174,14 @@ export const AvailabilityCard = ({
                 listed: listedChannelsCount,
                 total: totalChannelsCount,
               })}
-              {" · "}
-              {dirtyChannels.length > 0
-                ? intl.formatMessage(messages.unsavedChannelChanges, {
+              {dirtyChannels.length > 0 && (
+                <>
+                  {" · "}
+                  {intl.formatMessage(messages.unsavedChannelChanges, {
                     count: dirtyChannels.length,
-                  })
-                : intl.formatMessage(messages.savesWithProduct)}
+                  })}
+                </>
+              )}
             </DashboardCard.Subtitle>
           )}
         </Box>

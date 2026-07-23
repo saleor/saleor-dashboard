@@ -26,6 +26,7 @@ import {
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { dedupeBulkCreateInputs } from "@dashboard/products/hooks/variantGridStagedEdits";
 import {
   getProductSubmitErrorNotificationMessages,
   splitProductSubmitErrors,
@@ -186,31 +187,31 @@ export function useProductUpdateHandler(
     }
 
     if (data.variants.added.length > 0 || (data.variants.stagedCreates?.length ?? 0) > 0) {
-      const createInputs = [
-        ...data.variants.added.map(index =>
-          getCreateVariantInput(
-            data.variants,
-            index,
-            product?.productType?.variantAttributes ?? [],
-          ),
-        ),
-        ...(data.variants.stagedCreates ?? []),
-      ];
-      const createVariantsResults = await createVariants({
-        variables: {
-          id: product.id,
-          inputs: createInputs,
-        },
-      });
-      const createVariantsErrors = getCreateVariantMutationError(createVariantsResults);
-
-      errors.push(...createVariantsErrors);
-      variantErrors.push(...createVariantsErrors);
-      steps = setProductSaveStepStatus(
-        steps,
-        "variantCreate",
-        createVariantsErrors.length > 0 ? "error" : "success",
+      const fromGrid = data.variants.added.map(index =>
+        getCreateVariantInput(data.variants, index, product?.productType?.variantAttributes ?? []),
       );
+      const { unique: createInputs } = dedupeBulkCreateInputs([
+        ...fromGrid,
+        ...(data.variants.stagedCreates ?? []),
+      ]);
+
+      if (createInputs.length > 0) {
+        const createVariantsResults = await createVariants({
+          variables: {
+            id: product.id,
+            inputs: createInputs,
+          },
+        });
+        const createVariantsErrors = getCreateVariantMutationError(createVariantsResults);
+
+        errors.push(...createVariantsErrors);
+        variantErrors.push(...createVariantsErrors);
+        steps = setProductSaveStepStatus(
+          steps,
+          "variantCreate",
+          createVariantsErrors.length > 0 ? "error" : "success",
+        );
+      }
     }
 
     const updateChanges = data.variants.stagedUpdateChanges ?? data.variants;

@@ -110,6 +110,8 @@ export interface UseProductUpdateFormOutput
   touchedChannels: string[];
   /** Staged variant deletes waiting for Save (cross-page). */
   pendingVariantDeleteCount: number;
+  /** Generator creates waiting for Save (for duplicate detection in the modal). */
+  stagedVariantCreates: ProductVariantBulkCreateInput[];
   /** What the Savebar will persist on the next Save. */
   saveComposition: ProductSaveComposition;
 }

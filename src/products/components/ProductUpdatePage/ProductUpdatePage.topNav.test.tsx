@@ -65,6 +65,7 @@ jest.mock("./form", () => ({
       submit: jest.fn(),
       isSaveDisabled: false,
       pendingVariantDeleteCount: 0,
+      stagedVariantCreates: [],
       saveComposition: {
         hasDetails: false,
         dirtyChannelCount: 0,

@@ -3,8 +3,10 @@ import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
 
 import {
   buildVariantGridSubmitPayload,
+  clearStagedVariantCreates,
   countPendingVariantGridEdits,
   createEmptyVariantGridStagedEdits,
+  dedupeBulkCreateInputs,
   hasPendingVariantGridEdits,
   rehydrateVariantGridDatagridOpts,
   stageVariantCreatesInStore,
@@ -152,6 +154,49 @@ describe("variantGridStagedEdits", () => {
     expect(state.creates).toHaveLength(2);
     expect(countPendingVariantGridEdits(state)).toBe(2);
     expect(buildVariantGridSubmitPayload(state).stagedCreates).toEqual([first, second]);
+  });
+
+  it("dedupes grid and staged create inputs before BulkCreate", () => {
+    // Arrange
+    const gridRow = {
+      name: "Red",
+      sku: "RED",
+      attributes: [{ id: "color", values: ["red"] }],
+    };
+    const stagedDup = {
+      name: "Red staged",
+      sku: "RED",
+      attributes: [{ id: "color", values: ["red"] }],
+    };
+    const stagedNew = {
+      name: "Blue",
+      sku: "BLUE",
+      attributes: [{ id: "color", values: ["blue"] }],
+    };
+
+    // Act
+    const { unique, skippedCount } = dedupeBulkCreateInputs([gridRow, stagedDup, stagedNew]);
+
+    // Assert
+    expect(unique).toEqual([gridRow, stagedNew]);
+    expect(skippedCount).toBe(1);
+  });
+
+  it("clears staged creates after BulkCreate succeeded so retry cannot duplicate them", () => {
+    // Arrange
+    let state = createEmptyVariantGridStagedEdits();
+
+    state = stageVariantCreatesInStore(state, [
+      { name: "Red", sku: "RED", attributes: [{ id: "color", values: ["red"] }] },
+    ]).state;
+    state = stageVariantRemovalsInStore(state, ["v-keep-removal"]);
+
+    // Act
+    state = clearStagedVariantCreates(state);
+
+    // Assert
+    expect(state.creates).toEqual([]);
+    expect(state.removedIds.has("v-keep-removal")).toBe(true);
   });
 
   it("stages removals by id without requiring the variant to be on the current page", () => {

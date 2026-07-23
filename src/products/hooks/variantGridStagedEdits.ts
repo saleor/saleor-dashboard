@@ -298,12 +298,36 @@ export const stageVariantCreatesInStore = (
     return { state, stagedCount: 0, skippedCount: 0 };
   }
 
-  const existingSignatures = new Set(state.creates.map(attributeSignature));
+  const { unique, skippedCount } = dedupeBulkCreateInputs(inputs, state.creates);
+
+  if (unique.length === 0) {
+    return { state, stagedCount: 0, skippedCount };
+  }
+
+  return {
+    state: {
+      ...state,
+      creates: [...state.creates, ...unique],
+    },
+    stagedCount: unique.length,
+    skippedCount,
+  };
+};
+
+/**
+ * Drop bulk-create inputs that collide with an existing set (by attribute signature or SKU).
+ * Used when merging page-local adds with staged generator creates before Save.
+ */
+export const dedupeBulkCreateInputs = (
+  inputs: ProductVariantBulkCreateInput[],
+  alreadyPresent: ProductVariantBulkCreateInput[] = [],
+): { unique: ProductVariantBulkCreateInput[]; skippedCount: number } => {
+  const existingSignatures = new Set(alreadyPresent.map(attributeSignature));
   const existingSkus = new Set(
-    state.creates.map(create => create.sku).filter((sku): sku is string => Boolean(sku)),
+    alreadyPresent.map(create => create.sku).filter((sku): sku is string => Boolean(sku)),
   );
 
-  const accepted: ProductVariantBulkCreateInput[] = [];
+  const unique: ProductVariantBulkCreateInput[] = [];
   let skippedCount = 0;
 
   inputs.forEach(input => {
@@ -322,19 +346,16 @@ export const stageVariantCreatesInStore = (
       existingSkus.add(sku);
     }
 
-    accepted.push(input);
+    unique.push(input);
   });
 
-  if (accepted.length === 0) {
-    return { state, stagedCount: 0, skippedCount };
-  }
-
-  return {
-    state: {
-      ...state,
-      creates: [...state.creates, ...accepted],
-    },
-    stagedCount: accepted.length,
-    skippedCount,
-  };
+  return { unique, skippedCount };
 };
+
+/** Clear accepted generator creates after the API has persisted them. */
+export const clearStagedVariantCreates = (
+  state: VariantGridStagedEditsState,
+): VariantGridStagedEditsState => ({
+  ...state,
+  creates: [],
+});

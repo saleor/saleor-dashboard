@@ -16,6 +16,7 @@ import {
   excludeInputsWithCollidingSkus,
   extractExistingCombinations,
   generateVariantPreviews,
+  stagedCreatesToExistingVariantData,
   toBulkCreateInputs,
   toExistingVariantData,
 } from "./utils";
@@ -995,6 +996,34 @@ describe("ProductVariantGenerator utils", () => {
         expect(result[0].attributes).toHaveLength(3);
         expect(result[0].attributes).not.toContainEqual(expect.objectContaining({ id: "weight" }));
       });
+    });
+  });
+
+  describe("stagedCreatesToExistingVariantData", () => {
+    it("maps staged bulk-create inputs into Exists detection shape", () => {
+      // Arrange
+      const creates: ProductVariantBulkCreateInput[] = [
+        {
+          name: "Red / S",
+          attributes: [
+            { id: "color", dropdown: { value: "red" } },
+            { id: "size", values: ["s"] },
+          ],
+        },
+      ];
+
+      // Act
+      const result = stagedCreatesToExistingVariantData(creates);
+
+      // Assert
+      expect(result).toEqual([
+        {
+          attributes: [
+            { attribute: { id: "color" }, values: [{ slug: "red" }] },
+            { attribute: { id: "size" }, values: [{ slug: "s" }] },
+          ],
+        },
+      ]);
     });
   });
 });

@@ -512,6 +512,7 @@ const ProductUpdatePage = ({
         saveComposition,
         attributeRichTextGetters,
         richText,
+        stagedVariantCreates,
       }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
@@ -647,6 +648,7 @@ const ProductUpdatePage = ({
                   onStageVariantRemovals={handlers.stageVariantRemovals}
                   onRowClick={onVariantShow}
                   onStageVariantCreates={handlers.stageVariantCreates}
+                  stagedVariantCreates={stagedVariantCreates}
                 />
                 <CardSpacer />
                 <SeoForm
