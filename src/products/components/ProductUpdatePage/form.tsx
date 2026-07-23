@@ -460,18 +460,30 @@ export function useProductUpdateForm(
       return result;
     }
 
-    // Keep draft state for retry. Only trim variant grid rows that the API accepted
-    // when bulk create/update returned row-level DatagridErrors.
+    // Keep draft state for retry, but trim rows the API already accepted so a retry
+    // cannot create duplicates. Create runs even when earlier steps fail.
     const hasDatagridErrors = result.some(error => error.__typename === "DatagridError");
-    const createFailed = result.some(
-      error => error.__typename === "DatagridError" && error.type === "create",
-    );
 
-    // Create runs even when earlier steps fail. If BulkCreate succeeded (no create
-    // errors) but a later step failed, drop staged creates so retry does not duplicate
-    // variants that refetch already returned.
-    if (submittedStagedCreateCount > 0 && !createFailed) {
-      stagedEdits.current = clearStagedVariantCreates(stagedEdits.current);
+    // Staged (generator) creates: keep only the rows BulkCreate rejected. Accepted
+    // rows are already persisted — refetch returns them as real variants.
+    if (submittedStagedCreateCount > 0) {
+      const failedStagedIndexes = new Set<number>();
+
+      for (const error of result) {
+        if (
+          error.__typename === "DatagridError" &&
+          error.type === "create" &&
+          typeof error.stagedIndex === "number"
+        ) {
+          failedStagedIndexes.add(error.stagedIndex);
+        }
+      }
+
+      const keptStagedCreates = (submitData.variants.stagedCreates ?? []).filter((_, index) =>
+        failedStagedIndexes.has(index),
+      );
+
+      stagedEdits.current = replaceStagedVariantCreates(stagedEdits.current, keptStagedCreates);
     }
 
     if (hasDatagridErrors) {
@@ -503,6 +515,26 @@ export function useProductUpdateForm(
       datagrid.changes.current = nextUpdates;
       variants.current = {
         added: nextAdded,
+        updates: nextUpdates,
+        removed: datagrid.removed,
+      };
+      stagedEdits.current = syncVariantGridStagedEditsFromPage(
+        stagedEdits.current,
+        productVariants,
+        variants.current,
+      );
+    } else if (submitData.variants.added.length > 0) {
+      // BulkCreate accepted every grid-added row but a non-grid step (product,
+      // channels, files) failed. Drop the accepted rows so retry does not recreate
+      // them; keep edits to existing variants for the retry.
+      const nextUpdates = datagrid.changes.current.filter(
+        change => !datagrid.added.includes(change.row),
+      );
+
+      datagrid.setAdded([]);
+      datagrid.changes.current = nextUpdates;
+      variants.current = {
+        added: [],
         updates: nextUpdates,
         removed: datagrid.removed,
       };

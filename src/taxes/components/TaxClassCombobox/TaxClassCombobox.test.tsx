@@ -45,7 +45,6 @@ const taxClasses: TaxClassBaseFragment[] = [
     __typename: "TaxClass",
     id: "tax-1",
     name: "Standard",
-    countries: [],
   },
 ];
 

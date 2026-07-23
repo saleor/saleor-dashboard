@@ -196,7 +196,7 @@ export const applyStagedCreatesDatagridOpts = (
   creates: ProductVariantBulkCreateInput[],
   opts: DatagridChangeOpts,
 ): ProductVariantBulkCreateInput[] => {
-  let next = creates.map(create => ({
+  let next: ProductVariantBulkCreateInput[] = creates.map(create => ({
     ...create,
     stocks: create.stocks?.map(stock => ({ ...stock })),
     channelListings: create.channelListings?.map(listing => ({ ...listing })),

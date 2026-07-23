@@ -181,7 +181,7 @@ describe("ProductUpdatePage - fromChannels", () => {
         availableForPurchaseAt: null,
         visibleInListings: false,
       },
-    ] as ProductFragment["channelListings"];
+    ] as NonNullable<ProductFragment["channelListings"]>;
 
     it("returns 0 when channels or listings are missing (product still loading)", () => {
       // Arrange / Act / Assert

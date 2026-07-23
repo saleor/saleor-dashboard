@@ -1,4 +1,9 @@
-import { type ProductFragment } from "@dashboard/graphql";
+import {
+  ProductErrorCode,
+  type ProductFragment,
+  type ProductVariantBulkCreateInput,
+} from "@dashboard/graphql";
+import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { act, renderHook } from "@testing-library/react";
 
 import { useProductUpdateForm } from "./form";
@@ -291,9 +296,32 @@ describe("useProductUpdateForm", () => {
       expect(result.current.isSaveDisabled).toBe(true);
     });
 
-    it("keeps unsaved composition after a failed submit so the merchant can retry", async () => {
+    it("keeps detail edits after a failed submit so the merchant can retry", async () => {
       // Arrange
       const mockOnSubmit = jest.fn().mockResolvedValue([{ message: "boom" }]);
+      const { result } = renderHook(() =>
+        useProductUpdateForm(productWithName, mockOnSubmit, false, jest.fn(), formOpts),
+      );
+
+      act(() => {
+        result.current.change({ target: { name: "name", value: "Renamed product" } });
+      });
+
+      // Act
+      await act(async () => {
+        await result.current.submit();
+      });
+
+      // Assert
+      expect(result.current.saveComposition.hasDetails).toBe(true);
+      expect(result.current.isSaveDisabled).toBe(false);
+    });
+  });
+
+  describe("retry safety after a failed submit", () => {
+    it("drops grid-added rows when BulkCreate accepted them but another step failed", async () => {
+      // Arrange - a non-create error means BulkCreate ran and accepted every row
+      const mockOnSubmit = jest.fn().mockResolvedValue([{ message: "product update failed" }]);
       const { result } = renderHook(() =>
         useProductUpdateForm(productWithName, mockOnSubmit, false, jest.fn(), formOpts),
       );
@@ -312,10 +340,111 @@ describe("useProductUpdateForm", () => {
         await result.current.submit();
       });
 
-      // Assert
+      // Assert - created rows are gone; detail edits stay for the retry
+      expect(result.current.saveComposition.variantCreateCount).toBe(0);
       expect(result.current.saveComposition.hasDetails).toBe(true);
+      expect(result.current.isSaveDisabled).toBe(false);
+
+      // Act - retry must not resubmit the already-created rows
+      await act(async () => {
+        await result.current.submit();
+      });
+
+      // Assert
+      expect(mockOnSubmit).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          variants: expect.objectContaining({ added: [] }),
+        }),
+      );
+    });
+
+    it("keeps only the grid-added rows that BulkCreate rejected", async () => {
+      // Arrange - row 1 failed, row 0 was created
+      const createError: ProductVariantListError = {
+        __typename: "DatagridError",
+        type: "create",
+        index: 1,
+        error: ProductErrorCode.INVALID,
+      };
+      const mockOnSubmit = jest.fn().mockResolvedValue([createError]);
+      const { result } = renderHook(() =>
+        useProductUpdateForm(productWithName, mockOnSubmit, false, jest.fn(), formOpts),
+      );
+
+      act(() => {
+        // The Datagrid keeps its own added-rows state in sync with the change handler
+        result.current.datagrid.setAdded([0, 1]);
+        result.current.handlers.changeVariants({
+          added: [0, 1],
+          removed: [],
+          updates: [],
+        });
+      });
+
+      // Act
+      await act(async () => {
+        await result.current.submit();
+      });
+
+      // Assert
       expect(result.current.saveComposition.variantCreateCount).toBe(1);
       expect(result.current.isSaveDisabled).toBe(false);
+    });
+
+    it("keeps only the staged creates that BulkCreate rejected", async () => {
+      // Arrange - staged row 1 failed, staged row 0 was created
+      const stagedCreates: ProductVariantBulkCreateInput[] = [
+        { name: "Red / S", sku: "R-S", attributes: [] },
+        { name: "Red / M", sku: "R-M", attributes: [] },
+      ];
+      const createError: ProductVariantListError = {
+        __typename: "DatagridError",
+        type: "create",
+        index: -1,
+        stagedIndex: 1,
+        error: ProductErrorCode.INVALID,
+      };
+      const mockOnSubmit = jest.fn().mockResolvedValue([createError]);
+      const { result } = renderHook(() =>
+        useProductUpdateForm(productWithName, mockOnSubmit, false, jest.fn(), formOpts),
+      );
+
+      act(() => {
+        result.current.handlers.replaceStagedVariantCreates(stagedCreates);
+      });
+
+      // Act
+      await act(async () => {
+        await result.current.submit();
+      });
+
+      // Assert - only the rejected staged row remains for the retry
+      expect(result.current.stagedVariantCreates).toEqual([stagedCreates[1]]);
+      expect(result.current.saveComposition.variantCreateCount).toBe(1);
+    });
+
+    it("clears staged creates when BulkCreate accepted them but another step failed", async () => {
+      // Arrange
+      const stagedCreates: ProductVariantBulkCreateInput[] = [
+        { name: "Red / S", sku: "R-S", attributes: [] },
+      ];
+      const mockOnSubmit = jest.fn().mockResolvedValue([{ message: "product update failed" }]);
+      const { result } = renderHook(() =>
+        useProductUpdateForm(productWithName, mockOnSubmit, false, jest.fn(), formOpts),
+      );
+
+      act(() => {
+        result.current.handlers.replaceStagedVariantCreates(stagedCreates);
+      });
+
+      // Act
+      await act(async () => {
+        await result.current.submit();
+      });
+
+      // Assert
+      expect(result.current.stagedVariantCreates).toEqual([]);
+      expect(result.current.saveComposition.variantCreateCount).toBe(0);
     });
   });
 });

@@ -222,17 +222,24 @@ export function stagedCreatesToExistingVariantData(
   creates: ProductVariantBulkCreateInput[],
 ): ExistingVariantData {
   return creates.map(input => ({
-    attributes: (input.attributes ?? []).map(attribute => {
+    attributes: (input.attributes ?? []).flatMap(attribute => {
+      // An input without an attribute id can never match a generator combination
+      if (!attribute.id) {
+        return [];
+      }
+
       const slugs = [
         ...(attribute.values ?? []),
         attribute.dropdown?.value,
         attribute.swatch?.value,
       ].filter((slug): slug is string => Boolean(slug));
 
-      return {
-        attribute: { id: attribute.id },
-        values: slugs.map(slug => ({ slug })),
-      };
+      return [
+        {
+          attribute: { id: attribute.id },
+          values: slugs.map(slug => ({ slug })),
+        },
+      ];
     }),
   }));
 }

@@ -15,6 +15,7 @@ import {
   type ProductErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductFragment,
+  type ProductVariantBulkCreateInput,
   type UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -187,13 +188,19 @@ export function useProductUpdateHandler(
     }
 
     if (data.variants.added.length > 0 || (data.variants.stagedCreates?.length ?? 0) > 0) {
-      const fromGrid = data.variants.added.map(index =>
+      const fromGrid: ProductVariantBulkCreateInput[] = data.variants.added.map(index =>
         getCreateVariantInput(data.variants, index, product?.productType?.variantAttributes ?? []),
       );
-      const { unique: createInputs } = dedupeBulkCreateInputs([
-        ...fromGrid,
-        ...(data.variants.stagedCreates ?? []),
-      ]);
+      const stagedCreates = data.variants.stagedCreates ?? [];
+      const { unique: createInputs } = dedupeBulkCreateInputs([...fromGrid, ...stagedCreates]);
+      // Track each submitted input's origin (grid add vs staged create) so row-level
+      // errors can be mapped back for precise retry trimming. Object identity is
+      // stable: dedupe returns references to the original inputs.
+      const createInputSources = createInputs.map(input => {
+        const gridIndex = fromGrid.indexOf(input);
+
+        return gridIndex !== -1 ? { gridIndex } : { stagedIndex: stagedCreates.indexOf(input) };
+      });
 
       if (createInputs.length > 0) {
         const createVariantsResults = await createVariants({
@@ -202,7 +209,10 @@ export function useProductUpdateHandler(
             inputs: createInputs,
           },
         });
-        const createVariantsErrors = getCreateVariantMutationError(createVariantsResults);
+        const createVariantsErrors = getCreateVariantMutationError(
+          createVariantsResults,
+          createInputSources,
+        );
 
         errors.push(...createVariantsErrors);
         variantErrors.push(...createVariantsErrors);
