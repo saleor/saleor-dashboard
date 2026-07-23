@@ -505,6 +505,49 @@ describe("getProductUpdateVariables", () => {
     expect(result.input.weight).toBeUndefined();
   });
 
+  it("should include null when tax class is cleared", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      taxClassId: "",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.taxClass).toBeNull();
+  });
+
+  it("should include tax class id when provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      taxClassId: "tax-class-1",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.taxClass).toBe("tax-class-1");
+  });
+
+  it("should not include tax class when undefined", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+    } as ProductUpdateSubmitData;
+
+    delete (data as { taxClassId?: string | null }).taxClassId;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.taxClass).toBeUndefined();
+  });
+
   it("should handle decimal weight values", () => {
     // Arrange
     const data = {

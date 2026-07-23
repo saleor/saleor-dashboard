@@ -96,7 +96,7 @@ function getCreateShippingPriceRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE,
       description: getParsedDataForJsonStringField(data.description),
-      taxClass: data.taxClassId,
+      taxClass: data.taxClassId || null,
     },
   };
 }
@@ -123,7 +123,7 @@ function getCreateShippingWeightRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
       description: getParsedDataForJsonStringField(data.description),
-      taxClass: data.taxClassId,
+      taxClass: data.taxClassId || null,
     },
   };
 }
@@ -158,7 +158,7 @@ export function getUpdateShippingPriceRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.PRICE,
       description: getParsedDataForJsonStringField(data.description),
-      taxClass: data.taxClassId,
+      taxClass: data.taxClassId || null,
     },
   };
 }
@@ -189,7 +189,7 @@ export function getUpdateShippingWeightRateVariables(
       shippingZone: id,
       type: ShippingMethodTypeEnum.WEIGHT,
       description: getParsedDataForJsonStringField(data.description),
-      taxClass: data.taxClassId,
+      taxClass: data.taxClassId || null,
     },
   };
 }

@@ -72,8 +72,9 @@ export function getProductUpdateVariables(
     variables.input["slug"] = data.slug;
   }
 
-  if (data.taxClassId) {
-    variables.input["taxClass"] = data.taxClassId;
+  if (data.taxClassId !== undefined) {
+    // Empty string clears the product override so Saleor falls back to the product type.
+    variables.input["taxClass"] = data.taxClassId || null;
   }
 
   if (data.seoDescription || data.seoTitle) {

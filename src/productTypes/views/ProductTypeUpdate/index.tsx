@@ -150,7 +150,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           name: formData.name,
           kind: formData.kind,
           productAttributes: formData.productAttributes.map(choice => choice.value),
-          taxClass: formData.taxClassId,
+          taxClass: formData.taxClassId || null,
           variantAttributes: formData.variantAttributes.map(choice => choice.value),
           weight: formData.weight,
         },

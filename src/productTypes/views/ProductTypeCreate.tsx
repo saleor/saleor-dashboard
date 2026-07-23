@@ -62,7 +62,7 @@ const ProductTypeCreate = ({ params }: ProductTypeCreateProps) => {
           isShippingRequired: formData.isShippingRequired,
           name: formData.name,
           kind: formData.kind,
-          taxClass: formData.taxClassId,
+          taxClass: formData.taxClassId || null,
           weight: formData.weight,
         },
       },
