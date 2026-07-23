@@ -103,6 +103,9 @@ export const AppWidgetExtensionItem = ({
           appId={extension.app.id}
           dashboardVersion={APP_VERSION}
           params={params}
+          // Keeps the widget's JWT fresh on a long-open dashboard, which also
+          // keeps the token a co-located `openPopup` popup will use current.
+          refetch={extension.refetch}
         />
       )}
     </AppWidgetCard>

@@ -1,18 +1,18 @@
 import { Header as DatagridHeader } from "@dashboard/components/Datagrid/components/Header";
 import { type DatagridRenderHeaderProps } from "@dashboard/components/Datagrid/Datagrid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import { type VariantAttributeFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import { Box, Button, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { ChevronLeft, ChevronRight, CopyPlus } from "lucide-react";
 import { useCallback } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import messages from "../messages";
-import styles from "./ProductVariantsHeader.module.css";
 
 const localMessages = defineMessages({
   generatorRequiresConfig: {
@@ -153,6 +153,8 @@ interface ProductVariantsHeaderProps extends DatagridRenderHeaderProps {
   onVariantsNextPage?: () => void;
   onVariantsPreviousPage?: () => void;
   variantsRangeLabel?: string | null;
+  /** Absolute/filtered connection total — hide browse toolbar when 0 and not searching. */
+  variantsTotalCount?: number | null;
   onGuardUnsavedAction?: (action: () => void) => void;
   selectedCount?: number;
   onDeleteSelected?: () => void;
@@ -178,6 +180,7 @@ export const ProductVariantsHeader = ({
   onVariantsNextPage,
   onVariantsPreviousPage,
   variantsRangeLabel,
+  variantsTotalCount = null,
   onGuardUnsavedAction,
   selectedCount = 0,
   onDeleteSelected,
@@ -203,11 +206,16 @@ export const ProductVariantsHeader = ({
       })
     : intl.formatMessage(messages.title);
 
-  const showToolbar = Boolean(onVariantsSearchChange || variantsPageInfo);
+  // Search filters totalCount — keep the bar while a query is active (even at 0 hits).
+  // Hide when empty or still unknown so empty products don't flash a useless "0 of 0" bar.
+  const hasActiveSearch = Boolean(variantsSearch.trim());
+  const showToolbar =
+    Boolean(onVariantsSearchChange || variantsPageInfo) &&
+    (hasActiveSearch || (variantsTotalCount !== null && variantsTotalCount > 0));
   const runGuarded = onGuardUnsavedAction ?? ((action: () => void) => action());
 
   return (
-    <div className={styles.header}>
+    <>
       <DatagridHeader title={headerTitle}>
         <DatagridHeader.ButtonFullScreen isOpen={isFullscreenOpen} onToggle={toggleFullscreen}>
           {isFullscreenOpen ? (
@@ -244,7 +252,7 @@ export const ProductVariantsHeader = ({
         >
           {onVariantsSearchChange ? (
             <Box __maxWidth="260px" width="100%">
-              <Input
+              <InputWithPlaceholder
                 size="small"
                 value={variantsSearch}
                 onChange={event => {
@@ -325,6 +333,6 @@ export const ProductVariantsHeader = ({
           </Box>
         </Box>
       )}
-    </div>
+    </>
   );
 };

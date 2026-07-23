@@ -3525,6 +3525,9 @@
     "context": "payment status",
     "string": "Unpaid"
   },
+  "FDaFNL": {
+    "string": "Search Engine Slug"
+  },
   "FEWgh/": {
     "context": "column title tag",
     "string": "Tag"
@@ -5017,10 +5020,6 @@
   "Lx1ima": {
     "context": "button",
     "string": "Upload image"
-  },
-  "LzdG4r": {
-    "context": "warning when client-side validation rejects product media files before upload",
-    "string": "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image or larger than {maxSize} MB)"
   },
   "M3OlSr": {
     "context": "error message",
@@ -8744,6 +8743,10 @@
     "context": "checkbox",
     "string": "Grant refund for returned items"
   },
+  "d3IQVN": {
+    "context": "warning when client-side validation rejects product media files before upload",
+    "string": "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image)"
+  },
   "d3jlO3": {
     "context": "Label prefix for the creation date of a recurring problem",
     "string": "Started at"
@@ -10673,6 +10676,10 @@
   "mTEqYL": {
     "context": "NoChannels content",
     "string": "No channels to assign. Please first assign them for the product."
+  },
+  "mVcZkr": {
+    "context": "seo slug field hint",
+    "string": "URL path used in localized storefront links"
   },
   "mWQt3s": {
     "string": "No. of Products"

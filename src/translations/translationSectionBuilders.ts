@@ -1,4 +1,5 @@
 import { commonMessages } from "@dashboard/intl";
+import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import {
   PageTranslationInputFieldName,
   type TranslationField,
@@ -12,8 +13,10 @@ import { type IntlShape } from "react-intl";
 import { translationDetailMessages } from "./components/TranslationsDetailLayout/messages";
 
 interface SeoTranslationData {
+  slug?: string | null;
   seoDescription?: string | null;
   seoTitle?: string | null;
+  translationSlug?: string | null;
   translationSeoDescription?: string | null;
   translationSeoTitle?: string | null;
 }
@@ -72,6 +75,18 @@ export function createSeoTranslationSection(
       defaultMessage: "Search Engine Preview",
     }),
     fields: [
+      {
+        displayName: intl.formatMessage({
+          id: "FDaFNL",
+          defaultMessage: "Search Engine Slug",
+        }),
+        hint: intl.formatMessage(translationDetailMessages.seoSlugFieldHint),
+        name: TranslationInputFieldName.slug,
+        ripple: rippleSlugTranslation,
+        translation: data.translationSlug ?? null,
+        type: TranslationFieldType.SHORT,
+        value: data.slug ?? "",
+      },
       {
         displayName: intl.formatMessage({
           id: "HlEpii",

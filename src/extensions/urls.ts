@@ -88,6 +88,12 @@ export interface AppDetailsUrlMountQueryParams {
   menuId?: string;
   menuIds?: string[];
   translationContext?: TranslationContext;
+  /**
+   * Serialized (JSON) arbitrary payload passed by an app via the `openPopup`
+   * App Bridge action. Appended verbatim to the popup iframe URL as a single
+   * query param; the app reads it back and `JSON.parse`s it.
+   */
+  appParams?: string;
   saleId?: string;
   saleIds?: string[];
   structureId?: string;

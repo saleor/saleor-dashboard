@@ -14,6 +14,7 @@ import {
   type FormPayloadUpdate,
   type NotificationAction,
   type NotifyReady,
+  type OpenPopup,
   type PopupClose,
   type RedirectAction,
   type RefreshEntity,
@@ -328,8 +329,48 @@ const useHandleRefreshEntityAction = () => {
   };
 };
 
+/**
+ * Opens a POPUP extension belonging to the SAME app as the firing widget.
+ * Only honored for WIDGET frames - other frame types are rejected.
+ */
+const useHandleOpenPopupAction = (appId: string, target: "POPUP" | "WIDGET" | "APP_PAGE") => {
+  const { openPopupByIdentifier } = useActiveAppExtension();
+
+  return {
+    handle: (action: OpenPopup) => {
+      const { actionId, extensionIdentifier, appParams } = action.payload;
+
+      debug(`Handling OpenPopup action with ID: %s, identifier: %s`, actionId, extensionIdentifier);
+
+      if (target !== "WIDGET") {
+        console.error(
+          `openPopup action is only allowed from WIDGET extensions, but was sent from a "${target}" frame.`,
+          { appId, extensionIdentifier },
+        );
+
+        return createResponseStatus(actionId, false);
+      }
+
+      const result = openPopupByIdentifier({
+        requestingAppId: appId,
+        extensionIdentifier,
+        appParams,
+      });
+
+      if (!result.ok) {
+        console.error(`openPopup action failed: ${result.reason}`, { appId, extensionIdentifier });
+
+        return createResponseStatus(actionId, false);
+      }
+
+      return createResponseStatus(actionId, true);
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
+  useHandleOpenPopupAction,
   useHandleRefreshEntityAction,
   useHandleUpdateRoutingAction,
   useHandleRedirectAction,

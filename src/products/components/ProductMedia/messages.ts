@@ -47,9 +47,9 @@ export const messages = defineMessages({
     description: "button to clear selected product media items",
   },
   uploadRejected: {
-    id: "LzdG4r",
+    id: "d3IQVN",
     defaultMessage:
-      "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image or larger than {maxSize} MB)",
+      "{count, plural, one {# file was skipped} other {# files were skipped}} (not an image)",
     description: "warning when client-side validation rejects product media files before upload",
   },
 });

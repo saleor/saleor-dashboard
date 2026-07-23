@@ -100,6 +100,100 @@ describe("getUpdateVariantChannelInputs", () => {
       update: [],
     });
   });
+  test("should not overwrite price when re-enabling availability on an existing listing", () => {
+    // Arrange — untick then re-tick Available without editing price
+    const changeData: DatagridChangeOpts = {
+      added: [],
+      removed: [],
+      updates: [
+        {
+          data: false,
+          column: "availableInChannel:Q2hhbm5lbDox",
+          row: 1,
+        },
+        {
+          data: true,
+          column: "availableInChannel:Q2hhbm5lbDox",
+          row: 1,
+        },
+      ],
+    };
+    // Act
+    const channels = getUpdateVariantChannelInputs(changeData, 1, {
+      channelListings,
+    } as ProductDetailsVariantFragment);
+
+    // Assert — no-op preserves existing price and costPrice on the listing
+    expect(channels).toEqual({
+      create: [],
+      remove: [],
+      update: [],
+    });
+  });
+  test("should not change price when enabling availability on an already listed channel", () => {
+    // Arrange
+    const changeData: DatagridChangeOpts = {
+      added: [],
+      removed: [],
+      updates: [
+        {
+          data: true,
+          column: "availableInChannel:Q2hhbm5lbDox",
+          row: 1,
+        },
+      ],
+    };
+    // Act
+    const channels = getUpdateVariantChannelInputs(changeData, 1, {
+      channelListings,
+    } as ProductDetailsVariantFragment);
+
+    // Assert
+    expect(channels).toEqual({
+      create: [],
+      remove: [],
+      update: [],
+    });
+  });
+  test("should keep price edit when availability is re-enabled after editing price", () => {
+    // Arrange — price change then Available toggled on (both map to channel column)
+    const changeData: DatagridChangeOpts = {
+      added: [],
+      removed: [],
+      updates: [
+        {
+          column: "channel:Q2hhbm5lbDox",
+          row: 1,
+          data: {
+            kind: "money-cell",
+            value: 29.43,
+            currency: "EUR",
+          },
+        },
+        {
+          data: true,
+          column: "availableInChannel:Q2hhbm5lbDox",
+          row: 1,
+        },
+      ],
+    };
+    // Act
+    const channels = getUpdateVariantChannelInputs(changeData, 1, {
+      channelListings,
+    } as ProductDetailsVariantFragment);
+
+    // Assert
+    expect(channels).toEqual({
+      create: [],
+      remove: [],
+      update: [
+        {
+          channelListing: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
+          price: 29.43,
+        },
+      ],
+    });
+  });
   test("should handle created channels", () => {
     // Arrange
     const changeData: DatagridChangeOpts = {
@@ -239,6 +333,30 @@ describe("getVariantChannelsInputs", () => {
 
     // Assert
     expect(channels).toEqual([]);
+  });
+  test("should create listing with default price when only availability is enabled", () => {
+    // Arrange
+    const changeData: DatagridChangeOpts = {
+      added: [],
+      removed: [],
+      updates: [
+        {
+          data: true,
+          column: "availableInChannel:Q2hhbm5lbDox",
+          row: 1,
+        },
+      ],
+    };
+    // Act
+    const channels = getVariantChannelsInputs(changeData, 1);
+
+    // Assert
+    expect(channels).toEqual([
+      {
+        channelId: "Q2hhbm5lbDox",
+        price: 0,
+      },
+    ]);
   });
   test("should return empty arrays when no changes for given row", () => {
     // Arrange

@@ -66,6 +66,7 @@ export const AppFrame = ({
       core: coreVersion,
       dashboard: dashboardVersion,
     },
+    target,
   );
 
   useWidgetIframeAutoHeight(frameEl, autoHeight, { listenForResize: false });

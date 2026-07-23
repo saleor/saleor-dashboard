@@ -36,6 +36,7 @@ export const categoryTranslationFragment = gql`
         language
       }
       name
+      slug
       seoDescription
       seoTitle
     }
@@ -43,6 +44,7 @@ export const categoryTranslationFragment = gql`
       id
       name
       description
+      slug
       seoDescription
       seoTitle
     }
@@ -54,6 +56,7 @@ export const collectionTranslationFragment = gql`
       id
       name
       description
+      slug
       seoDescription
       seoTitle
     }
@@ -64,6 +67,7 @@ export const collectionTranslationFragment = gql`
         language
       }
       name
+      slug
       seoDescription
       seoTitle
     }
@@ -76,11 +80,13 @@ export const productTranslationFragment = gql`
       id
       name
       description
+      slug
       seoDescription
       seoTitle
     }
     translation(languageCode: $language) {
       id
+      slug
       seoTitle
       seoDescription
       name
@@ -175,6 +181,7 @@ export const pageTranslationFragment = gql`
     page {
       id
       content
+      slug
       seoDescription
       seoTitle
       title
@@ -185,6 +192,7 @@ export const pageTranslationFragment = gql`
       seoDescription
       seoTitle
       title
+      slug
       language {
         code
         language

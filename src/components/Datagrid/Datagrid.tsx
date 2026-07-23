@@ -706,7 +706,7 @@ export const Datagrid = ({
                 </div>
               </>
             ) : (
-              <Box padding={6}>
+              <Box paddingX={6} paddingBottom={6}>
                 <Placeholder>
                   <span data-test-id="empty-data-grid-text">{emptyText}</span>
                 </Placeholder>

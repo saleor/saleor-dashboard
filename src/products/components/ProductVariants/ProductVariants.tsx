@@ -94,6 +94,7 @@ export const ProductVariants = ({
   onVariantsNextPage,
   onVariantsPreviousPage,
   variantsRangeLabel,
+  variantsTotalCount = null,
   variantsLoading = false,
   pendingVariantDeleteCount = 0,
   variantAttributes,
@@ -448,6 +449,7 @@ export const ProductVariants = ({
         onVariantsNextPage={onVariantsNextPage}
         onVariantsPreviousPage={onVariantsPreviousPage}
         variantsRangeLabel={variantsRangeLabel}
+        variantsTotalCount={variantsTotalCount}
         onGuardUnsavedAction={guardAddedRowsThen}
         selectedCount={selectedCount}
         onDeleteSelected={handleBulkDeleteSelected}
@@ -469,6 +471,7 @@ export const ProductVariants = ({
       onVariantsNextPage,
       onVariantsPreviousPage,
       variantsRangeLabel,
+      variantsTotalCount,
       guardAddedRowsThen,
       selectedCount,
       handleBulkDeleteSelected,

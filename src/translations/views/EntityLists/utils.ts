@@ -21,12 +21,14 @@ interface GeneralTranslationFields {
   name?: string | null;
   seoDescription?: string | null;
   seoTitle?: string | null;
+  slug?: string | null;
 }
 
 interface PageTranslationFields {
   content?: string | null;
   seoDescription?: string | null;
   seoTitle?: string | null;
+  slug?: string | null;
   title?: string | null;
 }
 
@@ -46,6 +48,7 @@ export function getGeneralEntityTranslationCompletion(
     getTranslationCompletion([
       { translation: translation?.name, type: TranslationFieldType.SHORT },
       { translation: translation?.description, type: TranslationFieldType.RICH },
+      { translation: translation?.slug, type: TranslationFieldType.SHORT },
       { translation: translation?.seoTitle, type: TranslationFieldType.SHORT },
       { translation: translation?.seoDescription, type: TranslationFieldType.LONG },
     ]),
@@ -59,6 +62,7 @@ export function getPageTranslationCompletion(
     getTranslationCompletion([
       { translation: translation?.title, type: TranslationFieldType.SHORT },
       { translation: translation?.content, type: TranslationFieldType.RICH },
+      { translation: translation?.slug, type: TranslationFieldType.SHORT },
       { translation: translation?.seoTitle, type: TranslationFieldType.SHORT },
       { translation: translation?.seoDescription, type: TranslationFieldType.LONG },
     ]),
