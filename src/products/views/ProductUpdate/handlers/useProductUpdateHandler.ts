@@ -185,17 +185,21 @@ export function useProductUpdateHandler(
       }
     }
 
-    if (data.variants.added.length > 0) {
+    if (data.variants.added.length > 0 || (data.variants.stagedCreates?.length ?? 0) > 0) {
+      const createInputs = [
+        ...data.variants.added.map(index =>
+          getCreateVariantInput(
+            data.variants,
+            index,
+            product?.productType?.variantAttributes ?? [],
+          ),
+        ),
+        ...(data.variants.stagedCreates ?? []),
+      ];
       const createVariantsResults = await createVariants({
         variables: {
           id: product.id,
-          inputs: data.variants.added.map(index => ({
-            ...getCreateVariantInput(
-              data.variants,
-              index,
-              product?.productType?.variantAttributes ?? [],
-            ),
-          })),
+          inputs: createInputs,
         },
       });
       const createVariantsErrors = getCreateVariantMutationError(createVariantsResults);

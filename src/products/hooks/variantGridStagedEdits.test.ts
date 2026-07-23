@@ -7,6 +7,7 @@ import {
   createEmptyVariantGridStagedEdits,
   hasPendingVariantGridEdits,
   rehydrateVariantGridDatagridOpts,
+  stageVariantCreatesInStore,
   stageVariantRemovalsInStore,
   syncVariantGridStagedEditsFromPage,
 } from "./variantGridStagedEdits";
@@ -112,6 +113,45 @@ describe("variantGridStagedEdits", () => {
     expect(payload.updateChanges.updates).toEqual([
       { column: "sku", row: 0, data: { value: "A" } },
     ]);
+    expect(payload.stagedCreates).toEqual([]);
+  });
+
+  it("stages generator creates across pagination and skips duplicates", () => {
+    // Arrange
+    let state = createEmptyVariantGridStagedEdits();
+    const first = {
+      name: "Red / S",
+      sku: "RED-S",
+      attributes: [{ id: "color", values: ["red"] }],
+    };
+    const duplicate = {
+      name: "Red / S again",
+      sku: "RED-S",
+      attributes: [{ id: "color", values: ["red"] }],
+    };
+    const second = {
+      name: "Blue / S",
+      sku: "BLUE-S",
+      attributes: [{ id: "color", values: ["blue"] }],
+    };
+
+    // Act
+    const firstStage = stageVariantCreatesInStore(state, [first, duplicate]);
+
+    state = firstStage.state;
+
+    const secondStage = stageVariantCreatesInStore(state, [second, first]);
+
+    state = secondStage.state;
+
+    // Assert
+    expect(firstStage.stagedCount).toBe(1);
+    expect(firstStage.skippedCount).toBe(1);
+    expect(secondStage.stagedCount).toBe(1);
+    expect(secondStage.skippedCount).toBe(1);
+    expect(state.creates).toHaveLength(2);
+    expect(countPendingVariantGridEdits(state)).toBe(2);
+    expect(buildVariantGridSubmitPayload(state).stagedCreates).toEqual([first, second]);
   });
 
   it("stages removals by id without requiring the variant to be on the current page", () => {

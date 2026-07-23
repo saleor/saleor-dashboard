@@ -10,6 +10,7 @@ import {
   type ProductChannelListingUpdateInput,
   type ProductDetailsVariantFragment,
   type ProductFragment,
+  type ProductVariantBulkCreateInput,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -72,6 +73,8 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
     stagedUpdateVariants?: ProductDetailsVariantFragment[];
     /** Index-based updates aligned with `stagedUpdateVariants`. */
     stagedUpdateChanges?: DatagridChangeOpts;
+    /** Generator creates waiting for Save (API-ready bulk create inputs). */
+    stagedCreates?: ProductVariantBulkCreateInput[];
   };
 }
 
@@ -86,6 +89,14 @@ export interface ProductUpdateHandlers
   changeVariants: (data: DatagridChangeOpts) => void;
   /** Stage variant deletes by id (supports multi-page selection). */
   stageVariantRemovals: (ids: string[]) => void;
+  /** Stage generator creates until product Save. */
+  stageVariantCreates: (inputs: ProductVariantBulkCreateInput[]) => {
+    success: boolean;
+    successCount: number;
+    failedCount: number;
+    attributeErrors: Array<{ attributeId: string; code: string; message: string | null }>;
+    otherErrors: Array<{ message: string | null }>;
+  };
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
   updateChannelList: ProductChannelsListingDialogSubmit;

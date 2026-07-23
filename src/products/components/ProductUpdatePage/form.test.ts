@@ -77,6 +77,7 @@ describe("useProductUpdateForm", () => {
           removed: [],
           updates: [],
         },
+        stagedCreates: [],
       },
     });
     // Act
@@ -97,6 +98,7 @@ describe("useProductUpdateForm", () => {
           removed: [],
           updates: [],
         },
+        stagedCreates: [],
       },
     });
   });
@@ -150,6 +152,7 @@ describe("useProductUpdateForm", () => {
           removed: [],
           updates: [],
         },
+        stagedCreates: [],
       },
       rating: 4,
       seoTitle: "seo-title-1",

@@ -4963,6 +4963,10 @@
     "context": "date group header",
     "string": "Older"
   },
+  "LVY0Tj": {
+    "context": "generate button — stages variants until product Save",
+    "string": "Add {count} {count, plural, one {variant} other {variants}}"
+  },
   "LVa5ew": {
     "string": "Saleor ran into an unexpected problem"
   },
@@ -5939,10 +5943,6 @@
     "context": "customer overview, subtitle on total orders showing the most recent order date",
     "string": "Last order: {date}"
   },
-  "Q+oKl+": {
-    "context": "confirmation dialog description",
-    "string": "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone."
-  },
   "Q/Nbku": {
     "context": "product field",
     "string": "Type"
@@ -6539,10 +6539,6 @@
   "T5nU7u": {
     "context": "header",
     "string": "Create Token"
-  },
-  "T61cLQ": {
-    "context": "generate button",
-    "string": "Generate {count} {count, plural, one {variant} other {variants}}"
   },
   "T6dXGG": {
     "context": "header",
@@ -7403,6 +7399,10 @@
   "XJSRDK": {
     "context": "payment status",
     "string": "Fully refunded"
+  },
+  "XJZziQ": {
+    "context": "confirmation dialog description for staged generator creates",
+    "string": "You are about to add {count} variants to this product. They will be created when you save the product."
   },
   "XJm60a": {
     "string": "Manually change permission for the extension."
@@ -10102,10 +10102,6 @@
     "context": "app privacy policy link",
     "string": "View this extension's privacy policy."
   },
-  "jww7Wl": {
-    "context": "confirmation dialog title",
-    "string": "Generate {count} variants?"
-  },
   "jxCLwG": {
     "context": "bulk edit toggle label",
     "string": "Edit in bulk"
@@ -11020,6 +11016,10 @@
   "nqWHPw": {
     "context": "sales channel a11y label prefix",
     "string": "Channel"
+  },
+  "nsTglh": {
+    "context": "confirmation dialog title for staging generated variants",
+    "string": "Add {count} variants?"
   },
   "nudPsY": {
     "context": "metadata field name, header",

@@ -33,7 +33,6 @@ import {
   type ProductErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductFragment,
-  type ProductVariantBulkCreateInput,
   type RefreshLimitsQuery,
   type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
@@ -77,7 +76,6 @@ import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToD
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
-import { type BulkCreateResult } from "../ProductVariantGenerator/types";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
@@ -160,7 +158,6 @@ interface ProductUpdatePageProps {
   onMediaUrlUpload: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
   onSeoClick?: () => any;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
-  onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
   initialConstraints?: InitialConstraints & InitialPageConstraints;
 }
 
@@ -230,7 +227,6 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
   onFilterChange,
-  onBulkCreateVariants,
   initialConstraints,
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
@@ -650,7 +646,7 @@ const ProductUpdatePage = ({
                   onChange={handlers.changeVariants}
                   onStageVariantRemovals={handlers.stageVariantRemovals}
                   onRowClick={onVariantShow}
-                  onBulkCreate={onBulkCreateVariants}
+                  onStageVariantCreates={handlers.stageVariantCreates}
                 />
                 <CardSpacer />
                 <SeoForm

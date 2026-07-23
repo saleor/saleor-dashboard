@@ -21,16 +21,20 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { type ProductDetailsVariantFragment, type ProductFragment } from "@dashboard/graphql";
+import {
+  type ProductDetailsVariantFragment,
+  type ProductFragment,
+  type ProductVariantBulkCreateInput,
+} from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useFormset from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   buildVariantGridSubmitPayload,
-  countPendingVariantGridEdits,
   createEmptyVariantGridStagedEdits,
   rehydrateVariantGridDatagridOpts,
+  stageVariantCreatesInStore,
   stageVariantRemovalsInStore,
   syncVariantGridStagedEditsFromPage,
   type VariantGridStagedEditsState,
@@ -110,11 +114,15 @@ export function useProductUpdateForm(
 
   const refreshVariantCompositionCounts = useCallback(() => {
     const deleteCount = stagedEdits.current.removedIds.size;
-    const pendingTotal = countPendingVariantGridEdits(stagedEdits.current);
+    const updatedIds = [...stagedEdits.current.updatesById.keys()].filter(
+      id => !stagedEdits.current.removedIds.has(id),
+    );
 
     setPendingVariantDeleteCount(deleteCount);
-    setPendingVariantEditCount(Math.max(0, pendingTotal - deleteCount));
-    setPendingVariantCreateCount(variants.current.added.length);
+    setPendingVariantEditCount(updatedIds.length);
+    setPendingVariantCreateCount(
+      variants.current.added.length + stagedEdits.current.creates.length,
+    );
   }, []);
 
   const applyRehydratedDatagridState = useCallback(
@@ -189,6 +197,28 @@ export function useProductUpdateForm(
       triggerChange();
     },
     [datagrid, productVariants, refreshVariantCompositionCounts, triggerChange],
+  );
+
+  const handleStageVariantCreates = React.useCallback(
+    (inputs: ProductVariantBulkCreateInput[]) => {
+      const { state, stagedCount } = stageVariantCreatesInStore(stagedEdits.current, inputs);
+
+      stagedEdits.current = state;
+      refreshVariantCompositionCounts();
+
+      if (stagedCount > 0) {
+        triggerChange();
+      }
+
+      return {
+        success: stagedCount > 0,
+        successCount: stagedCount,
+        failedCount: inputs.length - stagedCount,
+        attributeErrors: [],
+        otherErrors: [],
+      };
+    },
+    [refreshVariantCompositionCounts, triggerChange],
   );
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
@@ -329,6 +359,7 @@ export function useProductUpdateForm(
         removedVariantIds: stagedPayload.removedVariantIds,
         stagedUpdateVariants: stagedPayload.updateVariants,
         stagedUpdateChanges: stagedPayload.updateChanges,
+        stagedCreates: stagedPayload.stagedCreates,
       },
     };
   };
@@ -472,6 +503,7 @@ export function useProductUpdateForm(
       changeChannels: handleChannelChange,
       changeVariants: handleVariantChange,
       stageVariantRemovals: handleStageVariantRemovals,
+      stageVariantCreates: handleStageVariantCreates,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
       reorderAttributeValue: handleAttributeValueReorder,

@@ -48,6 +48,7 @@ jest.mock("./form", () => ({
         changeChannels: jest.fn(),
         changeVariants: jest.fn(),
         stageVariantRemovals: jest.fn(),
+        stageVariantCreates: jest.fn(),
         selectCategory: jest.fn(),
         selectCollection: jest.fn(),
         selectTaxClass: jest.fn(),
