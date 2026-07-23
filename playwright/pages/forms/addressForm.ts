@@ -33,6 +33,7 @@ export class AddressForm extends BasePage {
   }
 
   async typePhone(phone: string) {
+    await this.phoneInput.click();
     await this.phoneInput.fill(phone);
   }
 

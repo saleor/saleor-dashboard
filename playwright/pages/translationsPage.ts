@@ -9,7 +9,7 @@ export class TranslationsPage extends BasePage {
 
   constructor(
     page: Page,
-    readonly translationPl_PL = page.getByTestId("PL_PL"),
+    readonly translationPl = page.getByTestId("PL"),
     readonly editTranslationNameButton = page.getByTestId("edit-name"),
     readonly translationInput = page.getByTestId("translation-field").locator("input"),
     readonly translationRichText = page

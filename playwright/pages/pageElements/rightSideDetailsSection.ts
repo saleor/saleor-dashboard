@@ -83,7 +83,7 @@ export class RightSideDetailsPage extends BasePage {
 
     await this.selectOption.filter({ hasText: warehouse }).first().click();
     // below click hides prompted options
-    this.clickWarehouseSelectShippingPage();
+    await this.clickWarehouseSelectShippingPage();
   }
 
   async typeAndSelectMultipleWarehousesShippingPage(warehouses: string[]) {
@@ -92,7 +92,7 @@ export class RightSideDetailsPage extends BasePage {
 
       await this.selectOption.filter({ hasText: warehouse }).first().click();
     }
-    this.clickWarehouseSelectShippingPage();
+    await this.clickWarehouseSelectShippingPage();
   }
 
   async clickChannelsSelectShippingPage() {
@@ -102,7 +102,7 @@ export class RightSideDetailsPage extends BasePage {
   async selectSingleChannelShippingPage(channel = "PLN") {
     await this.selectOption.filter({ hasText: `Channel-${channel}` }).click();
     // below click hides prompted options
-    this.clickChannelsSelectShippingPage();
+    await this.clickChannelsSelectShippingPage();
   }
 
   async openChannelsDialog() {
@@ -180,7 +180,7 @@ export class RightSideDetailsPage extends BasePage {
     await this.page.getByRole("option", { name: warehouseName });
   }
 
-  async selectCustomer(customer = "allison.freeman@example.com") {
+  async selectCustomer(customer = "ashley.cook@example.com") {
     await this.selectCustomerOption.locator(`text=${customer}`).waitFor({ state: "visible" });
     await this.selectCustomerOption.locator(`text=${customer}`).click();
     await this.waitForDOMToFullyLoad();

@@ -30,7 +30,7 @@ for (const type of discountType) {
     await discounts.typeEndHour();
     await discounts.clickSaveButton();
     await discounts.expectSuccessBanner();
-    await expect(discounts.pageHeader).toHaveText(discountName);
+    await expect(discounts.page.getByTitle(discountName)).toBeVisible();
     await expect(discounts.discountTypeSelect).toHaveText(type);
     await expect(discounts.ruleSection).toHaveText("Add your first rule to set up a promotion");
   });
@@ -57,7 +57,7 @@ test(`TC: SALEOR_151 Update existing promotion #discounts #e2e`, async () => {
   await expect(discounts.endHourInput).not.toBeAttached();
   await discounts.clickSaveButton();
   await discounts.expectSuccessBanner();
-  await expect(discounts.pageHeader).toHaveText(newDiscountName);
+  await expect(discounts.page.getByTitle(newDiscountName)).toBeVisible();
   await expect(discounts.discountTypeSelect).toHaveText(DISCOUNTS.promotionToBeEdited.type);
 });
 
@@ -245,10 +245,8 @@ for (const rule of orderRules) {
       state: "visible",
       timeout: 10000,
     });
-    await expect(
-      discounts.existingRule.filter({ hasText: `Order rule: ${rule.name}` }),
-    ).toBeVisible();
-    await discounts.clickEditRuleButton(`Order rule: ${rule.name}`);
+    await expect(discounts.existingRule.filter({ hasText: `${rule.name}` })).toBeVisible();
+    await discounts.clickEditRuleButton(`${rule.name}`);
 
     if (await discounts.promotionRuleDialog.ruleConditionRow.isVisible()) {
       await discounts.promotionRuleDialog.clickAddRuleConditionButton();
@@ -259,7 +257,7 @@ for (const rule of orderRules) {
       await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
       await discounts.expectSuccessBanner();
       await expect(
-        discounts.existingRule.filter({ hasText: `Order rule: ${orderRules[0].name}` }).first(),
+        discounts.existingRule.filter({ hasText: `${orderRules[0].name}` }).first(),
       ).toBeVisible();
     } else {
       const giftRewardToBeDeleted = orderRules[1].giftRewardToBeDeleted ?? "";
@@ -271,11 +269,11 @@ for (const rule of orderRules) {
       await discounts.promotionRuleDialog.selectRuleConditionType("is");
       await discounts.promotionRuleDialog.typeRuleConditionValue("100.00");
       await discounts.promotionRuleDialog.removeExistingGiftReward(giftRewardToBeDeleted);
-      await discounts.promotionRuleDialog.selectGiftReward("Blue Hoodie");
+      await discounts.promotionRuleDialog.selectGiftReward("Hoodie");
       await discounts.promotionRuleDialog.clickSaveEditedRuleButton();
       await discounts.expectSuccessBanner();
       await expect(
-        discounts.existingRule.filter({ hasText: `Order rule: ${orderRules[1].name}` }).first(),
+        discounts.existingRule.filter({ hasText: `${orderRules[1].name}` }).first(),
       ).toBeVisible();
     }
   });
@@ -293,17 +291,12 @@ for (const rule of catalogRules) {
       state: "visible",
       timeout: 50000,
     });
-    await discounts.existingRule.filter({ hasText: `Catalog rule: ${rule.name}` }).waitFor({
+    await discounts.existingRule.filter({ hasText: `${rule.name}` }).waitFor({
       state: "visible",
       timeout: 50000,
     });
 
-    const ruleChips = await discounts.existingRule
-      .filter({ hasText: `Catalog rule: ${rule.name}` })
-      .locator(discounts.ruleSummaryChip)
-      .count();
-
-    await discounts.clickEditRuleButton(`Catalog rule: ${rule.name}`);
+    await discounts.clickEditRuleButton(`${rule.name}`);
 
     if (await discounts.promotionRuleDialog.ruleConditionRow.isVisible()) {
       await discounts.promotionRuleDialog.selectRuleConditionValue(
@@ -326,10 +319,8 @@ for (const rule of catalogRules) {
       timeout: 10000,
     });
     await expect(
-      discounts.existingRule
-        .filter({ hasText: `Catalog rule: ${rule.name}` })
-        .locator(discounts.ruleSummaryChip),
-    ).toHaveCount(ruleChips + 1);
+      discounts.existingRule.filter({ hasText: `${rule.name}` }).locator(discounts.ruleSummaryChip),
+    ).toHaveCount(1);
   });
 }
 
@@ -347,8 +338,7 @@ for (const promotion of promotionsWithRules) {
         timeout: 15000,
       });
       const deleteButton = discounts.existingRule
-        .locator(discounts.ruleLabelWithActions)
-        .filter({ hasText: `${promotion.type} rule: ${rule.name}` })
+        .filter({ hasText: `${rule.name}` })
         .locator(discounts.deleteRuleButton);
 
       await deleteButton.waitFor({ state: "visible", timeout: 10000 });
@@ -356,7 +346,7 @@ for (const promotion of promotionsWithRules) {
       await expect(discounts.deleteRuleModal).toBeVisible({ timeout: 10000 });
       await discounts.deleteRuleDialog.clickConfirmDeleteButton();
       await discounts.expectSuccessBanner();
-      await expect(discounts.ruleSection).not.toHaveText(`${promotion.type}: ${rule.name}`);
+      await expect(discounts.ruleSection).not.toHaveText(`${rule.name}`);
     });
   }
 }

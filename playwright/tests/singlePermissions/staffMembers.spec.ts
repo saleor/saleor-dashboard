@@ -23,12 +23,12 @@ test.beforeEach(async ({ page, request }) => {
 test("TC: SALEOR_19 User should be able to navigate to staff members list page as a staff member using STAFF permission #e2e", async () => {
   await configurationPage.openStaffMembers();
   await expect(staffMembersPage.inviteStaffMembersButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
   await staffMembersPage.expectGridToBeAttached();
 });
 test("TC: SALEOR_20 User should be able to navigate to permission group list page as a staff member using STAFF permission #e2e", async () => {
   await configurationPage.openPermissionGroups();
   await expect(permissionGroupsPage.createPermissionGroupButton).toBeVisible();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await mainMenuPage.expectMenuItemsCount(4);
   await permissionGroupsPage.expectGridToBeAttached();
 });

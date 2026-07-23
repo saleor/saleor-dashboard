@@ -12,27 +12,27 @@ test.beforeEach(({ page }) => {
 });
 test("TC: SALEOR_121 Should be able to add translation  #e2e #translations", async () => {
   await translationsPage.gotoTranslationsPage();
-  await translationsPage.translationPl_PL.click();
-  await translationsPage.page.getByText("CategoryToTranslate").click();
+  await translationsPage.translationPl.click();
+  await translationsPage.page.getByText("Books", { exact: true }).click();
   await translationsPage.editTranslationNameButton.waitFor({
     state: "visible",
     timeout: 50000,
   });
   await translationsPage.page
-    .getByText('Translation Category "CategoryToTranslate" - PL_PL')
+    .getByText('Translation Category "Books" - PL')
     .waitFor({ state: "visible", timeout: 50000 });
   await translationsPage.editTranslationNameButton.click();
-  await translationsPage.translationInput.fill("Kategoria do Translacji");
+  await translationsPage.translationInput.fill("Książki");
   await translationsPage.saveButton.click();
   await translationsPage.expectSuccessBanner();
-  await expect(translationsPage.page.getByText("Kategoria do Translacji")).toBeVisible();
+  await expect(translationsPage.page.getByText("Książki")).toBeVisible();
 });
 test("TC: SALEOR_122 Should be able to edit translation  #e2e #translations", async () => {
   const newDescription =
-    "Brukselka, szpinak, groszek, jarmuż, sałata, kapusta, cukinia, więcej brukselki. Wszystkie warzywa, jakich będziesz potrzebować, w jednym pysznym soku.";
+    "Każda butelka zaczyna się na jabłoni. Dojrzałe owoce trafiają prosto do tłoczni, gdzie powstaje sok o naturalnym, pełnym smaku. Nic więcej nie trzeba — tylko jabłka i czas zbiorów. Ten prosty proces pozwala zachować wszystkie wartości odżywcze i smakowe, które oferują jabłka. To jest właśnie nasz Apple Juice.";
 
   await translationsPage.goToDirectTranslationPage(
-    "PL_PL",
+    "PL",
     "products",
     TRANSLATIONS.translationsToBeEdited.id,
   );
@@ -41,16 +41,16 @@ test("TC: SALEOR_122 Should be able to edit translation  #e2e #translations", as
     timeout: 50000,
   });
   await translationsPage.page
-    .getByText('Translation Product "Green Juice" - PL_PL')
+    .getByText('Translation Product "Apple Juice" - PL')
     .waitFor({ state: "visible", timeout: 50000 });
-  await expect(translationsPage.page.getByText("Brukselka, szpinak")).toBeVisible();
+  await expect(translationsPage.page.getByText("Spadło prosto z drzewa")).toBeVisible();
   await translationsPage.editTranslationDescriptionButton.click();
   await translationsPage.translationRichText.clear();
   await translationsPage.translationRichText.fill(newDescription);
   await translationsPage.saveButton.click();
   await translationsPage.expectSuccessBanner();
   await translationsPage.goToDirectTranslationPage(
-    "PL_PL",
+    "PL",
     "products",
     TRANSLATIONS.translationsToBeEdited.id,
   );
@@ -59,10 +59,10 @@ test("TC: SALEOR_122 Should be able to edit translation  #e2e #translations", as
 });
 test("TC: SALEOR_123 Should be able to clear translation  #e2e #translations", async () => {
   const description =
-    "Letnia kolekcja Saleor obejmuje gamę produktów, które cieszą się popularnością na rynku.Sklep demonstracyjny na każdą porę roku.Saleor uchwycił słońce open source, e-commerce.";
+    "Letnia kolekcja Saleor obejmuje gamę produktów, które cieszą się popularnością na rynku.Sklep demonstracyjny na każdą porę roku. Saleor uchwycił słońce open source, e-commerce.";
 
   await translationsPage.goToDirectTranslationPage(
-    "PL_PL",
+    "PL",
     "collections",
     TRANSLATIONS.translationsToBeCleared.id,
   );
@@ -71,7 +71,7 @@ test("TC: SALEOR_123 Should be able to clear translation  #e2e #translations", a
     timeout: 50000,
   });
   await translationsPage.page
-    .getByText('Translation Collection "Summer collection" - PL_PL')
+    .getByText('Translation Collection "Summer Picks" - PL')
     .waitFor({ state: "visible", timeout: 50000 });
   await expect(translationsPage.page.getByText(description)).toBeVisible();
   await translationsPage.editTranslationDescriptionButton.click();
