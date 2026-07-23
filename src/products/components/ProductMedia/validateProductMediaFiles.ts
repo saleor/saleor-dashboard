@@ -1,7 +1,4 @@
-/** Matches Saleor's common Django `FILE_UPLOAD_MAX_MEMORY_SIZE` default (10 MiB). */
-export const PRODUCT_MEDIA_MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
-
-export type ProductMediaFileValidationReason = "invalidType" | "tooLarge";
+export type ProductMediaFileValidationReason = "invalidType";
 
 export interface ProductMediaFileValidationResult {
   validFiles: File[];
@@ -17,9 +14,15 @@ const isImageFile = (file: File): boolean => {
   return /\.(avif|bmp|gif|jpe?g|png|webp)$/i.test(file.name);
 };
 
+/**
+ * Client-side checks that do not depend on backend configuration.
+ *
+ * File size is intentionally not validated here: Core enforces
+ * `MAX_IMAGE_FILE_SIZE` (env-configurable; Cloud sandboxes/prod differ),
+ * and that limit is not exposed via the Shop API.
+ */
 export const validateProductMediaFiles = (
   files: FileList | File[],
-  maxSizeBytes: number = PRODUCT_MEDIA_MAX_FILE_SIZE_BYTES,
 ): ProductMediaFileValidationResult => {
   const validFiles: File[] = [];
   const rejected: ProductMediaFileValidationResult["rejected"] = [];
@@ -27,12 +30,6 @@ export const validateProductMediaFiles = (
   Array.from(files).forEach(file => {
     if (!isImageFile(file)) {
       rejected.push({ file, reason: "invalidType" });
-
-      return;
-    }
-
-    if (file.size > maxSizeBytes) {
-      rejected.push({ file, reason: "tooLarge" });
 
       return;
     }

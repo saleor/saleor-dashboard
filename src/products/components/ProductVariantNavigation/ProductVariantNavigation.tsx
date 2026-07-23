@@ -1,6 +1,7 @@
 import { borderHeight, savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Divider } from "@dashboard/components/Divider";
+import { InputWithPlaceholder } from "@dashboard/components/InputWithPlaceholder/InputWithPlaceholder";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
@@ -10,7 +11,7 @@ import {
 import { productVariantAddUrl } from "@dashboard/products/urls";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { Box, Button, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import {
   type ChangeEvent,
   type CSSProperties,
@@ -195,7 +196,7 @@ export const ProductVariantNavigation = ({
           flexShrink="0"
         >
           <Box flexGrow="1" __minWidth={0}>
-            <Input
+            <InputWithPlaceholder
               size="small"
               value={search}
               onChange={handleSearchChange}
