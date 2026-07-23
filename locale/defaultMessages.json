@@ -5559,10 +5559,6 @@
     "context": "title for unsupported required attributes error",
     "string": "Cannot use generator"
   },
-  "ODD7yW": {
-    "context": "Variants grid persist-mode hint under the section title",
-    "string": "Saves with the product"
-  },
   "OErjoA": {
     "string": "{productName} discount was removed"
   },
@@ -5893,6 +5889,10 @@
   },
   "PlAdWI": {
     "string": "You are going to"
+  },
+  "PmLFgv": {
+    "context": "Button to remove all staged generator creates",
+    "string": "Clear all"
   },
   "Pnj+JH": {
     "context": "key-value field input",
@@ -11731,6 +11731,10 @@
     "context": "transaction event type, amount was authorized, but not captured",
     "string": "Authorization"
   },
+  "qtSRwh": {
+    "context": "Title for the draft list of generator-staged variants awaiting Save",
+    "string": "{count, plural, one {# new variant (unsaved)} other {# new variants (unsaved)}}"
+  },
   "qu/hXD": {
     "string": "Selected {number} items"
   },
@@ -12029,10 +12033,6 @@
   "sK1FPw": {
     "context": "categories section name",
     "string": "Categories"
-  },
-  "sOGWqM": {
-    "context": "Availability card persist-mode hint",
-    "string": "Saves with the product"
   },
   "sOlOZB": {
     "context": "gift cards page subheader",
@@ -13344,10 +13344,6 @@
   },
   "xxQxLE": {
     "string": "Email Address"
-  },
-  "xxazeW": {
-    "context": "Product media card subtitle — uploads persist without product Save",
-    "string": "Saves immediately"
   },
   "xy66ru": {
     "context": "custom preset delete, dialog header",
