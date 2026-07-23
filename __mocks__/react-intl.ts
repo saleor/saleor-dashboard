@@ -1,9 +1,16 @@
 import { createElement, Fragment } from "react";
 
+const isPrimitiveValue = (value: unknown): value is string | number | boolean =>
+  typeof value === "string" || typeof value === "number" || typeof value === "boolean";
+
 /**
  * Minimal ICU-ish formatter for unit tests.
- * The real react-intl is mapped away via jest moduleNameMapper; without this,
- * `{name}` / `{count, plural, ...}` stay literal and copy assertions are useless.
+ * The real react-intl is mapped away via jest moduleNameMapper.
+ *
+ * - Formats `{count, plural, one {...} other {...}}` for composition/copy tests.
+ * - Interpolates only primitive `{key}` values (string / number / boolean).
+ * - Leaves placeholders for React nodes and rich-text callbacks — many existing
+ *   suites pass JSX into formatMessage and assert on unreplaced `{name}` text.
  */
 const formatMessageImpl = (
   descriptor: { defaultMessage?: string; id?: string },
@@ -22,6 +29,10 @@ const formatMessageImpl = (
   );
 
   Object.entries(values).forEach(([key, value]) => {
+    if (!isPrimitiveValue(value)) {
+      return;
+    }
+
     msg = msg.replace(new RegExp(`\\{${key}\\}`, "g"), String(value));
   });
 
