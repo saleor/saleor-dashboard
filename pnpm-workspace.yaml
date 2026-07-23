@@ -1,7 +1,6 @@
 blockExoticSubdeps: true
 
-# pnpm 11 no longer reads `shamefully-hoist` from .npmrc; it must live here
-# (pnpm-workspace.yaml is pnpm's config source). Without it, transitive deps
+# pnpm 11 reads `shamefully-hoist` from pnpm-workspace.yaml. Without it, transitive deps
 # aren't hoisted to the root node_modules, which breaks bare `node` imports in
 # lint-rule test scripts (@typescript-eslint/parser) and lets a second
 # @testing-library/jest-dom copy leak into the tsc program.
