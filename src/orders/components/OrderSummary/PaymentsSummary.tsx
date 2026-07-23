@@ -11,7 +11,7 @@ import { PaymentsSummaryHeader } from "./PaymentsSummaryHeader";
 type Props = PropsWithBox<{
   orderAmounts: {
     totalAuthorized: OrderDetailsFragment["totalAuthorized"];
-    totalCaptured: OrderDetailsFragment["totalCaptured"];
+    totalCharged: OrderDetailsFragment["totalCharged"];
     totalBalance: OrderDetailsFragment["totalBalance"];
   };
   order: OrderDetailsFragment;
@@ -62,7 +62,7 @@ export const PaymentsSummary = ({ orderAmounts, order, hasNoPayment, ...props }:
       </Box>
 
       <Box as="ul" display="grid" gap={1} marginTop={4}>
-        <OrderSummaryListItem amount={orderAmounts.totalCaptured.amount}>
+        <OrderSummaryListItem amount={orderAmounts.totalCharged.amount}>
           {intl.formatMessage({
             defaultMessage: "Total captured",
             id: "JIQ7KX",

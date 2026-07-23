@@ -248,7 +248,7 @@ export const orderRefundData = gql`
           ...Money
         }
       }
-      totalCaptured {
+      totalCharged {
         ...Money
       }
       shippingPrice {

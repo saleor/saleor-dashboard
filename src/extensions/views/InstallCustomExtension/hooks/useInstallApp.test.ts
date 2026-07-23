@@ -57,7 +57,6 @@ describe("useInstallApp", () => {
     dataPrivacyUrl: null,
     homepageUrl: null,
     supportUrl: null,
-    configurationUrl: null,
     appUrl: null,
     tokenTargetUrl: null,
     brand: null,

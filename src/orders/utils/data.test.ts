@@ -33,7 +33,7 @@ import {
   isOpaqueGlobalId,
   mergeRepeatedOrderLines,
   type OrderLineWithStockWarehouses,
-  type OrderWithTotalAndTotalCaptured,
+  type OrderWithTotalAndTotalCharged,
 } from "./data";
 
 const orderBase: OrderDetailsFragment = {
@@ -148,7 +148,7 @@ describe("Get warehouses used in order", () => {
 });
 describe("Get previously refunded price", () => {
   it("is able to calculate refunded price from order", () => {
-    const order: OrderWithTotalAndTotalCaptured = {
+    const order: OrderWithTotalAndTotalCharged = {
       total: {
         __typename: "TaxedMoney",
         gross: {
@@ -157,7 +157,7 @@ describe("Get previously refunded price", () => {
           currency: "USD",
         },
       },
-      totalCaptured: {
+      totalCharged: {
         __typename: "Money",
         amount: 100,
         currency: "USD",
