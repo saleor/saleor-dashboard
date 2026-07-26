@@ -4,21 +4,26 @@ import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
 import { Box } from "@saleor/macaw-ui-next";
+import { RefreshCw } from "lucide-react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface HeaderOptionsProps {
   isActive: boolean;
+  showReload?: boolean;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
   onAppDeleteOpen: () => void;
+  onAppReloadOpen?: () => void;
 }
 
 export const AppHeaderOptions = ({
   isActive,
+  showReload = false,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
+  onAppReloadOpen,
 }: HeaderOptionsProps) => {
   const intl = useIntl();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
@@ -46,6 +51,22 @@ export const AppHeaderOptions = ({
             <FormattedMessage {...buttonMessages.activate} />
           )}
         </ButtonWithTooltip>
+
+        {showReload && (
+          <ButtonWithTooltip
+            data-test-id="app-reload-button"
+            variant="tertiary"
+            tooltip={tooltipContent}
+            disabled={!hasManagedAppsPermission}
+            onClick={onAppReloadOpen}
+            display="flex"
+            alignItems="center"
+            gap={1}
+          >
+            <RefreshCw size={16} />
+            <FormattedMessage {...buttonMessages.reload} />
+          </ButtonWithTooltip>
+        )}
 
         <ButtonWithTooltip
           data-test-id="app-delete-button"

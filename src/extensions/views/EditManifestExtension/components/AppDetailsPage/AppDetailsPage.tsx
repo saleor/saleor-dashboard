@@ -29,6 +29,7 @@ interface AppDetailsPageProps {
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
   onAppDeleteOpen: () => void;
+  onAppReloadOpen: () => void;
 }
 
 export const AppDetailsPage = ({
@@ -37,6 +38,7 @@ export const AppDetailsPage = ({
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
+  onAppReloadOpen,
 }: AppDetailsPageProps) => {
   if (!data) {
     return null;
@@ -56,6 +58,7 @@ export const AppDetailsPage = ({
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
+        onAppReloadOpen={onAppReloadOpen}
       />
       {data.type === AppTypeEnum.THIRDPARTY && !data.appUrl && (
         <Box

@@ -207,6 +207,27 @@ export const appDeactivateMutation = gql`
   }
 `;
 
+export const appReloadManifestMutation = gql`
+  mutation AppReloadManifest($id: ID!, $dryRun: Boolean, $expectedIncomingManifest: JSONString) {
+    appReloadManifest(
+      id: $id
+      dryRun: $dryRun
+      expectedIncomingManifest: $expectedIncomingManifest
+    ) {
+      app {
+        id
+      }
+      preview {
+        currentManifest
+        incomingManifest
+      }
+      errors {
+        ...AppError
+      }
+    }
+  }
+`;
+
 export const appProblemDismissMutation = gql`
   mutation appProblemDismiss($input: AppProblemDismissInput!) {
     appProblemDismiss(input: $input) {

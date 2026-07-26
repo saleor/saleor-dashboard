@@ -9739,6 +9739,54 @@ export function useAppDeactivateMutation(baseOptions?: ApolloReactHooks.Mutation
 export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivateMutation>;
 export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
 export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
+export const AppReloadManifestDocument = gql`
+    mutation AppReloadManifest($id: ID!, $dryRun: Boolean, $expectedIncomingManifest: JSONString) {
+  appReloadManifest(
+    id: $id
+    dryRun: $dryRun
+    expectedIncomingManifest: $expectedIncomingManifest
+  ) {
+    app {
+      id
+    }
+    preview {
+      currentManifest
+      incomingManifest
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppReloadManifestMutationFn = Apollo.MutationFunction<Types.AppReloadManifestMutation, Types.AppReloadManifestMutationVariables>;
+
+/**
+ * __useAppReloadManifestMutation__
+ *
+ * To run a mutation, you first call `useAppReloadManifestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppReloadManifestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appReloadManifestMutation, { data, loading, error }] = useAppReloadManifestMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      dryRun: // value for 'dryRun'
+ *      expectedIncomingManifest: // value for 'expectedIncomingManifest'
+ *   },
+ * });
+ */
+export function useAppReloadManifestMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppReloadManifestMutation, Types.AppReloadManifestMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppReloadManifestMutation, Types.AppReloadManifestMutationVariables>(AppReloadManifestDocument, options);
+      }
+export type AppReloadManifestMutationHookResult = ReturnType<typeof useAppReloadManifestMutation>;
+export type AppReloadManifestMutationResult = Apollo.MutationResult<Types.AppReloadManifestMutation>;
+export type AppReloadManifestMutationOptions = Apollo.BaseMutationOptions<Types.AppReloadManifestMutation, Types.AppReloadManifestMutationVariables>;
 export const AppProblemDismissDocument = gql`
     mutation appProblemDismiss($input: AppProblemDismissInput!) {
   appProblemDismiss(input: $input) {

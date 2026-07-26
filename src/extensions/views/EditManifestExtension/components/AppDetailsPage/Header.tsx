@@ -8,6 +8,7 @@ interface HeaderProps {
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
   onAppDeleteOpen: () => void;
+  onAppReloadOpen: () => void;
 }
 
 export const Header = ({
@@ -15,6 +16,7 @@ export const Header = ({
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
+  onAppReloadOpen,
 }: HeaderProps) => {
   const getBackButtonUrl = () => {
     /**
@@ -54,9 +56,11 @@ export const Header = ({
 
       <AppHeaderOptions
         isActive={!!data.isActive}
+        showReload={Boolean(data.manifestUrl)}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
+        onAppReloadOpen={onAppReloadOpen}
       />
     </>
   );

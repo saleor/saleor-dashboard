@@ -3,6 +3,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { AppActivateDialog } from "@dashboard/extensions/components/AppActivateDialog/AppActivateDialog";
 import { AppDeactivateDialog } from "@dashboard/extensions/components/AppDeactivateDialog/AppDeactivateDialog";
 import { AppDeleteDialog } from "@dashboard/extensions/components/AppDeleteDialog/AppDeleteDialog";
+import { AppReloadDialog } from "@dashboard/extensions/components/AppReloadDialog/AppReloadDialog";
 import { appMessages } from "@dashboard/extensions/messages";
 import { EXTENSION_LIST_QUERY } from "@dashboard/extensions/queries";
 import {
@@ -16,12 +17,14 @@ import {
   useAppDeactivateMutation,
   useAppDeleteMutation,
   useAppQuery,
+  useAppReloadManifestMutation,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { AppDetailsPage } from "./components/AppDetailsPage/AppDetailsPage";
@@ -119,6 +122,58 @@ export const EditManifestExtension = ({ id, params }: Props) => {
   const handleDeactivateConfirm = () => deactivateApp(mutationOpts);
   const handleRemoveConfirm = () => deleteApp({ ...mutationOpts });
 
+  const isReloadDialogOpen = params.action === "app-reload";
+  // Dry run: fetches the manifest and returns the current/incoming preview
+  // without applying anything. Errors are surfaced inside the dialog.
+  const [fetchReloadPreview, fetchReloadPreviewOpts] = useAppReloadManifestMutation({
+    disableErrorHandling: true,
+  });
+  const [applyReload, applyReloadOpts] = useAppReloadManifestMutation({
+    onCompleted: data => {
+      const errors = data?.appReloadManifest?.errors;
+
+      if (errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(messages.appReloaded),
+        });
+        refetch();
+        client.refetchQueries({ include: ["AppWebhookDeliveries"] });
+        closeModal();
+      } else if (appExists && errors) {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getAppErrorMessage(error, intl),
+          }),
+        );
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (isReloadDialogOpen) {
+      fetchReloadPreview({ variables: { id, dryRun: true } });
+    }
+  }, [isReloadDialogOpen, id]);
+
+  const reloadPreviewData = fetchReloadPreviewOpts.data?.appReloadManifest;
+  const reloadPreviewError = fetchReloadPreviewOpts.error
+    ? fetchReloadPreviewOpts.error.message
+    : reloadPreviewData?.errors?.length
+      ? (getAppErrorMessage(reloadPreviewData.errors[0], intl) ?? null)
+      : null;
+  // Pass the manifest the admin reviewed so the server refuses to apply if the
+  // manifest changed between preview and confirm (no silent unreviewed changes).
+  const handleReloadConfirm = () =>
+    applyReload({
+      variables: {
+        id,
+        dryRun: false,
+        expectedIncomingManifest: reloadPreviewData?.preview?.incomingManifest,
+      },
+    });
+
   if (!appExists) {
     return <NotFoundPage backHref={ExtensionsUrls.resolveInstalledExtensionsUrl()} />;
   }
@@ -147,12 +202,23 @@ export const EditManifestExtension = ({ id, params }: Props) => {
         type="EXTERNAL"
         open={params.action === "app-delete"}
       />
+      <AppReloadDialog
+        confirmButtonState={applyReloadOpts.status}
+        name={data?.app?.name || ""}
+        previewLoading={fetchReloadPreviewOpts.loading}
+        previewError={reloadPreviewError}
+        preview={reloadPreviewData?.preview ?? null}
+        onClose={closeModal}
+        onConfirm={handleReloadConfirm}
+        open={isReloadDialogOpen}
+      />
       <AppDetailsPage
         data={data?.app || null}
         loading={loading}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
         onAppDeleteOpen={() => openModal("app-delete")}
+        onAppReloadOpen={() => openModal("app-reload")}
       />
     </>
   );

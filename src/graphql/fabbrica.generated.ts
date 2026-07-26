@@ -61,6 +61,7 @@ import type {
   AppManifestBrand,
   AppManifestBrandLogo,
   AppManifestExtension,
+  AppManifestReloadPreview,
   AppManifestRequiredSaleorVersion,
   AppManifestWebhook,
   AppProblem,
@@ -75,6 +76,7 @@ import type {
   AppProblemDismissInput,
   AppProblemDismissed,
   AppReenableSyncWebhooks,
+  AppReloadManifest,
   AppRetryInstall,
   AppSortingInput,
   AppStatusChanged,
@@ -2952,6 +2954,30 @@ export const defineAppManifestExtensionFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Preview of the changes a manifest reload would apply.
+ *
+ * Added in Saleor 3.24.
+ */
+export type OptionalAppManifestReloadPreview = {
+  __typename?: 'AppManifestReloadPreview';
+  /** The installed app's current state, serialized in the manifest shape. Covers only the fields a reload applies. */
+  currentManifest?: AppManifestReloadPreview['currentManifest'] | undefined;
+  /** The freshly fetched manifest, serialized in the same shape as `currentManifest`. */
+  incomingManifest?: AppManifestReloadPreview['incomingManifest'] | undefined;
+};
+
+/**
+ * Define factory for {@link AppManifestReloadPreview} model.
+ *
+ * @param options
+ * @returns factory {@link AppManifestReloadPreviewFactoryInterface}
+ */
+export const defineAppManifestReloadPreviewFactory: DefineTypeFactoryInterface<
+  OptionalAppManifestReloadPreview,
+  {}
+> = defineTypeFactory;
+
 export type OptionalAppManifestRequiredSaleorVersion = {
   __typename?: 'AppManifestRequiredSaleorVersion';
   /** Required Saleor version as semver range. */
@@ -3324,6 +3350,35 @@ export type OptionalAppReenableSyncWebhooks = {
  */
 export const defineAppReenableSyncWebhooksFactory: DefineTypeFactoryInterface<
   OptionalAppReenableSyncWebhooks,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Reload an installed app from its manifest URL: the app's fields, permissions, extensions and webhooks are updated to match the manifest. Webhooks are matched by name; a webhook renamed in the manifest is deleted and recreated. The `isActive` flag of existing webhooks and of the app itself, and app tokens, are never modified. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+ *
+ * Added in Saleor 3.24.
+ *
+ * Triggers the following webhook events:
+ * - APP_UPDATED (async): An app was reloaded from its manifest.
+ */
+export type OptionalAppReloadManifest = {
+  __typename?: 'AppReloadManifest';
+  /** App reloaded from its manifest. */
+  app?: Maybe<OptionalApp> | undefined;
+  appErrors?: OptionalAppError[] | undefined;
+  errors?: OptionalAppError[] | undefined;
+  /** Current and incoming manifest, for reviewing the changes. */
+  preview?: Maybe<OptionalAppManifestReloadPreview> | undefined;
+};
+
+/**
+ * Define factory for {@link AppReloadManifest} model.
+ *
+ * @param options
+ * @returns factory {@link AppReloadManifestFactoryInterface}
+ */
+export const defineAppReloadManifestFactory: DefineTypeFactoryInterface<
+  OptionalAppReloadManifest,
   {}
 > = defineTypeFactory;
 
@@ -15684,6 +15739,15 @@ export type OptionalMutation = {
  * Requires one of the following permissions: MANAGE_APPS.
  */
   appReenableSyncWebhooks?: Maybe<OptionalAppReenableSyncWebhooks> | undefined;
+  /**
+ * Reload an installed app from its manifest URL: the app's fields, permissions, extensions and webhooks are updated to match the manifest. Webhooks are matched by name; a webhook renamed in the manifest is deleted and recreated. The `isActive` flag of existing webhooks and of the app itself, and app tokens, are never modified. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+ *
+ * Added in Saleor 3.24.
+ *
+ * Triggers the following webhook events:
+ * - APP_UPDATED (async): An app was reloaded from its manifest.
+ */
+  appReloadManifest?: Maybe<OptionalAppReloadManifest> | undefined;
   /**
  * Retry failed installation of new app.
  *
