@@ -64,7 +64,7 @@ import {
   withOrderLineFocus,
 } from "../../../urls";
 
-interface OrderUnconfirmedDetailsProps {
+export interface OrderUnconfirmedDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   data: any;

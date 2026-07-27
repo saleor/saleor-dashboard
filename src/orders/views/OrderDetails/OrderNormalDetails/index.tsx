@@ -70,7 +70,7 @@ import {
   withOrderLineFocus,
 } from "../../../urls";
 
-interface OrderNormalDetailsProps {
+export interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   data: OrderDetailsQueryResult["data"];
