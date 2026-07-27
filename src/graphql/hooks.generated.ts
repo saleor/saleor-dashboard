@@ -22,7 +22,6 @@ export const AppManifestFragmentDoc = gql`
   about
   name
   appUrl
-  configurationUrl
   tokenTargetUrl
   dataPrivacy
   dataPrivacyUrl
@@ -70,7 +69,6 @@ export const AppFragmentDoc = gql`
   homepageUrl
   appUrl
   manifestUrl
-  configurationUrl
   supportUrl
   version
   accessToken
@@ -2428,9 +2426,6 @@ export const OrderDetailsFragmentDoc = gql`
     ...Money
   }
   totalAuthorized {
-    ...Money
-  }
-  totalCaptured {
     ...Money
   }
   totalCharged {
@@ -14401,7 +14396,7 @@ export const OrderRefundDataDocument = gql`
         ...Money
       }
     }
-    totalCaptured {
+    totalCharged {
       ...Money
     }
     shippingPrice {

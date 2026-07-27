@@ -7,7 +7,6 @@ export const appManifestFragment = gql`
     about
     name
     appUrl
-    configurationUrl
     tokenTargetUrl
     dataPrivacy
     dataPrivacyUrl
@@ -45,7 +44,6 @@ export const appFragment = gql`
     homepageUrl
     appUrl
     manifestUrl
-    configurationUrl
     supportUrl
     version
     accessToken

@@ -498,10 +498,6 @@ export const fragmentOrderDetails = gql`
     totalAuthorized {
       ...Money
     }
-    # TODO: Remove me
-    totalCaptured {
-      ...Money
-    }
     totalCharged {
       ...Money
     }
