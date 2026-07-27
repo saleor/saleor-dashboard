@@ -53,7 +53,7 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
   const apolloClient = useApolloClient();
-  const { data, loading } = useOrderDetails(id);
+  const { data, loading, refetch, startPolling, stopPolling } = useOrderDetails(id);
 
   const order = data?.order;
   const isOrderDraft = order?.status === OrderStatus.DRAFT;
@@ -229,7 +229,12 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                   // The single non-draft payment-mode branch: resolve once, route
                   // to one concrete view. Draft stays outside the resolver.
                   (resolveOrderPaymentMode(order).kind === "transactions" ? (
-                    <TransactionOrderDetails {...nonDraftProps} />
+                    <TransactionOrderDetails
+                      {...nonDraftProps}
+                      startPolling={startPolling}
+                      stopPolling={stopPolling}
+                      refetch={refetch}
+                    />
                   ) : (
                     <LegacyOrderDetails {...nonDraftProps} />
                   ))}
