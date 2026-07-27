@@ -20,7 +20,7 @@ import OrderDetailsPage from "../../components/OrderDetailsPage/OrderDetailsPage
  * expects. Story names, DOM output and the exposed callback names must survive
  * the payment-view split so the interaction suite runs unchanged after it.
  */
-export interface OrderDetailsStoryHarnessProps {
+interface OrderDetailsStoryHarnessProps {
   order: OrderDetailsFragment;
   onMarkAsPaid?: () => void;
   onPaymentCapture?: () => void;

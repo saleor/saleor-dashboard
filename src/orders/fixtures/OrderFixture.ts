@@ -852,10 +852,12 @@ export class OrderFixture {
     return this;
   }
 
-  withTransaction() {
+  withTransaction(
+    overrides: Partial<OrderDetailsFragment["transactions"][number]> = {},
+  ): OrderFixture {
     this.order = {
       ...this.order,
-      transactions: [TransactionFixture.transaction],
+      transactions: [{ ...TransactionFixture.transaction, ...overrides }],
     };
 
     return this;
