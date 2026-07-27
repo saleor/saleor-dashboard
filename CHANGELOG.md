@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.23.19
+
+### Patch Changes
+
+- [#6752](https://github.com/saleor/saleor-dashboard/pull/6752) [`7ae356f`](https://github.com/saleor/saleor-dashboard/commit/7ae356fdda0786050474c93f217f099e249c40bb) Thanks [@EugenBodanov](https://github.com/EugenBodanov)! - Add slug translation fields for products, categories, collections, and pages.
+
+- [#6667](https://github.com/saleor/saleor-dashboard/pull/6667) [`8c919fb`](https://github.com/saleor/saleor-dashboard/commit/8c919fbe506a40d93b4f7873e91aa4449076485b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Widgets can now open a full-mode popup. A WIDGET extension can dispatch the new `openPopup` App Bridge action to open one of its app's POPUP extensions declared on the same page, passing an arbitrary JSON payload to it. This lets an app render a compact widget inline and let the user expand it into a larger popup view on demand. The popup always opens with a fresh access token and fills the full popup height.
+
+- [#6762](https://github.com/saleor/saleor-dashboard/pull/6762) [`e49c816`](https://github.com/saleor/saleor-dashboard/commit/e49c816869c2bf13f5faeef8753d8a1e43fea26c) Thanks [@mirekm](https://github.com/mirekm)! - Fixed product variant channel price being reset to 0 when availability was turned off and back on before saving. The original price is now kept when re-enabling availability in the same edit session.
+
+- [#6767](https://github.com/saleor/saleor-dashboard/pull/6767) [`0bf4beb`](https://github.com/saleor/saleor-dashboard/commit/0bf4beb95aed35ff62833054f4d6cd3efd25b215) Thanks [@mirekm](https://github.com/mirekm)! - Reverted the client-side product media file size pre-check introduced in the media management improvements. Oversized images are no longer blocked in the browser before upload; Saleor Core enforces the configured size limit.
+
 ## 3.23.18
 
 ### Patch Changes
