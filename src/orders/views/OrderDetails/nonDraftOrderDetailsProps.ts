@@ -1,10 +1,27 @@
-import { type OrderNormalDetailsProps } from "./OrderNormalDetails";
-import { type OrderUnconfirmedDetailsProps } from "./OrderUnconfirmedDetails";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata";
+import { type OrderDetailsQueryResult } from "@dashboard/graphql";
+import {
+  type CloseModalFunction,
+  type OpenModalFunction,
+} from "@dashboard/utils/handlers/dialogActionHandlers";
+
+import { type OrderUrlDialog, type OrderUrlQueryParams } from "../../urls";
+import { type OrderOperationHandlers } from "./operations/handlers";
 
 /**
- * Temporary (T5): the union of props the existing Normal/Unconfirmed lifecycle
- * views need, so the new Legacy/Transaction payment-mode seam can delegate to
- * them unchanged. This type shrinks as payment-mode ownership (mutations,
- * dialogs, summary buttons) moves into the concrete views in T6–T10.
+ * Route context handed to each non-draft concrete view. The view instantiates
+ * its own operation hooks from `handlers` and forwards their results to the
+ * shared lifecycle views, so this no longer carries the mutation bundle.
  */
-export type NonDraftOrderDetailsProps = OrderNormalDetailsProps & OrderUnconfirmedDetailsProps;
+export interface NonDraftOrderDetailsProps {
+  id: string;
+  params: OrderUrlQueryParams;
+  data: OrderDetailsQueryResult["data"];
+  loading: boolean;
+  saveButtonBarState: ConfirmButtonTransitionState;
+  handleSubmit: (data: MetadataIdSchema) => Promise<unknown>;
+  openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
+  closeModal: CloseModalFunction;
+  handlers: OrderOperationHandlers;
+}

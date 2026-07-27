@@ -2,6 +2,9 @@ import { OrderStatus } from "@dashboard/graphql";
 import { type ReactElement } from "react";
 
 import { type NonDraftOrderDetailsProps } from "../nonDraftOrderDetailsProps";
+import { noopOrderMutation } from "../operations/noopOrderMutation";
+import { useCommonOrderOperations } from "../operations/useCommonOrderOperations";
+import { useTransactionOrderOperations } from "../operations/useTransactionOrderOperations";
 import { OrderNormalDetails } from "../OrderNormalDetails";
 import { OrderUnconfirmedDetails } from "../OrderUnconfirmedDetails";
 import { useOrderTransactionPolling } from "../useOrderTransactionPolling";
@@ -15,30 +18,45 @@ export interface TransactionOrderDetailsProps extends NonDraftOrderDetailsProps 
 /**
  * Transactions API order view.
  *
- * Owns transaction polling: it is the React seam that keeps polling off for
- * legacy and draft orders (they never mount this component). No payment-mode
- * flag is passed to the polling hook.
+ * Owns transaction polling and instantiates only common + transaction operation
+ * hooks — never legacy capture/void hooks. The legacy props the shared lifecycle
+ * views still require are filled with inert no-op mutations (T10 removes this
+ * once those views are payment-neutral).
  *
- * T5/T6: still delegates lifecycle rendering to the shared Normal/Unconfirmed
- * views. Remaining transaction ownership (dialogs, transactions section) moves
- * here in T7–T10. Must not call resolveOrderPaymentMode.
+ * T7: still delegates lifecycle rendering to the shared Normal/Unconfirmed
+ * views. Must not call resolveOrderPaymentMode.
  */
 export const TransactionOrderDetails = ({
+  handlers,
   startPolling,
   stopPolling,
   refetch,
-  ...props
+  ...context
 }: TransactionOrderDetailsProps): ReactElement => {
   useOrderTransactionPolling({
-    order: props.data?.order,
+    order: context.data?.order,
     startPolling,
     stopPolling,
     refetch,
   });
 
-  return props.data?.order?.status === OrderStatus.UNCONFIRMED ? (
-    <OrderUnconfirmedDetails {...props} />
+  const common = useCommonOrderOperations(handlers);
+  const transaction = useTransactionOrderOperations(handlers);
+
+  const viewProps = {
+    ...context,
+    ...common,
+    ...transaction,
+    // Transaction orders never open legacy capture/void dialogs; inert
+    // placeholders satisfy the shared views' prop contract without creating
+    // legacy hooks.
+    orderPaymentCapture: noopOrderMutation(),
+    orderVoid: noopOrderMutation(),
+  };
+
+  return context.data?.order?.status === OrderStatus.UNCONFIRMED ? (
+    <OrderUnconfirmedDetails {...viewProps} />
   ) : (
-    <OrderNormalDetails {...props} />
+    <OrderNormalDetails {...viewProps} />
   );
 };

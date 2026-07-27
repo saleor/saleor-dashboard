@@ -6,10 +6,20 @@ import { type NonDraftOrderDetailsProps } from "./nonDraftOrderDetailsProps";
 import { TransactionOrderDetails } from "./TransactionOrderDetails/TransactionOrderDetails";
 import { useOrderTransactionPolling } from "./useOrderTransactionPolling";
 
-// Delegated lifecycle views are irrelevant to polling ownership; stub them out.
+// Delegated lifecycle views and operation hooks are irrelevant to polling
+// ownership; stub them out so nothing touches Apollo.
 jest.mock("./OrderNormalDetails", () => ({ OrderNormalDetails: () => null }));
 jest.mock("./OrderUnconfirmedDetails", () => ({ OrderUnconfirmedDetails: () => null }));
 jest.mock("./useOrderTransactionPolling", () => ({ useOrderTransactionPolling: jest.fn() }));
+jest.mock("./operations/useCommonOrderOperations", () => ({
+  useCommonOrderOperations: () => ({}),
+}));
+jest.mock("./operations/useLegacyOrderOperations", () => ({
+  useLegacyOrderOperations: () => ({}),
+}));
+jest.mock("./operations/useTransactionOrderOperations", () => ({
+  useTransactionOrderOperations: () => ({}),
+}));
 
 // The concrete views forward a wide prop bundle to the (mocked) lifecycle views;
 // only `data.order` and the polling controls are exercised here, so a minimal
