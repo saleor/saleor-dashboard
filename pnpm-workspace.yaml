@@ -1,5 +1,11 @@
 blockExoticSubdeps: true
 
+# pnpm 11 reads `shamefully-hoist` from pnpm-workspace.yaml. Without it, transitive deps
+# aren't hoisted to the root node_modules, which breaks bare `node` imports in
+# lint-rule test scripts (@typescript-eslint/parser) and lets a second
+# @testing-library/jest-dom copy leak into the tsc program.
+shamefullyHoist: true
+
 # Requires versions to be older than 21 days
 # Follows recommendations from https://snyk.io/articles/npm-security-best-practices-shai-hulud-attack/
 minimumReleaseAge: 30240 # in minutes
@@ -28,6 +34,19 @@ trustPolicyExclude:
   # no-downgrade check flags it. It is already the version shipped in the lockfile.
   # https://www.npmjs.com/package/jose/v/4.15.9
   - "jose@4.15.9"
+  # ua-parser-js adopted SLSA provenance only in its 2.x line; the 1.x releases
+  # (installed 1.0.41, pulled transitively via fbjs, which pins the 1.x range)
+  # predate it and carry no attestation, so no-downgrade flags them. Legitimately
+  # published by the original author (faisalman) and signed by the npm registry.
+  # Dev/build-time only.
+  # https://www.npmjs.com/package/ua-parser-js/v/1.0.41
+  - "ua-parser-js@1.0.41"
+  # undici-types added provenance only in its 8.x line; 6.21.0 is bundled with
+  # @types/node@22 and carries no attestation, tripping no-downgrade. Published
+  # by the undici maintainers (matteo.collina / ethan_arrowood) and npm-signed.
+  # Types-only dev dependency; can't be bumped independently of @types/node.
+  # https://www.npmjs.com/package/undici-types/v/6.21.0
+  - "undici-types@6.21.0"
 
 packages:
   - "."
