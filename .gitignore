@@ -12,7 +12,6 @@
 !.github
 !.gitignore
 !.node-version
-!.npmrc
 !.plop
 !.prettierignore
 !.prettierrc
@@ -62,4 +61,6 @@ storybook-static/
 
 !.claude
 !.claude/**/.claude-plugin/
+!.agents
+!.agents/**
 playwright-failures*/
