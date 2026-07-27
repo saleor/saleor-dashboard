@@ -2,9 +2,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { type TaxClassBaseFragment } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
-import { taxesMessages } from "@dashboard/taxes/messages";
+import { TaxClassCombobox } from "@dashboard/taxes/components/TaxClassCombobox/TaxClassCombobox";
 import { type FetchMoreProps } from "@dashboard/types";
-import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ProductTypeTaxesProps {
@@ -28,32 +27,13 @@ export const ProductTypeTaxes = (props: ProductTypeTaxesProps) => {
         <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <DynamicCombobox
-          autoComplete="off"
+        <TaxClassCombobox
+          value={data.taxClassId}
+          displayName={taxClassDisplayName}
+          taxClasses={taxClasses}
           disabled={disabled}
-          label={intl.formatMessage(taxesMessages.taxClass)}
-          options={taxClasses.map(choice => ({
-            label: choice.name,
-            value: choice.id,
-          }))}
-          onScrollEnd={() => {
-            if (onFetchMore.hasMore) {
-              onFetchMore.onFetchMore();
-            }
-          }}
-          name="taxClassId"
-          value={{
-            label: taxClassDisplayName,
-            value: data.taxClassId,
-          }}
-          onChange={v =>
-            onChange({
-              target: {
-                name: "taxClassId",
-                value: v?.value ?? "",
-              },
-            })
-          }
+          onChange={onChange}
+          onFetchMore={onFetchMore}
         />
       </DashboardCard.Content>
     </DashboardCard>

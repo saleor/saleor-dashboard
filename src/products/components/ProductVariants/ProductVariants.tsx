@@ -39,6 +39,7 @@ import {
   getUnsupportedRequiredAttributes,
 } from "../ProductVariantGenerator/types";
 import { ProductVariantsHeader } from "./components/ProductVariantsHeader";
+import { StagedVariantCreatesDatagrid } from "./components/StagedVariantCreatesDatagrid";
 import {
   isVariantDatagridSupportedAttribute,
   useAttributesAdapter,
@@ -81,7 +82,14 @@ interface ProductVariantsProps {
   onChange: (data: DatagridChangeOpts) => void;
   onStageVariantRemovals?: (ids: string[]) => void;
   onRowClick: (id: string) => void;
-  onBulkCreate?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
+  onStageVariantCreates?: (
+    inputs: ProductVariantBulkCreateInput[],
+  ) => Promise<BulkCreateResult> | BulkCreateResult;
+  /** Already-staged generator creates for Exists / skip detection. */
+  stagedVariantCreates?: ProductVariantBulkCreateInput[];
+  onRemoveStagedVariantCreates?: (indexes: number[]) => void;
+  onClearStagedVariantCreates?: () => void;
+  onReplaceStagedVariantCreates?: (creates: ProductVariantBulkCreateInput[]) => void;
 }
 
 export const ProductVariants = ({
@@ -108,7 +116,11 @@ export const ProductVariants = ({
   onChange,
   onStageVariantRemovals,
   onRowClick,
-  onBulkCreate,
+  onStageVariantCreates,
+  stagedVariantCreates = [],
+  onRemoveStagedVariantCreates,
+  onClearStagedVariantCreates,
+  onReplaceStagedVariantCreates,
 }: ProductVariantsProps) => {
   const intl = useIntl();
   const [generatorOpen, setGeneratorOpen] = useState(false);
@@ -242,13 +254,6 @@ export const ProductVariants = ({
   ]);
 
   const hasAddedRows = Boolean(datagridState && datagridState.added.length > 0);
-  const hasUnsavedChanges =
-    datagridState &&
-    (datagridState.removed.length > 0 ||
-      datagridState.added.length > 0 ||
-      datagridState.changes.current.length > 0);
-
-  // Pagination/search can keep ID-keyed updates/removes; only brand-new rows are page-local.
   const guardAddedRowsThen = useCallback(
     (action: () => void) => {
       if (hasAddedRows) {
@@ -271,12 +276,8 @@ export const ProductVariants = ({
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
   const handleOpenGenerator = useCallback(() => {
-    if (hasUnsavedChanges) {
-      setShowUnsavedWarning(true);
-    } else {
-      setGeneratorOpen(true);
-    }
-  }, [hasUnsavedChanges]);
+    setGeneratorOpen(true);
+  }, []);
 
   const handleCloseGenerator = useCallback(() => {
     setGeneratorOpen(false);
@@ -288,10 +289,9 @@ export const ProductVariants = ({
 
   const handleGenerateVariants = useCallback(
     async (inputs: ProductVariantBulkCreateInput[]): Promise<BulkCreateResult> => {
-      if (onBulkCreate) {
-        const result = await onBulkCreate(inputs);
+      if (onStageVariantCreates) {
+        const result = await onStageVariantCreates(inputs);
 
-        // Only close if successful (no attribute errors)
         if (result.success && result.attributeErrors.length === 0) {
           setGeneratorOpen(false);
         }
@@ -299,7 +299,6 @@ export const ProductVariants = ({
         return result;
       }
 
-      // Fallback if no handler
       return {
         success: false,
         successCount: 0,
@@ -308,7 +307,7 @@ export const ProductVariants = ({
         otherErrors: [],
       };
     },
-    [onBulkCreate],
+    [onStageVariantCreates],
   );
 
   const hasSelectionVariantAttributes = (selectionVariantAttributes?.length ?? 0) > 0;
@@ -536,7 +535,20 @@ export const ProductVariants = ({
         onControlledSelectionChange={handleGridSelectionChange}
         rowSelectionBlending="mixed"
       />
-      {hasVariants && hasSelectionVariantAttributes && onBulkCreate && (
+      {stagedVariantCreates.length > 0 &&
+      onRemoveStagedVariantCreates &&
+      onClearStagedVariantCreates &&
+      onReplaceStagedVariantCreates ? (
+        <StagedVariantCreatesDatagrid
+          creates={stagedVariantCreates}
+          channels={channels}
+          warehouses={warehouses ?? []}
+          onReplaceCreates={onReplaceStagedVariantCreates}
+          onRemoveIndexes={onRemoveStagedVariantCreates}
+          onClearAll={onClearStagedVariantCreates}
+        />
+      ) : null}
+      {hasVariants && hasSelectionVariantAttributes && onStageVariantCreates && (
         <ProductVariantGenerator
           open={generatorOpen}
           onClose={handleCloseGenerator}
@@ -548,6 +560,7 @@ export const ProductVariants = ({
           }
           onAttributeValuesSearch={onAttributeValuesSearch}
           onSubmit={handleGenerateVariants}
+          stagedCreates={stagedVariantCreates}
         />
       )}
 

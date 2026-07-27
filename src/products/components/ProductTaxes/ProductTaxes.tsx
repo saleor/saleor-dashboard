@@ -2,9 +2,10 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { type TaxClassBaseFragment } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
+import { TaxClassCombobox } from "@dashboard/taxes/components/TaxClassCombobox/TaxClassCombobox";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { type FetchMoreProps } from "@dashboard/types";
-import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 interface ProductTaxesProps {
@@ -27,44 +28,14 @@ export const ProductTaxes = (props: ProductTaxesProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         <Box data-test-id="taxes">
-          {/* Maybe this should normal Combobox, not Dynamic? */}
-          <DynamicCombobox
+          <TaxClassCombobox
+            value={value}
+            displayName={taxClassDisplayName}
+            taxClasses={taxClasses}
             disabled={disabled}
-            options={taxClasses.map(choice => ({
-              label: choice.name,
-              value: choice.id,
-            }))}
-            value={
-              value
-                ? {
-                    value,
-                    label: taxClassDisplayName,
-                  }
-                : null
-            }
-            name="taxClassId"
-            label={intl.formatMessage(taxesMessages.taxClass)}
-            onChange={v =>
-              onChange({
-                /**
-                 * Fake change event
-                 * 1. Upper handlers rely on event, not values
-                 * 2. Macaw's select doesn't expose inner event
-                 *
-                 * TODO: Expose native events from Macaw for interoperability
-                 */
-                target: {
-                  value: v?.value ?? "",
-                  name: "taxClassId",
-                },
-              })
-            }
-            onScrollEnd={() => {
-              if (onFetchMore.hasMore) {
-                onFetchMore.onFetchMore();
-              }
-            }}
-            loading={onFetchMore.loading}
+            emptyOptionMessage={taxesMessages.taxClassProductTypeDefault}
+            onChange={onChange}
+            onFetchMore={onFetchMore}
           />
         </Box>
       </DashboardCard.Content>

@@ -3,11 +3,12 @@ import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { type TaxClassBaseFragment } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { sectionNames } from "@dashboard/intl";
+import { TaxClassCombobox } from "@dashboard/taxes/components/TaxClassCombobox/TaxClassCombobox";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { taxClassesListUrl } from "@dashboard/taxes/urls";
 import { type FetchMoreProps } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface ShippingMethodTaxesProps {
@@ -39,37 +40,17 @@ export const ShippingMethodTaxes = (props: ShippingMethodTaxesProps) => {
         <DashboardCard.Title>{intl.formatMessage(sectionNames.taxes)}</DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <DynamicCombobox
-          autoComplete="off"
-          data-test-id="taxes"
-          disabled={disabled}
-          label={intl.formatMessage(taxesMessages.taxClass)}
-          options={taxClasses.map(choice => ({
-            label: choice.name,
-            value: choice.id,
-          }))}
-          /**
-           * Combobox without "Dynamic" doesnt expose onScrollEnd, when its added to Macaw, we can use simple version of this component (Combobox)
-           */
-          onScrollEnd={() => {
-            if (onFetchMore.hasMore) {
-              onFetchMore.onFetchMore();
-            }
-          }}
-          name="taxClassId"
-          value={{
-            label: taxClassDisplayName,
-            value,
-          }}
-          onChange={v =>
-            onChange({
-              target: {
-                value: v?.value ?? "",
-                name: "taxClassId",
-              },
-            })
-          }
-        />
+        <Box data-test-id="taxes">
+          <TaxClassCombobox
+            value={value}
+            displayName={taxClassDisplayName}
+            taxClasses={taxClasses}
+            disabled={disabled}
+            emptyOptionMessage={taxesMessages.taxClassShippingDefault}
+            onChange={onChange}
+            onFetchMore={onFetchMore}
+          />
+        </Box>
         <Box marginTop={2}>
           <DashboardCard.Subtitle
             fontSize={3}
