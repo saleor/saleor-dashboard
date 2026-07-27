@@ -1,5 +1,7 @@
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 import { render } from "@testing-library/react";
+import { type ReactElement } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 import { LegacyOrderDetails } from "./LegacyOrderDetails/LegacyOrderDetails";
 import { type NonDraftOrderDetailsProps } from "./nonDraftOrderDetailsProps";
@@ -32,6 +34,9 @@ const pollingControls = {
   refetch: jest.fn(() => Promise.resolve()),
 };
 
+// Both concrete views navigate from their payment actions, so they need a router.
+const renderInRouter = (view: ReactElement) => render(<MemoryRouter>{view}</MemoryRouter>);
+
 describe("transaction polling ownership", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -39,7 +44,7 @@ describe("transaction polling ownership", () => {
 
   it("mounts transaction polling for the Transactions view", () => {
     // Act
-    render(<TransactionOrderDetails {...baseProps} {...pollingControls} />);
+    renderInRouter(<TransactionOrderDetails {...baseProps} {...pollingControls} />);
 
     // Assert
     expect(useOrderTransactionPolling).toHaveBeenCalledTimes(1);
@@ -50,7 +55,7 @@ describe("transaction polling ownership", () => {
 
   it("never mounts transaction polling for the Legacy view", () => {
     // Act
-    render(<LegacyOrderDetails {...baseProps} />);
+    renderInRouter(<LegacyOrderDetails {...baseProps} />);
 
     // Assert
     expect(useOrderTransactionPolling).not.toHaveBeenCalled();

@@ -1,9 +1,7 @@
 // @ts-strict-ignore
 import {
-  OrderAction,
   type OrderPaymentFragment,
   type PaymentGatewayFragment,
-  TransactionActionEnum,
   TransactionKind,
 } from "@dashboard/graphql";
 import {
@@ -123,21 +121,3 @@ export const mapPaymentToTransactionEvents = (
     })
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 };
-
-export const mapOrderActionsToTransactionActions = (
-  orderActions: OrderAction[],
-): TransactionActionEnum[] =>
-  orderActions
-    .map(action => {
-      switch (action) {
-        case OrderAction.VOID:
-          return TransactionActionEnum.CANCEL;
-        case OrderAction.CAPTURE:
-          return TransactionActionEnum.CHARGE;
-        case OrderAction.REFUND:
-          return TransactionActionEnum.REFUND;
-        default:
-          return null;
-      }
-    })
-    .filter(mappedAction => mappedAction !== null);

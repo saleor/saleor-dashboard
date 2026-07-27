@@ -20,10 +20,8 @@ import { getFilteredPayments } from "./utils";
 
 interface OrderTransactionsSectionProps {
   order: OrderDetailsFragment;
-  shop: OrderDetailsQuery["shop"];
+  shop?: OrderDetailsQuery["shop"];
   onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
-  onPaymentCapture: () => any;
-  onPaymentVoid: () => any;
   onAddManualTransaction: () => any;
   onRefundAdd: () => void;
 }
@@ -32,8 +30,6 @@ export const OrderTransactionsSection = ({
   order,
   shop,
   onTransactionAction,
-  onPaymentCapture,
-  onPaymentVoid,
   onAddManualTransaction,
   onRefundAdd,
 }: OrderTransactionsSectionProps): JSX.Element => {
@@ -85,8 +81,6 @@ export const OrderTransactionsSection = ({
             key={payment.id}
             payment={payment}
             allPaymentMethods={shop?.availablePaymentGateways}
-            onCapture={onPaymentCapture}
-            onVoid={onPaymentVoid}
           />
         ))}
         {order?.giftCards?.map(giftCard => (

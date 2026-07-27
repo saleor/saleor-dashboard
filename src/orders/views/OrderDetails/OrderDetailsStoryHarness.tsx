@@ -4,7 +4,11 @@ import {
   OrderStatus,
   type TransactionActionEnum,
 } from "@dashboard/graphql";
+import { LegacyPaymentsApiButtons } from "@dashboard/orders/components/OrderSummary/LegacyPaymentsApiButtons";
+import { TransactionsApiButtons } from "@dashboard/orders/components/OrderSummary/TransactionsApiButtons";
+import { OrderTransactionsSection } from "@dashboard/orders/components/OrderTransactionsSection/OrderTransactionsSection";
 import { shop as shopFixture } from "@dashboard/orders/fixtures";
+import { resolveOrderPaymentMode } from "@dashboard/orders/resolveOrderPaymentMode";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { type ReactElement } from "react";
@@ -19,6 +23,9 @@ import OrderDetailsPage from "../../components/OrderDetailsPage/OrderDetailsPage
  * and supplies the app-shell contexts (dev mode, order discounts) that the page
  * expects. Story names, DOM output and the exposed callback names must survive
  * the payment-view split so the interaction suite runs unchanged after it.
+ *
+ * It stands in for the route: like the concrete Legacy/Transaction views, it
+ * resolves the payment mode once and supplies the resulting payment slots.
  */
 interface OrderDetailsStoryHarnessProps {
   order: OrderDetailsFragment;
@@ -47,6 +54,28 @@ const devModeContextValue = {
 export const OrderDetailsStoryHarness = (props: OrderDetailsStoryHarnessProps): ReactElement => {
   const { order } = props;
   const isUnconfirmed = order.status === OrderStatus.UNCONFIRMED;
+  const isTransactions = resolveOrderPaymentMode(order).kind === "transactions";
+
+  const paymentActions = isTransactions ? (
+    <TransactionsApiButtons order={order} onMarkAsPaid={props.onMarkAsPaid ?? fn()} />
+  ) : (
+    <LegacyPaymentsApiButtons
+      order={order}
+      onCapture={props.onPaymentCapture ?? fn()}
+      onRefund={props.onPaymentRefund ?? fn()}
+      onVoid={props.onPaymentVoid ?? fn()}
+      onMarkAsPaid={props.onMarkAsPaid ?? fn()}
+    />
+  );
+  const paymentSection = isTransactions ? (
+    <OrderTransactionsSection
+      order={order}
+      shop={shopFixture}
+      onTransactionAction={props.onTransactionAction ?? fn()}
+      onAddManualTransaction={props.onAddManualTransaction ?? fn()}
+      onRefundAdd={props.onRefundAdd ?? fn()}
+    />
+  ) : null;
 
   const page = (
     <OrderDetailsPage
@@ -56,13 +85,8 @@ export const OrderDetailsStoryHarness = (props: OrderDetailsStoryHarnessProps): 
       errors={[]}
       shippingMethods={order.shippingMethods ?? []}
       saveButtonBarState="default"
-      onMarkAsPaid={props.onMarkAsPaid ?? fn()}
-      onPaymentCapture={props.onPaymentCapture ?? fn()}
-      onPaymentRefund={props.onPaymentRefund ?? fn()}
-      onPaymentVoid={props.onPaymentVoid ?? fn()}
-      onTransactionAction={props.onTransactionAction ?? fn()}
-      onAddManualTransaction={props.onAddManualTransaction ?? fn()}
-      onRefundAdd={props.onRefundAdd ?? fn()}
+      paymentActions={paymentActions}
+      paymentSection={paymentSection}
       onOrderReturn={props.onOrderReturn ?? fn()}
       onProfileView={props.onProfileView ?? fn()}
       onInvoiceGenerate={props.onInvoiceGenerate ?? fn()}

@@ -20,7 +20,6 @@ import {
   type OrderErrorFragment,
   type OrderNoteUpdateMutation,
   OrderStatus,
-  type TransactionActionEnum,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -28,12 +27,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
-import { orderShouldUseTransactions } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Divider } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useContext, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -48,7 +46,6 @@ import OrderInvoiceList from "../OrderInvoiceList";
 import { LinePriceWaterfallModal } from "../OrderLinePriceBreakdown/components/LinePriceWaterfallModal";
 import { useOrderLinePriceWaterfall } from "../OrderLinePriceBreakdown/hooks/useOrderLinePriceWaterfall";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
-import { OrderTransactionsSection } from "../OrderTransactionsSection/OrderTransactionsSection";
 import { messages } from "./messages";
 import Title from "./Title";
 import { createOrderMetadataIdSchema } from "./utils";
@@ -78,10 +75,6 @@ interface OrderDetailsPageProps {
   onFulfillmentTrackingNumberUpdate: (id: string) => any;
   onOrderFulfill: () => any;
   onProductClick?: (id: string) => any;
-  onPaymentCapture: () => any;
-  onMarkAsPaid: () => any;
-  onPaymentRefund: () => any;
-  onPaymentVoid: () => any;
   onShippingAddressEdit: () => any;
   onOrderCancel: () => any;
   onNoteAdd: (data: HistoryFormData) => any;
@@ -92,9 +85,12 @@ interface OrderDetailsPageProps {
   onInvoiceClick: (invoiceId: string) => any;
   onInvoiceGenerate: () => any;
   onInvoiceSend: (invoiceId: string) => any;
-  onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
-  onAddManualTransaction: () => any;
-  onRefundAdd: () => void;
+  /**
+   * Payment-mode owned slots. The page never decides which payment UI to show —
+   * the concrete Legacy/Transaction view supplies these already resolved.
+   */
+  paymentActions?: ReactNode;
+  paymentSection?: ReactNode;
   onSubmit?: (data: MetadataIdSchema) => SubmitPromise;
   focusedLineId?: string;
   onFocusedLineChange?: (lineId: string | null) => void;
@@ -116,9 +112,6 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     onNoteUpdateLoading,
     onOrderCancel,
     onOrderFulfill,
-    onPaymentCapture,
-    onPaymentRefund,
-    onPaymentVoid,
     onShippingAddressEdit,
     onProfileView,
     onInvoiceClick,
@@ -131,13 +124,11 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
     orderLineRemoveConfirmState,
     orderLineRemoveErrors,
     onShippingMethodEdit,
-    onTransactionAction,
-    onAddManualTransaction,
     onOrderLineShowMetadata,
     onOrderShowMetadata,
     onFulfillmentShowMetadata,
-    onMarkAsPaid,
-    onRefundAdd,
+    paymentActions,
+    paymentSection,
     onSubmit,
     focusedLineId,
     onFocusedLineChange,
@@ -290,27 +281,12 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
         {order && !isOrderUnconfirmed && (
           <>
             {(unfulfilled.length > 0 || (order.fulfillments?.length ?? 0) > 0) && <CardSpacer />}
-            <OrderSummary
-              order={order}
-              onMarkAsPaid={onMarkAsPaid}
-              useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
-              onLegacyPaymentsApiCapture={onPaymentCapture}
-              onLegacyPaymentsApiRefund={onPaymentRefund}
-              onLegacyPaymentsApiVoid={onPaymentVoid}
-            />
+            <OrderSummary order={order} actions={paymentActions} />
 
-            {orderShouldUseTransactions(order) && (
+            {paymentSection && (
               <>
                 <CardSpacer />
-                <OrderTransactionsSection
-                  order={order}
-                  shop={shop}
-                  onTransactionAction={onTransactionAction}
-                  onPaymentCapture={onPaymentCapture}
-                  onPaymentVoid={onPaymentVoid}
-                  onAddManualTransaction={onAddManualTransaction}
-                  onRefundAdd={onRefundAdd}
-                />
+                {paymentSection}
               </>
             )}
           </>
@@ -321,29 +297,17 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
             {(order.fulfillments?.length ?? 0) > 0 && <CardSpacer />}
             <OrderSummary
               order={order}
-              onMarkAsPaid={onMarkAsPaid}
-              useLegacyPaymentsApi={!orderShouldUseTransactions(order)}
-              onLegacyPaymentsApiCapture={onPaymentCapture}
-              onLegacyPaymentsApiRefund={onPaymentRefund}
-              onLegacyPaymentsApiVoid={onPaymentVoid}
+              actions={paymentActions}
               isEditable
               onShippingMethodEdit={onShippingMethodEdit}
               errors={errors}
               {...orderDiscountContext}
             />
 
-            {orderShouldUseTransactions(order) && (
+            {paymentSection && (
               <>
                 <CardSpacer />
-                <OrderTransactionsSection
-                  order={order}
-                  shop={shop}
-                  onTransactionAction={onTransactionAction}
-                  onPaymentCapture={onPaymentCapture}
-                  onPaymentVoid={onPaymentVoid}
-                  onAddManualTransaction={onAddManualTransaction}
-                  onRefundAdd={onRefundAdd}
-                />
+                {paymentSection}
               </>
             )}
           </>

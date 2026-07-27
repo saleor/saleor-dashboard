@@ -15,7 +15,6 @@ import {
   type OrderTransactionRequestActionMutationVariables,
   type OrderUpdateMutation,
   type OrderUpdateMutationVariables,
-  TransactionActionEnum,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
@@ -37,7 +36,7 @@ import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrder
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
@@ -103,6 +102,9 @@ export interface OrderUnconfirmedDetailsProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   openModal: any;
   closeModal: any;
+  /** Payment-mode owned slots, supplied by the concrete Legacy/Transaction view. */
+  paymentActions?: ReactNode;
+  paymentSection?: ReactNode;
 }
 
 export const OrderUnconfirmedDetails = ({
@@ -132,6 +134,8 @@ export const OrderUnconfirmedDetails = ({
   orderAddManualTransaction,
   openModal,
   closeModal,
+  paymentActions,
+  paymentSection,
 }: OrderUnconfirmedDetailsProps) => {
   const order = data.order;
   const shop = data.shop;
@@ -221,21 +225,8 @@ export const OrderUnconfirmedDetails = ({
             }
             order={order}
             shop={shop}
-            onTransactionAction={(id, action) =>
-              openModal(
-                action === TransactionActionEnum.CHARGE
-                  ? "transaction-charge-action"
-                  : "transaction-action",
-                {
-                  type: action,
-                  id,
-                  action:
-                    action === TransactionActionEnum.CHARGE
-                      ? "transaction-charge-action"
-                      : "transaction-action",
-                },
-              )
-            }
+            paymentActions={paymentActions}
+            paymentSection={paymentSection}
             onOrderLineAdd={() => openModal("add-order-line")}
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
@@ -275,15 +266,10 @@ export const OrderUnconfirmedDetails = ({
                 orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
               )
             }
-            onPaymentCapture={() => openModal("capture")}
-            onPaymentVoid={() => openModal("void")}
-            onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
-            onMarkAsPaid={() => openModal("mark-paid")}
             onProfileView={() => navigate(customerUrl(order.user.id))}
-            onAddManualTransaction={() => openModal("add-manual-transaction")}
             onInvoiceClick={id =>
               window.open(
                 order.invoices.find(invoice => invoice.id === id)?.url,
@@ -297,7 +283,6 @@ export const OrderUnconfirmedDetails = ({
               })
             }
             onInvoiceSend={id => openModal("invoice-send", { id })}
-            onRefundAdd={() => openModal("add-refund")}
             onSubmit={handleSubmit}
             focusedLineId={params.lineId}
             onFocusedLineChange={lineId =>

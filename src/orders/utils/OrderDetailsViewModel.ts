@@ -94,6 +94,17 @@ export abstract class OrderDetailsViewModel {
     );
   }
 
+  /** Convenience wrapper over `hasNoPayment` for callers that hold the whole order. */
+  static orderHasNoPayment(order: OrderDetailsFragment): boolean {
+    return this.hasNoPayment({
+      canAnyRefund: this.canAnyRefund(order),
+      shouldDisplay: this.getShouldDisplayAmounts(order),
+      hasGiftCards: this.hasGiftCards(
+        this.getGiftCardsAmountUsed({ id: order.id, giftCards: order.giftCards }),
+      ),
+    });
+  }
+
   static getGiftCardsAmountUsed(args: {
     id: string;
     giftCards: OrderDetailsFragment["giftCards"];

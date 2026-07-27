@@ -2,15 +2,13 @@ import { type OrderDetailsFragment, type OrderErrorFragment } from "@dashboard/g
 import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { type OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { Box, type PropsWithBox, Text } from "@saleor/macaw-ui-next";
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { getLineDiscountsSummary } from "./getLineDiscountsSummary";
 import { getUndiscountedSubtotal } from "./getUndiscountedSubtotal";
-import { LegacyPaymentsApiButtons } from "./LegacyPaymentsApiButtons";
 import { OrderValue } from "./OrderValue";
 import { PaymentsSummary } from "./PaymentsSummary";
-import { TransactionsApiButtons } from "./TransactionsApiButtons";
 
 type EditableOrderSummary = {
   isEditable: true;
@@ -25,34 +23,20 @@ type ReadOnlyOrderSummary = {
 type Props = PropsWithBox<
   {
     order: OrderDetailsFragment;
-    onMarkAsPaid?: () => void;
-    useLegacyPaymentsApi?: boolean;
-    onLegacyPaymentsApiCapture?: () => void;
-    onLegacyPaymentsApiRefund?: () => void;
-    onLegacyPaymentsApiVoid?: () => void;
+    /** Payment-mode actions rendered next to the heading. Owned by the concrete view. */
+    actions?: ReactNode;
   } & (EditableOrderSummary | ReadOnlyOrderSummary)
 >;
 
 export const OrderSummary = (props: Props) => {
-  const { order, onMarkAsPaid, useLegacyPaymentsApi = false, isEditable = false } = props;
+  const { order, actions, isEditable = false } = props;
   const intl = useIntl();
   const giftCardsAmount = OrderDetailsViewModel.getGiftCardsAmountUsed({
     id: order.id,
     giftCards: order.giftCards,
   });
   const usedGiftCards = OrderDetailsViewModel.getUsedGiftCards(order.giftCards);
-  const canMarkAsPaid = OrderDetailsViewModel.canOrderBeMarkedAsPaid(order.actions);
-  const canAnyRefund = OrderDetailsViewModel.canAnyRefund(order);
-  const hasGiftCards = OrderDetailsViewModel.hasGiftCards(giftCardsAmount);
-  const shouldDisplay = OrderDetailsViewModel.getShouldDisplayAmounts(order);
-  const hasNoPayment = OrderDetailsViewModel.hasNoPayment({
-    canAnyRefund,
-    shouldDisplay,
-    hasGiftCards,
-  });
-  const canCapture = OrderDetailsViewModel.canOrderCapture(order.actions);
-  const canVoid = OrderDetailsViewModel.canOrderVoid(order.actions);
-  const canRefund = OrderDetailsViewModel.canOrderRefund(order.actions);
+  const hasNoPayment = OrderDetailsViewModel.orderHasNoPayment(order);
 
   const editableProps = isEditable ? (props as Props & EditableOrderSummary) : null;
 
@@ -74,33 +58,7 @@ export const OrderSummary = (props: Props) => {
           })}
         </Text>
 
-        {useLegacyPaymentsApi ? (
-          <LegacyPaymentsApiButtons
-            order={order}
-            canCapture={canCapture}
-            canVoid={canVoid}
-            canRefund={canRefund}
-            canMarkAsPaid={canMarkAsPaid}
-            onMarkAsPaid={onMarkAsPaid}
-            onLegacyPaymentsApiCapture={
-              "onLegacyPaymentsApiCapture" in props ? props.onLegacyPaymentsApiCapture : undefined
-            }
-            onLegacyPaymentsApiRefund={
-              "onLegacyPaymentsApiRefund" in props ? props.onLegacyPaymentsApiRefund : undefined
-            }
-            onLegacyPaymentsApiVoid={
-              "onLegacyPaymentsApiVoid" in props ? props.onLegacyPaymentsApiVoid : undefined
-            }
-          />
-        ) : (
-          onMarkAsPaid && (
-            <TransactionsApiButtons
-              canMarkAsPaid={canMarkAsPaid}
-              onMarkAsPaid={onMarkAsPaid}
-              hasNoPayment={hasNoPayment}
-            />
-          )
-        )}
+        {actions}
       </Box>
 
       <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={3}>

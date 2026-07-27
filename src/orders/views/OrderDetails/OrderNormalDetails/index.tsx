@@ -17,7 +17,6 @@ import {
   type OrderTransactionRequestActionMutationVariables,
   type OrderUpdateMutation,
   type OrderUpdateMutationVariables,
-  TransactionActionEnum,
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
@@ -45,7 +44,7 @@ import {
   type OpenModalFunction,
 } from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
@@ -103,6 +102,9 @@ export interface OrderNormalDetailsProps {
   >;
   openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
   closeModal: CloseModalFunction;
+  /** Payment-mode owned slots, supplied by the concrete Legacy/Transaction view. */
+  paymentActions?: ReactNode;
+  paymentSection?: ReactNode;
 }
 interface ApprovalState {
   fulfillment: FulfillmentFragment;
@@ -133,6 +135,8 @@ export const OrderNormalDetails = ({
   orderAddManualTransaction,
   openModal,
   closeModal,
+  paymentActions,
+  paymentSection,
 }: OrderNormalDetailsProps) => {
   const order = data?.order;
   const shop = data?.shop;
@@ -245,21 +249,8 @@ export const OrderNormalDetails = ({
         onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
         onOrderShowMetadata={() => openModal("view-order-metadata")}
         onFulfillmentShowMetadata={id => openModal("view-fulfillment-metadata", { id })}
-        onTransactionAction={(id, action) =>
-          openModal(
-            action === TransactionActionEnum.CHARGE
-              ? "transaction-charge-action"
-              : "transaction-action",
-            {
-              type: action,
-              id,
-              action:
-                action === TransactionActionEnum.CHARGE
-                  ? "transaction-charge-action"
-                  : "transaction-action",
-            },
-          )
-        }
+        paymentActions={paymentActions}
+        paymentSection={paymentSection}
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
           navigate(
@@ -276,15 +267,10 @@ export const OrderNormalDetails = ({
             orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
           )
         }
-        onPaymentCapture={() => openModal("capture")}
-        onPaymentVoid={() => openModal("void")}
-        onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
-        onMarkAsPaid={() => openModal("mark-paid")}
         onProfileView={() => navigate(customerUrl(order.user.id))}
-        onAddManualTransaction={() => openModal("add-manual-transaction")}
         onInvoiceClick={id =>
           window.open(
             order.invoices.find(invoice => invoice.id === id)?.url,
@@ -298,7 +284,6 @@ export const OrderNormalDetails = ({
           })
         }
         onInvoiceSend={id => openModal("invoice-send", { id })}
-        onRefundAdd={() => openModal("add-refund")}
         focusedLineId={params.lineId}
         onFocusedLineChange={lineId =>
           navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
