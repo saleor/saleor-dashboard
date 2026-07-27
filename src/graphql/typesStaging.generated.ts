@@ -7021,8 +7021,6 @@ export enum ProductTypeConfigurable {
 }
 
 export enum ProductTypeEnum {
-  /** @deprecated DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead. */
-  DIGITAL = 'DIGITAL',
   SHIPPABLE = 'SHIPPABLE'
 }
 
@@ -7043,8 +7041,6 @@ export type ProductTypeInput = {
    * @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
    */
   hasVariants?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Determines if products are digital - doesn't have any effect, it's present for backward-compatibility. */
-  isDigital?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if shipping is required for products of this variant. */
   isShippingRequired?: InputMaybe<Scalars['Boolean']['input']>;
   /** The product type kind. */
@@ -7074,11 +7070,6 @@ export enum ProductTypeKindEnum {
 }
 
 export enum ProductTypeSortField {
-  /**
-   * Sort products by type.
-   * @deprecated DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.
-   */
-  DIGITAL = 'DIGITAL',
   /** Sort products by name. */
   NAME = 'NAME',
   /** Sort products by shipping. */
