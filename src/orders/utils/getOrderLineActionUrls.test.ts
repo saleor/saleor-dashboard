@@ -3,7 +3,6 @@ import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
 
 import {
   getOrderLineFulfillUrl,
-  getOrderLineRefundUrl,
   getOrderLineReturnUrl,
   getTimelineFulfillmentSegment,
   hasLineFulfillableItems,
@@ -47,18 +46,6 @@ describe("getOrderLineActionUrls", () => {
 
     // Assert
     expect(url).toContain(`/orders/${encodeURIComponent(order.id)}/return`);
-    expect(url).toContain(`lineId=${encodeURIComponent(lineId)}`);
-  });
-
-  it("builds transaction refund url for transaction orders", () => {
-    // Arrange
-    const transactionOrder = OrderFixture.fulfilled().withTransaction().build();
-
-    // Act
-    const url = getOrderLineRefundUrl(transactionOrder, lineId);
-
-    // Assert
-    expect(url).toContain(`/orders/${encodeURIComponent(transactionOrder.id)}/refund`);
     expect(url).toContain(`lineId=${encodeURIComponent(lineId)}`);
   });
 

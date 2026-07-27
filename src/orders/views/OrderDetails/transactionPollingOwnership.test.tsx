@@ -22,12 +22,23 @@ jest.mock("./operations/useLegacyOrderOperations", () => ({
 jest.mock("./operations/useTransactionOrderOperations", () => ({
   useTransactionOrderOperations: () => ({}),
 }));
+jest.mock("./LegacyOrderDetails/LegacyPaymentDialogs", () => ({
+  LegacyPaymentDialogs: () => null,
+}));
+jest.mock("./TransactionOrderDetails/TransactionPaymentDialogs", () => ({
+  TransactionPaymentDialogs: () => null,
+}));
 
 // The concrete views forward a wide prop bundle to the (mocked) lifecycle views;
 // only `data.order` and the polling controls are exercised here, so a minimal
 // fixture cast keeps the test focused on ownership.
 const order = OrderFixture.fulfilled().withTransaction().build();
-const baseProps = { data: { order }, loading: false } as unknown as NonDraftOrderDetailsProps;
+const baseProps = {
+  id: order.id,
+  params: {},
+  data: { order },
+  loading: false,
+} as unknown as NonDraftOrderDetailsProps;
 const pollingControls = {
   startPolling: jest.fn(),
   stopPolling: jest.fn(),

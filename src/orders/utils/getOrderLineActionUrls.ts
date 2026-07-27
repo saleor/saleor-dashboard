@@ -2,7 +2,6 @@ import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql
 
 import { getUnfulfilledLines } from "../components/OrderReturnPage/utils";
 import { orderFulfillUrl, orderReturnUrl } from "../urls";
-import { getOrderRefundNavigation } from "./getOrderRefundNavigation";
 
 const RETURNABLE_FULFILLMENT_STATUSES = new Set<FulfillmentStatus>([
   FulfillmentStatus.FULFILLED,
@@ -81,6 +80,3 @@ export const getOrderLineFulfillUrl = (orderId: string, lineId: string) =>
 
 export const getOrderLineReturnUrl = (orderId: string, lineId: string) =>
   orderReturnUrl(orderId, { lineId });
-
-export const getOrderLineRefundUrl = (order: OrderDetailsFragment, lineId: string) =>
-  getOrderRefundNavigation(order, { lineId }).url;

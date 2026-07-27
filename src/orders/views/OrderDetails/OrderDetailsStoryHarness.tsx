@@ -8,6 +8,11 @@ import { LegacyPaymentsApiButtons } from "@dashboard/orders/components/OrderSumm
 import { TransactionsApiButtons } from "@dashboard/orders/components/OrderSummary/TransactionsApiButtons";
 import { OrderTransactionsSection } from "@dashboard/orders/components/OrderTransactionsSection/OrderTransactionsSection";
 import { shop as shopFixture } from "@dashboard/orders/fixtures";
+import {
+  createLegacyRefundNavigationAdapter,
+  createTransactionRefundNavigationAdapter,
+  OrderRefundNavigationProvider,
+} from "@dashboard/orders/orderRefundNavigation";
 import { resolveOrderPaymentMode } from "@dashboard/orders/resolveOrderPaymentMode";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
@@ -55,6 +60,9 @@ export const OrderDetailsStoryHarness = (props: OrderDetailsStoryHarnessProps): 
   const { order } = props;
   const isUnconfirmed = order.status === OrderStatus.UNCONFIRMED;
   const isTransactions = resolveOrderPaymentMode(order).kind === "transactions";
+  const refundNavigation = isTransactions
+    ? createTransactionRefundNavigationAdapter(order)
+    : createLegacyRefundNavigationAdapter(order);
 
   const paymentActions = isTransactions ? (
     <TransactionsApiButtons order={order} onMarkAsPaid={props.onMarkAsPaid ?? fn()} />
@@ -78,39 +86,41 @@ export const OrderDetailsStoryHarness = (props: OrderDetailsStoryHarnessProps): 
   ) : null;
 
   const page = (
-    <OrderDetailsPage
-      order={order}
-      shop={shopFixture}
-      loading={false}
-      errors={[]}
-      shippingMethods={order.shippingMethods ?? []}
-      saveButtonBarState="default"
-      paymentActions={paymentActions}
-      paymentSection={paymentSection}
-      onOrderReturn={props.onOrderReturn ?? fn()}
-      onProfileView={props.onProfileView ?? fn()}
-      onInvoiceGenerate={props.onInvoiceGenerate ?? fn()}
-      onOrderShowMetadata={props.onOrderShowMetadata ?? fn()}
-      onBillingAddressEdit={fn()}
-      onShippingAddressEdit={fn()}
-      onFulfillmentApprove={fn()}
-      onFulfillmentCancel={fn()}
-      onFulfillmentTrackingNumberUpdate={fn()}
-      onFulfillmentShowMetadata={fn()}
-      onOrderLineShowMetadata={fn()}
-      onOrderFulfill={fn()}
-      onOrderCancel={fn()}
-      onNoteAdd={fn()}
-      onNoteUpdate={fn() as never}
-      onNoteUpdateLoading={false}
-      onInvoiceClick={fn()}
-      onInvoiceSend={fn()}
-      onOrderLineAdd={fn()}
-      onOrderLineChange={fn()}
-      onOrderLineRemove={fn()}
-      onShippingMethodEdit={fn()}
-      onSubmit={isUnconfirmed ? (fn(() => Promise.resolve([])) as never) : undefined}
-    />
+    <OrderRefundNavigationProvider adapter={refundNavigation}>
+      <OrderDetailsPage
+        order={order}
+        shop={shopFixture}
+        loading={false}
+        errors={[]}
+        shippingMethods={order.shippingMethods ?? []}
+        saveButtonBarState="default"
+        paymentActions={paymentActions}
+        paymentSection={paymentSection}
+        onOrderReturn={props.onOrderReturn ?? fn()}
+        onProfileView={props.onProfileView ?? fn()}
+        onInvoiceGenerate={props.onInvoiceGenerate ?? fn()}
+        onOrderShowMetadata={props.onOrderShowMetadata ?? fn()}
+        onBillingAddressEdit={fn()}
+        onShippingAddressEdit={fn()}
+        onFulfillmentApprove={fn()}
+        onFulfillmentCancel={fn()}
+        onFulfillmentTrackingNumberUpdate={fn()}
+        onFulfillmentShowMetadata={fn()}
+        onOrderLineShowMetadata={fn()}
+        onOrderFulfill={fn()}
+        onOrderCancel={fn()}
+        onNoteAdd={fn()}
+        onNoteUpdate={fn() as never}
+        onNoteUpdateLoading={false}
+        onInvoiceClick={fn()}
+        onInvoiceSend={fn()}
+        onOrderLineAdd={fn()}
+        onOrderLineChange={fn()}
+        onOrderLineRemove={fn()}
+        onShippingMethodEdit={fn()}
+        onSubmit={isUnconfirmed ? (fn(() => Promise.resolve([])) as never) : undefined}
+      />
+    </OrderRefundNavigationProvider>
   );
 
   if (isUnconfirmed) {

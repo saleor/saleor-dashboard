@@ -12,12 +12,12 @@ import { TrackingNumberDisplay } from "@dashboard/orders/components/OrderCardTit
 import { WarehouseInfo } from "@dashboard/orders/components/OrderCardTitle/WarehouseInfo";
 import { ActionButtons } from "@dashboard/orders/components/OrderFulfillmentCard/ActionButtons";
 import { ReasonDisplay } from "@dashboard/orders/components/ReasonDisplay/ReasonDisplay";
+import { useOrderRefundNavigation } from "@dashboard/orders/orderRefundNavigation";
 import {
   type LineShipmentEntry,
   type OrderLineLifecycle,
 } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { getOrderLineDisplayName } from "@dashboard/orders/utils/data";
-import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
 import { useMemo } from "react";
@@ -75,7 +75,7 @@ export const OrderLineExpandedPanel = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const { locale } = useLocale();
-  const refundNavigation = getOrderRefundNavigation(order, { lineId: lifecycle.orderLineId });
+  const refundNavigation = useOrderRefundNavigation({ lineId: lifecycle.orderLineId });
   const line = lifecycle.orderLine;
   const shipments = lifecycle.shipments;
   const grantedRefundEntries = lifecycle.grantedRefundEntries;
@@ -252,7 +252,7 @@ export const OrderLineExpandedPanel = ({
                     onTrackingCodeAdd={() => onTrackingCodeAdd(fulfillment.id)}
                     onApprove={() => onOrderFulfillmentApprove(fulfillment.id)}
                     onRefund={
-                      refundNavigation.canRefund ? () => navigate(refundNavigation.url) : undefined
+                      refundNavigation?.canRefund ? () => navigate(refundNavigation.url) : undefined
                     }
                   />
                   {showCancelMenu ? (

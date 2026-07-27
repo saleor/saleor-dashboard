@@ -1,26 +1,28 @@
 import { OrderStatus } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { LegacyPaymentsApiButtons } from "@dashboard/orders/components/OrderSummary/LegacyPaymentsApiButtons";
-import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
-import { type ReactElement } from "react";
+import {
+  createLegacyRefundNavigationAdapter,
+  OrderRefundNavigationProvider,
+} from "@dashboard/orders/orderRefundNavigation";
+import { type ReactElement, useMemo } from "react";
 
 import { type NonDraftOrderDetailsProps } from "../nonDraftOrderDetailsProps";
-import { noopOrderMutation } from "../operations/noopOrderMutation";
 import { useCommonOrderOperations } from "../operations/useCommonOrderOperations";
 import { useLegacyOrderOperations } from "../operations/useLegacyOrderOperations";
 import { OrderNormalDetails } from "../OrderNormalDetails";
 import { OrderUnconfirmedDetails } from "../OrderUnconfirmedDetails";
+import { LegacyPaymentDialogs } from "./LegacyPaymentDialogs";
 
 /**
  * Legacy Payments API order view.
  *
- * Instantiates only common + legacy operation hooks — never transaction hooks —
- * and owns the legacy summary actions. The transaction props the shared
- * lifecycle views still require are filled with inert no-op mutations (T10
- * removes this once those views are payment-neutral).
+ * Owns the legacy summary actions, the legacy capture/void/mark-as-paid
+ * dialogs and the legacy refund destination, and instantiates only common +
+ * legacy operation hooks — never transaction hooks.
  *
- * T8: still delegates lifecycle rendering to the shared Normal/Unconfirmed
- * views. Must not call resolveOrderPaymentMode.
+ * T9: still delegates lifecycle rendering to the shared Normal/Unconfirmed
+ * views, which are now payment-neutral. Must not call resolveOrderPaymentMode.
  */
 export const LegacyOrderDetails = ({
   handlers,
@@ -30,30 +32,49 @@ export const LegacyOrderDetails = ({
   const common = useCommonOrderOperations(handlers);
   const legacy = useLegacyOrderOperations(handlers);
   const order = context.data?.order;
-  const { openModal } = context;
+  const { id, params, openModal, closeModal } = context;
+  const refundNavigation = useMemo(
+    () => (order ? createLegacyRefundNavigationAdapter(order) : null),
+    [order],
+  );
 
   const viewProps = {
     ...context,
     ...common,
-    ...legacy,
-    // Legacy orders never open transaction dialogs; inert placeholders satisfy
-    // the shared views' prop contract without creating transaction hooks.
-    orderTransactionAction: noopOrderMutation(),
-    orderAddManualTransaction: noopOrderMutation(),
-    paymentActions: order ? (
-      <LegacyPaymentsApiButtons
-        order={order}
-        onCapture={() => openModal("capture")}
-        onVoid={() => openModal("void")}
-        onRefund={() => navigate(getOrderRefundNavigation(order).url)}
-        onMarkAsPaid={() => openModal("mark-paid")}
-      />
-    ) : null,
+    paymentActions:
+      order && refundNavigation ? (
+        <LegacyPaymentsApiButtons
+          order={order}
+          onCapture={() => openModal("capture")}
+          onVoid={() => openModal("void")}
+          onRefund={() => navigate(refundNavigation.getNavigation().url)}
+          onMarkAsPaid={() => openModal("mark-paid")}
+        />
+      ) : null,
   };
 
-  return context.data?.order?.status === OrderStatus.UNCONFIRMED ? (
-    <OrderUnconfirmedDetails {...viewProps} />
-  ) : (
-    <OrderNormalDetails {...viewProps} />
+  const view = (
+    <>
+      {order?.status === OrderStatus.UNCONFIRMED ? (
+        <OrderUnconfirmedDetails {...viewProps} />
+      ) : (
+        <OrderNormalDetails {...viewProps} />
+      )}
+      <LegacyPaymentDialogs
+        orderId={id}
+        order={order}
+        params={params}
+        onClose={closeModal}
+        operations={legacy}
+      />
+    </>
+  );
+
+  if (!refundNavigation) {
+    return view;
+  }
+
+  return (
+    <OrderRefundNavigationProvider adapter={refundNavigation}>{view}</OrderRefundNavigationProvider>
   );
 };

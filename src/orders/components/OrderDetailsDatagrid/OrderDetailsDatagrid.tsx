@@ -13,6 +13,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { OrderLineRowActions } from "@dashboard/orders/components/OrderLineRowActions/OrderLineRowActions";
 import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
+import { useOrderRefundNavigationAdapter } from "@dashboard/orders/orderRefundNavigation";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { type OrderLineRowMenuContext } from "@dashboard/orders/utils/getOrderLineActionUrls";
 import { getOrderLineRowMenuItems } from "@dashboard/orders/utils/getOrderLineRowMenuItems";
@@ -62,6 +63,7 @@ export const OrderDetailsDatagrid = ({
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const refundNavigation = useOrderRefundNavigationAdapter();
   const { locale } = useLocale();
 
   const datagrid = useDatagridChangeState();
@@ -126,9 +128,10 @@ export const OrderDetailsDatagrid = ({
         intl,
         navigate,
         context: lineRowMenuContext,
+        refundNavigation,
       });
     },
-    [intl, lines, navigate, order, lineRowMenuContext],
+    [intl, lines, navigate, order, lineRowMenuContext, refundNavigation],
   );
   const getMenuItems = useCallback(
     (index: number) =>

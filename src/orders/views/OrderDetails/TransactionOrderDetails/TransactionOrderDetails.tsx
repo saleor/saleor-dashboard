@@ -1,15 +1,19 @@
 import { OrderStatus, TransactionActionEnum } from "@dashboard/graphql";
 import { TransactionsApiButtons } from "@dashboard/orders/components/OrderSummary/TransactionsApiButtons";
 import { OrderTransactionsSection } from "@dashboard/orders/components/OrderTransactionsSection/OrderTransactionsSection";
-import { type ReactElement } from "react";
+import {
+  createTransactionRefundNavigationAdapter,
+  OrderRefundNavigationProvider,
+} from "@dashboard/orders/orderRefundNavigation";
+import { type ReactElement, useMemo } from "react";
 
 import { type NonDraftOrderDetailsProps } from "../nonDraftOrderDetailsProps";
-import { noopOrderMutation } from "../operations/noopOrderMutation";
 import { useCommonOrderOperations } from "../operations/useCommonOrderOperations";
 import { useTransactionOrderOperations } from "../operations/useTransactionOrderOperations";
 import { OrderNormalDetails } from "../OrderNormalDetails";
 import { OrderUnconfirmedDetails } from "../OrderUnconfirmedDetails";
 import { useOrderTransactionPolling } from "../useOrderTransactionPolling";
+import { TransactionPaymentDialogs } from "./TransactionPaymentDialogs";
 
 export interface TransactionOrderDetailsProps extends NonDraftOrderDetailsProps {
   startPolling: (interval: number) => void;
@@ -20,14 +24,13 @@ export interface TransactionOrderDetailsProps extends NonDraftOrderDetailsProps 
 /**
  * Transactions API order view.
  *
- * Owns transaction polling, the transactions section and the transaction
- * summary actions, and instantiates only common + transaction operation hooks —
- * never legacy capture/void hooks. The legacy props the shared lifecycle views
- * still require are filled with inert no-op mutations (T10 removes this once
- * those views are payment-neutral).
+ * Owns transaction polling, the transactions section, the transaction summary
+ * actions, the transaction/manual-transaction/grant-refund dialogs and the
+ * transaction refund destination, and instantiates only common + transaction
+ * operation hooks — never legacy capture/void hooks.
  *
- * T8: still delegates lifecycle rendering to the shared Normal/Unconfirmed
- * views. Must not call resolveOrderPaymentMode.
+ * T9: still delegates lifecycle rendering to the shared Normal/Unconfirmed
+ * views, which are now payment-neutral. Must not call resolveOrderPaymentMode.
  */
 export const TransactionOrderDetails = ({
   handlers,
@@ -46,17 +49,15 @@ export const TransactionOrderDetails = ({
   const common = useCommonOrderOperations(handlers);
   const transaction = useTransactionOrderOperations(handlers);
   const order = context.data?.order;
-  const { openModal } = context;
+  const { id, params, openModal, closeModal } = context;
+  const refundNavigation = useMemo(
+    () => (order ? createTransactionRefundNavigationAdapter(order) : null),
+    [order],
+  );
 
   const viewProps = {
     ...context,
     ...common,
-    ...transaction,
-    // Transaction orders never open legacy capture/void dialogs; inert
-    // placeholders satisfy the shared views' prop contract without creating
-    // legacy hooks.
-    orderPaymentCapture: noopOrderMutation(),
-    orderVoid: noopOrderMutation(),
     paymentActions: order ? (
       <TransactionsApiButtons order={order} onMarkAsPaid={() => openModal("mark-paid")} />
     ) : null,
@@ -78,9 +79,31 @@ export const TransactionOrderDetails = ({
     ) : null,
   };
 
-  return context.data?.order?.status === OrderStatus.UNCONFIRMED ? (
-    <OrderUnconfirmedDetails {...viewProps} />
-  ) : (
-    <OrderNormalDetails {...viewProps} />
+  const view = (
+    <>
+      {order?.status === OrderStatus.UNCONFIRMED ? (
+        <OrderUnconfirmedDetails {...viewProps} />
+      ) : (
+        <OrderNormalDetails {...viewProps} />
+      )}
+      {refundNavigation && (
+        <TransactionPaymentDialogs
+          orderId={id}
+          order={order}
+          params={params}
+          onClose={closeModal}
+          operations={transaction}
+          refundNavigation={refundNavigation}
+        />
+      )}
+    </>
+  );
+
+  if (!refundNavigation) {
+    return view;
+  }
+
+  return (
+    <OrderRefundNavigationProvider adapter={refundNavigation}>{view}</OrderRefundNavigationProvider>
   );
 };

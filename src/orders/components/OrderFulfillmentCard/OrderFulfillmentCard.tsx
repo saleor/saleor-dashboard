@@ -4,10 +4,10 @@ import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/com
 import { FulfillmentStatus, type OrderDetailsFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
+import { useOrderRefundNavigation } from "@dashboard/orders/orderRefundNavigation";
 import { getFulfillmentWarehouseDisplay } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { getTimelineFulfillmentSegment } from "@dashboard/orders/utils/getOrderLineActionUrls";
-import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { Box, Button, Dropdown, List, Text, useTheme } from "@saleor/macaw-ui-next";
 import { Code, EllipsisVertical } from "lucide-react";
 import { useMemo } from "react";
@@ -69,7 +69,7 @@ export const OrderFulfillmentCard = (props: OrderFulfillmentCardProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const { themeValues } = useTheme();
-  const refundNavigation = order ? getOrderRefundNavigation(order) : null;
+  const refundNavigation = useOrderRefundNavigation();
   const warehouseDisplay = useMemo(
     () => (order ? getFulfillmentWarehouseDisplay(order, fulfillment) : undefined),
     [fulfillment, order],
