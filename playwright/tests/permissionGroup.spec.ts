@@ -23,6 +23,58 @@ test.beforeEach(({ page }) => {
   assignmentDialog = new AssignPermissionGroupMembersDialog(page);
   unassignDialog = new UnassignPermissionGroupMembersDialog(page);
 });
+
+interface CreatePermissionGroupOptions {
+  name: string;
+  permissionNames: string[];
+  memberNames?: string[];
+}
+
+const createPermissionGroup = async ({
+  name,
+  permissionNames,
+  memberNames = [],
+}: CreatePermissionGroupOptions): Promise<void> => {
+  await permissions.gotoPermissionGroupsView();
+  await permissions.clickCreatePermissionGroupButton();
+  await permissionDetails.fillPermissionGroupNameInput(name);
+
+  for (const permissionName of permissionNames) {
+    await permissionDetails.selectPermissionGroup(permissionName);
+  }
+
+  const createPermissionGroupUrl = permissionDetails.page.url();
+
+  await Promise.all([
+    permissionDetails.page.waitForURL(url => url.toString() !== createPermissionGroupUrl),
+    permissionDetails.clickSaveButton(),
+  ]);
+  await permissions.successBanner.waitFor({
+    state: "visible",
+    timeout: 50000,
+  });
+  await expect(permissionDetails.permissionGroupNameInput).toHaveValue(name);
+
+  if (memberNames.length === 0) {
+    return;
+  }
+
+  await permissionDetails.clickAssignMembersButton();
+  await assignmentDialog.searchForMembers("e2e_permission_group_member");
+
+  for (const memberName of memberNames) {
+    await assignmentDialog.selectMember(memberName);
+  }
+
+  await assignmentDialog.clickAssignButton();
+
+  for (const memberName of memberNames) {
+    await permissionDetails.assignedMemberName
+      .filter({ hasText: memberName })
+      .waitFor({ state: "visible", timeout: 30000 });
+  }
+};
+
 test("TC: SALEOR_139 Should be able to navigate to permission groups page #permissions #e2e", async () => {
   await config.goToConfigurationView();
   await config.permissionGroupsButton.scrollIntoViewIfNeeded();
@@ -76,23 +128,22 @@ test("TC: SALEOR_133 Should be able to create new permission group #permissions 
   }
 });
 test("TC: SALEOR_134 Should be able to edit an existing permission group #permissions #e2e", async () => {
-  const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
+  const oldName = `e2e-permission-group-to-update-${faker.datatype.uuid()}`;
+  const assignedPermissions = ["MANAGE_PRODUCTS", "MANAGE_PLUGINS", "MANAGE_STAFF"];
 
-  await permissions.gotoExistingPermissionGroupPage(permission.id);
-  await expect(permissionDetails.permissionGroupList).toBeVisible();
-
-  const oldName = permission.name;
-
+  await createPermissionGroup({
+    name: oldName,
+    permissionNames: assignedPermissions,
+  });
   await expect(permissionDetails.permissionGroupNameInput).toHaveValue(oldName);
   await permissionDetails.permissionGroupNameInput.clear();
 
-  const newName = faker.random.words(2);
+  const newName = `updated-e2e-permission-group-${faker.datatype.uuid()}`;
 
   await permissionDetails.fillPermissionGroupNameInput(newName);
   await permissionDetails.clickChannelPermissionsCheckbox();
 
-  const assignedPermissions = PERMISSION_GROUPS.permissionGroupToBeEdited.assignedPermissions;
-  const permissionsToBeUnchecked = [assignedPermissions.names[0], assignedPermissions.names[1]];
+  const permissionsToBeUnchecked = [assignedPermissions[0], assignedPermissions[1]];
 
   for (const permission of permissionsToBeUnchecked) {
     await permissionDetails.selectPermissionGroup(permission);
@@ -105,49 +156,37 @@ test("TC: SALEOR_134 Should be able to edit an existing permission group #permis
   await expect(permissions.successBanner).toBeVisible();
 
   await expect(permissionDetails.permissionGroupCheckbox("HANDLE_CHECKOUTS")).toBeChecked();
-  await expect(
-    permissionDetails.permissionGroupCheckbox(assignedPermissions.names[2]),
-  ).toBeChecked();
-  await expect(
-    permissionDetails.permissionGroupCheckbox(assignedPermissions.names[0]),
-  ).not.toBeChecked();
-  await expect(
-    permissionDetails.permissionGroupCheckbox(assignedPermissions.names[1]),
-  ).not.toBeChecked();
+  await expect(permissionDetails.permissionGroupCheckbox(assignedPermissions[2])).toBeChecked();
+  await expect(permissionDetails.permissionGroupCheckbox(assignedPermissions[0])).not.toBeChecked();
+  await expect(permissionDetails.permissionGroupCheckbox(assignedPermissions[1])).not.toBeChecked();
 });
 
 test("TC: SALEOR_218 Should be able to edit members of existing permission group #permissions #e2e", async () => {
-  const permission = PERMISSION_GROUPS.permissionGroupToBeEdited;
+  const permissionGroupName = `e2e-permission-group-members-${faker.datatype.uuid()}`;
+  const assignedMembers = PERMISSION_GROUPS.permissionGroupMembers.map(member => member.name);
 
-  await permissions.gotoExistingPermissionGroupPage(permission.id);
-  await expect(permissionDetails.permissionGroupList).toBeVisible();
-
-  const assignedMembers = PERMISSION_GROUPS.permissionGroupToBeEdited.assignedMembers;
-  await permissionDetails.unassignSingleMember(assignedMembers.names[0]);
+  await createPermissionGroup({
+    name: permissionGroupName,
+    permissionNames: ["MANAGE_PRODUCTS"],
+    memberNames: assignedMembers,
+  });
+  await permissionDetails.unassignSingleMember(assignedMembers[0]);
   await expect(permissionDetails.unassignMembersDialog).toBeVisible();
 
   await unassignDialog.clickConfirmUnassignButton();
-  await expect(permissionDetails.assignedMemberName.first()).not.toContainText(
-    assignedMembers.names[0],
-  );
-  await expect(permissionDetails.assignedMemberName.first()).toContainText(
-    assignedMembers.names[1],
-  );
-  await expect(permissionDetails.assignedMemberName.last()).toContainText(assignedMembers.names[2]);
+  await expect(permissionDetails.assignedMemberName.first()).not.toContainText(assignedMembers[0]);
+  await expect(permissionDetails.assignedMemberName.first()).toContainText(assignedMembers[1]);
+  await expect(permissionDetails.assignedMemberName.last()).toContainText(assignedMembers[2]);
   await permissionDetails.clickSaveButton();
   await expect(permissions.successBanner).toBeVisible();
 });
 test("TC: SALEOR_135 Should be able to delete single permission group #permissions #e2e", async () => {
-  await permissions.gotoPermissionGroupsView();
+  const permissionGroupName = `e2e-permission-group-to-delete-${faker.datatype.uuid()}`;
 
-  const permission = PERMISSION_GROUPS.permissionGroupToBeDeleted;
-
-  await permissions.gotoExistingPermissionGroupPage(permission.id);
-  await permissionDetails.permissionGroupList.waitFor({
-    state: "visible",
-    timeout: 30000,
+  await createPermissionGroup({
+    name: permissionGroupName,
+    permissionNames: ["MANAGE_PRODUCTS"],
   });
-  await expect(permissionDetails.permissionGroupNameInput).toHaveValue(permission.name);
   await permissionDetails.clickDeleteButton();
   await permissionDetails.deletePermissionGroupDialog.deleteDialog.waitFor({
     state: "visible",
@@ -161,5 +200,5 @@ test("TC: SALEOR_135 Should be able to delete single permission group #permissio
   await permissions.waitForGrid();
   await permissions.clickNumbersOfRowsButton();
   await permissions.clickPaginationRowNumberOption("100");
-  await expect(permissions.permissionGroupsList).not.toHaveText(permission.name);
+  await expect(permissions.permissionGroupsList).not.toContainText(permissionGroupName);
 });

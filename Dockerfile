@@ -1,8 +1,8 @@
 FROM node:24-alpine AS builder
 RUN apk --no-cache add bash
-RUN corepack enable && corepack prepare pnpm@10 --activate
+RUN corepack enable && corepack prepare pnpm@11.13.1 --activate
 WORKDIR /app
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 ENV CI=1
 RUN pnpm install --frozen-lockfile
 

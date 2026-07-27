@@ -11521,7 +11521,7 @@ export type ExtensionListQueryVariables = Exact<{
 }>;
 
 
-export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mountName: string, targetName: string, settings: unknown, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } } }> } | null };
+export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, identifier: string | null, url: string, mountName: string, targetName: string, settings: unknown, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null, name: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } } }> } | null };
 
 export type AppWebhookDeliveriesQueryVariables = Exact<{
   appId: Scalars['ID']['input'];

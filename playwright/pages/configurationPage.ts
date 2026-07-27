@@ -15,7 +15,12 @@ export class ConfigurationPage extends BasePage {
     readonly shippingMethodsButton = page.locator("[data-test-id*='shipping methods']"),
     readonly productTypesButton = page.locator("[data-test-id*='product-types']"),
     readonly webhooksAndEventsButton = page.locator("[data-test-id*='webhooks']"),
-    readonly attributesButton = page.locator("[data-test-id*='attributes']"),
+    readonly productAttributesButton = page.locator(
+      "[data-test-id^='configuration-menu-product-attributes-']",
+    ),
+    readonly modelAttributesButton = page.locator(
+      "[data-test-id^='configuration-menu-model-attributes-']",
+    ),
     readonly pageTypesButton = page.locator("[data-test-id*='configuration-menu-page-type']"),
     readonly taxesButton = page.locator("[data-test-id*='configuration-menu-taxes']"),
   ) {
@@ -70,7 +75,10 @@ export class ConfigurationPage extends BasePage {
     await this.webhooksAndEventsButton.click();
   }
 
-  async openAttributes() {
-    await this.attributesButton.click();
+  async openAttributes(attributeClass: "PRODUCT_TYPE" | "PAGE_TYPE") {
+    const attributesButton =
+      attributeClass === "PRODUCT_TYPE" ? this.productAttributesButton : this.modelAttributesButton;
+
+    await attributesButton.click();
   }
 }

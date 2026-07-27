@@ -38,7 +38,11 @@ import {
   type ProductVariantGeneratorProps,
 } from "./types";
 import { useVariantGenerator } from "./useVariantGenerator";
-import { excludeInputsWithCollidingSkus, toBulkCreateInputs } from "./utils";
+import {
+  excludeInputsWithCollidingSkus,
+  stagedCreatesToExistingVariantData,
+  toBulkCreateInputs,
+} from "./utils";
 
 // Maximum variants that can be created in a single batch (API performance consideration)
 const VARIANT_LIMIT = 100;
@@ -67,6 +71,7 @@ export const ProductVariantGenerator = ({
   nonSelectionVariantAttributes,
   onAttributeValuesSearch,
   onSubmit,
+  stagedCreates = [],
 }: ProductVariantGeneratorProps) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -76,9 +81,14 @@ export const ProductVariantGenerator = ({
   const [showMissingDefaultsWarning, setShowMissingDefaultsWarning] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [activeTab, setActiveTab] = useState(TAB_SELECTION);
-  const [existingVariants, setExistingVariants] = useState<ExistingVariantData>([]);
+  const [serverExistingVariants, setServerExistingVariants] = useState<ExistingVariantData>([]);
   const [existingVariantsLoading, setExistingVariantsLoading] = useState(false);
   const [existingVariantsLoadFailed, setExistingVariantsLoadFailed] = useState(false);
+
+  const existingVariants = useMemo(
+    () => [...serverExistingVariants, ...stagedCreatesToExistingVariantData(stagedCreates)],
+    [serverExistingVariants, stagedCreates],
+  );
 
   // State for non-selection required attribute values
   const [nonSelectionValues, setNonSelectionValues] = useState<NonSelectionAttributeValues>({});
@@ -176,7 +186,7 @@ export const ProductVariantGenerator = ({
       setAttributeErrors([]);
       setActiveTab(TAB_SELECTION);
       setViewMode(variantAttributes.length === 2 ? "grid" : "list");
-      setExistingVariants([]);
+      setServerExistingVariants([]);
       setExistingVariantsLoadFailed(false);
     },
     [open, reset, variantAttributes.length],
@@ -203,13 +213,13 @@ export const ProductVariantGenerator = ({
       fetchAllExistingVariantsForGenerator(apolloClient, productId, selectionAttributeIds)
         .then(variants => {
           if (!cancelled) {
-            setExistingVariants(variants);
+            setServerExistingVariants(variants);
             setExistingVariantsLoadFailed(false);
           }
         })
         .catch(() => {
           if (!cancelled) {
-            setExistingVariants([]);
+            setServerExistingVariants([]);
             setExistingVariantsLoadFailed(true);
           }
         })

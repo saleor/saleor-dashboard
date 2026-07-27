@@ -16,7 +16,7 @@ export class PageTypesPage extends BasePage {
   constructor(
     page: Page,
     readonly createPageTypeButton = page.getByTestId("create-page-type"),
-    readonly nameInput = page.getByTestId("page-type-name").locator("input"),
+    readonly nameInput = page.getByTestId("page-type-name"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-page-types"),
     readonly pageTypeList = page.getByTestId("page-types-list"),

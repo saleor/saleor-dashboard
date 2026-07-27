@@ -124,36 +124,33 @@ const isChannelDirty = (
 };
 
 // Check if any channels have changes compared to original product
-const hasChannelChanges = (
+export const hasChannelChanges = (
   channels: ProductChannelListingUpdateInput,
   originalListings: ProductFragment["channelListings"],
 ): boolean => {
+  return countDirtyChannels(channels, originalListings) > 0;
+};
+
+/** Count channels that differ from the saved product listings (updates + removals). */
+export const countDirtyChannels = (
+  channels: ProductChannelListingUpdateInput | null | undefined,
+  originalListings: ProductFragment["channelListings"] | null | undefined,
+): number => {
+  const updateChannels = channels?.updateChannels ?? [];
+  const removeChannels = channels?.removeChannels ?? [];
   const originalIds = new Set(originalListings?.map(l => l.channel.id) ?? []);
+  const removedOriginalChannels = removeChannels.filter(id => originalIds.has(id));
+  let count = removedOriginalChannels.length;
 
-  // Check if any original channels were removed (ignore removals of channels that weren't in original)
-  const removedOriginalChannels = channels.removeChannels.filter(id => originalIds.has(id));
-
-  if (removedOriginalChannels.length > 0) {
-    return true;
-  }
-
-  // Check if any channels have been modified
-  for (const current of channels.updateChannels) {
+  for (const current of updateChannels) {
     const original = originalListings?.find(l => l.channel.id === current.channelId);
 
     if (isChannelDirty(current, original)) {
-      return true;
+      count += 1;
     }
   }
 
-  // Check if any new channels were added
-  for (const current of channels.updateChannels) {
-    if (!originalIds.has(current.channelId)) {
-      return true;
-    }
-  }
-
-  return false;
+  return count;
 };
 
 export function useProductChannelListingsForm(
@@ -166,14 +163,16 @@ export function useProductChannelListingsForm(
     // IMPORTANT: We preserve original values including null for isAvailableForPurchase
     // This ensures we don't change API values as a side effect when saving
     // Dirty detection normalizes null/false during comparison (both mean "not available")
-    updateChannels: product?.channelListings.map(listing => ({
-      channelId: listing.channel.id,
-      isPublished: listing.isPublished,
-      publishedAt: listing.publishedAt,
-      isAvailableForPurchase: listing.isAvailableForPurchase, // Preserve null - don't normalize
-      availableForPurchaseAt: listing.availableForPurchaseAt,
-      visibleInListings: listing.visibleInListings,
-    })),
+    // Always an array — product may be undefined while the query is loading.
+    updateChannels:
+      product?.channelListings?.map(listing => ({
+        channelId: listing.channel.id,
+        isPublished: listing.isPublished,
+        publishedAt: listing.publishedAt,
+        isAvailableForPurchase: listing.isAvailableForPurchase, // Preserve null - don't normalize
+        availableForPurchaseAt: listing.availableForPurchaseAt,
+        visibleInListings: listing.visibleInListings,
+      })) ?? [],
   });
   const touched = useRef<string[]>([]);
   const touch = (id: string) => {

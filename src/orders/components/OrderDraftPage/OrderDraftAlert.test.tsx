@@ -72,7 +72,7 @@ describe("OrderDraftAlert", () => {
       </Wrapper>,
     );
 
-    expect(screen.getByText(/{country}/)).toBeInTheDocument();
+    expect(screen.getByText(/Wyspy Salomona/)).toBeInTheDocument();
     expect(screen.getByText(/{configLink}/)).toBeInTheDocument();
   });
 });

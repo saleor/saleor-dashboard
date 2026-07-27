@@ -80,7 +80,7 @@ const meta: Meta<typeof ProductVariants> = {
     onChange: { table: { disable: true } },
     onRowClick: { table: { disable: true } },
     onAttributeValuesSearch: { table: { disable: true } },
-    onBulkCreate: { table: { disable: true } },
+    onStageVariantCreates: { table: { disable: true } },
   },
   args: {
     variants: productData.variants ?? [],
@@ -100,6 +100,13 @@ const meta: Meta<typeof ProductVariants> = {
     onAttributeValuesSearch: fn().mockResolvedValue([]),
     onChange: fn(),
     onRowClick: fn(),
+    onStageVariantCreates: fn().mockResolvedValue({
+      success: true,
+      successCount: 1,
+      failedCount: 0,
+      attributeErrors: [],
+      otherErrors: [],
+    }),
   },
 };
 

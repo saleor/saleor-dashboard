@@ -15,6 +15,7 @@ export interface ExitFormDialogData {
   setIsDirty: (id: symbol, isDirty: boolean) => void;
   setExitDialogSubmitRef: (id: symbol, submitFn: SubmitFn) => void;
   setEnableExitDialog: (value: boolean) => void;
+  setExitDialogDescription: (description: React.ReactNode | null) => void;
   shouldBlockNavigation: () => boolean;
   showDialog: boolean;
   setIsSubmitting: (value: boolean) => void;
