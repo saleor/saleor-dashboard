@@ -12,12 +12,27 @@ test.beforeEach(({ page }) => {
 
 test("TC: SALEOR_132B Should be able to update checkout stock settings on orders hub #e2e", async () => {
   await orderSettingsPage.gotoOrderSettings();
-  await orderSettingsPage.fillStockReservationForAuthUser("200");
-  await orderSettingsPage.fillStockReservationForAnonUser("400");
-  await orderSettingsPage.fillCheckoutLineLimitInput("70");
+  const currentStockReservationForAuthUser =
+    await orderSettingsPage.stockReservationForAuthUserInput.inputValue();
+  const currentStockReservationForAnonUser =
+    await orderSettingsPage.stockReservationForAnonUserInput.inputValue();
+  const currentCheckoutLineLimit = await orderSettingsPage.checkoutLineLimitInput.inputValue();
+  const newStockReservationForAuthUser =
+    currentStockReservationForAuthUser === "200" ? "201" : "200";
+  const newStockReservationForAnonUser =
+    currentStockReservationForAnonUser === "400" ? "401" : "400";
+  const newCheckoutLineLimit = currentCheckoutLineLimit === "70" ? "71" : "70";
+
+  await orderSettingsPage.fillStockReservationForAuthUser(newStockReservationForAuthUser);
+  await orderSettingsPage.fillStockReservationForAnonUser(newStockReservationForAnonUser);
+  await orderSettingsPage.fillCheckoutLineLimitInput(newCheckoutLineLimit);
   await orderSettingsPage.saveButton.click();
   await orderSettingsPage.expectSuccessBanner();
-  await expect(orderSettingsPage.stockReservationForAuthUserInput).toHaveValue("200");
-  await expect(orderSettingsPage.stockReservationForAnonUserInput).toHaveValue("400");
-  await expect(orderSettingsPage.checkoutLineLimitInput).toHaveValue("70");
+  await expect(orderSettingsPage.stockReservationForAuthUserInput).toHaveValue(
+    newStockReservationForAuthUser,
+  );
+  await expect(orderSettingsPage.stockReservationForAnonUserInput).toHaveValue(
+    newStockReservationForAnonUser,
+  );
+  await expect(orderSettingsPage.checkoutLineLimitInput).toHaveValue(newCheckoutLineLimit);
 });

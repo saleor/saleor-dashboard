@@ -78,7 +78,7 @@ test("TC: SALEOR_27 Create full info variant - via edit variant page #e2e #produ
   await variantsPage.typeCheckoutLimit();
   await variantsPage.typeShippingWeight();
   await variantsPage.typeSellingPriceInChannel("PLN");
-  await variantsPage.typeSku();
+  await variantsPage.typeSku(`sku-dummy-e2e-${new Date().toISOString()}`);
   await variantsPage.addAllMetaData();
   await variantsPage.clickSaveVariantButton();
   await variantsPage.expectSuccessBanner();
@@ -132,9 +132,11 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
   const newVariantName = "variant 2";
 
   await productPage.gotoExistingProductPage(PRODUCTS.singleProductTypeToBeUpdated.id);
+  const initialProductImageCount = await productPage.productImage.count();
+
   await productPage.clickUploadMediaButton();
   await productPage.uploadProductImage("beer.avif");
-  await productPage.productImage.waitFor({ state: "visible" });
+  await expect(productPage.productImage).toHaveCount(initialProductImageCount + 1);
   await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenNoneSelected("Channel-PLN");
   await productPage.selectFirstTaxOption();
 
@@ -160,10 +162,9 @@ test("TC: SALEOR_46 As an admin, I should be able to update a product by uploadi
     productPage.productAvailableInChannelsText,
     "Label copy shows 1 out of 7 channels ",
   ).toContainText(AVAILABILITY.in1Of);
-  expect(
-    await productPage.productImage.count(),
-    "Newly added single image should be present",
-  ).toEqual(1);
+  await expect(productPage.productImage, "One new product image should be present").toHaveCount(
+    initialProductImageCount + 1,
+  );
 });
 test("TC: SALEOR_56 As an admin, I should be able to export products from single channel as CSV file @basic-regression #product #e2e", async () => {
   await productPage.gotoProductListPage();
