@@ -11,6 +11,7 @@ import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/comp
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 interface AppWidgetExtensionItemProps {
@@ -39,28 +40,37 @@ export const AppWidgetExtensionItem = ({
 
   if (extension.targetName !== "WIDGET") {
     const onClick = () => extension.open(params);
+    let title: string;
+    let suffix: ReactNode;
 
     switch (extension.targetName) {
       case "APP_PAGE":
-        return (
-          <Link onClick={onClick} title={intl.formatMessage(extensionActions.redirectToAppPage)}>
-            {extension.label}
-          </Link>
-        );
+        title = intl.formatMessage(extensionActions.redirectToAppPage);
+        suffix = null;
+        break;
       case "NEW_TAB":
-        return (
-          <Link onClick={onClick} title={intl.formatMessage(extensionActions.openInNewTab)}>
-            {extension.label}{" "}
+        title = intl.formatMessage(extensionActions.openInNewTab);
+        suffix = (
+          <>
+            {" "}
             <ExternalLink style={{ width: 16, height: 16, verticalAlign: "text-bottom" }} />
-          </Link>
+          </>
         );
+        break;
       case "POPUP":
-        return (
-          <Link onClick={onClick} title={intl.formatMessage(extensionActions.openInPopup)}>
-            {extension.label}...
-          </Link>
-        );
+        title = intl.formatMessage(extensionActions.openInPopup);
+        suffix = "...";
+        break;
     }
+
+    return (
+      <Box paddingX={6} data-test-id="app-widget-text">
+        <Link onClick={onClick} title={title}>
+          {extension.label}
+          {suffix}
+        </Link>
+      </Box>
+    );
   }
 
   if (extension.fromCache) {

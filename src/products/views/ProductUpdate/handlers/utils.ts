@@ -12,6 +12,7 @@ import {
   type ProductFragment,
   type ProductUpdateMutationVariables,
   type ProductVariantBulkUpdateInput,
+  type SeoInput,
   type VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { weight } from "@dashboard/misc";
@@ -64,28 +65,35 @@ export function getProductUpdateVariables(
     variables.input["name"] = data.name;
   }
 
-  if (data.rating) {
-    variables.input["rating"] = data.rating;
+  // Presence of the key means the field changed (payload holds changed fields only),
+  // so an empty value is an explicit clear — send null instead of dropping the field.
+  if (data.rating !== undefined) {
+    const rating = parseFloat(String(data.rating));
+
+    variables.input["rating"] = Number.isFinite(rating) ? rating : null;
   }
 
   if (data.slug) {
     variables.input["slug"] = data.slug;
   }
 
-  if (data.taxClassId) {
-    variables.input["taxClass"] = data.taxClassId;
+  if (data.taxClassId !== undefined) {
+    // Empty string clears the product override so Saleor falls back to the product type.
+    variables.input["taxClass"] = data.taxClassId || null;
   }
 
-  if (data.seoDescription || data.seoTitle) {
-    variables.input["seo"] = {};
-  }
+  if (data.seoDescription !== undefined || data.seoTitle !== undefined) {
+    const seo: SeoInput = {};
 
-  if (data.seoDescription && variables.input["seo"]) {
-    variables.input["seo"].description = data.seoDescription;
-  }
+    if (data.seoDescription !== undefined) {
+      seo.description = data.seoDescription;
+    }
 
-  if (data.seoTitle && variables.input["seo"]) {
-    variables.input["seo"].title = data.seoTitle;
+    if (data.seoTitle !== undefined) {
+      seo.title = data.seoTitle;
+    }
+
+    variables.input["seo"] = seo;
   }
 
   if (data.weight !== undefined) {

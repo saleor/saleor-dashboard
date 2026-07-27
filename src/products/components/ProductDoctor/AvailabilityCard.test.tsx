@@ -131,7 +131,7 @@ describe("AvailabilityCard / DiagnosticSummaryBanner", () => {
     // messages in this suite (e.g. publicApiVariantsInStock).
     const banner = screen.getByTestId("diagnostic-summary-banner");
 
-    expect(banner).toHaveTextContent(/All channels configured correctly · \{count\} advisories/);
+    expect(banner).toHaveTextContent(/All channels configured correctly · 2 advisories/);
     // The singular-only copy must NOT be selected for count > 1.
     expect(banner).not.toHaveTextContent(/1 advisory$/);
   });

@@ -69,9 +69,9 @@ describe("WelcomePageSidebar", () => {
     // Check activities
     expect(screen.getByTestId("activity-card")).toBeInTheDocument();
     expect(
-      screen.getByText("Order #{orderId} was placed from draft by {userEmail}"),
+      screen.getByText("Order #3268 was placed from draft by renata.gajzlerowicz@saleor.io"),
     ).toBeInTheDocument();
-    expect(screen.getByText("Order #{orderId} was fully paid")).toBeInTheDocument();
+    expect(screen.getByText("Order #3268 was fully paid")).toBeInTheDocument();
   });
 
   it("should render only channel select when user has no permission to manage orders ", async () => {

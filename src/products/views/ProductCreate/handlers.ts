@@ -118,7 +118,7 @@ export function createHandler(
           title: formData.seoTitle,
         },
         slug: formData.slug,
-        taxClass: formData.taxClassId,
+        taxClass: formData.taxClassId || null,
         weight: weight(formData.weight),
       },
     };

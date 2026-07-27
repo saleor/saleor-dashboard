@@ -112,7 +112,11 @@ function useForm<T extends FormData, TErrors>(
     mergeFunc: mergeData ? (mergeFunc ?? merge) : undefined,
   });
 
-  const { add: addChanged, clean: cleanChanged, data: changed } = useChangedData<T>(data);
+  const {
+    add: addChanged,
+    clean: cleanChanged,
+    data: changed,
+  } = useChangedData<T>(data, initialData);
 
   const isSaveDisabled = () => {
     if (checkIfSaveIsDisabled) {

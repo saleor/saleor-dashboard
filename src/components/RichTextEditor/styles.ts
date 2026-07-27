@@ -14,9 +14,37 @@ const useStyles = makeStyles(
         "& .codex-editor": {
           zIndex: 2,
         },
-        "& .cdx-quote__text": {
-          minHeight: 24,
+        // Quote: @editorjs/quote wraps fields in .cdx-input (bordered form
+        // controls + 158px min-height). Restyle to a standard blockquote.
+        "& .cdx-quote": {
+          borderLeft: `2px solid ${vars.colors.border.default1}`,
+          margin: 0,
+          paddingLeft: vars.spacing[4],
         },
+        "& .cdx-quote .cdx-input": {
+          background: "transparent",
+          border: "none",
+          borderRadius: 0,
+          boxShadow: "none",
+          padding: `${vars.spacing[0.5]} 0`,
+        },
+        "& .cdx-quote__text": {
+          color: vars.colors.text.default1,
+          // Keep body size; do not force italic — fights the inline italic tool.
+          lineHeight: 1.5,
+          marginBottom: vars.spacing[1],
+          minHeight: "auto",
+        },
+        "& .cdx-quote__caption": {
+          color: vars.colors.text.default2,
+          fontSize: vars.fontSize[3],
+          lineHeight: 1.4,
+          minHeight: "auto",
+        },
+        "& .cdx-quote [contentEditable=true][data-placeholder]:before": {
+          color: vars.colors.text.defaultDisabled,
+        },
+
         "& .ce-block--selected .ce-block__content": {
           background: `${vars.colors.background.default1Pressed} !important`,
         },

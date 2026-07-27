@@ -3,7 +3,7 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { parseQs } from "@dashboard/url-utils";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { type Action, type Location } from "history";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
 
@@ -79,6 +79,7 @@ export function useExitFormDialogProvider() {
   const history = useHistory();
   const { history: routerHistory } = useRouter();
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
+  const [description, setDescription] = useState<ReactNode | null>(null);
   const isSubmitDisabled = useRef(false);
   const setIsSubmitDisabled = useCallback((status: boolean) => {
     isSubmitDisabled.current = status;
@@ -307,12 +308,17 @@ export function useExitFormDialogProvider() {
   // Used to prevent race conditions from places such as
   // create pages with navigation on mutation completed
   const shouldBlockNavigation = useCallback(() => !!navAction.current, []);
+  const setExitDialogDescription = useCallback((value: ReactNode | null) => {
+    setDescription(value);
+  }, []);
+
   const providerData: ExitFormDialogData = {
     setIsDirty,
     shouldBlockNavigation,
     showDialog,
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef,
+    setExitDialogDescription,
     setIsSubmitting,
     setIsSubmitDisabled,
     leave: handleLeave,
@@ -327,5 +333,6 @@ export function useExitFormDialogProvider() {
     handleClose,
     shouldBlockNav,
     isSubmitDisabled,
+    description,
   };
 }

@@ -88,7 +88,7 @@ describe("ModalFilters", () => {
 
     // Assert
     expect(screen.getByTestId("modal-filters-button")).toBeInTheDocument();
-    expect(screen.getByText("Showing only {label}:")).toBeInTheDocument();
+    expect(screen.getByText("Showing only Product type:")).toBeInTheDocument();
     expect(screen.getAllByTestId("product-type-display")).toHaveLength(2);
   });
 
@@ -135,8 +135,7 @@ describe("ModalFilters", () => {
 
     // Assert
     expect(screen.queryByTestId("modal-filters-button")).not.toBeInTheDocument();
-    // react-intl is mocked globally in jest and returns the raw defaultMessage
-    expect(screen.getByText("Showing only {label}:")).toBeInTheDocument();
+    expect(screen.getByText("Showing only Model type:")).toBeInTheDocument();
   });
 
   it("renders locked model type values with the canonical model type component", () => {
