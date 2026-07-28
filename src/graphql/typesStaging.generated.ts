@@ -77,6 +77,25 @@ export type Scalars = {
   _Any: { input: any; output: any; }
 };
 
+/**
+ * AccountConfirmMode set the account merging mode for anonymous objects.
+ *
+ *     This dictates the behavior of the `confirmAccount()` mutation for
+ *     password-based authentication when attempting to merge orders & giftcard
+ *     that aren't associated to a user account.
+ *
+ *     Modes:
+ *
+ *     - MERGE_DISABLED disables merging only when the authentication method
+ *       is password (i.e., when not using OIDC)
+ *     - REQUIRE_PASSWORD enables account merging who accounts that use password
+ *       authentication but it requires the user to enter their password
+ */
+export enum AccountConfirmModeEnum {
+  MERGE_DISABLED = 'MERGE_DISABLED',
+  REQUIRE_PASSWORD = 'REQUIRE_PASSWORD'
+}
+
 export enum AccountErrorCode {
   ACCOUNT_NOT_CONFIRMED = 'ACCOUNT_NOT_CONFIRMED',
   ACTIVATE_OWN_ACCOUNT = 'ACTIVATE_OWN_ACCOUNT',
@@ -7949,6 +7968,8 @@ export enum ShopErrorCode {
 }
 
 export type ShopSettingsInput = {
+  /** Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging */
+  accountConfirmMergeMode?: InputMaybe<AccountConfirmModeEnum>;
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']['input']>;
   /**
