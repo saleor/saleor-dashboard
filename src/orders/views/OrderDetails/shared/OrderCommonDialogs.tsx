@@ -68,6 +68,8 @@ export const OrderCommonDialogs = ({
   const { data: warehousesData } = useWarehouseListQuery({
     displayLoader: true,
     variables: { first: 30 },
+    // Only the fulfillment-cancel dialog needs them; don't fetch on every page load.
+    skip: params.action !== "cancel-fulfillment",
   });
   const { data: customerAddresses, loading: customerAddressesLoading } = useCustomerAddressesQuery({
     variables: { id: order?.user?.id ?? "" },

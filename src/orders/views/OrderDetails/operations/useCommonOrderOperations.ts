@@ -67,3 +67,5 @@ export const useCommonOrderOperations = (handlers: OrderOperationHandlers) => {
     orderShippingMethodUpdate: getMutationProviderData(...updateShippingMethod),
   };
 };
+
+export type CommonOrderOperations = ReturnType<typeof useCommonOrderOperations>;

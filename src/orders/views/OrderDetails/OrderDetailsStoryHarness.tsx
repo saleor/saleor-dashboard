@@ -1,6 +1,7 @@
 import { SavebarRefProvider } from "@dashboard/components/Savebar/SavebarRefContext";
 import {
   type OrderDetailsFragment,
+  type OrderDetailsQueryResult,
   OrderStatus,
   type TransactionActionEnum,
 } from "@dashboard/graphql";
@@ -14,23 +15,27 @@ import {
   OrderRefundNavigationProvider,
 } from "@dashboard/orders/orderRefundNavigation";
 import { resolveOrderPaymentMode } from "@dashboard/orders/resolveOrderPaymentMode";
-import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import { type ReactElement } from "react";
+import { type ReactElement, useEffect } from "react";
 import { fn } from "storybook/test";
+import useRouter from "use-react-router";
 
 import { DevModeContext } from "../../../components/DevModePanel/hooks";
-import OrderDetailsPage from "../../components/OrderDetailsPage/OrderDetailsPage";
+import { type OrderUrlDialog } from "../../urls";
+import { type CommonOrderOperations } from "./operations/useCommonOrderOperations";
+import { OrderNormalDetails } from "./OrderNormalDetails";
+import { OrderUnconfirmedDetails } from "./OrderUnconfirmedDetails";
 
 /**
- * Test-only harness that renders the order-details page from a single `order`
- * fixture plus a handful of action spies. It hides the wide page prop surface
- * and supplies the app-shell contexts (dev mode, order discounts) that the page
- * expects. Story names, DOM output and the exposed callback names must survive
- * the payment-view split so the interaction suite runs unchanged after it.
+ * Test-only harness that renders the order-details lifecycle views from a
+ * single `order` fixture plus a handful of action spies. It stands in for the
+ * route: like the concrete Legacy/Transaction views it resolves the payment
+ * mode once and supplies the resulting payment slots, and it stubs the
+ * mutations the lifecycle views would otherwise get from the operation hooks.
  *
- * It stands in for the route: like the concrete Legacy/Transaction views, it
- * resolves the payment mode once and supplies the resulting payment slots.
+ * Story names, DOM output and the exposed callback names must survive the
+ * payment-view split so the interaction suite runs unchanged after it. Actions
+ * the views now perform themselves are observed where they land: dialog
+ * openings through `openModal`, navigation through the router location.
  */
 interface OrderDetailsStoryHarnessProps {
   order: OrderDetailsFragment;
@@ -42,8 +47,6 @@ interface OrderDetailsStoryHarnessProps {
   onAddManualTransaction?: () => void;
   onRefundAdd?: () => void;
   onOrderReturn?: () => void;
-  onProfileView?: () => void;
-  onInvoiceGenerate?: () => void;
   onOrderShowMetadata?: () => void;
 }
 
@@ -54,6 +57,40 @@ const devModeContextValue = {
   setDevModeVisibility: fn(),
   devModeContent: "",
   setDevModeContent: fn(),
+};
+
+const stubMutation = () => ({
+  mutate: fn(),
+  opts: { status: "default", loading: false, called: false, data: undefined },
+});
+const commonOperations = {
+  orderAddNote: stubMutation(),
+  orderUpdateNote: stubMutation(),
+  orderCancel: stubMutation(),
+  orderUpdate: stubMutation(),
+  orderFulfillmentApprove: stubMutation(),
+  orderFulfillmentCancel: stubMutation(),
+  orderFulfillmentUpdateTracking: stubMutation(),
+  orderInvoiceRequest: stubMutation(),
+  orderInvoiceSend: stubMutation(),
+  orderLineDelete: stubMutation(),
+  orderLinesAdd: stubMutation(),
+  orderLineUpdate: stubMutation(),
+  orderShippingMethodUpdate: stubMutation(),
+} as unknown as CommonOrderOperations;
+
+/** Reports router navigation, which is how the views now express "go to X". */
+const LocationSpy = ({ onNavigate }: { onNavigate: (pathname: string) => void }) => {
+  const {
+    location: { pathname },
+  } = useRouter();
+
+  useEffect(() => {
+    onNavigate(pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  return null;
 };
 
 export const OrderDetailsStoryHarness = (props: OrderDetailsStoryHarnessProps): ReactElement => {
@@ -85,55 +122,46 @@ export const OrderDetailsStoryHarness = (props: OrderDetailsStoryHarnessProps): 
     />
   ) : null;
 
-  const page = (
-    <OrderRefundNavigationProvider adapter={refundNavigation}>
-      <OrderDetailsPage
-        order={order}
-        shop={shopFixture}
-        loading={false}
-        errors={[]}
-        shippingMethods={order.shippingMethods ?? []}
-        saveButtonBarState="default"
-        paymentActions={paymentActions}
-        paymentSection={paymentSection}
-        onOrderReturn={props.onOrderReturn ?? fn()}
-        onProfileView={props.onProfileView ?? fn()}
-        onInvoiceGenerate={props.onInvoiceGenerate ?? fn()}
-        onOrderShowMetadata={props.onOrderShowMetadata ?? fn()}
-        onBillingAddressEdit={fn()}
-        onShippingAddressEdit={fn()}
-        onFulfillmentApprove={fn()}
-        onFulfillmentCancel={fn()}
-        onFulfillmentTrackingNumberUpdate={fn()}
-        onFulfillmentShowMetadata={fn()}
-        onOrderLineShowMetadata={fn()}
-        onOrderFulfill={fn()}
-        onOrderCancel={fn()}
-        onNoteAdd={fn()}
-        onNoteUpdate={fn() as never}
-        onNoteUpdateLoading={false}
-        onInvoiceClick={fn()}
-        onInvoiceSend={fn()}
-        onOrderLineAdd={fn()}
-        onOrderLineChange={fn()}
-        onOrderLineRemove={fn()}
-        onShippingMethodEdit={fn()}
-        onSubmit={isUnconfirmed ? (fn(() => Promise.resolve([])) as never) : undefined}
+  const viewProps = {
+    id: order.id,
+    params: {},
+    data: { order, shop: shopFixture } as unknown as OrderDetailsQueryResult["data"],
+    loading: false,
+    common: commonOperations,
+    saveButtonBarState: "default" as const,
+    handleSubmit: () => Promise.resolve([]),
+    openModal: (action: OrderUrlDialog) => {
+      if (action === "view-order-metadata") {
+        props.onOrderShowMetadata?.();
+      }
+    },
+    closeModal: fn(),
+    paymentActions,
+    paymentSection,
+  };
+
+  const view = (
+    <>
+      <LocationSpy
+        onNavigate={pathname => {
+          if (pathname.endsWith("/return")) {
+            props.onOrderReturn?.();
+          }
+        }}
       />
-    </OrderRefundNavigationProvider>
+      <OrderRefundNavigationProvider adapter={refundNavigation}>
+        {isUnconfirmed ? (
+          <OrderUnconfirmedDetails {...viewProps} />
+        ) : (
+          <OrderNormalDetails {...viewProps} />
+        )}
+      </OrderRefundNavigationProvider>
+    </>
   );
 
-  if (isUnconfirmed) {
-    return (
-      <DevModeContext.Provider value={devModeContextValue}>
-        <SavebarRefProvider>
-          <OrderDiscountProvider order={order}>
-            <OrderLineDiscountProvider order={order}>{page}</OrderLineDiscountProvider>
-          </OrderDiscountProvider>
-        </SavebarRefProvider>
-      </DevModeContext.Provider>
-    );
-  }
-
-  return <DevModeContext.Provider value={devModeContextValue}>{page}</DevModeContext.Provider>;
+  return (
+    <DevModeContext.Provider value={devModeContextValue}>
+      <SavebarRefProvider>{view}</SavebarRefProvider>
+    </DevModeContext.Provider>
+  );
 };

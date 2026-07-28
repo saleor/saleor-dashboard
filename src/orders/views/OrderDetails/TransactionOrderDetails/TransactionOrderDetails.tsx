@@ -29,8 +29,8 @@ export interface TransactionOrderDetailsProps extends NonDraftOrderDetailsProps 
  * transaction refund destination, and instantiates only common + transaction
  * operation hooks — never legacy capture/void hooks.
  *
- * T9: still delegates lifecycle rendering to the shared Normal/Unconfirmed
- * views, which are now payment-neutral. Must not call resolveOrderPaymentMode.
+ * Lifecycle rendering is delegated to the payment-neutral Normal/Unconfirmed
+ * views. Must not call resolveOrderPaymentMode.
  */
 export const TransactionOrderDetails = ({
   handlers,
@@ -57,7 +57,7 @@ export const TransactionOrderDetails = ({
 
   const viewProps = {
     ...context,
-    ...common,
+    common,
     paymentActions: order ? (
       <TransactionsApiButtons order={order} onMarkAsPaid={() => openModal("mark-paid")} />
     ) : null,

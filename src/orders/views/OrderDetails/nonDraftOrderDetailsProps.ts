@@ -20,7 +20,7 @@ export interface NonDraftOrderDetailsProps {
   data: OrderDetailsQueryResult["data"];
   loading: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
-  handleSubmit: (data: MetadataIdSchema) => Promise<unknown>;
+  handleSubmit: (data: MetadataIdSchema) => Promise<unknown[]>;
   openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
   closeModal: CloseModalFunction;
   handlers: OrderOperationHandlers;

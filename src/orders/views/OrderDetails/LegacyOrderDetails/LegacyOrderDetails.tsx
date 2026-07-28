@@ -21,8 +21,8 @@ import { LegacyPaymentDialogs } from "./LegacyPaymentDialogs";
  * dialogs and the legacy refund destination, and instantiates only common +
  * legacy operation hooks — never transaction hooks.
  *
- * T9: still delegates lifecycle rendering to the shared Normal/Unconfirmed
- * views, which are now payment-neutral. Must not call resolveOrderPaymentMode.
+ * Lifecycle rendering is delegated to the payment-neutral Normal/Unconfirmed
+ * views. Must not call resolveOrderPaymentMode.
  */
 export const LegacyOrderDetails = ({
   handlers,
@@ -40,7 +40,7 @@ export const LegacyOrderDetails = ({
 
   const viewProps = {
     ...context,
-    ...common,
+    common,
     paymentActions:
       order && refundNavigation ? (
         <LegacyPaymentsApiButtons
