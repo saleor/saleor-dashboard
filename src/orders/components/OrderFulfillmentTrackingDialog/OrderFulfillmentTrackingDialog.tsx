@@ -24,7 +24,7 @@ interface OrderFulfillmentTrackingDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  trackingNumber: string;
+  trackingNumber: string | undefined;
   onClose: () => void;
   onConfirm: (data: FormData) => void;
 }

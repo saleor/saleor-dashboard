@@ -29,7 +29,7 @@ interface OrderFulfillmentCancelDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   warehouses: WarehouseFragment[];
-  fulfillmentStatus: string;
+  fulfillmentStatus: string | undefined;
   defaultWarehouseId?: string | null;
   onClose: () => any;
   onConfirm: (data: OrderFulfillmentCancelDialogFormData) => any;

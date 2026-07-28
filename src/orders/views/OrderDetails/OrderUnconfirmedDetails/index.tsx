@@ -1,27 +1,18 @@
 // @ts-strict-ignore
-import { type FetchResult } from "@apollo/client";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  FulfillmentStatus,
   type OrderFulfillmentApproveMutation,
   type OrderFulfillmentApproveMutationVariables,
   type OrderNoteUpdateMutation,
   type OrderNoteUpdateMutationVariables,
   type OrderUpdateMutation,
   type OrderUpdateMutationVariables,
-  useCustomerAddressesQuery,
-  useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { OrderCannotCancelOrderDialog } from "@dashboard/orders/components/OrderCannotCancelOrderDialog/OrderCannotCancelOrderDialog";
-import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import { OrderFulfillmentApproveDialog } from "@dashboard/orders/components/OrderFulfillmentApproveDialog/OrderFulfillmentApproveDialog";
-import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
-import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
-import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
-import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
+import { getVariantSearchAddress } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
@@ -32,13 +23,9 @@ import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { extractMutationErrors, getById, getStringOrPlaceholder } from "../../../../misc";
+import { extractMutationErrors, getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
-import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
-import { OrderCancelDialog } from "../../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
-import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
-import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
@@ -50,6 +37,7 @@ import {
   withOrderFulfillmentDialog,
   withOrderLineFocus,
 } from "../../../urls";
+import { OrderCommonDialogs } from "../shared/OrderCommonDialogs";
 
 export interface OrderUnconfirmedDetailsProps {
   id: string;
@@ -122,30 +110,8 @@ export const OrderUnconfirmedDetails = ({
       channel: order.channel.slug,
     },
   });
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 30,
-    },
-  });
-  const { data: customerAddresses, loading: customerAddressesLoading } = useCustomerAddressesQuery({
-    variables: {
-      id: order?.user?.id,
-    },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
-  });
-  const handleCustomerChangeAddresses = async (
-    data: Partial<OrderCustomerAddressesEditDialogOutput>,
-  ): Promise<FetchResult<OrderUpdateMutation>> =>
-    orderUpdate.mutate({
-      id,
-      input: data,
-    });
   const intl = useIntl();
   const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
-  const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(
-    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
-  );
 
   return (
     <>
@@ -254,21 +220,19 @@ export const OrderUnconfirmedDetails = ({
           />
         </OrderLineDiscountProvider>
       </OrderDiscountProvider>
-      <OrderCannotCancelOrderDialog
+      <OrderCommonDialogs
+        orderId={id}
+        order={order}
+        countries={data?.shop?.countries}
+        params={params}
         onClose={closeModal}
-        open={params.action === "cancel" && hasOrderFulfillmentsFulFilled}
-      />
-      <OrderCancelDialog
-        confirmButtonState={orderCancel.opts.status}
-        errors={orderCancel.opts.data?.orderCancel.errors || []}
-        number={order?.number}
-        open={params.action === "cancel" && !hasOrderFulfillmentsFulFilled}
-        onClose={closeModal}
-        onSubmit={() =>
-          orderCancel.mutate({
-            id,
-          })
-        }
+        operations={{
+          orderCancel,
+          orderUpdate,
+          orderFulfillmentCancel,
+          orderFulfillmentUpdateTracking,
+          orderInvoiceSend,
+        }}
       />
       <OrderShippingMethodEditDialog
         confirmButtonState={orderShippingMethodUpdate.opts.status}
@@ -313,17 +277,6 @@ export const OrderUnconfirmedDetails = ({
           })
         }
       />
-      <OrderLineMetadataDialog
-        open={params.action === "view-order-line-metadata"}
-        onClose={closeModal}
-        lineId={params.id}
-        orderId={id}
-      />
-      <OrderMetadataDialog
-        open={params.action === "view-order-metadata"}
-        onClose={closeModal}
-        orderId={id}
-      />
       <OrderFulfillmentApproveDialog
         confirmButtonState={orderFulfillmentApprove.opts.status}
         errors={orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || []}
@@ -335,63 +288,6 @@ export const OrderUnconfirmedDetails = ({
           })
         }
         onClose={closeModal}
-      />
-      <OrderFulfillmentCancelDialog
-        confirmButtonState={orderFulfillmentCancel.opts.status}
-        errors={orderFulfillmentCancel.opts.data?.orderFulfillmentCancel.errors || []}
-        open={params.action === "cancel-fulfillment"}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
-        fulfillmentStatus={order?.fulfillments.find(getById(params.id))?.status}
-        defaultWarehouseId={order?.fulfillments.find(getById(params.id))?.warehouse?.id}
-        onConfirm={variables =>
-          orderFulfillmentCancel.mutate({
-            id: params.id,
-            input: variables,
-          })
-        }
-        onClose={closeModal}
-      />
-      <OrderFulfillmentTrackingDialog
-        confirmButtonState={orderFulfillmentUpdateTracking.opts.status}
-        errors={
-          orderFulfillmentUpdateTracking.opts.data?.orderFulfillmentUpdateTracking.errors || []
-        }
-        open={params.action === "edit-fulfillment"}
-        trackingNumber={
-          data?.order?.fulfillments.find(fulfillment => fulfillment.id === params.id)
-            ?.trackingNumber
-        }
-        onConfirm={variables =>
-          orderFulfillmentUpdateTracking.mutate({
-            id: params.id,
-            input: {
-              ...variables,
-              notifyCustomer: true,
-            },
-          })
-        }
-        onClose={closeModal}
-      />
-      <OrderInvoiceEmailSendDialog
-        confirmButtonState={orderInvoiceSend.opts.status}
-        errors={orderInvoiceSend.opts.data?.invoiceSendEmail.errors || []}
-        open={params.action === "invoice-send"}
-        invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
-        onClose={closeModal}
-        onSend={() => orderInvoiceSend.mutate({ id: params.id })}
-      />
-      <OrderAddressFields
-        action={params?.action}
-        customerAddressesLoading={customerAddressesLoading}
-        orderShippingAddress={order?.shippingAddress}
-        orderBillingAddress={order?.billingAddress}
-        isDraft={false}
-        countries={data?.shop?.countries}
-        customer={customerAddresses?.user}
-        onClose={closeModal}
-        onConfirm={handleCustomerChangeAddresses}
-        confirmButtonState={orderUpdate.opts.status}
-        errors={orderUpdate.opts.data?.orderUpdate.errors}
       />
     </>
   );
