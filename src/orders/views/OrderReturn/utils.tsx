@@ -15,66 +15,64 @@ import { type MessageDescriptor } from "react-intl";
 
 import { messages } from "./messages";
 
+type ReturnRefundInput = Pick<OrderReturnProductsInput, "amountToRefund" | "refund">;
+
+/**
+ * Turns the return form state into the mutation input. Payment-neutral: it
+ * knows nothing about payments or transactions. `getParsedData` returns what
+ * every return sends; the legacy view adds `getRefundInput()` on top, the
+ * transactions view refunds through its own grant/send mutations instead.
+ */
 class ReturnFormDataParser {
   private readonly order: OrderDetailsFragment;
 
   private readonly formData: OrderReturnFormData;
 
-  private readonly refundsEnabled: boolean;
-
-  constructor(data: {
-    order: OrderDetailsFragment;
-    formData: OrderReturnFormData;
-    refundsEnabled: boolean;
-  }) {
+  constructor(data: { order: OrderDetailsFragment; formData: OrderReturnFormData }) {
     this.order = data.order;
     this.formData = data.formData;
-    this.refundsEnabled = data.refundsEnabled;
   }
 
   public getParsedData = (): OrderReturnProductsInput => {
-    const {
-      fulfilledItemsQuantities,
-      waitingItemsQuantities,
-      unfulfilledItemsQuantities,
-      refundShipmentCosts,
-    } = this.formData;
-    const fulfillmentLines = this.getParsedLineData<OrderReturnFulfillmentLineInput>(
-      fulfilledItemsQuantities,
-      "fulfillmentLineId",
-    );
-    const waitingLines = this.getParsedLineData<OrderReturnFulfillmentLineInput>(
-      waitingItemsQuantities,
-      "fulfillmentLineId",
-    );
-    const orderLines = this.getParsedLineData<OrderReturnLineInput>(
-      unfulfilledItemsQuantities,
-      "orderLineId",
-    );
-
-    const reason = this.formData.reason || undefined;
-    const reasonReference = this.formData.reasonReference || undefined;
-
-    if (this.refundsEnabled) {
-      return {
-        amountToRefund: this.getAmountToRefund(),
-        fulfillmentLines: fulfillmentLines.concat(waitingLines),
-        includeShippingCosts: refundShipmentCosts,
-        orderLines,
-        refund: this.getShouldRefund(orderLines, fulfillmentLines),
-        reason,
-        reasonReference,
-      };
-    }
+    const { fulfillmentLines, orderLines } = this.getLines();
 
     return {
-      fulfillmentLines: fulfillmentLines.concat(waitingLines),
+      fulfillmentLines,
       orderLines,
-      amountToRefund: 0,
-      includeShippingCosts: refundShipmentCosts, // tood: remove once removed in API
-      refund: false, // todo: remove once removed in API
-      reason,
-      reasonReference,
+      includeShippingCosts: this.formData.refundShipmentCosts,
+      reason: this.formData.reason || undefined,
+      reasonReference: this.formData.reasonReference || undefined,
+    };
+  };
+
+  /** Legacy Payments API only: the return mutation performs the refund itself. */
+  public getRefundInput = (): ReturnRefundInput => {
+    const { fulfillmentLines, orderLines } = this.getLines();
+
+    return {
+      amountToRefund: this.getAmountToRefund(),
+      refund: this.getShouldRefund(orderLines, fulfillmentLines),
+    };
+  };
+
+  private readonly getLines = () => {
+    const { fulfilledItemsQuantities, waitingItemsQuantities, unfulfilledItemsQuantities } =
+      this.formData;
+
+    return {
+      fulfillmentLines: this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+        fulfilledItemsQuantities,
+        "fulfillmentLineId",
+      ).concat(
+        this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+          waitingItemsQuantities,
+          "fulfillmentLineId",
+        ),
+      ),
+      orderLines: this.getParsedLineData<OrderReturnLineInput>(
+        unfulfilledItemsQuantities,
+        "orderLineId",
+      ),
     };
   };
 

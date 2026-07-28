@@ -12,7 +12,6 @@ import {
 } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { type PaymentSubmitCardValuesProps } from "@dashboard/orders/components/OrderReturnPage/components/PaymentSubmitCard/PaymentSubmitCardValues";
-import { type IMoney } from "@dashboard/utils/intl";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,7 +32,6 @@ interface TransactionSubmitCardProps {
   autoSendRefund: boolean;
   refundShipmentCosts: boolean;
   canRefundShipping: boolean;
-  shippingCosts: IMoney;
   amountData: PaymentSubmitCardValuesProps;
   customRefundValue: number | undefined;
   onChange: FormChange;

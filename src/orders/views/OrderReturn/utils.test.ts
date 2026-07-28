@@ -40,7 +40,6 @@ describe("ReturnFormDataParser - reasons", () => {
     const parser = new ReturnFormDataParser({
       order: {} as OrderDetailsFragment,
       formData,
-      refundsEnabled: false,
     });
 
     // Act
@@ -67,7 +66,6 @@ describe("ReturnFormDataParser - reasons", () => {
     const parser = new ReturnFormDataParser({
       order: {} as OrderDetailsFragment,
       formData,
-      refundsEnabled: false,
     });
 
     // Act
@@ -101,7 +99,6 @@ describe("ReturnFormDataParser - reasons", () => {
     const parser = new ReturnFormDataParser({
       order: {} as OrderDetailsFragment,
       formData,
-      refundsEnabled: false,
     });
 
     // Act

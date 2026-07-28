@@ -1,32 +1,23 @@
 // @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import {
   type OrderDetailsFragment,
   type OrderErrorFragment,
-  type OrderGrantRefundCreateErrorFragment,
-  type TransactionRequestRefundForGrantedRefundErrorFragment,
-  useRefundSettingsQuery,
   useReturnSettingsQuery,
 } from "@dashboard/graphql";
-import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
-import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderReturnUrl, orderUrl } from "@dashboard/orders/urls";
 import { getOrderLineDisplayName } from "@dashboard/orders/utils/data";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { Fragment, useState } from "react";
+import { Fragment, type ReactNode, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
-import { TransactionSubmitCard } from "./components";
 import { OrderReturnReasonCard } from "./components/OrderReturnReasonCard/OrderReturnReasonCard";
-import { PaymentSubmitCard } from "./components/PaymentSubmitCard";
-import { getReturnProductsAmountValues } from "./components/PaymentSubmitCard/utils";
-import OrderRefundForm, { type OrderRefundSubmitData } from "./form";
+import OrderRefundForm, { type OrderRefundSubmitData, type OrderReturnFormData } from "./form";
 import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
@@ -38,40 +29,41 @@ import {
   getWaitingFulfillments,
 } from "./utils";
 
+/** Form state the mode-specific submit card needs; everything else it already owns. */
+export interface OrderReturnSubmitCardProps {
+  data: OrderReturnFormData;
+  change: FormChange;
+  onAmountChange: (value: number) => void;
+  isAmountDirty: boolean;
+  isSaveDisabled: boolean;
+  /**
+   * Gated on the return reason. Pass `true` when the card's own validation
+   * failed, so both error states surface together and nothing is submitted.
+   */
+  submit: (cardInvalid?: boolean) => void;
+}
+
 interface OrderReturnPageProps {
   order: OrderDetailsFragment | undefined | null;
   loading: boolean;
   returnErrors?: OrderErrorFragment[];
-  grantRefundErrors?: OrderGrantRefundCreateErrorFragment[];
-  sendRefundErrors?: TransactionRequestRefundForGrantedRefundErrorFragment[];
   prefilledOrderLineId?: string;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
-  submitStatus: ConfirmButtonTransitionState;
+  /**
+   * Payment-mode owned sidebar. The page never decides which submit card to
+   * show — the concrete Legacy/Transaction return view supplies it resolved.
+   */
+  submitCard: (props: OrderReturnSubmitCardProps) => ReactNode;
 }
 
 const OrderRefundPage = (props: OrderReturnPageProps) => {
-  const {
-    order,
-    loading,
-    returnErrors = [],
-    grantRefundErrors = [],
-    sendRefundErrors = [],
-    prefilledOrderLineId,
-    onSubmit,
-    submitStatus,
-  } = props;
-  const canRefundShipping = calculateCanRefundShipping(null, order?.grantedRefunds);
+  const { order, loading, returnErrors = [], prefilledOrderLineId, onSubmit, submitCard } = props;
   const intl = useIntl();
   const { data: returnSettingsData } = useReturnSettingsQuery();
   const reasonReferenceTypeId = returnSettingsData?.returnSettings.reasonReferenceType?.id ?? "";
-  const { data: refundSettingsData } = useRefundSettingsQuery();
-  const refundReasonReferenceTypeId =
-    refundSettingsData?.refundSettings.reasonReferenceType?.id ?? "";
   // When a return reason type is configured, selecting a reason is required.
   // Track whether a submit was attempted while the required reason was missing.
   const [showReasonError, setShowReasonError] = useState(false);
-  // Same for the refund reason when granting a refund during the return.
-  const [showRefundReasonError, setShowRefundReasonError] = useState(false);
   const prefilledLine = prefilledOrderLineId
     ? order?.lines?.find(line => line.id === prefilledOrderLineId)
     : undefined;
@@ -93,13 +85,10 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
     <OrderRefundForm order={order} prefilledOrderLineId={prefilledOrderLineId} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled, isAmountDirty }) => {
         const isReasonMissing = !!reasonReferenceTypeId && !data.reasonReference;
-        const isRefundReasonMissing =
-          data.autoGrantRefund && !!refundReasonReferenceTypeId && !data.refundReasonReference;
-        const handleValidatedSubmit = () => {
+        const handleValidatedSubmit = (cardInvalid?: boolean) => {
           setShowReasonError(isReasonMissing);
-          setShowRefundReasonError(isRefundReasonMissing);
 
-          if (isReasonMissing || isRefundReasonMissing) {
+          if (isReasonMissing || cardInvalid) {
             return;
           }
 
@@ -217,46 +206,14 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
               />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
-              {orderHasTransactions(order) ? (
-                <TransactionSubmitCard
-                  transactions={order.transactions}
-                  grantRefundErrors={grantRefundErrors}
-                  sendRefundErrors={sendRefundErrors}
-                  customRefundValue={data.amount}
-                  autoGrantRefund={data.autoGrantRefund}
-                  autoSendRefund={data.autoSendRefund}
-                  refundShipmentCosts={data.refundShipmentCosts}
-                  canRefundShipping={canRefundShipping}
-                  shippingCosts={order?.shippingPrice?.gross}
-                  transactionId={data.transactionId}
-                  amountData={getReturnProductsAmountValues(order, data)}
-                  onChange={change}
-                  disabled={isSaveDisabled}
-                  onSubmit={handleValidatedSubmit}
-                  submitStatus={submitStatus}
-                  onAmountChange={handlers.handleAmountChange}
-                  isAmountDirty={isAmountDirty}
-                  refundReason={data.refundReason}
-                  refundReasonReference={data.refundReasonReference}
-                  refundReasonReferenceTypeId={refundReasonReferenceTypeId}
-                  refundReasonError={showRefundReasonError}
-                  onClearRefundReasonError={() => setShowRefundReasonError(false)}
-                />
-              ) : (
-                <PaymentSubmitCard
-                  allowNoRefund
-                  isReturn
-                  amountData={getReturnProductsAmountValues(order, data)}
-                  data={data}
-                  order={order}
-                  disableSubmitButton={isSaveDisabled}
-                  disabled={loading}
-                  errors={returnErrors}
-                  onChange={change}
-                  onRefund={handleValidatedSubmit}
-                  loading={loading}
-                />
-              )}
+              {submitCard({
+                data,
+                change,
+                onAmountChange: handlers.handleAmountChange,
+                isAmountDirty,
+                isSaveDisabled,
+                submit: handleValidatedSubmit,
+              })}
             </DetailPageLayout.RightSidebar>
           </DetailPageLayout>
         );
