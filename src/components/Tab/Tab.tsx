@@ -39,21 +39,25 @@ interface TabProps<T> {
   isActive: boolean;
   changeTab: (index: T) => void;
   testId?: string;
+  className?: string;
 }
 
 export function Tab<T>(value: T) {
   const Component = (props: TabProps<T>) => {
-    const { children, isActive, changeTab, testId } = props;
+    const { children, isActive, changeTab, testId, className } = props;
     const classes = useStyles(props);
 
     return (
       <Text
         as="span"
         data-test-id={testId}
-        className={clsx({
-          [classes.root]: true,
-          [classes.active]: isActive,
-        })}
+        className={clsx(
+          {
+            [classes.root]: true,
+            [classes.active]: isActive,
+          },
+          className,
+        )}
         onClick={() => changeTab(value)}
       >
         {children}
