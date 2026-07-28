@@ -72,38 +72,36 @@ export const HomePage = () => {
   }
 
   let activeTab: HomeActiveTab;
+  let activeFullscreenExtension: (typeof fullscreen)[number] | undefined;
 
   if (isWidgetsRoute) {
     activeTab = { kind: "widgets" };
   } else {
-    const activeExtension = fullscreen.find(extension => extension.id === extensionId);
+    activeFullscreenExtension = fullscreen.find(extension => extension.id === extensionId);
 
     // URL points to a missing or unauthorized fullscreen extension - redirect to leftmost tab
-    if (!activeExtension) {
+    if (!activeFullscreenExtension) {
       return <Redirect to={leftmostUrl!} />;
     }
 
-    activeTab = { kind: "extension", id: activeExtension.id };
+    activeTab = { kind: "extension", id: activeFullscreenExtension.id };
   }
 
   const showWidgetsTab = widgets.length > 0;
+  const isFullscreenTab = activeTab.kind === "extension";
 
   return (
     <Box display="flex" flexDirection="column" height="100%">
-      <Box paddingX={6} paddingTop={6}>
-        <HomeWidgetTabs
-          fullscreenExtensions={fullscreen}
-          showWidgetsTab={showWidgetsTab}
-          activeTab={activeTab}
-        />
-      </Box>
-      <Box padding={6} width="100%" __flex="1" __minHeight={0}>
+      <HomeWidgetTabs
+        fullscreenExtensions={fullscreen}
+        showWidgetsTab={showWidgetsTab}
+        activeTab={activeTab}
+      />
+      <Box padding={isFullscreenTab ? 0 : 6} width="100%" __flex="1" __minHeight={0}>
         {activeTab.kind === "widgets" ? (
           <HomeWidgetsGrid extensions={widgets} />
         ) : (
-          <HomeWidgetView
-            extension={fullscreen.find(extension => extension.id === activeTab.id)!}
-          />
+          <HomeWidgetView extension={activeFullscreenExtension!} />
         )}
       </Box>
     </Box>

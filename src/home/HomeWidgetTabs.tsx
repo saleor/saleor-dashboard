@@ -2,10 +2,11 @@ import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { type Extension } from "@dashboard/extensions/types";
 import { SaleorLogo } from "@dashboard/extensions/views/InstallCustomExtension/components/InstallSectionData/InstallExtensionManifestData/SaleorLogo";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { Blocks } from "lucide-react";
 import { defineMessages, useIntl } from "react-intl";
 
+import styles from "./HomeWidgetTabs.module.css";
 import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
 
 const HomeTab = Tab<string>("home-widget-tab");
@@ -34,14 +35,16 @@ export const HomeWidgetTabs = ({
   const navigate = useNavigator();
   const intl = useIntl();
 
+  // paddingX on TabContainer (not a parent) so border-bottom stays edge-to-edge
   return (
-    <TabContainer>
+    <TabContainer className={sprinkles({ paddingX: 6, paddingTop: 3 })}>
       {fullscreenExtensions.map(extension => (
         <HomeTab
           key={extension.id}
           isActive={activeTab.kind === "extension" && activeTab.id === extension.id}
           changeTab={() => navigate(homeWidgetUrl(extension.id))}
           testId={`home-widget-tab-${extension.id}`}
+          className={styles.tab}
         >
           <Box display="inline-flex" alignItems="center" gap={2}>
             <Box
@@ -70,6 +73,7 @@ export const HomeWidgetTabs = ({
           isActive={activeTab.kind === "widgets"}
           changeTab={() => navigate(homeWidgetsUrl())}
           testId="home-widgets-tab"
+          className={styles.tab}
         >
           <Box display="inline-flex" alignItems="center" gap={2}>
             <Box
