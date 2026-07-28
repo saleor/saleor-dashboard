@@ -11,6 +11,11 @@ export const messages = defineMessages({
     defaultMessage: "Assign and save",
     description: "button, assign variants to sale and save",
   },
+  assignCountedButton: {
+    defaultMessage: "{label} ({count, plural, one {# item} other {# items}})",
+    id: "vFljxe",
+    description: "assign button label with number of selected items",
+  },
   assignVariantDialogContent: {
     id: "K+vjtE",
     defaultMessage: "Search Variants",
@@ -33,5 +38,20 @@ export const messages = defineMessages({
     id: "P6+RQ1",
     defaultMessage: "No products found",
     description: "no products placeholder",
+  },
+  loadMoreVariants: {
+    id: "fYRCRL",
+    defaultMessage: "Load more variants",
+    description: "button to fetch the next page of variants in assign variant dialog",
+  },
+  loadingMoreVariants: {
+    id: "hjamEg",
+    defaultMessage: "Loading more",
+    description: "loading state on load more variants button in assign variant dialog",
+  },
+  loadMoreVariantsProgress: {
+    id: "TQph+r",
+    defaultMessage: "{loaded} of {total} loaded",
+    description: "progress under load more variants in assign variant dialog",
   },
 });

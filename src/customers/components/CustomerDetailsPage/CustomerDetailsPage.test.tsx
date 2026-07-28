@@ -20,6 +20,15 @@ jest.mock("@dashboard/extensions/getExtensionsItems", () => ({
 // Fall back to the simple `__mocks__/Savebar.tsx` so we can detect the
 // presence/absence of save/delete/cancel buttons in the rendered tree.
 jest.mock("@dashboard/components/Savebar");
+// The "Open in GraphiQL" action reads the Dev Mode context, which is only
+// provided at the app root. Stub the hook so the page renders in isolation.
+jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
+  useDevModeContext: () => ({
+    setDevModeContent: jest.fn(),
+    setVariables: jest.fn(),
+    setDevModeVisibility: jest.fn(),
+  }),
+}));
 
 // Mock heavy/irrelevant children so the test only renders the permission-
 // dependent top-nav, form, and savebar surface area we care about.
@@ -166,12 +175,13 @@ describe("CustomerDetailsPage", () => {
       expect(screen.queryByTestId("show-customer-metadata")).not.toBeInTheDocument();
     });
 
-    it("hides the cogs menu when there are no extension actions", () => {
+    it("still shows the cogs menu for the built-in Open in GraphiQL action", () => {
       // Arrange / Act
       renderPage();
 
-      // Assert - no built-in items + no extension items => menu is suppressed entirely
-      expect(screen.queryByTestId("show-more-button")).not.toBeInTheDocument();
+      // Assert - the "Open in GraphiQL" action is always present, so the menu
+      // renders even without account actions or extension items
+      expect(screen.getByTestId("show-more-button")).toBeInTheDocument();
     });
 
     it("hides the savebar action buttons (no delete/cancel/save)", () => {

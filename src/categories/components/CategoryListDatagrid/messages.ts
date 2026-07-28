@@ -20,4 +20,9 @@ export const messages = defineMessages({
     defaultMessage: "No categories found",
     id: "dM86a2",
   },
+  loadMoreSubcategories: {
+    id: "i8FLQQ",
+    defaultMessage: "Load {count, plural, one {# more subcategory} other {# more subcategories}}",
+    description: "load more subcategories in category tree",
+  },
 });

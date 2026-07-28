@@ -61,7 +61,7 @@ describe("Extensions / Components / ExtensionItem", () => {
     // Assert
     expect(screen.getByText("Avatax")).toBeInTheDocument();
     expect(screen.getByText("Avatax description")).toBeInTheDocument();
-    expect(screen.getByText("Developed by {developer}")).toBeInTheDocument();
+    expect(screen.getByText("Developed by Saleor Commerce")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Install" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View on GitHub" })).toBeInTheDocument();
     expect(screen.queryByText("Installed")).not.toBeInTheDocument();
@@ -80,7 +80,7 @@ describe("Extensions / Components / ExtensionItem", () => {
     // Assert
     expect(screen.getByText("Avatax")).toBeInTheDocument();
     expect(screen.getByText("Avatax description")).toBeInTheDocument();
-    expect(screen.getByText("Developed by {developer}")).toBeInTheDocument();
+    expect(screen.getByText("Developed by Saleor Commerce")).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Install" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "View on GitHub" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "View details" })).toBeInTheDocument();

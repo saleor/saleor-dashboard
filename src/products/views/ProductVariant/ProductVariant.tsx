@@ -11,6 +11,8 @@ import {
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { createVariantChannels } from "@dashboard/channels/utils";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -37,9 +39,9 @@ import {
   mapFormsetStockToStockInput,
 } from "@dashboard/products/utils/data";
 import { handleAssignMedia } from "@dashboard/products/utils/handlers";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
-import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -48,11 +50,11 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { warehouseAddPath } from "@dashboard/warehouses/urls";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
-import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
+import { ProductVariantDeleteDialog } from "../../components/ProductVariantDeleteDialog/ProductVariantDeleteDialog";
 import { ProductVariantMetadataDialog } from "../../components/ProductVariantMetadataDialog/ProductVariantMetadataDialog";
 import { type ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import { ProductVariantPage } from "../../components/ProductVariantPage/ProductVariantPage";
@@ -81,14 +83,19 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     setErrors([]);
   }, [variantId]);
 
-  const { data, loading } = useProductVariantDetailsQuery({
-    displayLoader: true,
+  const { data, previousData, loading } = useProductVariantDetailsQuery({
+    // Avoid a full-page loader flash on every sibling click; the form already
+    // uses `loading` for disabled/skeleton state.
+    displayLoader: false,
     variables: {
       id: variantId,
       firstValues: 10,
     },
   });
-  const productId = data?.productVariant?.product.id;
+  // Keep productId stable while the next variant details load (cache-and-network
+  // briefly clears `data` for uncached ids). Otherwise the siblings list skips
+  // and appears to remount on every click.
+  const productId = data?.productVariant?.product.id ?? previousData?.productVariant?.product.id;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductVariantEditUrlDialog,
@@ -128,6 +135,8 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
 
   const variant = data?.productVariant;
+  // Selection follows the URL immediately; pending until details for that id exist.
+  const selectionPending = data?.productVariant?.id !== variantId;
   const channels = createVariantChannels(variant);
 
   const {
@@ -149,10 +158,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
   const handleDeactivateVariantPreorder = (id: string) => deactivatePreorder({ variables: { id } });
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
-  const handleVariantReorder = createVariantReorderHandler(
-    variant?.product,
-    reorderProductVariants,
-  );
+  const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
   const disableFormSave =
     loading ||
     uploadFileOpts.loading ||
@@ -234,6 +240,12 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     params.action === "assign-attribute-value" && params.id
       ? variant?.nonSelectionAttributes?.find(a => a.attribute.id === params.id)?.attribute
       : undefined;
+
+  // Extract productType and pageType constraints from reference attribute for modal filter
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -249,20 +261,12 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
-  });
+  } = useReferenceCategorySearch(refAttr);
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,
     result: searchCollectionsOpts,
-  } = useCollectionSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  } = useReferenceCollectionSearch(refAttr);
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
@@ -274,6 +278,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchCategoriesOpts.refetch,
     refetchCollections: searchCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -312,7 +317,10 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
       <ProductVariantPage
         productId={productId}
         defaultWeightUnit={shop?.defaultWeightUnit}
-        defaultVariantId={data?.productVariant.product.defaultVariant?.id}
+        defaultVariantId={
+          data?.productVariant?.product.defaultVariant?.id ??
+          previousData?.productVariant?.product.defaultVariant?.id
+        }
         errors={errors}
         hasVariants={variant?.product?.productType?.hasVariants ?? true}
         attributeValues={attributeValues}
@@ -321,6 +329,8 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onSetDefaultVariant={onSetDefaultVariant}
         saveButtonBarState={updateVariantOpts.status}
         loading={disableFormSave}
+        currentVariantId={variantId}
+        selectionPending={selectionPending}
         placeholderImage={placeholderImg}
         variant={variant}
         header={variant?.name || variant?.sku}
@@ -353,6 +363,7 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         onCloseDialog={() => navigate(productVariantEditUrl(variantId))}
         onAttributeSelectBlur={searchAttributeReset}
         onFilterChange={onFilterChange}
+        initialConstraints={initialConstraints}
       />
       <ProductVariantMetadataDialog
         open={params.action === "view-metadata" && !!variant}

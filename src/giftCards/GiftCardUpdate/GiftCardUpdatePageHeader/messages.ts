@@ -29,4 +29,8 @@ export const giftCardUpdatePageHeaderMessages = defineMessages({
     defaultMessage: "Disabled",
     description: "disabled status label",
   },
+  openGraphiQL: {
+    id: "YNhhZh",
+    defaultMessage: "Open this gift card in GraphiQL",
+  },
 });

@@ -1,6 +1,11 @@
 import { act, renderHook } from "@testing-library/react";
 
-import { usePublicApiVerification } from "./usePublicApiVerification";
+import {
+  fetchPublicApiProductCheck,
+  MAX_PUBLIC_API_VARIANT_PAGES,
+  PublicApiVariantsFetchError,
+  usePublicApiVerification,
+} from "./usePublicApiVerification";
 
 // Mock the config module
 jest.mock("@dashboard/config", () => ({
@@ -11,6 +16,91 @@ jest.mock("@dashboard/config", () => ({
 const mockFetch = jest.fn();
 
 global.fetch = mockFetch;
+
+const toProductVariantsConnection = (
+  variants: Array<{ id: string; name: string; quantityAvailable: number | null }>,
+) => ({
+  totalCount: variants.length,
+  pageInfo: {
+    hasNextPage: false,
+    endCursor: variants.length > 0 ? "end" : null,
+  },
+  edges: variants.map(node => ({ node })),
+});
+
+describe("fetchPublicApiProductCheck", () => {
+  it("walks productVariants pages and aggregates stock", async () => {
+    // Arrange
+    const fetchPage = jest
+      .fn()
+      .mockResolvedValueOnce({
+        data: {
+          product: {
+            id: "product-123",
+            name: "Test Product",
+            isAvailable: true,
+            isAvailableForPurchase: true,
+            availableForPurchaseAt: null,
+            productVariants: {
+              totalCount: 2,
+              pageInfo: { hasNextPage: true, endCursor: "c1" },
+              edges: [{ node: { id: "v1", name: "One", quantityAvailable: 3 } }],
+            },
+          },
+        },
+      })
+      .mockResolvedValueOnce({
+        data: {
+          product: {
+            id: "product-123",
+            name: "Test Product",
+            isAvailable: true,
+            isAvailableForPurchase: true,
+            availableForPurchaseAt: null,
+            productVariants: {
+              totalCount: 2,
+              pageInfo: { hasNextPage: false, endCursor: "c2" },
+              edges: [{ node: { id: "v2", name: "Two", quantityAvailable: 0 } }],
+            },
+          },
+        },
+      });
+
+    // Act
+    const result = await fetchPublicApiProductCheck("product-123", "default", fetchPage);
+
+    // Assert
+    expect(fetchPage).toHaveBeenCalledTimes(2);
+    expect(result.totalVariants).toBe(2);
+    expect(result.variantsWithStock).toBe(1);
+    expect(result.variants.map(variant => variant.id)).toEqual(["v1", "v2"]);
+  });
+
+  it("fails closed when the page cap is exceeded", async () => {
+    // Arrange
+    const fetchPage = jest.fn().mockResolvedValue({
+      data: {
+        product: {
+          id: "product-123",
+          name: "Test Product",
+          isAvailable: true,
+          isAvailableForPurchase: true,
+          availableForPurchaseAt: null,
+          productVariants: {
+            totalCount: MAX_PUBLIC_API_VARIANT_PAGES * 100 + 1,
+            pageInfo: { hasNextPage: true, endCursor: `c-${Math.random()}` },
+            edges: [{ node: { id: "v", name: "V", quantityAvailable: 1 } }],
+          },
+        },
+      },
+    });
+
+    // Act / Assert
+    await expect(fetchPublicApiProductCheck("product-123", "default", fetchPage)).rejects.toThrow(
+      PublicApiVariantsFetchError,
+    );
+  });
+});
 
 describe("usePublicApiVerification", () => {
   beforeEach(() => {
@@ -43,10 +133,10 @@ describe("usePublicApiVerification", () => {
           isAvailable: true,
           isAvailableForPurchase: true,
           availableForPurchaseAt: null,
-          variants: [
+          productVariants: toProductVariantsConnection([
             { id: "variant-1", name: "Variant 1", quantityAvailable: 10 },
             { id: "variant-2", name: "Variant 2", quantityAvailable: 0 },
-          ],
+          ]),
         },
       },
     };
@@ -178,7 +268,9 @@ describe("usePublicApiVerification", () => {
           isAvailable: true,
           isAvailableForPurchase: true,
           availableForPurchaseAt: null,
-          variants: [{ id: "variant-1", name: "Variant 1", quantityAvailable: 10 }],
+          productVariants: toProductVariantsConnection([
+            { id: "variant-1", name: "Variant 1", quantityAvailable: 10 },
+          ]),
         },
       },
     };
@@ -227,7 +319,7 @@ describe("usePublicApiVerification", () => {
           isAvailable: true,
           isAvailableForPurchase: true,
           availableForPurchaseAt: null,
-          variants: [],
+          productVariants: toProductVariantsConnection([]),
         },
       },
     };
@@ -266,11 +358,11 @@ describe("usePublicApiVerification", () => {
           isAvailable: true,
           isAvailableForPurchase: true,
           availableForPurchaseAt: null,
-          variants: [
-            { id: "variant-1", name: "Variant 1", quantityAvailable: null }, // Not tracked = available
-            { id: "variant-2", name: "Variant 2", quantityAvailable: 0 }, // Out of stock
-            { id: "variant-3", name: "Variant 3", quantityAvailable: 5 }, // Has stock
-          ],
+          productVariants: toProductVariantsConnection([
+            { id: "variant-1", name: "Variant 1", quantityAvailable: null },
+            { id: "variant-2", name: "Variant 2", quantityAvailable: 0 },
+            { id: "variant-3", name: "Variant 3", quantityAvailable: 5 },
+          ]),
         },
       },
     };
@@ -304,7 +396,9 @@ describe("usePublicApiVerification", () => {
           isAvailable: true,
           isAvailableForPurchase: true,
           availableForPurchaseAt: null,
-          variants: [{ id: "variant-1", name: "Variant 1", quantityAvailable: 10 }],
+          productVariants: toProductVariantsConnection([
+            { id: "variant-1", name: "Variant 1", quantityAvailable: 10 },
+          ]),
         },
       },
     };

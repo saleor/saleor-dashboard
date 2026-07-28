@@ -1,6 +1,7 @@
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
+  getAssignedVariantIdsFromForm,
   getFilteredProductVariants,
   mapLocalVariantsToSavedVariants,
 } from "@dashboard/discounts/components/VoucherCreatePage/utils";
@@ -191,7 +192,7 @@ describe("getFilteredProductVariants", () => {
     expect(result).toEqual([]);
   });
 
-  it("should filter out excluded variants from products", () => {
+  it("should keep excluded variants visible for AssignVariant selectedIds", () => {
     // Arrange
     const data = {
       variants: [{ id: "variant-1" }, { id: "variant-3" }],
@@ -204,7 +205,13 @@ describe("getFilteredProductVariants", () => {
             {
               node: {
                 id: "prod-1",
-                variants: [{ id: "variant-1" }, { id: "variant-2" }, { id: "variant-3" }],
+                productVariants: {
+                  edges: [
+                    { node: { id: "variant-1" } },
+                    { node: { id: "variant-2" } },
+                    { node: { id: "variant-3" } },
+                  ],
+                },
               },
             },
           ],
@@ -217,8 +224,8 @@ describe("getFilteredProductVariants", () => {
 
     // Assert
     expect(result).toHaveLength(1);
-    expect(result![0].variants).toHaveLength(1);
-    expect(result![0].variants[0].id).toBe("variant-2");
+    expect(result![0].productVariants!.edges).toHaveLength(3);
+    expect(getAssignedVariantIdsFromForm(data)).toEqual(["variant-1", "variant-3"]);
   });
 
   it("should handle null variants in products", () => {
@@ -234,7 +241,7 @@ describe("getFilteredProductVariants", () => {
             {
               node: {
                 id: "prod-1",
-                variants: null,
+                productVariants: null,
               },
             },
           ],
@@ -247,10 +254,10 @@ describe("getFilteredProductVariants", () => {
 
     // Assert
     expect(result).toHaveLength(1);
-    expect(result![0].variants).toEqual([]);
+    expect(result![0].productVariants).toBeNull();
   });
 
-  it("should maintain product structure while filtering variants", () => {
+  it("should maintain product structure without stripping assigned variants", () => {
     // Arrange
     const data = {
       variants: [{ id: "variant-1" }],
@@ -264,7 +271,9 @@ describe("getFilteredProductVariants", () => {
               node: {
                 id: "prod-1",
                 name: "Test Product",
-                variants: [{ id: "variant-1" }, { id: "variant-2" }],
+                productVariants: {
+                  edges: [{ node: { id: "variant-1" } }, { node: { id: "variant-2" } }],
+                },
               },
             },
           ],
@@ -279,7 +288,9 @@ describe("getFilteredProductVariants", () => {
     expect(result![0]).toMatchObject({
       id: "prod-1",
       name: "Test Product",
-      variants: [{ id: "variant-2" }],
+      productVariants: {
+        edges: [{ node: { id: "variant-1" } }, { node: { id: "variant-2" } }],
+      },
     });
   });
 });

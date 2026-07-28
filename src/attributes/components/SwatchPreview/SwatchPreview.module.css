@@ -1,0 +1,22 @@
+.swatchPreview {
+  display: block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--mu-colors-border-default1);
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.swatchPreviewCircle {
+  border-radius: 50%;
+}
+
+.swatchPreviewRounded {
+  border-radius: var(--mu-border-radius-2);
+}
+
+.swatchPreviewEmpty {
+  background-color: var(--mu-colors-background-default2);
+}

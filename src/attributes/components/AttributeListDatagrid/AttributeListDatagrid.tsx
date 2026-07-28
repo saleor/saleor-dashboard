@@ -22,6 +22,8 @@ import { messages } from "./messages";
 
 interface AttributeListDatagridProps extends ListProps, SortPage<AttributeListUrlSortField> {
   attributes: AttributeFragment[];
+  hidePagination?: boolean;
+  showTopBorder?: boolean;
   onSelectAttributesIds: (rowsIndex: number[], clearSelection: () => void) => void;
 }
 
@@ -30,6 +32,8 @@ export const AttributeListDatagrid = ({
   settings,
   sort,
   disabled,
+  hidePagination = false,
+  showTopBorder = true,
   onSort,
   onSelectAttributesIds,
   onUpdateListSettings,
@@ -101,6 +105,7 @@ export const AttributeListDatagrid = ({
       <Datagrid
         readonly
         loading={disabled}
+        showTopBorder={showTopBorder}
         rowMarkers="checkbox-visible"
         rowMarkerWidth={LIST_INSET_ROW_MARKER_WIDTH}
         columnSelect="single"
@@ -130,12 +135,14 @@ export const AttributeListDatagrid = ({
         navigatorOpts={{ state: getPrevLocationState(location) }}
       />
 
-      <DatagridPagination
-        component="div"
-        settings={settings}
-        disabled={disabled}
-        onUpdateListSettings={onUpdateListSettings}
-      />
+      {!hidePagination && (
+        <DatagridPagination
+          component="div"
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      )}
     </DatagridChangeStateContext.Provider>
   );
 };

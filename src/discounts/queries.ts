@@ -242,3 +242,22 @@ export const PromotionDetailsQuery = /* GraphQL */ `
     }
   }
 `;
+
+export const voucherGraphiQLQuery = `query VoucherDetails($id: ID!) {
+  voucher(id: $id) {
+    id
+    name
+    type
+    discountValueType
+  }
+}`;
+
+export const promotionGraphiQLQuery = `query PromotionGraphiQLDetails($id: ID!) {
+  promotion(id: $id) {
+    id
+    name
+    type
+    startDate
+    endDate
+  }
+}`;

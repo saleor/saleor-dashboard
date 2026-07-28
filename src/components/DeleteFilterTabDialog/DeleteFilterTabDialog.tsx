@@ -1,8 +1,11 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import BackButton from "@dashboard/components/BackButton";
+import {
+  ConfirmButton,
+  type ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
+import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
-import { FormattedMessage, useIntl } from "react-intl";
-
-import ActionDialog from "../ActionDialog";
+import { FormattedMessage } from "react-intl";
 
 interface DeleteFilterTabDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -12,39 +15,59 @@ interface DeleteFilterTabDialogProps {
   onSubmit: () => void;
 }
 
-const DeleteFilterTabDialog = ({
+export const DeleteFilterTabDialog = ({
   confirmButtonState,
   onClose,
   onSubmit,
   open,
   tabName,
 }: DeleteFilterTabDialogProps) => {
-  const intl = useIntl();
+  const isSubmitting = confirmButtonState === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
 
   return (
-    <ActionDialog
-      open={open}
-      confirmButtonState={confirmButtonState}
-      backButtonText={intl.formatMessage(buttonMessages.cancel)}
-      onClose={onClose}
-      onConfirm={onSubmit}
-      title={intl.formatMessage({
-        id: "xy66ru",
-        defaultMessage: "Delete preset",
-        description: "custom preset delete, dialog header",
-      })}
-      variant="delete"
-    >
-      <FormattedMessage
-        id="U5CH0u"
-        defaultMessage="Are you sure you want to delete {name} preset?"
-        values={{
-          name: <strong>{tabName}</strong>,
-        }}
-      />
-    </ActionDialog>
+    <DashboardModal onChange={handleClose} open={open}>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              id="U5CH0u"
+              defaultMessage="Are you sure you want to delete {name} preset?"
+              values={{
+                name: <strong>{tabName}</strong>,
+              }}
+            />
+          }
+        >
+          <FormattedMessage
+            id="xy66ru"
+            defaultMessage="Delete preset"
+            description="custom preset delete, dialog header"
+          />
+        </DashboardModal.Header>
+
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting}
+            onClick={onSubmit}
+            transitionState={confirmButtonState}
+            variant="error"
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </ConfirmButton>
+        </DashboardModal.Actions>
+      </DashboardModal.Content>
+    </DashboardModal>
   );
 };
 
 DeleteFilterTabDialog.displayName = "DeleteFilterTabDialog";
-export default DeleteFilterTabDialog;

@@ -42,6 +42,8 @@ export const getAppErrorMessageDescriptor = (code: AppErrorCode) => {
       return appManifestErrorMessages.forbidden;
     case AppErrorCode.NOT_FOUND:
       return appManifestErrorMessages.notFound;
+    case AppErrorCode.DUPLICATED_EXTENSION_IDENTIFIER:
+      return appManifestErrorMessages.genericError;
     default:
       const _exhaustiveCheck: never = code;
 

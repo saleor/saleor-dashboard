@@ -185,15 +185,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         __typename: "ProductVariant" as const,
         id: "default-variant-id",
       },
-      variants: [
-        {
-          __typename: "ProductVariant" as const,
-          id: "UHJvZHVjdFZhcmlhbnQ6MTQzMw==",
-          name: "Test Variant",
-          sku: "TEST-SKU",
-          media: [],
-        },
-      ],
       thumbnail: {
         __typename: "Image" as const,
         url: "test-thumb.jpg",

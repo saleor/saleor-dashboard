@@ -123,9 +123,9 @@ export const attributeTypesMessages = defineMessages({
     description: "attribute product type",
   },
   pageType: {
-    defaultMessage: "Page type",
-    id: "qT0qr/",
-    description: "attribute page type",
+    defaultMessage: "Model type",
+    id: "U/vaYf",
+    description: "attribute model type (PAGE_TYPE enum value in filters)",
   },
 });
 

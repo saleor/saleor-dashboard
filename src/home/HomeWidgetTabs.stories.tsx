@@ -15,12 +15,14 @@ const buildExtension = (overrides: Partial<Extension>): Extension => ({
   accessToken: "token",
   permissions: [],
   label: "Widget",
+  identifier: null,
   mountName: "HOMEPAGE_WIDGETS",
   url: "https://my-app.saleor.app/widget",
   open: () => undefined,
   targetName: "WIDGET",
   settings: null,
   isSaleorOfficial: true,
+  fromCache: false,
   ...overrides,
 });
 

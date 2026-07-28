@@ -1,13 +1,10 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
-import {
-  type CategoryBulkDeleteMutation,
-  useCategoryBulkDeleteMutation,
-  useRootCategoriesQuery,
-} from "@dashboard/graphql";
+import { useApolloClient } from "@apollo/client";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
+import { useRootCategoriesQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
@@ -21,26 +18,40 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import { Box } from "@saleor/macaw-ui-next";
-import isEqual from "lodash/isEqual";
 import { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
+import { CategoryBulkDeleteDialog } from "../../components/CategoryBulkDeleteDialog/CategoryBulkDeleteDialog";
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
+import {
+  type CategoryListPageState,
+  CategoryListPageStateProvider,
+} from "../../components/CategoryListPage/categoryListPageState";
 import {
   categoryListUrl,
   type CategoryListUrlDialog,
   type CategoryListUrlFilters,
   type CategoryListUrlQueryParams,
 } from "../../urls";
+import {
+  CATEGORY_LIST_EXPANDED_IDS_STORAGE_KEY,
+  normalizeStoredExpandedIds,
+} from "./expandedIdsStorage";
 import { getActiveFilters, getFilterVariables, storageUtils } from "./filter";
+import { useCategoryBulkDeleteController } from "./hooks/useCategoryBulkDeleteController";
+import { useCategorySelectionController } from "./hooks/useCategorySelectionController";
+import { useCategoryTreeController } from "./hooks/useCategoryTreeController";
 import { getSortQueryVariables } from "./sort";
+import { collectDescendantIds } from "./utils/categoryTree";
 
 interface CategoryListProps {
   params: CategoryListUrlQueryParams;
 }
 
-const CategoryList = ({ params }: CategoryListProps) => {
+const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
+  const client = useApolloClient();
+  const location = useLocation();
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
@@ -51,6 +62,7 @@ const CategoryList = ({ params }: CategoryListProps) => {
     setSelectedRowIds,
     clearRowSelection,
     setClearDatagridRowSelectionCallback,
+    excludeFromSelected,
   } = useRowSelection(params);
   const {
     hasPresetsChanged,
@@ -88,13 +100,18 @@ const CategoryList = ({ params }: CategoryListProps) => {
     displayLoader: true,
     variables: queryVariables,
   });
-  const categories = mapEdgesToItems(data?.categories);
+  const categories = mapEdgesToItems(data?.categories) ?? [];
   const paginationValues = usePaginator({
     pageInfo: data?.categories?.pageInfo,
     paginationState,
     queryString: params,
   });
-  const changeFilterField = (filter: CategoryListUrlFilters) => {
+  const [storedExpandedIds, setStoredExpandedIds] = useLocalStorage<string[]>(
+    CATEGORY_LIST_EXPANDED_IDS_STORAGE_KEY,
+    storedIds => normalizeStoredExpandedIds(storedIds),
+  );
+
+  const changeFilterField = (filter: CategoryListUrlFilters): void => {
     clearRowSelection();
     navigate(
       categoryListUrl({
@@ -104,81 +121,156 @@ const CategoryList = ({ params }: CategoryListProps) => {
       }),
     );
   };
-  const handleCategoryBulkDeleteOnComplete = (data: CategoryBulkDeleteMutation) => {
-    if (data?.categoryBulkDelete?.errors.length === 0) {
-      navigate(categoryListUrl(), { replace: true });
-      refetch();
-      clearRowSelection();
-      notify({
-        status: "success",
-        text: intl.formatMessage({
-          id: "G5ETO0",
-          defaultMessage: "Categories deleted",
-        }),
-      });
-    }
-  };
-  const handleSetSelectedCategoryIds = useCallback(
-    (rows: number[], clearSelection: () => void) => {
-      if (!categories) {
-        return;
-      }
 
-      const rowsIds = rows.map(row => categories[row].id);
-      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
-
-      if (!haveSaveValues) {
-        setSelectedRowIds(rowsIds);
-      }
-
-      setClearDatagridRowSelectionCallback(clearSelection);
-    },
-    [categories, setClearDatagridRowSelectionCallback, selectedRowIds, setSelectedRowIds],
-  );
-  const [categoryBulkDelete, categoryBulkDeleteOpts] = useCategoryBulkDeleteMutation({
-    onCompleted: handleCategoryBulkDeleteOnComplete,
+  const {
+    visibleRows,
+    hasExpandedSubcategories,
+    isCategoryExpanded,
+    isCategoryChildrenLoading,
+    isLoadingMoreSubcategories,
+    getCategoryDepth,
+    toggleExpanded,
+    loadMoreSubcategories,
+    handleCollapseAllSubcategories,
+    getCachedChildrenByParentId,
+    refreshParentChildren,
+    pruneTreeStateAfterDelete,
+  } = useCategoryTreeController({
+    client,
+    categories,
+    locationPathname: location.pathname,
+    clearRowSelection,
+    storedExpandedIds,
+    setStoredExpandedIds,
   });
-  const handleCategoryBulkDelete = useCallback(async () => {
-    await categoryBulkDelete({
-      variables: {
-        ids: selectedRowIds,
-      },
+
+  const { handleSelectedCategoryIdsChange, handleSetSelectedCategoryIds } =
+    useCategorySelectionController({
+      selectedRowIds,
+      setSelectedRowIds,
+      setClearDatagridRowSelectionCallback,
+      visibleRows,
+      getCachedChildrenByParentId,
     });
-    clearRowSelection();
-  }, [selectedRowIds]);
+
+  const handleCategoryExpandToggle = useCallback(
+    async (categoryId: string): Promise<void> => {
+      if (isCategoryExpanded(categoryId)) {
+        const hiddenIds = new Set(collectDescendantIds(categoryId, getCachedChildrenByParentId));
+        const hasHiddenSelectedRows = selectedRowIds.some(id => hiddenIds.has(id));
+
+        if (hasHiddenSelectedRows) {
+          excludeFromSelected([...hiddenIds, categoryId]);
+        }
+      }
+
+      await toggleExpanded(categoryId);
+    },
+    [
+      excludeFromSelected,
+      getCachedChildrenByParentId,
+      isCategoryExpanded,
+      selectedRowIds,
+      toggleExpanded,
+    ],
+  );
+
+  const notifyDeleted = useCallback((): void => {
+    notify({
+      status: "success",
+      text: intl.formatMessage({
+        id: "G5ETO0",
+        defaultMessage: "Categories deleted",
+      }),
+    });
+  }, [intl, notify]);
+
+  const refetchRootCategories = useCallback((): void => {
+    void refetch();
+  }, [refetch]);
+
+  const navigateToList = useCallback((): void => {
+    navigate(categoryListUrl(), { replace: true });
+  }, [navigate]);
+  const handleOpenDeleteModal = useCallback((): void => {
+    openModal("delete");
+  }, [openModal]);
+
+  const { categoryBulkDeleteOpts, handleCategoryBulkDelete } = useCategoryBulkDeleteController({
+    selectedRowIds,
+    visibleRows,
+    getCachedChildrenByParentId,
+    pruneTreeStateAfterDelete,
+    refreshParentChildren,
+    clearRowSelection,
+    refetchRootCategories,
+    navigateToList,
+    notifyDeleted,
+  });
+  const categoryListPageState = useMemo<CategoryListPageState>(
+    () => ({
+      rows: visibleRows,
+      selectedCategoriesIds: selectedRowIds,
+      onCategoriesDelete: handleOpenDeleteModal,
+      onSelectCategoriesIds: handleSetSelectedCategoryIds,
+      onSelectedCategoriesIdsChange: handleSelectedCategoryIdsChange,
+      isCategoryExpanded,
+      onCategoryExpandToggle: handleCategoryExpandToggle,
+      isCategoryChildrenLoading,
+      isLoadingMoreSubcategories,
+      getCategoryDepth,
+      onLoadMoreSubcategories: loadMoreSubcategories,
+      hasExpandedSubcategories,
+      onCollapseAllSubcategories: handleCollapseAllSubcategories,
+    }),
+    [
+      getCategoryDepth,
+      handleCategoryExpandToggle,
+      handleCollapseAllSubcategories,
+      handleOpenDeleteModal,
+      handleSelectedCategoryIdsChange,
+      handleSetSelectedCategoryIds,
+      hasExpandedSubcategories,
+      isCategoryChildrenLoading,
+      isLoadingMoreSubcategories,
+      isCategoryExpanded,
+      loadMoreSubcategories,
+      selectedRowIds,
+      visibleRows,
+    ],
+  );
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
-      <CategoryListPage
-        hasPresetsChanged={hasPresetsChanged()}
-        categories={mapEdgesToItems(data?.categories)!}
-        currentTab={selectedPreset}
-        initialSearch={params.query || ""}
-        onSearchChange={query => changeFilterField({ query })}
-        onAll={() => navigate(categoryListUrl())}
-        onTabChange={onPresetChange}
-        onTabDelete={(tabIndex: number) => {
-          setPresetIdToDelete(tabIndex);
-          openModal("delete-search");
-        }}
-        onTabUpdate={onPresetUpdate}
-        onTabSave={() => openModal("save-search")}
-        tabs={presets.map(tab => tab.name)}
-        settings={settings}
-        sort={getSortParams(params)}
-        onSort={handleSort}
-        disabled={!data}
-        onUpdateListSettings={(...props) => {
-          clearRowSelection();
-          updateListSettings(...props);
-        }}
-        selectedCategoriesIds={selectedRowIds}
-        onSelectCategoriesIds={handleSetSelectedCategoryIds}
-        onCategoriesDelete={() => openModal("delete")}
-      />
+      <CategoryListPageStateProvider value={categoryListPageState}>
+        <CategoryListPage
+          hasPresetsChanged={hasPresetsChanged()}
+          currentTab={selectedPreset}
+          initialSearch={params.query || ""}
+          onSearchChange={query => changeFilterField({ query })}
+          onAll={() => navigate(categoryListUrl())}
+          onTabChange={onPresetChange}
+          onTabDelete={(tabIndex: number) => {
+            setPresetIdToDelete(tabIndex);
+            openModal("delete-search");
+          }}
+          onTabUpdate={onPresetUpdate}
+          onTabSave={() => openModal("save-search")}
+          tabs={presets.map(tab => tab.name)}
+          settings={settings}
+          sort={getSortParams(params)}
+          onSort={handleSort}
+          disabled={!data}
+          onUpdateListSettings={(...props) => {
+            clearRowSelection();
+            updateListSettings(...props);
+          }}
+        />
+      </CategoryListPageStateProvider>
 
-      <ActionDialog
+      <CategoryBulkDeleteDialog
         confirmButtonState={categoryBulkDeleteOpts.status}
+        count={params?.ids?.length ?? 0}
         onClose={() =>
           navigate(
             categoryListUrl({
@@ -190,32 +282,7 @@ const CategoryList = ({ params }: CategoryListProps) => {
         }
         onConfirm={handleCategoryBulkDelete}
         open={params.action === "delete"}
-        title={intl.formatMessage({
-          id: "sG0w22",
-          defaultMessage: "Delete categories",
-          description: "dialog title",
-        })}
-        variant="delete"
-      >
-        <Box display="grid" gap={2}>
-          <Box>
-            <FormattedMessage
-              id="Pp/7T7"
-              defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
-              values={{
-                counter: params?.ids?.length,
-                displayQuantity: <strong>{params?.ids?.length}</strong>,
-              }}
-            />
-          </Box>
-          <Box>
-            <FormattedMessage
-              id="e+L+q3"
-              defaultMessage="Remember this will also delete all products assigned to this category."
-            />
-          </Box>
-        </Box>
-      </ActionDialog>
+      />
 
       <SaveFilterTabDialog
         open={params.action === "save-search"}
@@ -235,4 +302,5 @@ const CategoryList = ({ params }: CategoryListProps) => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default CategoryList;

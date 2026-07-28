@@ -156,6 +156,11 @@ export const taxesMessages = defineMessages({
     defaultMessage: "Choose country you want to add",
     description: "add country dialog header",
   },
+  chooseCountryNotFound: {
+    id: "wgOP2K",
+    defaultMessage: "No countries found",
+    description: "empty state in add country dialog search results",
+  },
   country: {
     id: "UBuKZ9",
     defaultMessage: "Country",
@@ -211,6 +216,23 @@ export const taxesMessages = defineMessages({
     id: "m66R1V",
     defaultMessage: "You can create new tax classes in {taxSettingsLink}.",
     description: "hint below tax class selector",
+  },
+  taxClassNone: {
+    id: "llKwCf",
+    defaultMessage: "None",
+    description: "Empty option in tax class combobox when there is no inherited default",
+  },
+  taxClassProductTypeDefault: {
+    id: "xE38Jf",
+    defaultMessage: "Product type default",
+    description:
+      "Empty option on product tax class combobox — clears override so product type tax class applies",
+  },
+  taxClassShippingDefault: {
+    id: "xhruoo",
+    defaultMessage: "Default",
+    description:
+      "Empty option on shipping method tax class combobox — uses Saleor default tax class",
   },
   taxSettingsLink: {
     id: "X4+lB+",

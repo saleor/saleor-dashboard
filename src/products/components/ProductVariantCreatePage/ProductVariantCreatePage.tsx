@@ -20,6 +20,8 @@ import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Link from "@dashboard/components/Link";
 import { Metadata } from "@dashboard/components/Metadata";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   type ProductErrorWithAttributesFragment,
@@ -36,12 +38,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import {
-  type Container,
-  type FetchMoreProps,
-  type RelayToFlat,
-  type ReorderAction,
-} from "@dashboard/types";
+import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -53,6 +50,7 @@ import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannels
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
+import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
 import { ProductVariantPrice } from "../ProductVariantPrice";
 import {
   type ProductVariantCreateData,
@@ -105,7 +103,7 @@ interface ProductVariantCreatePageProps {
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
-  onVariantReorder: ReorderAction;
+  onVariantReorder: (move: VariantReorderMove) => void;
   onWarehouseConfigure: () => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
@@ -125,6 +123,7 @@ interface ProductVariantCreatePageProps {
   searchWarehousesResult: QueryResult<SearchWarehousesQuery>;
   searchWarehouses: (query: string) => void;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
 }
 
 export const ProductVariantCreatePage = ({
@@ -162,6 +161,7 @@ export const ProductVariantCreatePage = ({
   searchWarehousesResult,
   searchWarehouses,
   onFilterChange,
+  initialConstraints,
 }: ProductVariantCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -225,7 +225,6 @@ export const ProductVariantCreatePage = ({
                 <div>
                   <ProductVariantNavigation
                     fallbackThumbnail={product?.thumbnail?.url}
-                    variants={product?.variants}
                     productId={productId}
                     defaultVariantId={defaultVariantId}
                     onReorder={onVariantReorder}
@@ -400,6 +399,7 @@ export const ProductVariantCreatePage = ({
                     handleAssignReferenceAttribute(attributeValues, data, handlers)
                   }
                   onFilterChange={onFilterChange}
+                  initialConstraints={initialConstraints}
                 />
               )}
               {product && (

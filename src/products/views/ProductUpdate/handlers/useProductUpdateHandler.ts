@@ -11,9 +11,11 @@ import {
   type AttributeErrorFragment,
   ErrorPolicyEnum,
   type ProductChannelListingErrorFragment,
+  type ProductDetailsVariantFragment,
   type ProductErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductFragment,
+  type ProductVariantBulkCreateInput,
   type UploadErrorFragment,
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
@@ -24,9 +26,12 @@ import {
   useProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { getMutationErrors } from "@dashboard/misc";
 import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
-import { getProductErrorMessage } from "@dashboard/utils/errors";
+import { dedupeBulkCreateInputs } from "@dashboard/products/hooks/variantGridStagedEdits";
+import {
+  getProductSubmitErrorNotificationMessages,
+  splitProductSubmitErrors,
+} from "@dashboard/products/utils/splitSubmitErrors";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -35,6 +40,12 @@ import {
   getVariantUpdateMutationErrors,
   type ProductVariantListError,
 } from "./errors";
+import {
+  createInitialProductSaveSteps,
+  hasFailedProductSaveStep,
+  type ProductSaveStepResult,
+  setProductSaveStepStatus,
+} from "./productSaveSteps";
 import {
   getBulkVariantUpdateInputs,
   getCreateVariantInput,
@@ -61,43 +72,43 @@ interface UseProductUpdateHandlerOpts {
   errors: ProductErrorWithAttributesFragment[];
   variantListErrors: ProductVariantListError[];
   channelsErrors: ProductChannelListingErrorFragment[];
+  saveSteps: ProductSaveStepResult[];
+  clearSaveSteps: () => void;
 }
 
 export function useProductUpdateHandler(
   product: ProductFragment | undefined,
+  variants: ProductDetailsVariantFragment[] = [],
 ): [UseProductUpdateHandler, UseProductUpdateHandlerOpts] {
   const intl = useIntl();
   const notify = useNotifier();
   const [variantListErrors, setVariantListErrors] = useState<ProductVariantListError[]>([]);
+  const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
+  const [submitChannelsErrors, setSubmitChannelsErrors] = useState<
+    ProductChannelListingErrorFragment[]
+  >([]);
+  const [saveSteps, setSaveSteps] = useState<ProductSaveStepResult[]>([]);
   const [called, setCalled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updateVariants] = useProductVariantBulkUpdateMutation();
   const [createVariants] = useProductVariantBulkCreateMutation();
   const [deleteVariants] = useProductVariantBulkDeleteMutation();
   const [uploadFile] = useFileUploadMutation();
-  const [updateProduct, updateProductOpts] = useProductUpdateMutation();
-  const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({
-    onCompleted: data => {
-      if (data.productChannelListingUpdate.errors.length) {
-        data.productChannelListingUpdate.errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl),
-          }),
-        );
-      }
-    },
-  });
+  const [updateProduct] = useProductUpdateMutation();
+  const [updateChannels] = useProductChannelListingUpdateMutation();
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
+  const clearSaveSteps = () => setSaveSteps([]);
   const sendMutations = async (
     data: ProductUpdateSubmitData,
-  ): Promise<UseProductUpdateHandlerError[]> => {
+  ): Promise<{ errors: UseProductUpdateHandlerError[]; steps: ProductSaveStepResult[] }> => {
     if (!product) {
-      return [];
+      return { errors: [], steps: [] };
     }
 
     let errors: UseProductUpdateHandlerError[] = [];
     const variantErrors: ProductVariantListError[] = [];
+    let steps = createInitialProductSaveSteps();
+    const hasFileAttributeWork = data.attributesWithNewFileValue.length > 0;
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
@@ -107,85 +118,160 @@ export function useProductUpdateHandler(
       product?.attributes,
       variables => deleteAttributeValue({ variables }),
     );
+    const fileErrors = [
+      ...mergeFileUploadErrors(uploadFilesResult),
+      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
+    ];
+
+    if (hasFileAttributeWork) {
+      steps = setProductSaveStepStatus(steps, "files", fileErrors.length > 0 ? "error" : "success");
+      errors = [...errors, ...fileErrors];
+    }
+
     const updateProductChannelsData = getProductChannelsUpdateVariables(product, data);
 
-    if (hasProductChannelsUpdate(updateProductChannelsData.input)) {
-      const updateChannelsResult = await updateChannels({
-        variables: updateProductChannelsData,
-      });
-
-      if (updateChannelsResult.data) {
-        errors = [...errors, ...updateChannelsResult.data.productChannelListingUpdate.errors];
-      }
-    }
-
-    if (data.variants.removed.length > 0) {
-      const deleteVaraintsResult = await deleteVariants({
-        variables: {
-          ids: data.variants.removed.map(index => product.variants[index].id),
-        },
-      });
-
-      errors = [...errors, ...deleteVaraintsResult.data.productVariantBulkDelete.errors];
-    }
-
+    // Persist product fields (including category) before channel listing updates so
+    // publish validation sees the latest saved product state in the same submit.
     const updateProductResult = await updateProduct({
       variables: getProductUpdateVariables(product, data, uploadFilesResult),
     });
+    const productUpdateErrors = updateProductResult?.data?.productUpdate?.errors ?? [];
 
-    if (data.variants.added.length > 0) {
-      const createVariantsResults = await createVariants({
-        variables: {
-          id: product.id,
-          inputs: data.variants.added.map(index => ({
-            ...getCreateVariantInput(
-              data.variants,
-              index,
-              product?.productType?.variantAttributes ?? [],
-            ),
-          })),
-        },
+    errors = [...errors, ...productUpdateErrors];
+    steps = setProductSaveStepStatus(
+      steps,
+      "product",
+      productUpdateErrors.length > 0 ? "error" : "success",
+    );
+
+    const shouldUpdateChannels =
+      productUpdateErrors.length === 0 && hasProductChannelsUpdate(updateProductChannelsData.input);
+
+    if (shouldUpdateChannels) {
+      const updateChannelsResult = await updateChannels({
+        variables: updateProductChannelsData,
       });
-      const createVariantsErrors = getCreateVariantMutationError(createVariantsResults);
+      const channelErrors = updateChannelsResult.data?.productChannelListingUpdate.errors ?? [];
 
-      errors.push(...createVariantsErrors);
-      variantErrors.push(...createVariantsErrors);
+      errors = [...errors, ...channelErrors];
+      steps = setProductSaveStepStatus(
+        steps,
+        "channels",
+        channelErrors.length > 0 ? "error" : "success",
+      );
+    } else if (hasProductChannelsUpdate(updateProductChannelsData.input)) {
+      steps = setProductSaveStepStatus(steps, "channels", "skipped");
     }
 
-    if (data.variants.updates.length > 0) {
+    if (data.variants.removedVariantIds?.length || data.variants.removed.length > 0) {
+      const idsFromIndexes = data.variants.removed
+        .map(index => variants[index]?.id)
+        .filter((id): id is string => Boolean(id));
+      // Prefer staged cross-page ids; fall back / union with page-local indexes.
+      const ids = Array.from(
+        new Set([...(data.variants.removedVariantIds ?? []), ...idsFromIndexes]),
+      );
+
+      if (ids.length > 0) {
+        const deleteVaraintsResult = await deleteVariants({
+          variables: { ids },
+        });
+        const deleteErrors = deleteVaraintsResult.data?.productVariantBulkDelete.errors ?? [];
+
+        errors = [...errors, ...deleteErrors];
+        steps = setProductSaveStepStatus(
+          steps,
+          "variantDelete",
+          deleteErrors.length > 0 ? "error" : "success",
+        );
+      }
+    }
+
+    if (data.variants.added.length > 0 || (data.variants.stagedCreates?.length ?? 0) > 0) {
+      const fromGrid: ProductVariantBulkCreateInput[] = data.variants.added.map(index =>
+        getCreateVariantInput(data.variants, index, product?.productType?.variantAttributes ?? []),
+      );
+      const stagedCreates = data.variants.stagedCreates ?? [];
+      const { unique: createInputs } = dedupeBulkCreateInputs([...fromGrid, ...stagedCreates]);
+      // Track each submitted input's origin (grid add vs staged create) so row-level
+      // errors can be mapped back for precise retry trimming. Object identity is
+      // stable: dedupe returns references to the original inputs.
+      const createInputSources = createInputs.map(input => {
+        const gridIndex = fromGrid.indexOf(input);
+
+        return gridIndex !== -1 ? { gridIndex } : { stagedIndex: stagedCreates.indexOf(input) };
+      });
+
+      if (createInputs.length > 0) {
+        const createVariantsResults = await createVariants({
+          variables: {
+            id: product.id,
+            inputs: createInputs,
+          },
+        });
+        const createVariantsErrors = getCreateVariantMutationError(
+          createVariantsResults,
+          createInputSources,
+        );
+
+        errors.push(...createVariantsErrors);
+        variantErrors.push(...createVariantsErrors);
+        steps = setProductSaveStepStatus(
+          steps,
+          "variantCreate",
+          createVariantsErrors.length > 0 ? "error" : "success",
+        );
+      }
+    }
+
+    const updateChanges = data.variants.stagedUpdateChanges ?? data.variants;
+    const variantsForBulkUpdate = data.variants.stagedUpdateVariants ?? variants;
+
+    if (updateChanges.updates.length > 0) {
       const updateInputdData = getBulkVariantUpdateInputs(
-        product.variants,
-        data.variants,
+        variantsForBulkUpdate,
+        updateChanges,
         product?.productType?.variantAttributes ?? [],
       );
 
       if (updateInputdData.length) {
-        const updateVariantsResults = await updateVariants({
-          variables: {
-            product: product.id,
-            input: updateInputdData,
-            errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
-          },
-        });
-        const updateVariantsErrors = getVariantUpdateMutationErrors(
-          updateVariantsResults,
-          updateInputdData.map(data => data.id),
-        );
+        // Chunk to stay within API comfort zone for large catalogs.
+        const CHUNK_SIZE = 100;
+        let updateFailed = false;
 
-        variantErrors.push(...updateVariantsErrors);
-        errors.push(...updateVariantsErrors);
+        for (let offset = 0; offset < updateInputdData.length; offset += CHUNK_SIZE) {
+          const chunk = updateInputdData.slice(offset, offset + CHUNK_SIZE);
+          const updateVariantsResults = await updateVariants({
+            variables: {
+              product: product.id,
+              input: chunk,
+              errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
+            },
+          });
+          const updateVariantsErrors = getVariantUpdateMutationErrors(
+            updateVariantsResults,
+            chunk.map(row => row.id),
+          );
+
+          variantErrors.push(...updateVariantsErrors);
+          errors.push(...updateVariantsErrors);
+
+          if (updateVariantsErrors.length > 0) {
+            updateFailed = true;
+          }
+        }
+
+        steps = setProductSaveStepStatus(
+          steps,
+          "variantUpdate",
+          updateFailed ? "error" : "success",
+        );
       }
     }
 
-    errors = [
-      ...errors,
-      ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-      ...(updateProductResult?.data?.productUpdate?.errors ?? []),
-    ];
     setVariantListErrors(variantErrors);
 
-    return errors;
+    return { errors, steps };
   };
   const submit = async (data: ProductUpdateSubmitData) => {
     if (!product) {
@@ -194,8 +280,11 @@ export function useProductUpdateHandler(
 
     setCalled(true);
     setLoading(true);
+    setSubmitErrors([]);
+    setSubmitChannelsErrors([]);
+    setSaveSteps([]);
 
-    const errors = await sendMutations(data);
+    const { errors, steps } = await sendMutations(data);
 
     setLoading(false);
 
@@ -207,21 +296,37 @@ export function useProductUpdateHandler(
           defaultMessage: "Product updated",
         }),
       });
+    } else {
+      if (hasFailedProductSaveStep(steps)) {
+        setSaveSteps(steps);
+      }
+
+      getProductSubmitErrorNotificationMessages(errors, intl).forEach(text =>
+        notify({
+          status: "error",
+          text,
+        }),
+      );
+
+      const { productErrors, channelsErrors } = splitProductSubmitErrors(errors);
+
+      setSubmitErrors(productErrors);
+      setSubmitChannelsErrors(channelsErrors);
     }
 
     return errors;
   };
-  const errors = getMutationErrors(updateProductOpts) as ProductErrorWithAttributesFragment[];
-  const channelsErrors = updateChannelsOpts?.data?.productChannelListingUpdate?.errors ?? [];
 
   return [
     submit,
     {
       called,
       loading,
-      channelsErrors,
-      errors,
+      channelsErrors: submitChannelsErrors,
+      errors: submitErrors,
       variantListErrors,
+      saveSteps,
+      clearSaveSteps,
     },
   ];
 }

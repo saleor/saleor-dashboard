@@ -15,9 +15,16 @@ export interface DialogProps {
   onClose: () => void;
 }
 
+export type OrderDetailsViewMode = "timeline" | "matrix";
+
 export interface ListSettings<TColumn extends string = string> {
   columns?: TColumn[];
   rowNumber: number;
+}
+
+export interface OrderDetailsListSettings extends ListSettings {
+  viewMode?: OrderDetailsViewMode;
+  showCanceledFulfillments?: boolean;
 }
 
 export enum ListViews {
@@ -32,6 +39,7 @@ export enum ListViews {
   NAVIGATION_LIST = "NAVIGATION_LIST",
   ORDER_LIST = "ORDER_LIST",
   ORDER_DETAILS_LIST = "ORDER_DETAILS_LIST",
+  ORDER_LINE_MATRIX_LIST = "ORDER_LINE_MATRIX_LIST",
   ORDER_DRAFT_DETAILS_LIST = "ORDER_DRAFT_DETAILS_LIST",
   PAGES_LIST = "PAGES_LIST",
   PAGE_TYPES_LIST = "PAGE_TYPES_LIST",

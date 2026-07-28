@@ -10,6 +10,7 @@ import {
   type OrderDiscountFragment,
   OrderDiscountType,
   type OrderFulfillLineFragment,
+  type OrderFulfillStockInput,
   type OrderLineFragment,
   type OrderLineStockDataFragment,
   type OrderRefundDataQuery,
@@ -29,9 +30,9 @@ import {
 import { orderDiscountTypeLabelMessages } from "../messages";
 import { type OrderRefundSharedType } from "../types";
 
-export type OrderWithTotalAndTotalCaptured = Pick<
+export type OrderWithTotalAndTotalCharged = Pick<
   NonNullable<OrderRefundDataQuery["order"]>,
-  "total" | "totalCaptured"
+  "total" | "totalCharged"
 >;
 
 export interface OrderLineWithStockWarehouses {
@@ -41,11 +42,7 @@ export interface OrderLineWithStockWarehouses {
 }
 
 export function getOrderCharged(order: OrderDetailsFragment) {
-  if (order?.totalCharged) {
-    return order.totalCharged;
-  }
-
-  return order?.totalCaptured;
+  return order.totalCharged;
 }
 
 export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
@@ -340,9 +337,47 @@ export interface OrderFulfillLineFormData {
   warehouse: WarehouseFragment;
 }
 
+type OrderFulfillLineValueInput = {
+  quantity: number;
+  warehouse?: WarehouseFragment | null;
+};
+
 export type OrderFulfillStockFormsetData = Array<
   Pick<FormsetData<null, OrderFulfillLineFormData[]>[0], "id" | "value">
 >;
+
+export const getOrderFulfillSubmitItems = <
+  TItem extends { id: string; value?: OrderFulfillLineValueInput[] | null },
+>(
+  formsetData: TItem[],
+): Array<Omit<TItem, "value"> & { value: OrderFulfillStockInput[] }> =>
+  formsetData
+    .map(item => ({
+      ...item,
+      value: (item.value ?? []).flatMap(value => {
+        if (value.quantity <= 0 || !value.warehouse?.id) {
+          return [];
+        }
+
+        return [
+          {
+            quantity: value.quantity,
+            warehouse: value.warehouse.id,
+          },
+        ];
+      }),
+    }))
+    .filter(item => item.value.length > 0);
+
+export const getOrderFulfillStockFormsetLineId = (
+  line: NonNullable<FulfillmentFragment["lines"]>[number] | OrderFulfillLineFragment,
+): string => {
+  if ("orderLine" in line && line.orderLine?.id) {
+    return line.orderLine.id;
+  }
+
+  return line.id;
+};
 
 export const getFulfillmentFormsetQuantity = (
   formsetData: OrderFulfillStockFormsetData,
@@ -383,13 +418,36 @@ export const getLineAllocationWithHighestQuantity = (
     null as NonNullable<OrderFulfillLineFragment["allocations"]>[number] | null,
   );
 
+export const getDefaultFulfillWarehouse = (
+  line: OrderFulfillLineFragment,
+): WarehouseFragment | undefined => {
+  const allocatedWarehouse = getLineAllocationWithHighestQuantity(line)?.warehouse;
+
+  if (allocatedWarehouse) {
+    return allocatedWarehouse;
+  }
+
+  const stocks = line.variant?.stocks;
+
+  if (!stocks?.length) {
+    return undefined;
+  }
+
+  return stocks.reduce((bestStock, stock) => {
+    const bestAvailable = getOrderLineAvailableQuantity(line, bestStock);
+    const stockAvailable = getOrderLineAvailableQuantity(line, stock);
+
+    return stockAvailable > bestAvailable ? stock : bestStock;
+  }).warehouse;
+};
+
 export const transformFuflillmentLinesToStockFormsetData = (
   lines: FulfillmentFragment["lines"],
   warehouse: WarehouseFragment,
 ): OrderFulfillStockFormsetData =>
   lines?.map(line => ({
     data: null,
-    id: line.orderLine?.id ?? "",
+    id: getOrderFulfillStockFormsetLineId(line),
     value: [
       {
         quantity: line.quantity,
@@ -414,10 +472,66 @@ export const getAttributesCaption = (
   return `${separator}${names.join(separator)}`;
 };
 
+export const isOpaqueGlobalId = (value: string | null | undefined): boolean => {
+  if (!value || !/^[A-Za-z0-9+/]+=*$/.test(value) || value.length < 8) {
+    return false;
+  }
+
+  try {
+    return atob(value).includes(":");
+  } catch {
+    return false;
+  }
+};
+
+export const getOrderFulfillLineDisplayName = (
+  line: Pick<OrderFulfillLineFragment, "productName" | "variant">,
+): string => {
+  const attributesCaption = getAttributesCaption(line.variant?.attributes);
+
+  if (attributesCaption) {
+    return `${line.productName}${attributesCaption}`;
+  }
+
+  const variantName = line.variant?.name;
+
+  if (variantName && !isOpaqueGlobalId(variantName) && variantName !== line.productName) {
+    return `${line.productName} / ${variantName}`;
+  }
+
+  return line.productName;
+};
+
+type OrderLineVariantDisplay = {
+  name?: string | null;
+  attributes?: NonNullable<OrderFulfillLineFragment["variant"]>["attributes"];
+};
+
+export const getOrderLineDisplayName = (line: {
+  productName: string;
+  variantName?: string | null;
+  variant?: OrderLineVariantDisplay | null;
+}): string => {
+  if (line.variant?.attributes?.length) {
+    return getOrderFulfillLineDisplayName({
+      productName: line.productName,
+      variant: line.variant as OrderFulfillLineFragment["variant"],
+    });
+  }
+
+  const variantLabelFromVariantName =
+    line.variantName && !isOpaqueGlobalId(line.variantName) ? line.variantName : null;
+  const variantLabelFromVariant =
+    line.variant?.name && !isOpaqueGlobalId(line.variant.name) ? line.variant.name : null;
+  const variantLabel = variantLabelFromVariantName ?? variantLabelFromVariant;
+
+  return variantLabel ? `${line.productName} / ${variantLabel}` : line.productName;
+};
+
 export const prepareMoney = (
   amount: number,
   currency: string,
-): NonNullable<OrderDetailsQuery["order"]>["totalCaptured"] => ({
+): NonNullable<OrderDetailsQuery["order"]>["totalCharged"] => ({
   __typename: "Money",
   amount,
   currency: currency ?? "USD",

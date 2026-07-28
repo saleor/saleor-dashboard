@@ -1,6 +1,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { Button } from "@saleor/macaw-ui-next";
+import type * as React from "react";
 import { useIntl } from "react-intl";
 
 import { exitFormPromptMessages as messages } from "./messages";
@@ -9,10 +10,12 @@ interface ExitFormDialogProps {
   onClose: () => void;
   onLeave: () => void;
   isOpen: boolean;
+  /** Confirmation copy under the title — rendered via Header subtitle (confirm-dialog pattern). */
+  description?: React.ReactNode;
 }
 
 /** @deprecated Use react-hook-form instead */
-const ExitFormDialog = ({ onLeave, onClose, isOpen }: ExitFormDialogProps) => {
+const ExitFormDialog = ({ onLeave, onClose, isOpen, description }: ExitFormDialogProps) => {
   const intl = useIntl();
 
   return (
@@ -25,10 +28,15 @@ const ExitFormDialog = ({ onLeave, onClose, isOpen }: ExitFormDialogProps) => {
       }}
     >
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
+        <DashboardModal.Header
+          subtitle={
+            description ? (
+              <span data-test-id="exit-form-dialog-description">{description}</span>
+            ) : undefined
+          }
+        >
           {intl.formatMessage(messages.unableToSaveTitle)}
         </DashboardModal.Header>
-
         <DashboardModal.Actions>
           <BackButton onClick={onClose}>{intl.formatMessage(messages.keepEditing)}</BackButton>
           <Button variant="primary" onClick={onLeave} data-test-id="ignore-changes">

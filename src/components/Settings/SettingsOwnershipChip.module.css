@@ -1,0 +1,11 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mu-spacing-1-5);
+  padding: var(--mu-spacing-1) var(--mu-spacing-2);
+  line-height: 1;
+}
+
+.chipIcon {
+  flex-shrink: 0;
+}

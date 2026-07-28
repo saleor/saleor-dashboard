@@ -1,8 +1,8 @@
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
-import { Box, useTheme } from "@saleor/macaw-ui-next";
+import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import { EraserIcon, PackageIcon, ReplaceIcon, SignatureIcon } from "lucide-react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { RefundedIcon } from "../../../icons/RefundedIcon";
 import { ReturnedIcon } from "../../../icons/ReturnedIcon";
@@ -96,9 +96,13 @@ const getIcon = ({ status, textColor, currentTheme }: GetIconParams): JSX.Elemen
 
 interface StatusIndicatorProps {
   status?: CardTitleStatus;
+  showLabel?: boolean;
 }
 
-export const StatusIndicator = ({ status }: StatusIndicatorProps): JSX.Element | null => {
+export const StatusIndicator = ({
+  status,
+  showLabel = false,
+}: StatusIndicatorProps): JSX.Element | null => {
   const intl = useIntl();
   const { theme: currentTheme } = useTheme();
 
@@ -117,16 +121,29 @@ export const StatusIndicator = ({ status }: StatusIndicatorProps): JSX.Element |
   const { base, border, text } = getStatusColor({ status: pillType, currentTheme });
 
   const icon = getIcon({ status, textColor: text, currentTheme });
+  const statusIcon =
+    status === FulfillmentStatus.REFUNDED_AND_RETURNED ? (
+      icon
+    ) : (
+      <IconCircle backgroundColor={base} borderColor={border}>
+        {icon}
+      </IconCircle>
+    );
+
+  if (showLabel) {
+    return (
+      <Box display="flex" alignItems="center" gap={2} role="status">
+        <Box aria-hidden>{statusIcon}</Box>
+        <Text size={3} fontWeight="medium">
+          <FormattedMessage {...messageForStatus} />
+        </Text>
+      </Box>
+    );
+  }
 
   return (
     <Box marginLeft={2} display="flex" placeItems="center" aria-label={ariaLabel}>
-      {status === FulfillmentStatus.REFUNDED_AND_RETURNED ? (
-        icon
-      ) : (
-        <IconCircle backgroundColor={base} borderColor={border}>
-          {icon}
-        </IconCircle>
-      )}
+      {statusIcon}
     </Box>
   );
 };

@@ -11,11 +11,6 @@ export const messages = defineMessages({
     defaultMessage: "Confirm order",
     description: "save button",
   },
-  returnOrder: {
-    id: "+RjQjs",
-    defaultMessage: "Return / Replace order",
-    description: "return button",
-  },
   openGraphiQL: {
     id: "5i/InH",
     defaultMessage: "Open this order in GraphiQL",

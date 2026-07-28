@@ -1,6 +1,6 @@
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
-import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
+import { type ProductChannelListingErrorFragment, ProductErrorCode } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { Box, Checkbox, Text, Toggle } from "@saleor/macaw-ui-next";
@@ -46,7 +46,11 @@ export const PublishedSection = ({
   disabled = false,
 }: PublishedSectionProps) => {
   const intl = useIntl();
-  const formErrors = getFormErrors(["publishedAt"], errors);
+  const formErrors = getFormErrors(["publishedAt", "isPublished"], errors);
+  const categoryRequiredError =
+    formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY
+      ? formErrors.isPublished
+      : null;
   const localizeDate = useDateLocalize();
 
   const originalWasScheduled =
@@ -115,6 +119,11 @@ export const PublishedSection = ({
 
         {summary.isPublished && (
           <Box marginLeft={8}>
+            {categoryRequiredError && (
+              <Text size={2} color="critical1">
+                {getProductErrorMessage(categoryRequiredError, intl)}
+              </Text>
+            )}
             {isVisibleMode && (
               <Text size={2} color="default2">
                 {summary.publishedAt && publishedInPast

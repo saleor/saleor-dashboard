@@ -26,10 +26,11 @@ import {
   orderPath,
   orderPaymentRefundPath,
   orderReturnPath,
+  type OrderReturnUrlQueryParams,
   orderSendRefundPath,
-  orderSettingsPath,
   orderTransactionRefundEditPath,
   orderTransactionRefundPath,
+  type OrderTransactionRefundUrlQueryParams,
   type OrderUrlQueryParams,
 } from "./urls";
 import OrderDetailsComponent from "./views/OrderDetails";
@@ -42,7 +43,6 @@ import OrderManualTransactionRefundComponent from "./views/OrderManualTransactio
 import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
 import OrderSendRefundComponent from "./views/OrderSendRefund";
-import OrderSettings from "./views/OrderSettings";
 import OrderTransactionRefundCreateComponent from "./views/OrderTransactionRefundCreate";
 import OrderTransactionRefundEditComponent from "./views/OrderTransactionRefundEdit";
 
@@ -99,9 +99,11 @@ const OrderPaymentRefund = ({ match }: RouteComponentProps<MatchParams>) => (
 const OrderSendRefund = ({ match }: RouteComponentProps<MatchParams>) => (
   <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
-const OrderReturn = ({ match }: RouteComponentProps<MatchParams>) => (
-  <OrderReturnComponent orderId={decodeURIComponent(match.params.id ?? "")} />
-);
+const OrderReturn = ({ location, match }: RouteComponentProps<MatchParams>) => {
+  const qs = parseQs(location.search.substr(1)) as OrderReturnUrlQueryParams;
+
+  return <OrderReturnComponent orderId={decodeURIComponent(match.params.id ?? "")} params={qs} />;
+};
 const OrderGrantRefund = ({ match }: RouteComponentProps<MatchParams>) => (
   <OrderGrantRefundComponent orderId={decodeURIComponent(match.params.id ?? "")} />
 );
@@ -114,9 +116,16 @@ const OrderGrantRefundEdit = ({
   />
 );
 
-const OrderTransactionRefund = ({ match }: RouteComponentProps<MatchParams>) => (
-  <OrderTransactionRefundCreateComponent orderId={decodeURIComponent(match.params.id ?? "")} />
-);
+const OrderTransactionRefund = ({ location, match }: RouteComponentProps<MatchParams>) => {
+  const qs = parseQs(location.search.substr(1)) as OrderTransactionRefundUrlQueryParams;
+
+  return (
+    <OrderTransactionRefundCreateComponent
+      orderId={decodeURIComponent(match.params.id ?? "")}
+      params={qs}
+    />
+  );
+};
 
 const OrderTransactionRefundEdit = ({
   match,
@@ -138,7 +147,6 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.orders)} />
       <Switch>
-        <Route exact path={orderSettingsPath} component={OrderSettings} />
         <Route exact path={orderDraftListPath} component={OrderDraftList} />
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />

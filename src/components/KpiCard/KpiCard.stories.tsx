@@ -62,6 +62,23 @@ export const WithTooltip: Story = {
   },
 };
 
+export const WithValueTooltip: Story = {
+  args: {
+    title: "Recent orders total",
+    value: "$142.68 USD",
+    icon: <ShoppingCart size={16} />,
+    tooltip: "Net product sales from the last 10 orders. Excludes shipping and tax.",
+    valueTooltip: (
+      <>
+        Shipping: $34.20
+        <br />
+        Refunded: $25.00
+      </>
+    ),
+    subtitle: "3 of last 3 orders in USD",
+  },
+};
+
 export const SubtitleOnly: Story = {
   args: {
     title: "Recent orders total",

@@ -64,8 +64,10 @@ export const TranslationsCategoriesPage = ({
       createSeoTranslationSection(intl, {
         seoDescription: data?.category?.seoDescription,
         seoTitle: data?.category?.seoTitle,
+        slug: data?.category?.slug,
         translationSeoDescription: data?.translation?.seoDescription,
         translationSeoTitle: data?.translation?.seoTitle,
+        translationSlug: data?.translation?.slug,
       }),
     ],
     [data, intl],

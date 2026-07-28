@@ -21,14 +21,6 @@ export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
   return hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn || hasAnyWaitingLines;
 };
 
-interface ConditionalItem {
-  shouldExist: boolean;
-  item: any;
-}
-
-export const filteredConditionalItems = (items: ConditionalItem[]) =>
-  items.filter(({ shouldExist }) => shouldExist).map(({ item }) => item);
-
 // Order and fulfillment metadata are no longer fetched eagerly with order details
 // (they are loaded on demand by their dedicated dialogs). The page-level confirm form
 // keeps the id-keyed schema shape, but with empty metadata since it is not edited inline.

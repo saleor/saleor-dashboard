@@ -1,13 +1,16 @@
-// @ts-strict-ignore
-import { type SearchOrderVariantQuery } from "@dashboard/graphql";
+import {
+  isOrderVariantsListTruncated,
+  type OrderSearchProduct,
+  type OrderSearchVariant,
+} from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 
-type SetVariantsAction = (
-  data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-) => void;
+type SetVariantsAction = (data: OrderSearchVariant[]) => void;
+
+export const hasVariantPricing = (variant: OrderSearchVariant): boolean => !!variant.pricing;
 
 export function hasAllVariantsSelected(
-  productVariants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  productVariants: OrderSearchVariant[],
+  selectedVariantsToProductsMap: OrderSearchVariant[],
 ): boolean {
   return productVariants.reduce(
     (acc, productVariant) =>
@@ -20,39 +23,46 @@ export function hasAllVariantsSelected(
 }
 
 export function isVariantSelected(
-  variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
-  selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  variant: OrderSearchVariant,
+  selectedVariantsToProductsMap: OrderSearchVariant[],
 ): boolean {
   return !!selectedVariantsToProductsMap.find(selectedVariant => selectedVariant.id === variant.id);
 }
 
 export const onProductAdd = (
-  product: SearchOrderVariantQuery["search"]["edges"][0]["node"],
+  product: OrderSearchProduct,
   productIndex: number,
   productsWithAllVariantsSelected: boolean[],
-  variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  variants: OrderSearchVariant[],
   setVariants: SetVariantsAction,
-) =>
-  productsWithAllVariantsSelected[productIndex]
+) => {
+  if (isOrderVariantsListTruncated(product)) {
+    return;
+  }
+
+  const productVariants = product.variants.filter(hasVariantPricing);
+
+  return productsWithAllVariantsSelected[productIndex]
     ? setVariants(
         variants.filter(
           selectedVariant =>
-            !product.variants.find(productVariant => productVariant.id === selectedVariant.id),
+            !productVariants.find(productVariant => productVariant.id === selectedVariant.id),
         ),
       )
     : setVariants([
         ...variants,
-        ...product.variants.filter(
+        ...productVariants.filter(
           productVariant =>
             !variants.find(selectedVariant => selectedVariant.id === productVariant.id),
         ),
       ]);
+};
 
 export const onVariantAdd = (
-  variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
+  variant: OrderSearchVariant,
   variantIndex: number,
   productIndex: number,
-  variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+  variants: OrderSearchVariant[],
   selectedVariantsToProductsMap: boolean[][],
   setVariants: SetVariantsAction,
 ) =>

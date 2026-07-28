@@ -47,6 +47,11 @@ jest.mock("./form", () => ({
       handlers: {
         changeChannels: jest.fn(),
         changeVariants: jest.fn(),
+        stageVariantRemovals: jest.fn(),
+        stageVariantCreates: jest.fn(),
+        removeStagedVariantCreates: jest.fn(),
+        clearStagedVariantCreates: jest.fn(),
+        replaceStagedVariantCreates: jest.fn(),
         selectCategory: jest.fn(),
         selectCollection: jest.fn(),
         selectTaxClass: jest.fn(),
@@ -62,6 +67,15 @@ jest.mock("./form", () => ({
       },
       submit: jest.fn(),
       isSaveDisabled: false,
+      pendingVariantDeleteCount: 0,
+      stagedVariantCreates: [],
+      saveComposition: {
+        hasDetails: false,
+        dirtyChannelCount: 0,
+        variantEditCount: 0,
+        variantCreateCount: 0,
+        variantDeleteCount: 0,
+      },
       formErrors: {},
       attributeRichTextGetters: {},
       richText: { getValue: jest.fn() },
@@ -127,6 +141,7 @@ const renderPage = (onShowMetadata = jest.fn()) =>
           onDelete={jest.fn()}
           onShowMetadata={onShowMetadata}
           onImageDelete={jest.fn()}
+          onImagesDelete={jest.fn()}
           onImageUpload={jest.fn()}
           onMediaUrlUpload={jest.fn()}
           onVariantShow={jest.fn()}
@@ -194,6 +209,7 @@ describe("ProductUpdatePage top nav", () => {
             onDelete={jest.fn()}
             onShowMetadata={jest.fn()}
             onImageDelete={jest.fn()}
+            onImagesDelete={jest.fn()}
             onImageUpload={jest.fn()}
             onMediaUrlUpload={jest.fn()}
             onVariantShow={jest.fn()}

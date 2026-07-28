@@ -63,7 +63,10 @@ function makeSearch<TData, TVariables extends BaseSearchVariables>(
     return {
       query: searchQuery,
       loadMore: () => loadMoreFn(result),
-      result,
+      result: {
+        ...result,
+        data: result.data ?? result.previousData,
+      },
       search: debouncedSearch,
     };
   }

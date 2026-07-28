@@ -9,3 +9,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+declare module "*/vite.config.js" {
+  const content: any;
+  // eslint-disable-next-line import/no-default-export
+  export default content;
+}

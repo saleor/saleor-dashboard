@@ -185,7 +185,7 @@ describe("InstallCustomExtension", () => {
       await waitFor(() => {
         expect(
           // Assert pure translation message, because mocked intl doesn't have formatting implemented
-          screen.getAllByText(`You are about to install {extensionName}`).length,
+          screen.getAllByText(`You are about to install Test App`).length,
         ).toBeGreaterThan(0);
       });
     });
@@ -264,9 +264,7 @@ describe("InstallCustomExtension", () => {
       // Assert
       await waitFor(() => {
         // Assert pure translation message, because mocked intl doesn't have formatting implemented
-        expect(
-          screen.getAllByText(`You are about to install {extensionName}`).length,
-        ).toBeGreaterThan(0);
+        expect(screen.getAllByText(`You are about to install Test App`).length).toBeGreaterThan(0);
       });
     });
 

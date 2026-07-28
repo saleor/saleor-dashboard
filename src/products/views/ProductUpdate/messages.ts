@@ -1,16 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const productUpdatePageMessages = defineMessages({
-  deleteProductDialogTitle: {
-    id: "TWVx7O",
-    defaultMessage: "Delete Product",
-    description: "delete product dialog title",
-  },
-  deleteProductDialogSubtitle: {
-    id: "ZHF4Z9",
-    defaultMessage: "Are you sure you want to delete {name}?",
-    description: "delete product dialog subtitle",
-  },
   deleteVariantDialogTitle: {
     id: "6iw4VR",
     defaultMessage: "Delete Product Variants",
@@ -49,23 +39,26 @@ export const productUpdatePageMessages = defineMessages({
     defaultMessage: "Image added",
     description: "success notification when product media is uploaded",
   },
-  deleteMediaImageTitle: {
-    id: "uCn/rd",
-    defaultMessage: "Delete Image",
-    description: "dialog header",
+  mediaUploadSuccessCount: {
+    id: "Yxoq3Y",
+    defaultMessage: "{count, plural, one {# image added} other {# images added}}",
+    description: "success notification when one or more product images finish uploading",
   },
-  deleteMediaVideoTitle: {
-    id: "dGlDp6",
-    defaultMessage: "Delete Video",
-    description: "product media delete dialog header",
+  mediaUploadAllFailed: {
+    id: "2z3+WY",
+    defaultMessage:
+      "{count, plural, one {Failed to upload image} other {Failed to upload # images}}",
+    description: "error notification when all product image uploads in a batch failed",
   },
-  deleteMediaImageConfirmation: {
-    id: "VEext+",
-    defaultMessage: "Are you sure you want to delete this image?",
+  mediaUploadPartial: {
+    id: "lxP7Rb",
+    defaultMessage:
+      "{success, plural, one {# image} other {# images}} added, {failed, plural, one {# failed} other {# failed}}",
+    description: "warning notification when some product image uploads in a batch failed",
   },
-  deleteMediaVideoConfirmation: {
-    id: "/uu/aV",
-    defaultMessage: "Are you sure you want to delete this video?",
-    description: "product media delete dialog content",
+  mediaDeleteSuccess: {
+    id: "F2xa5K",
+    defaultMessage: "{counter,plural,one{Media deleted} other{# media items deleted}}",
+    description: "success notification when product media items are deleted",
   },
 });

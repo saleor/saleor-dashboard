@@ -13,7 +13,9 @@ import { withApolloMocks } from "../../../../storybookUtils/apollo";
 import { ProductVariants } from "./ProductVariants";
 
 const placeholderImage = "https://via.placeholder.com/64";
-const productData = productFixture(placeholderImage);
+const productData = productFixture(placeholderImage) as ReturnType<typeof productFixture> & {
+  variants: Array<{ id: string }>;
+};
 
 const channels = channelsList.map(channel => ({
   ...channel,
@@ -78,7 +80,7 @@ const meta: Meta<typeof ProductVariants> = {
     onChange: { table: { disable: true } },
     onRowClick: { table: { disable: true } },
     onAttributeValuesSearch: { table: { disable: true } },
-    onBulkCreate: { table: { disable: true } },
+    onStageVariantCreates: { table: { disable: true } },
   },
   args: {
     variants: productData.variants ?? [],
@@ -98,6 +100,13 @@ const meta: Meta<typeof ProductVariants> = {
     onAttributeValuesSearch: fn().mockResolvedValue([]),
     onChange: fn(),
     onRowClick: fn(),
+    onStageVariantCreates: fn().mockResolvedValue({
+      success: true,
+      successCount: 1,
+      failedCount: 0,
+      attributeErrors: [],
+      otherErrors: [],
+    }),
   },
 };
 

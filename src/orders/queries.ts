@@ -34,6 +34,14 @@ export const orderListQuery = gql`
           number
           paymentStatus
           status
+          subtotal {
+            __typename
+            net {
+              __typename
+              amount
+              currency
+            }
+          }
           total {
             __typename
             gross {
@@ -206,11 +214,27 @@ export const orderFulfillSettingsQuery = gql`
 
 export const orderSettingsQuery = gql`
   query OrderSettings {
-    orderSettings {
-      ...OrderSettings
-    }
     shop {
       ...ShopOrderSettings
+    }
+  }
+`;
+
+export const orderSettingsChannelsQuery = gql`
+  query OrderSettingsChannels {
+    channels {
+      id
+      name
+      slug
+      currencyCode
+      isActive
+      orderSettings {
+        automaticallyConfirmAllNewOrders
+        automaticallyFulfillNonShippableGiftCard
+        allowUnpaidOrders
+        deleteExpiredOrdersAfter
+        markAsPaidStrategy
+      }
     }
   }
 `;
@@ -224,7 +248,7 @@ export const orderRefundData = gql`
           ...Money
         }
       }
-      totalCaptured {
+      totalCharged {
         ...Money
       }
       shippingPrice {
@@ -309,28 +333,6 @@ export const DevModeQuery = /* GraphQL */ `
           userEmail
           isPaid
         }
-      }
-    }
-  }
-`;
-
-export const refundSettings = gql`
-  query RefundSettings {
-    refundSettings {
-      reasonReferenceType {
-        id
-        name
-      }
-    }
-  }
-`;
-
-export const returnSettings = gql`
-  query ReturnSettings {
-    returnSettings {
-      reasonReferenceType {
-        id
-        name
       }
     }
   }

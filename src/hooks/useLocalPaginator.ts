@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface PageInfo {
   endCursor: string | null;
@@ -26,23 +26,34 @@ export function useLocalPaginationState(
   const [state, setState] = useState<PaginationState>({
     first: paginateBy,
   });
-  const setPaginationState = (paginationState: PaginationState) => {
-    if (paginationState.after) {
-      setState({
-        after: paginationState.after,
-        first: paginateBy,
-      });
-    } else if (paginationState.before) {
-      setState({
-        before: paginationState.before,
-        last: paginateBy,
-      });
-    } else {
-      setState({
-        first: paginateBy,
-      });
-    }
-  };
+  // Must be stable: callers put this in effect deps (e.g. reset-on-id-change).
+  // A new function every render + setState({}) in that effect = render loop,
+  // which starves Glide's scroll paints and makes horizontal scrolling jump.
+  const setPaginationState = useCallback(
+    (paginationState: PaginationState) => {
+      if (paginationState.after) {
+        setState({
+          after: paginationState.after,
+          first: paginateBy,
+        });
+      } else if (paginationState.before) {
+        setState({
+          before: paginationState.before,
+          last: paginateBy,
+        });
+      } else {
+        setState(prev =>
+          prev.after === undefined &&
+          prev.before === undefined &&
+          prev.first === paginateBy &&
+          prev.last === undefined
+            ? prev
+            : { first: paginateBy },
+        );
+      }
+    },
+    [paginateBy],
+  );
 
   useEffect(() => {
     setState({ first: paginateBy });

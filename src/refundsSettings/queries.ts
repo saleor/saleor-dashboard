@@ -1,8 +1,19 @@
 import { gql } from "@apollo/client";
 
-export const refundsSettings = gql`
-  query RefundsSettings {
+export const refundSettings = gql`
+  query RefundSettings {
     refundSettings {
+      reasonReferenceType {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const returnSettings = gql`
+  query ReturnSettings {
+    returnSettings {
       reasonReferenceType {
         id
         name

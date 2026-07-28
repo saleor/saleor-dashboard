@@ -29,8 +29,14 @@ export const fragmentOrderEvent = gql`
       id
       number
     }
+    composedId
     related {
       id
+      type
+    }
+    warehouse {
+      id
+      name
     }
     message
     quantity
@@ -141,6 +147,8 @@ export const fragmentOrderLine = gql`
     }
     unitDiscountValue
     unitDiscountReason
+    priceOverrideReason
+    isPriceOverridden
     unitDiscountType
     undiscountedUnitPrice {
       currency
@@ -350,6 +358,14 @@ export const fulfillmentFragment = gql`
       id
       name
     }
+    totalRefundedAmount {
+      amount
+      currency
+    }
+    shippingRefundedAmount {
+      amount
+      currency
+    }
   }
 `;
 
@@ -482,10 +498,6 @@ export const fragmentOrderDetails = gql`
     totalAuthorized {
       ...Money
     }
-    # TODO: Remove me
-    totalCaptured {
-      ...Money
-    }
     totalCharged {
       ...Money
     }
@@ -567,17 +579,13 @@ export const fragmentFulfillmentMetadata = gql`
   }
 `;
 
-export const fragmentOrderSettings = gql`
-  fragment OrderSettings on OrderSettings {
-    automaticallyConfirmAllNewOrders
-    automaticallyFulfillNonShippableGiftCard
-  }
-`;
-
 export const fragmentShopOrderSettings = gql`
   fragment ShopOrderSettings on Shop {
     fulfillmentAutoApprove
     fulfillmentAllowUnpaid
+    reserveStockDurationAnonymousUser
+    reserveStockDurationAuthenticatedUser
+    limitQuantityPerCheckout
   }
 `;
 
@@ -833,7 +841,7 @@ export const fragmentOrderGrantedRefunds = gql`
       amount
     }
     transactionEvents {
-      id
+      ...TransactionBaseEvent
     }
     reason
     reasonReference {

@@ -3,7 +3,7 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { parseQs } from "@dashboard/url-utils";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { type Action, type Location } from "history";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
 
@@ -14,6 +14,14 @@ import { type ExitFormDialogData, type FormData, type FormsData } from "./types"
 // Toggling these on the same pathname must never trigger the "leave without
 // saving" prompt.
 const DIALOG_QUERY_PARAMS = ["action", "id", "ids", "channelId"];
+
+// ConditionalFilter (list pages and modal pickers) serializes filter tokens
+// under numeric query keys (?0=...&1=...). Filter state is never part of a
+// form, so changing it must not trigger the exit prompt either.
+const isFilterQueryKey = (key: string): boolean => /^\d+$/.test(key);
+
+const isTransientQueryKey = (key: string): boolean =>
+  DIALOG_QUERY_PARAMS.includes(key) || isFilterQueryKey(key);
 
 // Stringifies with keys sorted so two equivalent query objects with different
 // key ordering produce the same string and compare equal.
@@ -35,7 +43,7 @@ const splitDialogParams = (search: string) => {
   const rest: Record<string, unknown> = {};
 
   Object.keys(parsed).forEach(key => {
-    if (DIALOG_QUERY_PARAMS.includes(key)) {
+    if (isTransientQueryKey(key)) {
       dialog[key] = parsed[key];
     } else {
       rest[key] = parsed[key];
@@ -71,6 +79,7 @@ export function useExitFormDialogProvider() {
   const history = useHistory();
   const { history: routerHistory } = useRouter();
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
+  const [description, setDescription] = useState<ReactNode | null>(null);
   const isSubmitDisabled = useRef(false);
   const setIsSubmitDisabled = useCallback((status: boolean) => {
     isSubmitDisabled.current = status;
@@ -299,12 +308,17 @@ export function useExitFormDialogProvider() {
   // Used to prevent race conditions from places such as
   // create pages with navigation on mutation completed
   const shouldBlockNavigation = useCallback(() => !!navAction.current, []);
+  const setExitDialogDescription = useCallback((value: ReactNode | null) => {
+    setDescription(value);
+  }, []);
+
   const providerData: ExitFormDialogData = {
     setIsDirty,
     shouldBlockNavigation,
     showDialog,
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef,
+    setExitDialogDescription,
     setIsSubmitting,
     setIsSubmitDisabled,
     leave: handleLeave,
@@ -319,5 +333,6 @@ export function useExitFormDialogProvider() {
     handleClose,
     shouldBlockNav,
     isSubmitDisabled,
+    description,
   };
 }

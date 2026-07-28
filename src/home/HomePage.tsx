@@ -1,17 +1,14 @@
 import { useUser } from "@dashboard/auth/useUser";
-import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { getUserName } from "@dashboard/misc";
-import { Ripple } from "@dashboard/ripples/components/Ripple";
-import { Box, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
+import { Box } from "@saleor/macaw-ui-next";
 import { useParams, useRouteMatch } from "react-router";
 import { Redirect } from "react-router-dom";
 
 import { filterHomeExtensions } from "./filterHomeExtensions";
+import { HomeEmptyState } from "./HomeEmptyState";
 import { HomeWidgetsGrid } from "./HomeWidgetsGrid";
 import { type HomeActiveTab, HomeWidgetTabs } from "./HomeWidgetTabs";
 import { HomeWidgetView } from "./HomeWidgetView";
-import { rippleHomeWidgets } from "./ripples/homeWidgets";
 import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
 
 const HOMEPAGE_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
@@ -48,30 +45,18 @@ export const HomePage = () => {
   const { user } = useUser();
   const userPermissions = user?.userPermissions ?? [];
 
-  const { HOMEPAGE_WIDGETS: extensions } = useExtensions(HOMEPAGE_MOUNT);
+  const { extensions: extensionsByMount, loading } = useExtensionsWithLoadingState(HOMEPAGE_MOUNT);
+  const extensions = extensionsByMount.HOMEPAGE_WIDGETS;
   const { fullscreen, widgets } = filterHomeExtensions(extensions, userPermissions);
 
+  if (loading) {
+    // First-ever load with no cached snapshot: keep the screen blank to avoid
+    // flashing the "Welcome" empty state before extensions resolve.
+    return <Box height="100%" />;
+  }
+
   if (fullscreen.length === 0 && widgets.length === 0) {
-    return (
-      <Box paddingX={8} paddingY={9}>
-        <Text size={6} fontWeight="bold">
-          <FormattedMessage
-            id="fTLvHX"
-            defaultMessage="Welcome"
-            description="empty home page title"
-          />
-        </Text>
-        <Box marginTop={4}>
-          <Text>
-            <FormattedMessage
-              id="cxUBO1"
-              defaultMessage="Install an app that registers a HOMEPAGE_WIDGETS extension to see it here."
-              description="empty home page description"
-            />
-          </Text>
-        </Box>
-      </Box>
-    );
+    return <HomeEmptyState />;
   }
 
   const leftmostUrl = resolveLeftmostTabUrl(fullscreen, widgets);
@@ -101,22 +86,11 @@ export const HomePage = () => {
     activeTab = { kind: "extension", id: activeExtension.id };
   }
 
-  const userName = getUserName(user, true);
   const showWidgetsTab = widgets.length > 0;
 
   return (
     <Box display="flex" flexDirection="column" height="100%">
-      <Box paddingX={6} paddingTop={6} display="flex" alignItems="center" gap={4}>
-        <Text size={6} fontWeight="bold" as="h1" data-test-id="welcome-header">
-          <FormattedMessage
-            id="0+zatS"
-            defaultMessage="Hello {userName}, welcome to your Store Dashboard"
-            values={{ userName }}
-          />
-        </Text>
-        <Ripple model={rippleHomeWidgets} />
-      </Box>
-      <Box paddingX={6} paddingTop={4}>
+      <Box paddingX={6} paddingTop={6}>
         <HomeWidgetTabs
           fullscreenExtensions={fullscreen}
           showWidgetsTab={showWidgetsTab}

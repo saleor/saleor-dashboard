@@ -1,4 +1,5 @@
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
+import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { ColorPicker, type ColorPickerProps } from "@dashboard/components/ColorPicker";
 import FileUploadField from "@dashboard/components/FileUploadField";
@@ -15,11 +16,14 @@ import { useFileProcessing } from "./useFileProcessing";
 type AttributeSwatchFieldProps<T> = Pick<
   UseFormResult<T>,
   "setError" | "set" | "errors" | "clearErrors" | "data"
->;
+> & {
+  hidePreview?: boolean;
+};
 
 type SwatchType = "picker" | "image";
 
 const AttributeSwatchField = ({
+  hidePreview = false,
   set,
   ...props
 }: AttributeSwatchFieldProps<AttributeValueEditDialogFormData>) => {
@@ -53,20 +57,23 @@ const AttributeSwatchField = ({
         gap={4}
         data-test-id="swatch-radio"
       />
-      <Box __height={280} overflow="hidden">
+      <Box overflowX="auto" overflowY="hidden" width="100%">
         {type === "image" ? (
           <>
-            <Box paddingBottom={4}>
-              <FileUploadField
-                disabled={processing}
-                loading={processing}
-                file={{ label: "", value: "", file: undefined }}
-                onFileUpload={handleFileUpload}
-                onFileDelete={handleFileDelete}
-                inputProps={{
-                  accept: "image/*",
-                }}
-              />
+            <Box display="flex" alignItems="center" gap={3} paddingBottom={4}>
+              {hidePreview ? null : <SwatchPreview imageUrl={data.fileUrl} size={40} />}
+              <Box flexGrow="1" __minWidth={0}>
+                <FileUploadField
+                  disabled={processing}
+                  loading={processing}
+                  file={{ label: "", value: "", file: undefined }}
+                  onFileUpload={handleFileUpload}
+                  onFileDelete={handleFileDelete}
+                  inputProps={{
+                    accept: "image/*",
+                  }}
+                />
+              </Box>
             </Box>
             <Box
               width="100%"
@@ -91,7 +98,16 @@ const AttributeSwatchField = ({
             </Box>
           </>
         ) : (
-          <ColorPicker {...(props as ColorPickerProps)} onColorChange={handleColorChange} />
+          <Box display="flex" alignItems="flex-start" gap={4}>
+            {hidePreview ? null : (
+              <Box paddingTop={2}>
+                <SwatchPreview color={data.value} size={40} />
+              </Box>
+            )}
+            <Box flexGrow="1" __minWidth={0}>
+              <ColorPicker {...(props as ColorPickerProps)} onColorChange={handleColorChange} />
+            </Box>
+          </Box>
         )}
       </Box>
     </>

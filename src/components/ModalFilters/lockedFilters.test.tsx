@@ -9,13 +9,14 @@ import {
   FilterElement,
 } from "../ConditionalFilter/FilterElement/FilterElement";
 import { type FilterValueProvider } from "../ConditionalFilter/FilterValueProvider";
+import { stripGlobalConstraints } from "../ConditionalFilter/globalConstraints";
 import { type LeftOperand } from "../ConditionalFilter/LeftOperandsProvider";
+import { createProductQueryVariables } from "../ConditionalFilter/queryVariables";
 import { type UrlToken } from "../ConditionalFilter/ValueProvider/UrlToken";
 import {
   createLockedFilterElement,
   createWrappedValueProvider,
   getFilteredOptions,
-  stripGlobalConstraints,
 } from "./lockedFilters";
 import { type LockedFilter } from "./types";
 
@@ -524,5 +525,21 @@ describe("useModalProductFilter / createWrappedValueProvider", () => {
       // Assert - categoryElement is NOT in the original value
       expect(isPersisted).toBe(false);
     });
+  });
+});
+
+describe("createLockedFilterElement query variables", () => {
+  it("should map locked product type constraint to ProductWhereInput", () => {
+    // Arrange
+    const lockedElement = createLockedFilterElement(
+      createProductTypeLockedFilter([{ id: "pt-1", name: "Simple" }]),
+      STATIC_PRODUCT_OPTIONS,
+    );
+
+    // Act
+    const result = createProductQueryVariables([lockedElement]);
+
+    // Assert
+    expect(result).toEqual({ productType: { oneOf: ["pt-1"] } });
   });
 });

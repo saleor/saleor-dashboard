@@ -9,12 +9,18 @@ import {
 import { useMemo } from "react";
 
 import { type AssignAttributeValueDialogFilterChangeMap } from "./AssignAttributeValueDialog";
+import {
+  mergePageReferenceWhereConstraints,
+  mergeProductReferenceWhereConstraints,
+  type ReferenceWhereConstraints,
+} from "./mergeReferenceTypeWhereConstraints";
 
 interface UseAssignAttributeValueDialogFilterChangeHandlersParams {
   refetchProducts: (variables: SearchProductsQueryVariables) => void;
   refetchPages: (variables: SearchPagesQueryVariables) => void;
   refetchCategories: (variables: SearchCategoriesQueryVariables) => void;
   refetchCollections: (variables: SearchCollectionsQueryVariables) => void;
+  referenceWhereConstraints?: ReferenceWhereConstraints;
 }
 
 export const useAssignAttributeValueDialogFilterChangeHandlers = ({
@@ -22,29 +28,38 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
   refetchPages,
   refetchCategories,
   refetchCollections,
+  referenceWhereConstraints,
 }: UseAssignAttributeValueDialogFilterChangeHandlersParams): AssignAttributeValueDialogFilterChangeMap =>
   useMemo(
     () => ({
       [AttributeEntityTypeEnum.PRODUCT]: (where, channel, query): void => {
         refetchProducts({
           ...DEFAULT_INITIAL_SEARCH_DATA,
-          where,
+          where: mergeProductReferenceWhereConstraints(
+            where,
+            referenceWhereConstraints?.productTypeIds,
+          ),
           channel,
           query,
+          includeVariants: false,
         });
       },
       [AttributeEntityTypeEnum.PRODUCT_VARIANT]: (where, channel, query): void => {
         refetchProducts({
           ...DEFAULT_INITIAL_SEARCH_DATA,
-          where,
+          where: mergeProductReferenceWhereConstraints(
+            where,
+            referenceWhereConstraints?.productTypeIds,
+          ),
           channel,
           query,
+          includeVariants: true,
         });
       },
       [AttributeEntityTypeEnum.PAGE]: (where, query): void => {
         refetchPages({
           ...DEFAULT_INITIAL_SEARCH_DATA,
-          where,
+          where: mergePageReferenceWhereConstraints(where, referenceWhereConstraints?.pageTypeIds),
           query,
         });
       },
@@ -70,5 +85,12 @@ export const useAssignAttributeValueDialogFilterChangeHandlers = ({
         });
       },
     }),
-    [refetchCategories, refetchCollections, refetchPages, refetchProducts],
+    [
+      refetchCategories,
+      refetchCollections,
+      refetchPages,
+      refetchProducts,
+      referenceWhereConstraints?.pageTypeIds,
+      referenceWhereConstraints?.productTypeIds,
+    ],
   );

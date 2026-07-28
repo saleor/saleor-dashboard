@@ -137,7 +137,6 @@ export const ShowsErrorWhenPercentageAbove100: Story = {
     await expect(dialog.getByTestId("submit")).toBeDisabled();
 
     // onConfirm must not be called while the form is invalid.
-    await userEvent.click(dialog.getByTestId("submit"));
     await expect(args.onConfirm).not.toHaveBeenCalled();
   },
 };

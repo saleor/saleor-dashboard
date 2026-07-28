@@ -4,11 +4,9 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import modalStyles from "@dashboard/components/Modal/DashboardModal.module.css";
 import { type MoneyFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Modal } from "@saleor/macaw-ui-next";
-import { X } from "lucide-react";
+import { Box } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
@@ -25,7 +23,9 @@ interface DiscountModalBaseProps {
   onConfirm: (discount: OrderDiscountCommonInput) => void;
   onRemove: () => void;
   onClose: () => void;
-  header: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  wrapDescription?: boolean;
   preFormContent?: ReactNode;
 }
 
@@ -38,7 +38,9 @@ export const DiscountModalBase = ({
   onConfirm,
   onRemove,
   onClose,
-  header,
+  title,
+  description,
+  wrapDescription = true,
   preFormContent,
 }: DiscountModalBaseProps) => {
   const intl = useIntl();
@@ -62,36 +64,24 @@ export const DiscountModalBase = ({
 
   return (
     <DashboardModal open={open} onChange={onClose}>
-      <DashboardModal.Content size="xs" className={modalStyles.modalContent}>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="flex-start"
-          gap={4}
-          overflow="hidden"
-        >
-          {header}
-          <Modal.Close>
-            <Button
-              data-test-id="close-button"
-              icon={<X size={20} />}
-              size="small"
-              variant="tertiary"
-              flexShrink="0"
-              aria-label={intl.formatMessage(buttonMessages.close)}
-              title={intl.formatMessage(buttonMessages.close)}
-            />
-          </Modal.Close>
-        </Box>
+      <DashboardModal.Content size="xs">
+        <DashboardModal.ContextHeader description={description} wrapDescription={wrapDescription}>
+          {title}
+        </DashboardModal.ContextHeader>
 
-        {preFormContent}
-
-        <DiscountFormFields
-          control={control}
-          valueFieldSymbol={valueFieldSymbol}
-          valueErrorMsg={valueErrorMsg}
-          onCalculationModeChange={onCalculationModeChange}
-        />
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box display="flex" flexDirection="column" gap={5}>
+              {preFormContent}
+              <DiscountFormFields
+                control={control}
+                valueFieldSymbol={valueFieldSymbol}
+                valueErrorMsg={valueErrorMsg}
+                onCalculationModeChange={onCalculationModeChange}
+              />
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
         <DashboardModal.Actions>
           {existingDiscount && (

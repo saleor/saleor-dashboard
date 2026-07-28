@@ -76,10 +76,44 @@ export const messages = defineMessages({
     defaultMessage: "SKU will not be set",
     description: "message when no SKU prefix is provided",
   },
+  skuCollisionTitle: {
+    id: "bhcIMr",
+    defaultMessage: "SKU conflict",
+    description: "notification title when generated SKUs already exist",
+  },
+  skuCollisionSkipped: {
+    id: "pxh49C",
+    defaultMessage:
+      "Skipped {count} {count, plural, one {variant} other {variants}} with existing SKUs: {skus}",
+    description: "notification when colliding SKUs are skipped and the rest are generated",
+  },
+  skuCollisionAllSkipped: {
+    id: "yIgYca",
+    defaultMessage:
+      "All selected variants conflict with existing SKUs ({skus}). Change the SKU prefix or selection and try again.",
+    description: "notification when every generated SKU already exists",
+  },
+  skuDuplicateInBatch: {
+    id: "3vWwSN",
+    defaultMessage:
+      "Your selection would create duplicate SKUs in this batch: {skus}. Adjust the prefix or selected values.",
+    description: "notification when the same SKU would be generated twice in one batch",
+  },
+  loadingExistingVariants: {
+    id: "Uj/iBz",
+    defaultMessage: "Loading existing variants…",
+    description: "shown while fetching all variants for duplicate detection",
+  },
+  existingVariantsLoadFailed: {
+    id: "/QIOpX",
+    defaultMessage:
+      "Could not load existing variants. Close the dialog and try again before generating.",
+    description: "error when fetching all variants for duplicate detection fails",
+  },
   generate: {
-    id: "T61cLQ",
-    defaultMessage: "Generate {count} {count, plural, one {variant} other {variants}}",
-    description: "generate button",
+    id: "LVY0Tj",
+    defaultMessage: "Add {count} {count, plural, one {variant} other {variants}}",
+    description: "generate button — stages variants until product Save",
   },
   noAttributes: {
     id: "O90S9P",
@@ -87,15 +121,15 @@ export const messages = defineMessages({
     description: "empty state when no variant attributes",
   },
   confirmTitle: {
-    id: "jww7Wl",
-    defaultMessage: "Generate {count} variants?",
-    description: "confirmation dialog title",
+    id: "nsTglh",
+    defaultMessage: "Add {count} variants?",
+    description: "confirmation dialog title for staging generated variants",
   },
   confirmDescription: {
-    id: "Q+oKl+",
+    id: "XJZziQ",
     defaultMessage:
-      "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone.",
-    description: "confirmation dialog description",
+      "You are about to add {count} variants to this product. They will be created when you save the product.",
+    description: "confirmation dialog description for staged generator creates",
   },
   limitReached: {
     id: "KvK69l",

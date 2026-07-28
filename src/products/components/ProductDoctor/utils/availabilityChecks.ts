@@ -37,6 +37,29 @@ interface CheckContext {
 type CheckFunction = (context: CheckContext) => RawAvailabilityIssue | null;
 
 /**
+ * True when `variants` is the full product catalog (or total is unknown and we
+ * treat the loaded list as authoritative — legacy callers).
+ */
+const hasCompleteVariantCatalog = (product: ProductDiagnosticData): boolean => {
+  if (product.variantsTotalCount === null) {
+    return true;
+  }
+
+  return product.variants.length >= product.variantsTotalCount;
+};
+
+/**
+ * Prefer totalCount so an empty paginated page is not mistaken for "no variants".
+ */
+const productHasNoVariants = (product: ProductDiagnosticData): boolean => {
+  if (product.variantsTotalCount !== null) {
+    return product.variantsTotalCount === 0;
+  }
+
+  return product.variants.length === 0;
+};
+
+/**
  * Check if channel is inactive
  */
 const checkChannelInactive: CheckFunction = ({ channelData, intl }) => {
@@ -62,7 +85,7 @@ const checkChannelInactive: CheckFunction = ({ channelData, intl }) => {
  * Check if product has no variants
  */
 const checkNoVariants: CheckFunction = ({ product, channelData, intl }) => {
-  if (!product.variants || product.variants.length === 0) {
+  if (productHasNoVariants(product)) {
     return {
       id: "no-variants",
       severity: "error",
@@ -80,7 +103,7 @@ const checkNoVariants: CheckFunction = ({ product, channelData, intl }) => {
  * Check if no variant is available in the channel
  */
 const checkNoVariantInChannel: CheckFunction = ({ product, channelData, intl }) => {
-  if (!product.variants || product.variants.length === 0) {
+  if (productHasNoVariants(product)) {
     return null; // Handled by checkNoVariants
   }
 
@@ -88,27 +111,32 @@ const checkNoVariantInChannel: CheckFunction = ({ product, channelData, intl }) 
     variant.channelListings?.some(listing => listing.channel.id === channelData.id),
   );
 
-  if (!hasVariantInChannel) {
-    return {
-      id: "no-variant-in-channel",
-      severity: "error",
-      channelId: channelData.id,
-      channelName: channelData.name,
-      message: intl.formatMessage(messages.noVariantInChannel, {
-        channelName: channelData.name,
-      }),
-      description: intl.formatMessage(messages.noVariantInChannelDescription),
-    };
+  if (hasVariantInChannel) {
+    return null;
   }
 
-  return null;
+  // Incomplete page: absence on this page is not catalog-wide truth.
+  if (!hasCompleteVariantCatalog(product)) {
+    return null;
+  }
+
+  return {
+    id: "no-variant-in-channel",
+    severity: "error",
+    channelId: channelData.id,
+    channelName: channelData.name,
+    message: intl.formatMessage(messages.noVariantInChannel, {
+      channelName: channelData.name,
+    }),
+    description: intl.formatMessage(messages.noVariantInChannelDescription),
+  };
 };
 
 /**
  * Check if no variant has price set for channel
  */
 const checkNoVariantPriced: CheckFunction = ({ product, channelData, intl }) => {
-  if (!product.variants || product.variants.length === 0) {
+  if (productHasNoVariants(product)) {
     return null; // Handled by checkNoVariants
   }
 
@@ -118,20 +146,24 @@ const checkNoVariantPriced: CheckFunction = ({ product, channelData, intl }) => 
     ),
   );
 
-  if (!hasVariantWithPrice) {
-    return {
-      id: "no-variant-priced",
-      severity: "error",
-      channelId: channelData.id,
-      channelName: channelData.name,
-      message: intl.formatMessage(messages.noVariantPriced, {
-        channelName: channelData.name,
-      }),
-      description: intl.formatMessage(messages.noVariantPricedDescription),
-    };
+  if (hasVariantWithPrice) {
+    return null;
   }
 
-  return null;
+  if (!hasCompleteVariantCatalog(product)) {
+    return null;
+  }
+
+  return {
+    id: "no-variant-priced",
+    severity: "error",
+    channelId: channelData.id,
+    channelName: channelData.name,
+    message: intl.formatMessage(messages.noVariantPriced, {
+      channelName: channelData.name,
+    }),
+    description: intl.formatMessage(messages.noVariantPricedDescription),
+  };
 };
 
 /**
@@ -214,7 +246,7 @@ const checkNoShippingZones: CheckFunction = ({
  * Check if no stock exists in warehouses for this channel
  */
 const checkNoStock: CheckFunction = ({ product, channelData, intl }) => {
-  if (!product.variants || product.variants.length === 0) {
+  if (productHasNoVariants(product)) {
     return null;
   }
 
@@ -230,20 +262,24 @@ const checkNoStock: CheckFunction = ({ product, channelData, intl }) => {
     ),
   );
 
-  if (!hasStockInChannelWarehouse) {
-    return {
-      id: "no-stock",
-      severity: "warning",
-      channelId: channelData.id,
-      channelName: channelData.name,
-      message: intl.formatMessage(messages.noStock, {
-        channelName: channelData.name,
-      }),
-      description: intl.formatMessage(messages.noStockDescription),
-    };
+  if (hasStockInChannelWarehouse) {
+    return null;
   }
 
-  return null;
+  if (!hasCompleteVariantCatalog(product)) {
+    return null;
+  }
+
+  return {
+    id: "no-stock",
+    severity: "warning",
+    channelId: channelData.id,
+    channelName: channelData.name,
+    message: intl.formatMessage(messages.noStock, {
+      channelName: channelData.name,
+    }),
+    description: intl.formatMessage(messages.noStockDescription),
+  };
 };
 
 /**
@@ -267,7 +303,7 @@ const checkWarehouseNotInShippingZone: CheckFunction = ({
     return null;
   }
 
-  if (!product.variants || product.variants.length === 0) {
+  if (productHasNoVariants(product)) {
     return null;
   }
 
@@ -308,7 +344,16 @@ const checkWarehouseNotInShippingZone: CheckFunction = ({
       warehouseIdsInShippingZones.has(warehouseId) && channelWarehouseIds.has(warehouseId),
   );
 
-  if (warehouseIdsWithStock.size > 0 && !hasReachableStock) {
+  if (hasReachableStock) {
+    return null;
+  }
+
+  // Incomplete catalog: stock on another page may still be reachable.
+  if (!hasCompleteVariantCatalog(product)) {
+    return null;
+  }
+
+  if (warehouseIdsWithStock.size > 0) {
     return {
       id: "warehouse-not-in-zone",
       severity: "warning",
@@ -337,7 +382,7 @@ const checkWarehouseNotInShippingZone: CheckFunction = ({
  * `no-stock` warning by pointing at a concrete fix.
  */
 const checkStockOutsideChannelWarehouses: CheckFunction = ({ product, channelData, intl }) => {
-  if (!product.variants || product.variants.length === 0) {
+  if (productHasNoVariants(product)) {
     return null;
   }
 
@@ -367,6 +412,11 @@ const checkStockOutsideChannelWarehouses: CheckFunction = ({ product, channelDat
   );
 
   if (hasStockInChannelWarehouse) {
+    return null;
+  }
+
+  // Incomplete catalog: another page may still have in-channel stock.
+  if (!hasCompleteVariantCatalog(product)) {
     return null;
   }
 

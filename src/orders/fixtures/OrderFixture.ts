@@ -122,11 +122,6 @@ export class OrderFixture {
       amount: 0,
       currency: "USD",
     },
-    totalCaptured: {
-      __typename: "Money",
-      amount: 110,
-      currency: "USD",
-    },
     totalCharged: {
       __typename: "Money",
       amount: 110,
@@ -222,6 +217,8 @@ export class OrderFixture {
       quantityFulfilled: 2,
       quantityToFulfill: 0,
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       allocations: [],
       unitDiscount: {
@@ -361,7 +358,7 @@ export class OrderFixture {
         reasonReference: null,
         orderLine: {
           __typename: "OrderLine",
-          id: "",
+          id: "line-id-1",
           isShippingRequired: false,
           productName: "",
           productSku: "",
@@ -371,6 +368,8 @@ export class OrderFixture {
           quantityToFulfill: 0,
           unitDiscountValue: undefined,
           unitDiscountReason: "",
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: DiscountValueTypeEnum.FIXED,
           allocations: [],
           variant: {
@@ -486,6 +485,16 @@ export class OrderFixture {
     },
     reason: null,
     reasonReference: null,
+    totalRefundedAmount: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD",
+    },
+    shippingRefundedAmount: {
+      __typename: "Money",
+      amount: 0,
+      currency: "USD",
+    },
   } satisfies FulfillmentFragment;
 
   private static giftCards = [
@@ -597,11 +606,6 @@ export class OrderFixture {
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
       lines: OrderFixture.lines,
-      totalCaptured: {
-        __typename: "Money",
-        amount: 0,
-        currency: "USD",
-      },
       totalCharged: {
         __typename: "Money",
         amount: 0,

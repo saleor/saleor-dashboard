@@ -1,5 +1,8 @@
+import { rippleAttributeListGroupByType } from "@dashboard/attributes/ripples/attributeListGroupByType";
 import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attributeValuesSearch";
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
+import { rippleTypePageCreateAttribute } from "@dashboard/attributes/ripples/typePageCreateAttribute";
+import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
@@ -16,6 +19,7 @@ import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReaso
 import { rippleNewReturnReasons } from "@dashboard/orders/ripples/newReturnReasons";
 import { rippleOrderChannelInHeader } from "@dashboard/orders/ripples/orderChannelInHeader";
 import { rippleOrderLineDiscountDiscoverability } from "@dashboard/orders/ripples/orderLineDiscountDiscoverability";
+import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";
 import { rippleOrderLinePriceBreakdown } from "@dashboard/orders/ripples/orderLinePriceBreakdown";
 import { rippleOrderMetadata } from "@dashboard/orders/ripples/orderMetadata";
 import { rippleProductAvailabilityDiagnostics } from "@dashboard/products/ripples/productAvailabilityDiagnostics";
@@ -27,6 +31,7 @@ import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRi
 import { type Ripple } from "@dashboard/ripples/types";
 import { rippleShippingRateEditor } from "@dashboard/shipping/ripples/shippingRateEditor";
 import { rippleStaffCustomerProfiles } from "@dashboard/staff/ripples/staffCustomerProfiles";
+import { rippleSlugTranslation } from "@dashboard/translations/ripples/slugTranslation";
 import { rippleTranslationDetailRefresh } from "@dashboard/translations/ripples/translationDetailRefresh";
 import { rippleWarehouseMetadata } from "@dashboard/warehouses/ripples/warehouseMetadata";
 
@@ -40,6 +45,9 @@ export const allRipples: Ripple[] = [
   rippleGroupedModelTypeTabs,
   rippleModelMetadata,
 
+  // Categories
+  rippleExpandedSubcategories,
+
   // Orders
   rippleNewRefundReasons,
   rippleNewReturnReasons,
@@ -48,6 +56,7 @@ export const allRipples: Ripple[] = [
   rippleOrderLineDiscountDiscoverability,
   rippleRefreshedOrderSections,
   rippleOrderLinePriceBreakdown,
+  rippleOrderLineMatrixView,
   rippleOrderChannelInHeader,
 
   // Warehouses
@@ -61,8 +70,10 @@ export const allRipples: Ripple[] = [
   rippleVariantGenerator,
 
   // Attributes
+  rippleAttributeListGroupByType,
   rippleAttributeValuesSearch,
   rippleAttributeViewOverhaul,
+  rippleTypePageCreateAttribute,
 
   // ...
 
@@ -89,6 +100,7 @@ export const allRipples: Ripple[] = [
   rippleStaffCustomerProfiles,
 
   // Translations
+  rippleSlugTranslation,
   rippleTranslationDetailRefresh,
 
   // Sidebar

@@ -12,7 +12,7 @@ export const orderToRefund = (placeholder: string): OrderRefundDataQuery["order"
       currency: "USD",
     },
   },
-  totalCaptured: {
+  totalCharged: {
     __typename: "Money",
     amount: 644.38,
     currency: "USD",

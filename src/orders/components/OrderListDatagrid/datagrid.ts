@@ -57,9 +57,16 @@ export const orderListStaticColumnAdapter = (
       width: 200,
     },
     {
+      id: "net",
+      title: intl.formatMessage(columnsMessages.net),
+      width: 150,
+      headerAlign: "right" as const,
+    },
+    {
       id: "total",
       title: intl.formatMessage(columnsMessages.total),
       width: 150,
+      headerAlign: "right" as const,
     },
     {
       id: "channel",
@@ -103,6 +110,8 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
         return getPaymentCellContent(intl, theme, rowData);
       case "status":
         return getStatusCellContent(intl, theme, rowData);
+      case "net":
+        return getNetCellContent(rowData);
       case "total":
         return getTotalCellContent(rowData);
       case "channel":
@@ -181,6 +190,14 @@ export function getPaymentCellContent(
     });
 
     return pillCell(paymentStatus.localized, color, COMMON_CELL_PROPS);
+  }
+
+  return readonlyTextCell("-");
+}
+
+function getNetCellContent(rowData: RelayToFlat<OrderListQuery["orders"]>[number]) {
+  if (rowData?.subtotal?.net) {
+    return moneyCell(rowData.subtotal.net.amount, rowData.subtotal.net.currency, COMMON_CELL_PROPS);
   }
 
   return readonlyTextCell("-");

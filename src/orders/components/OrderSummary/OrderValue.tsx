@@ -532,9 +532,11 @@ export const OrderValue = (props: Props): ReactNode => {
           {intl.formatMessage(messages.orderDiscountsLabel)}
         </Text>
         <Box paddingLeft={1}>
-          <ButtonLink onClick={editableProps?.openDialog}>
-            {intl.formatMessage(messages.addDiscount)}
-          </ButtonLink>
+          <Text size={3}>
+            <ButtonLink onClick={editableProps?.openDialog}>
+              {intl.formatMessage(messages.addDiscount)}
+            </ButtonLink>
+          </Text>
         </Box>
       </Box>
     );
@@ -583,11 +585,9 @@ export const OrderValue = (props: Props): ReactNode => {
     if (!hasAnyDiscount && isEditable) {
       return (
         <OrderSummaryListItem amount={0} amountTitle={intl.formatMessage(messages.discountTitle)}>
-          <Text as="span">
-            <ButtonLink onClick={editableProps?.openDialog}>
-              {intl.formatMessage(messages.addDiscount)}
-            </ButtonLink>
-          </Text>
+          <ButtonLink onClick={editableProps?.openDialog}>
+            {intl.formatMessage(messages.addDiscount)}
+          </ButtonLink>
         </OrderSummaryListItem>
       );
     }

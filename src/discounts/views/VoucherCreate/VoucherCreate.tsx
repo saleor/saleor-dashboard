@@ -63,6 +63,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     handleChannelsConfirm,
     handleChannelsModalClose,
     handleChannelsModalOpen,
+    hasChannelSelectionChanged,
     isChannelSelected,
     isChannelsModalOpen,
     setCurrentChannels,
@@ -102,9 +103,11 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     },
   });
   const productsSearch = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: false },
   });
-  const variantsSearch = productsSearch;
+  const variantsSearch = useProductSearch({
+    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: true },
+  });
 
   const handleProductFilterChange = (
     filterVariables: ProductWhereInput,
@@ -116,6 +119,21 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       where: filterVariables,
       channel,
       query,
+      includeVariants: false,
+    });
+  };
+
+  const handleVariantFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    variantsSearch.result.refetch({
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      where: filterVariables,
+      channel,
+      query,
+      includeVariants: true,
     });
   };
 
@@ -177,7 +195,6 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={!channelListElements.length}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
@@ -188,6 +205,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
+          hasSelectionChanged={hasChannelSelectionChanged}
           onConfirm={handleChannelsConfirm}
           toggleAll={toggleAllChannels}
         />
@@ -201,6 +219,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         productsSearch={productsSearch}
         variantsSearch={variantsSearch}
         onProductFilterChange={handleProductFilterChange}
+        onVariantFilterChange={handleVariantFilterChange}
         onCategoryFilterChange={handleCategoryFilterChange}
         onCollectionFilterChange={handleCollectionFilterChange}
         openModal={openModal}

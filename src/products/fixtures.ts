@@ -269,7 +269,13 @@ export const product: (
       name: "Winter sale",
     },
   ],
-  defaultVariant: { __typename: "ProductVariant", id: "pv75934" },
+  defaultVariant: {
+    __typename: "ProductVariant",
+    id: "pv75934",
+    sku: "59661-34207",
+    trackInventory: true,
+    preorder: null,
+  },
   description: JSON.stringify(content),
   id: "p10171",
   isAvailable: false,
@@ -3877,68 +3883,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     ],
     name: "Our Awesome Book",
     thumbnail: { __typename: "Image" as const, url: placeholderImage },
-    variants: [
-      {
-        __typename: "ProductVariant",
-        id: "var1",
-        media: [
-          {
-            __typename: "ProductMedia",
-            id: "23123",
-            type: ProductMediaType.IMAGE,
-            oembedData: "{}",
-            url: placeholderImage,
-          },
-        ],
-        name: "Extended Hard",
-        sku: "13-1337",
-      },
-      {
-        __typename: "ProductVariant",
-        id: "var2",
-        media: [
-          {
-            __typename: "ProductMedia",
-            id: "23123",
-            type: ProductMediaType.IMAGE,
-            oembedData: "{}",
-            url: placeholderImage,
-          },
-        ],
-        name: "Extended Soft",
-        sku: "13-1338",
-      },
-      {
-        __typename: "ProductVariant",
-        id: "var3",
-        media: [
-          {
-            __typename: "ProductMedia",
-            id: "23123",
-            type: ProductMediaType.IMAGE,
-            oembedData: "{}",
-            url: placeholderImage,
-          },
-        ],
-        name: "Normal Hard",
-        sku: "13-1339",
-      },
-      {
-        __typename: "ProductVariant",
-        id: "var4",
-        media: [
-          {
-            __typename: "ProductMedia",
-            id: "23123",
-            type: ProductMediaType.IMAGE,
-            oembedData: "{}",
-            url: placeholderImage,
-          },
-        ],
-        name: "Normal Soft",
-        sku: "13-1340",
-      },
-    ],
   },
   selectionAttributes: [
     {
@@ -4175,8 +4119,68 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
 export const variantMedia = (placeholderImage: string) => variant(placeholderImage).media;
 export const variantProductImages = (placeholderImage: string) =>
   variant(placeholderImage).product.media;
-export const variantSiblings = (placeholderImage: string) =>
-  variant(placeholderImage).product.variants;
+export const variantSiblings = (placeholderImage: string) => [
+  {
+    __typename: "ProductVariant" as const,
+    id: "var1",
+    media: [
+      {
+        __typename: "ProductMedia" as const,
+        id: "23123",
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
+        url: placeholderImage,
+      },
+    ],
+    name: "Extended Hard",
+    sku: "13-1337",
+  },
+  {
+    __typename: "ProductVariant" as const,
+    id: "var2",
+    media: [
+      {
+        __typename: "ProductMedia" as const,
+        id: "23123",
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
+        url: placeholderImage,
+      },
+    ],
+    name: "Extended Soft",
+    sku: "13-1338",
+  },
+  {
+    __typename: "ProductVariant" as const,
+    id: "var3",
+    media: [
+      {
+        __typename: "ProductMedia" as const,
+        id: "23123",
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
+        url: placeholderImage,
+      },
+    ],
+    name: "Normal Hard",
+    sku: "13-1339",
+  },
+  {
+    __typename: "ProductVariant" as const,
+    id: "var4",
+    media: [
+      {
+        __typename: "ProductMedia" as const,
+        id: "23123",
+        type: ProductMediaType.IMAGE,
+        oembedData: "{}",
+        url: placeholderImage,
+      },
+    ],
+    name: "Normal Soft",
+    sku: "13-1340",
+  },
+];
 
 export const productTypesList: Array<Pick<ProductType, "id" | "name" | "hasVariants">> = [
   {

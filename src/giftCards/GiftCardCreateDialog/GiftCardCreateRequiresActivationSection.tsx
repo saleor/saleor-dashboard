@@ -13,9 +13,10 @@ const GiftCardCreateRequiresActivationSection = ({
   onChange,
 }: GiftCardCreateRequiresActivationSectionProps) => (
   <Checkbox
-    data-test-id="requires-activation-section"
-    name="requiresActivation"
     checked={checked}
+    data-test-id="requires-activation-section"
+    gap={3}
+    name="requiresActivation"
     onCheckedChange={value => onChange({ target: { name: "requiresActivation", value } })}
   >
     <Text>

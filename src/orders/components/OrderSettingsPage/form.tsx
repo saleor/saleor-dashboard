@@ -1,76 +1,171 @@
-import { type OrderSettingsFragment, type ShopOrderSettingsFragment } from "@dashboard/graphql";
-import useForm, { type CommonUseFormResult, type SubmitPromise } from "@dashboard/hooks/useForm";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import type * as React from "react";
+import {
+  type OrderSettingsChannelsQuery,
+  type ShopOrderSettingsFragment,
+} from "@dashboard/graphql";
+import useForm, {
+  type CommonUseFormResult,
+  type FormChange,
+  type SubmitPromise,
+} from "@dashboard/hooks/useForm";
+import { type FormEvent, type ReactNode, useCallback, useEffect, useMemo } from "react";
 
-export interface OrderSettingsFormData {
-  automaticallyConfirmAllNewOrders: boolean;
-  fulfillmentAutoApprove: boolean;
-  fulfillmentAllowUnpaid: boolean;
-  automaticallyFulfillNonShippableGiftCard: boolean;
-}
+import {
+  getDirtyChannelIds,
+  getOrderSettingsFormData,
+  isOrderSettingsFormPristine,
+  mergeOrderSettingsFormData,
+} from "./formData";
+import {
+  type ChannelOrderSettingsFormData,
+  type ChannelOrderSettingsMatrixField,
+  type OrderSettingsFormData,
+} from "./types";
 
-type UseOrderSettingsFormResult = CommonUseFormResult<OrderSettingsFormData>;
+type OrderSettingsChannelRow = NonNullable<OrderSettingsChannelsQuery["channels"]>[number];
+
+type UseOrderSettingsFormResult = CommonUseFormResult<OrderSettingsFormData> & {
+  dirtyChannelIds: string[];
+  onChannelChange: (
+    channelId: string,
+    field: ChannelOrderSettingsMatrixField,
+    value: boolean | number,
+  ) => void;
+};
+
 interface OrderSettingsFormProps {
-  children: (props: UseOrderSettingsFormResult) => React.ReactNode;
-  orderSettings: OrderSettingsFragment;
-  shop: ShopOrderSettingsFragment;
+  children: (props: UseOrderSettingsFormResult) => ReactNode;
+  shop: ShopOrderSettingsFragment | undefined;
+  channels: OrderSettingsChannelRow[];
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
   disabled: boolean;
 }
 
-function getOrderSeettingsFormData(
-  orderSettings: OrderSettingsFragment,
-  shop: ShopOrderSettingsFragment,
-): OrderSettingsFormData {
-  return {
-    automaticallyFulfillNonShippableGiftCard:
-      orderSettings?.automaticallyFulfillNonShippableGiftCard,
-    automaticallyConfirmAllNewOrders: orderSettings?.automaticallyConfirmAllNewOrders,
-    fulfillmentAutoApprove: shop?.fulfillmentAutoApprove,
-    fulfillmentAllowUnpaid: shop?.fulfillmentAllowUnpaid,
-  };
+const NUMBER_FIELDS = new Set<keyof OrderSettingsFormData>([
+  "reserveStockDurationAnonymousUser",
+  "reserveStockDurationAuthenticatedUser",
+  "limitQuantityPerCheckout",
+]);
+
+function parseNumberFieldValue(value: unknown): number {
+  if (value === "" || value === null || value === undefined) {
+    return 0;
+  }
+
+  const parsed = Number(value);
+
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
 function useOrderSettingsForm(
-  orderSettings: OrderSettingsFragment,
-  shop: ShopOrderSettingsFragment,
+  shop: ShopOrderSettingsFragment | undefined,
+  channels: OrderSettingsChannelRow[],
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise,
   disabled: boolean,
 ): UseOrderSettingsFormResult {
-  const { data, handleChange, formId, setIsSubmitDisabled } = useForm(
-    getOrderSeettingsFormData(orderSettings, shop),
-    undefined,
-    {
-      confirmLeave: true,
-    },
-  );
-  const handleFormSubmit = useHandleFormSubmit({
-    formId,
-    onSubmit,
-  });
-  const submit = () => handleFormSubmit(data);
+  const initialData = useMemo(() => getOrderSettingsFormData(shop, channels), [channels, shop]);
 
-  setIsSubmitDisabled(disabled);
+  const { data, handleChange, submit, triggerChange, isSaveDisabled, setIsSubmitDisabled, set } =
+    useForm(initialData, onSubmit, {
+      confirmLeave: true,
+      disabled,
+      mergeFunc: mergeOrderSettingsFormData,
+      checkIfSaveIsDisabled: formData =>
+        disabled || isOrderSettingsFormPristine(formData, initialData),
+    });
+
+  const dirtyChannelIds = useMemo(
+    () => getDirtyChannelIds(data.channels, initialData.channels),
+    [data.channels, initialData.channels],
+  );
+
+  const onChannelChange = useCallback(
+    (channelId: string, field: ChannelOrderSettingsMatrixField, value: boolean | number) => {
+      const currentChannel = data.channels[channelId];
+
+      if (!currentChannel) {
+        return;
+      }
+
+      const nextValue =
+        field === "deleteExpiredOrdersAfter" ? parseNumberFieldValue(value) : value === true;
+
+      set({
+        channels: {
+          ...data.channels,
+          [channelId]: {
+            ...currentChannel,
+            [field]: nextValue,
+          } satisfies ChannelOrderSettingsFormData,
+        },
+      });
+      triggerChange(true);
+    },
+    [data.channels, set, triggerChange],
+  );
+
+  const change: FormChange = event => {
+    const name = event.target.name as keyof OrderSettingsFormData;
+
+    if (NUMBER_FIELDS.has(name)) {
+      handleChange({
+        target: {
+          name,
+          value: parseNumberFieldValue(event.target.value),
+        },
+      });
+
+      return;
+    }
+
+    handleChange(event);
+  };
+
+  useEffect(
+    function syncExitDialogDirtyWithPristine() {
+      if (isOrderSettingsFormPristine(data, initialData)) {
+        triggerChange(false);
+      }
+    },
+    [data, initialData, triggerChange],
+  );
+
+  useEffect(
+    function syncExitDialogSubmitDisabled() {
+      setIsSubmitDisabled(!!isSaveDisabled);
+    },
+    [isSaveDisabled, setIsSubmitDisabled],
+  );
 
   return {
-    change: handleChange,
+    change,
     data,
     submit,
-    isSaveDisabled: disabled,
+    isSaveDisabled,
+    dirtyChannelIds,
+    onChannelChange,
   };
 }
 
 const OrderSettingsForm = ({
   children,
-  orderSettings,
   shop,
+  channels,
   onSubmit,
   disabled,
-}: OrderSettingsFormProps) => {
-  const props = useOrderSettingsForm(orderSettings, shop, onSubmit, disabled);
+}: OrderSettingsFormProps): JSX.Element => {
+  const props = useOrderSettingsForm(shop, channels, onSubmit, disabled);
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    event.stopPropagation();
+    void props.submit();
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={{ width: "100%", display: "block" }}>
+      {children(props)}
+    </form>
+  );
 };
 
 OrderSettingsForm.displayName = "OrderSettingsForm";

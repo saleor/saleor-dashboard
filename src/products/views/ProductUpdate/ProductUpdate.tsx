@@ -1,26 +1,22 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
-import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
-import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
-  ErrorPolicyEnum,
   type ProductMediaCreateMutation,
   type ProductMediaCreateMutationVariables,
   ProductMediaType,
-  type ProductVariantBulkCreateInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
+  useProductMediaBulkDeleteMutation,
   useProductMediaCreateMutation,
-  useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
-  useProductVariantBulkCreateMutation,
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -30,6 +26,8 @@ import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttr
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
   useReferencePageSearch,
   useReferenceProductSearch,
 } from "@dashboard/searches/useReferenceSearch";
@@ -39,12 +37,15 @@ import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeV
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getMutationState } from "../../../misc";
+import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/ProductDeleteDialog";
+import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
+import { useProductVariantsGrid } from "../../hooks/useProductVariantsGrid";
 import {
   productListUrl,
   productUrl,
@@ -52,7 +53,11 @@ import {
   type ProductUrlQueryParams,
   productVariantEditUrl,
 } from "../../urls";
-import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
+import {
+  createImageReorderHandler,
+  createImagesUploadCompleteHandler,
+  createImageUploadHandler,
+} from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
 import { productUpdatePageMessages as messages } from "./messages";
 
@@ -71,17 +76,6 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchCategoriesOpts,
   } = useCategorySearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
-  const {
-    loadMore: loadMoreReferenceCategories,
-    search: searchReferenceCategories,
-    result: searchReferenceCategoriesOpts,
-  } = useCategorySearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-      filter: undefined,
-    },
   });
   const {
     loadMore: loadMoreCollections,
@@ -104,7 +98,22 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
   });
 
-  useRegisterEntityRefresh(refetch);
+  const {
+    variants,
+    loading: variantsLoading,
+    refetch: refetchVariants,
+    search: variantsSearch,
+    setSearch: setVariantsSearch,
+    pageInfo: variantsPageInfo,
+    loadNextPage: loadNextVariantsPage,
+    loadPreviousPage: loadPreviousVariantsPage,
+    rangeLabel: variantsRangeLabel,
+    totalCount: variantsTotalCount,
+  } = useProductVariantsGrid({ productId: id });
+
+  useRegisterEntityRefresh(async () => {
+    await Promise.all([refetch(), refetchVariants()]);
+  });
 
   const isSimpleProduct = !data?.product?.productType?.hasVariants;
   const { availableChannels } = useAppChannel(false);
@@ -190,17 +199,16 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     },
     [intl, notify],
   );
-  const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
-    onCompleted: handleProductMediaCreateCompleted,
-  });
-  const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
+  // File uploads report a single batch toast from ProductMedia; keep per-upload
+  // notifications only for URL/oEmbed uploads via createProductMedia.
+  const [createProductImage] = useProductMediaCreateMutation();
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
-  const [deleteProductImage, deleteProductImageOpts] = useProductMediaDeleteMutation({
+  const [bulkDeleteProductMedia, bulkDeleteProductMediaOpts] = useProductMediaBulkDeleteMutation({
     onCompleted: data => {
-      const result = data.productMediaDelete;
+      const result = data.productMediaBulkDelete;
 
       if (!result) {
         notify({
@@ -227,15 +235,15 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       closeModal();
       notify({
         status: "success",
-        text: intl.formatMessage({
-          id: "Gi8zwc",
-          defaultMessage: "Image deleted",
+        text: intl.formatMessage(messages.mediaDeleteSuccess, {
+          counter: result.count,
         }),
       });
     },
   });
   const product = data?.product;
   const [deleteMediaType, setDeleteMediaType] = useState<ProductMediaType | null>(null);
+  const mediaIdsToDelete = params.ids ?? [];
 
   useEffect(() => {
     if (params.action !== "remove-media") {
@@ -243,170 +251,93 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     }
   }, [params.action]);
 
-  const isVideoMediaToDelete = deleteMediaType === ProductMediaType.VIDEO;
+  const isVideoMediaToDelete =
+    mediaIdsToDelete.length === 1 && deleteMediaType === ProductMediaType.VIDEO;
   const getAttributeValuesSuggestions = useSearchAttributeValuesSuggestions();
   const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
     onCompleted: handleProductMediaCreateCompleted,
   });
-  const handleMediaUrlUpload = (mediaUrl: string) => {
-    const variables = {
-      alt: "",
-      mediaUrl,
-      product: product.id,
-    };
-
-    createProductMedia({
-      variables,
+  const handleMediaUrlUpload = async (mediaUrl: string) => {
+    const result = await createProductMedia({
+      variables: {
+        alt: "",
+        mediaUrl,
+        product: product.id,
+      },
     });
+
+    return result.data?.productMediaCreate?.errors ?? [];
   };
   const handleBack = () => navigate(productListUrl());
 
-  /**
-   * Handles bulk variant creation with two-tier error handling:
-   *
-   * 1. Attribute errors (e.g., missing required attribute) → returned in `attributeErrors`
-   *    and displayed INLINE next to the field in the generator modal. No notification shown.
-   *
-   * 2. Other errors (e.g., duplicate SKU, network) → shown as NOTIFICATIONS.
-   *    Only the first unique error is shown to avoid notification spam.
-   *
-   * This split ensures users see actionable errors where they can fix them (inline),
-   * while general failures are communicated via notifications.
-   */
-  const handleBulkCreateVariants = useCallback(
-    async (inputs: ProductVariantBulkCreateInput[]) => {
-      const result = await bulkCreateVariants({
-        variables: {
-          id,
-          inputs,
-          errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
-        },
-      });
-
-      const bulkErrors = result.data?.productVariantBulkCreate.errors ?? [];
-      const results = result.data?.productVariantBulkCreate.results ?? [];
-      const successCount = results.filter(
-        r => r.productVariant && (!r.errors || r.errors.length === 0),
-      ).length;
-      const failedCount = results.filter(r => r.errors && r.errors.length > 0).length;
-
-      // Categorize errors: attribute-specific (inline) vs other (notifications)
-      const attributeErrors: Array<{
-        attributeId: string;
-        code: string;
-        message: string | null;
-      }> = [];
-      const otherErrors: Array<{ message: string | null }> = [];
-
-      results
-        .flatMap(r => r.errors ?? [])
-        .forEach(error => {
-          if (error.attributes && error.attributes.length > 0) {
-            error.attributes.forEach(attrId => {
-              attributeErrors.push({
-                attributeId: attrId,
-                code: error.code,
-                message: error.message,
-              });
-            });
-          } else {
-            otherErrors.push({ message: error.message });
-          }
-        });
-
-      bulkErrors.forEach(error => {
-        otherErrors.push({ message: getProductErrorMessage(error, intl) });
-      });
-
-      // Show notifications based on outcome (skip if attribute errors will be shown inline)
-      if (successCount > 0 && failedCount === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.variantBulkCreateSuccess, { count: successCount }),
-        });
-        refetch();
-      } else if (successCount > 0 && failedCount > 0) {
-        notify({
-          status: "warning",
-          text: intl.formatMessage(messages.variantBulkCreatePartial, {
-            success: successCount,
-            failed: failedCount,
-          }),
-        });
-        refetch();
-      } else if (attributeErrors.length === 0 && otherErrors.length > 0) {
-        const uniqueMessages = [...new Set(otherErrors.map(e => e.message).filter(Boolean))];
-
-        if (uniqueMessages[0]) {
-          notify({
-            status: "error",
-            text: uniqueMessages[0],
-          });
-        }
-      }
-
-      return {
-        success: successCount > 0,
-        successCount,
-        failedCount,
-        attributeErrors,
-        otherErrors,
-      };
-    },
-    [bulkCreateVariants, id, intl, notify, refetch],
-  );
   const handleImageDelete = (mediaId: string) => () => {
-    const media = product?.media?.find(item => item.id === mediaId);
+    const mediaItem = product?.media?.find(item => item.id === mediaId);
 
-    setDeleteMediaType(media?.type ?? null);
-    openModal("remove-media", { id: mediaId });
+    setDeleteMediaType(mediaItem?.type ?? null);
+    openModal("remove-media", { ids: [mediaId] });
   };
-  const handleConfirmMediaDelete = () => {
-    const mediaId = params.id;
-    const currentMedia = product?.media;
-
-    if (!mediaId || !product || !currentMedia) {
+  const handleImagesDelete = (mediaIds: string[]) => {
+    if (mediaIds.length === 0) {
       return;
     }
 
-    deleteProductImage({
-      variables: { id: mediaId },
+    if (mediaIds.length === 1) {
+      const mediaItem = product?.media?.find(item => item.id === mediaIds[0]);
+
+      setDeleteMediaType(mediaItem?.type ?? null);
+    } else {
+      setDeleteMediaType(null);
+    }
+
+    openModal("remove-media", { ids: mediaIds });
+  };
+  const handleConfirmMediaDelete = () => {
+    const currentMedia = product?.media;
+
+    if (!product || !currentMedia || mediaIdsToDelete.length === 0) {
+      return;
+    }
+
+    const idsToDelete = new Set(mediaIdsToDelete);
+
+    bulkDeleteProductMedia({
+      variables: { ids: mediaIdsToDelete },
       optimisticResponse: {
         __typename: "Mutation",
-        productMediaDelete: {
-          __typename: "ProductMediaDelete",
+        productMediaBulkDelete: {
+          __typename: "ProductMediaBulkDelete",
           errors: [],
-          product: {
-            __typename: "Product",
-            id: product.id,
-            media: currentMedia.filter(media => media.id !== mediaId),
-          },
+          count: mediaIdsToDelete.length,
         },
+      },
+      update: cache => {
+        cache.modify({
+          id: cache.identify(product),
+          fields: {
+            media(existingMedia = [], { readField }) {
+              return existingMedia.filter(
+                mediaRef => !idsToDelete.has(readField("id", mediaRef) as string),
+              );
+            },
+          },
+        });
       },
     });
   };
-  const [submit, submitOpts] = useProductUpdateHandler(product);
+  const [submit, submitOpts] = useProductUpdateHandler(product, variants);
   const handleImageUpload = createImageUploadHandler(id, variables =>
     createProductImage({ variables }),
   );
+  const handleImagesUploadComplete = createImagesUploadCompleteHandler(notify, intl);
   const handleImageReorder = createImageReorderHandler(product, options =>
     reorderProductImages(options),
   );
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
-    navigate(
-      productUrl(id, {
-        ...params,
-        action: "assign-attribute-value",
-        id: attribute.id,
-      }),
-      { resetScroll: false },
-    );
+    openModal("assign-attribute-value", { id: attribute.id });
   const disableFormSave =
     submitOpts.loading ||
-    createProductImageOpts.loading ||
     deleteProductOpts.loading ||
     reorderProductImagesOpts.loading ||
-    createProductMediaOpts.loading ||
     (loading && !product);
   const formTransitionState = getMutationState(
     submitOpts.called,
@@ -420,36 +351,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       : undefined;
 
   // Extract productType and pageType constraints from reference attribute for modal filter
-  const initialConstraints = useMemo(():
-    | (InitialConstraints & InitialPageConstraints)
-    | undefined => {
-    if (!refAttr?.referenceTypes?.length) {
-      return undefined;
-    }
-
-    const productTypeRefs = refAttr.referenceTypes.filter(
-      (t): t is { __typename: "ProductType"; id: string; name: string } =>
-        t?.__typename === "ProductType" && Boolean(t?.id),
-    );
-
-    const pageTypeRefs = refAttr.referenceTypes.filter(
-      (t): t is { __typename: "PageType"; id: string; name: string } =>
-        t?.__typename === "PageType" && Boolean(t?.id),
-    );
-
-    if (productTypeRefs.length === 0 && pageTypeRefs.length === 0) {
-      return undefined;
-    }
-
-    return {
-      ...(productTypeRefs.length > 0 && {
-        productTypes: productTypeRefs.map(t => ({ id: t.id, name: t.name })),
-      }),
-      ...(pageTypeRefs.length > 0 && {
-        pageTypes: pageTypeRefs.map(t => ({ id: t.id, name: t.name })),
-      }),
-    };
-  }, [refAttr?.referenceTypes]);
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
 
   const {
     loadMore: loadMoreProducts,
@@ -463,11 +368,24 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     result: searchPagesOpts,
   } = useReferencePageSearch(refAttr);
 
+  const {
+    loadMore: loadMoreReferenceCategories,
+    search: searchReferenceCategories,
+    result: searchReferenceCategoriesOpts,
+  } = useReferenceCategorySearch(refAttr);
+
+  const {
+    loadMore: loadMoreReferenceCollections,
+    search: searchReferenceCollections,
+    result: searchReferenceCollectionsOpts,
+  } = useReferenceCollectionSearch(refAttr);
+
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
     refetchProducts: searchProductsOpts.refetch,
     refetchPages: searchPagesOpts.refetch,
     refetchCategories: searchReferenceCategoriesOpts.refetch,
-    refetchCollections: searchCollectionsOpts.refetch,
+    refetchCollections: searchReferenceCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
 
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
@@ -479,6 +397,10 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const fetchMoreReferenceCategories = getSearchFetchMoreProps(
     searchReferenceCategoriesOpts,
     loadMoreReferenceCategories,
+  );
+  const fetchMoreReferenceCollections = getSearchFetchMoreProps(
+    searchReferenceCollectionsOpts,
+    loadMoreReferenceCollections,
   );
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
@@ -510,15 +432,27 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
         fetchAttributeValues={searchAttributeValues}
-        refetch={refetch}
+        refetch={async () => {
+          await Promise.all([refetch(), refetchVariants()]);
+        }}
         limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
+        saveSteps={submitOpts.saveSteps}
+        onDismissSaveSteps={submitOpts.clearSaveSteps}
         media={data?.product?.media}
         product={product}
-        loading={loading}
+        loading={loading && !product}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
-        variants={product?.variants}
+        variants={variants}
+        variantsSearch={variantsSearch}
+        onVariantsSearchChange={setVariantsSearch}
+        variantsPageInfo={variantsPageInfo}
+        onVariantsNextPage={loadNextVariantsPage}
+        onVariantsPreviousPage={loadPreviousVariantsPage}
+        variantsRangeLabel={variantsRangeLabel}
+        variantsTotalCount={variantsTotalCount}
+        variantsLoading={variantsLoading}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata")}
         onImageReorder={handleImageReorder}
@@ -530,7 +464,9 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           })
         }
         onImageUpload={handleImageUpload}
+        onImagesUploadComplete={handleImagesUploadComplete}
         onImageDelete={handleImageDelete}
+        onImagesDelete={handleImagesDelete}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
@@ -538,21 +474,20 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         referenceCategories={referenceCategories}
-        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
+        referenceCollections={mapEdgesToItems(searchReferenceCollectionsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchReferenceCategories={searchReferenceCategories}
         fetchMoreReferenceCategories={fetchMoreReferenceCategories}
-        fetchReferenceCollections={searchCollections}
-        fetchMoreReferenceCollections={fetchMoreCollections}
+        fetchReferenceCollections={searchReferenceCollections}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
+        onCloseDialog={closeModal}
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
         onFilterChange={onFilterChange}
-        onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />
       <ProductMetadataDialog
@@ -560,35 +495,21 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onClose={closeModal}
         product={product}
       />
-      <ActionDialog
+      <ProductDeleteDialog
         open={params.action === "remove"}
         onClose={closeModal}
         confirmButtonState={deleteProductOpts.status}
+        name={product?.name ?? ""}
         onConfirm={() => deleteProduct({ variables: { id } })}
-        variant="delete"
-        title={intl.formatMessage(messages.deleteProductDialogTitle)}
-      >
-        <FormattedMessage
-          {...messages.deleteProductDialogSubtitle}
-          values={{ name: product?.name }}
-        />
-      </ActionDialog>
-      <ActionDialog
-        open={params.action === "remove-media" && !!params.id}
+      />
+      <ProductMediaDeleteDialog
+        open={params.action === "remove-media" && mediaIdsToDelete.length > 0}
         onClose={closeModal}
-        confirmButtonState={deleteProductImageOpts.status}
+        confirmButtonState={bulkDeleteProductMediaOpts.status}
+        quantity={mediaIdsToDelete.length}
+        isVideo={isVideoMediaToDelete}
         onConfirm={handleConfirmMediaDelete}
-        variant="delete"
-        title={intl.formatMessage(
-          isVideoMediaToDelete ? messages.deleteMediaVideoTitle : messages.deleteMediaImageTitle,
-        )}
-      >
-        <FormattedMessage
-          {...(isVideoMediaToDelete
-            ? messages.deleteMediaVideoConfirmation
-            : messages.deleteMediaImageConfirmation)}
-        />
-      </ActionDialog>
+      />
     </>
   );
 };

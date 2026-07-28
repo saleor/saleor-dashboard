@@ -203,19 +203,6 @@ export const productTranslationDetails = gql`
   }
 `;
 
-export const productVariantList = gql`
-  query ProductVariantList($id: ID!) {
-    product(id: $id) {
-      id
-      variants {
-        id
-        name
-        sku
-      }
-    }
-  }
-`;
-
 export const productVariantTranslationDetails = gql`
   query ProductVariantTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
     translation(kind: VARIANT, id: $id) {

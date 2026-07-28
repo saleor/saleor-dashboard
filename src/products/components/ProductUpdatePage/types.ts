@@ -8,7 +8,9 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   type ProductChannelListingUpdateInput,
+  type ProductDetailsVariantFragment,
   type ProductFragment,
+  type ProductVariantBulkCreateInput,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -32,6 +34,7 @@ import { type OutputData } from "@editorjs/editorjs";
 import { type Option } from "@saleor/macaw-ui-next";
 
 import { type ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
+import { type ProductSaveComposition } from "./saveComposition";
 
 export interface ProductUpdateFormData {
   category: string | null;
@@ -63,7 +66,16 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
   channels: ProductChannelListingUpdateInput;
   collections: Option[];
   description: OutputData;
-  variants: DatagridChangeOpts;
+  variants: DatagridChangeOpts & {
+    /** Cross-page staged deletes. Preferred over `removed` indices when present. */
+    removedVariantIds?: string[];
+    /** Snapshots used to build bulk updates for variants edited off the current page. */
+    stagedUpdateVariants?: ProductDetailsVariantFragment[];
+    /** Index-based updates aligned with `stagedUpdateVariants`. */
+    stagedUpdateChanges?: DatagridChangeOpts;
+    /** Generator creates waiting for Save (API-ready bulk create inputs). */
+    stagedCreates?: ProductVariantBulkCreateInput[];
+  };
 }
 
 export interface ProductUpdateHandlers
@@ -75,6 +87,22 @@ export interface ProductUpdateHandlers
   selectAttributeFile: FormsetChange<File>;
   reorderAttributeValue: FormsetChange<ReorderEvent>;
   changeVariants: (data: DatagridChangeOpts) => void;
+  /** Stage variant deletes by id (supports multi-page selection). */
+  stageVariantRemovals: (ids: string[]) => void;
+  /** Stage generator creates until product Save. */
+  stageVariantCreates: (inputs: ProductVariantBulkCreateInput[]) => {
+    success: boolean;
+    successCount: number;
+    failedCount: number;
+    attributeErrors: Array<{ attributeId: string; code: string; message: string | null }>;
+    otherErrors: Array<{ message: string | null }>;
+  };
+  /** Remove staged generator creates by index (draft list). */
+  removeStagedVariantCreates: (indexes: number[]) => void;
+  /** Drop all staged generator creates. */
+  clearStagedVariantCreates: () => void;
+  /** Replace staged generator creates after draft datagrid edits. */
+  replaceStagedVariantCreates: (creates: ProductVariantBulkCreateInput[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
   updateChannelList: ProductChannelsListingDialogSubmit;
@@ -86,6 +114,12 @@ export interface UseProductUpdateFormOutput
   datagrid: UseDatagridChangeState;
   formErrors: FormErrors<ProductUpdateSubmitData>;
   touchedChannels: string[];
+  /** Staged variant deletes waiting for Save (cross-page). */
+  pendingVariantDeleteCount: number;
+  /** Generator creates waiting for Save (for duplicate detection in the modal). */
+  stagedVariantCreates: ProductVariantBulkCreateInput[];
+  /** What the Savebar will persist on the next Save. */
+  saveComposition: ProductSaveComposition;
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;
@@ -111,6 +145,7 @@ export interface UseProductUpdateFormOpts
   fetchMoreReferenceCategories?: FetchMoreProps;
   assignReferencesAttributeId?: string;
   isSimpleProduct: boolean;
+  variants: ProductDetailsVariantFragment[];
 }
 
 export type SubmitResult = SubmitPromise<Array<UseProductUpdateHandlerError>>;

@@ -3,6 +3,75 @@
   max-width: 100%;
 }
 
+.contentShell {
+  --modal-padding: var(--mu-spacing-6);
+  --modal-body-inset-padding-block: var(--modal-padding);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: hidden;
+}
+
+/* Standard horizontal padding for chrome regions that are not the header row. */
+.modalChrome {
+  padding-inline: var(--modal-padding);
+}
+
+.modalChromeHeaderWrapper {
+  flex-shrink: 0;
+}
+
+.fullBleedDivider {
+  width: 100%;
+  height: 1px;
+  flex-shrink: 0;
+  background-color: var(--mu-colors-border-default1);
+}
+
+/* Header-only dialogs (e.g. confirmations) already separate actions via border-top. */
+/* Header-only and legacy no-body dialogs hide the divider — actions border-top is enough. */
+.contentShellNoBody .fullBleedDivider,
+.contentShellHeaderOnly .fullBleedDivider {
+  display: none;
+}
+
+.scrollBody,
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Legacy scroll region for modals without Body — keeps inset until migrated. */
+.scrollBody {
+  padding-inline: var(--modal-padding);
+  padding-bottom: var(--modal-padding);
+}
+
+.contentShell:has(.actions) .scrollBody {
+  padding-bottom: 0;
+}
+
+.contentMain {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.bodyFill {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  flex-shrink: 0;
+  padding-inline: var(--modal-padding);
+  padding-block: var(--mu-spacing-4);
+  background-color: var(--mu-colors-background-default2);
+  border-top: 1px solid var(--mu-colors-border-default1);
+}
+
 .truncatedText {
   overflow: hidden;
   text-overflow: ellipsis;

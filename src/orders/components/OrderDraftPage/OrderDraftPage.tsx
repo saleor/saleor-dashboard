@@ -1,8 +1,10 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
@@ -15,7 +17,6 @@ import {
   type OrderErrorFragment,
   type OrderLineInput,
   type OrderNoteUpdateMutation,
-  type SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -23,12 +24,12 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { OrderDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { Divider } from "@saleor/macaw-ui-next";
-import { useContext } from "react";
+import { Trash2 } from "lucide-react";
+import { useContext, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import OrderCustomer, { type CustomerEditData } from "../OrderCustomer";
+import OrderCustomer from "../OrderCustomer";
 import { messages as orderDetailsPageMessages } from "../OrderDetailsPage/messages";
 import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -36,17 +37,15 @@ import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory"
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 
-interface OrderDraftPageProps extends FetchMoreProps {
+interface OrderDraftPageProps {
+  loading?: boolean;
   disabled: boolean;
   order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
-  users: RelayToFlat<SearchCustomersQuery["search"]>;
-  usersLoading: boolean;
   errors: OrderErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  fetchUsers: (query: string) => void;
   onBillingAddressEdit: () => void;
-  onCustomerEdit: (data: CustomerEditData) => void;
+  onCustomerChangeClick: () => void;
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => SubmitPromise<any[]>;
@@ -55,6 +54,8 @@ interface OrderDraftPageProps extends FetchMoreProps {
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
+  orderLineRemoveConfirmState?: ConfirmButtonTransitionState;
+  orderLineRemoveErrors?: OrderErrorFragment[];
   onProductClick: (id: string) => void;
   onShippingAddressEdit: () => void;
   onShippingMethodEdit: () => void;
@@ -68,20 +69,19 @@ const draftOrderListUrl = orderDraftListUrl();
 const OrderDraftPage = (props: OrderDraftPageProps) => {
   const {
     loading,
-    fetchUsers,
-    hasMore,
     saveButtonBarState,
     onBillingAddressEdit,
-    onCustomerEdit,
+    onCustomerChangeClick,
     onDraftFinalize,
     onDraftRemove,
-    onFetchMore,
     onNoteAdd,
     onNoteUpdateLoading,
     onNoteUpdate,
     onOrderLineAdd,
     onOrderLineChange,
     onOrderLineRemove,
+    orderLineRemoveConfirmState,
+    orderLineRemoveErrors,
     onShippingAddressEdit,
     onShippingMethodEdit,
     onProfileView,
@@ -89,8 +89,6 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     onOrderShowMetadata,
     order,
     channelUsabilityData,
-    users,
-    usersLoading,
     errors,
     disabled,
   } = props;
@@ -108,6 +106,19 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
     DRAFT_ORDER_DETAILS_MORE_ACTIONS,
     order?.id,
   );
+  const menuItems = useMemo(
+    () => [
+      ...mapExtensionMenuItemsToTopNavItems(extensionMenuItems),
+      {
+        label: intl.formatMessage(orderDetailsPageMessages.cancelOrder),
+        onSelect: onDraftRemove,
+        testId: "cancel-order",
+        color: "critical1" as const,
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      },
+    ],
+    [extensionMenuItems, intl, onDraftRemove],
+  );
 
   return (
     <DetailPageLayout>
@@ -119,21 +130,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           title={intl.formatMessage(orderDetailsPageMessages.editOrderMetadata)}
           ripple={rippleDraftOrderMetadata}
         />
-        <TopNav.Menu
-          items={[
-            {
-              label: intl.formatMessage({
-                id: "PAqicb",
-                defaultMessage: "Cancel order",
-                description: "button",
-              }),
-              onSelect: onDraftRemove,
-              color: "critical1" as const,
-            },
-            ...extensionMenuItems,
-          ]}
-          dataTestId="menu"
-        />
+        <TopNav.Menu items={menuItems} dataTestId="menu" />
       </TopNav>
       <DetailPageLayout.Content>
         <OrderDraftAlert order={order} channelUsabilityData={channelUsabilityData} />
@@ -142,6 +139,8 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
           channelUsabilityData={channelUsabilityData}
           errors={errors}
           loading={loading}
+          orderLineRemoveConfirmState={orderLineRemoveConfirmState}
+          orderLineRemoveErrors={orderLineRemoveErrors}
           onOrderLineAdd={onOrderLineAdd}
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
@@ -149,6 +148,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
         />
         {order && orderDiscountContext && (
           <>
+            <CardSpacer />
             <OrderSummary
               order={order}
               isEditable
@@ -171,15 +171,10 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
         <OrderCustomer
           canEditAddresses={!!order?.user}
           canEditCustomer={true}
-          fetchUsers={fetchUsers}
-          hasMore={hasMore}
-          loading={usersLoading}
           errors={errors}
           order={order as OrderDetailsFragment}
-          users={users}
           onBillingAddressEdit={onBillingAddressEdit}
-          onCustomerEdit={onCustomerEdit}
-          onFetchMore={onFetchMore}
+          onCustomerChangeClick={onCustomerChangeClick}
           onProfileView={onProfileView}
           onShippingAddressEdit={onShippingAddressEdit}
         />

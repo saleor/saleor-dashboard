@@ -213,6 +213,59 @@ describe("useUrlFilterStore", () => {
       // Assert
       expect(result.current.router.location.search).toBe("");
     });
+
+    it("should not resurrect removed params when called from a stale closure", () => {
+      // Arrange - modal open: dialog params + filter params in URL
+      const { result } = renderHook(
+        () => {
+          const store = useUrlFilterStore();
+          const router = useRouter();
+
+          return { store, router };
+        },
+        {
+          wrapper: createWrapper("/products?0=filter1&action=assign&id=attr-1"),
+        },
+      );
+      // Closure captured before navigation, like a provider unmount cleanup
+      const staleClearFilters = result.current.store.clearFilters;
+
+      // Act - closing the modal removes dialog params, then stale cleanup runs
+      act(() => {
+        result.current.router.history.replace("/products?0=filter1");
+      });
+      act(() => {
+        staleClearFilters();
+      });
+
+      // Assert - dialog params must not come back (would reopen the modal)
+      expect(result.current.router.location.search).toBe("");
+    });
+
+    it("should skip history updates when there are no filter params to clear", () => {
+      // Arrange
+      const { result } = renderHook(
+        () => {
+          const store = useUrlFilterStore();
+          const router = useRouter();
+
+          return { store, router };
+        },
+        {
+          wrapper: createWrapper("/products?action=assign&id=attr-1"),
+        },
+      );
+      const replaceSpy = jest.spyOn(result.current.router.history, "replace");
+
+      // Act
+      act(() => {
+        result.current.store.clearFilters();
+      });
+
+      // Assert
+      expect(replaceSpy).not.toHaveBeenCalled();
+      expect(result.current.router.location.search).toBe("?action=assign&id=attr-1");
+    });
   });
 
   describe("reactivity", () => {

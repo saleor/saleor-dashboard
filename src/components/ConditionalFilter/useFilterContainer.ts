@@ -13,10 +13,19 @@ import { type LeftOperand } from "./LeftOperandsProvider";
 
 export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
   const {
-    containerState: { value, updateAt, getAt, removeAt, createEmpty, create, exist, updateBySlug },
+    containerState: {
+      value,
+      updateAt,
+      getAt,
+      removeAt,
+      createAndRemoveEmpty,
+      create,
+      exist,
+      updateBySlug,
+    },
   } = useConditionalFilterContext();
   const addEmpty = () => {
-    createEmpty();
+    createAndRemoveEmpty(FilterElement.createEmpty());
   };
   const updateLeftOperator = (position: string, leftOperator: LeftOperand) => {
     const current = getAt(position);

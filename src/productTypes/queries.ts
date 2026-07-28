@@ -40,6 +40,14 @@ export const productTypeDetailsQuery = gql`
   }
 `;
 
+export const defaultGraphiQLQuery = `query ProductTypeDetails($id: ID!) {
+  productType(id: $id) {
+    id
+    name
+    slug
+  }
+}`;
+
 export const productTypeCreateDataQuery = gql`
   query ProductTypeCreateData {
     shop {

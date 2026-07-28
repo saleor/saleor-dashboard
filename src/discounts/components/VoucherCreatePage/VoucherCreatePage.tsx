@@ -39,6 +39,7 @@ import {
   type SearchProductFragment,
   type SearchProductsQuery,
   type SearchProductsQueryVariables,
+  type SearchProductVariantFragment,
   type VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
@@ -72,6 +73,7 @@ import { type FormData, VoucherCreatePageTab, type VoucherCreateProductVariant }
 import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
+  getAssignedVariantIdsFromForm,
   getFilteredCategories,
   getFilteredCollections,
   getFilteredProducts,
@@ -94,6 +96,11 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
   openModal: (action: VoucherCreateUrlQueryParams["action"]) => void;
   closeModal: () => void;
   onProductFilterChange?: (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => void;
+  onVariantFilterChange?: (
     filterVariables: ProductWhereInput,
     channel: string | undefined,
     query: string,
@@ -140,6 +147,7 @@ const VoucherCreatePage = ({
   collectionsSearch,
   variantsSearch,
   onProductFilterChange,
+  onVariantFilterChange,
   onCategoryFilterChange,
   onCollectionFilterChange,
   countries,
@@ -193,11 +201,13 @@ const VoucherCreatePage = ({
     });
   };
 
-  const handleDeleteVoucherCodes = async () => {
+  const handleDeleteVoucherCodes = async (): Promise<boolean> => {
     clearRowSelection();
     set({
       codes: data.codes.filter(({ code }) => !selectedRowIds.includes(code)),
     });
+
+    return true;
   };
 
   const handleGenerateCustomCode = (code: string) => {
@@ -525,18 +535,19 @@ const VoucherCreatePage = ({
             confirmButtonState="default"
             hasMore={variantsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-variant"}
-            onFilterChange={onProductFilterChange}
+            onFilterChange={onVariantFilterChange}
             onFetchMore={variantsSearch.loadMore}
             loading={variantsSearch.result.loading}
             onClose={closeModal}
             onSubmit={(variants: unknown) => {
               assignItem(
-                variants as SearchProductFragment[],
+                variants as SearchProductVariantFragment[],
                 VoucherCreatePageTab.variants,
                 onModalClose,
               );
             }}
             products={getFilteredProductVariants(data, variantsSearch.result) || []}
+            selectedIds={getAssignedVariantIdsFromForm(data)}
             labels={{
               confirmBtn: intl.formatMessage(buttonMessages.assign),
             }}
@@ -565,6 +576,7 @@ const VoucherCreatePage = ({
           loading={productsSearch.result.loading}
           open={action === "assign-product"}
           onClose={closeModal}
+          onFilterChange={onProductFilterChange}
           onSubmit={data =>
             assignItem(data as SearchProductFragment[], VoucherCreatePageTab.products, onModalClose)
           }

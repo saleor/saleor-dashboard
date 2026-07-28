@@ -44,6 +44,10 @@ export function getCommonFormFieldErrorMessage<ErrorCode>(
         return intl.formatMessage(commonErrorMessages.invalid);
 
       default:
+        if (error.message) {
+          return error.message;
+        }
+
         return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }

@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { type DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { type ProductFragment } from "@dashboard/graphql";
+import { type ProductDetailsVariantFragment, type ProductFragment } from "@dashboard/graphql";
 import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 
 import { product, variantAttributes } from "../../../fixtures";
@@ -212,7 +212,9 @@ describe("getCreateVariantInput", () => {
 describe("getBulkVariantUpdateInputs", () => {
   test("should return input data base on datagrid change data for multiple variants", () => {
     // Arrange
-    const variants: ProductFragment["variants"] = product("http://google.com").variants;
+    const variants = (
+      product("http://google.com") as unknown as { variants: ProductDetailsVariantFragment[] }
+    ).variants;
     const inputData: DatagridChangeOpts = {
       updates: [
         {
@@ -339,7 +341,9 @@ describe("getBulkVariantUpdateInputs", () => {
   });
   test("should return input data base on datagrid change data for simultaneous bulk operations", () => {
     // Arrange
-    const variants: ProductFragment["variants"] = product("http://google.com").variants;
+    const variants = (
+      product("http://google.com") as unknown as { variants: ProductDetailsVariantFragment[] }
+    ).variants;
     const inputData: DatagridChangeOpts = {
       updates: [
         {
@@ -501,6 +505,49 @@ describe("getProductUpdateVariables", () => {
     expect(result.input.weight).toBeUndefined();
   });
 
+  it("should include null when tax class is cleared", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      taxClassId: "",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.taxClass).toBeNull();
+  });
+
+  it("should include tax class id when provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      taxClassId: "tax-class-1",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.taxClass).toBe("tax-class-1");
+  });
+
+  it("should not include tax class when undefined", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+    } as ProductUpdateSubmitData;
+
+    delete (data as { taxClassId?: string | null }).taxClassId;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.taxClass).toBeUndefined();
+  });
+
   it("should handle decimal weight values", () => {
     // Arrange
     const data = {
@@ -543,5 +590,105 @@ describe("getProductUpdateVariables", () => {
     // Assert
     // Backend should validate if negative weights are allowed
     expect(result.input.weight).toBe(-5);
+  });
+
+  it("should include rating as a number when provided", () => {
+    // Arrange - number inputs report string values
+    const data = {
+      ...baseData,
+      rating: "4.5",
+    } as unknown as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.rating).toBe(4.5);
+  });
+
+  it("should include zero rating when provided", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      rating: "0",
+    } as unknown as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.rating).toBe(0);
+  });
+
+  it("should include null when rating input is cleared", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      rating: "",
+    } as unknown as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.rating).toBeNull();
+  });
+
+  it("should not include rating when the field was not changed", () => {
+    // Arrange
+    const data = { ...baseData } as ProductUpdateSubmitData;
+
+    delete (data as { rating?: number | null }).rating;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.rating).toBeUndefined();
+  });
+
+  it("should include cleared seo fields so the API removes them", () => {
+    // Arrange - user emptied both SEO inputs
+    const data = {
+      ...baseData,
+      seoTitle: "",
+      seoDescription: "",
+    } as ProductUpdateSubmitData;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.seo).toEqual({ title: "", description: "" });
+  });
+
+  it("should include only the changed seo field", () => {
+    // Arrange
+    const data = {
+      ...baseData,
+      seoTitle: "New title",
+    } as ProductUpdateSubmitData;
+
+    delete (data as { seoDescription?: string | null }).seoDescription;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.seo).toEqual({ title: "New title" });
+  });
+
+  it("should not include seo when neither field was changed", () => {
+    // Arrange
+    const data = { ...baseData } as ProductUpdateSubmitData;
+
+    delete (data as { seoTitle?: string | null }).seoTitle;
+    delete (data as { seoDescription?: string | null }).seoDescription;
+
+    // Act
+    const result = getProductUpdateVariables(baseProduct, data, []);
+
+    // Assert
+    expect(result.input.seo).toBeUndefined();
   });
 });

@@ -1,0 +1,13 @@
+.container {
+  flex: 1 1 auto;
+  min-height: 240px;
+  width: 100%;
+  padding-inline: var(--modal-padding, var(--mu-spacing-6));
+  background-color: var(--mu-colors-background-default1);
+}
+
+.cell {
+  border-bottom: none !important;
+  padding: 0 !important;
+  background-color: var(--mu-colors-background-default1);
+}

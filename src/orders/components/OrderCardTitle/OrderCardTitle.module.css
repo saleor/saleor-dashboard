@@ -1,0 +1,46 @@
+.header {
+  padding: 16px 3.2rem 13px 3.2rem;
+}
+
+.headerToolbarMenuRight {
+  padding-right: 4px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.titleRowWithEyebrow {
+  margin-top: 4px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.datagridSeparator {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-top: 1px dashed var(--mu-colors-border-default1);
+  width: 100%;
+}

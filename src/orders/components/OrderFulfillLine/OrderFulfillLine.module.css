@@ -1,0 +1,15 @@
+.warehouseCell {
+  padding: 0 !important;
+}
+
+.warehouseInput {
+  cursor: pointer;
+}
+
+.warehouseInput input {
+  cursor: pointer;
+}
+
+.warehouseInputDisabled {
+  cursor: not-allowed;
+}

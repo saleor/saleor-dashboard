@@ -29,6 +29,7 @@ export const URL_LIST = {
   discountAddPage: "discounts/sales/add",
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
+  orderSettings: "orders/settings/",
   staffMembers: "staff/",
   translations: "translations/",
   variants: "variant/",

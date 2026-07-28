@@ -26,3 +26,19 @@
 .subtitleSlot {
   min-height: 1rem;
 }
+
+.tooltipContent {
+  display: block;
+  width: max-content;
+  max-width: min(52.5rem, calc(100vw - 2rem));
+  white-space: normal;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.valueWithTooltip {
+  cursor: help;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--mu-colors-border-default2);
+  text-underline-offset: 0.2em;
+}

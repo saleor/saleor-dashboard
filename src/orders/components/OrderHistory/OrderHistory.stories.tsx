@@ -25,6 +25,8 @@ const createEvent = (overrides: Partial<OrderEventFragment>): OrderEventFragment
   quantity: null,
   transactionReference: null,
   type: OrderEventsEnum.OTHER,
+  composedId: null,
+  warehouse: null,
   discount: null,
   relatedOrder: null,
   related: null,

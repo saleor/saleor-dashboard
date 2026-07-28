@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export interface FilterWindow {
   isOpen: boolean;
@@ -8,8 +8,11 @@ export interface FilterWindow {
 export const useFilterWindow = () => {
   const [open, setOpen] = useState(false);
 
-  return {
-    isOpen: open,
-    setOpen,
-  };
+  return useMemo(
+    () => ({
+      isOpen: open,
+      setOpen,
+    }),
+    [open],
+  );
 };

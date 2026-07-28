@@ -4,6 +4,7 @@ import { KpiCard } from "@dashboard/components/KpiCard/KpiCard";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { TimezoneConsumer } from "@dashboard/components/Timezone";
+import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { type CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
@@ -12,11 +13,17 @@ import { type IMoney } from "@dashboard/utils/intl";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Banknote, LogIn, Receipt, ShoppingCart } from "lucide-react";
-import { Fragment, type ReactNode, useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./CustomerOverview.module.css";
-import { groupRecentOrdersByCurrency, type RecentCurrencyBucket } from "./utils";
+import { CustomerOverviewChannelScope } from "./CustomerOverviewChannelScope";
+import { CustomerOverviewMoneyBreakdownTooltip } from "./CustomerOverviewMoneyBreakdownTooltip";
+import {
+  buildCustomerOrderKpiMetrics,
+  type CustomerOrderKpiMetrics,
+  selectRecentOrdersForKpis,
+} from "./utils";
 
 interface CustomerOverviewProps {
   customer: CustomerDetailsQuery["user"];
@@ -28,14 +35,34 @@ const EMPTY_VALUE = "—";
 export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Element => {
   const intl = useIntl();
   const { locale } = useLocale();
+  const { effectiveKpiChannelId, kpiChannels, setKpiChannelId } = useCustomerDetails();
   const loading = !customer;
 
-  const recentOrders = useMemo(() => mapEdgesToItems(customer?.orders) ?? [], [customer?.orders]);
+  const channelOrders = useMemo(() => {
+    if (!effectiveKpiChannelId || customer?.kpiOrders === undefined) {
+      return [];
+    }
 
-  const recentByCurrency = useMemo<RecentCurrencyBucket[]>(
-    () => groupRecentOrdersByCurrency(recentOrders),
-    [recentOrders],
+    const orders = mapEdgesToItems(customer.kpiOrders) ?? [];
+
+    if (orders.length > 0 && orders.some(order => order.channel?.id !== effectiveKpiChannelId)) {
+      return [];
+    }
+
+    return orders;
+  }, [customer?.kpiOrders, effectiveKpiChannelId]);
+
+  const recentOrders = useMemo(() => selectRecentOrdersForKpis(channelOrders), [channelOrders]);
+
+  const metrics = useMemo<CustomerOrderKpiMetrics | null>(
+    () => buildCustomerOrderKpiMetrics(channelOrders),
+    [channelOrders],
   );
+
+  const totalOrders = customer?.kpiNonCancelledOrderCount?.totalCount;
+  const totalOrdersLoading =
+    loading ||
+    (Boolean(effectiveKpiChannelId) && customer?.kpiNonCancelledOrderCount === undefined);
 
   const renderMoneyValue = (money: IMoney): JSX.Element => (
     <>
@@ -46,26 +73,49 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
     </>
   );
 
-  const renderRecentSubtitle = (bucket: RecentCurrencyBucket): JSX.Element =>
-    bucket.count === recentOrders.length ? (
+  const selectedChannelName = kpiChannels.find(
+    channel => channel.id === effectiveKpiChannelId,
+  )?.name;
+
+  const renderRecentWindowSubtitle = (): JSX.Element | undefined => {
+    if (!metrics || !selectedChannelName) {
+      return undefined;
+    }
+
+    return (
       <FormattedMessage
-        defaultMessage="Across last {count, plural, one {# order} other {# orders}} in {currency}"
-        description="customer overview, subtitle scoping a money stat when every fetched recent order belongs to this currency"
-        id="TZq1Tm"
-        values={{ count: bucket.count, currency: bucket.currency }}
-      />
-    ) : (
-      <FormattedMessage
-        defaultMessage="{count} of last {total, plural, one {# order} other {# orders}} in {currency}"
-        description="customer overview, subtitle scoping a money stat when only part of the fetched recent orders belong to this currency"
-        id="eAvs2Y"
+        defaultMessage="{count} of last {windowSize, plural, one {# order} other {# orders}} in {channelName}"
+        description="customer overview, subtitle scoping recent money stats to the selected channel window"
+        id="doQvFl"
         values={{
-          count: bucket.count,
-          total: recentOrders.length,
-          currency: bucket.currency,
+          channelName: selectedChannelName,
+          count: metrics.orderCount,
+          windowSize: metrics.windowSize,
         }}
       />
     );
+  };
+
+  const renderNetSalesValueTooltip = (): ReactNode | undefined => {
+    if (!metrics) {
+      return undefined;
+    }
+
+    const hasShipping = metrics.shippingTotal.amount > 0;
+    const hasRefunds = metrics.refundedTotal.amount > 0;
+
+    if (!hasShipping && !hasRefunds) {
+      return undefined;
+    }
+
+    return (
+      <CustomerOverviewMoneyBreakdownTooltip
+        locale={locale}
+        shipping={hasShipping ? metrics.shippingTotal : undefined}
+        refunded={hasRefunds ? metrics.refundedTotal : undefined}
+      />
+    );
+  };
 
   const renderTimeWithZone = (isoDate: string): ReactNode => {
     const date = new Date(isoDate);
@@ -89,6 +139,16 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
   return (
     <DashboardCard data-test-id="customer-overview">
       <DashboardCard.Content paddingY={6}>
+        <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+          {!loading && kpiChannels.length > 0 && (
+            <CustomerOverviewChannelScope
+              channels={kpiChannels}
+              selectedChannelId={effectiveKpiChannelId}
+              onChannelChange={setKpiChannelId}
+            />
+          )}
+        </RequirePermissions>
+
         <div className={styles.grid}>
           <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
             <Box position="relative">
@@ -107,7 +167,14 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                     id="HRy5qF"
                   />
                 }
-                value={loading ? EMPTY_VALUE : (customer.orders?.totalCount ?? 0)}
+                tooltip={
+                  <FormattedMessage
+                    defaultMessage="Number of orders placed by this customer in the selected channel. Draft and cancelled orders are not counted."
+                    description="customer overview, total orders tooltip"
+                    id="xwXFUB"
+                  />
+                }
+                value={totalOrdersLoading ? EMPTY_VALUE : (totalOrders ?? 0)}
                 subtitle={
                   !loading && recentOrders.length > 0 ? (
                     <FormattedMessage
@@ -120,7 +187,7 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                     />
                   ) : undefined
                 }
-                loading={loading}
+                loading={totalOrdersLoading}
               />
             </Box>
           </RequirePermissions>
@@ -133,6 +200,13 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                 defaultMessage="Last login"
                 description="customer overview stat label"
                 id="aYnI0N"
+              />
+            }
+            tooltip={
+              <FormattedMessage
+                defaultMessage="Most recent time this customer signed in to their account."
+                description="customer overview, last login tooltip"
+                id="n8tEIV"
               />
             }
             value={
@@ -150,27 +224,36 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
             loading={loading}
           />
 
-          {recentByCurrency.map(bucket => (
-            <Fragment key={bucket.currency}>
+          {metrics && (
+            <>
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <KpiCard
-                  dataTestId={`kpi-recent-spent-${bucket.currency.toLowerCase()}`}
+                  dataTestId={`kpi-recent-spent-${metrics.currency.toLowerCase()}`}
                   icon={<Banknote size={ICON_SIZE} />}
                   title={
                     <FormattedMessage
                       defaultMessage="Recent orders total"
-                      description="customer overview stat label: sum of recent orders"
-                      id="AJMlmz"
+                      description="customer overview stat label: sum of recent orders net product sales"
+                      id="wek82T"
                     />
                   }
-                  value={renderMoneyValue(bucket.spent)}
-                  subtitle={renderRecentSubtitle(bucket)}
+                  tooltip={
+                    <FormattedMessage
+                      defaultMessage="Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
+                      description="customer overview, recent net sales tooltip"
+                      id="tQA//+"
+                      values={{ windowSize: metrics.windowSize }}
+                    />
+                  }
+                  value={renderMoneyValue(metrics.netSales)}
+                  valueTooltip={renderNetSalesValueTooltip()}
+                  subtitle={renderRecentWindowSubtitle()}
                 />
               </RequirePermissions>
 
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <KpiCard
-                  dataTestId={`kpi-recent-aov-${bucket.currency.toLowerCase()}`}
+                  dataTestId={`kpi-recent-aov-${metrics.currency.toLowerCase()}`}
                   icon={<Receipt size={ICON_SIZE} />}
                   title={
                     <FormattedMessage
@@ -181,17 +264,18 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                   }
                   tooltip={
                     <FormattedMessage
-                      defaultMessage="Sum of the recent orders shown divided by their count."
-                      description="customer overview, AOV tooltip clarifying that the average is computed only over the fetched recent orders, not the customer's lifetime"
-                      id="zJuyv/"
+                      defaultMessage="Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
+                      description="customer overview, AOV tooltip"
+                      id="bIttOt"
+                      values={{ windowSize: metrics.windowSize }}
                     />
                   }
-                  value={renderMoneyValue(bucket.aov)}
-                  subtitle={renderRecentSubtitle(bucket)}
+                  value={renderMoneyValue(metrics.aov)}
+                  subtitle={renderRecentWindowSubtitle()}
                 />
               </RequirePermissions>
-            </Fragment>
-          ))}
+            </>
+          )}
         </div>
       </DashboardCard.Content>
     </DashboardCard>

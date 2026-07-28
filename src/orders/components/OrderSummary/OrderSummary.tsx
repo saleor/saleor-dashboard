@@ -65,7 +65,7 @@ export const OrderSummary = (props: Props) => {
   );
 
   return (
-    <Box padding={6} display="grid" gap={6} data-test-id="OrderSummary">
+    <Box paddingX={6} paddingBottom={6} display="grid" gap={5} data-test-id="OrderSummary">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text size={6} fontWeight="medium">
           {intl.formatMessage({
@@ -156,7 +156,7 @@ export const OrderSummary = (props: Props) => {
           hasNoPayment={hasNoPayment}
           orderAmounts={{
             totalAuthorized: order.totalAuthorized,
-            totalCaptured: order.totalCaptured,
+            totalCharged: order.totalCharged,
             totalBalance: order.totalBalance,
           }}
           order={order}

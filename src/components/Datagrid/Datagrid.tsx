@@ -9,6 +9,7 @@ import DataEditor, {
   type DataEditorRef,
   type DrawHeaderCallback,
   type EditableGridCell,
+  getMiddleCenterBias,
   type GridCell,
   type GridColumn,
   type GridSelection,
@@ -17,7 +18,7 @@ import DataEditor, {
   type Theme,
 } from "@glideapps/glide-data-grid";
 import { type GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
+import { Box, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import range from "lodash/range";
 import {
@@ -33,6 +34,7 @@ import {
 
 import { DashboardCard } from "../Card";
 import { type CardMenuItem } from "../CardMenu";
+import { Placeholder } from "../Placeholder";
 import { SaleorThrobber } from "../Throbber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
@@ -104,6 +106,7 @@ interface DatagridProps {
   onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
   readonly?: boolean;
   hasRowHover?: boolean;
+  highlightedRow?: number;
   rowMarkers?: DataEditorProps["rowMarkers"];
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
@@ -118,8 +121,13 @@ interface DatagridProps {
   navigatorOpts?: NavigatorOpts;
   showTopBorder?: boolean;
   themeOverride?: Partial<Theme>;
+  controlledSelection?: GridSelection;
+  onControlledSelectionChange?: (selection: GridSelection | undefined) => void;
+  getRowThemeOverride?: GetRowThemeCallback;
   rowMarkerWidth?: number;
   rowMarkerTheme?: Partial<Theme>;
+  smoothScrollX?: boolean;
+  rowSelectionBlending?: DataEditorProps["rowSelectionBlending"];
 }
 
 export const Datagrid = ({
@@ -149,6 +157,7 @@ export const Datagrid = ({
   loading,
   rowAnchor,
   hasRowHover = false,
+  highlightedRow,
   onRowSelectionChange,
   actionButtonPosition = "left",
   recentlyAddedColumn,
@@ -158,8 +167,12 @@ export const Datagrid = ({
   navigatorOpts,
   showTopBorder = true,
   themeOverride,
+  controlledSelection,
+  onControlledSelectionChange,
+  getRowThemeOverride: getRowThemeOverrideProp,
   rowMarkerWidth,
   rowMarkerTheme: rowMarkerThemeOverride,
+  smoothScrollX = true,
   ...datagridProps
 }: DatagridProps): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -186,7 +199,21 @@ export const Datagrid = ({
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
   const { clearTooltip, tooltip, setTooltip } = useTooltipContainer();
-  const [selection, setSelection] = useState<GridSelection>();
+  const [uncontrolledSelection, setUncontrolledSelection] = useState<GridSelection>();
+  const isSelectionControlled = typeof onControlledSelectionChange === "function";
+  const selection = isSelectionControlled ? controlledSelection : uncontrolledSelection;
+  const setSelectionState = useCallback(
+    (newSelection: GridSelection | undefined) => {
+      if (isSelectionControlled) {
+        onControlledSelectionChange?.(newSelection);
+
+        return;
+      }
+
+      setUncontrolledSelection(newSelection);
+    },
+    [isSelectionControlled, onControlledSelectionChange],
+  );
   const [areCellsDirty, setCellsDirty] = useState(true);
 
   const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
@@ -206,10 +233,10 @@ export const Datagrid = ({
     if (onRowSelectionChange && selection) {
       // Second parameter is callback to clear selection from parent component
       onRowSelectionChange(Array.from(selection.rows), () => {
-        setSelection(undefined);
+        setSelectionState(undefined);
       });
     }
-  }, [onRowSelectionChange, selection]);
+  }, [onRowSelectionChange, selection, setSelectionState]);
   useEffect(() => {
     if (recentlyAddedColumn && editor.current) {
       const columnIndex = availableColumns.findIndex(column => column.id === recentlyAddedColumn);
@@ -230,6 +257,23 @@ export const Datagrid = ({
     }
   }, [recentlyAddedColumn, availableColumns, editor]);
   usePortalClasses({ className: classes.portal });
+
+  // Macaw DynamicCombobox lists portal to document.body; Glide would treat those
+  // clicks as “outside” and close the editor before onChange. Returning false
+  // tells Glide to ignore the click for outside-detection.
+  // Match options via data-test-id too: data-portal-for is only set when Combobox
+  // has an `id`, and clicks can land on nested text/adornment nodes.
+  const isMacawPortalOutsideClick = useCallback((event: MouseEvent | TouchEvent): boolean => {
+    const target = event.target;
+    const element =
+      target instanceof Element ? target : target instanceof Node ? target.parentElement : null;
+
+    if (!element) {
+      return true;
+    }
+
+    return !element.closest("[data-portal-for], [data-test-id='select-option']");
+  }, []);
 
   const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } =
     useDatagridChange(availableColumns, rows, onChange, (areCellsDirty: boolean) =>
@@ -340,34 +384,50 @@ export const Datagrid = ({
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
     if (readonly && !gridSelection.current) {
-      setSelection(gridSelection);
+      setSelectionState(gridSelection);
     }
 
     if (!readonly) {
-      setSelection(gridSelection);
+      setSelectionState(gridSelection);
     }
   };
   const handleGetThemeOverride = useCallback<GetRowThemeCallback>(
     (row: number) => {
-      if (row !== hoverRow) {
+      const customOverride = getRowThemeOverrideProp?.(row);
+      const isActiveRow = highlightedRow !== undefined && row === highlightedRow;
+      const isHoverRow = row === hoverRow;
+
+      if (!customOverride && !isActiveRow && !isHoverRow) {
         return undefined;
       }
 
-      const overrideTheme: Partial<Theme> = {
-        /*
-          Grid-specific colors. Transparency matters when we highlight entire row.
-        */
-        bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
-        bgCellMedium: themeValues.colors.background.default1Hovered,
-      };
+      let stateOverride: Partial<Theme> = {};
 
-      if (readonly) {
-        overrideTheme.accentLight = themeValues.colors.background.default1;
+      if (isActiveRow) {
+        stateOverride = {
+          bgCell: themeValues.colors.background.default2,
+          bgCellMedium: themeValues.colors.background.default2,
+        };
+      } else if (isHoverRow) {
+        stateOverride = {
+          /*
+            Grid-specific colors. Transparency matters when we highlight entire row.
+          */
+          bgCell: theme === "defaultLight" ? "hsla(220, 18%, 97%, 1)" : "hsla(211, 32%, 19%, 1)",
+          bgCellMedium: themeValues.colors.background.default1Hovered,
+        };
+
+        if (readonly) {
+          stateOverride.accentLight = themeValues.colors.background.default1;
+        }
       }
 
-      return overrideTheme;
+      return {
+        ...customOverride,
+        ...stateOverride,
+      };
     },
-    [hoverRow, readonly, themeValues],
+    [getRowThemeOverrideProp, highlightedRow, hoverRow, readonly, theme, themeValues],
   );
   const handleHeaderClicked = useCallback(
     (colIndex: number, event: HeaderClickedEventArgs) => {
@@ -388,13 +448,15 @@ export const Datagrid = ({
   const drawHeader: DrawHeaderCallback = useCallback(
     args => {
       const { ctx, rect, isSelected, spriteManager, theme, column } = args;
+      const columnMeta = availableColumns.find(col => col.id === column.id);
+      const isRightAligned = columnMeta?.headerAlign === "right";
 
       if (isSelected) {
         ctx.fillStyle = themeValues.colors.background.default1;
         ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
       }
 
-      if (isSelected && column.id !== "empty") {
+      if (isSelected && column.id !== "empty" && !columnMeta?.disableReorder) {
         const iconSize = 16;
         const padding = 8;
         const x = rect.x + rect.width - iconSize - padding;
@@ -403,18 +465,50 @@ export const Datagrid = ({
         spriteManager.drawSprite("gripVertical", "normal", ctx, x, y, iconSize, theme);
       }
 
+      if (isRightAligned && column.id !== "empty") {
+        const xPad = theme.cellHorizontalPadding;
+        const gripReserved = isSelected ? 24 : 0;
+        const drawX = rect.x + rect.width - xPad - gripReserved;
+        const font = `${theme.headerFontStyle} ${theme.fontFamily}`;
+
+        ctx.font = font;
+        ctx.fillStyle = isSelected ? theme.textHeaderSelected : theme.textHeader;
+
+        const textY = rect.y + rect.height / 2 + getMiddleCenterBias(ctx, font);
+
+        ctx.textAlign = "right";
+        ctx.fillText(column.title, drawX, textY);
+        ctx.textAlign = "left";
+
+        if (column.icon !== undefined) {
+          const headerSize = theme.headerIconSize;
+
+          spriteManager.drawSprite(
+            column.icon,
+            isSelected ? "selected" : "normal",
+            ctx,
+            rect.x + xPad,
+            rect.y + (rect.height - headerSize) / 2,
+            headerSize,
+            theme,
+          );
+        }
+
+        return true;
+      }
+
       return false;
     },
-    [themeValues],
+    [themeValues, availableColumns],
   );
   const handleRemoveRows = useCallback(
     (rows: number[]) => {
       if (selection?.rows) {
         onRowsRemoved(rows);
-        setSelection(undefined);
+        setSelectionState(undefined);
       }
     },
-    [selection, onRowsRemoved],
+    [selection, onRowsRemoved, setSelectionState],
   );
   const handleColumnResize = useCallback(
     (column: GridColumn, newSize: number) => {
@@ -440,9 +534,16 @@ export const Datagrid = ({
         return;
       }
 
+      const startColumn = availableColumns[startIndex];
+      const endColumn = availableColumns[endIndex];
+
+      if (startColumn?.disableReorder || endColumn?.disableReorder) {
+        return;
+      }
+
       onColumnMoved(startIndex, endIndex);
     },
-    [clearTooltip, onColumnMoved, tooltip],
+    [availableColumns, clearTooltip, onColumnMoved, tooltip],
   );
   const selectionActionsComponent = useMemo(
     () =>
@@ -531,7 +632,7 @@ export const Datagrid = ({
                     columns={availableColumns}
                     rows={rowsTotal}
                     freezeColumns={freezeColumns}
-                    smoothScrollX
+                    smoothScrollX={smoothScrollX}
                     rowMarkers={rowMarkers}
                     rowSelect="multi"
                     rowSelectionMode="multi"
@@ -551,6 +652,7 @@ export const Datagrid = ({
                     headerHeight={cellHeight}
                     ref={editor}
                     onPaste
+                    isOutsideClick={isMacawPortalOutsideClick}
                     rightElementProps={{
                       sticky: true,
                     }}
@@ -604,10 +706,10 @@ export const Datagrid = ({
                 </div>
               </>
             ) : (
-              <Box padding={6} textAlign="center">
-                <Text data-test-id="empty-data-grid-text" size={3}>
-                  {emptyText}
-                </Text>
+              <Box paddingX={6} paddingBottom={6}>
+                <Placeholder>
+                  <span data-test-id="empty-data-grid-text">{emptyText}</span>
+                </Placeholder>
               </Box>
             )}
           </DashboardCard.Content>

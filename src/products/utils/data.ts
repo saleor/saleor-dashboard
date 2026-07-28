@@ -188,7 +188,7 @@ export function getProductUpdatePageFormData(
   product: ProductFragment,
   variants: ProductDetailsVariantFragment[],
 ): ProductUpdateFormData {
-  const variant = product?.variants[0];
+  const variant = product?.defaultVariant ?? variants?.[0];
 
   return {
     category: maybe(() => product.category.id, ""),
@@ -207,12 +207,7 @@ export function getProductUpdatePageFormData(
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
     sku: maybe(
-      () =>
-        product.productType.hasVariants
-          ? undefined
-          : variants && variants[0]
-            ? variants[0].sku
-            : undefined,
+      () => (product.productType.hasVariants ? undefined : (variant?.sku ?? undefined)),
       "",
     ),
     slug: product?.slug || "",

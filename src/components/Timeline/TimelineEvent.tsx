@@ -147,9 +147,44 @@ interface TimelineEventProps {
   actor?: Actor;
   eventType?: OrderEventsEnum | null;
   isLastInGroup?: boolean;
+  avatar?: { url?: string | null; alt?: string } | null;
 }
 
 const ICON_COLOR = vars.colors.text.default2;
+
+// Renders the actor's avatar in the dot slot, falling back to the event icon.
+const EventDot = ({
+  eventType,
+  avatar,
+}: {
+  eventType?: OrderEventsEnum | null;
+  avatar?: { url?: string | null; alt?: string } | null;
+}) => {
+  if (avatar?.url) {
+    return (
+      <Box
+        borderRadius="100%"
+        overflow="hidden"
+        borderStyle="solid"
+        borderWidth={1}
+        borderColor="default1"
+        __width="32px"
+        __height="32px"
+        flexShrink="0"
+      >
+        <img
+          src={avatar.url}
+          alt={avatar.alt ?? ""}
+          width={32}
+          height={32}
+          style={{ objectFit: "cover", display: "block" }}
+        />
+      </Box>
+    );
+  }
+
+  return <EventIcon eventType={eventType} />;
+};
 
 // Icon wrapper component with circle background
 const EventIcon = ({ eventType }: { eventType?: OrderEventsEnum | null }) => {
@@ -197,6 +232,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
     actor,
     eventType,
     isLastInGroup,
+    avatar,
   } = props;
   const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
 
@@ -261,7 +297,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                   position="relative"
                   __zIndex="1"
                 >
-                  <EventIcon eventType={eventType} />
+                  <EventDot eventType={eventType} avatar={avatar} />
                 </Box>
                 {/* Chevron */}
                 <Accordion.Trigger
@@ -324,7 +360,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
               position="relative"
               __zIndex="1"
             >
-              <EventIcon eventType={eventType} />
+              <EventDot eventType={eventType} avatar={avatar} />
             </Box>
             <Box width="100%" display="flex" alignItems="center" __minHeight="32px">
               <TimelineEventHeader

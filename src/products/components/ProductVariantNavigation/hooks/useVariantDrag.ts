@@ -5,19 +5,24 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { type ProductVariantItem } from "../types";
 
+export interface VariantReorderMove {
+  id: string;
+  sortOrder: number;
+}
+
 interface UseVariantDragProps {
   variants: ProductVariantItem[];
-  onReorder: (event: { oldIndex: number; newIndex: number }) => void;
+  onReorder: (move: VariantReorderMove) => void;
 }
 
 const extractVariantIds = (variants: ProductVariantItem[]): UniqueIdentifier[] =>
   variants
-    ?.filter((variant): variant is NonNullable<typeof variant> => variant !== null)
-    .map(variant => variant.id as UniqueIdentifier) ?? [];
+    .filter((variant): variant is NonNullable<typeof variant> => variant !== null)
+    .map(variant => variant.id as UniqueIdentifier);
 
 export const useVariantDrag = ({ variants, onReorder }: UseVariantDragProps) => {
   const [isSaving, setIsSaving] = useState(false);
@@ -30,16 +35,28 @@ export const useVariantDrag = ({ variants, onReorder }: UseVariantDragProps) => 
       return;
     }
 
-    setIsSaving(true);
-
     const oldIndex = variants.findIndex(variant => variant?.id === active.id);
     const newIndex = variants.findIndex(variant => variant?.id === over.id);
 
-    onReorder({ oldIndex, newIndex });
+    if (oldIndex === -1 || newIndex === -1) {
+      return;
+    }
+
+    const variant = variants[oldIndex];
+
+    if (!variant) {
+      return;
+    }
+
+    setIsSaving(true);
+    onReorder({
+      id: variant.id,
+      sortOrder: newIndex - oldIndex,
+    });
     setIsSaving(false);
   };
 
-  const items = extractVariantIds(variants);
+  const items = useMemo(() => extractVariantIds(variants), [variants]);
 
   return {
     items,

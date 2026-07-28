@@ -8,6 +8,14 @@ export const giftCardDetails = gql`
       ...GiftCardData
       events {
         ...GiftCardEvent
+        assignedTo {
+          currentAssignedTo @include(if: $canSeeUser) {
+            id
+          }
+          oldAssignedTo @include(if: $canSeeUser) {
+            id
+          }
+        }
         app @include(if: $canSeeApp) {
           id
           name
@@ -30,3 +38,11 @@ export const giftCardDetails = gql`
 `;
 
 export const GIFT_CARD_DETAILS_QUERY = getOperationAST(giftCardDetails).name.value;
+
+export const defaultGraphiQLQuery = `query GiftCardDetails($id: ID!) {
+  giftCard(id: $id) {
+    id
+    displayCode
+    isActive
+  }
+}`;

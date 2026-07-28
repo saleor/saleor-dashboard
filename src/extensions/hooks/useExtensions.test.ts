@@ -3,7 +3,8 @@ import { type ExtensionWithParams } from "@dashboard/extensions/types";
 import { type ExtensionListQuery, PermissionEnum, useExtensionListQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react";
 
-import { useExtensions } from "./useExtensions";
+import { getExtensionsSnapshotKey } from "./extensionsSnapshotStorage";
+import { useExtensions, useExtensionsWithLoadingState } from "./useExtensions";
 
 const mockOpenApp = jest.fn();
 
@@ -51,6 +52,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission" }],
             url: "https://example.com/ext1",
             label: "Extension 1",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "POPUP",
             settings: {},
@@ -71,6 +73,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext2",
             label: "Extension 2",
+            identifier: null,
             mountName: "PRODUCT_DETAILS_MORE_ACTIONS",
             targetName: "APP_PAGE",
             app: {
@@ -93,6 +96,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_CHANNELS, __typename: "Permission" }],
             url: "https://example.com/ext3",
             label: "Extension 3",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "POPUP",
             app: {
@@ -114,6 +118,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext4",
             label: "Extension 4",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -135,6 +140,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext5",
             label: "Extension 5",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -158,6 +164,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "/ext6",
             label: "Extension 6",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -181,6 +188,7 @@ describe("Extensions / hooks / useExtensions", () => {
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "/ext7",
             label: "Extension 7",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -222,7 +230,7 @@ describe("Extensions / hooks / useExtensions", () => {
 
     // Assert
     expect(useExtensionListQueryMock).toHaveBeenCalledWith({
-      fetchPolicy: "cache-first",
+      fetchPolicy: "cache-and-network",
       variables: {
         filter: {
           mountName: mountList,
@@ -238,6 +246,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_ORDERS],
           url: "https://example.com/ext1",
           label: "Extension 1",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "POPUP",
           settings: {},
@@ -253,6 +262,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_CHANNELS],
           url: "https://example.com/ext3",
           label: "Extension 3",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "POPUP",
           settings: {},
@@ -268,6 +278,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext4",
           label: "Extension 4",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: {},
@@ -283,6 +294,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext5",
           label: "Extension 5",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "POST" } },
@@ -298,6 +310,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext6",
           label: "Extension 6",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "GET" } },
@@ -314,6 +327,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext7",
           label: "Extension 7",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "POST" } },
@@ -332,6 +346,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext2",
           label: "Extension 2",
+          identifier: null,
           mountName: "PRODUCT_DETAILS_MORE_ACTIONS",
           targetName: "APP_PAGE",
           settings: {},
@@ -450,7 +465,7 @@ describe("Extensions / hooks / useExtensions", () => {
     });
   });
 
-  it("should use cache-first fetch policy", () => {
+  it("should use cache-and-network fetch policy", () => {
     // Arrange
     useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
     useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData });
@@ -463,7 +478,7 @@ describe("Extensions / hooks / useExtensions", () => {
     // Assert
     expect(useExtensionListQueryMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        fetchPolicy: "cache-first",
+        fetchPolicy: "cache-and-network",
       }),
     );
   });
@@ -661,6 +676,103 @@ describe("Extensions / hooks / useExtensions", () => {
       accessToken: "token7",
       appId: "app7",
       extensionUrl: "https://app7.example.com/ext7",
+    });
+  });
+
+  describe("snapshot + loading", () => {
+    beforeEach(() => {
+      localStorage.clear();
+      useUserPermissionsMock.mockReturnValue([{ code: PermissionEnum.MANAGE_APPS }]);
+    });
+
+    it("reports loading=true when there is no data and no snapshot", () => {
+      // Arrange
+      useExtensionListQueryMock.mockReturnValue({ data: undefined, error: undefined });
+
+      // Act
+      const { result } = renderHook(() =>
+        useExtensionsWithLoadingState(["PRODUCT_OVERVIEW_CREATE"] as const),
+      );
+
+      // Assert
+      expect(result.current.loading).toBe(true);
+      expect(result.current.extensions.PRODUCT_OVERVIEW_CREATE).toEqual([]);
+    });
+
+    it("renders snapshot extensions synchronously with loading=false and fromCache=true", () => {
+      // Arrange - persist a snapshot, then simulate a cold query (no data yet)
+      const key = getExtensionsSnapshotKey(["PRODUCT_OVERVIEW_CREATE"]);
+
+      localStorage.setItem(
+        key,
+        JSON.stringify([
+          {
+            __typename: "AppExtension",
+            id: "cached1",
+            accessToken: "",
+            permissions: [{ code: PermissionEnum.MANAGE_APPS, __typename: "Permission" }],
+            url: "https://example.com/cached1",
+            label: "Cached Extension",
+            mountName: "PRODUCT_OVERVIEW_CREATE",
+            targetName: "POPUP",
+            settings: {},
+            app: {
+              __typename: "App",
+              id: "app-cached",
+              name: "Cached App",
+              appUrl: "https://example.com",
+              brand: null,
+            },
+          },
+        ]),
+      );
+      useExtensionListQueryMock.mockReturnValue({ data: undefined, error: undefined });
+
+      // Act
+      const { result } = renderHook(() =>
+        useExtensionsWithLoadingState(["PRODUCT_OVERVIEW_CREATE"] as const),
+      );
+
+      // Assert
+      expect(result.current.loading).toBe(false);
+      expect(result.current.extensions.PRODUCT_OVERVIEW_CREATE).toEqual([
+        expect.objectContaining({ id: "cached1", fromCache: true, accessToken: "" }),
+      ]);
+    });
+
+    it("prefers live data (fromCache=false) and writes a token-free snapshot", () => {
+      // Arrange
+      useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData, error: undefined });
+
+      // Act
+      const { result } = renderHook(() =>
+        useExtensionsWithLoadingState(["PRODUCT_OVERVIEW_CREATE"] as const),
+      );
+
+      // Assert - live data wins
+      expect(result.current.loading).toBe(false);
+      expect(result.current.extensions.PRODUCT_OVERVIEW_CREATE[0]).toEqual(
+        expect.objectContaining({ id: "ext1", fromCache: false }),
+      );
+
+      // Assert - snapshot written without the access token
+      const stored = localStorage.getItem(getExtensionsSnapshotKey(["PRODUCT_OVERVIEW_CREATE"]));
+
+      expect(stored).not.toBeNull();
+      expect(stored).not.toContain("token1");
+    });
+
+    it("keeps useExtensions returning the plain record", () => {
+      // Arrange
+      useExtensionListQueryMock.mockReturnValue({ data: mockExtensionsData, error: undefined });
+
+      // Act
+      const { result } = renderHook(() => useExtensions(["PRODUCT_OVERVIEW_CREATE"] as const));
+
+      // Assert
+      expect(result.current.PRODUCT_OVERVIEW_CREATE[0]).toEqual(
+        expect.objectContaining({ id: "ext1" }),
+      );
     });
   });
 });

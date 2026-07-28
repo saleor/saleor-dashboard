@@ -25,12 +25,14 @@ import {
   CustomerChangeActionEnum,
   type OrderCustomerChangeData,
 } from "@dashboard/orders/components/OrderCustomerChangeDialog/form";
-import OrderCustomerChangeDialog from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
+import { OrderCustomerChangeDialog } from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
+import { OrderCustomerEditDialog } from "@dashboard/orders/components/OrderCustomerEditDialog/OrderCustomerEditDialog";
 import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
 import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
 import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
@@ -41,9 +43,9 @@ import { customerUrl } from "../../../../customers/urls";
 import { extractMutationErrors, getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
-import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
+import { OrderDraftCancelDialog } from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage/OrderDraftPage";
-import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
+import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import { orderDraftListUrl, type OrderUrlDialog, type OrderUrlQueryParams } from "../../../urls";
 
@@ -123,6 +125,7 @@ export const OrderDraftDetails = ({
     result: users,
   } = useCustomerSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
+    skip: params.action !== "change-customer",
   });
   const { data: customerAddresses, loading: customerAddressesLoading } = useCustomerAddressesQuery({
     variables: {
@@ -156,9 +159,7 @@ export const OrderDraftDetails = ({
       return;
     }
 
-    const modalUri = prevUser ? "customer-change" : "edit-customer-addresses";
-
-    openModal(modalUri);
+    openModal(prevUser ? "customer-change" : "edit-customer-addresses");
   };
   const handleCustomerChangeAction = (data: OrderCustomerChangeData) => {
     if (data.changeActionOption === CustomerChangeActionEnum.CHANGE_ADDRESS) {
@@ -219,12 +220,7 @@ export const OrderDraftDetails = ({
                 }),
               )
             }
-            users={mapEdgesToItems(users?.data?.search)}
-            hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
-            onFetchMore={loadMoreCustomers}
-            fetchUsers={searchUsers}
-            usersLoading={users.loading}
-            onCustomerEdit={handleCustomerChange}
+            onCustomerChangeClick={() => openModal("change-customer")}
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
@@ -237,6 +233,8 @@ export const OrderDraftDetails = ({
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
             onShippingMethodEdit={() => openModal("edit-shipping")}
             onOrderLineRemove={id => orderLineDelete.mutate({ id })}
+            orderLineRemoveConfirmState={orderLineDelete.opts.status}
+            orderLineRemoveErrors={orderLineDelete.opts.data?.orderLineDelete?.errors ?? []}
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
                 id,
@@ -281,11 +279,13 @@ export const OrderDraftDetails = ({
         loading={variantSearchOpts.loading}
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
-        products={mapEdgesToItems(variantSearchOpts?.data?.search)}
+        products={mapSearchOrderVariantsForAdd(mapEdgesToItems(variantSearchOpts?.data?.search))}
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
         channelName={order.channel.name}
+        channel={order.channel.slug}
+        address={getVariantSearchAddress(order)}
         onSubmit={variants =>
           extractMutationErrors(
             orderLinesAdd.mutate({
@@ -297,6 +297,23 @@ export const OrderDraftDetails = ({
             }),
           )
         }
+      />
+      <OrderCustomerEditDialog
+        confirmButtonState={orderDraftUpdate.opts.status}
+        errors={
+          params.action === "change-customer"
+            ? orderDraftUpdate.opts.data?.draftOrderUpdate.errors || []
+            : []
+        }
+        open={params.action === "change-customer"}
+        order={order}
+        users={mapEdgesToItems(users?.data?.search)}
+        hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
+        loading={users.loading}
+        fetchUsers={searchUsers}
+        onFetchMore={loadMoreCustomers}
+        onCustomerEdit={handleCustomerChange}
+        onClose={closeModal}
       />
       <OrderCustomerChangeDialog
         open={params.action === "customer-change"}

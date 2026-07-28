@@ -33,7 +33,6 @@ import {
   type ProductErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductFragment,
-  type ProductVariantBulkCreateInput,
   type RefreshLimitsQuery,
   type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
@@ -47,7 +46,7 @@ import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
-import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
+import { ProductExternalMediaDialog } from "@dashboard/products/components/ProductExternalMediaDialog/ProductExternalMediaDialog";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
@@ -55,6 +54,7 @@ import { rippleProductMetadata } from "@dashboard/products/ripples/productMetada
 import { productImageUrl, productListPath, productListUrl } from "@dashboard/products/urls";
 import { type ChoiceWithAncestors, getChoicesWithAncestors } from "@dashboard/products/utils/utils";
 import { type ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { type ProductSaveStepResult } from "@dashboard/products/views/ProductUpdate/handlers/productSaveSteps";
 import { type UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
@@ -64,22 +64,24 @@ import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
 import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { type AttributeValuesMetadata, getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { AvailabilityCard } from "../ProductDoctor/AvailabilityCard";
 import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/useProductAvailabilityDiagnostics";
+import { useProductDoctorVariants } from "../ProductDoctor/hooks/useProductDoctorVariants";
 import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToDiagnosticData";
 import ProductMedia from "../ProductMedia";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
-import { type BulkCreateResult } from "../ProductVariantGenerator/types";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
 import ProductUpdateForm from "./form";
 import { messages } from "./messages";
 import ProductChannelsListingsDialog from "./ProductChannelsListingsDialog";
+import { ProductSaveCompositionHint } from "./ProductSaveCompositionHint";
+import { ProductSaveStepsBanner } from "./ProductSaveStepsBanner";
 import { ProductDetailsTitle } from "./Title";
 import {
   type ProductUpdateData,
@@ -102,10 +104,23 @@ interface ProductUpdatePageProps {
   isMediaUrlModalVisible?: boolean;
   limits: RefreshLimitsQuery["shop"]["limits"];
   variants: ProductDetailsVariantFragment[];
+  variantsSearch?: string;
+  onVariantsSearchChange?: (query: string) => void;
+  variantsPageInfo?: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  } | null;
+  onVariantsNextPage?: () => void;
+  onVariantsPreviousPage?: () => void;
+  variantsRangeLabel?: string | null;
+  variantsTotalCount?: number | null;
+  variantsLoading?: boolean;
   media: ProductFragment["media"];
   product?: ProductDetailsQuery["product"];
   loading?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  saveSteps?: ProductSaveStepResult[];
+  onDismissSaveSteps?: () => void;
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
@@ -131,6 +146,7 @@ interface ProductUpdatePageProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onImageDelete: (id: string) => () => void;
+  onImagesDelete: (ids: string[]) => void;
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   onVariantShow: (id: string) => void;
   onAttributeSelectBlur: () => void;
@@ -138,10 +154,10 @@ interface ProductUpdatePageProps {
   onShowMetadata: () => void;
   onImageReorder?: (event: { oldIndex: number; newIndex: number }) => any;
   onImageUpload: (file: File) => any;
-  onMediaUrlUpload: (mediaUrl: string) => any;
+  onImagesUploadComplete?: (result: { successCount: number; failureCount: number }) => void;
+  onMediaUrlUpload: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
   onSeoClick?: () => any;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
-  onBulkCreateVariants?: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
   initialConstraints?: InitialConstraints & InitialPageConstraints;
 }
 
@@ -165,7 +181,17 @@ const ProductUpdatePage = ({
   product,
   loading,
   saveButtonBarState,
+  saveSteps = [],
+  onDismissSaveSteps,
   variants,
+  variantsSearch,
+  onVariantsSearchChange,
+  variantsPageInfo,
+  onVariantsNextPage,
+  onVariantsPreviousPage,
+  variantsRangeLabel,
+  variantsTotalCount,
+  variantsLoading,
   taxClasses,
   fetchMoreTaxClasses,
   referencePages = [],
@@ -175,8 +201,10 @@ const ProductUpdatePage = ({
   onDelete,
   onShowMetadata,
   onImageDelete,
+  onImagesDelete,
   onImageReorder,
   onImageUpload,
+  onImagesUploadComplete,
   onMediaUrlUpload,
   onVariantShow,
   onSeoClick,
@@ -199,7 +227,6 @@ const ProductUpdatePage = ({
   onCloseDialog,
   onAttributeSelectBlur,
   onFilterChange,
-  onBulkCreateVariants,
   initialConstraints,
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
@@ -303,12 +330,59 @@ const ProductUpdatePage = ({
     path: productListPath,
   });
 
-  // Availability diagnostics for the new AvailabilityCard
-  const productDiagnosticData = useMemo(() => mapProductToDiagnosticData(product), [product]);
+  // Product Doctor catalog is walked separately from the paginated/searchable grid
+  // so diagnostics are not polluted by the current page or search filter.
+  const {
+    variants: doctorVariantList,
+    totalCount: doctorVariantsTotalCount,
+    loading: doctorVariantsLoading,
+    error: doctorVariantsError,
+    complete: doctorVariantsComplete,
+    refetch: refetchDoctorVariants,
+  } = useProductDoctorVariants({
+    productId,
+    skip: !product,
+  });
+  const productDiagnosticData = useMemo(
+    () =>
+      mapProductToDiagnosticData(
+        product
+          ? {
+              ...product,
+              variants: doctorVariantList,
+              variantsTotalCount: doctorVariantsTotalCount,
+            }
+          : null,
+      ),
+    [doctorVariantList, doctorVariantsTotalCount, product],
+  );
   const availabilityDiagnostics = useProductAvailabilityDiagnostics({
     product: productDiagnosticData,
-    enabled: Boolean(product),
+    enabled: Boolean(product) && doctorVariantsComplete,
   });
+
+  // Keep the card in a loading skeleton while the doctor catalog walks, and
+  // avoid a false “no issues” flash when diagnostics are still disabled.
+  const diagnosticsForCard = useMemo(
+    () => ({
+      ...availabilityDiagnostics,
+      isLoading:
+        doctorVariantsLoading ||
+        (Boolean(product) && !doctorVariantsComplete && !doctorVariantsError) ||
+        availabilityDiagnostics.isLoading,
+    }),
+    [
+      availabilityDiagnostics,
+      doctorVariantsComplete,
+      doctorVariantsError,
+      doctorVariantsLoading,
+      product,
+    ],
+  );
+
+  const refetchWithDoctorCatalog = useCallback(async () => {
+    await Promise.all([refetch(), refetchDoctorVariants()]);
+  }, [refetch, refetchDoctorVariants]);
 
   const { attachFormState, active, framesByFormType } = useActiveAppExtension();
 
@@ -425,9 +499,21 @@ const ProductUpdatePage = ({
       fetchMoreReferenceCollections={fetchMoreReferenceCollections}
       assignReferencesAttributeId={assignReferencesAttributeId}
       disabled={disabled}
-      refetch={refetch}
+      refetch={refetchWithDoctorCatalog}
+      variants={variants}
     >
-      {({ change, data, handlers, submit, isSaveDisabled, attributeRichTextGetters, richText }) => {
+      {({
+        change,
+        data,
+        handlers,
+        submit,
+        isSaveDisabled,
+        pendingVariantDeleteCount,
+        saveComposition,
+        attributeRichTextGetters,
+        richText,
+        stagedVariantCreates,
+      }) => {
         // Store change handler so it can be accessed from useEffect
         changeHandlerRef.current = change;
         // Store richText so it can be accessed from useEffect
@@ -483,6 +569,9 @@ const ProductUpdatePage = ({
               </TopNav>
 
               <DetailPageLayout.Content paddingBottom={10}>
+                {saveSteps.length > 0 && onDismissSaveSteps ? (
+                  <ProductSaveStepsBanner steps={saveSteps} onDismiss={onDismissSaveSteps} />
+                ) : null}
                 <ProductDetailsForm
                   data={data}
                   disabled={disabled}
@@ -495,8 +584,10 @@ const ProductUpdatePage = ({
                 <ProductMedia
                   media={media}
                   onImageDelete={onImageDelete}
+                  onImagesDelete={onImagesDelete}
                   onImageReorder={onImageReorder}
                   onImageUpload={onImageUpload}
+                  onImagesUploadComplete={onImagesUploadComplete}
                   openMediaUrlModal={() => setMediaUrlModalStatus(true)}
                   getImageEditUrl={imageId => productImageUrl(productId, imageId)}
                 />
@@ -539,14 +630,28 @@ const ProductUpdatePage = ({
                   channels={listings}
                   limits={limits}
                   variants={variants}
+                  variantsSearch={variantsSearch}
+                  onVariantsSearchChange={onVariantsSearchChange}
+                  variantsPageInfo={variantsPageInfo}
+                  onVariantsNextPage={onVariantsNextPage}
+                  onVariantsPreviousPage={onVariantsPreviousPage}
+                  variantsRangeLabel={variantsRangeLabel}
+                  variantsTotalCount={variantsTotalCount}
+                  variantsLoading={variantsLoading}
+                  pendingVariantDeleteCount={pendingVariantDeleteCount}
                   variantAttributes={product?.productType.variantAttributes}
                   selectionVariantAttributes={product?.productType.selectionVariantAttributes}
                   nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}
                   hasVariants={hasVariants ?? false}
                   onAttributeValuesSearch={onAttributeValuesSearch}
                   onChange={handlers.changeVariants}
+                  onStageVariantRemovals={handlers.stageVariantRemovals}
                   onRowClick={onVariantShow}
-                  onBulkCreate={onBulkCreateVariants}
+                  onStageVariantCreates={handlers.stageVariantCreates}
+                  stagedVariantCreates={stagedVariantCreates}
+                  onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
+                  onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
+                  onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
                 />
                 <CardSpacer />
                 <SeoForm
@@ -588,7 +693,7 @@ const ProductUpdatePage = ({
                   selectedProductCategory={selectedProductCategory}
                 />
                 <AvailabilityCard
-                  diagnostics={availabilityDiagnostics}
+                  diagnostics={diagnosticsForCard}
                   totalChannelsCount={channels?.length ?? 0}
                   onManageClick={() => setChannelPickerOpen(true)}
                   onChannelChange={handlers.changeChannels}
@@ -598,6 +703,7 @@ const ProductUpdatePage = ({
                   channels={channels}
                   errors={channelsErrors}
                   productId={product?.id}
+                  variantsCatalogError={Boolean(doctorVariantsError)}
                 />
                 {showProductDetailsWidgets ? (
                   <>
@@ -622,6 +728,7 @@ const ProductUpdatePage = ({
               <Savebar>
                 <Savebar.DeleteButton onClick={onDelete} />
                 <Savebar.Spacer />
+                <ProductSaveCompositionHint composition={saveComposition} />
                 <Savebar.CancelButton onClick={() => navigate(productListUrl())} />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}
@@ -661,7 +768,6 @@ const ProductUpdatePage = ({
               )}
 
               <ProductExternalMediaDialog
-                product={product}
                 onClose={() => setMediaUrlModalStatus(false)}
                 open={mediaUrlModalStatus}
                 onSubmit={onMediaUrlUpload}

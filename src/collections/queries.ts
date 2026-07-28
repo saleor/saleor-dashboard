@@ -71,3 +71,11 @@ export const collectionProducts = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query CollectionDetails($id: ID!) {
+  collection(id: $id) {
+    id
+    name
+    slug
+  }
+}`;

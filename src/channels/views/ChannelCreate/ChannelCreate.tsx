@@ -62,6 +62,8 @@ const ChannelCreateView = () => {
   const handleSubmit = async ({
     allocationStrategy,
     allowUnpaidOrders,
+    automaticallyConfirmAllNewOrders,
+    automaticallyFulfillNonShippableGiftCard,
     currencyCode,
     defaultCountry,
     defaultTransactionFlowStrategy,
@@ -92,6 +94,8 @@ const ChannelCreateView = () => {
         markAsPaidStrategy,
         deleteExpiredOrdersAfter,
         allowUnpaidOrders,
+        automaticallyConfirmAllNewOrders,
+        automaticallyFulfillNonShippableGiftCard,
       },
       checkoutSettings: {
         automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,

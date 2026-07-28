@@ -12,6 +12,7 @@ import {
   defineProductTypeFactory,
   defineProductVariantChannelListingFactory,
   defineProductVariantFactory,
+  defineWarehouseFactory,
 } from "@dashboard/graphql/fabbrica.generated";
 import { dynamic } from "@mizdra/graphql-codegen-typescript-fabbrica/helper";
 
@@ -111,7 +112,18 @@ export const ProductFactory = defineProductFactory({
     productType: dynamic(() => ProductTypeFactory.build()),
     thumbnail: dynamic(() => ImageFactory.build()),
     channelListings: dynamic(async () => [await ProductChannelListingFactory.build()]),
-    variants: dynamic(async () => ProductVariantFactory.buildList(2)),
+    productVariants: dynamic(async () => {
+      const variants = await ProductVariantFactory.buildList(2);
+
+      return {
+        __typename: "ProductVariantCountableConnection" as const,
+        totalCount: variants.length,
+        edges: variants.map(node => ({
+          __typename: "ProductVariantCountableEdge" as const,
+          node,
+        })),
+      };
+    }),
     collections: [],
   },
 });
@@ -184,6 +196,26 @@ export const AttributeFactory = defineAttributeFactory({
     slug: dynamic(({ seq }) => ["color", "size", "material", "brand", "weight", "style"][seq % 6]),
     inputType: "DROPDOWN",
     entityType: null,
+  },
+});
+
+export const WarehouseFactory = defineWarehouseFactory({
+  defaultFields: {
+    __typename: "Warehouse",
+    id: dynamic(({ seq }) => `warehouse-${seq}`),
+    name: dynamic(
+      ({ seq }) =>
+        [
+          "US East Warehouse",
+          "US West Warehouse",
+          "EU Central Warehouse",
+          "UK Warehouse",
+          "Canada Warehouse",
+          "Australia Warehouse",
+          "Japan Warehouse",
+          "Brazil Warehouse",
+        ][seq % 8],
+    ),
   },
 });
 

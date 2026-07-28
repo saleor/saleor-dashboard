@@ -15,7 +15,7 @@ export const ProductVariantEmptyItem = ({
     <Box
       maxWidth="100%"
       paddingX={2}
-      paddingY={1}
+      paddingY={2}
       display="flex"
       alignItems="center"
       gap={5}

@@ -248,6 +248,7 @@ export type OrderUrlDialog =
   | "cancel-fulfillment"
   | "capture"
   | "change-warehouse"
+  | "change-customer"
   | "customer-change"
   | "edit-customer-addresses"
   | "edit-billing-address"
@@ -265,6 +266,8 @@ export type OrderUrlDialog =
   | "view-order-metadata"
   | "view-fulfillment-metadata";
 
+type OrderDetailsFocusFilters = Filters<"lineId">;
+
 interface TransactionAction {
   action: "transaction-action" | "transaction-charge-action";
   id: string;
@@ -272,8 +275,34 @@ interface TransactionAction {
 }
 
 export type OrderUrlQueryParams =
-  | (Dialog<OrderUrlDialog> & SingleAction & { type?: never })
-  | TransactionAction;
+  | (Dialog<OrderUrlDialog> & SingleAction & OrderDetailsFocusFilters & { type?: undefined })
+  | (TransactionAction & OrderDetailsFocusFilters);
+
+export const withOrderLineFocus = (
+  params: OrderUrlQueryParams | undefined,
+  lineId: string | null | undefined,
+): OrderUrlQueryParams => ({
+  ...params,
+  lineId: lineId ?? undefined,
+});
+
+type OrderFulfillmentDialogAction = Extract<
+  OrderUrlDialog,
+  "approve-fulfillment" | "cancel-fulfillment" | "edit-fulfillment"
+>;
+
+export const withOrderFulfillmentDialog = (
+  params: OrderUrlQueryParams | undefined,
+  action: OrderFulfillmentDialogAction,
+  fulfillmentId: string,
+): OrderUrlQueryParams => ({
+  ...params,
+  action,
+  id: fulfillmentId,
+  // Fulfillment dialogs never carry a transaction type; drop it so the
+  // result matches the non-transaction branch of the params union.
+  type: undefined,
+});
 
 type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
 type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
@@ -301,6 +330,18 @@ export const orderFulfillUrl = (id: string, params?: OrderFulfillUrlQueryParams)
 
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
+export type OrderSettingsUrlQueryParams = {
+  from?: "orders" | "configuration";
+};
+
+export const orderSettingsUrl = (params?: OrderSettingsUrlQueryParams): string => {
+  if (!params?.from) {
+    return orderSettingsPath;
+  }
+
+  return orderSettingsPath + "?" + stringifyQs(params);
+};
+
 export const orderPaymentRefundPath = (id: string) => urlJoin(orderPath(id), "payment-refund");
 
 export const orderSendRefundPath = (id: string) => urlJoin(orderPath(id), "send-refund");
@@ -312,12 +353,23 @@ export const orderGrantRefundPath = (id: string) => urlJoin(orderPath(id), "gran
 export const orderGrantRefundEditPath = (orderId: string, refundId: string) =>
   urlJoin(orderGrantRefundPath(orderId), refundId);
 
-export const orderReturnUrl = (id: string) => orderReturnPath(encodeURIComponent(id));
+export const orderReturnUrl = (id: string, params?: OrderReturnUrlQueryParams) =>
+  orderReturnPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+type OrderReturnUrlFiltersType = "lineId";
+type OrderReturnUrlFilters = Filters<OrderReturnUrlFiltersType>;
+export type OrderReturnUrlQueryParams = OrderReturnUrlFilters;
 
 export const orderTransactionRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
 
-export const orderTransactionRefundUrl = (id: string) =>
-  orderTransactionRefundPath(encodeURIComponent(id));
+type OrderTransactionRefundUrlFiltersType = "lineId";
+type OrderTransactionRefundUrlFilters = Filters<OrderTransactionRefundUrlFiltersType>;
+export type OrderTransactionRefundUrlQueryParams = OrderTransactionRefundUrlFilters;
+
+export const orderTransactionRefundUrl = (
+  id: string,
+  params?: OrderTransactionRefundUrlQueryParams,
+) => orderTransactionRefundPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const orderTransactionRefundEditPath = (orderId: string, refundId: string) =>
   urlJoin(orderTransactionRefundPath(orderId), refundId);

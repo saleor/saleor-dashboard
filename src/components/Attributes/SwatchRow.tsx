@@ -1,13 +1,13 @@
-// @ts-strict-ignore
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
+import { DatagridSwatchPreview } from "@dashboard/components/Attributes/DatagridSwatchPreview";
+import { getAttributeSwatchData } from "@dashboard/components/Attributes/getAttributeSwatchData";
 import {
   getAttributeRowLabelProps,
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { useComboboxHandlers } from "@dashboard/components/Combobox/hooks/useComboboxHandlers";
-import { getBySlug } from "@dashboard/misc";
-import { Box, DynamicCombobox } from "@saleor/macaw-ui-next";
+import { DynamicCombobox } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -34,7 +34,11 @@ export const SwatchRow = ({
   onChange,
 }: SwatchRowProps): JSX.Element => {
   const intl = useIntl();
-  const value = attribute.data.values.find(getBySlug(attribute.value[0]));
+  const selectedValueSlug = attribute.value[0];
+  const value = selectedValueSlug
+    ? attribute.data.values.find(attributeValue => attributeValue.slug === selectedValueSlug)
+    : undefined;
+  const selectedSwatch = getAttributeSwatchData(value);
 
   const { handleFetchMore, handleFocus, handleInputChange } = useComboboxHandlers({
     fetchOptions: query => fetchAttributeValues(query, attribute.id),
@@ -44,17 +48,21 @@ export const SwatchRow = ({
 
   const options = useMemo(
     () =>
-      attributeValues.map(({ file, value, slug, name }) => ({
-        label: name,
-        value: slug,
-        startAdornment: (
-          <SwatchPreviewBox
-            isFile={!!file}
-            backgroundImageUrl={file?.url}
-            backgroundColor={value}
-          />
-        ),
-      })),
+      attributeValues.flatMap(attributeValue => {
+        if (!attributeValue.name || !attributeValue.slug) {
+          return [];
+        }
+
+        const swatch = getAttributeSwatchData(attributeValue);
+
+        return [
+          {
+            label: attributeValue.name,
+            value: attributeValue.slug,
+            startAdornment: swatch ? <DatagridSwatchPreview {...swatch} /> : null,
+          },
+        ];
+      }),
     [attributeValues],
   );
 
@@ -68,19 +76,12 @@ export const SwatchRow = ({
             ? {
                 value: attribute.value[0],
                 label: getSingleDisplayValue(attribute, attributeValues),
-                // Not doing anything, but required in Macaw. @fixme
                 startAdornment: null,
               }
             : null
         }
         startAdornment={() =>
-          value ? (
-            <SwatchPreviewBox
-              isFile={!!value?.file}
-              backgroundImageUrl={value?.file?.url}
-              backgroundColor={value?.value}
-            />
-          ) : null
+          selectedSwatch ? <DatagridSwatchPreview {...selectedSwatch} placement="input" /> : null
         }
         error={!!error}
         label=""
@@ -94,33 +95,5 @@ export const SwatchRow = ({
         loading={fetchMoreAttributeValues?.hasMore || fetchMoreAttributeValues?.loading}
       />
     </BasicAttributeRow>
-  );
-};
-
-const SwatchPreviewBox = ({
-  isFile,
-  backgroundColor,
-  backgroundImageUrl,
-}: {
-  isFile: boolean;
-  backgroundImageUrl?: string;
-  backgroundColor?: string;
-}) => {
-  return (
-    <Box
-      width={8}
-      height={8}
-      borderRadius={2}
-      marginRight={2}
-      style={{
-        ...(isFile
-          ? {
-              backgroundImage: `url(${backgroundImageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }
-          : { backgroundColor }),
-      }}
-    />
   );
 };

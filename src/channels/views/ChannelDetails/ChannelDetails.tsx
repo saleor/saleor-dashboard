@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ChannelDeleteDialog from "@dashboard/channels/components/ChannelDeleteDialog";
+import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog";
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
@@ -97,6 +97,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const handleSubmit = async ({
     allocationStrategy,
     allowUnpaidOrders,
+    automaticallyConfirmAllNewOrders,
+    automaticallyFulfillNonShippableGiftCard,
     defaultCountry,
     defaultTransactionFlowStrategy,
     deleteExpiredOrdersAfter,
@@ -171,6 +173,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
             markAsPaidStrategy,
             deleteExpiredOrdersAfter,
             allowUnpaidOrders,
+            automaticallyConfirmAllNewOrders,
+            automaticallyFulfillNonShippableGiftCard,
           },
         },
       },

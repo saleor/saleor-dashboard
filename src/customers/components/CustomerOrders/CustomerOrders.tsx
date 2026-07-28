@@ -10,8 +10,9 @@ import { OrderPaymentStatusPill } from "@dashboard/orders/components/OrderPaymen
 import { orderUrl } from "@dashboard/orders/urls";
 import { type RelayToFlat } from "@dashboard/types";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Button, Skeleton, sprinkles } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
+import { Info } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -20,6 +21,53 @@ import styles from "./CustomerOrders.module.css";
 const textRightStyle = sprinkles({
   textAlign: "right",
 });
+
+const NetColumnHeader = (): JSX.Element => {
+  const intl = useIntl();
+
+  return (
+    <Box className={styles.amountHeaderContent}>
+      <FormattedMessage
+        id="QcXdj6"
+        defaultMessage="Net"
+        description="customer recent orders table column: net product sales after discounts"
+      />
+      <Tooltip>
+        <Tooltip.Trigger>
+          <Box
+            as="button"
+            type="button"
+            display="flex"
+            alignItems="center"
+            cursor="pointer"
+            padding={0}
+            borderWidth={0}
+            backgroundColor="transparent"
+            aria-label={intl.formatMessage({
+              id: "02j7gU",
+              defaultMessage: "Net order value explanation",
+              description: "customer recent orders table, net column tooltip aria label",
+            })}
+            data-test-id="customer-orders-net-hint"
+            onClick={event => event.stopPropagation()}
+          >
+            <Info size={13} />
+          </Box>
+        </Tooltip.Trigger>
+        <Tooltip.Content side="top" className={styles.tooltipContent}>
+          <Tooltip.Arrow />
+          <Text size={2} color="default1">
+            <FormattedMessage
+              id="wPhgkN"
+              defaultMessage="Product revenue after discounts. Excludes shipping and tax. Matches the net sales figures in the overview above."
+              description="customer recent orders table, net column tooltip"
+            />
+          </Text>
+        </Tooltip.Content>
+      </Tooltip>
+    </Box>
+  );
+};
 
 interface CustomerOrdersProps {
   orders: RelayToFlat<NonNullable<NonNullable<CustomerDetailsQuery["user"]>["orders"]>>;
@@ -80,11 +128,17 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
                     description="order status"
                   />
                 </TableCell>
-                <TableCell className={clsx(textRightStyle, styles.totalCell)}>
+                <TableCell className={styles.amountHeaderCell} align="right">
+                  <NetColumnHeader />
+                </TableCell>
+                <TableCell
+                  className={clsx(styles.amountHeaderCell, styles.lastAmountCell)}
+                  align="right"
+                >
                   <FormattedMessage
-                    id="taX/V3"
-                    defaultMessage="Total"
-                    description="order total amount"
+                    id="DGgIIw"
+                    defaultMessage="Gross"
+                    description="customer recent orders table column: checkout total including shipping and tax"
                   />
                 </TableCell>
               </TableRowLink>
@@ -110,7 +164,10 @@ const CustomerOrders = (props: CustomerOrdersProps) => {
                   <TableCell>
                     {order ? <OrderPaymentStatusPill order={order} /> : <Skeleton />}
                   </TableCell>
-                  <TableCell className={clsx(textRightStyle, styles.totalCell)} align="right">
+                  <TableCell className={textRightStyle} align="right">
+                    {order?.subtotal?.net ? <Money money={order.subtotal.net} /> : <Skeleton />}
+                  </TableCell>
+                  <TableCell className={clsx(textRightStyle, styles.lastAmountCell)} align="right">
                     {order?.total.gross ? <Money money={order.total.gross} /> : <Skeleton />}
                   </TableCell>
                 </TableRowLink>

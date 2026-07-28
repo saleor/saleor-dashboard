@@ -1,12 +1,74 @@
 import { customer } from "@dashboard/customers/fixtures";
-import { OrderChargeStatusEnum, PaymentChargeStatusEnum } from "@dashboard/graphql";
+import { CustomerDetailsContext } from "@dashboard/customers/providers/CustomerDetailsProvider";
+import { OrderStatus } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { FC } from "react";
 
 import { CustomerOverview } from "./CustomerOverview";
+
+const kpiOrderNode = {
+  __typename: "Order" as const,
+  id: "T3JkZXI6MQ==",
+  created: "2026-03-26T11:57:00Z",
+  status: OrderStatus.FULFILLED,
+  subtotal: {
+    __typename: "TaxedMoney" as const,
+    net: {
+      __typename: "Money" as const,
+      amount: 142.68,
+      currency: "USD",
+    },
+  },
+  shippingPrice: {
+    __typename: "TaxedMoney" as const,
+    gross: {
+      __typename: "Money" as const,
+      amount: 34.2,
+      currency: "USD",
+    },
+  },
+  totalRefunded: {
+    __typename: "Money" as const,
+    amount: 0,
+    currency: "USD",
+  },
+  channel: {
+    __typename: "Channel" as const,
+    id: "Q2hhbm5lbDox",
+    name: "United States",
+    slug: "us",
+    isActive: true,
+    currencyCode: "USD",
+  },
+};
+
+const withKpiContext = (channelId = "Q2hhbm5lbDox") => ({
+  customer: null,
+  effectiveKpiChannelId: channelId,
+  kpiChannelId: channelId,
+  kpiChannels: [
+    {
+      id: "Q2hhbm5lbDox",
+      name: "United States",
+      slug: "us",
+      isActive: true,
+      currencyCode: "USD",
+    },
+  ],
+  loading: false,
+  setKpiChannelId: () => undefined,
+});
 
 const meta: Meta<typeof CustomerOverview> = {
   title: "Customers/CustomerOverview",
   component: CustomerOverview,
+  decorators: [
+    (Story: FC) => (
+      <CustomerDetailsContext.Provider value={withKpiContext()}>
+        <Story />
+      </CustomerDetailsContext.Provider>
+    ),
+  ],
 };
 
 export default meta;
@@ -33,6 +95,18 @@ export const NoOrders: Story = {
         totalCount: 0,
         edges: [],
       },
+      kpiOrderChannels: {
+        __typename: "OrderCountableConnection",
+        edges: [],
+      },
+      kpiOrders: {
+        __typename: "OrderCountableConnection",
+        edges: [],
+      },
+      kpiNonCancelledOrderCount: {
+        __typename: "OrderCountableConnection",
+        totalCount: 0,
+      },
     },
   },
 };
@@ -46,56 +120,125 @@ export const NeverLoggedIn: Story = {
   },
 };
 
-// Customer with orders split across two currencies (e.g. orders placed in
-// channels with different currencies). The overview now renders a Spent + AOV
-// pair per currency rather than hiding the cards.
-export const MultiCurrencyOrders: Story = {
+export const NetSalesVsCheckoutTotal: Story = {
   args: {
     customer: {
       ...customer,
-      orders: {
+      kpiOrders: {
         __typename: "OrderCountableConnection",
-        totalCount: 2,
+        edges: [
+          {
+            __typename: "OrderCountableEdge",
+            node: kpiOrderNode,
+          },
+        ],
+      },
+      kpiNonCancelledOrderCount: {
+        __typename: "OrderCountableConnection",
+        totalCount: 1,
+      },
+    },
+  },
+};
+
+export const MultiChannelOrders: Story = {
+  decorators: [
+    (Story: FC) => (
+      <CustomerDetailsContext.Provider
+        value={{
+          ...withKpiContext("Q2hhbm5lbDox"),
+          kpiChannels: [
+            {
+              id: "Q2hhbm5lbDox",
+              name: "United States",
+              slug: "us",
+              isActive: true,
+              currencyCode: "USD",
+            },
+            {
+              id: "Q2hhbm5lbDoy",
+              name: "Europe",
+              slug: "eu",
+              isActive: true,
+              currencyCode: "EUR",
+            },
+          ],
+        }}
+      >
+        <Story />
+      </CustomerDetailsContext.Provider>
+    ),
+  ],
+  args: {
+    customer: {
+      ...customer,
+      kpiOrderChannels: {
+        __typename: "OrderCountableConnection",
         edges: [
           {
             __typename: "OrderCountableEdge",
             node: {
-              __typename: "Order",
-              id: "T3JkZXI6MQ==",
-              created: "2026-03-26T11:57:00Z",
-              number: "0001",
-              paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-              chargeStatus: OrderChargeStatusEnum.FULL,
-              total: {
-                __typename: "TaxedMoney",
-                gross: {
-                  __typename: "Money",
-                  amount: 100.0,
-                  currency: "USD",
-                },
-              },
+              ...kpiOrderNode,
             },
           },
           {
             __typename: "OrderCountableEdge",
             node: {
-              __typename: "Order",
+              ...kpiOrderNode,
               id: "T3JkZXI6Mg==",
               created: "2026-02-10T08:00:00Z",
-              number: "0002",
-              paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-              chargeStatus: OrderChargeStatusEnum.FULL,
-              total: {
-                __typename: "TaxedMoney",
-                gross: {
-                  __typename: "Money",
-                  amount: 50.0,
-                  currency: "EUR",
-                },
+              channel: {
+                __typename: "Channel",
+                id: "Q2hhbm5lbDoy",
+                name: "Europe",
+                slug: "eu",
+                isActive: true,
+                currencyCode: "EUR",
               },
             },
           },
         ],
+      },
+      kpiOrders: {
+        __typename: "OrderCountableConnection",
+        edges: [
+          {
+            __typename: "OrderCountableEdge",
+            node: kpiOrderNode,
+          },
+        ],
+      },
+      kpiNonCancelledOrderCount: {
+        __typename: "OrderCountableConnection",
+        totalCount: 1,
+      },
+    },
+  },
+};
+
+export const WithRefundsAndShipping: Story = {
+  args: {
+    customer: {
+      ...customer,
+      kpiOrders: {
+        __typename: "OrderCountableConnection",
+        edges: [
+          {
+            __typename: "OrderCountableEdge",
+            node: {
+              ...kpiOrderNode,
+              totalRefunded: {
+                __typename: "Money",
+                amount: 25,
+                currency: "USD",
+              },
+            },
+          },
+        ],
+      },
+      kpiNonCancelledOrderCount: {
+        __typename: "OrderCountableConnection",
+        totalCount: 1,
       },
     },
   },

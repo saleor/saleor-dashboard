@@ -6,6 +6,7 @@ import {
   type OrderLineMetadataDialogData,
 } from "./OrderLineMetadataDialog";
 import { TEST_ID_ORDER_LINE_METADATA, TEST_ID_PRODUCT_VARIANT_METADATA } from "./test-ids";
+import { useMetadataValues } from "./useMetadataValues";
 
 const mockOnSubmit = jest.fn();
 
@@ -51,10 +52,10 @@ const mockData = {
 } satisfies OrderLineMetadataDialogData;
 
 jest.mock("./useMetadataValues", () => ({
-  useMetadataValues: () => ({
+  useMetadataValues: jest.fn(() => ({
     data: mockData,
     loading: false,
-  }),
+  })),
 }));
 describe("OrderLineMetadataDialog", () => {
   const onCloseMock = jest.fn();
@@ -134,6 +135,13 @@ describe("OrderLineMetadataDialog", () => {
   });
 
   describe("ProductVariant metadata form", () => {
+    beforeEach(() => {
+      (useMetadataValues as jest.Mock).mockReturnValue({
+        data: mockData,
+        loading: false,
+      });
+    });
+
     it("displays product variant metadata in editable form", async () => {
       // Arrange
       (useHasManageProductsPermission as jest.Mock).mockReturnValue(true);
@@ -185,6 +193,35 @@ describe("OrderLineMetadataDialog", () => {
       expect(
         within(productVariantMetadata).getByDisplayValue("variant-private-value"),
       ).toBeInTheDocument();
+    });
+
+    it("hides expand controls for empty read-only variant metadata", () => {
+      // Arrange
+      (useMetadataValues as jest.Mock).mockReturnValue({
+        data: {
+          ...mockData,
+          variant: {
+            ...mockData.variant,
+            metadata: [],
+            privateMetadata: [],
+          },
+        },
+        loading: false,
+      });
+      render(
+        <OrderLineMetadataDialog
+          open={true}
+          onClose={onCloseMock}
+          orderId="order-id"
+          lineId={mockData.id}
+        />,
+      );
+
+      const productVariantMetadata = screen.getByTestId(TEST_ID_PRODUCT_VARIANT_METADATA);
+
+      // Assert
+      expect(within(productVariantMetadata).queryAllByTestId("expand")).toHaveLength(0);
+      expect(within(productVariantMetadata).getAllByText("Empty")).toHaveLength(2);
     });
 
     it("hides and disables variant metadata editing when user doesn't have MANAGE_PRODUCTS permission", () => {

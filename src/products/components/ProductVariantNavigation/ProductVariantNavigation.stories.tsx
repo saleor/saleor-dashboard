@@ -1,24 +1,27 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { product } from "@dashboard/products/fixtures";
+import { variantSiblings } from "@dashboard/products/fixtures";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import ProductVariantNavigation from "./ProductVariantNavigation";
+import { ProductVariantNavigation } from "./ProductVariantNavigation";
 
-const fixtureProduct = product(placeholderImage);
+const siblings = variantSiblings(placeholderImage);
 
 const meta: Meta<typeof ProductVariantNavigation> = {
   title: "Products/ProductVariantNavigation",
   component: ProductVariantNavigation,
   args: {
-    productId: fixtureProduct?.id ?? "product-1",
+    productId: "product-1",
     fallbackThumbnail: placeholderImage,
-    variants: fixtureProduct?.variants,
-    defaultVariantId: fixtureProduct?.defaultVariant?.id ?? undefined,
-    current: fixtureProduct?.variants?.[0]?.id,
+    defaultVariantId: siblings[0]?.id,
+    current: siblings[0]?.id,
+    currentVariant: siblings[0] ?? null,
     isCreate: false,
-    loading: false,
     onReorder: fn(),
+  },
+  parameters: {
+    // Sibling list is loaded via ProductVariantSiblings query (Apollo).
+    chromatic: { disableSnapshot: true },
   },
 };
 
@@ -30,17 +33,7 @@ export const Default: Story = {};
 export const CreateMode: Story = {
   args: {
     isCreate: true,
-    variants: undefined,
-  },
-};
-
-export const Loading: Story = {
-  args: { loading: true, variants: undefined },
-};
-
-export const NoVariantsCreateMode: Story = {
-  args: {
-    isCreate: true,
-    variants: [],
+    current: undefined,
+    currentVariant: null,
   },
 };
