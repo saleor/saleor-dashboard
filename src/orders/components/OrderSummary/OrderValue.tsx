@@ -744,6 +744,7 @@ export const OrderValue = (props: Props): ReactNode => {
           <Box
             borderStyle="solid"
             borderColor="default1"
+            borderTopWidth={1}
             borderBottomWidth={0}
             borderLeftWidth={0}
             borderRightWidth={0}
@@ -789,7 +790,8 @@ export const OrderValue = (props: Props): ReactNode => {
           </OrderSummaryListItem>
         )}
 
-        {giftCardsAmount && giftCardsAmount > 0 && usedGiftCards && (
+        {/* Avoid `{giftCardsAmount && ...}` — React renders falsy number 0 as text. */}
+        {giftCardsAmount != null && giftCardsAmount > 0 && usedGiftCards && (
           <OrderSummaryListItem
             amount={-giftCardsAmount}
             amountTitle={intl.formatMessage(messages.giftCardTitle)}
