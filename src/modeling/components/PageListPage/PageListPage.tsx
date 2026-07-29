@@ -1,4 +1,6 @@
+import { useUser } from "@dashboard/auth/useUser";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -9,14 +11,19 @@ import {
   getExtensionsItemsForPageOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { PermissionEnum } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField, pageUrl } from "@dashboard/modeling/urls";
+import { NavigationPinButton } from "@dashboard/navigationPins/components/NavigationPinButton";
+import { OrganizationPinsDialog } from "@dashboard/navigationPins/components/OrganizationPinsDialog";
+import { navigationPinMessages } from "@dashboard/navigationPins/messages";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type PageListProps, type SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -65,6 +72,7 @@ const PageListPage = ({
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();
+  const { user } = useUser();
 
   const { PAGE_OVERVIEW_CREATE, PAGE_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.PAGE_LIST,
@@ -74,6 +82,21 @@ const PageListPage = ({
     selectedPageIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PAGE_OVERVIEW_CREATE);
+
+  const [organizationPinsOpen, setOrganizationPinsOpen] = useState(false);
+  const canManageOrganizationPins = Boolean(
+    user?.userPermissions?.some(permission => permission.code === PermissionEnum.MANAGE_SETTINGS),
+  );
+  const topNavMenuItems: TopNavMenuItem[] = canManageOrganizationPins
+    ? [
+        ...extensionMenuItems,
+        {
+          label: intl.formatMessage(navigationPinMessages.organizationPinsTitle),
+          testId: "manage-organization-pins",
+          onSelect: () => setOrganizationPinsOpen(true),
+        },
+      ]
+    : extensionMenuItems;
 
   const createLabel = activePageTypeName ? (
     <FormattedMessage
@@ -89,7 +112,7 @@ const PageListPage = ({
   return (
     <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.models)} withoutBorder>
-        {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+        {topNavMenuItems.length > 0 && <TopNav.Menu items={topNavMenuItems} />}
         {extensionCreateButtonItems.length > 0 ? (
           <ButtonGroupWithDropdown
             options={extensionCreateButtonItems}
@@ -127,8 +150,8 @@ const PageListPage = ({
               placeholder={intl.formatMessage(messages.searchPlaceholder)}
               onSearchChange={onSearchChange}
             />
-            <Box display="flex" justifyContent="flex-end">
-              {selectedPageIds.length > 0 && (
+            <Box display="flex" justifyContent="flex-end" alignItems="center">
+              {selectedPageIds.length > 0 ? (
                 <Box display="flex" gap={4}>
                   <Button variant="secondary" onClick={onPagesUnpublish}>
                     <FormattedMessage {...messages.unpublish} />
@@ -140,6 +163,11 @@ const PageListPage = ({
                     <FormattedMessage {...messages.delete} />
                   </BulkDeleteButton>
                 </Box>
+              ) : (
+                <NavigationPinButton
+                  modelTypeId={selectedIds.length === 1 ? selectedIds[0] : null}
+                  modelTypeName={activePageTypeName}
+                />
               )}
             </Box>
           </Box>
@@ -155,6 +183,12 @@ const PageListPage = ({
           />
         </DashboardCard>
       </Box>
+      {organizationPinsOpen && (
+        <OrganizationPinsDialog
+          open={organizationPinsOpen}
+          onClose={() => setOrganizationPinsOpen(false)}
+        />
+      )}
     </ListPageLayout>
   );
 };

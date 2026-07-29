@@ -18,6 +18,7 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getUserName } from "@dashboard/misc";
+import { NavigationPinsCard } from "@dashboard/navigationPins/components/NavigationPinsCard";
 import UserStatus from "@dashboard/staff/components/UserStatus";
 import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
@@ -145,7 +146,11 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
             <DetailPageLayout.RightSidebar>
               {canEditPreferences && (
-                <StaffPreferences locale={locale} onLocaleChange={setLocale} />
+                <>
+                  <StaffPreferences locale={locale} onLocaleChange={setLocale} />
+                  <CardSpacer />
+                  <NavigationPinsCard />
+                </>
               )}
               {canEditStatus && (
                 <>
