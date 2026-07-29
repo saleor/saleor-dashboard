@@ -31804,6 +31804,8 @@ export const defineShippingZoneUpdatedFactory: DefineTypeFactoryInterface<
 /** Represents a shop resource containing general shop data and configuration. */
 export type OptionalShop = {
   __typename?: 'Shop';
+  /** Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging */
+  accountConfirmMergeMode?: Shop['accountConfirmMergeMode'] | undefined;
   /**
  * Determines if user can login without confirmation when `enableAccountConfirmation` is enabled.
  *
@@ -32112,6 +32114,8 @@ export const defineShopMetadataUpdatedFactory: DefineTypeFactoryInterface<
 
 export type OptionalShopSettingsInput = {
   __typename?: 'ShopSettingsInput';
+  /** Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging */
+  accountConfirmMergeMode?: ShopSettingsInput['accountConfirmMergeMode'] | undefined;
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: ShopSettingsInput['allowLoginWithoutConfirmation'] | undefined;
   /** Charge taxes on shipping. */
