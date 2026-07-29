@@ -43,7 +43,7 @@ export const ExtensionIframe = ({
 
   if (method === "POST") {
     return (
-      <Box position="relative" width="100%" height="100%">
+      <Box position="relative" __lineHeight={0} width="100%" height="100%">
         <IframePost
           appId={extension.app.id}
           accessToken={extension.accessToken}

@@ -1,0 +1,4 @@
+/* Doubled selector overrides Tab makeStyles `padding` shorthand. */
+.tab.tab {
+  padding: 12px 8px 10px;
+}
