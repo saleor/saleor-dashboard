@@ -259,6 +259,7 @@ export enum AnnouncementImportanceEnum {
 
 export enum AppErrorCode {
   DUPLICATED_EXTENSION_IDENTIFIER = 'DUPLICATED_EXTENSION_IDENTIFIER',
+  DUPLICATED_WEBHOOK_IDENTIFIER = 'DUPLICATED_WEBHOOK_IDENTIFIER',
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -8129,6 +8130,12 @@ export type ShopSettingsInput = {
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']['input']>;
   /**
+   * Determines whether the GraphQL API accepts storefront requests (anonymous requests and authenticated non-staff customers). When disabled, only apps and staff users may call the API directly; all other requests are rejected with an HTTP 401 and the `STOREFRONT_TRAFFIC_NOT_ALLOWED` error code.
+   *
+   * Added in Saleor 3.23.
+   */
+  allowStorefrontTraffic?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
    * Charge taxes on shipping.
    * @deprecated To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
    */
@@ -9347,6 +9354,12 @@ export type WebhookCreateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The name of the webhook. */
@@ -10356,6 +10369,12 @@ export type WebhookUpdateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The new name of the webhook. */
