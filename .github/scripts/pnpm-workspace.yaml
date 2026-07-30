@@ -1,3 +1,6 @@
 # This file makes .github/workflows an independent pnpm project
 # separate from the root dashboard workspace
 packages: []
+# Skip the release-age cooldown for the CLI - we own it, and it is pinned exactly.
+minimumReleaseAgeExclude:
+  - "@saleor/cli@1.42.2"
