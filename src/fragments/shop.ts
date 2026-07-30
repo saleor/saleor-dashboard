@@ -60,5 +60,6 @@ export const shopFragment = gql`
     useLegacyShippingZoneStockAvailability
     preserveAllAddressFields
     passwordLoginMode
+    allowStorefrontTraffic
   }
 `;
