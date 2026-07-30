@@ -13,7 +13,7 @@ import {
   type UpdatePrivateMetadataMutationVariables,
 } from "@dashboard/graphql";
 import { type useNotifier } from "@dashboard/hooks/useNotifier";
-import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
+import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderPageShared/utils";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { areMetadataArraysEqual } from "@dashboard/utils/handlers/metadataUpdateHelpers";
 import { type IntlShape } from "react-intl";

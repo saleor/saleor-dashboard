@@ -10,10 +10,10 @@ import {
   type OrderDetailsQuery,
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { hasAnyItemsReplaceable } from "@dashboard/orders/components/OrderDetailsPage/utils";
 import { OrderFulfillmentCard } from "@dashboard/orders/components/OrderFulfillmentCard/OrderFulfillmentCard";
 import { OrderLineExpandedPanel } from "@dashboard/orders/components/OrderLineExpandedPanel/OrderLineExpandedPanel";
 import { OrderLineMatrixDatagrid } from "@dashboard/orders/components/OrderLineMatrixDatagrid/OrderLineMatrixDatagrid";
+import { hasAnyItemsReplaceable } from "@dashboard/orders/components/OrderPageShared/utils";
 import { OrderUnfulfilledProductsCard } from "@dashboard/orders/components/OrderUnfulfilledProductsCard/OrderUnfulfilledProductsCard";
 import { useOrderDetailsViewMode } from "@dashboard/orders/hooks/useOrderDetailsViewMode";
 import { rippleOrderLineMatrixView } from "@dashboard/orders/ripples/orderLineMatrixView";

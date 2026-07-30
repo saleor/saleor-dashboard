@@ -1,5 +1,4 @@
 import {
-  MarkAsPaidStrategyEnum,
   type OrderDetailsFragment,
   type OrderDraftListQuery,
   type OrderRefundDataQuery,
@@ -7,26 +6,6 @@ import {
   type TransactionItemFragment,
 } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
-
-/** Check if order has transactions & feature flag enabled */
-export const orderHasTransactions = (order: OrderDetailsFragment): boolean =>
-  order?.transactions?.length > 0;
-
-const orderHasPayments = (order: OrderDetailsFragment): boolean => order?.payments?.length > 0;
-
-export const orderShouldUseTransactions = (order: OrderDetailsFragment): boolean => {
-  if (orderHasTransactions(order)) {
-    return true;
-  }
-
-  if (orderHasPayments(order)) {
-    return false;
-  }
-
-  return (
-    order?.channel?.orderSettings?.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-  );
-};
 
 export type OrderRefundData = OrderRefundDataQuery["order"];
 export type OrderRefundSharedType = Pick<

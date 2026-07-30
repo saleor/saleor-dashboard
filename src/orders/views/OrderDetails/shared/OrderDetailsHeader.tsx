@@ -15,8 +15,8 @@ import { Trash2 } from "lucide-react";
 import { type ReactElement, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "../../../components/OrderDetailsPage/messages";
-import Title from "../../../components/OrderDetailsPage/Title";
+import { messages } from "../../../components/OrderPageShared/messages";
+import Title from "../../../components/OrderPageShared/Title";
 
 interface OrderDetailsHeaderProps {
   order: OrderDetailsFragment;

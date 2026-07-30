@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import { type MetadataIdSchema } from "@dashboard/components/Metadata";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
-import { type ChangeEvent } from "@dashboard/hooks/useForm";
 
 import {
   getFulfilledFulfillemnts,
@@ -38,21 +37,3 @@ export const createOrderMetadataIdSchema = (order: OrderDetailsFragment): Metada
     return p;
   }, {}),
 });
-
-export const createMetadataHandler =
-  (
-    currentData: MetadataIdSchema,
-    set: (newData: Partial<MetadataIdSchema>) => void,
-    triggerChange: () => void,
-  ) =>
-  (event: ChangeEvent, objectId: string) => {
-    const metadataType = event.target.name;
-
-    set({
-      [objectId]: {
-        ...currentData[objectId],
-        [metadataType]: [...event.target.value],
-      },
-    });
-    triggerChange();
-  };

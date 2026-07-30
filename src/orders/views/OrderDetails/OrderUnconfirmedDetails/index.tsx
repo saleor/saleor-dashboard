@@ -28,11 +28,11 @@ import { type ReactElement, type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { messages } from "../../../components/OrderDetailsPage/messages";
-import { createOrderMetadataIdSchema } from "../../../components/OrderDetailsPage/utils";
 import OrderDraftDetails from "../../../components/OrderDraftDetails/OrderDraftDetails";
 import { OrderFulfillmentCard } from "../../../components/OrderFulfillmentCard/OrderFulfillmentCard";
 import { OrderHistory } from "../../../components/OrderHistory";
+import { messages } from "../../../components/OrderPageShared/messages";
+import { createOrderMetadataIdSchema } from "../../../components/OrderPageShared/utils";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import { OrderSummary } from "../../../components/OrderSummary/OrderSummary";
