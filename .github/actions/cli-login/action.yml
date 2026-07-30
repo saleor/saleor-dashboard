@@ -1,5 +1,5 @@
 name: Saleor CLI login
-description: Saleor CLI login to staging Saleor Cloud
+description: Install the pinned Saleor CLI and log in to staging Saleor Cloud
 inputs:
   token:
     description: "Cloud access token"
@@ -7,6 +7,14 @@ inputs:
 runs:
   using: "composite"
   steps:
+    # Version is pinned in .github/scripts/package.json - never resolve "latest" at runtime.
+    - name: Install Saleor CLI
+      shell: bash
+      working-directory: .github/scripts
+      run: |
+        pnpm install --frozen-lockfile
+        echo "$GITHUB_WORKSPACE/.github/scripts/node_modules/.bin" >> "$GITHUB_PATH"
+
     - name: Write config file
       shell: bash
       id: write-config-file
