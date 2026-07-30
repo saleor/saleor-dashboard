@@ -37487,6 +37487,12 @@ export type OptionalWebhook = {
   events?: OptionalWebhookEvent[] | undefined;
   /** The ID of webhook. */
   id?: Webhook['id'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app, null when not set.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: Webhook['identifier'] | undefined;
   /** Informs if webhook is activated. */
   isActive?: Webhook['isActive'] | undefined;
   /** The name of webhook. */
@@ -37545,6 +37551,12 @@ export type OptionalWebhookCreateInput = {
   customHeaders?: WebhookCreateInput['customHeaders'] | undefined;
   /** The events that webhook wants to subscribe. */
   events?: WebhookCreateInput['events'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: WebhookCreateInput['identifier'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookCreateInput['isActive'] | undefined;
   /** The name of the webhook. */
@@ -37794,6 +37806,12 @@ export type OptionalWebhookUpdateInput = {
   customHeaders?: WebhookUpdateInput['customHeaders'] | undefined;
   /** The events that webhook wants to subscribe. */
   events?: WebhookUpdateInput['events'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: WebhookUpdateInput['identifier'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookUpdateInput['isActive'] | undefined;
   /** The new name of the webhook. */

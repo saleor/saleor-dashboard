@@ -257,6 +257,7 @@ export enum AnnouncementImportanceEnum {
 
 export enum AppErrorCode {
   DUPLICATED_EXTENSION_IDENTIFIER = 'DUPLICATED_EXTENSION_IDENTIFIER',
+  DUPLICATED_WEBHOOK_IDENTIFIER = 'DUPLICATED_WEBHOOK_IDENTIFIER',
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -2240,7 +2241,6 @@ export enum CustomerEventsEnum {
   ACCOUNT_CREATED = 'ACCOUNT_CREATED',
   ACCOUNT_DEACTIVATED = 'ACCOUNT_DEACTIVATED',
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
-  DIGITAL_LINK_DOWNLOADED = 'DIGITAL_LINK_DOWNLOADED',
   EMAIL_ASSIGNED = 'EMAIL_ASSIGNED',
   EMAIL_CHANGED = 'EMAIL_CHANGED',
   EMAIL_CHANGED_REQUEST = 'EMAIL_CHANGED_REQUEST',
@@ -5410,7 +5410,6 @@ export type OrderEventTypeEnumFilterInput = {
 
 export enum OrderEventsEmailsEnum {
   CONFIRMED = 'CONFIRMED',
-  DIGITAL_LINKS = 'DIGITAL_LINKS',
   FULFILLMENT_CONFIRMATION = 'FULFILLMENT_CONFIRMATION',
   ORDER_CANCEL = 'ORDER_CANCEL',
   ORDER_CONFIRMATION = 'ORDER_CONFIRMATION',
@@ -9158,6 +9157,12 @@ export type WebhookCreateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The name of the webhook. */
@@ -10174,6 +10179,12 @@ export type WebhookUpdateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The new name of the webhook. */
