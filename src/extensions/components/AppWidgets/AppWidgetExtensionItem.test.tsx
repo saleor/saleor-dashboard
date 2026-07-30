@@ -33,6 +33,22 @@ const buildExtension = (overrides: Partial<ExtensionWithParams> = {}): Extension
   }) as ExtensionWithParams;
 
 describe("AppWidgetExtensionItem", () => {
+  it.each(["APP_PAGE", "NEW_TAB", "POPUP"] as const)(
+    "renders the %s text mount inside the widget list padding",
+    targetName => {
+      // Arrange
+      const extension = buildExtension({ targetName });
+
+      // Act
+      render(<AppWidgetExtensionItem extension={extension} params={{}} theme="light" />);
+
+      // Assert
+      expect(screen.getByTestId("app-widget-text")).toContainElement(
+        screen.getByText(targetName === "POPUP" ? `${extension.label}...` : extension.label),
+      );
+    },
+  );
+
   it("does not mount the widget iframe while fromCache is true", () => {
     // Arrange & Act
     render(

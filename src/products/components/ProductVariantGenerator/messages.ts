@@ -111,9 +111,9 @@ export const messages = defineMessages({
     description: "error when fetching all variants for duplicate detection fails",
   },
   generate: {
-    id: "T61cLQ",
-    defaultMessage: "Generate {count} {count, plural, one {variant} other {variants}}",
-    description: "generate button",
+    id: "LVY0Tj",
+    defaultMessage: "Add {count} {count, plural, one {variant} other {variants}}",
+    description: "generate button — stages variants until product Save",
   },
   noAttributes: {
     id: "O90S9P",
@@ -121,15 +121,15 @@ export const messages = defineMessages({
     description: "empty state when no variant attributes",
   },
   confirmTitle: {
-    id: "jww7Wl",
-    defaultMessage: "Generate {count} variants?",
-    description: "confirmation dialog title",
+    id: "nsTglh",
+    defaultMessage: "Add {count} variants?",
+    description: "confirmation dialog title for staging generated variants",
   },
   confirmDescription: {
-    id: "Q+oKl+",
+    id: "XJZziQ",
     defaultMessage:
-      "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone.",
-    description: "confirmation dialog description",
+      "You are about to add {count} variants to this product. They will be created when you save the product.",
+    description: "confirmation dialog description for staged generator creates",
   },
   limitReached: {
     id: "KvK69l",

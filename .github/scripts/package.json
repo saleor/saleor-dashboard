@@ -8,7 +8,7 @@
     "node-fetch": "^2.6.7",
     "octokit": "^4.1.1"
   },
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@11.13.1+sha512.b2fc7683b8a6525414e7d13e1ba28caaddde96bf66ec540bfaeb7e702b81f3e0be4d1f295edf7f9fe0396740a8dce4509c582ddf79891f4543fea32d37645f25",
   "engines": {
     "node": ">=22"
   }

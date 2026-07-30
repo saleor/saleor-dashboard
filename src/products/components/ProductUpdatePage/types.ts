@@ -10,6 +10,7 @@ import {
   type ProductChannelListingUpdateInput,
   type ProductDetailsVariantFragment,
   type ProductFragment,
+  type ProductVariantBulkCreateInput,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -33,6 +34,7 @@ import { type OutputData } from "@editorjs/editorjs";
 import { type Option } from "@saleor/macaw-ui-next";
 
 import { type ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
+import { type ProductSaveComposition } from "./saveComposition";
 
 export interface ProductUpdateFormData {
   category: string | null;
@@ -71,6 +73,8 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
     stagedUpdateVariants?: ProductDetailsVariantFragment[];
     /** Index-based updates aligned with `stagedUpdateVariants`. */
     stagedUpdateChanges?: DatagridChangeOpts;
+    /** Generator creates waiting for Save (API-ready bulk create inputs). */
+    stagedCreates?: ProductVariantBulkCreateInput[];
   };
 }
 
@@ -85,6 +89,20 @@ export interface ProductUpdateHandlers
   changeVariants: (data: DatagridChangeOpts) => void;
   /** Stage variant deletes by id (supports multi-page selection). */
   stageVariantRemovals: (ids: string[]) => void;
+  /** Stage generator creates until product Save. */
+  stageVariantCreates: (inputs: ProductVariantBulkCreateInput[]) => {
+    success: boolean;
+    successCount: number;
+    failedCount: number;
+    attributeErrors: Array<{ attributeId: string; code: string; message: string | null }>;
+    otherErrors: Array<{ message: string | null }>;
+  };
+  /** Remove staged generator creates by index (draft list). */
+  removeStagedVariantCreates: (indexes: number[]) => void;
+  /** Drop all staged generator creates. */
+  clearStagedVariantCreates: () => void;
+  /** Replace staged generator creates after draft datagrid edits. */
+  replaceStagedVariantCreates: (creates: ProductVariantBulkCreateInput[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
   updateChannelList: ProductChannelsListingDialogSubmit;
@@ -98,6 +116,10 @@ export interface UseProductUpdateFormOutput
   touchedChannels: string[];
   /** Staged variant deletes waiting for Save (cross-page). */
   pendingVariantDeleteCount: number;
+  /** Generator creates waiting for Save (for duplicate detection in the modal). */
+  stagedVariantCreates: ProductVariantBulkCreateInput[];
+  /** What the Savebar will persist on the next Save. */
+  saveComposition: ProductSaveComposition;
 }
 
 type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, "datagrid">;

@@ -6,6 +6,7 @@ import {
 } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { appExtensionManifestOptionsSchemaWithDefault } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { useRegisterExtensions } from "@dashboard/extensions/extension-registry";
 import { isSaleorOfficialAppUrl } from "@dashboard/extensions/isSaleorOfficialAppUrl";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
@@ -26,10 +27,12 @@ const prepareExtensionsWithActions = ({
   extensions,
   openAppInContext,
   fromCache,
+  refetch,
 }: {
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
   openAppInContext: (appData: AppExtensionActiveParams) => void;
   fromCache: boolean;
+  refetch: () => void;
 }): ExtensionWithParams[] =>
   extensions
     .filter(({ id, url, label, mountName, app }) => {
@@ -44,94 +47,109 @@ const prepareExtensionsWithActions = ({
 
       return true;
     })
-    .map(({ id, accessToken, permissions, url, label, mountName, targetName, app, settings }) => {
-      const isNewTab = targetName === "NEW_TAB";
-      const isWidget = targetName === "WIDGET";
-      const appUrl = app.appUrl;
-
-      const settingsValidation = appExtensionManifestOptionsSchemaWithDefault.safeParse(settings);
-
-      /**
-       * Options are not required so fall back to safe GET
-       */
-      const newTabMethod = settingsValidation.data?.newTabTarget?.method ?? "GET";
-
-      const resolvedUrl = isUrlAbsolute(url) ? url : `${appUrl ?? ""}${url}`;
-
-      return {
+    .map(
+      ({
         id,
-        app,
-        accessToken: accessToken || "",
-        permissions: permissions.map(({ code }) => code),
+        accessToken,
+        permissions,
         url,
         label,
-        mountName: ALL_APP_EXTENSION_MOUNTS.parse(mountName),
-        targetName: AppExtensionManifestTarget.parse(targetName),
+        identifier,
+        mountName,
+        targetName,
+        app,
         settings,
-        isSaleorOfficial: isSaleorOfficialAppUrl(resolvedUrl),
-        fromCache,
+      }) => {
+        const isNewTab = targetName === "NEW_TAB";
+        const isWidget = targetName === "WIDGET";
+        const appUrl = app.appUrl;
+
+        const settingsValidation = appExtensionManifestOptionsSchemaWithDefault.safeParse(settings);
+
         /**
-         * Only available for NEW_TAB, POPUP, APP_PAGE
-         * TODO: Change interface to *not* contain this method if type is WIDGET
+         * Options are not required so fall back to safe GET
          */
-        open: (params: AppDetailsUrlMountQueryParams) => {
-          if (fromCache) {
-            // No real access token yet — do not POST/redirect with an empty token.
-            return;
-          }
+        const newTabMethod = settingsValidation.data?.newTabTarget?.method ?? "GET";
 
-          if (!settingsValidation.success) {
-            console.error("Invalid extension configuration", settingsValidation.error);
+        const resolvedUrl = isUrlAbsolute(url) ? url : `${appUrl ?? ""}${url}`;
 
-            return;
-          }
+        return {
+          id,
+          app,
+          accessToken: accessToken || "",
+          permissions: permissions.map(({ code }) => code),
+          url,
+          label,
+          identifier,
+          mountName: ALL_APP_EXTENSION_MOUNTS.parse(mountName),
+          targetName: AppExtensionManifestTarget.parse(targetName),
+          settings,
+          isSaleorOfficial: isSaleorOfficialAppUrl(resolvedUrl),
+          fromCache,
+          refetch,
+          /**
+           * Only available for NEW_TAB, POPUP, APP_PAGE
+           * TODO: Change interface to *not* contain this method if type is WIDGET
+           */
+          open: (params: AppDetailsUrlMountQueryParams) => {
+            if (fromCache) {
+              // No real access token yet — do not POST/redirect with an empty token.
+              return;
+            }
 
-          if (isWidget) {
-            console.error("Widget-type app should not execute 'open' method");
+            if (!settingsValidation.success) {
+              console.error("Invalid extension configuration", settingsValidation.error);
 
-            return;
-          }
+              return;
+            }
 
-          const isAbsolute = isUrlAbsolute(url);
-          const absoluteUrl = isAbsolute ? url : `${appUrl}${url}`;
+            if (isWidget) {
+              console.error("Widget-type app should not execute 'open' method");
 
-          if (!["http:", "https:"].includes(new URL(absoluteUrl).protocol)) {
-            console.error("Invalid url");
+              return;
+            }
 
-            return;
-          }
+            const isAbsolute = isUrlAbsolute(url);
+            const absoluteUrl = isAbsolute ? url : `${appUrl}${url}`;
 
-          if (isNewTab && newTabMethod === "GET") {
-            const redirectUrl = new URL(absoluteUrl);
+            if (!["http:", "https:"].includes(new URL(absoluteUrl).protocol)) {
+              console.error("Invalid url");
 
-            Object.entries(params ?? {}).forEach(([key, value]) => {
-              redirectUrl.searchParams.append(key, value);
+              return;
+            }
+
+            if (isNewTab && newTabMethod === "GET") {
+              const redirectUrl = new URL(absoluteUrl);
+
+              Object.entries(params ?? {}).forEach(([key, value]) => {
+                redirectUrl.searchParams.append(key, value);
+              });
+
+              return newTabActions.openGETinNewTab(redirectUrl.toString());
+            }
+
+            if (isNewTab && newTabMethod === "POST") {
+              return newTabActions.openPOSTinNewTab({
+                appParams: params,
+                accessToken,
+                appId: app.id,
+                extensionUrl: absoluteUrl,
+              });
+            }
+
+            openAppInContext({
+              id: app.id,
+              appToken: accessToken || "",
+              src: url,
+              label,
+              targetName: AppExtensionManifestTarget.parse(targetName),
+              params,
+              formState: {},
             });
-
-            return newTabActions.openGETinNewTab(redirectUrl.toString());
-          }
-
-          if (isNewTab && newTabMethod === "POST") {
-            return newTabActions.openPOSTinNewTab({
-              appParams: params,
-              accessToken,
-              appId: app.id,
-              extensionUrl: absoluteUrl,
-            });
-          }
-
-          openAppInContext({
-            id: app.id,
-            appToken: accessToken || "",
-            src: url,
-            label,
-            targetName: AppExtensionManifestTarget.parse(targetName),
-            params,
-            formState: {},
-          });
-        },
-      };
-    });
+          },
+        };
+      },
+    );
 
 const buildExtensionsMap = <T extends AllAppExtensionMounts>(
   extensions: ExtensionWithParams[],
@@ -166,7 +184,7 @@ const useExtensionsCore = <T extends AllAppExtensionMounts>(
     return snapshotRef.current;
   });
 
-  const { data, error } = useExtensionListQuery({
+  const { data, error, refetch } = useExtensionListQuery({
     fetchPolicy: "cache-and-network",
     variables: {
       filter: {
@@ -194,7 +212,12 @@ const useExtensionsCore = <T extends AllAppExtensionMounts>(
     extensions: sourceNodes,
     openAppInContext: activate,
     fromCache,
+    refetch,
   });
+
+  // Publish the page's loaded extensions so the global popup context can resolve
+  // an `openPopup` action's target against extensions co-located on this page.
+  useRegisterExtensions(mountList.join(","), extensions);
 
   return { extensions: buildExtensionsMap(extensions, mountList), loading };
 };

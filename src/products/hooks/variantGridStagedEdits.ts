@@ -2,7 +2,10 @@ import {
   type DatagridChange,
   type DatagridChangeOpts,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { type ProductDetailsVariantFragment } from "@dashboard/graphql";
+import {
+  type ProductDetailsVariantFragment,
+  type ProductVariantBulkCreateInput,
+} from "@dashboard/graphql";
 
 export interface VariantColumnUpdate {
   column: string;
@@ -13,22 +16,28 @@ export interface VariantGridStagedEditsState {
   snapshots: Map<string, ProductDetailsVariantFragment>;
   removedIds: Set<string>;
   updatesById: Map<string, VariantColumnUpdate[]>;
+  /** Generator (and future) creates waiting for product Save — survive pagination. */
+  creates: ProductVariantBulkCreateInput[];
 }
 
 export const createEmptyVariantGridStagedEdits = (): VariantGridStagedEditsState => ({
   snapshots: new Map(),
   removedIds: new Set(),
   updatesById: new Map(),
+  creates: [],
 });
 
 export const hasPendingVariantGridEdits = (state: VariantGridStagedEditsState): boolean =>
-  state.removedIds.size > 0 || state.updatesById.size > 0;
+  state.removedIds.size > 0 || state.updatesById.size > 0 || state.creates.length > 0;
 
 export const countPendingVariantGridEdits = (state: VariantGridStagedEditsState): number => {
   const updatedIds = [...state.updatesById.keys()].filter(id => !state.removedIds.has(id));
 
-  return state.removedIds.size + updatedIds.length;
+  return state.removedIds.size + updatedIds.length + state.creates.length;
 };
+
+export const countPendingVariantGridCreates = (state: VariantGridStagedEditsState): number =>
+  state.creates.length;
 
 /**
  * Maps a datagrid visual row (post-removal, excluding added rows) to a variant id
@@ -128,7 +137,7 @@ export const syncVariantGridStagedEditsFromPage = (
     updatesById.set(variantId, columnUpdates);
   });
 
-  return { snapshots, removedIds, updatesById };
+  return { snapshots, removedIds, updatesById, creates: state.creates };
 };
 
 /**
@@ -178,11 +187,13 @@ export interface VariantGridSubmitPayload {
   removedVariantIds: string[];
   updateVariants: ProductDetailsVariantFragment[];
   updateChanges: DatagridChangeOpts;
+  /** Staged bulk creates from the generator (and similar) waiting for Save. */
+  stagedCreates: ProductVariantBulkCreateInput[];
 }
 
 /**
- * Build handler inputs for cross-page deletes/updates from the staged store.
- * Create (`added`) stays page-local and is taken from the live datagrid opts.
+ * Build handler inputs for cross-page deletes/updates/creates from the staged store.
+ * Page-local datagrid `added` rows are still taken from the live datagrid opts.
  */
 export const buildVariantGridSubmitPayload = (
   state: VariantGridStagedEditsState,
@@ -222,6 +233,7 @@ export const buildVariantGridSubmitPayload = (
       removed: [],
       updates,
     },
+    stagedCreates: [...state.creates],
   };
 };
 
@@ -246,5 +258,130 @@ export const stageVariantRemovalsInStore = (
     ...state,
     removedIds,
     updatesById,
+  };
+};
+
+const attributeSignature = (input: ProductVariantBulkCreateInput): string => {
+  const attributes = input.attributes ?? [];
+
+  return attributes
+    .map(attribute => {
+      const values = [
+        ...(attribute.values ?? []),
+        attribute.dropdown?.value,
+        attribute.swatch?.value,
+        attribute.plainText,
+        attribute.boolean === undefined ? undefined : String(attribute.boolean),
+        attribute.numeric,
+        attribute.date,
+        attribute.dateTime,
+      ]
+        .filter((value): value is string => Boolean(value))
+        .sort()
+        .join(",");
+
+      return `${attribute.id}:${values}`;
+    })
+    .sort()
+    .join("|");
+};
+
+/**
+ * Append generator (or other) bulk-create inputs to the staged draft.
+ * Drops rows that collide with an already staged create (same attributes or SKU).
+ */
+export const stageVariantCreatesInStore = (
+  state: VariantGridStagedEditsState,
+  inputs: ProductVariantBulkCreateInput[],
+): { state: VariantGridStagedEditsState; stagedCount: number; skippedCount: number } => {
+  if (inputs.length === 0) {
+    return { state, stagedCount: 0, skippedCount: 0 };
+  }
+
+  const { unique, skippedCount } = dedupeBulkCreateInputs(inputs, state.creates);
+
+  if (unique.length === 0) {
+    return { state, stagedCount: 0, skippedCount };
+  }
+
+  return {
+    state: {
+      ...state,
+      creates: [...state.creates, ...unique],
+    },
+    stagedCount: unique.length,
+    skippedCount,
+  };
+};
+
+/**
+ * Drop bulk-create inputs that collide with an existing set (by attribute signature or SKU).
+ * Used when merging page-local adds with staged generator creates before Save.
+ */
+export const dedupeBulkCreateInputs = (
+  inputs: ProductVariantBulkCreateInput[],
+  alreadyPresent: ProductVariantBulkCreateInput[] = [],
+): { unique: ProductVariantBulkCreateInput[]; skippedCount: number } => {
+  const existingSignatures = new Set(alreadyPresent.map(attributeSignature));
+  const existingSkus = new Set(
+    alreadyPresent.map(create => create.sku).filter((sku): sku is string => Boolean(sku)),
+  );
+
+  const unique: ProductVariantBulkCreateInput[] = [];
+  let skippedCount = 0;
+
+  inputs.forEach(input => {
+    const signature = attributeSignature(input);
+    const sku = input.sku ?? undefined;
+
+    if (existingSignatures.has(signature) || (sku && existingSkus.has(sku))) {
+      skippedCount += 1;
+
+      return;
+    }
+
+    existingSignatures.add(signature);
+
+    if (sku) {
+      existingSkus.add(sku);
+    }
+
+    unique.push(input);
+  });
+
+  return { unique, skippedCount };
+};
+
+/** Clear accepted generator creates after the API has persisted them. */
+export const clearStagedVariantCreates = (
+  state: VariantGridStagedEditsState,
+): VariantGridStagedEditsState => ({
+  ...state,
+  creates: [],
+});
+
+/** Replace the full staged creates list (draft datagrid edits). */
+export const replaceStagedVariantCreates = (
+  state: VariantGridStagedEditsState,
+  creates: ProductVariantBulkCreateInput[],
+): VariantGridStagedEditsState => ({
+  ...state,
+  creates,
+});
+
+/** Drop staged creates by index (draft-grid remove selected). */
+export const removeStagedVariantCreatesAtIndexes = (
+  state: VariantGridStagedEditsState,
+  indexes: number[],
+): VariantGridStagedEditsState => {
+  if (indexes.length === 0) {
+    return state;
+  }
+
+  const toRemove = new Set(indexes);
+
+  return {
+    ...state,
+    creates: state.creates.filter((_, index) => !toRemove.has(index)),
   };
 };

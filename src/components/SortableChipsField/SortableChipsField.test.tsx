@@ -115,12 +115,12 @@ describe("SortableChipsField", () => {
     );
 
     // Assert
-    expect(screen.getByRole("button", { name: "+{count} more" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "+2 more" })).toBeInTheDocument();
     expect(screen.queryByText("Value 6")).not.toBeInTheDocument();
     expect(screen.queryByText("Value 7")).not.toBeInTheDocument();
 
     // Act
-    fireEvent.click(screen.getByRole("button", { name: "+{count} more" }));
+    fireEvent.click(screen.getByRole("button", { name: "+2 more" }));
 
     // Assert
     expect(screen.getByRole("button", { name: "Show less" })).toBeInTheDocument();
@@ -149,7 +149,7 @@ describe("SortableChipsField", () => {
     );
 
     // Act - Expand first
-    fireEvent.click(screen.getByRole("button", { name: "+{count} more" }));
+    fireEvent.click(screen.getByRole("button", { name: "+2 more" }));
 
     // Assert - All chips are visible
     expect(screen.getByText("Value 6")).toBeInTheDocument();
@@ -160,7 +160,7 @@ describe("SortableChipsField", () => {
     fireEvent.click(screen.getByRole("button", { name: "Show less" }));
 
     // Assert - Hidden chips are not visible, button text changed back
-    expect(screen.getByRole("button", { name: "+{count} more" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "+2 more" })).toBeInTheDocument();
     expect(screen.queryByText("Value 6")).not.toBeInTheDocument();
     expect(screen.queryByText("Value 7")).not.toBeInTheDocument();
   });

@@ -375,6 +375,10 @@
     "context": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
     "string": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history."
   },
+  "/xgmw8": {
+    "context": "Save composition segment for staged variant grid creates",
+    "string": "{count, plural, one {# new variant} other {# new variants}}"
+  },
   "/yJJvI": {
     "context": "dialog header",
     "string": "Select a product type"
@@ -956,6 +960,10 @@
   },
   "2gsiR1": {
     "string": "No warehouses found"
+  },
+  "2hWKKd": {
+    "context": "Product save pipeline step label",
+    "string": "Variant updates"
   },
   "2i81/P": {
     "context": "section header button",
@@ -2241,6 +2249,10 @@
     "context": "error when attribute create returns no id",
     "string": "Failed to create attribute"
   },
+  "91Pvy0": {
+    "context": "Save composition segment for staged variant deletes",
+    "string": "{count, plural, one {# variant pending delete} other {# variants pending delete}}"
+  },
   "91vQMc": {
     "string": "order management"
   },
@@ -2994,6 +3006,10 @@
     "context": "product export dialog step one intro",
     "string": "Select the columns and details to include in your export file."
   },
+  "CVaEon": {
+    "context": "Product save pipeline step label",
+    "string": "Attribute files"
+  },
   "CWDuMj": {
     "context": "remaining quantity",
     "string": "/ {max}"
@@ -3257,6 +3273,10 @@
   },
   "DovGIa": {
     "string": "Permission Group Deleted"
+  },
+  "DpZRsS": {
+    "context": "Savebar hint listing which product areas will persist on Save",
+    "string": "Unsaved changes: {segments}"
   },
   "Duik8x": {
     "context": "Link to publish the product immediately instead of scheduling",
@@ -3592,6 +3612,10 @@
   "FZTrzW": {
     "string": "Manual refund"
   },
+  "FaL3f6": {
+    "context": "Save composition segment for product details/SEO/organization/attributes",
+    "string": "details"
+  },
   "Fbr4Vp": {
     "context": "dialog header",
     "string": "Permissions"
@@ -3669,6 +3693,10 @@
   "FwHWUm": {
     "context": "alert",
     "string": "SKU limit reached"
+  },
+  "Fwt3tF": {
+    "context": "Save composition segment for dirty channel availability (publish, AFP, listings, add/remove)",
+    "string": "{count, plural, one {# channel edited} other {# channels edited}}"
   },
   "Fxa6xp": {
     "context": "page header",
@@ -4256,6 +4284,10 @@
     "context": "button",
     "string": "Create attribute"
   },
+  "IH3Xn2": {
+    "context": "Banner title after partial product save failure",
+    "string": "Some changes were not saved"
+  },
   "IH47ID": {
     "string": "Use button above to add new product variants"
   },
@@ -4649,6 +4681,10 @@
     "context": "warning dialog description when SKU and stock are not set",
     "string": "You haven't set a SKU prefix or initial stock. The variants will be created without these values. You can add them later by editing individual variants."
   },
+  "JxRh2Z": {
+    "context": "Product save pipeline step label",
+    "string": "Variant creates"
+  },
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
@@ -4698,6 +4734,10 @@
   },
   "KHZlmi": {
     "string": "Discount Type"
+  },
+  "KJ15H3": {
+    "context": "Product save pipeline step skipped",
+    "string": "Skipped"
   },
   "KJPsls": {
     "context": "Tooltip line showing UTC timestamp of a problem event",
@@ -4922,6 +4962,10 @@
   "LU8dtl": {
     "context": "date group header",
     "string": "Older"
+  },
+  "LVY0Tj": {
+    "context": "generate button — stages variants until product Save",
+    "string": "Add {count} {count, plural, one {variant} other {variants}}"
   },
   "LVa5ew": {
     "string": "Saleor ran into an unexpected problem"
@@ -5846,6 +5890,10 @@
   "PlAdWI": {
     "string": "You are going to"
   },
+  "PmLFgv": {
+    "context": "Button to remove all staged generator creates",
+    "string": "Clear all"
+  },
   "Pnj+JH": {
     "context": "key-value field input",
     "string": "Value"
@@ -5894,10 +5942,6 @@
   "PyxGqS": {
     "context": "customer overview, subtitle on total orders showing the most recent order date",
     "string": "Last order: {date}"
-  },
-  "Q+oKl+": {
-    "context": "confirmation dialog description",
-    "string": "You are about to create {count} variants. This may take a moment to process. This action cannot be automatically undone."
   },
   "Q/Nbku": {
     "context": "product field",
@@ -6495,10 +6539,6 @@
   "T5nU7u": {
     "context": "header",
     "string": "Create Token"
-  },
-  "T61cLQ": {
-    "context": "generate button",
-    "string": "Generate {count} {count, plural, one {variant} other {variants}}"
   },
   "T6dXGG": {
     "context": "header",
@@ -7359,6 +7399,10 @@
   "XJSRDK": {
     "context": "payment status",
     "string": "Fully refunded"
+  },
+  "XJZziQ": {
+    "context": "confirmation dialog description for staged generator creates",
+    "string": "You are about to add {count} variants to this product. They will be created when you save the product."
   },
   "XJm60a": {
     "string": "Manually change permission for the extension."
@@ -8789,6 +8833,14 @@
   "dHAwu8": {
     "string": "Code already exists"
   },
+  "dIDTp2": {
+    "context": "Save composition segment for distinct variants with staged grid edits (count is variants, not edit operations)",
+    "string": "{count, plural, one {# variant edited} other {# variants edited}}"
+  },
+  "dKeMgI": {
+    "context": "Product save pipeline step failed",
+    "string": "Failed"
+  },
   "dLIeRH": {
     "context": "charge status none",
     "string": "None"
@@ -9243,6 +9295,10 @@
     "context": "button",
     "string": "Assign categories"
   },
+  "g3xSRW": {
+    "context": "Product save pipeline step succeeded",
+    "string": "Saved"
+  },
   "g8lXTL": {
     "context": "swatch attribute",
     "string": "Swatch"
@@ -9626,6 +9682,10 @@
   "i/ZhxL": {
     "context": "section header returned",
     "string": "Fulfillment waiting for approval"
+  },
+  "i0dH9w": {
+    "context": "Product save pipeline step label",
+    "string": "Channel availability"
   },
   "i0ou1B": {
     "context": "Description for no variants error",
@@ -10042,10 +10102,6 @@
     "context": "app privacy policy link",
     "string": "View this extension's privacy policy."
   },
-  "jww7Wl": {
-    "context": "confirmation dialog title",
-    "string": "Generate {count} variants?"
-  },
   "jxCLwG": {
     "context": "bulk edit toggle label",
     "string": "Edit in bulk"
@@ -10277,6 +10333,10 @@
   "ki2FY7": {
     "context": "Badge label for webhook delivery error problems",
     "string": "Webhook delivery"
+  },
+  "ki5OGg": {
+    "context": "Dismiss partial product save banner",
+    "string": "Dismiss"
   },
   "ki7Mr8": {
     "context": "product export to csv file, header",
@@ -10527,6 +10587,10 @@
   },
   "llBnr+": {
     "string": "Warehouse Name"
+  },
+  "llKwCf": {
+    "context": "Empty option in tax class combobox when there is no inherited default",
+    "string": "None"
   },
   "lm9NSK": {
     "context": "password reset, button",
@@ -10953,6 +11017,10 @@
     "context": "sales channel a11y label prefix",
     "string": "Channel"
   },
+  "nsTglh": {
+    "context": "confirmation dialog title for staging generated variants",
+    "string": "Add {count} variants?"
+  },
   "nudPsY": {
     "context": "metadata field name, header",
     "string": "Field"
@@ -11020,6 +11088,10 @@
   "oB0y5Y": {
     "context": "order status",
     "string": "Unfulfilled"
+  },
+  "oEE4gd": {
+    "context": "Product save pipeline step label",
+    "string": "Variant deletes"
   },
   "oEFc87": {
     "context": "Warning when no shipping zones configured",
@@ -11194,6 +11266,10 @@
   "p6ugX0": {
     "context": "button to keep order",
     "string": "Keep order"
+  },
+  "p73Q1f": {
+    "context": "Product save pipeline step label",
+    "string": "Product details"
   },
   "p9bXAy": {
     "context": "default transaction name",
@@ -11655,6 +11731,10 @@
     "context": "transaction event type, amount was authorized, but not captured",
     "string": "Authorization"
   },
+  "qtSRwh": {
+    "context": "Title for the draft list of generator-staged variants awaiting Save",
+    "string": "{count, plural, one {# new variant (unsaved)} other {# new variants (unsaved)}}"
+  },
   "qu/hXD": {
     "string": "Selected {number} items"
   },
@@ -11714,6 +11794,10 @@
   "r7uSVR": {
     "context": "model seo options description",
     "string": "Add search engine title and description to make this model easier to find"
+  },
+  "rBfhUQ": {
+    "context": "Banner description after partial product save failure",
+    "string": "Saving runs in steps. Review what applied below, fix the problem, and save again."
   },
   "rCy3Fe": {
     "context": "invalid date in expirydate field content",
@@ -12032,6 +12116,10 @@
   "sglKoA": {
     "context": "create attribute dialog step two intro for model types",
     "string": "Add the choices merchants can pick from and set how this attribute behaves on models."
+  },
+  "sh4Ozn": {
+    "context": "Exit form dialog body on product update page",
+    "string": "Media and metadata changes are already saved. Unsaved product details, availability, and variant edits will be lost."
   },
   "shmSDX": {
     "context": "no products placeholder",
@@ -13109,6 +13197,10 @@
   "xBulM3": {
     "string": "Set reward and conditions for the selected channel"
   },
+  "xE38Jf": {
+    "context": "Empty option on product tax class combobox — clears override so product type tax class applies",
+    "string": "Product type default"
+  },
   "xEef/i": {
     "string": "Open this model in GraphiQL"
   },
@@ -13144,6 +13236,10 @@
   "xOEZjV": {
     "context": "attribute's label",
     "string": "Default Label"
+  },
+  "xOrtMG": {
+    "context": "Availability card hint when channel listings are dirty",
+    "string": "{count, plural, one {# channel has unsaved changes} other {# channels have unsaved changes}}"
   },
   "xPJQvL": {
     "context": "gift card customer assigned success message",
@@ -13190,6 +13286,10 @@
   },
   "xgPXGD": {
     "string": "Customers deleted"
+  },
+  "xhruoo": {
+    "context": "Empty option on shipping method tax class combobox — uses Saleor default tax class",
+    "string": "Default"
   },
   "xipkZ1": {
     "context": "matrix column header",

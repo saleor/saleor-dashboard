@@ -30,7 +30,7 @@ export interface AttributeRowProps extends AttributeRowHandlers {
   attribute: AttributeInput;
   attributeValues: AttributeValueFragment[];
   disabled: boolean;
-  error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
+  error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment | undefined;
   loading: boolean;
   onAttributeSelectBlur?: () => void;
   richTextGetters: RichTextGetters<string>;

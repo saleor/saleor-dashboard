@@ -1,5 +1,40 @@
 # Changelog
 
+## 3.23.20
+
+### Patch Changes
+
+- [#6763](https://github.com/saleor/saleor-dashboard/pull/6763) [`c3c4202`](https://github.com/saleor/saleor-dashboard/commit/c3c4202a2c8a430f5625246adbf046b7da7ba51f) Thanks [@mirekm](https://github.com/mirekm)! - Rich text quote blocks now render as a blockquote with a left border and muted caption, instead of two bordered form fields.
+
+- [#6782](https://github.com/saleor/saleor-dashboard/pull/6782) [`f31967a`](https://github.com/saleor/saleor-dashboard/commit/f31967ae39bd015056aec72a519d41334eced5f3) Thanks [@mirekm](https://github.com/mirekm)! - Fixed a stray "0" showing under Order value when a gift card was attached to the order but no balance was used.
+
+- [#6778](https://github.com/saleor/saleor-dashboard/pull/6778) [`afd4c35`](https://github.com/saleor/saleor-dashboard/commit/afd4c3564116db9ca19020425f1cbaa0c3549e61) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Product media images no longer require a page refresh when the thumbnail is still being generated. Previously, when Saleor was not yet ready to serve an image, the dashboard showed a permanent "Image could not be loaded" fallback until the page was refreshed manually. Now the image is retried automatically with exponential backoff and appears as soon as it becomes available.
+
+- [#6780](https://github.com/saleor/saleor-dashboard/pull/6780) [`2b8944d`](https://github.com/saleor/saleor-dashboard/commit/2b8944da43c5fd2864e92c7adecee0813c8dd944) Thanks [@mirekm](https://github.com/mirekm)! - Homepage fullscreen widgets (e.g. Pulse) now render edge-to-edge under the tabs, without the previous content inset.
+
+- [#6690](https://github.com/saleor/saleor-dashboard/pull/6690) [`5549155`](https://github.com/saleor/saleor-dashboard/commit/5549155c1fbbc2d9cb6b4a9dd431d5f8c7a262e6) Thanks [@jiuyige](https://github.com/jiuyige)! - Fixed numeric attribute fields so values can be copied and pasted, making long numeric values such as EANs easier to enter without typing them manually.
+
+- [#6773](https://github.com/saleor/saleor-dashboard/pull/6773) [`48c39da`](https://github.com/saleor/saleor-dashboard/commit/48c39da5b3e580041dfa79e79d7a5556841b47bf) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed text-based app extension mounts in detail-page widget lists being aligned against the sidebar edge instead of matching the horizontal padding of widget cards.
+
+- [#6775](https://github.com/saleor/saleor-dashboard/pull/6775) [`7c2cc86`](https://github.com/saleor/saleor-dashboard/commit/7c2cc86a2c319e93bb770ba8e3fd9a71194b75aa) Thanks [@mirekm](https://github.com/mirekm)! - Product edit save behavior is clearer and safer:
+  - The save bar lists what will be saved (details, channels, variants). Partial failures show which steps applied, and a failed save keeps the draft for retry.
+  - Generated variants are staged until Save and appear in an editable draft grid (name, SKU, prices, stock).
+  - Retrying after a partial failure doesn't recreates variants the API already accepted.
+  - Tax class can be cleared to fall back to the product type default.
+  - Clearing rating or SEO title/description now persists correctly instead of silently keeping the old values.
+
+## 3.23.19
+
+### Patch Changes
+
+- [#6752](https://github.com/saleor/saleor-dashboard/pull/6752) [`7ae356f`](https://github.com/saleor/saleor-dashboard/commit/7ae356fdda0786050474c93f217f099e249c40bb) Thanks [@EugenBodanov](https://github.com/EugenBodanov)! - Add slug translation fields for products, categories, collections, and pages.
+
+- [#6667](https://github.com/saleor/saleor-dashboard/pull/6667) [`8c919fb`](https://github.com/saleor/saleor-dashboard/commit/8c919fbe506a40d93b4f7873e91aa4449076485b) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Widgets can now open a full-mode popup. A WIDGET extension can dispatch the new `openPopup` App Bridge action to open one of its app's POPUP extensions declared on the same page, passing an arbitrary JSON payload to it. This lets an app render a compact widget inline and let the user expand it into a larger popup view on demand. The popup always opens with a fresh access token and fills the full popup height.
+
+- [#6762](https://github.com/saleor/saleor-dashboard/pull/6762) [`e49c816`](https://github.com/saleor/saleor-dashboard/commit/e49c816869c2bf13f5faeef8753d8a1e43fea26c) Thanks [@mirekm](https://github.com/mirekm)! - Fixed product variant channel price being reset to 0 when availability was turned off and back on before saving. The original price is now kept when re-enabling availability in the same edit session.
+
+- [#6767](https://github.com/saleor/saleor-dashboard/pull/6767) [`0bf4beb`](https://github.com/saleor/saleor-dashboard/commit/0bf4beb95aed35ff62833054f4d6cd3efd25b215) Thanks [@mirekm](https://github.com/mirekm)! - Reverted the client-side product media file size pre-check introduced in the media management improvements. Oversized images are no longer blocked in the browser before upload; Saleor Core enforces the configured size limit.
+
 ## 3.23.18
 
 ### Patch Changes

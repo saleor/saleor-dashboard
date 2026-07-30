@@ -7277,11 +7277,6 @@ type ProductType implements Node & ObjectWithMetadata @doc(category: "Products")
   """Whether shipping is required for this product type."""
   isShippingRequired: Boolean!
 
-  """
-  Whether the product type is digital - doesn't have any effect, it's present for backward-compatibility.
-  """
-  isDigital: Boolean! @deprecated(reason: "Will be removed in v3.24.0, use metadata or attributes instead.")
-
   """Weight of the product type."""
   weight: Weight
 
@@ -15120,6 +15115,11 @@ type Shop implements ObjectWithMetadata {
   Added in Saleor 3.22.
   """
   useLegacyUpdateWebhookEmission: Boolean @deprecated
+
+  """
+  Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging
+  """
+  accountConfirmMergeMode: AccountConfirmModeEnum!
 }
 
 """External authentication plugin."""
@@ -15258,6 +15258,25 @@ enum PasswordLoginModeEnum @doc(category: "Authentication") {
   ENABLED
   CUSTOMERS_ONLY
   DISABLED
+}
+
+"""
+AccountConfirmMode set the account merging mode for anonymous objects.
+
+    This dictates the behavior of the `confirmAccount()` mutation for
+    password-based authentication when attempting to merge orders & giftcard
+    that aren't associated to a user account.
+
+    Modes:
+
+    - MERGE_DISABLED disables merging only when the authentication method
+      is password (i.e., when not using OIDC)
+    - REQUIRE_PASSWORD enables account merging who accounts that use password
+      authentication but it requires the user to enter their password
+"""
+enum AccountConfirmModeEnum @doc(category: "Authentication") {
+  MERGE_DISABLED
+  REQUIRE_PASSWORD
 }
 
 """Gift card related settings from site settings."""
@@ -15446,7 +15465,6 @@ enum ProductTypeConfigurable @doc(category: "Products") {
 }
 
 enum ProductTypeEnum @doc(category: "Products") {
-  DIGITAL @deprecated(reason: "DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead.")
   SHIPPABLE
 }
 
@@ -15461,9 +15479,6 @@ input ProductTypeSortingInput @doc(category: "Products") {
 enum ProductTypeSortField @doc(category: "Products") {
   """Sort products by name."""
   NAME
-
-  """Sort products by type."""
-  DIGITAL @deprecated(reason: "DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.")
 
   """Sort products by shipping."""
   SHIPPING_REQUIRED
@@ -21271,9 +21286,9 @@ type Mutation {
   ): AttributeCreate @doc(category: "Attributes") @webhookEventsInfo(asyncEvents: [ATTRIBUTE_CREATED], syncEvents: [])
 
   """
-  Deletes an attribute. 
+  Deletes an attribute.
   
-  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
   
   Triggers the following webhook events:
   - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -21287,9 +21302,9 @@ type Mutation {
   ): AttributeDelete @doc(category: "Attributes") @webhookEventsInfo(asyncEvents: [ATTRIBUTE_DELETED], syncEvents: [])
 
   """
-  Updates attribute. 
+  Updates attribute.
   
-  Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
   
   Triggers the following webhook events:
   - ATTRIBUTE_UPDATED (async): An attribute was updated.
@@ -21799,6 +21814,11 @@ type Mutation {
   confirmAccount(
     """E-mail of the user performing account confirmation."""
     email: String!
+
+    """
+    Password of the user confirming their account. Required when `REQUIRED_PASSWORD` mode is enabled in shop settings. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging
+    """
+    password: String
 
     """A one-time token required to confirm the account."""
     token: String!
@@ -23239,6 +23259,11 @@ input ShopSettingsInput {
   Added in Saleor 3.22.
   """
   useLegacyUpdateWebhookEmission: Boolean @deprecated
+
+  """
+  Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging
+  """
+  accountConfirmMergeMode: AccountConfirmModeEnum
 }
 
 """
@@ -25197,11 +25222,6 @@ input ProductTypeInput @doc(category: "Products") {
 
   """Determines if shipping is required for products of this variant."""
   isShippingRequired: Boolean
-
-  """
-  Determines if products are digital - doesn't have any effect, it's present for backward-compatibility.
-  """
-  isDigital: Boolean
 
   """Weight of the ProductType items."""
   weight: WeightScalar
@@ -31742,9 +31762,9 @@ input AttributeValueCreateInput @doc(category: "Attributes") {
 }
 
 """
-Deletes an attribute. 
+Deletes an attribute.
 
-Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
 
 Triggers the following webhook events:
 - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -31756,9 +31776,9 @@ type AttributeDelete @doc(category: "Attributes") @webhookEventsInfo(asyncEvents
 }
 
 """
-Updates attribute. 
+Updates attribute.
 
-Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
 
 Triggers the following webhook events:
 - ATTRIBUTE_UPDATED (async): An attribute was updated.

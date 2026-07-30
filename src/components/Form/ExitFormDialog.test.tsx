@@ -46,11 +46,13 @@ describe("ExitFormDialog", () => {
       onClose: jest.fn(),
       onLeave: jest.fn(),
       isOpen: true,
+      description: "Media changes are already saved.",
     };
     const user = userEvent.setup();
     // Act
-    const { getByTestId } = render(<ExitFormDialog {...props} />);
+    const { getByTestId, getByText } = render(<ExitFormDialog {...props} />);
 
+    expect(getByText("Media changes are already saved.")).toBeInTheDocument();
     await user.click(getByTestId("back"));
     // Assert
     expect(props.onClose).toHaveBeenCalled();

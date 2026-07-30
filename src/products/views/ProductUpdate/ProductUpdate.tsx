@@ -9,17 +9,14 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
-  ErrorPolicyEnum,
   type ProductMediaCreateMutation,
   type ProductMediaCreateMutationVariables,
   ProductMediaType,
-  type ProductVariantBulkCreateInput,
   useProductDeleteMutation,
   useProductDetailsQuery,
   useProductMediaBulkDeleteMutation,
   useProductMediaCreateMutation,
   useProductMediaReorderMutation,
-  useProductVariantBulkCreateMutation,
 } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -205,7 +202,6 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   // File uploads report a single batch toast from ProductMedia; keep per-upload
   // notifications only for URL/oEmbed uploads via createProductMedia.
   const [createProductImage] = useProductMediaCreateMutation();
-  const [bulkCreateVariants] = useProductVariantBulkCreateMutation();
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
@@ -274,102 +270,6 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   };
   const handleBack = () => navigate(productListUrl());
 
-  /**
-   * Handles bulk variant creation with two-tier error handling:
-   *
-   * 1. Attribute errors (e.g., missing required attribute) → returned in `attributeErrors`
-   *    and displayed INLINE next to the field in the generator modal. No notification shown.
-   *
-   * 2. Other errors (e.g., duplicate SKU, network) → shown as NOTIFICATIONS.
-   *    Only the first unique error is shown to avoid notification spam.
-   *
-   * This split ensures users see actionable errors where they can fix them (inline),
-   * while general failures are communicated via notifications.
-   */
-  const handleBulkCreateVariants = useCallback(
-    async (inputs: ProductVariantBulkCreateInput[]) => {
-      const result = await bulkCreateVariants({
-        variables: {
-          id,
-          inputs,
-          errorPolicy: ErrorPolicyEnum.REJECT_FAILED_ROWS,
-        },
-      });
-
-      const bulkErrors = result.data?.productVariantBulkCreate.errors ?? [];
-      const results = result.data?.productVariantBulkCreate.results ?? [];
-      const successCount = results.filter(
-        r => r.productVariant && (!r.errors || r.errors.length === 0),
-      ).length;
-      const failedCount = results.filter(r => r.errors && r.errors.length > 0).length;
-
-      // Categorize errors: attribute-specific (inline) vs other (notifications)
-      const attributeErrors: Array<{
-        attributeId: string;
-        code: string;
-        message: string | null;
-      }> = [];
-      const otherErrors: Array<{ message: string | null }> = [];
-
-      results
-        .flatMap(r => r.errors ?? [])
-        .forEach(error => {
-          if (error.attributes && error.attributes.length > 0) {
-            error.attributes.forEach(attrId => {
-              attributeErrors.push({
-                attributeId: attrId,
-                code: error.code,
-                message: error.message,
-              });
-            });
-          } else {
-            otherErrors.push({ message: error.message });
-          }
-        });
-
-      bulkErrors.forEach(error => {
-        otherErrors.push({ message: getProductErrorMessage(error, intl) });
-      });
-
-      // Show notifications based on outcome (skip if attribute errors will be shown inline)
-      if (successCount > 0 && failedCount === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(messages.variantBulkCreateSuccess, { count: successCount }),
-        });
-        refetch();
-        refetchVariants();
-      } else if (successCount > 0 && failedCount > 0) {
-        notify({
-          status: "warning",
-          text: intl.formatMessage(messages.variantBulkCreatePartial, {
-            success: successCount,
-            failed: failedCount,
-          }),
-        });
-        refetch();
-        refetchVariants();
-      } else if (attributeErrors.length === 0 && otherErrors.length > 0) {
-        const uniqueMessages = [...new Set(otherErrors.map(e => e.message).filter(Boolean))];
-
-        if (uniqueMessages[0]) {
-          notify({
-            status: "error",
-            text: uniqueMessages[0],
-          });
-        }
-      }
-
-      return {
-        success: successCount > 0,
-        successCount,
-        failedCount,
-        attributeErrors,
-        otherErrors,
-      };
-    },
-    [bulkCreateVariants, id, intl, notify, refetch, refetchVariants],
-  );
   const handleImageDelete = (mediaId: string) => () => {
     const mediaItem = product?.media?.find(item => item.id === mediaId);
 
@@ -537,6 +437,8 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         }}
         limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
+        saveSteps={submitOpts.saveSteps}
+        onDismissSaveSteps={submitOpts.clearSaveSteps}
         media={data?.product?.media}
         product={product}
         loading={loading && !product}
@@ -586,7 +488,6 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         onAttributeSelectBlur={searchAttributeReset}
         onAttributeValuesSearch={getAttributeValuesSuggestions}
         onFilterChange={onFilterChange}
-        onBulkCreateVariants={handleBulkCreateVariants}
         initialConstraints={initialConstraints}
       />
       <ProductMetadataDialog

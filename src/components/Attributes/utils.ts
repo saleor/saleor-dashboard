@@ -131,7 +131,7 @@ export function getMultiDisplayValue(
 }
 
 export function getErrorMessage(
-  err: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment,
+  err: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment | undefined,
   intl: IntlShape,
 ): string {
   switch (err?.__typename) {

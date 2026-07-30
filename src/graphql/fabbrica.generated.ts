@@ -4749,7 +4749,7 @@ export const defineAttributeCreatedFactory: DefineTypeFactoryInterface<
 /**
  * Deletes an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -5058,7 +5058,7 @@ export const defineAttributeTypeEnumFilterInputFactory: DefineTypeFactoryInterfa
 /**
  * Updates attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_UPDATED (async): An attribute was updated.
@@ -15769,7 +15769,7 @@ export type OptionalMutation = {
   /**
  * Deletes an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -15794,7 +15794,7 @@ export type OptionalMutation = {
   /**
  * Updates attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_UPDATED (async): An attribute was updated.
@@ -31804,6 +31804,8 @@ export const defineShippingZoneUpdatedFactory: DefineTypeFactoryInterface<
 /** Represents a shop resource containing general shop data and configuration. */
 export type OptionalShop = {
   __typename?: 'Shop';
+  /** Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging */
+  accountConfirmMergeMode?: Shop['accountConfirmMergeMode'] | undefined;
   /**
  * Determines if user can login without confirmation when `enableAccountConfirmation` is enabled.
  *
@@ -32112,6 +32114,8 @@ export const defineShopMetadataUpdatedFactory: DefineTypeFactoryInterface<
 
 export type OptionalShopSettingsInput = {
   __typename?: 'ShopSettingsInput';
+  /** Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging */
+  accountConfirmMergeMode?: ShopSettingsInput['accountConfirmMergeMode'] | undefined;
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: ShopSettingsInput['allowLoginWithoutConfirmation'] | undefined;
   /** Charge taxes on shipping. */

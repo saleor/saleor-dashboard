@@ -119,4 +119,9 @@ export interface ProductVariantGeneratorProps {
   onAttributeValuesSearch: (attributeId: string, query: string) => Promise<Option[]>;
   /** Returns result with error details for inline display */
   onSubmit: (inputs: ProductVariantBulkCreateInput[]) => Promise<BulkCreateResult>;
+  /**
+   * Already-staged generator creates for this product draft.
+   * Treated like existing variants so previews show Exists and Save does not double-stage.
+   */
+  stagedCreates?: ProductVariantBulkCreateInput[];
 }

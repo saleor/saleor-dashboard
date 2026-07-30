@@ -67,7 +67,7 @@ describe("ManifestErrorMessage", () => {
     // Check the error message text with placeholder
     expect(screen.getByText(/The extension's manifest has an invalid format/)).toBeInTheDocument();
     expect(screen.getByText(/{docsLink}/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/INVALID_MANIFEST_FORMAT/)).toBeInTheDocument();
   });
 
   it("renders backend error without specific documentation link", () => {
@@ -80,7 +80,7 @@ describe("ManifestErrorMessage", () => {
     renderWithError(error);
     // Assert
     expect(screen.getByText(/You are not allowed to perform this action/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/FORBIDDEN/)).toBeInTheDocument();
   });
 
   it("renders generic fallback error message for unknown client error string", () => {
@@ -94,7 +94,7 @@ describe("ManifestErrorMessage", () => {
 
     // Assert
     expect(screen.getByText(/An unexpected error occurred/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/client/)).toBeInTheDocument();
   });
 
   it("renders generic 'Unknown error' message for unknown error object", () => {
@@ -107,7 +107,7 @@ describe("ManifestErrorMessage", () => {
     renderWithError(error);
     // Assert
     expect(screen.getByText(/An unexpected error occurred/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/unknown/)).toBeInTheDocument();
   });
 
   it("sets aria-live='polite' on the root Box when error is displayed", () => {
