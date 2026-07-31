@@ -78,6 +78,7 @@ const SiteSettings = () => {
       useLegacyShippingZoneStockAvailability: data.useLegacyShippingZoneStockAvailability,
       preserveAllAddressFields: data.preserveAllAddressFields,
       passwordLoginMode: data.passwordLoginMode,
+      allowStorefrontTraffic: data.allowStorefrontTraffic,
     };
 
     return extractMutationErrors(

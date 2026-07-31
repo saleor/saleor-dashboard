@@ -60,6 +60,20 @@ const MATCHERS: ViewMatcher[] = [
 const EMPTY_CONTEXT: SearchActionContext = { view: null, params: {} };
 
 /**
+ * `matchPath` does not percent-decode params, but ids are base64 global ids whose
+ * padding is encoded in the URL ("UHJvZHVjdDo3Mw%3D%3D"). They must be decoded here —
+ * otherwise `stringifyQs` encodes them a second time and apps receive an id the API
+ * rejects. Falls back to the raw value for malformed sequences, which would throw.
+ */
+const decodeId = (id: string): string => {
+  try {
+    return decodeURIComponent(id);
+  } catch {
+    return id;
+  }
+};
+
+/**
  * Derives the current dashboard view and its entity-id context from a pathname.
  *
  * Detail routes resolve a single id (nested routes such as a product variant or an
@@ -85,7 +99,7 @@ export const resolveSearchActionContext = (pathname: string): SearchActionContex
         continue;
       }
 
-      return { view: matcher.view, params: { [matcher.param]: id } };
+      return { view: matcher.view, params: { [matcher.param]: decodeId(id) } };
     }
 
     return { view: matcher.view, params: {} };

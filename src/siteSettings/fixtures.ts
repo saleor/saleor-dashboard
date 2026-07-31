@@ -42,6 +42,7 @@ export const shop: SiteSettingsQuery["shop"] = {
   useLegacyShippingZoneStockAvailability: true,
   preserveAllAddressFields: false,
   passwordLoginMode: PasswordLoginModeEnum.ENABLED,
+  allowStorefrontTraffic: true,
   reserveStockDurationAnonymousUser: 10,
   reserveStockDurationAuthenticatedUser: 10,
   limitQuantityPerCheckout: 50,

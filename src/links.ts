@@ -77,6 +77,7 @@ export const getSpecificManifestErrorDocLink = (errorCode?: AppErrorCode): strin
     [AppErrorCode.FORBIDDEN]: EXTENSION_MANIFEST_DOCS, // No docs section
     [AppErrorCode.OUT_OF_SCOPE_APP]: EXTENSION_MANIFEST_DOCS, // No docs sect
     [AppErrorCode.DUPLICATED_EXTENSION_IDENTIFIER]: EXTENSION_MANIFEST_DOCS, // No docs section
+    [AppErrorCode.DUPLICATED_WEBHOOK_IDENTIFIER]: EXTENSION_MANIFEST_DOCS, // No docs section
   };
 
   return codeToLinkMap[errorCode] || "";

@@ -42,6 +42,9 @@ const stockAvailabilityWebhooks = [
 const stockAvailabilityDocsUrl =
   "https://docs.saleor.io/developer/stock/overview#legacy-stock-availability";
 
+const storefrontTrafficDocsUrl =
+  "https://docs.saleor.io/api-usage/authentication#blocking-storefront-traffic";
+
 interface SiteSettingsPageAddressFormData {
   city: string;
   companyName: string;
@@ -61,6 +64,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
   useLegacyShippingZoneStockAvailability: boolean;
   preserveAllAddressFields: boolean;
   passwordLoginMode: PasswordLoginModeEnum;
+  allowStorefrontTraffic: boolean;
 }
 
 interface SiteSettingsPageProps {
@@ -120,6 +124,7 @@ export const SiteSettingsPage = ({
     useLegacyShippingZoneStockAvailability: shop?.useLegacyShippingZoneStockAvailability ?? true,
     preserveAllAddressFields: shop?.preserveAllAddressFields ?? false,
     passwordLoginMode: shop?.passwordLoginMode ?? PasswordLoginModeEnum.ENABLED,
+    allowStorefrontTraffic: shop?.allowStorefrontTraffic ?? true,
   };
 
   return (
@@ -153,8 +158,8 @@ export const SiteSettingsPage = ({
               <SettingsPageContent
                 description={
                   <FormattedMessage
-                    id="En8pZE"
-                    defaultMessage="Store identity, company address, and how customers sign in. Advanced options cover legacy API behavior."
+                    id="KqJTVN"
+                    defaultMessage="Store identity, company address, how customers sign in, and who may call the API. Advanced options cover legacy API behavior."
                     description="intro under store settings page title"
                   />
                 }
@@ -269,6 +274,61 @@ export const SiteSettingsPage = ({
                       />
                     </SettingsFieldStack>
                   </Box>
+                </SettingsSection>
+
+                <SettingsSection
+                  id={settingsHashes.storeApiAccess}
+                  data-test-id="api-access-settings"
+                  ownership="shop"
+                  title={intl.formatMessage(messages.sectionApiAccessTitle)}
+                  description={intl.formatMessage(messages.sectionApiAccessDescription)}
+                >
+                  <SettingsToggleRow
+                    id={settingsHashes.storeStorefrontTraffic}
+                    name="allowStorefrontTraffic"
+                    title={intl.formatMessage(messages.sectionStorefrontTrafficTitle)}
+                    description={
+                      <FormattedMessage
+                        {...messages.sectionStorefrontTrafficDescription}
+                        values={{
+                          a: chunks => (
+                            <Link href={storefrontTrafficDocsUrl} target="_blank">
+                              {chunks}
+                            </Link>
+                          ),
+                        }}
+                      />
+                    }
+                    checked={data.allowStorefrontTraffic}
+                    disabled={disabled}
+                    onCheckedChange={isEnabled =>
+                      change({
+                        target: { name: "allowStorefrontTraffic", value: isEnabled },
+                      })
+                    }
+                    data-test-id="allow-storefront-traffic-checkbox"
+                  />
+                  {!data.allowStorefrontTraffic ? (
+                    <Box paddingX={6} paddingY={4} display="flex" flexDirection="column" gap={1}>
+                      <Text size={2} color="critical1" fontWeight="medium">
+                        {intl.formatMessage(messages.sectionStorefrontTrafficWarningIntro)}
+                      </Text>
+                      <Box as="ul" margin={0} paddingLeft={5}>
+                        {[
+                          messages.sectionStorefrontTrafficWarningLogin,
+                          messages.sectionStorefrontTrafficWarningAnonymous,
+                          messages.sectionStorefrontTrafficWarningIntrospection,
+                          messages.sectionStorefrontTrafficWarningCache,
+                        ].map(message => (
+                          <Box as="li" key={message.id}>
+                            <Text size={2} color="default2">
+                              {intl.formatMessage(message)}
+                            </Text>
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                  ) : null}
                 </SettingsSection>
 
                 <SettingsSection
