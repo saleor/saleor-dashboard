@@ -111,6 +111,39 @@ describe("resolveSearchActionContext", () => {
     expect(result).toEqual({ view: "MENU_DETAILS", params: { menuId: "TWVudTox" } });
   });
 
+  it("decodes a percent-encoded id so apps receive the raw global id", () => {
+    // Arrange
+    const pathname = "/products/UHJvZHVjdDo3Mw%3D%3D";
+
+    // Act
+    const result = resolveSearchActionContext(pathname);
+
+    // Assert
+    expect(result).toEqual({
+      view: "PRODUCT_DETAILS",
+      params: { productId: "UHJvZHVjdDo3Mw==" },
+    });
+  });
+
+  it("leaves an already-decoded id untouched", () => {
+    // Act
+    const result = resolveSearchActionContext("/products/UHJvZHVjdDo3Mw==");
+
+    // Assert
+    expect(result).toEqual({
+      view: "PRODUCT_DETAILS",
+      params: { productId: "UHJvZHVjdDo3Mw==" },
+    });
+  });
+
+  it("falls back to the raw segment when the id is not a valid escape sequence", () => {
+    // Act
+    const result = resolveSearchActionContext("/products/100%");
+
+    // Assert
+    expect(result).toEqual({ view: "PRODUCT_DETAILS", params: { productId: "100%" } });
+  });
+
   it("returns no view for non-entity routes", () => {
     // Act / Assert
     expect(resolveSearchActionContext("/")).toEqual({ view: null, params: {} });
