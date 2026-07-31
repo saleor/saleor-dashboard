@@ -699,6 +699,24 @@ describe("Extensions / hooks / useExtensions", () => {
       expect(result.current.extensions.PRODUCT_OVERVIEW_CREATE).toEqual([]);
     });
 
+    it("reports loading=true for an empty snapshot until live data arrives", () => {
+      // Arrange - a prior empty visit persisted `[]`. That must not short-circuit
+      // loading, or homepage empty-state UIs flash before the network confirms.
+      const key = getExtensionsSnapshotKey(["PRODUCT_OVERVIEW_CREATE"]);
+
+      localStorage.setItem(key, JSON.stringify([]));
+      useExtensionListQueryMock.mockReturnValue({ data: undefined, error: undefined });
+
+      // Act
+      const { result } = renderHook(() =>
+        useExtensionsWithLoadingState(["PRODUCT_OVERVIEW_CREATE"] as const),
+      );
+
+      // Assert
+      expect(result.current.loading).toBe(true);
+      expect(result.current.extensions.PRODUCT_OVERVIEW_CREATE).toEqual([]);
+    });
+
     it("renders snapshot extensions synchronously with loading=false and fromCache=true", () => {
       // Arrange - persist a snapshot, then simulate a cold query (no data yet)
       const key = getExtensionsSnapshotKey(["PRODUCT_OVERVIEW_CREATE"]);

@@ -121,8 +121,10 @@ describe("HomePage states", () => {
     renderHomePage();
 
     // Assert
+    expect(screen.getByTestId("home-extensions-loading")).toBeInTheDocument();
     expect(screen.queryByText("See how your store is doing")).not.toBeInTheDocument();
     expect(screen.queryByTestId("home-widgets-grid")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("home-pulse-cta")).not.toBeInTheDocument();
   });
 
   it("renders the Pulse empty state when loaded with no extensions", () => {
