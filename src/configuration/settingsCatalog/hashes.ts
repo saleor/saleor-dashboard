@@ -26,6 +26,8 @@ export const settingsHashes = {
   storeCustomerAccounts: "customer-accounts",
   storeEmailConfirmation: "email-confirmation",
   storePasswordLogin: "password-login",
+  storeApiAccess: "api-access",
+  storeStorefrontTraffic: "storefront-traffic",
   storeAdvanced: "advanced",
   storeWebhookEmission: "webhook-emission",
   storeStockAvailability: "stock-availability",

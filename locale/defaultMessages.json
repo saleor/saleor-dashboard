@@ -1870,6 +1870,10 @@
     "context": "link to configure shipping method channel pricing",
     "string": "Set up pricing"
   },
+  "7BQ5zc": {
+    "context": "consequence of blocking storefront traffic",
+    "string": "The setting is cached — a change takes up to 5 minutes to reach every worker."
+  },
   "7CZ8Tp": {
     "context": "Description for no shipping zones info when shop uses direct warehouse-channel stock availability",
     "string": "Customers can browse and add this product to cart, but no shipping methods will be available at checkout. Add at least one shipping zone to this channel to enable shipping."
@@ -2395,6 +2399,10 @@
   },
   "9Z7LQq": {
     "string": "Use email:"
+  },
+  "9ZJLIE": {
+    "context": "intro to list of consequences of blocking storefront traffic",
+    "string": "Turning this off blocks storefronts from reaching the API on their own:"
   },
   "9Zlogd": {
     "context": "staff member status",
@@ -3442,10 +3450,6 @@
     "context": "settings search alias",
     "string": "address validation"
   },
-  "En8pZE": {
-    "context": "intro under store settings page title",
-    "string": "Store identity, company address, and how customers sign in. Advanced options cover legacy API behavior."
-  },
   "EoNN9v": {
     "context": "Label for visible in listings toggle",
     "string": "Show in listings"
@@ -3601,6 +3605,10 @@
   "FX7ts2": {
     "context": "error message",
     "string": "Amount should be greater than 0"
+  },
+  "FXSauI": {
+    "context": "settings search alias",
+    "string": "storefront traffic"
   },
   "FXtMVc": {
     "string": "A URL field within the extension's manifest has an invalid format. {docsLink} ({errorCode})"
@@ -3835,6 +3843,10 @@
   "GNKG74": {
     "context": "webhooks inactive label",
     "string": "Inactive"
+  },
+  "GNX9HV": {
+    "context": "section title for GraphQL API access settings",
+    "string": "API access"
   },
   "GOKr7S": {
     "context": "gift card history message",
@@ -4820,6 +4832,10 @@
   "KpP/aW": {
     "string": "Order was marked as"
   },
+  "KqJTVN": {
+    "context": "intro under store settings page title",
+    "string": "Store identity, company address, how customers sign in, and who may call the API. Advanced options cover legacy API behavior."
+  },
   "KqbfFa": {
     "context": "expiry date selection info message",
     "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
@@ -5338,6 +5354,10 @@
     "context": "page title",
     "string": "Weight Rate Create"
   },
+  "NDnOZ0": {
+    "context": "section description for API access",
+    "string": "Control which clients are allowed to call the GraphQL API directly."
+  },
   "NEJo1I": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {voucherCode}?"
@@ -5579,6 +5599,10 @@
   "OKGd/k": {
     "context": "order history message",
     "string": "Order was created from draft"
+  },
+  "ONl3Bh": {
+    "context": "consequence of blocking storefront traffic",
+    "string": "Anonymous browsing and guest checkout are no longer possible."
   },
   "OP3Fgn": {
     "context": "section description for advanced store settings",
@@ -6590,6 +6614,10 @@
   "TKmub+": {
     "string": "This field is required"
   },
+  "TL6F/t": {
+    "context": "consequence of blocking storefront traffic",
+    "string": "Schema introspection requires app or staff credentials."
+  },
   "TLDkvR": {
     "context": "transaction event type, transaction was cancelled / voided",
     "string": "Cancel"
@@ -7099,6 +7127,10 @@
     "context": "command menu shortcut",
     "string": "Command menu"
   },
+  "VvqEe2": {
+    "context": "consequence of blocking storefront traffic",
+    "string": "Customer login, password reset and account confirmation stop working — the check runs before the operation is read, so authentication mutations are rejected too."
+  },
   "Vwqh4L": {
     "context": "dialog subtitle explaining what user should do",
     "string": "Select attribute values to create all possible variant combinations"
@@ -7166,6 +7198,10 @@
   "W8i2Ez": {
     "context": "product field",
     "string": "Name"
+  },
+  "WAcPLa": {
+    "context": "settings search alias",
+    "string": "block anonymous and customer API access"
   },
   "WCaf5C": {
     "string": "Approve"
@@ -11307,6 +11343,10 @@
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
   },
+  "pGCyyB": {
+    "context": "settings search alias",
+    "string": "api access"
+  },
   "pGDYG5": {
     "context": "search label",
     "string": "Search Countries"
@@ -12644,6 +12684,10 @@
   "v20Mra": {
     "string": "Menus deleted"
   },
+  "v286+q": {
+    "context": "card header and checkbox label",
+    "string": "Allow storefront traffic"
+  },
   "v3WWK+": {
     "string": "Status is invalid"
   },
@@ -12867,6 +12911,10 @@
   },
   "vprU7C": {
     "string": "Select visible order channels"
+  },
+  "vqSGtP": {
+    "context": "section description",
+    "string": "When enabled, anonymous clients and signed-in customers can call the GraphQL API directly. When disabled, only apps and staff users can — every other request is rejected with HTTP 401. <a>Learn more</a>."
   },
   "vqu+23": {
     "context": "success notifier message",

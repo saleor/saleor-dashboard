@@ -55,6 +55,53 @@ export const messages = defineMessages({
     description:
       "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
   },
+  sectionApiAccessTitle: {
+    id: "GNX9HV",
+    defaultMessage: "API access",
+    description: "section title for GraphQL API access settings",
+  },
+  sectionApiAccessDescription: {
+    id: "NDnOZ0",
+    defaultMessage: "Control which clients are allowed to call the GraphQL API directly.",
+    description: "section description for API access",
+  },
+  sectionStorefrontTrafficTitle: {
+    id: "v286+q",
+    defaultMessage: "Allow storefront traffic",
+    description: "card header and checkbox label",
+  },
+  sectionStorefrontTrafficDescription: {
+    id: "vqSGtP",
+    defaultMessage:
+      "When enabled, anonymous clients and signed-in customers can call the GraphQL API directly. When disabled, only apps and staff users can — every other request is rejected with HTTP 401. <a>Learn more</a>.",
+    description: "section description",
+  },
+  sectionStorefrontTrafficWarningIntro: {
+    id: "9ZJLIE",
+    defaultMessage: "Turning this off blocks storefronts from reaching the API on their own:",
+    description: "intro to list of consequences of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningLogin: {
+    id: "VvqEe2",
+    defaultMessage:
+      "Customer login, password reset and account confirmation stop working — the check runs before the operation is read, so authentication mutations are rejected too.",
+    description: "consequence of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningAnonymous: {
+    id: "ONl3Bh",
+    defaultMessage: "Anonymous browsing and guest checkout are no longer possible.",
+    description: "consequence of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningIntrospection: {
+    id: "TL6F/t",
+    defaultMessage: "Schema introspection requires app or staff credentials.",
+    description: "consequence of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningCache: {
+    id: "7BQ5zc",
+    defaultMessage: "The setting is cached — a change takes up to 5 minutes to reach every worker.",
+    description: "consequence of blocking storefront traffic",
+  },
   sectionAdvancedTitle: {
     id: "BgEWXq",
     defaultMessage: "Advanced",
