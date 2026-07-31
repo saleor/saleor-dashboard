@@ -63,7 +63,7 @@
   },
   "config": {
     "saleor": {
-      "schemaVersion": "3.23"
+      "schemaVersion": "5fce10cd8147d49d65108b63ef9622d895e012d2"
     }
   },
   "dependencies": {

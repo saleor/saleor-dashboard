@@ -47,6 +47,15 @@ export default defineMessages({
     defaultMessage: "Edit permissions",
     id: "psmnv9",
   },
+  installedByTitle: {
+    defaultMessage: "Installed by",
+    id: "so1MpQ",
+    description: "section header",
+  },
+  installedByDescription: {
+    defaultMessage: "{user} installed this extension on {date}.",
+    id: "TlWrHX",
+  },
   appWebhooksTitle: {
     defaultMessage: "Extension Webhooks",
     id: "/z5aI6",

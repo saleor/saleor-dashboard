@@ -1147,6 +1147,7 @@ export type AppError = {
 
 export type AppErrorCode =
   | 'DUPLICATED_EXTENSION_IDENTIFIER'
+  | 'DUPLICATED_WEBHOOK_IDENTIFIER'
   | 'FORBIDDEN'
   | 'GRAPHQL_ERROR'
   | 'INVALID'
@@ -1300,6 +1301,14 @@ export type AppInstallation = Job & Node & {
   createdAt: Scalars['DateTime']['output'];
   /** The ID of the app installation. */
   id: Scalars['ID']['output'];
+  /**
+   * The staff user who requested this installation. Null for installations created before this was tracked, or if the user has been deleted.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_STAFF.
+   */
+  installedBy: Maybe<User>;
   /** The URL address of manifest for the app installation. */
   manifestUrl: Scalars['String']['output'];
   /** Job message. */
@@ -1663,6 +1672,20 @@ export type AppToken = Node & {
   __typename: 'AppToken';
   /** Last 4 characters of the token. */
   authToken: Maybe<Scalars['String']['output']>;
+  /**
+   * The date and time when the token was created. Null for tokens created before this was tracked.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  /**
+   * The user who created this token. Null for tokens created before this was tracked, or if the user has been deleted.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_STAFF.
+   */
+  createdBy: Maybe<User>;
   /** The ID of the app token. */
   id: Scalars['ID']['output'];
   /** Name of the authenticated token. */
@@ -32540,6 +32563,12 @@ export type Webhook = Node & {
   events: Array<WebhookEvent>;
   /** The ID of webhook. */
   id: Scalars['ID']['output'];
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app, null when not set.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier: Maybe<Scalars['String']['output']>;
   /** Informs if webhook is activated. */
   isActive: Scalars['Boolean']['output'];
   /** The name of webhook. */
@@ -32593,6 +32622,12 @@ export type WebhookCreateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive: InputMaybe<Scalars['Boolean']['input']>;
   /** The name of the webhook. */
@@ -33639,6 +33674,12 @@ export type WebhookUpdateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive: InputMaybe<Scalars['Boolean']['input']>;
   /** The new name of the webhook. */

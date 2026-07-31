@@ -89,6 +89,13 @@ export const AppFragmentDoc = gql`
     authToken
     id
     name
+    createdAt
+    createdBy @include(if: $hasManageStaffPermission) {
+      id
+      email
+      firstName
+      lastName
+    }
   }
   webhooks @include(if: $hasManagedAppsPermission) {
     ...Webhook
@@ -106,6 +113,12 @@ export const AppInstallationFragmentDoc = gql`
     logo {
       default(format: WEBP, size: 64)
     }
+  }
+  installedBy @include(if: $hasManageStaffPermission) {
+    id
+    email
+    firstName
+    lastName
   }
 }
     `;
@@ -9335,7 +9348,7 @@ export type PluginUpdateMutationHookResult = ReturnType<typeof usePluginUpdateMu
 export type PluginUpdateMutationResult = Apollo.MutationResult<Types.PluginUpdateMutation>;
 export type PluginUpdateMutationOptions = Apollo.BaseMutationOptions<Types.PluginUpdateMutation, Types.PluginUpdateMutationVariables>;
 export const AppCreateDocument = gql`
-    mutation AppCreate($input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
+    mutation AppCreate($input: AppInput!, $hasManagedAppsPermission: Boolean = true, $hasManageStaffPermission: Boolean = false) {
   appCreate(input: $input) {
     authToken
     app {
@@ -9365,6 +9378,7 @@ export type AppCreateMutationFn = Apollo.MutationFunction<Types.AppCreateMutatio
  *   variables: {
  *      input: // value for 'input'
  *      hasManagedAppsPermission: // value for 'hasManagedAppsPermission'
+ *      hasManageStaffPermission: // value for 'hasManageStaffPermission'
  *   },
  * });
  */
@@ -9376,7 +9390,7 @@ export type AppCreateMutationHookResult = ReturnType<typeof useAppCreateMutation
 export type AppCreateMutationResult = Apollo.MutationResult<Types.AppCreateMutation>;
 export type AppCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>;
 export const AppDeleteDocument = gql`
-    mutation AppDelete($id: ID!, $hasManagedAppsPermission: Boolean = true) {
+    mutation AppDelete($id: ID!, $hasManagedAppsPermission: Boolean = true, $hasManageStaffPermission: Boolean = false) {
   appDelete(id: $id) {
     app {
       ...App
@@ -9405,6 +9419,7 @@ export type AppDeleteMutationFn = Apollo.MutationFunction<Types.AppDeleteMutatio
  *   variables: {
  *      id: // value for 'id'
  *      hasManagedAppsPermission: // value for 'hasManagedAppsPermission'
+ *      hasManageStaffPermission: // value for 'hasManageStaffPermission'
  *   },
  * });
  */
@@ -9537,7 +9552,7 @@ export type AppRetryInstallMutationHookResult = ReturnType<typeof useAppRetryIns
 export type AppRetryInstallMutationResult = Apollo.MutationResult<Types.AppRetryInstallMutation>;
 export type AppRetryInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>;
 export const AppUpdateDocument = gql`
-    mutation AppUpdate($id: ID!, $input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
+    mutation AppUpdate($id: ID!, $input: AppInput!, $hasManagedAppsPermission: Boolean = true, $hasManageStaffPermission: Boolean = false) {
   appUpdate(id: $id, input: $input) {
     app {
       ...App
@@ -9573,6 +9588,7 @@ export type AppUpdateMutationFn = Apollo.MutationFunction<Types.AppUpdateMutatio
  *      id: // value for 'id'
  *      input: // value for 'input'
  *      hasManagedAppsPermission: // value for 'hasManagedAppsPermission'
+ *      hasManageStaffPermission: // value for 'hasManageStaffPermission'
  *   },
  * });
  */
@@ -9981,7 +9997,7 @@ export type EventDeliveryQueryHookResult = ReturnType<typeof useEventDeliveryQue
 export type EventDeliveryLazyQueryHookResult = ReturnType<typeof useEventDeliveryLazyQuery>;
 export type EventDeliveryQueryResult = Apollo.QueryResult<Types.EventDeliveryQuery, Types.EventDeliveryQueryVariables>;
 export const AppsInstallationsDocument = gql`
-    query AppsInstallations {
+    query AppsInstallations($hasManageStaffPermission: Boolean = false) {
   appsInstallations {
     ...AppInstallation
   }
@@ -10000,6 +10016,7 @@ export const AppsInstallationsDocument = gql`
  * @example
  * const { data, loading, error } = useAppsInstallationsQuery({
  *   variables: {
+ *      hasManageStaffPermission: // value for 'hasManageStaffPermission'
  *   },
  * });
  */
@@ -10015,7 +10032,7 @@ export type AppsInstallationsQueryHookResult = ReturnType<typeof useAppsInstalla
 export type AppsInstallationsLazyQueryHookResult = ReturnType<typeof useAppsInstallationsLazyQuery>;
 export type AppsInstallationsQueryResult = Apollo.QueryResult<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>;
 export const AppDocument = gql`
-    query App($id: ID!, $hasManagedAppsPermission: Boolean!) {
+    query App($id: ID!, $hasManagedAppsPermission: Boolean!, $hasManageStaffPermission: Boolean = false) {
   app(id: $id) {
     ...App
     aboutApp
@@ -10048,6 +10065,7 @@ export const AppDocument = gql`
  *   variables: {
  *      id: // value for 'id'
  *      hasManagedAppsPermission: // value for 'hasManagedAppsPermission'
+ *      hasManageStaffPermission: // value for 'hasManageStaffPermission'
  *   },
  * });
  */

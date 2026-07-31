@@ -9,6 +9,7 @@ import { AppWebhooksDisplay } from "../AppWebhooksDisplay/AppWebhooksDisplay";
 import { AboutCard } from "./AboutCard";
 import { DataPrivacyCard } from "./DataPrivacyCard";
 import { Header } from "./Header";
+import { InstalledByCard } from "./InstalledByCard";
 import { PermissionsCard } from "./PermissionsCard";
 
 const noConfigurationScreenMessages = defineMessages({
@@ -111,6 +112,14 @@ export const AppDetailsPage = ({
             borderBottomWidth={1}
             borderColor="default1"
             dataPrivacyUrl={data?.dataPrivacyUrl}
+            loading={loading}
+          />
+          <InstalledByCard
+            padding={6}
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="default1"
+            tokens={data?.tokens}
             loading={loading}
           />
         </Box>

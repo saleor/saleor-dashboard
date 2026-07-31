@@ -259,6 +259,7 @@ export enum AnnouncementImportanceEnum {
 
 export enum AppErrorCode {
   DUPLICATED_EXTENSION_IDENTIFIER = 'DUPLICATED_EXTENSION_IDENTIFIER',
+  DUPLICATED_WEBHOOK_IDENTIFIER = 'DUPLICATED_WEBHOOK_IDENTIFIER',
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -9347,6 +9348,12 @@ export type WebhookCreateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The name of the webhook. */
@@ -10356,6 +10363,12 @@ export type WebhookUpdateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The new name of the webhook. */
@@ -11404,18 +11417,20 @@ export type PluginUpdateMutation = { __typename: 'Mutation', pluginUpdate: { __t
 export type AppCreateMutationVariables = Exact<{
   input: AppInput;
   hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']['input']>;
+  hasManageStaffPermission?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typename: 'AppCreate', authToken: string | null, app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typename: 'AppCreate', authToken: string | null, app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null, createdAt: any | null, createdBy?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppDeleteMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']['input']>;
+  hasManageStaffPermission?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type AppDeleteMutation = { __typename: 'Mutation', appDelete: { __typename: 'AppDelete', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+export type AppDeleteMutation = { __typename: 'Mutation', appDelete: { __typename: 'AppDelete', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null, createdAt: any | null, createdBy?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
 export type AppFetchMutationVariables = Exact<{
   manifestUrl: Scalars['String']['input'];
@@ -11442,10 +11457,11 @@ export type AppUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   input: AppInput;
   hasManagedAppsPermission?: InputMaybe<Scalars['Boolean']['input']>;
+  hasManageStaffPermission?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type AppUpdateMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', message: string | null, permissions: Array<PermissionEnum> | null, field: string | null, code: AppErrorCode }> } | null };
+export type AppUpdateMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null, createdAt: any | null, createdBy?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', message: string | null, permissions: Array<PermissionEnum> | null, field: string | null, code: AppErrorCode }> } | null };
 
 export type AppTokenCreateMutationVariables = Exact<{
   input: AppTokenInput;
@@ -11524,18 +11540,21 @@ export type EventDeliveryQueryVariables = Exact<{
 
 export type EventDeliveryQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null } }> } | null };
 
-export type AppsInstallationsQueryVariables = Exact<{ [key: string]: never; }>;
+export type AppsInstallationsQueryVariables = Exact<{
+  hasManageStaffPermission?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
 
 
-export type AppsInstallationsQuery = { __typename: 'Query', appsInstallations: Array<{ __typename: 'AppInstallation', status: JobStatusEnum, message: string | null, appName: string, manifestUrl: string, id: string, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null }> };
+export type AppsInstallationsQuery = { __typename: 'Query', appsInstallations: Array<{ __typename: 'AppInstallation', status: JobStatusEnum, message: string | null, appName: string, manifestUrl: string, id: string, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, installedBy?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null }> };
 
 export type AppQueryVariables = Exact<{
   id: Scalars['ID']['input'];
   hasManagedAppsPermission: Scalars['Boolean']['input'];
+  hasManageStaffPermission?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
-export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, author: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
+export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, author: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null, createdAt: any | null, createdBy?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
 
 export type ExtensionListQueryVariables = Exact<{
   filter: AppExtensionFilterInput;
@@ -11615,9 +11634,9 @@ export type AddressFragment = { __typename: 'Address', city: string, cityArea: s
 
 export type AppManifestFragment = { __typename: 'Manifest', identifier: string, version: string, about: string | null, name: string, appUrl: string | null, tokenTargetUrl: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, homepageUrl: string | null, supportUrl: string | null, extensions: Array<{ __typename: 'AppManifestExtension', targetName: string, mountName: string, url: string, label: string, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> }>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, brand: { __typename: 'AppManifestBrand', logo: { __typename: 'AppManifestBrandLogo', default: string } } | null };
 
-export type AppFragment = { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null };
+export type AppFragment = { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens?: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null, createdAt: any | null, createdBy?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null }> | null, webhooks?: Array<{ __typename: 'Webhook', id: string, name: string | null, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null };
 
-export type AppInstallationFragment = { __typename: 'AppInstallation', status: JobStatusEnum, message: string | null, appName: string, manifestUrl: string, id: string, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
+export type AppInstallationFragment = { __typename: 'AppInstallation', status: JobStatusEnum, message: string | null, appName: string, manifestUrl: string, id: string, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, installedBy?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null };
 
 export type AppListItemFragment = { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, manifestUrl: string | null, version: string | null, created: any | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null, webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null };
 

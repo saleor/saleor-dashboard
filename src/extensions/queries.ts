@@ -77,7 +77,7 @@ export const eventDeliveries = gql`
 `;
 
 export const appsInstallations = gql`
-  query AppsInstallations {
+  query AppsInstallations($hasManageStaffPermission: Boolean = false) {
     appsInstallations {
       ...AppInstallation
     }
@@ -85,7 +85,11 @@ export const appsInstallations = gql`
 `;
 
 export const appDetails = gql`
-  query App($id: ID!, $hasManagedAppsPermission: Boolean!) {
+  query App(
+    $id: ID!
+    $hasManagedAppsPermission: Boolean!
+    $hasManageStaffPermission: Boolean = false
+  ) {
     app(id: $id) {
       ...App
       aboutApp

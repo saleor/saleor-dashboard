@@ -18,6 +18,7 @@ import {
   useAppQuery,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
+import { useHasManageStaffPermission } from "@dashboard/hooks/useHasManageStaffPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
@@ -35,9 +36,10 @@ interface Props {
 export const EditManifestExtension = ({ id, params }: Props) => {
   const client = useApolloClient();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+  const { hasManageStaffPermission } = useHasManageStaffPermission();
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id, hasManagedAppsPermission },
+    variables: { id, hasManagedAppsPermission, hasManageStaffPermission },
   });
   const appExists = data?.app !== null;
   const navigate = useNavigator();

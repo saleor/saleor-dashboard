@@ -932,6 +932,10 @@
   "2atspc": {
     "string": "Drafts"
   },
+  "2bcoCH": {
+    "context": "custom app token creation date",
+    "string": "Created"
+  },
   "2biVb2": {
     "context": "Toggle to filter inactive channels out of the order settings matrix",
     "string": "Hide inactive channels"
@@ -2042,6 +2046,10 @@
   "87rPKi": {
     "context": "Label for disabled auto-confirm row in tooltip",
     "string": "Off"
+  },
+  "89Ne4o": {
+    "context": "custom app tokens list - missing token creation data",
+    "string": "(unknown)"
   },
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
@@ -6700,6 +6708,9 @@
     "context": "tabel column header",
     "string": "Refunded Qty"
   },
+  "TlWrHX": {
+    "string": "{user} installed this extension on {date}."
+  },
   "TnTi/a": {
     "context": "pricing card title",
     "string": "Pricing"
@@ -8207,6 +8218,10 @@
     "context": "voucher status",
     "string": "Active"
   },
+  "amlX8v": {
+    "context": "who started an app installation",
+    "string": "Requested by {user}"
+  },
   "anK7jD": {
     "string": "Product Type"
   },
@@ -8960,6 +8975,10 @@
   "e7yOai": {
     "context": "shipping address is not set in draft order",
     "string": "Not set"
+  },
+  "e8EAlK": {
+    "context": "custom app tokens list - token author",
+    "string": "by {author}"
   },
   "e8O72h": {
     "context": "password login mode option",
@@ -12147,6 +12166,10 @@
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
+  },
+  "so1MpQ": {
+    "context": "section header",
+    "string": "Installed by"
   },
   "spjKeI": {
     "string": "Fulfillment approved"

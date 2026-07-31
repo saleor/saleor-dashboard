@@ -2824,6 +2824,14 @@ export type OptionalAppInstallation = {
   createdAt?: AppInstallation['createdAt'] | undefined;
   /** The ID of the app installation. */
   id?: AppInstallation['id'] | undefined;
+  /**
+ * The staff user who requested this installation. Null for installations created before this was tracked, or if the user has been deleted.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_STAFF.
+ */
+  installedBy?: Maybe<OptionalUser> | undefined;
   /** The URL address of manifest for the app installation. */
   manifestUrl?: AppInstallation['manifestUrl'] | undefined;
   /** Job message. */
@@ -3403,6 +3411,20 @@ export type OptionalAppToken = {
   __typename?: 'AppToken';
   /** Last 4 characters of the token. */
   authToken?: AppToken['authToken'] | undefined;
+  /**
+ * The date and time when the token was created. Null for tokens created before this was tracked.
+ *
+ * Added in Saleor 3.23.
+ */
+  createdAt?: AppToken['createdAt'] | undefined;
+  /**
+ * The user who created this token. Null for tokens created before this was tracked, or if the user has been deleted.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_STAFF.
+ */
+  createdBy?: Maybe<OptionalUser> | undefined;
   /** The ID of the app token. */
   id?: AppToken['id'] | undefined;
   /** Name of the authenticated token. */
@@ -37487,6 +37509,12 @@ export type OptionalWebhook = {
   events?: OptionalWebhookEvent[] | undefined;
   /** The ID of webhook. */
   id?: Webhook['id'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app, null when not set.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: Webhook['identifier'] | undefined;
   /** Informs if webhook is activated. */
   isActive?: Webhook['isActive'] | undefined;
   /** The name of webhook. */
@@ -37545,6 +37573,12 @@ export type OptionalWebhookCreateInput = {
   customHeaders?: WebhookCreateInput['customHeaders'] | undefined;
   /** The events that webhook wants to subscribe. */
   events?: WebhookCreateInput['events'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: WebhookCreateInput['identifier'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookCreateInput['isActive'] | undefined;
   /** The name of the webhook. */
@@ -37794,6 +37828,12 @@ export type OptionalWebhookUpdateInput = {
   customHeaders?: WebhookUpdateInput['customHeaders'] | undefined;
   /** The events that webhook wants to subscribe. */
   events?: WebhookUpdateInput['events'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: WebhookUpdateInput['identifier'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookUpdateInput['isActive'] | undefined;
   /** The new name of the webhook. */
