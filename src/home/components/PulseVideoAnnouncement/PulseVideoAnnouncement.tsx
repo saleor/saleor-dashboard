@@ -4,10 +4,10 @@ import {
   PULSE_POSTER_URL,
   PULSE_VIDEO_URL,
 } from "@dashboard/home/getPulsePromotionLink";
-import { rippleSaleorPulse } from "@dashboard/home/ripples/saleorPulse";
 import { homeUrl } from "@dashboard/home/urls";
 import { PULSE_DOCS_URL } from "@dashboard/links";
 import { RippleVideoAnnouncement } from "@dashboard/ripples/components/RippleVideoAnnouncement/RippleVideoAnnouncement";
+import { type CornerRippleComponentProps } from "@dashboard/ripples/cornerRipples/selectActiveCornerRipple";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -36,8 +36,11 @@ const messages = defineMessages({
 /**
  * Bottom-left Pulse video announcement. Uses ripple storage for TTL/dismiss,
  * with a dedicated card UI (not the contextual Tooltip ripple).
+ * Mount via CornerRipplesHost — `model` must match the registry entry.
  */
-export const PulseVideoAnnouncement = (): JSX.Element | null => {
+export const PulseVideoAnnouncement = ({
+  model,
+}: CornerRippleComponentProps): JSX.Element | null => {
   const intl = useIntl();
   const pulseLink = getPulsePromotionLink(IS_CLOUD_INSTANCE);
 
@@ -55,7 +58,7 @@ export const PulseVideoAnnouncement = (): JSX.Element | null => {
 
   return (
     <RippleVideoAnnouncement
-      model={rippleSaleorPulse}
+      model={model}
       videoUrl={PULSE_VIDEO_URL}
       posterUrl={PULSE_POSTER_URL}
       dismissAriaLabel={intl.formatMessage(messages.dismissAriaLabel)}

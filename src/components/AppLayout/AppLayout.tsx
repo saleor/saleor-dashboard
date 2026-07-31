@@ -1,6 +1,6 @@
 import { AnnouncementsContainer } from "@dashboard/announcements/components/AnnouncementsContainer/AnnouncementsContainer";
-import { PulseVideoAnnouncement } from "@dashboard/home/components/PulseVideoAnnouncement/PulseVideoAnnouncement";
 import useAppState from "@dashboard/hooks/useAppState";
+import { CornerRipplesHost } from "@dashboard/ripples/components/CornerRipplesHost/CornerRipplesHost";
 import { LinearProgress } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
@@ -66,7 +66,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         </Box>
       </Box>
       {/* Fixed to the viewport bottom-left (nav corner); keep out of SidebarContent to avoid double-mount in drawer layouts. */}
-      <PulseVideoAnnouncement />
+      <CornerRipplesHost />
     </SidebarProvider>
   );
 };
