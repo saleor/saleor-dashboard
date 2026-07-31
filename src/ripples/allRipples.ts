@@ -9,6 +9,7 @@ import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOve
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
+import { rippleSaleorPulse } from "@dashboard/home/ripples/saleorPulse";
 import { rippleGroupedModelTypeTabs } from "@dashboard/modeling/ripples/groupedModelTypeTabs";
 import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
@@ -85,6 +86,7 @@ export const allRipples: Ripple[] = [
 
   // Home
   rippleHomeWidgets,
+  rippleSaleorPulse,
 
   // Channels
   checkoutAutocompleteSettings,

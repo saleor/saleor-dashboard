@@ -1,0 +1,43 @@
+.root {
+  /* Viewport bottom-left = navigation corner (sidebar is 260px; card may spill into content). */
+  position: fixed;
+  z-index: 3;
+  left: var(--mu-spacing-4);
+  bottom: var(--mu-spacing-4);
+  width: min(360px, calc(100vw - var(--mu-spacing-8)));
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 12px 40px -12px rgba(0, 0, 0, 0.18);
+  animation: rippleVideoAnnounceIn 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rippleVideoAnnounceIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    animation: none;
+  }
+}
+
+.videoWrap {
+  aspect-ratio: 16 / 9;
+  background-color: var(--mu-colors-background-default2);
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}

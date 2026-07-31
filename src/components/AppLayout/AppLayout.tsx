@@ -1,4 +1,5 @@
 import { AnnouncementsContainer } from "@dashboard/announcements/components/AnnouncementsContainer/AnnouncementsContainer";
+import { PulseVideoAnnouncement } from "@dashboard/home/components/PulseVideoAnnouncement/PulseVideoAnnouncement";
 import useAppState from "@dashboard/hooks/useAppState";
 import { LinearProgress } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
@@ -64,6 +65,8 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           />
         </Box>
       </Box>
+      {/* Fixed to the viewport bottom-left (nav corner); keep out of SidebarContent to avoid double-mount in drawer layouts. */}
+      <PulseVideoAnnouncement />
     </SidebarProvider>
   );
 };

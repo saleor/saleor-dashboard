@@ -1,4 +1,5 @@
 import githubLogo from "@assets/images/github-logo.svg";
+import { Link } from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
@@ -6,6 +7,7 @@ import { allRipples } from "@dashboard/ripples/allRipples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
 import { type Ripple, type RippleType } from "@dashboard/ripples/types";
+import { isExternalURL } from "@dashboard/utils/urls";
 import { Box, Button, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
 import { cloneElement, isValidElement, type ReactNode, useEffect, useMemo, useState } from "react";
@@ -74,6 +76,7 @@ const rippleTypeToPillStatus: Record<RippleType, PillStatusType> = {
   feature: "success",
   improvement: "info",
   bugfix: "error",
+  newApp: "attention",
 };
 
 const rippleTypeMessages = defineMessages({
@@ -88,6 +91,11 @@ const rippleTypeMessages = defineMessages({
   bugfix: {
     id: "RUwHjA",
     defaultMessage: "Bug Fix",
+  },
+  newApp: {
+    id: "bqsyq+",
+    defaultMessage: "New App",
+    description: "ripple type badge for a newly available app",
   },
 });
 
@@ -142,23 +150,21 @@ const RippleAction = ({ action }: { action: NonNullable<Ripple["actions"]>[numbe
   const label = intl.formatMessage(action.label);
 
   if (action.href) {
+    const external = isExternalURL(action.href);
+
+    // Internal hrefs must go through Dashboard Link (basename / SPA). Opening
+    // them with target="_blank" broke in-app install deep-links under /dashboard.
     return (
-      <Box
-        as="a"
+      <Link
         href={action.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        display="flex"
-        alignItems="center"
-        gap={1}
-        marginTop={3}
-        cursor="pointer"
+        inline={false}
+        className={styles.actionLink}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        textDecoration="none"
       >
         <RippleActionContent label={label} isHovered={isHovered} />
-      </Box>
+      </Link>
     );
   }
 
@@ -168,7 +174,6 @@ const RippleAction = ({ action }: { action: NonNullable<Ripple["actions"]>[numbe
       display="flex"
       alignItems="center"
       gap={1}
-      marginTop={3}
       cursor="pointer"
       onClick={action.onClick}
       onMouseEnter={() => setIsHovered(true)}
@@ -230,15 +235,40 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast }: RippleEntryRowProps) =>
           {ripple.content.oneLiner}
         </Text>
 
+        {ripple.media?.kind === "video" ? (
+          <Box
+            className={styles.mediaVideoWrap}
+            marginBottom={3}
+            borderRadius={3}
+            overflow="hidden"
+          >
+            <video
+              className={styles.mediaVideo}
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              poster={ripple.media.poster}
+              aria-label={ripple.content.oneLiner}
+            >
+              <source src={ripple.media.src} type="video/mp4" />
+            </video>
+          </Box>
+        ) : null}
+
         {/* Description */}
         <RippleGlobalDescription content={ripple.content.global} />
 
         {/* Actions - filter out actions marked as hideInModal */}
-        {ripple.actions
-          ?.filter(action => !action.hideInModal)
-          .map((action, index) => (
-            <RippleAction key={`${ripple.ID}-action-${index}`} action={action} />
-          ))}
+        {ripple.actions?.some(action => !action.hideInModal) ? (
+          <Box display="flex" flexWrap="wrap" alignItems="center" gap={4} marginTop={3}>
+            {ripple.actions
+              .filter(action => !action.hideInModal)
+              .map((action, index) => (
+                <RippleAction key={`${ripple.ID}-action-${index}`} action={action} />
+              ))}
+          </Box>
+        ) : null}
       </Box>
     </Box>
   );

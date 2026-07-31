@@ -138,5 +138,9 @@ describe("HomePage states", () => {
     // Assert
     expect(screen.getByText("See how your store is doing")).toBeInTheDocument();
     expect(screen.getByTestId("home-pulse-cta")).toBeInTheDocument();
+    expect(screen.getByTestId("home-create-own-homepage-link")).toHaveAttribute(
+      "href",
+      expect.stringContaining("extending-dashboard-with-apps"),
+    );
   });
 });

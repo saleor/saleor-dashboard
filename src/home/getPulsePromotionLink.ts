@@ -1,3 +1,4 @@
+import pulsePoster from "@assets/images/cover-big-pulse-by-saleor.png";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 
 export const PULSE_MANIFEST_URL = "https://pulse.saleor.app/api/manifest";
@@ -5,9 +6,11 @@ export const PULSE_MANIFEST_URL = "https://pulse.saleor.app/api/manifest";
 /** App Store listing for open-source / non-cloud Dashboards. */
 export const PULSE_APPS_STORE_URL = "https://apps.saleor.io/apps/pulse";
 
-/** Official Pulse promo media from saleor.io (CORS-open CDN). */
+/** Official Pulse promo video from saleor.io (CORS-open CDN). */
 export const PULSE_VIDEO_URL = "https://saleor.io/blog/20260716_pulse/pulse.mp4";
-export const PULSE_POSTER_URL = "https://saleor.io/blog/20260716_pulse/pulse-home.jpg";
+
+/** Local poster shown before the promo video loads / when autoplay is blocked. */
+export const PULSE_POSTER_URL: string = pulsePoster;
 
 export type PulsePromotionLink =
   | { kind: "internal"; to: string }

@@ -1,5 +1,7 @@
+import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
 import Link from "@dashboard/components/Link";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
+import { HOMEPAGE_WIDGETS_DOCS_URL } from "@dashboard/links";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useRef } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -37,6 +39,11 @@ const messages = defineMessages({
     id: "3zQ8xn",
     defaultMessage: "Preview of Saleor Pulse analytics",
     description: "accessible label for Pulse promo video",
+  },
+  createOwnHomepage: {
+    id: "ZKBRtP",
+    defaultMessage: "Create your own app homepage?",
+    description: "secondary docs link below Pulse homepage empty state",
   },
 });
 
@@ -125,6 +132,18 @@ export const HomeEmptyState = (): JSX.Element => {
             </Link>
           </Box>
         </Box>
+
+        <ExternalLinkNext
+          href={HOMEPAGE_WIDGETS_DOCS_URL}
+          target="_blank"
+          size={2}
+          color="default2"
+          fontWeight="medium"
+          textDecoration={{ hover: "underline" }}
+          data-test-id="home-create-own-homepage-link"
+        >
+          <FormattedMessage {...messages.createOwnHomepage} />
+        </ExternalLinkNext>
       </Box>
     </Box>
   );
