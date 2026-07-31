@@ -13434,6 +13434,10 @@
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
   },
+  "yOcWZe": {
+    "context": "command palette section grouping app-provided actions",
+    "string": "App actions"
+  },
   "yPMIz3": {
     "context": "Label for enabled auto-confirm row in tooltip",
     "string": "On"

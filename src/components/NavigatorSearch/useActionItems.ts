@@ -109,9 +109,17 @@ export const useActionItems = () => {
   const takeAction = () => {
     const element = getActiveFocusedElement();
 
-    if (!element || !element.dataset.href) return;
+    if (!element) return;
 
-    navigate(element.dataset.href);
+    // Link/row items navigate to their href; action items (e.g. search actions)
+    // handle activation via their own click handler.
+    if (element.dataset.href) {
+      navigate(element.dataset.href);
+
+      return;
+    }
+
+    element.click();
   };
 
   return {
