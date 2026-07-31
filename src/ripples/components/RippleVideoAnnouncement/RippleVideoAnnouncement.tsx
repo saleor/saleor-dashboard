@@ -146,7 +146,7 @@ export const RippleVideoAnnouncement = ({
             <Text size={4} fontWeight="medium">
               {model.content.oneLiner}
             </Text>
-            <Text size={2} color="default2" as="div">
+            <Text size={2} color="default2" as="p">
               {model.content.contextual}
             </Text>
           </Box>
