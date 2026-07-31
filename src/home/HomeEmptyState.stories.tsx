@@ -5,6 +5,16 @@ import { HomeEmptyState } from "./HomeEmptyState";
 const meta: Meta<typeof HomeEmptyState> = {
   title: "Home / HomeEmptyState",
   component: HomeEmptyState,
+  parameters: {
+    layout: "fullscreen",
+  },
+  decorators: [
+    (Story): JSX.Element => (
+      <div style={{ height: "100vh", background: "var(--mu-colors-background-default1)" }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;

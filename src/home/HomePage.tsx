@@ -51,7 +51,7 @@ export const HomePage = () => {
 
   if (loading) {
     // First-ever load with no cached snapshot: keep the screen blank to avoid
-    // flashing the "Welcome" empty state before extensions resolve.
+    // flashing the Pulse empty state before extensions resolve.
     return <Box height="100%" />;
   }
 
