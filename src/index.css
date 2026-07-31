@@ -117,6 +117,18 @@ a.command-menu-item {
   display: block;
 }
 
+button.command-menu-item {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
 .command-menu-item:hover .command-menu-item-content,
 .command-menu-item[data-focus="true"] .command-menu-item-content {
   background-color: var(--mu-colors-background-default1-hovered) !important;
