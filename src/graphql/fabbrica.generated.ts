@@ -31813,6 +31813,12 @@ export type OptionalShop = {
  */
   allowLoginWithoutConfirmation?: Shop['allowLoginWithoutConfirmation'] | undefined;
   /**
+ * Determines whether the GraphQL API accepts storefront requests (anonymous requests and authenticated non-staff customers). When disabled, only apps and staff users may call the API directly; all other requests are rejected with an HTTP 401 and the `STOREFRONT_TRAFFIC_NOT_ALLOWED` error code.
+ *
+ * Added in Saleor 3.23.
+ */
+  allowStorefrontTraffic?: Shop['allowStorefrontTraffic'] | undefined;
+  /**
  * List of announcements for this shop.
  *
  * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
@@ -32118,6 +32124,12 @@ export type OptionalShopSettingsInput = {
   accountConfirmMergeMode?: ShopSettingsInput['accountConfirmMergeMode'] | undefined;
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: ShopSettingsInput['allowLoginWithoutConfirmation'] | undefined;
+  /**
+ * Determines whether the GraphQL API accepts storefront requests (anonymous requests and authenticated non-staff customers). When disabled, only apps and staff users may call the API directly; all other requests are rejected with an HTTP 401 and the `STOREFRONT_TRAFFIC_NOT_ALLOWED` error code.
+ *
+ * Added in Saleor 3.23.
+ */
+  allowStorefrontTraffic?: ShopSettingsInput['allowStorefrontTraffic'] | undefined;
   /** Charge taxes on shipping. */
   chargeTaxesOnShipping?: ShopSettingsInput['chargeTaxesOnShipping'] | undefined;
   /** URL of a view where customers can set their password. */
@@ -37487,6 +37499,12 @@ export type OptionalWebhook = {
   events?: OptionalWebhookEvent[] | undefined;
   /** The ID of webhook. */
   id?: Webhook['id'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app, null when not set.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: Webhook['identifier'] | undefined;
   /** Informs if webhook is activated. */
   isActive?: Webhook['isActive'] | undefined;
   /** The name of webhook. */
@@ -37545,6 +37563,12 @@ export type OptionalWebhookCreateInput = {
   customHeaders?: WebhookCreateInput['customHeaders'] | undefined;
   /** The events that webhook wants to subscribe. */
   events?: WebhookCreateInput['events'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: WebhookCreateInput['identifier'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookCreateInput['isActive'] | undefined;
   /** The name of the webhook. */
@@ -37794,6 +37818,12 @@ export type OptionalWebhookUpdateInput = {
   customHeaders?: WebhookUpdateInput['customHeaders'] | undefined;
   /** The events that webhook wants to subscribe. */
   events?: WebhookUpdateInput['events'] | undefined;
+  /**
+ * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+ *
+ * Added in Saleor 3.23.
+ */
+  identifier?: WebhookUpdateInput['identifier'] | undefined;
   /** Determine if webhook will be set active or not. */
   isActive?: WebhookUpdateInput['isActive'] | undefined;
   /** The new name of the webhook. */

@@ -3557,6 +3557,7 @@ export const ShopFragmentDoc = gql`
   useLegacyShippingZoneStockAvailability
   preserveAllAddressFields
   passwordLoginMode
+  allowStorefrontTraffic
 }
     ${AddressFragmentDoc}`;
 export const StaffMemberDetailsFragmentDoc = gql`
