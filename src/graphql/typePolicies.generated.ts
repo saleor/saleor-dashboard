@@ -388,12 +388,13 @@ export type AppInstallFieldPolicy = {
 	appInstallation?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppInstallationKeySpecifier = ('appName' | 'brand' | 'createdAt' | 'id' | 'manifestUrl' | 'message' | 'status' | 'updatedAt' | AppInstallationKeySpecifier)[];
+export type AppInstallationKeySpecifier = ('appName' | 'brand' | 'createdAt' | 'id' | 'installedBy' | 'manifestUrl' | 'message' | 'status' | 'updatedAt' | AppInstallationKeySpecifier)[];
 export type AppInstallationFieldPolicy = {
 	appName?: FieldPolicy<any> | FieldReadFunction<any>,
 	brand?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	installedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	manifestUrl?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	status?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -496,9 +497,11 @@ export type AppStatusChangedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AppTokenKeySpecifier = ('authToken' | 'id' | 'name' | AppTokenKeySpecifier)[];
+export type AppTokenKeySpecifier = ('authToken' | 'createdAt' | 'createdBy' | 'id' | 'name' | AppTokenKeySpecifier)[];
 export type AppTokenFieldPolicy = {
 	authToken?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>
 };
@@ -7272,7 +7275,7 @@ export type WarehouseUpdatedFieldPolicy = {
 	version?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouse?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type WebhookKeySpecifier = ('app' | 'asyncEvents' | 'customHeaders' | 'eventDeliveries' | 'events' | 'id' | 'isActive' | 'name' | 'secretKey' | 'subscriptionQuery' | 'syncEvents' | 'targetUrl' | WebhookKeySpecifier)[];
+export type WebhookKeySpecifier = ('app' | 'asyncEvents' | 'customHeaders' | 'eventDeliveries' | 'events' | 'id' | 'identifier' | 'isActive' | 'name' | 'secretKey' | 'subscriptionQuery' | 'syncEvents' | 'targetUrl' | WebhookKeySpecifier)[];
 export type WebhookFieldPolicy = {
 	app?: FieldPolicy<any> | FieldReadFunction<any>,
 	asyncEvents?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -7280,6 +7283,7 @@ export type WebhookFieldPolicy = {
 	eventDeliveries?: FieldPolicy<any> | FieldReadFunction<any>,
 	events?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	identifier?: FieldPolicy<any> | FieldReadFunction<any>,
 	isActive?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	secretKey?: FieldPolicy<any> | FieldReadFunction<any>,

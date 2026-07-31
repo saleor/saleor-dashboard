@@ -64,6 +64,13 @@ export const appFragment = gql`
       authToken
       id
       name
+      createdAt
+      createdBy @include(if: $hasManageStaffPermission) {
+        id
+        email
+        firstName
+        lastName
+      }
     }
     webhooks @include(if: $hasManagedAppsPermission) {
       ...Webhook
@@ -82,6 +89,12 @@ export const appInstallationFragment = gql`
       logo {
         default(format: WEBP, size: 64)
       }
+    }
+    installedBy @include(if: $hasManageStaffPermission) {
+      id
+      email
+      firstName
+      lastName
     }
   }
 `;

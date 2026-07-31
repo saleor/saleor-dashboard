@@ -98,6 +98,11 @@ export const infoMessages = defineMessages({
     defaultMessage: "Installation is pending...",
     id: "KTjTMW",
   },
+  installationRequestedBy: {
+    defaultMessage: "Requested by {user}",
+    description: "who started an app installation",
+    id: "amlX8v",
+  },
   webhookErrorDetected: {
     defaultMessage: "Webhook errors detected.",
     id: "CKP9+i",

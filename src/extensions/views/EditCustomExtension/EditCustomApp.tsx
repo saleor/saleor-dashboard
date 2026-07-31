@@ -23,6 +23,7 @@ import {
   type WebhookDeleteMutation,
 } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
+import { useHasManageStaffPermission } from "@dashboard/hooks/useHasManageStaffPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -58,6 +59,7 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
   const intl = useIntl();
   const shop = useShop();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
+  const { hasManageStaffPermission } = useHasManageStaffPermission();
 
   useEffect(() => onTokenClose, []);
 
@@ -67,7 +69,7 @@ export const EditCustomExtension = ({ id, params, token, onTokenClose }: OrderLi
   >(navigate, params => ExtensionsUrls.editCustomExtensionUrl(id, params), params);
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
-    variables: { id, hasManagedAppsPermission },
+    variables: { id, hasManagedAppsPermission, hasManageStaffPermission },
   });
   const [activateApp, activateAppResult] = useAppActivateMutation({
     onCompleted: data => {

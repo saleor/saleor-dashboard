@@ -1,11 +1,12 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
+import { Date } from "@dashboard/components/Date/Date";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type AppUpdateMutation } from "@dashboard/graphql";
-import { renderCollection } from "@dashboard/misc";
+import { getUserName, renderCollection } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
@@ -21,7 +22,45 @@ interface CustomAppTokensProps {
   isLoading: boolean;
 }
 
-const numberOfColumns = 3;
+const numberOfColumns = 4;
+
+const TokenCreationInfo = ({
+  createdAt,
+  createdBy,
+}: {
+  createdAt: string | null;
+  createdBy: { email: string; firstName: string; lastName: string } | null;
+}) => {
+  const authorName = getUserName(createdBy);
+
+  if (!createdAt) {
+    return (
+      <Box as="span" fontStyle="italic">
+        <FormattedMessage
+          defaultMessage="(unknown)"
+          description="custom app tokens list - missing token creation data"
+          id="89Ne4o"
+        />
+      </Box>
+    );
+  }
+
+  return (
+    <>
+      <Date date={createdAt} />
+      {authorName && (
+        <Text size={2} color="default2" display="block">
+          <FormattedMessage
+            defaultMessage="by {author}"
+            description="custom app tokens list - token author"
+            id="e8EAlK"
+            values={{ author: authorName }}
+          />
+        </Text>
+      )}
+    </>
+  );
+};
 
 export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
   const { tokens, onCreate, onDelete, hasManagedAppsPermission, isLoading } = props;
@@ -53,6 +92,9 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
           <TableCell className={classes.colKey}>
             <Skeleton />
           </TableCell>
+          <TableCell className={classes.colCreated}>
+            <Skeleton />
+          </TableCell>
           <TableCell className={classes.colActions}></TableCell>
         </TableRowLink>
       );
@@ -74,6 +116,12 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
             )}
           </TableCell>
           <TableCell className={classes.colKey}>{`**** ${token?.authToken}`}</TableCell>
+          <TableCell className={classes.colCreated}>
+            <TokenCreationInfo
+              createdAt={token.createdAt ?? null}
+              createdBy={token.createdBy ?? null}
+            />
+          </TableCell>
           <TableCell className={classes.colActions}>
             {hasManagedAppsPermission && (
               <Box display="flex" justifyContent="flex-end" width="100%">
@@ -134,6 +182,13 @@ export const CustomExtensionTokens = (props: CustomAppTokensProps) => {
                     id="MAsLIT"
                     defaultMessage="Key"
                     description="custom app token key"
+                  />
+                </TableCell>
+                <TableCell className={classes.colCreated}>
+                  <FormattedMessage
+                    id="2bcoCH"
+                    defaultMessage="Created"
+                    description="custom app token creation date"
                   />
                 </TableCell>
                 <TableCell />

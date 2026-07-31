@@ -11,6 +11,9 @@ export const useStyles = makeStyles(
       textAlign: "right",
       width: 100,
     },
+    colCreated: {
+      width: 260,
+    },
     colKey: {
       width: 200,
     },

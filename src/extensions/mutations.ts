@@ -66,7 +66,11 @@ export const pluginUpdate = gql`
 `;
 
 export const appCreateMutation = gql`
-  mutation AppCreate($input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
+  mutation AppCreate(
+    $input: AppInput!
+    $hasManagedAppsPermission: Boolean = true
+    $hasManageStaffPermission: Boolean = false
+  ) {
     appCreate(input: $input) {
       authToken
       app {
@@ -80,7 +84,11 @@ export const appCreateMutation = gql`
 `;
 
 export const appDeleteMutation = gql`
-  mutation AppDelete($id: ID!, $hasManagedAppsPermission: Boolean = true) {
+  mutation AppDelete(
+    $id: ID!
+    $hasManagedAppsPermission: Boolean = true
+    $hasManageStaffPermission: Boolean = false
+  ) {
     appDelete(id: $id) {
       app {
         ...App
@@ -138,7 +146,12 @@ export const appRetryInstallMutation = gql`
 `;
 
 export const appUpdateMutation = gql`
-  mutation AppUpdate($id: ID!, $input: AppInput!, $hasManagedAppsPermission: Boolean = true) {
+  mutation AppUpdate(
+    $id: ID!
+    $input: AppInput!
+    $hasManagedAppsPermission: Boolean = true
+    $hasManageStaffPermission: Boolean = false
+  ) {
     appUpdate(id: $id, input: $input) {
       app {
         ...App
