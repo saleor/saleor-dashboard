@@ -50,9 +50,9 @@ export const HomePage = () => {
   const { fullscreen, widgets } = filterHomeExtensions(extensions, userPermissions);
 
   if (loading) {
-    // First-ever load with no cached snapshot: keep the screen blank to avoid
-    // flashing the "Welcome" empty state before extensions resolve.
-    return <Box height="100%" />;
+    // No live data yet and no non-empty snapshot: stay blank so the Pulse
+    // empty state never appears as a loading placeholder.
+    return <Box height="100%" data-test-id="home-extensions-loading" />;
   }
 
   if (fullscreen.length === 0 && widgets.length === 0) {

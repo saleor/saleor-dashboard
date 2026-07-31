@@ -110,7 +110,7 @@ describe("useHomeRouteParams", () => {
 });
 
 describe("HomePage states", () => {
-  it("renders neither Welcome nor tabs while loading", () => {
+  it("renders neither Pulse promo nor tabs while loading", () => {
     // Arrange
     useExtensionsWithLoadingStateMock.mockReturnValue({
       extensions: { HOMEPAGE_WIDGETS: [] },
@@ -121,11 +121,13 @@ describe("HomePage states", () => {
     renderHomePage();
 
     // Assert
-    expect(screen.queryByText("Welcome")).not.toBeInTheDocument();
+    expect(screen.getByTestId("home-extensions-loading")).toBeInTheDocument();
+    expect(screen.queryByText("See how your store is doing")).not.toBeInTheDocument();
     expect(screen.queryByTestId("home-widgets-grid")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("home-pulse-cta")).not.toBeInTheDocument();
   });
 
-  it("renders the Welcome empty state when loaded with no extensions", () => {
+  it("renders the Pulse empty state when loaded with no extensions", () => {
     // Arrange
     useExtensionsWithLoadingStateMock.mockReturnValue({
       extensions: { HOMEPAGE_WIDGETS: [] },
@@ -136,6 +138,11 @@ describe("HomePage states", () => {
     renderHomePage();
 
     // Assert
-    expect(screen.getByText("Welcome")).toBeInTheDocument();
+    expect(screen.getByText("See how your store is doing")).toBeInTheDocument();
+    expect(screen.getByTestId("home-pulse-cta")).toBeInTheDocument();
+    expect(screen.getByTestId("home-create-own-homepage-link")).toHaveAttribute(
+      "href",
+      expect.stringContaining("extending-dashboard-with-apps"),
+    );
   });
 });

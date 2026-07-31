@@ -196,9 +196,13 @@ const useExtensionsCore = <T extends AllAppExtensionMounts>(
 
   const hasLiveData = Boolean(data);
   const liveNodes = mapEdgesToItems(data?.appExtensions ?? undefined) || [];
-  const fromCache = !hasLiveData && Boolean(snapshot);
-  const sourceNodes = hasLiveData ? liveNodes : (snapshot ?? []);
-  const loading = !hasLiveData && !snapshot && !error;
+  // An empty `[]` snapshot is not evidence of "no extensions" — it may be a
+  // stale write from a previous empty visit. Only a non-empty snapshot is safe
+  // to paint before the network responds (avoids flashing empty-state UIs).
+  const hasUsableSnapshot = Array.isArray(snapshot) && snapshot.length > 0;
+  const fromCache = !hasLiveData && hasUsableSnapshot;
+  const sourceNodes = hasLiveData ? liveNodes : hasUsableSnapshot && snapshot ? snapshot : [];
+  const loading = !hasLiveData && !hasUsableSnapshot && !error;
 
   // Persist a fresh, token-free snapshot whenever live data arrives.
   useEffect(() => {

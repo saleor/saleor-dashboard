@@ -1214,6 +1214,10 @@
   "3yf2ND": {
     "string": "Operator"
   },
+  "3zQ8xn": {
+    "context": "accessible label for Pulse promo video",
+    "string": "Preview of Saleor Pulse analytics"
+  },
   "3zdm8A": {
     "context": "Dialog title",
     "string": "Transaction {actionType}"
@@ -1944,6 +1948,10 @@
     "context": "checkbox gift cards label",
     "string": "Automatically fulfill non shippable gift cards"
   },
+  "7UOtno": {
+    "context": "eyebrow label for Pulse homepage promotion",
+    "string": "Saleor Pulse"
+  },
   "7WEeNq": {
     "context": "select label",
     "string": "True"
@@ -2228,6 +2236,10 @@
   "8vQGO0": {
     "context": "tooltip content when line's variant has been deleted",
     "string": "This variant no longer exists. You can still fulfill it."
+  },
+  "8wYH6R": {
+    "context": "homepage empty state headline promoting Pulse",
+    "string": "See how your store is doing"
   },
   "8xsKUv": {
     "context": "service accounts section name",
@@ -3541,6 +3553,10 @@
     "context": "input placeholder",
     "string": "Optional"
   },
+  "F9116r": {
+    "context": "ripple action to install Saleor Pulse",
+    "string": "Install Pulse"
+  },
   "F9o33g": {
     "context": "shipping method channel coverage summary",
     "string": "Priced for {configured} of {total} channels"
@@ -3623,6 +3639,10 @@
   "FaL3f6": {
     "context": "Save composition segment for product details/SEO/organization/attributes",
     "string": "details"
+  },
+  "Fbkcn2": {
+    "context": "CTA to install Saleor Pulse from homepage empty state",
+    "string": "Install Pulse"
   },
   "Fbr4Vp": {
     "context": "dialog header",
@@ -7541,6 +7561,10 @@
     "context": "Checkbox label for scheduling publication for a future date",
     "string": "Schedule for later"
   },
+  "XcwOQt": {
+    "context": "ripple video announcement CTA to install Saleor Pulse",
+    "string": "Install Pulse"
+  },
   "XgsXQv": {
     "context": "order transaction refund summary label",
     "string": "Total:"
@@ -7920,6 +7944,10 @@
   "ZJib9I": {
     "context": "empty state when variants grid search returns no results",
     "string": "No variants match \"{query}\""
+  },
+  "ZKBRtP": {
+    "context": "secondary docs link below Pulse homepage empty state",
+    "string": "Create your own app homepage?"
   },
   "ZLcjD2": {
     "string": "Password reset failed"
@@ -8524,6 +8552,10 @@
     "context": "success notification when product media is uploaded",
     "string": "Image added"
   },
+  "bqsyq+": {
+    "context": "ripple type badge for a newly available app",
+    "string": "New App"
+  },
   "br+OIS": {
     "string": "Open this model type in GraphiQL"
   },
@@ -8573,6 +8605,10 @@
   },
   "c5pMZ8": {
     "string": "API error"
+  },
+  "c5sFXi": {
+    "context": "ripple action to explore Saleor Pulse on the App Store (non-cloud)",
+    "string": "Explore Pulse"
   },
   "c5tWY8": {
     "context": "dialog title",
@@ -8650,6 +8686,10 @@
   "cN8pa0": {
     "context": "radio button label",
     "string": "Refund with line items"
+  },
+  "cNCKU1": {
+    "context": "ripple video announcement CTA to explore Saleor Pulse",
+    "string": "Explore Pulse"
   },
   "cNSLLO": {
     "context": "button",
@@ -8785,10 +8825,6 @@
   "cwjmte": {
     "context": "fulfillment status refunded",
     "string": "Refunded"
-  },
-  "cxUBO1": {
-    "context": "empty home page description",
-    "string": "Install an app that registers a HOMEPAGE_WIDGETS extension to see it here."
   },
   "cy8sV7": {
     "context": "volume units types",
@@ -9196,13 +9232,13 @@
     "context": "tooltip for taxes amount",
     "string": "Tax amount"
   },
-  "fTLvHX": {
-    "context": "empty home page title",
-    "string": "Welcome"
-  },
   "fU+a9k": {
     "context": "date attribute type",
     "string": "Date"
+  },
+  "fUE1ip": {
+    "context": "homepage empty state supporting copy for Pulse",
+    "string": "Install Pulse to unlock real-time analytics on this page."
   },
   "fV6yX5": {
     "context": "table head",
@@ -9993,6 +10029,10 @@
   "jDovoJ": {
     "context": "gift card history message",
     "string": "Gift card was issued"
+  },
+  "jE6w+u": {
+    "context": "ripple action linking to documentation",
+    "string": "See docs"
   },
   "jGGnSZ": {
     "context": "page header",
@@ -11366,6 +11406,10 @@
     "context": "Shown when a value cannot be determined due to permissions",
     "string": "Unknown"
   },
+  "pML8C9": {
+    "context": "aria label for dismissing Pulse video announcement",
+    "string": "Dismiss Pulse announcement"
+  },
   "pMXWrd": {
     "context": "Label for available for purchase toggle",
     "string": "Available for purchase"
@@ -12221,6 +12265,10 @@
   "t/eWc4": {
     "context": "single translation save success",
     "string": "Translation saved"
+  },
+  "t0awJM": {
+    "context": "link to Saleor Pulse documentation from video announcement",
+    "string": "See docs"
   },
   "t1Bd7E": {
     "string": "Payment captured"
@@ -13436,6 +13484,10 @@
   "y8hdd1": {
     "context": "cancel fulfillment action in shipment row menu",
     "string": "Cancel fulfillment"
+  },
+  "y9464e": {
+    "context": "CTA to learn about Saleor Pulse for open-source users",
+    "string": "Explore Pulse"
   },
   "yAFaVK": {
     "context": "Webhook details synchronous events",
