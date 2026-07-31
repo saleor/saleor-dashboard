@@ -1,36 +1,23 @@
 // @ts-strict-ignore
-import {
-  type OrderPaymentFragment,
-  type PaymentGatewayFragment,
-  TransactionActionEnum,
-} from "@dashboard/graphql";
-import OrderTransaction, {
-  type OrderTransactionProps,
-} from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
+import { type OrderPaymentFragment, type PaymentGatewayFragment } from "@dashboard/graphql";
+import OrderTransaction from "@dashboard/orders/components/OrderTransaction/OrderTransaction";
 import { type FakeTransaction } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
 import { useMemo } from "react";
 
-import {
-  findMethodName,
-  getTransactionAmount,
-  mapOrderActionsToTransactionActions,
-  mapPaymentToTransactionEvents,
-} from "./utils";
+import { findMethodName, getTransactionAmount, mapPaymentToTransactionEvents } from "./utils";
 
 interface OrderTransactionPaymentProps {
   payment: OrderPaymentFragment;
   allPaymentMethods: PaymentGatewayFragment[];
-  onCapture: () => void;
-  onVoid: () => void;
 }
 
-const OrderTransactionPayment = ({
-  payment,
-  allPaymentMethods,
-  onCapture,
-  onVoid,
-}: OrderTransactionPaymentProps) => {
+/**
+ * Read-only compatibility view of a historical legacy payment shown inside the
+ * Transactions API view. It renders no actions on purpose: a transactions order
+ * must not regain legacy capture/void mutation ownership through this adapter.
+ */
+const OrderTransactionPayment = ({ payment, allPaymentMethods }: OrderTransactionPaymentProps) => {
   const currency = payment.total.currency;
   const total = payment?.total?.amount ?? 0;
   const captured = payment?.capturedAmount?.amount ?? 0;
@@ -41,7 +28,7 @@ const OrderTransactionPayment = ({
   const transactionFromPayment: FakeTransaction = {
     id: payment.id,
     name: findMethodName(payment.gateway, allPaymentMethods),
-    actions: mapOrderActionsToTransactionActions(payment.actions),
+    actions: [],
     pspReference: "",
     externalUrl: null,
     chargedAmount: getTransactionAmount(payment.capturedAmount, currency),
@@ -58,21 +45,12 @@ const OrderTransactionPayment = ({
     paymentMethodDetails: null,
     __typename: "FakeTransaction",
   };
-  const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (_, action) => {
-    if (action === TransactionActionEnum.CHARGE) {
-      onCapture();
-    }
-
-    if (action === TransactionActionEnum.CANCEL) {
-      onVoid();
-    }
-  };
 
   return (
     <OrderTransaction
       transaction={transactionFromPayment}
       fakeEvents={fakeEvents}
-      onTransactionAction={handleTransactionAction}
+      onTransactionAction={() => undefined}
     />
   );
 };

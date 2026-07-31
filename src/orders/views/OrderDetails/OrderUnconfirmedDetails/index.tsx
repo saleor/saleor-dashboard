@@ -1,142 +1,86 @@
-// @ts-strict-ignore
-import { type FetchResult } from "@apollo/client";
+import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata";
+import { Savebar } from "@dashboard/components/Savebar";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import {
-  type CreateManualTransactionCaptureMutation,
-  type CreateManualTransactionCaptureMutationVariables,
-  FulfillmentStatus,
-  type OrderFulfillmentApproveMutation,
-  type OrderFulfillmentApproveMutationVariables,
-  type OrderNoteUpdateMutation,
-  type OrderNoteUpdateMutationVariables,
-  type OrderTransactionRequestActionMutation,
-  type OrderTransactionRequestActionMutationVariables,
-  type OrderUpdateMutation,
-  type OrderUpdateMutationVariables,
-  TransactionActionEnum,
-  useCustomerAddressesQuery,
-  useWarehouseListQuery,
-} from "@dashboard/graphql";
+import { type OrderDetailsQueryResult } from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { OrderCannotCancelOrderDialog } from "@dashboard/orders/components/OrderCannotCancelOrderDialog/OrderCannotCancelOrderDialog";
-import { type OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
+import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { OrderFulfillmentApproveDialog } from "@dashboard/orders/components/OrderFulfillmentApproveDialog/OrderFulfillmentApproveDialog";
-import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
-import { OrderLineMetadataDialog } from "@dashboard/orders/components/OrderLineMetadataDialog/OrderLineMetadataDialog";
-import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
-import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataDialog/OrderMetadataDialog";
-import { OrderRefundDialog } from "@dashboard/orders/components/OrderRefundDialog/OrderRefundDialog";
-import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
-import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
-import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
-import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { getVariantSearchAddress } from "@dashboard/orders/utils/data";
+import {
+  OrderDiscountContext,
+  OrderDiscountProvider,
+} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
-import { type PartialMutationProviderOutput } from "@dashboard/types";
+import {
+  type CloseModalFunction,
+  type OpenModalFunction,
+} from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useMemo, useState } from "react";
+import { type ReactElement, type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { extractMutationErrors, getById, getStringOrPlaceholder } from "../../../../misc";
-import { productUrl } from "../../../../products/urls";
-import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
-import { OrderCancelDialog } from "../../../components/OrderCancelDialog";
-import { OrderCaptureDialog } from "../../../components/OrderCaptureDialog/OrderCaptureDialog";
-import OrderDetailsPage from "../../../components/OrderDetailsPage/OrderDetailsPage";
-import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
-import { OrderFulfillmentTrackingDialog } from "../../../components/OrderFulfillmentTrackingDialog/OrderFulfillmentTrackingDialog";
-import { OrderMarkAsPaidDialog } from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
-import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
+import OrderDraftDetails from "../../../components/OrderDraftDetails/OrderDraftDetails";
+import { OrderFulfillmentCard } from "../../../components/OrderFulfillmentCard/OrderFulfillmentCard";
+import { OrderHistory } from "../../../components/OrderHistory";
+import { messages } from "../../../components/OrderPageShared/messages";
+import { createOrderMetadataIdSchema } from "../../../components/OrderPageShared/utils";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
-import {
-  orderDetailsUrl,
-  orderFulfillUrl,
-  orderManualTransactionRefundUrl,
-  orderReturnUrl,
-  orderUrl,
-  type OrderUrlQueryParams,
-  withOrderFulfillmentDialog,
-  withOrderLineFocus,
-} from "../../../urls";
+import { OrderSummary } from "../../../components/OrderSummary/OrderSummary";
+import { orderListUrl, orderUrl, withOrderFulfillmentDialog } from "../../../urls";
+import { type OrderUrlDialog, type OrderUrlQueryParams } from "../../../urls";
+import { type CommonOrderOperations } from "../operations/useCommonOrderOperations";
+import { OrderCommonDialogs } from "../shared/OrderCommonDialogs";
+import { OrderDetailsHeader } from "../shared/OrderDetailsHeader";
+import { OrderDetailsSidebar } from "../shared/OrderDetailsSidebar";
+import { useLinePriceBreakdown } from "../shared/useLinePriceBreakdown";
 
-interface OrderUnconfirmedDetailsProps {
+export interface OrderUnconfirmedDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data: any;
+  data: OrderDetailsQueryResult["data"];
   loading: boolean;
-  orderAddNote: any;
-  orderUpdateNote: PartialMutationProviderOutput<
-    OrderNoteUpdateMutation,
-    OrderNoteUpdateMutationVariables
-  >;
-  orderLineUpdate: any;
-  orderLineDelete: any;
-  orderInvoiceRequest: any;
-  handleSubmit: any;
-  orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
-  orderCancel: any;
-  orderShippingMethodUpdate: any;
-  orderLinesAdd: any;
-  orderPaymentMarkAsPaid: any;
-  orderVoid: any;
-  orderPaymentCapture: any;
-  orderFulfillmentApprove: PartialMutationProviderOutput<
-    OrderFulfillmentApproveMutation,
-    OrderFulfillmentApproveMutationVariables
-  >;
-  orderFulfillmentCancel: any;
-  orderFulfillmentUpdateTracking: any;
-  orderTransactionAction: PartialMutationProviderOutput<
-    OrderTransactionRequestActionMutation,
-    OrderTransactionRequestActionMutationVariables
-  >;
-  orderAddManualTransaction: PartialMutationProviderOutput<
-    CreateManualTransactionCaptureMutation,
-    CreateManualTransactionCaptureMutationVariables
-  >;
-  orderInvoiceSend: any;
+  common: CommonOrderOperations;
+  handleSubmit: (data: MetadataIdSchema) => Promise<unknown[]>;
   saveButtonBarState: ConfirmButtonTransitionState;
-  openModal: any;
-  closeModal: any;
+  openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
+  closeModal: CloseModalFunction;
+  /** Payment-mode owned slots, supplied by the concrete Legacy/Transaction view. */
+  paymentActions?: ReactNode;
+  paymentSection?: ReactNode;
 }
 
+/**
+ * Unconfirmed order details: still editable (lines, shipping method) and
+ * confirmed through the savebar. Payment-neutral: the payment summary actions
+ * and the payment section arrive as slots from the concrete view.
+ */
 export const OrderUnconfirmedDetails = ({
   id,
   params,
   data,
   loading,
-  orderAddNote,
-  orderUpdateNote,
-  orderLineUpdate,
-  orderLineDelete,
-  orderInvoiceRequest,
+  common,
   handleSubmit,
-  orderUpdate,
-  orderCancel,
-  orderShippingMethodUpdate,
-  orderLinesAdd,
-  orderPaymentMarkAsPaid,
-  orderVoid,
-  orderPaymentCapture,
-  orderFulfillmentApprove,
-  orderFulfillmentCancel,
-  orderFulfillmentUpdateTracking,
-  orderInvoiceSend,
   saveButtonBarState,
-  orderTransactionAction,
-  orderAddManualTransaction,
   openModal,
   closeModal,
-}: OrderUnconfirmedDetailsProps) => {
-  const order = data.order;
-  const shop = data.shop;
+  paymentActions,
+  paymentSection,
+}: OrderUnconfirmedDetailsProps): ReactElement | null => {
+  const order = data?.order;
+  const shop = data?.shop;
   const navigate = useNavigator();
-  const refundNavigation = useMemo(() => (order ? getOrderRefundNavigation(order) : null), [order]);
+  const intl = useIntl();
   const {
     loadMore,
     search: variantSearch,
@@ -144,42 +88,150 @@ export const OrderUnconfirmedDetails = ({
   } = useOrderVariantSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      channel: order.channel.slug,
+      channel: order?.channel?.slug ?? "",
     },
   });
-  const warehouses = useWarehouseListQuery({
-    displayLoader: true,
-    variables: {
-      first: 30,
-    },
-  });
-  const { data: customerAddresses, loading: customerAddressesLoading } = useCustomerAddressesQuery({
-    variables: {
-      id: order?.user?.id,
-    },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
-  });
-  const handleCustomerChangeAddresses = async (
-    data: Partial<OrderCustomerAddressesEditDialogOutput>,
-  ): Promise<FetchResult<OrderUpdateMutation>> =>
-    orderUpdate.mutate({
-      id,
-      input: data,
-    });
-  const intl = useIntl();
-  const [transactionReference, setTransactionReference] = useState("");
-  const errors = orderUpdate.opts.data?.orderUpdate.errors || [];
-  const defaultZeroMoney = {
-    amount: 0,
-    currency: order?.total?.gross?.currency ?? order?.totalBalance?.currency ?? "USD",
-  };
-  const selectedTransaction = useMemo(
-    () => order?.transactions?.find(t => t.id === params.id),
-    [order?.transactions, params.id],
-  );
+  const { onShowLinePriceBreakdown, priceBreakdownModal } = useLinePriceBreakdown(order);
 
-  const hasOrderFulfillmentsFulFilled = order?.fulfillments.some(
-    fulfillment => fulfillment.status === FulfillmentStatus.FULFILLED,
+  // The route only mounts this view once the order query resolved.
+  if (!order || !shop) {
+    return null;
+  }
+
+  const errors = common.orderUpdate.opts.data?.orderUpdate?.errors ?? [];
+  const isSaving = loading || saveButtonBarState === "loading";
+  const renderLayout = (submit: () => SubmitPromise<unknown[]>) => (
+    <DetailPageLayout withSavebar>
+      <OrderDetailsHeader
+        order={order}
+        onShowMetadata={() => openModal("view-order-metadata")}
+        onCancel={() => openModal("cancel")}
+      />
+
+      <DetailPageLayout.Content data-test-id="order-fulfillment">
+        <OrderDraftDetails
+          order={order}
+          errors={errors}
+          loading={isSaving}
+          onOrderLineShowMetadata={lineId => openModal("view-order-line-metadata", { id: lineId })}
+          onOrderLineAdd={() => openModal("add-order-line")}
+          onOrderLineChange={(lineId, lineData) =>
+            common.orderLineUpdate.mutate({ id: lineId, input: lineData })
+          }
+          onOrderLineRemove={lineId => common.orderLineDelete.mutate({ id: lineId })}
+          orderLineRemoveConfirmState={common.orderLineDelete.opts.status}
+          orderLineRemoveErrors={common.orderLineDelete.opts.data?.orderLineDelete?.errors ?? []}
+        />
+        <CardSpacer />
+
+        {order.fulfillments?.map((fulfillment, index) => (
+          <OrderFulfillmentCard
+            key={fulfillment.id}
+            dataTestId="fulfilled-order-section"
+            fulfillment={fulfillment}
+            fulfillmentAllowUnpaid={shop.fulfillmentAllowUnpaid}
+            order={order}
+            onOrderLineShowMetadata={lineId =>
+              openModal("view-order-line-metadata", { id: lineId })
+            }
+            onShowLinePriceBreakdown={onShowLinePriceBreakdown}
+            onFulfillmentShowMetadata={() =>
+              openModal("view-fulfillment-metadata", { id: fulfillment.id })
+            }
+            onOrderFulfillmentCancel={() =>
+              navigate(
+                orderUrl(
+                  id,
+                  withOrderFulfillmentDialog(params, "cancel-fulfillment", fulfillment.id),
+                ),
+              )
+            }
+            onTrackingCodeAdd={() =>
+              navigate(
+                orderUrl(
+                  id,
+                  withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillment.id),
+                ),
+              )
+            }
+            onOrderFulfillmentApprove={() =>
+              navigate(
+                orderUrl(
+                  id,
+                  withOrderFulfillmentDialog(params, "approve-fulfillment", fulfillment.id),
+                ),
+              )
+            }
+            showBottomSeparator={index < (order.fulfillments?.length ?? 0) - 1}
+          />
+        ))}
+
+        <OrderDiscountContext.Consumer>
+          {discountContext =>
+            discountContext && (
+              <>
+                {(order.fulfillments?.length ?? 0) > 0 && <CardSpacer />}
+                <OrderSummary
+                  order={order}
+                  actions={paymentActions}
+                  isEditable
+                  onShippingMethodEdit={() => openModal("edit-shipping")}
+                  errors={errors}
+                  {...discountContext}
+                />
+
+                {paymentSection && (
+                  <>
+                    <CardSpacer />
+                    {paymentSection}
+                  </>
+                )}
+              </>
+            )
+          }
+        </OrderDiscountContext.Consumer>
+
+        <CardSpacer />
+        <OrderHistory
+          history={order.events}
+          onNoteUpdateLoading={common.orderUpdateNote.opts.loading}
+          orderCurrency={order.total?.gross.currency}
+          onNoteAdd={variables =>
+            extractMutationErrors(common.orderAddNote.mutate({ input: variables, order: id }))
+          }
+          onNoteUpdate={(noteId, message) =>
+            common.orderUpdateNote.mutate({ order: noteId, input: { message } })
+          }
+        />
+      </DetailPageLayout.Content>
+
+      <DetailPageLayout.RightSidebar>
+        <OrderDetailsSidebar
+          order={order}
+          errors={errors}
+          onBillingAddressEdit={() => openModal("edit-billing-address")}
+          onShippingAddressEdit={() => openModal("edit-shipping-address")}
+          onProfileView={() => {
+            if (order.user) {
+              navigate(customerUrl(order.user.id));
+            }
+          }}
+        />
+      </DetailPageLayout.RightSidebar>
+
+      <Savebar>
+        <Savebar.Spacer />
+        <Savebar.CancelButton onClick={() => navigate(orderListUrl())} />
+        <Savebar.ConfirmButton
+          transitionState={saveButtonBarState}
+          onClick={submit}
+          disabled={order.lines?.length ? isSaving : true}
+        >
+          {intl.formatMessage(messages.confirmOrder)}
+        </Savebar.ConfirmButton>
+      </Savebar>
+      {priceBreakdownModal}
+    </DetailPageLayout>
   );
 
   return (
@@ -191,165 +243,54 @@ export const OrderUnconfirmedDetails = ({
             defaultMessage: "Order #{orderNumber}",
             description: "window title",
           },
-          {
-            orderNumber: getStringOrPlaceholder(order.number),
-          },
+          { orderNumber: getStringOrPlaceholder(order.number) },
         )}
       />
       <OrderDiscountProvider order={order}>
         <OrderLineDiscountProvider order={order}>
-          <OrderDetailsPage
-            onOrderReturn={() => navigate(orderReturnUrl(id))}
-            loading={loading || saveButtonBarState === "loading"}
-            errors={errors}
-            onNoteAdd={variables =>
-              extractMutationErrors(
-                orderAddNote.mutate({
-                  input: variables,
-                  order: id,
-                }),
-              )
-            }
-            onNoteUpdateLoading={orderUpdateNote.opts.loading}
-            onNoteUpdate={(id, message) =>
-              orderUpdateNote.mutate({
-                order: id,
-                input: {
-                  message,
-                },
-              })
-            }
-            order={order}
-            shop={shop}
-            onTransactionAction={(id, action) =>
-              openModal(
-                action === TransactionActionEnum.CHARGE
-                  ? "transaction-charge-action"
-                  : "transaction-action",
-                {
-                  type: action,
-                  id,
-                  action:
-                    action === TransactionActionEnum.CHARGE
-                      ? "transaction-charge-action"
-                      : "transaction-action",
-                },
-              )
-            }
-            onOrderLineAdd={() => openModal("add-order-line")}
-            onOrderLineChange={(id, data) =>
-              orderLineUpdate.mutate({
-                id,
-                input: data,
-              })
-            }
-            onOrderLineRemove={id => orderLineDelete.mutate({ id })}
-            orderLineRemoveConfirmState={orderLineDelete.opts.status}
-            orderLineRemoveErrors={orderLineDelete.opts.data?.orderLineDelete?.errors ?? []}
-            onShippingMethodEdit={() => openModal("edit-shipping")}
-            onOrderLineShowMetadata={id => openModal("view-order-line-metadata", { id })}
-            onOrderShowMetadata={() => openModal("view-order-metadata")}
-            onFulfillmentShowMetadata={id => openModal("view-fulfillment-metadata", { id })}
-            saveButtonBarState={saveButtonBarState}
-            shippingMethods={data?.order?.shippingMethods || []}
-            onOrderCancel={() => openModal("cancel")}
-            onOrderFulfill={() => navigate(orderFulfillUrl(id))}
-            onFulfillmentApprove={fulfillmentId =>
-              navigate(
-                orderUrl(
-                  id,
-                  withOrderFulfillmentDialog(params, "approve-fulfillment", fulfillmentId),
-                ),
-              )
-            }
-            onFulfillmentCancel={fulfillmentId =>
-              navigate(
-                orderUrl(
-                  id,
-                  withOrderFulfillmentDialog(params, "cancel-fulfillment", fulfillmentId),
-                ),
-              )
-            }
-            onFulfillmentTrackingNumberUpdate={fulfillmentId =>
-              navigate(
-                orderUrl(id, withOrderFulfillmentDialog(params, "edit-fulfillment", fulfillmentId)),
-              )
-            }
-            onPaymentCapture={() => openModal("capture")}
-            onPaymentVoid={() => openModal("void")}
-            onPaymentRefund={() => refundNavigation && navigate(refundNavigation.url)}
-            onProductClick={id => () => navigate(productUrl(id))}
-            onBillingAddressEdit={() => openModal("edit-billing-address")}
-            onShippingAddressEdit={() => openModal("edit-shipping-address")}
-            onMarkAsPaid={() => openModal("mark-paid")}
-            onProfileView={() => navigate(customerUrl(order.user.id))}
-            onAddManualTransaction={() => openModal("add-manual-transaction")}
-            onInvoiceClick={id =>
-              window.open(
-                order.invoices.find(invoice => invoice.id === id)?.url,
-                "_blank",
-                "rel=noopener",
-              )
-            }
-            onInvoiceGenerate={() =>
-              orderInvoiceRequest.mutate({
-                orderId: id,
-              })
-            }
-            onInvoiceSend={id => openModal("invoice-send", { id })}
-            onRefundAdd={() => openModal("add-refund")}
+          <Form
+            confirmLeave
+            initial={createOrderMetadataIdSchema(order)}
             onSubmit={handleSubmit}
-            focusedLineId={params.lineId}
-            onFocusedLineChange={lineId =>
-              navigate(orderDetailsUrl(id, withOrderLineFocus(params, lineId), order?.status), {
-                replace: true,
-              })
-            }
-          />
+            mergeData={false}
+          >
+            {({ submit }) => renderLayout(submit)}
+          </Form>
         </OrderLineDiscountProvider>
       </OrderDiscountProvider>
-      <OrderCannotCancelOrderDialog
+
+      <OrderCommonDialogs
+        orderId={id}
+        order={order}
+        countries={shop.countries}
+        params={params}
         onClose={closeModal}
-        open={params.action === "cancel" && hasOrderFulfillmentsFulFilled}
-      />
-      <OrderCancelDialog
-        confirmButtonState={orderCancel.opts.status}
-        errors={orderCancel.opts.data?.orderCancel.errors || []}
-        number={order?.number}
-        open={params.action === "cancel" && !hasOrderFulfillmentsFulFilled}
-        onClose={closeModal}
-        onSubmit={() =>
-          orderCancel.mutate({
-            id,
-          })
-        }
+        operations={common}
       />
       <OrderShippingMethodEditDialog
-        confirmButtonState={orderShippingMethodUpdate.opts.status}
-        errors={orderShippingMethodUpdate.opts.data?.orderUpdateShipping.errors || []}
+        confirmButtonState={common.orderShippingMethodUpdate.opts.status}
+        errors={common.orderShippingMethodUpdate.opts.data?.orderUpdateShipping?.errors || []}
         open={params.action === "edit-shipping"}
-        shippingMethod={order?.shippingMethod?.id}
-        shippingMethodName={order?.shippingMethodName}
-        shippingPrice={order?.shippingPrice}
-        shippingMethods={order?.shippingMethods}
+        shippingMethod={order.shippingMethod?.id}
+        shippingMethodName={order.shippingMethodName ?? undefined}
+        shippingPrice={order.shippingPrice}
+        shippingMethods={order.shippingMethods}
         onClose={closeModal}
         onSubmit={variables =>
           extractMutationErrors(
-            orderShippingMethodUpdate.mutate({
+            common.orderShippingMethodUpdate.mutate({
               id,
-              input: {
-                shippingMethod: variables.shippingMethod,
-              },
+              input: { shippingMethod: variables.shippingMethod },
             }),
           )
         }
       />
       <OrderProductAddDialog
-        confirmButtonState={orderLinesAdd.opts.status}
-        errors={orderLinesAdd.opts.data?.orderLinesCreate.errors || []}
+        confirmButtonState={common.orderLinesAdd.opts.status}
+        errors={common.orderLinesAdd.opts.data?.orderLinesCreate?.errors || []}
         loading={variantSearchOpts.loading}
         open={params.action === "add-order-line"}
-        hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
+        hasMore={variantSearchOpts.data?.search?.pageInfo.hasNextPage ?? false}
         products={mapSearchOrderVariantsForAdd(mapEdgesToItems(variantSearchOpts?.data?.search))}
         onClose={closeModal}
         onFetch={variantSearch}
@@ -358,196 +299,20 @@ export const OrderUnconfirmedDetails = ({
         channel={order.channel?.slug}
         address={getVariantSearchAddress(order)}
         onSubmit={variants =>
-          orderLinesAdd.mutate({
+          common.orderLinesAdd.mutate({
             id,
-            input: variants.map(variant => ({
-              quantity: 1,
-              variantId: variant.id,
-            })),
+            input: variants.map(variant => ({ quantity: 1, variantId: variant.id })),
           })
         }
       />
-      <OrderMarkAsPaidDialog
-        confirmButtonState={orderPaymentMarkAsPaid.opts.status}
-        errors={orderPaymentMarkAsPaid.opts.data?.orderMarkAsPaid.errors || []}
-        onClose={closeModal}
-        onConfirm={() =>
-          orderPaymentMarkAsPaid.mutate({
-            id,
-            transactionReference,
-          })
-        }
-        open={params.action === "mark-paid"}
-        transactionReference={transactionReference}
-        handleTransactionReference={({ target }) => setTransactionReference(target.value)}
-      />
-      {/* Transaction Capture Dialog - for CHARGE action */}
-      {params.action === "transaction-charge-action" && (
-        <OrderCaptureDialog
-          key={params.id}
-          confirmButtonState={orderTransactionAction.opts.status}
-          errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
-          orderTotal={order?.total.gross ?? defaultZeroMoney}
-          authorizedAmount={selectedTransaction?.authorizedAmount ?? defaultZeroMoney}
-          chargedAmount={selectedTransaction?.chargedAmount ?? defaultZeroMoney}
-          orderBalance={order?.totalBalance ?? defaultZeroMoney}
-          onClose={closeModal}
-          onSubmit={amount =>
-            orderTransactionAction
-              .mutate({
-                action: params.type,
-                transactionId: params.id,
-                amount,
-              })
-              .finally(() => closeModal())
-          }
-        />
-      )}
-      {/* Transaction Action Dialog - for other actions like CANCEL */}
-      <OrderTransactionActionDialog
-        confirmButtonState={orderTransactionAction.opts.status}
-        onClose={closeModal}
-        open={params.action === "transaction-action"}
-        action={params.type}
-        onSubmit={() =>
-          orderTransactionAction
-            .mutate({
-              action: params.type,
-              transactionId: params.id,
-            })
-            .finally(() => closeModal())
-        }
-      />
-      <OrderLineMetadataDialog
-        open={params.action === "view-order-line-metadata"}
-        onClose={closeModal}
-        lineId={params.id}
-        orderId={id}
-      />
-      <OrderMetadataDialog
-        open={params.action === "view-order-metadata"}
-        onClose={closeModal}
-        orderId={id}
-      />
-      <OrderPaymentVoidDialog
-        confirmButtonState={orderVoid.opts.status}
-        errors={orderVoid.opts.data?.orderVoid.errors || []}
-        open={params.action === "void"}
-        onClose={closeModal}
-        onConfirm={() => orderVoid.mutate({ id })}
-      />
-      {params.action === "capture" && (
-        <OrderCaptureDialog
-          confirmButtonState={orderPaymentCapture.opts.status}
-          errors={orderPaymentCapture.opts.data?.orderCapture?.errors ?? []}
-          orderTotal={order?.total.gross ?? defaultZeroMoney}
-          authorizedAmount={order?.totalAuthorized ?? defaultZeroMoney}
-          onClose={closeModal}
-          onSubmit={amount =>
-            orderPaymentCapture.mutate({
-              amount,
-              id,
-            })
-          }
-        />
-      )}
       <OrderFulfillmentApproveDialog
-        confirmButtonState={orderFulfillmentApprove.opts.status}
-        errors={orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || []}
+        confirmButtonState={common.orderFulfillmentApprove.opts.status}
+        errors={common.orderFulfillmentApprove.opts.data?.orderFulfillmentApprove?.errors || []}
         open={params.action === "approve-fulfillment"}
         onConfirm={({ notifyCustomer }) =>
-          orderFulfillmentApprove.mutate({
-            id: params.id,
-            notifyCustomer,
-          })
+          common.orderFulfillmentApprove.mutate({ id: params.id ?? "", notifyCustomer })
         }
         onClose={closeModal}
-      />
-      <OrderFulfillmentCancelDialog
-        confirmButtonState={orderFulfillmentCancel.opts.status}
-        errors={orderFulfillmentCancel.opts.data?.orderFulfillmentCancel.errors || []}
-        open={params.action === "cancel-fulfillment"}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
-        fulfillmentStatus={order?.fulfillments.find(getById(params.id))?.status}
-        defaultWarehouseId={order?.fulfillments.find(getById(params.id))?.warehouse?.id}
-        onConfirm={variables =>
-          orderFulfillmentCancel.mutate({
-            id: params.id,
-            input: variables,
-          })
-        }
-        onClose={closeModal}
-      />
-      <OrderFulfillmentTrackingDialog
-        confirmButtonState={orderFulfillmentUpdateTracking.opts.status}
-        errors={
-          orderFulfillmentUpdateTracking.opts.data?.orderFulfillmentUpdateTracking.errors || []
-        }
-        open={params.action === "edit-fulfillment"}
-        trackingNumber={
-          data?.order?.fulfillments.find(fulfillment => fulfillment.id === params.id)
-            ?.trackingNumber
-        }
-        onConfirm={variables =>
-          orderFulfillmentUpdateTracking.mutate({
-            id: params.id,
-            input: {
-              ...variables,
-              notifyCustomer: true,
-            },
-          })
-        }
-        onClose={closeModal}
-      />
-      <OrderInvoiceEmailSendDialog
-        confirmButtonState={orderInvoiceSend.opts.status}
-        errors={orderInvoiceSend.opts.data?.invoiceSendEmail.errors || []}
-        open={params.action === "invoice-send"}
-        invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
-        onClose={closeModal}
-        onSend={() => orderInvoiceSend.mutate({ id: params.id })}
-      />
-      <OrderManualTransactionDialog
-        dialogProps={{
-          open: params.action === "add-manual-transaction",
-          onClose: closeModal,
-        }}
-        submitState={orderAddManualTransaction.opts.status}
-        error={
-          orderAddManualTransaction.opts?.error?.message ||
-          orderAddManualTransaction.opts?.data?.transactionCreate?.errors?.[0]?.message
-        }
-        currency={data?.order?.totalBalance?.currency}
-        onAddTransaction={({ amount, description }) =>
-          orderAddManualTransaction.mutate({
-            currency: data?.order?.totalBalance?.currency,
-            orderId: id,
-            amount,
-            description,
-          })
-        }
-      />
-      <OrderAddressFields
-        action={params?.action}
-        customerAddressesLoading={customerAddressesLoading}
-        orderShippingAddress={order?.shippingAddress}
-        orderBillingAddress={order?.billingAddress}
-        isDraft={false}
-        countries={data?.shop?.countries}
-        customer={customerAddresses?.user}
-        onClose={closeModal}
-        onConfirm={handleCustomerChangeAddresses}
-        confirmButtonState={orderUpdate.opts.status}
-        errors={orderUpdate.opts.data?.orderUpdate.errors}
-      />
-
-      <OrderRefundDialog
-        open={params.action === "add-refund"}
-        onClose={closeModal}
-        onStandardRefund={() =>
-          refundNavigation && navigate(refundNavigation.url, { replace: true })
-        }
-        onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />
     </>
   );

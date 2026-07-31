@@ -1,19 +1,24 @@
+import { type OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { Button } from "@saleor/macaw-ui-next";
 import { CheckIcon } from "lucide-react";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { transactionActionMessages } from "../OrderTransaction/messages";
 
 type Props = {
-  hasNoPayment: boolean;
-  canMarkAsPaid: boolean;
-  onMarkAsPaid: () => void;
+  order: OrderDetailsFragment;
+  onMarkAsPaid?: () => void;
 };
 
-export const TransactionsApiButtons = ({ hasNoPayment, canMarkAsPaid, onMarkAsPaid }: Props) => {
+/** Summary actions owned by the Transactions API view. */
+export const TransactionsApiButtons = ({ order, onMarkAsPaid }: Props): ReactNode => {
   const intl = useIntl();
+  const hasNoPayment = OrderDetailsViewModel.orderHasNoPayment(order);
+  const canMarkAsPaid = OrderDetailsViewModel.canOrderBeMarkedAsPaid(order.actions);
 
-  if (!hasNoPayment || !canMarkAsPaid) {
+  if (!hasNoPayment || !canMarkAsPaid || !onMarkAsPaid) {
     return null;
   }
 

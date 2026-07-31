@@ -4,16 +4,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type OrderDetailsQueryResult,
-  type OrderDraftCancelMutation,
-  type OrderDraftCancelMutationVariables,
-  type OrderDraftFinalizeMutation,
-  type OrderDraftFinalizeMutationVariables,
   type OrderDraftUpdateMutation,
-  type OrderDraftUpdateMutationVariables,
-  type OrderLineUpdateMutation,
-  type OrderLineUpdateMutationVariables,
-  type OrderNoteUpdateMutation,
-  type OrderNoteUpdateMutationVariables,
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
@@ -35,7 +26,6 @@ import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderD
 import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
-import { type PartialMutationProviderOutput } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useIntl } from "react-intl";
 
@@ -48,36 +38,15 @@ import OrderDraftPage from "../../../components/OrderDraftPage/OrderDraftPage";
 import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import { orderDraftListUrl, type OrderUrlDialog, type OrderUrlQueryParams } from "../../../urls";
+import { type OrderOperationHandlers } from "../operations/handlers";
+import { useDraftOrderOperations } from "../operations/useDraftOrderOperations";
 
 interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
   data: OrderDetailsQueryResult["data"];
-  orderAddNote: any;
-  orderUpdateNote: PartialMutationProviderOutput<
-    OrderNoteUpdateMutation,
-    OrderNoteUpdateMutationVariables
-  >;
-  orderLineUpdate: PartialMutationProviderOutput<
-    OrderLineUpdateMutation,
-    OrderLineUpdateMutationVariables
-  >;
-  orderLineDelete: any;
-  orderShippingMethodUpdate: any;
-  orderLinesAdd: any;
-  orderDraftUpdate: PartialMutationProviderOutput<
-    OrderDraftUpdateMutation,
-    OrderDraftUpdateMutationVariables
-  >;
-  orderDraftCancel: PartialMutationProviderOutput<
-    OrderDraftCancelMutation,
-    OrderDraftCancelMutationVariables
-  >;
-  orderDraftFinalize: PartialMutationProviderOutput<
-    OrderDraftFinalizeMutation,
-    OrderDraftFinalizeMutationVariables
-  >;
+  handlers: OrderOperationHandlers;
   openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
   closeModal: any;
 }
@@ -87,18 +56,21 @@ export const OrderDraftDetails = ({
   params,
   loading,
   data,
-  orderAddNote,
-  orderUpdateNote,
-  orderLineUpdate,
-  orderLineDelete,
-  orderShippingMethodUpdate,
-  orderLinesAdd,
-  orderDraftUpdate,
-  orderDraftCancel,
-  orderDraftFinalize,
+  handlers,
   openModal,
   closeModal,
 }: OrderDraftDetailsProps) => {
+  const {
+    orderAddNote,
+    orderUpdateNote,
+    orderLineUpdate,
+    orderLineDelete,
+    orderShippingMethodUpdate,
+    orderLinesAdd,
+    orderDraftUpdate,
+    orderDraftCancel,
+    orderDraftFinalize,
+  } = useDraftOrderOperations(handlers);
   const order = data.order;
   const navigate = useNavigator();
   const { data: channelUsabilityData } = useChannelUsabilityDataQuery({

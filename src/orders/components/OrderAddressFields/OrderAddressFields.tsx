@@ -18,7 +18,7 @@ import {
 } from "../OrderCustomerAddressesEditDialog/types";
 
 interface OrderAddressFieldsProps {
-  action: string;
+  action: string | undefined;
   isDraft: boolean;
   customerAddressesLoading: boolean;
   customer: CustomerAddressesQuery["user"];
@@ -27,8 +27,8 @@ interface OrderAddressFieldsProps {
   onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
-  orderShippingAddress: AddressFragment;
-  orderBillingAddress: AddressFragment;
+  orderShippingAddress: AddressFragment | null | undefined;
+  orderBillingAddress: AddressFragment | null | undefined;
 }
 
 const OrderAddressFields = ({

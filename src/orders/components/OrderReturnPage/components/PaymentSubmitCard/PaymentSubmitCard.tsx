@@ -72,7 +72,7 @@ const messages = defineMessages({
 
 interface PaymentSubmitCardProps {
   data: OrderRefundFormData | OrderReturnFormData;
-  order: OrderRefundDataQuery["order"] | OrderDetailsFragment;
+  order: OrderRefundDataQuery["order"] | OrderDetailsFragment | undefined;
   disabled: boolean;
   loading: boolean;
   disableSubmitButton?: boolean;

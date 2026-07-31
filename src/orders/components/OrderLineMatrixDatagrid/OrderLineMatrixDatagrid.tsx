@@ -15,6 +15,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { OrderLineRowActions } from "@dashboard/orders/components/OrderLineRowActions/OrderLineRowActions";
 import { messages as orderMessages } from "@dashboard/orders/components/OrderListDatagrid/messages";
+import { useOrderRefundNavigationAdapter } from "@dashboard/orders/orderRefundNavigation";
 import { type OrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import { getOrderLineRowMenuItems } from "@dashboard/orders/utils/getOrderLineRowMenuItems";
 import { ListViews } from "@dashboard/types";
@@ -68,6 +69,7 @@ export const OrderLineMatrixDatagrid = ({
 }: OrderLineMatrixDatagridProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const refundNavigation = useOrderRefundNavigationAdapter();
   const { locale } = useLocale();
   const datagrid = useDatagridChangeState();
   const pointerInteractionRef = useRef({
@@ -274,9 +276,10 @@ export const OrderLineMatrixDatagrid = ({
         productId: lifecycle?.orderLine.variant?.product.id,
         intl,
         navigate,
+        refundNavigation,
       });
     },
-    [intl, lines, navigate, order],
+    [intl, lines, navigate, order, refundNavigation],
   );
   const getMenuItems = useCallback(
     (index: number): CardMenuItem[] =>

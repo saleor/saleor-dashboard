@@ -2,6 +2,7 @@ import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { messages } from "@dashboard/orders/components/OrderLineRowActions/messages";
+import { type OrderRefundNavigationAdapter } from "@dashboard/orders/orderRefundNavigation";
 import {
   getOrderLineFulfillUrl,
   getOrderLineReturnUrl,
@@ -9,7 +10,6 @@ import {
   shouldOfferLineFulfillAction,
   shouldOfferLineReturnAction,
 } from "@dashboard/orders/utils/getOrderLineActionUrls";
-import { getOrderRefundNavigation } from "@dashboard/orders/utils/getOrderRefundNavigation";
 import { productPath } from "@dashboard/products/urls";
 import { ExternalLink, PackageIcon, Undo2 } from "lucide-react";
 import { type IntlShape } from "react-intl";
@@ -23,6 +23,8 @@ interface GetOrderLineRowMenuItemsParams {
   intl: IntlShape;
   navigate: (url: string) => void;
   context?: OrderLineRowMenuContext;
+  /** Supplied by the concrete payment view; absent means no refund destination. */
+  refundNavigation: OrderRefundNavigationAdapter | null;
 }
 
 export const getOrderLineRowMenuItems = ({
@@ -32,6 +34,7 @@ export const getOrderLineRowMenuItems = ({
   intl,
   navigate,
   context,
+  refundNavigation,
 }: GetOrderLineRowMenuItemsParams): TopNavMenuItem[] => {
   const items: TopNavMenuItem[] = [
     {
@@ -69,16 +72,16 @@ export const getOrderLineRowMenuItems = ({
     });
   }
 
-  if (lineId) {
-    const refundNavigation = getOrderRefundNavigation(order, { lineId });
+  if (lineId && refundNavigation) {
+    const lineRefund = refundNavigation.getNavigation({ lineId });
 
-    if (refundNavigation.canRefund) {
+    if (lineRefund.canRefund) {
       items.push({
         label: intl.formatMessage(messages.refundLine),
         testId: "order-line-refund",
         icon: <RefundedIcon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
         onSelect: () => {
-          navigate(refundNavigation.url);
+          navigate(lineRefund.url);
         },
       });
     }

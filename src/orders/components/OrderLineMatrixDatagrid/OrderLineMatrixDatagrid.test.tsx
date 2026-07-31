@@ -2,6 +2,10 @@
 import { mockResizeObserver } from "@dashboard/components/Datagrid/testUtils";
 import { FulfillmentStatus, OrderAction } from "@dashboard/graphql";
 import { OrderFixture } from "@dashboard/orders/fixtures/OrderFixture";
+import {
+  createTransactionRefundNavigationAdapter,
+  OrderRefundNavigationProvider,
+} from "@dashboard/orders/orderRefundNavigation";
 import { buildOrderLineLifecycle } from "@dashboard/orders/utils/buildOrderLineLifecycle";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
@@ -23,11 +27,17 @@ const defaultProps = {
   onShowLinePriceBreakdown: jest.fn(),
 };
 
-const renderDatagrid = (props = {}) =>
+// The refund affordance is payment-mode owned; a concrete order view supplies
+// the adapter, so the datagrid only offers it inside a provider.
+const renderDatagrid = (props: Record<string, unknown> = {}) =>
   render(
     <MemoryRouter>
       <Wrapper>
-        <OrderLineMatrixDatagrid {...defaultProps} {...props} />
+        <OrderRefundNavigationProvider
+          adapter={createTransactionRefundNavigationAdapter((props.order as typeof order) ?? order)}
+        >
+          <OrderLineMatrixDatagrid {...defaultProps} {...props} />
+        </OrderRefundNavigationProvider>
       </Wrapper>
     </MemoryRouter>,
   );

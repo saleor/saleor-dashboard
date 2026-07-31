@@ -1,114 +1,39 @@
-import {
-  OrderErrorCode,
-  useFulfillmentReturnProductsMutation,
-  useOrderDetailsQuery,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { extractMutationErrors } from "@dashboard/misc";
-import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
-import { type OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
-import { orderHasTransactions } from "@dashboard/orders/types";
-import { type OrderReturnUrlQueryParams, orderUrl } from "@dashboard/orders/urls";
-import { useState } from "react";
-import { useIntl } from "react-intl";
+import { useOrderDetailsQuery } from "@dashboard/graphql";
+import { resolveOrderPaymentMode } from "@dashboard/orders/resolveOrderPaymentMode";
+import { type OrderReturnUrlQueryParams } from "@dashboard/orders/urls";
+import { type ReactElement } from "react";
 
-import { messages } from "./messages";
-import { useRefundWithinReturn } from "./useRefundWithinReturn";
-import ReturnFormDataParser, { getSuccessMessage } from "./utils";
+import { LegacyOrderReturn } from "./LegacyOrderReturn";
+import { type OrderReturnViewProps } from "./orderReturnViewProps";
+import { TransactionOrderReturn } from "./TransactionOrderReturn";
 
 interface OrderReturnProps {
   orderId: string;
   params: OrderReturnUrlQueryParams;
 }
 
-const OrderReturn = ({ orderId, params }: OrderReturnProps) => {
-  const navigate = useNavigator();
-  const notify = useNotifier();
-  const intl = useIntl();
-  const [replacedOrder, setReplacedOrder] = useState<string | null>(null);
+const OrderReturn = ({ orderId, params }: OrderReturnProps): ReactElement => {
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: {
       id: orderId,
     },
   });
-  const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation({
-    onCompleted: data => {
-      if (!data.orderFulfillmentReturnProducts?.errors.length) {
-        const replaceOrder = data.orderFulfillmentReturnProducts?.replaceOrder;
-
-        if (replaceOrder?.id) {
-          setReplacedOrder(replaceOrder?.id);
-        }
-      }
-    },
-  });
-  const { sendMutations, grantRefundErrors, sendRefundErrors, grantRefundResponseOrderData } =
-    useRefundWithinReturn({
-      orderId,
-      transactionId: data?.order?.transactions[0]?.id,
-    });
-  const handleSubmit = async (formData: OrderReturnFormData) => {
-    if (!data?.order) {
-      return;
-    }
-
-    const returnErrors = await extractMutationErrors(
-      returnCreate({
-        variables: {
-          id: data.order.id,
-          input: new ReturnFormDataParser({
-            order: data.order,
-            formData,
-            refundsEnabled: !orderHasTransactions(data.order),
-          }).getParsedData(),
-        },
-      }),
-    );
-
-    if (returnErrors.length) {
-      return;
-    }
-
-    const { grantRefundErrors, sendRefundErrors } = await sendMutations(formData);
-    const errors = [...returnErrors, ...grantRefundErrors, ...sendRefundErrors];
-
-    if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
-      notify({
-        autohide: 5000,
-        status: "error",
-        text: intl.formatMessage(messages.cannotRefundDescription),
-        title: intl.formatMessage(messages.cannotRefundTitle),
-      });
-    }
-
-    if (!errors.length) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(
-          getSuccessMessage(formData.autoGrantRefund, formData.autoSendRefund),
-        ),
-      });
-      navigate(orderUrl(replacedOrder ?? orderId));
-    }
+  const order = data?.order;
+  const viewProps: OrderReturnViewProps = {
+    orderId,
+    order,
+    loading,
+    prefilledOrderLineId: params.lineId,
   };
-  const returnCreateResponseOrderData =
-    returnCreateOpts.data?.orderFulfillmentReturnProducts?.order;
-  // order data from mutations responses if available
-  const orderData = grantRefundResponseOrderData ?? returnCreateResponseOrderData ?? data?.order;
 
-  return (
-    <OrderReturnPage
-      returnErrors={returnCreateOpts.data?.orderFulfillmentReturnProducts?.errors}
-      grantRefundErrors={grantRefundErrors}
-      sendRefundErrors={sendRefundErrors}
-      order={orderData}
-      loading={loading || returnCreateOpts.loading}
-      prefilledOrderLineId={params.lineId}
-      onSubmit={handleSubmit}
-      submitStatus={returnCreateOpts.status}
-    />
+  // The single payment-mode branch of the return route: resolve once, render
+  // one concrete view. Until the order loads there is nothing to resolve, so
+  // the legacy view renders the (order-less) skeleton, as it always has.
+  return order && resolveOrderPaymentMode(order).kind === "transactions" ? (
+    <TransactionOrderReturn {...viewProps} />
+  ) : (
+    <LegacyOrderReturn {...viewProps} />
   );
 };
 

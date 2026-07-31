@@ -21,8 +21,8 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import OrderOperations from "../../containers/OrderOperations";
 import { useOrderDetailsUrlCanonicalization } from "../../hooks/useOrderDetailsUrlCanonicalization";
+import { resolveOrderPaymentMode } from "../../resolveOrderPaymentMode";
 import {
   orderDetailsUrl,
   orderDraftListUrl,
@@ -31,11 +31,13 @@ import {
   type OrderUrlQueryParams,
 } from "../../urls";
 import { handleOrderDetailsSubmit } from "./handleOrderDetailsSubmit";
+import { LegacyOrderDetails } from "./LegacyOrderDetails/LegacyOrderDetails";
 import { orderDetailsMessages } from "./messages";
+import { type NonDraftOrderDetailsProps } from "./nonDraftOrderDetailsProps";
+import { type OrderOperationHandlers } from "./operations/handlers";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
-import { OrderNormalDetails } from "./OrderNormalDetails";
-import { OrderUnconfirmedDetails } from "./OrderUnconfirmedDetails";
+import { TransactionOrderDetails } from "./TransactionOrderDetails/TransactionOrderDetails";
 import { useOrderDetails } from "./useOrderDetails";
 
 interface OrderDetailsProps {
@@ -51,10 +53,9 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
   const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
   const notify = useNotifier();
   const apolloClient = useApolloClient();
-  const { data, loading } = useOrderDetails(id);
+  const { data, loading, refetch, startPolling, stopPolling } = useOrderDetails(id);
 
   const order = data?.order;
-  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const isOrderDraft = order?.status === OrderStatus.DRAFT;
 
   useOrderDetailsUrlCanonicalization(id, order?.status);
@@ -117,30 +118,18 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
 
   return (
     <OrderDetailsMessages id={id} orderStatus={order?.status} params={params}>
-      {orderMessages => (
-        <OrderOperations
-          order={id}
-          onNoteAdd={orderMessages.handleNoteAdd}
-          onNoteUpdate={orderMessages.handleNoteUpdate}
-          onOrderCancel={orderMessages.handleOrderCancel}
-          onOrderVoid={orderMessages.handleOrderVoid}
-          onPaymentCapture={orderMessages.handlePaymentCapture}
-          onUpdate={orderMessages.handleUpdate}
-          onDraftUpdate={orderMessages.handleDraftUpdate}
-          onShippingMethodUpdate={data => {
-            orderMessages.handleShippingMethodUpdate(data);
-            order.total = data.orderUpdateShipping.order.total;
-          }}
-          onOrderLineDelete={orderMessages.handleOrderLineDelete}
-          onOrderLinesAdd={orderMessages.handleOrderLinesAdd}
-          onOrderLineUpdate={orderMessages.handleOrderLineUpdate}
-          onOrderFulfillmentApprove={orderMessages.handleOrderFulfillmentApprove}
-          onOrderFulfillmentCancel={orderMessages.handleOrderFulfillmentCancel}
-          onOrderFulfillmentUpdate={orderMessages.handleOrderFulfillmentUpdate}
-          onDraftFinalize={orderMessages.handleDraftFinalize}
-          onDraftCancel={orderMessages.handleDraftCancel}
-          onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
-          onInvoiceRequest={data => {
+      {orderMessages => {
+        // Completion handlers built once at the route; each concrete view
+        // instantiates only the operation hooks it owns from this object.
+        const handlers: OrderOperationHandlers = {
+          onNoteAdd: orderMessages.handleNoteAdd,
+          onNoteUpdate: orderMessages.handleNoteUpdate,
+          onOrderCancel: orderMessages.handleOrderCancel,
+          onUpdate: orderMessages.handleUpdate,
+          onOrderFulfillmentApprove: orderMessages.handleOrderFulfillmentApprove,
+          onOrderFulfillmentCancel: orderMessages.handleOrderFulfillmentCancel,
+          onOrderFulfillmentUpdate: orderMessages.handleOrderFulfillmentUpdate,
+          onInvoiceRequest: data => {
             if (data.invoiceRequest.invoice.status === JobStatusEnum.SUCCESS) {
               orderMessages.handleInvoiceGenerateFinished(data);
             } else {
@@ -152,122 +141,77 @@ const OrderDetails = ({ id, params }: OrderDetailsProps) => {
                 },
               });
             }
-          }}
-          onInvoiceSend={orderMessages.handleInvoiceSend}
-          onTransactionActionSend={async data => {
+          },
+          onInvoiceSend: orderMessages.handleInvoiceSend,
+          onOrderLineDelete: orderMessages.handleOrderLineDelete,
+          onOrderLinesAdd: orderMessages.handleOrderLinesAdd,
+          onOrderLineUpdate: orderMessages.handleOrderLineUpdate,
+          onShippingMethodUpdate: data => {
+            orderMessages.handleShippingMethodUpdate(data);
+            order.total = data.orderUpdateShipping.order.total;
+          },
+          onPaymentCapture: orderMessages.handlePaymentCapture,
+          onOrderVoid: orderMessages.handleOrderVoid,
+          onOrderMarkAsPaid: orderMessages.handleOrderMarkAsPaid,
+          onTransactionActionSend: async data => {
             await apolloClient.refetchQueries({
               include: [OrderDetailsDocument],
             });
             orderMessages.handleTransactionAction(data);
-          }}
-          onManualTransactionAdded={async data => {
+          },
+          onManualTransactionAdded: async data => {
             await apolloClient.refetchQueries({
               include: [OrderDetailsDocument],
             });
             orderMessages.handleAddManualTransaction(data);
-          }}
-        >
-          {({
-            orderAddNote,
-            orderUpdateNote,
-            orderCancel,
-            orderDraftUpdate,
-            orderLinesAdd,
-            orderLineDelete,
-            orderLineUpdate,
-            orderPaymentCapture,
-            orderVoid,
-            orderShippingMethodUpdate,
-            orderUpdate,
-            orderFulfillmentApprove,
-            orderFulfillmentCancel,
-            orderFulfillmentUpdateTracking,
-            orderDraftCancel,
-            orderDraftFinalize,
-            orderPaymentMarkAsPaid,
-            orderInvoiceRequest,
-            orderInvoiceSend,
-            orderTransactionAction,
-            orderAddManualTransaction,
-          }) => (
-            <>
-              {order && !isOrderDraft && !isOrderUnconfirmed && (
-                <OrderNormalDetails
-                  id={id}
-                  params={params}
-                  loading={loading}
-                  data={data}
-                  orderAddNote={orderAddNote}
-                  orderUpdateNote={orderUpdateNote}
-                  orderInvoiceRequest={orderInvoiceRequest}
-                  orderUpdate={orderUpdate}
-                  orderCancel={orderCancel}
-                  orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
-                  orderVoid={orderVoid}
-                  orderPaymentCapture={orderPaymentCapture}
-                  orderFulfillmentApprove={orderFulfillmentApprove}
-                  orderFulfillmentCancel={orderFulfillmentCancel}
-                  orderFulfillmentUpdateTracking={orderFulfillmentUpdateTracking}
-                  orderInvoiceSend={orderInvoiceSend}
-                  orderTransactionAction={orderTransactionAction}
-                  orderAddManualTransaction={orderAddManualTransaction}
-                  openModal={openModal}
-                  closeModal={closeModal}
+          },
+          onDraftUpdate: orderMessages.handleDraftUpdate,
+          onDraftCancel: orderMessages.handleDraftCancel,
+          onDraftFinalize: orderMessages.handleDraftFinalize,
+        };
+
+        const nonDraftProps: NonDraftOrderDetailsProps = {
+          id,
+          params,
+          loading,
+          data,
+          saveButtonBarState: confirmSaveButtonBarState,
+          handleSubmit,
+          openModal,
+          closeModal,
+          handlers,
+        };
+
+        return (
+          <>
+            {order &&
+              !isOrderDraft &&
+              // The single non-draft payment-mode branch: resolve once, route
+              // to one concrete view. Draft stays outside the resolver.
+              (resolveOrderPaymentMode(order).kind === "transactions" ? (
+                <TransactionOrderDetails
+                  {...nonDraftProps}
+                  startPolling={startPolling}
+                  stopPolling={stopPolling}
+                  refetch={refetch}
                 />
-              )}
-              {order && isOrderDraft && (
-                <OrderDraftDetails
-                  id={id}
-                  params={params}
-                  loading={loading}
-                  data={data}
-                  orderAddNote={orderAddNote}
-                  orderUpdateNote={orderUpdateNote}
-                  orderLineUpdate={orderLineUpdate}
-                  orderLineDelete={orderLineDelete}
-                  orderShippingMethodUpdate={orderShippingMethodUpdate}
-                  orderLinesAdd={orderLinesAdd}
-                  orderDraftUpdate={orderDraftUpdate}
-                  orderDraftCancel={orderDraftCancel}
-                  orderDraftFinalize={orderDraftFinalize}
-                  openModal={openModal}
-                  closeModal={closeModal}
-                />
-              )}
-              {order && isOrderUnconfirmed && (
-                <OrderUnconfirmedDetails
-                  id={id}
-                  params={params}
-                  data={data}
-                  loading={loading}
-                  orderAddNote={orderAddNote}
-                  orderUpdateNote={orderUpdateNote}
-                  orderLineUpdate={orderLineUpdate}
-                  orderLineDelete={orderLineDelete}
-                  orderInvoiceRequest={orderInvoiceRequest}
-                  handleSubmit={handleSubmit}
-                  orderUpdate={orderUpdate}
-                  orderCancel={orderCancel}
-                  orderShippingMethodUpdate={orderShippingMethodUpdate}
-                  orderLinesAdd={orderLinesAdd}
-                  orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
-                  orderVoid={orderVoid}
-                  orderPaymentCapture={orderPaymentCapture}
-                  orderFulfillmentApprove={orderFulfillmentApprove}
-                  orderFulfillmentCancel={orderFulfillmentCancel}
-                  orderFulfillmentUpdateTracking={orderFulfillmentUpdateTracking}
-                  orderInvoiceSend={orderInvoiceSend}
-                  saveButtonBarState={confirmSaveButtonBarState}
-                  orderTransactionAction={orderTransactionAction}
-                  orderAddManualTransaction={orderAddManualTransaction}
-                  openModal={openModal}
-                  closeModal={closeModal}
-                />
-              )}
-            </>
-          )}
-        </OrderOperations>
-      )}
+              ) : (
+                <LegacyOrderDetails {...nonDraftProps} />
+              ))}
+            {order && isOrderDraft && (
+              <OrderDraftDetails
+                id={id}
+                params={params}
+                loading={loading}
+                data={data}
+                handlers={handlers}
+                openModal={openModal}
+                closeModal={closeModal}
+              />
+            )}
+          </>
+        );
+      }}
     </OrderDetailsMessages>
   );
 };

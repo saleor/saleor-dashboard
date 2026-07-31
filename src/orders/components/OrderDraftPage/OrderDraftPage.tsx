@@ -30,10 +30,10 @@ import { useContext, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import OrderCustomer from "../OrderCustomer";
-import { messages as orderDetailsPageMessages } from "../OrderDetailsPage/messages";
-import Title from "../OrderDetailsPage/Title";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
+import { messages as orderDetailsPageMessages } from "../OrderPageShared/messages";
+import Title from "../OrderPageShared/Title";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import OrderDraftAlert from "./OrderDraftAlert";
 

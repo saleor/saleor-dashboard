@@ -1,4 +1,5 @@
 import { type OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
+import { OrderDetailsViewModel } from "@dashboard/orders/utils/OrderDetailsViewModel";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
@@ -7,31 +8,28 @@ import { transactionActionMessages } from "../OrderTransaction/messages";
 
 type Props = {
   order: OrderDetailsFragment;
-  canCapture: boolean;
-  canRefund: boolean;
-  canVoid: boolean;
-  canMarkAsPaid: boolean;
+  onCapture?: () => void;
+  onRefund?: () => void;
+  onVoid?: () => void;
   onMarkAsPaid?: () => void;
-  onLegacyPaymentsApiCapture?: () => any;
-  onLegacyPaymentsApiRefund?: () => any;
-  onLegacyPaymentsApiVoid?: () => any;
 };
 
+/** Summary actions owned by the Legacy Payments API view. */
 export const LegacyPaymentsApiButtons = ({
   order,
-  canCapture,
-  canRefund,
-  canVoid,
-  canMarkAsPaid,
+  onCapture,
+  onRefund,
+  onVoid,
   onMarkAsPaid,
-  onLegacyPaymentsApiCapture,
-  onLegacyPaymentsApiRefund,
-  onLegacyPaymentsApiVoid,
 }: Props): ReactNode => {
   const intl = useIntl();
+  const canCapture = OrderDetailsViewModel.canOrderCapture(order.actions);
+  const canVoid = OrderDetailsViewModel.canOrderVoid(order.actions);
+  const canRefund = OrderDetailsViewModel.canOrderRefund(order.actions);
+  const canMarkAsPaid = OrderDetailsViewModel.canOrderBeMarkedAsPaid(order.actions);
 
   const showButtons =
-    order?.status !== OrderStatus.CANCELED &&
+    order.status !== OrderStatus.CANCELED &&
     (canCapture || canRefund || canVoid || (canMarkAsPaid && onMarkAsPaid));
 
   if (!showButtons) {
@@ -41,21 +39,17 @@ export const LegacyPaymentsApiButtons = ({
   return (
     <Box display="flex" gap={2}>
       {canCapture && (
-        <Button variant="secondary" onClick={onLegacyPaymentsApiCapture}>
+        <Button variant="secondary" onClick={onCapture}>
           {intl.formatMessage(transactionActionMessages.capture)}
         </Button>
       )}
       {canRefund && (
-        <Button
-          variant="secondary"
-          onClick={onLegacyPaymentsApiRefund}
-          data-test-id="refund-button"
-        >
+        <Button variant="secondary" onClick={onRefund} data-test-id="refund-button">
           {intl.formatMessage(transactionActionMessages.refund)}
         </Button>
       )}
       {canVoid && (
-        <Button variant="secondary" onClick={onLegacyPaymentsApiVoid}>
+        <Button variant="secondary" onClick={onVoid}>
           {intl.formatMessage(transactionActionMessages.void)}
         </Button>
       )}

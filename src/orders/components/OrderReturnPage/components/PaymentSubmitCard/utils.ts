@@ -145,7 +145,7 @@ const getReturnTotalAmount = ({
 };
 
 export const getReturnProductsAmountValues = (
-  order: OrderDetailsFragment,
+  order: OrderDetailsFragment | undefined | null,
   formData: OrderReturnFormData,
 ) => {
   const authorizedAmount = getAuthorizedAmount(order);

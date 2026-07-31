@@ -17,7 +17,7 @@ import { orderInvoiceEmailSendDialogMessages } from "./messages";
 interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: InvoiceErrorFragment[];
-  invoice: InvoiceFragment;
+  invoice: InvoiceFragment | undefined;
   onSend: () => void;
 }
 

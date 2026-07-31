@@ -842,10 +842,45 @@ export class OrderFixture {
     return this;
   }
 
-  withTransaction() {
+  withTransaction(
+    overrides: Partial<OrderDetailsFragment["transactions"][number]> = {},
+  ): OrderFixture {
     this.order = {
       ...this.order,
-      transactions: [TransactionFixture.transaction],
+      transactions: [{ ...TransactionFixture.transaction, ...overrides }],
+    };
+
+    return this;
+  }
+
+  withActions(actions: OrderDetailsFragment["actions"]): OrderFixture {
+    this.order = {
+      ...this.order,
+      actions,
+    };
+
+    return this;
+  }
+
+  withLegacyPayments(): OrderFixture {
+    const payment: OrderDetailsFragment["payments"][number] = {
+      __typename: "Payment",
+      id: "payment-id-1",
+      isActive: true,
+      actions: [],
+      gateway: "mirumee.payments.dummy",
+      paymentMethodType: "card",
+      modified: "2023-10-01T12:00:00Z",
+      availableCaptureAmount: { __typename: "Money", amount: 0, currency: "USD" },
+      capturedAmount: { __typename: "Money", amount: 110, currency: "USD" },
+      total: { __typename: "Money", amount: 110, currency: "USD" },
+      availableRefundAmount: { __typename: "Money", amount: 0, currency: "USD" },
+      transactions: [],
+    };
+
+    this.order = {
+      ...this.order,
+      payments: [payment],
     };
 
     return this;

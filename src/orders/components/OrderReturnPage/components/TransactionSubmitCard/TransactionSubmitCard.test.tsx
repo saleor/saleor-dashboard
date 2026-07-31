@@ -42,7 +42,6 @@ const transactionSubmitCardProps = {
   autoSendRefund: false,
   refundShipmentCosts: false,
   canRefundShipping: true,
-  shippingCosts: { amount: 5, currency: "USD" },
   amountData: {
     refundTotalAmount: { amount: 0, currency: "USD" },
     shipmentCost: { amount: 0, currency: "USD" },
