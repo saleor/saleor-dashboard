@@ -89,6 +89,9 @@ const TRANSLATIONS_MOUNTS = ["TRANSLATIONS_MORE_ACTIONS"] as const;
 
 const HOMEPAGE_MOUNTS = ["HOMEPAGE_WIDGETS"] as const;
 
+// Global mount rendered in the command palette (Cmd+K), not bound to a single page.
+const SEARCH_MOUNTS = ["SEARCH_ACTION"] as const;
+
 // Create a const array with all mounts to preserve literal types
 const ALL_MOUNTS_ARRAY = [
   ...CATEGORY_MOUNTS,
@@ -105,6 +108,7 @@ const ALL_MOUNTS_ARRAY = [
   ...PRODUCT_MOUNTS,
   ...VOUCHER_MOUNTS,
   ...TRANSLATIONS_MOUNTS,
+  ...SEARCH_MOUNTS,
 ] as const;
 
 // Create the zod enum from the tuple, ensuring proper type inference
