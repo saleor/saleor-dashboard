@@ -1,6 +1,6 @@
 import pulsePoster from "@assets/images/cover-big-pulse-by-saleor.png";
 import { type Ripple } from "@dashboard/ripples/types";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { MemoryRouter } from "react-router-dom";
 
 import { RippleVideoAnnouncement } from "./RippleVideoAnnouncement";
@@ -29,7 +29,7 @@ const meta: Meta<typeof RippleVideoAnnouncement> = {
     localStorage.removeItem(RIPPLE_STORAGE_KEY);
   },
   decorators: [
-    (Story): JSX.Element => (
+    (Story: StoryFn): JSX.Element => (
       <MemoryRouter>
         <div
           style={{

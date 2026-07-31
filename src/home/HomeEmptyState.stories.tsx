@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 
 import { HomeEmptyState } from "./HomeEmptyState";
 
@@ -9,7 +9,7 @@ const meta: Meta<typeof HomeEmptyState> = {
     layout: "fullscreen",
   },
   decorators: [
-    (Story): JSX.Element => (
+    (Story: StoryFn): JSX.Element => (
       <div style={{ height: "100vh", background: "var(--mu-colors-background-default1)" }}>
         <Story />
       </div>
