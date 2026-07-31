@@ -16,7 +16,7 @@ export const SearchActionsList = ({
   query,
   onActionSelected,
 }: SearchActionsListProps) => {
-  const searchResults = fuzzySearch(actions, query, ["label"]);
+  const searchResults = fuzzySearch(actions, query, ["label", "appName"]);
 
   if (searchResults.length === 0) {
     return null;

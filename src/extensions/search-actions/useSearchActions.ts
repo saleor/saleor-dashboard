@@ -54,6 +54,7 @@ export const useSearchActions = () => {
       section: intl.formatMessage(messages.appActionsSection),
       views: parseExtensionViews(extension.settings),
       permissions: extension.permissions,
+      appName: extension.app.name ?? undefined,
       avatar: extension.app.brand?.logo.default,
       onSelect: context => extension.open(context.params),
     }));

@@ -18,6 +18,8 @@ export interface ContextualSearchAction {
   views?: AppExtensionView[];
   /** Permissions the user must hold for the action to appear. Undefined/empty = always. */
   permissions?: PermissionEnum[];
+  /** Owning app's name for extension-provided actions. Searchable, not displayed. */
+  appName?: string;
   /** Optional icon (app logo for extension-provided actions). */
   avatar?: string;
   /** Invoked when the action is activated, receiving the current view + entity context. */
