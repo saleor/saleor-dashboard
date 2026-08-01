@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ChannelDeliveryCard } from "@dashboard/channels/components/ChannelDeliveryCard/ChannelDeliveryCard";
 import { ChannelInventoryCard } from "@dashboard/channels/components/ChannelInventoryCard/ChannelInventoryCard";
 import { channelSectionIds } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
@@ -21,8 +22,9 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import RequirePermissions from "@dashboard/components/RequirePermissions";
+import { hasOneOfPermissions, hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
+import { SaleorThrobber } from "@dashboard/components/Throbber";
 import {
   type ChannelDetailsFragment,
   type ChannelErrorFragment,
@@ -44,6 +46,7 @@ import { useIntl } from "react-intl";
 
 import { ChannelForm, type FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
+import { ChannelDetailsTitle } from "./ChannelDetailsTitle";
 import {
   createShippingZoneRemoveHandler,
   createWarehouseRemoveHandler,
@@ -55,6 +58,8 @@ import { parseDateTimeToDateAndTime } from "./utils";
 
 interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
+  /** Edit view: true while the channel query is in flight (prevents create-layout flash). */
+  loading?: boolean;
   currencyCodes?: Option[];
   disabled: boolean;
   disabledStatus?: boolean;
@@ -87,6 +92,7 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
 
 const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   channel,
+  loading = false,
   currencyCodes,
   disabled,
   disabledStatus,
@@ -111,7 +117,18 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   const navigate = useNavigator();
   const intl = useIntl();
   const devMode = useDevModeContext();
-  const isCreate = !channel;
+  const userPermissions = useUserPermissions() ?? [];
+  // Without this, a missing `channel` during fetch is treated as create and flashes that layout.
+  const isCreate = !channel && !loading;
+  const isEditLoading = loading && !channel;
+  // Status moved to the header — don't leave an empty bordered sidebar column.
+  const showDeliveryCard = hasPermissions(userPermissions, [PermissionEnum.MANAGE_SHIPPING]);
+  const showInventoryCard = hasOneOfPermissions(userPermissions, [
+    PermissionEnum.MANAGE_SHIPPING,
+    PermissionEnum.MANAGE_ORDERS,
+    PermissionEnum.MANAGE_PRODUCTS,
+  ]);
+  const showRightSidebar = !isCreate && (showDeliveryCard || showInventoryCard);
   const channelId = channel?.id;
   const taxConfigurationId = channel?.taxConfiguration?.id;
   const createDefaults = getChannelCreateDefaults();
@@ -257,6 +274,28 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     return onSubmit(data);
   };
 
+  if (isEditLoading) {
+    return (
+      <DetailPageLayout gridTemplateColumns={showRightSidebar ? 12 : 1}>
+        <TopNav href={channelsListUrl()} title={null} />
+        <DetailPageLayout.Content>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            paddingY={12}
+            data-test-id="channel-details-loader"
+          >
+            <SaleorThrobber />
+          </Box>
+        </DetailPageLayout.Content>
+        {showRightSidebar ? (
+          <DetailPageLayout.RightSidebar paddingTop={6}>{null}</DetailPageLayout.RightSidebar>
+        ) : null}
+      </DetailPageLayout>
+    );
+  }
+
   return (
     <Form confirmLeave onSubmit={handleSubmit} initial={initialData}>
       {({ change, data, submit, set, triggerChange }) => {
@@ -311,19 +350,29 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         };
 
         return (
-          <DetailPageLayout gridTemplateColumns={isCreate ? 1 : 12}>
+          <DetailPageLayout gridTemplateColumns={showRightSidebar ? 12 : 1}>
             <TopNav
               href={channelsListUrl()}
               title={
-                channel?.name ||
-                intl.formatMessage({
-                  id: "DnghuS",
-                  defaultMessage: "New Channel",
-                  description: "channel create",
-                })
+                channel ? (
+                  <ChannelDetailsTitle channel={channel} />
+                ) : (
+                  intl.formatMessage({
+                    id: "DnghuS",
+                    defaultMessage: "New Channel",
+                    description: "channel create",
+                  })
+                )
               }
               actionsGap={3}
             >
+              {!isCreate && updateChannelStatus && (
+                <ChannelStatus
+                  isActive={!!channel?.isActive}
+                  disabled={!!disabledStatus}
+                  onClick={updateChannelStatus}
+                />
+              )}
               {!isCreate && onShowMetadata && (
                 <TopNav.MetadataButton
                   onClick={onShowMetadata}
@@ -356,38 +405,24 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 </Box>
               )}
             </DetailPageLayout.Content>
-            {!isCreate && (
-              <DetailPageLayout.RightSidebar>
-                {!!updateChannelStatus && (
+            {showRightSidebar && (
+              <DetailPageLayout.RightSidebar paddingTop={6}>
+                {showDeliveryCard && (
                   <>
-                    <ChannelStatus
-                      isActive={channel?.isActive}
-                      disabled={disabledStatus}
-                      updateChannelStatus={updateChannelStatus}
+                    <ChannelDeliveryCard
+                      shippingZones={data.shippingZonesToDisplay}
+                      removeShippingZone={removeShippingZone}
+                      disabled={disabled}
+                      availableShippingZonesCount={allShippingZonesCount}
+                      // Card is gated by MANAGE_SHIPPING — same permission as shippingZoneCreate.
+                      canCreateShipping
+                      onAssignShipping={onAssignShipping}
+                      onCreateShipping={onCreateShipping}
                     />
-                    <CardSpacer />
+                    {showInventoryCard ? <CardSpacer /> : null}
                   </>
                 )}
-                <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}>
-                  <ChannelDeliveryCard
-                    shippingZones={data.shippingZonesToDisplay}
-                    removeShippingZone={removeShippingZone}
-                    disabled={disabled}
-                    availableShippingZonesCount={allShippingZonesCount}
-                    // Card is gated by MANAGE_SHIPPING — same permission as shippingZoneCreate.
-                    canCreateShipping
-                    onAssignShipping={onAssignShipping}
-                    onCreateShipping={onCreateShipping}
-                  />
-                  <CardSpacer />
-                </RequirePermissions>
-                <RequirePermissions
-                  oneOfPermissions={[
-                    PermissionEnum.MANAGE_SHIPPING,
-                    PermissionEnum.MANAGE_ORDERS,
-                    PermissionEnum.MANAGE_PRODUCTS,
-                  ]}
-                >
+                {showInventoryCard && (
                   <ChannelInventoryCard
                     warehouses={data.warehousesToDisplay}
                     removeWarehouse={removeWarehouse}
@@ -400,7 +435,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                     allocationStrategy={data.allocationStrategy}
                     onAllocationStrategyChange={change}
                   />
-                </RequirePermissions>
+                )}
               </DetailPageLayout.RightSidebar>
             )}
             <Savebar>

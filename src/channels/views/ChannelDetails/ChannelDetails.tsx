@@ -11,6 +11,7 @@ import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
 import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
@@ -352,14 +353,21 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     fetchMoreShippingZones,
   );
 
+  if (data?.channel === null) {
+    return <NotFoundPage onBack={() => navigate(channelsListUrl())} />;
+  }
+
   return (
     <>
       <WindowTitle
-        title={intl.formatMessage({
-          id: "D9Rg+F",
-          defaultMessage: "Channel details",
-          description: "window title",
-        })}
+        title={
+          data?.channel?.name ||
+          intl.formatMessage({
+            id: "D9Rg+F",
+            defaultMessage: "Channel details",
+            description: "window title",
+          })
+        }
       />
       <ChannelDetailsPage
         channelShippingZones={channelShippingZones}
@@ -367,6 +375,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         channelWarehouses={channelWarehouses}
         allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
         channel={data?.channel}
+        loading={loading}
         disabled={
           updateChannelOpts.loading ||
           reorderChannelWarehousesOpts.loading ||

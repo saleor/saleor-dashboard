@@ -21,4 +21,19 @@ export const messages = defineMessages({
     defaultMessage: "Delete channel",
     description: "channel detail cogs menu, opens the delete-confirmation dialog",
   },
+  statusActive: {
+    id: "HBrAXs",
+    defaultMessage: "Active",
+    description: "channel status",
+  },
+  statusInactive: {
+    id: "rZh6/D",
+    defaultMessage: "Inactive",
+    description: "channel status",
+  },
+  headerCountryCurrency: {
+    id: "GXxpRA",
+    defaultMessage: "{country} · {currency}",
+    description: "channel detail title secondary meta after status pill",
+  },
 });
