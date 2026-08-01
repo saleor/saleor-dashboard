@@ -32,6 +32,11 @@ export const channelDetailsFragment = gql`
     warehouses {
       ...Warehouse
     }
+    taxConfiguration {
+      id
+      chargeTaxes
+      taxCalculationStrategy
+    }
     orderSettings {
       markAsPaidStrategy
       deleteExpiredOrdersAfter

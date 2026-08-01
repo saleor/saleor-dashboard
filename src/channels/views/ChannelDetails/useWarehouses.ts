@@ -24,6 +24,7 @@ export const useWarehouses = () => {
   });
 
   return {
+    canLoadWarehouses,
     warehousesCountData,
     warehousesCountLoading,
     fetchMoreWarehouses,

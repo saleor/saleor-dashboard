@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
+import { getChannelCreateDefaults } from "@dashboard/channels/utils/getChannelCreateDefaults";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   type ChannelCreateInput,
@@ -15,9 +16,10 @@ import useShop from "@dashboard/hooks/useShop";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import currencyCodes from "currency-codes";
 import { useIntl } from "react-intl";
+import slugify from "slugify";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
-import { channelPath } from "../../urls";
+import { channelUrl } from "../../urls";
 import { useShippingZones } from "../ChannelDetails/useShippingZones";
 import { useWarehouses } from "../ChannelDetails/useWarehouses";
 import { useSaveChannel } from "./useSaveChannel";
@@ -51,39 +53,38 @@ const ChannelCreateView = () => {
         if (errors.length) {
           errors.forEach(error => handleError(error));
         }
-
-        navigate(channelPath(data.channelReorderWarehouses.channel?.id));
       },
     });
   const saveChannel = useSaveChannel({
     createChannel,
     reorderChannelWarehouses,
   });
-  const handleSubmit = async ({
-    allocationStrategy,
-    allowUnpaidOrders,
-    automaticallyConfirmAllNewOrders,
-    automaticallyFulfillNonShippableGiftCard,
-    currencyCode,
-    defaultCountry,
-    defaultTransactionFlowStrategy,
-    deleteExpiredOrdersAfter,
-    markAsPaidStrategy,
-    name,
-    shippingZonesIdsToAdd,
-    slug,
-    warehousesIdsToAdd,
-    warehousesToDisplay,
-    automaticallyCompleteCheckouts,
-    allowLegacyGiftCardUse,
-  }: FormData) => {
-    const input: ChannelCreateInput = {
+  const handleSubmit = async (formData: FormData) => {
+    const defaults = getChannelCreateDefaults();
+    const {
+      allocationStrategy = defaults.allocationStrategy,
+      allowUnpaidOrders = defaults.allowUnpaidOrders,
+      automaticallyConfirmAllNewOrders = defaults.automaticallyConfirmAllNewOrders,
+      automaticallyFulfillNonShippableGiftCard = defaults.automaticallyFulfillNonShippableGiftCard,
+      currencyCode,
+      defaultCountry,
+      defaultTransactionFlowStrategy = defaults.defaultTransactionFlowStrategy,
+      deleteExpiredOrdersAfter = defaults.deleteExpiredOrdersAfter,
+      markAsPaidStrategy = defaults.markAsPaidStrategy,
       name,
       slug,
+      warehousesToDisplay,
+      automaticallyCompleteCheckouts = defaults.automaticallyCompleteCheckouts,
+      allowLegacyGiftCardUse = defaults.allowLegacyGiftCardUse,
+    } = formData;
+
+    const input: ChannelCreateInput = {
+      name,
+      slug: slug || slugify(name).toLowerCase(),
       defaultCountry,
       currencyCode: currencyCode.toUpperCase(),
-      addShippingZones: shippingZonesIdsToAdd,
-      addWarehouses: warehousesIdsToAdd,
+      addShippingZones: [],
+      addWarehouses: [],
       stockSettings: {
         allocationStrategy,
       },
@@ -99,11 +100,17 @@ const ChannelCreateView = () => {
       },
       checkoutSettings: {
         automaticallyCompleteFullyPaidCheckouts: automaticallyCompleteCheckouts,
-        allowLegacyGiftCardUse: allowLegacyGiftCardUse,
+        allowLegacyGiftCardUse,
       },
     };
 
-    return saveChannel(input, warehousesToDisplay);
+    const { errors, channelId } = await saveChannel(input, warehousesToDisplay);
+
+    if (!errors.length && channelId) {
+      navigate(channelUrl(channelId, { action: "setup" }));
+    }
+
+    return errors;
   };
   const {
     shippingZonesCountData,
@@ -143,32 +150,30 @@ const ChannelCreateView = () => {
           description: "window title",
         })}
       />
-      <>
-        <ChannelDetailsPage
-          allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
-          searchShippingZones={searchShippingZones}
-          searchShippingZonesData={searchShippingZonesResult.data}
-          fetchMoreShippingZones={getSearchFetchMoreProps(
-            searchShippingZonesResult,
-            fetchMoreShippingZones,
-          )}
-          allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
-          searchWarehouses={searchWarehouses}
-          searchWarehousesData={searchWarehousesResult.data}
-          fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
-          disabled={
-            createChannelOpts.loading ||
-            reorderChannelWarehousesOpts.loading ||
-            shippingZonesCountLoading ||
-            warehousesCountLoading
-          }
-          errors={createChannelOpts?.data?.channelCreate?.errors || []}
-          currencyCodes={currencyCodeChoices}
-          onSubmit={handleSubmit}
-          saveButtonBarState={createChannelOpts.status}
-          countries={shop?.countries || []}
-        />
-      </>
+      <ChannelDetailsPage
+        allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
+        searchShippingZones={searchShippingZones}
+        searchShippingZonesData={searchShippingZonesResult.data}
+        fetchMoreShippingZones={getSearchFetchMoreProps(
+          searchShippingZonesResult,
+          fetchMoreShippingZones,
+        )}
+        allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
+        searchWarehouses={searchWarehouses}
+        searchWarehousesData={searchWarehousesResult.data}
+        fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
+        disabled={
+          createChannelOpts.loading ||
+          reorderChannelWarehousesOpts.loading ||
+          shippingZonesCountLoading ||
+          warehousesCountLoading
+        }
+        errors={createChannelOpts?.data?.channelCreate?.errors || []}
+        currencyCodes={currencyCodeChoices}
+        onSubmit={handleSubmit}
+        saveButtonBarState={createChannelOpts.status}
+        countries={shop?.countries || []}
+      />
     </>
   );
 };

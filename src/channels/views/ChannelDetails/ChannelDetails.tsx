@@ -1,13 +1,23 @@
 // @ts-strict-ignore
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog";
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
+import { ChannelMetadataDialog } from "@dashboard/channels/components/ChannelMetadataDialog/ChannelMetadataDialog";
+import { ChannelSetupCard } from "@dashboard/channels/components/ChannelSetupCard/ChannelSetupCard";
+import { useChannelSetupCardDismiss } from "@dashboard/channels/components/ChannelSetupCard/useChannelSetupCardDismiss";
+import { CreateShippingForChannelDialog } from "@dashboard/channels/components/CreateShippingForChannelDialog/CreateShippingForChannelDialog";
+import { CreateWarehouseForChannelDialog } from "@dashboard/channels/components/CreateWarehouseForChannelDialog/CreateWarehouseForChannelDialog";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
+import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
+import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   type ChannelDeleteMutation,
   type ChannelErrorFragment,
   type ChannelUpdateMutation,
+  PermissionEnum,
   useChannelActivateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
@@ -15,7 +25,10 @@ import {
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
-import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import {
+  getParsedSearchData,
+  getSearchFetchMoreProps,
+} from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
@@ -24,6 +37,7 @@ import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
@@ -33,6 +47,8 @@ import {
   type ChannelUrlDialog,
   type ChannelUrlQueryParams,
 } from "../../urls";
+import { useChannelSetupActions } from "./useChannelSetupActions";
+import { useChannelSetupReviewStats } from "./useChannelSetupReviewStats";
 import { useShippingZones } from "./useShippingZones";
 import { useWarehouses } from "./useWarehouses";
 
@@ -233,7 +249,12 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     deleteChannel({ variables: data });
   };
 
+  const userPermissions = useUserPermissions();
+  const canCreateWarehouse = hasPermissions(userPermissions ?? [], [
+    PermissionEnum.MANAGE_PRODUCTS,
+  ]);
   const {
+    canLoadShippingZones,
     shippingZonesCountData,
     shippingZonesCountLoading,
     channelShippingZonesData,
@@ -243,6 +264,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     searchShippingZonesResult,
   } = useShippingZones(id);
   const {
+    canLoadWarehouses,
     warehousesCountData,
     warehousesCountLoading,
     fetchMoreWarehouses,
@@ -250,8 +272,77 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     searchWarehousesResult,
   } = useWarehouses();
 
-  const channelWarehouses = data?.channel?.warehouses || [];
+  const channelWarehouses = useMemo(
+    () => data?.channel?.warehouses || [],
+    [data?.channel?.warehouses],
+  );
   const channelShippingZones = mapEdgesToItems(channelShippingZonesData?.shippingZones);
+  const setupEmphasized = params.action === "setup";
+  const { isDismissed: setupCardDismissed, dismiss: dismissSetupCard } =
+    useChannelSetupCardDismiss(id);
+  const hasWarehouseAssigned = channelWarehouses.length > 0;
+  const hasShippingAssigned = (channelShippingZones?.length ?? 0) > 0;
+  const coreSetupIncomplete =
+    !hasWarehouseAssigned || (canLoadShippingZones && !hasShippingAssigned);
+  // Show for post-create (?action=setup), incomplete core setup, or inactive channels
+  // that still need Activate — not for every already-live channel forever.
+  const showSetupCard =
+    !!data?.channel &&
+    !setupCardDismissed &&
+    (setupEmphasized || coreSetupIncomplete || !data.channel.isActive);
+  const { paymentAppsCount, publishedProductCount, totalProductCount } = useChannelSetupReviewStats(
+    {
+      channelSlug: data?.channel?.slug,
+      skip: !showSetupCard,
+    },
+  );
+
+  const {
+    handleCreateWarehouse,
+    handleCreateShipping,
+    handleAssignWarehouse,
+    handleAssignShippingZone,
+    createWarehouseConfirmState,
+    createShippingConfirmState,
+    assignConfirmState,
+  } = useChannelSetupActions({
+    channelId: id,
+    warehouseIds: channelWarehouses.map(warehouse => warehouse.id),
+    onWarehouseCreated: closeModal,
+    onShippingCreated: closeModal,
+    onAssigned: closeModal,
+  });
+
+  const assignedWarehouseIds = useMemo(
+    () => new Set(channelWarehouses.map(warehouse => warehouse.id)),
+    [channelWarehouses],
+  );
+  const assignedShippingZoneIds = useMemo(
+    () => new Set((channelShippingZones ?? []).map(zone => zone.id)),
+    [channelShippingZones],
+  );
+  const warehousesToAssign = useMemo(
+    () =>
+      getParsedSearchData({ data: searchWarehousesResult.data }).filter(
+        warehouse => !assignedWarehouseIds.has(warehouse.id),
+      ),
+    [searchWarehousesResult.data, assignedWarehouseIds],
+  );
+  const shippingZonesToAssign = useMemo(
+    () =>
+      getParsedSearchData({ data: searchShippingZonesResult.data }).filter(
+        zone => !assignedShippingZoneIds.has(zone.id),
+      ),
+    [searchShippingZonesResult.data, assignedShippingZoneIds],
+  );
+  const warehouseAssignFetchMore = getSearchFetchMoreProps(
+    searchWarehousesResult,
+    fetchMoreWarehouses,
+  );
+  const shippingAssignFetchMore = getSearchFetchMoreProps(
+    searchShippingZonesResult,
+    fetchMoreShippingZones,
+  );
 
   return (
     <>
@@ -288,6 +379,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         disabledStatus={activateChannelOpts.loading || deactivateChannelOpts.loading}
         errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
         onDelete={() => openModal("remove")}
+        onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleSubmit}
         updateChannelStatus={() =>
           data?.channel?.isActive
@@ -296,6 +388,43 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         }
         saveButtonBarState={updateChannelOpts.status}
         countries={shop?.countries || []}
+        onCreateWarehouse={() => openModal("create-warehouse")}
+        onCreateShipping={() => openModal("create-shipping")}
+        setupCard={
+          showSetupCard && data?.channel ? (
+            <ChannelSetupCard
+              taxConfigurationId={data.channel.taxConfiguration?.id}
+              chargeTaxes={data.channel.taxConfiguration?.chargeTaxes}
+              taxCalculationStrategy={data.channel.taxConfiguration?.taxCalculationStrategy}
+              channelSlug={data.channel.slug}
+              warehouseCount={channelWarehouses.length}
+              shippingZoneCount={
+                canLoadShippingZones ? (channelShippingZones?.length ?? 0) : undefined
+              }
+              availableWarehousesCount={warehousesCountData?.warehouses?.totalCount ?? 0}
+              availableShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount ?? 0}
+              paymentAppsCount={paymentAppsCount}
+              publishedProductCount={publishedProductCount}
+              totalProductCount={totalProductCount}
+              isActive={data.channel.isActive}
+              canCreateWarehouse={canCreateWarehouse}
+              canAssignWarehouse={canLoadWarehouses}
+              onAssignWarehouse={() => openModal("assign-warehouse")}
+              onCreateWarehouse={() => openModal("create-warehouse")}
+              onAssignShipping={() => openModal("assign-shipping")}
+              onCreateShipping={() => openModal("create-shipping")}
+              onActivate={() => activateChannel({ variables: { id } })}
+              activateDisabled={activateChannelOpts.loading}
+              onDismiss={() => {
+                dismissSetupCard();
+
+                if (setupEmphasized) {
+                  closeModal();
+                }
+              }}
+            />
+          ) : null
+        }
       />
       <ChannelDeleteDialog
         channelSlug={data?.channel?.slug}
@@ -308,6 +437,61 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         onClose={closeModal}
         onConfirm={handleRemoveConfirm}
       />
+      <ChannelMetadataDialog
+        open={params.action === "view-metadata" && !!data?.channel}
+        onClose={closeModal}
+        channel={data?.channel}
+      />
+      {data?.channel && (
+        <>
+          <CreateWarehouseForChannelDialog
+            open={params.action === "create-warehouse"}
+            onClose={closeModal}
+            channelName={data.channel.name}
+            countries={shop?.countries || []}
+            defaultCountryCode={data.channel.defaultCountry.code}
+            confirmButtonState={createWarehouseConfirmState}
+            errors={[]}
+            onSubmit={handleCreateWarehouse}
+          />
+          <CreateShippingForChannelDialog
+            open={params.action === "create-shipping"}
+            onClose={closeModal}
+            channelName={data.channel.name}
+            currencyCode={data.channel.currencyCode}
+            defaultCountryCode={data.channel.defaultCountry.code}
+            defaultCountryName={data.channel.defaultCountry.country}
+            warehouseName={channelWarehouses[0]?.name}
+            confirmButtonState={createShippingConfirmState}
+            errors={[]}
+            onSubmit={formData => handleCreateShipping(formData, data.channel.defaultCountry.code)}
+          />
+          <AssignWarehouseDialog
+            open={params.action === "assign-warehouse"}
+            onClose={closeModal}
+            warehouses={warehousesToAssign}
+            loading={searchWarehousesResult.loading}
+            hasMore={warehouseAssignFetchMore.hasMore}
+            onFetchMore={warehouseAssignFetchMore.onFetchMore}
+            onFetch={searchWarehouses}
+            confirmButtonState={assignConfirmState}
+            onSubmit={selectedWarehouses =>
+              handleAssignWarehouse(selectedWarehouses.map(warehouse => warehouse.id))
+            }
+          />
+          <AssignShippingZoneDialog
+            open={params.action === "assign-shipping"}
+            onClose={closeModal}
+            shippingZones={shippingZonesToAssign}
+            loading={searchShippingZonesResult.loading}
+            hasMore={shippingAssignFetchMore.hasMore}
+            onFetchMore={shippingAssignFetchMore.onFetchMore}
+            onFetch={searchShippingZones}
+            confirmButtonState={assignConfirmState}
+            onSubmit={selectedZones => handleAssignShippingZone(selectedZones.map(zone => zone.id))}
+          />
+        </>
+      )}
     </>
   );
 };

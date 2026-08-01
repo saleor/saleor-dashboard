@@ -154,6 +154,54 @@ vars.colors.text.default2; // text color
 
 Full TypeScript token structure: `node_modules/@saleor/macaw-ui/dist/theme/contract.css.d.ts`
 
+## Foldable sections (`DetailGroupBox`)
+
+For expandable/collapsible sections on detail and create pages, use **`DetailGroupBox`** — not the legacy `@dashboard/components/Accordion` wrapper and not a one-off Macaw `Accordion` with custom chrome.
+
+**Component:** [`src/components/DetailGroupBox/DetailGroupBox.tsx`](../../src/components/DetailGroupBox/DetailGroupBox.tsx)
+
+**Reference usages:**
+
+- Shipping zone rates: `src/shipping/components/ShippingZoneRates/ShippingZoneRateItem.tsx`
+- Shipping postal codes: `src/shipping/components/ShippingZonePostalCodes/ShippingZonePostalCodes.tsx`
+- Countries list, metadata editors, translation groups
+
+```tsx
+import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
+import { Title2 } from "@dashboard/components/Title2/Title2";
+import { Box } from "@saleor/macaw-ui-next";
+
+<DetailGroupBox
+  groupId="unique-section-id"
+  dataTestId="my-section"
+  triggerButtonTestId="my-section-expand"
+  defaultExpanded={false}
+  marginTop={4}
+  headerStart={<Title2>{title}</Title2>}
+  headerEnd={optionalMetaOrActions}
+>
+  <Box padding={5}>{/* section body */}</Box>
+</DetailGroupBox>;
+```
+
+### Rules
+
+- **Header title:** prefer `Title2` for the foldable label (same as shipping rates)
+- **`groupId`:** stable unique string (or entity id when listing many foldables)
+- **`defaultExpanded`:** `false` for optional/advanced content; `true` only when the section is primary
+- **Do not full-bleed:** nest `DetailGroupBox` inside `DashboardCard.Content` (or another padded container). Shipping zone rates/postal codes do this — a bare `DetailGroupBox` as a page sibling of cards spans the content column edge-to-edge and looks wrong
+- **Body padding:** content area has no built-in padding — wrap children in `<Box padding={5}>` (or match the surrounding list/table pattern)
+- **Actions in the header:** put icon buttons in `headerEnd` and call `event.stopPropagation()` so they don’t toggle expand/collapse
+- **Do not** use `@dashboard/components/Accordion` for new UI — that is the older bordered accordion pattern
+
+### When to use what
+
+| Need                                                                        | Use                                                               |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Foldable section inside a card (advanced settings, rate row, postal ranges) | `DetailGroupBox` inside `DashboardCard.Content`                   |
+| Full always-visible settings block                                          | `DashboardCard` with Header/Content                               |
+| Nested disclose inside an already-padded surface                            | `DetailGroupBox` with `marginTop={0}` when it is the only content |
+
 ## Anti-patterns
 
 - **No inline `style={{}}`** - Use Box props or CSS Modules instead
@@ -161,3 +209,4 @@ Full TypeScript token structure: `node_modules/@saleor/macaw-ui/dist/theme/contr
 - **No hardcoded colors** - Use `var(--mu-colors-*)` or Box color props
 - **No shared CSS modules** - Each component gets its own `.module.css` file
 - **Combining Box + CSS Modules is OK** - Use Box for layout, CSS Module for complex styling within the same component
+- **No legacy `@dashboard/components/Accordion` for new foldable sections** - Use `DetailGroupBox` (see above)

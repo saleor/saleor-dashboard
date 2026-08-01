@@ -449,6 +449,11 @@ export const ChannelDetailsFragmentDoc = gql`
   warehouses {
     ...Warehouse
   }
+  taxConfiguration {
+    id
+    chargeTaxes
+    taxCalculationStrategy
+  }
   orderSettings {
     markAsPaidStrategy
     deleteExpiredOrdersAfter
@@ -5403,9 +5408,11 @@ export const ChannelDocument = gql`
     query Channel($id: ID!) {
   channel(id: $id) {
     ...ChannelDetails
+    ...Metadata
   }
 }
-    ${ChannelDetailsFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}
+${MetadataFragmentDoc}`;
 
 /**
  * __useChannelQuery__
@@ -5434,6 +5441,59 @@ export function useChannelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type ChannelQueryHookResult = ReturnType<typeof useChannelQuery>;
 export type ChannelLazyQueryHookResult = ReturnType<typeof useChannelLazyQuery>;
 export type ChannelQueryResult = Apollo.QueryResult<Types.ChannelQuery, Types.ChannelQueryVariables>;
+export const ChannelSetupReviewStatsDocument = gql`
+    query ChannelSetupReviewStats($channelSlug: String!, $canFetchApps: Boolean!, $canFetchProducts: Boolean!) {
+  allProducts: products @include(if: $canFetchProducts) {
+    totalCount
+  }
+  channelProducts: products(channel: $channelSlug, filter: {isPublished: true}) @include(if: $canFetchProducts) {
+    totalCount
+  }
+  apps(first: 100, filter: {isActive: true}) @include(if: $canFetchApps) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        permissions {
+          code
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelSetupReviewStatsQuery__
+ *
+ * To run a query within a React component, call `useChannelSetupReviewStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelSetupReviewStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelSetupReviewStatsQuery({
+ *   variables: {
+ *      channelSlug: // value for 'channelSlug'
+ *      canFetchApps: // value for 'canFetchApps'
+ *      canFetchProducts: // value for 'canFetchProducts'
+ *   },
+ * });
+ */
+export function useChannelSetupReviewStatsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>(ChannelSetupReviewStatsDocument, options);
+      }
+export function useChannelSetupReviewStatsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>(ChannelSetupReviewStatsDocument, options);
+        }
+export type ChannelSetupReviewStatsQueryHookResult = ReturnType<typeof useChannelSetupReviewStatsQuery>;
+export type ChannelSetupReviewStatsLazyQueryHookResult = ReturnType<typeof useChannelSetupReviewStatsLazyQuery>;
+export type ChannelSetupReviewStatsQueryResult = Apollo.QueryResult<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>;
 export const CollectionUpdateDocument = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {

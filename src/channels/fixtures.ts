@@ -2,6 +2,7 @@ import {
   AllocationStrategyEnum,
   type ChannelDetailsFragment,
   MarkAsPaidStrategyEnum,
+  TaxCalculationStrategy,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 
@@ -35,6 +36,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
@@ -84,6 +91,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
@@ -133,6 +146,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
@@ -182,6 +201,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
@@ -231,6 +256,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
@@ -280,6 +311,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
@@ -329,6 +366,12 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
       deleteExpiredOrdersAfter: 60,
@@ -380,6 +423,12 @@ export const channel: ChannelDetailsFragment = {
       name: "Warehouse 2",
     },
   ],
+  taxConfiguration: {
+    __typename: "TaxConfiguration",
+    id: "TX1",
+    chargeTaxes: true,
+    taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+  },
   orderSettings: {
     markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
     deleteExpiredOrdersAfter: 60,

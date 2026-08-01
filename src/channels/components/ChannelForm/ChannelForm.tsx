@@ -1,42 +1,31 @@
-import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/automatic-checkout-complete/AutomaticallyCompleteCheckouts";
 import {
   type ChannelShippingZones,
   type ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { DashboardCard } from "@dashboard/components/Card";
+import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
+import { Title2 } from "@dashboard/components/Title2/Title2";
 import {
   type ChannelErrorFragment,
   type CountryCode,
-  isStagingSchema,
-  MarkAsPaidStrategyEnum,
+  type MarkAsPaidStrategyEnum,
   type StockSettingsInput,
-  TransactionFlowStrategyEnum,
+  type TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
-import { commonMessages, sectionNames } from "@dashboard/intl";
-import { orderSettingsPath } from "@dashboard/orders/urls";
+import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import {
-  Box,
-  Button,
-  Checkbox,
-  DynamicCombobox,
-  Input,
-  type Option,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Input, type Option, Text } from "@saleor/macaw-ui-next";
 import { Copy } from "lucide-react";
+import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import slugify from "slugify";
 
-import { AllowLegacyGiftCardUse } from "./AllowLegacyGiftCardUse";
-import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
-import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
-import { MarkAsPaid } from "./MarkAsPaid";
+import { ChannelOrderSettings } from "./ChannelOrderSettings";
 import { messages } from "./messages";
 
 export interface FormData extends StockSettingsInput {
@@ -71,7 +60,8 @@ interface ChannelFormProps {
   selectedCurrencyCode?: string;
   selectedCountryDisplayName: string;
   countries: Option[];
-  // Saved values from backend for automatic checkout completion warnings
+  /** When true, show market helper, auto-slug, and collapse order settings into Advanced. */
+  isCreate?: boolean;
   savedAutomaticallyCompleteCheckouts: boolean;
   savedAutomaticCompletionCutOffDate: string;
   savedAutomaticCompletionCutOffTime: string;
@@ -92,6 +82,7 @@ export const ChannelForm = ({
   selectedCurrencyCode,
   selectedCountryDisplayName,
   countries,
+  isCreate = false,
   savedAutomaticallyCompleteCheckouts,
   savedAutomaticCompletionCutOffDate,
   savedAutomaticCompletionCutOffTime,
@@ -105,27 +96,64 @@ export const ChannelForm = ({
 }: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    [
-      "name",
-      "slug",
-      "currencyCode",
-      "defaultCountry",
-      "deleteExpiredOrdersAfter",
-      "automaticCompletionDelay",
-      "automaticCompletionCutOffDate",
-    ],
+    ["name", "slug", "currencyCode", "defaultCountry"],
     errors,
   );
   const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
+
+  const handleNameChange = (event: ChangeEvent) => {
+    onChange(event);
+
+    if (isCreate && !slugManuallyEdited) {
+      const nextName = typeof event.target.value === "string" ? event.target.value : "";
+
+      onChange({
+        target: {
+          name: "slug",
+          value: slugify(nextName).toLowerCase(),
+        },
+      });
+    }
+  };
+
+  const handleSlugChange = (event: ChangeEvent) => {
+    setSlugManuallyEdited(true);
+    onChange(event);
+  };
+
+  const orderSettings = (
+    <ChannelOrderSettings
+      data={data}
+      disabled={disabled}
+      errors={errors}
+      showHubHint={!isCreate}
+      savedAutomaticallyCompleteCheckouts={savedAutomaticallyCompleteCheckouts}
+      savedAutomaticCompletionCutOffDate={savedAutomaticCompletionCutOffDate}
+      savedAutomaticCompletionCutOffTime={savedAutomaticCompletionCutOffTime}
+      onChange={onChange}
+      onMarkAsPaidStrategyChange={onMarkAsPaidStrategyChange}
+      onTransactionFlowStrategyChange={onTransactionFlowStrategyChange}
+      onAutomaticallyCompleteCheckoutsChange={onAutomaticallyCompleteCheckoutsChange}
+      onAllowLegacyGiftCardUseChange={onAllowLegacyGiftCardUseChange}
+    />
+  );
 
   return (
     <>
       <DashboardCard>
         <DashboardCard.Header>
-          <DashboardCard.Title>
-            {intl.formatMessage(commonMessages.generalInformations)}
-          </DashboardCard.Title>
+          <Box display="flex" flexDirection="column" gap={1}>
+            <DashboardCard.Title>
+              {intl.formatMessage(commonMessages.generalInformations)}
+            </DashboardCard.Title>
+            {isCreate && (
+              <DashboardCard.Subtitle fontSize={3} color="default2">
+                <FormattedMessage {...messages.marketHelper} />
+              </DashboardCard.Subtitle>
+            )}
+          </Box>
         </DashboardCard.Header>
         <DashboardCard.Content data-test-id="general-information">
           <Input
@@ -135,7 +163,7 @@ export const ChannelForm = ({
             label={intl.formatMessage(messages.channelName)}
             name="name"
             value={data.name}
-            onChange={onChange}
+            onChange={handleNameChange}
           />
           <FormSpacer />
           <Input
@@ -146,7 +174,7 @@ export const ChannelForm = ({
             label={intl.formatMessage(messages.channelSlug)}
             name="slug"
             value={data.slug}
-            onChange={onChange}
+            onChange={handleSlugChange}
             endAdornment={
               <Button
                 variant="tertiary"
@@ -164,6 +192,27 @@ export const ChannelForm = ({
         </DashboardCard.Header>
         <DashboardCard.Content>
           <Box display="flex" flexDirection="column" gap={4}>
+            <DynamicCombobox
+              data-test-id="country-select-input"
+              disabled={disabled}
+              error={!!formErrors.defaultCountry}
+              label={intl.formatMessage(messages.defaultCountry)}
+              helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
+              options={countries}
+              name="defaultCountry"
+              value={{
+                label: selectedCountryDisplayName,
+                value: data.defaultCountry,
+              }}
+              onChange={v =>
+                onDefaultCountryChange({
+                  target: {
+                    value: v?.value ?? "",
+                    name: "defaultCountry",
+                  },
+                })
+              }
+            />
             {renderCurrencySelection ? (
               <DynamicCombobox
                 data-test-id="channel-currency-select-input"
@@ -194,163 +243,33 @@ export const ChannelForm = ({
                 <Text>{data.currencyCode}</Text>
               </Box>
             )}
-            <DynamicCombobox
-              data-test-id="country-select-input"
-              disabled={disabled}
-              error={!!formErrors.defaultCountry}
-              label={intl.formatMessage(messages.defaultCountry)}
-              helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
-              options={countries}
-              name="defaultCountry"
-              value={{
-                label: selectedCountryDisplayName,
-                value: data.defaultCountry,
-              }}
-              onChange={v =>
-                onDefaultCountryChange({
-                  target: {
-                    value: v?.value ?? "",
-                    name: "defaultCountry",
-                  },
-                })
-              }
-            />
           </Box>
         </DashboardCard.Content>
       </DashboardCard>
-      <DashboardCard data-test-id="channel-order-checkout-settings">
-        <DashboardCard.Header>
-          <Box display="flex" flexDirection="column" gap={1}>
+      {isCreate ? (
+        <DashboardCard data-test-id="channel-order-checkout-settings">
+          <DashboardCard.Content paddingY={6}>
+            <DetailGroupBox
+              groupId="channel-advanced-settings"
+              triggerButtonTestId="channel-advanced-settings"
+              defaultExpanded={false}
+              marginTop={0}
+              headerStart={<Title2>{intl.formatMessage(messages.advancedSettings)}</Title2>}
+            >
+              <Box padding={5}>{orderSettings}</Box>
+            </DetailGroupBox>
+          </DashboardCard.Content>
+        </DashboardCard>
+      ) : (
+        <DashboardCard data-test-id="channel-order-checkout-settings">
+          <DashboardCard.Header>
             <DashboardCard.Title>
               {intl.formatMessage(messages.orderAndCheckoutSettings)}
             </DashboardCard.Title>
-            <DashboardCard.Subtitle fontSize={3} color="default2">
-              <FormattedMessage
-                {...messages.orderAndCheckoutSettingsHint}
-                values={{
-                  link: (
-                    <MicrocopyLink to={orderSettingsPath}>
-                      <FormattedMessage {...sectionNames.ordersAndFulfillment} />
-                    </MicrocopyLink>
-                  ),
-                }}
-              />
-            </DashboardCard.Subtitle>
-          </Box>
-        </DashboardCard.Header>
-        <DashboardCard.Content>
-          <Box display="flex" flexDirection="column" gap={4}>
-            <Box paddingX={0}>
-              <Checkbox
-                name="automaticallyConfirmAllNewOrders"
-                data-test-id="channel-automatically-confirm-orders-checkbox"
-                checked={data.automaticallyConfirmAllNewOrders}
-                onCheckedChange={value =>
-                  onChange({
-                    target: { name: "automaticallyConfirmAllNewOrders", value },
-                  })
-                }
-                disabled={disabled}
-              >
-                <Text>
-                  <FormattedMessage {...messages.automaticallyConfirmAllNewOrdersLabel} />
-                </Text>
-              </Checkbox>
-              <Box paddingLeft={4}>
-                <Text size={3} color="default2">
-                  <FormattedMessage {...messages.automaticallyConfirmAllNewOrdersDescription} />
-                </Text>
-              </Box>
-            </Box>
-            <Box>
-              <Checkbox
-                name="automaticallyFulfillNonShippableGiftCard"
-                data-test-id="channel-automatically-fulfill-gift-cards-checkbox"
-                checked={data.automaticallyFulfillNonShippableGiftCard}
-                onCheckedChange={value =>
-                  onChange({
-                    target: { name: "automaticallyFulfillNonShippableGiftCard", value },
-                  })
-                }
-                disabled={disabled}
-              >
-                <Text>
-                  <FormattedMessage {...messages.automaticallyFulfillNonShippableGiftCardLabel} />
-                </Text>
-              </Checkbox>
-              <Box paddingLeft={4}>
-                <Text size={3} color="default2">
-                  <FormattedMessage
-                    {...messages.automaticallyFulfillNonShippableGiftCardDescription}
-                  />
-                </Text>
-              </Box>
-            </Box>
-            <Box>
-              <Text size={2} color="default2" marginBottom={2}>
-                <FormattedMessage {...messages.orderExpirationDescription} />
-              </Text>
-              <Input
-                name="deleteExpiredOrdersAfter"
-                data-test-id="delete-expired-order-input"
-                value={data.deleteExpiredOrdersAfter}
-                error={!!formErrors.deleteExpiredOrdersAfter}
-                type="number"
-                label={intl.formatMessage(messages.orderExpiration)}
-                onChange={onChange}
-                min={0}
-                max={120}
-              />
-            </Box>
-            <MarkAsPaid
-              isChecked={data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW}
-              onCheckedChange={onMarkAsPaidStrategyChange}
-              hasError={!!formErrors.markAsPaidStrategy}
-              disabled={disabled}
-            />
-            <AllowUnpaidOrders
-              onChange={onChange}
-              isChecked={data.allowUnpaidOrders}
-              hasError={!!formErrors.allowUnpaidOrders}
-              disabled={disabled}
-            />
-            <DefaultTransactionFlowStrategy
-              onChange={onTransactionFlowStrategyChange}
-              isChecked={
-                data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.AUTHORIZATION
-              }
-              hasError={!!formErrors.defaultTransactionFlowStrategy}
-              disabled={disabled}
-            />
-            <AutomaticallyCompleteCheckouts
-              hasError={!!formErrors.automaticCompletionDelay}
-              isChecked={data.automaticallyCompleteCheckouts}
-              disabled={disabled}
-              delay={data.automaticCompletionDelay}
-              cutOffDate={data.automaticCompletionCutOffDate}
-              cutOffTime={data.automaticCompletionCutOffTime}
-              cutOffDateError={!!formErrors.automaticCompletionCutOffDate}
-              savedIsEnabled={savedAutomaticallyCompleteCheckouts}
-              savedCutOffDate={savedAutomaticCompletionCutOffDate}
-              savedCutOffTime={savedAutomaticCompletionCutOffTime}
-              onCheckboxChange={onAutomaticallyCompleteCheckoutsChange}
-              onDelayChange={onChange}
-              onCutOffDateChange={onChange}
-              onCutOffTimeChange={onChange}
-            />
-            {isStagingSchema() && (
-              <AllowLegacyGiftCardUse
-                onChange={
-                  onAllowLegacyGiftCardUseChange ? onAllowLegacyGiftCardUseChange : () => {}
-                }
-                hasError={!!formErrors.allowLegacyGiftCardUse}
-                isChecked={data.allowLegacyGiftCardUse!}
-                disabled={disabled}
-              />
-            )}
-          </Box>
-        </DashboardCard.Content>
-      </DashboardCard>
+          </DashboardCard.Header>
+          <DashboardCard.Content>{orderSettings}</DashboardCard.Content>
+        </DashboardCard>
+      )}
     </>
   );
 };

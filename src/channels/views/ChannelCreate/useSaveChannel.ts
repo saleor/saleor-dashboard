@@ -4,6 +4,7 @@ import { type ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetails
 import {
   type ChannelCreateInput,
   type ChannelCreateMutation,
+  type ChannelErrorFragment,
   type ChannelReorderWarehousesMutation,
   type Exact,
   type ReorderInput,
@@ -23,10 +24,18 @@ interface SaveChannelConfig {
   >;
 }
 
+interface SaveChannelResult {
+  errors: ChannelErrorFragment[];
+  channelId?: string;
+}
+
 export const useSaveChannel = ({ createChannel, reorderChannelWarehouses }: SaveChannelConfig) => {
   const { refetchUser } = useUser();
 
-  return async (input: ChannelCreateInput, warehousesToDisplay: ChannelWarehouses) => {
+  return async (
+    input: ChannelCreateInput,
+    warehousesToDisplay: ChannelWarehouses,
+  ): Promise<SaveChannelResult> => {
     const createChannelMutation = createChannel({
       variables: {
         input,
@@ -34,15 +43,15 @@ export const useSaveChannel = ({ createChannel, reorderChannelWarehouses }: Save
     });
     const result = await createChannelMutation;
     const errors = await extractMutationErrors(createChannelMutation);
+    const channelId = result.data?.channelCreate?.channel?.id;
 
-    if (!errors?.length) {
+    if (!errors?.length && channelId) {
       const moves = calculateItemsOrderMoves(
         result.data?.channelCreate?.channel?.warehouses || [],
         warehousesToDisplay,
       );
-      const channelId = result.data?.channelCreate?.channel?.id;
 
-      if (channelId) {
+      if (moves.length) {
         await reorderChannelWarehouses({
           variables: { channelId, moves },
         });
@@ -53,6 +62,6 @@ export const useSaveChannel = ({ createChannel, reorderChannelWarehouses }: Save
       }
     }
 
-    return errors;
+    return { errors, channelId };
   };
 };

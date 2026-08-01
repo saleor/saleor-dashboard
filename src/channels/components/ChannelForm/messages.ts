@@ -11,6 +11,17 @@ export const messages = defineMessages({
     defaultMessage: "Slug",
     description: "channel slug",
   },
+  marketHelper: {
+    id: "ooUWhl",
+    defaultMessage:
+      "A channel is a market: one currency and default country for prices, tax, and checkout. You can set up warehouses and shipping right after creating it.",
+    description: "helper under create channel general info",
+  },
+  advancedSettings: {
+    id: "6xx3Us",
+    defaultMessage: "Advanced settings",
+    description: "accordion title for optional channel order/payment settings on create",
+  },
   channelSettings: {
     id: "3y4r+z",
     defaultMessage: "Channel Settings",

@@ -1,3 +1,4 @@
+import { channelCreateSetupFlow } from "@dashboard/channels/ripples/channelCreateSetupFlow";
 import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -14,9 +15,10 @@ import { type ChannelDetailsFragment, type RefreshLimitsQuery } from "@dashboard
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,7 +30,7 @@ interface ChannelsListPageProps {
   onRemove: (id: string) => void;
 }
 
-const numberOfColumns = 2;
+const numberOfColumns = 5;
 
 const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPageProps) => {
   const intl = useIntl();
@@ -39,14 +41,19 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
   return (
     <ListPageLayout>
       <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.channels)}>
-        <Button
-          disabled={limitReached}
-          variant="primary"
-          data-test-id="add-channel"
-          onClick={() => navigator(channelAddUrl)}
-        >
-          <FormattedMessage id="OGm8wO" defaultMessage="Create Channel" description="button" />
-        </Button>
+        <Box position="relative">
+          <Button
+            disabled={limitReached}
+            variant="primary"
+            data-test-id="add-channel"
+            onClick={() => navigator(channelAddUrl)}
+          >
+            <FormattedMessage id="OGm8wO" defaultMessage="Create Channel" description="button" />
+          </Button>
+          <Box position="absolute" __top="-4px" __right="-4px">
+            <Ripple model={channelCreateSetupFlow} />
+          </Box>
+        </Box>
         {hasLimits(limits, "channels") && (
           <LimitsInfo
             text={intl.formatMessage(
@@ -85,6 +92,27 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
                 <TableCellHeader>
                   <FormattedMessage id="hh0xW7" defaultMessage="Channel Name" />
                 </TableCellHeader>
+                <TableCellHeader>
+                  <FormattedMessage
+                    id="YX7eDk"
+                    defaultMessage="Currency"
+                    description="channel list column"
+                  />
+                </TableCellHeader>
+                <TableCellHeader>
+                  <FormattedMessage
+                    id="wzfVrA"
+                    defaultMessage="Country"
+                    description="channel list column"
+                  />
+                </TableCellHeader>
+                <TableCellHeader>
+                  <FormattedMessage
+                    id="N2RGVh"
+                    defaultMessage="Status"
+                    description="channel list column"
+                  />
+                </TableCellHeader>
                 <TableCell />
               </TableRowLink>
             </TableHead>
@@ -100,7 +128,49 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
                     href={channel && channelUrl(channel.id)}
                   >
                     <TableCell className={classes.colName}>
-                      <span data-test-id="name">{channel?.name || <Skeleton />}</span>
+                      <Box display="flex" flexDirection="column" gap={0.5}>
+                        <span data-test-id="name">{channel?.name || <Skeleton />}</span>
+                        {channel && channel.warehouses.length === 0 && (
+                          <Text size={1} color="warning1">
+                            <FormattedMessage
+                              id="qmV/np"
+                              defaultMessage="No warehouse"
+                              description="channel readiness hint"
+                            />
+                          </Text>
+                        )}
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      {channel ? <Text size={2}>{channel.currencyCode}</Text> : <Skeleton />}
+                    </TableCell>
+                    <TableCell>
+                      {channel ? (
+                        <Text size={2}>{channel.defaultCountry.country}</Text>
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {channel ? (
+                        <Text size={2} color={channel.isActive ? "success1" : "default2"}>
+                          {channel.isActive ? (
+                            <FormattedMessage
+                              id="HBrAXs"
+                              defaultMessage="Active"
+                              description="channel status"
+                            />
+                          ) : (
+                            <FormattedMessage
+                              id="rZh6/D"
+                              defaultMessage="Inactive"
+                              description="channel status"
+                            />
+                          )}
+                        </Text>
+                      ) : (
+                        <Skeleton />
+                      )}
                     </TableCell>
                     <TableCell className={classes.colAction}>
                       {channelsList && channelsList.length > 1 && (

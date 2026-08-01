@@ -11,7 +11,14 @@ export enum ChannelsListUrlSortField {
 }
 type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
 type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
-export type ChannelUrlDialog = "remove";
+export type ChannelUrlDialog =
+  | "remove"
+  | "setup"
+  | "create-warehouse"
+  | "create-shipping"
+  | "assign-warehouse"
+  | "assign-shipping"
+  | "view-metadata";
 export type ChannelUrlQueryParams = Dialog<ChannelUrlDialog>;
 export type ChannelsListUrlDialog = "remove";
 export type ChannelsListUrlQueryParams = Dialog<ChannelsListUrlDialog> &
@@ -33,5 +40,5 @@ export const channelAddUrl = channelAddPath;
 
 export const channelPath = (id: string) => urlJoin(channelsSection, id);
 
-export const channelUrl = (id: string, params?: ChannelsListUrlQueryParams) =>
+export const channelUrl = (id: string, params?: ChannelUrlQueryParams) =>
   channelPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
