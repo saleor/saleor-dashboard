@@ -1,15 +1,31 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  generalSettings: {
+    id: "zE3ga7",
+    defaultMessage: "General settings",
+    description: "channel form card title for name, slug, country, currency",
+  },
   channelName: {
     id: "UymotP",
     defaultMessage: "Channel name",
     description: "channel name",
   },
+  channelNameHint: {
+    id: "z1yZ/P",
+    defaultMessage: "Shown in the dashboard only. Customers never see it.",
+    description: "helper under channel name",
+  },
   channelSlug: {
     id: "74Zo/H",
     defaultMessage: "Slug",
     description: "channel slug",
+  },
+  channelSlugHint: {
+    id: "JakPK4",
+    defaultMessage:
+      "Identifies this channel in the Storefront API. Changing it breaks existing storefront requests.",
+    description: "helper under channel slug",
   },
   marketHelper: {
     id: "ooUWhl",
@@ -22,10 +38,20 @@ export const messages = defineMessages({
     defaultMessage: "Advanced settings",
     description: "accordion title for optional channel order/payment settings on create",
   },
-  channelSettings: {
-    id: "3y4r+z",
-    defaultMessage: "Channel Settings",
-    description: "channel settings",
+  defaultCountryHint: {
+    id: "Q0SbHA",
+    defaultMessage: "Fallback country for tax when checkout has no address yet.",
+    description: "helper under channel default country",
+  },
+  channelCurrencyHintCreate: {
+    id: "xzzNba",
+    defaultMessage: "Prices and payments use this currency. It can’t be changed later.",
+    description: "helper under currency on create",
+  },
+  channelCurrencyHintLocked: {
+    id: "5HXDLH",
+    defaultMessage: "Fixed at creation. To sell in another currency, create a second channel.",
+    description: "helper under locked currency on edit",
   },
   orderAndCheckoutSettings: {
     id: "EXPRMd",
@@ -63,11 +89,6 @@ export const messages = defineMessages({
     id: "9Sz0By",
     defaultMessage: "Currency",
     description: "channel currency",
-  },
-  selectedCurrency: {
-    id: "39yi8w",
-    defaultMessage: "Selected currency",
-    description: "selected currency",
   },
   defaultCountry: {
     id: "tV+Dcm",
