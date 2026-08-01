@@ -9,7 +9,6 @@ import {
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
-import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -20,8 +19,6 @@ import slugify from "slugify";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelUrl } from "../../urls";
-import { useShippingZones } from "../ChannelDetails/useShippingZones";
-import { useWarehouses } from "../ChannelDetails/useWarehouses";
 import { useSaveChannel } from "./useSaveChannel";
 
 const ChannelCreateView = () => {
@@ -120,20 +117,6 @@ const ChannelCreateView = () => {
 
     return errors;
   };
-  const {
-    shippingZonesCountData,
-    shippingZonesCountLoading,
-    fetchMoreShippingZones,
-    searchShippingZones,
-    searchShippingZonesResult,
-  } = useShippingZones();
-  const {
-    warehousesCountData,
-    warehousesCountLoading,
-    fetchMoreWarehouses,
-    searchWarehouses,
-    searchWarehousesResult,
-  } = useWarehouses();
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(
       {
@@ -159,23 +142,7 @@ const ChannelCreateView = () => {
         })}
       />
       <ChannelDetailsPage
-        allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
-        searchShippingZones={searchShippingZones}
-        searchShippingZonesData={searchShippingZonesResult.data}
-        fetchMoreShippingZones={getSearchFetchMoreProps(
-          searchShippingZonesResult,
-          fetchMoreShippingZones,
-        )}
-        allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
-        searchWarehouses={searchWarehouses}
-        searchWarehousesData={searchWarehousesResult.data}
-        fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
-        disabled={
-          createChannelOpts.loading ||
-          reorderChannelWarehousesOpts.loading ||
-          shippingZonesCountLoading ||
-          warehousesCountLoading
-        }
+        disabled={createChannelOpts.loading || reorderChannelWarehousesOpts.loading}
         errors={createChannelOpts?.data?.channelCreate?.errors || []}
         currencyCodes={currencyCodeChoices}
         onSubmit={handleSubmit}

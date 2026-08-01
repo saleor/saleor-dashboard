@@ -7,11 +7,12 @@ import {
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import { type TaxCalculationStrategy } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { ProductsIcon } from "@dashboard/icons/Products";
 import { productListUrl } from "@dashboard/products/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { Box, Button, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { ArrowRight, CreditCard, Package, Receipt, Truck, Warehouse } from "lucide-react";
+import { ArrowRight, CreditCard, Receipt, Truck, Warehouse } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -260,7 +261,7 @@ export const ChannelSetupCard = ({
     },
     {
       id: "catalog",
-      icon: <Package size={16} />,
+      icon: <ProductsIcon />,
       title: <FormattedMessage {...messages.catalogTitle} />,
       description: <FormattedMessage {...messages.catalogDescription} />,
       status:

@@ -364,17 +364,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
       <ChannelDetailsPage
         channelShippingZones={channelShippingZones}
         allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
-        searchShippingZones={searchShippingZones}
-        searchShippingZonesData={searchShippingZonesResult.data}
-        fetchMoreShippingZones={getSearchFetchMoreProps(
-          searchShippingZonesResult,
-          fetchMoreShippingZones,
-        )}
         channelWarehouses={channelWarehouses}
         allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
-        searchWarehouses={searchWarehouses}
-        searchWarehousesData={searchWarehousesResult.data}
-        fetchMoreWarehouses={getSearchFetchMoreProps(searchWarehousesResult, fetchMoreWarehouses)}
         channel={data?.channel}
         disabled={
           updateChannelOpts.loading ||
@@ -397,7 +388,10 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         saveButtonBarState={updateChannelOpts.status}
         countries={shop?.countries || []}
         onCreateWarehouse={() => openModal("create-warehouse")}
+        onAssignWarehouse={() => openModal("assign-warehouse")}
+        canCreateWarehouse={canCreateWarehouse}
         onCreateShipping={() => openModal("create-shipping")}
+        onAssignShipping={() => openModal("assign-shipping")}
         setupCard={
           showSetupCard && data?.channel ? (
             <ChannelSetupCard

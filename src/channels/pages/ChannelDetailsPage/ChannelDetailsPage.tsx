@@ -1,5 +1,6 @@
 // @ts-strict-ignore
-import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
+import { ChannelDeliveryCard } from "@dashboard/channels/components/ChannelDeliveryCard/ChannelDeliveryCard";
+import { ChannelInventoryCard } from "@dashboard/channels/components/ChannelInventoryCard/ChannelInventoryCard";
 import { channelSectionIds } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
 import {
   ChannelSectionNav,
@@ -7,8 +8,6 @@ import {
 } from "@dashboard/channels/components/ChannelSectionNav/ChannelSectionNav";
 import { messages as sectionNavMessages } from "@dashboard/channels/components/ChannelSectionNav/messages";
 import { useChannelSectionScrollSpy } from "@dashboard/channels/components/ChannelSectionNav/useChannelSectionScrollSpy";
-import { ShippingZones } from "@dashboard/channels/components/ShippingZones/ShippingZones";
-import Warehouses from "@dashboard/channels/components/Warehouses";
 import { defaultGraphiQLQuery } from "@dashboard/channels/queries";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { getChannelCreateDefaults } from "@dashboard/channels/utils/getChannelCreateDefaults";
@@ -30,17 +29,12 @@ import {
   type CountryCode,
   type CountryFragment,
   PermissionEnum,
-  type SearchShippingZonesQuery,
-  type SearchWarehousesQuery,
 } from "@dashboard/graphql";
-import { type SearchData } from "@dashboard/hooks/makeTopLevelSearch";
-import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { type ChangeEvent, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
-import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box, type Option } from "@saleor/macaw-ui-next";
@@ -51,9 +45,7 @@ import { useIntl } from "react-intl";
 import { ChannelForm, type FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
 import {
-  createShippingZoneAddHandler,
   createShippingZoneRemoveHandler,
-  createWarehouseAddHandler,
   createWarehouseRemoveHandler,
   createWarehouseReorderHandler,
 } from "./handlers";
@@ -68,27 +60,29 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   disabledStatus?: boolean;
   errors: ChannelErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  searchShippingZonesData?: SearchData;
-  fetchMoreShippingZones: FetchMoreProps;
   channelShippingZones?: ChannelShippingZones;
-  allShippingZonesCount: number;
-  searchWarehousesData?: SearchData;
-  fetchMoreWarehouses: FetchMoreProps;
+  /** Shop-wide shipping zone count (edit sidebar). */
+  allShippingZonesCount?: number;
   channelWarehouses?: ChannelWarehouses;
-  allWarehousesCount: number;
+  /** Shop-wide warehouse count (edit sidebar). */
+  allWarehousesCount?: number;
   countries: CountryFragment[];
   /** Setup checklist + in-flow create actions (edit only). */
   setupCard?: ReactNode;
   /** Opens in-place warehouse create when the shop has none yet. */
   onCreateWarehouse?: () => void;
+  /** Opens assign-warehouse dialog for the inventory card. */
+  onAssignWarehouse?: () => void;
+  /** `warehouseCreate` requires MANAGE_PRODUCTS. */
+  canCreateWarehouse?: boolean;
   /** Opens in-place shipping create when the shop has none yet. */
   onCreateShipping?: () => void;
+  /** Opens assign-shipping dialog for the delivery card. */
+  onAssignShipping?: () => void;
   onDelete?: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors>;
   updateChannelStatus?: () => void;
-  searchShippingZones: (query: string) => void;
-  searchWarehouses: (query: string) => void;
 }
 
 const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
@@ -101,20 +95,17 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   onDelete,
   saveButtonBarState,
   updateChannelStatus,
-  searchShippingZones,
-  searchShippingZonesData,
-  fetchMoreShippingZones,
   channelShippingZones = [],
-  allShippingZonesCount,
-  searchWarehouses,
-  searchWarehousesData,
-  fetchMoreWarehouses,
+  allShippingZonesCount = 0,
   channelWarehouses = [],
-  allWarehousesCount,
+  allWarehousesCount = 0,
   countries,
   setupCard,
   onCreateWarehouse,
+  onAssignWarehouse,
+  canCreateWarehouse = false,
   onCreateShipping,
+  onAssignShipping,
   onShowMetadata,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
@@ -254,19 +245,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     automaticCompletionCutOffDate: cutOffDateTime.date,
     automaticCompletionCutOffTime: cutOffDateTime.time,
   };
-  const getFilteredShippingZonesChoices = (
-    shippingZonesToDisplay: ChannelShippingZones,
-  ): RelayToFlat<SearchShippingZonesQuery["search"]> =>
-    getParsedSearchData({ data: searchShippingZonesData }).filter(
-      ({ id: searchedZoneId }) => !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
-    );
-  const getFilteredWarehousesChoices = (
-    warehousesToDisplay: ChannelWarehouses,
-  ): RelayToFlat<SearchWarehousesQuery["search"]> =>
-    getParsedSearchData({ data: searchWarehousesData }).filter(
-      ({ id: searchedWarehouseId }) =>
-        !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
-    );
   const handleSubmit = async (data: FormData) => {
     const errors = validateChannelFormData(data);
 
@@ -311,19 +289,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             }
           }
         };
-        const addShippingZone = createShippingZoneAddHandler(
-          data,
-          searchShippingZonesData,
-          set,
-          triggerChange,
-        );
         const removeShippingZone = createShippingZoneRemoveHandler(data, set, triggerChange);
-        const addWarehouse = createWarehouseAddHandler(
-          data,
-          searchWarehousesData,
-          set,
-          triggerChange,
-        );
         const removeWarehouse = createWarehouseRemoveHandler(data, set, triggerChange);
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
         const allErrors = [...errors, ...validationErrors];
@@ -373,7 +339,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               {isCreate ? (
                 <ChannelForm {...channelFormProps} isCreate />
               ) : (
-                <Box display="flex" gap={8} paddingX={6} paddingBottom={8}>
+                <Box display="flex" gap={8} paddingX={6} paddingBottom={6}>
                   <Box
                     display={{ mobile: "none", tablet: "block", desktop: "block" }}
                     flexShrink="0"
@@ -403,17 +369,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                   </>
                 )}
                 <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}>
-                  <ShippingZones
-                    shippingZonesChoices={getFilteredShippingZonesChoices(
-                      data.shippingZonesToDisplay,
-                    )}
+                  <ChannelDeliveryCard
                     shippingZones={data.shippingZonesToDisplay}
-                    addShippingZone={addShippingZone}
                     removeShippingZone={removeShippingZone}
-                    searchShippingZones={searchShippingZones}
-                    fetchMoreShippingZones={fetchMoreShippingZones}
-                    totalCount={allShippingZonesCount}
-                    loading={disabled}
+                    disabled={disabled}
+                    availableShippingZonesCount={allShippingZonesCount}
+                    // Card is gated by MANAGE_SHIPPING — same permission as shippingZoneCreate.
+                    canCreateShipping
+                    onAssignShipping={onAssignShipping}
                     onCreateShipping={onCreateShipping}
                   />
                   <CardSpacer />
@@ -425,21 +388,19 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                     PermissionEnum.MANAGE_PRODUCTS,
                   ]}
                 >
-                  <Warehouses
-                    warehousesChoices={getFilteredWarehousesChoices(data.warehousesToDisplay)}
+                  <ChannelInventoryCard
                     warehouses={data.warehousesToDisplay}
-                    addWarehouse={addWarehouse}
                     removeWarehouse={removeWarehouse}
-                    searchWarehouses={searchWarehouses}
-                    fetchMoreWarehouses={fetchMoreWarehouses}
-                    totalCount={allWarehousesCount}
                     reorderWarehouses={reorderWarehouse}
-                    loading={disabled}
+                    disabled={disabled}
+                    availableWarehousesCount={allWarehousesCount}
+                    canCreateWarehouse={canCreateWarehouse}
+                    onAssignWarehouse={onAssignWarehouse}
                     onCreateWarehouse={onCreateWarehouse}
+                    allocationStrategy={data.allocationStrategy}
+                    onAllocationStrategyChange={change}
                   />
-                  <CardSpacer />
                 </RequirePermissions>
-                <ChannelAllocationStrategy data={data} disabled={disabled} onChange={change} />
               </DetailPageLayout.RightSidebar>
             )}
             <Savebar>
