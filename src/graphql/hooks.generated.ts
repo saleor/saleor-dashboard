@@ -456,6 +456,7 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   orderSettings {
     markAsPaidStrategy
+    expireOrdersAfter
     deleteExpiredOrdersAfter
     allowUnpaidOrders
     automaticallyConfirmAllNewOrders
@@ -463,6 +464,8 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   paymentSettings {
     defaultTransactionFlowStrategy
+    releaseFundsForExpiredCheckouts
+    checkoutTtlBeforeReleasingFunds
   }
   checkoutSettings {
     automaticallyCompleteFullyPaidCheckouts

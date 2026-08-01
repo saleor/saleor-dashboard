@@ -69,6 +69,9 @@ const ChannelCreateView = () => {
       currencyCode,
       defaultCountry,
       defaultTransactionFlowStrategy = defaults.defaultTransactionFlowStrategy,
+      releaseFundsForExpiredCheckouts = defaults.releaseFundsForExpiredCheckouts,
+      checkoutTtlBeforeReleasingFunds = defaults.checkoutTtlBeforeReleasingFunds,
+      expireOrdersAfter = defaults.expireOrdersAfter,
       deleteExpiredOrdersAfter = defaults.deleteExpiredOrdersAfter,
       markAsPaidStrategy = defaults.markAsPaidStrategy,
       name,
@@ -90,9 +93,14 @@ const ChannelCreateView = () => {
       },
       paymentSettings: {
         defaultTransactionFlowStrategy,
+        releaseFundsForExpiredCheckouts,
+        checkoutTtlBeforeReleasingFunds: releaseFundsForExpiredCheckouts
+          ? checkoutTtlBeforeReleasingFunds || 0
+          : checkoutTtlBeforeReleasingFunds,
       },
       orderSettings: {
         markAsPaidStrategy,
+        expireOrdersAfter: expireOrdersAfter || 0,
         deleteExpiredOrdersAfter,
         allowUnpaidOrders,
         automaticallyConfirmAllNewOrders,

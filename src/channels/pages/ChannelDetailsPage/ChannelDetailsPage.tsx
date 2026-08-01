@@ -1,5 +1,12 @@
 // @ts-strict-ignore
 import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
+import { channelSectionIds } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
+import {
+  ChannelSectionNav,
+  type ChannelSectionNavItem,
+} from "@dashboard/channels/components/ChannelSectionNav/ChannelSectionNav";
+import { messages as sectionNavMessages } from "@dashboard/channels/components/ChannelSectionNav/messages";
+import { useChannelSectionScrollSpy } from "@dashboard/channels/components/ChannelSectionNav/useChannelSectionScrollSpy";
 import { ShippingZones } from "@dashboard/channels/components/ShippingZones/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
 import { defaultGraphiQLQuery } from "@dashboard/channels/queries";
@@ -22,11 +29,9 @@ import {
   type ChannelErrorFragment,
   type CountryCode,
   type CountryFragment,
-  MarkAsPaidStrategyEnum,
   PermissionEnum,
   type SearchShippingZonesQuery,
   type SearchWarehousesQuery,
-  TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 import { type SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
@@ -38,7 +43,7 @@ import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { type Option } from "@saleor/macaw-ui-next";
+import { Box, type Option } from "@saleor/macaw-ui-next";
 import { Receipt, Trash2 } from "lucide-react";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -119,6 +124,28 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   const channelId = channel?.id;
   const taxConfigurationId = channel?.taxConfiguration?.id;
   const createDefaults = getChannelCreateDefaults();
+  const sectionNavItems = useMemo((): ChannelSectionNavItem[] => {
+    if (isCreate) {
+      return [];
+    }
+
+    return [
+      {
+        id: channelSectionIds.general,
+        label: intl.formatMessage(sectionNavMessages.general),
+      },
+      {
+        id: channelSectionIds.orders,
+        label: intl.formatMessage(sectionNavMessages.orders),
+      },
+      {
+        id: channelSectionIds.payments,
+        label: intl.formatMessage(sectionNavMessages.payments),
+      },
+    ];
+  }, [intl, isCreate]);
+  const sectionIds = useMemo(() => sectionNavItems.map(item => item.id), [sectionNavItems]);
+  const { activeId: activeSectionId, selectSection } = useChannelSectionScrollSpy({ sectionIds });
   const openPlaygroundURL = useCallback(() => {
     if (!channelId) {
       return;
@@ -198,6 +225,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
     markAsPaidStrategy: orderSettings?.markAsPaidStrategy ?? createDefaults.markAsPaidStrategy,
+    expireOrdersAfter: orderSettings?.expireOrdersAfter ?? createDefaults.expireOrdersAfter,
     deleteExpiredOrdersAfter:
       orderSettings?.deleteExpiredOrdersAfter ?? createDefaults.deleteExpiredOrdersAfter,
     allowUnpaidOrders: orderSettings?.allowUnpaidOrders ?? createDefaults.allowUnpaidOrders,
@@ -210,6 +238,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     defaultTransactionFlowStrategy:
       paymentSettings?.defaultTransactionFlowStrategy ??
       createDefaults.defaultTransactionFlowStrategy,
+    releaseFundsForExpiredCheckouts:
+      paymentSettings?.releaseFundsForExpiredCheckouts ??
+      createDefaults.releaseFundsForExpiredCheckouts,
+    checkoutTtlBeforeReleasingFunds:
+      paymentSettings?.checkoutTtlBeforeReleasingFunds ??
+      createDefaults.checkoutTtlBeforeReleasingFunds,
     allowLegacyGiftCardUse:
       checkoutSettings?.allowLegacyGiftCardUse ?? createDefaults.allowLegacyGiftCardUse,
     automaticallyCompleteCheckouts:
@@ -292,52 +326,23 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         );
         const removeWarehouse = createWarehouseRemoveHandler(data, set, triggerChange);
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
-        const handleMarkAsPaidStrategyChange = () => {
-          if (!data.markAsPaidStrategy) {
-            set({
-              markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
-            });
-
-            return;
-          }
-
-          set({
-            markAsPaidStrategy:
-              data.markAsPaidStrategy === MarkAsPaidStrategyEnum.PAYMENT_FLOW
-                ? MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-                : MarkAsPaidStrategyEnum.PAYMENT_FLOW,
-          });
-        };
-        const handleTransactionFlowStrategyChange = () => {
-          if (!data.defaultTransactionFlowStrategy) {
-            set({
-              defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.AUTHORIZATION,
-            });
-
-            return;
-          }
-
-          set({
-            defaultTransactionFlowStrategy:
-              data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.CHARGE
-                ? TransactionFlowStrategyEnum.AUTHORIZATION
-                : TransactionFlowStrategyEnum.CHARGE,
-          });
-        };
-
-        const handleAutomaticallyCompleteCheckoutsChange = () => {
-          set({
-            automaticallyCompleteCheckouts: !data.automaticallyCompleteCheckouts,
-          });
-        };
-
-        const handleAllowLegacyGiftCardUseChange = () => {
-          set({
-            allowLegacyGiftCardUse: !data.allowLegacyGiftCardUse,
-          });
-        };
-
         const allErrors = [...errors, ...validationErrors];
+        const channelFormProps = {
+          data,
+          disabled,
+          currencyCodes,
+          countries: countryChoices,
+          selectedCurrencyCode,
+          selectedCountryDisplayName,
+          savedAutomaticallyCompleteCheckouts:
+            checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
+          savedAutomaticCompletionCutOffDate: cutOffDateTime.date,
+          savedAutomaticCompletionCutOffTime: cutOffDateTime.time,
+          onChange: change,
+          onCurrencyCodeChange: handleCurrencyCodeSelect,
+          onDefaultCountryChange: handleDefaultCountrySelect,
+          errors: allErrors,
+        };
 
         return (
           <DetailPageLayout gridTemplateColumns={isCreate ? 1 : 12}>
@@ -365,28 +370,25 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             </TopNav>
             <DetailPageLayout.Content>
               {setupCard}
-              <ChannelForm
-                data={data}
-                disabled={disabled}
-                currencyCodes={currencyCodes}
-                countries={countryChoices}
-                selectedCurrencyCode={selectedCurrencyCode}
-                selectedCountryDisplayName={selectedCountryDisplayName}
-                isCreate={isCreate}
-                savedAutomaticallyCompleteCheckouts={
-                  checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false
-                }
-                savedAutomaticCompletionCutOffDate={cutOffDateTime.date}
-                savedAutomaticCompletionCutOffTime={cutOffDateTime.time}
-                onChange={change}
-                onCurrencyCodeChange={handleCurrencyCodeSelect}
-                onDefaultCountryChange={handleDefaultCountrySelect}
-                onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
-                onTransactionFlowStrategyChange={handleTransactionFlowStrategyChange}
-                onAutomaticallyCompleteCheckoutsChange={handleAutomaticallyCompleteCheckoutsChange}
-                onAllowLegacyGiftCardUseChange={handleAllowLegacyGiftCardUseChange}
-                errors={allErrors}
-              />
+              {isCreate ? (
+                <ChannelForm {...channelFormProps} isCreate />
+              ) : (
+                <Box display="flex" gap={8} paddingX={6} paddingBottom={8}>
+                  <Box
+                    display={{ mobile: "none", tablet: "block", desktop: "block" }}
+                    flexShrink="0"
+                  >
+                    <ChannelSectionNav
+                      items={sectionNavItems}
+                      activeId={activeSectionId}
+                      onSelect={selectSection}
+                    />
+                  </Box>
+                  <Box flexGrow="1" __minWidth="0">
+                    <ChannelForm {...channelFormProps} sectionLayout />
+                  </Box>
+                </Box>
+              )}
             </DetailPageLayout.Content>
             {!isCreate && (
               <DetailPageLayout.RightSidebar>

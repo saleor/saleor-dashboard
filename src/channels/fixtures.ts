@@ -44,6 +44,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -53,6 +54,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -99,6 +102,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -108,6 +112,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -154,6 +160,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -163,6 +170,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -209,6 +218,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -218,6 +228,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -264,6 +276,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -273,6 +286,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -319,6 +334,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -328,6 +344,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -374,6 +392,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -383,6 +402,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -431,6 +452,7 @@ export const channel: ChannelDetailsFragment = {
   },
   orderSettings: {
     markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+    expireOrdersAfter: null,
     deleteExpiredOrdersAfter: 60,
     allowUnpaidOrders: false,
     automaticallyConfirmAllNewOrders: true,
@@ -440,6 +462,8 @@ export const channel: ChannelDetailsFragment = {
   paymentSettings: {
     __typename: "PaymentSettings",
     defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+    releaseFundsForExpiredCheckouts: false,
+    checkoutTtlBeforeReleasingFunds: null,
   },
   checkoutSettings: {
     automaticallyCompleteFullyPaidCheckouts: true,

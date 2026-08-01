@@ -1,0 +1,42 @@
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-3);
+  padding: var(--mu-spacing-4) var(--mu-spacing-6);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-1);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-3);
+}
+
+.optionItem {
+  width: 100%;
+  cursor: pointer;
+}
+
+.optionItem[data-disabled],
+.optionItem[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.optionCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-0.5);
+  min-width: 0;
+  /* Match RadioGroup.Item label: sit on the same baseline as the control. */
+  line-height: 1.25;
+}

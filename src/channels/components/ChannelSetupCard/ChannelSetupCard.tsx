@@ -9,11 +9,13 @@ import { type TaxCalculationStrategy } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productListUrl } from "@dashboard/products/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text, useTheme } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { ArrowRight, CreditCard, Package, Receipt, Truck, Warehouse } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import styles from "./ChannelSetupCard.module.css";
 import { getTaxStatusMessage } from "./getTaxStatusMessage";
 import { messages } from "./messages";
 
@@ -92,6 +94,7 @@ export const ChannelSetupCard = ({
 }: ChannelSetupCardProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const { theme } = useTheme();
   const hasWarehouse = warehouseCount > 0;
   const shippingStatusKnown = shippingZoneCount !== undefined;
   const hasShipping = (shippingZoneCount ?? 0) > 0;
@@ -278,8 +281,9 @@ export const ChannelSetupCard = ({
       : null;
 
   return (
-    <Box paddingX={6} paddingTop={6} marginBottom={4}>
+    <Box paddingX={6} paddingTop={6} marginBottom={10}>
       <SetupChecklist
+        className={clsx(styles.elevated, theme === "defaultDark" && styles.elevatedDark)}
         data-test-id="channel-setup-card"
         title={<FormattedMessage {...messages.title} />}
         subtitle={

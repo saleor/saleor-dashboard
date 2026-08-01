@@ -39,6 +39,7 @@ export const channelDetailsFragment = gql`
     }
     orderSettings {
       markAsPaidStrategy
+      expireOrdersAfter
       deleteExpiredOrdersAfter
       allowUnpaidOrders
       automaticallyConfirmAllNewOrders
@@ -46,6 +47,8 @@ export const channelDetailsFragment = gql`
     }
     paymentSettings {
       defaultTransactionFlowStrategy
+      releaseFundsForExpiredCheckouts
+      checkoutTtlBeforeReleasingFunds
     }
     checkoutSettings {
       automaticallyCompleteFullyPaidCheckouts

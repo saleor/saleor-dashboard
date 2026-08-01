@@ -1,0 +1,6 @@
+.inlinePill {
+  display: inline-flex;
+  width: fit-content;
+  vertical-align: middle;
+  margin: 0 2px;
+}

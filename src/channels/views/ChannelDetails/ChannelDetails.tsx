@@ -117,6 +117,9 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     automaticallyFulfillNonShippableGiftCard,
     defaultCountry,
     defaultTransactionFlowStrategy,
+    releaseFundsForExpiredCheckouts,
+    checkoutTtlBeforeReleasingFunds,
+    expireOrdersAfter,
     deleteExpiredOrdersAfter,
     markAsPaidStrategy,
     name,
@@ -184,9 +187,14 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
           },
           paymentSettings: {
             defaultTransactionFlowStrategy,
+            releaseFundsForExpiredCheckouts,
+            checkoutTtlBeforeReleasingFunds: releaseFundsForExpiredCheckouts
+              ? checkoutTtlBeforeReleasingFunds || 0
+              : checkoutTtlBeforeReleasingFunds,
           },
           orderSettings: {
             markAsPaidStrategy,
+            expireOrdersAfter: expireOrdersAfter || 0,
             deleteExpiredOrdersAfter,
             allowUnpaidOrders,
             automaticallyConfirmAllNewOrders,
