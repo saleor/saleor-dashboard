@@ -1,5 +1,5 @@
 import { channelCreateSetupFlow } from "@dashboard/channels/ripples/channelCreateSetupFlow";
-import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
+import { channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -12,7 +12,6 @@ import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type ChannelDetailsFragment, type RefreshLimitsQuery } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
@@ -27,16 +26,21 @@ import { useStyles } from "./styles";
 interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
   limits: RefreshLimitsQuery["shop"]["limits"];
+  onAddChannel: () => void;
   onRemove: (id: string) => void;
 }
 
 const numberOfColumns = 5;
 
-const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPageProps) => {
+const ChannelsListPage = ({
+  channelsList,
+  limits,
+  onAddChannel,
+  onRemove,
+}: ChannelsListPageProps) => {
   const intl = useIntl();
   const classes = useStyles({});
   const limitReached = isLimitReached(limits, "channels");
-  const navigator = useNavigator();
 
   return (
     <ListPageLayout>
@@ -46,7 +50,7 @@ const ChannelsListPage = ({ channelsList, limits, onRemove }: ChannelsListPagePr
             disabled={limitReached}
             variant="primary"
             data-test-id="add-channel"
-            onClick={() => navigator(channelAddUrl)}
+            onClick={onAddChannel}
           >
             <FormattedMessage id="OGm8wO" defaultMessage="Create Channel" description="button" />
           </Button>

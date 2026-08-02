@@ -1,4 +1,4 @@
-import { channelAddUrl } from "@dashboard/channels/urls";
+import { channelCreateUrl } from "@dashboard/channels/urls";
 import { type Ripple } from "@dashboard/ripples/types";
 import { defineMessages } from "react-intl";
 
@@ -25,7 +25,7 @@ export const channelCreateSetupFlow: Ripple = {
   actions: [
     {
       label: messages.visitCreate,
-      href: channelAddUrl,
+      href: channelCreateUrl(),
     },
   ],
 };

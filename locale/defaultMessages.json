@@ -3411,10 +3411,6 @@
     "context": "dialog header, title",
     "string": "Invoice Generation"
   },
-  "DnghuS": {
-    "context": "channel create",
-    "string": "New Channel"
-  },
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
@@ -3861,6 +3857,10 @@
   "FwHWUm": {
     "context": "alert",
     "string": "SKU limit reached"
+  },
+  "FwUe5N": {
+    "context": "create channel dialog submit",
+    "string": "Create"
   },
   "Fwt3tF": {
     "context": "Save composition segment for dirty channel availability (publish, AFP, listings, add/remove)",
@@ -5961,10 +5961,6 @@
   "OrEUr6": {
     "context": "Message when search returns no results",
     "string": "No channels match your search"
-  },
-  "OrMr/k": {
-    "context": "window title",
-    "string": "Create Channel"
   },
   "OrR3Qy": {
     "context": "no products",
@@ -13253,6 +13249,10 @@
   "v3WWK+": {
     "string": "Status is invalid"
   },
+  "v41uKG": {
+    "context": "create channel dialog title",
+    "string": "Create channel"
+  },
   "v5yLSE": {
     "context": "section title",
     "string": "Stock availability"
@@ -14374,6 +14374,10 @@
   "zjkAMs": {
     "context": "header",
     "string": "Translation Sale \"{saleName}\" - {languageCode}"
+  },
+  "zkfMxY": {
+    "context": "create channel dialog description",
+    "string": "A channel is a market: one currency and default country for prices, tax, and checkout."
   },
   "zmKgYS": {
     "context": "order header date, same year and older than yesterday",

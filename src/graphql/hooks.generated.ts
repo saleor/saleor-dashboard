@@ -5444,6 +5444,42 @@ export function useChannelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type ChannelQueryHookResult = ReturnType<typeof useChannelQuery>;
 export type ChannelLazyQueryHookResult = ReturnType<typeof useChannelLazyQuery>;
 export type ChannelQueryResult = Apollo.QueryResult<Types.ChannelQuery, Types.ChannelQueryVariables>;
+export const ChannelBySlugDocument = gql`
+    query ChannelBySlug($slug: String!) {
+  channel(slug: $slug) {
+    id
+    slug
+  }
+}
+    `;
+
+/**
+ * __useChannelBySlugQuery__
+ *
+ * To run a query within a React component, call `useChannelBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelBySlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useChannelBySlugQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>(ChannelBySlugDocument, options);
+      }
+export function useChannelBySlugLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>(ChannelBySlugDocument, options);
+        }
+export type ChannelBySlugQueryHookResult = ReturnType<typeof useChannelBySlugQuery>;
+export type ChannelBySlugLazyQueryHookResult = ReturnType<typeof useChannelBySlugLazyQuery>;
+export type ChannelBySlugQueryResult = Apollo.QueryResult<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>;
 export const ChannelSetupReviewStatsDocument = gql`
     query ChannelSetupReviewStats($channelSlug: String!, $canFetchApps: Boolean!, $canFetchProducts: Boolean!) {
   allProducts: products @include(if: $canFetchProducts) {

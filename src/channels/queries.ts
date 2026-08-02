@@ -25,6 +25,15 @@ export const channelDetails = gql`
   }
 `;
 
+export const channelBySlug = gql`
+  query ChannelBySlug($slug: String!) {
+    channel(slug: $slug) {
+      id
+      slug
+    }
+  }
+`;
+
 export const defaultGraphiQLQuery = `query ChannelDetails($id: ID!) {
   channel(id: $id) {
     id

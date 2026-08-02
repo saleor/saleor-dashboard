@@ -1,9 +1,9 @@
 import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
+import { type ComponentType, useState } from "react";
 import { fn } from "storybook/test";
 
-import { channelSectionIds } from "./channelSectionIds";
+import { type ChannelSectionId, channelSectionIds } from "./channelSectionIds";
 import { ChannelSectionNav, type ChannelSectionNavItem } from "./ChannelSectionNav";
 
 const items: ChannelSectionNavItem[] = [
@@ -27,7 +27,7 @@ export const Default: Story = {
     onSelect: fn(),
   },
   decorators: [
-    Story => (
+    (Story: ComponentType) => (
       <Box padding={6} backgroundColor="default1">
         <Story />
       </Box>
@@ -37,7 +37,7 @@ export const Default: Story = {
 
 export const Interactive: Story = {
   render: () => {
-    const [activeId, setActiveId] = useState(channelSectionIds.general);
+    const [activeId, setActiveId] = useState<ChannelSectionId>(channelSectionIds.general);
 
     return (
       <Box padding={6} backgroundColor="default1">

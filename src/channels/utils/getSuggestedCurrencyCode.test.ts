@@ -8,6 +8,7 @@ describe("getSuggestedCurrencyCode", () => {
     expect(getSuggestedCurrencyCode("GB")).toBe("GBP");
     expect(getSuggestedCurrencyCode("PL")).toBe("PLN");
     expect(getSuggestedCurrencyCode("jp")).toBe("JPY");
+    expect(getSuggestedCurrencyCode("EU")).toBe("EUR");
   });
 
   it("returns undefined for unknown or empty codes", () => {

@@ -1,6 +1,7 @@
 import { AllocationStrategyEnum } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { type ComponentType } from "react";
 import { fn } from "storybook/test";
 
 import { ChannelInventoryCard } from "./ChannelInventoryCard";
@@ -28,7 +29,7 @@ const meta: Meta<typeof ChannelInventoryCard> = {
     onAllocationStrategyChange: fn(),
   },
   decorators: [
-    Story => (
+    (Story: ComponentType) => (
       <Box padding={6} __maxWidth="420px" backgroundColor="default1">
         <Story />
       </Box>

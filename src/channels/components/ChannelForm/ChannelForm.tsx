@@ -2,10 +2,7 @@ import {
   type ChannelShippingZones,
   type ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Title2 } from "@dashboard/components/Title2/Title2";
 import {
   type ChannelErrorFragment,
   type CountryCode,
@@ -14,15 +11,13 @@ import {
   type TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
+import { type FormChange } from "@dashboard/hooks/useForm";
 import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { Box, Button, DynamicCombobox, Input, type Option } from "@saleor/macaw-ui-next";
 import { Copy, Lock } from "lucide-react";
-import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import slugify from "slugify";
+import { useIntl } from "react-intl";
 
 import { channelSectionIds } from "../ChannelSectionNav/channelSectionIds";
 import { ChannelSection } from "../ChannelSectionNav/ChannelSectionNav";
@@ -63,13 +58,9 @@ export interface FormData extends StockSettingsInput {
 interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
-  currencyCodes?: Option[];
   errors: ChannelErrorFragment[];
-  selectedCurrencyCode?: string;
   selectedCountryDisplayName: string;
   countries: Option[];
-  /** When true, show market helper, auto-slug, and collapse order settings into Advanced. */
-  isCreate?: boolean;
   /**
    * Edit layout: wrap General / Orders / Payments in scroll-spy sections
    * (parent owns padding + section nav; sidebar stays separate).
@@ -79,55 +70,28 @@ interface ChannelFormProps {
   savedAutomaticCompletionCutOffDate: string;
   savedAutomaticCompletionCutOffTime: string;
   onChange: FormChange;
-  onCurrencyCodeChange?: (event: ChangeEvent) => void;
-  onDefaultCountryChange: (event: ChangeEvent) => void;
+  onDefaultCountryChange: (event: { target: { name: string; value: string } }) => void;
 }
 
 export const ChannelForm = ({
-  currencyCodes,
   data,
   disabled,
   errors,
-  selectedCurrencyCode,
   selectedCountryDisplayName,
   countries,
-  isCreate = false,
   sectionLayout = false,
   savedAutomaticallyCompleteCheckouts,
   savedAutomaticCompletionCutOffDate,
   savedAutomaticCompletionCutOffTime,
   onChange,
-  onCurrencyCodeChange,
   onDefaultCountryChange,
 }: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
-  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
     ["name", "slug", "currencyCode", "defaultCountry"],
     errors,
   );
-  const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
-
-  const handleNameChange = (event: ChangeEvent) => {
-    onChange(event);
-
-    if (isCreate && !slugManuallyEdited) {
-      const nextName = typeof event.target.value === "string" ? event.target.value : "";
-
-      onChange({
-        target: {
-          name: "slug",
-          value: slugify(nextName).toLowerCase(),
-        },
-      });
-    }
-  };
-
-  const handleSlugChange = (event: ChangeEvent) => {
-    setSlugManuallyEdited(true);
-    onChange(event);
-  };
 
   const ordersSection = (
     <ChannelOrdersSection data={data} disabled={disabled} errors={errors} onChange={onChange} />
@@ -148,13 +112,11 @@ export const ChannelForm = ({
   const nameError = getChannelsErrorMessage(formErrors?.name, intl);
   const slugError = getChannelsErrorMessage(formErrors?.slug, intl);
   const countryError = getChannelsErrorMessage(formErrors?.defaultCountry, intl);
-  const currencyError = getChannelsErrorMessage(formErrors?.currencyCode, intl);
 
   const generalCard = (
     <ChannelSettingsCard
       data-test-id="general-information"
       title={intl.formatMessage(messages.generalSettings)}
-      subtitle={isCreate ? <FormattedMessage {...messages.marketHelper} /> : undefined}
     >
       <Box display="flex" flexDirection="column" gap={4}>
         <Input
@@ -164,7 +126,7 @@ export const ChannelForm = ({
           label={intl.formatMessage(messages.channelName)}
           name="name"
           value={data.name}
-          onChange={handleNameChange}
+          onChange={onChange}
         />
         <Input
           data-test-id="slug-name-input"
@@ -174,7 +136,7 @@ export const ChannelForm = ({
           label={intl.formatMessage(messages.channelSlug)}
           name="slug"
           value={data.slug}
-          onChange={handleSlugChange}
+          onChange={onChange}
           endAdornment={
             <Button
               variant="tertiary"
@@ -214,49 +176,25 @@ export const ChannelForm = ({
             />
           </Box>
           <Box __flex="1 1 0" __minWidth="0" width="100%">
-            {renderCurrencySelection ? (
-              <DynamicCombobox
-                data-test-id="channel-currency-select-input"
-                disabled={disabled}
-                error={!!formErrors.currencyCode}
-                label={intl.formatMessage(messages.channelCurrency)}
-                helperText={currencyError || intl.formatMessage(messages.channelCurrencyHintCreate)}
-                options={currencyCodes}
-                name="currencyCode"
-                value={{
-                  label: selectedCurrencyCode ?? "",
-                  value: selectedCurrencyCode ?? "",
-                }}
-                onChange={e =>
-                  onCurrencyCodeChange({
-                    target: {
-                      value: e?.value ?? "",
-                      name: "currencyCode",
-                    },
-                  })
-                }
-              />
-            ) : (
-              <Input
-                data-test-id="channel-currency-locked-input"
-                disabled
-                label={intl.formatMessage(messages.channelCurrency)}
-                name="currencyCode"
-                value={data.currencyCode}
-                helperText={intl.formatMessage(messages.channelCurrencyHintLocked)}
-                endAdornment={
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    color="default2"
-                    paddingRight={1}
-                    aria-hidden
-                  >
-                    <Lock size={iconSize.small} strokeWidth={iconStrokeWidth} />
-                  </Box>
-                }
-              />
-            )}
+            <Input
+              data-test-id="channel-currency-locked-input"
+              disabled
+              label={intl.formatMessage(messages.channelCurrency)}
+              name="currencyCode"
+              value={data.currencyCode}
+              helperText={intl.formatMessage(messages.channelCurrencyHintLocked)}
+              endAdornment={
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  color="default2"
+                  paddingRight={1}
+                  aria-hidden
+                >
+                  <Lock size={iconSize.small} strokeWidth={iconStrokeWidth} />
+                </Box>
+              }
+            />
           </Box>
         </Box>
       </Box>
@@ -294,31 +232,10 @@ export const ChannelForm = ({
   }
 
   return (
-    <Box paddingX={6} paddingBottom={8}>
+    <Box paddingX={6} paddingBottom={8} display="flex" flexDirection="column" gap={4}>
       {generalCard}
-      <CardSpacer />
-      {isCreate ? (
-        <Box data-test-id="channel-advanced-settings">
-          <DetailGroupBox
-            groupId="channel-advanced-settings"
-            triggerButtonTestId="channel-advanced-settings"
-            defaultExpanded={false}
-            marginTop={0}
-            headerStart={<Title2>{intl.formatMessage(messages.advancedSettings)}</Title2>}
-          >
-            <Box paddingY={4} display="flex" flexDirection="column" gap={4}>
-              {ordersCard}
-              {paymentsCard}
-            </Box>
-          </DetailGroupBox>
-        </Box>
-      ) : (
-        <>
-          {ordersCard}
-          <CardSpacer />
-          {paymentsCard}
-        </>
-      )}
+      {ordersCard}
+      {paymentsCard}
     </Box>
   );
 };

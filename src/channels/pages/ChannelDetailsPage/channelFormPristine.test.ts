@@ -55,7 +55,14 @@ describe("isChannelUpdateFormPristine", () => {
     const current: FormData = {
       ...baseForm,
       warehousesIdsToAdd: ["w3"],
-      warehousesToDisplay: [...baseForm.warehousesToDisplay, { id: "w3", name: "Three" }],
+      warehousesToDisplay: [
+        ...baseForm.warehousesToDisplay,
+        {
+          __typename: "Warehouse",
+          id: "w3",
+          name: "Three",
+        } as FormData["warehousesToDisplay"][number],
+      ],
     };
 
     // Act & Assert
@@ -117,11 +124,25 @@ describe("mergeChannelFormData", () => {
     const prevState: FormData = {
       ...baseForm,
       warehousesIdsToAdd: ["w3"],
-      warehousesToDisplay: [...baseForm.warehousesToDisplay, { id: "w3", name: "Three" }],
+      warehousesToDisplay: [
+        ...baseForm.warehousesToDisplay,
+        {
+          __typename: "Warehouse",
+          id: "w3",
+          name: "Three",
+        } as FormData["warehousesToDisplay"][number],
+      ],
     };
     const nextData: FormData = {
       ...baseForm,
-      warehousesToDisplay: [...baseForm.warehousesToDisplay, { id: "w3", name: "Three" }],
+      warehousesToDisplay: [
+        ...baseForm.warehousesToDisplay,
+        {
+          __typename: "Warehouse",
+          id: "w3",
+          name: "Three",
+        } as FormData["warehousesToDisplay"][number],
+      ],
     };
 
     // Act
@@ -138,7 +159,14 @@ describe("mergeChannelFormData", () => {
     const prevState: FormData = {
       ...baseForm,
       warehousesIdsToAdd: ["w3"],
-      warehousesToDisplay: [...baseForm.warehousesToDisplay, { id: "w3", name: "Three" }],
+      warehousesToDisplay: [
+        ...baseForm.warehousesToDisplay,
+        {
+          __typename: "Warehouse",
+          id: "w3",
+          name: "Three",
+        } as FormData["warehousesToDisplay"][number],
+      ],
     };
     const nextData: FormData = {
       ...baseForm,

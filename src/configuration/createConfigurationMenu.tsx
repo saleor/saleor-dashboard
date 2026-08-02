@@ -16,8 +16,8 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import {
+  Globe,
   Package,
-  Radio,
   Receipt,
   Settings,
   Shield,
@@ -37,7 +37,7 @@ const ConfigurationPermissionGroupsIcon = createConfigurationLucideIcon(Shield);
 const ConfigurationShippingIcon = createConfigurationLucideIcon(Truck);
 const ConfigurationWarehousesIcon = createConfigurationLucideIcon(Warehouse);
 const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
-const ConfigurationChannelsIcon = createConfigurationLucideIcon(Radio);
+const ConfigurationChannelsIcon = createConfigurationLucideIcon(Globe);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 
 /**

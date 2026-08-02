@@ -12,7 +12,6 @@ import { useChannelSectionScrollSpy } from "@dashboard/channels/components/Chann
 import { defaultGraphiQLQuery } from "@dashboard/channels/queries";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { getChannelCreateDefaults } from "@dashboard/channels/utils/getChannelCreateDefaults";
-import { getSuggestedCurrencyCode } from "@dashboard/channels/utils/getSuggestedCurrencyCode";
 import { validateChannelFormData } from "@dashboard/channels/validation";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
@@ -39,7 +38,7 @@ import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { Box, type Option } from "@saleor/macaw-ui-next";
+import { Box } from "@saleor/macaw-ui-next";
 import { Receipt, Trash2 } from "lucide-react";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -68,9 +67,8 @@ import { parseDateTimeToDateAndTime } from "./utils";
 
 interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
-  /** Edit view: true while the channel query is in flight (prevents create-layout flash). */
+  /** True while the channel query is in flight. */
   loading?: boolean;
-  currencyCodes?: Option[];
   disabled: boolean;
   disabledStatus?: boolean;
   errors: ChannelErrorFragment[];
@@ -110,7 +108,6 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
 const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   channel,
   loading = false,
-  currencyCodes,
   disabled,
   disabledStatus,
   onSubmit,
@@ -137,8 +134,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   const intl = useIntl();
   const devMode = useDevModeContext();
   const userPermissions = useUserPermissions() ?? [];
-  // Without this, a missing `channel` during fetch is treated as create and flashes that layout.
-  const isCreate = !channel && !loading;
   const isEditLoading = loading && !channel;
   // Status moved to the header — don't leave an empty bordered sidebar column.
   const showDeliveryCard = hasPermissions(userPermissions, [PermissionEnum.MANAGE_SHIPPING]);
@@ -147,16 +142,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     PermissionEnum.MANAGE_ORDERS,
     PermissionEnum.MANAGE_PRODUCTS,
   ]);
-  const showRightSidebar = !isCreate && (showDeliveryCard || showInventoryCard);
+  const showRightSidebar = showDeliveryCard || showInventoryCard;
   const channelId = channel?.id;
   const taxConfigurationId = channel?.taxConfiguration?.id;
   const createDefaults = getChannelCreateDefaults();
-  const sectionNavItems = useMemo((): ChannelSectionNavItem[] => {
-    if (isCreate) {
-      return [];
-    }
-
-    return [
+  const sectionNavItems = useMemo(
+    (): ChannelSectionNavItem[] => [
       {
         id: channelSectionIds.general,
         label: intl.formatMessage(sectionNavMessages.general),
@@ -169,8 +160,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         id: channelSectionIds.payments,
         label: intl.formatMessage(sectionNavMessages.payments),
       },
-    ];
-  }, [intl, isCreate]);
+    ],
+    [intl],
+  );
   const sectionIds = useMemo(() => sectionNavItems.map(item => item.id), [sectionNavItems]);
   const { activeId: activeSectionId, selectSection } = useChannelSectionScrollSpy({ sectionIds });
   const openPlaygroundURL = useCallback(() => {
@@ -183,10 +175,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     devMode.setDevModeVisibility(true);
   }, [channelId, devMode]);
   const menuItems = useMemo((): TopNavMenuItem[] => {
-    if (isCreate) {
-      return [];
-    }
-
     const items: TopNavMenuItem[] = [];
 
     if (taxConfigurationId) {
@@ -218,10 +206,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     }
 
     return items;
-  }, [channelId, taxConfigurationId, intl, isCreate, navigate, onDelete, openPlaygroundURL]);
+  }, [channelId, taxConfigurationId, intl, navigate, onDelete, openPlaygroundURL]);
   const [validationErrors, setValidationErrors] = useState<ChannelErrorFragment[]>([]);
-  const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
-  const [currencyManuallyEdited, setCurrencyManuallyEdited] = useState(false);
   const [selectedCountryDisplayName, setSelectedCountryDisplayName] = useStateFromProps(
     channel?.defaultCountry.country || "",
   );
@@ -292,14 +278,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         return true;
       }
 
-      // Create keeps Save enabled for validation feedback; edit uses pristine compare.
-      if (!channel) {
-        return false;
-      }
-
       return isChannelUpdateFormPristine(data, initialData);
     },
-    [channel, disabled, initialData],
+    [disabled, initialData],
   );
   const handleSubmit = async (data: FormData) => {
     const errors = validateChannelFormData(data);
@@ -349,34 +330,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           ? buildChannelSaveComposition(data, initialData)
           : undefined;
 
-        const handleCurrencyCodeSelect = (event: ChangeEvent) => {
-          setCurrencyManuallyEdited(true);
-          createSingleAutocompleteSelectHandler(
-            change,
-            setSelectedCurrencyCode,
-            currencyCodes,
-          )(event);
-        };
         const handleDefaultCountrySelect = (event: ChangeEvent) => {
           createSingleAutocompleteSelectHandler(
             change,
             setSelectedCountryDisplayName,
             countryChoices,
           )(event);
-
-          if (isCreate && !currencyManuallyEdited) {
-            const suggested = getSuggestedCurrencyCode(String(event.target.value));
-
-            if (suggested) {
-              setSelectedCurrencyCode(suggested);
-              change({
-                target: {
-                  name: "currencyCode",
-                  value: suggested,
-                },
-              });
-            }
-          }
         };
         const addShippingZone = createShippingZoneAddHandler(data, set);
         const removeShippingZone = createShippingZoneRemoveHandler(data, set);
@@ -387,16 +346,13 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         const channelFormProps = {
           data,
           disabled,
-          currencyCodes,
           countries: countryChoices,
-          selectedCurrencyCode,
           selectedCountryDisplayName,
           savedAutomaticallyCompleteCheckouts:
             checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ?? false,
           savedAutomaticCompletionCutOffDate: cutOffDateTime.date,
           savedAutomaticCompletionCutOffTime: cutOffDateTime.time,
           onChange: change,
-          onCurrencyCodeChange: handleCurrencyCodeSelect,
           onDefaultCountryChange: handleDefaultCountrySelect,
           errors: allErrors,
         };
@@ -420,27 +376,17 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             />
             <TopNav
               href={channelsListUrl()}
-              title={
-                channel ? (
-                  <ChannelDetailsTitle channel={channel} />
-                ) : (
-                  intl.formatMessage({
-                    id: "DnghuS",
-                    defaultMessage: "New Channel",
-                    description: "channel create",
-                  })
-                )
-              }
+              title={channel ? <ChannelDetailsTitle channel={channel} /> : null}
               actionsGap={3}
             >
-              {!isCreate && onToggleChannelStatus && (
+              {onToggleChannelStatus && (
                 <ChannelStatus
                   isActive={!!channel?.isActive}
                   disabled={disabled || !!disabledStatus}
                   onClick={onToggleChannelStatus}
                 />
               )}
-              {!isCreate && onShowMetadata && (
+              {onShowMetadata && (
                 <TopNav.MetadataButton
                   onClick={onShowMetadata}
                   disabled={disabled || !channel}
@@ -459,25 +405,23 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             </TopNav>
             <DetailPageLayout.Content>
               {setupCard}
-              {isCreate ? (
-                <ChannelForm {...channelFormProps} isCreate />
-              ) : (
-                <Box display="flex" gap={8} paddingX={6} paddingBottom={6}>
-                  <Box
-                    display={{ mobile: "none", tablet: "block", desktop: "block" }}
-                    flexShrink="0"
-                  >
-                    <ChannelSectionNav
-                      items={sectionNavItems}
-                      activeId={activeSectionId}
-                      onSelect={selectSection}
-                    />
-                  </Box>
-                  <Box flexGrow="1" __minWidth="0">
-                    <ChannelForm {...channelFormProps} sectionLayout />
-                  </Box>
+              <Box display="flex" gap={4} paddingX={6} paddingTop={6} paddingBottom={6}>
+                <Box
+                  display={{ mobile: "none", tablet: "block", desktop: "block" }}
+                  flexShrink="0"
+                  __width="25%"
+                  __minWidth="10rem"
+                >
+                  <ChannelSectionNav
+                    items={sectionNavItems}
+                    activeId={activeSectionId}
+                    onSelect={selectSection}
+                  />
                 </Box>
-              )}
+                <Box flexGrow="1" __minWidth="0">
+                  <ChannelForm {...channelFormProps} sectionLayout />
+                </Box>
+              </Box>
             </DetailPageLayout.Content>
             {showRightSidebar && (
               <DetailPageLayout.RightSidebar paddingTop={6}>
@@ -513,9 +457,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               </DetailPageLayout.RightSidebar>
             )}
             <Savebar>
-              {!isCreate && <Savebar.DeleteButton onClick={onDelete} disabled={disabled} />}
+              <Savebar.DeleteButton onClick={onDelete} disabled={disabled} />
               <Savebar.Spacer />
-              {!isCreate && <ChannelSaveCompositionHint composition={saveComposition} />}
+              <ChannelSaveCompositionHint composition={saveComposition} />
               <Savebar.CancelButton onClick={() => navigate(channelsListUrl())} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}

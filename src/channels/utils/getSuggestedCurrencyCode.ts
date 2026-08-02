@@ -58,6 +58,7 @@ const COUNTRY_TO_CURRENCY: Record<string, string> = {
   ER: "ERN",
   ES: "EUR",
   ET: "ETB",
+  EU: "EUR",
   FI: "EUR",
   FJ: "FJD",
   FR: "EUR",

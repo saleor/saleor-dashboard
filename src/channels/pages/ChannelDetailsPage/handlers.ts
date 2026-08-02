@@ -36,8 +36,8 @@ export function createShippingZoneAddHandler(
       ),
       shippingZonesToDisplay: [
         ...(data.shippingZonesToDisplay ?? []),
-        ...(zonesToAdd as ChannelShippingZones),
-      ],
+        ...zonesToAdd,
+      ] as ChannelShippingZones,
     });
   };
 }

@@ -1,6 +1,6 @@
 import { attributeAddUrl, attributeListUrl } from "@dashboard/attributes/urls";
 import { categoryAddUrl, categoryListUrl } from "@dashboard/categories/urls";
-import { channelAddUrl, channelsListUrl } from "@dashboard/channels/urls";
+import { channelCreateUrl, channelsListUrl } from "@dashboard/channels/urls";
 import { collectionAddUrl, collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
 import { customerAddPath, customerListUrl } from "@dashboard/customers/urls";
@@ -438,7 +438,7 @@ const allActions: TriggerDescriptor[] = [
     },
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
-        <ActionLinkItem href={channelAddUrl}>
+        <ActionLinkItem href={channelCreateUrl()}>
           <FormattedMessage id="Nuq83+" defaultMessage="Create new channel" />
         </ActionLinkItem>
       </Box>

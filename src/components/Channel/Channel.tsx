@@ -3,7 +3,7 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { orderListUrlWithChannel } from "@dashboard/orders/urls";
 import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
-import { Radio } from "lucide-react";
+import { Globe } from "lucide-react";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -105,7 +105,7 @@ export const ChannelDisplay = ({
       data-test-id={dataTestId}
       aria-label={ariaLabel}
     >
-      {!hideIcon && <Radio size={iconSize} aria-hidden="true" />}
+      {!hideIcon && <Globe size={iconSize} aria-hidden="true" />}
       <span className={styles.name} title={nameTitle}>
         {channel.name}
       </span>

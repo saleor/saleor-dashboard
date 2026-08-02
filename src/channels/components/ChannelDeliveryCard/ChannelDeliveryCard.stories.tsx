@@ -1,5 +1,6 @@
 import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { type ComponentType } from "react";
 import { fn } from "storybook/test";
 
 import { ChannelDeliveryCard } from "./ChannelDeliveryCard";
@@ -22,7 +23,7 @@ const meta: Meta<typeof ChannelDeliveryCard> = {
     onCreateShipping: fn(),
   },
   decorators: [
-    Story => (
+    (Story: ComponentType) => (
       <Box padding={6} __maxWidth="420px" backgroundColor="default1">
         <Story />
       </Box>

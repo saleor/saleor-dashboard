@@ -1,6 +1,6 @@
 import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { Radio } from "lucide-react";
+import { Globe } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { channelAvailabilityMessages } from "./messages";
@@ -38,7 +38,7 @@ export const StatusDot = ({ statusType, size = "default" }: StatusDotProps) => {
 
 export const ChannelIcon = () => (
   <Box display="flex" alignItems="center" flexShrink="0" data-test-id="channel-availability-icon">
-    <Radio size={14} aria-hidden="true" color="var(--mu-colors-text-default2)" />
+    <Globe size={14} aria-hidden="true" color="var(--mu-colors-text-default2)" />
   </Box>
 );
 

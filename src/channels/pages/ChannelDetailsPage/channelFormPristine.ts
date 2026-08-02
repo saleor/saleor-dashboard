@@ -50,7 +50,7 @@ export const getChannelUpdateComparableData = (data: FormData) => ({
 export const isChannelUpdateFormPristine = (data: FormData, initialData: FormData): boolean =>
   isEqual(getChannelUpdateComparableData(data), getChannelUpdateComparableData(initialData));
 
-const ids = (items: Array<{ id: string }> | undefined): string[] =>
+const ids = (items: ReadonlyArray<{ id: string }> | undefined): string[] =>
   (items ?? []).map(item => item.id);
 
 /**
@@ -95,7 +95,10 @@ export const mergeChannelFormData = (
           warehousesIdsToRemove: data.warehousesIdsToRemove,
         }
       : {}),
-    ...(shouldClearAssignmentDeltas(merged.shippingZonesToDisplay, data.shippingZonesToDisplay)
+    ...(shouldClearAssignmentDeltas(
+      merged.shippingZonesToDisplay ?? [],
+      data.shippingZonesToDisplay ?? [],
+    )
       ? {
           shippingZonesIdsToAdd: data.shippingZonesIdsToAdd,
           shippingZonesIdsToRemove: data.shippingZonesIdsToRemove,

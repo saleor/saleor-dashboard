@@ -115,7 +115,10 @@ describe("buildChannelSaveComposition", () => {
     const composition = buildChannelSaveComposition(
       {
         ...baseForm,
-        shippingZonesToDisplay: [...baseForm.shippingZonesToDisplay, { id: "z2", name: "US" }],
+        shippingZonesToDisplay: [
+          ...(baseForm.shippingZonesToDisplay ?? []),
+          { __typename: "ShippingZone" as const, id: "z2", name: "US" },
+        ],
       },
       baseForm,
     );

@@ -22,7 +22,7 @@ export type ChannelUrlDialog =
   | "deactivate"
   | "view-metadata";
 export type ChannelUrlQueryParams = Dialog<ChannelUrlDialog>;
-export type ChannelsListUrlDialog = "remove";
+export type ChannelsListUrlDialog = "remove" | "create";
 export type ChannelsListUrlQueryParams = Dialog<ChannelsListUrlDialog> &
   ChannelsListUrlFilters &
   ChannelsListUrlSort &
@@ -37,6 +37,10 @@ export const channelsListPath = channelsSection;
 export const channelsListUrl = (params?: ChannelsListUrlQueryParams) =>
   channelsListPath + "?" + stringifyQs(params);
 
+/** Opens the create-channel dialog on the channels list. */
+export const channelCreateUrl = () => channelsListUrl({ action: "create" });
+
+/** Legacy create path — redirects to {@link channelCreateUrl}. */
 export const channelAddPath = urlJoin(channelsSection, "add");
 export const channelAddUrl = channelAddPath;
 

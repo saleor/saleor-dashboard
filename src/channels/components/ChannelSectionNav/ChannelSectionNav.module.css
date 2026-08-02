@@ -1,10 +1,8 @@
 .nav {
   position: sticky;
   top: var(--mu-spacing-4);
-  width: 16rem;
-  flex-shrink: 0;
+  width: 100%;
   padding-top: var(--mu-spacing-1);
-  padding-right: var(--mu-spacing-2);
 }
 
 .list {

@@ -10687,6 +10687,13 @@ export type ChannelQueryVariables = Exact<{
 
 export type ChannelQuery = { __typename: 'Query', channel: { __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, expireOrdersAfter: any | null, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean, automaticallyConfirmAllNewOrders: boolean, automaticallyFulfillNonShippableGiftCard: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum, releaseFundsForExpiredCheckouts: boolean | null, checkoutTtlBeforeReleasingFunds: number | null }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } } | null };
 
+export type ChannelBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type ChannelBySlugQuery = { __typename: 'Query', channel: { __typename: 'Channel', id: string, slug: string } | null };
+
 export type ChannelSetupReviewStatsQueryVariables = Exact<{
   channelSlug: Scalars['String']['input'];
   canFetchApps: Scalars['Boolean']['input'];
