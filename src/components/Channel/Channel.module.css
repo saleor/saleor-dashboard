@@ -24,3 +24,17 @@
   white-space: nowrap;
   vertical-align: bottom;
 }
+
+/*
+ * Inline variant. An inline-flex box takes its baseline from its first item, and an
+ * SVG icon has none, so the whole channel sits below the surrounding text. Laying it
+ * out as ordinary inline content puts the name back on the shared baseline.
+ */
+.inlineIcon {
+  vertical-align: -0.125em;
+  margin-right: 0.25em;
+}
+
+.inlineName {
+  white-space: nowrap;
+}

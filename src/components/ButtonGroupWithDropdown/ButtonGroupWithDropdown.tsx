@@ -38,7 +38,12 @@ export const ButtonGroupWithDropdown = ({
 }: ButtonGroupWithDropdownProps) => {
   return (
     <Dropdown>
-      <Box className={clsx(styles.group, className)} data-variant={variant} {...boxProps}>
+      <Box
+        className={clsx(styles.group, className)}
+        data-variant={variant}
+        data-disabled={disabled || undefined}
+        {...boxProps}
+      >
         <Button
           className={styles.segment}
           variant={variant}

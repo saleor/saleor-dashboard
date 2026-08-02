@@ -291,7 +291,7 @@
 
 .reviewItem {
   display: grid;
-  grid-template-columns: var(--setup-leading-width, 44px) minmax(0, 1fr) auto;
+  grid-template-columns: var(--setup-leading-width, 44px) minmax(0, 1fr) minmax(0, auto);
   gap: var(--mu-spacing-2);
   align-items: center;
   width: 100%;
@@ -354,8 +354,16 @@
   display: flex;
   align-items: center;
   gap: var(--mu-spacing-2);
-  flex-shrink: 0;
+  min-width: 0;
   color: var(--mu-colors-text-default2);
+}
+
+/* Kept on one line so counts stay readable; truncates rather than squeezing the title. */
+.reviewStatusLabel {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .reviewStatusDot {
@@ -370,6 +378,7 @@
 .reviewChevron {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   color: var(--mu-colors-text-default2);
   transition:
     color 0.15s ease,

@@ -10700,12 +10700,29 @@ export type ChannelSetupReviewStatsQueryVariables = Exact<{
 }>;
 
 
-export type ChannelSetupReviewStatsQuery = { __typename: 'Query', allProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, channelProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+export type ChannelSetupReviewStatsQuery = { __typename: 'Query', allProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, listedInChannel?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, channelProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, unpublishedInChannel?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, recentlyPublishedProducts?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, thumbnail: { __typename: 'Image', url: string } | null } }> } | null };
 
 export type ChannelPaymentAppsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ChannelPaymentAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
+
+export type BulkPublishProductsDataQueryVariables = Exact<{
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type BulkPublishProductsDataQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, channelListings: Array<{ __typename: 'ProductChannelListing', channel: { __typename: 'Channel', id: string } }> | null, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string } }> } | null } }> } | null };
+
+export type BulkPublishProductVariantsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type BulkPublishProductVariantsQuery = { __typename: 'Query', product: { __typename: 'Product', id: string, productVariants: { __typename: 'ProductVariantCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string }, price: { __typename: 'Money', amount: number } | null }> | null, stocks: Array<{ __typename: 'Stock', id: string, warehouse: { __typename: 'Warehouse', id: string } }> | null } }> } | null } | null };
 
 export type CollectionUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];

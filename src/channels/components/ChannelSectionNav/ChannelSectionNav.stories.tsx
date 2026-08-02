@@ -11,8 +11,8 @@ const items: ChannelSectionNavItem[] = [
   { id: channelSectionIds.orders, label: "Orders" },
   { id: channelSectionIds.payments, label: "Payments & checkout" },
   { id: channelSectionIds.paymentGateways, label: "Payment gateways" },
-  { id: channelSectionIds.taxes, label: "Taxes" },
   { id: channelSectionIds.catalog, label: "Catalog" },
+  { id: channelSectionIds.taxes, label: "Taxes" },
 ];
 
 const meta: Meta<typeof ChannelSectionNav> = {

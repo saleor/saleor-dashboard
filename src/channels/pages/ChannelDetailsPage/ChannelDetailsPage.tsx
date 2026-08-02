@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { type CatalogProductThumbnail } from "@dashboard/channels/components/ChannelCatalogSection/CatalogProductThumbnailStack";
 import { ChannelDeliveryCard } from "@dashboard/channels/components/ChannelDeliveryCard/ChannelDeliveryCard";
 import { messages as channelFormMessages } from "@dashboard/channels/components/ChannelForm/messages";
 import { ChannelInventoryCard } from "@dashboard/channels/components/ChannelInventoryCard/ChannelInventoryCard";
@@ -96,8 +97,14 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   /** Setup review row stats for tax/catalog shortcut panels. */
   paymentAppsCount?: number;
   publishedProductCount?: number;
+  unpublishedProductCount?: number;
+  listedInChannelCount?: number;
   totalProductCount?: number;
-  /** Opens in-place warehouse create when the shop has none yet. */
+  recentlyPublishedProducts?: CatalogProductThumbnail[];
+  canViewCatalogStats?: boolean;
+  catalogStatsError?: boolean;
+  catalogStatsLoading?: boolean;
+  onBulkPublishCatalog?: () => void;
   onCreateWarehouse?: () => void;
   /** Opens assign-warehouse dialog for the inventory card. */
   onAssignWarehouse?: () => void;
@@ -141,7 +148,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   showPaymentGatewaysSection = false,
   paymentAppsCount,
   publishedProductCount,
+  unpublishedProductCount,
+  listedInChannelCount,
   totalProductCount,
+  recentlyPublishedProducts,
+  canViewCatalogStats,
+  catalogStatsError,
+  catalogStatsLoading,
+  onBulkPublishCatalog,
   onCreateWarehouse,
   onAssignWarehouse,
   canCreateWarehouse = false,
@@ -193,12 +207,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
     items.push(
       {
-        id: channelSectionIds.taxes,
-        label: intl.formatMessage(sectionNavMessages.taxes),
-      },
-      {
         id: channelSectionIds.catalog,
         label: intl.formatMessage(sectionNavMessages.catalog),
+      },
+      {
+        id: channelSectionIds.taxes,
+        label: intl.formatMessage(sectionNavMessages.taxes),
       },
     );
 
@@ -220,10 +234,25 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       taxConfigurationId={channel.taxConfiguration?.id}
       chargeTaxes={channel.taxConfiguration?.chargeTaxes}
       taxCalculationStrategy={channel.taxConfiguration?.taxCalculationStrategy}
+      channel={{
+        id: channel.id,
+        name: channel.name,
+        slug: channel.slug,
+        currencyCode: channel.currencyCode,
+      }}
       channelSlug={channel.slug}
       paymentAppsCount={paymentAppsCount}
       publishedProductCount={publishedProductCount}
+      unpublishedProductCount={unpublishedProductCount}
+      listedInChannelCount={listedInChannelCount}
       totalProductCount={totalProductCount}
+      recentlyPublishedProducts={recentlyPublishedProducts}
+      canViewCatalogStats={canViewCatalogStats}
+      catalogStatsError={catalogStatsError}
+      channelWarehouseCount={channelWarehouses.length}
+      shopWarehouseCount={allWarehousesCount}
+      catalogStatsLoading={catalogStatsLoading}
+      onBulkPublishCatalog={onBulkPublishCatalog}
     />
   ) : null;
   const openPlaygroundURL = useCallback(() => {

@@ -191,9 +191,18 @@ describe("ChannelSetupCard", () => {
 
   it("renders worth-reviewing rows with tax, payments, and product status", () => {
     // Arrange & Act
-    render(<ChannelSetupCard {...baseProps} paymentAppsCount={2} publishedProductCount={3} />, {
-      wrapper: Wrapper,
-    });
+    render(
+      <ChannelSetupCard
+        {...baseProps}
+        paymentAppsCount={2}
+        publishedProductCount={3}
+        warehouseCount={1}
+        availableWarehousesCount={2}
+      />,
+      {
+        wrapper: Wrapper,
+      },
+    );
 
     // Assert
     expect(screen.getByTestId("setup-checklist-tasks-section")).toHaveTextContent(
@@ -209,6 +218,27 @@ describe("ChannelSetupCard", () => {
     );
     expect(screen.getByTestId("setup-checklist-review-catalog")).toHaveTextContent(
       "3 of 128 published",
+    );
+  });
+
+  it("shows assign-warehouse catalog status when the channel has no warehouses", () => {
+    // Arrange & Act
+    render(
+      <ChannelSetupCard
+        {...baseProps}
+        warehouseCount={0}
+        availableWarehousesCount={2}
+        publishedProductCount={0}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.getByTestId("setup-checklist-review-catalog")).toHaveTextContent(
+      "Assign warehouse",
+    );
+    expect(screen.getByTestId("setup-checklist-review-catalog")).toHaveTextContent(
+      "Add products and prices now. Assign a warehouse to this channel for checkout inventory.",
     );
   });
 
@@ -307,7 +337,7 @@ describe("ChannelSetupCard", () => {
         <ChannelSetupCard
           {...baseProps}
           paymentAppsCount={2}
-          scrollableSectionIds={[channelSectionIds.taxes, channelSectionIds.catalog]}
+          scrollableSectionIds={[channelSectionIds.catalog, channelSectionIds.taxes]}
         />
       </ChannelSectionScrollProvider>,
       { wrapper: Wrapper },

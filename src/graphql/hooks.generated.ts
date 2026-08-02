@@ -5485,8 +5485,33 @@ export const ChannelSetupReviewStatsDocument = gql`
   allProducts: products @include(if: $canFetchProducts) {
     totalCount
   }
+  listedInChannel: products(channel: $channelSlug) @include(if: $canFetchProducts) {
+    totalCount
+  }
   channelProducts: products(channel: $channelSlug, filter: {isPublished: true}) @include(if: $canFetchProducts) {
     totalCount
+  }
+  unpublishedInChannel: products(
+    channel: $channelSlug
+    filter: {isPublished: false}
+  ) @include(if: $canFetchProducts) {
+    totalCount
+  }
+  recentlyPublishedProducts: products(
+    channel: $channelSlug
+    first: 3
+    filter: {isPublished: true}
+    sortBy: {field: PUBLISHED_AT, direction: DESC}
+  ) @include(if: $canFetchProducts) {
+    edges {
+      node {
+        id
+        name
+        thumbnail(size: 128) {
+          url
+        }
+      }
+    }
   }
 }
     `;
@@ -5572,6 +5597,123 @@ export function useChannelPaymentAppsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ChannelPaymentAppsQueryHookResult = ReturnType<typeof useChannelPaymentAppsQuery>;
 export type ChannelPaymentAppsLazyQueryHookResult = ReturnType<typeof useChannelPaymentAppsLazyQuery>;
 export type ChannelPaymentAppsQueryResult = Apollo.QueryResult<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>;
+export const BulkPublishProductsDataDocument = gql`
+    query BulkPublishProductsData($ids: [ID!]!, $first: Int!) {
+  products(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        channelListings {
+          channel {
+            id
+          }
+        }
+        productVariants(first: 1) {
+          totalCount
+          edges {
+            node {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBulkPublishProductsDataQuery__
+ *
+ * To run a query within a React component, call `useBulkPublishProductsDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulkPublishProductsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulkPublishProductsDataQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useBulkPublishProductsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>(BulkPublishProductsDataDocument, options);
+      }
+export function useBulkPublishProductsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>(BulkPublishProductsDataDocument, options);
+        }
+export type BulkPublishProductsDataQueryHookResult = ReturnType<typeof useBulkPublishProductsDataQuery>;
+export type BulkPublishProductsDataLazyQueryHookResult = ReturnType<typeof useBulkPublishProductsDataLazyQuery>;
+export type BulkPublishProductsDataQueryResult = Apollo.QueryResult<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>;
+export const BulkPublishProductVariantsDocument = gql`
+    query BulkPublishProductVariants($id: ID!, $first: Int!, $after: String) {
+  product(id: $id) {
+    id
+    productVariants(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          channelListings {
+            id
+            channel {
+              id
+            }
+            price {
+              amount
+            }
+          }
+          stocks {
+            id
+            warehouse {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBulkPublishProductVariantsQuery__
+ *
+ * To run a query within a React component, call `useBulkPublishProductVariantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulkPublishProductVariantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulkPublishProductVariantsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useBulkPublishProductVariantsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>(BulkPublishProductVariantsDocument, options);
+      }
+export function useBulkPublishProductVariantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>(BulkPublishProductVariantsDocument, options);
+        }
+export type BulkPublishProductVariantsQueryHookResult = ReturnType<typeof useBulkPublishProductVariantsQuery>;
+export type BulkPublishProductVariantsLazyQueryHookResult = ReturnType<typeof useBulkPublishProductVariantsLazyQuery>;
+export type BulkPublishProductVariantsQueryResult = Apollo.QueryResult<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>;
 export const CollectionUpdateDocument = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {

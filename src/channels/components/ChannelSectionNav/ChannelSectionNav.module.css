@@ -54,14 +54,10 @@
 
 .item:first-child.active::before {
   top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 
 .item:last-child.active::before {
   bottom: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 
 .section {

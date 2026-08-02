@@ -3,6 +3,10 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
+  "+23eZr": {
+    "context": "bulk publish confirm single stock quantity",
+    "string": "{quantity} units per variant"
+  },
   "+2MvXa": {
     "context": "channel setup card subtitle",
     "string": "Channels work like markets. Customers can’t check out until the required steps are done. Finish them now or come back later."
@@ -97,6 +101,10 @@
     "context": "channel order setting description for gift cards",
     "string": "Digital gift cards are marked {fulfilled} and emailed to the customer without waiting for a warehouse step."
   },
+  "+WPPzl": {
+    "context": "bulk publish unexpected error",
+    "string": "Publishing failed. Try again."
+  },
   "+WTmpr": {
     "context": "disabled status option label",
     "string": "Disabled"
@@ -173,6 +181,10 @@
   "+qDoi0": {
     "context": "button",
     "string": "Create model type"
+  },
+  "+qtDGu": {
+    "context": "bulk publish product many variants chip",
+    "string": "Many variants"
   },
   "+sXiWx": {
     "context": "window title",
@@ -285,6 +297,10 @@
     "context": "tax classes menu header",
     "string": "Tax class label"
   },
+  "/IvojM": {
+    "context": "bulk publish defaults visibility section description",
+    "string": "Applied to every selected product. You can change any of these per product later."
+  },
   "/Mcvt4": {
     "context": "section header",
     "string": "Media"
@@ -371,6 +387,10 @@
   "/tC+ce": {
     "context": "shipping method types help example table cart column",
     "string": "Cart"
+  },
+  "/ts0XA": {
+    "context": "bulk publish per product price field label",
+    "string": "Price"
   },
   "/uu/aV": {
     "context": "product media delete dialog content",
@@ -545,6 +565,10 @@
   "0YjGFG": {
     "context": "alert message",
     "string": "For subscription"
+  },
+  "0ZveaI": {
+    "context": "channel catalog section subtitle",
+    "string": "Products are not added to a channel automatically. Add each product to this channel, set variant prices in {currency}, then publish it when it should be visible. Your shop has {total, plural, one {# product} other {# products}}."
   },
   "0a0fLZ": {
     "context": "countries list menu label when no countries are assigned",
@@ -1401,6 +1425,10 @@
     "context": "Charge in progress transaction amount, data display header",
     "string": "Pending charge"
   },
+  "4hOnpC": {
+    "context": "bulk publish confirm pricing section label",
+    "string": "Pricing"
+  },
   "4hl9rS": {
     "context": "variant price in channel",
     "string": "Price"
@@ -1618,6 +1646,10 @@
     "context": "open new window button",
     "string": "Open this order in GraphiQL"
   },
+  "5iAXw5": {
+    "context": "bulk publish confirm products section label",
+    "string": "Products"
+  },
   "5kODlC": {
     "string": "{usedGiftCards, plural, one {Gift card} other {Gift cards} } {giftCardCodesList}"
   },
@@ -1734,6 +1766,14 @@
     "context": "tax strategy combobox hint",
     "string": "Select the method of tax calculation"
   },
+  "6I1/iS": {
+    "context": "channel catalog published action description",
+    "string": "Added to this channel with publish turned on."
+  },
+  "6I1Qdg": {
+    "context": "bulk publish available for purchase toggle description",
+    "string": "When off, customers can still see the products but cannot buy them."
+  },
   "6IteaF": {
     "string": "Apps are available for Saleor Cloud users. Most of them are available for self-hosting."
   },
@@ -1746,6 +1786,10 @@
   "6KqwHF": {
     "context": "Error when no variant has price set",
     "string": "No variant has a price in \"{channelName}\""
+  },
+  "6LB3kZ": {
+    "context": "bulk publish visible in listings toggle",
+    "string": "Visible in listings"
   },
   "6LqbaB": {
     "string": "Collection created"
@@ -1957,6 +2001,10 @@
     "context": "Expanded help for shipping setup. Based on Saleor shipping zones: zones set countries/methods and must be linked to the channel for checkout rates.",
     "string": "Shipping zones define which countries you deliver to and which rates customers see at checkout. Assign this channel to a zone that covers your default country so shoppers can choose a shipping method."
   },
+  "7E7y/o": {
+    "context": "bulk publish review table cost price column",
+    "string": "Cost price (optional)"
+  },
   "7EDqed": {
     "context": "tab name",
     "string": "All gift cards"
@@ -2120,6 +2168,10 @@
   "84VEY1": {
     "string": "Shipping rate updated"
   },
+  "84XFds": {
+    "context": "catalog setup status when channel has no warehouses",
+    "string": "Assign warehouse"
+  },
   "86CJVg": {
     "context": "setup review row description",
     "string": "How tax is calculated for this channel."
@@ -2223,10 +2275,6 @@
   "8Q504V": {
     "string": "Metadata"
   },
-  "8RdHXd": {
-    "context": "channel details section nav item",
-    "string": "Payments"
-  },
   "8RnPGF": {
     "context": "order history message",
     "string": "Payment was voided"
@@ -2273,6 +2321,10 @@
     "context": "order header date, same year and older than yesterday",
     "string": "Created {date} at {time}"
   },
+  "8lKCb2": {
+    "context": "bulk publish review table price column",
+    "string": "Price"
+  },
   "8liGHT": {
     "context": "configuration menu item description for order settings",
     "string": "Configure order processing, fulfillment, checkout stock, and returns"
@@ -2303,6 +2355,10 @@
     "context": "shipping method channel picker dialog title without method name",
     "string": "Choose channels for this shipping method"
   },
+  "8sIIGa": {
+    "context": "channel catalog warehouse hint when channel has no warehouses",
+    "string": "Assign a warehouse to this channel so checkout can allocate inventory and you can set stock when adding products."
+  },
   "8sOnqE": {
     "context": "Warning when scheduling an available product for the future",
     "string": "Product will not be purchasable until this date."
@@ -2314,6 +2370,10 @@
   "8uLHBY": {
     "context": "unassign attribute from object",
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
+  },
+  "8uYDAT": {
+    "context": "bulk publish in progress description",
+    "string": "Publishing products to the channel. This may take a moment."
   },
   "8ugJiV": {
     "string": "Reward value type"
@@ -2604,6 +2664,10 @@
   "A+g/VP": {
     "string": "Unsaved preset"
   },
+  "A/BBdr": {
+    "context": "bulk publish stock disabled without channel warehouses",
+    "string": "Assign at least one warehouse to this channel before you can set stock here. You can still publish products and set prices."
+  },
   "A02NDR": {
     "context": "plain text attribute value was truncated",
     "string": "Attribute value too long and truncated at {length} characters."
@@ -2770,6 +2834,10 @@
     "context": "caption",
     "string": "If enabled this attribute can be used as a column in product table."
   },
+  "Azdlay": {
+    "context": "bulk publish review variant limit warning",
+    "string": "{count, plural, one {# product has} other {# products have}} more than {max} variants and cannot be published here: {productNames}"
+  },
   "B+Ba0R": {
     "string": "Requested Permissions"
   },
@@ -2882,10 +2950,6 @@
   "BVDaKx": {
     "string": "Subtotal discount"
   },
-  "BVS1I0": {
-    "context": "setup review row title",
-    "string": "Payments"
-  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -2928,6 +2992,10 @@
     "context": "shipping method types help example row two cart",
     "string": "$50, 8 kg"
   },
+  "BerdNE": {
+    "context": "channel catalog count of products with isPublished true in this channel",
+    "string": "Published"
+  },
   "BfJGij": {
     "context": "header",
     "string": "Address Information"
@@ -2965,6 +3033,10 @@
   "BvUJzF": {
     "context": "matrix section title on orders and fulfillment settings",
     "string": "Per-channel order settings"
+  },
+  "BxHDRs": {
+    "context": "setup review row description when channel has no warehouses",
+    "string": "Add products and prices now. Assign a warehouse to this channel for checkout inventory."
   },
   "BxRnKL": {
     "context": "settings search alias",
@@ -3051,6 +3123,10 @@
   "C87+/n": {
     "context": "button to select all product media items",
     "string": "Select all"
+  },
+  "C9+sei": {
+    "context": "channel payment gateways section subtitle",
+    "string": "Payment apps handle provider credentials and checkout processing. Channel payment settings above control charge and authorization behavior."
   },
   "C90nKP": {
     "context": "error with deactivatation alert message",
@@ -3221,6 +3297,10 @@
   "CmxKIg": {
     "context": "window title",
     "string": "Grant refund"
+  },
+  "Cn6Q/T": {
+    "context": "bulk publish visible in listings toggle description",
+    "string": "Include in category listings and search. Does not affect collections."
   },
   "Cn6l5R": {
     "context": "playground shortcut",
@@ -3414,9 +3494,17 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "DpVPvW": {
+    "context": "bulk publish per product cost price field label",
+    "string": "Cost price"
+  },
   "DpZRsS": {
     "context": "Savebar hint listing which product areas will persist on Save",
     "string": "Unsaved changes: {segments}"
+  },
+  "DtYy/u": {
+    "context": "bulk publish stock toggle",
+    "string": "Also set stock levels"
   },
   "Duik8x": {
     "context": "Link to publish the product immediately instead of scheduling",
@@ -3515,6 +3603,10 @@
     "context": "checkbox",
     "string": "Refund shipment costs"
   },
+  "EQ/R+B": {
+    "context": "select all loaded products in assign product picker when filters or search are active",
+    "string": "Select all visible products"
+  },
   "EQfaUv": {
     "context": "onboarding step title",
     "string": "Check our GraphQL playground & make an API call"
@@ -3533,6 +3625,10 @@
   "ESft7g": {
     "context": "Warning when warehouse with stock not in shipping zone",
     "string": "Stock unreachable in \"{channelName}\""
+  },
+  "EUI+gH": {
+    "context": "bulk publish confirm stock enabled none title",
+    "string": "No stock quantities set"
   },
   "EVHRls": {
     "context": "channel details section nav item",
@@ -3715,6 +3811,10 @@
     "context": "button",
     "string": "Filters"
   },
+  "FOJ5Ak": {
+    "context": "bulk publish confirm visibility hidden from listings detail",
+    "string": "Products will not appear in storefront listings."
+  },
   "FOa+Xd": {
     "context": "voucher value requirement",
     "string": "Min. Order Value"
@@ -3834,6 +3934,10 @@
   "Fn3bE0": {
     "string": "Order line updated"
   },
+  "FokiTS": {
+    "context": "bulk publish confirm stock skipped detail",
+    "string": "Inventory updates were turned off in the previous step."
+  },
   "FopBSj": {
     "context": "error message",
     "string": "Your username and/or password are incorrect. Please try again."
@@ -3865,6 +3969,10 @@
   "Fwt3tF": {
     "context": "Save composition segment for dirty channel availability (publish, AFP, listings, add/remove)",
     "string": "{count, plural, one {# channel edited} other {# channels edited}}"
+  },
+  "Fx7aD4": {
+    "context": "bulk publish stock single warehouse radio description",
+    "string": "Applies the default quantity only in this warehouse."
   },
   "Fxa6xp": {
     "context": "page header",
@@ -3957,6 +4065,10 @@
   "GDHGAK": {
     "context": "usage summary when attribute is only on product types",
     "string": "{count, plural, one {# product type} other {# product types}}"
+  },
+  "GDM+GZ": {
+    "context": "bulk publish defaults inventory section title",
+    "string": "Inventory"
   },
   "GFJabu": {
     "context": "dialog header",
@@ -4111,6 +4223,10 @@
     "context": "footer hint for the next required setup task",
     "string": "Next up: {task}"
   },
+  "GoZ/jJ": {
+    "context": "bulk publish confirm visibility all enabled detail",
+    "string": "Customers can find and buy these products."
+  },
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
@@ -4136,6 +4252,10 @@
   "GuihaP": {
     "context": "order transaction refund summary label",
     "string": "Shipping"
+  },
+  "GvcIhr": {
+    "context": "channel catalog subtitle when product counts are unavailable",
+    "string": "Products are not added to a channel automatically. Add each product to this channel, set variant prices in {currency}, then publish it when it should be visible."
   },
   "Gw+vb5": {
     "context": "configuration section for sales channels and tax markets",
@@ -4232,6 +4352,10 @@
     "context": "successfully created gift card alert title",
     "string": "Gift card created"
   },
+  "HK9hkL": {
+    "context": "channel catalog stats fetch error",
+    "string": "Could not load catalog stats. Refresh the page to try again."
+  },
   "HKC6aF": {
     "context": "store settings section name (formerly site settings)",
     "string": "Store"
@@ -4316,6 +4440,10 @@
   },
   "HYK65C": {
     "string": "Order rule"
+  },
+  "HbPBZk": {
+    "context": "bulk publish defaults visibility section title",
+    "string": "Visibility in this channel"
   },
   "Hc58JL": {
     "context": "card title",
@@ -4535,6 +4663,10 @@
   "IOg+Hh": {
     "string": "Refund with manual amount"
   },
+  "ISsHpV": {
+    "context": "setup review row description when shop has no warehouses",
+    "string": "Create a warehouse to set stock when adding products. You can still publish products and set prices."
+  },
   "ITSq4J": {
     "string": "Unit price"
   },
@@ -4578,6 +4710,10 @@
   "IYuKD6": {
     "string": "No discounts found"
   },
+  "IZQhZu": {
+    "context": "channel details section nav item for channel product availability",
+    "string": "Catalog"
+  },
   "IalCDT": {
     "string": "No model types found"
   },
@@ -4611,6 +4747,10 @@
   "Ila7WO": {
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
+  },
+  "Io6O//": {
+    "context": "setup review row title for installed payment apps",
+    "string": "Payment gateways"
   },
   "IoCMjg": {
     "context": "no collections",
@@ -4681,10 +4821,6 @@
   "J71slC": {
     "context": "settings search alias",
     "string": "customer registration"
-  },
-  "J7mFhU": {
-    "context": "currency code select",
-    "string": "{code} - {countries}"
   },
   "J8lwWh": {
     "context": "create attribute dialog step two label",
@@ -4764,6 +4900,10 @@
   },
   "JRfJD9": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
+  },
+  "JRuUWT": {
+    "context": "bulk publish partial failure notification",
+    "string": "Some products could not be published. Review errors and try again."
   },
   "JSr+vB": {
     "context": "settings search alias",
@@ -5022,6 +5162,10 @@
     "context": "transaction refund card label in line expanded panel",
     "string": "Transaction refund"
   },
+  "Kb8Mdm": {
+    "context": "channel payment gateways section title",
+    "string": "Payment gateways"
+  },
   "KcsJKm": {
     "context": "error with activatation alert message",
     "string": "Error activating gift {count,plural,one{card} other{cards}}"
@@ -5040,6 +5184,14 @@
   "Kg0Fiu": {
     "context": "quantity of fulfilled products",
     "string": "Quantity to fulfill"
+  },
+  "Kg0yyk": {
+    "context": "bulk publish product exceeds variant limit chip",
+    "string": "Over {max} variants"
+  },
+  "KgabNG": {
+    "context": "bulk publish product already listed badge",
+    "string": "Already listed"
   },
   "KkQkcu": {
     "context": "Short tooltip for OrderSettings.deleteExpiredOrdersAfter (docs: order expiration)",
@@ -5086,6 +5238,10 @@
   "Kw0jHS": {
     "context": "created products counter",
     "string": "{count}/{max} SKUs used"
+  },
+  "Kw2ApX": {
+    "context": "channel catalog add products row status",
+    "string": "{count} not in channel"
   },
   "KwvZpP": {
     "context": "zero payment apps status",
@@ -5346,6 +5502,10 @@
   "M8ME4X": {
     "context": "shown under expire orders when auto-confirm is enabled",
     "string": "No effect while {autoConfirm} is on — orders become {unfulfilled} straight away and never reach the {unconfirmed} state this applies to."
+  },
+  "M8sTdd": {
+    "context": "bulk publish review table stock column",
+    "string": "Stock"
   },
   "M8z5WZ": {
     "context": "WarehouseSettings disabled warehouse description",
@@ -5658,6 +5818,14 @@
   "NQgbYA": {
     "string": "Account Settings"
   },
+  "NRWfwM": {
+    "context": "bulk publish review variant limit hint",
+    "string": "Prices, cost, and stock apply to all variants of each product (up to {max} per product)."
+  },
+  "NRaMt5": {
+    "context": "bulk publish review spreadsheet paste hint",
+    "string": "{hasStock, select, true {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price, cost price, and stock down the list.} other {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price and cost price down the list.}}"
+  },
   "NSOHa/": {
     "context": "gift card export dialog intro",
     "string": "Choose which gift cards to export and the file format. Only active, unused gift cards are included."
@@ -5812,6 +5980,10 @@
     "context": "Product doctor card title",
     "string": "Availability Doctor"
   },
+  "O6fFzA": {
+    "context": "bulk publish default stock quantity label",
+    "string": "Default stock level"
+  },
   "O90S9P": {
     "context": "empty state when no variant attributes",
     "string": "No variant attributes defined for this product type."
@@ -5923,6 +6095,10 @@
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
   },
+  "Oct6t4": {
+    "context": "bulk publish price validation",
+    "string": "Enter a valid price for every product."
+  },
   "Oe62bR": {
     "context": "product availability",
     "string": "Availability"
@@ -6016,6 +6192,10 @@
     "context": "product availability",
     "string": "Available for purchase"
   },
+  "P0LSN7": {
+    "context": "bulk publish review card title",
+    "string": "Products"
+  },
   "P4Hja1": {
     "string": "Create new shipping zone"
   },
@@ -6072,6 +6252,10 @@
   "PF7Zsp": {
     "context": "Status when product has availability issues",
     "string": "Issues"
+  },
+  "PFJYxb": {
+    "context": "bulk publish defaults step intro",
+    "string": "These apply to every product you selected."
   },
   "PFXGaR": {
     "string": "Shipping Zones"
@@ -6508,6 +6692,10 @@
     "context": "sub-header for order-level discounts in summary",
     "string": "Order"
   },
+  "RB7zH3": {
+    "context": "bulk publish confirm stock skipped title",
+    "string": "Stock will not be changed"
+  },
   "RBxYJf": {
     "context": "sale status",
     "string": "Expired"
@@ -6818,6 +7006,10 @@
     "context": "note about separators input in model type tab grouping help",
     "string": "Enter multiple separators as a comma-separated list."
   },
+  "SeGiFv": {
+    "context": "bulk publish defaults inventory optional label",
+    "string": "Optional"
+  },
   "SgFE10": {
     "context": "product type digital",
     "string": "Digital"
@@ -6984,6 +7176,10 @@
     "context": "progress under load more variants in assign variant dialog",
     "string": "{loaded} of {total} loaded"
   },
+  "TRl/Xe": {
+    "context": "bulk publish stock warehouse scope section title",
+    "string": "Write stock to"
+  },
   "TTVPyd": {
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
@@ -7119,6 +7315,10 @@
     "context": "number of structures",
     "string": "Items"
   },
+  "U87Yeh": {
+    "context": "link to explore payment apps",
+    "string": "Explore extensions"
+  },
   "U8eeLW": {
     "context": "button",
     "string": "Assign products"
@@ -7141,6 +7341,10 @@
   },
   "UE9zNR": {
     "string": "Recent Searches"
+  },
+  "UGUTLP": {
+    "context": "bulk publish confirm stock all warehouses detail",
+    "string": "Applies to {productCount, plural, one {# product} other {# products}} in all assigned warehouses"
   },
   "UGm9nx": {
     "context": "payment method type card",
@@ -7210,6 +7414,10 @@
     "context": "Description for scheduled status when publication date is in the future",
     "string": "Publication scheduled"
   },
+  "Uf1Fl5": {
+    "context": "bulk publish stock disabled without any warehouses",
+    "string": "Create at least one warehouse in your shop to set stock levels."
+  },
   "Uh3NX/": {
     "context": "remove failed installation dialog content",
     "string": "Are you sure you want to delete {name} failed installation?"
@@ -7269,6 +7477,10 @@
     "context": "Description explaining which permissions are needed",
     "string": "Full availability diagnostics require additional permissions: {permissions}"
   },
+  "UrZRxo": {
+    "context": "bulk publish publish toggle",
+    "string": "Publish to channel"
+  },
   "Us9cA1": {
     "context": "profit margin",
     "string": "Margin"
@@ -7304,6 +7516,10 @@
   "Uxhquh": {
     "context": "info message about attribute exclusivity in product type",
     "string": "Product attributes and variant attributes are mutually exclusive. An attribute cannot be assigned to both sections within the same product type."
+  },
+  "Uy6UVW": {
+    "context": "bulk publish confirm add products button",
+    "string": "{count, plural, one {Add # product} other {Add # products}}"
   },
   "UycVMp": {
     "context": "button",
@@ -7440,12 +7656,20 @@
   "Vf57Ie": {
     "string": "Partially fulfilled"
   },
+  "VkUgug": {
+    "context": "bulk publish stock single warehouse validation",
+    "string": "Select a warehouse to write stock to."
+  },
   "VkYZQ8": {
     "string": "Current Permissions"
   },
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
+  },
+  "VnPjPG": {
+    "context": "bulk publish already listed badge tooltip",
+    "string": "{hasStock, select, true {Prices and stock will be updated across all variants.} other {Prices will be updated across all variants.}}"
   },
   "VrFy8e": {
     "string": "No notes from customer"
@@ -7592,6 +7816,10 @@
   "WMNtD2": {
     "string": "The extension will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the extension before you approve."
   },
+  "WNwbEi": {
+    "context": "bulk publish confirm stock single warehouse detail",
+    "string": "Applies to {productCount, plural, one {# product} other {# products}} in {warehouseName}"
+  },
   "WPCbcV": {
     "context": "WarehousesSection channel requirement hint",
     "string": "Only warehouses that share a channel with this shipping zone can be assigned."
@@ -7675,9 +7903,21 @@
     "context": "configuration menu item description for store settings",
     "string": "Manage your store name, address, and customer accounts"
   },
+  "Wo/OGT": {
+    "context": "bulk publish variant count per product",
+    "string": "{count, plural, one {# variant} other {# variants}}"
+  },
   "Wr5UOV": {
     "context": "error message",
     "string": "Login went wrong. Please try again."
+  },
+  "WrlaSD": {
+    "context": "catalog setup status when shop has no warehouses",
+    "string": "No warehouse"
+  },
+  "Wv/8tv": {
+    "context": "channel catalog action to review unpublished in-channel products",
+    "string": "Review unpublished products"
   },
   "WvabuR": {
     "context": "Expanded help for warehouse setup. Based on Saleor stock allocation: stocks allocate only from warehouses available in the order channel.",
@@ -7868,6 +8108,10 @@
     "context": "edit attribute value",
     "string": "Edit Value"
   },
+  "XYvupB": {
+    "context": "bulk publish exit wizard confirmation",
+    "string": "Your product selection and pricing changes will be lost."
+  },
   "XZpRr8": {
     "context": "btn label",
     "string": "Go to all products"
@@ -7875,6 +8119,10 @@
   "Xa8ZOn": {
     "context": "Badge shown when channel has unsaved changes",
     "string": "edited"
+  },
+  "XaOLzw": {
+    "context": "bulk publish confirm no cost prices",
+    "string": "No cost prices set"
   },
   "Xb/w18": {
     "string": "Vouchers deleted"
@@ -7905,6 +8153,14 @@
   },
   "XitW/z": {
     "string": "Translation Category \"{categoryName}\" - {languageCode}"
+  },
+  "XixXDN": {
+    "context": "bulk publish picker filter helper",
+    "string": "Turn off to include products already listed and update their prices and stock."
+  },
+  "XkJr/+": {
+    "context": "bulk publish confirm step intro",
+    "string": "Confirming publishes these products to <strong>{channelName}</strong>. Nothing has been written yet."
   },
   "XkX56I": {
     "context": "filters error messages value required",
@@ -7965,6 +8221,10 @@
   },
   "Y/SXVb": {
     "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier."
+  },
+  "Y/hhGf": {
+    "context": "channel catalog published row status",
+    "string": "{count} published"
   },
   "Y0EpoG": {
     "string": "Rule deleted"
@@ -8054,6 +8314,10 @@
   "YIT1XP": {
     "string": "Create voucher"
   },
+  "YIUVBj": {
+    "context": "bulk publish retry failed products button",
+    "string": "Retry failed"
+  },
   "YJ4fhf": {
     "context": "successfully created gift card alert notification title",
     "string": "Gift card created"
@@ -8105,6 +8369,10 @@
     "context": "channel list column",
     "string": "Currency"
   },
+  "YYLVFC": {
+    "context": "bulk publish confirm stock quantity range",
+    "string": "{min} – {max} units per variant"
+  },
   "YaCu4U": {
     "context": "Health check status when product can be purchased",
     "string": "Customers can buy this product"
@@ -8155,6 +8423,10 @@
     "context": "gift card history message",
     "string": "Gift card balance was reset from {oldBalance} to {newBalance} by {resetBy}"
   },
+  "YmweRb": {
+    "context": "setup review row description when warehouses are ready",
+    "string": "Products published to this channel, priced in its currency."
+  },
   "Ynjq+C": {
     "string": "Fully charged"
   },
@@ -8178,6 +8450,10 @@
   },
   "Ys86kI": {
     "string": "Refunded amount will not be automatically returned to the customer. You’ll need to decide on a method and refund via balance sheet section of the order."
+  },
+  "Ys9GCT": {
+    "context": "bulk publish default stock per warehouse hint",
+    "string": "{scope, select, single {Per variant.} other {Per variant, per warehouse.}}"
   },
   "YtCaCm": {
     "context": "header",
@@ -8332,6 +8608,10 @@
   "ZXOpCJ": {
     "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
   },
+  "Za//IL": {
+    "context": "channel details section nav item for tax settings shortcut",
+    "string": "Taxes"
+  },
   "Za3SQQ": {
     "context": "gift card history message",
     "string": "Gift card was unassigned from {customer} by {unassignedBy}"
@@ -8430,6 +8710,10 @@
   "a0TDWs": {
     "context": "search section name",
     "string": "All Search Results"
+  },
+  "a1kRZJ": {
+    "context": "bulk publish confirm visibility published item",
+    "string": "Published"
   },
   "a24HjK": {
     "context": "currency channel",
@@ -8634,6 +8918,10 @@
     "context": "order settings hub page title",
     "string": "Orders & fulfillment"
   },
+  "apfBOX": {
+    "context": "bulk publish stock all channel warehouses radio label",
+    "string": "All assigned warehouses"
+  },
   "aq5ZiN": {
     "context": "order history message",
     "string": "Fulfillment confirmation was sent to customer"
@@ -8752,6 +9040,10 @@
   "bIttOt": {
     "context": "customer overview, AOV tooltip",
     "string": "Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
+  },
+  "bJ8HZb": {
+    "context": "bulk publish cost price validation",
+    "string": "Enter a valid cost price or leave it blank."
   },
   "bKCoN5": {
     "context": "order line discount updated title",
@@ -8982,6 +9274,10 @@
     "context": "dialog title",
     "string": "Generate Variants"
   },
+  "c7Pl4C": {
+    "context": "bulk publish to channel wizard title",
+    "string": "Add products to {channelName}"
+  },
   "c7cakc": {
     "context": "model attribute entity type",
     "string": "Models"
@@ -9172,6 +9468,10 @@
     "context": "assign collections to sale and save",
     "string": "Assign and save"
   },
+  "csKusi": {
+    "context": "open payment app settings",
+    "string": "Configure"
+  },
   "ctdEON": {
     "string": "Latest updates and improvements"
   },
@@ -9200,6 +9500,10 @@
   },
   "cyR7Kh": {
     "string": "Back"
+  },
+  "czNpQW": {
+    "context": "bulk publish review card subtitle",
+    "string": "{count, plural, one {# product} other {# products}}"
   },
   "d+F7sb": {
     "string": "Open this product type in GraphiQL"
@@ -9262,6 +9566,10 @@
     "context": "alert message",
     "string": "Not available for sale this channel"
   },
+  "dEhO58": {
+    "context": "bulk publish available for purchase toggle",
+    "string": "Available for purchase"
+  },
   "dGlDp6": {
     "context": "product media delete dialog header",
     "string": "Delete Video"
@@ -9272,6 +9580,10 @@
   },
   "dHAwu8": {
     "string": "Code already exists"
+  },
+  "dHhnXx": {
+    "context": "bulk publish confirm stock enabled none detail",
+    "string": "Existing inventory will not be changed."
   },
   "dIDTp2": {
     "context": "Save composition segment for distinct variants with staged grid edits (count is variants, not edit operations)",
@@ -9325,6 +9637,10 @@
     "context": "Health check status when product is not published but otherwise ready",
     "string": "Not visible to customers"
   },
+  "dUI83L": {
+    "context": "channel catalog primary action",
+    "string": "Add products to channel"
+  },
   "dVk241": {
     "string": "product configurations"
   },
@@ -9341,6 +9657,10 @@
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
+  },
+  "diq8M5": {
+    "context": "payment apps list truncated warning",
+    "string": "Showing the first 100 extensions. Open installed extensions to see payment apps beyond this limit."
   },
   "djhz70": {
     "context": "order-level validation error in address edit dialog",
@@ -9382,6 +9702,10 @@
   },
   "e0lt+l": {
     "string": "See documentation"
+  },
+  "e2Sgrr": {
+    "context": "channel catalog section title",
+    "string": "Catalog"
   },
   "e3NyeN": {
     "context": "fulfill card title for a single line",
@@ -9497,6 +9821,10 @@
     "context": "add products button tooltip",
     "string": "Add products from {channelName}"
   },
+  "eobdhS": {
+    "context": "bulk publish confirm visibility not published detail",
+    "string": "Products will be added to the channel but remain unpublished."
+  },
   "epB7b7": {
     "context": "fulfillment status replaced",
     "string": "Replaced"
@@ -9508,6 +9836,10 @@
   "erZXUi": {
     "context": "channel order setting label",
     "string": "Confirm new orders automatically"
+  },
+  "es9wf4": {
+    "context": "bulk publish confirm truncated product names",
+    "string": "{previewNames}, and {remainingCount} more"
   },
   "etP0+D": {
     "string": "Vouchers"
@@ -9553,6 +9885,10 @@
   "f4oJRg": {
     "context": "order transaction refund summary description",
     "string": "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed."
+  },
+  "f6X5Cp": {
+    "context": "bulk publish wizard step 1",
+    "string": "Select products"
   },
   "fDc5ys": {
     "context": "order transaction refund summary label",
@@ -9635,6 +9971,10 @@
     "context": "quantity refunded via fulfillment records in line matrix",
     "string": "Fulfillment refund"
   },
+  "fZzBxX": {
+    "context": "bulk publish variant count limit validation",
+    "string": "{count, plural, one {# product has} other {# products have}} more than {max} variants and cannot be published with this wizard."
+  },
   "fbH51z": {
     "context": "Amount error message",
     "string": "Amount cannot be bigger than max refund"
@@ -9672,6 +10012,10 @@
   "fkplbE": {
     "context": "order history message",
     "string": "Order was marked as paid"
+  },
+  "fl7+le": {
+    "context": "bulk publish per product stock field label",
+    "string": "Stock"
   },
   "fo7nfa": {
     "context": "fixed amount",
@@ -9834,6 +10178,10 @@
   "gWUWig": {
     "context": "channel inventory allocation description when fewer than two",
     "string": "Applies once more than one warehouse is assigned."
+  },
+  "gWc9xM": {
+    "context": "bulk publish partial product data fetch failure",
+    "string": "Only {loaded} of {selected} selected products could be loaded. Go back and try again."
   },
   "gaOXvo": {
     "context": "notification, form submitted",
@@ -10049,6 +10397,10 @@
   "hYWxeg": {
     "string": "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})"
   },
+  "hapYhy": {
+    "context": "bulk publish wizard defaults step",
+    "string": "Defaults"
+  },
   "hh0xW7": {
     "string": "Channel Name"
   },
@@ -10117,6 +10469,10 @@
   },
   "htvX+Z": {
     "string": "Deny"
+  },
+  "huLuhF": {
+    "context": "channel details section nav item for installed payment apps",
+    "string": "Payment gateways"
   },
   "hw9Fah": {
     "context": "button",
@@ -10238,6 +10594,10 @@
   "iQkrjy": {
     "string": "Shipping zone name"
   },
+  "iRui6c": {
+    "context": "channel catalog unpublished action description",
+    "string": "Added to this channel but publish is still off."
+  },
   "iSnXTt": {
     "string": "Open this collection in GraphiQL"
   },
@@ -10352,6 +10712,10 @@
   "ipbT0Q": {
     "context": "btn label",
     "string": "Mark all as done"
+  },
+  "iqftjN": {
+    "context": "channel catalog not in channel stat label",
+    "string": "Not in channel"
   },
   "isM94c": {
     "context": "create service token, button",
@@ -10809,6 +11173,10 @@
     "context": "order refund amount",
     "string": "Selected Products Value"
   },
+  "kbdk/c": {
+    "context": "bulk publish wizard review step",
+    "string": "Review products"
+  },
   "kbezTI": {
     "string": "Extension doesn't provide a description."
   },
@@ -10840,6 +11208,10 @@
   "ki7Mr8": {
     "context": "product export to csv file, header",
     "string": "Export Settings"
+  },
+  "kiEkK/": {
+    "context": "channel catalog count of in-channel products with isPublished false",
+    "string": "Unpublished"
   },
   "kkFOHD": {
     "context": "gift card history message",
@@ -10928,6 +11300,10 @@
   "l4zYVm": {
     "context": "channel inventory allocation option description",
     "string": "Take stock from whichever warehouse holds the most, ignoring the order above. Use to keep stock levels even."
+  },
+  "l54GOt": {
+    "context": "accessible label for recently published product thumbnail stack",
+    "string": "Recently published products"
   },
   "l5V0QT": {
     "context": "boolean attribute type",
@@ -11203,6 +11579,10 @@
     "context": "Link label to navigate to webhook settings for an app",
     "string": "Check webhooks"
   },
+  "mBHG3G": {
+    "context": "channel catalog action to view published products",
+    "string": "View published products"
+  },
   "mBSBtn": {
     "string": "Prefix matching"
   },
@@ -11341,6 +11721,10 @@
   },
   "mvVmbJ": {
     "string": "Install extension from manifest"
+  },
+  "mwmYkm": {
+    "context": "bulk publish wizard confirm step",
+    "string": "Confirm & publish"
   },
   "mxGY7T": {
     "context": "status pill for no authorization",
@@ -11504,6 +11888,10 @@
     "context": "column header",
     "string": "Customer name"
   },
+  "naU0Gz": {
+    "context": "bulk publish stock all channel warehouses radio description",
+    "string": "Applies the default quantity in each warehouse assigned to this channel."
+  },
   "nb2FlN": {
     "string": "Extensions"
   },
@@ -11553,6 +11941,10 @@
     "context": "confirmation dialog title for staging generated variants",
     "string": "Add {count} variants?"
   },
+  "ntFB+V": {
+    "context": "channel payment gateways empty state",
+    "string": "Install a payment app to accept card and other payments at checkout for this channel."
+  },
   "nudPsY": {
     "context": "metadata field name, header",
     "string": "Field"
@@ -11580,6 +11972,10 @@
   "o+5eA9": {
     "context": "attribute detail sidebar card title for type assignments",
     "string": "Usage"
+  },
+  "o+OjmT": {
+    "context": "bulk publish review stock hint",
+    "string": "Only stock is prefilled from your default quantity. Clear a row to leave that product's inventory unchanged."
   },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
@@ -11624,6 +12020,10 @@
   "oEFc87": {
     "context": "Warning when no shipping zones configured",
     "string": "No shipping zones"
+  },
+  "oGsDpe": {
+    "context": "bulk publish confirm visibility not available detail",
+    "string": "Products will be visible but not available for purchase."
   },
   "oIL8jk": {
     "context": "error message",
@@ -11732,6 +12132,10 @@
   "of/+iV": {
     "context": "transaction event type, refund was reversed, funds are back to store account",
     "string": "Refund reversed"
+  },
+  "ofGciN": {
+    "context": "bulk publish stock single assigned warehouse info",
+    "string": "Stock will be set in {warehouseName}."
   },
   "ofT0HH": {
     "context": "Info box description for unpublished products",
@@ -11975,6 +12379,10 @@
     "context": "Canceled transaction amount, data display header",
     "string": "Canceled"
   },
+  "pjHBHZ": {
+    "context": "bulk publish success notification",
+    "string": "Products published to channel"
+  },
   "pkUbrL": {
     "string": "General Information"
   },
@@ -11982,9 +12390,17 @@
     "context": "order status",
     "string": "Fulfilled"
   },
+  "pmzMmq": {
+    "context": "bulk publish stock toggle description",
+    "string": "Seeds a quantity for every variant. Leave off to publish without touching inventory."
+  },
   "ppLwx3": {
     "context": "number of categories",
     "string": "Categories ({quantity})"
+  },
+  "ppUdc+": {
+    "context": "bulk publish default stock helper",
+    "string": "Prefills stock on the next step only. Clear any row there to skip updating that product."
   },
   "pr/aHj": {
     "context": "success gift card disable message",
@@ -12015,6 +12431,10 @@
   "puikeb": {
     "context": "button",
     "string": "Delete Address"
+  },
+  "pva0/a": {
+    "context": "bulk publish stock disabled info callout",
+    "string": "Products are published with their existing inventory. Any variant with no stock shows as out of stock until you add some."
   },
   "pxCn3q": {
     "context": "button to clear lineId filter on return page",
@@ -12517,6 +12937,10 @@
     "context": "text field label",
     "string": "Group name"
   },
+  "rtHRcz": {
+    "context": "bulk publish defaults inventory section note",
+    "string": "Stock is not part of this channel's listing."
+  },
   "rvk9ls": {
     "context": "attribute can be used only in variants",
     "string": "Variant Only"
@@ -12636,6 +13060,10 @@
     "context": "empty shipping methods list in shipping zone",
     "string": "No shipping methods in this zone"
   },
+  "sRf1ZK": {
+    "context": "hint below select all when more products can be loaded in assign product picker",
+    "string": "Scroll to load more products."
+  },
   "sS5aVm": {
     "context": "voucher discount type",
     "string": "Free Shipping"
@@ -12661,6 +13089,10 @@
   "sZ8CgC": {
     "context": "screen reader announcement when matrix line is expanded",
     "string": "Shipments expanded for {productName}"
+  },
+  "sZpp65": {
+    "context": "bulk publish review step description",
+    "string": "Set prices in {currency} for each product. Cost price and stock are optional. Values apply to all variants of that product."
   },
   "saKXY3": {
     "context": "product label",
@@ -12730,6 +13162,10 @@
     "context": "header",
     "string": "Unnamed Webhook Details"
   },
+  "snjvVg": {
+    "context": "bulk publish select all hit max selection cap",
+    "string": "Only {max} products can be selected at once. {skipped, plural, one {# more visible product was} other {# more visible products were}} not selected."
+  },
   "spjKeI": {
     "string": "Fulfillment approved"
   },
@@ -12774,6 +13210,10 @@
   },
   "t1Bd7E": {
     "string": "Payment captured"
+  },
+  "t3POsd": {
+    "context": "bulk publish summary line",
+    "string": "{productCount, plural, one {# product} other {# products}} · {variantCount, plural, one {# variant} other {# variants}}"
   },
   "t3aiWF": {
     "context": "section header",
@@ -12874,6 +13314,10 @@
     "context": "matrix section description on editable orders hub",
     "string": "Edit per-channel values here or open a channel for checkout, payment, and other channel settings."
   },
+  "tdhr3t": {
+    "context": "channel catalog warehouse hint when shop has no warehouses",
+    "string": "Create a warehouse before you can set stock when adding products. You can still publish products and set prices."
+  },
   "teWSsc": {
     "context": "assign warehouse dialog search label",
     "string": "Search warehouses"
@@ -12888,6 +13332,10 @@
   },
   "tiY7bx": {
     "string": "Add new product"
+  },
+  "tkZoWk": {
+    "context": "bulk publish product data fetch failure",
+    "string": "Could not load selected products. Go back and try again."
   },
   "tl1/1E": {
     "string": "Learn more about {orderManagement}"
@@ -12926,6 +13374,10 @@
     "context": "gift card history message",
     "string": "Gift card was sent to customer"
   },
+  "ttDLY+": {
+    "context": "channel catalog add products action description",
+    "string": "Select products from your catalog, set prices, and publish them to this channel."
+  },
   "ttMauu": {
     "context": "window title",
     "string": "Create collection"
@@ -12952,6 +13404,10 @@
   "txOXvy": {
     "context": "checkbox label",
     "string": "Set the same for shipping address"
+  },
+  "tyw+kv": {
+    "context": "bulk publish stock validation",
+    "string": "Enter a valid stock level or leave it blank."
   },
   "tzMNF3": {
     "string": "Status"
@@ -13027,6 +13483,10 @@
   "u9WrRb": {
     "string": "Add Custom Extensions"
   },
+  "u9npnE": {
+    "context": "bulk publish validation",
+    "string": "Select at least one product to continue."
+  },
   "uCJ+gT": {
     "context": "model metadata dialog header",
     "string": "Model Metadata"
@@ -13060,6 +13520,10 @@
   },
   "uOC/uQ": {
     "string": "Image updated"
+  },
+  "uP7qYe": {
+    "context": "bulk publish confirm visibility section label",
+    "string": "Visibility"
   },
   "uPg2BK": {
     "string": "Quantities show fulfillment status per unit. Click a line's status or row to manage shipments."
@@ -13203,6 +13667,10 @@
     "context": "staff member's account",
     "string": "Status"
   },
+  "utpPc4": {
+    "context": "bulk publish picker filter label",
+    "string": "Only products not in channel"
+  },
   "uwO3oC": {
     "string": "An unexpected error occurred while saving the extension."
   },
@@ -13318,6 +13786,10 @@
     "context": "assign button label with number of selected items",
     "string": "{label} ({count, plural, one {# item} other {# items}})"
   },
+  "vFm31D": {
+    "context": "bulk publish product limit",
+    "string": "Select up to {max} products at a time."
+  },
   "vG57x5": {
     "context": "card update success alert title",
     "string": "Card balance updated"
@@ -13329,6 +13801,10 @@
   "vLc9Td": {
     "context": "Title for public API verification section",
     "string": "Public API verification"
+  },
+  "vMdO8a": {
+    "context": "bulk publish publish toggle description",
+    "string": "Makes the products visible to customers in this channel."
   },
   "vMo6/3": {
     "string": "Tracking: {trackingNumber}"
@@ -13466,6 +13942,10 @@
   },
   "vlVTmY": {
     "string": "Product removed"
+  },
+  "vmLY5S": {
+    "context": "bulk publish confirm partial cost prices",
+    "string": "Cost prices set for {count, plural, one {# product} other {# products}}"
   },
   "vmX9L4": {
     "context": "loading state label on the load more variants button",
@@ -14072,10 +14552,6 @@
     "context": "granted refund amount in line expanded panel",
     "string": "Refund total {amount}"
   },
-  "yOADwo": {
-    "context": "setup review row description",
-    "string": "Products published to this channel, priced in its currency."
-  },
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
@@ -14238,6 +14714,10 @@
     "context": "delete gift cards with balance subtitle",
     "string": "{selectedItemsCount,plural,one{This gift card has available balance. Deleting it will remove funds the customer can still redeem.} other{These gift cards have available balance. Deleting them will remove funds customers can still redeem.}}"
   },
+  "zDAOAk": {
+    "context": "channel catalog unpublished row status",
+    "string": "{count} unpublished"
+  },
   "zDvDnG": {
     "context": "modal header",
     "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
@@ -14279,6 +14759,10 @@
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
+  },
+  "zMHrO2": {
+    "context": "bulk publish review many variants warning",
+    "string": "{count, plural, one {# product has} other {# products have}} more than {threshold} variants. Publishing may take longer."
   },
   "zN0Eub": {
     "context": "info message when hasVariants is false but variant attributes exist",
@@ -14336,6 +14820,10 @@
   "zcyBm+": {
     "context": "tooltip title for undiscounted subtotal next to order subtotal",
     "string": "Before discounts"
+  },
+  "ze+o5l": {
+    "context": "bulk publish confirm stock section label",
+    "string": "Stock"
   },
   "zehNKT": {
     "string": "Rule has error, open rule to see details"

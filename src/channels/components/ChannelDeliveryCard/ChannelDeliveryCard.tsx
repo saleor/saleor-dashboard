@@ -140,7 +140,9 @@ export const ChannelDeliveryCard = ({
                     {zone.name}
                   </Text>
                 </RouterLink>
-                <DeletableItem id={zone.id} onDelete={removeShippingZone} disabled={disabled} />
+                <div className={styles.rowDelete}>
+                  <DeletableItem id={zone.id} onDelete={removeShippingZone} disabled={disabled} />
+                </div>
               </div>
             ))}
           </div>

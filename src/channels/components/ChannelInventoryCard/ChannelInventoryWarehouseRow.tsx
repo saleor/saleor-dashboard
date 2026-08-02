@@ -40,7 +40,9 @@ export const ChannelInventoryWarehouseRow = SortableElement(
           {name}
         </Text>
       </div>
-      <DeletableItem id={id} onDelete={onDelete} disabled={disabled} />
+      <div className={styles.rowDelete}>
+        <DeletableItem id={id} onDelete={onDelete} disabled={disabled} />
+      </div>
     </div>
   ),
 );

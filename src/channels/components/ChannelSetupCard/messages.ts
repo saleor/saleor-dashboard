@@ -195,14 +195,36 @@ export const messages = defineMessages({
     description: "setup review row title",
   },
   catalogDescription: {
-    id: "yOADwo",
+    id: "YmweRb",
     defaultMessage: "Products published to this channel, priced in its currency.",
-    description: "setup review row description",
+    description: "setup review row description when warehouses are ready",
+  },
+  catalogDescriptionNoShopWarehouse: {
+    id: "ISsHpV",
+    defaultMessage:
+      "Create a warehouse to set stock when adding products. You can still publish products and set prices.",
+    description: "setup review row description when shop has no warehouses",
+  },
+  catalogDescriptionNoChannelWarehouse: {
+    id: "BxHDRs",
+    defaultMessage:
+      "Add products and prices now. Assign a warehouse to this channel for checkout inventory.",
+    description: "setup review row description when channel has no warehouses",
   },
   catalogStatusPublished: {
     id: "Gx+CaK",
     defaultMessage: "{published} of {total} published",
     description: "products published to channel vs shop total",
+  },
+  catalogStatusNoWarehouse: {
+    id: "WrlaSD",
+    defaultMessage: "No warehouse",
+    description: "catalog setup status when shop has no warehouses",
+  },
+  catalogStatusAssignWarehouse: {
+    id: "84XFds",
+    defaultMessage: "Assign warehouse",
+    description: "catalog setup status when channel has no warehouses",
   },
   dismiss: {
     id: "O6C+2E",

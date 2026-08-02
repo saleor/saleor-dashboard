@@ -19,6 +19,12 @@ interface ChannelSetupCardProps {
   chargeTaxes?: boolean | null;
   taxCalculationStrategy?: TaxCalculationStrategy | null;
   channelSlug?: string;
+  channel?: {
+    id: string;
+    name: string;
+    slug: string;
+    currencyCode: string;
+  };
   warehouseCount: number;
   /**
    * Zones assigned to this channel. `undefined` when the shipping query was
@@ -78,6 +84,7 @@ export const ChannelSetupCard = ({
   chargeTaxes,
   taxCalculationStrategy,
   channelSlug,
+  channel,
   warehouseCount,
   shippingZoneCount,
   availableWarehousesCount,
@@ -105,10 +112,13 @@ export const ChannelSetupCard = ({
     taxConfigurationId,
     chargeTaxes,
     taxCalculationStrategy,
+    channel,
     channelSlug,
     paymentAppsCount,
     publishedProductCount,
     totalProductCount,
+    channelWarehouseCount: warehouseCount,
+    shopWarehouseCount: availableWarehousesCount,
     scrollableSectionIds,
   });
   const hasWarehouse = warehouseCount > 0;

@@ -45,6 +45,16 @@ interface ChannelProps {
    */
   color?: TextProps["color"];
   /**
+   * Macaw font weight token used for the channel name.
+   * @default "medium"
+   */
+  fontWeight?: TextProps["fontWeight"];
+  /**
+   * Render inline for embedding in headings or sentences.
+   * @default false
+   */
+  inline?: boolean;
+  /**
    * Optional override for the `data-test-id` attribute.
    * @default "channel-display"
    */
@@ -76,6 +86,8 @@ export const ChannelDisplay = ({
   hideInactiveStatus = false,
   size = 2,
   color = "default2",
+  fontWeight = "medium",
+  inline = false,
   "data-test-id": dataTestId = "channel-display",
   title,
 }: ChannelProps): JSX.Element => {
@@ -98,15 +110,21 @@ export const ChannelDisplay = ({
     <Text
       size={size}
       color={color}
-      fontWeight="medium"
-      display="flex"
-      alignItems="center"
-      gap={1}
+      fontWeight={fontWeight}
+      display={inline ? "inline" : "flex"}
+      alignItems={inline ? undefined : "center"}
+      gap={inline ? undefined : 1}
       data-test-id={dataTestId}
       aria-label={ariaLabel}
     >
-      {!hideIcon && <Globe size={iconSize} aria-hidden="true" />}
-      <span className={styles.name} title={nameTitle}>
+      {!hideIcon && (
+        <Globe
+          size={iconSize}
+          aria-hidden="true"
+          className={inline ? styles.inlineIcon : undefined}
+        />
+      )}
+      <span className={inline ? styles.inlineName : styles.name} title={nameTitle}>
         {channel.name}
       </span>
       {isInactive && !hideInactiveStatus && (

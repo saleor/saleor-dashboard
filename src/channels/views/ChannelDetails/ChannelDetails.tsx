@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { BulkPublishToChannelDialog } from "@dashboard/channels/components/BulkPublishToChannelDialog/BulkPublishToChannelDialog";
 import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog";
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { ChannelMetadataDialog } from "@dashboard/channels/components/ChannelMetadataDialog/ChannelMetadataDialog";
@@ -101,7 +102,11 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     },
   });
 
-  const { data, loading } = useChannelQuery({
+  const {
+    data,
+    loading,
+    refetch: refetchChannel,
+  } = useChannelQuery({
     displayLoader: true,
     variables: { id },
   });
@@ -295,9 +300,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   };
 
   const userPermissions = useUserPermissions();
-  const canCreateWarehouse = hasPermissions(userPermissions ?? [], [
-    PermissionEnum.MANAGE_PRODUCTS,
-  ]);
+  const canManageProducts = hasPermissions(userPermissions ?? [], [PermissionEnum.MANAGE_PRODUCTS]);
+  const canCreateWarehouse = canManageProducts;
   const {
     canLoadShippingZones,
     shippingZonesCountData,
@@ -343,7 +347,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     hasMoreApps: hasMorePaymentApps,
   } = useChannelPaymentApps();
   const setupScrollableSectionIds = useMemo((): ChannelSectionId[] => {
-    const ids: ChannelSectionId[] = [channelSectionIds.taxes, channelSectionIds.catalog];
+    const ids: ChannelSectionId[] = [channelSectionIds.catalog, channelSectionIds.taxes];
 
     if (canManagePaymentApps) {
       ids.unshift(channelSectionIds.paymentGateways);
@@ -351,7 +355,17 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
 
     return ids;
   }, [canManagePaymentApps]);
-  const { publishedProductCount, totalProductCount } = useChannelSetupReviewStats({
+  const {
+    publishedProductCount,
+    unpublishedProductCount,
+    listedInChannelCount,
+    totalProductCount,
+    recentlyPublishedProducts,
+    canViewCatalogStats,
+    catalogStatsError,
+    loading: catalogStatsLoading,
+    refetch: refetchCatalogStats,
+  } = useChannelSetupReviewStats({
     channelSlug: data?.channel?.slug,
     skip: !data?.channel,
   });
@@ -480,7 +494,14 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         showPaymentGatewaysSection={canManagePaymentApps}
         paymentAppsCount={paymentAppsCount}
         publishedProductCount={publishedProductCount}
+        unpublishedProductCount={unpublishedProductCount}
+        listedInChannelCount={listedInChannelCount}
         totalProductCount={totalProductCount}
+        recentlyPublishedProducts={recentlyPublishedProducts}
+        canViewCatalogStats={canViewCatalogStats}
+        catalogStatsError={catalogStatsError}
+        catalogStatsLoading={catalogStatsLoading}
+        onBulkPublishCatalog={canManageProducts ? () => openModal("bulk-publish") : undefined}
         setupCard={
           showSetupCard && data?.channel ? (
             <ChannelSetupCard
@@ -488,6 +509,12 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
               chargeTaxes={data.channel.taxConfiguration?.chargeTaxes}
               taxCalculationStrategy={data.channel.taxConfiguration?.taxCalculationStrategy}
               channelSlug={data.channel.slug}
+              channel={{
+                id: data.channel.id,
+                name: data.channel.name,
+                slug: data.channel.slug,
+                currencyCode: data.channel.currencyCode,
+              }}
               warehouseCount={setupWarehouseCount}
               shippingZoneCount={setupShippingZoneCount}
               availableWarehousesCount={warehousesCountData?.warehouses?.totalCount ?? 0}
@@ -597,6 +624,28 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
             confirmButtonState={getMutationStatus(deactivateChannelOpts)}
             onConfirm={() => deactivateChannel({ variables: { id } })}
           />
+          {/* Mounted on demand — the wizard's product search would otherwise run on every page load. */}
+          {canManageProducts && params.action === "bulk-publish" && (
+            <BulkPublishToChannelDialog
+              open
+              onClose={closeModal}
+              channel={{
+                id: data.channel.id,
+                name: data.channel.name,
+                slug: data.channel.slug,
+                currencyCode: data.channel.currencyCode,
+              }}
+              warehouses={channelWarehouses.map(warehouse => ({
+                id: warehouse.id,
+                name: warehouse.name,
+              }))}
+              shopWarehouseCount={warehousesCountData?.warehouses?.totalCount ?? 0}
+              onSuccess={() => {
+                void refetchCatalogStats();
+                void refetchChannel();
+              }}
+            />
+          )}
         </>
       )}
     </>

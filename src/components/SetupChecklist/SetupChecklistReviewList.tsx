@@ -58,7 +58,7 @@ export const SetupChecklistReviewList = ({
                 {item.status != null && (
                   <>
                     <Box className={styles.reviewStatusDot} aria-hidden />
-                    <Text size={2} color="default2">
+                    <Text size={2} color="default2" className={styles.reviewStatusLabel}>
                       {item.status}
                     </Text>
                   </>
