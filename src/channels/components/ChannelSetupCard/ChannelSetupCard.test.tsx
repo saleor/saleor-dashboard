@@ -1,9 +1,14 @@
+import { channelSectionIds } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
+import { ChannelSectionScrollProvider } from "@dashboard/channels/components/ChannelSectionNav/ChannelSectionScrollContext";
+import { ExtensionsPaths } from "@dashboard/extensions/urls";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 
 import { ChannelSetupCard } from "./ChannelSetupCard";
 
-jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
+const navigate = jest.fn();
+
+jest.mock("@dashboard/hooks/useNavigator", () => () => navigate);
 
 const baseProps = {
   taxConfigurationId: "taxConf1",
@@ -24,6 +29,10 @@ const baseProps = {
 };
 
 describe("ChannelSetupCard", () => {
+  beforeEach(() => {
+    navigate.mockClear();
+  });
+
   it("shows create warehouse when the shop has no warehouses", () => {
     // Arrange & Act
     render(<ChannelSetupCard {...baseProps} />, { wrapper: Wrapper });
@@ -264,5 +273,71 @@ describe("ChannelSetupCard", () => {
     expect(screen.getByText("Missing permission to manage shipping")).toBeInTheDocument();
     expect(screen.queryByTestId("setup-create-shipping")).not.toBeInTheDocument();
     expect(screen.queryByTestId("setup-assign-shipping")).not.toBeInTheDocument();
+  });
+
+  it("scrolls to payment gateways when the section is scrollable on the page", () => {
+    // Arrange
+    const selectSection = jest.fn();
+
+    // Act
+    render(
+      <ChannelSectionScrollProvider selectSection={selectSection}>
+        <ChannelSetupCard
+          {...baseProps}
+          paymentAppsCount={2}
+          scrollableSectionIds={[channelSectionIds.paymentGateways]}
+        />
+      </ChannelSectionScrollProvider>,
+      { wrapper: Wrapper },
+    );
+    screen.getByTestId("setup-checklist-review-payments").click();
+
+    // Assert
+    expect(selectSection).toHaveBeenCalledWith(channelSectionIds.paymentGateways);
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it("navigates to installed extensions when payment gateways are not scrollable on the page", () => {
+    // Arrange
+    const selectSection = jest.fn();
+
+    // Act
+    render(
+      <ChannelSectionScrollProvider selectSection={selectSection}>
+        <ChannelSetupCard
+          {...baseProps}
+          paymentAppsCount={2}
+          scrollableSectionIds={[channelSectionIds.taxes, channelSectionIds.catalog]}
+        />
+      </ChannelSectionScrollProvider>,
+      { wrapper: Wrapper },
+    );
+    screen.getByTestId("setup-checklist-review-payments").click();
+
+    // Assert
+    expect(selectSection).not.toHaveBeenCalled();
+    expect(navigate).toHaveBeenCalledWith(ExtensionsPaths.installedExtensions);
+  });
+
+  it("scrolls to taxes when the section is scrollable on the page", () => {
+    // Arrange
+    const selectSection = jest.fn();
+
+    // Act
+    render(
+      <ChannelSectionScrollProvider selectSection={selectSection}>
+        <ChannelSetupCard
+          {...baseProps}
+          paymentAppsCount={2}
+          scrollableSectionIds={[channelSectionIds.taxes]}
+        />
+      </ChannelSectionScrollProvider>,
+      { wrapper: Wrapper },
+    );
+    screen.getByTestId("setup-checklist-review-tax").click();
+
+    // Assert
+    expect(selectSection).toHaveBeenCalledWith(channelSectionIds.taxes);
+    expect(navigate).not.toHaveBeenCalled();
   });
 });

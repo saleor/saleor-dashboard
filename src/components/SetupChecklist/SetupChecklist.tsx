@@ -1,11 +1,12 @@
 import { getDotColor } from "@dashboard/misc";
 import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { Check, ChevronDown, ChevronRight, Circle, Lock } from "lucide-react";
+import { Check, ChevronDown, Circle, Lock } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent, type ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import styles from "./SetupChecklist.module.css";
+import { SetupChecklistReviewList } from "./SetupChecklistReviewList";
 import {
   type SetupChecklistProps,
   type SetupChecklistReviewSection,
@@ -229,47 +230,12 @@ const SetupSectionHeader = ({
 );
 
 const SetupReviewSection = ({ title, subtitle, items }: SetupChecklistReviewSection) => (
-  <Box className={styles.reviewSection} data-test-id="setup-checklist-review">
-    <SetupSectionHeader title={title} subtitle={subtitle} />
-    <Box as="ul" className={styles.reviewList}>
-      {items.map(item => (
-        <Box as="li" key={item.id}>
-          <button
-            type="button"
-            className={styles.reviewItem}
-            onClick={item.onClick}
-            disabled={item.disabled}
-            data-test-id={`setup-checklist-review-${item.id}`}
-          >
-            <Box className={styles.reviewLeading} aria-hidden>
-              <Box className={styles.reviewIcon}>{item.icon}</Box>
-            </Box>
-            <Box className={styles.reviewContent}>
-              <Text size={3} fontWeight="medium">
-                {item.title}
-              </Text>
-              <Text size={2} color="default2">
-                {item.description}
-              </Text>
-            </Box>
-            <Box className={styles.reviewStatus}>
-              {item.status != null && (
-                <>
-                  <Box className={styles.reviewStatusDot} aria-hidden />
-                  <Text size={2} color="default2">
-                    {item.status}
-                  </Text>
-                </>
-              )}
-              <Box className={styles.reviewChevron} aria-hidden>
-                <ChevronRight size={16} strokeWidth={1.75} />
-              </Box>
-            </Box>
-          </button>
-        </Box>
-      ))}
-    </Box>
-  </Box>
+  <SetupChecklistReviewList
+    title={title}
+    subtitle={subtitle}
+    items={items}
+    data-test-id="setup-checklist-review"
+  />
 );
 
 export const SetupChecklist = ({

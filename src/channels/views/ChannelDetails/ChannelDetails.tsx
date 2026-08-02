@@ -3,12 +3,17 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog";
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { ChannelMetadataDialog } from "@dashboard/channels/components/ChannelMetadataDialog/ChannelMetadataDialog";
+import {
+  type ChannelSectionId,
+  channelSectionIds,
+} from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
 import { ChannelSetupCard } from "@dashboard/channels/components/ChannelSetupCard/ChannelSetupCard";
 import { useChannelSetupCardDismiss } from "@dashboard/channels/components/ChannelSetupCard/useChannelSetupCardDismiss";
 import { ChannelActivateDialog } from "@dashboard/channels/components/ChannelStatus/ChannelActivateDialog";
 import { ChannelDeactivateDialog } from "@dashboard/channels/components/ChannelStatus/ChannelDeactivateDialog";
 import { CreateShippingForChannelDialog } from "@dashboard/channels/components/CreateShippingForChannelDialog/CreateShippingForChannelDialog";
 import { CreateWarehouseForChannelDialog } from "@dashboard/channels/components/CreateWarehouseForChannelDialog/CreateWarehouseForChannelDialog";
+import { useChannelPaymentApps } from "@dashboard/channels/hooks/useChannelPaymentApps";
 import {
   assignmentIdsEqual,
   type ChannelAssignmentActions,
@@ -330,12 +335,26 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     !!data?.channel &&
     !setupCardDismissed &&
     (setupEmphasized || coreSetupIncomplete || !data.channel.isActive);
-  const { paymentAppsCount, publishedProductCount, totalProductCount } = useChannelSetupReviewStats(
-    {
-      channelSlug: data?.channel?.slug,
-      skip: !showSetupCard,
-    },
-  );
+  const {
+    canFetchApps: canManagePaymentApps,
+    paymentApps,
+    paymentAppsCount,
+    loading: paymentAppsLoading,
+    hasMoreApps: hasMorePaymentApps,
+  } = useChannelPaymentApps();
+  const setupScrollableSectionIds = useMemo((): ChannelSectionId[] => {
+    const ids: ChannelSectionId[] = [channelSectionIds.taxes, channelSectionIds.catalog];
+
+    if (canManagePaymentApps) {
+      ids.unshift(channelSectionIds.paymentGateways);
+    }
+
+    return ids;
+  }, [canManagePaymentApps]);
+  const { publishedProductCount, totalProductCount } = useChannelSetupReviewStats({
+    channelSlug: data?.channel?.slug,
+    skip: !data?.channel,
+  });
 
   const {
     handleCreateWarehouse,
@@ -455,6 +474,13 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         canCreateWarehouse={canCreateWarehouse}
         onCreateShipping={() => openModal("create-shipping")}
         onAssignShipping={() => openModal("assign-shipping")}
+        paymentApps={paymentApps}
+        paymentAppsLoading={paymentAppsLoading}
+        hasMorePaymentApps={hasMorePaymentApps}
+        showPaymentGatewaysSection={canManagePaymentApps}
+        paymentAppsCount={paymentAppsCount}
+        publishedProductCount={publishedProductCount}
+        totalProductCount={totalProductCount}
         setupCard={
           showSetupCard && data?.channel ? (
             <ChannelSetupCard
@@ -469,6 +495,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
               paymentAppsCount={paymentAppsCount}
               publishedProductCount={publishedProductCount}
               totalProductCount={totalProductCount}
+              scrollableSectionIds={setupScrollableSectionIds}
               isActive={data.channel.isActive}
               activateReady={activateReady}
               canCreateWarehouse={canCreateWarehouse}

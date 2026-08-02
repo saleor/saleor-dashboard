@@ -165,9 +165,9 @@ export const messages = defineMessages({
     description: "tax strategy status when using a tax app",
   },
   paymentsTitle: {
-    id: "BVS1I0",
-    defaultMessage: "Payments",
-    description: "setup review row title",
+    id: "Io6O//",
+    defaultMessage: "Payment gateways",
+    description: "setup review row title for installed payment apps",
   },
   paymentsDescription: {
     id: "b2Nzq4",

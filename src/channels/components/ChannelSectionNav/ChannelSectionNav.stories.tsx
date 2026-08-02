@@ -9,7 +9,10 @@ import { ChannelSectionNav, type ChannelSectionNavItem } from "./ChannelSectionN
 const items: ChannelSectionNavItem[] = [
   { id: channelSectionIds.general, label: "General" },
   { id: channelSectionIds.orders, label: "Orders" },
-  { id: channelSectionIds.payments, label: "Payments" },
+  { id: channelSectionIds.payments, label: "Payments & checkout" },
+  { id: channelSectionIds.paymentGateways, label: "Payment gateways" },
+  { id: channelSectionIds.taxes, label: "Taxes" },
+  { id: channelSectionIds.catalog, label: "Catalog" },
 ];
 
 const meta: Meta<typeof ChannelSectionNav> = {

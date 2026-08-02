@@ -5481,25 +5481,12 @@ export type ChannelBySlugQueryHookResult = ReturnType<typeof useChannelBySlugQue
 export type ChannelBySlugLazyQueryHookResult = ReturnType<typeof useChannelBySlugLazyQuery>;
 export type ChannelBySlugQueryResult = Apollo.QueryResult<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>;
 export const ChannelSetupReviewStatsDocument = gql`
-    query ChannelSetupReviewStats($channelSlug: String!, $canFetchApps: Boolean!, $canFetchProducts: Boolean!) {
+    query ChannelSetupReviewStats($channelSlug: String!, $canFetchProducts: Boolean!) {
   allProducts: products @include(if: $canFetchProducts) {
     totalCount
   }
   channelProducts: products(channel: $channelSlug, filter: {isPublished: true}) @include(if: $canFetchProducts) {
     totalCount
-  }
-  apps(first: 100, filter: {isActive: true}) @include(if: $canFetchApps) {
-    pageInfo {
-      hasNextPage
-    }
-    edges {
-      node {
-        id
-        permissions {
-          code
-        }
-      }
-    }
   }
 }
     `;
@@ -5517,7 +5504,6 @@ export const ChannelSetupReviewStatsDocument = gql`
  * const { data, loading, error } = useChannelSetupReviewStatsQuery({
  *   variables: {
  *      channelSlug: // value for 'channelSlug'
- *      canFetchApps: // value for 'canFetchApps'
  *      canFetchProducts: // value for 'canFetchProducts'
  *   },
  * });
@@ -5533,6 +5519,59 @@ export function useChannelSetupReviewStatsLazyQuery(baseOptions?: ApolloReactHoo
 export type ChannelSetupReviewStatsQueryHookResult = ReturnType<typeof useChannelSetupReviewStatsQuery>;
 export type ChannelSetupReviewStatsLazyQueryHookResult = ReturnType<typeof useChannelSetupReviewStatsLazyQuery>;
 export type ChannelSetupReviewStatsQueryResult = Apollo.QueryResult<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>;
+export const ChannelPaymentAppsDocument = gql`
+    query ChannelPaymentApps {
+  apps(first: 100, filter: {isActive: true, type: THIRDPARTY}) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        name
+        isActive
+        type
+        appUrl
+        permissions {
+          code
+        }
+        brand {
+          logo {
+            default(format: WEBP, size: 64)
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelPaymentAppsQuery__
+ *
+ * To run a query within a React component, call `useChannelPaymentAppsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelPaymentAppsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelPaymentAppsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useChannelPaymentAppsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>(ChannelPaymentAppsDocument, options);
+      }
+export function useChannelPaymentAppsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>(ChannelPaymentAppsDocument, options);
+        }
+export type ChannelPaymentAppsQueryHookResult = ReturnType<typeof useChannelPaymentAppsQuery>;
+export type ChannelPaymentAppsLazyQueryHookResult = ReturnType<typeof useChannelPaymentAppsLazyQuery>;
+export type ChannelPaymentAppsQueryResult = Apollo.QueryResult<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>;
 export const CollectionUpdateDocument = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {

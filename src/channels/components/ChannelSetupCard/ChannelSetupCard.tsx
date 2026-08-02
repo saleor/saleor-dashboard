@@ -1,23 +1,16 @@
+import { type ChannelSectionId } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
+import { useChannelReviewItems } from "@dashboard/channels/hooks/useChannelReviewItems";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { SetupChecklist } from "@dashboard/components/SetupChecklist/SetupChecklist";
-import {
-  type SetupChecklistReviewItem,
-  type SetupChecklistTask,
-} from "@dashboard/components/SetupChecklist/types";
-import { ExtensionsPaths } from "@dashboard/extensions/urls";
+import { type SetupChecklistTask } from "@dashboard/components/SetupChecklist/types";
 import { type TaxCalculationStrategy } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { ProductsIcon } from "@dashboard/icons/Products";
-import { productListUrl } from "@dashboard/products/urls";
-import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { Box, Button, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { ArrowRight, CreditCard, Receipt, Truck, Warehouse } from "lucide-react";
+import { ArrowRight, Truck, Warehouse } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./ChannelSetupCard.module.css";
-import { getTaxStatusMessage } from "./getTaxStatusMessage";
 import { messages } from "./messages";
 
 interface ChannelSetupCardProps {
@@ -42,6 +35,8 @@ interface ChannelSetupCardProps {
   publishedProductCount?: number;
   /** All products in the shop. */
   totalProductCount?: number;
+  /** Channel detail sections the review rows may scroll to. */
+  scrollableSectionIds?: ChannelSectionId[];
   /** When false, footer shows Activate (enabled after warehouse + shipping). */
   isActive?: boolean;
   /**
@@ -90,6 +85,7 @@ export const ChannelSetupCard = ({
   paymentAppsCount,
   publishedProductCount,
   totalProductCount,
+  scrollableSectionIds,
   isActive = false,
   activateReady,
   canCreateWarehouse,
@@ -104,8 +100,17 @@ export const ChannelSetupCard = ({
   onDismiss,
 }: ChannelSetupCardProps) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const { theme } = useTheme();
+  const reviewItems = useChannelReviewItems({
+    taxConfigurationId,
+    chargeTaxes,
+    taxCalculationStrategy,
+    channelSlug,
+    paymentAppsCount,
+    publishedProductCount,
+    totalProductCount,
+    scrollableSectionIds,
+  });
   const hasWarehouse = warehouseCount > 0;
   const shippingStatusKnown = shippingZoneCount !== undefined;
   const hasShipping = (shippingZoneCount ?? 0) > 0;
@@ -251,56 +256,6 @@ export const ChannelSetupCard = ({
       details: <FormattedMessage {...messages.shippingDetails} />,
       detailsIcon: <Truck size={16} />,
       action: shippingAction,
-    },
-  ];
-
-  const reviewItems: SetupChecklistReviewItem[] = [
-    {
-      id: "tax",
-      icon: <Receipt size={16} />,
-      title: <FormattedMessage {...messages.taxTitle} />,
-      description: <FormattedMessage {...messages.taxDescription} />,
-      status: (
-        <FormattedMessage {...getTaxStatusMessage({ chargeTaxes, taxCalculationStrategy })} />
-      ),
-      onClick: () => navigate(taxConfigurationListUrl(taxConfigurationId ?? undefined)),
-      disabled: !taxConfigurationId,
-    },
-    {
-      id: "payments",
-      icon: <CreditCard size={16} />,
-      title: <FormattedMessage {...messages.paymentsTitle} />,
-      description: (
-        <FormattedMessage
-          {...(paymentAppsCount === 0
-            ? messages.paymentsDescriptionNone
-            : messages.paymentsDescription)}
-        />
-      ),
-      status:
-        paymentAppsCount === undefined ? undefined : paymentAppsCount === 0 ? (
-          <FormattedMessage {...messages.paymentsStatusNone} />
-        ) : (
-          <FormattedMessage
-            {...messages.paymentsStatusCount}
-            values={{ count: paymentAppsCount }}
-          />
-        ),
-      onClick: () => navigate(ExtensionsPaths.installedExtensions),
-    },
-    {
-      id: "catalog",
-      icon: <ProductsIcon />,
-      title: <FormattedMessage {...messages.catalogTitle} />,
-      description: <FormattedMessage {...messages.catalogDescription} />,
-      status:
-        publishedProductCount === undefined || totalProductCount === undefined ? undefined : (
-          <FormattedMessage
-            {...messages.catalogStatusPublished}
-            values={{ published: publishedProductCount, total: totalProductCount }}
-          />
-        ),
-      onClick: () => navigate(productListUrl(channelSlug ? { channel: channelSlug } : undefined)),
     },
   ];
 

@@ -2,7 +2,7 @@ import {
   type ChannelShippingZones,
   type ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   type ChannelErrorFragment,
   type CountryCode,
@@ -17,10 +17,12 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { Box, Button, DynamicCombobox, Input, type Option } from "@saleor/macaw-ui-next";
 import { Copy, Lock } from "lucide-react";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { channelSectionIds } from "../ChannelSectionNav/channelSectionIds";
 import { ChannelSection } from "../ChannelSectionNav/ChannelSectionNav";
+import styles from "./ChannelForm.module.css";
 import { ChannelOrdersSection } from "./ChannelOrdersSection";
 import { ChannelPaymentsCheckoutSection } from "./ChannelPaymentsCheckoutSection";
 import { ChannelSettingsCard } from "./ChannelSettingsCard";
@@ -66,6 +68,8 @@ interface ChannelFormProps {
    * (parent owns padding + section nav; sidebar stays separate).
    */
   sectionLayout?: boolean;
+  /** Rendered after the Payments section when section layout is enabled. */
+  trailingSection?: ReactNode;
   savedAutomaticallyCompleteCheckouts: boolean;
   savedAutomaticCompletionCutOffDate: string;
   savedAutomaticCompletionCutOffTime: string;
@@ -80,6 +84,7 @@ export const ChannelForm = ({
   selectedCountryDisplayName,
   countries,
   sectionLayout = false,
+  trailingSection,
   savedAutomaticallyCompleteCheckouts,
   savedAutomaticCompletionCutOffDate,
   savedAutomaticCompletionCutOffTime,
@@ -141,9 +146,10 @@ export const ChannelForm = ({
             <Button
               variant="tertiary"
               size="small"
+              className={styles.slugCopyButton}
               onClick={() => copy(data.slug)}
               aria-label={intl.formatMessage(buttonMessages.copyToClipboard)}
-              icon={<Copy size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+              icon={<Copy size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
             />
           }
         />
@@ -227,6 +233,7 @@ export const ChannelForm = ({
         <ChannelSection id={channelSectionIds.general}>{generalCard}</ChannelSection>
         <ChannelSection id={channelSectionIds.orders}>{ordersCard}</ChannelSection>
         <ChannelSection id={channelSectionIds.payments}>{paymentsCard}</ChannelSection>
+        {trailingSection}
       </Box>
     );
   }

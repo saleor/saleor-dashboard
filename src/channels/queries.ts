@@ -49,11 +49,7 @@ export const defaultGraphiQLQuery = `query ChannelDetails($id: ID!) {
 }`;
 
 export const channelSetupReviewStats = gql`
-  query ChannelSetupReviewStats(
-    $channelSlug: String!
-    $canFetchApps: Boolean!
-    $canFetchProducts: Boolean!
-  ) {
+  query ChannelSetupReviewStats($channelSlug: String!, $canFetchProducts: Boolean!) {
     allProducts: products @include(if: $canFetchProducts) {
       totalCount
     }
@@ -61,15 +57,29 @@ export const channelSetupReviewStats = gql`
       @include(if: $canFetchProducts) {
       totalCount
     }
-    apps(first: 100, filter: { isActive: true }) @include(if: $canFetchApps) {
+  }
+`;
+
+export const channelPaymentApps = gql`
+  query ChannelPaymentApps {
+    apps(first: 100, filter: { isActive: true, type: THIRDPARTY }) {
       pageInfo {
         hasNextPage
       }
       edges {
         node {
           id
+          name
+          isActive
+          type
+          appUrl
           permissions {
             code
+          }
+          brand {
+            logo {
+              default(format: WEBP, size: 64)
+            }
           }
         }
       }

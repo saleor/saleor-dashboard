@@ -10696,12 +10696,16 @@ export type ChannelBySlugQuery = { __typename: 'Query', channel: { __typename: '
 
 export type ChannelSetupReviewStatsQueryVariables = Exact<{
   channelSlug: Scalars['String']['input'];
-  canFetchApps: Scalars['Boolean']['input'];
   canFetchProducts: Scalars['Boolean']['input'];
 }>;
 
 
-export type ChannelSetupReviewStatsQuery = { __typename: 'Query', allProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, channelProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, apps?: { __typename: 'AppCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }> | null } }> } | null };
+export type ChannelSetupReviewStatsQuery = { __typename: 'Query', allProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, channelProducts?: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+
+export type ChannelPaymentAppsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ChannelPaymentAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null } }> } | null };
 
 export type CollectionUpdateMutationVariables = Exact<{
   id: Scalars['ID']['input'];

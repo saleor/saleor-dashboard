@@ -1,14 +1,20 @@
 // @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ChannelDeliveryCard } from "@dashboard/channels/components/ChannelDeliveryCard/ChannelDeliveryCard";
+import { messages as channelFormMessages } from "@dashboard/channels/components/ChannelForm/messages";
 import { ChannelInventoryCard } from "@dashboard/channels/components/ChannelInventoryCard/ChannelInventoryCard";
+import { ChannelPaymentGatewaysSection } from "@dashboard/channels/components/ChannelPaymentGatewaysSection/ChannelPaymentGatewaysSection";
+import { ChannelReviewSections } from "@dashboard/channels/components/ChannelReviewSections/ChannelReviewSections";
 import { channelSectionIds } from "@dashboard/channels/components/ChannelSectionNav/channelSectionIds";
 import {
+  ChannelSection,
   ChannelSectionNav,
   type ChannelSectionNavItem,
 } from "@dashboard/channels/components/ChannelSectionNav/ChannelSectionNav";
+import { ChannelSectionScrollProvider } from "@dashboard/channels/components/ChannelSectionNav/ChannelSectionScrollContext";
 import { messages as sectionNavMessages } from "@dashboard/channels/components/ChannelSectionNav/messages";
 import { useChannelSectionScrollSpy } from "@dashboard/channels/components/ChannelSectionNav/useChannelSectionScrollSpy";
+import { type ChannelPaymentApp } from "@dashboard/channels/hooks/useChannelPaymentApps";
 import { defaultGraphiQLQuery } from "@dashboard/channels/queries";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { getChannelCreateDefaults } from "@dashboard/channels/utils/getChannelCreateDefaults";
@@ -82,6 +88,15 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   countries: CountryFragment[];
   /** Setup checklist + in-flow create actions (edit only). */
   setupCard?: ReactNode;
+  /** Installed payment apps for the Payment gateways section. */
+  paymentApps?: ChannelPaymentApp[];
+  paymentAppsLoading?: boolean;
+  hasMorePaymentApps?: boolean;
+  showPaymentGatewaysSection?: boolean;
+  /** Setup review row stats for tax/catalog shortcut panels. */
+  paymentAppsCount?: number;
+  publishedProductCount?: number;
+  totalProductCount?: number;
   /** Opens in-place warehouse create when the shop has none yet. */
   onCreateWarehouse?: () => void;
   /** Opens assign-warehouse dialog for the inventory card. */
@@ -120,6 +135,13 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   allWarehousesCount = 0,
   countries,
   setupCard,
+  paymentApps = [],
+  paymentAppsLoading = false,
+  hasMorePaymentApps = false,
+  showPaymentGatewaysSection = false,
+  paymentAppsCount,
+  publishedProductCount,
+  totalProductCount,
   onCreateWarehouse,
   onAssignWarehouse,
   canCreateWarehouse = false,
@@ -146,8 +168,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   const channelId = channel?.id;
   const taxConfigurationId = channel?.taxConfiguration?.id;
   const createDefaults = getChannelCreateDefaults();
-  const sectionNavItems = useMemo(
-    (): ChannelSectionNavItem[] => [
+  const sectionNavItems = useMemo((): ChannelSectionNavItem[] => {
+    const items: ChannelSectionNavItem[] = [
       {
         id: channelSectionIds.general,
         label: intl.formatMessage(sectionNavMessages.general),
@@ -158,13 +180,52 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       },
       {
         id: channelSectionIds.payments,
-        label: intl.formatMessage(sectionNavMessages.payments),
+        label: intl.formatMessage(channelFormMessages.paymentsCheckoutSectionTitle),
       },
-    ],
-    [intl],
-  );
+    ];
+
+    if (showPaymentGatewaysSection) {
+      items.push({
+        id: channelSectionIds.paymentGateways,
+        label: intl.formatMessage(sectionNavMessages.paymentGateways),
+      });
+    }
+
+    items.push(
+      {
+        id: channelSectionIds.taxes,
+        label: intl.formatMessage(sectionNavMessages.taxes),
+      },
+      {
+        id: channelSectionIds.catalog,
+        label: intl.formatMessage(sectionNavMessages.catalog),
+      },
+    );
+
+    return items;
+  }, [intl, showPaymentGatewaysSection]);
   const sectionIds = useMemo(() => sectionNavItems.map(item => item.id), [sectionNavItems]);
   const { activeId: activeSectionId, selectSection } = useChannelSectionScrollSpy({ sectionIds });
+  const paymentGatewaysSection = showPaymentGatewaysSection ? (
+    <ChannelSection id={channelSectionIds.paymentGateways}>
+      <ChannelPaymentGatewaysSection
+        apps={paymentApps}
+        loading={paymentAppsLoading}
+        hasMoreApps={hasMorePaymentApps}
+      />
+    </ChannelSection>
+  ) : null;
+  const reviewSections = channel ? (
+    <ChannelReviewSections
+      taxConfigurationId={channel.taxConfiguration?.id}
+      chargeTaxes={channel.taxConfiguration?.chargeTaxes}
+      taxCalculationStrategy={channel.taxConfiguration?.taxCalculationStrategy}
+      channelSlug={channel.slug}
+      paymentAppsCount={paymentAppsCount}
+      publishedProductCount={publishedProductCount}
+      totalProductCount={totalProductCount}
+    />
+  ) : null;
   const openPlaygroundURL = useCallback(() => {
     if (!channelId) {
       return;
@@ -404,24 +465,35 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               )}
             </TopNav>
             <DetailPageLayout.Content>
-              {setupCard}
-              <Box display="flex" gap={4} paddingX={6} paddingTop={6} paddingBottom={6}>
-                <Box
-                  display={{ mobile: "none", tablet: "block", desktop: "block" }}
-                  flexShrink="0"
-                  __width="25%"
-                  __minWidth="10rem"
-                >
-                  <ChannelSectionNav
-                    items={sectionNavItems}
-                    activeId={activeSectionId}
-                    onSelect={selectSection}
-                  />
+              <ChannelSectionScrollProvider selectSection={selectSection}>
+                {setupCard}
+                <Box display="flex" gap={4} paddingX={6} paddingTop={6} paddingBottom={6}>
+                  <Box
+                    display={{ mobile: "none", tablet: "block", desktop: "block" }}
+                    flexShrink="0"
+                    __width="25%"
+                    __minWidth="10rem"
+                  >
+                    <ChannelSectionNav
+                      items={sectionNavItems}
+                      activeId={activeSectionId}
+                      onSelect={selectSection}
+                    />
+                  </Box>
+                  <Box flexGrow="1" __minWidth="0" display="flex" flexDirection="column" gap={4}>
+                    <ChannelForm
+                      {...channelFormProps}
+                      sectionLayout
+                      trailingSection={
+                        <>
+                          {paymentGatewaysSection}
+                          {reviewSections}
+                        </>
+                      }
+                    />
+                  </Box>
                 </Box>
-                <Box flexGrow="1" __minWidth="0">
-                  <ChannelForm {...channelFormProps} sectionLayout />
-                </Box>
-              </Box>
+              </ChannelSectionScrollProvider>
             </DetailPageLayout.Content>
             {showRightSidebar && (
               <DetailPageLayout.RightSidebar paddingTop={6}>
@@ -457,7 +529,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               </DetailPageLayout.RightSidebar>
             )}
             <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} disabled={disabled} />
               <Savebar.Spacer />
               <ChannelSaveCompositionHint composition={saveComposition} />
               <Savebar.CancelButton onClick={() => navigate(channelsListUrl())} />

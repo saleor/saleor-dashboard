@@ -16,9 +16,19 @@ export const messages = defineMessages({
     defaultMessage: "Orders",
     description: "channel details section nav item",
   },
-  payments: {
-    id: "8RdHXd",
-    defaultMessage: "Payments",
-    description: "channel details section nav item",
+  paymentGateways: {
+    id: "huLuhF",
+    defaultMessage: "Payment gateways",
+    description: "channel details section nav item for installed payment apps",
+  },
+  taxes: {
+    id: "Za//IL",
+    defaultMessage: "Taxes",
+    description: "channel details section nav item for tax settings shortcut",
+  },
+  catalog: {
+    id: "IZQhZu",
+    defaultMessage: "Catalog",
+    description: "channel details section nav item for channel product availability",
   },
 });
