@@ -46,7 +46,7 @@ import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
-import { Copy, Receipt, Trash2 } from "lucide-react";
+import { Copy, ListChecks, Receipt, Trash2 } from "lucide-react";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -123,6 +123,11 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   onDelete?: () => void;
   /** Opens create dialog prefilled from this channel's settings and assignments. */
   onDuplicate?: () => void;
+  /**
+   * Reopens the setup checklist (clears local dismiss + emphasizes setup).
+   * Shown in the cogs menu when the card is currently hidden.
+   */
+  onShowSetupChecklist?: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors>;
   /** Opens activate/deactivate confirmation (live action, not part of Save). */
@@ -138,6 +143,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   errors,
   onDelete,
   onDuplicate,
+  onShowSetupChecklist,
   saveButtonBarState,
   channelShippingZones = [],
   allShippingZonesCount = 0,
@@ -297,6 +303,15 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       });
     }
 
+    if (onShowSetupChecklist) {
+      items.push({
+        label: intl.formatMessage(messages.showSetupChecklist),
+        onSelect: onShowSetupChecklist,
+        testId: "show-setup-checklist",
+        icon: <ListChecks size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
     if (onDelete) {
       items.push({
         label: intl.formatMessage(messages.deleteChannel),
@@ -308,7 +323,16 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     }
 
     return items;
-  }, [channelId, taxConfigurationId, intl, navigate, onDelete, onDuplicate, openPlaygroundURL]);
+  }, [
+    channelId,
+    taxConfigurationId,
+    intl,
+    navigate,
+    onDelete,
+    onDuplicate,
+    onShowSetupChecklist,
+    openPlaygroundURL,
+  ]);
   const [validationErrors, setValidationErrors] = useState<ChannelErrorFragment[]>([]);
   const [selectedCountryDisplayName, setSelectedCountryDisplayName] = useStateFromProps(
     channel?.defaultCountry.country || "",

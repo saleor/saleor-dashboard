@@ -328,18 +328,20 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   );
   const channelShippingZones = mapEdgesToItems(channelShippingZonesData?.shippingZones);
   const setupEmphasized = params.action === "setup";
-  const { isDismissed: setupCardDismissed, dismiss: dismissSetupCard } =
-    useChannelSetupCardDismiss(id);
+  const {
+    isDismissed: setupCardDismissed,
+    dismiss: dismissSetupCard,
+    undismiss: undismissSetupCard,
+  } = useChannelSetupCardDismiss(id);
   const hasWarehouseAssigned = channelWarehouses.length > 0;
   const hasShippingAssigned = (channelShippingZones?.length ?? 0) > 0;
   const coreSetupIncomplete =
     !hasWarehouseAssigned || (canLoadShippingZones && !hasShippingAssigned);
-  // Show for post-create (?action=setup), incomplete core setup, or inactive channels
-  // that still need Activate — not for every already-live channel forever.
+  // Show for post-create / cogs reopen (?action=setup overrides dismiss), incomplete
+  // core setup, or inactive channels that still need Activate — not forever on live channels.
   const showSetupCard =
     !!data?.channel &&
-    !setupCardDismissed &&
-    (setupEmphasized || coreSetupIncomplete || !data.channel.isActive);
+    (setupEmphasized || (!setupCardDismissed && (coreSetupIncomplete || !data.channel.isActive)));
   const {
     canFetchApps: canManagePaymentApps,
     paymentApps,
@@ -483,6 +485,14 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
                 const sourceChannelId = data.channel.id;
 
                 navigate(channelCreateUrl({ from: sourceChannelId }));
+              }
+            : undefined
+        }
+        onShowSetupChecklist={
+          data?.channel && !showSetupCard
+            ? () => {
+                undismissSetupCard();
+                openModal("setup");
               }
             : undefined
         }

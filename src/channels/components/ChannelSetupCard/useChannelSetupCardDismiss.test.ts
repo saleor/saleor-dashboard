@@ -37,4 +37,22 @@ describe("useChannelSetupCardDismiss", () => {
     // Assert
     expect(second.current.isDismissed).toBe(false);
   });
+
+  it("undismisses so the checklist can be shown again", () => {
+    // Arrange
+    const { result } = renderHook(() => useChannelSetupCardDismiss("channel-1"));
+
+    act(() => {
+      result.current.dismiss();
+    });
+    expect(result.current.isDismissed).toBe(true);
+
+    // Act
+    act(() => {
+      result.current.undismiss();
+    });
+
+    // Assert
+    expect(result.current.isDismissed).toBe(false);
+  });
 });

@@ -57,6 +57,12 @@ export const messages = defineMessages({
     description:
       "channel detail cogs menu, opens create dialog prefilled from this channel's settings",
   },
+  showSetupChecklist: {
+    id: "AqAfTD",
+    defaultMessage: "Show setup checklist",
+    description:
+      "channel detail cogs menu, reopens the Finish setting up this channel card after dismiss",
+  },
   deleteChannel: {
     id: "IlPaqv",
     defaultMessage: "Delete channel",

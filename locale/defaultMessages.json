@@ -12302,6 +12302,10 @@
   "pJ5/7G": {
     "string": "Close and hide all hints"
   },
+  "pK8nWm": {
+    "context": "channel detail cogs menu, reopens the Finish setting up this channel card after dismiss",
+    "string": "Show setup checklist"
+  },
   "pLSGmd": {
     "context": "product metadata dialog header",
     "string": "Product Metadata"
