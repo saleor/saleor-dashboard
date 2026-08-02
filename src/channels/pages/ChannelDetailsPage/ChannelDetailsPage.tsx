@@ -4,7 +4,11 @@ import { ShippingZones } from "@dashboard/channels/components/ShippingZones/Ship
 import Warehouses from "@dashboard/channels/components/Warehouses";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { validateChannelFormData } from "@dashboard/channels/validation";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -250,6 +254,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           <DetailPageLayout>
             <TopNav
               href={channelsListUrl()}
+              hrefIcon={<TopNavDestinationIcon.channels />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allChannels)}
               title={
                 channel?.name ||
                 intl.formatMessage({

@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -212,6 +216,8 @@ const ProductTypeDetailsPage = ({
           <DetailPageLayout>
             <TopNav
               href={productTypeListBackLink}
+              hrefIcon={<TopNavDestinationIcon.products />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allProductTypes)}
               title={
                 <ProductTypeDetailsTitle
                   productType={productType ? { name: productType.name } : null}

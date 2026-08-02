@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -57,6 +61,8 @@ const GiftCardUpdatePageHeader = () => {
     <>
       <TopNav
         href={giftCardBackLink}
+        hrefIcon={<TopNavDestinationIcon.giftCards />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.allGiftCards)}
         title={
           <div className={classes.title}>
             {title}

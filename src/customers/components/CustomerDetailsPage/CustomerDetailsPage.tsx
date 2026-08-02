@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -201,7 +205,13 @@ const CustomerDetailsPage = ({
       {({ change, data, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={customerBackLink} title={titleNode} actionsGap={3}>
+            <TopNav
+              href={customerBackLink}
+              hrefIcon={<TopNavDestinationIcon.customers />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allCustomers)}
+              title={titleNode}
+              actionsGap={3}
+            >
               {canEditCustomers && (
                 <TopNav.MetadataButton
                   onClick={onShowMetadata}

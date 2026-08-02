@@ -4,7 +4,11 @@ import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { defaultGraphiQLQuery } from "@dashboard/collections/queries";
 import { collectionListPath, type CollectionUrlQueryParams } from "@dashboard/collections/urls";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -111,7 +115,12 @@ const CollectionDetailsPage = ({
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={collectionListBackLink} title={collection?.name}>
+          <TopNav
+            href={collectionListBackLink}
+            hrefIcon={<TopNavDestinationIcon.products />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allCollections)}
+            title={collection?.name}
+          >
             {canTranslate && (
               <TranslationsButton
                 onClick={() =>

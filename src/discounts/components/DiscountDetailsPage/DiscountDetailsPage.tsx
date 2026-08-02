@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -96,7 +100,12 @@ export const DiscountDetailsPage = ({
     >
       {({ rulesErrors, rules, discountType, onDeleteRule, onRuleSubmit, onSubmit }) => (
         <DetailPageLayout testId="discount-form">
-          <TopNav href={backLinkHref} title={<DiscountDetailsTitle data={data} />}>
+          <TopNav
+            href={backLinkHref}
+            hrefIcon={<TopNavDestinationIcon.discounts />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allDiscounts)}
+            title={<DiscountDetailsTitle data={data} />}
+          >
             <TopNav.Menu
               items={[
                 ...extensionMenuItems,

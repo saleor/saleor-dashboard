@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -151,6 +155,8 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
           <DetailPageLayout>
             <TopNav
               href={pageTypeListBackLink}
+              hrefIcon={<TopNavDestinationIcon.modeling />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allModelTypes)}
               title={
                 <PageTypeDetailsTitle
                   pageType={pageType ? { name: pageType.name } : null}

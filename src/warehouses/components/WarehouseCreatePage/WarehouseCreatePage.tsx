@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -71,6 +75,8 @@ const WarehouseCreatePage = ({
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={warehouseListUrl()}
+              hrefIcon={<TopNavDestinationIcon.warehouses />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allWarehouses)}
               title={intl.formatMessage({
                 id: "GhcypC",
                 defaultMessage: "Create Warehouse",

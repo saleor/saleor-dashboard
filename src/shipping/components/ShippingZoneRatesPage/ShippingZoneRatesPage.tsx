@@ -1,7 +1,11 @@
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelShippingData } from "@dashboard/channels/utils";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type WithFormId } from "@dashboard/components/Form";
@@ -210,6 +214,8 @@ const ShippingZoneRatesPage = ({
         <DetailPageLayout>
           <TopNav
             href={backHref}
+            hrefIcon={<TopNavDestinationIcon.shipping />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.shippingZone)}
             title={
               <ShippingMethodDetailsTitle
                 shippingZoneName={shippingZoneName}

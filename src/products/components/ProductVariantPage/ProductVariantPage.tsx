@@ -7,7 +7,11 @@ import {
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelPriceData } from "@dashboard/channels/utils";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -234,6 +238,8 @@ export const ProductVariantPage = ({
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={productUrl(productId)}
+        hrefIcon={<TopNavDestinationIcon.products />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.product)}
         actionsGap={3}
         title={
           loading ? (
