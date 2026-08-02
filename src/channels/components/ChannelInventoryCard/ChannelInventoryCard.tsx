@@ -55,17 +55,15 @@ export const ChannelInventoryCard = ({
   };
 
   const assignAction = (() => {
-    if (disabled) {
-      return null;
-    }
-
     // Secondary in the sidebar cards — setup checklist keeps primary for the main funnel.
+    // Stay visible while saving; only disable so the layout doesn't jump.
     if (hasUnassigned && onAssignWarehouse && canCreateWarehouse && onCreateWarehouse) {
       return (
         <ButtonGroupWithDropdown
           variant="secondary"
           onClick={onAssignWarehouse}
           testId="inventory-assign-warehouse"
+          disabled={disabled}
           options={[
             {
               label: intl.formatMessage(messages.createWarehouse),
@@ -85,6 +83,7 @@ export const ChannelInventoryCard = ({
           variant="secondary"
           data-test-id="inventory-assign-warehouse"
           onClick={onAssignWarehouse}
+          disabled={disabled}
         >
           <FormattedMessage {...messages.assignWarehouse} />
         </Button>
@@ -97,6 +96,7 @@ export const ChannelInventoryCard = ({
           variant="secondary"
           data-test-id="inventory-create-warehouse"
           onClick={onCreateWarehouse}
+          disabled={disabled}
         >
           <FormattedMessage {...messages.createWarehouse} />
         </Button>
@@ -151,10 +151,11 @@ export const ChannelInventoryCard = ({
             axis="y"
             lockAxis="y"
             useDragHandle
+            shouldCancelStart={() => disabled}
             onSortStart={handleSortStart}
             onSortEnd={handleSortEnd}
           >
-            <div className={styles.list}>
+            <div className={disabled ? `${styles.list} ${styles.listDisabled}` : styles.list}>
               {warehouses.map((warehouse, index) => (
                 <ChannelInventoryWarehouseRow
                   key={warehouse.id}
@@ -164,6 +165,7 @@ export const ChannelInventoryCard = ({
                   name={warehouse.name}
                   position={index + 1}
                   onDelete={removeWarehouse}
+                  disabled={disabled}
                 />
               ))}
             </div>
@@ -194,14 +196,20 @@ export const ChannelInventoryCard = ({
           name="allocationStrategy"
           value={allocationValue}
           disabled={disabled}
-          onValueChange={next =>
+          onValueChange={next => {
+            // Ignore no-op updates (e.g. when the group enables after load) so
+            // we don't mark the channel form dirty before the user edits.
+            if (next === allocationValue) {
+              return;
+            }
+
             onAllocationStrategyChange({
               target: {
                 name: "allocationStrategy",
                 value: next,
               },
-            })
-          }
+            });
+          }}
           className={styles.allocationOptions}
           size="small"
           data-test-id="channel-inventory-allocation"

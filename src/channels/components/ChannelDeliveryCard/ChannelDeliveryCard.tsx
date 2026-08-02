@@ -38,16 +38,14 @@ export const ChannelDeliveryCard = ({
   const hasUnassigned = availableShippingZonesCount > zones.length;
 
   const assignAction = (() => {
-    if (disabled) {
-      return null;
-    }
-
+    // Stay visible while saving; only disable so the layout doesn't jump.
     if (hasUnassigned && onAssignShipping && canCreateShipping && onCreateShipping) {
       return (
         <ButtonGroupWithDropdown
           variant="secondary"
           onClick={onAssignShipping}
           testId="delivery-assign-shipping"
+          disabled={disabled}
           options={[
             {
               label: intl.formatMessage(messages.createShipping),
@@ -67,6 +65,7 @@ export const ChannelDeliveryCard = ({
           variant="secondary"
           data-test-id="delivery-assign-shipping"
           onClick={onAssignShipping}
+          disabled={disabled}
         >
           <FormattedMessage {...messages.assign} />
         </Button>
@@ -79,6 +78,7 @@ export const ChannelDeliveryCard = ({
           variant="secondary"
           data-test-id="delivery-create-shipping"
           onClick={onCreateShipping}
+          disabled={disabled}
         >
           <FormattedMessage {...messages.createShipping} />
         </Button>
@@ -140,7 +140,7 @@ export const ChannelDeliveryCard = ({
                     {zone.name}
                   </Text>
                 </RouterLink>
-                <DeletableItem id={zone.id} onDelete={removeShippingZone} />
+                <DeletableItem id={zone.id} onDelete={removeShippingZone} disabled={disabled} />
               </div>
             ))}
           </div>

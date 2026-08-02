@@ -162,15 +162,25 @@ export const messages = defineMessages({
       "Matches modern payment apps. Pick this unless you still run legacy payment plugins.",
     description: "mark as paid transaction option description",
   },
+  markAsPaidRecommendedBadge: {
+    id: "Gl0VOw",
+    defaultMessage: "recommended",
+    description: "parenthetical marker on recommended channel setting radio option",
+  },
   markAsPaidPaymentLabel: {
     id: "oPaVXi",
     defaultMessage: "A Payment",
     description: "mark as paid payment option label",
   },
   markAsPaidPaymentDescription: {
-    id: "YQ1Ru4",
-    defaultMessage: "The older object, kept for payment plugins.",
+    id: "CfuWsg",
+    defaultMessage: "The older object, kept for deprecated payment plugins.",
     description: "mark as paid payment option description",
+  },
+  markAsPaidLegacyBadge: {
+    id: "OWF2HL",
+    defaultMessage: "legacy",
+    description: "parenthetical marker on legacy channel setting radio option",
   },
   allowUnpaidOrdersLabel: {
     id: "v8CmW0",

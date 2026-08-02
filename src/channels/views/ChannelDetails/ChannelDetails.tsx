@@ -5,9 +5,17 @@ import { type FormData } from "@dashboard/channels/components/ChannelForm/Channe
 import { ChannelMetadataDialog } from "@dashboard/channels/components/ChannelMetadataDialog/ChannelMetadataDialog";
 import { ChannelSetupCard } from "@dashboard/channels/components/ChannelSetupCard/ChannelSetupCard";
 import { useChannelSetupCardDismiss } from "@dashboard/channels/components/ChannelSetupCard/useChannelSetupCardDismiss";
+import { ChannelActivateDialog } from "@dashboard/channels/components/ChannelStatus/ChannelActivateDialog";
+import { ChannelDeactivateDialog } from "@dashboard/channels/components/ChannelStatus/ChannelDeactivateDialog";
 import { CreateShippingForChannelDialog } from "@dashboard/channels/components/CreateShippingForChannelDialog/CreateShippingForChannelDialog";
 import { CreateWarehouseForChannelDialog } from "@dashboard/channels/components/CreateWarehouseForChannelDialog/CreateWarehouseForChannelDialog";
+import {
+  assignmentIdsEqual,
+  type ChannelAssignmentActions,
+  type ChannelDisplayedAssignmentIds,
+} from "@dashboard/channels/pages/ChannelDetailsPage/ChannelAssignmentActions";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
+import { getChannelDetailsRefetchQueries } from "@dashboard/channels/views/ChannelDetails/channelRefetchQueries";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
 import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
@@ -34,14 +42,15 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import useShop from "@dashboard/hooks/useShop";
-import { extractMutationErrors } from "@dashboard/misc";
+import { extractMutationErrors, getMutationStatus } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useMemo } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
+import { messages as channelDetailsPageMessages } from "../../pages/ChannelDetailsPage/messages";
 import {
   channelsListUrl,
   channelUrl,
@@ -73,8 +82,18 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   >(navigate, params => channelUrl(id, params), params);
 
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
-    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
-      notify(getDefaultNotifierSuccessErrorData(errors, intl)),
+    onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) => {
+      if (errors.length) {
+        notify(getDefaultNotifierSuccessErrorData(errors, intl));
+
+        return;
+      }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(channelDetailsPageMessages.channelUpdated),
+      });
+    },
   });
 
   const { data, loading } = useChannelQuery({
@@ -97,7 +116,11 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
 
       if (errors.length) {
         errors.forEach(error => handleError(error));
+
+        return;
       }
+
+      closeModal();
     },
   });
 
@@ -107,7 +130,11 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
 
       if (errors.length) {
         errors.forEach(error => handleError(error));
+
+        return;
       }
+
+      closeModal();
     },
   });
 
@@ -203,6 +230,10 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
           },
         },
       },
+      // Shipping zones are a separate query — without this, Activate stays
+      // disabled after Save even though assigns persisted.
+      refetchQueries: getChannelDetailsRefetchQueries(id),
+      awaitRefetchQueries: true,
     });
 
     const resultChannel = await updateChannelMutation;
@@ -309,11 +340,8 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const {
     handleCreateWarehouse,
     handleCreateShipping,
-    handleAssignWarehouse,
-    handleAssignShippingZone,
     createWarehouseConfirmState,
     createShippingConfirmState,
-    assignConfirmState,
   } = useChannelSetupActions({
     channelId: id,
     warehouseIds: channelWarehouses.map(warehouse => warehouse.id),
@@ -322,27 +350,54 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     onAssigned: closeModal,
   });
 
-  const assignedWarehouseIds = useMemo(
-    () => new Set(channelWarehouses.map(warehouse => warehouse.id)),
-    [channelWarehouses],
+  const assignmentActionsRef = useRef<ChannelAssignmentActions | null>(null);
+  const [displayedAssignmentIds, setDisplayedAssignmentIds] =
+    useState<ChannelDisplayedAssignmentIds>({
+      warehouseIds: [],
+      shippingZoneIds: [],
+    });
+  // Form bridge starts empty until mount — fall back to server counts until then.
+  const [hasDisplayedAssignments, setHasDisplayedAssignments] = useState(false);
+  const handleDisplayedAssignmentIdsChange = useCallback((ids: ChannelDisplayedAssignmentIds) => {
+    setHasDisplayedAssignments(true);
+    setDisplayedAssignmentIds(prev => (assignmentIdsEqual(prev, ids) ? prev : ids));
+  }, []);
+  const setupWarehouseCount = hasDisplayedAssignments
+    ? displayedAssignmentIds.warehouseIds.length
+    : channelWarehouses.length;
+  const setupShippingZoneCount = !canLoadShippingZones
+    ? undefined
+    : hasDisplayedAssignments
+      ? displayedAssignmentIds.shippingZoneIds.length
+      : (channelShippingZones?.length ?? 0);
+  // Activate must not enable on unsaved staged assigns.
+  const activateReady =
+    channelWarehouses.length > 0 &&
+    (!canLoadShippingZones || (channelShippingZones?.length ?? 0) > 0);
+
+  const displayedWarehouseIds = useMemo(
+    () => new Set(displayedAssignmentIds.warehouseIds),
+    [displayedAssignmentIds.warehouseIds],
   );
-  const assignedShippingZoneIds = useMemo(
-    () => new Set((channelShippingZones ?? []).map(zone => zone.id)),
-    [channelShippingZones],
+  const displayedShippingZoneIds = useMemo(
+    () => new Set(displayedAssignmentIds.shippingZoneIds),
+    [displayedAssignmentIds.shippingZoneIds],
   );
+
+  // Exclude server-assigned and form-staged rows so Save-pending picks don't reappear.
   const warehousesToAssign = useMemo(
     () =>
       getParsedSearchData({ data: searchWarehousesResult.data }).filter(
-        warehouse => !assignedWarehouseIds.has(warehouse.id),
+        warehouse => !displayedWarehouseIds.has(warehouse.id),
       ),
-    [searchWarehousesResult.data, assignedWarehouseIds],
+    [searchWarehousesResult.data, displayedWarehouseIds],
   );
   const shippingZonesToAssign = useMemo(
     () =>
       getParsedSearchData({ data: searchShippingZonesResult.data }).filter(
-        zone => !assignedShippingZoneIds.has(zone.id),
+        zone => !displayedShippingZoneIds.has(zone.id),
       ),
-    [searchShippingZonesResult.data, assignedShippingZoneIds],
+    [searchShippingZonesResult.data, displayedShippingZoneIds],
   );
   const warehouseAssignFetchMore = getSearchFetchMoreProps(
     searchWarehousesResult,
@@ -356,6 +411,14 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   if (data?.channel === null) {
     return <NotFoundPage onBack={() => navigate(channelsListUrl())} />;
   }
+
+  const pageDisabled =
+    updateChannelOpts.loading ||
+    reorderChannelWarehousesOpts.loading ||
+    loading ||
+    shippingZonesCountLoading ||
+    warehousesCountLoading ||
+    channelsShippingZonesLoading;
 
   return (
     <>
@@ -376,24 +439,15 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
         channel={data?.channel}
         loading={loading}
-        disabled={
-          updateChannelOpts.loading ||
-          reorderChannelWarehousesOpts.loading ||
-          loading ||
-          shippingZonesCountLoading ||
-          warehousesCountLoading ||
-          channelsShippingZonesLoading
-        }
+        disabled={pageDisabled}
         disabledStatus={activateChannelOpts.loading || deactivateChannelOpts.loading}
         errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleSubmit}
-        updateChannelStatus={() =>
-          data?.channel?.isActive
-            ? deactivateChannel({ variables: { id } })
-            : activateChannel({ variables: { id } })
-        }
+        onToggleChannelStatus={() => openModal(data?.channel?.isActive ? "deactivate" : "activate")}
+        assignmentActionsRef={assignmentActionsRef}
+        onDisplayedAssignmentIdsChange={handleDisplayedAssignmentIdsChange}
         saveButtonBarState={updateChannelOpts.status}
         countries={shop?.countries || []}
         onCreateWarehouse={() => openModal("create-warehouse")}
@@ -408,24 +462,24 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
               chargeTaxes={data.channel.taxConfiguration?.chargeTaxes}
               taxCalculationStrategy={data.channel.taxConfiguration?.taxCalculationStrategy}
               channelSlug={data.channel.slug}
-              warehouseCount={channelWarehouses.length}
-              shippingZoneCount={
-                canLoadShippingZones ? (channelShippingZones?.length ?? 0) : undefined
-              }
+              warehouseCount={setupWarehouseCount}
+              shippingZoneCount={setupShippingZoneCount}
               availableWarehousesCount={warehousesCountData?.warehouses?.totalCount ?? 0}
               availableShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount ?? 0}
               paymentAppsCount={paymentAppsCount}
               publishedProductCount={publishedProductCount}
               totalProductCount={totalProductCount}
               isActive={data.channel.isActive}
+              activateReady={activateReady}
               canCreateWarehouse={canCreateWarehouse}
               canAssignWarehouse={canLoadWarehouses}
               onAssignWarehouse={() => openModal("assign-warehouse")}
               onCreateWarehouse={() => openModal("create-warehouse")}
               onAssignShipping={() => openModal("assign-shipping")}
               onCreateShipping={() => openModal("create-shipping")}
-              onActivate={() => activateChannel({ variables: { id } })}
+              onActivate={() => openModal("activate")}
               activateDisabled={activateChannelOpts.loading}
+              disabled={pageDisabled}
               onDismiss={() => {
                 dismissSetupCard();
 
@@ -485,10 +539,10 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
             hasMore={warehouseAssignFetchMore.hasMore}
             onFetchMore={warehouseAssignFetchMore.onFetchMore}
             onFetch={searchWarehouses}
-            confirmButtonState={assignConfirmState}
-            onSubmit={selectedWarehouses =>
-              handleAssignWarehouse(selectedWarehouses.map(warehouse => warehouse.id))
-            }
+            onSubmit={selectedWarehouses => {
+              // Assign dialog closes itself after onSubmit.
+              assignmentActionsRef.current?.assignWarehouses(selectedWarehouses);
+            }}
           />
           <AssignShippingZoneDialog
             open={params.action === "assign-shipping"}
@@ -498,8 +552,23 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
             hasMore={shippingAssignFetchMore.hasMore}
             onFetchMore={shippingAssignFetchMore.onFetchMore}
             onFetch={searchShippingZones}
-            confirmButtonState={assignConfirmState}
-            onSubmit={selectedZones => handleAssignShippingZone(selectedZones.map(zone => zone.id))}
+            onSubmit={selectedZones => {
+              assignmentActionsRef.current?.assignShippingZones(selectedZones);
+            }}
+          />
+          <ChannelActivateDialog
+            open={params.action === "activate"}
+            onClose={closeModal}
+            channelName={data.channel.name}
+            confirmButtonState={getMutationStatus(activateChannelOpts)}
+            onConfirm={() => activateChannel({ variables: { id } })}
+          />
+          <ChannelDeactivateDialog
+            open={params.action === "deactivate"}
+            onClose={closeModal}
+            channelName={data.channel.name}
+            confirmButtonState={getMutationStatus(deactivateChannelOpts)}
+            onConfirm={() => deactivateChannel({ variables: { id } })}
           />
         </>
       )}

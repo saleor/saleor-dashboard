@@ -7,6 +7,8 @@ export interface ChannelSettingRadioOption<T extends string> {
   value: T;
   label: ReactNode;
   description: ReactNode;
+  /** Optional pill next to the label (e.g. Recommended / Legacy). */
+  badge?: ReactNode;
 }
 
 interface ChannelSettingRadioGroupProps<T extends string> {
@@ -59,9 +61,12 @@ export const ChannelSettingRadioGroup = <T extends string>({
           className={`simple-radio-group ${styles.optionItem}`}
         >
           <Box className={styles.optionCopy}>
-            <Text size={3} fontWeight="medium" as="span">
-              {option.label}
-            </Text>
+            <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
+              <Text size={3} fontWeight="medium" as="span">
+                {option.label}
+              </Text>
+              {option.badge}
+            </Box>
             <Text size={2} color="default2" as="span">
               {option.description}
             </Text>

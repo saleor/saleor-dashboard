@@ -1,6 +1,41 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  channelUpdated: {
+    id: "T9dLJY",
+    defaultMessage: "Channel updated",
+    description: "success toast after saving channel details",
+  },
+  saveCompositionIncludes: {
+    id: "TjY0ay",
+    defaultMessage: "Unsaved changes: {segments}",
+    description: "Savebar hint listing which channel areas will persist on Save",
+  },
+  saveCompositionGeneral: {
+    id: "C+uqjN",
+    defaultMessage: "general",
+    description: "Save composition segment for channel name, slug, currency, country",
+  },
+  saveCompositionOrders: {
+    id: "6UwNdZ",
+    defaultMessage: "orders",
+    description: "Save composition segment for channel order settings",
+  },
+  saveCompositionPayments: {
+    id: "3NioLe",
+    defaultMessage: "payments",
+    description: "Save composition segment for channel payment and checkout settings",
+  },
+  saveCompositionInventory: {
+    id: "mOyjAi",
+    defaultMessage: "inventory",
+    description: "Save composition segment for warehouses and allocation strategy",
+  },
+  saveCompositionDelivery: {
+    id: "Z79yxZ",
+    defaultMessage: "delivery",
+    description: "Save composition segment for shipping zones",
+  },
   editChannelMetadata: {
     id: "N4rmXl",
     defaultMessage: "Edit channel metadata",

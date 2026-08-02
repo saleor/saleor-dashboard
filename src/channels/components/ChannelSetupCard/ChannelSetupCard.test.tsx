@@ -140,6 +140,27 @@ describe("ChannelSetupCard", () => {
     expect(onActivate).toHaveBeenCalled();
   });
 
+  it("keeps Activate disabled when checklist is staged but activateReady is false", () => {
+    // Arrange & Act — local counts complete; saved server state not ready yet
+    render(
+      <ChannelSetupCard
+        {...baseProps}
+        warehouseCount={1}
+        shippingZoneCount={1}
+        availableWarehousesCount={1}
+        availableShippingZonesCount={1}
+        activateReady={false}
+        onDismiss={jest.fn()}
+        onActivate={jest.fn()}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.getByTestId("setup-checklist-progress")).toHaveTextContent("2 of 2");
+    expect(screen.getByTestId("setup-activate-channel")).toBeDisabled();
+  });
+
   it("hides Activate channel when the channel is already active", () => {
     // Arrange & Act
     render(

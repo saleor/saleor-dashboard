@@ -79,6 +79,7 @@
 
 .taskCompleted .taskTitle {
   color: var(--mu-colors-text-default2);
+  text-decoration: line-through;
 }
 
 .taskHeader {

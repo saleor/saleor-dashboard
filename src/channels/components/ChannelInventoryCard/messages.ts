@@ -44,8 +44,8 @@ export const messages = defineMessages({
     description: "channel inventory create dropdown item",
   },
   reorderHint: {
-    id: "MoZtoJ",
-    defaultMessage: "Drag the handles to reorder, or focus one and use the arrow keys.",
+    id: "EfF28c",
+    defaultMessage: "Drag the handles to reorder.",
     description: "channel inventory reorder hint",
   },
   allocationTitle: {

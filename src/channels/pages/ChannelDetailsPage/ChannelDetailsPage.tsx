@@ -19,7 +19,7 @@ import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
+import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { hasOneOfPermissions, hasPermissions } from "@dashboard/components/RequirePermissions";
@@ -46,13 +46,23 @@ import { useIntl } from "react-intl";
 
 import { ChannelForm, type FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
-import { ChannelDetailsTitle } from "./ChannelDetailsTitle";
 import {
+  type ChannelAssignmentActionsRef,
+  type ChannelDisplayedAssignmentIds,
+} from "./ChannelAssignmentActions";
+import { ChannelAssignmentActionsBridge } from "./ChannelAssignmentActionsBridge";
+import { ChannelDetailsTitle } from "./ChannelDetailsTitle";
+import { isChannelUpdateFormPristine, mergeChannelFormData } from "./channelFormPristine";
+import { ChannelSaveCompositionHint } from "./ChannelSaveCompositionHint";
+import {
+  createShippingZoneAddHandler,
   createShippingZoneRemoveHandler,
+  createWarehouseAddHandler,
   createWarehouseRemoveHandler,
   createWarehouseReorderHandler,
 } from "./handlers";
 import { messages } from "./messages";
+import { buildChannelSaveComposition } from "./saveComposition";
 import { type ChannelShippingZones, type ChannelWarehouses } from "./types";
 import { parseDateTimeToDateAndTime } from "./utils";
 
@@ -84,10 +94,17 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   onCreateShipping?: () => void;
   /** Opens assign-shipping dialog for the delivery card. */
   onAssignShipping?: () => void;
+  /**
+   * Refs filled with form-staged assign actions / displayed ids so URL-driven
+   * dialogs in the view can stage membership until Save and filter choices.
+   */
+  assignmentActionsRef?: ChannelAssignmentActionsRef;
+  onDisplayedAssignmentIdsChange?: (ids: ChannelDisplayedAssignmentIds) => void;
   onDelete?: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors>;
-  updateChannelStatus?: () => void;
+  /** Opens activate/deactivate confirmation (live action, not part of Save). */
+  onToggleChannelStatus?: () => void;
 }
 
 const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
@@ -100,7 +117,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   errors,
   onDelete,
   saveButtonBarState,
-  updateChannelStatus,
   channelShippingZones = [],
   allShippingZonesCount = 0,
   channelWarehouses = [],
@@ -112,7 +128,10 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   canCreateWarehouse = false,
   onCreateShipping,
   onAssignShipping,
+  assignmentActionsRef,
+  onDisplayedAssignmentIdsChange,
   onShowMetadata,
+  onToggleChannelStatus,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
   const intl = useIntl();
@@ -219,49 +238,69 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   const cutOffDateTime = parseDateTimeToDateAndTime(
     checkoutSettings?.automaticCompletionCutOffDate,
   );
-  const initialData: FormData = {
-    currencyCode: "",
-    name: "",
-    slug: "",
-    shippingZonesIdsToAdd: [],
-    shippingZonesIdsToRemove: [],
-    warehousesIdsToAdd: [],
-    warehousesIdsToRemove: [],
-    defaultCountry: (defaultCountry?.code || "") as CountryCode,
-    ...formData,
-    allocationStrategy: stockSettings?.allocationStrategy ?? createDefaults.allocationStrategy,
-    shippingZonesToDisplay: channelShippingZones,
-    warehousesToDisplay: channelWarehouses,
-    markAsPaidStrategy: orderSettings?.markAsPaidStrategy ?? createDefaults.markAsPaidStrategy,
-    expireOrdersAfter: orderSettings?.expireOrdersAfter ?? createDefaults.expireOrdersAfter,
-    deleteExpiredOrdersAfter:
-      orderSettings?.deleteExpiredOrdersAfter ?? createDefaults.deleteExpiredOrdersAfter,
-    allowUnpaidOrders: orderSettings?.allowUnpaidOrders ?? createDefaults.allowUnpaidOrders,
-    automaticallyConfirmAllNewOrders:
-      orderSettings?.automaticallyConfirmAllNewOrders ??
-      createDefaults.automaticallyConfirmAllNewOrders,
-    automaticallyFulfillNonShippableGiftCard:
-      orderSettings?.automaticallyFulfillNonShippableGiftCard ??
-      createDefaults.automaticallyFulfillNonShippableGiftCard,
-    defaultTransactionFlowStrategy:
-      paymentSettings?.defaultTransactionFlowStrategy ??
-      createDefaults.defaultTransactionFlowStrategy,
-    releaseFundsForExpiredCheckouts:
-      paymentSettings?.releaseFundsForExpiredCheckouts ??
-      createDefaults.releaseFundsForExpiredCheckouts,
-    checkoutTtlBeforeReleasingFunds:
-      paymentSettings?.checkoutTtlBeforeReleasingFunds ??
-      createDefaults.checkoutTtlBeforeReleasingFunds,
-    allowLegacyGiftCardUse:
-      checkoutSettings?.allowLegacyGiftCardUse ?? createDefaults.allowLegacyGiftCardUse,
-    automaticallyCompleteCheckouts:
-      checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ??
-      createDefaults.automaticallyCompleteCheckouts,
-    automaticCompletionDelay:
-      checkoutSettings?.automaticCompletionDelay ?? createDefaults.automaticCompletionDelay,
-    automaticCompletionCutOffDate: cutOffDateTime.date,
-    automaticCompletionCutOffTime: cutOffDateTime.time,
-  };
+  const initialData: FormData = useMemo(
+    () => ({
+      currencyCode: "",
+      name: "",
+      slug: "",
+      shippingZonesIdsToAdd: [],
+      shippingZonesIdsToRemove: [],
+      warehousesIdsToAdd: [],
+      warehousesIdsToRemove: [],
+      defaultCountry: (defaultCountry?.code || "") as CountryCode,
+      ...formData,
+      allocationStrategy: stockSettings?.allocationStrategy ?? createDefaults.allocationStrategy,
+      shippingZonesToDisplay: channelShippingZones,
+      warehousesToDisplay: channelWarehouses,
+      markAsPaidStrategy: orderSettings?.markAsPaidStrategy ?? createDefaults.markAsPaidStrategy,
+      expireOrdersAfter: orderSettings?.expireOrdersAfter ?? createDefaults.expireOrdersAfter,
+      deleteExpiredOrdersAfter:
+        orderSettings?.deleteExpiredOrdersAfter ?? createDefaults.deleteExpiredOrdersAfter,
+      allowUnpaidOrders: orderSettings?.allowUnpaidOrders ?? createDefaults.allowUnpaidOrders,
+      automaticallyConfirmAllNewOrders:
+        orderSettings?.automaticallyConfirmAllNewOrders ??
+        createDefaults.automaticallyConfirmAllNewOrders,
+      automaticallyFulfillNonShippableGiftCard:
+        orderSettings?.automaticallyFulfillNonShippableGiftCard ??
+        createDefaults.automaticallyFulfillNonShippableGiftCard,
+      defaultTransactionFlowStrategy:
+        paymentSettings?.defaultTransactionFlowStrategy ??
+        createDefaults.defaultTransactionFlowStrategy,
+      releaseFundsForExpiredCheckouts:
+        paymentSettings?.releaseFundsForExpiredCheckouts ??
+        createDefaults.releaseFundsForExpiredCheckouts,
+      checkoutTtlBeforeReleasingFunds:
+        paymentSettings?.checkoutTtlBeforeReleasingFunds ??
+        createDefaults.checkoutTtlBeforeReleasingFunds,
+      allowLegacyGiftCardUse:
+        checkoutSettings?.allowLegacyGiftCardUse ?? createDefaults.allowLegacyGiftCardUse,
+      automaticallyCompleteCheckouts:
+        checkoutSettings?.automaticallyCompleteFullyPaidCheckouts ??
+        createDefaults.automaticallyCompleteCheckouts,
+      automaticCompletionDelay:
+        checkoutSettings?.automaticCompletionDelay ?? createDefaults.automaticCompletionDelay,
+      automaticCompletionCutOffDate: cutOffDateTime.date,
+      automaticCompletionCutOffTime: cutOffDateTime.time,
+    }),
+    // Channel fragment + assigned lists are the saved baseline for pristine checks.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [channel, channelShippingZones, channelWarehouses],
+  );
+  const checkIfSaveIsDisabled = useCallback(
+    (data: FormData) => {
+      if (disabled) {
+        return true;
+      }
+
+      // Create keeps Save enabled for validation feedback; edit uses pristine compare.
+      if (!channel) {
+        return false;
+      }
+
+      return isChannelUpdateFormPristine(data, initialData);
+    },
+    [channel, disabled, initialData],
+  );
   const handleSubmit = async (data: FormData) => {
     const errors = validateChannelFormData(data);
 
@@ -297,8 +336,19 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   }
 
   return (
-    <Form confirmLeave onSubmit={handleSubmit} initial={initialData}>
-      {({ change, data, submit, set, triggerChange }) => {
+    <Form
+      confirmLeave
+      onSubmit={handleSubmit}
+      initial={initialData}
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+      mergeFunc={mergeChannelFormData}
+    >
+      {({ change, data, submit, set, triggerChange, isSaveDisabled }) => {
+        const saveComposition = channel
+          ? buildChannelSaveComposition(data, initialData)
+          : undefined;
+
         const handleCurrencyCodeSelect = (event: ChangeEvent) => {
           setCurrencyManuallyEdited(true);
           createSingleAutocompleteSelectHandler(
@@ -328,8 +378,10 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             }
           }
         };
-        const removeShippingZone = createShippingZoneRemoveHandler(data, set, triggerChange);
-        const removeWarehouse = createWarehouseRemoveHandler(data, set, triggerChange);
+        const addShippingZone = createShippingZoneAddHandler(data, set);
+        const removeShippingZone = createShippingZoneRemoveHandler(data, set);
+        const addWarehouse = createWarehouseAddHandler(data, set);
+        const removeWarehouse = createWarehouseRemoveHandler(data, set);
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
         const allErrors = [...errors, ...validationErrors];
         const channelFormProps = {
@@ -351,6 +403,21 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
         return (
           <DetailPageLayout gridTemplateColumns={showRightSidebar ? 12 : 1}>
+            <FormDirtyStateSync
+              enabled={!!channel}
+              isSaveDisabled={isSaveDisabled}
+              triggerChange={triggerChange}
+            />
+            <ChannelAssignmentActionsBridge
+              assignmentActionsRef={assignmentActionsRef}
+              onDisplayedAssignmentIdsChange={onDisplayedAssignmentIdsChange}
+              actions={{
+                assignWarehouses: addWarehouse,
+                assignShippingZones: addShippingZone,
+              }}
+              warehouseIds={data.warehousesToDisplay.map(warehouse => warehouse.id)}
+              shippingZoneIds={(data.shippingZonesToDisplay ?? []).map(zone => zone.id)}
+            />
             <TopNav
               href={channelsListUrl()}
               title={
@@ -366,22 +433,29 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               }
               actionsGap={3}
             >
-              {!isCreate && updateChannelStatus && (
+              {!isCreate && onToggleChannelStatus && (
                 <ChannelStatus
                   isActive={!!channel?.isActive}
-                  disabled={!!disabledStatus}
-                  onClick={updateChannelStatus}
+                  disabled={disabled || !!disabledStatus}
+                  onClick={onToggleChannelStatus}
                 />
               )}
               {!isCreate && onShowMetadata && (
                 <TopNav.MetadataButton
                   onClick={onShowMetadata}
-                  disabled={!channel}
+                  disabled={disabled || !channel}
                   data-test-id="show-channel-metadata"
                   title={intl.formatMessage(messages.editChannelMetadata)}
                 />
               )}
-              {menuItems.length > 0 && <TopNav.Menu items={menuItems} dataTestId="menu" />}
+              {menuItems.length > 0 && (
+                <TopNav.Menu
+                  items={
+                    disabled ? menuItems.map(item => ({ ...item, disabled: true })) : menuItems
+                  }
+                  dataTestId="menu"
+                />
+              )}
             </TopNav>
             <DetailPageLayout.Content>
               {setupCard}
@@ -407,45 +481,46 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             </DetailPageLayout.Content>
             {showRightSidebar && (
               <DetailPageLayout.RightSidebar paddingTop={6}>
-                {showDeliveryCard && (
+                {showInventoryCard && (
                   <>
-                    <ChannelDeliveryCard
-                      shippingZones={data.shippingZonesToDisplay}
-                      removeShippingZone={removeShippingZone}
+                    <ChannelInventoryCard
+                      warehouses={data.warehousesToDisplay}
+                      removeWarehouse={removeWarehouse}
+                      reorderWarehouses={reorderWarehouse}
                       disabled={disabled}
-                      availableShippingZonesCount={allShippingZonesCount}
-                      // Card is gated by MANAGE_SHIPPING — same permission as shippingZoneCreate.
-                      canCreateShipping
-                      onAssignShipping={onAssignShipping}
-                      onCreateShipping={onCreateShipping}
+                      availableWarehousesCount={allWarehousesCount}
+                      canCreateWarehouse={canCreateWarehouse}
+                      onAssignWarehouse={onAssignWarehouse}
+                      onCreateWarehouse={onCreateWarehouse}
+                      allocationStrategy={data.allocationStrategy}
+                      onAllocationStrategyChange={change}
                     />
-                    {showInventoryCard ? <CardSpacer /> : null}
+                    {showDeliveryCard ? <CardSpacer /> : null}
                   </>
                 )}
-                {showInventoryCard && (
-                  <ChannelInventoryCard
-                    warehouses={data.warehousesToDisplay}
-                    removeWarehouse={removeWarehouse}
-                    reorderWarehouses={reorderWarehouse}
+                {showDeliveryCard && (
+                  <ChannelDeliveryCard
+                    shippingZones={data.shippingZonesToDisplay}
+                    removeShippingZone={removeShippingZone}
                     disabled={disabled}
-                    availableWarehousesCount={allWarehousesCount}
-                    canCreateWarehouse={canCreateWarehouse}
-                    onAssignWarehouse={onAssignWarehouse}
-                    onCreateWarehouse={onCreateWarehouse}
-                    allocationStrategy={data.allocationStrategy}
-                    onAllocationStrategyChange={change}
+                    availableShippingZonesCount={allShippingZonesCount}
+                    // Card is gated by MANAGE_SHIPPING — same permission as shippingZoneCreate.
+                    canCreateShipping
+                    onAssignShipping={onAssignShipping}
+                    onCreateShipping={onCreateShipping}
                   />
                 )}
               </DetailPageLayout.RightSidebar>
             )}
             <Savebar>
-              {!isCreate && <Savebar.DeleteButton onClick={onDelete} />}
+              {!isCreate && <Savebar.DeleteButton onClick={onDelete} disabled={disabled} />}
               <Savebar.Spacer />
+              {!isCreate && <ChannelSaveCompositionHint composition={saveComposition} />}
               <Savebar.CancelButton onClick={() => navigate(channelsListUrl())} />
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}
-                disabled={disabled}
+                disabled={isSaveDisabled}
               />
             </Savebar>
           </DetailPageLayout>

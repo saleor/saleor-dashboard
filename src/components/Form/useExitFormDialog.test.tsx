@@ -128,6 +128,68 @@ describe("useExitFormDialog", () => {
     expect(result.current.exit.shouldBlockNavigation()).toBe(false);
     expect(result.current.history.location.search).toBe("?action=assign-attribute-value&id=123");
   });
+  it("allows opening a dialog when pathname encoding differs only by encodeURIComponent", async () => {
+    // Arrange - GraphQL ids often end in "="; url helpers encode them as %3D
+    const decodedPath = "/channels/Q2hhbm5lbDoxMA==";
+    const encodedPath = "/channels/Q2hhbm5lbDoxMA%3D%3D";
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = renderHook(
+      () => {
+        const form = useForm({ field: "" }, submitFn, { confirmLeave: true });
+        const exit = useExitFormDialog();
+        const history = useHistory();
+
+        return { form, exit, history };
+      },
+      {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={[{ pathname: decodedPath }]}>
+            <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
+          </MemoryRouter>
+        ),
+      },
+    );
+
+    // Act - dirty form, then open a URL-driven dialog via the encoded entity URL
+    act(() => {
+      result.current.form.change({
+        target: { name: "field", value: "something" },
+      });
+    });
+    act(() => {
+      result.current.history.push(`${encodedPath}?action=assign-shipping`);
+    });
+
+    // Assert - same page after decoding; dialog opens without an exit prompt
+    expect(result.current.exit.shouldBlockNavigation()).toBe(false);
+    expect(result.current.history.location.search).toBe("?action=assign-shipping");
+  });
+  it("allows no-op same-path replace when form is dirty (double dialog close)", async () => {
+    // Arrange - dialog already closed; a second closeModal replace is a no-op
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    const { result } = setup(submitFn);
+
+    act(() => {
+      result.current.form.change({
+        target: { name: "field", value: "something" },
+      });
+    });
+    act(() => {
+      result.current.history.push("/?action=assign-shipping");
+    });
+    act(() => {
+      result.current.history.replace("/");
+    });
+
+    // Act - second close with identical location (dialogs often call onClose after onSubmit)
+    act(() => {
+      result.current.history.replace("/");
+    });
+
+    // Assert
+    expect(result.current.exit.shouldBlockNavigation()).toBe(false);
+    expect(result.current.history.location.search).toBe("");
+  });
   it("allows closing a dialog (clearing action query params) on same pathname when form is dirty", async () => {
     // Given - start with an open dialog
     const submitFn = jest.fn(() => Promise.resolve([]));

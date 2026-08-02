@@ -3,6 +3,10 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
+  "+2MvXa": {
+    "context": "channel setup card subtitle",
+    "string": "Channels work like markets. Customers can’t check out until the required steps are done. Finish them now or come back later."
+  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -81,9 +85,17 @@
   "+U6ozc": {
     "string": "Type"
   },
+  "+VC8bY": {
+    "context": "channel payments mark as paid title",
+    "string": "\"Mark as paid\" creates"
+  },
   "+VEhV8": {
     "context": "product channels",
     "string": "Availability"
+  },
+  "+Vvntt": {
+    "context": "channel order setting description for gift cards",
+    "string": "Digital gift cards are marked {fulfilled} and emailed to the customer without waiting for a warehouse step."
   },
   "+WTmpr": {
     "context": "disabled status option label",
@@ -169,10 +181,6 @@
   "+svQBN": {
     "context": "alert",
     "string": "Order limit reached"
-  },
-  "+tIkAe": {
-    "context": "status",
-    "string": "Status"
   },
   "+vyg/Z": {
     "context": "canceled fulfillment, restock destination warehouse info",
@@ -331,6 +339,14 @@
   "/ly15q": {
     "context": "tab label for required attributes",
     "string": "Required Attributes"
+  },
+  "/mtpmv": {
+    "context": "channel payments setting description for transaction flow",
+    "string": "What payment apps are asked to do at checkout."
+  },
+  "/n3uYt": {
+    "context": "channel inventory allocation option description",
+    "string": "Take stock from the first warehouse above, then fall through the list. Use when one location should always ship first."
   },
   "/nZy6A": {
     "context": "page subtitle",
@@ -561,6 +577,10 @@
     "context": "card header and checkbox label",
     "string": "Emit update webhooks for metadata changes"
   },
+  "0hCh0t": {
+    "context": "footer when warehouse and shipping are done",
+    "string": "Required steps are complete."
+  },
   "0iF2NT": {
     "context": "physical shipment section header in line expanded panel",
     "string": "Shipments"
@@ -622,9 +642,6 @@
   "0xMUfd": {
     "string": "No results found for \"{query}\""
   },
-  "1+ROfp": {
-    "string": "Transaction"
-  },
   "1/bAgt": {
     "context": "discount type fixed",
     "string": "Fixed"
@@ -664,6 +681,10 @@
   "15fg+o": {
     "context": "weeks after label",
     "string": "weeks after issue"
+  },
+  "15w4sp": {
+    "context": "channel deactivate confirmation dialog title",
+    "string": "Deactivate channel"
   },
   "16Dpgb": {
     "context": "Synchronous events description",
@@ -707,6 +728,10 @@
   "1LiVhv": {
     "context": "section header",
     "string": "Recent Orders"
+  },
+  "1M0OKI": {
+    "context": "badge when shipping setup CTAs are unavailable",
+    "string": "Missing permission to manage shipping"
   },
   "1O/T5n": {
     "context": "gift card history message",
@@ -901,6 +926,10 @@
     "context": "webhooks active label",
     "string": "Active"
   },
+  "2Sq3eY": {
+    "context": "channel inventory allocation option",
+    "string": "Follow the list order"
+  },
   "2Sx05f": {
     "context": "Previous discount label",
     "string": "Previous discount value"
@@ -1002,6 +1031,10 @@
   "2qfU+C": {
     "string": "The extension identifier is already in use."
   },
+  "2qyiGa": {
+    "context": "channel metadata dialog header",
+    "string": "Channel Metadata"
+  },
   "2sDBzg": {
     "context": "reference types multiselect label for product entity",
     "string": "Product types"
@@ -1058,6 +1091,10 @@
     "context": "hint under returns and refunds card on order settings",
     "string": "Choose model types used as refund and return reason references."
   },
+  "35Ix6Q": {
+    "context": "setup checklist review section subtitle",
+    "string": "Review before activating"
+  },
   "367xKd": {
     "context": "settings search alias",
     "string": "authorize"
@@ -1077,10 +1114,6 @@
   "38izkC": {
     "context": "placeholder for configuration settings search",
     "string": "Search settings…"
-  },
-  "39yi8w": {
-    "context": "selected currency",
-    "string": "Selected currency"
   },
   "3AqOxp": {
     "context": "no category set error",
@@ -1120,6 +1153,10 @@
     "context": "label",
     "string": "Model type Name"
   },
+  "3NioLe": {
+    "context": "Save composition segment for channel payment and checkout settings",
+    "string": "payments"
+  },
   "3PVGWj": {
     "string": "Filter preset"
   },
@@ -1133,6 +1170,10 @@
   "3VsNbv": {
     "context": "WarehouseSettings local warehouse description",
     "string": "If selected customer will be able to choose this warehouse as pickup point.{break}Ordered products will be only fulfilled from this warehouse stock"
+  },
+  "3Yn1Qe": {
+    "context": "create shipping for channel",
+    "string": "Create shipping"
   },
   "3a5wL8": {
     "string": "Active"
@@ -1185,6 +1226,10 @@
     "context": "attribute values list: slug column header",
     "string": "Admin"
   },
+  "3qaTMO": {
+    "context": "assign shipping zone dialog title",
+    "string": "Assign shipping zones"
+  },
   "3rIMq/": {
     "context": "product shipping",
     "string": "Shipping"
@@ -1206,10 +1251,6 @@
   },
   "3xv4ez": {
     "string": "Go to users/staff members"
-  },
-  "3y4r+z": {
-    "context": "channel settings",
-    "string": "Channel Settings"
   },
   "3yf2ND": {
     "string": "Operator"
@@ -1458,6 +1499,10 @@
   "5FSIZp": {
     "string": "Create new attribute"
   },
+  "5HXDLH": {
+    "context": "helper under locked currency on edit",
+    "string": "Fixed at creation. To sell in another currency, create a second channel."
+  },
   "5HwLx9": {
     "context": "alert",
     "string": "Warehouse limit reached"
@@ -1480,9 +1525,9 @@
     "context": "model label",
     "string": "Hidden"
   },
-  "5O8EIz": {
-    "context": "Authorize transactions instead of charging",
-    "string": "Authorize transactions instead of charging"
+  "5O+fh+": {
+    "context": "channel details section nav item",
+    "string": "Orders"
   },
   "5ObBlW": {
     "string": "Dark Mode"
@@ -1494,6 +1539,9 @@
   "5QKsu+": {
     "context": "waiting for export to end, header",
     "string": "Exporting CSV"
+  },
+  "5R7tCW": {
+    "string": "Shipping zone and rate created"
   },
   "5RmuD+": {
     "string": "Manage and update your warehouse information"
@@ -1629,6 +1677,10 @@
     "context": "customer detail cogs menu, activates a deactivated customer account",
     "string": "Activate user"
   },
+  "62h68f": {
+    "context": "channel delivery create dropdown item",
+    "string": "Create shipping"
+  },
   "62nsdy": {
     "string": "Retry"
   },
@@ -1655,6 +1707,10 @@
   "68Wuv1": {
     "context": "search results",
     "string": "No collections found"
+  },
+  "69M0SI": {
+    "context": "setup checklist primary CTA to activate the channel",
+    "string": "Activate channel"
   },
   "6AMFki": {
     "context": "product name",
@@ -1710,6 +1766,10 @@
   },
   "6Tps09": {
     "string": "Inactive"
+  },
+  "6UwNdZ": {
+    "context": "Save composition segment for channel order settings",
+    "string": "orders"
   },
   "6V+aAL": {
     "string": "Avatar updated"
@@ -1782,6 +1842,10 @@
     "context": "tooltip, submit form",
     "string": "Transaction is non-refundable. You have to send refund manually."
   },
+  "6hrHWS": {
+    "context": "transaction flow charge option label",
+    "string": "Charge immediately"
+  },
   "6iw4VR": {
     "context": "delete variant dialog title",
     "string": "Delete Product Variants"
@@ -1823,6 +1887,10 @@
   },
   "6xNl6V": {
     "string": "Add code"
+  },
+  "6xx3Us": {
+    "context": "accordion title for optional channel order/payment settings on create",
+    "string": "Advanced settings"
   },
   "6y+k8V": {
     "context": "product field",
@@ -1885,6 +1953,10 @@
   "7Chrsf": {
     "string": "Passwords do not match"
   },
+  "7CpvZg": {
+    "context": "Expanded help for shipping setup. Based on Saleor shipping zones: zones set countries/methods and must be linked to the channel for checkout rates.",
+    "string": "Shipping zones define which countries you deliver to and which rates customers see at checkout. Assign this channel to a zone that covers your default country so shoppers can choose a shipping method."
+  },
   "7EDqed": {
     "context": "tab name",
     "string": "All gift cards"
@@ -1896,6 +1968,10 @@
   "7FL+WZ": {
     "context": "export products to csv file, button",
     "string": "Export Products"
+  },
+  "7Fj+JA": {
+    "context": "channel payments auto-complete checkouts description",
+    "string": "Your storefront no longer needs to call checkoutComplete once payment is authorised. Only applies to payments made through transactions."
   },
   "7G7tg3": {
     "context": "Number of variants that have stock available",
@@ -1944,10 +2020,6 @@
     "context": "tax class rates list label when no country is selected",
     "string": "Add country to access tax classes"
   },
-  "7UG1Lx": {
-    "context": "checkbox gift cards label",
-    "string": "Automatically fulfill non shippable gift cards"
-  },
   "7UOtno": {
     "context": "eyebrow label for Pulse homepage promotion",
     "string": "Saleor Pulse"
@@ -1971,6 +2043,10 @@
   "7ZKQU3": {
     "context": "no shipping method option",
     "string": "No shipping method"
+  },
+  "7aZkUK": {
+    "context": "channel inventory empty state title",
+    "string": "No warehouses assigned"
   },
   "7az76v": {
     "context": "tooltip for status column in line matrix",
@@ -2044,6 +2120,10 @@
   "84VEY1": {
     "string": "Shipping rate updated"
   },
+  "86CJVg": {
+    "context": "setup review row description",
+    "string": "How tax is calculated for this channel."
+  },
   "86pLaG": {
     "context": "WarehouseSettings public stock label",
     "string": "Public Stock"
@@ -2054,6 +2134,10 @@
   "87rPKi": {
     "context": "Label for disabled auto-confirm row in tooltip",
     "string": "Off"
+  },
+  "8Ai2Lr": {
+    "context": "setup task description",
+    "string": "Create a warehouse, or assign an existing one, so this channel can allocate inventory."
   },
   "8BBMRj": {
     "context": "default tax class name for new tax classes",
@@ -2077,6 +2161,10 @@
   "8F2D1H": {
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
+  },
+  "8F9Nsz": {
+    "context": "channel inventory assign CTA short label",
+    "string": "Assign"
   },
   "8FDx9i": {
     "context": "tooltip when generate variants is disabled due to product type configuration (hasVariants=false or no selection attributes)",
@@ -2135,6 +2223,10 @@
   "8Q504V": {
     "string": "Metadata"
   },
+  "8RdHXd": {
+    "context": "channel details section nav item",
+    "string": "Payments"
+  },
   "8RnPGF": {
     "context": "order history message",
     "string": "Payment was voided"
@@ -2172,10 +2264,6 @@
   "8hrH/z": {
     "context": "dialog header",
     "string": "Search Category"
-  },
-  "8iUzOU": {
-    "context": "allow unpaid orders checbkox description",
-    "string": "Enables completing checkout with order before a successful payment."
   },
   "8jgfPX": {
     "context": "automatic completion disabled info message",
@@ -2218,6 +2306,10 @@
   "8sOnqE": {
     "context": "Warning when scheduling an available product for the future",
     "string": "Product will not be purchasable until this date."
+  },
+  "8u1Ks9": {
+    "context": "channel activate confirmation dialog body",
+    "string": "Are you sure you want to activate {name}? Products and content for this channel will become available to customers."
   },
   "8uLHBY": {
     "context": "unassign attribute from object",
@@ -2310,6 +2402,10 @@
   "9CW3TD": {
     "context": "label",
     "string": "Reward type"
+  },
+  "9Czafv": {
+    "context": "setup checklist optional section title",
+    "string": "Worth reviewing"
   },
   "9DUknc": {
     "string": "Installation failed"
@@ -2677,6 +2773,10 @@
   "B+Ba0R": {
     "string": "Requested Permissions"
   },
+  "B/iTPS": {
+    "context": "label for checkoutTtlBeforeReleasingFunds hours input",
+    "string": "Release after"
+  },
   "B/y6LC": {
     "context": "section header",
     "string": "Unfulfilled Products"
@@ -2782,6 +2882,10 @@
   "BVDaKx": {
     "string": "Subtotal discount"
   },
+  "BVS1I0": {
+    "context": "setup review row title",
+    "string": "Payments"
+  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -2796,6 +2900,10 @@
   "BYTvv/": {
     "context": "Dry run events unavailable",
     "string": "The following events from provided query are currently not available for dry run:"
+  },
+  "BYWrlO": {
+    "context": "channel inventory empty state description",
+    "string": "This channel can't sell tracked products until it can draw stock from somewhere."
   },
   "BYfAwE": {
     "context": "page title - installing app with manifestUrl provided",
@@ -2868,9 +2976,17 @@
   "ByYtFB": {
     "string": "Invalid or expired token. Please check your token in URL"
   },
+  "Byk4pC": {
+    "context": "unit after expireOrdersAfter input",
+    "string": "minutes"
+  },
   "C+WD8j": {
     "context": "alert message",
     "string": "all of"
+  },
+  "C+uqjN": {
+    "context": "Save composition segment for channel name, slug, currency, country",
+    "string": "general"
   },
   "C035fF": {
     "context": "grant refund, refund card explanation next to submit button",
@@ -3056,6 +3172,10 @@
     "context": "Info box title when product is not published",
     "string": "Hidden from public API."
   },
+  "CfuWsg": {
+    "context": "mark as paid payment option description",
+    "string": "The older object, kept for deprecated payment plugins."
+  },
   "Cganz5": {
     "context": "configuration section name for orders and fulfillment settings",
     "string": "Orders & fulfillment"
@@ -3070,6 +3190,10 @@
   },
   "CiWUaq": {
     "string": "Make sure to save token, you won't be able to see it again."
+  },
+  "CkmWKG": {
+    "context": "channel order setting description for order expiration",
+    "string": "Releases reserved stock from orders that were never confirmed."
   },
   "ClKKID": {
     "context": "channel publication status",
@@ -3414,9 +3538,9 @@
     "context": "Warning when warehouse with stock not in shipping zone",
     "string": "Stock unreachable in \"{channelName}\""
   },
-  "EXPRMd": {
-    "context": "channel form card title for channel-owned order and checkout settings",
-    "string": "Orders & fulfillment"
+  "EVHRls": {
+    "context": "channel details section nav item",
+    "string": "General"
   },
   "EXqb2l": {
     "string": "Go to Saleor Cloud"
@@ -3424,6 +3548,10 @@
   "EYkW1J": {
     "context": "checkbox label",
     "string": "Charge taxes for this channel"
+  },
+  "EZUwpG": {
+    "context": "channel delivery card description",
+    "string": "Shipping zones supplied through this channel. A zone can be shared with other channels."
   },
   "Eau5AV": {
     "string": "Manage Products Channel Availability"
@@ -3446,9 +3574,9 @@
   "Ed2705": {
     "string": "Create new model type"
   },
-  "EewziG": {
-    "context": "checkbox gift cards label description",
-    "string": "When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
+  "EfF28c": {
+    "context": "channel inventory reorder hint",
+    "string": "Drag the handles to reorder."
   },
   "Egyh2T": {
     "context": "section header",
@@ -3495,6 +3623,10 @@
   "EwoyVr": {
     "context": "bulk remove button label",
     "string": "Delete shipping zones"
+  },
+  "EyIpfs": {
+    "context": "mark as paid transaction option description",
+    "string": "Matches modern payment apps. Pick this unless you still run legacy payment plugins."
   },
   "F/JMp6": {
     "context": "authorize status full",
@@ -3607,6 +3739,10 @@
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
   },
+  "FTCq+9": {
+    "context": "channel payments setting title",
+    "string": "Default transaction flow"
+  },
   "FTYkgw": {
     "string": "Delete collections"
   },
@@ -3639,6 +3775,10 @@
   "FaL3f6": {
     "context": "Save composition segment for product details/SEO/organization/attributes",
     "string": "details"
+  },
+  "FbWSQs": {
+    "context": "setup task description when shipping actions unavailable",
+    "string": "You need shipping permissions to create or assign zones for this channel."
   },
   "Fbkcn2": {
     "context": "CTA to install Saleor Pulse from homepage empty state",
@@ -3826,10 +3966,6 @@
     "context": "models section name",
     "string": "Models"
   },
-  "GFkb2t": {
-    "context": "automatically complete checkouts checkbox label",
-    "string": "Automatically complete checkouts when fully paid"
-  },
   "GGhg9z": {
     "context": "order header date, earlier today",
     "string": "Created today at {time}"
@@ -3901,6 +4037,10 @@
     "context": "column title",
     "string": "Value"
   },
+  "GXxpRA": {
+    "context": "channel detail title secondary meta after status pill",
+    "string": "{country} · {currency}"
+  },
   "GY93MP": {
     "context": "order line return/refund reason",
     "string": "Reason"
@@ -3963,6 +4103,14 @@
     "context": "button",
     "string": "Unassign"
   },
+  "Gl0VOw": {
+    "context": "parenthetical marker on recommended channel setting radio option",
+    "string": "recommended"
+  },
+  "Gm3fGD": {
+    "context": "footer hint for the next required setup task",
+    "string": "Next up: {task}"
+  },
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
@@ -3992,6 +4140,10 @@
   "Gw+vb5": {
     "context": "configuration section for sales channels and tax markets",
     "string": "Markets & channels"
+  },
+  "Gx+CaK": {
+    "context": "products published to channel vs shop total",
+    "string": "{published} of {total} published"
   },
   "Gxo/XC": {
     "context": "header",
@@ -4072,6 +4224,10 @@
   "HAlOn1": {
     "string": "Name"
   },
+  "HBrAXs": {
+    "context": "channel status",
+    "string": "Active"
+  },
   "HFo3Qe": {
     "context": "successfully created gift card alert title",
     "string": "Gift card created"
@@ -4146,6 +4302,10 @@
   "HW6Vef": {
     "string": "This transaction is non-refundable"
   },
+  "HWM7Cf": {
+    "context": "channel delivery card header count",
+    "string": "{count} assigned"
+  },
   "HYC6cH": {
     "context": "input description",
     "string": "Threshold that cannot be exceeded even if per channel thresholds are still available"
@@ -4212,6 +4372,10 @@
   "HqRNN8": {
     "string": "Support"
   },
+  "HupwkE": {
+    "context": "channel inventory allocation description with warehouses",
+    "string": "How stock is drawn when an order can be filled from more than one warehouse."
+  },
   "HvJPcU": {
     "string": "Category deleted"
   },
@@ -4269,6 +4433,10 @@
     "context": "WarehouseSettings all warehouses description",
     "string": "If selected customer will be able to choose this warehouse as pickup point.{break}Ordered products can be shipped here from a different warehouse"
   },
+  "I5/gU5": {
+    "context": "channel inventory card title",
+    "string": "Inventory"
+  },
   "I5vC7T": {
     "context": "button label",
     "string": "Edit reason"
@@ -4292,6 +4460,10 @@
   "ICJ3mp": {
     "context": "shipping method types help example setup",
     "string": "Example — zone with \"Free over $100\" (price) and \"Heavy parcel 5–20 kg\" (weight):"
+  },
+  "ICT1Lt": {
+    "context": "label for deleteExpiredOrdersAfter days input",
+    "string": "Delete expired orders after"
   },
   "ICeshC": {
     "context": "product type",
@@ -4413,10 +4585,6 @@
     "context": "button",
     "string": "Manage"
   },
-  "Ic7Wln": {
-    "context": "card subtitle",
-    "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
-  },
   "IcTtTE": {
     "context": "Description for live status",
     "string": "Visible and purchasable"
@@ -4436,6 +4604,10 @@
     "context": "header",
     "string": "Edit Media"
   },
+  "IlPaqv": {
+    "context": "channel detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete channel"
+  },
   "Ila7WO": {
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
@@ -4450,6 +4622,9 @@
   "IpOugE": {
     "string": "Show metadata"
   },
+  "IqFUJl": {
+    "string": "Rate name"
+  },
   "IqRBql": {
     "context": "variant name",
     "string": "New variant"
@@ -4461,6 +4636,14 @@
   "Irflxf": {
     "context": "window title",
     "string": "Create category"
+  },
+  "IrwpKJ": {
+    "context": "dismiss setup checklist after required steps are done",
+    "string": "Dismiss"
+  },
+  "IsKEVf": {
+    "context": "assign shipping zone dialog search label",
+    "string": "Search shipping zones"
   },
   "IzECoP": {
     "string": "Search draft orders..."
@@ -4534,6 +4717,10 @@
   "JEw8ys": {
     "string": "Releases"
   },
+  "JFbw16": {
+    "context": "setup task complete",
+    "string": "{count} {count, plural, one {warehouse} other {warehouses}} assigned"
+  },
   "JFmOfi": {
     "context": "button",
     "string": "Create Product"
@@ -4570,6 +4757,10 @@
   "JMBsrr": {
     "context": "table header available stock label",
     "string": "Available"
+  },
+  "JN8kTJ": {
+    "context": "channel delivery empty state description",
+    "string": "Customers won't see any delivery method at checkout, so the order can't be completed."
   },
   "JRfJD9": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
@@ -4621,6 +4812,14 @@
   "JaicxZ": {
     "context": "order return reason card, structured reason select placeholder",
     "string": "Select a reason type"
+  },
+  "JakPK4": {
+    "context": "helper under channel slug",
+    "string": "Identifies this channel in the Storefront API. Changing it breaks existing storefront requests."
+  },
+  "Jb8345": {
+    "context": "channel detail cogs menu, opens tax configuration for this channel",
+    "string": "Tax settings"
   },
   "JbRIRr": {
     "context": "attribute slug helper in embedded create form",
@@ -4812,6 +5011,10 @@
     "context": "product media gallery dropzone hint when click-to-upload is disabled",
     "string": "Drag and drop to upload"
   },
+  "KXYvNG": {
+    "context": "channel detail cogs menu, opens GraphiQL with this channel",
+    "string": "Open in GraphiQL"
+  },
   "KYMCYg": {
     "string": "Shipping rate deleted"
   },
@@ -4884,6 +5087,10 @@
     "context": "created products counter",
     "string": "{count}/{max} SKUs used"
   },
+  "KwvZpP": {
+    "context": "zero payment apps status",
+    "string": "No payment apps"
+  },
   "Kxiige": {
     "string": "Generated Token"
   },
@@ -4902,10 +5109,6 @@
   "L/ZbnW": {
     "context": "fulfillment status waiting for approval",
     "string": "Waiting for Approval"
-  },
-  "L2tvTm": {
-    "context": "mark as paid strategy checkbox label",
-    "string": "Use Transaction flow when marking order as paid"
   },
   "L5IuDw": {
     "string": "lower"
@@ -4945,6 +5148,10 @@
     "context": "note when granted refund amount includes shipping costs",
     "string": "(incl. shipping)"
   },
+  "LCHIys": {
+    "context": "channel delivery card header when no zones",
+    "string": "Required to sell"
+  },
   "LCPfA9": {
     "string": "Open this voucher in GraphiQL"
   },
@@ -4954,6 +5161,10 @@
   "LD4Vnf": {
     "context": "gift card assigned customer label",
     "string": "Assigned to"
+  },
+  "LFevQP": {
+    "context": "channel detail top nav CTA when channel is inactive",
+    "string": "Activate channel"
   },
   "LICZeR": {
     "context": "weight",
@@ -4995,6 +5206,10 @@
   "LR3HlT": {
     "string": "This password is too short"
   },
+  "LSvab3": {
+    "context": "badge when warehouse setup CTAs are unavailable",
+    "string": "Missing permission to manage products"
+  },
   "LU8dtl": {
     "context": "date group header",
     "string": "Older"
@@ -5012,6 +5227,10 @@
   "LWc61W": {
     "context": "Title when diagnostics are limited due to permissions",
     "string": "Limited diagnostics"
+  },
+  "LWlDC+": {
+    "context": "setup task title",
+    "string": "Set up shipping"
   },
   "LWmYSU": {
     "string": "Completed Translations"
@@ -5101,6 +5320,10 @@
     "context": "button",
     "string": "Upload image"
   },
+  "LxGbUN": {
+    "context": "tax strategy status for flat rates",
+    "string": "Flat rates"
+  },
   "M3OlSr": {
     "context": "error message",
     "string": "Maximum weight must be higher than minimum"
@@ -5120,9 +5343,17 @@
     "context": "unassign country, dialog header",
     "string": "Remove from Shipping Zone"
   },
+  "M8ME4X": {
+    "context": "shown under expire orders when auto-confirm is enabled",
+    "string": "No effect while {autoConfirm} is on — orders become {unfulfilled} straight away and never reach the {unconfirmed} state this applies to."
+  },
   "M8z5WZ": {
     "context": "WarehouseSettings disabled warehouse description",
     "string": "If selected customer won't be able to choose this warehouse as pickup point"
+  },
+  "MAicWa": {
+    "context": "transaction flow charge option description",
+    "string": "Funds are captured when the order is placed. One step, nothing to chase."
   },
   "MAsLIT": {
     "context": "custom app token key",
@@ -5154,10 +5385,6 @@
   },
   "MH1qA1": {
     "string": "Test Action"
-  },
-  "MHVglr": {
-    "context": "deactivate",
-    "string": "Deactivate"
   },
   "MHY5da": {
     "context": "tooltip for shipping amount",
@@ -5196,10 +5423,6 @@
   "MOQWz8": {
     "context": "Number of warehouses",
     "string": "{count, plural, =0 {No warehouses} one {# warehouse} other {# warehouses}}"
-  },
-  "MQwT1W": {
-    "context": "activate",
-    "string": "Activate"
   },
   "MS86iy": {
     "string": "The extension identifier is already in use. ({errorCode})"
@@ -5325,12 +5548,20 @@
   "N2IrpM": {
     "string": "Confirm"
   },
+  "N2RGVh": {
+    "context": "channel list column",
+    "string": "Status"
+  },
   "N2SbNc": {
     "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
   },
   "N43t3/": {
     "context": "error message",
     "string": "Number not set for an invoice"
+  },
+  "N4rmXl": {
+    "context": "channel detail page, top-bar metadata button tooltip",
+    "string": "Edit channel metadata"
   },
   "N5UuEK": {
     "context": "header",
@@ -5385,6 +5616,10 @@
   "NEmY1y": {
     "context": "title for model type tab settings",
     "string": "Tab grouping"
+  },
+  "NF3w7I": {
+    "context": "channel inventory card header count",
+    "string": "{count} assigned"
   },
   "NGWTE4": {
     "string": "Create webhook/extension manually"
@@ -5565,6 +5800,14 @@
     "context": "alert message",
     "string": "There are no available products in this channel."
   },
+  "O4a1K+": {
+    "context": "channel payments release funds label",
+    "string": "Release held funds for expired checkouts"
+  },
+  "O6C+2E": {
+    "context": "dismiss setup checklist while required steps remain",
+    "string": "Skip for now"
+  },
   "O6C2jX": {
     "context": "Product doctor card title",
     "string": "Availability Doctor"
@@ -5650,6 +5893,10 @@
     "context": "input label",
     "string": "Model type"
   },
+  "OWF2HL": {
+    "context": "parenthetical marker on legacy channel setting radio option",
+    "string": "legacy"
+  },
   "OZ5c64": {
     "context": "intro under refunds and returns settings page title",
     "string": "Choose Model Types whose instances appear as structured refund and return reasons on orders."
@@ -5657,6 +5904,10 @@
   "OZc365": {
     "context": "single reference attribute type",
     "string": "Single Reference"
+  },
+  "OZqeK6": {
+    "context": "setup task CTA when zones exist",
+    "string": "Assign shipping zones"
   },
   "OaA0f9": {
     "string": "You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -5690,6 +5941,10 @@
   "Om1LKj": {
     "context": "stock input label",
     "string": "Initial stock (all warehouses)"
+  },
+  "OmrtHH": {
+    "context": "setup task description",
+    "string": "Create a shipping zone for your default country with a flat rate, or assign an existing zone."
   },
   "OpgSjI": {
     "context": "dialog header",
@@ -5728,6 +5983,10 @@
   },
   "OtMtzH": {
     "string": "Product unavailable in collection channels"
+  },
+  "OufJut": {
+    "context": "label for expireOrdersAfter minutes input",
+    "string": "Expire after"
   },
   "OutAI7": {
     "context": "Label prefix for the last occurrence date of a recurring problem",
@@ -5827,6 +6086,10 @@
   "PFnobO": {
     "string": "greater"
   },
+  "PGpSUm": {
+    "context": "helper under deleteExpiredOrdersAfter input",
+    "string": "Permanent. Between 1 and 120 days."
+  },
   "PHT8z1": {
     "context": "extension form permissions section header",
     "string": "Permissions"
@@ -5841,6 +6104,9 @@
   },
   "PKJqcq": {
     "string": "Invoice is Generating"
+  },
+  "PKjitS": {
+    "string": "{count, plural, one {Warehouse assigned} other {# warehouses assigned}}"
   },
   "PLCwT/": {
     "context": "search results",
@@ -5945,6 +6211,10 @@
   "Pp/7T7": {
     "string": "{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
   },
+  "PqLlpS": {
+    "context": "setup task CTA when warehouses exist",
+    "string": "Assign warehouses"
+  },
   "PqMbma": {
     "context": "add attribute value",
     "string": "Add Value"
@@ -5998,6 +6268,10 @@
   "Q0JJ4F": {
     "context": "dialog header",
     "string": "Delete Vouchers"
+  },
+  "Q0SbHA": {
+    "context": "helper under channel default country",
+    "string": "Fallback country for tax when checkout has no address yet."
   },
   "Q1HhPk": {
     "context": "table head",
@@ -6129,9 +6403,6 @@
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
   },
-  "Qb2XN5": {
-    "string": "\"Mark as paid\" feature creates a {link} - used by Payment Apps"
-  },
   "QcXdj6": {
     "context": "customer recent orders table column: net product sales after discounts",
     "string": "Net"
@@ -6152,13 +6423,13 @@
     "context": "years after label",
     "string": "years after issue"
   },
+  "QgQ0NB": {
+    "context": "channel inventory card description",
+    "string": "Warehouses this channel can reserve stock from. Without at least one, checkout can't allocate inventory for tracked products."
+  },
   "Qhb89u": {
     "context": "Warning when no countries covered",
     "string": "No countries covered"
-  },
-  "QiN4hv": {
-    "context": "active",
-    "string": "Active"
   },
   "QirE3M": {
     "string": "Start Date"
@@ -6268,13 +6539,13 @@
     "context": "order history message",
     "string": "Order address was updated"
   },
-  "RLYfMF": {
-    "context": "checkbox label",
-    "string": "Automatically confirm all orders"
-  },
   "RMB6fU": {
     "context": "button",
     "string": "Create Token"
+  },
+  "RMoQDQ": {
+    "context": "channel payments mark as paid description",
+    "string": "Which object is attached to the order when staff record a payment by hand."
   },
   "RQUkVW": {
     "string": "Manage your employees and their permissions"
@@ -6297,6 +6568,10 @@
   "RZDxej": {
     "context": "Popover trigger text (button)",
     "string": "Filters {count, plural, =0 {} other {({count})} }"
+  },
+  "RZZAjR": {
+    "context": "setup review row title",
+    "string": "Taxes"
   },
   "RaQzn2": {
     "string": "Rule created"
@@ -6360,6 +6635,10 @@
   "Ruw3iJ": {
     "context": "activate customer dialog, confirm button label",
     "string": "Activate"
+  },
+  "RvRHDy": {
+    "context": "setup checklist progress counter",
+    "string": "{done} of {total}"
   },
   "RyZd9J": {
     "context": "error message",
@@ -6425,6 +6704,10 @@
     "context": "Refund status pending",
     "string": "Pending"
   },
+  "SBquoC": {
+    "context": "unit after deleteExpiredOrdersAfter input",
+    "string": "days"
+  },
   "SDgGcU": {
     "context": "Button to manually mark order as paid without actual payment",
     "string": "Mark as Paid"
@@ -6447,8 +6730,16 @@
     "context": "dialog title for order line discount",
     "string": "Line discount"
   },
+  "SJSWi7": {
+    "context": "default flat rate name",
+    "string": "Standard shipping"
+  },
   "SKFr04": {
     "string": "Attribute not found."
+  },
+  "SKj6Us": {
+    "context": "assign shipping zone dialog confirm",
+    "string": "Assign"
   },
   "SM+yG0": {
     "context": "input label",
@@ -6508,6 +6799,10 @@
   "SW4GYL": {
     "context": "Button label to dismiss a single app problem",
     "string": "Dismiss"
+  },
+  "SWN9Jj": {
+    "context": "setup task CTA",
+    "string": "Create shipping"
   },
   "SZH0fw": {
     "context": "set variant as default, button",
@@ -6595,6 +6890,14 @@
   "T83iU7": {
     "string": "Search categories..."
   },
+  "T8rYzW": {
+    "context": "channel payments release funds description",
+    "string": "Voids authorisations left behind by checkouts that were never completed, so customers aren't left with a hold on their card."
+  },
+  "T9dLJY": {
+    "context": "success toast after saving channel details",
+    "string": "Channel updated"
+  },
   "T9zLm6": {
     "string": "Selecting reason is required"
   },
@@ -6620,12 +6923,20 @@
   "TE4fIS": {
     "string": "City"
   },
+  "TFb4/p": {
+    "context": "channel order setting description for unpaid orders",
+    "string": "Lets checkout complete before payment succeeds. Usual for invoicing and wholesale; risky for card-only storefronts."
+  },
   "TGX4T1": {
     "string": "Search Engine Preview"
   },
   "THpf1b": {
     "context": "product availability available date",
     "string": "Set available on"
+  },
+  "TIQ1eV": {
+    "context": "badge when shipping is locked until warehouse exists",
+    "string": "Requires a stock location"
   },
   "TJ7WHA": {
     "context": "tax strategy combobox choice",
@@ -6676,10 +6987,6 @@
   "TQph+r": {
     "context": "progress under load more variants in assign variant dialog",
     "string": "{loaded} of {total} loaded"
-  },
-  "TSJRiZ": {
-    "context": "channel status title",
-    "string": "Channel Status"
   },
   "TTVPyd": {
     "context": "dialog subheading",
@@ -6744,6 +7051,10 @@
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
   },
+  "TjY0ay": {
+    "context": "Savebar hint listing which channel areas will persist on Save",
+    "string": "Unsaved changes: {segments}"
+  },
   "Tl+7X4": {
     "context": "tabel column header",
     "string": "Refunded Qty"
@@ -6759,10 +7070,6 @@
   "TxYWkD": {
     "context": "page header, edit view",
     "string": "Edit grant refund"
-  },
-  "U+79k0": {
-    "context": "order expiration card description",
-    "string": "The time in days after expired orders will be deleted. Allowed range between 1 and 120."
   },
   "U+Fl4Z": {
     "context": "customer detail, label above the address when default billing and default shipping are the same",
@@ -6832,6 +7139,10 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
+  "UC5nF0": {
+    "context": "channel inventory card header when no warehouses",
+    "string": "Required to sell"
+  },
   "UE9zNR": {
     "string": "Recent Searches"
   },
@@ -6896,6 +7207,9 @@
     "context": "collection filter published",
     "string": "Published"
   },
+  "UbJf55": {
+    "string": "Flat rate ({currency})"
+  },
   "UcrXYE": {
     "context": "Description for scheduled status when publication date is in the future",
     "string": "Publication scheduled"
@@ -6923,6 +7237,10 @@
   "Uj/iBz": {
     "context": "shown while fetching all variants for duplicate detection",
     "string": "Loading existing variants…"
+  },
+  "UjUw4+": {
+    "context": "tax strategy status when using a tax app",
+    "string": "Tax app"
   },
   "UjoSZB": {
     "context": "dialog content",
@@ -7105,6 +7423,10 @@
     "context": "section header",
     "string": "Staff Member Information"
   },
+  "VWuT7A": {
+    "context": "setup review row description when no payment apps",
+    "string": "Install a payment app so customers can pay at checkout."
+  },
   "VYK2nN": {
     "string": "Product details"
   },
@@ -7135,6 +7457,10 @@
   "Vsax0N": {
     "context": "aria label for model type tab grouping help",
     "string": "How tab grouping works"
+  },
+  "VseKVb": {
+    "context": "setup review row title",
+    "string": "Products"
   },
   "Vtjlpw": {
     "string": "Transaction is not unique"
@@ -7286,6 +7612,10 @@
     "context": "notifier message",
     "string": "Note was added sucessfully"
   },
+  "WT/sFU": {
+    "context": "assign shipping zone dialog search placeholder",
+    "string": "Search by shipping zone name"
+  },
   "WUKB5Z": {
     "context": "Shown after verification with relative time",
     "string": "Verified {time}"
@@ -7353,6 +7683,10 @@
     "context": "error message",
     "string": "Login went wrong. Please try again."
   },
+  "WvabuR": {
+    "context": "Expanded help for warehouse setup. Based on Saleor stock allocation: stocks allocate only from warehouses available in the order channel.",
+    "string": "Inventory is tracked per warehouse. This channel can only reserve stock from warehouses you assign here—without one, checkout can’t allocate inventory for tracked products."
+  },
   "Ww69SE": {
     "context": "search input placeholder",
     "string": "Search tax classes"
@@ -7398,10 +7732,6 @@
   },
   "X7jl6w": {
     "string": "Orders"
-  },
-  "X8qjg3": {
-    "context": "inactive",
-    "string": "Inactive"
   },
   "X90ElB": {
     "context": "dialog header",
@@ -7573,6 +7903,10 @@
     "context": "shipping method types help tooltip intro",
     "string": "Each method applies by order value or weight—not both."
   },
+  "XiQfIl": {
+    "context": "channel form payments and checkout section title",
+    "string": "Payments & checkout"
+  },
   "XitW/z": {
     "string": "Translation Category \"{categoryName}\" - {languageCode}"
   },
@@ -7587,6 +7921,9 @@
   "Xm9qOu": {
     "context": "product pricing, section header",
     "string": "Pricing"
+  },
+  "XqwYc0": {
+    "string": "Could not assign warehouse to this channel"
   },
   "XrliJg": {
     "context": "label for amount selection",
@@ -7648,6 +7985,10 @@
     "context": "table column header",
     "string": "Price"
   },
+  "Y2dPyq": {
+    "context": "setup task description when shipping zones already exist",
+    "string": "Assign existing shipping zones, or create a new zone with a flat rate."
+  },
   "Y3ELdI": {
     "context": "unassign attribute from model type, button",
     "string": "Unassign"
@@ -7663,6 +8004,10 @@
   "Y4cy0i": {
     "context": "dialog header",
     "string": "Ending preorder"
+  },
+  "Y6amBy": {
+    "context": "setup checklist required section title",
+    "string": "Required by checkout"
   },
   "Y7UlMR": {
     "context": "app extensions subsection",
@@ -7759,6 +8104,10 @@
   "YVsbL4": {
     "context": "Tooltip showing which user dismissed a problem",
     "string": "Dismissed by {email}"
+  },
+  "YX7eDk": {
+    "context": "channel list column",
+    "string": "Currency"
   },
   "YaCu4U": {
     "context": "Health check status when product can be purchased",
@@ -7859,6 +8208,9 @@
   "Yy/yDL": {
     "string": "Reset password"
   },
+  "Yy6lYo": {
+    "string": "Warehouse name"
+  },
   "YzLUXA": {
     "string": "Ensure this value is greater than 0."
   },
@@ -7876,6 +8228,10 @@
   "Z3T6zR": {
     "context": "card title",
     "string": "Return & Replace"
+  },
+  "Z79yxZ": {
+    "context": "Save composition segment for shipping zones",
+    "string": "delivery"
   },
   "Z7YrIb": {
     "context": "no customer assigned to order",
@@ -7980,10 +8336,6 @@
   "ZXOpCJ": {
     "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
   },
-  "ZZb4E+": {
-    "context": "automatically complete checkouts checkbox description",
-    "string": "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. {link}"
-  },
   "Za3SQQ": {
     "context": "gift card history message",
     "string": "Gift card was unassigned from {customer} by {unassignedBy}"
@@ -8010,6 +8362,10 @@
   "Zg0dRo": {
     "context": "dialog description",
     "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
+  },
+  "ZgwlD5": {
+    "context": "channel details section nav aria label",
+    "string": "Channel sections"
   },
   "Zhloph": {
     "context": "gift card resend dialog channel field helper text",
@@ -8117,6 +8473,10 @@
   "aAhfh6": {
     "context": "Title for configuration summary section",
     "string": "Configuration Summary"
+  },
+  "aBFzDG": {
+    "context": "transaction flow authorize option description",
+    "string": "Funds are held and must be captured manually. Use when you ship days later or adjust totals before charging."
   },
   "aBpkVh": {
     "context": "gift cards docs link",
@@ -8285,6 +8645,10 @@
   "arT1bu": {
     "string": "Warehouse updated"
   },
+  "atlZPe": {
+    "context": "tax strategy status when not charging",
+    "string": "Taxes off"
+  },
   "auxEP1": {
     "context": "input placeholder",
     "string": "Search by attribute name"
@@ -8334,6 +8698,10 @@
     "context": "Taxes section title",
     "string": "Channels"
   },
+  "b2Nzq4": {
+    "context": "setup review row description when payment apps are installed",
+    "string": "Installed payment apps still need to be set up for checkout."
+  },
   "b6J/B9": {
     "context": "attribute input type helper in embedded create form",
     "string": "How merchants enter values for this attribute."
@@ -8349,6 +8717,10 @@
   "bADvk1": {
     "context": "configuration section label for store identity and accounts",
     "string": "Store"
+  },
+  "bBSnYv": {
+    "context": "channel inventory allocation option",
+    "string": "Highest stock first"
   },
   "bBhgtd": {
     "context": "restrict gift card to customer field label",
@@ -8942,6 +9314,10 @@
     "context": "product",
     "string": "Digital"
   },
+  "dSyctO": {
+    "context": "ripple action",
+    "string": "Create a channel"
+  },
   "dTCWqt": {
     "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
   },
@@ -9075,9 +9451,6 @@
     "context": "gift card resend dialog fallback when default recipient email is unknown",
     "string": "Default recipient assigned to this gift card"
   },
-  "eR2vV/": {
-    "string": "If left unchecked it creates a {link} - used by Payment Plugins"
-  },
   "eRqx44": {
     "string": "Search collections..."
   },
@@ -9120,6 +9493,10 @@
     "context": "page title - creating custom app",
     "string": "Add extension manually"
   },
+  "ejo6Sh": {
+    "context": "channel order setting description for auto-confirm",
+    "string": "On: orders from checkout arrive as {unfulfilled} and ready to pick. Off: they arrive {unconfirmed} and someone must review each one."
+  },
   "empNV9": {
     "context": "add products button tooltip",
     "string": "Add products from {channelName}"
@@ -9131,6 +9508,10 @@
   "erC44f": {
     "context": "filters error messages dependencies missing",
     "string": "Filter requires other filters: {dependencies}"
+  },
+  "erZXUi": {
+    "context": "channel order setting label",
+    "string": "Confirm new orders automatically"
   },
   "etP0+D": {
     "string": "Vouchers"
@@ -9322,10 +9703,6 @@
   "ftcHpD": {
     "string": "Customer created"
   },
-  "fuFCpI": {
-    "context": "allow unpaid orders checkbox label",
-    "string": "Allow unpaid orders"
-  },
   "fuUksg": {
     "context": "column header",
     "string": "Model Type"
@@ -9337,6 +9714,10 @@
   "fxbjge": {
     "context": "Status when product is currently visible on storefront",
     "string": "Visible now"
+  },
+  "fz0ZMN": {
+    "context": "count of installed payment apps",
+    "string": "{count} installed"
   },
   "fzk04H": {
     "context": "dialog title",
@@ -9381,6 +9762,9 @@
   "g9Mb+U": {
     "context": "change warehouse dialog title",
     "string": "Change warehouse"
+  },
+  "g9PCqW": {
+    "string": "Warehouse created and assigned"
   },
   "gAqkrG": {
     "context": "gift card history message",
@@ -9446,6 +9830,14 @@
   },
   "gSQ0Ge": {
     "string": "Variant {name} has been set as default."
+  },
+  "gSTyF7": {
+    "context": "channel order setting label for order expiration",
+    "string": "Expire abandoned {unconfirmed} orders"
+  },
+  "gWUWig": {
+    "context": "channel inventory allocation description when fewer than two",
+    "string": "Applies once more than one warehouse is assigned."
   },
   "gaOXvo": {
     "context": "notification, form submitted",
@@ -9534,6 +9926,10 @@
   "h0IgEq": {
     "context": "checkbox",
     "string": "Automatically send granted refund"
+  },
+  "h0OD30": {
+    "context": "channel deactivate confirmation dialog body",
+    "string": "Are you sure you want to deactivate {name}? Customers will no longer be able to buy through this channel until you activate it again."
   },
   "h0mEWF": {
     "context": "Availability card subtitle showing channel count",
@@ -9843,6 +10239,9 @@
     "context": "dialog header",
     "string": "Media Selection"
   },
+  "iQkrjy": {
+    "string": "Shipping zone name"
+  },
   "iSnXTt": {
     "string": "Open this collection in GraphiQL"
   },
@@ -9881,6 +10280,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
   },
+  "iZHrIY": {
+    "context": "channel payments auto-complete checkouts label",
+    "string": "Turn fully paid checkouts into orders automatically"
+  },
   "ibnmEd": {
     "context": "voucher country range",
     "string": "Countries"
@@ -9904,6 +10307,10 @@
   "igoIjo": {
     "string": "Line matrix"
   },
+  "ihUOLR": {
+    "context": "channel detail top nav CTA when channel is active",
+    "string": "Deactivate channel"
+  },
   "iidznP": {
     "context": "password login mode option description",
     "string": "All users can log in with a password"
@@ -9923,6 +10330,10 @@
   "ijPI0J": {
     "context": "banner when newly added shipping method channels need prices",
     "string": "{count, plural, one {# new channel needs a price before saving} other {# new channels need a price before saving}}"
+  },
+  "ijRTbx": {
+    "context": "create shipping for channel dialog title",
+    "string": "Create shipping zone"
   },
   "ikM00B": {
     "context": "table column header",
@@ -9991,6 +10402,10 @@
     "context": "Manage and Update your warehouse information",
     "string": "Exchange Rates"
   },
+  "j23Ryb": {
+    "context": "channel delivery empty state title",
+    "string": "No shipping zones assigned"
+  },
   "j2l6cL": {
     "context": "checkbox label",
     "string": "Set gift card expiration period"
@@ -10010,6 +10425,10 @@
   "j5r4iT": {
     "context": "bulk issue gift cards quantity section header",
     "string": "Gift cards to issue"
+  },
+  "j7XAly": {
+    "context": "create warehouse for channel dialog description",
+    "string": "Creates a warehouse and assigns it to this channel as the stock location."
   },
   "jBl05c": {
     "context": "Badge shown when channel has validation errors",
@@ -10157,6 +10576,10 @@
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"
   },
+  "jt2Sm+": {
+    "context": "setup task description when warehouse actions unavailable",
+    "string": "You need product permissions to create or assign a warehouse for this channel."
+  },
   "jtxRC6": {
     "string": "Press {key1} {key2} to save"
   },
@@ -10212,12 +10635,20 @@
   "k20lqw": {
     "string": "Legacy flow detected - select tax strategy from dropdown"
   },
+  "k3B1+l": {
+    "context": "create warehouse for channel dialog title",
+    "string": "Create warehouse"
+  },
   "k3EI/U": {
     "context": "dialog header",
     "string": "Delete Shipping Zone"
   },
   "k4brJy": {
     "string": "SKU"
+  },
+  "k4j6EA": {
+    "context": "setup task complete",
+    "string": "{count} shipping {count, plural, one {zone} other {zones}} assigned"
   },
   "k62BKw": {
     "context": "select label",
@@ -10352,10 +10783,6 @@
     "context": "notifier after transfer funds mutation succeeds",
     "string": "Refund request sent to payment provider"
   },
-  "kVKTwC": {
-    "context": "order expiration card title",
-    "string": "Order expiration"
-  },
   "kVL3LM": {
     "string": "Voucher codes"
   },
@@ -10464,6 +10891,9 @@
     "context": "copy gift card code error",
     "string": "Failed to copy to clipboard"
   },
+  "kwS+Nw": {
+    "string": "Warehouse was created but could not be assigned to this channel"
+  },
   "kyOwDW": {
     "context": "aria-label for the error icon inside a channel issue badge",
     "string": "Error"
@@ -10499,6 +10929,10 @@
     "context": "voucher type order discount",
     "string": "Voucher: {voucherName}"
   },
+  "l4zYVm": {
+    "context": "channel inventory allocation option description",
+    "string": "Take stock from whichever warehouse holds the most, ignoring the order above. Use to keep stock levels even."
+  },
   "l5V0QT": {
     "context": "boolean attribute type",
     "string": "Boolean"
@@ -10533,6 +10967,13 @@
   "lEG/12": {
     "context": "Webhook subscription query card title",
     "string": "Subscription Query"
+  },
+  "lEpYOj": {
+    "string": "{count, plural, one {Shipping zone assigned} other {# shipping zones assigned}}"
+  },
+  "lEv1fx": {
+    "context": "create warehouse for channel",
+    "string": "Create and assign"
   },
   "lF+VJQ": {
     "context": "Shipment information card header",
@@ -10622,6 +11063,10 @@
   "lZTwh4": {
     "string": "Feature"
   },
+  "lZh3Xj": {
+    "context": "transaction flow authorize option label",
+    "string": "Authorise, capture later"
+  },
   "lb5uDM": {
     "context": "metadata edit form, error message",
     "string": "Metadata key cannot be empty"
@@ -10661,12 +11106,20 @@
     "context": "export selected gift cards scope option",
     "string": "Selected gift cards ({number})"
   },
+  "lkuKaM": {
+    "context": "mark as paid transaction option label",
+    "string": "A Transaction"
+  },
   "llBnr+": {
     "string": "Warehouse Name"
   },
   "llKwCf": {
     "context": "Empty option in tax class combobox when there is no inherited default",
     "string": "None"
+  },
+  "lm847Q": {
+    "context": "channel form orders section title",
+    "string": "Orders"
   },
   "lm9NSK": {
     "context": "password reset, button",
@@ -10798,6 +11251,10 @@
     "context": "attribute entity type helper on full attribute form",
     "string": "Which type of record merchants can link to."
   },
+  "mOyjAi": {
+    "context": "Save composition segment for warehouses and allocation strategy",
+    "string": "inventory"
+  },
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
@@ -10915,10 +11372,6 @@
     "context": "label for currently selected warehouse",
     "string": "currently selected"
   },
-  "n2eKUn": {
-    "context": "channel form hint linking to orders and fulfillment settings hub",
-    "string": "Settings for this channel only. Compare all channels or edit shop-wide policies in {link}."
-  },
   "n4wLTL": {
     "context": "create attribute dialog step two intro for product types",
     "string": "Add the choices merchants can pick from and set how this attribute behaves on products."
@@ -10985,6 +11438,10 @@
     "context": "model availability date label",
     "string": "Set availability date"
   },
+  "nKGplR": {
+    "context": "default shipping zone name",
+    "string": "Domestic"
+  },
   "nKZUy3": {
     "context": "attribute detail page, top-bar metadata button tooltip",
     "string": "Edit attribute metadata"
@@ -11003,6 +11460,9 @@
   "nNeWAx": {
     "context": "dialog header",
     "string": "Delete Shipping Method"
+  },
+  "nOGSLQ": {
+    "string": "Could not set the shipping rate price for this channel"
   },
   "nOo0oL": {
     "context": "error message",
@@ -11104,10 +11564,6 @@
   "nvpGUR": {
     "context": "shipping method types help example row three result",
     "string": "Price only"
-  },
-  "nwcJVT": {
-    "context": "When enabled, all transactions would require an additional step to be charged.",
-    "string": "When enabled, all transactions would require an additional step to be charged. ({link})"
   },
   "nwnwJ0": {
     "context": "payment status",
@@ -11211,12 +11667,19 @@
     "context": "settings ownership badge — channel-scoped setting",
     "string": "Channel"
   },
+  "oPaVXi": {
+    "context": "mark as paid payment option label",
+    "string": "A Payment"
+  },
   "oQ27V4": {
     "context": "order history message",
     "string": "Order placed information was sent to customer"
   },
   "oQY0a2": {
     "string": "Address line 2"
+  },
+  "oSf5JD": {
+    "string": "No shipping zones available to add"
   },
   "oUM6fi": {
     "string": "To fulfill"
@@ -11289,9 +11752,17 @@
     "context": "translation context bar without known source language",
     "string": "Translating original content to {targetLanguage}"
   },
+  "oj6EqD": {
+    "context": "channel inventory allocation section title",
+    "string": "Allocation strategy"
+  },
   "omdhZg": {
     "context": "store name field label",
     "string": "Store name"
+  },
+  "ooUWhl": {
+    "context": "helper under create channel general info",
+    "string": "A channel is a market: one currency and default country for prices, tax, and checkout. You can set up warehouses and shipping right after creating it."
   },
   "opSGsa": {
     "context": "create attribute dialog step one label",
@@ -11315,6 +11786,10 @@
   "oyXhGL": {
     "context": "label for model type tab grouping separator input",
     "string": "Split on"
+  },
+  "p/8wfM": {
+    "context": "helper under channel name",
+    "string": "Used in the dashboard. Storefronts may also show it to customers (for example in a market picker)."
   },
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
@@ -11377,6 +11852,10 @@
     "context": "gift card history message",
     "string": "Gift card was activated"
   },
+  "pDbKtV": {
+    "context": "channel order setting label for gift cards",
+    "string": "Fulfil non-shippable gift cards automatically"
+  },
   "pEf/m+": {
     "string": "There are no previews at the moment. Stay tuned!"
   },
@@ -11401,6 +11880,10 @@
   "pLSGmd": {
     "context": "product metadata dialog header",
     "string": "Product Metadata"
+  },
+  "pM3s0H": {
+    "context": "channel delivery assign CTA short label",
+    "string": "Assign"
   },
   "pMAlSC": {
     "context": "Shown when a value cannot be determined due to permissions",
@@ -11796,6 +12279,10 @@
     "context": "label for remaining amount customer owes",
     "string": "Balance due"
   },
+  "qmV/np": {
+    "context": "channel readiness hint",
+    "string": "No warehouse"
+  },
   "qnwUm+": {
     "context": "embedded swatch attribute values section hint",
     "string": "Each choice needs a name and a color or image. Add at least one before continuing."
@@ -11833,6 +12320,10 @@
   "qwp4zK": {
     "context": "Health check subtitle when product can be purchased",
     "string": "Product is visible in store and available for purchase"
+  },
+  "qx2mD0": {
+    "context": "unit after checkoutTtlBeforeReleasingFunds input",
+    "string": "hours"
   },
   "qy/XqL": {
     "string": "Select transaction"
@@ -11955,6 +12446,10 @@
     "context": "bulk variant create error",
     "string": "SKUs must be unique"
   },
+  "rZh6/D": {
+    "context": "channel status",
+    "string": "Inactive"
+  },
   "ra2O4j": {
     "string": "Deleted draft orders"
   },
@@ -12008,12 +12503,19 @@
     "context": "Description when product is not visible in listings",
     "string": "Customers can still access it via direct link."
   },
+  "rpVzFU": {
+    "string": "Could not assign shipping zone to this channel"
+  },
   "rqiCWU": {
     "string": "Saved changes"
   },
   "rqtV5d": {
     "context": "order status",
     "string": "Ready to capture"
+  },
+  "rrU/T2": {
+    "context": "create shipping for channel dialog description",
+    "string": "Creates a zone for {country} on this channel{warehouseSuffix}, with one flat-rate method."
   },
   "rs815i": {
     "context": "text field label",
@@ -12258,6 +12760,10 @@
     "context": "permission group name",
     "string": "Permission Group Name"
   },
+  "szm4zm": {
+    "context": "setup task CTA",
+    "string": "Create warehouse"
+  },
   "t/R8nK": {
     "context": "ShippingZoneSettingsCard title",
     "string": "Settings"
@@ -12443,6 +12949,10 @@
     "context": "ordered product quantity",
     "string": "Quantity"
   },
+  "tx73BO": {
+    "context": "channel delivery card title",
+    "string": "Delivery"
+  },
   "txOXvy": {
     "context": "checkbox label",
     "string": "Set the same for shipping address"
@@ -12494,6 +13004,10 @@
   "u6V5I/": {
     "context": "shipping zones configuration",
     "string": "Change default weight unit"
+  },
+  "u6gp+Y": {
+    "context": "setup task title",
+    "string": "Add a stock location"
   },
   "u6rPuc": {
     "context": "warning message when some variants failed to create",
@@ -12669,6 +13183,10 @@
   "uoKAmI": {
     "string": "Add new order"
   },
+  "up2u+U": {
+    "context": "when warehouse and shipping tasks complete",
+    "string": "Stock and shipping are ready. Review the steps below before you activate this channel."
+  },
   "uq2aqJ": {
     "context": "overflow tab label",
     "string": "More"
@@ -12725,10 +13243,6 @@
   "v1vJ77": {
     "string": "Edit rule"
   },
-  "v2+u4c": {
-    "context": "card subtitle",
-    "string": "Assign and sort warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
-  },
   "v20Mra": {
     "string": "Menus deleted"
   },
@@ -12746,6 +13260,10 @@
   "v6GMvG": {
     "context": "settings search alias",
     "string": "confirm orders"
+  },
+  "v8CmW0": {
+    "context": "channel order setting label for unpaid orders",
+    "string": "Allow unpaid orders"
   },
   "v8UngX": {
     "string": "Search warehouses..."
@@ -12768,6 +13286,10 @@
   "vC8vyb": {
     "context": "enabled status option label",
     "string": "Enabled"
+  },
+  "vCt3/t": {
+    "context": "channel setup card title",
+    "string": "Finish setting up this channel"
   },
   "vCw7BP": {
     "context": "requires activation checkbox label",
@@ -12949,6 +13471,10 @@
     "context": "loading state label on the load more variants button",
     "string": "Loading more"
   },
+  "vo4bI1": {
+    "context": "channel activate confirmation dialog title",
+    "string": "Activate channel"
+  },
   "vof5TR": {
     "context": "button",
     "string": "Create category"
@@ -12986,6 +13512,10 @@
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
+  },
+  "vxQsu2": {
+    "context": "helper under expireOrdersAfter input",
+    "string": "Counted from when the order was placed."
   },
   "vyVVAW": {
     "context": "generate variants button",
@@ -13031,6 +13561,10 @@
   },
   "w2Cewo": {
     "string": "Search engine title"
+  },
+  "w2cy6v": {
+    "context": "setup task description when warehouses already exist in the shop",
+    "string": "Assign existing warehouses, or create a new one for this channel."
   },
   "w2eTzO": {
     "context": "placed orders counter",
@@ -13217,10 +13751,6 @@
     "context": "automatic completion cut-off date checkbox label",
     "string": "Custom cut-off date"
   },
-  "wpAXKX": {
-    "context": "checkbox label description",
-    "string": "All orders will be automatically confirmed and all payments will be captured."
-  },
   "wpONQ2": {
     "string": "Enter any extra information regarding this customer."
   },
@@ -13243,6 +13773,10 @@
   "wu/9MB": {
     "context": "label for enabling grouped model type tabs",
     "string": "Group similar model types"
+  },
+  "wzfVrA": {
+    "context": "channel list column",
+    "string": "Country"
   },
   "x/N8AY": {
     "context": "field translation status",
@@ -13340,6 +13874,10 @@
   "xPJQvL": {
     "context": "gift card customer assigned success message",
     "string": "Customer assigned"
+  },
+  "xPsePF": {
+    "context": "helper under checkoutTtlBeforeReleasingFunds input",
+    "string": "Counted from when the checkout expired."
   },
   "xRMVTn": {
     "string": "Read-only — editing requires Manage users"
@@ -13449,6 +13987,10 @@
     "context": "dialog description when restock warehouse must be selected",
     "string": "Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected."
   },
+  "xzzNba": {
+    "context": "helper under currency on create",
+    "string": "Prices and payments use this currency. It can’t be changed later."
+  },
   "y+718D": {
     "context": "factor label for whole-order voucher propagated to a line",
     "string": "Voucher (order, line share)"
@@ -13530,6 +14072,10 @@
     "context": "granted refund amount in line expanded panel",
     "string": "Refund total {amount}"
   },
+  "yOADwo": {
+    "context": "setup review row description",
+    "string": "Products published to this channel, priced in its currency."
+  },
   "yOaNWB": {
     "context": "delete shipping method",
     "string": "Are you sure you want to delete {name}?"
@@ -13555,6 +14101,10 @@
   },
   "yT5zvU": {
     "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
+  },
+  "yYLFG8": {
+    "context": "warehouse mention in shipping setup dialog",
+    "string": ", using warehouse {warehouse}"
   },
   "yatGsm": {
     "context": "card title",
@@ -13630,6 +14180,10 @@
     "context": "draft orders section name",
     "string": "Drafts"
   },
+  "yvdudc": {
+    "context": "channel inventory create dropdown item",
+    "string": "Create warehouse"
+  },
   "ywLJ93": {
     "context": "attribute translation section subtitle",
     "string": "The attribute label shown in your storefront"
@@ -13687,6 +14241,10 @@
   "zDvDnG": {
     "context": "modal header",
     "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
+  },
+  "zE3ga7": {
+    "context": "channel form card title for name, slug, country, currency",
+    "string": "General settings"
   },
   "zGvkK2": {
     "context": "usage summary when attribute is on both product and variant types",

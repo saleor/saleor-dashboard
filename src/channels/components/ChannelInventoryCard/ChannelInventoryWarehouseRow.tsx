@@ -14,12 +14,23 @@ interface ChannelInventoryWarehouseRowProps extends SortableElementProps {
   /** 1-based position shown beside the drag handle. */
   position: number;
   onDelete: (id: string) => void;
+  disabled?: boolean;
 }
 
 /** @deprecated SortableElement — migrate with AssignmentList to @dnd-kit. */
 export const ChannelInventoryWarehouseRow = SortableElement(
-  ({ id, name, position, onDelete }: ChannelInventoryWarehouseRowProps): ReactNode => (
-    <div className={styles.row} data-test-id="channel-inventory-warehouse-row">
+  ({
+    id,
+    name,
+    position,
+    onDelete,
+    disabled = false,
+  }: ChannelInventoryWarehouseRowProps): ReactNode => (
+    <div
+      className={styles.row}
+      data-test-id="channel-inventory-warehouse-row"
+      data-disabled={disabled ? "true" : undefined}
+    >
       <div className={styles.rowMain}>
         <SortableHandle data-test-id="button-drag-handle" />
         <Text as="span" className={styles.rowIndex} size={2}>
@@ -29,7 +40,7 @@ export const ChannelInventoryWarehouseRow = SortableElement(
           {name}
         </Text>
       </div>
-      <DeletableItem id={id} onDelete={onDelete} />
+      <DeletableItem id={id} onDelete={onDelete} disabled={disabled} />
     </div>
   ),
 );

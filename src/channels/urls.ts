@@ -18,6 +18,8 @@ export type ChannelUrlDialog =
   | "create-shipping"
   | "assign-warehouse"
   | "assign-shipping"
+  | "activate"
+  | "deactivate"
   | "view-metadata";
 export type ChannelUrlQueryParams = Dialog<ChannelUrlDialog>;
 export type ChannelsListUrlDialog = "remove";

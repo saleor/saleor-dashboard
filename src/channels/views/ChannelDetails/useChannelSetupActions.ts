@@ -1,8 +1,6 @@
 import { type CreateShippingForChannelFormData } from "@dashboard/channels/components/CreateShippingForChannelDialog/CreateShippingForChannelDialog";
 import { type CreateWarehouseForChannelFormData } from "@dashboard/channels/components/CreateWarehouseForChannelDialog/CreateWarehouseForChannelDialog";
 import {
-  ChannelDocument,
-  ChannelShippingZonesDocument,
   CountryCode,
   type ShippingErrorFragment,
   ShippingMethodTypeEnum,
@@ -17,6 +15,8 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 
+import { getChannelDetailsRefetchQueries } from "./channelRefetchQueries";
+
 interface UseChannelSetupActionsArgs {
   channelId: string;
   warehouseIds: string[];
@@ -24,14 +24,6 @@ interface UseChannelSetupActionsArgs {
   onShippingCreated: () => void;
   onAssigned: () => void;
 }
-
-const channelRefetch = (channelId: string) => [
-  { query: ChannelDocument, variables: { id: channelId } },
-  {
-    query: ChannelShippingZonesDocument,
-    variables: { filter: { channels: [channelId] } },
-  },
-];
 
 export const useChannelSetupActions = ({
   channelId,
@@ -91,7 +83,7 @@ export const useChannelSetupActions = ({
             addWarehouses: [warehouseId],
           },
         },
-        refetchQueries: channelRefetch(channelId),
+        refetchQueries: getChannelDetailsRefetchQueries(channelId),
       }),
     );
 
@@ -180,7 +172,7 @@ export const useChannelSetupActions = ({
           ],
         },
       },
-      refetchQueries: channelRefetch(channelId),
+      refetchQueries: getChannelDetailsRefetchQueries(channelId),
     });
     const listingErrors = listingResult.data?.shippingMethodChannelListingUpdate?.errors ?? [];
 
@@ -223,7 +215,7 @@ export const useChannelSetupActions = ({
             addWarehouses: warehouseIdsToAdd,
           },
         },
-        refetchQueries: channelRefetch(channelId),
+        refetchQueries: getChannelDetailsRefetchQueries(channelId),
       }),
     );
 
@@ -267,7 +259,7 @@ export const useChannelSetupActions = ({
             addShippingZones: shippingZoneIdsToAdd,
           },
         },
-        refetchQueries: channelRefetch(channelId),
+        refetchQueries: getChannelDetailsRefetchQueries(channelId),
       }),
     );
 

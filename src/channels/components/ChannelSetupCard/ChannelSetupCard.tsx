@@ -44,6 +44,12 @@ interface ChannelSetupCardProps {
   totalProductCount?: number;
   /** When false, footer shows Activate (enabled after warehouse + shipping). */
   isActive?: boolean;
+  /**
+   * Saved (server) warehouse+shipping readiness for Activate.
+   * Checklist counts may include unsaved staged assigns; Activate must not.
+   * Defaults to checklist `coreReady` when omitted.
+   */
+  activateReady?: boolean;
   /** `createWarehouse` requires MANAGE_PRODUCTS. */
   canCreateWarehouse: boolean;
   /**
@@ -58,6 +64,8 @@ interface ChannelSetupCardProps {
   onActivate?: () => void;
   /** Disables Activate while the mutation is in flight. */
   activateDisabled?: boolean;
+  /** Disables setup CTAs while the channel form is saving/loading. */
+  disabled?: boolean;
   onDismiss?: () => void;
 }
 
@@ -83,6 +91,7 @@ export const ChannelSetupCard = ({
   publishedProductCount,
   totalProductCount,
   isActive = false,
+  activateReady,
   canCreateWarehouse,
   canAssignWarehouse,
   onAssignWarehouse,
@@ -91,6 +100,7 @@ export const ChannelSetupCard = ({
   onCreateShipping,
   onActivate,
   activateDisabled = false,
+  disabled = false,
   onDismiss,
 }: ChannelSetupCardProps) => {
   const intl = useIntl();
@@ -99,8 +109,10 @@ export const ChannelSetupCard = ({
   const hasWarehouse = warehouseCount > 0;
   const shippingStatusKnown = shippingZoneCount !== undefined;
   const hasShipping = (shippingZoneCount ?? 0) > 0;
-  // Don't block Activate when shipping zones couldn't be loaded.
+  // Checklist progress from local/staged counts (may include unsaved assigns).
   const coreReady = hasWarehouse && (!shippingStatusKnown || hasShipping);
+  // Activate stays on saved server readiness when the parent passes it.
+  const canActivate = activateReady ?? coreReady;
   const hasUnassignedWarehouses = canAssignWarehouse && availableWarehousesCount > warehouseCount;
   const canAssignShipping =
     shippingStatusKnown && availableShippingZonesCount > (shippingZoneCount ?? 0);
@@ -116,6 +128,7 @@ export const ChannelSetupCard = ({
           variant="primary"
           onClick={onAssignWarehouse}
           testId="setup-assign-warehouse"
+          disabled={disabled}
           options={[
             {
               label: intl.formatMessage(messages.warehouseCreate),
@@ -129,14 +142,24 @@ export const ChannelSetupCard = ({
           </CtaLabel>
         </ButtonGroupWithDropdown>
       ) : (
-        <Button variant="primary" data-test-id="setup-assign-warehouse" onClick={onAssignWarehouse}>
+        <Button
+          variant="primary"
+          data-test-id="setup-assign-warehouse"
+          onClick={onAssignWarehouse}
+          disabled={disabled}
+        >
           <CtaLabel>
             <FormattedMessage {...messages.warehouseAssign} />
           </CtaLabel>
         </Button>
       )
     ) : canCreateWarehouse ? (
-      <Button variant="primary" data-test-id="setup-create-warehouse" onClick={onCreateWarehouse}>
+      <Button
+        variant="primary"
+        data-test-id="setup-create-warehouse"
+        onClick={onCreateWarehouse}
+        disabled={disabled}
+      >
         <CtaLabel>
           <FormattedMessage {...messages.warehouseCreate} />
         </CtaLabel>
@@ -152,6 +175,7 @@ export const ChannelSetupCard = ({
           variant="primary"
           onClick={onAssignShipping}
           testId="setup-assign-shipping"
+          disabled={disabled}
           options={[
             {
               label: intl.formatMessage(messages.shippingCreate),
@@ -165,7 +189,12 @@ export const ChannelSetupCard = ({
           </CtaLabel>
         </ButtonGroupWithDropdown>
       ) : (
-        <Button variant="primary" data-test-id="setup-create-shipping" onClick={onCreateShipping}>
+        <Button
+          variant="primary"
+          data-test-id="setup-create-shipping"
+          onClick={onCreateShipping}
+          disabled={disabled}
+        >
           <CtaLabel>
             <FormattedMessage {...messages.shippingCreate} />
           </CtaLabel>
@@ -324,7 +353,12 @@ export const ChannelSetupCard = ({
           onDismiss || showActivate ? (
             <>
               {onDismiss && (
-                <Button variant="tertiary" onClick={onDismiss} data-test-id="setup-dismiss">
+                <Button
+                  variant="tertiary"
+                  onClick={onDismiss}
+                  disabled={disabled}
+                  data-test-id="setup-dismiss"
+                >
                   <FormattedMessage
                     {...(coreReady ? messages.dismissComplete : messages.dismiss)}
                   />
@@ -334,7 +368,7 @@ export const ChannelSetupCard = ({
                 <Button
                   variant="primary"
                   onClick={onActivate}
-                  disabled={!coreReady || activateDisabled}
+                  disabled={!canActivate || activateDisabled || disabled}
                   data-test-id="setup-activate-channel"
                 >
                   <FormattedMessage {...messages.activateChannel} />

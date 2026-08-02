@@ -74,6 +74,8 @@
 .list {
   display: flex;
   flex-direction: column;
+  /* Space below hint copy — empty state keeps its own margin instead. */
+  margin-top: var(--mu-spacing-4);
   /* Full-bleed rows: separators span the card edge-to-edge. */
   border-top: 1px solid var(--mu-colors-border-default1);
 }
@@ -159,4 +161,12 @@
 
 .grabbing {
   cursor: grabbing;
+}
+
+.listDisabled {
+  opacity: 0.65;
+}
+
+.listDisabled [data-test-id="button-drag-handle"] {
+  cursor: not-allowed;
 }

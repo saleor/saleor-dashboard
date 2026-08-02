@@ -196,10 +196,21 @@ export function useExitFormDialogProvider() {
     setStateDefaultValues();
   }, [setStateDefaultValues]);
 
+  const normalizePathname = (pathname: string) => {
+    try {
+      return decodeURIComponent(pathname);
+    } catch {
+      return pathname;
+    }
+  };
+
   const isOnlyQuerying = (transition: typeof history.location) =>
-    // We need to compare to current path and not window location
-    // so it works with browser back button as well
-    transition.pathname === currentLocation.current.pathname;
+    // Compare decoded pathnames: entity URLs use encodeURIComponent(id), and
+    // Saleor GraphQL IDs often end in "=". history may keep the current location
+    // decoded (`...==`) while the next URL is encoded (`...%3D%3D`). Treating
+    // that as a different page wrongly blocks dialog opens on dirty forms and
+    // resets exit-form state on clean ones.
+    normalizePathname(transition.pathname) === normalizePathname(currentLocation.current.pathname);
 
   const shouldBlockNavRef = useRef(shouldBlockNav);
   const setStateDefaultValuesRef = useRef(setStateDefaultValues);
@@ -226,6 +237,16 @@ export function useExitFormDialogProvider() {
         // Opening/closing a URL-driven modal (dialog params only) is part of
         // editing the form, not leaving it, so it must never be blocked.
         if (isDialogOnlyQueryChange(currentLocation.current.search, transition.search)) {
+          setCurrentLocation(transition);
+
+          return null;
+        }
+
+        // No-op same-path push/replace (e.g. dialog calls onSubmit→close then
+        // onClose→close again) are not "leaving" — query already matches.
+        // Skip POP: after "keep editing" we re-push the current URL, and a
+        // second back can target that duplicate entry with identical search.
+        if (action !== "POP" && currentLocation.current.search === transition.search) {
           setCurrentLocation(transition);
 
           return null;

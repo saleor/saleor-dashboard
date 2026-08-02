@@ -73,6 +73,8 @@
 .list {
   display: flex;
   flex-direction: column;
+  /* Space below hint copy — empty state keeps its own margin instead. */
+  margin-top: var(--mu-spacing-4);
   border-top: 1px solid var(--mu-colors-border-default1);
 }
 
