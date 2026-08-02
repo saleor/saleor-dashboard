@@ -1,15 +1,24 @@
 // @ts-strict-ignore
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { useUser } from "@dashboard/auth/useUser";
 import { CreateChannelDialog } from "@dashboard/channels/components/CreateChannelDialog/CreateChannelDialog";
+import { messages as createChannelMessages } from "@dashboard/channels/components/CreateChannelDialog/messages";
 import { type ChannelCreateFormData } from "@dashboard/channels/components/CreateChannelDialog/types";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { buildChannelCreateInput } from "@dashboard/channels/utils/buildChannelCreateInput";
+import {
+  buildChannelDuplicateSource,
+  getChannelDuplicateFormPrefill,
+} from "@dashboard/channels/utils/channelDuplicate";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   type ChannelCreateMutation,
   type ChannelDeleteMutation,
+  PermissionEnum,
   useChannelCreateMutation,
   useChannelDeleteMutation,
+  useChannelShippingZonesQuery,
   useChannelsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -18,6 +27,8 @@ import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelDeleteDialog } from "../../components/ChannelDeleteDialog";
@@ -39,6 +50,10 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
   const intl = useIntl();
   const shop = useShop();
   const { refetchUser } = useUser();
+  const userPermissions = useUserPermissions();
+  const canLoadShippingZones = hasPermissions(userPermissions ?? [], [
+    PermissionEnum.MANAGE_SHIPPING,
+  ]);
   const { data, refetch } = useChannelsQuery({ displayLoader: true });
   const limitOpts = useShopLimitsQuery({
     variables: {
@@ -46,10 +61,45 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
     },
   });
   const selectedChannel = data?.channels?.find(channel => channel.id === params?.id);
+  const duplicateFromId = params.action === "create" ? params.from : undefined;
+  const sourceChannel = data?.channels?.find(channel => channel.id === duplicateFromId);
+  const { data: duplicateZonesData, loading: duplicateZonesLoading } = useChannelShippingZonesQuery(
+    {
+      variables: {
+        filter: {
+          channels: duplicateFromId ? [duplicateFromId] : [],
+        },
+      },
+      skip: !duplicateFromId || !canLoadShippingZones,
+    },
+  );
+  const duplicateShippingZoneIds = useMemo(
+    () => mapEdgesToItems(duplicateZonesData?.shippingZones)?.map(zone => zone.id) ?? [],
+    [duplicateZonesData?.shippingZones],
+  );
+  const duplicateSource = useMemo(
+    () =>
+      sourceChannel
+        ? buildChannelDuplicateSource(sourceChannel, duplicateShippingZoneIds)
+        : undefined,
+    [duplicateShippingZoneIds, sourceChannel],
+  );
+  const duplicatePrefill = useMemo(
+    () =>
+      duplicateSource
+        ? getChannelDuplicateFormPrefill(duplicateSource, {
+            name: intl.formatMessage(createChannelMessages.duplicateName, {
+              name: duplicateSource.name,
+            }),
+          })
+        : undefined,
+    [duplicateSource, intl],
+  );
+  // Clear `from` on close so a later "Create channel" doesn't keep cloning.
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsListUrlDialog,
     ChannelsListUrlQueryParams
-  >(navigate, channelsListUrl, params);
+  >(navigate, channelsListUrl, params, ["from"]);
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
     const errors = data.channelDelete.errors;
 
@@ -100,7 +150,7 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
   const handleCreateChannel = async (formData: ChannelCreateFormData) => {
     const createChannelMutation = createChannel({
       variables: {
-        input: buildChannelCreateInput(formData),
+        input: buildChannelCreateInput(formData, { duplicateFrom: duplicateSource }),
       },
     });
     const result = await createChannelMutation;
@@ -119,26 +169,33 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
 
     return errors;
   };
+  const isDuplicate = Boolean(duplicateFromId);
+  const duplicatePreparing =
+    isDuplicate && (!sourceChannel || (canLoadShippingZones && duplicateZonesLoading));
 
   return (
     <>
       <ChannelsListPage
         channelsList={data?.channels}
         limits={limitOpts.data?.shop.limits}
-        onAddChannel={() => openModal("create")}
+        onAddChannel={() => openModal("create", { from: undefined })}
         onRemove={id =>
           openModal("remove", {
             id,
+            from: undefined,
           })
         }
       />
 
       <CreateChannelDialog
+        key={`${duplicateFromId ?? "create"}:${duplicatePrefill?.slug ?? ""}`}
         open={params.action === "create"}
         confirmButtonState={createChannelOpts.status}
         countries={shop?.countries || []}
-        disabled={createChannelOpts.loading}
+        disabled={createChannelOpts.loading || duplicatePreparing}
         errors={createChannelOpts?.data?.channelCreate?.errors || []}
+        initialValues={duplicatePrefill}
+        isDuplicate={isDuplicate}
         onClose={closeModal}
         onSubmit={handleCreateChannel}
       />

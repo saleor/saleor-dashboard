@@ -1,3 +1,4 @@
+import { channel } from "@dashboard/channels/fixtures";
 import {
   AllocationStrategyEnum,
   CountryCode,
@@ -6,6 +7,7 @@ import {
 } from "@dashboard/graphql";
 
 import { buildChannelCreateInput } from "./buildChannelCreateInput";
+import { buildChannelDuplicateSource } from "./channelDuplicate";
 
 describe("buildChannelCreateInput", () => {
   it("maps basic form fields and applies create defaults", () => {
@@ -22,6 +24,7 @@ describe("buildChannelCreateInput", () => {
     expect(input.slug).toBe("europe");
     expect(input.currencyCode).toBe("EUR");
     expect(input.defaultCountry).toBe("DE");
+    expect(input.isActive).toBeUndefined();
     expect(input.addWarehouses).toEqual([]);
     expect(input.addShippingZones).toEqual([]);
     expect(input.stockSettings?.allocationStrategy).toBe(
@@ -45,5 +48,39 @@ describe("buildChannelCreateInput", () => {
 
     // Assert
     expect(input.slug).toBe("north-america");
+  });
+
+  it("copies settings and assignments from a duplicate source", () => {
+    // Arrange
+    const duplicateFrom = buildChannelDuplicateSource(channel, ["SZ1"]);
+
+    // Act
+    const input = buildChannelCreateInput(
+      {
+        name: "Copy of Test",
+        slug: "test-copy",
+        currencyCode: "PLN",
+        defaultCountry: CountryCode.PL,
+      },
+      { duplicateFrom },
+    );
+
+    // Assert
+    expect(input.isActive).toBe(false);
+    expect(input.addWarehouses).toEqual(["WH1", "WH2"]);
+    expect(input.addShippingZones).toEqual(["SZ1"]);
+    expect(input.stockSettings?.allocationStrategy).toBe(
+      AllocationStrategyEnum.PRIORITIZE_HIGH_STOCK,
+    );
+    expect(input.orderSettings?.allowUnpaidOrders).toBe(false);
+    expect(input.paymentSettings?.defaultTransactionFlowStrategy).toBe(
+      TransactionFlowStrategyEnum.CHARGE,
+    );
+    expect(input.checkoutSettings?.allowLegacyGiftCardUse).toBe(true);
+    expect(input.checkoutSettings?.automaticCompletion).toEqual({
+      enabled: true,
+      delay: 30,
+      cutOffDate: "2024-01-01T00:00:00Z",
+    });
   });
 });

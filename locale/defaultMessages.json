@@ -1627,6 +1627,10 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "5dQWTz": {
+    "context": "create channel dialog title when cloning settings from another channel",
+    "string": "Duplicate channel"
+  },
   "5e6fxf": {
     "string": "Selecting reason is not obligatory for lines"
   },
@@ -9434,6 +9438,10 @@
     "context": "page header",
     "string": "Create New Category"
   },
+  "channelDuplicateName": {
+    "context": "prefilled name when duplicating a channel",
+    "string": "Copy of {name}"
+  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -12798,6 +12806,10 @@
     "context": "inline hint when return page is opened with lineId",
     "string": "Opened from the line matrix for {productName}. Quantities are prefilled for this line — adjust before submitting."
   },
+  "rGANbD": {
+    "context": "create channel dialog description when duplicating",
+    "string": "Copies settings, warehouses, and shipping zones. Product listings and tax configuration are not copied — review currency and country before creating."
+  },
   "rGj6RR": {
     "context": "order header date, older than yesterday",
     "string": "Placed {date}"
@@ -14404,6 +14416,10 @@
   "xhruoo": {
     "context": "Empty option on shipping method tax class combobox — uses Saleor default tax class",
     "string": "Default"
+  },
+  "xi32al": {
+    "context": "channel detail cogs menu, opens create dialog prefilled from this channel's settings",
+    "string": "Duplicate channel"
   },
   "xipkZ1": {
     "context": "matrix column header",

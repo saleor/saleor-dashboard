@@ -27,7 +27,11 @@ export type ChannelsListUrlDialog = "remove" | "create";
 export type ChannelsListUrlQueryParams = Dialog<ChannelsListUrlDialog> &
   ChannelsListUrlFilters &
   ChannelsListUrlSort &
-  SingleAction;
+  SingleAction &
+  Partial<{
+    /** Source channel id when opening create as a duplicate. */
+    from: string;
+  }>;
 
 export type ChannelsAction = "open-channels-picker";
 
@@ -39,7 +43,11 @@ export const channelsListUrl = (params?: ChannelsListUrlQueryParams) =>
   channelsListPath + "?" + stringifyQs(params);
 
 /** Opens the create-channel dialog on the channels list. */
-export const channelCreateUrl = () => channelsListUrl({ action: "create" });
+export const channelCreateUrl = (options?: { from?: string }) =>
+  channelsListUrl({
+    action: "create",
+    ...(options?.from ? { from: options.from } : {}),
+  });
 
 /** Legacy create path — redirects to {@link channelCreateUrl}. */
 export const channelAddPath = urlJoin(channelsSection, "add");

@@ -58,6 +58,7 @@ import { useIntl } from "react-intl";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { messages as channelDetailsPageMessages } from "../../pages/ChannelDetailsPage/messages";
 import {
+  channelCreateUrl,
   channelsListUrl,
   channelUrl,
   type ChannelUrlDialog,
@@ -476,6 +477,15 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         disabledStatus={activateChannelOpts.loading || deactivateChannelOpts.loading}
         errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
         onDelete={() => openModal("remove")}
+        onDuplicate={
+          data?.channel?.id
+            ? () => {
+                const sourceChannelId = data.channel.id;
+
+                navigate(channelCreateUrl({ from: sourceChannelId }));
+              }
+            : undefined
+        }
         onShowMetadata={() => openModal("view-metadata")}
         onSubmit={handleSubmit}
         onToggleChannelStatus={() => openModal(data?.channel?.isActive ? "deactivate" : "activate")}

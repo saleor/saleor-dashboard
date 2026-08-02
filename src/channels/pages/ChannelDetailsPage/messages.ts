@@ -51,6 +51,12 @@ export const messages = defineMessages({
     defaultMessage: "Open in GraphiQL",
     description: "channel detail cogs menu, opens GraphiQL with this channel",
   },
+  duplicateChannel: {
+    id: "xi32al",
+    defaultMessage: "Duplicate channel",
+    description:
+      "channel detail cogs menu, opens create dialog prefilled from this channel's settings",
+  },
   deleteChannel: {
     id: "IlPaqv",
     defaultMessage: "Delete channel",

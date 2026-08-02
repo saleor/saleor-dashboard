@@ -46,7 +46,7 @@ import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui-next";
-import { Receipt, Trash2 } from "lucide-react";
+import { Copy, Receipt, Trash2 } from "lucide-react";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -121,6 +121,8 @@ interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   assignmentActionsRef?: ChannelAssignmentActionsRef;
   onDisplayedAssignmentIdsChange?: (ids: ChannelDisplayedAssignmentIds) => void;
   onDelete?: () => void;
+  /** Opens create dialog prefilled from this channel's settings and assignments. */
+  onDuplicate?: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors>;
   /** Opens activate/deactivate confirmation (live action, not part of Save). */
@@ -135,6 +137,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   onSubmit,
   errors,
   onDelete,
+  onDuplicate,
   saveButtonBarState,
   channelShippingZones = [],
   allShippingZonesCount = 0,
@@ -285,6 +288,15 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       });
     }
 
+    if (onDuplicate) {
+      items.push({
+        label: intl.formatMessage(messages.duplicateChannel),
+        onSelect: onDuplicate,
+        testId: "duplicate-channel",
+        icon: <Copy size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
     if (onDelete) {
       items.push({
         label: intl.formatMessage(messages.deleteChannel),
@@ -296,7 +308,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     }
 
     return items;
-  }, [channelId, taxConfigurationId, intl, navigate, onDelete, openPlaygroundURL]);
+  }, [channelId, taxConfigurationId, intl, navigate, onDelete, onDuplicate, openPlaygroundURL]);
   const [validationErrors, setValidationErrors] = useState<ChannelErrorFragment[]>([]);
   const [selectedCountryDisplayName, setSelectedCountryDisplayName] = useStateFromProps(
     channel?.defaultCountry.country || "",

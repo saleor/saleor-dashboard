@@ -42,11 +42,19 @@ const createSlugTakenError = (): ChannelErrorFragment => ({
   message: null,
 });
 
+export type CreateChannelDialogInitialValues = ChannelCreateFormData & {
+  countryDisplayName?: string;
+};
+
 interface CreateChannelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: CountryFragment[];
   disabled?: boolean;
   errors: ChannelErrorFragment[];
+  /** Prefill when duplicating an existing channel. */
+  initialValues?: CreateChannelDialogInitialValues;
+  /** Switches copy to the duplicate-channel title and description. */
+  isDuplicate?: boolean;
   open: boolean;
   onClose: () => void;
   onSubmit: (data: ChannelCreateFormData) => SubmitPromise<ChannelErrorFragment[]>;
@@ -60,6 +68,7 @@ interface CreateChannelDialogFormContentProps {
   currencyManuallyEdited: boolean;
   data: ChannelCreateFormData;
   disabled: boolean;
+  isDuplicate: boolean;
   onClose: () => void;
   selectedCountryDisplayName: string;
   selectedCurrencyCode: string;
@@ -82,6 +91,7 @@ const CreateChannelDialogFormContent = ({
   currencyManuallyEdited,
   data,
   disabled,
+  isDuplicate,
   onClose,
   selectedCountryDisplayName,
   selectedCurrencyCode,
@@ -195,14 +205,20 @@ const CreateChannelDialogFormContent = ({
 
   return (
     <DashboardModal.Content size="sm" data-test-id="create-channel-dialog">
-      <DashboardModal.Header subtitle={<FormattedMessage {...messages.description} />}>
+      <DashboardModal.Header
+        subtitle={
+          <FormattedMessage
+            {...(isDuplicate ? messages.duplicateDescription : messages.description)}
+          />
+        }
+      >
         <Box as="span" display="inline-flex" alignItems="center" gap={2}>
           <Globe
             size={iconSize.medium}
             strokeWidth={iconStrokeWidthBySize.medium}
             aria-hidden="true"
           />
-          <FormattedMessage {...messages.title} />
+          <FormattedMessage {...(isDuplicate ? messages.duplicateTitle : messages.title)} />
         </Box>
       </DashboardModal.Header>
 
@@ -299,6 +315,8 @@ export const CreateChannelDialog = ({
   countries,
   disabled = false,
   errors: apiErrors,
+  initialValues,
+  isDuplicate = false,
   open,
   onClose,
   onSubmit,
@@ -313,10 +331,10 @@ export const CreateChannelDialog = ({
   const countryChoices = useMemo(() => mapCountriesToChoices(countries || []), [countries]);
 
   const initialForm: ChannelCreateFormData = {
-    name: "",
-    slug: "",
-    currencyCode: "",
-    defaultCountry: "",
+    name: initialValues?.name ?? "",
+    slug: initialValues?.slug ?? "",
+    currencyCode: initialValues?.currencyCode ?? "",
+    defaultCountry: initialValues?.defaultCountry ?? "",
   };
 
   useModalDialogOpen(open, {
@@ -329,10 +347,11 @@ export const CreateChannelDialog = ({
     },
     onOpen: () => {
       setSubmitErrors([]);
-      setSlugManuallyEdited(false);
-      setCurrencyManuallyEdited(false);
-      setSelectedCountryDisplayName("");
-      setSelectedCurrencyCode("");
+      // Prefills are intentional — don't let name/country autosuggest overwrite them.
+      setSlugManuallyEdited(Boolean(initialValues?.slug));
+      setCurrencyManuallyEdited(Boolean(initialValues?.currencyCode));
+      setSelectedCountryDisplayName(initialValues?.countryDisplayName ?? "");
+      setSelectedCurrencyCode(initialValues?.currencyCode ?? "");
       setFormKey(current => current + 1);
     },
   });
@@ -369,6 +388,7 @@ export const CreateChannelDialog = ({
               currencyManuallyEdited={currencyManuallyEdited}
               data={data}
               disabled={disabled}
+              isDuplicate={isDuplicate}
               onClose={onClose}
               selectedCountryDisplayName={selectedCountryDisplayName}
               selectedCurrencyCode={selectedCurrencyCode}
