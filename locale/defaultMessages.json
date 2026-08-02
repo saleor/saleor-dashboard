@@ -3325,6 +3325,10 @@
   "CrnqOK": {
     "string": "Country tax rates updated"
   },
+  "CsnhUR": {
+    "context": "channels list warehouses and shipping zones column",
+    "string": "Coverage"
+  },
   "CvRYXC": {
     "context": "settings search alias",
     "string": "delete expired orders"
@@ -4211,6 +4215,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
   },
+  "Gk5o6q": {
+    "context": "prefilled name when duplicating a channel",
+    "string": "Copy of {name}"
+  },
   "GkJBnh": {
     "context": "Accessible label for matrix column help icon",
     "string": "More information about {column}"
@@ -4872,6 +4880,10 @@
   "JGm7E5": {
     "context": "option",
     "string": "Export stock for all warehouses"
+  },
+  "JGmMYz": {
+    "context": "accessible label for shipping zone count on channels list",
+    "string": "{count, plural, one {# shipping zone} other {# shipping zones}}"
   },
   "JI2Xwp": {
     "context": "dialog title",
@@ -5538,6 +5550,10 @@
   "MFPCsL": {
     "context": "expand canceled fulfillments in timeline view",
     "string": "Show {count, plural, one {# canceled shipment} other {# canceled shipments}}"
+  },
+  "MFPmoe": {
+    "context": "channel list setup hint",
+    "string": "Needs warehouse and shipping zone"
   },
   "MFUQrr": {
     "context": "Placeholder for date picker",
@@ -6649,6 +6665,10 @@
   "Qph0GE": {
     "context": "dialog content",
     "string": "Add a new address:"
+  },
+  "QqClcr": {
+    "context": "channel list setup hint",
+    "string": "Needs warehouse"
   },
   "QqnNUm": {
     "string": "Visible in listing"
@@ -7889,6 +7909,10 @@
     "context": "plugins section name",
     "string": "Plugins"
   },
+  "WiR1jA": {
+    "context": "channel list setup hint",
+    "string": "Needs shipping zone"
+  },
   "WigK1f": {
     "context": "helper text",
     "string": "All items refunded"
@@ -8368,10 +8392,6 @@
   "YVsbL4": {
     "context": "Tooltip showing which user dismissed a problem",
     "string": "Dismissed by {email}"
-  },
-  "YX7eDk": {
-    "context": "channel list column",
-    "string": "Currency"
   },
   "YYLVFC": {
     "context": "bulk publish confirm stock quantity range",
@@ -9438,10 +9458,6 @@
     "context": "page header",
     "string": "Create New Category"
   },
-  "channelDuplicateName": {
-    "context": "prefilled name when duplicating a channel",
-    "string": "Copy of {name}"
-  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -10157,6 +10173,10 @@
     "context": "error message",
     "string": "Only pre-authorized payments can be captured"
   },
+  "gM6g0w": {
+    "context": "channels list setup/health column",
+    "string": "Setup"
+  },
   "gMwpNC": {
     "context": "page content",
     "string": "Content"
@@ -10408,9 +10428,6 @@
   "hapYhy": {
     "context": "bulk publish wizard defaults step",
     "string": "Defaults"
-  },
-  "hh0xW7": {
-    "string": "Channel Name"
   },
   "hhXK05": {
     "context": "Link label to navigate to the app page",
@@ -12703,10 +12720,6 @@
     "context": "label for remaining amount customer owes",
     "string": "Balance due"
   },
-  "qmV/np": {
-    "context": "channel readiness hint",
-    "string": "No warehouse"
-  },
   "qnwUm+": {
     "context": "embedded swatch attribute values section hint",
     "string": "Each choice needs a name and a color or image. Add at least one before continuing."
@@ -13223,6 +13236,10 @@
   "t1Bd7E": {
     "string": "Payment captured"
   },
+  "t3CUFs": {
+    "context": "secondary channel identity line on list",
+    "string": "{slug} · {currency} · {country}"
+  },
   "t3POsd": {
     "context": "bulk publish summary line",
     "string": "{productCount, plural, one {# product} other {# products}} · {variantCount, plural, one {# variant} other {# variants}}"
@@ -13341,6 +13358,10 @@
   "th06kZ": {
     "context": "dialog body asking to confirm product removal from draft order",
     "string": "Are you sure you want to remove {productName} from this draft order?"
+  },
+  "tiAQ48": {
+    "context": "accessible label for warehouse count on channels list",
+    "string": "{count, plural, one {# warehouse} other {# warehouses}}"
   },
   "tiY7bx": {
     "string": "Add new product"
@@ -13586,6 +13607,10 @@
   "uaZNZS": {
     "context": "Info when product has stock only in warehouses not linked to the channel",
     "string": "Stock is in warehouses not assigned to \"{channelName}\""
+  },
+  "ub6zar": {
+    "context": "channels list column",
+    "string": "Channel"
   },
   "ubasgL": {
     "context": "order history message",
@@ -14265,10 +14290,6 @@
   "wu/9MB": {
     "context": "label for enabling grouped model type tabs",
     "string": "Group similar model types"
-  },
-  "wzfVrA": {
-    "context": "channel list column",
-    "string": "Country"
   },
   "x/N8AY": {
     "context": "field translation status",

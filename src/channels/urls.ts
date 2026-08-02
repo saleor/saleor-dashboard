@@ -8,6 +8,7 @@ enum ChannelsListUrlFiltersEnum {
 }
 export enum ChannelsListUrlSortField {
   name = "name",
+  status = "status",
 }
 type ChannelsListUrlSort = Sort<ChannelsListUrlSortField>;
 type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;

@@ -16,6 +16,28 @@ export const channelsList = gql`
   }
 `;
 
+/**
+ * Zone→channel coverage for the channels list (single page, API max first: 100).
+ * Callers must treat `hasNextPage` as incomplete/unknown — do not paginate on list mount.
+ */
+export const channelsListShippingCoverage = gql`
+  query ChannelsListShippingCoverage {
+    shippingZones(first: 100) {
+      pageInfo {
+        hasNextPage
+      }
+      edges {
+        node {
+          id
+          channels {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const channelDetails = gql`
   query Channel($id: ID!) {
     channel(id: $id) {

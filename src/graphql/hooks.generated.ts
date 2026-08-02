@@ -5407,6 +5407,50 @@ export function useChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type ChannelsQueryHookResult = ReturnType<typeof useChannelsQuery>;
 export type ChannelsLazyQueryHookResult = ReturnType<typeof useChannelsLazyQuery>;
 export type ChannelsQueryResult = Apollo.QueryResult<Types.ChannelsQuery, Types.ChannelsQueryVariables>;
+export const ChannelsListShippingCoverageDocument = gql`
+    query ChannelsListShippingCoverage {
+  shippingZones(first: 100) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        channels {
+          id
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelsListShippingCoverageQuery__
+ *
+ * To run a query within a React component, call `useChannelsListShippingCoverageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelsListShippingCoverageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelsListShippingCoverageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useChannelsListShippingCoverageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>(ChannelsListShippingCoverageDocument, options);
+      }
+export function useChannelsListShippingCoverageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>(ChannelsListShippingCoverageDocument, options);
+        }
+export type ChannelsListShippingCoverageQueryHookResult = ReturnType<typeof useChannelsListShippingCoverageQuery>;
+export type ChannelsListShippingCoverageLazyQueryHookResult = ReturnType<typeof useChannelsListShippingCoverageLazyQuery>;
+export type ChannelsListShippingCoverageQueryResult = Apollo.QueryResult<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>;
 export const ChannelDocument = gql`
     query Channel($id: ID!) {
   channel(id: $id) {

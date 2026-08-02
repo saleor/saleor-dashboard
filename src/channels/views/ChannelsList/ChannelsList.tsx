@@ -4,6 +4,7 @@ import { useUser } from "@dashboard/auth/useUser";
 import { CreateChannelDialog } from "@dashboard/channels/components/CreateChannelDialog/CreateChannelDialog";
 import { messages as createChannelMessages } from "@dashboard/channels/components/CreateChannelDialog/messages";
 import { type ChannelCreateFormData } from "@dashboard/channels/components/CreateChannelDialog/types";
+import { useChannelsListShippingZoneCounts } from "@dashboard/channels/hooks/useChannelsListShippingZoneCounts";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { buildChannelCreateInput } from "@dashboard/channels/utils/buildChannelCreateInput";
 import {
@@ -27,12 +28,14 @@ import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ChannelDeleteDialog } from "../../components/ChannelDeleteDialog";
-import ChannelsListPage from "../../pages/ChannelsListPage";
+import { ChannelsListPage } from "../../pages/ChannelsListPage";
 import {
   channelsListUrl,
   type ChannelsListUrlDialog,
@@ -55,6 +58,10 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
     PermissionEnum.MANAGE_SHIPPING,
   ]);
   const { data, refetch } = useChannelsQuery({ displayLoader: true });
+  const { shippingZoneCountsByChannelId, shippingCoverageLoading } =
+    useChannelsListShippingZoneCounts({
+      skip: !canLoadShippingZones,
+    });
   const limitOpts = useShopLimitsQuery({
     variables: {
       channels: true,
@@ -172,12 +179,17 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
   const isDuplicate = Boolean(duplicateFromId);
   const duplicatePreparing =
     isDuplicate && (!sourceChannel || (canLoadShippingZones && duplicateZonesLoading));
+  const handleSort = createSortHandler(navigate, channelsListUrl, params);
 
   return (
     <>
       <ChannelsListPage
         channelsList={data?.channels}
         limits={limitOpts.data?.shop.limits}
+        shippingZoneCountsByChannelId={shippingZoneCountsByChannelId}
+        shippingCoverageLoading={shippingCoverageLoading}
+        sort={getSortParams(params)}
+        onSort={handleSort}
         onAddChannel={() => openModal("create", { from: undefined })}
         onRemove={id =>
           openModal("remove", {

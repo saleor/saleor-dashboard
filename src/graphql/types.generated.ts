@@ -10680,6 +10680,11 @@ export type ChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ChannelsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', hasOrders: boolean, id: string, isActive: boolean, name: string, slug: string, currencyCode: string, warehouses: Array<{ __typename: 'Warehouse', id: string, name: string }>, taxConfiguration: { __typename: 'TaxConfiguration', id: string, chargeTaxes: boolean, taxCalculationStrategy: TaxCalculationStrategy | null }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum, expireOrdersAfter: any | null, deleteExpiredOrdersAfter: number, allowUnpaidOrders: boolean, automaticallyConfirmAllNewOrders: boolean, automaticallyFulfillNonShippableGiftCard: boolean }, paymentSettings: { __typename: 'PaymentSettings', defaultTransactionFlowStrategy: TransactionFlowStrategyEnum, releaseFundsForExpiredCheckouts: boolean | null, checkoutTtlBeforeReleasingFunds: number | null }, checkoutSettings: { __typename: 'CheckoutSettings', automaticallyCompleteFullyPaidCheckouts: boolean, automaticCompletionDelay: any | null, automaticCompletionCutOffDate: any | null, allowLegacyGiftCardUse: boolean }, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 
+export type ChannelsListShippingCoverageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ChannelsListShippingCoverageQuery = { __typename: 'Query', shippingZones: { __typename: 'ShippingZoneCountableConnection', pageInfo: { __typename: 'PageInfo', hasNextPage: boolean }, edges: Array<{ __typename: 'ShippingZoneCountableEdge', node: { __typename: 'ShippingZone', id: string, channels: Array<{ __typename: 'Channel', id: string }> } }> } | null };
+
 export type ChannelQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
