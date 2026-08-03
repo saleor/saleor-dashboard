@@ -1,9 +1,77 @@
 import { type Ripple } from "@dashboard/ripples/types";
-import { Text } from "@saleor/macaw-ui-next";
+import { Text, ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { type ReactNode } from "react";
 import { defineMessage } from "react-intl";
+import { MemoryRouter } from "react-router-dom";
 
 import { getRipplesSortedAndGroupedByMonths, RippleGlobalDescription } from "./AllRipplesModal";
+
+const mockNavigate = jest.fn();
+const mockOnChange = jest.fn();
+
+jest.mock("@dashboard/hooks/useNavigator", () => ({
+  __esModule: true,
+  default: jest.fn(() => mockNavigate),
+}));
+
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: jest.fn(() => ({
+    trackEvent: jest.fn(),
+  })),
+}));
+
+jest.mock("@dashboard/ripples/hooks/useRipplesStorage", () => ({
+  useRippleStorage: jest.fn(() => ({
+    hideAllRipples: jest.fn(),
+    setManuallyHidden: jest.fn(),
+  })),
+}));
+
+jest.mock("@dashboard/home/usePulsePromotionLink", () => ({
+  usePulsePromotionLink: jest.fn(() => ({
+    kind: "internal",
+    to: "/extensions/app/install?manifestUrl=https%3A%2F%2Fpulse.saleor.app%2Fapi%2Fmanifest",
+    intent: "install",
+    loading: false,
+  })),
+}));
+
+jest.mock("@dashboard/ripples/allRipples", () => ({
+  allRipples: [
+    {
+      type: "newApp",
+      ID: "saleor-pulse",
+      dateAdded: new Date(2026, 6, 31),
+      content: {
+        oneLiner: "Saleor Pulse",
+        global: "Analytics on your homepage.",
+        contextual: "See real-time store analytics.",
+      },
+      TTL_seconds: 3600,
+      actions: [
+        {
+          label: {
+            defaultMessage: "Install Pulse",
+            id: "testInstallPulse",
+          },
+          href: "/extensions/app/install?manifestUrl=https%3A%2F%2Fpulse.saleor.app%2Fapi%2Fmanifest",
+        },
+      ],
+    },
+  ],
+}));
+
+const { AllRipplesModal } = jest.requireActual(
+  "./AllRipplesModal",
+) as typeof import("./AllRipplesModal");
+
+const Wrapper = ({ children }: { children: ReactNode }) => (
+  <MemoryRouter initialEntries={["/"]}>
+    <ThemeProvider>{children}</ThemeProvider>
+  </MemoryRouter>
+);
 
 const createMockRipple = (id: string, dateAdded: Date, overrides?: Partial<Ripple>): Ripple => ({
   type: "feature",
@@ -259,5 +327,50 @@ describe("Ripple actions", () => {
 
     // Note: TypeScript enforces that actions cannot have both href and onClick,
     // and cannot have neither. This is enforced at compile time via the RippleAction union type.
+  });
+});
+
+describe("AllRipplesModal", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("closes the modal and navigates when an internal action link is clicked", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    render(<AllRipplesModal open onChange={mockOnChange} />, { wrapper: Wrapper });
+
+    // Act
+    await user.click(screen.getByRole("link", { name: "Install Pulse" }));
+
+    // Assert
+    expect(mockOnChange).toHaveBeenCalledWith(false);
+    expect(mockNavigate).toHaveBeenCalledWith(
+      "/extensions/app/install?manifestUrl=https%3A%2F%2Fpulse.saleor.app%2Fapi%2Fmanifest",
+    );
+  });
+
+  it("opens Pulse directly when it is already installed", async () => {
+    // Arrange
+    const { usePulsePromotionLink } = jest.requireMock("@dashboard/home/usePulsePromotionLink");
+
+    usePulsePromotionLink.mockReturnValue({
+      kind: "internal",
+      to: "/extensions/app/pulse-app-id",
+      intent: "open",
+      loading: false,
+    });
+
+    const user = userEvent.setup();
+
+    render(<AllRipplesModal open onChange={mockOnChange} />, { wrapper: Wrapper });
+
+    // Act
+    await user.click(screen.getByRole("link", { name: "Open Pulse" }));
+
+    // Assert
+    expect(mockOnChange).toHaveBeenCalledWith(false);
+    expect(mockNavigate).toHaveBeenCalledWith("/extensions/app/pulse-app-id");
   });
 });

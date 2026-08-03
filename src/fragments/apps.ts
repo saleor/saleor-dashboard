@@ -191,6 +191,9 @@ export const InstalledApp = gql`
     identifier
     manifestUrl
     isActive
+    name
+    type
+    appUrl
   }
 `;
 

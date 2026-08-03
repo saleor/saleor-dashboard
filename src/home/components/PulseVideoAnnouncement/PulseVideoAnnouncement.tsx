@@ -1,10 +1,6 @@
-import { IS_CLOUD_INSTANCE } from "@dashboard/config";
-import {
-  getPulsePromotionLink,
-  PULSE_POSTER_URL,
-  PULSE_VIDEO_URL,
-} from "@dashboard/home/getPulsePromotionLink";
+import { PULSE_POSTER_URL, PULSE_VIDEO_URL } from "@dashboard/home/getPulsePromotionLink";
 import { homeUrl } from "@dashboard/home/urls";
+import { usePulsePromotionLink } from "@dashboard/home/usePulsePromotionLink";
 import { PULSE_DOCS_URL } from "@dashboard/links";
 import { RippleVideoAnnouncement } from "@dashboard/ripples/components/RippleVideoAnnouncement/RippleVideoAnnouncement";
 import { type CornerRippleComponentProps } from "@dashboard/ripples/cornerRipples/selectActiveCornerRipple";
@@ -15,6 +11,11 @@ const messages = defineMessages({
     id: "XcwOQt",
     defaultMessage: "Install Pulse",
     description: "ripple video announcement CTA to install Saleor Pulse",
+  },
+  openCta: {
+    id: "+CE3ZW",
+    defaultMessage: "Open Pulse",
+    description: "ripple video announcement CTA when Saleor Pulse is already installed",
   },
   exploreCta: {
     id: "cNCKU1",
@@ -42,14 +43,17 @@ export const PulseVideoAnnouncement = ({
   model,
 }: CornerRippleComponentProps): JSX.Element | null => {
   const intl = useIntl();
-  const pulseLink = getPulsePromotionLink(IS_CLOUD_INSTANCE);
+  const pulseLink = usePulsePromotionLink();
 
-  // Cloud: deep-link to install. Open source: send people to Home (empty-state promo).
   const primaryAction =
     pulseLink.kind === "internal"
       ? {
           href: pulseLink.to,
-          label: <FormattedMessage {...messages.installCta} />,
+          label: (
+            <FormattedMessage
+              {...(pulseLink.intent === "open" ? messages.openCta : messages.installCta)}
+            />
+          ),
         }
       : {
           href: homeUrl(),

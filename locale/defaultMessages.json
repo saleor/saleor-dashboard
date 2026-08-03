@@ -35,6 +35,10 @@
     "context": "aria label for grid view button",
     "string": "Grid view"
   },
+  "+CE3ZW": {
+    "context": "ripple video announcement CTA when Saleor Pulse is already installed",
+    "string": "Open Pulse"
+  },
   "+G2N98": {
     "string": "Install from manifest"
   },
@@ -284,6 +288,10 @@
   "/Mcvt4": {
     "context": "section header",
     "string": "Media"
+  },
+  "/PVq8j": {
+    "context": "shown when user tries to install an extension that is already installed but inactive",
+    "string": "{appName} is installed but disabled."
   },
   "/QIOpX": {
     "context": "error when fetching all variants for duplicate detection fails",
@@ -4927,6 +4935,10 @@
   "Kxiige": {
     "string": "Generated Token"
   },
+  "KynPlY": {
+    "context": "link to open an already installed extension app UI",
+    "string": "Open {appName}"
+  },
   "KzgcFV": {
     "context": "category attribute entity type",
     "string": "Categories"
@@ -7268,6 +7280,10 @@
     "context": "fulfilled fulfillment, warehouse info",
     "string": "From {warehouseName}"
   },
+  "W2mMdu": {
+    "context": "shown when user tries to install an extension that is already installed",
+    "string": "{appName} is already installed."
+  },
   "W32xfN": {
     "context": "staff member full name",
     "string": "Name"
@@ -8507,6 +8523,10 @@
   "bT71VU": {
     "context": "total of all sent refunds",
     "string": "Result"
+  },
+  "bT8nK1": {
+    "context": "ripple action to open Saleor Pulse when already installed",
+    "string": "Open Pulse"
   },
   "bVbEZ/": {
     "context": "amount filter label",
@@ -14011,6 +14031,10 @@
   },
   "zxs6G3": {
     "string": "Manage how you ship out orders"
+  },
+  "zyWNgK": {
+    "context": "link to an already installed extension settings page from the install page",
+    "string": "Open settings"
   },
   "zyXcBP": {
     "string": "Sorting by this column requires active filter: {filterName}"

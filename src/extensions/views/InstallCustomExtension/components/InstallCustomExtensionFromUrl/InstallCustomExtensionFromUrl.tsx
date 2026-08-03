@@ -6,6 +6,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import {
   type Control,
+  type UseFormClearErrors,
   type UseFormGetValues,
   type UseFormHandleSubmit,
   type UseFormSetError,
@@ -31,23 +32,31 @@ export const InstallCustomExtensionFromUrl = ({
   handleSubmit,
   getValues,
   setError,
+  clearErrors,
   params,
 }: {
   control: Control<ExtensionInstallFormData>;
   trigger: UseFormTrigger<ExtensionInstallFormData>;
   handleSubmit: UseFormHandleSubmit<ExtensionInstallFormData>;
   setError: UseFormSetError<ExtensionInstallFormData>;
+  clearErrors: UseFormClearErrors<ExtensionInstallFormData>;
   getValues: UseFormGetValues<ExtensionInstallFormData>;
   params: ExtensionInstallQueryParams;
 }) => {
   const intl = useIntl();
   const { errors } = useFormState({ control });
 
-  const { submitFetchManifest, manifest, lastFetchedManifestUrl, isFetchingManifest } =
-    useFetchManifest({
-      getValues,
-      setError,
-    });
+  const {
+    submitFetchManifest,
+    manifest,
+    lastFetchedManifestUrl,
+    isFetchingManifest,
+    alreadyInstalledApp,
+  } = useFetchManifest({
+    getValues,
+    setError,
+    clearErrors,
+  });
 
   useLoadQueryParamsToForm({
     trigger,
@@ -86,7 +95,10 @@ export const InstallCustomExtensionFromUrl = ({
           control={control}
           issues={issues}
         />
-        <ManifestErrorMessage error={errors.manifestUrl} />
+        <ManifestErrorMessage
+          error={alreadyInstalledApp ? undefined : errors.manifestUrl}
+          alreadyInstalledApp={alreadyInstalledApp}
+        />
       </Box>
       <Savebar>
         <Savebar.Spacer />

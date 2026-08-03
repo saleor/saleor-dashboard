@@ -10,7 +10,7 @@ import { type ExtensionInstallFormData } from "./types";
 export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQueryParams }) => {
   const manifestUrlFromQueryParams = params[MANIFEST_ATTR];
 
-  const { control, trigger, watch, handleSubmit, setError, getValues } =
+  const { control, trigger, watch, handleSubmit, setError, clearErrors, getValues } =
     useForm<ExtensionInstallFormData>({
       resolver: zodResolver(manifestFormSchema),
       values: {
@@ -27,6 +27,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           trigger={trigger}
           handleSubmit={handleSubmit}
           setError={setError}
+          clearErrors={clearErrors}
           getValues={getValues}
           params={params}
         />
@@ -36,6 +37,7 @@ export const InstallCustomExtension = ({ params }: { params: ExtensionInstallQue
           handleSubmit={handleSubmit}
           getValues={getValues}
           setError={setError}
+          clearErrors={clearErrors}
           watch={watch}
         />
       )}

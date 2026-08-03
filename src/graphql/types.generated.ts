@@ -11526,7 +11526,7 @@ export type InstalledAppsQueryVariables = Exact<{
 }>;
 
 
-export type InstalledAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null } }> } | null };
+export type InstalledAppsQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, appUrl: string | null } }> } | null };
 
 export type InstalledAppsListQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -11656,7 +11656,7 @@ export type EventDeliveryAttemptFragment = { __typename: 'EventDeliveryAttempt',
 
 export type AppEventDeliveriesFragment = { __typename: 'App', webhooks?: Array<{ __typename: 'Webhook', failedDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, createdAt: any, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null, pendingDelivers: { __typename: 'EventDeliveryCountableConnection', edges: Array<{ __typename: 'EventDeliveryCountableEdge', node: { __typename: 'EventDelivery', id: string, attempts: { __typename: 'EventDeliveryAttemptCountableConnection', edges: Array<{ __typename: 'EventDeliveryAttemptCountableEdge', node: { __typename: 'EventDeliveryAttempt', id: string, status: EventDeliveryStatusEnum, createdAt: any } }> } | null } }> } | null }> | null };
 
-export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null };
+export type InstalledAppFragment = { __typename: 'App', id: string, identifier: string | null, manifestUrl: string | null, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, appUrl: string | null };
 
 export type InstalledAppDetailsFragment = { __typename: 'App', id: string, isActive: boolean | null, name: string | null, type: AppTypeEnum | null, appUrl: string | null, problems: Array<{ __typename: 'AppProblem', key: string, message: string, createdAt: any, count: number, isCritical: boolean, updatedAt: any, id: string, dismissed: { __typename: 'AppProblemDismissed', by: AppProblemDismissedByEnum, userEmail: string | null } | null }> | null, brand: { __typename: 'AppBrand', logo: { __typename: 'AppBrandLogo', default: string } } | null };
 

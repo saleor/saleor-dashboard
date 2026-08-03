@@ -24,6 +24,11 @@ export const rippleActionMessages = defineMessages({
     defaultMessage: "Install Pulse",
     description: "ripple action to install Saleor Pulse",
   },
+  openPulse: {
+    id: "r0blTm",
+    defaultMessage: "Open Pulse",
+    description: "ripple action to open Saleor Pulse when already installed",
+  },
   explorePulse: {
     id: "c5sFXi",
     defaultMessage: "Explore Pulse",
