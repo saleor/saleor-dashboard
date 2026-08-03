@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { type ChannelShippingData } from "@dashboard/channels/utils";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { type WithFormId } from "@dashboard/components/Form";
@@ -184,6 +188,8 @@ const ShippingZoneRatesCreatePage = ({
         <DetailPageLayout>
           <TopNav
             href={backUrl}
+            hrefIcon={<TopNavDestinationIcon.shipping />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.shippingZone)}
             title={
               !shippingZoneName ? (
                 <Skeleton __width="200px" />

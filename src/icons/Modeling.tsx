@@ -2,13 +2,16 @@ import {
   configurationLucideIconProps,
   getConfigurationCustomIconStrokeWidth,
   getNavigationCustomIconStrokeWidth,
+  getTopNavCustomIconStrokeWidth,
   navigationLucideIconProps,
+  topNavLucideIconProps,
 } from "@dashboard/components/icons";
 
 const MODELING_VIEWBOX_SIZE = 20;
 const modelingStrokeWidth = getNavigationCustomIconStrokeWidth(MODELING_VIEWBOX_SIZE);
 const configurationModelingStrokeWidth =
   getConfigurationCustomIconStrokeWidth(MODELING_VIEWBOX_SIZE);
+const topNavModelingStrokeWidth = getTopNavCustomIconStrokeWidth(MODELING_VIEWBOX_SIZE);
 
 const ModelingIconPaths = ({ strokeWidth }: { strokeWidth: number }) => (
   <>
@@ -71,5 +74,17 @@ export const ConfigurationModelingIcon = (): JSX.Element => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <ModelingIconPaths strokeWidth={configurationModelingStrokeWidth} />
+  </svg>
+);
+
+export const TopNavModelingIcon = (): JSX.Element => (
+  <svg
+    width={topNavLucideIconProps.size}
+    height={topNavLucideIconProps.size}
+    viewBox={`0 0 ${MODELING_VIEWBOX_SIZE} ${MODELING_VIEWBOX_SIZE}`}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <ModelingIconPaths strokeWidth={topNavModelingStrokeWidth} />
   </svg>
 );

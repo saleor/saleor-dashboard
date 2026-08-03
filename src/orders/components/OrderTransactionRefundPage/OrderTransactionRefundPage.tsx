@@ -1,5 +1,9 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { TopNav } from "@dashboard/components/AppLayout";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Link from "@dashboard/components/Link";
@@ -250,7 +254,12 @@ const OrderTransactionRefundPage = ({
   return (
     <DetailPageLayout gridTemplateColumns={1}>
       <Box as="form" display="contents" onSubmit={handleSubmit(onSubmit)}>
-        <TopNav href={orderUrl(order?.id ?? "")} title={getRefundViewTitle(draftRefund, intl)}>
+        <TopNav
+          href={orderUrl(order?.id ?? "")}
+          hrefIcon={<TopNavDestinationIcon.orders />}
+          hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
+          title={getRefundViewTitle(draftRefund, intl)}
+        >
           {draftRefund && (
             <Pill
               color={getRefundStatusColor(draftRefund.status)}

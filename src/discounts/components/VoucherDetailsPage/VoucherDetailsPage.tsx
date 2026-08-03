@@ -2,7 +2,11 @@
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -279,7 +283,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={voucherListBackLink} title={voucher?.name}>
+            <TopNav
+              href={voucherListBackLink}
+              hrefIcon={<TopNavDestinationIcon.discounts />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allVouchers)}
+              title={voucher?.name}
+            >
               {canTranslate && (
                 <TranslationsButton
                   onClick={() =>

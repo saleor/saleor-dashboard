@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -181,6 +185,8 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={orderUrl(order?.id)}
+        hrefIcon={<TopNavDestinationIcon.orders />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
         title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {
           orderNumber: order?.number,
         })}

@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -183,6 +187,8 @@ const ProductMediaPage = (props: ProductMediaPageProps) => {
         <>
           <TopNav
             href={productUrl(productId)}
+            hrefIcon={<TopNavDestinationIcon.products />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.product)}
             title={
               disabled && !productName ? (
                 <Skeleton __width="200px" />

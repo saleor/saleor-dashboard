@@ -1,5 +1,9 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -56,6 +60,8 @@ const ProductTypeListPage = ({
         withoutBorder
         isAlignToRight={false}
         href={configurationMenuUrl}
+        hrefIcon={<TopNavDestinationIcon.configuration />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
         title={intl.formatMessage(sectionNames.productTypes)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">

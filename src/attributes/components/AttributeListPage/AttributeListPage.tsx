@@ -1,7 +1,11 @@
 import { rippleAttributeListGroupByType } from "@dashboard/attributes/ripples/attributeListGroupByType";
 import { attributeAddUrl, type AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { BulkUnassignButton } from "@dashboard/components/BulkUnassignButton";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -87,6 +91,8 @@ const AttributeListPage = ({
     <>
       <TopNav
         href={configurationMenuUrl}
+        hrefIcon={<TopNavDestinationIcon.configuration />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
         title={intl.formatMessage(sectionNames.attributes)}
         withoutBorder
         isAlignToRight={false}

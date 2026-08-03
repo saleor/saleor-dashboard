@@ -1,7 +1,11 @@
 // @ts-strict-ignore
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { CountryList } from "@dashboard/components/CountryList";
@@ -156,6 +160,8 @@ export const ShippingZoneDetailsPage = ({
     <DetailPageLayout>
       <TopNav
         href={shippingZonesListBackLink}
+        hrefIcon={<TopNavDestinationIcon.shipping />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.allShippingZones)}
         title={<ShippingZoneDetailsTitle name={shippingZone?.name} loading={zoneLoading} />}
         actionsGap={3}
       >

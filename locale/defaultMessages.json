@@ -194,6 +194,10 @@
     "context": "alert",
     "string": "Order limit reached"
   },
+  "+tIkAe": {
+    "context": "status",
+    "string": "Status"
+  },
   "+vyg/Z": {
     "context": "canceled fulfillment, restock destination warehouse info",
     "string": "Restocked to {warehouseName}"
@@ -261,6 +265,10 @@
   "/8/Ffn": {
     "context": "button",
     "string": "Show"
+  },
+  "/84jS6": {
+    "context": "TopNav destination link tooltip to shipping zones list",
+    "string": "All shipping zones"
   },
   "/8a4cU": {
     "context": "Description for stock-outside-channel-warehouses info",
@@ -665,6 +673,9 @@
   },
   "0xMUfd": {
     "string": "No results found for \"{query}\""
+  },
+  "1+ROfp": {
+    "string": "Transaction"
   },
   "1/bAgt": {
     "context": "discount type fixed",
@@ -1127,6 +1138,10 @@
     "context": "settings search alias",
     "string": "authorize"
   },
+  "36QccF": {
+    "context": "TopNav destination link tooltip to channels list",
+    "string": "All channels"
+  },
   "37IPJQ": {
     "context": "return items table, edit reason button",
     "string": "Edit reason"
@@ -1142,6 +1157,10 @@
   "38izkC": {
     "context": "placeholder for configuration settings search",
     "string": "Search settings…"
+  },
+  "39yi8w": {
+    "context": "selected currency",
+    "string": "Selected currency"
   },
   "3AqOxp": {
     "context": "no category set error",
@@ -1194,6 +1213,10 @@
   },
   "3SVI5p": {
     "string": "Warning"
+  },
+  "3TAa8s": {
+    "context": "TopNav destination link tooltip to collections list",
+    "string": "All collections"
   },
   "3VsNbv": {
     "context": "WarehouseSettings local warehouse description",
@@ -1279,6 +1302,10 @@
   },
   "3xv4ez": {
     "string": "Go to users/staff members"
+  },
+  "3y4r+z": {
+    "context": "channel settings",
+    "string": "Channel Settings"
   },
   "3yf2ND": {
     "string": "Operator"
@@ -1460,6 +1487,10 @@
     "context": "date group header",
     "string": "Last 30 days"
   },
+  "4lIe10": {
+    "context": "TopNav destination link tooltip to vouchers list",
+    "string": "All vouchers"
+  },
   "4oWCm4": {
     "string": "Tax class updated"
   },
@@ -1560,6 +1591,10 @@
   "5O+fh+": {
     "context": "channel details section nav item",
     "string": "Orders"
+  },
+  "5O8EIz": {
+    "context": "Authorize transactions instead of charging",
+    "string": "Authorize transactions instead of charging"
   },
   "5ObBlW": {
     "string": "Dark Mode"
@@ -2076,6 +2111,10 @@
     "context": "tax class rates list label when no country is selected",
     "string": "Add country to access tax classes"
   },
+  "7UG1Lx": {
+    "context": "checkbox gift cards label",
+    "string": "Automatically fulfill non shippable gift cards"
+  },
   "7UOtno": {
     "context": "eyebrow label for Pulse homepage promotion",
     "string": "Saleor Pulse"
@@ -2111,6 +2150,10 @@
   "7bueG3": {
     "context": "export scope section header for gift cards",
     "string": "Gift cards to include"
+  },
+  "7e3EYJ": {
+    "context": "TopNav destination link tooltip to models list",
+    "string": "All models"
   },
   "7eGvyy": {
     "context": "extension install page, extension permissions (from manifest)",
@@ -2320,6 +2363,10 @@
   "8hrH/z": {
     "context": "dialog header",
     "string": "Search Category"
+  },
+  "8iUzOU": {
+    "context": "allow unpaid orders checbkox description",
+    "string": "Enables completing checkout with order before a successful payment."
   },
   "8jgfPX": {
     "context": "automatic completion disabled info message",
@@ -2545,6 +2592,10 @@
   },
   "9UHfux": {
     "string": "Voucher Specific Information"
+  },
+  "9UMv3K": {
+    "context": "permission group create page title",
+    "string": "New permission group"
   },
   "9UYpUB": {
     "context": "customer gift cards card header",
@@ -3507,6 +3558,10 @@
     "context": "dialog header, title",
     "string": "Invoice Generation"
   },
+  "DnghuS": {
+    "context": "channel create",
+    "string": "New Channel"
+  },
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
@@ -3654,6 +3709,10 @@
     "context": "channel details section nav item",
     "string": "General"
   },
+  "EXPRMd": {
+    "context": "channel form card title for channel-owned order and checkout settings",
+    "string": "Orders & fulfillment"
+  },
   "EXqb2l": {
     "string": "Go to Saleor Cloud"
   },
@@ -3685,6 +3744,10 @@
   },
   "Ed2705": {
     "string": "Create new model type"
+  },
+  "EewziG": {
+    "context": "checkbox gift cards label description",
+    "string": "When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
   },
   "EfF28c": {
     "context": "channel inventory reorder hint",
@@ -4097,6 +4160,10 @@
   "GFioCC": {
     "context": "models section name",
     "string": "Models"
+  },
+  "GFkb2t": {
+    "context": "automatically complete checkouts checkbox label",
+    "string": "Automatically complete checkouts when fully paid"
   },
   "GGhg9z": {
     "context": "order header date, earlier today",
@@ -4745,6 +4812,10 @@
     "context": "button",
     "string": "Manage"
   },
+  "Ic7Wln": {
+    "context": "card subtitle",
+    "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
+  },
   "IcTtTE": {
     "context": "Description for live status",
     "string": "Visible and purchasable"
@@ -4846,6 +4917,10 @@
     "context": "settings search alias",
     "string": "customer registration"
   },
+  "J7mFhU": {
+    "context": "currency code select",
+    "string": "{code} - {countries}"
+  },
   "J8lwWh": {
     "context": "create attribute dialog step two label",
     "string": "Attribute values"
@@ -4888,6 +4963,10 @@
   "JFtFgc": {
     "context": "tabel column header",
     "string": "Selling Price"
+  },
+  "JGIW6o": {
+    "context": "TopNav destination link tooltip to model types list",
+    "string": "All model types"
   },
   "JGm7E5": {
     "context": "option",
@@ -5294,6 +5373,10 @@
     "context": "fulfillment status waiting for approval",
     "string": "Waiting for Approval"
   },
+  "L2tvTm": {
+    "context": "mark as paid strategy checkbox label",
+    "string": "Use Transaction flow when marking order as paid"
+  },
   "L5IuDw": {
     "string": "lower"
   },
@@ -5578,6 +5661,10 @@
   "MH1qA1": {
     "string": "Test Action"
   },
+  "MHVglr": {
+    "context": "deactivate",
+    "string": "Deactivate"
+  },
   "MHY5da": {
     "context": "tooltip for shipping amount",
     "string": "Shipping cost"
@@ -5619,6 +5706,10 @@
   "MQc8k3": {
     "context": "assign warehouse picker, client-side filter emptied the loaded pages",
     "string": "Every warehouse loaded so far is already added. Search by name, or keep loading the list."
+  },
+  "MQwT1W": {
+    "context": "activate",
+    "string": "Activate"
   },
   "MS86iy": {
     "string": "The extension identifier is already in use. ({errorCode})"
@@ -6174,6 +6265,10 @@
     "context": "Message when search returns no results",
     "string": "No channels match your search"
   },
+  "OrMr/k": {
+    "context": "window title",
+    "string": "Create Channel"
+  },
   "OrR3Qy": {
     "context": "no products",
     "string": "No products found"
@@ -6203,6 +6298,10 @@
   "Owgj18": {
     "context": "section description",
     "string": "Your store's public name and description, used across the storefront and in SEO metadata."
+  },
+  "OwiCeE": {
+    "context": "TopNav destination link tooltip to parent shipping zone",
+    "string": "Shipping zone"
   },
   "Oy1LhB": {
     "context": "button error state label",
@@ -6619,6 +6718,9 @@
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
   },
+  "Qb2XN5": {
+    "string": "\"Mark as paid\" feature creates a {link} - used by Payment Apps"
+  },
   "QcXdj6": {
     "context": "customer recent orders table column: net product sales after discounts",
     "string": "Net"
@@ -6646,6 +6748,10 @@
   "Qhb89u": {
     "context": "Warning when no countries covered",
     "string": "No countries covered"
+  },
+  "QiN4hv": {
+    "context": "active",
+    "string": "Active"
   },
   "QirE3M": {
     "string": "Start Date"
@@ -6762,6 +6868,10 @@
   "RLTaAR": {
     "context": "order history message",
     "string": "Order address was updated"
+  },
+  "RLYfMF": {
+    "context": "checkbox label",
+    "string": "Automatically confirm all orders"
   },
   "RMB6fU": {
     "context": "button",
@@ -7111,6 +7221,10 @@
     "context": "header",
     "string": "Create Variant"
   },
+  "T6tO6B": {
+    "context": "TopNav destination link tooltip to parent customer",
+    "string": "Customer"
+  },
   "T7Dju4": {
     "context": "replaced quantity column in line matrix",
     "string": "Replaced"
@@ -7220,6 +7334,10 @@
     "context": "bulk publish stock warehouse scope section title",
     "string": "Write stock to"
   },
+  "TSJRiZ": {
+    "context": "channel status title",
+    "string": "Channel Status"
+  },
   "TTVPyd": {
     "context": "dialog subheading",
     "string": "Create a manual transaction for non-integrated payments"
@@ -7302,6 +7420,10 @@
   "TxYWkD": {
     "context": "page header, edit view",
     "string": "Edit grant refund"
+  },
+  "U+79k0": {
+    "context": "order expiration card description",
+    "string": "The time in days after expired orders will be deleted. Allowed range between 1 and 120."
   },
   "U+Fl4Z": {
     "context": "customer detail, label above the address when default billing and default shipping are the same",
@@ -7656,6 +7778,10 @@
     "context": "refund type",
     "string": "Refund products"
   },
+  "VOtpY0": {
+    "context": "TopNav destination link tooltip to parent order",
+    "string": "Order"
+  },
   "VQvNZx": {
     "context": "page title",
     "string": "All installed"
@@ -7663,6 +7789,10 @@
   "VRT9cG": {
     "context": "orders list menu shortcut to settings hub",
     "string": "Orders & fulfillment settings"
+  },
+  "VRUlSh": {
+    "context": "TopNav destination link tooltip to attributes list",
+    "string": "All attributes"
   },
   "VS0YOp": {
     "context": "Request extension",
@@ -7688,6 +7818,10 @@
   },
   "VZsE96": {
     "string": "Collection Name"
+  },
+  "Vb79Wt": {
+    "context": "TopNav destination link tooltip to permission groups list",
+    "string": "All permission groups"
   },
   "VceXrc": {
     "context": "initial balance filter label",
@@ -8020,6 +8154,10 @@
   },
   "X7jl6w": {
     "string": "Orders"
+  },
+  "X8qjg3": {
+    "context": "inactive",
+    "string": "Inactive"
   },
   "X90ElB": {
     "context": "dialog header",
@@ -8653,8 +8791,16 @@
     "context": "empty state message",
     "string": "No refunds made for this order."
   },
+  "ZV//jf": {
+    "context": "TopNav destination link tooltip to translations",
+    "string": "Translations"
+  },
   "ZXOpCJ": {
     "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
+  },
+  "ZZb4E+": {
+    "context": "automatically complete checkouts checkbox description",
+    "string": "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. {link}"
   },
   "Za//IL": {
     "context": "channel details section nav item for tax settings shortcut",
@@ -9819,6 +9965,9 @@
     "context": "gift card resend dialog fallback when default recipient email is unknown",
     "string": "Default recipient assigned to this gift card"
   },
+  "eR2vV/": {
+    "string": "If left unchecked it creates a {link} - used by Payment Plugins"
+  },
   "eRqx44": {
     "string": "Search collections..."
   },
@@ -9961,6 +10110,10 @@
     "context": "configuration menu item description",
     "string": "Manage attributes used for model types"
   },
+  "fGOZfh": {
+    "context": "TopNav destination link tooltip to orders list",
+    "string": "All orders"
+  },
   "fITtdb": {
     "context": "helper text",
     "string": "{value} already refunded"
@@ -10065,6 +10218,10 @@
     "context": "bulk publish per product stock field label",
     "string": "Stock"
   },
+  "fmYFl3": {
+    "context": "TopNav destination link tooltip to home / sign in",
+    "string": "Home"
+  },
   "fo7nfa": {
     "context": "fixed amount",
     "string": "Fixed Amount"
@@ -10090,6 +10247,10 @@
   },
   "ftcHpD": {
     "string": "Customer created"
+  },
+  "fuFCpI": {
+    "context": "allow unpaid orders checkbox label",
+    "string": "Allow unpaid orders"
   },
   "fuUksg": {
     "context": "column header",
@@ -10294,6 +10455,10 @@
     "context": "dialog content",
     "string": "This customer doesn't have any addresses in the address book. Provide address for order."
   },
+  "goNSwS": {
+    "context": "TopNav destination link tooltip to warehouses list",
+    "string": "All warehouses"
+  },
   "gr+oXW": {
     "context": "page title",
     "string": "Title"
@@ -10452,6 +10617,9 @@
   "hapYhy": {
     "context": "bulk publish wizard defaults step",
     "string": "Defaults"
+  },
+  "hh0xW7": {
+    "string": "Channel Name"
   },
   "hhXK05": {
     "context": "Link label to navigate to the app page",
@@ -11196,6 +11364,10 @@
     "context": "notifier after transfer funds mutation succeeds",
     "string": "Refund request sent to payment provider"
   },
+  "kVKTwC": {
+    "context": "order expiration card title",
+    "string": "Order expiration"
+  },
   "kVL3LM": {
     "string": "Voucher codes"
   },
@@ -11432,6 +11604,10 @@
   },
   "lLKEMH": {
     "string": "Use refund settings to configure available reasons (permissions required)"
+  },
+  "lLNHdh": {
+    "context": "TopNav destination link tooltip to configuration",
+    "string": "Configuration"
   },
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
@@ -11809,6 +11985,10 @@
     "context": "label for currently selected warehouse",
     "string": "currently selected"
   },
+  "n2eKUn": {
+    "context": "channel form hint linking to orders and fulfillment settings hub",
+    "string": "Settings for this channel only. Compare all channels or edit shop-wide policies in {link}."
+  },
   "n4wLTL": {
     "context": "create attribute dialog step two intro for product types",
     "string": "Add the choices merchants can pick from and set how this attribute behaves on products."
@@ -11858,6 +12038,10 @@
   "nG1+Cz": {
     "context": "staff members status active",
     "string": "Active"
+  },
+  "nG76Ql": {
+    "context": "TopNav destination link tooltip to categories list",
+    "string": "All categories"
   },
   "nIuKz3": {
     "context": "Refund status none",
@@ -12010,6 +12194,14 @@
     "context": "shipping method types help example row three result",
     "string": "Price only"
   },
+  "nwSh4z": {
+    "context": "TopNav destination link tooltip to product types list",
+    "string": "All product types"
+  },
+  "nwcJVT": {
+    "context": "When enabled, all transactions would require an additional step to be charged.",
+    "string": "When enabled, all transactions would require an additional step to be charged. ({link})"
+  },
   "nwnwJ0": {
     "context": "payment status",
     "string": "Refused"
@@ -12111,6 +12303,10 @@
   "oLMXDv": {
     "context": "order status",
     "string": "Ready to fulfill"
+  },
+  "oNoehJ": {
+    "context": "TopNav destination link tooltip to structures/menus list",
+    "string": "All structures"
   },
   "oO2fji": {
     "context": "dialog title for order discount",
@@ -12331,6 +12527,10 @@
     "context": "search label",
     "string": "Search Countries"
   },
+  "pGYCdT": {
+    "context": "TopNav destination link tooltip to discounts list",
+    "string": "All discounts"
+  },
   "pGwvpX": {
     "context": "status",
     "string": "Deactivated"
@@ -12451,6 +12651,10 @@
     "context": "order status",
     "string": "Fulfilled"
   },
+  "pmXN+Q": {
+    "context": "TopNav destination link tooltip to products list",
+    "string": "All products"
+  },
   "pmzMmq": {
     "context": "bulk publish stock toggle description",
     "string": "Seeds a quantity for every variant. Leave off to publish without touching inventory."
@@ -12496,6 +12700,10 @@
   "pva0/a": {
     "context": "bulk publish stock disabled info callout",
     "string": "Products are published with their existing inventory. Any variant with no stock shows as out of stock until you add some."
+  },
+  "pwZmqw": {
+    "context": "TopNav destination link tooltip to extensions",
+    "string": "Extensions"
   },
   "pxCn3q": {
     "context": "button to clear lineId filter on return page",
@@ -13074,6 +13282,10 @@
     "context": "search label",
     "string": "Search products"
   },
+  "s81JoX": {
+    "context": "TopNav destination link tooltip to customers list",
+    "string": "All customers"
+  },
   "s8e+7y": {
     "string": "Attribute updated"
   },
@@ -13234,6 +13446,10 @@
   "snjvVg": {
     "context": "bulk publish select all hit max selection cap",
     "string": "Only {max} products can be selected at once. {skipped, plural, one {# more visible product was} other {# more visible products were}} not selected."
+  },
+  "sozQ3N": {
+    "context": "TopNav destination link tooltip to staff list",
+    "string": "All staff members"
   },
   "spjKeI": {
     "string": "Fulfillment approved"
@@ -13788,6 +14004,10 @@
   "v1vJ77": {
     "string": "Edit rule"
   },
+  "v2+u4c": {
+    "context": "card subtitle",
+    "string": "Assign and sort warehouses that will be used in this channel (warehouses can be assigned in multiple channels)."
+  },
   "v20Mra": {
     "string": "Menus deleted"
   },
@@ -14240,6 +14460,10 @@
     "context": "note on currency",
     "string": "Note: Only channels with matching currency are available."
   },
+  "wY2PDI": {
+    "context": "TopNav destination link tooltip to gift cards list",
+    "string": "All gift cards"
+  },
   "wabGCe": {
     "context": "Tooltip line showing local timestamp of a problem event",
     "string": "Local: {time}"
@@ -14311,6 +14535,10 @@
   "wo7tA9": {
     "context": "automatic completion cut-off date checkbox label",
     "string": "Custom cut-off date"
+  },
+  "wpAXKX": {
+    "context": "checkbox label description",
+    "string": "All orders will be automatically confirmed and all payments will be captured."
   },
   "wpONQ2": {
     "string": "Enter any extra information regarding this customer."
@@ -14927,6 +15155,10 @@
   "zgqPGF": {
     "context": "attribute list",
     "string": "Attribute {name}"
+  },
+  "zhDXGJ": {
+    "context": "TopNav destination link tooltip to parent product",
+    "string": "Product"
   },
   "zhG4HQ": {
     "context": "Action to configure channel",

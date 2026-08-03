@@ -5,7 +5,11 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -218,6 +222,8 @@ const PageDetailsPage = ({
           <DetailPageLayout>
             <TopNav
               href={pageListBackLink}
+              hrefIcon={<TopNavDestinationIcon.modeling />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allModels)}
               title={
                 !pageExists ? (
                   intl.formatMessage(messages.title)

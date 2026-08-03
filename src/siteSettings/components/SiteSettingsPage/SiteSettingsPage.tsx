@@ -1,4 +1,6 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
+import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
+import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
 import { CompanyAddressForm } from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -130,6 +132,8 @@ export const SiteSettingsPage = ({
   return (
     <SettingsHubLayout
       backHref={configurationMenuUrl}
+      backHrefIcon={<TopNavDestinationIcon.configuration />}
+      backHrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
       title={intl.formatMessage(sectionNames.siteSettings)}
     >
       <Form

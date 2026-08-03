@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -45,6 +49,8 @@ const PageTypeCreatePage = (props: PageTypeCreatePageProps) => {
           <DetailPageLayout>
             <TopNav
               href={pageTypeListUrl()}
+              hrefIcon={<TopNavDestinationIcon.modeling />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allModelTypes)}
               title={intl.formatMessage({
                 id: "Gxo/XC",
                 defaultMessage: "Create model type",

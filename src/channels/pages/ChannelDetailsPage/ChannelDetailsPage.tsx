@@ -20,7 +20,11 @@ import { defaultGraphiQLQuery } from "@dashboard/channels/queries";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { getChannelCreateDefaults } from "@dashboard/channels/utils/getChannelCreateDefaults";
 import { validateChannelFormData } from "@dashboard/channels/validation";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -426,7 +430,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   if (isEditLoading) {
     return (
       <DetailPageLayout gridTemplateColumns={showRightSidebar ? 12 : 1}>
-        <TopNav href={channelsListUrl()} title={null} />
+        <TopNav
+          href={channelsListUrl()}
+          hrefIcon={<TopNavDestinationIcon.channels />}
+          hrefTitle={intl.formatMessage(topNavDestinationMessages.allChannels)}
+          title={null}
+        />
         <DetailPageLayout.Content>
           <Box
             display="flex"
@@ -505,6 +514,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             />
             <TopNav
               href={channelsListUrl()}
+              hrefIcon={<TopNavDestinationIcon.channels />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allChannels)}
               title={channel ? <ChannelDetailsTitle channel={channel} /> : null}
               actionsGap={3}
             >

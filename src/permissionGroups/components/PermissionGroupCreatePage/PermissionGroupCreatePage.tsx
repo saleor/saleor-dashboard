@@ -1,6 +1,9 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Backlink } from "@dashboard/components/Backlink";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -13,7 +16,7 @@ import {
 } from "@dashboard/graphql";
 import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { buttonMessages, sectionNames } from "@dashboard/intl";
+import { buttonMessages } from "@dashboard/intl";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
@@ -95,11 +98,17 @@ export const PermissionGroupCreatePage = ({
 
         return (
           <DetailPageLayout>
-            <TopNav title="New Permission Group" />
+            <TopNav
+              href={permissionGroupListUrl()}
+              hrefIcon={<TopNavDestinationIcon.permissionGroups />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allPermissionGroups)}
+              title={intl.formatMessage({
+                id: "9UMv3K",
+                defaultMessage: "New permission group",
+                description: "permission group create page title",
+              })}
+            />
             <DetailPageLayout.Content>
-              <Backlink href={permissionGroupListUrl()}>
-                {intl.formatMessage(sectionNames.permissionGroups)}
-              </Backlink>
               <PermissionGroupInfo
                 data={data}
                 errors={errors}

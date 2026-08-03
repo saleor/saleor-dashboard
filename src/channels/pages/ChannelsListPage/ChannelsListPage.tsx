@@ -6,7 +6,11 @@ import {
   getChannelListSetupState,
 } from "@dashboard/channels/utils/channelListSetup";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -78,7 +82,12 @@ export const ChannelsListPage = ({
 
   return (
     <ListPageLayout>
-      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.channels)}>
+      <TopNav
+        href={configurationMenuUrl}
+        hrefIcon={<TopNavDestinationIcon.configuration />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
+        title={intl.formatMessage(sectionNames.channels)}
+      >
         <Box position="relative">
           <Button
             disabled={limitReached}
