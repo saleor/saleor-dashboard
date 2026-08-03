@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -72,6 +76,8 @@ const PageTypeListPage = ({
         isAlignToRight={false}
         withoutBorder
         href={configurationMenuUrl}
+        hrefIcon={<TopNavDestinationIcon.configuration />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
         title={intl.formatMessage(sectionNames.modelTypes)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">

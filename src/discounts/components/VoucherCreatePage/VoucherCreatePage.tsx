@@ -1,5 +1,9 @@
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/AssignCategoryDialog";
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog";
@@ -318,6 +322,8 @@ const VoucherCreatePage = ({
         <DetailPageLayout>
           <TopNav
             href={voucherListUrl()}
+            hrefIcon={<TopNavDestinationIcon.discounts />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allVouchers)}
             title={intl.formatMessage({
               id: "PsclSa",
               defaultMessage: "Create Voucher",

@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -10,7 +14,7 @@ import {
 } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Skeleton } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { DataLine } from "./components/DataLine";
 import { DataLineMoney } from "./components/DataLineMoney";
@@ -35,6 +39,8 @@ const OrderSendRefundPage = ({
   addManualRefundState,
   addManualRefundError,
 }: OrderSendRefundPageProps) => {
+  const intl = useIntl();
+
   const classes = useStyles();
   const currency = order?.totalBalance?.currency || "";
   const transactions = order?.transactions ?? [];
@@ -43,6 +49,8 @@ const OrderSendRefundPage = ({
     <DetailPageLayout>
       <TopNav
         href={orderUrl(order?.id)}
+        hrefIcon={<TopNavDestinationIcon.orders />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
         title={<FormattedMessage {...refundPageMessages.pageSubtitle} />}
       />
       <DetailPageLayout.Content>

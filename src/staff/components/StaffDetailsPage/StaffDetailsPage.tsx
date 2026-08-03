@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -101,7 +105,12 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
       {({ data: formData, change, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={staffListBackLink} title={getUserName(staffMember)}>
+            <TopNav
+              href={staffListBackLink}
+              hrefIcon={<TopNavDestinationIcon.staff />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allStaffMembers)}
+              title={getUserName(staffMember)}
+            >
               {canViewCustomerProfile && staffMember?.id && (
                 <Button
                   onClick={onViewCustomerProfile}

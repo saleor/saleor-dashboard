@@ -6,7 +6,11 @@ import {
 } from "@dashboard/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { type ChannelData } from "@dashboard/channels/utils";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -243,7 +247,12 @@ const ProductCreatePage = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={productListUrl()} title={header} />
+            <TopNav
+              href={productListUrl()}
+              hrefIcon={<TopNavDestinationIcon.products />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allProducts)}
+              title={header}
+            />
             <DetailPageLayout.Content>
               <ProductDetailsForm
                 data={data}

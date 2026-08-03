@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, type ProductVariantTranslationFragment } from "@dashboard/graphql";
@@ -101,6 +105,8 @@ export const TranslationsProductVariantsPage = ({
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.products,
         })}
+        hrefIcon={<TopNavDestinationIcon.translations />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.translations)}
         title={intl.formatMessage(
           {
             id: "98WMlR",

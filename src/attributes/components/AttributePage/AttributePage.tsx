@@ -15,7 +15,11 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -262,6 +266,8 @@ const AttributePage = ({
             <DetailPageLayout>
               <TopNav
                 href={attributePageBackLink}
+                hrefIcon={<TopNavDestinationIcon.attributes />}
+                hrefTitle={intl.formatMessage(topNavDestinationMessages.allAttributes)}
                 title={
                   attribute === null ? (
                     intl.formatMessage({

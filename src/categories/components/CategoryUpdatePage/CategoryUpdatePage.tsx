@@ -2,7 +2,11 @@ import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { defaultGraphiQLQuery } from "@dashboard/categories/queries";
 import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -154,7 +158,13 @@ export const CategoryUpdatePage = ({
     <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
         <DetailPageLayout gridTemplateColumns={1}>
-          <TopNav href={backHref} title={category?.name} subtitleTop={breadcrumb}>
+          <TopNav
+            href={backHref}
+            hrefIcon={<TopNavDestinationIcon.products />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allCategories)}
+            title={category?.name}
+            subtitleTop={breadcrumb}
+          >
             {canTranslate && (
               <TranslationsButton
                 variant="secondary"

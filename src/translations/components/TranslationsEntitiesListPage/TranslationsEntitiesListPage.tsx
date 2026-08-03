@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
 import { type LanguageFragment } from "@dashboard/graphql";
@@ -51,6 +55,8 @@ const TranslationsEntitiesListPage = (props: TranslationsEntitiesListPageProps) 
     <>
       <TopNav
         href={languageListUrl}
+        hrefIcon={<TopNavDestinationIcon.translations />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.translations)}
         title={intl.formatMessage(
           {
             id: "FemBUF",

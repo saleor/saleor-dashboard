@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -21,6 +25,7 @@ import {
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { type FetchMoreProps, type UserError } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { useIntl } from "react-intl";
 
 import { ProductTypeConfiguration } from "../ProductTypeConfiguration/ProductTypeConfiguration";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
@@ -69,6 +74,7 @@ const ProductTypeCreatePage = ({
   onSubmit,
   onFetchMoreTaxClasses,
 }: ProductTypeCreatePageProps) => {
+  const intl = useIntl();
   const navigate = useNavigator();
   const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps("");
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
@@ -85,7 +91,12 @@ const ProductTypeCreatePage = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={productTypeListUrl()} title={pageTitle} />
+            <TopNav
+              href={productTypeListUrl()}
+              hrefIcon={<TopNavDestinationIcon.products />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allProductTypes)}
+              title={pageTitle}
+            />
             <DetailPageLayout.Content paddingBottom={10}>
               <Metadata data={data} onChange={changeMetadata} />
             </DetailPageLayout.Content>

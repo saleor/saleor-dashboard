@@ -4,7 +4,11 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -219,7 +223,12 @@ export const ProductVariantCreatePage = ({
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav href={productUrl(productId)} title={header} />
+            <TopNav
+              href={productUrl(productId)}
+              hrefIcon={<TopNavDestinationIcon.products />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.product)}
+              title={header}
+            />
             <DetailPageLayout.Content>
               <Grid variant="inverted">
                 <div>

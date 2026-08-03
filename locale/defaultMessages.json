@@ -242,6 +242,10 @@
     "context": "button",
     "string": "Show"
   },
+  "/84jS6": {
+    "context": "TopNav destination link tooltip to shipping zones list",
+    "string": "All shipping zones"
+  },
   "/8a4cU": {
     "context": "Description for stock-outside-channel-warehouses info",
     "string": "This product has stock in warehouses that are not linked to this channel. Assign the warehouse to the channel for the stock to count toward availability."
@@ -1066,6 +1070,10 @@
     "context": "settings search alias",
     "string": "authorize"
   },
+  "36QccF": {
+    "context": "TopNav destination link tooltip to channels list",
+    "string": "All channels"
+  },
   "37IPJQ": {
     "context": "return items table, edit reason button",
     "string": "Edit reason"
@@ -1133,6 +1141,10 @@
   },
   "3SVI5p": {
     "string": "Warning"
+  },
+  "3TAa8s": {
+    "context": "TopNav destination link tooltip to collections list",
+    "string": "All collections"
   },
   "3VsNbv": {
     "context": "WarehouseSettings local warehouse description",
@@ -1390,6 +1402,10 @@
   "4kcpaI": {
     "context": "date group header",
     "string": "Last 30 days"
+  },
+  "4lIe10": {
+    "context": "TopNav destination link tooltip to vouchers list",
+    "string": "All vouchers"
   },
   "4oWCm4": {
     "string": "Tax class updated"
@@ -1984,6 +2000,10 @@
     "context": "export scope section header for gift cards",
     "string": "Gift cards to include"
   },
+  "7e3EYJ": {
+    "context": "TopNav destination link tooltip to models list",
+    "string": "All models"
+  },
   "7eGvyy": {
     "context": "extension install page, extension permissions (from manifest)",
     "string": "Permissions"
@@ -2385,6 +2405,10 @@
   },
   "9UHfux": {
     "string": "Voucher Specific Information"
+  },
+  "9UMv3K": {
+    "context": "permission group create page title",
+    "string": "New permission group"
   },
   "9UYpUB": {
     "context": "customer gift cards card header",
@@ -4554,6 +4578,10 @@
     "context": "tabel column header",
     "string": "Selling Price"
   },
+  "JGIW6o": {
+    "context": "TopNav destination link tooltip to model types list",
+    "string": "All model types"
+  },
   "JGm7E5": {
     "context": "option",
     "string": "Export stock for all warehouses"
@@ -5753,6 +5781,10 @@
     "context": "section description",
     "string": "Your store's public name and description, used across the storefront and in SEO metadata."
   },
+  "OwiCeE": {
+    "context": "TopNav destination link tooltip to parent shipping zone",
+    "string": "Shipping zone"
+  },
   "Oy1LhB": {
     "context": "button error state label",
     "string": "Try again"
@@ -6604,6 +6636,10 @@
     "context": "header",
     "string": "Create Variant"
   },
+  "T6tO6B": {
+    "context": "TopNav destination link tooltip to parent customer",
+    "string": "Customer"
+  },
   "T7Dju4": {
     "context": "replaced quantity column in line matrix",
     "string": "Replaced"
@@ -7102,6 +7138,10 @@
     "context": "refund type",
     "string": "Refund products"
   },
+  "VOtpY0": {
+    "context": "TopNav destination link tooltip to parent order",
+    "string": "Order"
+  },
   "VQvNZx": {
     "context": "page title",
     "string": "All installed"
@@ -7109,6 +7149,10 @@
   "VRT9cG": {
     "context": "orders list menu shortcut to settings hub",
     "string": "Orders & fulfillment settings"
+  },
+  "VRUlSh": {
+    "context": "TopNav destination link tooltip to attributes list",
+    "string": "All attributes"
   },
   "VS0YOp": {
     "context": "Request extension",
@@ -7130,6 +7174,10 @@
   },
   "VZsE96": {
     "string": "Collection Name"
+  },
+  "Vb79Wt": {
+    "context": "TopNav destination link tooltip to permission groups list",
+    "string": "All permission groups"
   },
   "VceXrc": {
     "context": "initial balance filter label",
@@ -8000,6 +8048,10 @@
   "ZU1Kz8": {
     "context": "empty state message",
     "string": "No refunds made for this order."
+  },
+  "ZV//jf": {
+    "context": "TopNav destination link tooltip to translations",
+    "string": "Translations"
   },
   "ZXOpCJ": {
     "string": "An unexpected issue occurred when parsing manifest. Please contact support. ({errorCode})"
@@ -9224,6 +9276,10 @@
     "context": "configuration menu item description",
     "string": "Manage attributes used for model types"
   },
+  "fGOZfh": {
+    "context": "TopNav destination link tooltip to orders list",
+    "string": "All orders"
+  },
   "fITtdb": {
     "context": "helper text",
     "string": "{value} already refunded"
@@ -9319,6 +9375,10 @@
   "fkplbE": {
     "context": "order history message",
     "string": "Order was marked as paid"
+  },
+  "fmYFl3": {
+    "context": "TopNav destination link tooltip to home / sign in",
+    "string": "Home"
   },
   "fo7nfa": {
     "context": "fixed amount",
@@ -9529,6 +9589,10 @@
   "gnIyDX": {
     "context": "dialog content",
     "string": "This customer doesn't have any addresses in the address book. Provide address for order."
+  },
+  "goNSwS": {
+    "context": "TopNav destination link tooltip to warehouses list",
+    "string": "All warehouses"
   },
   "gr+oXW": {
     "context": "page title",
@@ -10595,6 +10659,10 @@
   "lLKEMH": {
     "string": "Use refund settings to configure available reasons (permissions required)"
   },
+  "lLNHdh": {
+    "context": "TopNav destination link tooltip to configuration",
+    "string": "Configuration"
+  },
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
@@ -11001,6 +11069,10 @@
     "context": "staff members status active",
     "string": "Active"
   },
+  "nG76Ql": {
+    "context": "TopNav destination link tooltip to categories list",
+    "string": "All categories"
+  },
   "nIuKz3": {
     "context": "Refund status none",
     "string": "Draft"
@@ -11137,6 +11209,10 @@
     "context": "shipping method types help example row three result",
     "string": "Price only"
   },
+  "nwSh4z": {
+    "context": "TopNav destination link tooltip to product types list",
+    "string": "All product types"
+  },
   "nwcJVT": {
     "context": "When enabled, all transactions would require an additional step to be charged.",
     "string": "When enabled, all transactions would require an additional step to be charged. ({link})"
@@ -11234,6 +11310,10 @@
   "oLMXDv": {
     "context": "order status",
     "string": "Ready to fulfill"
+  },
+  "oNoehJ": {
+    "context": "TopNav destination link tooltip to structures/menus list",
+    "string": "All structures"
   },
   "oO2fji": {
     "context": "dialog title for order discount",
@@ -11427,6 +11507,10 @@
     "context": "search label",
     "string": "Search Countries"
   },
+  "pGYCdT": {
+    "context": "TopNav destination link tooltip to discounts list",
+    "string": "All discounts"
+  },
   "pGwvpX": {
     "context": "status",
     "string": "Deactivated"
@@ -11539,6 +11623,10 @@
     "context": "order status",
     "string": "Fulfilled"
   },
+  "pmXN+Q": {
+    "context": "TopNav destination link tooltip to products list",
+    "string": "All products"
+  },
   "ppLwx3": {
     "context": "number of categories",
     "string": "Categories ({quantity})"
@@ -11572,6 +11660,10 @@
   "puikeb": {
     "context": "button",
     "string": "Delete Address"
+  },
+  "pwZmqw": {
+    "context": "TopNav destination link tooltip to extensions",
+    "string": "Extensions"
   },
   "pxCn3q": {
     "context": "button to clear lineId filter on return page",
@@ -12127,6 +12219,10 @@
     "context": "search label",
     "string": "Search products"
   },
+  "s81JoX": {
+    "context": "TopNav destination link tooltip to customers list",
+    "string": "All customers"
+  },
   "s8e+7y": {
     "string": "Attribute updated"
   },
@@ -12279,6 +12375,10 @@
   "snUby7": {
     "context": "header",
     "string": "Unnamed Webhook Details"
+  },
+  "sozQ3N": {
+    "context": "TopNav destination link tooltip to staff list",
+    "string": "All staff members"
   },
   "spjKeI": {
     "string": "Fulfillment approved"
@@ -13193,6 +13293,10 @@
     "context": "note on currency",
     "string": "Note: Only channels with matching currency are available."
   },
+  "wY2PDI": {
+    "context": "TopNav destination link tooltip to gift cards list",
+    "string": "All gift cards"
+  },
   "wabGCe": {
     "context": "Tooltip line showing local timestamp of a problem event",
     "string": "Local: {time}"
@@ -13848,6 +13952,10 @@
   "zgqPGF": {
     "context": "attribute list",
     "string": "Attribute {name}"
+  },
+  "zhDXGJ": {
+    "context": "TopNav destination link tooltip to parent product",
+    "string": "Product"
   },
   "zhG4HQ": {
     "context": "Action to configure channel",

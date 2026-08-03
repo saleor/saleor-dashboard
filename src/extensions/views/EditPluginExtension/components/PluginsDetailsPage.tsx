@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
@@ -95,6 +99,8 @@ export const PluginsDetailsPage = ({
           <DetailPageLayout gridTemplateColumns={1} testId="plugin-details">
             <TopNav
               href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
+              hrefIcon={<TopNavDestinationIcon.extensions />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.extensions)}
               title={intl.formatMessage(
                 {
                   id: "ak62Oe",

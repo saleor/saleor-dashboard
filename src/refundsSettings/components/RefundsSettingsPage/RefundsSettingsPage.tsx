@@ -1,9 +1,11 @@
+import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
 import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
 import { orderSettingsPath } from "@dashboard/orders/urls";
 import { refundsSettingsPageMessages } from "@dashboard/refundsSettings/components/RefundsSettingsPage/messages";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -42,6 +44,8 @@ export const RefundsSettingsPage = ({
   return (
     <SettingsHubLayout
       backHref={orderSettingsPath}
+      backHrefIcon={<TopNavDestinationIcon.orders />}
+      backHrefTitle={intl.formatMessage(sectionNames.ordersAndFulfillment)}
       title={intl.formatMessage(refundsSettingsPageMessages.pageTitle)}
     >
       <form

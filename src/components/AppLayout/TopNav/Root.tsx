@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { Box, type BoxProps, Text, vars } from "@saleor/macaw-ui-next";
-import { type PropsWithChildren } from "react";
+import { type PropsWithChildren, type ReactNode } from "react";
 
 import useAppChannel from "../AppChannelContext";
 import AppChannelSelect from "../AppChannelSelect";
@@ -8,22 +8,40 @@ import { ContextualLine } from "../ContextualLinks/ContextualLine";
 import { TopNavLink } from "./TopNavLink";
 import { TopNavWrapper } from "./TopNavWrapper";
 
-interface TopNavProps {
+type TopNavBaseProps = {
   title: React.ReactNode;
   subtitle?: React.ReactNode;
   subtitleTop?: React.ReactNode;
-  href?: string;
   withoutBorder?: boolean;
   isAlignToRight?: boolean;
   /** Gap between header action buttons. Detail pages use a slightly wider spacing. */
   actionsGap?: 2 | 3;
-}
+};
+
+type TopNavProps = TopNavBaseProps &
+  (
+    | {
+        /** Destination URL for the leading nav control. */
+        href: string;
+        /** Icon representing that destination (not a generic back arrow). */
+        hrefIcon: ReactNode;
+        /** Tooltip / aria-label for the destination (e.g. "All products"). */
+        hrefTitle: string;
+      }
+    | {
+        href?: undefined;
+        hrefIcon?: undefined;
+        hrefTitle?: undefined;
+      }
+  );
 
 export const Root = ({
   title,
   subtitle,
   subtitleTop,
   href,
+  hrefIcon,
+  hrefTitle,
   withoutBorder = false,
   isAlignToRight = true,
   actionsGap = 2,
@@ -58,7 +76,9 @@ export const Root = ({
         </ContextualLine>
       ) : null}
       <Box display="flex" alignItems="center" width="100%">
-        {href && <TopNavLink to={href} />}
+        {href && hrefIcon && hrefTitle ? (
+          <TopNavLink to={href} icon={hrefIcon} title={hrefTitle} />
+        ) : null}
         <Box
           __flex={isAlignToRight ? "1 1 auto" : 0}
           overflow="hidden"

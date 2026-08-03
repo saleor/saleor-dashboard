@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -37,6 +41,8 @@ const CategoryCreatePage = ({
         <DetailPageLayout gridTemplateColumns={1}>
           <TopNav
             href={backUrl}
+            hrefIcon={<TopNavDestinationIcon.products />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allCategories)}
             title={intl.formatMessage({
               id: "cgsY/X",
               defaultMessage: "Create New Category",

@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { type FetchResult } from "@apollo/client";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -223,7 +227,13 @@ const OrderDetailsPage = (props: OrderDetailsPageProps) => {
 
   const renderLayout = (submit?: () => SubmitPromise<any[]>) => (
     <DetailPageLayout withSavebar={isOrderUnconfirmed}>
-      <TopNav href={backLinkUrl} title={<Title order={order} />} actionsGap={3}>
+      <TopNav
+        href={backLinkUrl}
+        hrefIcon={<TopNavDestinationIcon.orders />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.allOrders)}
+        title={<Title order={order} />}
+        actionsGap={3}
+      >
         <TopNav.MetadataButton
           onClick={onOrderShowMetadata}
           data-test-id="show-order-metadata"

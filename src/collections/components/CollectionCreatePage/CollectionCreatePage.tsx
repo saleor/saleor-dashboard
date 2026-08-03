@@ -1,7 +1,11 @@
 // @ts-strict-ignore
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListUrl } from "@dashboard/collections/urls";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -59,6 +63,8 @@ const CollectionCreatePage = ({
         <DetailPageLayout>
           <TopNav
             href={collectionListUrl()}
+            hrefIcon={<TopNavDestinationIcon.products />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allCollections)}
             title={intl.formatMessage({
               id: "Fxa6xp",
               defaultMessage: "Add Collection",

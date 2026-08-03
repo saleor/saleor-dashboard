@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -45,6 +49,8 @@ export const DiscountCreatePage = ({
         <DetailPageLayout gridTemplateColumns={1} testId="discount-form">
           <TopNav
             href={discountListUrl()}
+            hrefIcon={<TopNavDestinationIcon.discounts />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allDiscounts)}
             title={intl.formatMessage({
               id: "FWbv/u",
               defaultMessage: "Create Discount",

@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import { Grid } from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -48,7 +52,12 @@ const GiftCardSettingsPage = () => {
 
   return (
     <DetailPageLayout gridTemplateColumns={1}>
-      <TopNav href={giftCardsListPath} title={intl.formatMessage(messages.title)} />
+      <TopNav
+        href={giftCardsListPath}
+        hrefIcon={<TopNavDestinationIcon.giftCards />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.allGiftCards)}
+        title={intl.formatMessage(messages.title)}
+      />
       <DetailPageLayout.Content>
         <Form initial={initialData} onSubmit={handleSubmit}>
           {({ data: formData, submit, change }) => (

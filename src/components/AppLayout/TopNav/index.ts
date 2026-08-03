@@ -2,6 +2,8 @@ import { Menu } from "./Menu";
 import { MetadataButton } from "./MetadataButton";
 import { Root } from "./Root";
 
+export * from "./destinationIcons";
+export * from "./destinationMessages";
 export * from "./TopNavLink";
 export * from "./TopNavWrapper";
 
