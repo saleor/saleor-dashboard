@@ -226,6 +226,93 @@ describe("useExitFormDialog", () => {
     expect(result.current.exit.shouldBlockNavigation()).toBe(false);
     expect(result.current.history.location.search).toBe("");
   });
+  it("blocks closing a URL-driven dialog when a dirty form opts into blockDialogClose", async () => {
+    // Arrange - wizard opened via ?action=; it owns its own dirty state
+    const { result } = renderHook(
+      () => {
+        const exit = useExitFormDialog();
+        const history = useHistory();
+
+        return { exit, history };
+      },
+      {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={[{ pathname: "/", search: "?action=bulk-publish" }]}>
+            <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
+          </MemoryRouter>
+        ),
+      },
+    );
+
+    // Act - dialog marks itself dirty and opts into blocking its own URL close
+    act(() => {
+      result.current.exit.setBlockDialogClose(true);
+      result.current.exit.setIsDirty(true);
+    });
+    act(() => {
+      result.current.history.replace("/");
+    });
+
+    // Assert - Back / closeModal must not silently dismiss the wizard
+    expect(result.current.exit.shouldBlockNavigation()).toBe(true);
+    expect(result.current.history.location.search).toBe("?action=bulk-publish");
+  });
+  it("keeps the page form dirty after ignoring changes on a dialog that blocked its close", async () => {
+    // Arrange - page form dirty + URL wizard dirty; confirming leave on the wizard
+    // must not wipe the page form's dirty bit.
+    const submitFn = jest.fn(() => Promise.resolve([]));
+    let provider: ReturnType<typeof useExitFormDialogProvider> | undefined;
+    const { result } = renderHook(
+      () => {
+        const pageForm = useForm({ field: "" }, submitFn, { confirmLeave: true });
+        const dialogExit = useExitFormDialog();
+        const history = useHistory();
+
+        return { pageForm, dialogExit, history };
+      },
+      {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={[{ pathname: "/", search: "?action=bulk-publish" }]}>
+            <MockExitFormDialogProvider
+              onProvider={value => {
+                provider = value;
+              }}
+            >
+              {children}
+            </MockExitFormDialogProvider>
+          </MemoryRouter>
+        ),
+      },
+    );
+
+    act(() => {
+      result.current.pageForm.change({
+        target: { name: "field", value: "page-edit" },
+      });
+      result.current.dialogExit.setBlockDialogClose(true);
+      result.current.dialogExit.setIsDirty(true);
+    });
+    act(() => {
+      result.current.history.replace("/");
+    });
+    expect(result.current.dialogExit.shouldBlockNavigation()).toBe(true);
+
+    // Act - merchant confirms leaving the wizard
+    act(() => {
+      provider?.handleLeave();
+    });
+
+    // Assert - wizard closed without a pending leave prompt
+    expect(result.current.history.location.search).toBe("");
+    expect(result.current.dialogExit.shouldBlockNavigation()).toBe(false);
+
+    // Act - try to leave the page; the page form must still be dirty
+    act(() => {
+      result.current.history.push("/elsewhere");
+    });
+    expect(result.current.dialogExit.shouldBlockNavigation()).toBe(true);
+    expect(result.current.history.location.pathname).toBe("/");
+  });
   it("allows clearing channel focus param on same pathname when form is dirty", async () => {
     // Given - start with channel focus from "Set up pricing"
     const submitFn = jest.fn(() => Promise.resolve([]));

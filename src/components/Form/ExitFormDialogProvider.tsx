@@ -13,6 +13,7 @@ export const ExitFormDialogContext = createContext<ExitFormDialogData>({
   setEnableExitDialog: () => undefined,
   setExitDialogSubmitRef: () => undefined,
   setExitDialogDescription: () => undefined,
+  setBlockDialogClose: () => undefined,
   shouldBlockNavigation: () => false,
   showDialog: false,
   setIsSubmitting: () => undefined,

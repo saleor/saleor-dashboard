@@ -12,6 +12,7 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton";
 import ExitFormDialog from "@dashboard/components/Form/ExitFormDialog";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalProductFilterProvider } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -28,7 +29,7 @@ import useProductSearch from "@dashboard/searches/useProductSearch";
 import { type DialogProps } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Text } from "@saleor/macaw-ui-next";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { BulkPublishConfirmStep } from "./BulkPublishConfirmStep";
@@ -119,6 +120,8 @@ const BulkPublishToChannelDialogContent = ({
   );
   const [excludeListedInChannel, setExcludeListedInChannel] = useState(true);
   const [showExitDialog, setShowExitDialog] = useState(false);
+  const { setIsDirty, setBlockDialogClose, setExitDialogDescription, resetFormsState } =
+    useExitFormDialog();
   const isSelectStep = step === BulkPublishStep.SELECT;
 
   const { loadMore, result } = useProductSearch({
@@ -230,10 +233,40 @@ const BulkPublishToChannelDialogContent = ({
   const confirmButtonState: ConfirmButtonTransitionState = submitting ? "loading" : "default";
   const isPublishing = publishProgress !== null;
   const hasWizardProgress = step !== BulkPublishStep.SELECT || selectedProducts.length > 0;
+  // Match handleRequestClose: trap while a request is in flight, or while the wizard
+  // still has progress that has not been published. After publish starts, X/Back are free
+  // so merchants can dismiss a partial failure.
+  const shouldTrapLeave = open && (submitting || (!isPublishing && hasWizardProgress));
   const hasOversizedDrafts = useMemo(
     () => getDraftsExceedingVariantLimit(productDrafts).length > 0,
     [productDrafts],
   );
+
+  useEffect(
+    function syncBulkPublishLeaveTrap() {
+      // Opt into blocking URL dialog close (Back / Cmd+[) — page forms leave this off so
+      // opening unrelated modals never interrupts them. Also registers the form so setIsDirty
+      // has an entry to write to.
+      setBlockDialogClose(shouldTrapLeave);
+      setIsDirty(shouldTrapLeave);
+      setExitDialogDescription(
+        shouldTrapLeave ? <FormattedMessage {...messages.exitWizardDescription} /> : null,
+      );
+    },
+    [shouldTrapLeave, setBlockDialogClose, setIsDirty, setExitDialogDescription],
+  );
+
+  const releaseLeaveTrap = useCallback(() => {
+    setIsDirty(false);
+    setBlockDialogClose(false);
+    setExitDialogDescription(null);
+  }, [setBlockDialogClose, setExitDialogDescription, setIsDirty]);
+
+  const dismissExitPrompts = useCallback(() => {
+    setShowExitDialog(false);
+    releaseLeaveTrap();
+    resetFormsState();
+  }, [releaseLeaveTrap, resetFormsState]);
 
   const handleRequestClose = useCallback(() => {
     // Only block while a publish request is in flight. After failures, users must
@@ -245,6 +278,7 @@ const BulkPublishToChannelDialogContent = ({
     // Publish already ran (partial/total failure). Skip the unsaved-wizard prompt —
     // some listings may already exist on the channel.
     if (isPublishing) {
+      releaseLeaveTrap();
       onClose();
 
       return;
@@ -256,13 +290,18 @@ const BulkPublishToChannelDialogContent = ({
       return;
     }
 
+    releaseLeaveTrap();
     onClose();
-  }, [hasWizardProgress, isPublishing, onClose, submitting]);
+  }, [hasWizardProgress, isPublishing, onClose, releaseLeaveTrap, submitting]);
 
   const handleConfirmClose = useCallback(() => {
-    setShowExitDialog(false);
+    if (submitting) {
+      return;
+    }
+
+    dismissExitPrompts();
     onClose();
-  }, [onClose]);
+  }, [dismissExitPrompts, onClose, submitting]);
 
   const handleModalOpenChange = useCallback(
     (nextOpen: boolean) => {
@@ -471,6 +510,7 @@ const BulkPublishToChannelDialogContent = ({
           status: "success",
           text: intl.formatMessage(messages.success),
         });
+        dismissExitPrompts();
         onSuccess?.();
         onClose();
       } else {

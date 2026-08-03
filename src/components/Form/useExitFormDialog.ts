@@ -4,10 +4,14 @@ import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { type ExitFormDialogData, type SubmitFn, type WithFormId } from "./types";
 
 export interface UseExitFormDialogResult
-  extends Omit<ExitFormDialogData, "setIsDirty" | "setExitDialogSubmitRef" | "unregisterForm">,
+  extends Omit<
+      ExitFormDialogData,
+      "setIsDirty" | "setExitDialogSubmitRef" | "setBlockDialogClose" | "unregisterForm"
+    >,
     WithFormId {
   setIsDirty: (isDirty: boolean) => void;
   setExitDialogSubmitRef: (submitFn: SubmitFn) => void;
+  setBlockDialogClose: (value: boolean) => void;
   unregisterForm: () => void;
 }
 
@@ -22,8 +26,13 @@ export const useExitFormDialog = (
 ): UseExitFormDialogResult => {
   const id = useRef(formId || Symbol("exit-form-fallback-id")).current;
   const exitDialogProps = useContext(ExitFormDialogContext);
-  const { setIsDirty, setIsSubmitDisabled, setExitDialogSubmitRef, unregisterForm } =
-    exitDialogProps;
+  const {
+    setIsDirty,
+    setIsSubmitDisabled,
+    setExitDialogSubmitRef,
+    setBlockDialogClose,
+    unregisterForm,
+  } = exitDialogProps;
 
   useEffect(() => {
     if (isDisabled !== undefined) {
@@ -42,6 +51,7 @@ export const useExitFormDialog = (
     formId: id,
     setIsDirty: (value: boolean) => setIsDirty(id, value),
     setExitDialogSubmitRef: (submitFn: SubmitFn) => setExitDialogSubmitRef(id, submitFn),
+    setBlockDialogClose: (value: boolean) => setBlockDialogClose(id, value),
     unregisterForm: () => unregisterForm(id),
   };
 };
