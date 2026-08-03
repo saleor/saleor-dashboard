@@ -2406,6 +2406,10 @@
   "9UHfux": {
     "string": "Voucher Specific Information"
   },
+  "9UMv3K": {
+    "context": "permission group create page title",
+    "string": "New permission group"
+  },
   "9UYpUB": {
     "context": "customer gift cards card header",
     "string": "Gift cards"
