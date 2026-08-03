@@ -1,60 +1,100 @@
 import jwt_decode from "jwt-decode";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 interface AppToken {
   exp?: number;
   iat?: number;
 }
 
-const TIME_BEFORE_REFRESH = 30 * 1000; // 30 seconds
+/** How long before the token expires we ask for a new one. */
+const TIME_BEFORE_REFRESH = 30 * 1000;
 
-export const useTokenRefresh = (token?: string, refetch?: () => void) => {
-  let decoded: AppToken = {
-    exp: 0,
-    iat: 0,
-  };
+/**
+ * Floor for a scheduled refresh.
+ *
+ * The timeout re-arms itself, so a token that is already inside its refresh
+ * window would otherwise schedule `setTimeout(…, 0)` and spin: refetch, re-arm,
+ * refetch, pinning the main thread. With a floor the worst case degrades to a
+ * retry every 30s, which is a sane recovery cadence for a token the server
+ * keeps handing back stale.
+ */
+const MIN_REFRESH_DELAY = 30 * 1000;
 
-  // For some reason jwt_decode causes seemingly unrelated error in tests
-  // It seems like at some point undefined token is passed
-  // Wrapping it in try..catch and if fixes the issue
-  try {
-    if (token) {
-      decoded = jwt_decode(token) as AppToken;
-    }
-  } catch (e) {
-    console.warn(e);
+const decodeToken = (token?: string): AppToken | null => {
+  if (!token) {
+    return null;
   }
 
-  const decodedSuccesfully = !!decoded?.iat && !!decoded?.exp;
-  const refreshTimeout = useRef<null | ReturnType<typeof setTimeout>>(null);
-  const tokenLife = ((decoded?.exp || 0) - (decoded?.iat || 0)) * 1000; // in ms
-  const refreshTime = tokenLife - TIME_BEFORE_REFRESH;
-  const setUpTimeout = () => {
-    if (refetch) {
-      refetch();
-    }
+  try {
+    return jwt_decode<AppToken>(token);
+  } catch (e) {
+    console.warn(e);
 
-    createTimeout();
-  };
-  const createTimeout = () => {
-    refreshTimeout.current = setTimeout(setUpTimeout, refreshTime);
-  };
-  const deleteTimeout = () => {
-    if (refreshTimeout?.current) {
-      clearTimeout(refreshTimeout.current);
-      refreshTimeout.current = null;
-    }
-  };
+    return null;
+  }
+};
+
+/**
+ * Keeps an app's JWT fresh while its iframe stays mounted.
+ *
+ * Scheduling is driven by the token's absolute `exp`, not by its total lifetime
+ * (`exp - iat`): a token handed to us mid-life, or one that aged while the
+ * machine slept, has far less time left than a full lifetime. Because Chrome
+ * suspends timers on a sleeping/background tab, the timeout alone is not enough
+ * to recover promptly, so returning to the tab also triggers a catch-up.
+ */
+export const useTokenRefresh = (token?: string, refetch?: () => void) => {
+  // Memoized so an undecodable token is parsed - and warned about - once rather
+  // than on every render of the frame.
+  const expiresAt = useMemo(() => decodeToken(token)?.exp, [token]);
+  const canRefetch = !!refetch;
+
+  const refetchRef = useRef(refetch);
+
+  refetchRef.current = refetch;
 
   useEffect(() => {
-    if (refetch && decodedSuccesfully) {
-      createTimeout();
+    if (!expiresAt || !canRefetch) {
+      return;
     }
 
+    const refreshAt = expiresAt * 1000 - TIME_BEFORE_REFRESH;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
+    const schedule = () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(
+        () => {
+          refetchRef.current?.();
+          schedule();
+        },
+        Math.max(refreshAt - Date.now(), MIN_REFRESH_DELAY),
+      );
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState !== "visible" || Date.now() < refreshAt) {
+        return;
+      }
+
+      // The timer was throttled while the tab was hidden and the token is now
+      // due (or past due) — refresh immediately instead of waiting it out.
+      refetchRef.current?.();
+      schedule();
+    };
+
+    schedule();
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
-      if (!!refetch && decodedSuccesfully) {
-        deleteTimeout();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+
+      if (timeout) {
+        clearTimeout(timeout);
       }
     };
-  }, [token]);
+  }, [expiresAt, canRefetch]);
 };
