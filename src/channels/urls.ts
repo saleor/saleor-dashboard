@@ -15,6 +15,7 @@ type ChannelsListUrlFilters = Filters<ChannelsListUrlFiltersEnum>;
 export type ChannelUrlDialog =
   | "remove"
   | "setup"
+  | "duplicate"
   | "create-warehouse"
   | "create-shipping"
   | "assign-warehouse"

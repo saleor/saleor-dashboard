@@ -19,7 +19,6 @@ import {
   type CountryFragment,
 } from "@dashboard/graphql";
 import { type ChangeEvent, type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -327,6 +326,8 @@ export const CreateChannelDialog = ({
   const [currencyManuallyEdited, setCurrencyManuallyEdited] = useState(false);
   const [selectedCountryDisplayName, setSelectedCountryDisplayName] = useState("");
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
+  // null = not synced yet, so the first open (including mount-with-open) still resets.
+  const [prevOpen, setPrevOpen] = useState<boolean | null>(null);
 
   const countryChoices = useMemo(() => mapCountriesToChoices(countries || []), [countries]);
 
@@ -337,15 +338,13 @@ export const CreateChannelDialog = ({
     defaultCountry: initialValues?.defaultCountry ?? "",
   };
 
-  useModalDialogOpen(open, {
-    onClose: () => {
-      setSubmitErrors([]);
-      setSlugManuallyEdited(false);
-      setCurrencyManuallyEdited(false);
-      setSelectedCountryDisplayName("");
-      setSelectedCurrencyCode("");
-    },
-    onOpen: () => {
+  // Adjust state while rendering when `open` changes so the first paint already
+  // has a fresh Form — remounting from an effect flashes the modal for a frame.
+  // https://react.dev/reference/react/useState#storing-information-from-previous-renders
+  if (prevOpen !== open) {
+    setPrevOpen(open);
+
+    if (open) {
       setSubmitErrors([]);
       // Prefills are intentional — don't let name/country autosuggest overwrite them.
       setSlugManuallyEdited(Boolean(initialValues?.slug));
@@ -353,8 +352,14 @@ export const CreateChannelDialog = ({
       setSelectedCountryDisplayName(initialValues?.countryDisplayName ?? "");
       setSelectedCurrencyCode(initialValues?.currencyCode ?? "");
       setFormKey(current => current + 1);
-    },
-  });
+    } else if (prevOpen === true) {
+      setSubmitErrors([]);
+      setSlugManuallyEdited(false);
+      setCurrencyManuallyEdited(false);
+      setSelectedCountryDisplayName("");
+      setSelectedCurrencyCode("");
+    }
+  }
 
   return (
     <DashboardModal onChange={onClose} open={open}>

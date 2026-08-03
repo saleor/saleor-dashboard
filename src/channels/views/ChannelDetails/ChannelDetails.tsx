@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { useUser } from "@dashboard/auth/useUser";
 import { BulkPublishToChannelDialog } from "@dashboard/channels/components/BulkPublishToChannelDialog/BulkPublishToChannelDialog";
 import { ChannelDeleteDialog } from "@dashboard/channels/components/ChannelDeleteDialog";
 import { type FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
@@ -12,6 +13,9 @@ import { ChannelSetupCard } from "@dashboard/channels/components/ChannelSetupCar
 import { useChannelSetupCardDismiss } from "@dashboard/channels/components/ChannelSetupCard/useChannelSetupCardDismiss";
 import { ChannelActivateDialog } from "@dashboard/channels/components/ChannelStatus/ChannelActivateDialog";
 import { ChannelDeactivateDialog } from "@dashboard/channels/components/ChannelStatus/ChannelDeactivateDialog";
+import { CreateChannelDialog } from "@dashboard/channels/components/CreateChannelDialog/CreateChannelDialog";
+import { messages as createChannelMessages } from "@dashboard/channels/components/CreateChannelDialog/messages";
+import { type ChannelCreateFormData } from "@dashboard/channels/components/CreateChannelDialog/types";
 import { CreateShippingForChannelDialog } from "@dashboard/channels/components/CreateShippingForChannelDialog/CreateShippingForChannelDialog";
 import { CreateWarehouseForChannelDialog } from "@dashboard/channels/components/CreateWarehouseForChannelDialog/CreateWarehouseForChannelDialog";
 import { useChannelPaymentApps } from "@dashboard/channels/hooks/useChannelPaymentApps";
@@ -21,6 +25,11 @@ import {
   type ChannelDisplayedAssignmentIds,
 } from "@dashboard/channels/pages/ChannelDetailsPage/ChannelAssignmentActions";
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
+import { buildChannelCreateInput } from "@dashboard/channels/utils/buildChannelCreateInput";
+import {
+  buildChannelDuplicateSource,
+  getChannelDuplicateFormPrefill,
+} from "@dashboard/channels/utils/channelDuplicate";
 import { getChannelDetailsRefetchQueries } from "@dashboard/channels/views/ChannelDetails/channelRefetchQueries";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
 import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
@@ -29,11 +38,13 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
+  type ChannelCreateMutation,
   type ChannelDeleteMutation,
   type ChannelErrorFragment,
   type ChannelUpdateMutation,
   PermissionEnum,
   useChannelActivateMutation,
+  useChannelCreateMutation,
   useChannelDeactivateMutation,
   useChannelDeleteMutation,
   useChannelQuery,
@@ -58,7 +69,6 @@ import { useIntl } from "react-intl";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { messages as channelDetailsPageMessages } from "../../pages/ChannelDetailsPage/messages";
 import {
-  channelCreateUrl,
   channelsListUrl,
   channelUrl,
   type ChannelUrlDialog,
@@ -79,6 +89,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
+  const { refetchUser } = useUser();
   const channelsListData = useChannelsQuery({
     displayLoader: true,
   });
@@ -287,6 +298,16 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const [deleteChannel, deleteChannelOpts] = useChannelDeleteMutation({
     onCompleted: onDeleteCompleted,
   });
+  const [createChannel, createChannelOpts] = useChannelCreateMutation({
+    onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
+      if (!errors.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({ id: "HA0fD3", defaultMessage: "Channel created" }),
+        });
+      }
+    },
+  });
 
   const channelsChoices = getChannelsCurrencyChoices(
     id,
@@ -327,6 +348,51 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     [data?.channel?.warehouses],
   );
   const channelShippingZones = mapEdgesToItems(channelShippingZonesData?.shippingZones);
+  // Depend on the query result, not the mapped array (new reference every render).
+  const channelShippingZoneIds = useMemo(
+    () => mapEdgesToItems(channelShippingZonesData?.shippingZones)?.map(zone => zone.id) ?? [],
+    [channelShippingZonesData?.shippingZones],
+  );
+  const duplicateSource = useMemo(
+    () =>
+      data?.channel ? buildChannelDuplicateSource(data.channel, channelShippingZoneIds) : undefined,
+    [channelShippingZoneIds, data],
+  );
+  const duplicatePrefill = useMemo(
+    () =>
+      duplicateSource
+        ? getChannelDuplicateFormPrefill(duplicateSource, {
+            name: intl.formatMessage(createChannelMessages.duplicateName, {
+              name: duplicateSource.name,
+            }),
+          })
+        : undefined,
+    [duplicateSource, intl],
+  );
+  const handleDuplicateChannel = async (formData: ChannelCreateFormData) => {
+    const createChannelMutation = createChannel({
+      variables: {
+        input: buildChannelCreateInput(formData, { duplicateFrom: duplicateSource }),
+      },
+    });
+    const result = await createChannelMutation;
+    const errors = await extractMutationErrors(createChannelMutation);
+    const channelId = result.data?.channelCreate?.channel?.id;
+
+    if (!errors?.length && channelId) {
+      if (refetchUser) {
+        await refetchUser();
+      }
+
+      closeModal();
+      navigate(channelUrl(channelId, { action: "setup" }));
+    }
+
+    return errors;
+  };
+  const duplicatePreparing =
+    params.action === "duplicate" &&
+    (!data?.channel || (canLoadShippingZones && channelsShippingZonesLoading));
   const setupEmphasized = params.action === "setup";
   const {
     isDismissed: setupCardDismissed,
@@ -479,15 +545,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         disabledStatus={activateChannelOpts.loading || deactivateChannelOpts.loading}
         errors={updateChannelOpts?.data?.channelUpdate?.errors || []}
         onDelete={() => openModal("remove")}
-        onDuplicate={
-          data?.channel?.id
-            ? () => {
-                const sourceChannelId = data.channel.id;
-
-                navigate(channelCreateUrl({ from: sourceChannelId }));
-              }
-            : undefined
-        }
+        onDuplicate={data?.channel?.id ? () => openModal("duplicate") : undefined}
         onShowSetupChecklist={
           data?.channel && !showSetupCard
             ? () => {
@@ -580,6 +638,17 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         open={params.action === "view-metadata" && !!data?.channel}
         onClose={closeModal}
         channel={data?.channel}
+      />
+      <CreateChannelDialog
+        open={params.action === "duplicate"}
+        confirmButtonState={createChannelOpts.status}
+        countries={shop?.countries || []}
+        disabled={createChannelOpts.loading || duplicatePreparing}
+        errors={createChannelOpts?.data?.channelCreate?.errors || []}
+        initialValues={duplicatePrefill}
+        isDuplicate
+        onClose={closeModal}
+        onSubmit={handleDuplicateChannel}
       />
       {data?.channel && (
         <>
