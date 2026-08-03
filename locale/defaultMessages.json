@@ -3502,6 +3502,10 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "DpB9Oq": {
+    "context": "assign product picker, client-side filter emptied the loaded pages",
+    "string": "Every product loaded so far is already assigned. Search for a product by name, or keep loading the catalog."
+  },
   "DpVPvW": {
     "context": "bulk publish per product cost price field label",
     "string": "Cost price"
@@ -11711,6 +11715,10 @@
   },
   "mgFyBA": {
     "string": "This name should be unique"
+  },
+  "miimrR": {
+    "context": "button, assign product picker",
+    "string": "Load more products"
   },
   "mkBgDe": {
     "string": "Product types deleted"

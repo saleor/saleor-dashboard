@@ -13,9 +13,18 @@ import { AssignProductPickerList } from "./AssignProductPickerList";
 import { AssignProductPickerToolbar } from "./AssignProductPickerToolbar";
 import { messages } from "./messages";
 import { type Products, type SelectedChannel } from "./types";
-import { ASSIGN_PRODUCT_PICKER_SCROLL_ID, useAssignProductPicker } from "./useAssignProductPicker";
+import {
+  ASSIGN_PRODUCT_PICKER_SCROLL_ID,
+  useAssignProductPicker,
+  type UseAssignProductPickerProps,
+} from "./useAssignProductPicker";
 
-interface AssignProductDialogMultiProps extends FetchMoreProps {
+interface AssignProductDialogMultiProps
+  extends FetchMoreProps,
+    Pick<
+      UseAssignProductPickerProps,
+      "backfillResetKey" | "excludeProduct" | "selectAllMode" | "onMaxSelectionReached"
+    > {
   confirmButtonState: ConfirmButtonTransitionState;
   products: Products;
   selectedChannels?: SelectedChannel[];

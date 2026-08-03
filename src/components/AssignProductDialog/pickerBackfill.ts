@@ -23,6 +23,41 @@ export const createPickerBackfillState = (): PickerBackfillState => ({
   requestedPages: 0,
 });
 
+export const isFreshPickerBackfillState = (state: PickerBackfillState): boolean =>
+  state.requestedAtRawCount === -1 && state.requestedPages === 0;
+
+export type PickerBackfillStatus = {
+  /** More pages are still being pulled in, so an empty list is not yet a real empty state. */
+  isBackfilling: boolean;
+  /** Backfill gave up with pages still available, so the user has to ask for more explicitly. */
+  isExhausted: boolean;
+};
+
+/**
+ * Whether the short list the user is looking at is mid-backfill or a dead end. Both cases
+ * must not render as "no products found": one is premature, the other is a lie the user
+ * can do something about.
+ */
+export const getPickerBackfillStatus = ({
+  state,
+  enabled,
+  hasMore,
+  filteredItemCount,
+}: {
+  state: PickerBackfillState;
+  enabled: boolean;
+  hasMore: boolean;
+  filteredItemCount: number;
+}): PickerBackfillStatus => {
+  if (!enabled || !hasMore || filteredItemCount >= BACKFILL_MIN_ROWS) {
+    return { isBackfilling: false, isExhausted: false };
+  }
+
+  const isExhausted = state.requestedPages >= PICKER_BACKFILL_MAX_PAGES;
+
+  return { isBackfilling: !isExhausted, isExhausted };
+};
+
 /**
  * Apollo 3.4 leaves `loading` false while `fetchMore` is in flight, so the caller's effect
  * re-runs before new results land. Requesting at most one page per distinct raw result count

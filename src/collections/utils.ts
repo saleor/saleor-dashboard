@@ -1,5 +1,5 @@
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
-import { type CollectionDetailsQuery, type SearchProductsQuery } from "@dashboard/graphql";
+import { type SearchProductsQuery } from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const createChannelsChangeHandler =
@@ -24,20 +24,6 @@ export const createChannelsChangeHandler =
     triggerChange();
   };
 
-export const getAssignedProductIdsToCollection = (
-  collection: CollectionDetailsQuery["collection"],
-  queryData?: SearchProductsQuery["search"],
-) => {
-  if (!queryData || !collection) {
-    return {};
-  }
-
-  return queryData.edges
-    .filter(e => e.node?.collections?.some(s => collection.id === s.id))
-    .map(e => ({ [e.node.id]: true }))
-    .reduce((p, c) => ({ ...p, ...c }), {});
-};
-
 export const getProductsFromSearchResults = (searchResults: SearchProductsQuery | undefined) => {
   if (!searchResults?.search) {
     return [];
@@ -46,17 +32,24 @@ export const getProductsFromSearchResults = (searchResults: SearchProductsQuery 
   return mapEdgesToItems(searchResults.search)?.filter(suggestedProduct => suggestedProduct.id);
 };
 
-type SearchProduct = NonNullable<ReturnType<typeof getProductsFromSearchResults>>[number];
+/** Only the shape the check reads, so a full search product satisfies it structurally. */
+export interface ProductCollections {
+  collections?: Array<{ id: string }> | null;
+}
 
-export const excludeProductsInCollection = (
-  products: SearchProduct[],
+/**
+ * `ProductWhereInput` cannot express "not in collection X" (`GlobalIdFilterInput` has no
+ * negation), so the assign picker has to drop already-assigned products from the fetched page
+ * itself. Kept as a predicate rather than a list filter so the picker can tell a page that was
+ * filtered down to nothing apart from an exhausted catalog and pull in the next page.
+ */
+export const isProductAssignedToCollection = (
+  product: ProductCollections,
   collectionId: string | undefined,
-): SearchProduct[] => {
+): boolean => {
   if (!collectionId) {
-    return products;
+    return false;
   }
 
-  return products.filter(
-    product => !product.collections?.some(collection => collection.id === collectionId),
-  );
+  return Boolean(product.collections?.some(collection => collection.id === collectionId));
 };

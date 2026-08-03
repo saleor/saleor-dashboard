@@ -40,4 +40,15 @@ export const messages = defineMessages({
     defaultMessage: "Scroll to load more products.",
     description: "hint below select all when more products can be loaded in assign product picker",
   },
+  allLoadedProductsFilteredOut: {
+    id: "DpB9Oq",
+    defaultMessage:
+      "Every product loaded so far is already assigned. Search for a product by name, or keep loading the catalog.",
+    description: "assign product picker, client-side filter emptied the loaded pages",
+  },
+  loadMoreProducts: {
+    id: "miimrR",
+    defaultMessage: "Load more products",
+    description: "button, assign product picker",
+  },
 });

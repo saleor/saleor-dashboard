@@ -94,7 +94,7 @@ export const useAssignProductPicker = ({
   // should appear even when the user hasn't typed a query yet.
   const hasExclusionFilter = Boolean(excludeProduct);
 
-  usePickerBackfill({
+  const backfill = usePickerBackfill({
     enabled: hasExclusionFilter,
     open,
     loading,
@@ -233,10 +233,18 @@ export const useAssignProductPicker = ({
   };
 
   const displayedProducts = useStalePickerList(products, loading, open);
-  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
+  const { showEmptyState: hasNothingToShow, showListLoading } = useAssignPickerListDisplayState(
     loading,
     displayedProducts.length,
   );
+
+  // A page that was filtered down to nothing is not an empty catalog. Claiming "no products
+  // found" while pages are still coming in — or while the user could ask for more — is the
+  // dead end that makes large catalogs look empty after a few rows get assigned.
+  const showBackfillExhausted = hasNothingToShow && backfill.isExhausted;
+  const showEmptyState = hasNothingToShow && !backfill.isBackfilling && !showBackfillExhausted;
+  const showListLoadingWithBackfill =
+    showListLoading || (hasNothingToShow && backfill.isBackfilling);
 
   const isProductAvailable = useCallback(
     (product: Products[number]) => {
@@ -304,7 +312,7 @@ export const useAssignProductPicker = ({
   const showSelectAll =
     selectAllMode === "when-scoped" &&
     isListScoped &&
-    !showListLoading &&
+    !showListLoadingWithBackfill &&
     !showEmptyState &&
     selectableVisibleIds.length > 0;
 
@@ -361,10 +369,12 @@ export const useAssignProductPicker = ({
     productUnavailableText,
     productsDict,
     query,
+    resumeBackfill: backfill.resumeBackfill,
     selectAllCheckboxState,
     selectedCount,
+    showBackfillExhausted,
     showEmptyState,
-    showListLoading,
+    showListLoading: showListLoadingWithBackfill,
     showSelectAll,
     showSelectAllScrollHint,
   };

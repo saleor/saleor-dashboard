@@ -1,5 +1,7 @@
 import {
   createPickerBackfillState,
+  getPickerBackfillStatus,
+  isFreshPickerBackfillState,
   PICKER_BACKFILL_MAX_PAGES,
   planPickerBackfill,
 } from "./pickerBackfill";
@@ -107,5 +109,59 @@ describe("planPickerBackfill", () => {
     // Assert
     expect(plan.shouldFetchMore).toBe(false);
     expect(plan.state).toBe(state);
+  });
+});
+
+describe("getPickerBackfillStatus", () => {
+  const baseArgs = {
+    enabled: true,
+    hasMore: true,
+    filteredItemCount: 0,
+  };
+
+  it("reports backfilling while the budget is still available", () => {
+    // Act
+    const status = getPickerBackfillStatus({ ...baseArgs, state: createPickerBackfillState() });
+
+    // Assert — an empty list here is premature, more pages are on the way
+    expect(status).toEqual({ isBackfilling: true, isExhausted: false });
+  });
+
+  it("reports exhausted once the budget is spent with pages still available", () => {
+    // Arrange
+    const spent = { requestedAtRawCount: 400, requestedPages: PICKER_BACKFILL_MAX_PAGES };
+
+    // Act
+    const status = getPickerBackfillStatus({ ...baseArgs, state: spent });
+
+    // Assert — the user has to ask for more, so the picker must not claim the catalog is empty
+    expect(status).toEqual({ isBackfilling: false, isExhausted: true });
+  });
+
+  it.each([
+    ["nothing is filtered out", { enabled: false }],
+    ["the catalog is genuinely exhausted", { hasMore: false }],
+    ["the list is already long enough", { filteredItemCount: 15 }],
+  ])("reports neither state when %s", (_, override) => {
+    // Arrange
+    const spent = { requestedAtRawCount: 400, requestedPages: PICKER_BACKFILL_MAX_PAGES };
+
+    // Act
+    const status = getPickerBackfillStatus({ ...baseArgs, ...override, state: spent });
+
+    // Assert
+    expect(status).toEqual({ isBackfilling: false, isExhausted: false });
+  });
+});
+
+describe("isFreshPickerBackfillState", () => {
+  it("recognises an untouched budget", () => {
+    // Act & Assert
+    expect(isFreshPickerBackfillState(createPickerBackfillState())).toBe(true);
+  });
+
+  it("recognises a spent budget", () => {
+    // Act & Assert
+    expect(isFreshPickerBackfillState({ requestedAtRawCount: 20, requestedPages: 1 })).toBe(false);
   });
 });

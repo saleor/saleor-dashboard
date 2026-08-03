@@ -1,6 +1,6 @@
 # Select all in bulk publish product picker
 
-**Implemented** in shared assign product picker (`selectAllMode: "when-scoped"`). Bulk publish passes `maxSelection: 50`.
+**Implemented** in shared assign product picker (`selectAllMode: "when-scoped"`). Bulk publish passes `maxSelection: 50`. The collection product picker opts in too, without a cap.
 
 ## Behavior (v0)
 

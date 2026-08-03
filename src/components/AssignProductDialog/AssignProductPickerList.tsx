@@ -11,6 +11,7 @@ import { useIntl } from "react-intl";
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import Checkbox from "../Checkbox";
+import { AssignProductPickerBackfillExhausted } from "./AssignProductPickerBackfillExhausted";
 import { AssignProductPickerSelectAll } from "./AssignProductPickerSelectAll";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -32,12 +33,20 @@ export const AssignProductPickerList = ({
     handleChange,
     hasMore,
     isProductAvailable,
+    loading,
     onFetchMore,
     productUnavailableText,
     productsDict,
+    resumeBackfill,
+    showBackfillExhausted,
     showEmptyState,
     showListLoading,
   } = picker;
+
+  // An empty list cannot be scrolled, so InfiniteScroll would call `next` in a loop. While
+  // backfill owns that empty state (loading or the Load more dead-end), keep hasMore false
+  // so those fetches stay on the budgeted path instead of storming the API.
+  const allowScrollFetch = Boolean(hasMore) && displayedProducts.length > 0;
 
   return (
     <>
@@ -46,7 +55,7 @@ export const AssignProductPickerList = ({
         flush
         dataLength={displayedProducts.length}
         next={onFetchMore}
-        hasMore={hasMore}
+        hasMore={allowScrollFetch}
         scrollThreshold="100px"
         scrollableTarget={scrollableTargetId}
       >
@@ -54,6 +63,12 @@ export const AssignProductPickerList = ({
           <TableBody data-test-id="products-list">
             {showListLoading ? (
               <AssignPickerListLoadingRow colSpan={3} />
+            ) : showBackfillExhausted ? (
+              <AssignProductPickerBackfillExhausted
+                colSpan={3}
+                loading={loading}
+                onLoadMore={resumeBackfill}
+              />
             ) : (
               renderCollection(
                 displayedProducts,

@@ -1,6 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { createPickerBackfillState, planPickerBackfill } from "./pickerBackfill";
+import {
+  createPickerBackfillState,
+  getPickerBackfillStatus,
+  isFreshPickerBackfillState,
+  PICKER_BACKFILL_MAX_PAGES,
+  type PickerBackfillStatus,
+  planPickerBackfill,
+} from "./pickerBackfill";
 
 interface UsePickerBackfillArgs {
   /** Whether the caller filters the fetched page at all. */
@@ -13,6 +20,11 @@ interface UsePickerBackfillArgs {
   onFetchMore: () => void;
   /** Bumped by the caller when a new search starts, to hand back the page budget. */
   resetKey?: string;
+}
+
+interface UsePickerBackfillResult extends PickerBackfillStatus {
+  /** Hands the page budget back so the next pages get pulled in. */
+  resumeBackfill: () => void;
 }
 
 /**
@@ -28,23 +40,34 @@ export const usePickerBackfill = ({
   filteredItemCount,
   onFetchMore,
   resetKey = "",
-}: UsePickerBackfillArgs): void => {
-  const stateRef = useRef(createPickerBackfillState());
+}: UsePickerBackfillArgs): UsePickerBackfillResult => {
+  const [state, setState] = useState(createPickerBackfillState);
   const onFetchMoreRef = useRef(onFetchMore);
 
   onFetchMoreRef.current = onFetchMore;
 
+  const resumeBackfill = useCallback(() => {
+    // Only hand the budget back once it is actually spent. Mid-backfill / double-clicks must
+    // not reset `requestedAtRawCount`, or the effect would fire a second fetchMore for the
+    // same cursor while Apollo 3.4 still reports `loading: false`.
+    setState(current =>
+      current.requestedPages >= PICKER_BACKFILL_MAX_PAGES ? createPickerBackfillState() : current,
+    );
+  }, []);
+
   useEffect(
     function resetPickerBackfillBudget() {
-      stateRef.current = createPickerBackfillState();
+      setState(current =>
+        isFreshPickerBackfillState(current) ? current : createPickerBackfillState(),
+      );
     },
     [open, resetKey],
   );
 
   useEffect(
     function backfillFilteredPickerPages() {
-      const { shouldFetchMore, state } = planPickerBackfill({
-        state: stateRef.current,
+      const { shouldFetchMore, state: nextState } = planPickerBackfill({
+        state,
         enabled: enabled && open,
         loading,
         hasMore,
@@ -52,12 +75,23 @@ export const usePickerBackfill = ({
         filteredItemCount,
       });
 
-      stateRef.current = state;
+      if (nextState !== state) {
+        setState(nextState);
+      }
 
       if (shouldFetchMore) {
         onFetchMoreRef.current();
       }
     },
-    [enabled, open, loading, hasMore, rawItemCount, filteredItemCount],
+    [state, enabled, open, loading, hasMore, rawItemCount, filteredItemCount],
   );
+
+  const { isBackfilling, isExhausted } = getPickerBackfillStatus({
+    state,
+    enabled: enabled && open,
+    hasMore,
+    filteredItemCount,
+  });
+
+  return { isBackfilling, isExhausted, resumeBackfill };
 };
