@@ -54,7 +54,8 @@ export const Menu = ({ items, dataTestId, trigger }: TopNavMenuProps) => {
               <Dropdown.Item key={item.testId ?? item.label}>
                 <List.Item
                   borderRadius={4}
-                  paddingX={1.5}
+                  paddingLeft={2}
+                  paddingRight={1.5}
                   paddingY={2}
                   onClick={item.disabled ? undefined : item.onSelect}
                   data-test-id={item.testId}
