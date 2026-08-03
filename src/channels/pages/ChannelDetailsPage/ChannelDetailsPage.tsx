@@ -228,7 +228,10 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     return items;
   }, [intl, showPaymentGatewaysSection]);
   const sectionIds = useMemo(() => sectionNavItems.map(item => item.id), [sectionNavItems]);
-  const { activeId: activeSectionId, selectSection } = useChannelSectionScrollSpy({ sectionIds });
+  const { activeId: activeSectionId, selectSection } = useChannelSectionScrollSpy({
+    sectionIds,
+    enabled: !isEditLoading,
+  });
   const paymentGatewaysSection = showPaymentGatewaysSection ? (
     <ChannelSection id={channelSectionIds.paymentGateways}>
       <ChannelPaymentGatewaysSection

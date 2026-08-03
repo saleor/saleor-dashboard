@@ -5,6 +5,8 @@ import { resolveActiveSectionIndex } from "./resolveActiveSectionIndex";
 
 interface UseChannelSectionScrollSpyArgs {
   sectionIds: ChannelSectionId[];
+  /** When false, scroll tracking is paused (e.g. while section DOM is not mounted). */
+  enabled?: boolean;
 }
 
 /** Offset from the content scrollport top used as the “current section” line. */
@@ -74,6 +76,7 @@ export const scrollToChannelSection = (sectionId: ChannelSectionId): void => {
  */
 export const useChannelSectionScrollSpy = ({
   sectionIds,
+  enabled = true,
 }: UseChannelSectionScrollSpyArgs): {
   activeId: ChannelSectionId | undefined;
   selectSection: (sectionId: ChannelSectionId) => void;
@@ -91,7 +94,7 @@ export const useChannelSectionScrollSpy = ({
 
   useEffect(
     function syncActiveSectionOnScroll() {
-      if (sectionIds.length === 0) {
+      if (!enabled || sectionIds.length === 0) {
         return;
       }
 
@@ -137,7 +140,7 @@ export const useChannelSectionScrollSpy = ({
         root.removeEventListener("scroll", onScroll);
       };
     },
-    [sectionIds],
+    [enabled, sectionIds],
   );
 
   const selectSection = useCallback((sectionId: ChannelSectionId) => {
