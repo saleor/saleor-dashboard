@@ -26,4 +26,10 @@ export const messages = defineMessages({
     defaultMessage: "No categories found",
     description: "search results",
   },
+  allLoadedCategoriesFilteredOut: {
+    id: "py06r7",
+    defaultMessage:
+      "Every category loaded so far is already assigned. Search by name, or keep loading the list.",
+    description: "assign category picker, client-side filter emptied the loaded pages",
+  },
 });

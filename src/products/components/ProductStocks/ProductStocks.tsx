@@ -10,6 +10,7 @@ import { type ProductErrorFragment, type WarehouseFragment } from "@dashboard/gr
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { type FormsetAtomicData, type FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
+import { type Container } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
@@ -77,10 +78,14 @@ export const ProductStocks = ({
   const [isAssignWarehousesOpen, setIsAssignWarehousesOpen] = React.useState(false);
   const formErrors = getFormErrors(["sku"], errors);
 
-  const stocksIds = React.useMemo(() => stocks.map(stock => stock.id), [stocks]);
+  const stocksIds = React.useMemo(() => new Set(stocks.map(stock => stock.id)), [stocks]);
 
-  const warehousesToAssign =
-    warehouses?.filter(warehouse => !stocksIds.includes(warehouse.id)) || [];
+  // Excluding inside the dialog rather than here lets it notice when a page of warehouses
+  // was filtered down to nothing and pull in the next one instead of looking empty.
+  const isWarehouseAlreadyStocked = React.useCallback(
+    (warehouse: Container) => stocksIds.has(warehouse.id),
+    [stocksIds],
+  );
 
   const handleWarehouseStockAdd = (warehouseId: string, warehouseName: string) => {
     onWarehouseStockAdd(warehouseId, warehouseName);
@@ -248,7 +253,8 @@ export const ProductStocks = ({
         )}
 
         <AssignWarehouseDialog
-          warehouses={warehousesToAssign}
+          warehouses={warehouses ?? []}
+          excludeContainer={isWarehouseAlreadyStocked}
           hasMore={hasMoreWarehouses}
           onFetchMore={fetchMoreWarehouses}
           loading={loading}

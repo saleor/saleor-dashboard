@@ -10,8 +10,15 @@ import {
 import { AssignProductDialogMulti } from "./AssignProductDialogMulti";
 import { AssignProductDialogSingle } from "./AssignProductDialogSingle";
 import { type Products, type SelectedChannel } from "./types";
+import { type UseAssignProductPickerProps } from "./useAssignProductPicker";
 
-export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
+export interface AssignProductDialogProps
+  extends FetchMoreProps,
+    DialogProps,
+    Pick<
+      UseAssignProductPickerProps,
+      "backfillResetKey" | "excludeProduct" | "selectAllMode" | "onMaxSelectionReached"
+    > {
   confirmButtonState: ConfirmButtonTransitionState;
   products: Products;
   selectedChannels?: SelectedChannel[];

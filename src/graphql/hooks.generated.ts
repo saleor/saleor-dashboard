@@ -8848,6 +8848,72 @@ export function useVoucherDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQuery>;
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
+export const VoucherAssignedIdsDocument = gql`
+    query VoucherAssignedIds($id: ID!, $first: Int!) {
+  voucher(id: $id) {
+    id
+    products(first: $first) {
+      edges {
+        node {
+          id
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+    categories(first: $first) {
+      edges {
+        node {
+          id
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+    collections(first: $first) {
+      edges {
+        node {
+          id
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useVoucherAssignedIdsQuery__
+ *
+ * To run a query within a React component, call `useVoucherAssignedIdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVoucherAssignedIdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVoucherAssignedIdsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useVoucherAssignedIdsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherAssignedIdsQuery, Types.VoucherAssignedIdsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.VoucherAssignedIdsQuery, Types.VoucherAssignedIdsQueryVariables>(VoucherAssignedIdsDocument, options);
+      }
+export function useVoucherAssignedIdsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherAssignedIdsQuery, Types.VoucherAssignedIdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.VoucherAssignedIdsQuery, Types.VoucherAssignedIdsQueryVariables>(VoucherAssignedIdsDocument, options);
+        }
+export type VoucherAssignedIdsQueryHookResult = ReturnType<typeof useVoucherAssignedIdsQuery>;
+export type VoucherAssignedIdsLazyQueryHookResult = ReturnType<typeof useVoucherAssignedIdsLazyQuery>;
+export type VoucherAssignedIdsQueryResult = Apollo.QueryResult<Types.VoucherAssignedIdsQuery, Types.VoucherAssignedIdsQueryVariables>;
 export const VoucherCodesDocument = gql`
     query VoucherCodes($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
   voucher(id: $id) {

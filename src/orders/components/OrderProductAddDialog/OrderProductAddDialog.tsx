@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { AssignPickerBackfillExhaustedRow } from "@dashboard/components/AssignPickerBackfillExhausted/AssignPickerBackfillExhausted";
 import { AssignPickerListEmptyStateRow } from "@dashboard/components/AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "@dashboard/components/AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "@dashboard/components/BackButton";
@@ -17,6 +18,7 @@ import { type AddressInput, type OrderErrorFragment } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { buttonMessages } from "@dashboard/intl";
@@ -60,6 +62,9 @@ interface OrderProductAddDialogProps extends FetchMoreProps {
 }
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
+
+/** Products, not rows — see the `minRows` note where this is used. */
+const ORDER_PRODUCT_ADD_BACKFILL_MIN_PRODUCTS = 4;
 
 export const OrderProductAddDialog = ({
   confirmButtonState,
@@ -108,6 +113,8 @@ export const OrderProductAddDialog = ({
   const isValidVariant = hasVariantPricing;
   const getValidProductVariants = (product: OrderSearchProduct) =>
     product.variants.filter(isValidVariant);
+  // Products with nothing priced in this channel are dropped from the fetched page, so on a
+  // sparsely priced channel a whole page can disappear and leave the list unscrollable.
   const productChoices =
     products?.filter(product => getValidProductVariants(product).length > 0) || [];
   const displayedProductChoices = useStalePickerList(productChoices, loading, open);
@@ -117,13 +124,38 @@ export const OrderProductAddDialog = ({
   const productsWithAllVariantsSelected = displayedProductChoices.map(product =>
     hasAllVariantsSelected(getValidProductVariants(product), variants),
   );
-  const productChoicesWithValidVariants = displayedProductChoices.filter(({ variants }) =>
-    variants.some(isValidVariant),
-  );
-  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(
+  const itemCount = displayedProductChoices.length;
+
+  const backfill = usePickerBackfill({
+    enabled: true,
+    open,
     loading,
-    productChoicesWithValidVariants.length,
+    hasMore: Boolean(hasMore),
+    rawItemCount: products?.length ?? 0,
+    filteredItemCount: productChoices.length,
+    onFetchMore,
+    resetKey: query,
+    // A product here expands into a header row plus a row per priced variant, so the list is
+    // scrollable at a handful of products. The default would treat a page of 20 products as
+    // short and prefetch — expensive, because this search embeds 50 priced variants per product.
+    minRows: ORDER_PRODUCT_ADD_BACKFILL_MIN_PRODUCTS,
+  });
+
+  const { showEmptyState: hasNothingToShow, showListLoading } = useAssignPickerListDisplayState(
+    loading,
+    itemCount,
   );
+
+  // A page emptied by channel pricing is not an empty catalog. Saying "no products available"
+  // while pages are still coming in — or while the user could ask for more — is the dead end.
+  const showBackfillExhausted = hasNothingToShow && backfill.isExhausted;
+  const showEmptyState = hasNothingToShow && !backfill.isBackfilling && !showBackfillExhausted;
+  const showBackfillLoading = showListLoading || (hasNothingToShow && backfill.isBackfilling);
+
+  // An empty list cannot be scrolled, so InfiniteScroll would call `next` in a loop. While
+  // backfill owns that empty state, keep hasMore false so those fetches stay on the budgeted
+  // path instead of storming the API.
+  const allowScrollFetch = Boolean(hasMore) && itemCount > 0;
 
   const handleSubmit = () => onSubmit(variants);
 
@@ -160,19 +192,27 @@ export const OrderProductAddDialog = ({
         <DashboardModal.Body fill id={scrollableTargetId}>
           <InfiniteScroll
             flush
-            dataLength={productChoicesWithValidVariants.length}
+            dataLength={itemCount}
             next={onFetchMore}
-            hasMore={hasMore}
+            hasMore={allowScrollFetch}
             scrollThreshold="100px"
             scrollableTarget={scrollableTargetId}
           >
             <ResponsiveTable bleed fillHeight key="table">
               <TableBody data-test-id="add-products-table">
-                {showListLoading ? (
+                {showBackfillLoading ? (
                   <AssignPickerListLoadingRow colSpan={4} />
+                ) : showBackfillExhausted ? (
+                  <AssignPickerBackfillExhaustedRow
+                    colSpan={4}
+                    loading={loading}
+                    message={intl.formatMessage(messages.allLoadedProductsFilteredOut)}
+                    buttonLabel={intl.formatMessage(messages.loadMoreProducts)}
+                    onLoadMore={backfill.resumeBackfill}
+                  />
                 ) : (
                   renderCollection(
-                    productChoicesWithValidVariants,
+                    displayedProductChoices,
                     (product, productIndex) => (
                       <Fragment key={product ? product.id : "skeleton"}>
                         <TableRowLink data-test-id="product">

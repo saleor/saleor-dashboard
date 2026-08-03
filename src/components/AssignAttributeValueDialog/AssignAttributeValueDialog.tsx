@@ -27,12 +27,7 @@ import {
   getReferencePickerLoadingState,
 } from "./mergeReferenceTypeWhereConstraints";
 import { messages } from "./messages";
-import {
-  filterCategoriesByAttributeValues,
-  filterCollectionsByAttributeValues,
-  filterPagesByAttributeValues,
-  filterProductsByAttributeValues,
-} from "./utils";
+import { getExcludeAssignedAttributeValue } from "./utils";
 
 export type ProductFilterChangeHandler = (
   filterVariables: ProductWhereInput,
@@ -95,19 +90,32 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     loading,
     ...rest
   } = props;
-  const filteredProducts = filterProductsByAttributeValues(products, attribute);
+  // Type constraints stay as a pre-filter: they only hide stale Apollo `previousData` while the
+  // constrained query settles. Assigned-value exclusion goes through the dialog predicate so
+  // backfill can recover from an emptied page.
   const constrainedProducts = useMemo(
-    () => filterProductsByReferenceTypeConstraints(filteredProducts, initialConstraints),
-    [filteredProducts, initialConstraints],
+    () => filterProductsByReferenceTypeConstraints(products, initialConstraints),
+    [products, initialConstraints],
   );
   const referencePickerLoading = getReferencePickerLoadingState(
     loading,
     initialConstraints,
-    filteredProducts,
+    products,
   );
-  const filteredPages = filterPagesByAttributeValues(pages, attribute);
-  const filteredCollections = filterCollectionsByAttributeValues(collections, attribute);
-  const filteredCategories = filterCategoriesByAttributeValues(categories, attribute);
+  const { inputType, entityType: attributeEntityType } = attribute.data;
+  const attributeValue = attribute.value;
+  const excludeAssignedReference = useMemo(
+    () =>
+      getExcludeAssignedAttributeValue({
+        inputType,
+        entityType: attributeEntityType,
+        value: attributeValue,
+      }),
+    [inputType, attributeEntityType, attributeValue],
+  );
+  const singleOrMultipleProps = getSingleOrMultipleDialogProps(attribute);
+  // Select-all only exists on the multi-selection picker; passing it to the single one is a no-op.
+  const selectAllMode = singleOrMultipleProps.selectionMode === "multiple" ? "when-scoped" : "off";
   const productFilterChange = onFilterChange?.[AttributeEntityTypeEnum.PRODUCT];
   const variantFilterChange =
     onFilterChange?.[AttributeEntityTypeEnum.PRODUCT_VARIANT] ??
@@ -127,12 +135,13 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     case AttributeEntityTypeEnum.PAGE:
       return (
         <AssignModelDialog
-          pages={filteredPages ?? []}
+          pages={pages ?? []}
+          excludeContainer={excludeAssignedReference}
           initialConstraints={initialConstraints}
           onFilterChange={pageFilterChange}
           labels={dialogLabels}
           loading={loading}
-          {...getSingleOrMultipleDialogProps(attribute)}
+          {...singleOrMultipleProps}
           {...rest}
         />
       );
@@ -140,11 +149,13 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
       return (
         <AssignProductDialog
           products={constrainedProducts ?? []}
+          excludeProduct={excludeAssignedReference}
+          selectAllMode={selectAllMode}
           initialConstraints={initialConstraints}
           onFilterChange={productFilterChange}
           labels={dialogLabels}
           loading={referencePickerLoading}
-          {...getSingleOrMultipleDialogProps(attribute)}
+          {...singleOrMultipleProps}
           {...rest}
         />
       );
@@ -157,7 +168,7 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
           labels={dialogLabels}
           loading={referencePickerLoading}
           {...rest}
-          {...getSingleOrMultipleDialogProps(attribute)}
+          {...singleOrMultipleProps}
           selectedIds={
             attribute.data.inputType === AttributeInputTypeEnum.REFERENCE
               ? (attribute.value ?? [])
@@ -168,22 +179,24 @@ const AssignAttributeValueDialog = (props: AssignAttributeValueDialogProps) => {
     case AttributeEntityTypeEnum.COLLECTION:
       return (
         <AssignCollectionDialog
-          collections={filteredCollections}
+          collections={collections}
+          excludeContainer={excludeAssignedReference}
           onFilterChange={collectionFilterChange}
           labels={dialogLabels}
           loading={loading}
-          {...getSingleOrMultipleDialogProps(attribute)}
+          {...singleOrMultipleProps}
           {...rest}
         />
       );
     case AttributeEntityTypeEnum.CATEGORY:
       return (
         <AssignCategoryDialog
-          categories={filteredCategories}
+          categories={categories}
+          excludeContainer={excludeAssignedReference}
           onFilterChange={categoryFilterChange}
           labels={dialogLabels}
           loading={loading}
-          {...getSingleOrMultipleDialogProps(attribute)}
+          {...singleOrMultipleProps}
           {...rest}
         />
       );
