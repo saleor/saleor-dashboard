@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.23.22
+
+### Patch Changes
+
+- [#6800](https://github.com/saleor/saleor-dashboard/pull/6800) [`ce151c1`](https://github.com/saleor/saleor-dashboard/commit/ce151c13f367136773ba4798b53d8dcd280049b5) Thanks [@mirekm](https://github.com/mirekm)! - Assign pickers no longer dead-end on an empty list. These dialogs hide rows you have already used up — products already assigned, warehouses already stocked, products with no price in the order's channel — but they did so only after fetching a page, so a page could be emptied entirely and the picker would claim nothing was left while thousands of items sat on later pages.
+
+  Pickers now keep loading until they have rows to show. This covers collection products, voucher products/categories/collections, reference attribute values, product stock warehouses, and adding products to an order. Product pickers also gained **Select all visible products**.
+
+- [#6792](https://github.com/saleor/saleor-dashboard/pull/6792) [`c94a753`](https://github.com/saleor/saleor-dashboard/commit/c94a753f4e92186c6fd2e7e175ddc1e3fc568db5) Thanks [@mirekm](https://github.com/mirekm)! - Homepage empty state softly promotes Saleor Pulse with a product preview video and install CTA. A dismissible bottom-left video announcement (ripple-backed) also introduces Pulse across the Dashboard.
+
+- [#6801](https://github.com/saleor/saleor-dashboard/pull/6801) [`02abf9d`](https://github.com/saleor/saleor-dashboard/commit/02abf9dd7f7b28477ba4b8f764c31f94be4e8238) Thanks [@mirekm](https://github.com/mirekm)! - Fixed a 1px gap where the save bar border did not line up with detail page sidebars (for example on channel settings).
+
+- [#6795](https://github.com/saleor/saleor-dashboard/pull/6795) [`6e87979`](https://github.com/saleor/saleor-dashboard/commit/6e8797979a11086899e2649de6dc0b0ac657ac8b) Thanks [@mirekm](https://github.com/mirekm)! - Fixed the Dashboard becoming unresponsive after the browser tab was left inactive for a long time, for example after closing and reopening a laptop.
+
+  Before: returning to a long-idle tab could fire a burst of duplicate session refresh requests, and installed apps could keep running with an expired token that was never renewed.
+
+  Now: the session is refreshed once for all pending requests, and app tokens are renewed based on when they actually expire, including an immediate catch-up when you return to the tab.
+
+- [#6802](https://github.com/saleor/saleor-dashboard/pull/6802) [`1a920f8`](https://github.com/saleor/saleor-dashboard/commit/1a920f84a36cb88335d5b8503fc2f6c7182bd34c) Thanks [@mirekm](https://github.com/mirekm)! - Detail page headers no longer show a generic back arrow. The leading control now uses the destination section icon (for example products, orders, or configuration) with a tooltip that names where it goes, such as "All products" or "All orders".
+
+  Before: every detail view used the same left arrow with no label, so you had to guess where back would take you.
+
+  Now: the icon and tooltip reflect the actual parent list or hub, making cross-section navigation easier to scan.
+
 ## 3.23.21
 
 ### Patch Changes
