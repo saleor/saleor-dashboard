@@ -63,6 +63,9 @@ interface OrderProductAddDialogProps extends FetchMoreProps {
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
 
+/** Products, not rows — see the `minRows` note where this is used. */
+const ORDER_PRODUCT_ADD_BACKFILL_MIN_PRODUCTS = 4;
+
 export const OrderProductAddDialog = ({
   confirmButtonState,
   errors: apiErrors,
@@ -132,6 +135,10 @@ export const OrderProductAddDialog = ({
     filteredItemCount: productChoices.length,
     onFetchMore,
     resetKey: query,
+    // A product here expands into a header row plus a row per priced variant, so the list is
+    // scrollable at a handful of products. The default would treat a page of 20 products as
+    // short and prefetch — expensive, because this search embeds 50 priced variants per product.
+    minRows: ORDER_PRODUCT_ADD_BACKFILL_MIN_PRODUCTS,
   });
 
   const { showEmptyState: hasNothingToShow, showListLoading } = useAssignPickerListDisplayState(

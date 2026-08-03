@@ -6,8 +6,15 @@
  * These helpers decide when to pull the next page in on the list's behalf.
  */
 
-/** Keep loading pages until the filtered list has enough rows to be scrollable. */
-const BACKFILL_MIN_ROWS = 15;
+/**
+ * Keep loading pages until the filtered list has enough rows to be scrollable.
+ *
+ * Assumes one row per item. Pickers that expand an item into several rows should pass a
+ * proportionally smaller `minRows`, or they will prefetch pages they have no use for. Both
+ * `planPickerBackfill` and `getPickerBackfillStatus` must be given the same value: if the status
+ * says "backfilling" while the plan declines to fetch, the list sits on a spinner forever.
+ */
+export const BACKFILL_MIN_ROWS = 15;
 
 /** Upper bound on extra pages per search, so a fully used-up catalog can't be walked end to end. */
 export const PICKER_BACKFILL_MAX_PAGES = 4;
@@ -43,13 +50,15 @@ export const getPickerBackfillStatus = ({
   enabled,
   hasMore,
   filteredItemCount,
+  minRows = BACKFILL_MIN_ROWS,
 }: {
   state: PickerBackfillState;
   enabled: boolean;
   hasMore: boolean;
   filteredItemCount: number;
+  minRows?: number;
 }): PickerBackfillStatus => {
-  if (!enabled || !hasMore || filteredItemCount >= BACKFILL_MIN_ROWS) {
+  if (!enabled || !hasMore || filteredItemCount >= minRows) {
     return { isBackfilling: false, isExhausted: false };
   }
 
@@ -70,6 +79,7 @@ export const planPickerBackfill = ({
   hasMore,
   rawItemCount,
   filteredItemCount,
+  minRows = BACKFILL_MIN_ROWS,
 }: {
   state: PickerBackfillState;
   enabled: boolean;
@@ -77,6 +87,7 @@ export const planPickerBackfill = ({
   hasMore: boolean;
   rawItemCount: number;
   filteredItemCount: number;
+  minRows?: number;
 }): { shouldFetchMore: boolean; state: PickerBackfillState } => {
   // A shorter raw list means a new search replaced the results.
   const current = rawItemCount < state.requestedAtRawCount ? createPickerBackfillState() : state;
@@ -85,7 +96,7 @@ export const planPickerBackfill = ({
     !enabled ||
     loading ||
     !hasMore ||
-    filteredItemCount >= BACKFILL_MIN_ROWS ||
+    filteredItemCount >= minRows ||
     rawItemCount === current.requestedAtRawCount ||
     current.requestedPages >= PICKER_BACKFILL_MAX_PAGES
   ) {

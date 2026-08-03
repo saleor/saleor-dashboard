@@ -44,6 +44,17 @@ exclusion on a large catalog.
 
 ## Remaining
 
+**Terminal empty state still uses the generic copy.** Exclusion-aware pickers distinguish two
+cases, not three: `getPickerBackfillStatus` reports neither backfilling nor exhausted once
+`hasMore` is false, so a list that was loaded to the end and fully excluded falls through to the
+plain `emptyMessage`. A voucher that already has every product says "No products found" — the
+same lie the backfill work set out to kill, at the end of the list instead of the start, and
+with no Load more button to hint otherwise. The third state ("rows returned, all excluded, no
+more pages") wants its own message per picker, e.g. "No products left to assign." / "No
+warehouses left to add." / "None of these products have a price in this channel." Phrase it
+scoped to the current list rather than the catalog, so it stays true while a search narrows
+things down.
+
 Voucher details reads the assigned-id set from `VoucherAssignedIds`, capped at 100 per list.
 Past that cap exclusion goes partial again — an already-assigned row can reappear in the picker.
 That is recoverable (re-assigning is a no-op), unlike the empty picker it replaced. Closing it
