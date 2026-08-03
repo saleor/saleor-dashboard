@@ -834,6 +834,10 @@
     "context": "product type scope link in product header, opens filtered catalog list",
     "string": "View products of {productTypeName}"
   },
+  "28ZQcS": {
+    "context": "assign collection picker, client-side filter emptied the loaded pages",
+    "string": "Every collection loaded so far is already assigned. Search by name, or keep loading the list."
+  },
   "28vvyx": {
     "context": "deselect all values button",
     "string": "None"
@@ -3314,6 +3318,10 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "DpB9Oq": {
+    "context": "assign product picker, client-side filter emptied the loaded pages",
+    "string": "Every product loaded so far is already assigned. Search for a product by name, or keep loading the catalog."
+  },
   "DpZRsS": {
     "context": "Savebar hint listing which product areas will persist on Save",
     "string": "Unsaved changes: {segments}"
@@ -3414,6 +3422,10 @@
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
+  },
+  "EQ/R+B": {
+    "context": "select all loaded products in assign product picker when filters or search are active",
+    "string": "Select all visible products"
   },
   "EQfaUv": {
     "context": "onboarding step title",
@@ -5221,6 +5233,10 @@
     "context": "Number of warehouses",
     "string": "{count, plural, =0 {No warehouses} one {# warehouse} other {# warehouses}}"
   },
+  "MQc8k3": {
+    "context": "assign warehouse picker, client-side filter emptied the loaded pages",
+    "string": "Every warehouse loaded so far is already added. Search by name, or keep loading the list."
+  },
   "MQwT1W": {
     "context": "activate",
     "string": "Activate"
@@ -6902,6 +6918,10 @@
     "context": "input label",
     "string": "Search Staff Members"
   },
+  "UQg+AQ": {
+    "context": "button, assign picker loads the next pages",
+    "string": "Load more"
+  },
   "UQu75k": {
     "context": "dialog header",
     "string": "Approve this fulfillment"
@@ -7165,6 +7185,10 @@
   },
   "Vf57Ie": {
     "string": "Partially fulfilled"
+  },
+  "VhAHLQ": {
+    "context": "assign picker, client-side filter emptied the loaded pages",
+    "string": "Everything loaded so far is already assigned. Search by name, or keep loading the list."
   },
   "VkYZQ8": {
     "string": "Current Permissions"
@@ -9887,6 +9911,10 @@
     "context": "SKU label inside the line price breakdown modal subtitle",
     "string": "SKU"
   },
+  "iKc9yr": {
+    "context": "order add product picker, channel pricing filter emptied the loaded pages",
+    "string": "Every product loaded so far is unavailable in this channel. Search by name, or keep loading the catalog."
+  },
   "iLNRJL": {
     "context": "product type a11y label prefix",
     "string": "Product type"
@@ -10918,6 +10946,10 @@
   "mgFyBA": {
     "string": "This name should be unique"
   },
+  "miimrR": {
+    "context": "button, assign product picker",
+    "string": "Load more products"
+  },
   "mkBgDe": {
     "string": "Product types deleted"
   },
@@ -11407,6 +11439,10 @@
   "p2EAP0": {
     "string": "Promotion removed"
   },
+  "p4L3Gb": {
+    "context": "button, order add product picker loads the next pages",
+    "string": "Load more products"
+  },
   "p4X/0H": {
     "context": "button, assign variants to sale and save",
     "string": "Assign and save"
@@ -11633,6 +11669,10 @@
     "context": "notification when colliding SKUs are skipped and the rest are generated",
     "string": "Skipped {count} {count, plural, one {variant} other {variants}} with existing SKUs: {skus}"
   },
+  "py06r7": {
+    "context": "assign category picker, client-side filter emptied the loaded pages",
+    "string": "Every category loaded so far is already assigned. Search by name, or keep loading the list."
+  },
   "pyiyxe": {
     "context": "button",
     "string": "Create model"
@@ -11702,6 +11742,10 @@
   "qEZ463": {
     "context": "export selected items to csv file",
     "string": "Selected products ({number})"
+  },
+  "qFCc+k": {
+    "context": "assign model picker, client-side filter emptied the loaded pages",
+    "string": "Every model loaded so far is already assigned. Search by name, or keep loading the list."
   },
   "qGwKT/": {
     "string": "Extension disabled. Activate the extension from the settings."
@@ -12229,6 +12273,10 @@
   "sRB887": {
     "context": "empty shipping methods list in shipping zone",
     "string": "No shipping methods in this zone"
+  },
+  "sRf1ZK": {
+    "context": "hint below select all when more products can be loaded in assign product picker",
+    "string": "Scroll to load more products."
   },
   "sS5aVm": {
     "context": "voucher discount type",

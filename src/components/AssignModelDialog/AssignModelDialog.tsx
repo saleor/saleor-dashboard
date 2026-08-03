@@ -20,7 +20,10 @@ import {
 import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { messages } from "./messages";
 
-interface AssignModelDialogProps extends FetchMoreProps, DialogProps {
+interface AssignModelDialogProps
+  extends FetchMoreProps,
+    DialogProps,
+    Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState: ConfirmButtonTransitionState;
   pages: RelayToFlat<SearchPagesQuery["search"]>;
   loading: boolean;
@@ -80,6 +83,7 @@ const AssignModelDialogInner = ({
       onClose={onClose}
       onFetch={() => {}}
       emptyMessage={emptyMessage}
+      backfillExhaustedMessage={intl.formatMessage(messages.allLoadedModelsFilteredOut)}
       search={{ query, onQueryChange, resetQuery }}
       filtersSlot={<ModalFilters />}
       onResetFilters={clearFilters}

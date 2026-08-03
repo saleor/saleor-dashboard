@@ -25,13 +25,7 @@ import {
   type VoucherUrlDialog,
   type VoucherUrlQueryParams,
 } from "@dashboard/discounts/urls";
-import {
-  getAssignedVariantIds,
-  getFilteredCategories,
-  getFilteredCollections,
-  getFilteredProducts,
-  getFilteredProductVariants,
-} from "@dashboard/discounts/utils";
+import { getAssignedVariantIds } from "@dashboard/discounts/utils";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CategoryFilterInput,
@@ -69,6 +63,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { createUpdateHandler } from "./handlers";
+import { useVoucherAssignedIds } from "./hooks/useVoucherAssignedIds";
 import { useVoucherCodes } from "./hooks/useVoucherCodes";
 import { VOUCHER_UPDATE_FORM_ID } from "./types";
 
@@ -103,20 +98,32 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       first: DEFAULT_INITIAL_SEARCH_DATA.first,
     },
   });
+  // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
+  // on a large catalog. Ask for more per request so the picker stays useful without leaning on
+  // backfill for every page.
+  const assignProductSearchVariables = {
+    ...DEFAULT_INITIAL_SEARCH_DATA,
+    first: 100,
+  };
   const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
-    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: false },
+    variables: { ...assignProductSearchVariables, includeVariants: false },
   });
   const { loadMore: loadMoreVariants, result: searchVariantsOpts } = useProductSearch({
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: true },
   });
+
+  // Bumped on every new search so the pickers' backfill budget starts over.
+  const [searchGeneration, setSearchGeneration] = useState(0);
+  const startNewSearch = () => setSearchGeneration(generation => generation + 1);
 
   const handleProductFilterChange = (
     filterVariables: ProductWhereInput,
     channel: string | undefined,
     query: string,
   ) => {
+    startNewSearch();
     searchProductsOpts.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+      ...assignProductSearchVariables,
       where: filterVariables,
       channel,
       query,
@@ -139,6 +146,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   };
 
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
+    startNewSearch();
     searchCategoriesOpts.refetch({
       after: DEFAULT_INITIAL_SEARCH_DATA.after,
       first: DEFAULT_INITIAL_SEARCH_DATA.first,
@@ -154,6 +162,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     channel: string | undefined,
     query: string,
   ) => {
+    startNewSearch();
     searchCollectionsOpts.refetch({
       after: DEFAULT_INITIAL_SEARCH_DATA.after,
       first: DEFAULT_INITIAL_SEARCH_DATA.first,
@@ -198,6 +207,15 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   });
 
   useRegisterEntityRefresh(refetch);
+
+  const isAssignPickerOpen =
+    params.action === "assign-product" ||
+    params.action === "assign-category" ||
+    params.action === "assign-collection";
+  const { isProductAssigned, isCategoryAssigned, isCollectionAssigned } = useVoucherAssignedIds({
+    id,
+    skip: !isAssignPickerOpen,
+  });
 
   const {
     voucherCodes,
@@ -547,7 +565,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         toggleAll={toggleAll}
       />
       <AssignCategoriesDialog
-        categories={getFilteredCategories(data, searchCategoriesOpts)}
+        categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)}
+        excludeContainer={isCategoryAssigned}
+        backfillResetKey={String(searchGeneration)}
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchCategoriesOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-category"}
@@ -570,7 +590,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         }
       />
       <AssignCollectionDialog
-        collections={getFilteredCollections(data, searchCollectionsOpts)}
+        collections={mapEdgesToItems(searchCollectionsOpts?.data?.search)}
+        excludeContainer={isCollectionAssigned}
+        backfillResetKey={String(searchGeneration)}
         confirmButtonState={voucherCataloguesAddOpts.status}
         hasMore={searchCollectionsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-collection"}
@@ -633,7 +655,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
             },
           });
         }}
-        products={getFilteredProductVariants(data?.voucher?.variants, searchVariantsOpts)}
+        products={mapEdgesToItems(searchVariantsOpts?.data?.search)}
         selectedIds={getAssignedVariantIds(data?.voucher?.variants)}
       />
       <AssignProductDialog
@@ -660,7 +682,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
             },
           })
         }
-        products={getFilteredProducts(data, searchProductsOpts)}
+        products={mapEdgesToItems(searchProductsOpts?.data?.search) ?? []}
+        excludeProduct={isProductAssigned}
+        backfillResetKey={String(searchGeneration)}
+        selectAllMode="when-scoped"
         excludedFilters={["channel"]}
         onFilterChange={handleProductFilterChange}
       />

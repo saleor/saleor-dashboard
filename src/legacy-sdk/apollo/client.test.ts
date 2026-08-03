@@ -299,6 +299,47 @@ describe("createFetch", () => {
       expect(mockRefreshToken).not.toHaveBeenCalled();
     });
 
+    it("refreshes only once when concurrent requests find the token expired", async () => {
+      // Arrange
+      const expiredTimestamp = Math.floor(Date.now() / 1000) - 300;
+
+      storage.getAccessToken.mockReturnValue("expired-token");
+      jwtDecode.mockReturnValue({
+        exp: expiredTimestamp,
+        owner: "saleor",
+      });
+
+      // Keep the refresh in flight so both requests overlap, mirroring the burst
+      // of queries Apollo fires when a slept tab wakes up.
+      let resolveRefresh: (value: unknown) => void = () => undefined;
+
+      mockRefreshToken.mockReturnValueOnce(
+        new Promise(resolve => {
+          resolveRefresh = resolve;
+        }),
+      );
+
+      const fetchFn = createFetch({
+        autoTokenRefresh: true,
+        refreshOnUnauthorized: false,
+      });
+
+      mockFetch.mockResolvedValue(createMockResponse({ data: {} }));
+
+      // Act
+      const requests = Promise.all([
+        fetchFn("http://localhost:8000/graphql/", {}),
+        fetchFn("http://localhost:8000/graphql/", {}),
+      ]);
+
+      await Promise.resolve();
+      resolveRefresh({ data: { tokenRefresh: { token: "new-token" } } });
+      await requests;
+
+      // Assert
+      expect(mockRefreshToken).toHaveBeenCalledTimes(1);
+    });
+
     it("retries request on ExpiredSignatureError when refreshOnUnauthorized is enabled", async () => {
       // Arrange
       const futureTimestamp = Math.floor(Date.now() / 1000) + 600;

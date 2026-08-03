@@ -26,4 +26,10 @@ export const messages = defineMessages({
     defaultMessage: "No collections found",
     description: "search results",
   },
+  allLoadedCollectionsFilteredOut: {
+    id: "28ZQcS",
+    defaultMessage:
+      "Every collection loaded so far is already assigned. Search by name, or keep loading the list.",
+    description: "assign collection picker, client-side filter emptied the loaded pages",
+  },
 });

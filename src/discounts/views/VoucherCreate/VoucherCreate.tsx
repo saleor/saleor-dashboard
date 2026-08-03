@@ -102,8 +102,15 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       first: DEFAULT_INITIAL_SEARCH_DATA.first,
     },
   });
+  // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
+  // on a large catalog. Ask for more per request so the picker stays useful without leaning on
+  // backfill for every page.
+  const assignProductSearchVariables = {
+    ...DEFAULT_INITIAL_SEARCH_DATA,
+    first: 100,
+  };
   const productsSearch = useProductSearch({
-    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: false },
+    variables: { ...assignProductSearchVariables, includeVariants: false },
   });
   const variantsSearch = useProductSearch({
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: true },
@@ -115,7 +122,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     query: string,
   ) => {
     productsSearch.result.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+      ...assignProductSearchVariables,
       where: filterVariables,
       channel,
       query,

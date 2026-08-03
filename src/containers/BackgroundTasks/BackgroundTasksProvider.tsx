@@ -42,7 +42,9 @@ export function useBackgroundTasks(
     }, backgroundTasksRefreshTime);
 
     return () => clearInterval(intervalId);
-  });
+    // The interval only reads `tasks` through a ref, so it never needs rebuilding.
+    // Without this it was torn down and recreated on every render of the tree.
+  }, []);
 
   function cancel(id: number) {
     tasks.current = tasks.current.filter(task => task.id !== id);

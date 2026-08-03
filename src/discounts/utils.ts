@@ -1,90 +1,9 @@
-import {
-  type PromotionRuleDetailsFragment,
-  type SaleDetailsQuery,
-  type VoucherDetailsQuery,
-} from "@dashboard/graphql";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { type PromotionRuleDetailsFragment, type SaleDetailsQuery } from "@dashboard/graphql";
 import { sortAlphabetically } from "@dashboard/utils/sort";
 
 import { type Rule } from "./models";
-import {
-  type SearchCategoriesOpts,
-  type SearchCollectionOpts,
-  type SearchProductsOpts,
-} from "./types";
 
-type SaleOrVoucherData = SaleDetailsQuery | VoucherDetailsQuery;
 export type PromotionStatus = "scheduled" | "active" | "finished";
-
-const getCriteria = (data: SaleOrVoucherData) => {
-  if (!!data && "sale" in data) {
-    return data.sale;
-  }
-
-  if (!!data && "voucher" in data) {
-    return data.voucher;
-  }
-};
-
-export function getFilteredCategories(
-  data: SaleOrVoucherData,
-  searchCategoriesOpts: SearchCategoriesOpts,
-) {
-  const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search);
-  const criteria = getCriteria(data);
-
-  if (!criteria?.categories?.edges) {
-    return categories;
-  }
-
-  const excludedCategoryIds = criteria.categories.edges.map(category => category.node.id);
-
-  return categories?.filter(
-    suggestedCategory => !excludedCategoryIds.includes(suggestedCategory.id),
-  );
-}
-
-export function getFilteredCollections(
-  data: SaleOrVoucherData,
-  searchCollectionsOpts: SearchCollectionOpts,
-) {
-  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
-  const criteria = getCriteria(data);
-
-  if (!criteria?.collections?.edges) {
-    return collections;
-  }
-
-  const excludedCollectionIds = criteria?.collections.edges.map(collection => collection.node.id);
-
-  return collections?.filter(
-    suggestedCollection => !excludedCollectionIds.includes(suggestedCollection.id),
-  );
-}
-
-export function getFilteredProducts(
-  data: SaleOrVoucherData,
-  searchProductsOpts: SearchProductsOpts,
-) {
-  const products = mapEdgesToItems(searchProductsOpts?.data?.search);
-  const criteria = getCriteria(data);
-
-  if (!criteria?.products?.edges) {
-    return products;
-  }
-
-  const excludedProductIds = criteria?.products.edges.map(product => product.node.id);
-
-  return products?.filter(suggestedProduct => !excludedProductIds.includes(suggestedProduct.id));
-}
-
-export function getFilteredProductVariants(
-  _variants: NonNullable<SaleDetailsQuery["sale"]>["variants"] | null,
-  searchProductsOpts: SearchProductsOpts,
-) {
-  // Keep already-assigned variants visible; AssignVariantDialog disables them via selectedIds.
-  return mapEdgesToItems(searchProductsOpts?.data?.search);
-}
 
 export function getAssignedVariantIds(
   variants: NonNullable<SaleDetailsQuery["sale"]>["variants"] | null | undefined,

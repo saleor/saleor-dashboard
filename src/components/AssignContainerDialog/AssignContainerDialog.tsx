@@ -7,12 +7,14 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
+import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 import { TableBody, TextField } from "@material-ui/core";
-import { type ChangeEvent, type ReactNode } from "react";
+import { type ChangeEvent, type ReactNode, useMemo } from "react";
 import { useIntl } from "react-intl";
 
+import { AssignPickerBackfillExhaustedRow } from "../AssignPickerBackfillExhausted/AssignPickerBackfillExhausted";
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "../BackButton";
@@ -32,6 +34,16 @@ export interface AssignContainerDialogProps extends FetchMoreProps, DialogProps 
   onFetch: (value: string) => void;
   onSubmit: (data: Container[]) => void;
   emptyMessage?: string;
+  /**
+   * Hide rows the caller has already used up (assigned to the voucher, the product, the
+   * attribute). Filtering here rather than before `containers` lets the dialog notice when a
+   * page has been filtered down to nothing and pull in the next one.
+   */
+  excludeContainer?: (container: Container) => boolean;
+  /** Bumped when a new search starts, so backfill gets its page budget back. */
+  backfillResetKey?: string;
+  /** Shown instead of `emptyMessage` when exclusion emptied every loaded page. */
+  backfillExhaustedMessage?: string;
   selectionMode?: "single" | "multiple";
   selectedId?: string;
   filtersSlot?: ReactNode;
@@ -57,6 +69,9 @@ const AssignContainerDialog = ({
   onSubmit,
   open,
   emptyMessage = "No objects found",
+  excludeContainer,
+  backfillResetKey,
+  backfillExhaustedMessage,
   selectionMode = "multiple",
   selectedId,
   filtersSlot,
@@ -71,6 +86,8 @@ const AssignContainerDialog = ({
     onResetFilters,
   });
 
+  // Single selection resolves the submitted item by id, so it needs the unfiltered list:
+  // the current assignment is usually the very row exclusion would drop.
   const singleSelection = useAssignDialogSingleSelection({
     items: containers,
     selectedId,
@@ -78,9 +95,41 @@ const AssignContainerDialog = ({
     onSubmit,
   });
 
-  const displayedContainers = useStalePickerList(containers, loading, open);
+  const assignableContainers = useMemo(
+    () =>
+      excludeContainer ? containers.filter(container => !excludeContainer(container)) : containers,
+    [containers, excludeContainer],
+  );
+
+  const backfill = usePickerBackfill({
+    enabled: Boolean(excludeContainer),
+    open,
+    loading,
+    hasMore: Boolean(hasMore),
+    rawItemCount: containers.length,
+    filteredItemCount: assignableContainers.length,
+    onFetchMore,
+    resetKey: backfillResetKey,
+  });
+
+  const displayedContainers = useStalePickerList(assignableContainers, loading, open);
   const itemCount = displayedContainers.length;
-  const { showEmptyState, showListLoading } = useAssignPickerListDisplayState(loading, itemCount);
+  const { showEmptyState: hasNothingToShow, showListLoading } = useAssignPickerListDisplayState(
+    loading,
+    itemCount,
+  );
+
+  // A page filtered down to nothing is not an empty backend. Claiming "nothing found" while
+  // pages are still coming in — or while the user could ask for more — is the dead end that
+  // makes a picker look empty once enough rows have been assigned.
+  const showBackfillExhausted = hasNothingToShow && backfill.isExhausted;
+  const showEmptyState = hasNothingToShow && !backfill.isBackfilling && !showBackfillExhausted;
+  const showBackfillLoading = showListLoading || (hasNothingToShow && backfill.isBackfilling);
+
+  // An empty list cannot be scrolled, so InfiniteScroll would call `next` in a loop. While
+  // backfill owns that empty state, keep hasMore false so those fetches stay on the budgeted
+  // path instead of storming the API.
+  const allowScrollFetch = Boolean(hasMore) && itemCount > 0;
 
   const multiSelection = useAssignDialogMultiSelection({
     open,
@@ -137,14 +186,25 @@ const AssignContainerDialog = ({
             flush
             dataLength={itemCount}
             next={onFetchMore}
-            hasMore={hasMore}
+            hasMore={allowScrollFetch}
             scrollThreshold="100px"
             scrollableTarget={scrollableTargetId}
           >
             <ResponsiveTable bleed fillHeight>
               <TableBody>
-                {showListLoading ? (
+                {showBackfillLoading ? (
                   <AssignPickerListLoadingRow colSpan={2} />
+                ) : showBackfillExhausted ? (
+                  <AssignPickerBackfillExhaustedRow
+                    colSpan={2}
+                    loading={loading}
+                    message={
+                      backfillExhaustedMessage ??
+                      intl.formatMessage(messages.allLoadedItemsFilteredOut)
+                    }
+                    buttonLabel={intl.formatMessage(messages.loadMore)}
+                    onLoadMore={backfill.resumeBackfill}
+                  />
                 ) : (
                   <>
                     {showEmptyState && (

@@ -127,6 +127,50 @@ export const voucherDetails = gql`
   }
 `;
 
+/**
+ * Ids of everything already on the voucher, for the assign pickers' exclusion predicates.
+ * The details query paginates these lists, so it only ever knows about the tab page on screen.
+ * `hasNextPage` tells the caller the set is capped; exclusion then stays partial, which only
+ * means an already-assigned row can reappear (re-assigning it is a no-op).
+ */
+export const voucherAssignedIds = gql`
+  query VoucherAssignedIds($id: ID!, $first: Int!) {
+    voucher(id: $id) {
+      id
+      products(first: $first) {
+        edges {
+          node {
+            id
+          }
+        }
+        pageInfo {
+          hasNextPage
+        }
+      }
+      categories(first: $first) {
+        edges {
+          node {
+            id
+          }
+        }
+        pageInfo {
+          hasNextPage
+        }
+      }
+      collections(first: $first) {
+        edges {
+          node {
+            id
+          }
+        }
+        pageInfo {
+          hasNextPage
+        }
+      }
+    }
+  }
+`;
+
 export const voucherCodes = gql`
   query VoucherCodes($id: ID!, $after: String, $before: String, $first: Int, $last: Int) {
     voucher(id: $id) {
