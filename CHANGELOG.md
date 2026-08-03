@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.23.21
+
+### Patch Changes
+
+- [#6793](https://github.com/saleor/saleor-dashboard/pull/6793) [`0d02fdb`](https://github.com/saleor/saleor-dashboard/commit/0d02fdb681a3f872267337c2741859229baeb9dc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fix entity ids being passed double-encoded to apps opened from the command palette (Cmd+K). Actions triggered from a detail page received ids such as `UHJvZHVjdDo3Mw%3D%3D` instead of `UHJvZHVjdDo3Mw==`, so app queries failed with `Invalid ID`. Affected every entity context the `SEARCH_ACTION` mount resolves (`productId`, `orderId`, `customerId`, …).
+
+- [#6755](https://github.com/saleor/saleor-dashboard/pull/6755) [`3374776`](https://github.com/saleor/saleor-dashboard/commit/3374776156912fdc4f6c22ff9a5b62f3bfbde0d4) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Add a `SEARCH_ACTION` extension mount that surfaces app actions in the global command palette (Cmd+K).
+
+  Apps can register `SEARCH_ACTION` extensions to appear in the command bar with `POPUP`, `NEW_TAB`, or `APP_PAGE` targets (`WIDGET` is not supported). Actions can be scoped to specific pages via the new `options.views` manifest field (e.g. `["PRODUCT_DETAILS", "ORDER_DETAILS"]`); when omitted the action is available everywhere. When opened from an entity page, the current entity's context (e.g. product id, order id) is passed to the app just as it would be from that page's "more actions" menu. Actions are shown only when the current user holds the extension's required permissions.
+
+- [#6786](https://github.com/saleor/saleor-dashboard/pull/6786) [`dd8da38`](https://github.com/saleor/saleor-dashboard/commit/dd8da3897e7dd619a67c46f94f4f3c5e888d034f) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Configuration → Store settings now has an **API access** section with an **Allow storefront traffic** toggle, sitting between Customer accounts and Advanced.
+
+  When the toggle is on (the default), anonymous clients and signed-in customers can call the GraphQL API directly. Turning it off restricts the API to apps and staff users — every other request is rejected with HTTP 401. Turning it off also shows what stops working: customer login and password reset, anonymous browsing and guest checkout, and schema introspection without app or staff credentials. Requires Saleor 3.23.
+
 ## 3.23.20
 
 ### Patch Changes
