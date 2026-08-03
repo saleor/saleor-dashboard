@@ -20,6 +20,8 @@ interface UsePickerBackfillArgs {
   onFetchMore: () => void;
   /** Bumped by the caller when a new search starts, to hand back the page budget. */
   resetKey?: string;
+  /** Lower this when one item renders as several rows. See `BACKFILL_MIN_ROWS`. */
+  minRows?: number;
 }
 
 interface UsePickerBackfillResult extends PickerBackfillStatus {
@@ -40,6 +42,7 @@ export const usePickerBackfill = ({
   filteredItemCount,
   onFetchMore,
   resetKey = "",
+  minRows,
 }: UsePickerBackfillArgs): UsePickerBackfillResult => {
   const [state, setState] = useState(createPickerBackfillState);
   const onFetchMoreRef = useRef(onFetchMore);
@@ -73,6 +76,7 @@ export const usePickerBackfill = ({
         hasMore,
         rawItemCount,
         filteredItemCount,
+        minRows,
       });
 
       if (nextState !== state) {
@@ -83,7 +87,7 @@ export const usePickerBackfill = ({
         onFetchMoreRef.current();
       }
     },
-    [state, enabled, open, loading, hasMore, rawItemCount, filteredItemCount],
+    [state, enabled, open, loading, hasMore, rawItemCount, filteredItemCount, minRows],
   );
 
   const { isBackfilling, isExhausted } = getPickerBackfillStatus({
@@ -91,6 +95,7 @@ export const usePickerBackfill = ({
     enabled: enabled && open,
     hasMore,
     filteredItemCount,
+    minRows,
   });
 
   return { isBackfilling, isExhausted, resumeBackfill };

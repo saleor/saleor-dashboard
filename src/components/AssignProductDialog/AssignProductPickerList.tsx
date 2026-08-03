@@ -8,10 +8,10 @@ import { TableBody, TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
+import { AssignPickerBackfillExhaustedRow } from "../AssignPickerBackfillExhausted/AssignPickerBackfillExhausted";
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import Checkbox from "../Checkbox";
-import { AssignProductPickerBackfillExhausted } from "./AssignProductPickerBackfillExhausted";
 import { AssignProductPickerSelectAll } from "./AssignProductPickerSelectAll";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -64,9 +64,11 @@ export const AssignProductPickerList = ({
             {showListLoading ? (
               <AssignPickerListLoadingRow colSpan={3} />
             ) : showBackfillExhausted ? (
-              <AssignProductPickerBackfillExhausted
+              <AssignPickerBackfillExhaustedRow
                 colSpan={3}
                 loading={loading}
+                message={intl.formatMessage(messages.allLoadedProductsFilteredOut)}
+                buttonLabel={intl.formatMessage(messages.loadMoreProducts)}
                 onLoadMore={resumeBackfill}
               />
             ) : (

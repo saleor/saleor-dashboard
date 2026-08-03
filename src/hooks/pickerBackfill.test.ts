@@ -154,6 +154,52 @@ describe("getPickerBackfillStatus", () => {
   });
 });
 
+describe("minRows", () => {
+  const baseArgs = {
+    enabled: true,
+    loading: false,
+    hasMore: true,
+    rawItemCount: 20,
+    filteredItemCount: 8,
+  };
+
+  it("leaves a short list alone when the caller renders several rows per item", () => {
+    // Arrange — 8 products is plenty to scroll once each expands into variant rows
+    const state = createPickerBackfillState();
+
+    // Act
+    const plan = planPickerBackfill({ ...baseArgs, state, minRows: 4 });
+
+    // Assert — the default of 15 would have prefetched here
+    expect(plan.shouldFetchMore).toBe(false);
+  });
+
+  it("still rescues a page that was filtered away entirely", () => {
+    // Arrange
+    const state = createPickerBackfillState();
+
+    // Act
+    const plan = planPickerBackfill({ ...baseArgs, state, filteredItemCount: 0, minRows: 4 });
+
+    // Assert
+    expect(plan.shouldFetchMore).toBe(true);
+  });
+
+  it("agrees with the status helper, so the list never sits on a spinner nothing will fill", () => {
+    // Arrange — a plan that declines to fetch must not be reported as backfilling
+    const state = createPickerBackfillState();
+
+    // Act
+    const plan = planPickerBackfill({ ...baseArgs, state, minRows: 4 });
+    const status = getPickerBackfillStatus({ ...baseArgs, state, minRows: 4 });
+
+    // Assert
+    expect(plan.shouldFetchMore).toBe(false);
+    expect(status.isBackfilling).toBe(false);
+    expect(status.isExhausted).toBe(false);
+  });
+});
+
 describe("isFreshPickerBackfillState", () => {
   it("recognises an untouched budget", () => {
     // Act & Assert

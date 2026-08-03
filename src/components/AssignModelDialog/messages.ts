@@ -29,4 +29,10 @@ export const messages = defineMessages({
     defaultMessage: "No models available",
     description: "no models placeholder",
   },
+  allLoadedModelsFilteredOut: {
+    id: "qFCc+k",
+    defaultMessage:
+      "Every model loaded so far is already assigned. Search by name, or keep loading the list.",
+    description: "assign model picker, client-side filter emptied the loaded pages",
+  },
 });

@@ -23,7 +23,10 @@ export type AssignCollectionFilterChangeHandler = (
   query: string,
 ) => void;
 
-interface AssignCollectionDialogProps extends FetchMoreProps, DialogProps {
+interface AssignCollectionDialogProps
+  extends FetchMoreProps,
+    DialogProps,
+    Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState: ConfirmButtonTransitionState;
   collections: Collections | null;
   loading: boolean;
@@ -79,6 +82,7 @@ const AssignCollectionDialogInner = ({
       onClose={onClose}
       onFetch={() => {}}
       emptyMessage={intl.formatMessage(messages.noCollectionsFound)}
+      backfillExhaustedMessage={intl.formatMessage(messages.allLoadedCollectionsFilteredOut)}
       search={{ query, onQueryChange, resetQuery }}
       filtersSlot={<ModalFilters />}
       onResetFilters={clearFilters}
