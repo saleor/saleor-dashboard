@@ -44,7 +44,15 @@ export const SetupChecklistReviewList = ({
               data-test-id={`${dataTestId}-${item.id}`}
             >
               <Box className={styles.reviewLeading} aria-hidden>
-                <Box className={styles.reviewIcon}>{item.icon}</Box>
+                <Box
+                  className={
+                    item.iconVariant === "accent"
+                      ? `${styles.reviewIcon} ${styles.reviewIconAccent}`
+                      : styles.reviewIcon
+                  }
+                >
+                  {item.icon}
+                </Box>
               </Box>
               <Box className={styles.reviewContent}>
                 <Text size={3} fontWeight="medium">

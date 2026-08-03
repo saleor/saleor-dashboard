@@ -33,6 +33,8 @@ export interface SetupChecklistProgress {
 export interface SetupChecklistReviewItem {
   id: string;
   icon: ReactNode;
+  /** Filled primary-style tile for the main CTA row (e.g. “Add products”). */
+  iconVariant?: "default" | "accent";
   title: ReactNode;
   description: ReactNode;
   /** Short status on the right (e.g. “Flat rates”, “2 payment apps”). */

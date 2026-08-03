@@ -26,7 +26,10 @@
   border: none;
   border-radius: 50%;
   background-color: var(--mu-colors-background-default2);
-  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 6%);
+  /* Light ring on the image edge, dark hairline outside — keeps stacked thumbnails readable. */
+  box-shadow:
+    0 0 0 1px var(--mu-colors-background-default1),
+    0 0 0 2px var(--mu-colors-border-default1);
   cursor: pointer;
   transition: transform 0.15s ease;
 }

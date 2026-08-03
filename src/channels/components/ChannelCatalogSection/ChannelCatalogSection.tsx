@@ -86,6 +86,7 @@ export const ChannelCatalogSection = ({
       {
         id: "add",
         icon: <Plus size={16} />,
+        iconVariant: "accent",
         title: <FormattedMessage {...messages.addProducts} />,
         description: <FormattedMessage {...messages.addProductsDescription} />,
         status: stats ? (

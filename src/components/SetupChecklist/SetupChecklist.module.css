@@ -343,6 +343,18 @@
   background-color: var(--mu-colors-background-default1);
 }
 
+/* Primary-button fill for the main CTA row — signals “this is the action” without
+   turning the whole row into a button. */
+.reviewIconAccent {
+  border-color: var(--mu-colors-background-button-default-primary);
+  background-color: var(--mu-colors-background-button-default-primary);
+  color: var(--mu-colors-text-button-default-primary);
+}
+
+.reviewIconAccent svg {
+  stroke: currentColor;
+}
+
 .reviewContent {
   display: flex;
   flex-direction: column;
