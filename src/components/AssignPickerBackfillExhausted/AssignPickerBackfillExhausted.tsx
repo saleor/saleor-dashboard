@@ -1,26 +1,29 @@
 import { TableCell, TableRow } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { type ReactNode } from "react";
 
 import styles from "../AssignPickerListLoading/AssignPickerListPlaceholder.module.css";
-import { messages } from "./messages";
 
-interface AssignProductPickerBackfillExhaustedProps {
+interface AssignPickerBackfillExhaustedProps {
   colSpan?: number;
   loading?: boolean;
+  message: ReactNode;
+  buttonLabel: ReactNode;
   onLoadMore: () => void;
 }
 
 /**
- * Shown when the picker's client-side exclusion emptied every page loaded so far but the
- * catalog still has more. Without an explicit way forward the picker dead-ends on
- * "no products found" while thousands of assignable products sit on later pages.
+ * Shown when a picker's client-side exclusion emptied every page loaded so far but the
+ * backend still has more. Without an explicit way forward the picker dead-ends on
+ * "nothing found" while assignable rows sit on later pages.
  */
-export const AssignProductPickerBackfillExhausted = ({
+export const AssignPickerBackfillExhaustedRow = ({
   colSpan = 3,
   loading = false,
+  message,
+  buttonLabel,
   onLoadMore,
-}: AssignProductPickerBackfillExhaustedProps) => (
+}: AssignPickerBackfillExhaustedProps): JSX.Element => (
   <TableRow>
     <TableCell colSpan={colSpan} className={styles.cell}>
       <Box
@@ -30,18 +33,18 @@ export const AssignProductPickerBackfillExhausted = ({
         alignItems="center"
         justifyContent="center"
         gap={3}
-        data-test-id="assign-product-backfill-exhausted"
+        data-test-id="assign-picker-backfill-exhausted"
       >
         <Text size={2} color="default2" textAlign="center">
-          <FormattedMessage {...messages.allLoadedProductsFilteredOut} />
+          {message}
         </Text>
         <Button
           variant="secondary"
           disabled={loading}
           onClick={onLoadMore}
-          data-test-id="assign-product-load-more-products"
+          data-test-id="assign-picker-load-more"
         >
-          <FormattedMessage {...messages.loadMoreProducts} />
+          {buttonLabel}
         </Button>
       </Box>
     </TableCell>

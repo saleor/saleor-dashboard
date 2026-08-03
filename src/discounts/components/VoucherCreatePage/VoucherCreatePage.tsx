@@ -51,8 +51,10 @@ import { buttonMessages } from "@dashboard/intl";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { type ListActionsWithoutToolbar } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { Button, Text } from "@saleor/macaw-ui-next";
+import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
@@ -74,10 +76,6 @@ import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
   getAssignedVariantIdsFromForm,
-  getFilteredCategories,
-  getFilteredCollections,
-  getFilteredProducts,
-  getFilteredProductVariants,
   mapLocalVariantsToSavedVariants,
   voucherCodeExists,
 } from "./utils";
@@ -157,6 +155,30 @@ const VoucherCreatePage = ({
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const { activeTab, changeTab } = useActiveTab();
+
+  // Bumped on every new search so the pickers' backfill budget starts over.
+  const [searchGeneration, setSearchGeneration] = useState(0);
+  const startNewSearch = () => setSearchGeneration(generation => generation + 1);
+  const handleProductFilterChange = (
+    filterVariables: ProductWhereInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    startNewSearch();
+    onProductFilterChange?.(filterVariables, channel, query);
+  };
+  const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
+    startNewSearch();
+    onCategoryFilterChange?.(filterVariables, query);
+  };
+  const handleCollectionFilterChange = (
+    filterVariables: CollectionFilterInput,
+    channel: string | undefined,
+    query: string,
+  ) => {
+    startNewSearch();
+    onCollectionFilterChange?.(filterVariables, channel, query);
+  };
 
   const checkIfSaveIsDisabled = (data: FormData) =>
     (data.discountType.toString() !== "SHIPPING" &&
@@ -258,6 +280,25 @@ const VoucherCreatePage = ({
     closeModal();
     resetSelected();
   };
+
+  // The picked items live in form state, so this exclusion set is complete and grows as the
+  // user assigns. Handing the pickers a predicate rather than a pre-filtered list lets them
+  // pull in the next page once a page has been filtered down to nothing.
+  const isCategoryAssigned = useMemo(() => {
+    const assigned = new Set(data.categories.map(category => category.id));
+
+    return (category: { id: string }) => assigned.has(category.id);
+  }, [data.categories]);
+  const isCollectionAssigned = useMemo(() => {
+    const assigned = new Set(data.collections.map(collection => collection.id));
+
+    return (collection: { id: string }) => assigned.has(collection.id);
+  }, [data.collections]);
+  const isProductAssigned = useMemo(() => {
+    const assigned = new Set(data.products.map(product => product.id));
+
+    return (product: { id: string }) => assigned.has(product.id);
+  }, [data.products]);
 
   const BulkUnassignButton = ({ type }: { type: VoucherCreatePageTab | "countries" }) => (
     <Button
@@ -484,12 +525,14 @@ const VoucherCreatePage = ({
         {/* Modal state needs to reset when the modal is closed */}
         {action === "assign-category" && (
           <AssignCategoriesDialog
-            categories={getFilteredCategories(data, categoriesSearch.result)}
+            categories={mapEdgesToItems(categoriesSearch.result?.data?.search) ?? []}
+            excludeContainer={isCategoryAssigned}
+            backfillResetKey={String(searchGeneration)}
             confirmButtonState="default"
             hasMore={categoriesSearch.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-category"}
             onFetch={categoriesSearch.search}
-            onFilterChange={onCategoryFilterChange}
+            onFilterChange={handleCategoryFilterChange}
             onFetchMore={categoriesSearch.loadMore}
             loading={categoriesSearch.result?.loading}
             onClose={closeModal}
@@ -508,12 +551,14 @@ const VoucherCreatePage = ({
         {/* Modal state needs to reset when the modal is closed */}
         {action === "assign-collection" && (
           <AssignCollectionDialog
-            collections={getFilteredCollections(data, collectionsSearch.result)}
+            collections={mapEdgesToItems(collectionsSearch.result?.data?.search) ?? []}
+            excludeContainer={isCollectionAssigned}
+            backfillResetKey={String(searchGeneration)}
             confirmButtonState="default"
             hasMore={collectionsSearch?.result?.data?.search?.pageInfo?.hasNextPage ?? false}
             open={action === "assign-collection"}
             onFetch={collectionsSearch.search}
-            onFilterChange={onCollectionFilterChange}
+            onFilterChange={handleCollectionFilterChange}
             onFetchMore={collectionsSearch.loadMore}
             loading={collectionsSearch.result.loading}
             onClose={closeModal}
@@ -546,7 +591,7 @@ const VoucherCreatePage = ({
                 onModalClose,
               );
             }}
-            products={getFilteredProductVariants(data, variantsSearch.result) || []}
+            products={mapEdgesToItems(variantsSearch.result?.data?.search) ?? []}
             selectedIds={getAssignedVariantIdsFromForm(data)}
             labels={{
               confirmBtn: intl.formatMessage(buttonMessages.assign),
@@ -576,11 +621,14 @@ const VoucherCreatePage = ({
           loading={productsSearch.result.loading}
           open={action === "assign-product"}
           onClose={closeModal}
-          onFilterChange={onProductFilterChange}
+          onFilterChange={handleProductFilterChange}
           onSubmit={data =>
             assignItem(data as SearchProductFragment[], VoucherCreatePageTab.products, onModalClose)
           }
-          products={getFilteredProducts(data, productsSearch.result)}
+          products={mapEdgesToItems(productsSearch.result?.data?.search) ?? []}
+          excludeProduct={isProductAssigned}
+          backfillResetKey={String(searchGeneration)}
+          selectAllMode="when-scoped"
           labels={{
             confirmBtn: intl.formatMessage(buttonMessages.assign),
           }}

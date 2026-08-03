@@ -4,13 +4,13 @@ import { type ProductWhereInput } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
+import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { type Products, type SelectedChannel } from "./types";
-import { usePickerBackfill } from "./usePickerBackfill";
 import {
   applySelectAllVisibleToggle,
   getSelectAllVisibleCheckboxState,

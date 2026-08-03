@@ -17,7 +17,10 @@ type Categories = {
   name: string;
 }[];
 
-interface AssignCategoryDialogProps extends FetchMoreProps, DialogProps {
+interface AssignCategoryDialogProps
+  extends FetchMoreProps,
+    DialogProps,
+    Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState: ConfirmButtonTransitionState;
   categories: Categories | null;
   loading: boolean;
@@ -72,6 +75,7 @@ const AssignCategoryDialogInner = ({
       onClose={onClose}
       onFetch={() => {}}
       emptyMessage={intl.formatMessage(messages.noCategoriesFound)}
+      backfillExhaustedMessage={intl.formatMessage(messages.allLoadedCategoriesFilteredOut)}
       search={{ query, onQueryChange, resetQuery }}
       filtersSlot={<ModalFilters />}
       onResetFilters={clearFilters}
