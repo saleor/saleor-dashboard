@@ -10,7 +10,7 @@ import NavigatorSearch from "../NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
 import { Sidebar } from "../Sidebar";
 import { SidebarProvider } from "../Sidebar/SidebarContext";
-import { savebarHeight } from "./consts";
+import { borderHeight, savebarHeight } from "./consts";
 import { useStyles } from "./styles";
 
 interface AppLayoutProps {
@@ -61,6 +61,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             borderColor="default1"
             zIndex="2"
             __height={isSavebarMounted ? savebarHeight : "0"}
+            // DetailPageLayout withholds 2× borderHeight (Safari overflow guard); the anchor
+            // only adds one border outside its box — overlap so the bar meets sidebar/grid lines.
+            __marginTop={isSavebarMounted ? `-${borderHeight}` : 0}
             overflow="hidden"
           />
         </Box>
