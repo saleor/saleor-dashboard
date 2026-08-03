@@ -1,8 +1,14 @@
 import { type SearchProductsQuery } from "@dashboard/graphql";
 
-import { excludeProductsInCollection, getProductsFromSearchResults } from "./utils";
+import {
+  getProductsFromSearchResults,
+  isProductAssignedToCollection,
+  type ProductCollections,
+} from "./utils";
 
-type SearchProduct = Parameters<typeof excludeProductsInCollection>[0][number];
+const createProduct = (collectionIds: string[]): ProductCollections => ({
+  collections: collectionIds.map(id => ({ id })),
+});
 
 describe("getProductsFromSearchResults", () => {
   it("should return empty array when searchResults is undefined", () => {
@@ -39,36 +45,46 @@ describe("getProductsFromSearchResults", () => {
   });
 });
 
-describe("excludeProductsInCollection", () => {
-  it("should return all products when collection id is missing", () => {
-    // Arrange
-    const products: SearchProduct[] = [
-      { id: "1", collections: [{ id: "col-1" }] },
-      { id: "2", collections: [] },
-    ] as SearchProduct[];
+describe("isProductAssignedToCollection", () => {
+  const assigned = createProduct(["col-1"]);
+  const inOtherCollection = createProduct(["col-2"]);
+  const unassigned = createProduct([]);
 
+  it("should treat nothing as assigned when collection id is missing", () => {
     // Act
-    const result = excludeProductsInCollection(products, undefined);
+    const result = isProductAssignedToCollection(assigned, undefined);
 
     // Assert
-    expect(result).toEqual(products);
+    expect(result).toBe(false);
   });
 
-  it("should exclude products already assigned to the collection", () => {
-    // Arrange
-    const products: SearchProduct[] = [
-      { id: "1", collections: [{ id: "col-1" }] },
-      { id: "2", collections: [{ id: "col-2" }] },
-      { id: "3", collections: [] },
-    ] as SearchProduct[];
-
+  it("should detect a product assigned to the given collection", () => {
     // Act
-    const result = excludeProductsInCollection(products, "col-1");
+    const result = isProductAssignedToCollection(assigned, "col-1");
 
     // Assert
-    expect(result).toEqual([
-      { id: "2", collections: [{ id: "col-2" }] },
-      { id: "3", collections: [] },
-    ]);
+    expect(result).toBe(true);
+  });
+
+  it.each([
+    ["the product is only in other collections", inOtherCollection],
+    ["the product is in no collection", unassigned],
+  ])("should return false when %s", (_, product) => {
+    // Act
+    const result = isProductAssignedToCollection(product, "col-1");
+
+    // Assert
+    expect(result).toBe(false);
+  });
+
+  it("should tolerate a missing collections field", () => {
+    // Arrange — `collections` is nullable on the search fragment
+    const product: ProductCollections = { collections: null };
+
+    // Act
+    const result = isProductAssignedToCollection(product, "col-1");
+
+    // Assert
+    expect(result).toBe(false);
   });
 });

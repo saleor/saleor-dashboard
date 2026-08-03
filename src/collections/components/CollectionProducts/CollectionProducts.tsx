@@ -5,8 +5,8 @@ import {
   type CollectionUrlQueryParams,
 } from "@dashboard/collections/urls";
 import {
-  excludeProductsInCollection,
   getProductsFromSearchResults,
+  isProductAssignedToCollection,
 } from "@dashboard/collections/utils";
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
@@ -30,7 +30,7 @@ import { type Container } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
@@ -38,6 +38,18 @@ import { Pagination } from "./Pagination";
 import { ProductsTable } from "./ProductsTable";
 import { ProductTableSkeleton } from "./ProductTableSkeleton";
 import { useCollectionId } from "./useCollectionId";
+
+/**
+ * Products already in the collection are dropped from the fetched page client-side, so a page
+ * of 20 can easily arrive empty on a large catalog. Asking for more per request keeps the
+ * picker useful without leaning on backfill for every page.
+ */
+const ASSIGN_PRODUCT_SEARCH_PAGE_SIZE = 100;
+
+const assignProductSearchVariables = {
+  ...DEFAULT_INITIAL_SEARCH_DATA,
+  first: ASSIGN_PRODUCT_SEARCH_PAGE_SIZE,
+};
 
 interface CollectionProductsProps {
   collection: CollectionDetailsQuery["collection"];
@@ -110,13 +122,15 @@ const CollectionProducts = ({
   );
 
   const { loadMore, result } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: assignProductSearchVariables,
   });
+  const [searchGeneration, setSearchGeneration] = useState(0);
 
   const handleFilterChange = useCallback(
     (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
+      setSearchGeneration(generation => generation + 1);
       result.refetch({
-        ...DEFAULT_INITIAL_SEARCH_DATA,
+        ...assignProductSearchVariables,
         where: filterVariables,
         channel,
         query,
@@ -126,14 +140,19 @@ const CollectionProducts = ({
   );
 
   const handleAssignDialogClose = useCallback(() => {
-    void result.refetch(DEFAULT_INITIAL_SEARCH_DATA);
+    void result.refetch(assignProductSearchVariables);
     closeModal();
   }, [closeModal, result]);
 
-  const assignableProducts = useMemo(
-    () =>
-      excludeProductsInCollection(getProductsFromSearchResults(result?.data) ?? [], collection?.id),
-    [collection?.id, result?.data],
+  const searchedProducts = useMemo(
+    () => getProductsFromSearchResults(result?.data) ?? [],
+    [result?.data],
+  );
+
+  const isAssignedToThisCollection = useCallback(
+    (product: (typeof searchedProducts)[number]) =>
+      isProductAssignedToCollection(product, collection?.id),
+    [collection?.id],
   );
 
   const assignProductInitialConstraints = useMemo(
@@ -154,7 +173,7 @@ const CollectionProducts = ({
         ...paginationState,
       },
     });
-    await result.refetch(DEFAULT_INITIAL_SEARCH_DATA);
+    await result.refetch(assignProductSearchVariables);
   };
 
   const handleAssignationChange = async (products: Container[]) => {
@@ -181,7 +200,7 @@ const CollectionProducts = ({
 
     closeModal();
 
-    await Promise.all([result.refetch(DEFAULT_INITIAL_SEARCH_DATA), refetchCollectionProducts()]);
+    await Promise.all([result.refetch(assignProductSearchVariables), refetchCollectionProducts()]);
   };
 
   return (
@@ -253,7 +272,10 @@ const CollectionProducts = ({
         loading={result.loading}
         onClose={handleAssignDialogClose}
         onSubmit={handleAssignationChange}
-        products={assignableProducts}
+        products={searchedProducts}
+        excludeProduct={isAssignedToThisCollection}
+        selectAllMode="when-scoped"
+        backfillResetKey={String(searchGeneration)}
         excludedFilters={["channel"]}
         initialConstraints={assignProductInitialConstraints}
         onFilterChange={handleFilterChange}

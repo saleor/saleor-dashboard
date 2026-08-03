@@ -42,3 +42,64 @@ export const isProductAvailableInVoucherChannels = (
 
   return productChannelsIds.some(productChannel => selectedChannelsIds.includes(productChannel));
 };
+
+export const getSelectAllVisibleCheckboxState = (
+  selectableVisibleIds: string[],
+  productsDict: Record<string, boolean>,
+): { checked: boolean; indeterminate: boolean } => {
+  if (selectableVisibleIds.length === 0) {
+    return { checked: false, indeterminate: false };
+  }
+
+  const selectedCount = selectableVisibleIds.filter(id => productsDict[id]).length;
+
+  return {
+    checked: selectedCount === selectableVisibleIds.length,
+    indeterminate: selectedCount > 0 && selectedCount < selectableVisibleIds.length,
+  };
+};
+
+export const applySelectAllVisibleToggle = ({
+  productsDict,
+  selectableVisibleIds,
+  maxSelection,
+}: {
+  productsDict: Record<string, boolean>;
+  selectableVisibleIds: string[];
+  maxSelection?: number;
+}): { nextDict: Record<string, boolean>; skipped: number } => {
+  const allVisibleSelected =
+    selectableVisibleIds.length > 0 && selectableVisibleIds.every(id => productsDict[id]);
+
+  if (allVisibleSelected) {
+    const nextDict = { ...productsDict };
+
+    selectableVisibleIds.forEach(id => {
+      nextDict[id] = false;
+    });
+
+    return { nextDict, skipped: 0 };
+  }
+
+  const currentlySelectedCount = getSelectedIdsFromDict(productsDict).length;
+  const nextDict = { ...productsDict };
+  let skipped = 0;
+  let added = 0;
+
+  selectableVisibleIds.forEach(id => {
+    if (productsDict[id]) {
+      return;
+    }
+
+    if (maxSelection !== undefined && currentlySelectedCount + added >= maxSelection) {
+      skipped++;
+
+      return;
+    }
+
+    nextDict[id] = true;
+    added++;
+  });
+
+  return { nextDict, skipped };
+};

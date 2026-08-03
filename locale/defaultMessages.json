@@ -3294,6 +3294,10 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "DpB9Oq": {
+    "context": "assign product picker, client-side filter emptied the loaded pages",
+    "string": "Every product loaded so far is already assigned. Search for a product by name, or keep loading the catalog."
+  },
   "DpZRsS": {
     "context": "Savebar hint listing which product areas will persist on Save",
     "string": "Unsaved changes: {segments}"
@@ -3394,6 +3398,10 @@
   "EP+jcU": {
     "context": "checkbox",
     "string": "Refund shipment costs"
+  },
+  "EQ/R+B": {
+    "context": "select all loaded products in assign product picker when filters or search are active",
+    "string": "Select all visible products"
   },
   "EQfaUv": {
     "context": "onboarding step title",
@@ -10854,6 +10862,10 @@
   "mgFyBA": {
     "string": "This name should be unique"
   },
+  "miimrR": {
+    "context": "button, assign product picker",
+    "string": "Load more products"
+  },
   "mkBgDe": {
     "string": "Product types deleted"
   },
@@ -12137,6 +12149,10 @@
   "sRB887": {
     "context": "empty shipping methods list in shipping zone",
     "string": "No shipping methods in this zone"
+  },
+  "sRf1ZK": {
+    "context": "hint below select all when more products can be loaded in assign product picker",
+    "string": "Scroll to load more products."
   },
   "sS5aVm": {
     "context": "voucher discount type",

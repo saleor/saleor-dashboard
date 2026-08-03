@@ -8,6 +8,11 @@ export const useStyles = makeStyles(
     wideCell: {
       width: "100%",
     },
+    selectAllRow: {
+      paddingInline: "var(--modal-padding)",
+      paddingBlock: "var(--mu-spacing-2)",
+      borderBottom: "1px solid var(--mu-colors-border-default1)",
+    },
   },
   { name: "AssignProductDialog" },
 );
