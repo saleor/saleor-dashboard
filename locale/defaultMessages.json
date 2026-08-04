@@ -9719,10 +9719,6 @@
     "context": "product media detail page, top-bar metadata button tooltip",
     "string": "Edit media metadata"
   },
-  "channelAvailEmptyTitle": {
-    "context": "Availability card empty state title when entity has no channel listings",
-    "string": "No channels assigned"
-  },
   "chvryR": {
     "context": "order history message",
     "string": "Invoice was requested by {requestedBy}"
@@ -11182,6 +11178,10 @@
   "jPVqOL": {
     "context": "settings search alias",
     "string": "order confirmation"
+  },
+  "jQe+kI": {
+    "context": "Availability card empty state title when entity has no channel listings",
+    "string": "No channels assigned"
   },
   "jSGYms": {
     "context": "settings search alias",
