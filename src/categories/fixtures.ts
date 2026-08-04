@@ -96,6 +96,7 @@ export const category: (placeholderImage: string) => CategoryDetailsQuery["categ
   },
   children: {
     __typename: "CategoryCountableConnection",
+    totalCount: 0,
     edges: [],
     pageInfo: {
       __typename: "PageInfo",

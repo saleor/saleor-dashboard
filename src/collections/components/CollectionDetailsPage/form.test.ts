@@ -1,3 +1,4 @@
+import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { type CollectionDetailsFragment } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react";
 
@@ -12,11 +13,10 @@ jest.mock("@dashboard/utils/richText/useRichText", () => ({
   })),
 }));
 
-const savedChannelListings = [
+const savedChannelListings: ChannelCollectionData[] = [
   {
     id: "channel-1",
     name: "Channel",
-    currency: "USD",
     isPublished: true,
     publishedAt: null,
   },
@@ -125,7 +125,10 @@ describe("useCollectionUpdateForm", () => {
 
     // Act
     act(() => {
-      result.current.handlers.changeChannels("channel-1", { isPublished: false });
+      result.current.handlers.changeChannels("channel-1", {
+        isPublished: false,
+        publishedAt: null,
+      });
     });
     rerender({ channels: updatedChannels });
 
@@ -138,13 +141,15 @@ describe("useCollectionUpdateForm", () => {
   it("disables Save when a channel change is reverted to the baseline", () => {
     // Arrange
     const setChannels = jest.fn();
-    const savedWithDate = [
+    const savedWithDate: ChannelCollectionData[] = [
       {
         ...savedChannelListings[0],
         publishedAt: "2024-06-01T10:00:00Z",
       },
     ];
-    const updatedChannels = [{ ...savedWithDate[0], isPublished: false, publishedAt: null }];
+    const updatedChannels: ChannelCollectionData[] = [
+      { ...savedWithDate[0], isPublished: false, publishedAt: null },
+    ];
     const { result, rerender } = renderHook(
       ({ channels }) =>
         useCollectionUpdateForm(collection, channels, savedWithDate, setChannels, jest.fn(), false),

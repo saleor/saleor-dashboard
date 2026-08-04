@@ -192,7 +192,7 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
                   ) : (
                     <Accordion
                       value={expandedChannelId ?? ""}
-                      onValueChange={value => setExpandedChannelId(value || undefined)}
+                      onValueChange={(value: string) => setExpandedChannelId(value || undefined)}
                     >
                       {paginatedChannels.map((channel, index) => (
                         <ChannelAvailabilityItem

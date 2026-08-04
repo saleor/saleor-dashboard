@@ -31,6 +31,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       hasVariants: true,
       __typename: "ProductType" as const,
     },
+    category: null,
     channelListings: [
       {
         id: "123",
@@ -65,6 +66,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       hasVariants: true,
       __typename: "ProductType" as const,
     },
+    category: null,
     channelListings: [
       {
         id: "124",

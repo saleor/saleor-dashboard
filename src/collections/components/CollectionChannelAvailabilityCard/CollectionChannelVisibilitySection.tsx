@@ -84,7 +84,7 @@ export const CollectionChannelVisibilitySection = ({
       const dateToRestore = savedChannelListing?.publishedAt ?? null;
 
       onChange(true, dateToRestore);
-      setShowDatePicker(savedWasScheduled);
+      setShowDatePicker(Boolean(savedWasScheduled));
     } else {
       onChange(false, null);
       setShowDatePicker(false);

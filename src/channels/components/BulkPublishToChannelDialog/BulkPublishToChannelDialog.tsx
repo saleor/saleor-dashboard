@@ -16,7 +16,10 @@ import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog"
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ModalProductFilterProvider } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { useBulkPublishProductsDataQuery } from "@dashboard/graphql";
+import {
+  type SearchProductsQueryVariables,
+  useBulkPublishProductsDataQuery,
+} from "@dashboard/graphql";
 import {
   getParsedSearchData,
   getSearchFetchMoreProps,
@@ -75,7 +78,7 @@ const defaultDefaults: BulkPublishDefaults = {
   isAvailableForPurchase: true,
 };
 
-const bulkPublishProductSearchVariables = {
+const bulkPublishProductSearchVariables: SearchProductsQueryVariables = {
   ...DEFAULT_INITIAL_SEARCH_DATA,
   first: BULK_PUBLISH_PICKER_PAGE_SIZE,
 };
@@ -124,9 +127,8 @@ const BulkPublishToChannelDialogContent = ({
     useExitFormDialog();
   const isSelectStep = step === BulkPublishStep.SELECT;
 
-  const [productSearchVariables, setProductSearchVariables] = useState(
-    bulkPublishProductSearchVariables,
-  );
+  const [productSearchVariables, setProductSearchVariables] =
+    useState<SearchProductsQueryVariables>(bulkPublishProductSearchVariables);
   const { loadMore, result } = useProductSearch({
     variables: productSearchVariables,
   });

@@ -1904,6 +1904,7 @@ export const products: RelayToFlat<NonNullable<SearchProductsQuery["search"]>> =
       id: "1",
       name: "Juice",
     },
+    category: null,
     channelListings: [],
     collections: [{ __typename: "Collection", id: "Q29sbGVjdGlvbjo0" }],
   },

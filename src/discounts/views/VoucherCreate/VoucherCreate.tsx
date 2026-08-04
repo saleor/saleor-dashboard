@@ -9,6 +9,9 @@ import {
   type CategoryFilterInput,
   type CollectionFilterInput,
   type ProductWhereInput,
+  type SearchCategoriesWithTotalProductsQueryVariables,
+  type SearchCollectionsWithTotalProductsQueryVariables,
+  type SearchProductsQueryVariables,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherChannelListingUpdateMutation,
@@ -91,31 +94,31 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     },
   });
 
-  const assignProductSearchVariables = {
+  const assignProductSearchVariables: SearchProductsQueryVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
     first: 100,
-    includeVariants: false as const,
+    includeVariants: false,
   };
-  const assignVariantSearchVariables = {
+  const assignVariantSearchVariables: SearchProductsQueryVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
-    includeVariants: true as const,
+    includeVariants: true,
   };
-  const categorySearchInitialVariables = {
+  const categorySearchInitialVariables: SearchCategoriesWithTotalProductsQueryVariables = {
     after: DEFAULT_INITIAL_SEARCH_DATA.after,
     first: DEFAULT_INITIAL_SEARCH_DATA.first,
   };
-  const [productSearchVariables, setProductSearchVariables] = useState(
-    assignProductSearchVariables,
-  );
-  const [variantSearchVariables, setVariantSearchVariables] = useState(
-    assignVariantSearchVariables,
-  );
-  const [categorySearchVariables, setCategorySearchVariables] = useState(
-    categorySearchInitialVariables,
-  );
-  const [collectionSearchVariables, setCollectionSearchVariables] = useState(
-    categorySearchInitialVariables,
-  );
+  const collectionSearchInitialVariables: SearchCollectionsWithTotalProductsQueryVariables = {
+    after: DEFAULT_INITIAL_SEARCH_DATA.after,
+    first: DEFAULT_INITIAL_SEARCH_DATA.first,
+  };
+  const [productSearchVariables, setProductSearchVariables] =
+    useState<SearchProductsQueryVariables>(assignProductSearchVariables);
+  const [variantSearchVariables, setVariantSearchVariables] =
+    useState<SearchProductsQueryVariables>(assignVariantSearchVariables);
+  const [categorySearchVariables, setCategorySearchVariables] =
+    useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
+  const [collectionSearchVariables, setCollectionSearchVariables] =
+    useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
   const categoriesSearch = useCategoryWithTotalProductsSearch({
     variables: categorySearchVariables,
   });
@@ -174,7 +177,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     query: string,
   ) => {
     setCollectionSearchVariables({
-      ...categorySearchInitialVariables,
+      ...collectionSearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,

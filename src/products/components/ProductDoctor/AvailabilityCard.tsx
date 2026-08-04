@@ -265,7 +265,7 @@ export const AvailabilityCard = ({
                 >
                   <Accordion
                     value={expandedChannel ?? ""}
-                    onValueChange={value => setExpandedChannel(value || undefined)}
+                    onValueChange={(value: string) => setExpandedChannel(value || undefined)}
                   >
                     {paginatedSummaries.map((summary, index) => {
                       const channelErrors = errors.filter(error =>

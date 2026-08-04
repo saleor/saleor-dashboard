@@ -6,7 +6,6 @@ const baselineChannels: ChannelCollectionData[] = [
   {
     id: "channel-1",
     name: "Channel",
-    currency: "USD",
     isPublished: true,
     publishedAt: null,
   },

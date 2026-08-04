@@ -49,7 +49,7 @@ const assignProductSearchVariables: SearchProductsQueryVariables = {
 };
 
 interface CategoryProductsProps {
-  category: CategoryDetailsQuery["category"];
+  category: Pick<NonNullable<CategoryDetailsQuery["category"]>, "id" | "name"> | null | undefined;
   categoryId: string;
   params: CategoryUrlQueryParams;
   disabled: boolean;

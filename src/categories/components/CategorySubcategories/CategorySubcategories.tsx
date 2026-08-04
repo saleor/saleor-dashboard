@@ -49,8 +49,8 @@ export const CategorySubcategories = ({
   const client = useApolloClient();
   const location = useLocation();
   const [storedExpandedIds, setStoredExpandedIds] = useState<string[]>([]);
-  const count = subcategoryTotalCount ?? subcategories.length;
-  const hasSubcategories = (subcategories?.length ?? 0) > 0;
+  const count = subcategoryTotalCount ?? subcategories?.length ?? 0;
+  const hasSubcategories = count > 0;
   const numberOfRows = settings?.rowNumber ?? PAGINATE_BY;
   const {
     visibleRows,
@@ -178,7 +178,10 @@ export const CategorySubcategories = ({
 
       {hasSubcategories ? (
         <Box className={styles.pagination}>
-          <Pagination numberOfRows={numberOfRows} onUpdateListSettings={onUpdateListSettings} />
+          <Pagination
+            numberOfRows={numberOfRows}
+            onUpdateListSettings={(key, value) => onUpdateListSettings?.(key, value)}
+          />
         </Box>
       ) : null}
     </Box>

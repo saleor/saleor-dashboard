@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 
 import { Skeleton } from "./Skeleton";
 
@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Skeleton>;
 
 export const TextLine: Story = {
   decorators: [
-    Story => (
+    (Story: StoryFn) => (
       <Box backgroundColor="default1" padding={6} __maxWidth="360px">
         <Story />
       </Box>
@@ -27,7 +27,7 @@ export const TextLine: Story = {
 
 export const Thumbnail: Story = {
   decorators: [
-    Story => (
+    (Story: StoryFn) => (
       <Box backgroundColor="default1" padding={6}>
         <Story />
       </Box>

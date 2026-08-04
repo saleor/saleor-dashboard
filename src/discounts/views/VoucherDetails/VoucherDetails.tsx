@@ -31,6 +31,9 @@ import {
   type CategoryFilterInput,
   type CollectionFilterInput,
   type ProductWhereInput,
+  type SearchCategoriesWithTotalProductsQueryVariables,
+  type SearchCollectionsWithTotalProductsQueryVariables,
+  type SearchProductsQueryVariables,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherCataloguesAddMutation,
@@ -81,31 +84,31 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
   // on a large catalog. Ask for more per request so the picker stays useful without leaning on
   // backfill for every page.
-  const assignProductSearchVariables = {
+  const assignProductSearchVariables: SearchProductsQueryVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
     first: 100,
-    includeVariants: false as const,
+    includeVariants: false,
   };
-  const assignVariantSearchVariables = {
+  const assignVariantSearchVariables: SearchProductsQueryVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
-    includeVariants: true as const,
+    includeVariants: true,
   };
-  const categorySearchInitialVariables = {
+  const categorySearchInitialVariables: SearchCategoriesWithTotalProductsQueryVariables = {
     after: DEFAULT_INITIAL_SEARCH_DATA.after,
     first: DEFAULT_INITIAL_SEARCH_DATA.first,
   };
-  const [productSearchVariables, setProductSearchVariables] = useState(
-    assignProductSearchVariables,
-  );
-  const [variantSearchVariables, setVariantSearchVariables] = useState(
-    assignVariantSearchVariables,
-  );
-  const [categorySearchVariables, setCategorySearchVariables] = useState(
-    categorySearchInitialVariables,
-  );
-  const [collectionSearchVariables, setCollectionSearchVariables] = useState(
-    categorySearchInitialVariables,
-  );
+  const collectionSearchInitialVariables: SearchCollectionsWithTotalProductsQueryVariables = {
+    after: DEFAULT_INITIAL_SEARCH_DATA.after,
+    first: DEFAULT_INITIAL_SEARCH_DATA.first,
+  };
+  const [productSearchVariables, setProductSearchVariables] =
+    useState<SearchProductsQueryVariables>(assignProductSearchVariables);
+  const [variantSearchVariables, setVariantSearchVariables] =
+    useState<SearchProductsQueryVariables>(assignVariantSearchVariables);
+  const [categorySearchVariables, setCategorySearchVariables] =
+    useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
+  const [collectionSearchVariables, setCollectionSearchVariables] =
+    useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -177,7 +180,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   ) => {
     startNewSearch();
     setCollectionSearchVariables({
-      ...categorySearchInitialVariables,
+      ...collectionSearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,

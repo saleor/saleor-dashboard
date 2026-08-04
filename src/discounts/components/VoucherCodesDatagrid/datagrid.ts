@@ -5,8 +5,7 @@ import {
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
-import { getStatusColor } from "@dashboard/misc";
+import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
 import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
@@ -79,7 +78,7 @@ export const createGetCellContent =
     }
   };
 
-function getStatus(isActive: boolean | undefined): DotStatus {
+function getStatus(isActive: boolean | undefined): PillStatusType {
   if (isActive === undefined) {
     return "warning";
   }

@@ -13,6 +13,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   type PostalCodeRuleInclusionTypeEnum,
   type ProductWhereInput,
+  type SearchProductsQueryVariables,
   ShippingMethodTypeEnum,
   type ShippingMethodTypeFragment,
   type ShippingMethodWithPostalCodesFragment,
@@ -90,7 +91,8 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   const channelsData = data?.shippingZone?.channels;
   const zoneName = data?.shippingZone?.name;
   const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
-  const [productSearchVariables, setProductSearchVariables] = useState(DEFAULT_INITIAL_SEARCH_DATA);
+  const [productSearchVariables, setProductSearchVariables] =
+    useState<SearchProductsQueryVariables>(DEFAULT_INITIAL_SEARCH_DATA);
   const { loadMore, result: productsSearchOpts } = useProductSearch({
     variables: productSearchVariables,
   });

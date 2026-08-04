@@ -24,7 +24,6 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
-          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -49,7 +48,6 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
-          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -74,7 +72,6 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
-          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -99,7 +96,6 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
-          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -124,7 +120,6 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
-          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -153,7 +148,6 @@ export const voucherList: VoucherFragment[] = [
       {
         __typename: "VoucherChannelListing",
         channel: {
-          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -193,7 +187,6 @@ export const voucherList: VoucherFragment[] = [
       {
         __typename: "VoucherChannelListing",
         channel: {
-          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -268,7 +261,6 @@ export const sale: SaleDetailsFragment = {
     {
       __typename: "SaleChannelListing",
       channel: {
-        isActive: true,
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",
@@ -658,7 +650,6 @@ export const voucherDetails: VoucherDetailsFragment = {
     {
       __typename: "VoucherChannelListing",
       channel: {
-        isActive: true,
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",
