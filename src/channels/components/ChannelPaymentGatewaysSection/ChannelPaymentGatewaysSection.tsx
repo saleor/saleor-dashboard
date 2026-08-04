@@ -1,5 +1,6 @@
 import { type ChannelPaymentApp } from "@dashboard/channels/hooks/useChannelPaymentApps";
 import { resolvePaymentAppConfigureUrl } from "@dashboard/channels/utils/resolvePaymentAppConfigureUrl";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -7,7 +8,6 @@ import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ArrowRight, Package } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ChannelSettingsCard } from "../ChannelForm/ChannelSettingsCard";
 import styles from "./ChannelPaymentGatewaysSection.module.css";
 import { messages } from "./messages";
 
@@ -26,16 +26,16 @@ export const ChannelPaymentGatewaysSection = ({
   const navigate = useNavigator();
 
   return (
-    <ChannelSettingsCard
+    <DetailSettingsCard
       data-test-id="channel-payment-gateways"
       title={intl.formatMessage(messages.title)}
-      contentFlush
-    >
-      <Box className={styles.intro}>
+      intro={
         <Text size={3} color="default2">
           <FormattedMessage {...messages.subtitle} />
         </Text>
-      </Box>
+      }
+      contentFlush
+    >
       {loading ? (
         <Box className={styles.emptyContent} display="flex" flexDirection="column" gap={3}>
           <Skeleton __height="3.5rem" />
@@ -97,6 +97,6 @@ export const ChannelPaymentGatewaysSection = ({
           ) : null}
         </Box>
       )}
-    </ChannelSettingsCard>
+    </DetailSettingsCard>
   );
 };

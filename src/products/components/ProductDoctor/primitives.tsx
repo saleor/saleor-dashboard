@@ -1,4 +1,4 @@
-import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
+import { SCHEDULED_BACKGROUND_COLOR, SCHEDULED_COLOR, SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { AlertTriangle, CircleAlert } from "lucide-react";
 import * as React from "react";
@@ -6,11 +6,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-/** Violet color for scheduled states - distinct from link color (accent1) */
-export const SCHEDULED_COLOR = "oklch(60.6% 0.25 292.717)";
-
-/** Background color for scheduled state callouts */
-export const SCHEDULED_BACKGROUND_COLOR = "oklch(95% 0.03 292.717)";
+export { SCHEDULED_BACKGROUND_COLOR, SCHEDULED_COLOR };
 
 export type AvailabilityStatus = "live" | "scheduled" | "hidden";
 

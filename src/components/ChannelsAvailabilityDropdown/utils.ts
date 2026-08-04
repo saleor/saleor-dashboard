@@ -57,7 +57,7 @@ export const getChannelAvailabilityStatus = (channelData: CollectionChannels): D
   }
 
   if (isScheduled(channelData)) {
-    return "warning";
+    return "scheduled";
   }
 
   return "error";

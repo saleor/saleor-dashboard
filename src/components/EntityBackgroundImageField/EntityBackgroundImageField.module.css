@@ -1,0 +1,79 @@
+.gallery {
+  min-height: 120px;
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  padding: var(--mu-spacing-1);
+  overflow: hidden;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.previewImage {
+  display: block;
+  width: 100%;
+  min-height: 104px;
+  max-height: 200px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.previewOverlay {
+  display: none;
+  position: absolute;
+  inset: var(--mu-spacing-1);
+  border-radius: 4px;
+  background-color: var(--mu-colors-background-default1);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.preview:hover .previewOverlay,
+.preview:focus-within .previewOverlay {
+  display: block;
+}
+
+.previewActions {
+  position: absolute;
+  top: calc(var(--mu-spacing-1) + var(--mu-spacing-1));
+  right: calc(var(--mu-spacing-1) + var(--mu-spacing-1));
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.preview:hover .previewActions,
+.preview:focus-within .previewActions {
+  opacity: 1;
+}
+
+.previewDragActive {
+  opacity: 0.5;
+}
+
+.previewUploading {
+  pointer-events: none;
+}
+
+.previewUploadingOverlay {
+  position: absolute;
+  inset: var(--mu-spacing-1);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: var(--mu-colors-background-default1);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+@media (hover: none) {
+  .previewActions {
+    opacity: 1;
+  }
+}

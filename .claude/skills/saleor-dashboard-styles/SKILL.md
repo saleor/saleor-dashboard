@@ -7,6 +7,10 @@ description: Styling guide for Saleor Dashboard React components using macaw-ui 
 
 Two strategies for styling components. Choose based on complexity.
 
+**Entity detail vs Configuration:** Entity detail chrome and in-page settings use the **`Detail*`** family (`DetailSettingsCard`, `DetailSectionNav`, …). Configuration hubs use **`Settings*`** in `src/components/Settings/`. Do not mix. See [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) for page anatomy, card vs section criteria, primary/secondary headers, channel availability tiers, and Vercel-aligned restraint rules.
+
+**Elevation:** Use shadows sparingly. When a surface truly floats (modal, popover, menu, setup checklist), follow [`saleor-dashboard-smooth-shadow`](./saleor-dashboard-smooth-shadow/SKILL.md) — never `border` + `box-shadow` on the same elevated node.
+
 ## Strategy 1: Box Inline Props (Simple Styles)
 
 Use `<Box>` from `@saleor/macaw-ui-next` when you need a few CSS properties (layout, spacing, colors).
@@ -196,11 +200,37 @@ import { Box } from "@saleor/macaw-ui-next";
 
 ### When to use what
 
-| Need                                                                        | Use                                                               |
-| --------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| Foldable section inside a card (advanced settings, rate row, postal ranges) | `DetailGroupBox` inside `DashboardCard.Content`                   |
-| Full always-visible settings block                                          | `DashboardCard` with Header/Content                               |
-| Nested disclose inside an already-padded surface                            | `DetailGroupBox` with `marginTop={0}` when it is the only content |
+| Need                                                                        | Use                                                                      |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Foldable section inside a card (advanced settings, rate row, postal ranges) | `DetailGroupBox` inside `DashboardCard.Content`                          |
+| Full always-visible settings block on **entity detail**                     | `DetailSettingsCard` (+ `DetailSetting*` rows) — see entity-detail skill |
+| Full always-visible block on **Configuration hub**                          | `SettingsSection` + `SettingsToggleRow`                                  |
+| Shipping-style card with subtitle hints                                     | `DashboardCard` + `DashboardCard.Subtitle`                               |
+| Nested disclose inside an already-padded surface                            | `DetailGroupBox` with `marginTop={0}` when it is the only content        |
+
+## Typography & semantics (shared)
+
+- Prefer macaw `Text` tokens (`size`, `fontWeight`, `color`) over browser defaults or ad-hoc CSS `font-size`.
+- **Section card titles** on entity detail: always `Text size={5} fontWeight="bold" as="h2"` — owned by `DetailSettingsCard` (and matching secondary cards). Pass title _content_ only.
+- **Foldable nested rows:** `Title2` inside `DetailGroupBox` — do not invent a third heading style.
+- **Column / table headers** (datagrid, list headers) stay secondary (`size={2}`–`3`, regular/medium) — they are not section titles.
+- One visual system for the same role across collections, categories, channels, shipping — if a title looks “off”, fix the shared primitive, not a one-off page style.
+
+## Entity detail settings card (`DetailSettingsCard`)
+
+Primary bordered settings surface on entity detail pages. Full rules (primary vs secondary header, card vs section, Vercel restraint) live in [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md).
+
+| Piece              | Style                                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------- |
+| Card shell         | `DetailSettingsCard.module.css` — `default1` body, 8px radius, 1px border                   |
+| Primary header     | Tinted `default2` band; `align-items: center`; title left, `headerEnd` right                |
+| Title              | Always `Text size={5} fontWeight="bold" as="h2"` — string **and** ReactNode titles          |
+| Header with action | `.headerWithEnd` — tighter vertical padding (`spacing-2`), keep default button size         |
+| Leading copy       | `intro` prop — white band + bottom border below header (not under title in tinted band)     |
+| Optional in title  | `DetailSettingsCardTitle optional` + `DetailSettingsOptionalLabel` (`size={2}`, `default2`) |
+| Body               | `.content` padding `5/6`; `contentFlush` for lists and upload zones                         |
+
+Secondary sidebar ops cards (`AssignListCard`, `ChannelInventoryCard`) use **white** headers with meta on the right — not `DetailSettingsCard`.
 
 ## Anti-patterns
 
@@ -210,3 +240,5 @@ import { Box } from "@saleor/macaw-ui-next";
 - **No shared CSS modules** - Each component gets its own `.module.css` file
 - **Combining Box + CSS Modules is OK** - Use Box for layout, CSS Module for complex styling within the same component
 - **No legacy `@dashboard/components/Accordion` for new foldable sections** - Use `DetailGroupBox` (see above)
+- **No `border` + `box-shadow` on elevated surfaces** - See [`saleor-dashboard-smooth-shadow`](./saleor-dashboard-smooth-shadow/SKILL.md)
+- **No bare browser heading styles for card titles** - Do not style only string `title`s; the primitive must style all title nodes

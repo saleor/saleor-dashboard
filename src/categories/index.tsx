@@ -3,18 +3,19 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   categoryAddPath,
   categoryListPath,
+  categoryListUrl,
   type CategoryListUrlQueryParams,
   CategoryListUrlSortField,
   categoryPath,
+  categoryUrl,
   type CategoryUrlQueryParams,
 } from "./urls";
-import { CategoryCreateView } from "./views/CategoryCreate";
 import CategoryDetailsView from "./views/CategoryDetails";
 import CategoryListComponent from "./views/CategoryList";
 
@@ -33,11 +34,16 @@ interface CategoryCreateRouteParams {
   id: string;
 }
 
-const CategoryCreate = ({ match }: RouteComponentProps<CategoryCreateRouteParams>) => (
-  <CategoryCreateView
-    parentId={match.params.id ? decodeURIComponent(match.params.id) : undefined}
-  />
-);
+/** Legacy /categories/add and /categories/:id/add → dialog on list/detail. */
+const CategoryCreateRedirect = ({ match }: RouteComponentProps<CategoryCreateRouteParams>) => {
+  const parentId = match.params.id ? decodeURIComponent(match.params.id) : undefined;
+
+  if (parentId) {
+    return <Redirect to={categoryUrl(parentId, { action: "create" })} />;
+  }
+
+  return <Redirect to={categoryListUrl({ action: "create" })} />;
+};
 
 const CategoryList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
@@ -56,8 +62,8 @@ const Component = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.categories)} />
       <Switch>
         <Route exact path={categoryListPath} component={CategoryList} />
-        <Route exact path={categoryAddPath()} component={CategoryCreate} />
-        <Route exact path={categoryAddPath(":id")} component={CategoryCreate} />
+        <Route exact path={categoryAddPath()} component={CategoryCreateRedirect} />
+        <Route exact path={categoryAddPath(":id")} component={CategoryCreateRedirect} />
         <Route path={categoryPath(":id")} component={CategoryDetails} />
       </Switch>
     </>

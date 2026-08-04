@@ -120,4 +120,15 @@ describe("usePickerBackfill", () => {
     expect(result.current.isExhausted).toBe(false);
     expect(onFetchMore).toHaveBeenCalled();
   });
+
+  it("stops spinning when loadMore reports nothing was fetched", () => {
+    // Arrange — hasMore from the parent is true, but loadMore cannot advance (no-op)
+    const onFetchMore = jest.fn(() => false as const);
+    const { result } = setup({ onFetchMore });
+
+    // Assert — budget is spent so the list shows Load more instead of a forever throbber
+    expect(onFetchMore).toHaveBeenCalledTimes(1);
+    expect(result.current.isExhausted).toBe(true);
+    expect(result.current.isBackfilling).toBe(false);
+  });
 });

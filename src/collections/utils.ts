@@ -1,12 +1,86 @@
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { type SearchProductsQuery } from "@dashboard/graphql";
+import { arrayDiff } from "@dashboard/utils/arrays";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+
+export type CollectionChannelListingFields = Pick<
+  ChannelCollectionData,
+  "isPublished" | "publishedAt"
+>;
+
+export const areCollectionChannelFieldsDifferent = (
+  current: CollectionChannelListingFields,
+  baseline: CollectionChannelListingFields,
+): boolean => {
+  // Saleor ignores publishedAt when the listing is hidden.
+  if (!current.isPublished && !baseline.isPublished) {
+    return false;
+  }
+
+  if (current.isPublished !== baseline.isPublished) {
+    return true;
+  }
+
+  return (current.publishedAt ?? null) !== (baseline.publishedAt ?? null);
+};
+
+const sortChannelsById = <T extends { id: string }>(channels: T[]): T[] =>
+  [...channels].sort((leftChannel, rightChannel) => leftChannel.id.localeCompare(rightChannel.id));
+
+export const hasCollectionChannelListingsChanges = (
+  channelListings: ChannelCollectionData[],
+  baselineChannelListings: ChannelCollectionData[],
+): boolean => {
+  const sortedCurrent = sortChannelsById(channelListings);
+  const sortedBaseline = sortChannelsById(baselineChannelListings);
+
+  if (sortedCurrent.length !== sortedBaseline.length) {
+    return true;
+  }
+
+  return sortedCurrent.some((channel, index) => {
+    const baseline = sortedBaseline[index];
+
+    if (channel.id !== baseline.id) {
+      return true;
+    }
+
+    return areCollectionChannelFieldsDifferent(channel, baseline);
+  });
+};
+
+export const getCollectionChannelsUpdateVariables = (
+  collectionId: string,
+  savedChannelListings: ChannelCollectionData[],
+  formChannelListings: ChannelCollectionData[],
+) => {
+  if (!hasCollectionChannelListingsChanges(formChannelListings, savedChannelListings)) {
+    return null;
+  }
+
+  const initialIds = savedChannelListings.map(channel => channel.id);
+  const modifiedIds = formChannelListings.map(channel => channel.id);
+  const idsDiff = arrayDiff(initialIds, modifiedIds);
+
+  return {
+    id: collectionId,
+    input: {
+      addChannels: formChannelListings.map(channel => ({
+        channelId: channel.id,
+        isPublished: channel.isPublished,
+        publishedAt: channel.publishedAt,
+      })),
+      removeChannels: idsDiff.removed,
+    },
+  };
+};
 
 export const createChannelsChangeHandler =
   (
     channelListings: ChannelCollectionData[],
     updateChannels: (data: ChannelCollectionData[]) => void,
-    triggerChange: () => void,
+    triggerChange: (isDirty?: boolean) => void,
+    baselineChannelListings?: ChannelCollectionData[],
   ) =>
   (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => {
     const channelIndex = channelListings.findIndex(channel => channel.id === id);
@@ -21,7 +95,12 @@ export const createChannelsChangeHandler =
     ];
 
     updateChannels(updatedChannels);
-    triggerChange();
+
+    if (baselineChannelListings) {
+      triggerChange(hasCollectionChannelListingsChanges(updatedChannels, baselineChannelListings));
+    } else {
+      triggerChange(true);
+    }
   };
 
 export const getProductsFromSearchResults = (searchResults: SearchProductsQuery | undefined) => {

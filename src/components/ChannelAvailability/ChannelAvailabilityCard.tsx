@@ -1,15 +1,23 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
+import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
 import { type PermissionEnum } from "@dashboard/graphql";
-import { Accordion, Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
-import type * as React from "react";
+import { Accordion, Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Globe } from "lucide-react";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
+import styles from "./ChannelAvailabilityCard.module.css";
 import { ChannelAvailabilityItem } from "./ChannelAvailabilityItem";
 import { ChannelAvailabilityListItem } from "./ChannelAvailabilityListItem";
 import { ChannelPagination } from "./ChannelPagination";
 import { ChannelSearchInput } from "./ChannelSearchInput";
-import { channelAvailabilityMessages } from "./messages";
+import {
+  channelAvailabilityEntityMessages,
+  type ChannelAvailabilityEntityType,
+  channelAvailabilityMessages,
+} from "./messages";
 import {
   type ChannelAvailabilityListLeadingVisual,
   type ChannelAvailabilityStatus,
@@ -21,11 +29,14 @@ import { CHANNEL_SEARCH_VISIBILITY_THRESHOLD } from "./utils";
 interface ChannelAvailabilityCardBaseProps<T extends ChannelAvailabilitySummary> {
   channels: T[];
   totalChannelsCount: number;
-  emptyMessage: string;
+  entityType: ChannelAvailabilityEntityType;
+  /** Defaults to shared “No channels assigned” copy. */
+  emptyTitle?: string;
+  emptyDescription: string;
   isLoading?: boolean;
   onManageClick?: () => void;
   managePermissions?: PermissionEnum[];
-  banner?: React.ReactNode;
+  banner?: ReactNode;
   getChannelStatus: (channel: T) => ChannelAvailabilityStatus;
   listLeadingVisual?: ChannelAvailabilityListLeadingVisual;
 }
@@ -35,7 +46,7 @@ type ChannelAvailabilityCardProps<T extends ChannelAvailabilitySummary> =
     (
       | {
           variant?: "accordion";
-          renderChannelDetails: (channel: T) => React.ReactNode;
+          renderChannelDetails: (channel: T) => ReactNode;
         }
       | {
           variant: "list";
@@ -46,7 +57,9 @@ type ChannelAvailabilityCardProps<T extends ChannelAvailabilitySummary> =
 export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
   channels,
   totalChannelsCount,
-  emptyMessage,
+  entityType,
+  emptyTitle: emptyTitleProp,
+  emptyDescription,
   isLoading = false,
   onManageClick,
   managePermissions = [],
@@ -73,6 +86,8 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
   } = useChannelAvailabilityList(channels, undefined, showSearch);
 
   const listedChannelsCount = channels.length;
+  const entityTypeLabel = intl.formatMessage(channelAvailabilityEntityMessages[entityType]);
+  const emptyTitle = emptyTitleProp ?? intl.formatMessage(channelAvailabilityMessages.emptyTitle);
 
   return (
     <DashboardCard data-test-id="availability-card">
@@ -84,6 +99,7 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
           {!isLoading && (
             <Text size={2} color="default2" data-test-id="channel-availability-subtitle">
               {intl.formatMessage(channelAvailabilityMessages.availabilitySubtitle, {
+                entityType: entityTypeLabel,
                 listed: listedChannelsCount,
                 total: totalChannelsCount,
               })}
@@ -95,7 +111,6 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
             <RequirePermissions requiredPermissions={managePermissions}>
               <Button
                 variant="secondary"
-                size="small"
                 onClick={onManageClick}
                 data-test-id="channels-availability-manage-button"
                 type="button"
@@ -110,14 +125,24 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
       <DashboardCard.Content>
         {isLoading ? (
           <Box padding={4}>
-            <Skeleton height={4} marginBottom={2} />
-            <Skeleton height={4} __width="60%" />
+            <Skeleton __height="14px" marginBottom={2} />
+            <Skeleton __height="14px" __width="60%" />
           </Box>
         ) : channels.length === 0 ? (
-          <Box padding={4}>
-            <Text size={2} color="default2">
-              {emptyMessage}
-            </Text>
+          <Box className={styles.emptyState} data-test-id="channel-availability-empty">
+            <Box className={styles.emptyLeading}>
+              <Box className={styles.emptyIcon} aria-hidden>
+                <Globe size={iconSize.small} strokeWidth={iconStrokeWidth} />
+              </Box>
+              <Box className={styles.emptyCopy}>
+                <Text size={3} fontWeight="medium">
+                  {emptyTitle}
+                </Text>
+                <Text size={2} color="default2">
+                  {emptyDescription}
+                </Text>
+              </Box>
+            </Box>
           </Box>
         ) : (
           <Box display="flex" flexDirection="column" gap={4}>
@@ -166,15 +191,17 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
                     ))
                   ) : (
                     <Accordion
-                      value={expandedChannelId}
-                      onValueChange={(value: string) => setExpandedChannelId(value)}
+                      value={expandedChannelId ?? ""}
+                      onValueChange={value => setExpandedChannelId(value || undefined)}
                     >
                       {paginatedChannels.map((channel, index) => (
                         <ChannelAvailabilityItem
                           key={channel.id}
                           channel={channel}
+                          rowIndex={index}
                           isLast={index === paginatedChannels.length - 1}
-                          isExpanded={expandedChannelId === channel.id}
+                          isOpen={expandedChannelId === channel.id}
+                          onClose={() => setExpandedChannelId(undefined)}
                           status={getChannelStatus(channel)}
                         >
                           {renderChannelDetails!(channel)}

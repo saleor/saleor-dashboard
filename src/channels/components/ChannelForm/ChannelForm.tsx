@@ -2,6 +2,7 @@ import {
   type ChannelShippingZones,
   type ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   type ChannelErrorFragment,
@@ -25,7 +26,6 @@ import { ChannelSection } from "../ChannelSectionNav/ChannelSectionNav";
 import styles from "./ChannelForm.module.css";
 import { ChannelOrdersSection } from "./ChannelOrdersSection";
 import { ChannelPaymentsCheckoutSection } from "./ChannelPaymentsCheckoutSection";
-import { ChannelSettingsCard } from "./ChannelSettingsCard";
 import { messages } from "./messages";
 
 export interface FormData extends StockSettingsInput {
@@ -119,7 +119,7 @@ export const ChannelForm = ({
   const countryError = getChannelsErrorMessage(formErrors?.defaultCountry, intl);
 
   const generalCard = (
-    <ChannelSettingsCard
+    <DetailSettingsCard
       data-test-id="general-information"
       title={intl.formatMessage(messages.generalSettings)}
     >
@@ -204,27 +204,27 @@ export const ChannelForm = ({
           </Box>
         </Box>
       </Box>
-    </ChannelSettingsCard>
+    </DetailSettingsCard>
   );
 
   const ordersCard = (
-    <ChannelSettingsCard
+    <DetailSettingsCard
       data-test-id="channel-orders-settings"
       title={intl.formatMessage(messages.ordersSectionTitle)}
       contentFlush
     >
       {ordersSection}
-    </ChannelSettingsCard>
+    </DetailSettingsCard>
   );
 
   const paymentsCard = (
-    <ChannelSettingsCard
+    <DetailSettingsCard
       data-test-id="channel-payments-checkout-settings"
       title={intl.formatMessage(messages.paymentsCheckoutSectionTitle)}
       contentFlush
     >
       {paymentsCheckoutSection}
-    </ChannelSettingsCard>
+    </DetailSettingsCard>
   );
 
   if (sectionLayout) {

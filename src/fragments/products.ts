@@ -73,6 +73,7 @@ export const channelListingProductWithoutPricingFragment = gql`
       name
       slug
       currencyCode
+      isActive
     }
   }
 `;
@@ -389,6 +390,9 @@ export const searchProduct = gql`
       ...ChannelListingProductWithoutPricing
     }
     collections {
+      id
+    }
+    category {
       id
     }
   }

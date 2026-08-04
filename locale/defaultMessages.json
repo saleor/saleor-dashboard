@@ -309,6 +309,10 @@
     "context": "section header",
     "string": "Media"
   },
+  "/Myo2R": {
+    "context": "Product availability summary when live in exactly two channels",
+    "string": "Both channels"
+  },
   "/QIOpX": {
     "context": "error when fetching all variants for duplicate detection fails",
     "string": "Could not load existing variants. Close the dialog and try again before generating."
@@ -613,10 +617,6 @@
     "context": "physical shipment section header in line expanded panel",
     "string": "Shipments"
   },
-  "0iMYc+": {
-    "context": "field is optional",
-    "string": "(Optional)"
-  },
   "0iZ6Ds": {
     "context": "snackbar text",
     "string": "Extension activated"
@@ -693,6 +693,10 @@
   "129wyQ": {
     "context": "dialog header",
     "string": "Change customer shipping address"
+  },
+  "12DAFh": {
+    "context": "collection channel status when publishedAt field has an error",
+    "string": "Publication date error"
   },
   "12K83x": {
     "context": "shipping method option when name unknown",
@@ -986,10 +990,6 @@
     "context": "dialog header",
     "string": "Add postal codes"
   },
-  "2ZDnTL": {
-    "context": "empty state for shipping method channel availability",
-    "string": "This shipping rate is not available in any channel"
-  },
   "2atspc": {
     "string": "Drafts"
   },
@@ -1018,6 +1018,10 @@
   "2fgaAQ": {
     "context": "search input placeholder",
     "string": "Search shipping zones..."
+  },
+  "2gLFEQ": {
+    "context": "Save composition segment for category name, slug, description, SEO",
+    "string": "general"
   },
   "2gsiR1": {
     "string": "No warehouses found"
@@ -1483,6 +1487,10 @@
     "context": "tax strategy combobox choice",
     "string": "Use flat rates"
   },
+  "4piZ1P": {
+    "context": "empty state when this category has no subcategories",
+    "string": "No categories found"
+  },
   "4prRLv": {
     "string": "Permission is out of your scope"
   },
@@ -1859,6 +1867,10 @@
     "context": "shipping zone detail page, top-bar metadata button tooltip",
     "string": "Edit shipping zone metadata"
   },
+  "6YiZ6R": {
+    "context": "Save composition segment for shipping zone channel assignment",
+    "string": "channels"
+  },
   "6ZnMfQ": {
     "context": "card header and checkbox label",
     "string": "Use legacy shipping zone stock availability"
@@ -1913,6 +1925,10 @@
   "6hrHWS": {
     "context": "transaction flow charge option label",
     "string": "Charge immediately"
+  },
+  "6i0KPD": {
+    "context": "Save composition segment for collection channel listings",
+    "string": "channel availability"
   },
   "6iw4VR": {
     "context": "delete variant dialog title",
@@ -2075,6 +2091,9 @@
   },
   "7NFfmz": {
     "string": "Products"
+  },
+  "7OMaiR": {
+    "string": "{counter,plural,one{Are you sure you want to remove this product from the category?} other{Are you sure you want to remove {displayQuantity} products from the category?}}"
   },
   "7QPLu0": {
     "context": "empty state message",
@@ -2519,6 +2538,10 @@
     "context": "attribute can be searched in storefront",
     "string": "Filterable in storefront"
   },
+  "9KzuFr": {
+    "context": "Product availability status when not visible in a channel",
+    "string": "Hidden"
+  },
   "9MGrEp": {
     "string": "Is available"
   },
@@ -2627,6 +2650,9 @@
     "context": "address type",
     "string": "Add new address"
   },
+  "9jXdkz": {
+    "string": "Are you sure you want to delete this category's background image?"
+  },
   "9kF+go": {
     "string": "AND (implicit)"
   },
@@ -2723,6 +2749,10 @@
     "context": "PageTypeDeleteWarningDialog single assigned items button label",
     "string": "View models"
   },
+  "ACZg1z": {
+    "context": "create collection dialog description",
+    "string": "Add a collection. You can edit channels, SEO, media, and metadata after creating it."
+  },
   "AD1PlC": {
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
@@ -2746,6 +2776,10 @@
   "ALe+of": {
     "string": "You don't have permission to manage webhooks. Contact your administrator for access."
   },
+  "AMa5Mi": {
+    "context": "collection channel status when not published",
+    "string": "Hidden"
+  },
   "AN+zaK": {
     "string": "Structures"
   },
@@ -2766,6 +2800,10 @@
   "AR/VVX": {
     "context": "Indicates last login method user used",
     "string": "Last used"
+  },
+  "AS39WJ": {
+    "context": "success toast after assigning products; category is a singular FK so assign moves",
+    "string": "Product moved to this category"
   },
   "AUaL7R": {
     "context": "notification",
@@ -2892,6 +2930,10 @@
     "context": "pint unit",
     "string": "pint"
   },
+  "B0UcL7": {
+    "context": "collection detail page, top-bar metadata button tooltip",
+    "string": "Edit collection metadata"
+  },
   "B0XvpR": {
     "string": "You are not allowed to perform this action. ({errorCode})"
   },
@@ -2933,6 +2975,10 @@
     "context": "btn label",
     "string": "Invite members"
   },
+  "BC/h4y": {
+    "context": "category detail sidebar children card intro",
+    "string": "Open a child to edit it, or create a new subcategory under this one."
+  },
   "BCPrmK": {
     "context": "order history message",
     "string": "Shipping details was sent to customer"
@@ -2940,6 +2986,10 @@
   "BFR6CF": {
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
+  },
+  "BGQRiO": {
+    "context": "collection channel status description when publishedAt has an error",
+    "string": "Fix the publication date for this channel"
   },
   "BHr3fj": {
     "context": "no warehouses info",
@@ -2971,6 +3021,10 @@
   },
   "BNTZLv": {
     "string": "Order #{orderId} was placed from draft"
+  },
+  "BOYxG5": {
+    "context": "Product purchasability status in a channel",
+    "string": "Not purchasable"
   },
   "BR8au7": {
     "context": "delete channel",
@@ -3024,6 +3078,10 @@
     "context": "variant availability in channel",
     "string": "Available"
   },
+  "BdS6CQ": {
+    "context": "category detail sidebar card title",
+    "string": "Subcategories"
+  },
   "Be1Tws": {
     "context": "shipping method types help example row two cart",
     "string": "$50, 8 kg"
@@ -3036,6 +3094,10 @@
     "context": "header",
     "string": "Address Information"
   },
+  "Bfh6NP": {
+    "context": "sidebar header meta for number of child categories",
+    "string": "{count, plural, one {# subcategory} other {# subcategories}}"
+  },
   "BfhUcl": {
     "context": "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=false",
     "string": "Stock availability uses direct warehouse-channel link"
@@ -3044,12 +3106,20 @@
     "context": "section title for legacy and developer store settings",
     "string": "Advanced"
   },
+  "BikTYV": {
+    "context": "Collection is visible in channel without scheduled date",
+    "string": "Visible now"
+  },
   "Bkxrhw": {
     "context": "no webhooks message",
     "string": "No webhooks found"
   },
   "Bl6896": {
     "string": "Refund amount"
+  },
+  "BmcBt9": {
+    "context": "Product availability summary when scheduled in every assigned channel",
+    "string": "Scheduled in {count} channels"
   },
   "Bphmwe": {
     "context": "header",
@@ -3087,6 +3157,10 @@
   "Byk4pC": {
     "context": "unit after expireOrdersAfter input",
     "string": "minutes"
+  },
+  "C+GnKO": {
+    "context": "collection details section nav item",
+    "string": "Background image"
   },
   "C+WD8j": {
     "context": "alert message",
@@ -3271,6 +3345,10 @@
   },
   "CXn88q": {
     "string": "No permission groups found"
+  },
+  "CXrIww": {
+    "context": "Product availability summary when live in every assigned channel",
+    "string": "Live in {count} channels"
   },
   "CYEnGq": {
     "context": "order fulfilled success message",
@@ -3476,10 +3554,6 @@
   "DOkfyZ": {
     "string": "Insufficient permissions"
   },
-  "DP6b8U": {
-    "context": "section header",
-    "string": "Background Image (optional)"
-  },
   "DPz5y6": {
     "context": "dialog header",
     "string": "Assign Staff Members"
@@ -3541,10 +3615,6 @@
   "DpVPvW": {
     "context": "bulk publish per product cost price field label",
     "string": "Cost price"
-  },
-  "DpZRsS": {
-    "context": "Savebar hint listing which product areas will persist on Save",
-    "string": "Unsaved changes: {segments}"
   },
   "DtYy/u": {
     "context": "bulk publish stock toggle",
@@ -3780,6 +3850,10 @@
     "context": "Status when product is visible and purchasable",
     "string": "Live"
   },
+  "F1s09x": {
+    "context": "Save composition segment for shipping zone warehouse assignment",
+    "string": "warehouses"
+  },
   "F2Ng8N": {
     "context": "note about standalone tabs in model type tab grouping help",
     "string": "Types without a separator stay as separate tabs."
@@ -3824,6 +3898,10 @@
   "F9116r": {
     "context": "ripple action to install Saleor Pulse",
     "string": "Install Pulse"
+  },
+  "F9hInY": {
+    "context": "Product availability in a channel when live and purchasable",
+    "string": "Product visible and purchasable"
   },
   "F9o33g": {
     "context": "shipping method channel coverage summary",
@@ -3989,6 +4067,10 @@
   "FpIcp9": {
     "string": "No customers found"
   },
+  "FpcXEj": {
+    "context": "collection background image alt text field helper",
+    "string": "Describe the image for screen readers, e.g. \"Summer sale banner with beach scene.\""
+  },
   "Ftz7VI": {
     "context": "input label, transaction amount",
     "string": "Transaction amount"
@@ -4017,10 +4099,6 @@
   "Fx7aD4": {
     "context": "bulk publish stock single warehouse radio description",
     "string": "Applies the default quantity only in this warehouse."
-  },
-  "Fxa6xp": {
-    "context": "page header",
-    "string": "Add Collection"
   },
   "Fyd+zC": {
     "string": "Matches the exact phrase only"
@@ -4055,10 +4133,6 @@
   },
   "G/yZLu": {
     "string": "Remove"
-  },
-  "G0+gAp": {
-    "context": "shipping section header",
-    "string": "Shipping"
   },
   "G2WJ1J": {
     "context": "order header date, less than an hour ago",
@@ -4178,6 +4252,10 @@
     "context": "configuration menu item title",
     "string": "Product attributes"
   },
+  "GTuhwY": {
+    "context": "entity background image alt text field label",
+    "string": "Image alt text"
+  },
   "GUeIcq": {
     "context": "edit structure, header",
     "string": "Edit Item"
@@ -4278,6 +4356,10 @@
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
+  },
+  "GrBsBx": {
+    "context": "Product availability summary when hidden in every assigned channel",
+    "string": "Not available"
   },
   "GrMiRT": {
     "context": "fallback product name in remove product confirmation dialog",
@@ -4408,6 +4490,10 @@
     "context": "store settings section name (formerly site settings)",
     "string": "Store"
   },
+  "HKNVcY": {
+    "context": "Product availability summary when live in some but not all channels",
+    "string": "Live in {liveCount} of {count} channels"
+  },
   "HLqWXA": {
     "context": "voucher value requirement",
     "string": "Usage Limit"
@@ -4467,6 +4553,10 @@
     "context": "button",
     "string": "Copy token"
   },
+  "HVFqk3": {
+    "context": "collection details section nav item",
+    "string": "Search engine preview"
+  },
   "HVlMK2": {
     "context": "number of variants",
     "string": "Variants ({quantity})"
@@ -4492,6 +4582,10 @@
   "HbPBZk": {
     "context": "bulk publish defaults visibility section title",
     "string": "Visibility in this channel"
+  },
+  "Hbjzr4": {
+    "context": "Product availability in a channel when visible but not purchasable",
+    "string": "Product visible but not purchasable"
   },
   "Hc58JL": {
     "context": "card title",
@@ -4541,6 +4635,10 @@
   },
   "HoBGng": {
     "string": "Voucher created"
+  },
+  "Hpd7i6": {
+    "context": "collection channel status when published",
+    "string": "Visible"
   },
   "HpxNPd": {
     "string": "Add discount"
@@ -4886,10 +4984,6 @@
     "context": "search gift card placeholder",
     "string": "Search Gift Cards (e.g. by code, email, user name)"
   },
-  "JDz5h8": {
-    "context": "number of subcategories in category",
-    "string": "Subcategories"
-  },
   "JE0TAx": {
     "context": "section name",
     "string": "Values"
@@ -5130,6 +5224,10 @@
   "K/gnGg": {
     "string": "If you want to disable this User please uncheck the box below."
   },
+  "K0Scar": {
+    "context": "collection metadata dialog header",
+    "string": "Collection Metadata"
+  },
   "K1ycaD": {
     "context": "input label",
     "string": "Refund value"
@@ -5169,6 +5267,10 @@
   "KJPsls": {
     "context": "Tooltip line showing UTC timestamp of a problem event",
     "string": "UTC: {time}"
+  },
+  "KLEQGN": {
+    "context": "Product availability status when publication is scheduled",
+    "string": "Scheduled"
   },
   "KMxiiF": {
     "context": "button",
@@ -5278,6 +5380,10 @@
   "KszPFx": {
     "context": "dialog header",
     "string": "Void Payment"
+  },
+  "KuHlaW": {
+    "context": "category detail page, top-bar metadata button tooltip",
+    "string": "Edit category metadata"
   },
   "KupNHw": {
     "context": "product field",
@@ -5508,6 +5614,10 @@
   "LnRlch": {
     "context": "attribute's editor component entity",
     "string": "Entity"
+  },
+  "LqIHgW": {
+    "context": "channel details link title and a11y label",
+    "string": "View {channelName}"
   },
   "Lrp9WW": {
     "string": "Discount of {value} on the purchase of {conditions} through the {channel}"
@@ -5936,10 +6046,6 @@
     "context": "dialog header",
     "string": "Saleor couldn’t cancel order"
   },
-  "NivJal": {
-    "context": "section header",
-    "string": "All Subcategories"
-  },
   "Nj9iSB": {
     "context": "table header column",
     "string": "Tax rate"
@@ -6260,6 +6366,10 @@
     "context": "product availability",
     "string": "Available for purchase"
   },
+  "P/yK/7": {
+    "context": "dialog title",
+    "string": "Remove products from category"
+  },
   "P0LSN7": {
     "context": "bulk publish review card title",
     "string": "Products"
@@ -6424,6 +6534,10 @@
   "PeMebc": {
     "context": "search section name",
     "string": "Search"
+  },
+  "PesQ3H": {
+    "context": "Savebar hint listing which dirty areas will persist on Save",
+    "string": "Unsaved changes: {segments}"
   },
   "PhXtJy": {
     "context": "factor label for line-level voucher discount",
@@ -6760,6 +6874,10 @@
     "context": "OrderCustomer Fulfillment from All Warehouses",
     "string": "Fulfill from All Warehouses"
   },
+  "RA+pDk": {
+    "context": "category metadata dialog header",
+    "string": "Category Metadata"
+  },
   "RADyO6": {
     "context": "sub-header for order-level discounts in summary",
     "string": "Order"
@@ -7044,6 +7162,10 @@
     "context": "change button label",
     "string": "Change"
   },
+  "STgcIO": {
+    "context": "category background image alt text field label",
+    "string": "Image alt text"
+  },
   "SUbxSK": {
     "context": "product weight",
     "string": "Weight"
@@ -7101,6 +7223,10 @@
   "SwtcgX": {
     "context": "product media alt text field label",
     "string": "Alt text"
+  },
+  "SxJ5OG": {
+    "context": "Entity type label for channel availability panel subtitles",
+    "string": "Product"
   },
   "SyRul5": {
     "context": "inline add swatch attribute value instructions",
@@ -7187,6 +7313,10 @@
   "TE4fIS": {
     "string": "City"
   },
+  "TF2VBv": {
+    "context": "collection details section nav aria label",
+    "string": "Collection sections"
+  },
   "TFb4/p": {
     "context": "channel order setting description for unpaid orders",
     "string": "Lets checkout complete before payment succeeds. Usual for invoicing and wholesale; risky for card-only storefronts."
@@ -7229,6 +7359,10 @@
     "context": "extension form app name field placeholder",
     "string": "Extension Name"
   },
+  "TOA3CD": {
+    "context": "foldable SEO settings section title",
+    "string": "SEO"
+  },
   "TOMgXz": {
     "context": "button",
     "string": "Reset"
@@ -7255,6 +7389,10 @@
   "TRl/Xe": {
     "context": "bulk publish stock warehouse scope section title",
     "string": "Write stock to"
+  },
+  "TSHyul": {
+    "context": "entity background image alt text field helper",
+    "string": "Describe the image for screen readers, e.g. \"Summer sale banner with beach scene.\""
   },
   "TTVPyd": {
     "context": "dialog subheading",
@@ -7292,6 +7430,10 @@
     "context": "dialog subtitle",
     "string": "You can only add products available for the order's channel"
   },
+  "Tat+A7": {
+    "context": "Product availability in a channel when hidden",
+    "string": "Product not visible to customers"
+  },
   "Tbaoeu": {
     "context": "column title assigned to customer",
     "string": "Assigned to"
@@ -7318,10 +7460,6 @@
   "TjGYna": {
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
-  },
-  "TjY0ay": {
-    "context": "Savebar hint listing which channel areas will persist on Save",
-    "string": "Unsaved changes: {segments}"
   },
   "Tl+7X4": {
     "context": "tabel column header",
@@ -7358,6 +7496,10 @@
   "U2DyeR": {
     "string": "Are you sure you want to delete structure {menuName}?"
   },
+  "U2PF0d": {
+    "context": "create category dialog description for root create",
+    "string": "Add a top-level category. You can edit SEO, media, and metadata after creating it."
+  },
   "U2WgwW": {
     "context": "add custom select input option",
     "string": "Add new value: {value}"
@@ -7372,6 +7514,10 @@
   "U353oB": {
     "context": "configuration section for staff and permission groups",
     "string": "Users & permissions"
+  },
+  "U4By91": {
+    "context": "bulk delete selected subcategories, button tooltip",
+    "string": "Delete categories"
   },
   "U5CH0u": {
     "string": "Are you sure you want to delete {name} preset?"
@@ -7425,6 +7571,10 @@
   "UGm9nx": {
     "context": "payment method type card",
     "string": "Card"
+  },
+  "UHEtNL": {
+    "context": "Product availability summary when hidden in every assigned channel",
+    "string": "Hidden in {count} channels"
   },
   "UHhqmr": {
     "context": "search results",
@@ -7569,6 +7719,10 @@
     "context": "gift card history message",
     "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
   },
+  "Uu5x44": {
+    "context": "Checkbox to schedule collection publication in channel",
+    "string": "Schedule for later"
+  },
   "Uu76vj": {
     "context": "no categories",
     "string": "No categories found"
@@ -7608,10 +7762,6 @@
   "UymotP": {
     "context": "channel name",
     "string": "Channel name"
-  },
-  "V+fkAO": {
-    "context": "number of products in category",
-    "string": "Products"
   },
   "V+h02n": {
     "context": "issued by label",
@@ -8050,6 +8200,10 @@
     "context": "button, assign models and save",
     "string": "Assign and save"
   },
+  "X2Ebzl": {
+    "context": "Product availability status when visible in a channel",
+    "string": "Live"
+  },
   "X4+lB+": {
     "context": "link to tax classes settings",
     "string": "Tax settings"
@@ -8098,6 +8252,10 @@
     "context": "discount type",
     "string": "Fixed amount"
   },
+  "XDumOI": {
+    "context": "collection channel status description when scheduled",
+    "string": "Collection will become visible on {date}"
+  },
   "XExNls": {
     "context": "callout title for granted refunds not tied to a line",
     "string": "{count, plural, one {# order-level refund needs attention} other {# order-level refunds need attention}}"
@@ -8109,6 +8267,9 @@
   "XFtKV5": {
     "context": "input placeholder tag",
     "string": "Tag"
+  },
+  "XG2mph": {
+    "string": "Removed products from category"
   },
   "XGBsoK": {
     "context": "dialog content",
@@ -8384,6 +8545,10 @@
     "context": "inactive channel label in matrix",
     "string": "Inactive"
   },
+  "YD0ckk": {
+    "context": "category background image helper text below upload area",
+    "string": "Shown on category pages if your storefront uses it. Use a wide image; add alt text for accessibility."
+  },
   "YDIpJq": {
     "context": "product media detail page header",
     "string": "Edit Video"
@@ -8465,6 +8630,10 @@
     "context": "Tooltip showing which user dismissed a problem",
     "string": "Dismissed by {email}"
   },
+  "YXHLuV": {
+    "context": "Label for collection published toggle when visible now",
+    "string": "Published"
+  },
   "YYLVFC": {
     "context": "bulk publish confirm stock quantity range",
     "string": "{min} – {max} units per variant"
@@ -8480,6 +8649,10 @@
   "YgE6ga": {
     "context": "imperial unit system",
     "string": "Imperial"
+  },
+  "YgZVI1": {
+    "context": "entity background image helper text below upload area",
+    "string": "Shown on storefront pages if your theme uses it. Use a wide image; add alt text for accessibility."
   },
   "YhGcC5": {
     "context": "select all values button",
@@ -8652,6 +8825,10 @@
   },
   "ZIc5lM": {
     "string": "Product Name"
+  },
+  "ZJHgVh": {
+    "context": "collection background image alt text field label",
+    "string": "Image alt text"
   },
   "ZJOX8n": {
     "context": "alert message",
@@ -8830,6 +9007,10 @@
   "a55zOn": {
     "context": "section header",
     "string": "Data privacy"
+  },
+  "a5eZlA": {
+    "context": "short product count column header in category sidebar",
+    "string": "Prods"
   },
   "a5msuh": {
     "string": "Yes"
@@ -9401,6 +9582,10 @@
     "context": "sku preview example showing resulting SKU",
     "string": "→ {example}"
   },
+  "cDq5Lx": {
+    "context": "create category dialog description for child create",
+    "string": "Add a subcategory under this category. You can edit SEO, media, and metadata after creating it."
+  },
   "cEO6Yx": {
     "context": "dialog header",
     "string": "Activate Extension"
@@ -9509,6 +9694,10 @@
     "context": "Webhook details events",
     "string": "Events"
   },
+  "cbuyLA": {
+    "context": "category background image alt text field helper",
+    "string": "Describe the image for screen readers, e.g. \"Summer sale banner with beach scene.\""
+  },
   "ccXLVi": {
     "string": "Category"
   },
@@ -9530,9 +9719,9 @@
     "context": "product media detail page, top-bar metadata button tooltip",
     "string": "Edit media metadata"
   },
-  "cgsY/X": {
-    "context": "page header",
-    "string": "Create New Category"
+  "channelAvailEmptyTitle": {
+    "context": "Availability card empty state title when entity has no channel listings",
+    "string": "No channels assigned"
   },
   "chvryR": {
     "context": "order history message",
@@ -9912,6 +10101,10 @@
   "ecM5eL": {
     "context": "page title - creating custom app",
     "string": "Add extension manually"
+  },
+  "eiRboK": {
+    "context": "collection channel status description when hidden",
+    "string": "Collection is hidden in this channel"
   },
   "ejo6Sh": {
     "context": "channel order setting description for auto-confirm",
@@ -10303,6 +10496,10 @@
     "context": "storefront example in model type tab grouping help tooltip",
     "string": "With separator \"—\", types named <em>Storefront — Cart</em> and <em>Storefront — Checkout</em> appear under one <strong>Storefront</strong> tab."
   },
+  "gccLZY": {
+    "context": "collection details SEO settings card title",
+    "string": "Search engine preview"
+  },
   "gelco+": {
     "string": "Metadata updated"
   },
@@ -10327,6 +10524,10 @@
   },
   "giVGCH": {
     "string": "Enter Voucher Code"
+  },
+  "gimJGK": {
+    "context": "Entity type label for channel availability panel subtitles",
+    "string": "Collection"
   },
   "gj3MUg": {
     "context": "gift card history message",
@@ -10390,10 +10591,6 @@
   "h0OD30": {
     "context": "channel deactivate confirmation dialog body",
     "string": "Are you sure you want to deactivate {name}? Customers will no longer be able to buy through this channel until you activate it again."
-  },
-  "h0mEWF": {
-    "context": "Availability card subtitle showing channel count",
-    "string": "In {listed} of {total} channels"
   },
   "h1rPPg": {
     "context": "dialog content",
@@ -10513,9 +10710,17 @@
   "hYWxeg": {
     "string": "The extension requests permissions you cannot grant or that exceed its allowed scope. Review the extension's manifest and your permissions. {docsLink} ({errorCode})"
   },
+  "hYY0ki": {
+    "context": "collection details section nav item",
+    "string": "Products"
+  },
   "hapYhy": {
     "context": "bulk publish wizard defaults step",
     "string": "Defaults"
+  },
+  "hg79SY": {
+    "context": "Label for collection toggle row when publication is scheduled",
+    "string": "Scheduled"
   },
   "hhXK05": {
     "context": "Link label to navigate to the app page",
@@ -10537,6 +10742,10 @@
   "hks/QN": {
     "context": "shipping method channel listing missing",
     "string": "Not configured"
+  },
+  "hlj1XE": {
+    "context": "category detail cogs menu, navigates to create a child category",
+    "string": "Create subcategory"
   },
   "hnBvH7": {
     "context": "copied to clipboard alert title",
@@ -10800,6 +11009,10 @@
     "context": "error message",
     "string": "This fulfillment cannot be cancelled"
   },
+  "ijAoJZ": {
+    "context": "Save composition segment for collection name, slug, description, SEO",
+    "string": "general"
+  },
   "ijPI0J": {
     "context": "banner when newly added shipping method channels need prices",
     "string": "{count, plural, one {# new channel needs a price before saving} other {# new channels need a price before saving}}"
@@ -11059,6 +11272,9 @@
   },
   "jtxRC6": {
     "string": "Press {key1} {key2} to save"
+  },
+  "ju2zro": {
+    "string": "Background image"
   },
   "juBV+h": {
     "string": "End Hour"
@@ -11446,6 +11662,10 @@
     "context": "attribute properties regarding dashboard",
     "string": "Dashboard Properties"
   },
+  "lDPwGU": {
+    "context": "short subcategory count column header in category sidebar",
+    "string": "Subs"
+  },
   "lDdWo9": {
     "string": "Fulfillment Metadata"
   },
@@ -11670,8 +11890,16 @@
   "m0Dz+2": {
     "string": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
   },
+  "m14laH": {
+    "context": "collection channel status when publication is scheduled",
+    "string": "Scheduled"
+  },
   "m2Jb3P": {
     "string": "You don't have permission to manage authentication tokens. Contact your administrator for access."
+  },
+  "m3tAcs": {
+    "context": "Save composition segment for shipping zone name and description",
+    "string": "general"
   },
   "m66R1V": {
     "context": "hint below tax class selector",
@@ -11815,6 +12043,10 @@
   "mkBgDe": {
     "string": "Product types deleted"
   },
+  "mkU93f": {
+    "context": "Product publication status when live in a channel",
+    "string": "Product published"
+  },
   "mmcHeH": {
     "string": "Discount Value"
   },
@@ -11930,6 +12162,10 @@
   "nG76Ql": {
     "context": "TopNav destination link tooltip to categories list",
     "string": "All categories"
+  },
+  "nGuFx9": {
+    "context": "Channel status blocking purchase in a channel",
+    "string": "Channel inactive — cannot be purchased"
   },
   "nIuKz3": {
     "context": "Refund status none",
@@ -12051,6 +12287,10 @@
     "context": "check to require attribute to have value",
     "string": "Value Required"
   },
+  "nkCi/+": {
+    "context": "collection channel status description when visible",
+    "string": "Collection is visible in this channel"
+  },
   "nngeI3": {
     "context": "amount title",
     "string": "Refunded amount"
@@ -12109,6 +12349,10 @@
   "o+OjmT": {
     "context": "bulk publish review stock hint",
     "string": "Only stock is prefilled from your default quantity. Clear a row to leave that product's inventory unchanged."
+  },
+  "o+aRjV": {
+    "context": "collection channel availability empty state description",
+    "string": "Assign channels so this collection can appear in storefronts."
   },
   "o/4OCR": {
     "string": "Shipping has already been refunded"
@@ -12214,6 +12458,9 @@
   "oSf5JD": {
     "string": "No shipping zones available to add"
   },
+  "oTb9cg": {
+    "string": "Removed product from category"
+  },
   "oUM6fi": {
     "string": "To fulfill"
   },
@@ -12243,6 +12490,10 @@
   "oYV+Ru": {
     "context": "staff members status deactivated",
     "string": "Inactive"
+  },
+  "oYXeRV": {
+    "context": "Product availability summary when scheduled in some but not all channels",
+    "string": "Scheduled in {scheduledCount} of {count} channels"
   },
   "oZFssJ": {
     "context": "tooltip when generate button is disabled because required attributes are not filled",
@@ -12499,6 +12750,10 @@
     "context": "gift card currency redemption info callout",
     "string": "This {currency} gift card can only be redeemed in channels that use {currency}. The delivery channel above only controls which email notification is sent."
   },
+  "pZatYf": {
+    "context": "create collection dialog description field",
+    "string": "Collection Description"
+  },
   "pc36KX": {
     "context": "PageTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those model types and assigned models"
@@ -12616,6 +12871,10 @@
   "q/FMPM": {
     "context": "dialog header",
     "string": "Publish models"
+  },
+  "q/aqcy": {
+    "context": "collection details section nav item",
+    "string": "General information"
   },
   "q0TV+c": {
     "context": "no countries found in assign countries dialog",
@@ -12826,6 +13085,10 @@
   "qf8OtW": {
     "string": "Continue with Saleor Cloud"
   },
+  "qfEVRX": {
+    "context": "collection background image helper text below upload area",
+    "string": "Shown on collection pages if your storefront uses it. Use a wide image; add alt text for accessibility."
+  },
   "qgQeVW": {
     "string": "Generate Voucher Codes"
   },
@@ -12938,6 +13201,10 @@
   "r5h6qc": {
     "context": "model type name",
     "string": "Model Type Name"
+  },
+  "r6AVkm": {
+    "context": "Collection scheduled for future publication in channel",
+    "string": "Scheduled for {date}"
   },
   "r7uSVR": {
     "context": "model seo options description",
@@ -13052,6 +13319,10 @@
   "rfvBAF": {
     "context": "select all options, button",
     "string": "Select All"
+  },
+  "rgDdIY": {
+    "context": "category detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete category"
   },
   "rhSI1/": {
     "string": "Model"
@@ -13748,6 +14019,10 @@
     "context": "button label to cancel product removal",
     "string": "Keep product"
   },
+  "uYEKNN": {
+    "context": "Product availability in a channel when publication is scheduled",
+    "string": "Product publication scheduled"
+  },
   "uaZNZS": {
     "context": "Info when product has stock only in warehouses not linked to the channel",
     "string": "Stock is in warehouses not assigned to \"{channelName}\""
@@ -13851,6 +14126,10 @@
   "utpPc4": {
     "context": "bulk publish picker filter label",
     "string": "Only products not in channel"
+  },
+  "uvVmpA": {
+    "context": "collection detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete collection"
   },
   "uwO3oC": {
     "string": "An unexpected error occurred while saving the extension."
@@ -14309,9 +14588,6 @@
     "context": "customer recent orders table, net column tooltip",
     "string": "Product revenue after discounts. Excludes shipping and tax. Matches the net sales figures in the overview above."
   },
-  "wQdR8M": {
-    "string": "Add search engine title and description to make this category easier to find"
-  },
   "wS1Wms": {
     "context": "seo title field hint",
     "string": "Title tag shown in browser tabs and search results"
@@ -14446,10 +14722,6 @@
   "x/ZVlU": {
     "string": "Product"
   },
-  "x/pIZ9": {
-    "context": "button",
-    "string": "Add product"
-  },
   "x0n6YG": {
     "string": "This refund is currently being processed and cannot be edited"
   },
@@ -14468,6 +14740,10 @@
   "x3leH4": {
     "context": "ProductTypeDeleteWarningDialog title",
     "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "x4B8Yd": {
+    "context": "Entity type label for channel availability panel subtitles",
+    "string": "Shipping method"
   },
   "x5wgj0": {
     "context": "link to replace automatic order discounts with a manual one",
@@ -14841,6 +15117,10 @@
     "context": "draft orders section name",
     "string": "Drafts"
   },
+  "yumN1U": {
+    "context": "Availability card subtitle showing entity channel count",
+    "string": "{entityType} in {listed} of {total} channels"
+  },
   "yvdudc": {
     "context": "channel inventory create dropdown item",
     "string": "Create warehouse"
@@ -14880,10 +15160,6 @@
   },
   "z4qMx5": {
     "string": "Open in a new tab"
-  },
-  "z8jo8h": {
-    "context": "button",
-    "string": "View products"
   },
   "z9c6/C": {
     "string": "Deprecated"
@@ -15002,6 +15278,10 @@
     "context": "alert message",
     "string": "{country} is not available as a shipping destination for this channel, check {configLink}."
   },
+  "zcHJoO": {
+    "context": "Collection visible since date in channel availability",
+    "string": "since {date}"
+  },
   "zcyBm+": {
     "context": "tooltip title for undiscounted subtotal next to order subtotal",
     "string": "Before discounts"
@@ -15055,6 +15335,10 @@
   "zkfMxY": {
     "context": "create channel dialog description",
     "string": "A channel is a market: one currency and default country for prices, tax, and checkout."
+  },
+  "zl9Mr7": {
+    "context": "shipping method channel availability empty state description",
+    "string": "Assign channels so this shipping rate can be offered at checkout."
   },
   "zmKgYS": {
     "context": "order header date, same year and older than yesterday",

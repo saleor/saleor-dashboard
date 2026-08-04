@@ -1,11 +1,11 @@
-import { DashboardCard } from "@dashboard/components/Card";
-import CardSpacer from "@dashboard/components/CardSpacer";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { type ShippingErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -55,13 +55,11 @@ const ShippingZoneInfo = ({ data, disabled, errors, onChange }: ShippingZoneInfo
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage(commonMessages.generalInformations)}
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
+    <DetailSettingsCard
+      title={intl.formatMessage(commonMessages.generalInformations)}
+      data-test-id="shipping-zone-general-info"
+    >
+      <Box display="flex" flexDirection="column" gap={4}>
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
@@ -75,7 +73,6 @@ const ShippingZoneInfo = ({ data, disabled, errors, onChange }: ShippingZoneInfo
           value={data.name}
           onChange={onChange}
         />
-        <CardSpacer />
         <TextField
           error={data.description.length > MAX_DESCRIPTION_LENGTH}
           name={"description"}
@@ -111,8 +108,8 @@ const ShippingZoneInfo = ({ data, disabled, errors, onChange }: ShippingZoneInfo
           placeholder={intl.formatMessage(messages.descriptionPlaceholder)}
           rows={3}
         />
-      </DashboardCard.Content>
-    </DashboardCard>
+      </Box>
+    </DetailSettingsCard>
   );
 };
 

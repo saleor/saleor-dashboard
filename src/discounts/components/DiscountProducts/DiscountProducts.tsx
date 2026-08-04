@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
+import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@dashboard/components/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder";
@@ -128,7 +128,7 @@ const DiscountProducts = (props: SaleProductsProps) => {
                       {product && !product?.channelListings?.length ? (
                         "-"
                       ) : product?.channelListings !== undefined ? (
-                        <ChannelsAvailabilityDropdown channels={product?.channelListings} />
+                        <ProductChannelsAvailability channels={product?.channelListings} />
                       ) : (
                         <Skeleton />
                       )}

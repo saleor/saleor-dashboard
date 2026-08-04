@@ -17,7 +17,11 @@ interface UsePickerBackfillArgs {
   hasMore: boolean;
   rawItemCount: number;
   filteredItemCount: number;
-  onFetchMore: () => void;
+  /**
+   * Load the next page. Return `false` when nothing was fetched so backfill can
+   * stop showing a spinner that nothing will fill.
+   */
+  onFetchMore: () => false | void | Promise<unknown>;
   /** Bumped by the caller when a new search starts, to hand back the page budget. */
   resetKey?: string;
   /** Lower this when one item renders as several rows. See `BACKFILL_MIN_ROWS`. */
@@ -84,7 +88,16 @@ export const usePickerBackfill = ({
       }
 
       if (shouldFetchMore) {
-        onFetchMoreRef.current();
+        const fetchResult = onFetchMoreRef.current();
+
+        // loadMore can no-op (no next page in the live result). Without this, the
+        // in-flight lock from planPickerBackfill leaves isBackfilling true forever.
+        if (fetchResult === false) {
+          setState(current => ({
+            ...current,
+            requestedPages: PICKER_BACKFILL_MAX_PAGES,
+          }));
+        }
       }
     },
     [state, enabled, open, loading, hasMore, rawItemCount, filteredItemCount, minRows],

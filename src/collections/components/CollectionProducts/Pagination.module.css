@@ -1,0 +1,6 @@
+/* Compact enough for 3-digit row counts (e.g. 100). */
+.rowNumberSelect {
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}

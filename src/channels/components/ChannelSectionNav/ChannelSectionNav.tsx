@@ -1,16 +1,15 @@
-import { Box, Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
+import {
+  DetailSection,
+  DetailSectionNav,
+  type DetailSectionNavItem,
+} from "@dashboard/components/DetailSectionNav/DetailSectionNav";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { type ChannelSectionId } from "./channelSectionIds";
-import styles from "./ChannelSectionNav.module.css";
 import { messages } from "./messages";
 
-export interface ChannelSectionNavItem {
-  id: ChannelSectionId;
-  label: string;
-}
+export type ChannelSectionNavItem = DetailSectionNavItem & { id: ChannelSectionId };
 
 interface ChannelSectionNavProps {
   items: ChannelSectionNavItem[];
@@ -26,34 +25,13 @@ export const ChannelSectionNav = ({
   const intl = useIntl();
 
   return (
-    <Box
-      as="nav"
-      className={styles.nav}
-      aria-label={intl.formatMessage(messages.navAriaLabel)}
+    <DetailSectionNav
+      items={items}
+      activeId={activeId}
+      onSelect={sectionId => onSelect(sectionId as ChannelSectionId)}
+      ariaLabel={intl.formatMessage(messages.navAriaLabel)}
       data-test-id="channel-section-nav"
-    >
-      <Box as="ul" className={styles.list}>
-        {items.map(item => {
-          const isActive = item.id === activeId;
-
-          return (
-            <Box as="li" key={item.id} className={clsx(styles.item, isActive && styles.active)}>
-              <button
-                type="button"
-                className={styles.button}
-                aria-current={isActive ? "true" : undefined}
-                data-test-id={`channel-section-nav-${item.id}`}
-                onClick={() => onSelect(item.id)}
-              >
-                <Text as="span" size={3}>
-                  {item.label}
-                </Text>
-              </button>
-            </Box>
-          );
-        })}
-      </Box>
-    </Box>
+    />
   );
 };
 
@@ -63,8 +41,4 @@ export const ChannelSection = ({
 }: {
   id: ChannelSectionId;
   children: ReactNode;
-}): ReactNode => (
-  <Box id={id} className={styles.section} data-test-id={id}>
-    {children}
-  </Box>
-);
+}): ReactNode => <DetailSection id={id}>{children}</DetailSection>;

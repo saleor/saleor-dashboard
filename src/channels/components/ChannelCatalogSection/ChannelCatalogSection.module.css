@@ -1,9 +1,3 @@
-.intro {
-  padding: var(--mu-spacing-4) var(--mu-spacing-6);
-  background-color: var(--mu-colors-background-default1);
-  border-bottom: 1px solid var(--mu-colors-border-default1);
-}
-
 .stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

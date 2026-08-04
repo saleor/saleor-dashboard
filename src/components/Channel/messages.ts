@@ -16,4 +16,9 @@ export const messages = defineMessages({
     defaultMessage: "View orders from {channelName}",
     description: "channel link title and a11y label",
   },
+  viewChannelDetails: {
+    id: "LqIHgW",
+    defaultMessage: "View {channelName}",
+    description: "channel details link title and a11y label",
+  },
 });

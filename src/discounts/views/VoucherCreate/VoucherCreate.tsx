@@ -25,6 +25,7 @@ import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCol
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage";
@@ -90,30 +91,45 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     },
   });
 
+  const assignProductSearchVariables = {
+    ...DEFAULT_INITIAL_SEARCH_DATA,
+    first: 100,
+    includeVariants: false as const,
+  };
+  const assignVariantSearchVariables = {
+    ...DEFAULT_INITIAL_SEARCH_DATA,
+    includeVariants: true as const,
+  };
+  const categorySearchInitialVariables = {
+    after: DEFAULT_INITIAL_SEARCH_DATA.after,
+    first: DEFAULT_INITIAL_SEARCH_DATA.first,
+  };
+  const [productSearchVariables, setProductSearchVariables] = useState(
+    assignProductSearchVariables,
+  );
+  const [variantSearchVariables, setVariantSearchVariables] = useState(
+    assignVariantSearchVariables,
+  );
+  const [categorySearchVariables, setCategorySearchVariables] = useState(
+    categorySearchInitialVariables,
+  );
+  const [collectionSearchVariables, setCollectionSearchVariables] = useState(
+    categorySearchInitialVariables,
+  );
   const categoriesSearch = useCategoryWithTotalProductsSearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-    },
+    variables: categorySearchVariables,
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-    },
+    variables: collectionSearchVariables,
   });
   // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
   // on a large catalog. Ask for more per request so the picker stays useful without leaning on
   // backfill for every page.
-  const assignProductSearchVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    first: 100,
-  };
   const productsSearch = useProductSearch({
-    variables: { ...assignProductSearchVariables, includeVariants: false },
+    variables: productSearchVariables,
   });
   const variantsSearch = useProductSearch({
-    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: true },
+    variables: variantSearchVariables,
   });
 
   const handleProductFilterChange = (
@@ -121,12 +137,11 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     channel: string | undefined,
     query: string,
   ) => {
-    productsSearch.result.refetch({
+    setProductSearchVariables({
       ...assignProductSearchVariables,
       where: filterVariables,
       channel,
       query,
-      includeVariants: false,
     });
   };
 
@@ -135,19 +150,17 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     channel: string | undefined,
     query: string,
   ) => {
-    variantsSearch.result.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+    setVariantSearchVariables({
+      ...assignVariantSearchVariables,
       where: filterVariables,
       channel,
       query,
-      includeVariants: true,
     });
   };
 
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
-    categoriesSearch.result.refetch({
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    setCategorySearchVariables({
+      ...categorySearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,
@@ -160,9 +173,8 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     channel: string | undefined,
     query: string,
   ) => {
-    collectionsSearch.result.refetch({
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    setCollectionSearchVariables({
+      ...categorySearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,

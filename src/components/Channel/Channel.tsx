@@ -1,4 +1,5 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { channelUrl } from "@dashboard/channels/urls";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { orderListUrlWithChannel } from "@dashboard/orders/urls";
@@ -66,6 +67,10 @@ interface ChannelProps {
   title?: string;
 }
 
+interface ChannelLinkProps extends ChannelProps {
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+}
+
 const ICON_SIZE_BY_TEXT_SIZE: Record<ChannelTextSize, number> = {
   1: 12,
   2: 14,
@@ -128,7 +133,7 @@ export const ChannelDisplay = ({
         {channel.name}
       </span>
       {isInactive && !hideInactiveStatus && (
-        <Text size={size} color="critical1" fontWeight="medium">
+        <Text size={size} color="default2" fontWeight="regular">
           ({intl.formatMessage(messages.inactive)})
         </Text>
       )}
@@ -138,7 +143,7 @@ export const ChannelDisplay = ({
   return content;
 };
 
-export const ClickableChannel = (props: ChannelProps): JSX.Element => {
+export const ClickableChannel = (props: ChannelLinkProps): JSX.Element => {
   const { channel } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();
@@ -165,6 +170,31 @@ export const ClickableChannel = (props: ChannelProps): JSX.Element => {
       className={styles.link}
       title={linkLabel}
       aria-label={linkLabel}
+    >
+      <ChannelDisplay {...props} title={linkLabel} />
+    </RouterLink>
+  );
+};
+
+export const ChannelDetailsLink = ({ onClick, ...props }: ChannelLinkProps): JSX.Element => {
+  const { channel } = props;
+  const intl = useIntl();
+
+  if (!channel?.id) {
+    return <ChannelDisplay {...props} />;
+  }
+
+  const linkLabel = intl.formatMessage(messages.viewChannelDetails, {
+    channelName: channel.name,
+  });
+
+  return (
+    <RouterLink
+      to={channelUrl(channel.id)}
+      className={styles.detailsLink}
+      title={linkLabel}
+      aria-label={linkLabel}
+      onClick={onClick}
     >
       <ChannelDisplay {...props} title={linkLabel} />
     </RouterLink>

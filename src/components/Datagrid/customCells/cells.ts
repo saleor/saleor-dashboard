@@ -39,6 +39,7 @@ export function readonlyTextCell(
   value: string,
   hasCursorPointer = true,
   style: TextCell["style"] = "normal",
+  themeOverride?: Partial<Theme>,
 ): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
@@ -48,6 +49,7 @@ export function readonlyTextCell(
     displayData: value,
     kind: GridCellKind.Text,
     style,
+    themeOverride,
   };
 }
 

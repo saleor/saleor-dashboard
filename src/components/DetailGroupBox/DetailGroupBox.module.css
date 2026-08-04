@@ -15,3 +15,12 @@
   border-bottom-left-radius: var(--mu-border-radius-4);
   border-bottom-right-radius: var(--mu-border-radius-4);
 }
+
+.surfaceSecondary {
+  border-radius: 8px;
+}
+
+.contentSecondary {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

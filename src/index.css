@@ -1,3 +1,5 @@
+@import "./components/Skeleton/skeleton.css";
+
 #portal {
   position: fixed;
   top: 0;

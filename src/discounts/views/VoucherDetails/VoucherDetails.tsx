@@ -78,38 +78,53 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
   const intl = useIntl();
-  const {
-    loadMore: loadMoreCategories,
-    search: searchCategories,
-    result: searchCategoriesOpts,
-  } = useCategoryWithTotalProductsSearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-    },
-  });
-  const {
-    loadMore: loadMoreCollections,
-    search: searchCollections,
-    result: searchCollectionsOpts,
-  } = useCollectionWithTotalProductsSearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-    },
-  });
   // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
   // on a large catalog. Ask for more per request so the picker stays useful without leaning on
   // backfill for every page.
   const assignProductSearchVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
     first: 100,
+    includeVariants: false as const,
   };
+  const assignVariantSearchVariables = {
+    ...DEFAULT_INITIAL_SEARCH_DATA,
+    includeVariants: true as const,
+  };
+  const categorySearchInitialVariables = {
+    after: DEFAULT_INITIAL_SEARCH_DATA.after,
+    first: DEFAULT_INITIAL_SEARCH_DATA.first,
+  };
+  const [productSearchVariables, setProductSearchVariables] = useState(
+    assignProductSearchVariables,
+  );
+  const [variantSearchVariables, setVariantSearchVariables] = useState(
+    assignVariantSearchVariables,
+  );
+  const [categorySearchVariables, setCategorySearchVariables] = useState(
+    categorySearchInitialVariables,
+  );
+  const [collectionSearchVariables, setCollectionSearchVariables] = useState(
+    categorySearchInitialVariables,
+  );
+  const {
+    loadMore: loadMoreCategories,
+    search: searchCategories,
+    result: searchCategoriesOpts,
+  } = useCategoryWithTotalProductsSearch({
+    variables: categorySearchVariables,
+  });
+  const {
+    loadMore: loadMoreCollections,
+    search: searchCollections,
+    result: searchCollectionsOpts,
+  } = useCollectionWithTotalProductsSearch({
+    variables: collectionSearchVariables,
+  });
   const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
-    variables: { ...assignProductSearchVariables, includeVariants: false },
+    variables: productSearchVariables,
   });
   const { loadMore: loadMoreVariants, result: searchVariantsOpts } = useProductSearch({
-    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: true },
+    variables: variantSearchVariables,
   });
 
   // Bumped on every new search so the pickers' backfill budget starts over.
@@ -122,12 +137,11 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     query: string,
   ) => {
     startNewSearch();
-    searchProductsOpts.refetch({
+    setProductSearchVariables({
       ...assignProductSearchVariables,
       where: filterVariables,
       channel,
       query,
-      includeVariants: false,
     });
   };
 
@@ -136,20 +150,19 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     channel: string | undefined,
     query: string,
   ) => {
-    searchVariantsOpts.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+    startNewSearch();
+    setVariantSearchVariables({
+      ...assignVariantSearchVariables,
       where: filterVariables,
       channel,
       query,
-      includeVariants: true,
     });
   };
 
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
     startNewSearch();
-    searchCategoriesOpts.refetch({
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    setCategorySearchVariables({
+      ...categorySearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,
@@ -163,9 +176,8 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     query: string,
   ) => {
     startNewSearch();
-    searchCollectionsOpts.refetch({
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    setCollectionSearchVariables({
+      ...categorySearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,

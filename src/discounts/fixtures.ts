@@ -24,6 +24,7 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
+          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -48,6 +49,7 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
+          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -72,6 +74,7 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
+          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -96,6 +99,7 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
+          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -120,6 +124,7 @@ export const saleList: SaleFragment[] = [
       {
         __typename: "SaleChannelListing",
         channel: {
+          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -148,6 +153,7 @@ export const voucherList: VoucherFragment[] = [
       {
         __typename: "VoucherChannelListing",
         channel: {
+          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -187,6 +193,7 @@ export const voucherList: VoucherFragment[] = [
       {
         __typename: "VoucherChannelListing",
         channel: {
+          isActive: true,
           __typename: "Channel",
           currencyCode: "USD",
           id: "123",
@@ -261,6 +268,7 @@ export const sale: SaleDetailsFragment = {
     {
       __typename: "SaleChannelListing",
       channel: {
+        isActive: true,
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",
@@ -316,6 +324,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -351,6 +360,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -386,6 +396,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -421,6 +432,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -481,6 +493,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-USD",
                   slug: "channel-usd",
                   currencyCode: "USD",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -521,6 +534,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-USD",
                   slug: "channel-usd",
                   currencyCode: "USD",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -561,6 +575,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-USD",
                   slug: "channel-usd",
                   currencyCode: "USD",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -577,6 +592,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-PLN",
                   slug: "channel-pln",
                   currencyCode: "PLN",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -642,6 +658,7 @@ export const voucherDetails: VoucherDetailsFragment = {
     {
       __typename: "VoucherChannelListing",
       channel: {
+        isActive: true,
         __typename: "Channel",
         currencyCode: "USD",
         id: "123",

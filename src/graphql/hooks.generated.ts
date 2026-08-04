@@ -518,6 +518,7 @@ export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     name
     slug
     currencyCode
+    isActive
   }
 }
     `;
@@ -3347,6 +3348,9 @@ export const SearchProductFragmentDoc = gql`
   collections {
     id
   }
+  category {
+    id
+  }
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}`;
 export const SearchProductVariantFragmentDoc = gql`
@@ -4993,10 +4997,16 @@ export type RootCategoriesQueryHookResult = ReturnType<typeof useRootCategoriesQ
 export type RootCategoriesLazyQueryHookResult = ReturnType<typeof useRootCategoriesLazyQuery>;
 export type RootCategoriesQueryResult = Apollo.QueryResult<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>;
 export const CategoryDetailsDocument = gql`
-    query CategoryDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+    query CategoryDetails($id: ID!, $childrenFirst: Int, $childrenAfter: String, $childrenLast: Int, $childrenBefore: String) {
   category(id: $id) {
     ...CategoryDetails
-    children(first: $first, after: $after, last: $last, before: $before) {
+    children(
+      first: $childrenFirst
+      after: $childrenAfter
+      last: $childrenLast
+      before: $childrenBefore
+    ) {
+      totalCount
       edges {
         node {
           ...Category
@@ -5004,21 +5014,6 @@ export const CategoryDetailsDocument = gql`
       }
       pageInfo {
         ...PageInfo
-      }
-    }
-    products(first: $first, after: $after, last: $last, before: $before) {
-      pageInfo {
-        ...PageInfo
-      }
-      edges {
-        cursor
-        node {
-          id
-          name
-          thumbnail {
-            url
-          }
-        }
       }
     }
   }
@@ -5040,10 +5035,10 @@ ${PageInfoFragmentDoc}`;
  * const { data, loading, error } = useCategoryDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
+ *      childrenFirst: // value for 'childrenFirst'
+ *      childrenAfter: // value for 'childrenAfter'
+ *      childrenLast: // value for 'childrenLast'
+ *      childrenBefore: // value for 'childrenBefore'
  *   },
  * });
  */
@@ -5058,6 +5053,56 @@ export function useCategoryDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type CategoryDetailsQueryHookResult = ReturnType<typeof useCategoryDetailsQuery>;
 export type CategoryDetailsLazyQueryHookResult = ReturnType<typeof useCategoryDetailsLazyQuery>;
 export type CategoryDetailsQueryResult = Apollo.QueryResult<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>;
+export const CategoryProductsDocument = gql`
+    query CategoryProducts($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+  category(id: $id) {
+    id
+    products(first: $first, after: $after, before: $before, last: $last) {
+      edges {
+        node {
+          ...CollectionProduct
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}
+    ${CollectionProductFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useCategoryProductsQuery__
+ *
+ * To run a query within a React component, call `useCategoryProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryProductsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useCategoryProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>(CategoryProductsDocument, options);
+      }
+export function useCategoryProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>(CategoryProductsDocument, options);
+        }
+export type CategoryProductsQueryHookResult = ReturnType<typeof useCategoryProductsQuery>;
+export type CategoryProductsLazyQueryHookResult = ReturnType<typeof useCategoryProductsLazyQuery>;
+export type CategoryProductsQueryResult = Apollo.QueryResult<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>;
 export const CategoryChildrenDocument = gql`
     query CategoryChildren($id: ID!, $first: Int!, $after: String) {
   category(id: $id) {
@@ -6015,12 +6060,16 @@ export type CollectionBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Typ
 export const CollectionChannelListingUpdateDocument = gql`
     mutation CollectionChannelListingUpdate($id: ID!, $input: CollectionChannelListingUpdateInput!) {
   collectionChannelListingUpdate(id: $id, input: $input) {
+    collection {
+      ...CollectionDetails
+    }
     errors {
       ...CollectionChannelListingError
     }
   }
 }
-    ${CollectionChannelListingErrorFragmentDoc}`;
+    ${CollectionDetailsFragmentDoc}
+${CollectionChannelListingErrorFragmentDoc}`;
 export type CollectionChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>;
 
 /**

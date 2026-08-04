@@ -43,14 +43,11 @@ const useStyles = makeStyles(
     },
     mediaOverlay: {
       background: theme.palette.background.default,
-      opacity: 0.8,
+      opacity: 0.35,
       cursor: "move",
       display: "none",
-      height: 148,
-      left: 0,
+      inset: 0,
       position: "absolute",
-      top: 0,
-      width: 148,
     },
     disableOverlay: {
       "&$mediaOverlay": {
@@ -64,7 +61,10 @@ const useStyles = makeStyles(
     },
     mediaOverlayToolbar: {
       display: "flex",
-      justifyContent: "flex-end",
+      gap: vars.spacing[1],
+      position: "absolute",
+      right: vars.spacing[1],
+      top: vars.spacing[1],
     },
     selectionCheckbox: {
       position: "absolute",
@@ -88,14 +88,11 @@ const useStyles = makeStyles(
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
-      margin: theme.spacing(2),
+      margin: 0,
       padding: 0,
 
       "&:hover": {
         color: theme.palette.saleor.active[1],
-      },
-      "&:first-child": {
-        marginRight: 0,
       },
     },
   }),

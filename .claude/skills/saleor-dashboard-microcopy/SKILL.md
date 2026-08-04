@@ -35,6 +35,7 @@ import { FormattedMessage } from "react-intl";
 - **Under `DashboardCard.Title`** (in `DashboardCard.Header`): subtitle directly below title in a column `Box` — see `OrderValue`, `OrderWeight`.
 - **Above a field inside `DashboardCard.Content`**: subtitle before `Multiselect` / inputs — see `ChannelsSection`, `WarehousesSection`.
 - **Below a field**: subtitle after the control — see `ShippingMethodTaxes` tax-class hint.
+- **Entity detail `DetailSettingsCard`**: long leading copy in the card’s **`intro` row** (bordered band below header), not in the tinted title band — see Payment gateways, collection SEO. Short Complete/Incomplete status can live in `intro` too.
 
 ### Reference files
 
@@ -43,6 +44,28 @@ import { FormattedMessage } from "react-intl";
 - `src/shipping/components/ShippingZoneSettingsCard/ChannelsSection.tsx`
 - `src/shipping/components/ShippingZoneSettingsCard/WarehousesSection.tsx`
 - `src/shipping/components/ShippingMethodTaxes/ShippingMethodTaxes.tsx`
+
+- `src/shipping/components/ShippingMethodTaxes/ShippingMethodTaxes.tsx`
+- `src/channels/components/ChannelPaymentGatewaysSection/ChannelPaymentGatewaysSection.tsx`
+- `src/collections/components/CollectionDetailsPage/CollectionDetailsPage.tsx` (SEO `intro`)
+
+## Optional labels
+
+Mark optional sections/fields without brackets or title-case noise.
+
+| Do                                                                           | Don't                                               |
+| ---------------------------------------------------------------------------- | --------------------------------------------------- |
+| `DetailSettingsCardTitle` + `optional` prop → `DetailSettingsOptionalLabel`  | `"Background Image (optional)"` in the title string |
+| `commonMessages.optionalField` for field helper text (`Optional`, no parens) | `"(Optional)"` in helper text                       |
+| `Text size={2} color="default2"` beside the title (baseline-aligned)         | Same size/weight as the section title               |
+
+```tsx
+import { DetailSettingsCardTitle } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+
+<DetailSettingsCardTitle optional>
+  <FormattedMessage defaultMessage="Background image" />
+</DetailSettingsCardTitle>;
+```
 
 ## Inline links inside hints
 
@@ -101,9 +124,11 @@ When backend rules make in-context creation fragile (e.g. warehouse must share a
 - [ ] Inline links use `MicrocopyLink` with inherit color/size
 - [ ] No accent-colored links inside gray hint text
 - [ ] `CardSpacer` between hint blocks and form controls
+- [ ] Optional sections use `DetailSettingsCardTitle optional`, not “(optional)” in the title
 - [ ] Messages extracted with `defineMessages` + `FormattedMessage`
 
 ## Related skills
 
+- [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) — entity detail surfaces vs Configuration
 - Layout/spacing/tokens: `saleor-dashboard-styles`
 - Detail page structure: `saleor-dashboard-detail-pages`

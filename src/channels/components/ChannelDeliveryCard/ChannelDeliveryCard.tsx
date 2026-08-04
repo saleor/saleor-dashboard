@@ -1,15 +1,13 @@
 import { type ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import { AssignListCard } from "@dashboard/components/AssignListCard/AssignListCard";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import DeletableItem from "@dashboard/components/DeletableItem";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { shippingZoneUrl } from "@dashboard/shipping/urls";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import { Truck } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link as RouterLink } from "react-router-dom";
 
-import styles from "./ChannelDeliveryCard.module.css";
 import { messages } from "./messages";
 
 interface ChannelDeliveryCardProps {
@@ -89,70 +87,31 @@ export const ChannelDeliveryCard = ({
   })();
 
   return (
-    <Box className={styles.card} data-test-id="channel-delivery-card">
-      <Box className={styles.header}>
-        <Text size={5} fontWeight="bold" as="h2">
-          <FormattedMessage {...messages.title} />
-        </Text>
-        <Text size={2} color="default2">
-          {hasZones ? (
-            <FormattedMessage {...messages.assignedCount} values={{ count: zones.length }} />
-          ) : (
-            <FormattedMessage {...messages.requiredToSell} />
-          )}
-        </Text>
-      </Box>
-
-      <Box className={styles.intro}>
-        <Text size={3} color="default2">
-          <FormattedMessage {...messages.description} />
-        </Text>
-      </Box>
-
-      {!hasZones ? (
-        <Box className={styles.emptyState}>
-          <Box className={styles.emptyLeading}>
-            <Box className={styles.emptyIcon} aria-hidden>
-              <Truck size={iconSize.small} strokeWidth={iconStrokeWidth} />
-            </Box>
-            <Box className={styles.emptyCopy}>
-              <Text size={3} fontWeight="medium">
-                <FormattedMessage {...messages.emptyTitle} />
-              </Text>
-              <Text size={2} color="default2">
-                <FormattedMessage {...messages.emptyDescription} />
-              </Text>
-            </Box>
-          </Box>
-          {assignAction ? <Box className={styles.emptyAction}>{assignAction}</Box> : null}
-        </Box>
-      ) : (
-        <>
-          <div className={styles.list}>
-            {zones.map(zone => (
-              <div key={zone.id} className={styles.row} data-test-id="channel-delivery-zone-row">
-                <RouterLink
-                  to={shippingZoneUrl(zone.id)}
-                  className={styles.rowName}
-                  data-test-id={`${zone.id}-link`}
-                >
-                  <Text size={3} fontWeight="medium">
-                    {zone.name}
-                  </Text>
-                </RouterLink>
-                <div className={styles.rowDelete}>
-                  <DeletableItem id={zone.id} onDelete={removeShippingZone} disabled={disabled} />
-                </div>
-              </div>
-            ))}
-          </div>
-          {assignAction ? (
-            <Box className={styles.listFooter}>
-              <Box className={styles.listFooterAction}>{assignAction}</Box>
-            </Box>
-          ) : null}
-        </>
-      )}
-    </Box>
+    <AssignListCard
+      data-test-id="channel-delivery-card"
+      title={<FormattedMessage {...messages.title} />}
+      subtitle={
+        hasZones ? (
+          <FormattedMessage {...messages.assignedCount} values={{ count: zones.length }} />
+        ) : (
+          <FormattedMessage {...messages.requiredToSell} />
+        )
+      }
+      intro={<FormattedMessage {...messages.description} />}
+      items={zones.map(zone => ({
+        id: zone.id,
+        name: zone.name,
+        href: shippingZoneUrl(zone.id),
+      }))}
+      emptyState={{
+        icon: <Truck size={iconSize.small} strokeWidth={iconStrokeWidth} />,
+        title: <FormattedMessage {...messages.emptyTitle} />,
+        description: <FormattedMessage {...messages.emptyDescription} />,
+      }}
+      footerAction={assignAction ? <Box>{assignAction}</Box> : undefined}
+      onRemoveItem={removeShippingZone}
+      disabled={disabled}
+      rowTestId="channel-delivery-zone-row"
+    />
   );
 };

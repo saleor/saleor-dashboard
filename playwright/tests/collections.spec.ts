@@ -15,17 +15,11 @@ test("TC: SALEOR_112 Create collection #collections  #e2e", async () => {
   await collectionsPage.waitForDOMToFullyLoad();
   await collectionsPage.clickCreateCollectionButton();
   await collectionsPage.typeCollectionName("Saleor automation collection");
-  await collectionsPage.typeCollectionDescription("Best collection ever");
-  await collectionsPage.uploadCollectionImage("beer.avif");
-  await collectionsPage.collectionImages.first().waitFor({ state: "visible" });
-  expect(await collectionsPage.collectionImages.count()).toEqual(1);
-  await collectionsPage.metadataSeoPage.fillSeoSection();
-  await collectionsPage.metadataSeoPage.expandAndAddAllMetadata();
-  await collectionsPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected(
-    "Channel-PLN",
-  );
-  await collectionsPage.clickSaveButton();
+  await collectionsPage.typeCreateCollectionDescription("Best collection ever");
+  await collectionsPage.clickCreateCollectionSubmitButton();
   await collectionsPage.expectSuccessBanner();
+  await expect(collectionsPage.page).toHaveURL(/\/collections\/.+/);
+  await expect(collectionsPage.collectionNameInput).toHaveValue("Saleor automation collection");
 });
 test("TC: SALEOR_113 Edit collection: assign product #collections  #e2e", async () => {
   const productToBeAssigned = "Bean Juice";

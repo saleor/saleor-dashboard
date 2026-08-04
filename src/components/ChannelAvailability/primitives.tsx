@@ -1,4 +1,4 @@
-import { SUCCESS_ICON_COLOR } from "@dashboard/colors";
+import { SCHEDULED_COLOR, SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Globe } from "lucide-react";
 import { useIntl } from "react-intl";
@@ -18,6 +18,10 @@ export const StatusDot = ({ statusType, size = "default" }: StatusDotProps) => {
     switch (statusType) {
       case "success":
         return SUCCESS_ICON_COLOR;
+      case "scheduled":
+        return SCHEDULED_COLOR;
+      case "hidden":
+        return "var(--mu-colors-text-default2)";
       case "warning":
         return "var(--mu-colors-background-warning1)";
       case "error":

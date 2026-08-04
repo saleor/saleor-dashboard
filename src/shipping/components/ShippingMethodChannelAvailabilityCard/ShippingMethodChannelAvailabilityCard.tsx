@@ -30,10 +30,10 @@ interface ShippingMethodChannelAvailabilityCardProps {
 }
 
 const messages = defineMessages({
-  emptyMessage: {
-    id: "2ZDnTL",
-    defaultMessage: "This shipping rate is not available in any channel",
-    description: "empty state for shipping method channel availability",
+  emptyDescription: {
+    id: "zl9Mr7",
+    defaultMessage: "Assign channels so this shipping rate can be offered at checkout.",
+    description: "shipping method channel availability empty state description",
   },
   statusConfigured: {
     id: "gxlfwl",
@@ -211,11 +211,12 @@ export const ShippingMethodChannelAvailabilityCard = ({
 
   return (
     <ChannelAvailabilityCard
+      entityType="shippingMethod"
       variant="list"
       listLeadingVisual="channel-icon"
       channels={channelSummaries}
       totalChannelsCount={totalChannelsCount}
-      emptyMessage={intl.formatMessage(messages.emptyMessage)}
+      emptyDescription={intl.formatMessage(messages.emptyDescription)}
       isLoading={isLoading}
       onManageClick={onManageClick}
       managePermissions={managePermissions}

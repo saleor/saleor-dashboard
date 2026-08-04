@@ -1,8 +1,14 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
 import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+
+import styles from "./Pagination.module.css";
+import {
+  COLLECTION_PRODUCT_TABLE_ACTION_INSET,
+  COLLECTION_PRODUCT_TABLE_LEADING_INSET,
+} from "./productTableLayout";
 
 const ROW_NUMBER_OPTIONS = [
   { label: "10", value: "10" },
@@ -33,14 +39,19 @@ export const Pagination = ({ onUpdateListSettings, numberOfRows }: PaginationPro
       justifyContent="space-between"
       alignItems="center"
       gap={2}
-      width="100%"
-      paddingX={6}
+      __paddingLeft={COLLECTION_PRODUCT_TABLE_LEADING_INSET}
+      paddingRight={COLLECTION_PRODUCT_TABLE_ACTION_INSET}
+      paddingY={2}
     >
       <Box display="flex" alignItems="center" gap={2}>
-        <Text color="default2" size={1}>
+        <Text color="default2" size={2}>
           <FormattedMessage id="nABmvC" defaultMessage="No. of rows" />
         </Text>
         <Select
+          size="small"
+          className={styles.rowNumberSelect}
+          __width="60px"
+          __minWidth="60px"
           options={ROW_NUMBER_OPTIONS}
           value={currentRowNumberOption ?? ROW_NUMBER_OPTIONS[1]}
           onChange={handleRowNumberChange}
@@ -49,15 +60,17 @@ export const Pagination = ({ onUpdateListSettings, numberOfRows }: PaginationPro
       <Box display="flex" gap={2}>
         <Button
           variant="secondary"
+          size="small"
           disabled={!hasPreviousPage}
           onClick={loadPreviousPage}
-          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          icon={<ChevronLeft size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
         />
         <Button
           variant="secondary"
+          size="small"
           disabled={!hasNextPage}
           onClick={loadNextPage}
-          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          icon={<ChevronRight size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
         />
       </Box>
     </Box>

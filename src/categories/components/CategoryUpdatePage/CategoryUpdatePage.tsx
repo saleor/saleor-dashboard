@@ -1,20 +1,24 @@
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { defaultGraphiQLQuery } from "@dashboard/categories/queries";
-import { categoryListPath, categoryUrl } from "@dashboard/categories/urls";
+import {
+  categoryListPath,
+  categoryUrl,
+  type CategoryUrlQueryParams,
+} from "@dashboard/categories/urls";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
-import { Tab, TabContainer } from "@dashboard/components/Tab";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForCategoryDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -26,81 +30,74 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { PaginatorContext, type PaginatorContextValues } from "@dashboard/hooks/usePaginator";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui-next";
-import { type Dispatch, Fragment, type SetStateAction } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { FolderPlus, Trash2 } from "lucide-react";
+import { type Dispatch, Fragment, type SetStateAction, useCallback, useMemo } from "react";
+import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { type ListProps, type ListViews, type RelayToFlat } from "../../../types";
-import CategoryDetailsForm from "../../components/CategoryDetailsForm";
-import CategoryBackground from "../CategoryBackground";
+import { CategoryDetailsForm } from "../CategoryDetailsForm";
 import { CategoryProducts } from "../CategoryProducts";
-import { CategorySubcategories } from "../CategorySubcategories";
+import { CategorySubcategories } from "../CategorySubcategories/CategorySubcategories";
+import { CategorySaveCompositionHint } from "./CategorySaveCompositionHint";
 import CategoryUpdateForm, { type CategoryUpdateData } from "./form";
-
-export enum CategoryPageTab {
-  categories = "categories",
-  products = "products",
-}
+import { messages } from "./messages";
 
 interface CategoryUpdatePageProps
   extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {
   categoryId: string;
-  changeTab: (index: CategoryPageTab) => void;
-  currentTab: CategoryPageTab;
+  params: CategoryUrlQueryParams;
   errors: ProductErrorFragment[];
   disabled: boolean;
   category: CategoryDetailsQuery["category"] | undefined | null;
-  products?: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["products"]>;
+  backgroundImageRevision?: number;
+  backgroundImageUploadPreview?: string | null;
+  isBackgroundImageUploading?: boolean;
+  onBackgroundImageUploadPreviewLoaded?: () => void;
   subcategories?: RelayToFlat<NonNullable<CategoryDetailsQuery["category"]>["children"]>;
+  subcategoryTotalCount?: number | null;
+  subcategoriesPaginator: PaginatorContextValues;
   saveButtonBarState: ConfirmButtonTransitionState;
-  addProductHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onCategoriesDelete: () => void;
-  onProductsDelete: () => void;
-  onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
   selectedCategoryIds: string[];
   setSelectedCategoryIds: Dispatch<SetStateAction<string[]>>;
   clearCategoryRowSelection: () => void;
   excludeCategoryFromSelected: (ids: string[]) => void;
   setClearCategoryDatagridRowSelectionCallback: (callback: () => void) => void;
-  onImageUpload: (file: File | null) => any;
-  onDelete: () => any;
+  onImageUpload: (file: File) => void;
+  onDelete: () => void;
+  onShowMetadata: () => void;
+  onCreateSubcategory: () => void;
 }
-
-const messages = defineMessages({
-  openGraphiQL: {
-    id: "qNpzxl",
-    defaultMessage: "Open this category in GraphiQL",
-  },
-});
-
-const CategoriesTab = Tab(CategoryPageTab.categories);
-const ProductsTab = Tab(CategoryPageTab.products);
 
 export const CategoryUpdatePage = ({
   categoryId,
-  changeTab,
-  currentTab,
+  params,
   category,
+  backgroundImageRevision = 0,
+  backgroundImageUploadPreview = null,
+  isBackgroundImageUploading = false,
+  onBackgroundImageUploadPreviewLoaded,
   disabled,
   errors,
-  products,
   saveButtonBarState,
   subcategories,
+  subcategoryTotalCount,
+  subcategoriesPaginator,
   onDelete,
   onSubmit,
   onImageDelete,
   onImageUpload,
   onCategoriesDelete,
-  onProductsDelete,
-  onSelectProductsIds,
   selectedCategoryIds,
   setSelectedCategoryIds,
   clearCategoryRowSelection,
@@ -108,7 +105,9 @@ export const CategoryUpdatePage = ({
   setClearCategoryDatagridRowSelectionCallback,
   settings,
   onUpdateListSettings,
-}: CategoryUpdatePageProps) => {
+  onShowMetadata,
+  onCreateSubcategory,
+}: CategoryUpdatePageProps): JSX.Element => {
   const intl = useIntl();
   const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
@@ -127,25 +126,63 @@ export const CategoryUpdatePage = ({
     categoryId,
   );
   const context = useDevModeContext();
-  const openPlaygroundURL = () => {
+  const openPlaygroundURL = useCallback(() => {
     context.setDevModeContent(defaultGraphiQLQuery);
     context.setVariables(`{ "id": "${category?.id}" }`);
     context.setDevModeVisibility(true);
-  };
+  }, [category?.id, context]);
+
+  const menuItems = useMemo((): TopNavMenuItem[] => {
+    const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
+      label: item.label,
+      onSelect: item.onSelect,
+      testId: item.testId,
+    }));
+
+    if (category?.id) {
+      items.push({
+        label: intl.formatMessage(messages.createSubcategory),
+        onSelect: onCreateSubcategory,
+        testId: "create-subcategory-menu",
+        icon: <FolderPlus size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+      items.push({
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <GraphqlIcon />,
+      });
+      items.push({
+        label: intl.formatMessage(messages.deleteCategory),
+        onSelect: onDelete,
+        testId: "delete-category",
+        color: "critical1",
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
+    return items;
+  }, [category, extensionMenuItems, intl, onCreateSubcategory, onDelete, openPlaygroundURL]);
 
   const ancestors = mapEdgesToItems(category?.ancestors);
   const breadcrumb =
     ancestors && ancestors.length > 0 ? (
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="center" gap={1} overflow="hidden" __lineHeight={1.15}>
         {ancestors.map((ancestor, index) => (
           <Fragment key={ancestor.id}>
             {index > 0 && (
-              <Text size={2} color="default2">
+              <Text size={2} color="default2" flexShrink="0" __lineHeight={1.15}>
                 /
               </Text>
             )}
-            <Link to={categoryUrl(ancestor.id)} style={{ textDecoration: "none" }}>
-              <Text size={2} color="default2" textDecoration={{ hover: "underline" }}>
+            <Link to={categoryUrl(ancestor.id)} style={{ textDecoration: "none", minWidth: 0 }}>
+              <Text
+                size={2}
+                color="default2"
+                ellipsis
+                textDecoration={{ hover: "underline" }}
+                __lineHeight={1.15}
+              >
                 {ancestor.name}
               </Text>
             </Link>
@@ -156,19 +193,24 @@ export const CategoryUpdatePage = ({
 
   return (
     <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>
-      {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <DetailPageLayout gridTemplateColumns={1}>
+      {({ data, change, submit, isSaveDisabled, saveComposition }) => (
+        <DetailPageLayout>
           <TopNav
             href={backHref}
-            hrefIcon={<TopNavDestinationIcon.products />}
+            hrefIcon={<TopNavDestinationIcon.categories />}
             hrefTitle={intl.formatMessage(topNavDestinationMessages.allCategories)}
             title={category?.name}
             subtitleTop={breadcrumb}
+            actionsGap={3}
           >
+            <TopNav.MetadataButton
+              onClick={onShowMetadata}
+              disabled={disabled || !category}
+              data-test-id="show-category-metadata"
+              title={intl.formatMessage(messages.editCategoryMetadata)}
+            />
             {canTranslate && (
               <TranslationsButton
-                variant="secondary"
-                icon={<TranslationsIcon />}
                 onClick={() =>
                   navigate(
                     languageEntityUrl(
@@ -180,95 +222,61 @@ export const CategoryUpdatePage = ({
                 }
               />
             )}
-            <TopNav.Menu
-              items={[
-                ...extensionMenuItems,
-                {
-                  label: intl.formatMessage(messages.openGraphiQL),
-                  onSelect: openPlaygroundURL,
-                  testId: "graphiql-redirect",
-                },
-              ]}
-              dataTestId="menu"
-            />
+            {menuItems.length > 0 && (
+              <TopNav.Menu
+                items={
+                  disabled || !category
+                    ? menuItems.map(item => ({ ...item, disabled: true }))
+                    : menuItems
+                }
+                dataTestId="menu"
+              />
+            )}
           </TopNav>
           <DetailPageLayout.Content>
-            <CategoryDetailsForm
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-            />
-
-            <CardSpacer />
-
-            <CategoryBackground
-              data={data}
-              onImageUpload={onImageUpload}
-              onImageDelete={onImageDelete}
-              image={category?.backgroundImage}
-              onChange={change}
-            />
-
-            <CardSpacer />
-
-            <SeoForm
-              helperText={intl.formatMessage({
-                id: "wQdR8M",
-                defaultMessage:
-                  "Add search engine title and description to make this category easier to find",
-              })}
-              errors={errors}
-              title={data.seoTitle}
-              titlePlaceholder={data.name}
-              description={data.seoDescription}
-              descriptionPlaceholder={data.name}
-              slug={data.slug}
-              slugPlaceholder={data.name}
-              loading={!category}
-              onChange={change}
-              disabled={disabled}
-            />
-
-            <CardSpacer />
-
-            <Metadata data={data} onChange={handlers.changeMetadata} />
-
-            <CardSpacer />
-
-            <TabContainer className={sprinkles({ paddingX: 9 })}>
-              <CategoriesTab
-                isActive={currentTab === CategoryPageTab.categories}
-                changeTab={changeTab}
-              >
-                <FormattedMessage
-                  id="JDz5h8"
-                  defaultMessage="Subcategories"
-                  description="number of subcategories in category"
-                />
-              </CategoriesTab>
-
-              <ProductsTab
-                testId="products-tab"
-                isActive={currentTab === CategoryPageTab.products}
-                changeTab={changeTab}
-              >
-                <FormattedMessage
-                  id="V+fkAO"
-                  defaultMessage="Products"
-                  description="number of products in category"
-                />
-              </ProductsTab>
-            </TabContainer>
-
-            <CardSpacer />
-
-            {currentTab === CategoryPageTab.categories && (
+            <DetailPageContent>
+              <CategoryDetailsForm
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                image={category?.backgroundImage}
+                backgroundImageRevision={backgroundImageRevision}
+                backgroundImageUploadPreview={backgroundImageUploadPreview}
+                isBackgroundImageUploading={isBackgroundImageUploading}
+                onUploadPreviewLoaded={onBackgroundImageUploadPreviewLoaded}
+                onChange={change}
+                onImageDelete={onImageDelete}
+                onImageUpload={onImageUpload}
+              />
+              <CategoryProducts
+                category={category}
+                categoryId={categoryId}
+                params={params}
+                disabled={disabled}
+              />
+              <SeoForm
+                columnInset={false}
+                errors={errors}
+                title={data.seoTitle}
+                titlePlaceholder={data.name}
+                description={data.seoDescription}
+                descriptionPlaceholder={data.name}
+                slug={data.slug}
+                slugPlaceholder={data.name}
+                loading={!category}
+                onChange={change}
+                disabled={disabled}
+              />
+            </DetailPageContent>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar paddingTop={6}>
+            <PaginatorContext.Provider value={subcategoriesPaginator}>
               <CategorySubcategories
                 disabled={disabled}
                 onUpdateListSettings={onUpdateListSettings}
                 settings={settings}
-                subcategories={subcategories!}
+                subcategories={subcategories ?? []}
+                subcategoryTotalCount={subcategoryTotalCount}
                 categoryId={categoryId}
                 selectedCategoryIds={selectedCategoryIds}
                 setSelectedCategoryIds={setSelectedCategoryIds}
@@ -276,31 +284,20 @@ export const CategoryUpdatePage = ({
                 excludeFromSelected={excludeCategoryFromSelected}
                 setClearDatagridRowSelectionCallback={setClearCategoryDatagridRowSelectionCallback}
                 onCategoriesDelete={onCategoriesDelete}
+                onCreateSubcategory={onCreateSubcategory}
               />
-            )}
-
-            {currentTab === CategoryPageTab.products && (
-              <CategoryProducts
-                category={category}
-                categoryId={categoryId}
-                products={products!}
-                disabled={disabled}
-                onProductsDelete={onProductsDelete}
-                onSelectProductsIds={onSelectProductsIds}
-              />
-            )}
-
-            <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} />
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(backHref)} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBarState}
-                onClick={submit}
-                disabled={!!isSaveDisabled}
-              />
-            </Savebar>
-          </DetailPageLayout.Content>
+            </PaginatorContext.Provider>
+          </DetailPageLayout.RightSidebar>
+          <Savebar>
+            <Savebar.Spacer />
+            <CategorySaveCompositionHint composition={saveComposition} />
+            <Savebar.CancelButton onClick={() => navigate(backHref)} />
+            <Savebar.ConfirmButton
+              transitionState={saveButtonBarState}
+              onClick={submit}
+              disabled={!!isSaveDisabled}
+            />
+          </Savebar>
         </DetailPageLayout>
       )}
     </CategoryUpdateForm>

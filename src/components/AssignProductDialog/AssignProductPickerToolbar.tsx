@@ -12,7 +12,7 @@ interface AssignProductPickerToolbarProps {
 
 export const AssignProductPickerToolbar = ({ picker }: AssignProductPickerToolbarProps) => {
   const intl = useIntl();
-  const { loading, onQueryChange, query } = picker;
+  const { loading, onQueryChange, query, showListLoading } = picker;
 
   return (
     <>
@@ -26,7 +26,7 @@ export const AssignProductPickerToolbar = ({ picker }: AssignProductPickerToolba
         fullWidth
         InputProps={{
           autoComplete: "off",
-          endAdornment: loading && <SaleorThrobber size={16} />,
+          endAdornment: loading && !showListLoading ? <SaleorThrobber size={16} /> : null,
         }}
       />
 

@@ -1,0 +1,8 @@
+.tooltipContent {
+  overflow: visible;
+}
+
+.tooltipBody {
+  max-height: 360px;
+  overflow: auto;
+}

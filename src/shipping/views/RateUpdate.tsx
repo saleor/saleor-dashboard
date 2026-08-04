@@ -90,19 +90,20 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   const channelsData = data?.shippingZone?.channels;
   const zoneName = data?.shippingZone?.name;
   const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
+  const [productSearchVariables, setProductSearchVariables] = useState(DEFAULT_INITIAL_SEARCH_DATA);
   const { loadMore, result: productsSearchOpts } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: productSearchVariables,
   });
   const handleProductFilterChange = useCallback(
     (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
-      void productsSearchOpts.refetch({
+      setProductSearchVariables({
         ...DEFAULT_INITIAL_SEARCH_DATA,
         where: filterVariables,
         channel,
         query,
       });
     },
-    [productsSearchOpts.refetch],
+    [],
   );
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingRateUrlDialog,

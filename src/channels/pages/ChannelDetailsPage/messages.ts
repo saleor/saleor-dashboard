@@ -6,11 +6,6 @@ export const messages = defineMessages({
     defaultMessage: "Channel updated",
     description: "success toast after saving channel details",
   },
-  saveCompositionIncludes: {
-    id: "TjY0ay",
-    defaultMessage: "Unsaved changes: {segments}",
-    description: "Savebar hint listing which channel areas will persist on Save",
-  },
   saveCompositionGeneral: {
     id: "C+uqjN",
     defaultMessage: "general",

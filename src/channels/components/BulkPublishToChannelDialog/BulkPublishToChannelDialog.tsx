@@ -124,8 +124,11 @@ const BulkPublishToChannelDialogContent = ({
     useExitFormDialog();
   const isSelectStep = step === BulkPublishStep.SELECT;
 
+  const [productSearchVariables, setProductSearchVariables] = useState(
+    bulkPublishProductSearchVariables,
+  );
   const { loadMore, result } = useProductSearch({
-    variables: bulkPublishProductSearchVariables,
+    variables: productSearchVariables,
   });
   const pickerProducts = getParsedSearchData(result);
   const pickerFetchMoreProps = getSearchFetchMoreProps(result, loadMore);
@@ -143,14 +146,14 @@ const BulkPublishToChannelDialogContent = ({
   const handleFilterChange = useCallback(
     (filterVariables, channelSlug: string | undefined, query: string) => {
       setSearchGeneration(generation => generation + 1);
-      result.refetch({
+      setProductSearchVariables({
         ...bulkPublishProductSearchVariables,
         where: filterVariables,
         channel: channelSlug,
         query,
       });
     },
-    [result],
+    [],
   );
 
   const handleProductSelectionChange = useCallback(
@@ -208,6 +211,7 @@ const BulkPublishToChannelDialogContent = ({
     setLastAppliedDefaultStock(undefined);
     setExcludeListedInChannel(true);
     setSearchGeneration(0);
+    setProductSearchVariables(bulkPublishProductSearchVariables);
     setShowExitDialog(false);
   }, [setStep]);
 

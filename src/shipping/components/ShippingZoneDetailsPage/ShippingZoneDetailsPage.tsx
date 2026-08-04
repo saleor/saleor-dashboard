@@ -6,9 +6,9 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { CountryList } from "@dashboard/components/CountryList";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useExitFormDialog } from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -29,7 +29,7 @@ import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { type Option } from "@saleor/macaw-ui-next";
 import { useLayoutEffect, useMemo } from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../../misc";
 import { type FetchMoreProps, type SearchProps } from "../../../types";
@@ -37,25 +37,11 @@ import { type ShippingZoneUpdateFormData } from "../../components/ShippingZoneDe
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import { ShippingZoneRates } from "../ShippingZoneRates/ShippingZoneRates";
 import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard";
+import { messages } from "./messages";
+import { buildShippingZoneSaveComposition } from "./saveComposition";
+import { ShippingZoneSaveCompositionHint } from "./ShippingZoneSaveCompositionHint";
 import { ShippingZoneDetailsTitle } from "./Title";
 import { getInitialFormData } from "./utils";
-
-const messages = defineMessages({
-  countries: {
-    id: "55LMJv",
-    defaultMessage: "Countries",
-    description: "country list header",
-  },
-  noCountriesAssigned: {
-    id: "y7mfbl",
-    defaultMessage: "Currently, there are no countries assigned to this shipping zone",
-  },
-  shipping: {
-    id: "G0+gAp",
-    defaultMessage: "Shipping",
-    description: "shipping section header",
-  },
-});
 
 interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps {
   zoneLoading?: boolean;
@@ -68,6 +54,7 @@ interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProps {
   onCountryRemove: (code: string) => void;
   onDelete: () => void;
   onShowMetadata: () => void;
+  onFetchMore: () => void;
   onPriceRateAdd: () => void;
   getPriceRateEditHref: (id: string) => string;
   getRateChannelSetupHref: (rateId: string, channelId: string) => string;
@@ -128,6 +115,7 @@ export const ShippingZoneDetailsPage = ({
     formData: data,
     initialFormData: initialForm,
   });
+  const saveComposition = buildShippingZoneSaveComposition(data, initialForm);
   const warehouseChoices = useMemo(() => {
     const searchChoices = warehouses.map(warehouseToChoice);
     const selectedNotInSearch = data.warehouses.filter(
@@ -176,50 +164,49 @@ export const ShippingZoneDetailsPage = ({
           })}
         />
       </TopNav>
-      <DetailPageLayout.Content paddingBottom={10}>
-        <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
-        <CardSpacer />
-        <CountryList
-          countries={zoneLoading ? undefined : shippingZone?.countries}
-          disabled={disabled}
-          emptyText={getStringOrPlaceholder(
-            shippingZone && intl.formatMessage(messages.noCountriesAssigned),
-          )}
-          summaryContext="shipping-zone"
-          onCountryAssign={onCountryAdd}
-          onCountryUnassign={onCountryRemove}
-          title={intl.formatMessage(messages.countries)}
-        />
-        <CardSpacer />
-        <ShippingZoneRates
-          disabled={disabled}
-          onRateAdd={onPriceRateAdd}
-          getRateEditHref={getPriceRateEditHref}
-          getRateChannelSetupHref={getRateChannelSetupHref}
-          getRateTranslationHref={getRateTranslationHref}
-          onRateRemove={onRateRemove}
-          rates={shippingZone?.shippingMethods?.filter(
-            method => method.type === ShippingMethodTypeEnum.PRICE,
-          )}
-          variant="price"
-          zoneChannels={zoneChannels}
-          testId="add-price-rate"
-        />
-        <CardSpacer />
-        <ShippingZoneRates
-          disabled={disabled}
-          onRateAdd={onWeightRateAdd}
-          getRateEditHref={getWeightRateEditHref}
-          getRateChannelSetupHref={getRateChannelSetupHref}
-          getRateTranslationHref={getRateTranslationHref}
-          onRateRemove={onRateRemove}
-          rates={shippingZone?.shippingMethods?.filter(
-            method => method.type === ShippingMethodTypeEnum.WEIGHT,
-          )}
-          variant="weight"
-          zoneChannels={zoneChannels}
-          testId="add-weight-rate"
-        />
+      <DetailPageLayout.Content>
+        <DetailPageContent>
+          <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
+          <CountryList
+            countries={zoneLoading ? undefined : shippingZone?.countries}
+            disabled={disabled}
+            emptyText={getStringOrPlaceholder(
+              shippingZone && intl.formatMessage(messages.noCountriesAssigned),
+            )}
+            summaryContext="shipping-zone"
+            onCountryAssign={onCountryAdd}
+            onCountryUnassign={onCountryRemove}
+            title={intl.formatMessage(messages.countries)}
+          />
+          <ShippingZoneRates
+            disabled={disabled}
+            onRateAdd={onPriceRateAdd}
+            getRateEditHref={getPriceRateEditHref}
+            getRateChannelSetupHref={getRateChannelSetupHref}
+            getRateTranslationHref={getRateTranslationHref}
+            onRateRemove={onRateRemove}
+            rates={shippingZone?.shippingMethods?.filter(
+              method => method.type === ShippingMethodTypeEnum.PRICE,
+            )}
+            variant="price"
+            zoneChannels={zoneChannels}
+            testId="add-price-rate"
+          />
+          <ShippingZoneRates
+            disabled={disabled}
+            onRateAdd={onWeightRateAdd}
+            getRateEditHref={getWeightRateEditHref}
+            getRateChannelSetupHref={getRateChannelSetupHref}
+            getRateTranslationHref={getRateTranslationHref}
+            onRateRemove={onRateRemove}
+            rates={shippingZone?.shippingMethods?.filter(
+              method => method.type === ShippingMethodTypeEnum.WEIGHT,
+            )}
+            variant="weight"
+            zoneChannels={zoneChannels}
+            testId="add-weight-rate"
+          />
+        </DetailPageContent>
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
         <ShippingZoneSettingsCard
@@ -237,6 +224,7 @@ export const ShippingZoneDetailsPage = ({
       <Savebar>
         <Savebar.DeleteButton onClick={onDelete} />
         <Savebar.Spacer />
+        <ShippingZoneSaveCompositionHint composition={saveComposition} />
         <Savebar.CancelButton onClick={() => navigate(shippingZonesListBackLink)} />
         <Savebar.ConfirmButton
           transitionState={saveButtonBarState}

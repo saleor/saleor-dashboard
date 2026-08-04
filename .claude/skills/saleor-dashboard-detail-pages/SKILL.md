@@ -1,18 +1,35 @@
 ---
 name: saleor-dashboard-detail-pages
 description: >
-  Patterns for Saleor Dashboard entity detail views (products, customers, orders,
-  models/pages, warehouses). Use when building or refactoring detail pages, moving
-  metadata out of the main form, or aligning TopNav actions with existing entities.
+  Patterns for Saleor Dashboard entity detail views (channels, products, collections,
+  customers, shipping zones, warehouses, models/pages). Use when building or refactoring
+  detail pages, moving metadata out of the main form, or aligning TopNav actions.
+  For the full update language (sidebar ops, settings cards, checklist), see
+  saleor-dashboard-entity-detail skill.
 ---
 
 # Saleor Dashboard Detail Pages
 
 Conventions for `DetailPageLayout` entity views under `src/<feature>/`.
 
+**Start here for broader refresh:** [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) — page anatomy, `Detail*` vs `Settings*`, refactor checklist (e.g. collections).
+
 ## Foldable sections
 
 For expandable sections (advanced settings, rate rows, postal ranges, etc.) use **`DetailGroupBox`** with `Title2` — documented in [`saleor-dashboard-styles`](../saleor-dashboard-styles/SKILL.md#foldable-sections-detailgroupbox). Do not introduce new UI with the legacy `@dashboard/components/Accordion`.
+
+## Settings sections (`DetailSettingsCard`)
+
+On entity detail pages, group fields in **`DetailSettingsCard`** (not `DashboardCard` or nested cards). Full language:
+
+- Primary vs **secondary** sidebar card headers (Inventory / Delivery pattern)
+- **`intro`** row for leading description (Payment gateways pattern)
+- **Card vs open section** — when to skip the border
+- Channel availability tiers, foldables, SEO `unwrapped`
+- **SEO last** in the main column by default (identity → primary content → SEO)
+- [Vercel design](https://vercel.com/design) restraint rules (earn a surface, no nesting)
+
+→ [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md)
 
 ## Metadata in Header Modal
 
@@ -70,5 +87,6 @@ Shared UI: `src/components/MetadataDialog/`. Entity dialogs are thin wrappers �
 
 ## Further Reading
 
+- [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) — update language for daily entity details
 - `rules/metadata-modal.md` — step-by-step migration from inline metadata
 - `saleor-dashboard-styles` skill — layout and Macaw UI patterns

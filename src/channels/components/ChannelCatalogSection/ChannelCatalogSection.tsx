@@ -4,6 +4,10 @@ import {
   type ChannelCatalogFilterChannel,
   productListUrlWithChannelCatalogFilters,
 } from "@dashboard/channels/utils/productListCatalogUrls";
+import {
+  DetailSettingsCard,
+  DetailSettingsCardIntro,
+} from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { SetupChecklistReviewList } from "@dashboard/components/SetupChecklist/SetupChecklistReviewList";
 import { type SetupChecklistReviewItem } from "@dashboard/components/SetupChecklist/types";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -13,7 +17,6 @@ import { Eye, Plus } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ChannelSettingsCard } from "../ChannelForm/ChannelSettingsCard";
 import {
   type CatalogProductThumbnail,
   CatalogProductThumbnailStack,
@@ -139,12 +142,12 @@ export const ChannelCatalogSection = ({
   }, [hasListedProducts, stats, onBulkPublishCatalog, openChannelProductList, intl.locale]);
 
   return (
-    <ChannelSettingsCard
+    <DetailSettingsCard
       data-test-id="channel-catalog"
       title={intl.formatMessage(messages.title)}
       contentFlush
     >
-      <Box className={styles.intro}>
+      <DetailSettingsCardIntro>
         <Text size={3} color="default2">
           {catalogStatsError ? (
             <FormattedMessage {...messages.catalogStatsError} />
@@ -165,20 +168,20 @@ export const ChannelCatalogSection = ({
             />
           )}
         </Text>
-      </Box>
+      </DetailSettingsCardIntro>
       {warehouseReadiness === "no_shop_warehouses" ? (
-        <Box className={styles.intro}>
+        <DetailSettingsCardIntro>
           <Text size={3} color="default2">
             <FormattedMessage {...messages.warehouseNoteNoShop} />
           </Text>
-        </Box>
+        </DetailSettingsCardIntro>
       ) : null}
       {warehouseReadiness === "no_channel_warehouses" ? (
-        <Box className={styles.intro}>
+        <DetailSettingsCardIntro>
           <Text size={3} color="default2">
             <FormattedMessage {...messages.warehouseNoteNoChannel} />
           </Text>
-        </Box>
+        </DetailSettingsCardIntro>
       ) : null}
       {loading ? (
         <Box className={styles.emptyContent} display="flex" flexDirection="column" gap={3}>
@@ -222,6 +225,6 @@ export const ChannelCatalogSection = ({
           <SetupChecklistReviewList items={catalogActions} data-test-id="catalog-action" />
         </>
       )}
-    </ChannelSettingsCard>
+    </DetailSettingsCard>
   );
 };

@@ -1,17 +1,12 @@
 // @ts-strict-ignore
 import { type LazyQueryResult, type QueryLazyOptions } from "@apollo/client";
-import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
-import {
-  getChannelAvailabilityLabel,
-  getChannelAvailabilityStatus,
-} from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import { getProductAvailabilityStatusCell } from "@dashboard/components/ChannelsAvailabilityDropdown/productAvailabilityDatagrid";
 import { type ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   dateCell,
   moneyCell,
   pillCell,
   readonlyTextCell,
-  statusCell,
   tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
@@ -302,27 +297,11 @@ function getCollectionsCellContent(
 function getAvailabilityCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   intl: IntlShape,
-  selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
+  selectedChannel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
 ) {
-  if (selectedChannnel) {
-    return statusCell(
-      getChannelAvailabilityStatus(selectedChannnel),
-      intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
-      COMMON_CELL_PROPS,
-    );
-  }
+  const listings = selectedChannel ? [selectedChannel] : (rowData?.channelListings ?? []);
 
-  if (rowData?.channelListings?.length) {
-    return statusCell(
-      "success",
-      intl.formatMessage(messages.dropdownLabel, {
-        channelCount: rowData?.channelListings?.length,
-      }),
-      COMMON_CELL_PROPS,
-    );
-  } else {
-    return statusCell("error", intl.formatMessage(messages.noChannels), COMMON_CELL_PROPS);
-  }
+  return getProductAvailabilityStatusCell(listings, intl);
 }
 
 function getDescriptionCellContent(
