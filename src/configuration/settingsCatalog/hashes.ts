@@ -20,6 +20,9 @@ export const settingsHashes = {
   refundsRefundReasons: "refund-reasons",
   refundsReturnReasons: "return-reasons",
 
+  // Gift cards
+  giftCardsExpiry: "expiry-date",
+
   // Store
   storeDetails: "store-details",
   storeCompany: "company-information",

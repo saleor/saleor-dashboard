@@ -29,8 +29,23 @@ export const giftCardUpdatePageHeaderMessages = defineMessages({
     defaultMessage: "Disabled",
     description: "disabled status label",
   },
+  giftCardSettings: {
+    id: "0Crrwk",
+    defaultMessage: "Gift card settings",
+    description: "gift card detail cogs menu, opens shop-wide gift card settings",
+  },
   openGraphiQL: {
     id: "YNhhZh",
     defaultMessage: "Open this gift card in GraphiQL",
+  },
+  deleteGiftCard: {
+    id: "eEXfCE",
+    defaultMessage: "Delete gift card",
+    description: "gift card detail cogs menu, opens the delete-confirmation dialog",
+  },
+  editGiftCardMetadata: {
+    id: "xbgJHS",
+    defaultMessage: "Edit gift card metadata",
+    description: "gift card detail page, top-bar metadata button tooltip",
   },
 });

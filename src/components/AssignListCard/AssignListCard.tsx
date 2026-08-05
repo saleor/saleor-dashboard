@@ -9,6 +9,7 @@ export interface AssignListCardItem {
   id: string;
   name: string;
   href?: string;
+  icon?: ReactNode;
 }
 
 export interface AssignListCardEmptyState {
@@ -85,23 +86,30 @@ export const AssignListCard = ({
           <div className={styles.list}>
             {items.map(item => (
               <div key={item.id} className={styles.row} data-test-id={rowTestId}>
-                {item.href ? (
-                  <RouterLink
-                    to={item.href}
-                    className={styles.rowName}
-                    data-test-id={rowLinkTestId(item.id)}
-                  >
-                    <Text size={3} fontWeight="medium">
-                      {item.name}
-                    </Text>
-                  </RouterLink>
-                ) : (
-                  <Box className={styles.rowName}>
-                    <Text size={3} fontWeight="medium">
-                      {item.name}
-                    </Text>
-                  </Box>
-                )}
+                <Box className={styles.rowLeading}>
+                  {item.icon ? (
+                    <Box className={styles.itemIcon} aria-hidden>
+                      {item.icon}
+                    </Box>
+                  ) : null}
+                  {item.href ? (
+                    <RouterLink
+                      to={item.href}
+                      className={styles.rowName}
+                      data-test-id={rowLinkTestId(item.id)}
+                    >
+                      <Text size={3} fontWeight="medium">
+                        {item.name}
+                      </Text>
+                    </RouterLink>
+                  ) : (
+                    <Box className={styles.rowName}>
+                      <Text size={3} fontWeight="medium">
+                        {item.name}
+                      </Text>
+                    </Box>
+                  )}
+                </Box>
                 <div className={styles.rowDelete}>
                   <DeletableItem id={item.id} onDelete={onRemoveItem} disabled={disabled} />
                 </div>

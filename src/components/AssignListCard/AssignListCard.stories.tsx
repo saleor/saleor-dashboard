@@ -1,5 +1,6 @@
+import { Button } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Truck } from "lucide-react";
+import { Truck, User } from "lucide-react";
 
 import { AssignListCard } from "./AssignListCard";
 
@@ -30,10 +31,57 @@ export const WithItems: Story = {
   },
 };
 
+export const WithItemIcons: Story = {
+  args: {
+    ...WithItems.args,
+    title: "Assigned customer",
+    subtitle: "Restricted",
+    intro: "Only this customer can redeem the gift card.",
+    items: [{ id: "1", name: "Jane Customer", href: "/customers/1", icon: <User size={16} /> }],
+    emptyState: {
+      icon: <User size={16} />,
+      title: "No customer assigned",
+      description: "Anyone with the code can redeem it.",
+    },
+  },
+};
+
 export const Empty: Story = {
   args: {
     ...WithItems.args,
     items: [],
     subtitle: "Required to sell",
+    footerAction: (
+      <Button variant="secondary" type="button">
+        Assign shipping zone
+      </Button>
+    ),
   },
+};
+
+/** Sidebar-width card — empty action stacks under icon+copy, right-aligned. */
+export const EmptyNarrow: Story = {
+  args: {
+    ...Empty.args,
+    title: "Assigned customer",
+    subtitle: "Unrestricted",
+    intro: "Only this customer can redeem the gift card.",
+    emptyState: {
+      icon: <User size={16} />,
+      title: "No customer assigned",
+      description: "This card is unrestricted — anyone with the code can redeem it.",
+    },
+    footerAction: (
+      <Button variant="secondary" type="button">
+        Assign customer
+      </Button>
+    ),
+  },
+  decorators: [
+    Story => (
+      <div style={{ width: 320 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };

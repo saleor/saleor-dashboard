@@ -46,7 +46,10 @@ export const Link = (props: LinkProps): JSX.Element => {
     sprinkles({
       cursor: disabled ? "not-allowed" : "pointer",
       fontSize: "inherit",
-      textDecoration: underline ? "underline" : "none",
+      // Always give links a hover affordance (underline) unless already underlined.
+      textDecoration: underline
+        ? "underline"
+        : { default: "none", hover: disabled ? "none" : "underline" },
       color: textColor,
     }),
     className,

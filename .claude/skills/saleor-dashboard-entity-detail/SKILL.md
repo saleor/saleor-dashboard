@@ -69,24 +69,66 @@ DetailPageLayout
 
 ### `Detail*` components (entity detail)
 
-| Component                    | Status                 | Use when                                                                                      |
-| ---------------------------- | ---------------------- | --------------------------------------------------------------------------------------------- |
-| `DetailPageLayout`           | exists                 | All entity details                                                                            |
-| `DetailGroupBox`             | exists                 | Foldable nested blocks (rates, postal codes, metadata editor) — not primary settings cards    |
-| `DetailSettingsCard`         | exists                 | Sectioned settings — title + optional `headerEnd` in header band; leading copy in `intro` row |
-| `DetailPageContent`          | exists                 | Main-column stack (`gap={4}` + `paddingX/Y={6}`) for settings / SEO / lists                   |
-| `DetailSettingToggleRow`     | **lift from channels** | Toggle setting with title + description + optional nested fields                              |
-| `DetailSettingRadioGroup`    | **lift from channels** | Strategy radios with recommended/legacy badges                                                |
-| `DetailSectionNav`           | exists                 | 4+ sections on a long detail page                                                             |
-| `SetupChecklist`             | exists                 | Entity has required setup steps (channel) or strong diagnostics (product availability)        |
-| `SetupReviewShortcut`        | **lift from channels** | Single-row jump to tax/catalog/payments                                                       |
-| `AssignListCard`             | exists                 | Sidebar membership list (Delivery/Inventory pattern)                                          |
-| `EntityBackgroundImageField` | exists                 | Shared background image upload/preview/alt for collections, categories, …                     |
-| `SavebarCompositionHint`     | exists                 | Presentational “Unsaved changes: …” — entity wrappers supply segments                         |
+| Component                    | Status                 | Use when                                                                                                                                                                                                                                                |
+| ---------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DetailPageLayout`           | exists                 | All entity details                                                                                                                                                                                                                                      |
+| `DetailGroupBox`             | exists                 | Foldable nested blocks (rates, postal codes, metadata editor) — not primary settings cards                                                                                                                                                              |
+| `DetailSettingsCard`         | exists                 | Sectioned settings — title + optional `headerEnd` in header band; leading copy in `intro` row                                                                                                                                                           |
+| `DetailPageContent`          | exists                 | Main-column stack (`gap={4}` + `paddingX/Y={6}`) for settings / SEO / lists                                                                                                                                                                             |
+| `DetailSettingToggleRow`     | exists                 | Boolean setting row (title + description + Toggle); optional nested fields when on                                                                                                                                                                      |
+| `DetailSettingRadioGroup`    | **lift from channels** | Strategy radios with recommended/legacy badges                                                                                                                                                                                                          |
+| `DetailSectionNav`           | exists                 | 4+ sections on a long detail page                                                                                                                                                                                                                       |
+| `SetupChecklist`             | exists                 | Entity has required setup steps (channel) or strong diagnostics (product availability)                                                                                                                                                                  |
+| `SetupReviewShortcut`        | **lift from channels** | Single-row jump to tax/catalog/payments                                                                                                                                                                                                                 |
+| `AssignListCard`             | exists                 | Sidebar membership list (Delivery / gift-card customer). Empty state uses `flex-wrap`: wide = one row; when icon+copy (~16rem) + action no longer fit, action wraps right-aligned below. Mirror in `ChannelInventoryCard` until it uses this primitive. |
+| `ChannelDisplay` / links     | exists                 | Read-only or linked channel name + globe icon (`src/components/Channel/Channel.tsx`)                                                                                                                                                                    |
+| `EntityBackgroundImageField` | exists                 | Shared background image upload/preview/alt for collections, categories, …                                                                                                                                                                               |
+| `SavebarCompositionHint`     | exists                 | Presentational “Unsaved changes: …” — entity wrappers supply segments                                                                                                                                                                                   |
 
 Until extraction lands during Phase B, keep legacy `DashboardCard` for shipping-style hints — do not use `SettingsSection` on entity detail.
 
 **Phase B workflow:** improve a pilot view (collections) in slices; extract `Detail*` when the slice needs it; rewire channels in the same PR. See plan: dogfood-driven extraction, not library-first.
+
+### `DetailSettingToggleRow` (boolean settings)
+
+Path: `src/components/DetailSettingToggleRow/DetailSettingToggleRow.tsx`. Storybook: `Components / DetailSettingToggleRow`.
+
+**Canonical references:** Channel Orders (`ChannelOrdersSection` — allow unpaid, expire orders) · Gift card Details expiry.
+
+Use for **on/off settings** inside a primary `DetailSettingsCard` — not for membership assigns (sidebar) and not for free-form fields alone.
+
+| Rule              | Detail                                                                                                                                             |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Parent card**   | Wrap the toggle stack in `DetailSettingsCard` with **`contentFlush`** so row borders go edge-to-edge                                               |
+| **Row anatomy**   | Title (`size={3}` medium) + description (`size={2}` default2) on the left; `Toggle` on the right                                                   |
+| **Description**   | Explain the consequence of enabling — not a restatement of the title. Links use `MicrocopyLink`                                                    |
+| **Nested fields** | When the setting is on and needs inputs, put them in `DetailSettingNestedField` children (dashed top border, indented)                             |
+| **Notice**        | Optional `notice` slot for conditional callouts under the title row (channel expire-orders + auto-confirm)                                         |
+| **Mixed content** | If the same card has regular fields above toggles (e.g. tags then expiry), pad that block yourself and give it a bottom border; toggles stay flush |
+| **Optional**      | Do **not** append `DetailSettingsOptionalLabel` on toggle titles — off state already means “not set”; say so in the description                    |
+| **A11y**          | Title/description are a clickable `role="button"`; Toggle is `aria-hidden` / `tabIndex={-1}` so there is one tab stop                              |
+
+```tsx
+<DetailSettingsCard title="Details" contentFlush>
+  <Box className={styles.paddedFields}>{/* tags, etc. */}</Box>
+  <DetailSettingToggleRow
+    title={<FormattedMessage {...messages.expiryTitle} />}
+    description={<FormattedMessage {...messages.expiryDescription} />}
+    pressed={expires}
+    onPressedChange={setExpires}
+  >
+    {expires ? (
+      <DetailSettingNestedField>
+        <Input type="date" name="expiryDate" value={expiryDate} onChange={onChange} />
+      </DetailSettingNestedField>
+    ) : null}
+  </DetailSettingToggleRow>
+</DetailSettingsCard>
+```
+
+**Anti-patterns:** Checkbox + separate label instead of this row; toggle inside a nested card; putting toggles in a padded (non-flush) card body so borders look inset/double-padded.
+
+Channel code may still import `ChannelSettingToggleRow` — that file re-exports `DetailSettingToggleRow`. Prefer the `Detail*` import in new code.
 
 ### Settings card headers — primary vs secondary
 
@@ -103,7 +145,7 @@ Two header patterns; both use a bordered card surface but different chrome.
 
 Primary = settings you edit in place. Secondary = assign/remove membership with count in the header.
 
-`headerEnd` on primary cards: default button size; `DetailSettingsCard` applies tighter vertical header padding when `headerEnd` is set (not a smaller button). Same for `ChannelAvailabilityCard` Manage in the sidebar toolbar.
+`headerEnd` on primary cards: default button size; header keeps the same vertical padding as title-only cards — only the right inset tightens to match the Y gap (`spacing-4`). Same for `ChannelAvailabilityCard` Manage in the sidebar toolbar.
 
 ### `DetailSettingsCard` API (primary settings card)
 
@@ -114,7 +156,7 @@ Path: `src/components/DetailSettingsCard/DetailSettingsCard.tsx`. Storybook: `Co
 | `title`                       | String, `FormattedMessage`, or `DetailSettingsCardTitle` — card always renders **`Text size={5}` bold `as="h2"`**           |
 | `intro`                       | Leading description — **bordered row below header** (Payment gateways pattern). Prefer over `subtitle` for multi-line copy. |
 | `subtitle`                    | Short line under title **inside tinted header** — rare (status/count); don’t put long hints here                            |
-| `headerEnd`                   | Actions on the right (Upload, Manage). Triggers compact vertical header padding.                                            |
+| `headerEnd`                   | Actions on the right (Upload, Manage). Same header height; right inset matches Y gap (`spacing-4`).                         |
 | `contentFlush`                | Full-bleed body (lists, image upload dropzone)                                                                              |
 | `DetailSettingsCardIntro`     | Reusable intro band when stacking multiple intro blocks (catalog warehouse notes)                                           |
 | `DetailSettingsOptionalLabel` | Secondary `size={2}` “Optional” — no brackets; use inside `DetailSettingsCardTitle`                                         |
@@ -189,6 +231,7 @@ Three established patterns — pick by **depth of per-channel config**, not by e
 - Do **not** nest `DetailGroupBox` for SEO when section nav exists — double collapse hides optional fields unnecessarily.
 - Carry **Complete / Incomplete** in the SEO surface (`intro` or foldable trigger), not above primary content.
 - Use foldable `DetailGroupBox` SEO only on **short pages without section nav** where collapse saves space — still keep it last in the stack.
+- **Gift card Timeline** is an open (non-carded) section — title + timeline only, **last** in the main column. Do not wrap in `DetailSettingsCard` / `DetailGroupBox`.
 
 `DetailGroupBox` ≠ `ChannelAvailabilityItem` accordion: group box is for **entity rows in a list**; channel item is for **homogeneous channel rows** with shared status model.
 
@@ -212,6 +255,7 @@ Shipping-style entity cards with [`DashboardCard.Subtitle`](./saleor-dashboard-m
 10. **Recoverable setup** — if checklist dismissible, offer reopen from TopNav menu.
 11. **SEO last in the main column** — after identity/settings and primary content; exception only when explicitly decided for that entity.
 12. **Primitives own heading typography** — `DetailSettingsCard` / `AssignListCard` / `Title2` set size, weight, and heading level. Callers pass copy only (`string` / `FormattedMessage` / thin wrappers like `DetailSettingsCardTitle`). Never rely on bare browser `<h2>` styles.
+13. **Channel references use `ChannelDisplay` / `ChannelDetailsLink`** — globe icon + normal text color; never a bare blue link for a channel name. Other in-card links prefer `Link color="secondary"` with hover underline. See [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) → Interactive affordances.
 
 Not every entity needs all of these. Collections don’t need a setup checklist; channels do.
 
@@ -228,14 +272,15 @@ Work top-down. Skip steps that don’t apply.
 
 Canonical reference: `src/channels/pages/ChannelDetailsPage/ChannelDetailsPage.tsx` (`menuItems` `useMemo`).
 
-| Rule           | Detail                                                                                                                                                          |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Trigger**    | Default `TopNav.Menu` — secondary `Settings` cog (`show-more-button`).                                                                                          |
-| **Order**      | Extension items → dev/utility actions (GraphiQL with `GraphqlIcon`) → entity-specific links → **Delete last**.                                                  |
-| **Delete**     | `color: "critical1"`, `Trash2` icon (`iconSize.small`), `testId: "delete-<entity>"`. Opens confirm dialog — **not** on `Savebar` (channel + collection pilots). |
-| **Icons**      | Every built-in item gets an icon; extensions may omit until avatar support lands.                                                                               |
-| **Disabled**   | When page `disabled` or entity not loaded: `menuItems.map(item => ({ ...item, disabled: true }))`.                                                              |
-| **Visibility** | Render only when `menuItems.length > 0`.                                                                                                                        |
+| Rule                 | Detail                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Trigger**          | Default `TopNav.Menu` — secondary `Settings` cog (`show-more-button`).                                                                                                                                                                                                                                                                                        |
+| **Order**            | Extension items → entity-specific actions (e.g. Resend, Create child) → **related store/settings hub** (when one exists) → **GraphiQL** (`GraphqlIcon`) → **Delete last**. GraphiQL always immediately precedes Delete (or other critical/destructive last item).                                                                                             |
+| **Related settings** | If the entity family has a shop/configuration hub that affects this entity (gift card expiry defaults, channel tax config, …), add a cogs item **immediately above GraphiQL**. Named label (“Gift card settings”, “Tax settings”), Lucide icon, permission-gated. Canonical: gift card detail → `giftCardSettingsUrl({ from: "gift-cards" })`; channel → tax. |
+| **Delete**           | `color: "critical1"`, `Trash2` icon (`iconSize.small`), `testId: "delete-<entity>"`. Opens confirm dialog — **not** on `Savebar` (channel + collection pilots).                                                                                                                                                                                               |
+| **Icons**            | Every built-in item gets an icon; extensions may omit until avatar support lands.                                                                                                                                                                                                                                                                             |
+| **Disabled**         | When page `disabled` or entity not loaded: `menuItems.map(item => ({ ...item, disabled: true }))`.                                                                                                                                                                                                                                                            |
+| **Visibility**       | Render only when `menuItems.length > 0`.                                                                                                                                                                                                                                                                                                                      |
 
 Savebar on entity detail: `Spacer` + composition hint (optional) + Cancel + Confirm — no delete button when delete lives in the menu.
 
@@ -307,6 +352,7 @@ Reference: [`ShippingZoneDetailsPage`](../../src/shipping/components/ShippingZon
 | Pattern                                             | Reference                                                                               |
 | --------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Full funnel (checklist, nav, staged assign, review) | `src/channels/pages/ChannelDetailsPage/`                                                |
+| Boolean setting toggle row                          | `src/components/DetailSettingToggleRow/` · channel Orders · gift card expiry            |
 | Metadata modal                                      | `src/products/components/ProductMetadataDialog/`                                        |
 | Save composition                                    | `src/components/Savebar/SavebarCompositionHint.tsx` (+ entity segment wrappers)         |
 | Content column stack                                | `src/components/DetailPageContent/DetailPageContent.tsx`                                |

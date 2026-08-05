@@ -76,7 +76,7 @@ export const GiftCardUpdateBalanceDialog = ({ open, onClose }: DialogProps) => {
   isSubmittingRef.current = isSubmitting;
 
   const { formErrors } = useDialogFormReset({
-    apiErrors: submitData?.giftCardUpdate?.errors ?? [],
+    apiErrors: submitData?.giftCardUpdate?.errors,
     keys: ["initialBalanceAmount"],
     open,
     reset,

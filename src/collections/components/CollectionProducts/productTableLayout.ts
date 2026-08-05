@@ -1,7 +1,7 @@
 import { iconSize } from "@dashboard/components/icons";
 
 /** Matches `DetailSettingsCard` `.headerWithEnd` right inset (Assign product button). */
-export const COLLECTION_PRODUCT_TABLE_ACTION_INSET = 2;
+export const COLLECTION_PRODUCT_TABLE_ACTION_INSET = 4;
 
 /** Width of the drag column in `ProductsTable` colgroup. */
 export const COLLECTION_PRODUCT_TABLE_DRAG_COLUMN_PX = 40;

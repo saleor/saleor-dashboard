@@ -101,11 +101,15 @@ import { warehouseListUrl } from "@dashboard/warehouses/urls";
 
 ### When to use which link
 
-| Component                                      | Use for                                                                  |
-| ---------------------------------------------- | ------------------------------------------------------------------------ |
-| `MicrocopyLink`                                | Links embedded in hint/subtitle sentences                                |
-| `@dashboard/components/Link`                   | Standalone navigation, tables, actions (accent color OK)                 |
-| `InternalLink` / `RouterLink` in custom `Text` | Avoid — duplicate styling; extend `MicrocopyLink` if a variant is needed |
+| Component                                      | Use for                                                                                                      |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `MicrocopyLink`                                | Links embedded in hint/subtitle sentences (inherit color; underline on hover)                                |
+| `Link color="secondary"`                       | In-component / card / sidebar navigation — **prefer this** (`default1`, underline on hover; not accent blue) |
+| `Link` (default `primary`)                     | Rare emphasis where accent blue is intentional (legacy tables/actions)                                       |
+| `ChannelDisplay` / `ChannelDetailsLink`        | Channel name + globe icon (read-only or link to channel details) — see styles skill                          |
+| `InternalLink` / `RouterLink` in custom `Text` | Avoid — duplicate styling; extend `MicrocopyLink` or use `Link color="secondary"`                            |
+
+**Hover is required** for every interactive link: underline and/or color change. See [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) → Interactive affordances.
 
 ## i18n
 

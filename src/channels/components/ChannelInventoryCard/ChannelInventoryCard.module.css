@@ -24,11 +24,12 @@
   padding: var(--mu-spacing-4) var(--mu-spacing-4) 0;
 }
 
+/* Match AssignListCard empty-state: wrap action under copy when the row is tight. */
 .emptyState {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--mu-spacing-4);
+  gap: var(--mu-spacing-3) var(--mu-spacing-4);
   margin: var(--mu-spacing-4);
   padding: var(--mu-spacing-4);
   border: 1px dashed var(--mu-colors-border-default1);
@@ -38,7 +39,8 @@
 
 /* Combo button must not shrink — overflow:hidden on the group clips the chevron. */
 .emptyAction {
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  margin-left: auto;
   white-space: nowrap;
 }
 
@@ -51,7 +53,7 @@
 
 .emptyLeading {
   display: flex;
-  flex: 1;
+  flex: 1 1 16rem;
   align-items: center;
   gap: var(--mu-spacing-3);
   min-width: 0;

@@ -47,6 +47,8 @@ export const giftCardEventsFragment = gql`
 export const giftCardDataFragment = gql`
   fragment GiftCardData on GiftCard {
     ...Metadata
+    code
+    displayCode
     last4CodeChars
     boughtInChannel
     createdBy {
@@ -55,6 +57,9 @@ export const giftCardDataFragment = gql`
     product {
       id
       name
+      thumbnail {
+        url
+      }
     }
     assignedTo {
       ...UserBase

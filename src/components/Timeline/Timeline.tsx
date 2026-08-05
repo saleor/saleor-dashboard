@@ -3,6 +3,8 @@ import { Box, Button, Textarea } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { TimelineStem } from "./TimelineStem";
+
 export const Timeline = ({ children }: PropsWithChildren) => {
   return <Box position="relative">{children}</Box>;
 };
@@ -16,6 +18,8 @@ interface TimelineAddNoteProps {
   placeholder?: string;
   buttonLabel?: string | React.ReactNode;
   label?: string;
+  /** Draw a vertical line from the note input down to the first timeline item. */
+  showTimelineConnector?: boolean;
 }
 
 export const TimelineAddNote = ({
@@ -27,6 +31,7 @@ export const TimelineAddNote = ({
   placeholder,
   buttonLabel,
   label,
+  showTimelineConnector = false,
 }: TimelineAddNoteProps) => {
   const intl = useIntl();
   const [isFocused, setIsFocused] = useState(false);
@@ -57,7 +62,7 @@ export const TimelineAddNote = ({
   );
 
   return (
-    <Box marginBottom={6}>
+    <Box>
       <Box position="relative">
         <Textarea
           disabled={disabled}
@@ -76,10 +81,20 @@ export const TimelineAddNote = ({
           <SendFormKeyboardShortcutHint visible={isFocused} />
         </Box>
       </Box>
-      <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
-        <Button disabled={!canSubmit} onClick={submit} variant="secondary" type="button">
-          {buttonLabel ?? defaultButtonLabel}
-        </Button>
+      {/*
+        Stem lives here (not inside the textarea wrapper) so it isn't clipped by
+        macaw field overflow. Top of this box = note input bottom border.
+        paddingBottom replaces the old marginBottom so the stem can paint through it.
+      */}
+      <Box position="relative" paddingBottom={6} overflow="visible">
+        {showTimelineConnector ? (
+          <TimelineStem top={0} bottom="-16px" data-test-id="timeline-note-connector" />
+        ) : null}
+        <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={2}>
+          <Button disabled={!canSubmit} onClick={submit} variant="secondary" type="button">
+            {buttonLabel ?? defaultButtonLabel}
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

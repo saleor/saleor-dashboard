@@ -1538,6 +1538,8 @@ export const UserBaseFragmentDoc = gql`
 export const GiftCardDataFragmentDoc = gql`
     fragment GiftCardData on GiftCard {
   ...Metadata
+  code
+  displayCode
   last4CodeChars
   boughtInChannel
   createdBy {
@@ -1546,6 +1548,9 @@ export const GiftCardDataFragmentDoc = gql`
   product {
     id
     name
+    thumbnail {
+      url
+    }
   }
   assignedTo {
     ...UserBase
@@ -11525,6 +11530,10 @@ export const GiftCardDetailsDocument = gql`
     query GiftCardDetails($id: ID!, $canSeeApp: Boolean!, $canSeeUser: Boolean!) {
   giftCard(id: $id) {
     ...GiftCardData
+    app @include(if: $canSeeApp) {
+      id
+      name
+    }
     events {
       ...GiftCardEvent
       assignedTo {

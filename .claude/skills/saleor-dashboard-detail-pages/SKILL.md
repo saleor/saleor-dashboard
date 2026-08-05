@@ -82,7 +82,7 @@ Shared UI: `src/components/MetadataDialog/`. Entity dialogs are thin wrappers �
 
 - `TopNav.MetadataButton` — metadata (edit views only)
 - `TranslationsButton` — when `MANAGE_TRANSLATIONS`
-- `TopNav.Menu` — extensions + delete/other actions
+- `TopNav.Menu` — extensions → entity actions → related settings hub (if any) → GraphiQL → Delete last (see entity-detail skill)
 - Set `actionsGap={3}` when multiple header actions
 
 ## Further Reading

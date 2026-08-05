@@ -10,7 +10,7 @@ export function useDialogFormReset<TError extends UserError, TKey extends string
   open,
 }: {
   reset: () => void;
-  apiErrors: TError[];
+  apiErrors: TError[] | undefined;
   keys: TKey[];
   open: boolean;
 }) {
@@ -21,11 +21,19 @@ export function useDialogFormReset<TError extends UserError, TKey extends string
       setFormErrors(null);
       reset();
     }
+    // omit reset — useForm recreates it every render
   }, [open]);
-  useEffect(() => {
-    const errors = getFormErrors(keys, apiErrors);
 
-    setFormErrors(errors);
+  useEffect(() => {
+    // Do not use `apiErrors ?? []` at call sites: a new [] each render loops here.
+    if (!apiErrors?.length) {
+      setFormErrors(null);
+
+      return;
+    }
+
+    setFormErrors(getFormErrors(keys, apiErrors));
+    // omit keys — callers pass inline arrays
   }, [apiErrors]);
 
   return { formErrors };

@@ -25,6 +25,7 @@ const GiftCardEnableDisableSection = () => {
 
   return (
     <ButtonWithLoader
+      variant="secondary"
       data-test-id="enable-button"
       onClick={handleClick}
       transitionState={currentOpts?.status}

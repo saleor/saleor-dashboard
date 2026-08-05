@@ -216,6 +216,50 @@ import { Box } from "@saleor/macaw-ui-next";
 - **Column / table headers** (datagrid, list headers) stay secondary (`size={2}`–`3`, regular/medium) — they are not section titles.
 - One visual system for the same role across collections, categories, channels, shipping — if a title looks “off”, fix the shared primitive, not a one-off page style.
 
+## Interactive affordances (hover / focus)
+
+Every clickable control must show a hover (and focus-visible) state. Prefer one of:
+
+| Pattern                   | When                                                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Underline on hover**    | Text links, channel name links, product name rows, microcopy links                               |
+| **Color change on hover** | Icon buttons, chips, rows that don’t read as links (`default2` → `default1`, or background tint) |
+| **Both**                  | Dense ops lists where underline alone is easy to miss                                            |
+
+Do **not** ship interactive elements that only change the cursor. Focus-visible outlines stay required for keyboard users (`outline` / macaw focus rings).
+
+### Links in UI components — prefer normal text color
+
+Inside cards, sidebars, provenance, tooltips, and other product UI chrome, prefer **normal text colors** over accent blue:
+
+| Use                                                | Color                                                        | Hover                                                     |
+| -------------------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------- |
+| In-component navigation (`Link color="secondary"`) | `default1`                                                   | Underline (built into `Link` when not already underlined) |
+| Hint / subtitle embeds                             | `MicrocopyLink` → `inherit`                                  | Underline                                                 |
+| Read-only / clickable channel                      | `ChannelDisplay` / `ChannelDetailsLink` / `ClickableChannel` | Underline on name (or color on `ClickableChannel`)        |
+| Marketing / rare emphasis                          | `Link` default `primary` (`accent1`)                         | Underline                                                 |
+
+```tsx
+// ✅ Preferred in entity detail / sidebar chrome
+<Link href={orderUrl} color="secondary">
+  <Text size={3} as="span">#{orderNumber}</Text>
+</Link>
+
+// ✅ Channel with globe icon
+<ChannelDetailsLink channel={channel} size={3} color="default1" fontWeight="regular" />
+
+// ❌ Avoid for body/meta links in cards
+<Link href={orderUrl}>#{orderNumber}</Link> // accent blue
+```
+
+**Channel display primitives** live in `src/components/Channel/Channel.tsx`:
+
+- `ChannelDisplay` — read-only name + globe icon (optional inactive suffix)
+- `ChannelDetailsLink` — same chrome, links to channel details
+- `ClickableChannel` — same chrome, links to orders filtered by channel (permission-gated)
+
+Do not hand-roll `Globe` + blue `Link` for channel names.
+
 ## Entity detail settings card (`DetailSettingsCard`)
 
 Primary bordered settings surface on entity detail pages. Full rules (primary vs secondary header, card vs section, Vercel restraint) live in [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md).
@@ -225,7 +269,7 @@ Primary bordered settings surface on entity detail pages. Full rules (primary vs
 | Card shell         | `DetailSettingsCard.module.css` — `default1` body, 8px radius, 1px border                   |
 | Primary header     | Tinted `default2` band; `align-items: center`; title left, `headerEnd` right                |
 | Title              | Always `Text size={5} fontWeight="bold" as="h2"` — string **and** ReactNode titles          |
-| Header with action | `.headerWithEnd` — tighter vertical padding (`spacing-2`), keep default button size         |
+| Header with action | `.headerWithEnd` — same Y padding as title-only; `padding-right` matches Y (`spacing-4`)    |
 | Leading copy       | `intro` prop — white band + bottom border below header (not under title in tinted band)     |
 | Optional in title  | `DetailSettingsCardTitle optional` + `DetailSettingsOptionalLabel` (`size={2}`, `default2`) |
 | Body               | `.content` padding `5/6`; `contentFlush` for lists and upload zones                         |

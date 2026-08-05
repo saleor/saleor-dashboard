@@ -163,6 +163,10 @@
     "context": "limit voucher",
     "string": "Limit to staff only"
   },
+  "+kfFIG": {
+    "context": "gift card sidebar, empty state title for assigned customer",
+    "string": "No customer assigned"
+  },
   "+mbkbU": {
     "context": "unknown customer display name",
     "string": "Unknown customer"
@@ -500,6 +504,10 @@
     "context": "settings search alias",
     "string": "shipping zone stock"
   },
+  "0Crrwk": {
+    "context": "gift card detail cogs menu, opens shop-wide gift card settings",
+    "string": "Gift card settings"
+  },
   "0DRBjg": {
     "string": "Token Note"
   },
@@ -764,10 +772,6 @@
   "1M0OKI": {
     "context": "badge when shipping setup CTAs are unavailable",
     "string": "Missing permission to manage shipping"
-  },
-  "1O/T5n": {
-    "context": "gift card history message",
-    "string": "Gift card balance was adjusted by {adjustedBy}"
   },
   "1SwKZV": {
     "context": "create attribute and assign to model type button",
@@ -1038,6 +1042,10 @@
     "context": "shipping method channel status description when newly added",
     "string": "Set a price in the Pricing section before saving"
   },
+  "2kMLBJ": {
+    "context": "gift card instrument card, aria label to reveal full code",
+    "string": "Show code"
+  },
   "2m2Xi9": {
     "context": "scope helper for editable order line metadata section",
     "string": "Metadata stored on this order line only. Changes here do not update the product variant."
@@ -1106,10 +1114,6 @@
   "3/IQO9": {
     "context": "extension install page, permissions section",
     "string": "Installing this extension will give it following permissions"
-  },
-  "30X9S8": {
-    "context": "gift card history message",
-    "string": "Gift card was issued by {issuedBy}"
   },
   "32Capp": {
     "context": "page title",
@@ -1372,6 +1376,10 @@
     "context": "datagrid title label",
     "string": "Select transaction to refund"
   },
+  "4ErS/1": {
+    "context": "gift card tag field label",
+    "string": "Card tag"
+  },
   "4IawKc": {
     "context": "onboarding step description",
     "string": "Go to all orders where you can create an fulfilment and refund and review corresponding statuses. View the order in GraphQL"
@@ -1422,10 +1430,6 @@
   "4YyeCx": {
     "context": "label for order total amount",
     "string": "Order total"
-  },
-  "4Z0O2B": {
-    "context": "section header title",
-    "string": "Gift Card Timeline"
   },
   "4Z14xW": {
     "context": "button",
@@ -1734,6 +1738,14 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
+  "6+zuTC": {
+    "context": "gift card sidebar, meta when a customer is assigned",
+    "string": "Restricted"
+  },
+  "6/1Urx": {
+    "context": "intro under gift card settings page title",
+    "string": "Configure shop-wide defaults for gift cards. Per-card expiration can still be set on each gift card."
+  },
   "6230rS": {
     "string": "Discount rules for carts and draft orders."
   },
@@ -1878,10 +1890,6 @@
   "6ZubLQ": {
     "string": "Manage available refunds reasons"
   },
-  "6a+Epp": {
-    "context": "gift card history message",
-    "string": "Gift card was assigned to {customer} by {assignedBy}"
-  },
   "6a075o": {
     "context": "activate customer dialog, content",
     "string": "Are you sure you want to activate {email}? They will be able to sign in and place new orders."
@@ -2017,6 +2025,10 @@
   "750Ymk": {
     "context": "apps about permissions",
     "string": "This extension has permissions to:"
+  },
+  "769/mX": {
+    "context": "gift card metadata dialog header",
+    "string": "Gift card metadata"
   },
   "7A+FJl": {
     "context": "link",
@@ -2577,10 +2589,6 @@
   },
   "9TENcY": {
     "string": "All payments from registered transactions."
-  },
-  "9TbDQD": {
-    "context": "order number label",
-    "string": "Order number"
   },
   "9Tl/bT": {
     "context": "export items as spreadsheet",
@@ -3272,6 +3280,10 @@
     "context": "dialog content",
     "string": "Which address would you like to use as shipping address for selected customer:"
   },
+  "CI5owv": {
+    "context": "gift card history message when order link is unavailable",
+    "string": "Gift card was used as a payment method on an order"
+  },
   "CJEIRC": {
     "string": "Product export has finished and was sent to your email address."
   },
@@ -3323,6 +3335,10 @@
   "CTASiY": {
     "context": "gift card resend dialog email field label",
     "string": "Email address"
+  },
+  "CVEnEY": {
+    "context": "gift card tag multiselect placeholder",
+    "string": "Select tag"
   },
   "CVVSkC": {
     "context": "product export dialog step one intro",
@@ -3887,6 +3903,10 @@
   "F6LHyk": {
     "context": "Webhook details objects",
     "string": "Objects"
+  },
+  "F6U+Fj": {
+    "context": "settings search alias",
+    "string": "gift card expiration period"
   },
   "F7DxHw": {
     "string": "Subcategories"
@@ -5036,10 +5056,6 @@
   "JJgJwi": {
     "string": "Selecting this will change the language of your dashboard"
   },
-  "JKbpH9": {
-    "context": "expiry date checkbox label",
-    "string": "Gift card expires"
-  },
   "JMBsrr": {
     "context": "table header available stock label",
     "string": "Available"
@@ -5283,10 +5299,6 @@
     "context": "tooltip, submit form",
     "string": "You have to grant refund first."
   },
-  "KOx6cY": {
-    "context": "unassign gift card from customer button",
-    "string": "Unassign"
-  },
   "KPmk40": {
     "context": "charge status partial",
     "string": "Partial"
@@ -5475,10 +5487,6 @@
   },
   "LCmiky": {
     "string": "Shipping zones deleted"
-  },
-  "LD4Vnf": {
-    "context": "gift card assigned customer label",
-    "string": "Assigned to"
   },
   "LFevQP": {
     "context": "channel detail top nav CTA when channel is inactive",
@@ -6452,10 +6460,6 @@
     "context": "extension form permissions section header",
     "string": "Permissions"
   },
-  "PJDcQs": {
-    "context": "set balance button label",
-    "string": "Set Balance"
-  },
   "PJGv35": {
     "context": "section description",
     "string": "Controls how address fields that are not part of a country's standard format are handled. By default, such fields are removed during validation — enabling this setting preserves them as entered."
@@ -6493,6 +6497,10 @@
   "PV0SQd": {
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
+  },
+  "PWJpiZ": {
+    "context": "gift card instrument card, last redemption timestamp",
+    "string": "Last used {date}"
   },
   "PWTzkQ": {
     "string": "Ordered"
@@ -6753,6 +6761,10 @@
     "context": "product field",
     "string": "Charge Taxes"
   },
+  "QVhelr": {
+    "context": "set balance dialog subtitle",
+    "string": "What would you like to set the card's balance to? Changing the balance updates both the current and initial amounts."
+  },
   "QX0gQb": {
     "context": "radio button label",
     "string": "Use the product list to suggest refund amount. Ideal for refunding specific items or entire order."
@@ -6980,6 +6992,10 @@
   "Rjs1CD": {
     "context": "button",
     "string": "Continue"
+  },
+  "RkDcW2": {
+    "context": "gift card sidebar, assigned customer intro microcopy",
+    "string": "By default, anyone with the code can redeem this card, including in guest checkout. Assign a customer to restrict redemption to their account."
   },
   "RlbhwF": {
     "context": "product no longer exists error description",
@@ -7684,6 +7700,10 @@
     "context": "date",
     "string": "since {date}"
   },
+  "UjvQOS": {
+    "context": "gift card expiry toggle, link text to gift card settings page",
+    "string": "gift card settings"
+  },
   "UjzI96": {
     "context": "Transaction capture button label while a capture request is in flight",
     "string": "Capture in progress"
@@ -7715,10 +7735,6 @@
     "context": "profit margin",
     "string": "Margin"
   },
-  "Uu2B2G": {
-    "context": "gift card history message",
-    "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
-  },
   "Uu5x44": {
     "context": "Checkbox to schedule collection publication in channel",
     "string": "Schedule for later"
@@ -7738,6 +7754,10 @@
   "UvZuf7": {
     "context": "section title for reference types selector",
     "string": "Reference Types"
+  },
+  "Ux9//2": {
+    "context": "gift card instrument card, note that cards are not channel-scoped",
+    "string": "Usable in any channel with the same currency."
   },
   "UxOcKE": {
     "context": "order history message",
@@ -7876,6 +7896,10 @@
   "VWuT7A": {
     "context": "setup review row description when no payment apps",
     "string": "Install a payment app so customers can pay at checkout."
+  },
+  "VX9XZ1": {
+    "context": "settings search alias",
+    "string": "gift cards never expire"
   },
   "VYK2nN": {
     "string": "Product details"
@@ -8204,6 +8228,10 @@
     "context": "Product availability status when visible in a channel",
     "string": "Live"
   },
+  "X31kOG": {
+    "context": "gift card sidebar, intro when only assignedToEmail is set",
+    "string": "Restricted to {email}. No customer account is linked — typically from guest checkout. Assign a customer to attach an account, or remove the restriction."
+  },
   "X4+lB+": {
     "context": "link to tax classes settings",
     "string": "Tax settings"
@@ -8263,10 +8291,6 @@
   "XFErUZ": {
     "context": "Refund pending status",
     "string": "Pending"
-  },
-  "XFtKV5": {
-    "context": "input placeholder tag",
-    "string": "Tag"
   },
   "XG2mph": {
     "string": "Removed products from category"
@@ -8658,6 +8682,10 @@
     "context": "select all values button",
     "string": "All"
   },
+  "Yhdi+j": {
+    "context": "gift card expiry toggle description with link to gift card settings",
+    "string": "When enabled, the card stops working after this date. Leave off for a card that never expires. Default expiry for gift cards customers buy is configured in {settingsLink}."
+  },
   "YhfTcL": {
     "context": "order weight restrictions helper",
     "string": "Leave min and max empty to apply this rate to orders of any weight."
@@ -8687,10 +8715,6 @@
   "Ykw8k5": {
     "context": "dialog title",
     "string": "Delete collections"
-  },
-  "YlJchr": {
-    "context": "gift card history message",
-    "string": "Gift card balance was reset from {oldBalance} to {newBalance} by {resetBy}"
   },
   "YmweRb": {
     "context": "setup review row description when warehouses are ready",
@@ -8758,10 +8782,6 @@
   "YzoG9n": {
     "context": "dialog header",
     "string": "Delete promotion"
-  },
-  "Z/7hyu": {
-    "context": "card balance label",
-    "string": "Card Balance"
   },
   "Z/jtCO": {
     "string": "Avatar deleted"
@@ -8889,10 +8909,6 @@
     "context": "channel details section nav item for tax settings shortcut",
     "string": "Taxes"
   },
-  "Za3SQQ": {
-    "context": "gift card history message",
-    "string": "Gift card was unassigned from {customer} by {unassignedBy}"
-  },
   "ZaDvwq": {
     "context": "helper text shown in line discount modal when automatic discount is applied",
     "string": "This line is already discounted by {source}."
@@ -8963,10 +8979,6 @@
   "a+iRI1": {
     "context": "single gift card title",
     "string": "{selectedItemsCount,plural,one{Delete Gift Card} other{Delete Gift Cards}}"
-  },
-  "a+kgkq": {
-    "context": "tag label",
-    "string": "Card Tag"
   },
   "a+x05s": {
     "context": "select option, button",
@@ -9053,10 +9065,6 @@
   },
   "aCdAsI": {
     "string": "Copy to clipboard"
-  },
-  "aEc9Ar": {
-    "context": "gift card history message",
-    "string": "Gift card balance was reset by {resetBy}"
   },
   "aFVFeH": {
     "context": "submit button",
@@ -9377,6 +9385,10 @@
     "context": "amount filter label",
     "string": "Amount"
   },
+  "bVjqu0": {
+    "context": "gift card instrument card, opens set-balance dialog",
+    "string": "Set balance"
+  },
   "bW4TOw": {
     "context": "configuration section name for refund and return settings",
     "string": "Refunds & returns settings"
@@ -9462,6 +9474,10 @@
     "context": "ProductTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this product type and assigned products"
   },
+  "bl0j6v": {
+    "context": "Save composition segment for gift card tags",
+    "string": "tags"
+  },
   "blWvag": {
     "string": "Models"
   },
@@ -9521,6 +9537,10 @@
   "bxZ9Nx": {
     "context": "customer detail page, section header grouping name and contact fields",
     "string": "Customer details"
+  },
+  "byCwum": {
+    "context": "gift card detail page, activity timeline section title",
+    "string": "Timeline"
   },
   "byP6IC": {
     "string": "Selected"
@@ -9734,6 +9754,10 @@
     "context": "ChannelsSection select field placeholder",
     "string": "Add Channel"
   },
+  "cofudM": {
+    "context": "gift card details card, intro for tags field",
+    "string": "Tags help organize and filter gift cards, for example by campaign or bulk issue."
+  },
   "cohh4s": {
     "context": "Refund success status",
     "string": "Success"
@@ -9803,6 +9827,10 @@
   },
   "d+qgix": {
     "string": "Next step"
+  },
+  "d0YXCw": {
+    "context": "gift card expiry nested date field label",
+    "string": "Expires on"
   },
   "d12NWZ": {
     "context": "tooltip when generate button is disabled because no new variants can be created",
@@ -10037,6 +10065,10 @@
     "context": "Health check label for isAvailableForPurchase field",
     "string": "Can add to cart"
   },
+  "eEXfCE": {
+    "context": "gift card detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete gift card"
+  },
   "eIGXwJ": {
     "context": "Alert text",
     "string": "You are using an old version of filter presets. The following presets: {presetNames} must be updated to continue using filters"
@@ -10160,6 +10192,10 @@
     "context": "dialog header",
     "string": "Search Collection"
   },
+  "f0mrKL": {
+    "context": "gift card sidebar, meta when no customer is assigned",
+    "string": "Unrestricted"
+  },
   "f1Pj99": {
     "string": "Discount of {value} through the {channel} with {unknown} conditions"
   },
@@ -10190,10 +10226,6 @@
     "context": "voucher discount type",
     "string": "Percentage"
   },
-  "fExm0/": {
-    "context": "gift card history message",
-    "string": "Gift card was activated by {activatedBy}"
-  },
   "fF9jx2": {
     "context": "create attribute dialog step one intro for product types",
     "string": "Attributes store extra fields on products of this type, such as material or size."
@@ -10218,6 +10250,10 @@
   },
   "fL08MU": {
     "string": "Order value"
+  },
+  "fLNQUG": {
+    "context": "gift card sidebar, assigned customer card title",
+    "string": "Assigned customer"
   },
   "fLhj3a": {
     "context": "gift card history message",
@@ -10402,10 +10438,6 @@
   },
   "g9PCqW": {
     "string": "Warehouse created and assigned"
-  },
-  "gAqkrG": {
-    "context": "gift card history message",
-    "string": "Gift card was deactivated by {deactivatedBy}"
   },
   "gCZYcl": {
     "context": "tooltip shown when shipping method is selected but no other options exist",
@@ -10625,10 +10657,6 @@
   "hAoqp6": {
     "string": "Failed to save permissions. Refresh the page and try again."
   },
-  "hAyk99": {
-    "context": "gift card history message",
-    "string": "Gift card balance was adjusted from {oldBalance} to {newBalance} by {adjustedBy}"
-  },
   "hGI8RO": {
     "context": "PageTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this model type and assigned models"
@@ -10666,6 +10694,10 @@
   },
   "hMRP6J": {
     "string": "Default Address"
+  },
+  "hNwVmh": {
+    "context": "configuration menu item description for gift card settings",
+    "string": "Set default expiration for issued and purchased gift cards"
   },
   "hOZsq5": {
     "context": "link label in usage empty state",
@@ -10840,6 +10872,10 @@
   "i3Mvj8": {
     "context": "product attribute error",
     "string": "This variant already exists"
+  },
+  "i3U0hk": {
+    "context": "Save composition segment for gift card expiry date",
+    "string": "expiration"
   },
   "i3r9KP": {
     "context": "Checkbox label for scheduling availability for a future date",
@@ -11397,10 +11433,6 @@
   },
   "kFYlu2": {
     "string": "Saleor runs in read-only mode. Changes not saved."
-  },
-  "kFkMoG": {
-    "context": "set balance dialog subtitle",
-    "string": "What would you like to set cards balance to. When you change the balance both values will be changed"
   },
   "kFkPWB": {
     "string": "Number"
@@ -12151,10 +12183,6 @@
     "context": "table action",
     "string": "Actions"
   },
-  "nFTvQW": {
-    "context": "expiration date label",
-    "string": "Expiration date"
-  },
   "nG1+Cz": {
     "context": "staff members status active",
     "string": "Active"
@@ -12182,6 +12210,10 @@
   "nK68Sg": {
     "context": "model availability date label",
     "string": "Set availability date"
+  },
+  "nK8vRq": {
+    "context": "date group header when it is the only group on the timeline",
+    "string": "Older than 30 days"
   },
   "nKGplR": {
     "context": "default shipping zone name",
@@ -12282,6 +12314,10 @@
   },
   "ninItd": {
     "string": "Create customer"
+  },
+  "nir539": {
+    "context": "gift card instrument card, aria label to mask full code",
+    "string": "Hide code"
   },
   "njBulj": {
     "context": "check to require attribute to have value",
@@ -12636,6 +12672,10 @@
     "context": "WarehousesSection link to warehouses configuration",
     "string": "Need a new warehouse? Create one in {link} and assign it to the same channels."
   },
+  "pCDEhW": {
+    "context": "gift card instrument card, when lastUsedOn is empty",
+    "string": "Not used yet"
+  },
   "pCjZEC": {
     "context": "Error when channel is not active",
     "string": "Channel \"{channelName}\" is inactive"
@@ -12941,6 +12981,10 @@
     "context": "Modal header showing total problem count for an app",
     "string": "All problems ({count})"
   },
+  "qIpZpt": {
+    "context": "gift card provenance, label for channel + order line",
+    "string": "Purchase"
+  },
   "qJ6D+G": {
     "context": "gift card bulk create success dialog content",
     "string": "Your gift cards are ready. Export the codes to your email to download the list."
@@ -12948,6 +12992,10 @@
   "qJedl0": {
     "context": "product label",
     "string": "Published"
+  },
+  "qK4it1": {
+    "context": "gift card instrument card, caption under spend progress meter",
+    "string": "{spent} spent of {initial} initial value"
   },
   "qKiqXs": {
     "context": "Date suffix for toggle controls",
@@ -14023,6 +14071,10 @@
     "context": "Product availability in a channel when publication is scheduled",
     "string": "Product publication scheduled"
   },
+  "uZ6MLe": {
+    "context": "gift card expiry toggle title",
+    "string": "Expiration date"
+  },
   "uaZNZS": {
     "context": "Info when product has stock only in warehouses not linked to the channel",
     "string": "Stock is in warehouses not assigned to \"{channelName}\""
@@ -14283,10 +14335,6 @@
   "vP7g2+": {
     "context": "error message",
     "string": "URL not set for an invoice"
-  },
-  "vQunFc": {
-    "context": "gift card history message",
-    "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
   },
   "vSLaZ7": {
     "string": "Select a reason type"
@@ -14783,10 +14831,6 @@
     "context": "grant refund, button",
     "string": "Set max. quantities"
   },
-  "xHj9Qe": {
-    "context": "gift card settings header",
-    "string": "Gift Cards Settings"
-  },
   "xJEaxW": {
     "string": "added"
   },
@@ -14840,6 +14884,10 @@
   "xWtZEw": {
     "context": "expand canceled shipments in line expanded panel",
     "string": "Show {count, plural, one {# canceled shipment} other {# canceled shipments}}"
+  },
+  "xbgJHS": {
+    "context": "gift card detail page, top-bar metadata button tooltip",
+    "string": "Edit gift card metadata"
   },
   "xeMcID": {
     "string": "Warehouse created"
@@ -14987,6 +15035,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
   },
+  "yEy4EC": {
+    "context": "gift card instrument card, label above current balance",
+    "string": "Remaining balance"
+  },
   "yH56V+": {
     "string": "Ooops!..."
   },
@@ -15024,6 +15076,10 @@
   "yPMIz3": {
     "context": "Label for enabled auto-confirm row in tooltip",
     "string": "On"
+  },
+  "yPVBpm": {
+    "context": "gift card instrument card, warning when card has expiry and remaining balance",
+    "string": "{remaining} will be lost on {date} unless it is spent or you extend the expiration."
   },
   "ySqncG": {
     "context": "ExitFormPrompt keep editing button",
@@ -15303,6 +15359,10 @@
   },
   "zfSKyx": {
     "string": "Clear history"
+  },
+  "zfaa1q": {
+    "context": "gift card sidebar, empty state description for assigned customer",
+    "string": "This card is unrestricted — anyone with the code can redeem it."
   },
   "zfjAc7": {
     "context": "grant refund, card header",
