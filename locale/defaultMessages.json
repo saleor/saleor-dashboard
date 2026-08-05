@@ -2507,10 +2507,6 @@
     "context": "tile view pagination label",
     "string": "No. of products"
   },
-  "9B5R2I": {
-    "context": "success gift card enable message",
-    "string": "Gift card enabled"
-  },
   "9BvYb9": {
     "string": "Voucher"
   },
@@ -3686,10 +3682,6 @@
   "E9E5Eh": {
     "string": "Please remember that conditions will not be updated when you change the channel."
   },
-  "EA7rjI": {
-    "context": "disabled status label",
-    "string": "Disabled"
-  },
   "EAGfdH": {
     "string": "Page updated"
   },
@@ -4689,6 +4681,10 @@
   },
   "HyMpO2": {
     "string": "Percentage"
+  },
+  "Hz9Ll0": {
+    "context": "success gift card activate message",
+    "string": "Gift card activated"
   },
   "HzOpXG": {
     "context": "change warehouse dialog empty state",
@@ -10142,6 +10138,10 @@
     "context": "channel order setting description for auto-confirm",
     "string": "On: orders from checkout arrive as {unfulfilled} and ready to pick. Off: they arrive {unconfirmed} and someone must review each one."
   },
+  "ekDCsN": {
+    "context": "gift card status when deactivated",
+    "string": "Inactive"
+  },
   "empNV9": {
     "context": "add products button tooltip",
     "string": "Add products from {channelName}"
@@ -11132,6 +11132,10 @@
     "context": "channel delivery empty state title",
     "string": "No shipping zones assigned"
   },
+  "j2DRaI": {
+    "context": "success gift card deactivate message",
+    "string": "Gift card deactivated"
+  },
   "j2l6cL": {
     "context": "checkbox label",
     "string": "Set gift card expiration period"
@@ -11623,6 +11627,10 @@
   "kv3FWU": {
     "context": "btn label",
     "string": "Go to orders"
+  },
+  "kvdWeq": {
+    "context": "gift card status when active",
+    "string": "Active"
   },
   "kvsZ4J": {
     "context": "copy gift card code error",
@@ -12845,10 +12853,6 @@
   "ppUdc+": {
     "context": "bulk publish default stock helper",
     "string": "Prefills stock on the next step only. Clear any row there to skip updating that product."
-  },
-  "pr/aHj": {
-    "context": "success gift card disable message",
-    "string": "Gift card disabled"
   },
   "ps+h1G": {
     "context": "checkbox label description",

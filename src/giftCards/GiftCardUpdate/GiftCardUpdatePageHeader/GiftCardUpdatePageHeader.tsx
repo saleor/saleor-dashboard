@@ -9,7 +9,7 @@ import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForGiftCardDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
+import { GiftCardStatusChip } from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { defaultGraphiQLQuery } from "@dashboard/giftCards/GiftCardUpdate/queries";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import { giftCardSettingsUrl, giftCardsListPath } from "@dashboard/giftCards/urls";
