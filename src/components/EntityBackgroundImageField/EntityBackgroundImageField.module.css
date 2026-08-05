@@ -46,6 +46,29 @@
   transition: opacity 0.12s ease;
 }
 
+/* Light chip behind the icon — translucent by default, solid on hover. */
+.deleteButtonBackdrop {
+  border-radius: 6px;
+  background-color: color-mix(in srgb, var(--mu-colors-background-default1) 80%, transparent);
+  transition: background-color 0.2s ease;
+}
+
+.deleteButtonBackdrop:hover,
+.deleteButtonBackdrop:focus-within {
+  background-color: var(--mu-colors-background-default1);
+}
+
+.deleteButton,
+.deleteButton:hover,
+.deleteButton:focus,
+.deleteButton:focus-visible,
+.deleteButton:active {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background-color: transparent;
+}
+
 .preview:hover .previewActions,
 .preview:focus-within .previewActions {
   opacity: 1;

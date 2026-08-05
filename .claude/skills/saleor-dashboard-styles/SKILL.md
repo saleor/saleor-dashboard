@@ -264,15 +264,15 @@ Do not hand-roll `Globe` + blue `Link` for channel names.
 
 Primary bordered settings surface on entity detail pages. Full rules (primary vs secondary header, card vs section, Vercel restraint) live in [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md).
 
-| Piece              | Style                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------- |
-| Card shell         | `DetailSettingsCard.module.css` — `default1` body, 8px radius, 1px border                   |
-| Primary header     | Tinted `default2` band; `align-items: center`; title left, `headerEnd` right                |
-| Title              | Always `Text size={5} fontWeight="bold" as="h2"` — string **and** ReactNode titles          |
-| Header with action | `.headerWithEnd` — same Y padding as title-only; `padding-right` matches Y (`spacing-4`)    |
-| Leading copy       | `intro` prop — white band + bottom border below header (not under title in tinted band)     |
-| Optional in title  | `DetailSettingsCardTitle optional` + `DetailSettingsOptionalLabel` (`size={2}`, `default2`) |
-| Body               | `.content` padding `5/6`; `contentFlush` for lists and upload zones                         |
+| Piece              | Style                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------------ |
+| Card shell         | `DetailSettingsCard.module.css` — `default1` body, 8px radius, 1px border                        |
+| Primary header     | Tinted `default2` band; `align-items: center`; title left, `headerEnd` right                     |
+| Title              | Always `Text size={5} fontWeight="bold" as="h2"` — string **and** ReactNode titles               |
+| Header with action | `.headerWithEnd` — same Y padding as title-only; `size="small"` actions; right inset `spacing-4` |
+| Leading copy       | `intro` prop — white band + bottom border below header (not under title in tinted band)          |
+| Optional in title  | `DetailSettingsCardTitle optional` + `DetailSettingsOptionalLabel` (`size={2}`, `default2`)      |
+| Body               | `.content` padding `5/6`; `contentFlush` for lists and upload zones                              |
 
 Secondary sidebar ops cards (`AssignListCard`, `ChannelInventoryCard`) use **white** headers with meta on the right — not `DetailSettingsCard`.
 

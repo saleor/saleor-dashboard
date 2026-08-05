@@ -106,17 +106,21 @@ const BackgroundImagePreview = ({
         <>
           <div className={styles.previewOverlay} aria-hidden />
           <Box className={styles.previewActions}>
-            <Button
-              data-test-id={testIds?.delete ?? "delete-entity-background-image"}
-              variant="tertiary"
-              onClick={event => {
-                stopDropzoneActivation(event);
-                onImageDelete();
-              }}
-              onMouseDown={stopDropzoneActivation}
-              title={intl.formatMessage(buttonMessages.delete)}
-              icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
-            />
+            <Box className={styles.deleteButtonBackdrop}>
+              <Button
+                data-test-id={testIds?.delete ?? "delete-entity-background-image"}
+                variant="tertiary"
+                size="small"
+                className={styles.deleteButton}
+                onClick={event => {
+                  stopDropzoneActivation(event);
+                  onImageDelete();
+                }}
+                onMouseDown={stopDropzoneActivation}
+                title={intl.formatMessage(buttonMessages.delete)}
+                icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+              />
+            </Box>
           </Box>
         </>
       ) : null}

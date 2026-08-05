@@ -145,7 +145,7 @@ Two header patterns; both use a bordered card surface but different chrome.
 
 Primary = settings you edit in place. Secondary = assign/remove membership with count in the header.
 
-`headerEnd` on primary cards: default button size; header keeps the same vertical padding as title-only cards — only the right inset tightens to match the Y gap (`spacing-4`). Same for `ChannelAvailabilityCard` Manage in the sidebar toolbar.
+`headerEnd` on primary cards: use `size="small"` actions so header height matches title-only cards; right inset matches the Y gap (`spacing-4`). Same for `ChannelAvailabilityCard` Manage in the sidebar toolbar.
 
 ### `DetailSettingsCard` API (primary settings card)
 
@@ -156,7 +156,7 @@ Path: `src/components/DetailSettingsCard/DetailSettingsCard.tsx`. Storybook: `Co
 | `title`                       | String, `FormattedMessage`, or `DetailSettingsCardTitle` — card always renders **`Text size={5}` bold `as="h2"`**           |
 | `intro`                       | Leading description — **bordered row below header** (Payment gateways pattern). Prefer over `subtitle` for multi-line copy. |
 | `subtitle`                    | Short line under title **inside tinted header** — rare (status/count); don’t put long hints here                            |
-| `headerEnd`                   | Actions on the right (Upload, Manage). Same header height; right inset matches Y gap (`spacing-4`).                         |
+| `headerEnd`                   | Actions on the right (Upload, Manage). Prefer `size="small"` so height matches title-only; right inset `spacing-4`.         |
 | `contentFlush`                | Full-bleed body (lists, image upload dropzone)                                                                              |
 | `DetailSettingsCardIntro`     | Reusable intro band when stacking multiple intro blocks (catalog warehouse notes)                                           |
 | `DetailSettingsOptionalLabel` | Secondary `size={2}` “Optional” — no brackets; use inside `DetailSettingsCardTitle`                                         |

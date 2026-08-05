@@ -284,6 +284,7 @@ export const CategoryProducts = ({
             data-test-id="assign-product"
             disabled={disabled}
             variant="secondary"
+            size="small"
             onClick={() => openModal("assign")}
           >
             <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
