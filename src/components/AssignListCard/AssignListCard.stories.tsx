@@ -1,5 +1,5 @@
 import { Button } from "@saleor/macaw-ui-next";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { Truck, User } from "lucide-react";
 
 import { AssignListCard } from "./AssignListCard";
@@ -78,7 +78,7 @@ export const EmptyNarrow: Story = {
     ),
   },
   decorators: [
-    Story => (
+    (Story: StoryFn): JSX.Element => (
       <div style={{ width: 320 }}>
         <Story />
       </div>
