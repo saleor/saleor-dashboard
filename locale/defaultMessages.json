@@ -2334,6 +2334,10 @@
   "8Q504V": {
     "string": "Metadata"
   },
+  "8RDDZP": {
+    "context": "date group header when it is the only group on the timeline",
+    "string": "Older than 30 days"
+  },
   "8RnPGF": {
     "context": "order history message",
     "string": "Payment was voided"
@@ -12210,10 +12214,6 @@
   "nK68Sg": {
     "context": "model availability date label",
     "string": "Set availability date"
-  },
-  "nK8vRq": {
-    "context": "date group header when it is the only group on the timeline",
-    "string": "Older than 30 days"
   },
   "nKGplR": {
     "context": "default shipping zone name",
