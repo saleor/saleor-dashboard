@@ -118,13 +118,11 @@ export const ProductTableItem = ({
         </Link>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0} className={styles.truncateCell}>
-        <Link href={href} inline={false} className={styles.cellLink}>
-          <Box className={styles.typeCellContent}>
-            <Text ellipsis display="block" size={2} color="default2">
-              {product?.productType.name || <Skeleton __height="14px" __width="6rem" />}
-            </Text>
-          </Box>
-        </Link>
+        <Box className={styles.typeCellContent}>
+          <Text ellipsis display="block" size={2} color="default2">
+            {product?.productType.name || <Skeleton __height="14px" __width="6rem" />}
+          </Text>
+        </Box>
       </GridTable.Cell>
       <GridTable.Cell __height="inherit" padding={0}>
         <Box display="flex" alignItems="center" height="100%" padding={2}>
