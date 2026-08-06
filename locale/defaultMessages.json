@@ -289,10 +289,6 @@
     "context": "section header",
     "string": "Media"
   },
-  "/PVq8j": {
-    "context": "shown when user tries to install an extension that is already installed but inactive",
-    "string": "{appName} is installed but disabled."
-  },
   "/QIOpX": {
     "context": "error when fetching all variants for duplicate detection fails",
     "string": "Could not load existing variants. Close the dialog and try again before generating."
@@ -7280,10 +7276,6 @@
     "context": "fulfilled fulfillment, warehouse info",
     "string": "From {warehouseName}"
   },
-  "W2mMdu": {
-    "context": "shown when user tries to install an extension that is already installed",
-    "string": "{appName} is already installed."
-  },
   "W32xfN": {
     "context": "staff member full name",
     "string": "Name"
@@ -8524,10 +8516,6 @@
     "context": "total of all sent refunds",
     "string": "Result"
   },
-  "bT8nK1": {
-    "context": "ripple action to open Saleor Pulse when already installed",
-    "string": "Open Pulse"
-  },
   "bVbEZ/": {
     "context": "amount filter label",
     "string": "Amount"
@@ -9467,6 +9455,10 @@
     "context": "payment method type other",
     "string": "Other"
   },
+  "g2P/kE": {
+    "context": "shown when user tries to install an extension that is already installed but inactive",
+    "string": "{appName} is installed but disabled."
+  },
   "g3qjSf": {
     "context": "button",
     "string": "Assign categories"
@@ -9550,6 +9542,10 @@
   },
   "gSQ0Ge": {
     "string": "Variant {name} has been set as default."
+  },
+  "gU10OX": {
+    "context": "shown when user tries to install an extension that is already installed",
+    "string": "{appName} is already installed."
   },
   "gaOXvo": {
     "context": "notification, form submitted",
@@ -12011,6 +12007,10 @@
   "r/sk/h": {
     "context": "number of included postal code ranges",
     "string": "{number, plural, one {# included postal code range} other {# included postal code ranges}}"
+  },
+  "r0blTm": {
+    "context": "ripple action to open Saleor Pulse when already installed",
+    "string": "Open Pulse"
   },
   "r1aQ2f": {
     "context": "dialog header",
