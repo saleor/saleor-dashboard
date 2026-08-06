@@ -1,6 +1,10 @@
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 
-import { getCollectionChannelsUpdateVariables, hasCollectionChannelListingsChanges } from "./utils";
+import {
+  areCollectionPublishedAtEqual,
+  getCollectionChannelsUpdateVariables,
+  hasCollectionChannelListingsChanges,
+} from "./utils";
 
 const savedChannelListings: ChannelCollectionData[] = [
   {
@@ -112,6 +116,64 @@ describe("hasCollectionChannelListingsChanges", () => {
 
     // Act / Assert
     expect(hasCollectionChannelListingsChanges(afterCycle, baseline)).toBe(false);
+  });
+
+  it("treats equivalent publishedAt instants as unchanged after scheduled save", () => {
+    // Arrange — form emit vs typical Saleor DateTime serialization
+    const formListings: ChannelCollectionData[] = [
+      {
+        ...savedChannelListings[0],
+        isPublished: true,
+        publishedAt: "2026-08-10T12:00:00Z",
+      },
+    ];
+    const savedListings: ChannelCollectionData[] = [
+      {
+        ...savedChannelListings[0],
+        isPublished: true,
+        publishedAt: "2026-08-10T12:00:00+00:00",
+      },
+    ];
+
+    // Act / Assert
+    expect(hasCollectionChannelListingsChanges(formListings, savedListings)).toBe(false);
+  });
+
+  it("still detects a real publishedAt change", () => {
+    // Arrange
+    const formListings: ChannelCollectionData[] = [
+      {
+        ...savedChannelListings[0],
+        isPublished: true,
+        publishedAt: "2026-08-10T12:00:00Z",
+      },
+    ];
+    const savedListings: ChannelCollectionData[] = [
+      {
+        ...savedChannelListings[0],
+        isPublished: true,
+        publishedAt: "2026-08-11T12:00:00+00:00",
+      },
+    ];
+
+    // Act / Assert
+    expect(hasCollectionChannelListingsChanges(formListings, savedListings)).toBe(true);
+  });
+});
+
+describe("areCollectionPublishedAtEqual", () => {
+  it("equates Z and +00:00 forms of the same instant", () => {
+    // Arrange / Act / Assert
+    expect(areCollectionPublishedAtEqual("2026-08-10T12:00:00Z", "2026-08-10T12:00:00+00:00")).toBe(
+      true,
+    );
+  });
+
+  it("equates fractional-second API values with form emits", () => {
+    // Arrange / Act / Assert
+    expect(
+      areCollectionPublishedAtEqual("2026-08-10T12:00:00Z", "2026-08-10T12:00:00.000000+00:00"),
+    ).toBe(true);
   });
 });
 

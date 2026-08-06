@@ -260,10 +260,15 @@ const CreateChannelDialogFormContent = ({
                   }
                   options={countryChoices}
                   name="defaultCountry"
-                  value={{
-                    label: selectedCountryDisplayName,
-                    value: data.defaultCountry,
-                  }}
+                  // Empty string value floats the label as if selected — use null like Currency.
+                  value={
+                    data.defaultCountry
+                      ? {
+                          label: selectedCountryDisplayName,
+                          value: data.defaultCountry,
+                        }
+                      : null
+                  }
                   onChange={option =>
                     handleDefaultCountryChange({
                       target: {

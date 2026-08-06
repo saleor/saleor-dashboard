@@ -10,7 +10,6 @@ import {
 } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { SetupChecklistReviewList } from "@dashboard/components/SetupChecklist/SetupChecklistReviewList";
 import { type SetupChecklistReviewItem } from "@dashboard/components/SetupChecklist/types";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductsIcon } from "@dashboard/icons/Products";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Eye, Plus } from "lucide-react";
@@ -54,7 +53,6 @@ export const ChannelCatalogSection = ({
   onBulkPublishCatalog,
 }: ChannelCatalogSectionProps) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const warehouseReadiness = getCatalogWarehouseReadiness({
     channelWarehouseCount,
     shopWarehouseCount,
@@ -79,9 +77,14 @@ export const ChannelCatalogSection = ({
 
   const openChannelProductList = useCallback(
     (isPublished: boolean) => {
-      navigate(productListUrlWithChannelCatalogFilters({ channel, isPublished }));
+      // New tab keeps channel details open and avoids SPA filter-state races.
+      window.open(
+        productListUrlWithChannelCatalogFilters({ channel, isPublished }),
+        "_blank",
+        "noopener,noreferrer",
+      );
     },
-    [channel, navigate],
+    [channel],
   );
 
   const catalogActions = useMemo((): SetupChecklistReviewItem[] => {

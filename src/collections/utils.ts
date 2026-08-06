@@ -8,6 +8,36 @@ export type CollectionChannelListingFields = Pick<
   "isPublished" | "publishedAt"
 >;
 
+/**
+ * DateTimeTimezoneField emits UTC with a `Z` suffix; Saleor often returns the same
+ * instant as `+00:00` (sometimes with fractional seconds). String equality would
+ * leave channel availability dirty after a successful scheduled save.
+ */
+export const areCollectionPublishedAtEqual = (
+  current: string | null | undefined,
+  baseline: string | null | undefined,
+): boolean => {
+  const left = current ?? null;
+  const right = baseline ?? null;
+
+  if (left === right) {
+    return true;
+  }
+
+  if (left === null || right === null) {
+    return false;
+  }
+
+  const leftTime = Date.parse(left);
+  const rightTime = Date.parse(right);
+
+  if (Number.isNaN(leftTime) || Number.isNaN(rightTime)) {
+    return left === right;
+  }
+
+  return leftTime === rightTime;
+};
+
 export const areCollectionChannelFieldsDifferent = (
   current: CollectionChannelListingFields,
   baseline: CollectionChannelListingFields,
@@ -21,7 +51,7 @@ export const areCollectionChannelFieldsDifferent = (
     return true;
   }
 
-  return (current.publishedAt ?? null) !== (baseline.publishedAt ?? null);
+  return !areCollectionPublishedAtEqual(current.publishedAt, baseline.publishedAt);
 };
 
 const sortChannelsById = <T extends { id: string }>(channels: T[]): T[] =>

@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
-import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Button, Select, Text } from "@saleor/macaw-ui-next";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,11 +21,25 @@ const ROW_NUMBER_OPTIONS = [
 interface PaginationProps {
   onUpdateListSettings: (key: "rowNumber", value: number) => void;
   numberOfRows: number;
-  /** Override left inset (defaults to product-table leading inset). */
-  paddingLeft?: string | number;
+  /**
+   * Override left inset (defaults to product-table leading inset).
+   * Numbers are Macaw spacing tokens (`paddingLeft={6}` → spacing-6).
+   * Strings are raw CSS (e.g. `calc(...)`).
+   */
+  paddingLeft?: BoxProps["paddingLeft"] | string;
   /** Optional action immediately before the pagination arrows (e.g. bulk delete). */
   beforePagination?: ReactNode;
 }
+
+const getPaddingLeftProps = (
+  paddingLeft: BoxProps["paddingLeft"] | string,
+): Pick<BoxProps, "paddingLeft"> | { __paddingLeft: string } => {
+  if (typeof paddingLeft === "string") {
+    return { __paddingLeft: paddingLeft };
+  }
+
+  return { paddingLeft };
+};
 
 export const Pagination = ({
   onUpdateListSettings,
@@ -50,12 +64,12 @@ export const Pagination = ({
       justifyContent="space-between"
       alignItems="center"
       gap={2}
-      __paddingLeft={paddingLeft}
+      {...getPaddingLeftProps(paddingLeft)}
       paddingRight={COLLECTION_PRODUCT_TABLE_ACTION_INSET}
       paddingY={2}
     >
-      <Box display="flex" alignItems="center" gap={2}>
-        <Text color="default2" size={2}>
+      <Box display="flex" alignItems="center">
+        <Text color="default2" size={2} className={styles.rowNumberLabel}>
           <FormattedMessage id="nABmvC" defaultMessage="No. of rows" />
         </Text>
         <Select

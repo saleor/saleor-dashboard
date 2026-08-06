@@ -472,6 +472,16 @@ describe("bulkPublishDrafts", () => {
     it("accepts positive numbers", () => {
       expect(isValidBulkPublishPrice("9.99")).toBe(true);
     });
+
+    it("accepts zero — Saleor PositiveDecimal allows free products", () => {
+      expect(isValidBulkPublishPrice("0")).toBe(true);
+      expect(isValidBulkPublishPrice("0.00")).toBe(true);
+    });
+
+    it("rejects empty and negative values", () => {
+      expect(isValidBulkPublishPrice("")).toBe(false);
+      expect(isValidBulkPublishPrice("-1")).toBe(false);
+    });
   });
 
   describe("getDraftsMissingPrice", () => {

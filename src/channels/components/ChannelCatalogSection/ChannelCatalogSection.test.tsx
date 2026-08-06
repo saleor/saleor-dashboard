@@ -6,9 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { ChannelCatalogSection } from "./ChannelCatalogSection";
 
-const navigate = jest.fn();
-
-jest.mock("@dashboard/hooks/useNavigator", () => () => navigate);
+const open = jest.fn();
 
 const RouterWrapper = ({ children }: { children: ReactNode }) => (
   <MemoryRouter>
@@ -25,7 +23,12 @@ const channel = {
 
 describe("ChannelCatalogSection", () => {
   beforeEach(() => {
-    navigate.mockClear();
+    open.mockClear();
+    jest.spyOn(window, "open").mockImplementation(open);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it("shows not-in-channel stats and opens full product list for new channels", () => {
@@ -159,11 +162,27 @@ describe("ChannelCatalogSection", () => {
     expect(screen.getByTestId("catalog-action-unpublished")).toBeInTheDocument();
 
     await user.click(screen.getByTestId("catalog-action-unpublished"));
-    expect(navigate).toHaveBeenCalledWith(expect.stringContaining("isPublished"));
-    expect(navigate).toHaveBeenCalledWith(expect.stringContaining("false"));
+    expect(open).toHaveBeenCalledWith(
+      expect.stringContaining("isPublished"),
+      "_blank",
+      "noopener,noreferrer",
+    );
+    expect(open).toHaveBeenCalledWith(
+      expect.stringContaining("false"),
+      "_blank",
+      "noopener,noreferrer",
+    );
+    expect(open).toHaveBeenCalledWith(
+      expect.stringContaining("us"),
+      "_blank",
+      "noopener,noreferrer",
+    );
 
     await user.click(screen.getByTestId("catalog-action-published"));
-    expect(navigate).toHaveBeenCalledWith(expect.stringContaining("isPublished"));
-    expect(navigate).toHaveBeenCalledWith(expect.stringContaining("true"));
+    expect(open).toHaveBeenCalledWith(
+      expect.stringContaining("true"),
+      "_blank",
+      "noopener,noreferrer",
+    );
   });
 });

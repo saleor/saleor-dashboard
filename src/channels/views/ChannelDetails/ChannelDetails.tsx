@@ -32,6 +32,7 @@ import {
 } from "@dashboard/channels/utils/channelDuplicate";
 import { getChannelDetailsRefetchQueries } from "@dashboard/channels/views/ChannelDetails/channelRefetchQueries";
 import { useChannelWarehousesReorder } from "@dashboard/channels/views/ChannelDetails/useChannelWarehouseReorder";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AssignShippingZoneDialog } from "@dashboard/components/AssignShippingZoneDialog/AssignShippingZoneDialog";
 import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
@@ -92,6 +93,7 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
   const intl = useIntl();
   const shop = useShop();
   const { refetchUser } = useUser();
+  const { refreshChannels } = useAppChannel(false);
   const channelsListData = useChannelsQuery({
     displayLoader: true,
   });
@@ -404,6 +406,9 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
         if (refetchUser) {
           await refetchUser();
         }
+
+        // Product-list channel filters resolve against BaseChannels / channel operands.
+        await Promise.all([refreshChannels(), channelsListData.refetch()]);
 
         closeModal();
         navigate(channelUrl(channelId, { action: "setup" }));

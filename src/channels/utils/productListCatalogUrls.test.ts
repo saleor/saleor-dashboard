@@ -25,7 +25,7 @@ describe("productListUrlWithChannelCatalogFilters", () => {
     const result = productListUrlWithChannelCatalogFilters({ channel });
 
     // Assert
-    expect(result).toContain("/products");
+    expect(result.startsWith("/products/?")).toBe(true);
     expect(result).toContain("channel");
     expect(result).toContain("us");
   });

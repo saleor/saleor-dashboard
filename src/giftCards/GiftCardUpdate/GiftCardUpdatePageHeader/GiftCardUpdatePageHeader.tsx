@@ -12,13 +12,12 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { GiftCardStatusChip } from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { defaultGraphiQLQuery } from "@dashboard/giftCards/GiftCardUpdate/queries";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
-import { giftCardSettingsUrl, giftCardsListPath } from "@dashboard/giftCards/urls";
+import { giftCardsListPath } from "@dashboard/giftCards/urls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Box } from "@saleor/macaw-ui-next";
-import { Mail, Settings, Trash2 } from "lucide-react";
+import { Mail, Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -33,8 +32,7 @@ const GiftCardUpdatePageHeader = () => {
     path: giftCardsListPath,
   });
   const intl = useIntl();
-  const navigate = useNavigator();
-  const { canManageChannels, canManageGiftCards } = useGiftCardPermissions();
+  const { canManageChannels } = useGiftCardPermissions();
   const { giftCard } = useGiftCardDetails();
   const { openResendCodeDialog, openDeleteDialog, openMetadataDialog } = useGiftCardUpdateDialogs();
 
@@ -49,9 +47,6 @@ const GiftCardUpdatePageHeader = () => {
     context.setVariables(`{ "id": "${giftCard?.id}" }`);
     context.setDevModeVisibility(true);
   }, [context, giftCard?.id]);
-  const openGiftCardSettings = useCallback(() => {
-    navigate(giftCardSettingsUrl({ from: "gift-cards" }));
-  }, [navigate]);
 
   const menuItems = useMemo((): TopNavMenuItem[] => {
     const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
@@ -68,16 +63,6 @@ const GiftCardUpdatePageHeader = () => {
         onSelect: openResendCodeDialog,
         testId: "resend-code",
         icon: <Mail size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
-      });
-    }
-
-    // Related store settings (when the entity family has a hub) sit just above GraphiQL.
-    if (canManageGiftCards) {
-      items.push({
-        label: intl.formatMessage(messages.giftCardSettings),
-        onSelect: openGiftCardSettings,
-        testId: "gift-card-settings",
-        icon: <Settings size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
       });
     }
 
@@ -103,12 +88,10 @@ const GiftCardUpdatePageHeader = () => {
     return items;
   }, [
     canManageChannels,
-    canManageGiftCards,
     extensionMenuItems,
     giftCard,
     intl,
     openDeleteDialog,
-    openGiftCardSettings,
     openPlaygroundURL,
     openResendCodeDialog,
   ]);

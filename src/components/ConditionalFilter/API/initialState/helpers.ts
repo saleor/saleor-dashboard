@@ -105,10 +105,14 @@ export const createInitialProductStateFromData = (
   return data.reduce<InitialProductState>(
     (acc, query) => {
       if (isChannelQuery(query)) {
+        // Coerce to an array: a bare string would use String.includes and keep both
+        // "default-channel" and "default-channel-copy" when the URL asks for the copy.
+        const channelSlugs = Array.isArray(channel) ? channel : [channel];
+
         return {
           ...acc,
           channel: (query.data?.channels ?? [])
-            .filter(({ slug }) => channel.includes(slug))
+            .filter(({ slug }) => channelSlugs.includes(slug))
             .map(({ id, name, slug }) => ({ label: name, value: id, slug })),
         };
       }
@@ -349,10 +353,12 @@ export const createInitialCollectionState = (
   data.reduce<InitialCollectionState>(
     (acc, query) => {
       if (isChannelQuery(query)) {
+        const channelSlugs = Array.isArray(channel) ? channel : [channel];
+
         return {
           ...acc,
           channel: (query.data?.channels ?? [])
-            .filter(({ slug }) => channel.includes(slug))
+            .filter(({ slug }) => channelSlugs.includes(slug))
             .map(({ id, name, slug }) => ({ label: name, value: id, slug })),
         };
       }

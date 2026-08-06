@@ -226,14 +226,6 @@ export const getProductAvailabilitySummary = (
     };
   }
 
-  if (customerLiveCount === count && count === 2) {
-    return {
-      label: productAvailabilityMessages.summaryBothChannels,
-      dotStatus: getSummaryDotStatus(channels, customerLiveCount, count),
-      channels,
-    };
-  }
-
   if (customerLiveCount === count) {
     return {
       label: productAvailabilityMessages.summaryAllLive,

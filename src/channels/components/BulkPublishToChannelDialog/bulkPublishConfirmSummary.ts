@@ -29,7 +29,7 @@ export const getBulkPublishPriceRange = (
 ): BulkPublishNumericRange | null => {
   const prices = drafts
     .map(draft => Number.parseFloat(draft.price))
-    .filter(price => Number.isFinite(price) && price > 0);
+    .filter(price => Number.isFinite(price) && price >= 0);
 
   return getNumericRange(prices);
 };

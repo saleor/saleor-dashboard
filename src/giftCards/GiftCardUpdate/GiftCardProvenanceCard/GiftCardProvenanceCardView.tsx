@@ -84,7 +84,7 @@ export const GiftCardProvenanceCardView = ({
           <Text size={2} color="default2">
             {intl.formatMessage(messages.creationLabel)}
           </Text>
-          <Text size={3}>{localizeDate(created)}</Text>
+          <Text size={3}>{localizeDate(created, "lll")}</Text>
         </Box>
 
         {product ? (

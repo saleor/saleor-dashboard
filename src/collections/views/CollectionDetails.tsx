@@ -234,7 +234,12 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
 
       if (errors.length === 0) {
         handleCollectionUpdateSuccess();
-        await refetch();
+
+        const refetchResult = await refetch();
+
+        // Keep local channel draft aligned with the server payload so scheduled
+        // publishedAt serialization differences cannot leave the form dirty.
+        setCurrentChannels(createCollectionChannelsData(refetchResult.data?.collection));
       }
 
       return errors;

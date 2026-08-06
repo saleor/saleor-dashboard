@@ -198,7 +198,7 @@ describe("getProductAvailabilitySummary", () => {
     ]);
   });
 
-  it("returns both channels summary when live in exactly two channels", () => {
+  it("returns aggregate live summary when live in exactly two channels", () => {
     // Arrange
     const listings = [
       createListing({
@@ -219,7 +219,8 @@ describe("getProductAvailabilitySummary", () => {
     const summary = getProductAvailabilitySummary(listings, dateNow);
 
     // Assert
-    expect(summary.label).toBe(productAvailabilityMessages.summaryBothChannels);
+    expect(summary.label).toBe(productAvailabilityMessages.summaryAllLive);
+    expect(summary.labelValues).toEqual({ count: 2 });
     expect(summary.dotStatus).toBe("success");
   });
 

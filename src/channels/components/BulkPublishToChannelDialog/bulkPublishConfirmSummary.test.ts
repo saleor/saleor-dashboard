@@ -35,6 +35,12 @@ describe("bulkPublishConfirmSummary", () => {
 
       expect(getBulkPublishPriceRange(drafts)).toEqual({ min: 7, max: 12.5 });
     });
+
+    it("includes zero prices in the range", () => {
+      const drafts = [createDraft({ price: "0" }), createDraft({ productId: "p2", price: "10" })];
+
+      expect(getBulkPublishPriceRange(drafts)).toEqual({ min: 0, max: 10 });
+    });
   });
 
   describe("getBulkPublishCostPriceRange", () => {

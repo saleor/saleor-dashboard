@@ -45,7 +45,8 @@ export const chunkBulkPublishItems = <TItem>(items: TItem[], chunkSize: number):
 export const isValidBulkPublishPrice = (price: string): boolean => {
   const parsed = Number.parseFloat(price);
 
-  return Number.isFinite(parsed) && parsed > 0;
+  // Saleor PositiveDecimal is nonnegative (0 or greater), not strictly positive.
+  return Number.isFinite(parsed) && parsed >= 0;
 };
 
 export const isValidBulkPublishCostPrice = (costPrice: string): boolean => {

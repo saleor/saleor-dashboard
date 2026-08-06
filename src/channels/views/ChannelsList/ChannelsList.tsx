@@ -11,6 +11,7 @@ import {
   buildChannelDuplicateSource,
   getChannelDuplicateFormPrefill,
 } from "@dashboard/channels/utils/channelDuplicate";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
@@ -53,6 +54,7 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
   const intl = useIntl();
   const shop = useShop();
   const { refetchUser } = useUser();
+  const { refreshChannels } = useAppChannel(false);
   const userPermissions = useUserPermissions();
   const canLoadShippingZones = hasPermissions(userPermissions ?? [], [
     PermissionEnum.MANAGE_SHIPPING,
@@ -169,6 +171,7 @@ const ChannelsList = ({ params }: ChannelsListProps) => {
         await refetchUser();
       }
 
+      await Promise.all([refreshChannels(), refetch()]);
       limitOpts.refetch();
       closeModal();
       navigate(channelUrl(channelId, { action: "setup" }));

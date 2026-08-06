@@ -354,12 +354,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     });
   const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({
     onCompleted: data => {
-      if (data.voucherUpdate.errors.length === 0) {
-        closeModal();
-        notifySaved();
-        handleClearAddedVoucherCodes();
-        voucherCodesRefetch();
-        refetchCatalogue();
+      // Only patch the voucher cache here. Success toast / clearing draft codes must wait
+      // until channel + catalogue mutations in createUpdateHandler also succeed.
+      if (data.voucherUpdate.errors.length === 0 && data.voucherUpdate.voucher) {
         updateQuery(prev => ({
           ...prev,
           voucher: {
@@ -405,6 +402,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     const errors = await updateHandler(formData);
 
     if (!errors?.length) {
+      notifySaved();
+      handleClearAddedVoucherCodes();
+      voucherCodesRefetch();
       resetCatalogueDraft();
       reset();
       refetch();

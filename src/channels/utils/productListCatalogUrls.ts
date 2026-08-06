@@ -13,7 +13,6 @@ import { prepareStructure } from "@dashboard/components/ConditionalFilter/ValueP
 import { createChannelFilterElement } from "@dashboard/products/components/ProductListDatagrid/utils";
 import { productListPath } from "@dashboard/products/urls";
 import { stringify } from "qs";
-import urlJoin from "url-join";
 
 export type ChannelCatalogFilterChannel = {
   id: string;
@@ -60,7 +59,8 @@ const productListUrlWithCatalogFilters = (
 
   const queryParams = prepareStructure(filters);
 
-  return urlJoin(productListPath, "?" + stringify(queryParams));
+  // Keep the trailing slash on productListPath (url-join strips it and can break exact routes).
+  return productListPath + "?" + stringify(queryParams);
 };
 
 export const productListUrlWithChannelCatalogFilters = ({

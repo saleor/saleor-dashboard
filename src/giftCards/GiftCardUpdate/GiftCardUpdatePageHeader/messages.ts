@@ -19,11 +19,6 @@ export const giftCardUpdatePageHeaderMessages = defineMessages({
     defaultMessage: "Resend code",
     description: "resend code label",
   },
-  giftCardSettings: {
-    id: "0Crrwk",
-    defaultMessage: "Gift card settings",
-    description: "gift card detail cogs menu, opens shop-wide gift card settings",
-  },
   openGraphiQL: {
     id: "YNhhZh",
     defaultMessage: "Open this gift card in GraphiQL",

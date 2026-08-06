@@ -122,9 +122,4 @@ export const productAvailabilityMessages = defineMessages({
     defaultMessage: "Not available",
     description: "Product availability summary when hidden in every assigned channel",
   },
-  summaryBothChannels: {
-    id: "/Myo2R",
-    defaultMessage: "Both channels",
-    description: "Product availability summary when live in exactly two channels",
-  },
 });

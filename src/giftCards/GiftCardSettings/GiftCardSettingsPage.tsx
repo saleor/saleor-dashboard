@@ -12,8 +12,11 @@ import {
   useGiftCardSettingsQuery,
   useGiftCardSettingsUpdateMutation,
 } from "@dashboard/graphql";
+import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { commonMessages, sectionNames } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
 import { parseQs } from "@dashboard/url-utils";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { type ReactNode } from "react";
@@ -51,6 +54,7 @@ const getGiftCardSettingsExit = (
 export const GiftCardSettingsPage = (): JSX.Element => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const notify = useNotifier();
   const {
     location: { search },
   } = useRouter();
@@ -62,16 +66,24 @@ export const GiftCardSettingsPage = (): JSX.Element => {
     expiryPeriodType: settingsData?.expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
     expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1,
   };
-  const [updateGiftCardSettings, updateGiftCardSettingsOpts] = useGiftCardSettingsUpdateMutation(
-    {},
-  );
-  const handleSubmit = (formData: GiftCardSettingsFormData) => {
-    updateGiftCardSettings({
-      variables: {
-        input: getGiftCardSettingsInputData(formData),
-      },
-    });
-  };
+  const [updateGiftCardSettings, updateGiftCardSettingsOpts] = useGiftCardSettingsUpdateMutation({
+    onCompleted: (data): void => {
+      if (!data.giftCardSettingsUpdate?.errors.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
+  const handleSubmit = (formData: GiftCardSettingsFormData): SubmitPromise =>
+    extractMutationErrors(
+      updateGiftCardSettings({
+        variables: {
+          input: getGiftCardSettingsInputData(formData),
+        },
+      }),
+    );
   const formLoading = loading || updateGiftCardSettingsOpts?.loading;
   const apiErrors = updateGiftCardSettingsOpts?.data?.giftCardSettingsUpdate?.errors;
   const formErrors = getFormErrors(["expiryPeriod"], apiErrors);

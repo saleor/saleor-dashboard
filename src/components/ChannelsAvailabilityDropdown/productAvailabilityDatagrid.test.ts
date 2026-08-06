@@ -155,7 +155,7 @@ describe("getProductAvailabilityStatusCell", () => {
     expect(cell.data.kind).toBe("status-cell");
     expect(cell.data.status).toBe("success");
     expect(cell.data.value).toBe(
-      intl.formatMessage(productAvailabilityMessages.summaryBothChannels),
+      intl.formatMessage(productAvailabilityMessages.summaryAllLive, { count: 2 }),
     );
   });
 });
