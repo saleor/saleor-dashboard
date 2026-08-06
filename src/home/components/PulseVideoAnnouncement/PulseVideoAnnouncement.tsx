@@ -1,5 +1,4 @@
 import { PULSE_POSTER_URL, PULSE_VIDEO_URL } from "@dashboard/home/getPulsePromotionLink";
-import { homeUrl } from "@dashboard/home/urls";
 import { usePulsePromotionLink } from "@dashboard/home/usePulsePromotionLink";
 import { PULSE_DOCS_URL } from "@dashboard/links";
 import { RippleVideoAnnouncement } from "@dashboard/ripples/components/RippleVideoAnnouncement/RippleVideoAnnouncement";
@@ -45,6 +44,7 @@ export const PulseVideoAnnouncement = ({
   const intl = useIntl();
   const pulseLink = usePulsePromotionLink();
 
+  // Match HomeEmptyState: cloud/install → internal path; OSS → App Store (external).
   const primaryAction =
     pulseLink.kind === "internal"
       ? {
@@ -56,7 +56,8 @@ export const PulseVideoAnnouncement = ({
           ),
         }
       : {
-          href: homeUrl(),
+          href: pulseLink.href,
+          external: true,
           label: <FormattedMessage {...messages.exploreCta} />,
         };
 

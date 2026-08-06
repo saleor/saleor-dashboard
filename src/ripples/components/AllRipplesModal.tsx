@@ -4,12 +4,13 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
 import { usePulsePromotionLink } from "@dashboard/home/usePulsePromotionLink";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { PULSE_DOCS_URL } from "@dashboard/links";
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { allRipples } from "@dashboard/ripples/allRipples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
 import { rippleActionMessages } from "@dashboard/ripples/messages";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
-import { type Ripple, type RippleType } from "@dashboard/ripples/types";
+import { type Ripple, type RippleAction, type RippleType } from "@dashboard/ripples/types";
 import { isExternalURL } from "@dashboard/utils/urls";
 import { Box, Button, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
@@ -152,31 +153,42 @@ const PulseInstallRippleAction = ({
   onActionClick: () => void;
 }) => {
   const pulseLink = usePulsePromotionLink();
-  const resolvedAction = useMemo(() => {
+  const resolvedAction = useMemo((): RippleAction => {
     if (pulseLink.loading) {
       return action;
     }
 
+    // Rebuild as RippleActionWithHref — spreading `action` can retain onClick
+    // and violate the mutually exclusive RippleAction union.
     if (pulseLink.kind === "internal" && pulseLink.intent === "open") {
       return {
-        ...action,
         href: pulseLink.to,
         label: rippleActionMessages.openPulse,
+        hideInModal: action.hideInModal,
       };
     }
 
     if (pulseLink.kind === "internal") {
       return {
-        ...action,
         href: pulseLink.to,
+        label: action.label,
+        hideInModal: action.hideInModal,
       };
     }
 
-    return action;
+    return {
+      href: pulseLink.href,
+      label: rippleActionMessages.explorePulse,
+      hideInModal: action.hideInModal,
+    };
   }, [action, pulseLink]);
 
   return <RippleAction action={resolvedAction} onActionClick={onActionClick} />;
 };
+
+/** Pulse primary CTA (install/open/explore) — not the docs link. */
+const isPulsePrimaryRippleAction = (action: RippleAction): boolean =>
+  !!action.href && action.href !== PULSE_DOCS_URL;
 
 const RippleAction = ({
   action,
@@ -319,7 +331,7 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEn
             {ripple.actions
               .filter(action => !action.hideInModal)
               .map((action, index) =>
-                ripple.ID === "saleor-pulse" && action.href?.includes("pulse.saleor.app") ? (
+                ripple.ID === "saleor-pulse" && isPulsePrimaryRippleAction(action) ? (
                   <PulseInstallRippleAction
                     key={`${ripple.ID}-action-${index}`}
                     action={action}

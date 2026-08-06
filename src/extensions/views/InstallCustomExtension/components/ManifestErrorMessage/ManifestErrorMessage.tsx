@@ -102,7 +102,7 @@ export const ManifestErrorMessage = ({
   className,
   ...props
 }: {
-  error: FieldError | null | undefined;
+  error?: FieldError | null;
   alreadyInstalledApp?: AlreadyInstalledApp | null;
 } & BoxProps) => {
   const intl = useIntl();

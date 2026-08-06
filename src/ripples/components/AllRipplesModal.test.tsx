@@ -331,8 +331,18 @@ describe("Ripple actions", () => {
 });
 
 describe("AllRipplesModal", () => {
+  const { usePulsePromotionLink } = jest.requireMock("@dashboard/home/usePulsePromotionLink") as {
+    usePulsePromotionLink: jest.Mock;
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
+    usePulsePromotionLink.mockReturnValue({
+      kind: "internal",
+      to: "/extensions/app/install?manifestUrl=https%3A%2F%2Fpulse.saleor.app%2Fapi%2Fmanifest",
+      intent: "install",
+      loading: false,
+    });
   });
 
   it("closes the modal and navigates when an internal action link is clicked", async () => {
@@ -353,8 +363,6 @@ describe("AllRipplesModal", () => {
 
   it("opens Pulse directly when it is already installed", async () => {
     // Arrange
-    const { usePulsePromotionLink } = jest.requireMock("@dashboard/home/usePulsePromotionLink");
-
     usePulsePromotionLink.mockReturnValue({
       kind: "internal",
       to: "/extensions/app/pulse-app-id",
@@ -372,5 +380,28 @@ describe("AllRipplesModal", () => {
     // Assert
     expect(mockOnChange).toHaveBeenCalledWith(false);
     expect(mockNavigate).toHaveBeenCalledWith("/extensions/app/pulse-app-id");
+  });
+
+  it("links to the App Store explore URL on open-source instances", async () => {
+    // Arrange
+    usePulsePromotionLink.mockReturnValue({
+      kind: "external",
+      href: "https://apps.saleor.io/apps/pulse",
+      intent: "explore",
+      loading: false,
+    });
+
+    const user = userEvent.setup();
+
+    render(<AllRipplesModal open onChange={mockOnChange} />, { wrapper: Wrapper });
+
+    // Act
+    const exploreLink = screen.getByRole("link", { name: "Explore Pulse" });
+
+    await user.click(exploreLink);
+
+    // Assert
+    expect(exploreLink).toHaveAttribute("href", "https://apps.saleor.io/apps/pulse");
+    expect(mockOnChange).toHaveBeenCalledWith(false);
   });
 });
