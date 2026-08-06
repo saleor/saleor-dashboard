@@ -337,10 +337,6 @@
     "context": "section header",
     "string": "Media"
   },
-  "/Myo2R": {
-    "context": "Product availability summary when live in exactly two channels",
-    "string": "Both channels"
-  },
   "/PUjN6": {
     "context": "voucher discount amount type",
     "string": "Percentage"
@@ -543,10 +539,6 @@
   "0BXL1v": {
     "context": "settings search alias",
     "string": "shipping zone stock"
-  },
-  "0Crrwk": {
-    "context": "gift card detail cogs menu, opens shop-wide gift card settings",
-    "string": "Gift card settings"
   },
   "0DRBjg": {
     "string": "Token Note"
