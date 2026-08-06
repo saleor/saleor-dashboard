@@ -112,7 +112,7 @@ const ShippingZoneRatesCreatePage = ({
     triggerChange,
   } = useForm(initialForm, undefined, { confirmLeave: true, formId });
   const { setExitDialogSubmitRef, setIsDirty } = useExitFormDialog({ formId });
-  const { handleChannelsChange, hasValidChannelPrices, pricedChannelIdsList } =
+  const { handleChannelsChange, replaceChannels, hasValidChannelPrices, pricedChannelIdsList } =
     useShippingRateChannels({
       shippingChannels,
       onChannelsChange,
@@ -163,7 +163,7 @@ const ShippingZoneRatesCreatePage = ({
     setIsDirty(hasChanges);
   });
 
-  const isSaveDisabled = disabled || !hasValidChannelPrices;
+  const isSaveDisabled = disabled || !hasValidChannelPrices || !hasChanges;
   const pageTitle = useMemo(
     () =>
       isPriceVariant
@@ -218,6 +218,7 @@ const ShippingZoneRatesCreatePage = ({
             <PricingCard
               channels={shippingChannels}
               onChange={handleChannelsChange}
+              onChannelsReplace={replaceChannels}
               disabled={disabled}
               errors={channelErrors}
             />
@@ -227,7 +228,8 @@ const ShippingZoneRatesCreatePage = ({
                 channels={shippingChannels}
                 errors={channelErrors}
                 disabled={disabled}
-                onChannelsChange={handleChannelsChange}
+                onChannelChange={handleChannelsChange}
+                onChannelsReplace={replaceChannels}
               />
             ) : (
               <OrderWeight
@@ -249,7 +251,7 @@ const ShippingZoneRatesCreatePage = ({
             />
             <CardSpacer />
           </DetailPageLayout.Content>
-          <DetailPageLayout.RightSidebar>
+          <DetailPageLayout.RightSidebar paddingTop={6}>
             <ShippingMethodChannelAvailabilityCard
               channels={shippingChannels}
               pricedChannelIds={pricedChannelIdsList}
@@ -281,9 +283,9 @@ const ShippingZoneRatesCreatePage = ({
               tooltip={
                 !hasValidChannelPrices &&
                 intl.formatMessage({
-                  id: "lCEp2/",
-                  defaultMessage: "Set prices for all channels to save",
-                  description: "save button disabled tooltip",
+                  id: "1BjZBQ",
+                  defaultMessage: "Set prices for assigned channels to save",
+                  description: "save button disabled tooltip on shipping rate create",
                 })
               }
             />

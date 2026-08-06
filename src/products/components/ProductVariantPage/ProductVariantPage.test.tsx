@@ -210,6 +210,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
             id: "channel-1",
             name: "Default Channel",
             currencyCode: "USD",
+            isActive: true,
           },
         },
       ],

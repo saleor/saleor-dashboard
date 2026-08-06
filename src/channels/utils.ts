@@ -23,6 +23,7 @@ export interface ChannelData {
   name: string;
   isPublished?: boolean;
   publishedAt?: string | null;
+  isActive?: boolean;
   currency?: string;
   variantsIds?: string[];
   price?: string;
@@ -54,6 +55,8 @@ export interface ChannelPriceAndPreorderData {
   currency: string;
   price: string;
   costPrice?: string;
+  isActive?: boolean;
+  isPublished?: boolean;
   preorderThreshold?: number | null;
   unitsSold?: number;
 }
@@ -103,15 +106,25 @@ const createVoucherChannels = (data?: ChannelFragment[]) =>
 
 export const createVariantChannels = (
   data?: ProductVariantDetailsQuery["productVariant"],
-): ChannelPriceData[] => {
+): ChannelPriceAndPreorderData[] => {
   if (data) {
-    return data?.channelListings?.map(listing => ({
-      costPrice: listing.costPrice?.amount.toString() || "",
-      currency: listing.channel.currencyCode,
-      id: listing.channel.id,
-      name: listing.channel.name,
-      price: listing.price?.amount?.toString(),
-    })) as ChannelPriceData[];
+    return (
+      data?.channelListings?.map(listing => {
+        const productChannelListing = data.product?.channelListings?.find(
+          productListing => productListing.channel.id === listing.channel.id,
+        );
+
+        return {
+          costPrice: listing.costPrice?.amount.toString() || "",
+          currency: listing.channel.currencyCode,
+          id: listing.channel.id,
+          isActive: productChannelListing?.channel.isActive ?? true,
+          isPublished: productChannelListing?.isPublished,
+          name: listing.channel.name,
+          price: listing.price?.amount?.toString() ?? "",
+        };
+      }) ?? []
+    );
   }
 
   return [];

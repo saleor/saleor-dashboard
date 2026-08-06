@@ -1,6 +1,7 @@
 import {
   formatPriceInput,
   getCurrencyDecimalPoints,
+  getPriceFieldDisplayValue,
   padPriceToDecimalPlaces,
   sanitizeSpreadsheetPrice,
 } from "./utils";
@@ -92,6 +93,35 @@ describe("padPriceToDecimalPlaces", () => {
 
   it("truncates to zero decimals for currencies like JPY", () => {
     expect(padPriceToDecimalPlaces("1000.9", 0)).toBe("1000");
+  });
+});
+
+describe("getPriceFieldDisplayValue", () => {
+  it("pads API values for display when not focused", () => {
+    // Arrange
+    // Act
+    const displayValue = getPriceFieldDisplayValue("2.2", 2);
+
+    // Assert
+    expect(displayValue).toBe("2.20");
+  });
+
+  it("shows raw value while focused so partial input stays editable", () => {
+    // Arrange
+    // Act
+    const displayValue = getPriceFieldDisplayValue("2.", 2, { isFocused: true });
+
+    // Assert
+    expect(displayValue).toBe("2.");
+  });
+
+  it("skips padding when disabled", () => {
+    // Arrange
+    // Act
+    const displayValue = getPriceFieldDisplayValue("2.2", 2, { padDecimals: false });
+
+    // Assert
+    expect(displayValue).toBe("2.2");
   });
 });
 

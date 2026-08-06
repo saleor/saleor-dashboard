@@ -510,6 +510,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         }
         openChannelsModal={handleChannelsModalOpen}
         focusChannelId={focusChannelId}
+        onFocusChannelComplete={clearFocusChannelFromUrl}
         onChannelsChange={setCurrentChannels}
         onProductUnassign={handleProductUnassign}
         onProductAssign={() => openModal("assign-product")}

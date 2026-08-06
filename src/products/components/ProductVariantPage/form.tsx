@@ -16,6 +16,7 @@ import {
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
 import {
+  type ChannelData,
   type ChannelPriceAndPreorderData,
   type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
@@ -51,6 +52,8 @@ import {
   createMediaChangeHandler,
   createPreorderEndDateChangeHandler,
   getChannelsInput,
+  replaceFormsetChannelListings,
+  replaceFormsetStockValues,
 } from "@dashboard/products/utils/handlers";
 import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
@@ -60,7 +63,7 @@ import type * as React from "react";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { type ProductStockInput } from "../ProductStocks";
+import { type ProductStockInput, type ProductStockPasteRow } from "../ProductStocks";
 import {
   concatChannelsBySelection,
   extractChannelPricesFromVariantChannel,
@@ -122,6 +125,8 @@ export interface ProductVariantUpdateHandlers
     Record<"deleteStock", (id: string) => void> {
   changePreorderEndDate: FormChange;
   changeMedia: (ids: string[]) => void;
+  replaceChannels: (listings: ChannelData[]) => void;
+  replaceStocks: (stocks: ProductStockPasteRow[]) => void;
   updateChannels: (selectedChannelsIds: string[]) => void;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -258,12 +263,20 @@ function useProductVariantUpdateForm(
     triggerChange();
     stocks.change(id, value);
   };
+  const handleStocksReplace = (updatedStocks: ProductStockPasteRow[]) => {
+    triggerChange();
+    stocks.set(replaceFormsetStockValues(stocks.data, updatedStocks));
+  };
   const handleStockDelete = (id: string) => {
     triggerChange();
     stocks.remove(id);
   };
   const handleChannelChange: FormsetChange = (id, value) => {
     channels.change(id, value);
+    triggerChange();
+  };
+  const handleChannelsReplace = (listings: ChannelData[]) => {
+    channels.set(replaceFormsetChannelListings(channels.data, listings));
     triggerChange();
   };
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
@@ -284,6 +297,8 @@ function useProductVariantUpdateForm(
         return {
           ...variantChannel.channel,
           currency: variantChannel.channel.currencyCode,
+          isActive: listing.channel.isActive ?? true,
+          isPublished: listing.isPublished,
           preorderThreshold: variantChannel?.preorderThreshold.quantity,
           soldUnits: variantChannel?.preorderThreshold?.soldUnits,
           price,
@@ -294,6 +309,8 @@ function useProductVariantUpdateForm(
       return {
         ...listing.channel,
         currency: listing.channel.currencyCode,
+        isActive: listing.channel.isActive ?? true,
+        isPublished: listing.isPublished,
         price: "",
         preorderThreshold: null,
         soldUnits: null,
@@ -375,8 +392,10 @@ function useProductVariantUpdateForm(
     handlers: {
       addStock: handleStockAdd,
       changeChannels: handleChannelChange,
+      replaceChannels: handleChannelsReplace,
       updateChannels: handleUpdateChannels,
       changeStock: handleStockChange,
+      replaceStocks: handleStocksReplace,
       changePreorderEndDate: handlePreorderEndDateChange,
       changeMedia: handleMediaChange,
       deleteStock: handleStockDelete,

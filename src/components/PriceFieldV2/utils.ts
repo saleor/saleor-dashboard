@@ -346,6 +346,22 @@ export const padPriceToDecimalPlaces = (value: string, maxDecimalPlaces: number)
 };
 
 /**
+ * Value shown in the input when not focused — pads to currency decimals so
+ * API/form values like "2.2" render as "2.20" without waiting for blur.
+ */
+export const getPriceFieldDisplayValue = (
+  value: string,
+  maxDecimalPlaces: number,
+  { isFocused = false, padDecimals = true }: { isFocused?: boolean; padDecimals?: boolean } = {},
+): string => {
+  if (!padDecimals || isFocused || value === "") {
+    return value;
+  }
+
+  return padPriceToDecimalPlaces(value, maxDecimalPlaces);
+};
+
+/**
  * Normalizes a spreadsheet cell value for price fields.
  * Returns "" for empty cells, null for invalid values.
  */

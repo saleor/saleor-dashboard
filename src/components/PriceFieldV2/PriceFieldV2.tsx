@@ -1,9 +1,10 @@
 import { Input, type InputProps } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { type FocusEvent } from "react";
+import { type FocusEvent, useMemo, useState } from "react";
 
 import styles from "./PriceFieldV2.module.css";
 import { type PriceFieldV2ChangeHandler, usePriceFieldV2 } from "./usePriceFieldV2";
+import { getPriceFieldDisplayValue } from "./utils";
 
 /**
  * Preferred money/amount input for the Dashboard.
@@ -27,13 +28,33 @@ export const PriceFieldV2 = ({
   endAdornment,
   onBlur,
   padDecimalsOnBlur = true,
+  onFocus,
   ...inputProps
 }: PriceFieldV2Props) => {
-  const { handleBlur: handlePriceBlur, handleChange } = usePriceFieldV2(currencySymbol, onChange, {
+  const [isFocused, setIsFocused] = useState(false);
+  const {
+    handleBlur: handlePriceBlur,
+    handleChange,
+    maxDecimalPlaces,
+  } = usePriceFieldV2(currencySymbol, onChange, {
     padDecimalsOnBlur,
   });
+  const displayValue = useMemo(
+    () =>
+      getPriceFieldDisplayValue(value, maxDecimalPlaces, {
+        isFocused,
+        padDecimals: padDecimalsOnBlur,
+      }),
+    [value, maxDecimalPlaces, isFocused, padDecimalsOnBlur],
+  );
+
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    setIsFocused(true);
+    onFocus?.(event);
+  };
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    setIsFocused(false);
     handlePriceBlur(event);
     onBlur?.(event);
   };
@@ -46,8 +67,9 @@ export const PriceFieldV2 = ({
       autoComplete="off"
       data-test-id="price-field-v2"
       endAdornment={endAdornment ?? currencySymbol}
-      value={value}
+      value={displayValue}
       onChange={handleChange}
+      onFocus={handleFocus}
       onBlur={handleBlur}
       {...inputProps}
     />

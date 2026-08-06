@@ -3812,6 +3812,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           currencyCode: "USD",
           id: "test1",
           name: "Test channel",
+          isActive: true,
         },
       },
       {
@@ -3824,6 +3825,7 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
           currencyCode: "USD",
           id: "test2",
           name: "Test channel other",
+          isActive: true,
         },
       },
     ],

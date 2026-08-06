@@ -6,6 +6,14 @@ import { useIntl } from "react-intl";
 import { channelAvailabilityMessages } from "./messages";
 import { type ChannelAvailabilityStatusType } from "./types";
 
+const channelIconColor = (statusType?: ChannelAvailabilityStatusType): string => {
+  if (statusType === "success") {
+    return SUCCESS_ICON_COLOR;
+  }
+
+  return "var(--mu-colors-text-default2)";
+};
+
 interface StatusDotProps {
   statusType: ChannelAvailabilityStatusType;
   size?: "small" | "default";
@@ -40,9 +48,14 @@ export const StatusDot = ({ statusType, size = "default" }: StatusDotProps) => {
   );
 };
 
-export const ChannelIcon = () => (
+interface ChannelIconProps {
+  /** When `success`, globe is green — otherwise muted gray. */
+  statusType?: ChannelAvailabilityStatusType;
+}
+
+export const ChannelIcon = ({ statusType }: ChannelIconProps) => (
   <Box display="flex" alignItems="center" flexShrink="0" data-test-id="channel-availability-icon">
-    <Globe size={14} aria-hidden="true" color="var(--mu-colors-text-default2)" />
+    <Globe size={14} aria-hidden="true" color={channelIconColor(statusType)} />
   </Box>
 );
 

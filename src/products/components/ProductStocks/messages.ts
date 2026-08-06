@@ -46,9 +46,8 @@ export const messages = defineMessages({
     description: "header, allocated product quantity",
   },
   noChannelWarehousesAllocation: {
-    id: "taS/08",
-    defaultMessage:
-      "Assign this variant to a channel in the product channel manager to define warehouses allocation",
+    id: "/+k9uY",
+    defaultMessage: "Add channels in Pricing to define warehouse allocation",
     description: "variant stocks section subtitle",
   },
   configureWarehouseForVariant: {
@@ -149,5 +148,11 @@ export const messages = defineMessages({
       "Customers see this stock when the warehouse is assigned to a channel and covered by a shipping zone for the destination.",
     description:
       "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop is in legacy stock-availability mode (stock visibility filtered through shipping zones).",
+  },
+  stockPasteHint: {
+    id: "QIe5rc",
+    defaultMessage:
+      "You can paste from a spreadsheet. Select a quantity field and paste a column of values to fill stock down the list.",
+    description: "variant stock spreadsheet paste hint",
   },
 });

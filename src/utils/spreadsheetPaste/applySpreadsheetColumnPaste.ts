@@ -1,4 +1,4 @@
-import { parseSpreadsheetClipboard, trimEmptyTrailingRows } from "./parseSpreadsheetClipboard";
+import { applySpreadsheetPaste } from "./applySpreadsheetPaste";
 
 /**
  * Fill a single column down a list from spreadsheet paste (one value per row).
@@ -18,33 +18,12 @@ export const applySpreadsheetColumnPaste = <T>({
   pastedText: string;
   sanitizeCell: (cell: string, row: T, rowIndex: number) => string | null;
   setCell: (row: T, value: string) => T;
-}): { rows: T[]; handled: boolean } => {
-  const grid = trimEmptyTrailingRows(parseSpreadsheetClipboard(pastedText));
-
-  if (grid.length === 0 || startIndex < 0 || startIndex >= rows.length) {
-    return { rows, handled: false };
-  }
-
-  const nextRows = [...rows];
-  let handled = false;
-
-  grid.forEach((row, rowOffset) => {
-    const rowIndex = startIndex + rowOffset;
-
-    if (rowIndex >= nextRows.length) {
-      return;
-    }
-
-    const cell = row[0] ?? "";
-    const sanitized = sanitizeCell(cell, nextRows[rowIndex], rowIndex);
-
-    if (sanitized === null || sanitized === "") {
-      return;
-    }
-
-    nextRows[rowIndex] = setCell(nextRows[rowIndex], sanitized);
-    handled = true;
+}): { rows: T[]; handled: boolean } =>
+  applySpreadsheetPaste({
+    rows,
+    startRowIndex: startIndex,
+    fields: ["value"] as const,
+    pastedText,
+    sanitize: (_field, cell, row, rowIndex) => sanitizeCell(cell, row, rowIndex),
+    setField: (row, _field, value) => setCell(row, value),
   });
-
-  return { rows: nextRows, handled };
-};

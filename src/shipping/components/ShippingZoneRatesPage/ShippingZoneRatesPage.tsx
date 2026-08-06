@@ -6,10 +6,13 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { type WithFormId } from "@dashboard/components/Form";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -26,6 +29,7 @@ import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useStateUpdate } from "@dashboard/hooks/useStateUpdate";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
 import OrderValue from "@dashboard/shipping/components/OrderValue";
 import OrderWeight from "@dashboard/shipping/components/OrderWeight";
@@ -34,6 +38,7 @@ import ShippingMethodProducts from "@dashboard/shipping/components/ShippingMetho
 import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
 import { useShippingRateChannels } from "@dashboard/shipping/hooks/useShippingRateChannels";
 import { useShippingRateEditChanges } from "@dashboard/shipping/hooks/useShippingRateEditChanges";
+import { shippingMethodGraphiQLQuery } from "@dashboard/shipping/queries";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
@@ -41,12 +46,14 @@ import { type FetchMoreProps, type ListActions, type ListProps } from "@dashboar
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { type FormEventHandler, useLayoutEffect, useMemo } from "react";
+import { Trash2 } from "lucide-react";
+import { type FormEventHandler, useCallback, useLayoutEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { ShippingMethodChannelAvailabilityCard } from "../ShippingMethodChannelAvailabilityCard/ShippingMethodChannelAvailabilityCard";
 import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
 import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
+import { messages } from "./messages";
 import { ShippingMethodDetailsTitle } from "./Title";
 import { type ShippingZoneRateUpdateFormData } from "./types";
 
@@ -82,6 +89,7 @@ interface ShippingZoneRatesPageProps
   onChannelsChange: (data: ChannelShippingData[]) => void;
   openChannelsModal: () => void;
   focusChannelId?: string;
+  onFocusChannelComplete?: () => void;
   onProductAssign: () => void;
   onProductUnassign: (ids: string[]) => void;
   variant: ShippingMethodTypeEnum;
@@ -112,6 +120,7 @@ const ShippingZoneRatesPage = ({
   onProductUnassign,
   openChannelsModal,
   focusChannelId,
+  onFocusChannelComplete,
   rate,
   saveButtonBarState,
   postalCodeRules,
@@ -162,7 +171,7 @@ const ShippingZoneRatesPage = ({
     ...formData,
     description: null,
   };
-  const { handleChannelsChange, hasValidChannelPrices, pricedChannelIdsList } =
+  const { handleChannelsChange, replaceChannels, hasValidChannelPrices, pricedChannelIdsList } =
     useShippingRateChannels({
       shippingChannels,
       onChannelsChange,
@@ -208,6 +217,42 @@ const ShippingZoneRatesPage = ({
 
   setIsSubmitDisabled(isSaveDisabled);
 
+  const devMode = useDevModeContext();
+  const openPlaygroundURL = useCallback(() => {
+    if (!rate?.id) {
+      return;
+    }
+
+    devMode.setDevModeContent(shippingMethodGraphiQLQuery);
+    devMode.setVariables(`{ "id": "${rate.id}" }`);
+    devMode.setDevModeVisibility(true);
+  }, [devMode, rate]);
+
+  const menuItems = useMemo((): TopNavMenuItem[] => {
+    const items: TopNavMenuItem[] = [];
+
+    if (rate?.id) {
+      items.push({
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <GraphqlIcon />,
+      });
+    }
+
+    if (onDelete) {
+      items.push({
+        label: intl.formatMessage(messages.deleteShippingMethod),
+        onSelect: onDelete,
+        testId: "delete-shipping-method",
+        color: "critical1",
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
+    return items;
+  }, [intl, onDelete, openPlaygroundURL, rate]);
+
   return (
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
@@ -229,11 +274,7 @@ const ShippingZoneRatesPage = ({
               onClick={onShowMetadata}
               disabled={!rate}
               data-test-id="show-shipping-method-metadata"
-              title={intl.formatMessage({
-                defaultMessage: "Edit shipping method metadata",
-                description: "shipping method detail page, top-bar metadata button tooltip",
-                id: "leb986",
-              })}
+              title={intl.formatMessage(messages.editShippingMethodMetadata)}
             />
             {canTranslate && rate?.id && (
               <TranslationsButton
@@ -248,6 +289,16 @@ const ShippingZoneRatesPage = ({
                 }
               />
             )}
+            {menuItems.length > 0 && (
+              <TopNav.Menu
+                items={
+                  disabled || !rate
+                    ? menuItems.map(item => ({ ...item, disabled: true }))
+                    : menuItems
+                }
+                dataTestId="menu"
+              />
+            )}
           </TopNav>
           <DetailPageLayout.Content paddingBottom={10}>
             <ShippingRateInfo data={data} disabled={disabled} errors={errors} onChange={change} />
@@ -255,10 +306,12 @@ const ShippingZoneRatesPage = ({
             <PricingCard
               channels={shippingChannels}
               onChange={handleChannelsChange}
+              onChannelsReplace={replaceChannels}
               disabled={disabled}
               errors={channelErrors}
               focusChannelId={focusChannelId}
               isFocusReady={!loading && richText.isReadyForMount}
+              onFocusChannelComplete={onFocusChannelComplete}
             />
             <CardSpacer />
             {isPriceVariant ? (
@@ -266,7 +319,8 @@ const ShippingZoneRatesPage = ({
                 channels={shippingChannels}
                 errors={channelErrors}
                 disabled={disabled}
-                onChannelsChange={handleChannelsChange}
+                onChannelChange={handleChannelsChange}
+                onChannelsReplace={replaceChannels}
               />
             ) : (
               <OrderWeight
@@ -295,7 +349,7 @@ const ShippingZoneRatesPage = ({
               {...listProps}
             />
           </DetailPageLayout.Content>
-          <DetailPageLayout.RightSidebar>
+          <DetailPageLayout.RightSidebar paddingTop={6}>
             <ShippingMethodChannelAvailabilityCard
               channels={shippingChannels}
               savedChannelIds={savedChannelIds}
@@ -319,7 +373,6 @@ const ShippingZoneRatesPage = ({
             />
           </DetailPageLayout.RightSidebar>
           <Savebar>
-            <Savebar.DeleteButton onClick={onDelete} />
             <Savebar.Spacer />
             <Savebar.CancelButton onClick={() => navigate(backHref)} />
             <Savebar.ConfirmButton
@@ -329,9 +382,9 @@ const ShippingZoneRatesPage = ({
               tooltip={
                 !hasValidChannelPrices &&
                 intl.formatMessage({
-                  id: "lCEp2/",
-                  defaultMessage: "Set prices for all channels to save",
-                  description: "save button disabled tooltip",
+                  id: "38mk3k",
+                  defaultMessage: "Set prices for assigned channels to save",
+                  description: "save button disabled tooltip on shipping rate edit",
                 })
               }
             />

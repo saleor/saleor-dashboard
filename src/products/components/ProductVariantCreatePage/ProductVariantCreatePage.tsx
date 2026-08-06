@@ -39,7 +39,6 @@ import {
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
@@ -243,11 +242,18 @@ export const ProductVariantCreatePage = ({
                 <div>
                   <ProductVariantName value={data.variantName} onChange={change} errors={errors} />
                   <CardSpacer />
-                  <ProductDetailsChannelsAvailabilityCard
-                    disabled={disabled}
-                    listings={data.channelListings}
-                    product={product}
-                    onManageClick={toggleManageChannels}
+                  <ProductVariantPrice
+                    disabled={!product}
+                    productVariantChannelListings={data.channelListings.map(channel => ({
+                      ...channel.data,
+                      ...channel.value,
+                    }))}
+                    errors={errors}
+                    loading={!product}
+                    onChange={handlers.changeChannels}
+                    onChannelsReplace={handlers.replaceChannels}
+                    onManageClick={product ? toggleManageChannels : undefined}
+                    availableChannelsCount={product?.channelListings?.length}
                   />
                   <CardSpacer />
                   {product?.productType?.hasVariants && (
@@ -343,17 +349,6 @@ export const ProductVariantCreatePage = ({
                     onChange={change}
                   />
                   <CardSpacer />
-                  <ProductVariantPrice
-                    disabled={!product}
-                    productVariantChannelListings={data.channelListings.map(channel => ({
-                      ...channel.data,
-                      ...channel.value,
-                    }))}
-                    errors={errors}
-                    loading={!product}
-                    onChange={handlers.changeChannels}
-                  />
-                  <CardSpacer />
                   <ProductStocks
                     data={data}
                     warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
@@ -366,6 +361,7 @@ export const ProductVariantCreatePage = ({
                     loading={!product}
                     searchWarehouses={searchWarehouses}
                     onChange={handlers.changeStock}
+                    onStocksReplace={handlers.replaceStocks}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}

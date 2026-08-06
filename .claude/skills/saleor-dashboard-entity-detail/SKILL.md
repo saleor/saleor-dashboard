@@ -375,6 +375,17 @@ Reference: [`ShippingZoneDetailsPage`](../../src/shipping/components/ShippingZon
 | Sidebar settings | `ShippingZoneSettingsCard` + `DashboardCard.Subtitle` microcopy — **keep** until AssignListCard fits multiselect UX |
 | Save composition | `ShippingZoneSaveCompositionHint` (general + channels + warehouses)                                                 |
 
+## Example: shipping method (rate) details
+
+Reference: [`ShippingZoneRatesPage`](../../src/shipping/components/ShippingZoneRatesPage/ShippingZoneRatesPage.tsx) (edit). Create: [`ShippingZoneRatesCreatePage`](../../src/shipping/components/ShippingZoneRatesCreatePage/ShippingZoneRatesCreatePage.tsx).
+
+| Area    | Edit                                                                                                                   | Create                                                                   |
+| ------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| TopNav  | `actionsGap={3}`; **Metadata** \| **Translations** \| **Menu** (GraphiQL → Delete last). Delete is **not** on Savebar. | Title + back only — no Metadata / Translations / Menu (no entity id yet) |
+| Savebar | Cancel + Save (composition hint optional)                                                                              | Cancel + Save                                                            |
+
+Do not leave edit TopNav as Metadata-only — the cogs menu is required once Delete moves off Savebar.
+
 ---
 
 ## Canonical implementations

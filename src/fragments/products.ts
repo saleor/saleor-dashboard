@@ -354,6 +354,7 @@ export const fragmentVariant = gql`
           id
           name
           currencyCode
+          isActive
         }
       }
     }

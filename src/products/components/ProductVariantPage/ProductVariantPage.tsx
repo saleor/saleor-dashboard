@@ -42,7 +42,6 @@ import {
   type SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { rippleProductVariantMetadata } from "@dashboard/products/ripples/productVariantMetadata";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
@@ -357,12 +356,20 @@ export const ProductVariantPage = ({
                       errors={errors}
                     />
                     <CardSpacer />
-                    <VariantDetailsChannelsAvailabilityCard
-                      variant={variant}
-                      listings={data.channelListings}
-                      disabled={loading}
-                      onManageClick={toggleManageChannels}
+                    <ProductVariantPrice
+                      disabled={!variant}
+                      productVariantChannelListings={data.channelListings.map(channel => ({
+                        ...channel.data,
+                        ...channel.value,
+                      }))}
+                      errors={priceVariantErrors}
+                      loading={loading}
+                      onChange={handlers.changeChannels}
+                      onChannelsReplace={handlers.replaceChannels}
+                      onManageClick={variant ? toggleManageChannels : undefined}
+                      availableChannelsCount={variant?.product?.channelListings?.length}
                     />
+                    <CardSpacer />
                     {variant?.product?.productType && (
                       <VariantAttributesSection
                         title={intl.formatMessage(messages.nonSelectionAttributes)}
@@ -450,17 +457,6 @@ export const ProductVariantPage = ({
                       onImageAdd={toggleModal}
                     />
                     <CardSpacer />
-                    <ProductVariantPrice
-                      disabled={!variant}
-                      productVariantChannelListings={data.channelListings.map(channel => ({
-                        ...channel.data,
-                        ...channel.value,
-                      }))}
-                      errors={priceVariantErrors}
-                      loading={loading}
-                      onChange={handlers.changeChannels}
-                    />
-                    <CardSpacer />
                     <ProductVariantCheckoutSettings
                       data={data}
                       disabled={loading}
@@ -493,6 +489,7 @@ export const ProductVariantPage = ({
                       errors={errors}
                       stocks={data.stocks}
                       onChange={handlers.changeStock}
+                      onStocksReplace={handlers.replaceStocks}
                       onFormDataChange={change}
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}

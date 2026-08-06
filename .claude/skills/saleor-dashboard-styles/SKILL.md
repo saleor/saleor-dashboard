@@ -281,7 +281,6 @@ Do not hand-roll `Globe` + blue `Link` for channel names.
 import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 
 <PriceFieldV2
-  size="small"
   currencySymbol={channel.currencyCode}
   value={price}
   onChange={setPrice}
@@ -289,7 +288,26 @@ import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 />
 ```
 
+Default (medium) input size for channel amount lists — `size="small"` feels cramped next to currency adornments. Use `small` only in dense dialogs (e.g. bulk publish).
+
 Row-list UIs with aligned amount columns should support spreadsheet paste (`onPasteCapture` + `src/utils/spreadsheetPaste/`). See also `docs/follow-ups/spreadsheet-paste-reuse.md`.
+
+### Channel amount lists (Pricing / Order value / voucher amounts)
+
+Canonical references: `VoucherFixedAmountChannelList`, `OrderValue` (shipping method), `PricingCard` (shipping method).
+
+| Piece                        | Rule                                                                                                                                                                                                             |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Paste hint band              | Optional `Text size={2}` in a tinted band (`padding` Y `spacing-3`). One short line — not a second card header. Multi-column lists (Order value min/max) should mention tab-separated rows, not only “a column”. |
+| Column label row (subheader) | **Always include**, even for single-amount lists (Pricing: Channel name / Price). Keep the band **compact** (`Text size={2}`, Y ~`spacing-1`) — never reuse value-row `min-height` or value-row Y padding.       |
+| Value rows                   | Default-size `PriceFieldV2` (not `small`); row `min-height` ~`3.75rem`, Y `spacing-2`. Amount columns ≥`15rem` so ~5 digits + decimals + currency adornment fit without clipping.                                |
+| Shared grid                  | Share `grid-template-columns` between label row and value rows; **split** padding/`min-height` rules so labels stay short.                                                                                       |
+
+Anti-patterns:
+
+- One CSS rule for `.headerRow, .row { min-height: 3.25rem; padding: … }` — labels inherit a tall input row.
+- Skipping the label row on single-amount channel lists (“obvious” Price column) — keep Channel name / Price so Pricing matches Order value. Prefer the same on voucher amount lists when you touch them.
+- Material-UI `Table` / `TableCell` for channel amount or breakdown lists — prefer macaw `Box` + CSS grid like `OrderValue` / `PricingCard` / `ShippingZoneRateChannelTable`. Fighting MUI head padding is a losing battle.
 
 ## Entity detail settings card (`DetailSettingsCard`)
 
@@ -318,3 +336,4 @@ Secondary sidebar ops cards (`AssignListCard`, `ChannelInventoryCard`) use **whi
 - **No `border` + `box-shadow` on elevated surfaces** - See [`saleor-dashboard-smooth-shadow`](./saleor-dashboard-smooth-shadow/SKILL.md)
 - **No bare browser heading styles for card titles** - Do not style only string `title`s; the primitive must style all title nodes
 - **No new `type="number"` money fields** - Use `PriceFieldV2` (see above)
+- **No tall column-label bands in channel amount lists** - Label rows stay compact (`spacing-1` Y); do not reuse value-row `min-height` (see Channel amount lists above)

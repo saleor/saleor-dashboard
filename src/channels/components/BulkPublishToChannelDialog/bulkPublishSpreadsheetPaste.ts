@@ -4,6 +4,7 @@ import {
   parseSpreadsheetClipboard,
   trimEmptyTrailingRows,
 } from "@dashboard/utils/spreadsheetPaste/parseSpreadsheetClipboard";
+import { sanitizeSpreadsheetInteger } from "@dashboard/utils/spreadsheetPaste/sanitizeSpreadsheetInteger";
 import { type ClipboardEvent } from "react";
 
 // Multi-field paste for bulk publish. Generic parse lives in utils/spreadsheetPaste.
@@ -11,7 +12,7 @@ import { type ClipboardEvent } from "react";
 
 export type BulkPublishPasteField = "price" | "costPrice" | "stock";
 
-export { parseSpreadsheetClipboard };
+export { parseSpreadsheetClipboard, sanitizeSpreadsheetInteger };
 
 const FIELD_ORDER_WITH_STOCK: BulkPublishPasteField[] = ["price", "costPrice", "stock"];
 const FIELD_ORDER_WITHOUT_STOCK: BulkPublishPasteField[] = ["price", "costPrice"];
@@ -24,52 +25,6 @@ const getFieldsFromPasteStart = (
   const startIndex = order.indexOf(startField);
 
   return startIndex === -1 ? [] : order.slice(startIndex);
-};
-
-const normalizeIntegerToken = (value: string): string => {
-  const cleaned = value
-    .trim()
-    .replace(/[\s\u00A0]/g, "")
-    .replace(/[^\d.,-]/g, "");
-
-  if (cleaned === "" || cleaned === "-" || cleaned === "." || cleaned === ",") {
-    return "";
-  }
-
-  const lastComma = cleaned.lastIndexOf(",");
-  const lastDot = cleaned.lastIndexOf(".");
-
-  if (lastComma > lastDot) {
-    const integerPart = cleaned.slice(0, lastComma).replace(/[.,]/g, "");
-    const decimalPart = cleaned.slice(lastComma + 1).replace(/[.,]/g, "");
-
-    return decimalPart === "" ? integerPart : `${integerPart}.${decimalPart}`;
-  }
-
-  if (lastDot > lastComma) {
-    const integerPart = cleaned.slice(0, lastDot).replace(/[.,]/g, "");
-    const decimalPart = cleaned.slice(lastDot + 1).replace(/[.,]/g, "");
-
-    return decimalPart === "" ? integerPart : `${integerPart}.${decimalPart}`;
-  }
-
-  return cleaned.replace(/,/g, "");
-};
-
-export const sanitizeSpreadsheetInteger = (value: string): string | null => {
-  const normalized = normalizeIntegerToken(value);
-
-  if (normalized === "") {
-    return "";
-  }
-
-  const parsed = Number.parseFloat(normalized);
-
-  if (!Number.isFinite(parsed) || parsed < 0) {
-    return null;
-  }
-
-  return String(Math.trunc(parsed));
 };
 
 const sanitizeSpreadsheetFieldValue = (

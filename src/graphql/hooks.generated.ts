@@ -3317,6 +3317,7 @@ export const ProductVariantFragmentDoc = gql`
         id
         name
         currencyCode
+        isActive
       }
     }
   }
@@ -17050,6 +17051,7 @@ export const ProductVariantCreateDataDocument = gql`
         id
         name
         currencyCode
+        isActive
       }
     }
     name

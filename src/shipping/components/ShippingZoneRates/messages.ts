@@ -21,22 +21,33 @@ export const shippingZoneMethodsMessages = defineMessages({
     defaultMessage: "No shipping methods in this zone",
     description: "empty shipping methods list in shipping zone",
   },
+  channelsAssigned: {
+    id: "p8wPET",
+    defaultMessage: "{count, plural, one {# channel} other {# channels}}",
+    description: "shipping method assigned channel count when all have prices",
+  },
   channelsPriced: {
-    id: "F9o33g",
+    id: "wN8PkE",
     defaultMessage: "Priced for {configured} of {total} channels",
-    description: "shipping method channel coverage summary",
+    description: "shipping method channel coverage when some assigned channels lack prices",
   },
   channelsMissingPricing: {
-    id: "HSYLgD",
+    id: "vPW5Zc",
     defaultMessage:
       "{count, plural, one {# channel without pricing} other {# channels without pricing}}",
-    description: "shipping method missing channel listings count",
+    description: "shipping method assigned channels missing a price",
   },
   assignChannelsHint: {
     id: "avj76v",
     defaultMessage:
       "Assign channels to this shipping zone so we know which orders will be supported",
     description: "ChannelsSection subtitle",
+  },
+  noMethodChannelsHint: {
+    id: "Pr3zjN",
+    defaultMessage:
+      "No channels assigned to this shipping method yet. Open the method to set availability and prices.",
+    description: "empty state when a shipping method has no channel listings",
   },
   channelColumn: {
     id: "cW7hFJ",
