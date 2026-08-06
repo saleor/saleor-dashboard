@@ -23,6 +23,7 @@ import VoucherDetailsPage, {
 import { VoucherMetadataDialog } from "@dashboard/discounts/components/VoucherMetadataDialog/VoucherMetadataDialog";
 import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
 import { useVoucherSetupCardDismiss } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDismiss";
+import { useVoucherSetupCardDisplayReady } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDisplayReady";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import {
   voucherListUrl,
@@ -553,9 +554,17 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     tabItemsCount,
     countriesCount: voucherForPage?.countries?.length ?? 0,
   });
+  const setupCardDisplayReady = useVoucherSetupCardDisplayReady({
+    voucherId: data?.voucher?.id,
+    serverChannelCount: data?.voucher?.channelListings?.length ?? 0,
+    channelListingsCount: currentChannels.length,
+    savedCodesCount: data?.voucher?.codesCount?.totalCount ?? 0,
+    voucherCodesLoading,
+  });
   // Menu reopen uses saved readiness; the card itself also reacts to unsaved form edits.
   const setupCardVisibleFromSavedState =
     !!data?.voucher &&
+    setupCardDisplayReady &&
     (setupEmphasized || (!setupCardDismissed && !setupReadinessForMenu.coreReady));
 
   return (
@@ -659,6 +668,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         }
         setupEmphasized={setupEmphasized}
         setupCardDismissed={setupCardDismissed}
+        setupCardDisplayReady={setupCardDisplayReady}
         onDismissSetupCard={() => {
           dismissSetupCard();
 

@@ -102,6 +102,7 @@ interface VoucherDetailsPageFormContentProps extends ChannelProps {
   onRemove: () => void;
   setupEmphasized?: boolean;
   setupCardDismissed?: boolean;
+  setupCardDisplayReady?: boolean;
   onDismissSetupCard?: () => void;
   onCancel: () => void;
   onSubmit: (data: VoucherDetailsPageFormData) => void;
@@ -157,6 +158,7 @@ export const VoucherDetailsPageFormContent = ({
   onShowMetadata,
   setupEmphasized = false,
   setupCardDismissed = false,
+  setupCardDisplayReady = true,
   onDismissSetupCard,
   onCancel,
   onSubmit,
@@ -236,7 +238,9 @@ export const VoucherDetailsPageFormContent = ({
     countriesCount: voucher?.countries?.length ?? 0,
   });
   const showSetupCard =
-    !!voucher && (setupEmphasized || (!setupCardDismissed && !setupReadiness.coreReady));
+    !!voucher &&
+    setupCardDisplayReady &&
+    (setupEmphasized || (!setupCardDismissed && !setupReadiness.coreReady));
 
   const handleChannelsChange = (channels: ChannelVoucherData[]) => {
     set({ channelListings: channels });

@@ -129,6 +129,7 @@ interface VoucherDetailsPageProps
   /** URL `?action=setup` — forces the checklist visible even if dismissed. */
   setupEmphasized?: boolean;
   setupCardDismissed?: boolean;
+  setupCardDisplayReady?: boolean;
   onDismissSetupCard?: () => void;
   onMultipleVoucherCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
   onCustomVoucherCodeGenerate: (code: string) => void;
@@ -169,6 +170,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onShowSetupChecklist,
   setupEmphasized = false,
   setupCardDismissed = false,
+  setupCardDisplayReady = true,
   onDismissSetupCard,
   onMultipleVoucherCodesGenerate,
   onCustomVoucherCodeGenerate,
@@ -369,6 +371,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
             onRemove={onRemove}
             setupEmphasized={setupEmphasized}
             setupCardDismissed={setupCardDismissed}
+            setupCardDisplayReady={setupCardDisplayReady}
             onDismissSetupCard={onDismissSetupCard}
             onCancel={() => navigate(voucherListBackLink)}
             onSubmit={data => handleSubmit(data)}
