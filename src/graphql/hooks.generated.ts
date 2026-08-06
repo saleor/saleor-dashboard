@@ -199,6 +199,9 @@ export const InstalledAppFragmentDoc = gql`
   identifier
   manifestUrl
   isActive
+  name
+  type
+  appUrl
 }
     `;
 export const InstalledAppDetailsFragmentDoc = gql`
