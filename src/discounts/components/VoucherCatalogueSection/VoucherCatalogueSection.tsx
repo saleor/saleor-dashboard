@@ -2,6 +2,7 @@ import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/Det
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type SearchProductFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
+import { type Node } from "@dashboard/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { FolderTree, Layers, Package, Plus, Tags } from "lucide-react";
 import { type ReactNode } from "react";
@@ -16,10 +17,10 @@ import { voucherCatalogueMessages as messages } from "./messages";
 import styles from "./VoucherCatalogueSection.module.css";
 
 interface VoucherCatalogueSectionProps {
-  isChecked: (id: string) => boolean;
+  isChecked: (id: string) => boolean | undefined;
   selected: number;
   toggle: (id: string) => void;
-  toggleAll: (items: unknown[], selected: number) => void;
+  toggleAll: (items: Node[], selected: number) => void;
   toolbar?: ReactNode;
   disabled: boolean;
   activeTab: VoucherDetailsPageTab;

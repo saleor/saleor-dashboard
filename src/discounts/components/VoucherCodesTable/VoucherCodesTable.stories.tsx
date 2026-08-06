@@ -1,5 +1,5 @@
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
@@ -16,18 +16,16 @@ const meta: Meta<typeof VoucherCodesTable> = {
   title: "Discounts/VoucherCodesTable",
   component: VoucherCodesTable,
   decorators: [
-    Story => (
+    (Story: StoryFn) => (
       <PaginatorContext.Provider
         value={{
           loadNextPage: fn(),
           loadPreviousPage: fn(),
           paginatorType: "click",
-          pageInfo: {
-            endCursor: "",
-            hasNextPage: false,
-            hasPreviousPage: false,
-            startCursor: "",
-          },
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: "",
         }}
       >
         <Story />

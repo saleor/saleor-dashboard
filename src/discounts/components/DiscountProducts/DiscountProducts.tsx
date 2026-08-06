@@ -18,7 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-interface SaleProductsProps extends ListProps, ListActions {
+interface SaleProductsProps extends Omit<ListProps, "onUpdateListSettings">, ListActions {
   products: SearchProductFragment[];
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;

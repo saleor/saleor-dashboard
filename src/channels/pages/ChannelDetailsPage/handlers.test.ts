@@ -91,7 +91,10 @@ describe("ChannelDetailsPage handlers", () => {
       {
         ...baseFormData,
         warehousesIdsToAdd: ["w3"],
-        warehousesToDisplay: [...baseFormData.warehousesToDisplay, { id: "w3", name: "Three" }],
+        warehousesToDisplay: [
+          ...baseFormData.warehousesToDisplay,
+          { __typename: "Warehouse" as const, id: "w3", name: "Three" },
+        ],
       },
       set,
     );
@@ -138,7 +141,7 @@ describe("ChannelDetailsPage handlers", () => {
       {
         ...baseFormData,
         shippingZonesIdsToAdd: ["z1"],
-        shippingZonesToDisplay: [{ id: "z1", name: "EU" }],
+        shippingZonesToDisplay: [{ __typename: "ShippingZone" as const, id: "z1", name: "EU" }],
       },
       set,
     );

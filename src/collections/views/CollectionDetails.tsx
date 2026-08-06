@@ -19,7 +19,7 @@ import useChannels from "@dashboard/hooks/useChannels";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { errorMessages } from "@dashboard/intl";
+import { commonMessages, errorMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { useMemo } from "react";
@@ -179,7 +179,7 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     } catch {
       notify({
         status: "error",
-        text: intl.formatMessage(errorMessages.somethingWentWrong),
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
       });
     }
   };
@@ -241,7 +241,7 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     } catch {
       notify({
         status: "error",
-        text: intl.formatMessage(errorMessages.somethingWentWrong),
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
       });
 
       return [
@@ -249,7 +249,7 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
           __typename: "CollectionError",
           code: CollectionErrorCode.GRAPHQL_ERROR,
           field: null,
-          message: intl.formatMessage(errorMessages.somethingWentWrong),
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
         },
       ];
     }

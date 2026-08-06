@@ -62,7 +62,7 @@ export const CategoryDetailsForm = ({
           name: "backgroundImageAlt",
           value: "",
         },
-      });
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   }, [image, onChange]);
 

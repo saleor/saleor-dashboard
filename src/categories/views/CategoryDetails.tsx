@@ -24,7 +24,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { type PaginatorContextValues } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { errorMessages } from "@dashboard/intl";
+import { commonMessages, errorMessages } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -220,7 +220,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
     } catch {
       notify({
         status: "error",
-        text: intl.formatMessage(errorMessages.somethingWentWrong),
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
       });
     }
   };
@@ -246,7 +246,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
     } catch {
       notify({
         status: "error",
-        text: intl.formatMessage(errorMessages.somethingWentWrong),
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
       });
 
       return [
@@ -254,7 +254,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
           __typename: "ProductError",
           code: ProductErrorCode.GRAPHQL_ERROR,
           field: null,
-          message: intl.formatMessage(errorMessages.somethingWentWrong),
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
         },
       ];
     }

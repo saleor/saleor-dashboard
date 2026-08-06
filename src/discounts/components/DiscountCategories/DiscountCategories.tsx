@@ -15,7 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-interface DiscountCategoriesProps extends ListProps, ListActions {
+interface DiscountCategoriesProps extends Omit<ListProps, "onUpdateListSettings">, ListActions {
   categories: CategoryWithTotalProductsFragment[];
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;

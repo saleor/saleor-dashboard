@@ -34,7 +34,7 @@ interface AssignableListTableProps<T extends { id: string }> {
   columns: AssignableListColumn[];
   disabled?: boolean;
   selected: number;
-  isChecked: (id: string) => boolean;
+  isChecked: (id: string) => boolean | undefined;
   toggle: (id: string) => void;
   toggleAll: (items: T[], selected: number) => void;
   onUnassign: (id: string) => void;

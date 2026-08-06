@@ -1,7 +1,7 @@
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { DiscountErrorCode, VoucherTypeEnum } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { fn } from "storybook/test";
 
@@ -37,7 +37,7 @@ const meta: Meta<typeof VoucherLimits> = {
   title: "Discounts/VoucherLimits",
   component: VoucherLimits,
   decorators: [
-    Story => (
+    (Story: StoryFn) => (
       <Box __maxWidth="720px" padding={4}>
         <Story />
       </Box>

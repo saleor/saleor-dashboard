@@ -18,7 +18,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-interface SaleVariantsProps extends ListProps, ListActions {
+interface SaleVariantsProps extends Omit<ListProps, "onUpdateListSettings">, ListActions {
   variants: SaleDetailsFragment["variants"] | VoucherCatalogueFragment["variants"];
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;

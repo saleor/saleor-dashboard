@@ -62,7 +62,7 @@ export const CollectionDetails = ({
           name: "backgroundImageAlt",
           value: "",
         },
-      });
+      } as React.ChangeEvent<HTMLInputElement>);
     }
   }, [image, onChange]);
 

@@ -50,8 +50,7 @@ export const Pagination = ({
       justifyContent="space-between"
       alignItems="center"
       gap={2}
-      __paddingLeft={typeof paddingLeft === "number" ? undefined : paddingLeft}
-      paddingLeft={typeof paddingLeft === "number" ? paddingLeft : undefined}
+      __paddingLeft={paddingLeft}
       paddingRight={COLLECTION_PRODUCT_TABLE_ACTION_INSET}
       paddingY={2}
     >
