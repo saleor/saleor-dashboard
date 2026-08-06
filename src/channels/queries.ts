@@ -139,6 +139,9 @@ export const bulkPublishProductsData = gql`
         node {
           id
           name
+          category {
+            id
+          }
           channelListings {
             channel {
               id

@@ -17,8 +17,13 @@ import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/
 import { VoucherDeleteDialog } from "@dashboard/discounts/components/VoucherDeleteDialog/VoucherDeleteDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
+  type VoucherDetailsPageVoucher,
   type VoucherTabItemsCount,
 } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { VoucherMetadataDialog } from "@dashboard/discounts/components/VoucherMetadataDialog/VoucherMetadataDialog";
+import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
+import { useVoucherSetupCardDismiss } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDismiss";
+import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import {
   voucherListUrl,
   voucherUrl,
@@ -30,19 +35,20 @@ import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CategoryFilterInput,
   type CollectionFilterInput,
+  DiscountValueTypeEnum,
   type ProductWhereInput,
   type SearchCategoriesWithTotalProductsQueryVariables,
   type SearchCollectionsWithTotalProductsQueryVariables,
   type SearchProductsQueryVariables,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
+  useVoucherCatalogueQuery,
   useVoucherCataloguesAddMutation,
   useVoucherCataloguesRemoveMutation,
   useVoucherChannelListingUpdateMutation,
   useVoucherDeleteMutation,
   useVoucherDetailsQuery,
   useVoucherUpdateMutation,
-  type VoucherDetailsQueryVariables,
+  type VoucherCatalogueQueryVariables,
+  VoucherTypeEnum,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useChannels from "@dashboard/hooks/useChannels";
@@ -53,15 +59,14 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
-import { sectionNames } from "@dashboard/intl";
+import { buttonMessages, sectionNames } from "@dashboard/intl";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Button } from "@saleor/macaw-ui-next";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
@@ -69,6 +74,14 @@ import { createUpdateHandler } from "./handlers";
 import { useVoucherAssignedIds } from "./hooks/useVoucherAssignedIds";
 import { useVoucherCodes } from "./hooks/useVoucherCodes";
 import { VOUCHER_UPDATE_FORM_ID } from "./types";
+import { useVoucherCatalogueDraft } from "./useVoucherCatalogueDraft";
+import {
+  adjustCatalogueCount,
+  applyCatalogueBucketToConnection,
+  hasVoucherCatalogueDraftChanges,
+  hasVoucherCountriesDraftChanges,
+  isIdAssignedWithDraft,
+} from "./voucherCatalogueDraft";
 
 interface VoucherDetailsProps {
   id: string;
@@ -81,6 +94,14 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
   const intl = useIntl();
+  const {
+    draft: catalogueDraft,
+    resetDraft: resetCatalogueDraft,
+    assignItems: assignCatalogueItems,
+    unassignIds: unassignCatalogueIds,
+    setCountryCodes,
+    unassignCountryCode,
+  } = useVoucherCatalogueDraft();
   // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
   // on a large catalog. Ask for more per request so the picker stays useful without leaning on
   // backfill for every page.
@@ -189,22 +210,26 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     });
   };
 
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [activeTab, setActiveTab] = useState<VoucherDetailsPageTab>(
     VoucherDetailsPageTab.categories,
   );
+  const [catalogueNumberOfRows, setCatalogueNumberOfRows] = useState(PAGINATE_BY);
   const [paginationState, setPaginationState] = useSectionLocalPaginationState(
-    PAGINATE_BY,
+    catalogueNumberOfRows,
     activeTab,
   );
+  const handleCatalogueListSettingsUpdate = (key: "rowNumber", value: number) => {
+    if (key === "rowNumber") {
+      setCatalogueNumberOfRows(value);
+    }
+  };
   const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: VoucherDetailsPageTab) => {
     reset();
     setActiveTab(tab);
   };
-  const detailsQueryInclude: Pick<
-    VoucherDetailsQueryVariables,
+  const catalogueQueryInclude: Pick<
+    VoucherCatalogueQueryVariables,
     "includeCategories" | "includeCollections" | "includeProducts" | "includeVariants"
   > = {
     includeCategories: activeTab === VoucherDetailsPageTab.categories,
@@ -214,10 +239,15 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   };
   const { data, loading, refetch, updateQuery } = useVoucherDetailsQuery({
     displayLoader: true,
+    variables: { id },
+  });
+  const { data: catalogueData, refetch: refetchCatalogue } = useVoucherCatalogueQuery({
+    displayLoader: false,
+    skip: !data?.voucher,
     variables: {
       id,
       ...paginationState,
-      ...detailsQueryInclude,
+      ...catalogueQueryInclude,
     },
   });
 
@@ -227,10 +257,33 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     params.action === "assign-product" ||
     params.action === "assign-category" ||
     params.action === "assign-collection";
-  const { isProductAssigned, isCategoryAssigned, isCollectionAssigned } = useVoucherAssignedIds({
+  const {
+    isProductAssigned: isProductAssignedOnServer,
+    isCategoryAssigned: isCategoryAssignedOnServer,
+    isCollectionAssigned: isCollectionAssignedOnServer,
+  } = useVoucherAssignedIds({
     id,
     skip: !isAssignPickerOpen,
   });
+  const isProductAssigned = useCallback(
+    (item: { id: string }) =>
+      isIdAssignedWithDraft(item.id, isProductAssignedOnServer(item), catalogueDraft.products),
+    [catalogueDraft.products, isProductAssignedOnServer],
+  );
+  const isCategoryAssigned = useCallback(
+    (item: { id: string }) =>
+      isIdAssignedWithDraft(item.id, isCategoryAssignedOnServer(item), catalogueDraft.categories),
+    [catalogueDraft.categories, isCategoryAssignedOnServer],
+  );
+  const isCollectionAssigned = useCallback(
+    (item: { id: string }) =>
+      isIdAssignedWithDraft(
+        item.id,
+        isCollectionAssignedOnServer(item),
+        catalogueDraft.collections,
+      ),
+    [catalogueDraft.collections, isCollectionAssignedOnServer],
+  );
 
   const {
     voucherCodes,
@@ -241,7 +294,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     selectedVoucherCodesIds,
     addedVoucherCodes,
     voucherCodesRefetch,
-    handleSetSelectedVoucherCodesIds,
+    setSelectedVoucherCodesIds,
     updateVoucherCodesListSettings,
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
@@ -257,10 +310,18 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     data?.voucher,
     availableChannels,
   );
-  const voucherChannelsChoices: ChannelVoucherData[] = useMemo(
-    () => createSortedChannelsDataFromVoucher(data?.voucher),
-    [data?.voucher],
-  );
+  // Percentage is edited in `percentageDiscountValue`; per-channel `discountValue` is the
+  // fixed-amount draft. For %-saved vouchers the API stores the same number on every
+  // listing — strip it from channel drafts so Fixed doesn't pretfill currency with that %.
+  const voucherChannelsChoices: ChannelVoucherData[] = useMemo(() => {
+    const channels = createSortedChannelsDataFromVoucher(data?.voucher) ?? [];
+
+    if (data?.voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE) {
+      return channels.map(channel => ({ ...channel, discountValue: "" }));
+    }
+
+    return channels;
+  }, [data?.voucher]);
   const {
     channelListElements,
     channelsToggle,
@@ -280,7 +341,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       closeModal,
       openModal,
     },
-    { formId: VOUCHER_UPDATE_FORM_ID },
+    { formId: VOUCHER_UPDATE_FORM_ID, deferDirtyOnConfirm: true },
   );
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
   const notifySaved = () =>
@@ -298,6 +359,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         notifySaved();
         handleClearAddedVoucherCodes();
         voucherCodesRefetch();
+        refetchCatalogue();
         updateQuery(prev => ({
           ...prev,
           voucher: {
@@ -317,92 +379,89 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     },
   });
   const [voucherCataloguesRemove, voucherCataloguesRemoveOpts] = useVoucherCataloguesRemoveMutation(
-    {
-      onCompleted: data => {
-        if (data.voucherCataloguesRemove.errors.length === 0) {
-          notifySaved();
-          closeModal();
-          reset();
-          refetch();
-        }
-      },
-    },
+    {},
   );
-  const [voucherCataloguesAdd, voucherCataloguesAddOpts] = useVoucherCataloguesAddMutation({
-    onCompleted: data => {
-      if (data.voucherCataloguesAdd.errors.length === 0) {
-        notifySaved();
-        closeModal();
-        reset();
-        refetch();
-      }
-    },
-  });
+  const [voucherCataloguesAdd, voucherCataloguesAddOpts] = useVoucherCataloguesAddMutation({});
   const selectedUnassignIds = params.ids ?? [];
   const selectedUnassignIdsCount = selectedUnassignIds.length;
   const canOpenBulkActionDialog = selectedUnassignIdsCount > 0;
-  const handleUpdate = createUpdateHandler(
+  const catalogueQueryVariables = {
+    ...paginationState,
+    ...catalogueQueryInclude,
+  };
+  const updateHandler = createUpdateHandler(
     data?.voucher,
     voucherChannelsChoices,
     variables => voucherUpdate({ variables }),
     updateChannels,
+    {
+      cataloguesAdd: voucherCataloguesAdd,
+      cataloguesRemove: voucherCataloguesRemove,
+      getCatalogueDraft: () => catalogueDraft,
+      catalogueQueryVariables,
+    },
   );
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.voucher,
-    handleUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+  const handleSubmit = async formData => {
+    const errors = await updateHandler(formData);
+
+    if (!errors?.length) {
+      resetCatalogueDraft();
+      reset();
+      refetch();
+      refetchCatalogue();
+    }
+
+    return errors;
+  };
+  const catalogueVoucher = catalogueData?.voucher;
+  const voucher = data?.voucher;
+  const voucherForPage: VoucherDetailsPageVoucher | undefined | null = useMemo(() => {
+    if (!voucher) {
+      return voucher;
+    }
+
+    const shopCountries = shop?.countries ?? [];
+    const countriesByCode = new Map(
+      [...shopCountries, ...(voucher.countries ?? [])].map(country => [country.code, country]),
+    );
+    const countries =
+      catalogueDraft.countryCodes === null
+        ? voucher.countries
+        : catalogueDraft.countryCodes
+            .map(code => countriesByCode.get(code))
+            .filter((country): country is NonNullable<typeof country> => !!country);
+
+    const pageVoucher: VoucherDetailsPageVoucher = {
+      ...voucher,
+      countries,
+      products: applyCatalogueBucketToConnection(
+        catalogueVoucher?.products,
+        catalogueDraft.products,
+      ) as VoucherDetailsPageVoucher["products"],
+      collections: applyCatalogueBucketToConnection(
+        catalogueVoucher?.collections,
+        catalogueDraft.collections,
+      ) as VoucherDetailsPageVoucher["collections"],
+      categories: applyCatalogueBucketToConnection(
+        catalogueVoucher?.categories,
+        catalogueDraft.categories,
+      ) as VoucherDetailsPageVoucher["categories"],
+      variants: applyCatalogueBucketToConnection(
+        catalogueVoucher?.variants,
+        catalogueDraft.variants,
+      ) as VoucherDetailsPageVoucher["variants"],
+    };
+
+    return pageVoucher;
+  }, [catalogueDraft, catalogueVoucher, shop?.countries, voucher]);
   const tabPageInfo =
     activeTab === VoucherDetailsPageTab.categories
-      ? maybe(() => data.voucher.categories.pageInfo)
+      ? maybe(() => catalogueVoucher?.categories?.pageInfo)
       : activeTab === VoucherDetailsPageTab.collections
-        ? maybe(() => data.voucher.collections.pageInfo)
-        : maybe(() => data.voucher.products.pageInfo);
-  const handleCategoriesUnassign = (ids: string[]) =>
-    voucherCataloguesRemove({
-      variables: {
-        ...paginationState,
-        ...detailsQueryInclude,
-        id,
-        input: {
-          categories: ids,
-        },
-      },
-    });
-  const handleCollectionsUnassign = (ids: string[]) =>
-    voucherCataloguesRemove({
-      variables: {
-        ...paginationState,
-        ...detailsQueryInclude,
-        id,
-        input: {
-          collections: ids,
-        },
-      },
-    });
-  const handleProductsUnassign = (ids: string[]) =>
-    voucherCataloguesRemove({
-      variables: {
-        ...paginationState,
-        ...detailsQueryInclude,
-        id,
-        input: {
-          products: ids,
-        },
-      },
-    });
-  const handleVariantsUnassign = (ids: string[]) =>
-    voucherCataloguesRemove({
-      variables: {
-        ...paginationState,
-        ...detailsQueryInclude,
-        id,
-        input: {
-          variants: ids,
-        },
-      },
-    });
+        ? maybe(() => catalogueVoucher?.collections?.pageInfo)
+        : activeTab === VoucherDetailsPageTab.variants
+          ? maybe(() => catalogueVoucher?.variants?.pageInfo)
+          : maybe(() => catalogueVoucher?.products?.pageInfo);
   const unassignCatalogueType =
     params.action === "unassign-category"
       ? "category"
@@ -416,26 +475,88 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const handleUnassignConfirm = () => {
     switch (unassignCatalogueType) {
       case "category":
-        handleCategoriesUnassign(selectedUnassignIds);
+        unassignCatalogueIds("categories", selectedUnassignIds);
         break;
       case "collection":
-        handleCollectionsUnassign(selectedUnassignIds);
+        unassignCatalogueIds("collections", selectedUnassignIds);
         break;
       case "product":
-        handleProductsUnassign(selectedUnassignIds);
+        unassignCatalogueIds("products", selectedUnassignIds);
         break;
       case "variant":
-        handleVariantsUnassign(selectedUnassignIds);
+        unassignCatalogueIds("variants", selectedUnassignIds);
         break;
     }
+
+    closeModal();
+    reset();
   };
   const { pageInfo, ...paginationValues } = paginate(tabPageInfo, paginationState);
   const tabItemsCount: VoucherTabItemsCount = {
-    categories: data?.voucher?.categoriesCount?.totalCount,
-    collections: data?.voucher?.collectionsCount?.totalCount,
-    products: data?.voucher?.productsCount?.totalCount,
-    variants: data?.voucher?.variantsCount?.totalCount,
+    categories: adjustCatalogueCount(
+      data?.voucher?.categoriesCount?.totalCount,
+      catalogueDraft.categories,
+    ),
+    collections: adjustCatalogueCount(
+      data?.voucher?.collectionsCount?.totalCount,
+      catalogueDraft.collections,
+    ),
+    products: adjustCatalogueCount(
+      data?.voucher?.productsCount?.totalCount,
+      catalogueDraft.products,
+    ),
+    variants: adjustCatalogueCount(
+      data?.voucher?.variantsCount?.totalCount,
+      catalogueDraft.variants,
+    ),
   };
+  const hasCatalogueDraftChanges = hasVoucherCatalogueDraftChanges(catalogueDraft);
+  const hasCountriesDraftChanges = hasVoucherCountriesDraftChanges(catalogueDraft);
+  const stagedVariantIds = useMemo(() => {
+    const serverIds = getAssignedVariantIds(catalogueVoucher?.variants);
+    const withoutRemoved = serverIds.filter(
+      id => !catalogueDraft.variants.idsToRemove.includes(id),
+    );
+
+    return [...catalogueDraft.variants.idsToAdd, ...withoutRemoved];
+  }, [catalogueDraft.variants, catalogueVoucher?.variants]);
+  const setupEmphasized = params.action === "setup";
+  const {
+    isDismissed: setupCardDismissed,
+    dismiss: dismissSetupCard,
+    undismiss: undismissSetupCard,
+  } = useVoucherSetupCardDismiss(id);
+  const setupDiscountType =
+    data?.voucher?.type === VoucherTypeEnum.SHIPPING
+      ? DiscountTypeEnum.SHIPPING
+      : data?.voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE
+        ? DiscountTypeEnum.VALUE_PERCENTAGE
+        : DiscountTypeEnum.VALUE_FIXED;
+  // Menu reopen uses *saved* readiness — don't read percentage from `currentChannels`,
+  // which clears `discountValue` for %-saved vouchers so Fixed doesn't pretfill.
+  const setupReadinessForMenu = getVoucherSetupReadiness({
+    voucher: voucherForPage,
+    formData: {
+      discountType: setupDiscountType,
+      type: data?.voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
+      percentageDiscountValue:
+        setupDiscountType === DiscountTypeEnum.VALUE_PERCENTAGE
+          ? String(
+              data?.voucher?.channelListings?.find(listing => listing.discountValue != null)
+                ?.discountValue ?? "",
+            )
+          : "",
+      channelListings: currentChannels,
+      codes: [],
+    },
+    voucherCodes,
+    tabItemsCount,
+    countriesCount: voucherForPage?.countries?.length ?? 0,
+  });
+  // Menu reopen uses saved readiness; the card itself also reacts to unsaved form edits.
+  const setupCardVisibleFromSavedState =
+    !!data?.voucher &&
+    (setupEmphasized || (!setupCardDismissed && !setupReadinessForMenu.coreReady));
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
@@ -459,7 +580,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         />
       )}
       <VoucherDetailsPage
-        voucher={data?.voucher}
+        voucher={voucherForPage}
         voucherCodes={voucherCodes}
         addedVoucherCodes={addedVoucherCodes}
         voucherCodesPagination={voucherCodesPagination}
@@ -470,14 +591,22 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         onMultipleVoucherCodesGenerate={handleGenerateMultipleCodes}
         onCustomVoucherCodeGenerate={handleAddVoucherCode}
         onVoucherCodesSettingsChange={updateVoucherCodesListSettings}
-        onSelectVoucherCodesIds={handleSetSelectedVoucherCodesIds}
+        onSelectedCodesChange={setSelectedVoucherCodesIds}
         selectedVoucherCodesIds={selectedVoucherCodesIds}
         allChannelsCount={allChannels?.length}
         channelListings={currentChannels}
-        disabled={loading || voucherCataloguesRemoveOpts.loading || updateChannelsOpts.loading}
+        savedChannelListings={voucherChannelsChoices}
+        disabled={
+          (loading && !data?.voucher) ||
+          voucherCataloguesRemoveOpts.loading ||
+          voucherCataloguesAddOpts.loading ||
+          updateChannelsOpts.loading
+        }
         errors={[
           ...(voucherUpdateOpts.data?.voucherUpdate.errors || []),
           ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
+          ...(voucherCataloguesAddOpts.data?.voucherCataloguesAdd.errors || []),
+          ...(voucherCataloguesRemoveOpts.data?.voucherCataloguesRemove.errors || []),
         ]}
         selectedChannelId={channel?.id}
         onCategoryAssign={() => openModal("assign-category")}
@@ -489,17 +618,10 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         }
         onCountryAssign={() => openModal("assign-country")}
         onCountryUnassign={countryCode =>
-          voucherUpdate({
-            variables: {
-              ...paginationState,
-              id,
-              input: {
-                countries: data.voucher.countries
-                  .filter(country => country.code !== countryCode)
-                  .map(country => country.code),
-              },
-            },
-          })
+          unassignCountryCode(
+            countryCode,
+            data?.voucher?.countries?.map(country => country.code) ?? [],
+          )
         }
         onCategoryUnassign={categoryId =>
           openModal("unassign-category", {
@@ -520,12 +642,41 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         }
         activeTab={activeTab}
         tabItemsCount={tabItemsCount}
+        catalogueNumberOfRows={catalogueNumberOfRows}
+        onCatalogueListSettingsUpdate={handleCatalogueListSettingsUpdate}
         onTabClick={changeTab}
         onSubmit={handleSubmit}
+        hasCatalogueDraftChanges={hasCatalogueDraftChanges}
+        hasCountriesDraftChanges={hasCountriesDraftChanges}
+        onShowMetadata={() => openModal("view-metadata")}
+        onShowSetupChecklist={
+          data?.voucher && !setupCardVisibleFromSavedState
+            ? () => {
+                undismissSetupCard();
+                openModal("setup");
+              }
+            : undefined
+        }
+        setupEmphasized={setupEmphasized}
+        setupCardDismissed={setupCardDismissed}
+        onDismissSetupCard={() => {
+          dismissSetupCard();
+
+          if (setupEmphasized) {
+            closeModal();
+          }
+        }}
         onRemove={() => openModal("remove")}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        saveButtonBarState={voucherUpdateOpts.status}
+        saveButtonBarState={
+          voucherUpdateOpts.loading ||
+          updateChannelsOpts.loading ||
+          voucherCataloguesAddOpts.loading ||
+          voucherCataloguesRemoveOpts.loading
+            ? "loading"
+            : voucherUpdateOpts.status
+        }
         categoryListToolbar={
           <Button
             variant="secondary"
@@ -583,7 +734,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)}
         excludeContainer={isCategoryAssigned}
         backfillResetKey={String(searchGeneration)}
-        confirmButtonState={voucherCataloguesAddOpts.status}
+        confirmButtonState="default"
         hasMore={searchCategoriesOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-category"}
         onFetch={searchCategories}
@@ -591,24 +742,19 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         onFetchMore={loadMoreCategories}
         loading={searchCategoriesOpts.loading}
         onClose={closeModal}
-        onSubmit={categories =>
-          voucherCataloguesAdd({
-            variables: {
-              ...paginationState,
-              ...detailsQueryInclude,
-              id,
-              input: {
-                categories: categories.map(category => category.id),
-              },
-            },
-          })
-        }
+        onSubmit={categories => {
+          assignCatalogueItems("categories", categories);
+          closeModal();
+        }}
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.assign),
+        }}
       />
       <AssignCollectionDialog
         collections={mapEdgesToItems(searchCollectionsOpts?.data?.search)}
         excludeContainer={isCollectionAssigned}
         backfillResetKey={String(searchGeneration)}
-        confirmButtonState={voucherCataloguesAddOpts.status}
+        confirmButtonState="default"
         hasMore={searchCollectionsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-collection"}
         onFetch={searchCollections}
@@ -616,38 +762,35 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         onFilterChange={handleCollectionFilterChange}
         loading={searchCollectionsOpts.loading}
         onClose={closeModal}
-        onSubmit={collections =>
-          voucherCataloguesAdd({
-            variables: {
-              ...paginationState,
-              ...detailsQueryInclude,
-              id,
-              input: {
-                collections: collections.map(collection => collection.id),
-              },
-            },
-          })
-        }
+        onSubmit={collections => {
+          assignCatalogueItems("collections", collections);
+          closeModal();
+        }}
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.assign),
+        }}
       />
       <DiscountCountrySelectDialog
-        confirmButtonState={voucherUpdateOpts.status}
+        confirmButtonState="default"
         countries={maybe(() => shop.countries, [])}
         onClose={() => navigate(voucherUrl(id))}
-        onConfirm={formData =>
-          voucherUpdate({
-            variables: {
-              id,
-              input: {
-                countries: formData.countries,
-              },
-            },
-          })
-        }
+        onConfirm={async formData => {
+          setCountryCodes(formData.countries);
+          closeModal();
+
+          return [];
+        }}
         open={params.action === "assign-country"}
-        initial={maybe(() => data.voucher.countries.map(country => country.code), [])}
+        initial={
+          catalogueDraft.countryCodes ??
+          maybe(() => data.voucher.countries.map(country => country.code), [])
+        }
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.assign),
+        }}
       />
       <AssignVariantDialog
-        confirmButtonState={voucherUpdateOpts.status}
+        confirmButtonState="default"
         hasMore={searchVariantsOpts.data?.search.pageInfo.hasNextPage}
         open={params.action === "assign-variant"}
         onFilterChange={handleVariantFilterChange}
@@ -655,23 +798,14 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         loading={searchVariantsOpts.loading}
         onClose={closeModal}
         onSubmit={variants => {
-          const variantsIdsFromModal = variants.map(variant => variant.id);
-          const savedVariantsIds = mapEdgesToItems(data?.voucher.variants).map(
-            variant => variant.id,
-          );
-          const variantsToSave = [...savedVariantsIds, ...variantsIdsFromModal];
-
-          voucherUpdate({
-            variables: {
-              id,
-              input: {
-                variants: variantsToSave,
-              },
-            },
-          });
+          assignCatalogueItems("variants", variants);
+          closeModal();
         }}
         products={mapEdgesToItems(searchVariantsOpts?.data?.search)}
-        selectedIds={getAssignedVariantIds(data?.voucher?.variants)}
+        selectedIds={stagedVariantIds}
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.assign),
+        }}
       />
       <AssignProductDialog
         selectedChannels={currentChannels}
@@ -679,41 +813,40 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           id: "XOkUxQ",
           defaultMessage: "Product unavailable in voucher channels",
         })}
-        confirmButtonState={voucherCataloguesAddOpts.status}
-        hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
+        confirmButtonState="default"
+        hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage ?? false}
         open={params.action === "assign-product"}
         onFetchMore={loadMoreProducts}
         loading={searchProductsOpts.loading}
         onClose={closeModal}
-        onSubmit={products =>
-          voucherCataloguesAdd({
-            variables: {
-              ...paginationState,
-              ...detailsQueryInclude,
-              id,
-              input: {
-                products: products.map(product => product.id),
-              },
-            },
-          })
-        }
+        onSubmit={products => {
+          assignCatalogueItems("products", products);
+          closeModal();
+        }}
         products={mapEdgesToItems(searchProductsOpts?.data?.search) ?? []}
         excludeProduct={isProductAssigned}
         backfillResetKey={String(searchGeneration)}
         selectAllMode="when-scoped"
-        excludedFilters={["channel"]}
         onFilterChange={handleProductFilterChange}
+        labels={{
+          confirmBtn: intl.formatMessage(buttonMessages.assign),
+        }}
       />
       {unassignCatalogueType !== null && (
         <VoucherCatalogueUnassignDialog
           catalogueType={unassignCatalogueType}
-          confirmButtonState={voucherCataloguesRemoveOpts.status}
+          confirmButtonState="default"
           count={selectedUnassignIdsCount}
           onClose={closeModal}
           onConfirm={handleUnassignConfirm}
           open={canOpenBulkActionDialog}
         />
       )}
+      <VoucherMetadataDialog
+        open={params.action === "view-metadata" && !!data?.voucher}
+        onClose={closeModal}
+        voucher={data?.voucher}
+      />
       <VoucherDeleteDialog
         confirmButtonState={voucherDeleteOpts.status}
         onClose={closeModal}

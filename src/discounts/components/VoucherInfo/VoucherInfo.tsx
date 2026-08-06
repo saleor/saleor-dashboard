@@ -1,10 +1,10 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { type DiscountErrorFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Input } from "@saleor/macaw-ui-next";
-import { useIntl } from "react-intl";
+import { Input, Text } from "@saleor/macaw-ui-next";
+import type * as React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
@@ -12,37 +12,46 @@ interface VoucherInfoProps {
   data: VoucherDetailsPageFormData;
   errors: DiscountErrorFragment[];
   disabled: boolean;
-  onChange: (event: any) => void;
+  onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const VoucherInfo = ({ data, disabled, errors, onChange }: VoucherInfoProps) => {
+export const VoucherInfo = ({ data, disabled, errors, onChange }: VoucherInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage(commonMessages.generalInformations)}
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        <Input
-          size="small"
-          disabled={disabled}
-          error={!!formErrors.name}
-          helperText={getDiscountErrorMessage(formErrors.name, intl)}
-          name={"name" as keyof VoucherDetailsPageFormData}
-          label={intl.formatMessage({
-            id: "sfErC+",
-            defaultMessage: "Voucher Name",
-          })}
-          value={data.name}
-          onChange={onChange}
-          data-test-id="voucher-name-input"
-        />
-      </DashboardCard.Content>
-    </DashboardCard>
+    <DetailSettingsCard
+      data-test-id="voucher-details-section"
+      title={intl.formatMessage({
+        id: "5xOAYZ",
+        defaultMessage: "Details",
+        description: "voucher details section title",
+      })}
+      intro={
+        <Text size={3} color="default2">
+          <FormattedMessage
+            id="tQnYA/"
+            defaultMessage="Internal name for staff. Customers redeem voucher codes at checkout, not this label."
+            description="voucher details section intro"
+          />
+        </Text>
+      }
+    >
+      <Input
+        size="small"
+        disabled={disabled}
+        error={!!formErrors.name}
+        helperText={getDiscountErrorMessage(formErrors.name, intl)}
+        name={"name" as keyof VoucherDetailsPageFormData}
+        label={intl.formatMessage({
+          id: "sfErC+",
+          defaultMessage: "Voucher Name",
+        })}
+        value={data.name}
+        onChange={onChange}
+        data-test-id="voucher-name-input"
+      />
+    </DetailSettingsCard>
   );
 };
 

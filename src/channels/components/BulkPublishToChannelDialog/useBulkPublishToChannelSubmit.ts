@@ -10,6 +10,7 @@ import {
 } from "@dashboard/channels/components/BulkPublishToChannelDialog/types";
 import {
   ErrorPolicyEnum,
+  type ProductErrorCode,
   type ProductVariantBulkUpdateInput,
   type ProductVariantBulkUpdateMutation,
   useBulkPublishProductsDataQuery,
@@ -17,9 +18,11 @@ import {
   useProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { getMutationErrors } from "@dashboard/misc";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useCallback, useState } from "react";
-import { useIntl } from "react-intl";
+import { type IntlShape, useIntl } from "react-intl";
 
 import {
   chunkBulkPublishItems,
@@ -38,6 +41,26 @@ import { messages } from "./messages";
 type BulkPublishProductNode = {
   id: string;
   name: string;
+  category: { id: string } | null;
+};
+
+type MutationErrorLike = {
+  code: ProductErrorCode;
+  field: string | null;
+  message: string | null;
+};
+
+const getBulkPublishMutationErrorMessage = (
+  errors: MutationErrorLike[],
+  intl: IntlShape,
+): string | undefined => {
+  const firstError = errors[0];
+
+  if (!firstError) {
+    return undefined;
+  }
+
+  return getProductErrorMessage(firstError, intl) ?? firstError.message ?? undefined;
 };
 
 const hasVariantBulkUpdateErrors = (
@@ -56,6 +79,15 @@ const hasVariantBulkUpdateErrors = (
   const rowErrors = payload.results?.flatMap(result => result.errors ?? []) ?? [];
 
   return payload.errors.length > 0 || rowErrors.length > 0;
+};
+
+const getVariantBulkUpdateErrorMessage = (
+  variantResult: FetchResult<ProductVariantBulkUpdateMutation>,
+  intl: IntlShape,
+): string | undefined => {
+  const payloadErrors = getMutationErrors(variantResult) as MutationErrorLike[];
+
+  return getBulkPublishMutationErrorMessage(payloadErrors, intl);
 };
 
 const buildVariantBulkUpdateInputs = ({
@@ -147,8 +179,13 @@ export const useBulkPublishToChannelSubmit = ({
       first: 1,
     },
   });
-  const [updateChannelListing] = useProductChannelListingUpdateMutation();
-  const [bulkUpdateVariants] = useProductVariantBulkUpdateMutation();
+  // Wizard surfaces per-product errors in the progress list — suppress global mutation toasts.
+  const [updateChannelListing] = useProductChannelListingUpdateMutation({
+    disableErrorHandling: true,
+  });
+  const [bulkUpdateVariants] = useProductVariantBulkUpdateMutation({
+    disableErrorHandling: true,
+  });
 
   const publishProducts = useCallback(
     async ({
@@ -197,6 +234,9 @@ export const useBulkPublishToChannelSubmit = ({
           })
         : [];
       const stockWarehouseIds = stockWarehouses.map(warehouse => warehouse.id);
+      const missingCategoryMessage = intl.formatMessage(messages.missingCategoryForPublish, {
+        count: 1,
+      });
 
       try {
         const { data } = await fetchProductsData({
@@ -212,6 +252,7 @@ export const useBulkPublishToChannelSubmit = ({
           progress[index] = {
             ...progress[index],
             status: "in_progress",
+            errorMessage: undefined,
           };
           onProgressChange([...progress]);
 
@@ -223,6 +264,18 @@ export const useBulkPublishToChannelSubmit = ({
               progress[index] = {
                 ...progress[index],
                 status: "error",
+                errorMessage: intl.formatMessage(messages.productLoadFailed),
+              };
+              onProgressChange([...progress]);
+              continue;
+            }
+
+            if (defaults.isPublished && !product.category) {
+              failedProductIds.push(draft.productId);
+              progress[index] = {
+                ...progress[index],
+                status: "error",
+                errorMessage: missingCategoryMessage,
               };
               onProgressChange([...progress]);
               continue;
@@ -244,14 +297,22 @@ export const useBulkPublishToChannelSubmit = ({
               },
             });
 
+            const channelListing = channelListingResult.data?.productChannelListingUpdate;
+            const channelListingErrors = (channelListing?.errors ?? []) as MutationErrorLike[];
+
             if (
               channelListingResult.errors?.length ||
-              (channelListingResult.data?.productChannelListingUpdate?.errors.length ?? 0) > 0
+              !channelListing ||
+              channelListingErrors.length > 0
             ) {
               failedProductIds.push(draft.productId);
               progress[index] = {
                 ...progress[index],
                 status: "error",
+                errorMessage:
+                  getBulkPublishMutationErrorMessage(channelListingErrors, intl) ??
+                  channelListingResult.errors?.[0]?.message ??
+                  intl.formatMessage(messages.publishFailed),
               };
               onProgressChange([...progress]);
               continue;
@@ -303,6 +364,10 @@ export const useBulkPublishToChannelSubmit = ({
                   progress[index] = {
                     ...progress[index],
                     status: "error",
+                    errorMessage:
+                      getVariantBulkUpdateErrorMessage(variantResult, intl) ??
+                      variantResult.errors?.[0]?.message ??
+                      intl.formatMessage(messages.publishFailed),
                   };
                   onProgressChange([...progress]);
                   break;
@@ -317,6 +382,7 @@ export const useBulkPublishToChannelSubmit = ({
             progress[index] = {
               ...progress[index],
               status: "success",
+              errorMessage: undefined,
             };
             onProgressChange([...progress]);
           } catch {
@@ -324,6 +390,7 @@ export const useBulkPublishToChannelSubmit = ({
             progress[index] = {
               ...progress[index],
               status: "error",
+              errorMessage: intl.formatMessage(messages.publishFailed),
             };
             onProgressChange([...progress]);
           }
@@ -331,6 +398,14 @@ export const useBulkPublishToChannelSubmit = ({
 
         return { failedProductIds };
       } catch {
+        progress.forEach((item, index) => {
+          progress[index] = {
+            ...item,
+            status: "error",
+            errorMessage: item.errorMessage ?? intl.formatMessage(messages.publishFailed),
+          };
+        });
+        onProgressChange([...progress]);
         notify({
           status: "error",
           text: intl.formatMessage(messages.publishFailed),

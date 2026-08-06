@@ -293,6 +293,7 @@ export const AutomaticallyCompleteCheckoutsFields = ({
             <Button
               variant="secondary"
               size="small"
+              type="button"
               onClick={handleSetCurrentDateTime}
               disabled={disabled}
             >
@@ -302,6 +303,7 @@ export const AutomaticallyCompleteCheckoutsFields = ({
               <Button
                 variant="secondary"
                 size="small"
+                type="button"
                 onClick={handleResetToSaved}
                 disabled={disabled}
               >

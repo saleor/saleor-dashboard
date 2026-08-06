@@ -10,6 +10,7 @@ import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
 import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
+import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { categoryBackgroundImageMessages } from "./categoryBackgroundImageMessages";
@@ -48,6 +49,22 @@ export const CategoryDetailsForm = ({
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
   const formErrors = getFormErrors(["name", "description"], errors);
+  const previousImage = useRef(image);
+
+  useEffect(() => {
+    const imageWasDeleted = Boolean(previousImage.current) && !image;
+
+    previousImage.current = image;
+
+    if (imageWasDeleted && data.backgroundImageAlt) {
+      onChange({
+        target: {
+          name: "backgroundImageAlt",
+          value: "",
+        },
+      });
+    }
+  }, [image, onChange]);
 
   return (
     <DetailSettingsCard

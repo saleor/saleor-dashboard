@@ -3,7 +3,9 @@ import { AllocationStrategyEnum } from "@dashboard/graphql";
 
 import {
   createShippingZoneAddHandler,
+  createShippingZoneRemoveHandler,
   createWarehouseAddHandler,
+  createWarehouseRemoveHandler,
   createWarehouseReorderHandler,
 } from "./handlers";
 
@@ -78,6 +80,77 @@ describe("ChannelDetailsPage handlers", () => {
           { id: "w2", name: "Two" },
           { id: "w1", name: "One" },
         ],
+      }),
+    );
+  });
+
+  it("does not stage a removal for a warehouse added in the same edit", () => {
+    // Arrange
+    const set = jest.fn();
+    const removeWarehouse = createWarehouseRemoveHandler(
+      {
+        ...baseFormData,
+        warehousesIdsToAdd: ["w3"],
+        warehousesToDisplay: [...baseFormData.warehousesToDisplay, { id: "w3", name: "Three" }],
+      },
+      set,
+    );
+
+    // Act
+    removeWarehouse("w3");
+
+    // Assert
+    expect(set).toHaveBeenCalledWith(
+      expect.objectContaining({
+        warehousesIdsToAdd: [],
+        warehousesIdsToRemove: [],
+      }),
+    );
+  });
+
+  it("restores an existing warehouse without staging an add after remove and re-add", () => {
+    // Arrange
+    const set = jest.fn();
+    const addWarehouse = createWarehouseAddHandler(
+      {
+        ...baseFormData,
+        warehousesIdsToRemove: ["w3"],
+      },
+      set,
+    );
+
+    // Act
+    addWarehouse([{ id: "w3", name: "Three" }]);
+
+    // Assert
+    expect(set).toHaveBeenCalledWith(
+      expect.objectContaining({
+        warehousesIdsToAdd: [],
+        warehousesIdsToRemove: [],
+      }),
+    );
+  });
+
+  it("does not stage a removal for a shipping zone added in the same edit", () => {
+    // Arrange
+    const set = jest.fn();
+    const removeZone = createShippingZoneRemoveHandler(
+      {
+        ...baseFormData,
+        shippingZonesIdsToAdd: ["z1"],
+        shippingZonesToDisplay: [{ id: "z1", name: "EU" }],
+      },
+      set,
+    );
+
+    // Act
+    removeZone("z1");
+
+    // Assert
+    expect(set).toHaveBeenCalledWith(
+      expect.objectContaining({
+        shippingZonesIdsToAdd: [],
+        shippingZonesIdsToRemove: [],
       }),
     );
   });

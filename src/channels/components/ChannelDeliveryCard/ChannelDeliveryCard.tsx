@@ -61,6 +61,7 @@ export const ChannelDeliveryCard = ({
       return (
         <Button
           variant="secondary"
+          type="button"
           data-test-id="delivery-assign-shipping"
           onClick={onAssignShipping}
           disabled={disabled}
@@ -74,6 +75,7 @@ export const ChannelDeliveryCard = ({
       return (
         <Button
           variant="secondary"
+          type="button"
           data-test-id="delivery-create-shipping"
           onClick={onCreateShipping}
           disabled={disabled}

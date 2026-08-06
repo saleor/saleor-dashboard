@@ -11,7 +11,11 @@ import { type ClipboardEvent, type ReactNode, useCallback, useMemo, useRef } fro
 import { FormattedMessage } from "react-intl";
 
 import { BulkPublishCallout } from "./BulkPublishCallout";
-import { getDraftsExceedingVariantLimit, getDraftsWithManyVariants } from "./bulkPublishDrafts";
+import {
+  getDraftsExceedingVariantLimit,
+  getDraftsMissingCategoryForPublish,
+  getDraftsWithManyVariants,
+} from "./bulkPublishDrafts";
 import { type BulkPublishReviewField, BulkPublishReviewRow } from "./BulkPublishReviewRow";
 import styles from "./BulkPublishReviewStep.module.css";
 import { handleBulkPublishFieldPaste } from "./bulkPublishSpreadsheetPaste";
@@ -49,11 +53,16 @@ export const BulkPublishReviewStep = ({
     () => getDraftsExceedingVariantLimit(productDrafts),
     [productDrafts],
   );
+  const missingCategoryDrafts = useMemo(
+    () => getDraftsMissingCategoryForPublish(productDrafts, defaults.isPublished),
+    [defaults.isPublished, productDrafts],
+  );
   const manyVariantsDrafts = useMemo(
     () => getDraftsWithManyVariants(productDrafts).filter(draft => !draft.exceedsVariantLimit),
     [productDrafts],
   );
   const oversizedProductNames = oversizedDrafts.map(draft => draft.name).join(", ");
+  const missingCategoryProductNames = missingCategoryDrafts.map(draft => draft.name).join(", ");
 
   // Rows are memoized, so the handlers they receive have to stay stable across keystrokes.
   const latestDraftsRef = useRef(productDrafts);
@@ -89,25 +98,20 @@ export const BulkPublishReviewStep = ({
   return (
     <Box className={styles.step}>
       <Box className={styles.stepHeader}>
-        <Text size={3} color="default2">
+        <BulkPublishCallout variant="info">
           <FormattedMessage
             {...messages.reviewVariantLimitHint}
             values={{ max: BULK_PUBLISH_MAX_VARIANTS_PER_PRODUCT }}
           />
-        </Text>
-        <Text size={3} color="default2">
-          <FormattedMessage
-            {...messages.reviewSpreadsheetPasteHint}
-            values={{ hasStock: showStock ? "true" : "other" }}
-          />
-        </Text>
-        {showStock ? (
-          <Text size={3} color="default2">
-            <FormattedMessage {...messages.reviewStockHint} />
-          </Text>
-        ) : null}
+          {showStock ? (
+            <>
+              {" "}
+              <FormattedMessage {...messages.reviewStockHint} />
+            </>
+          ) : null}
+        </BulkPublishCallout>
         {manyVariantsDrafts.length > 0 ? (
-          <BulkPublishCallout variant="info" title={null}>
+          <BulkPublishCallout variant="info">
             <FormattedMessage
               {...messages.reviewManyVariantsWarning}
               values={{
@@ -118,7 +122,7 @@ export const BulkPublishReviewStep = ({
           </BulkPublishCallout>
         ) : null}
         {oversizedDrafts.length > 0 ? (
-          <BulkPublishCallout variant="warning" title={null}>
+          <BulkPublishCallout variant="warning">
             <FormattedMessage
               {...messages.reviewVariantLimitWarning}
               values={{
@@ -129,8 +133,25 @@ export const BulkPublishReviewStep = ({
             />
           </BulkPublishCallout>
         ) : null}
+        {missingCategoryDrafts.length > 0 ? (
+          <BulkPublishCallout variant="warning">
+            <FormattedMessage
+              {...messages.reviewMissingCategoryWarning}
+              values={{
+                count: missingCategoryDrafts.length,
+                productNames: missingCategoryProductNames,
+              }}
+            />
+          </BulkPublishCallout>
+        ) : null}
       </Box>
       <Box className={styles.tableCard}>
+        <Text size={2} color="default2" className={styles.pasteHint}>
+          <FormattedMessage
+            {...messages.reviewSpreadsheetPasteHint}
+            values={{ hasStock: showStock ? "true" : "other" }}
+          />
+        </Text>
         <Box className={styles.listScroll}>
           <Box className={styles.list}>
             <Box className={styles.headerRow}>

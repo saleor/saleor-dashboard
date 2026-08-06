@@ -58,6 +58,11 @@
   background-color: var(--mu-colors-background-default1);
 }
 
+.deleteButtonBackdrop:focus-within {
+  outline: 2px solid var(--mu-colors-border-info1);
+  outline-offset: 2px;
+}
+
 .deleteButton,
 .deleteButton:hover,
 .deleteButton:focus,

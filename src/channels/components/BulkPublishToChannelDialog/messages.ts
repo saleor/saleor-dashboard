@@ -210,6 +210,17 @@ export const messages = defineMessages({
     defaultMessage: "Many variants",
     description: "bulk publish product many variants chip",
   },
+  productMissingCategory: {
+    id: "FgR9Yp",
+    defaultMessage: "No category",
+    description: "bulk publish product missing category chip",
+  },
+  reviewMissingCategoryWarning: {
+    id: "xsd8Wt",
+    defaultMessage:
+      "{count, plural, one {# product has} other {# products have}} no category and cannot be published: {productNames}. Assign a category on the product, or turn off Publish in Defaults.",
+    description: "bulk publish review missing category warning",
+  },
   reviewStockHint: {
     id: "o+OjmT",
     defaultMessage:
@@ -450,6 +461,11 @@ export const messages = defineMessages({
       "Turn off to include products already listed and update their prices and stock.",
     description: "bulk publish picker filter helper",
   },
+  excludeMissingCategoryHelper: {
+    id: "R5IYxa",
+    defaultMessage: "Products without a category are hidden because they cannot be published.",
+    description: "bulk publish picker helper about missing category filter",
+  },
   exitWizardDescription: {
     id: "XYvupB",
     defaultMessage: "Your product selection and pricing changes will be lost.",
@@ -470,5 +486,16 @@ export const messages = defineMessages({
     defaultMessage:
       "{count, plural, one {# product has} other {# products have}} more than {max} variants and cannot be published with this wizard.",
     description: "bulk publish variant count limit validation",
+  },
+  missingCategoryForPublish: {
+    id: "RmWKtT",
+    defaultMessage:
+      "{count, plural, one {# product has} other {# products have}} no category. Assign a category before publishing, or turn off Publish in Defaults.",
+    description: "bulk publish missing category validation",
+  },
+  productLoadFailed: {
+    id: "efbank",
+    defaultMessage: "Could not load product data.",
+    description: "bulk publish progress error when product fetch misses a row",
   },
 });

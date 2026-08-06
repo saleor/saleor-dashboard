@@ -39,6 +39,10 @@
     "context": "dialog header",
     "string": "Mark Order as Paid"
   },
+  "+BeaTn": {
+    "context": "voucher detail menu, reopens the Finish setting up this voucher card after dismiss",
+    "string": "Show setup checklist"
+  },
   "+BkNuT": {
     "context": "aria label for grid view button",
     "string": "Grid view"
@@ -57,6 +61,10 @@
   "+Jgot0": {
     "context": "tax class for a product type",
     "string": "Tax class"
+  },
+  "+Lknrr": {
+    "context": "setup task complete",
+    "string": "Discount value set"
   },
   "+LyCI8": {
     "context": "detail page top bar, settings menu button tooltip",
@@ -151,9 +159,17 @@
   "+fICx5": {
     "string": "Important"
   },
+  "+hXD2U": {
+    "context": "voucher catalogue assign variants aria label",
+    "string": "Assign variants"
+  },
   "+hib+V": {
     "context": "error message",
     "string": "This attribute is already assigned."
+  },
+  "+iGiat": {
+    "context": "voucher setup card subtitle when required steps are complete",
+    "string": "This voucher is ready to redeem. Review the optional steps below anytime."
   },
   "+iVKR1": {
     "context": "assign attribute value button",
@@ -219,6 +235,10 @@
   },
   "+xTpT1": {
     "string": "Attributes"
+  },
+  "+xZjfP": {
+    "context": "setup task CTA",
+    "string": "Add codes"
   },
   "//k1GX": {
     "context": "expired on label",
@@ -293,6 +313,10 @@
     "context": "exclude postal codes helper",
     "string": "Leave the list empty to apply this rate to all postal codes. Added ranges will be excluded."
   },
+  "/DtuG1": {
+    "context": "voucher channel status when schedule is currently redeemable",
+    "string": "Active"
+  },
   "/DzBc6": {
     "context": "section description",
     "string": "Strategy defines the preference of warehouses for stock allocations and reservations."
@@ -316,6 +340,10 @@
   "/Myo2R": {
     "context": "Product availability summary when live in exactly two channels",
     "string": "Both channels"
+  },
+  "/PUjN6": {
+    "context": "voucher discount amount type",
+    "string": "Percentage"
   },
   "/QIOpX": {
     "context": "error when fetching all variants for duplicate detection fails",
@@ -342,6 +370,10 @@
   },
   "/eWPsp": {
     "string": "Invalid currency used to create transaction"
+  },
+  "/fwEbi": {
+    "context": "setup task CTA",
+    "string": "Manage channels"
   },
   "/glQgs": {
     "string": "No channels found"
@@ -395,6 +427,10 @@
   "/rsk2X": {
     "context": "Badge shown when channel is newly added",
     "string": "new"
+  },
+  "/suM59": {
+    "context": "pagination previous page button aria label",
+    "string": "Previous page"
   },
   "/tC+ce": {
     "context": "shipping method types help example table cart column",
@@ -489,6 +525,10 @@
   "07nmyw": {
     "context": "quick pick label for United States, Canada, and Mexico",
     "string": "North America"
+  },
+  "09q72K": {
+    "context": "Entity type label for channel availability panel subtitles",
+    "string": "Voucher"
   },
   "0AQH0Q": {
     "string": "Plugin is misconfigured and cannot be activated"
@@ -663,6 +703,10 @@
     "context": "table column header",
     "string": "Return"
   },
+  "0rdBWd": {
+    "context": "voucher redemptions schedule status when ended",
+    "string": "Redemption window ended {date}."
+  },
   "0sd4ez": {
     "context": "selected customer channel subtitle",
     "string": "Customer will be sent the gift card code via this channels email address"
@@ -765,6 +809,10 @@
     "context": "settings search hint when deep links are not yet available",
     "string": "Configured per channel — open a channel to edit."
   },
+  "1LMrlA": {
+    "context": "Expanded help for catalogue setup",
+    "string": "Specific-product vouchers only discount the catalogue you assign. Until something is assigned, the code won’t reduce any line items."
+  },
   "1LiVhv": {
     "context": "section header",
     "string": "Recent Orders"
@@ -772,6 +820,10 @@
   "1M0OKI": {
     "context": "badge when shipping setup CTAs are unavailable",
     "string": "Missing permission to manage shipping"
+  },
+  "1OB3se": {
+    "context": "voucher catalogue products row title",
+    "string": "Products"
   },
   "1SwKZV": {
     "context": "create attribute and assign to model type button",
@@ -805,6 +857,10 @@
   },
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
+  },
+  "1jGDif": {
+    "context": "voucher fixed amount spreadsheet paste hint",
+    "string": "You can paste from a spreadsheet. Select a field and paste a column of values to fill amounts down the list."
   },
   "1lk/oS": {
     "context": "button",
@@ -1015,6 +1071,10 @@
     "context": "customer gift cards empty state placeholder",
     "string": "This customer hasn't redeemed any gift cards yet. Newly issued cards appear here once they're used at checkout."
   },
+  "2enMlh": {
+    "context": "voucher scope tile title",
+    "string": "Products"
+  },
   "2fZByy": {
     "context": "product media metadata dialog header",
     "string": "Media Metadata"
@@ -1115,6 +1175,10 @@
     "context": "extension install page, permissions section",
     "string": "Installing this extension will give it following permissions"
   },
+  "31IkHD": {
+    "context": "voucher type pill scope: entire order",
+    "string": "Entire order"
+  },
   "32Capp": {
     "context": "page title",
     "string": "Explore"
@@ -1208,6 +1272,10 @@
     "context": "Extension by Author",
     "string": "by"
   },
+  "3SF3CQ": {
+    "context": "setup checklist required section title",
+    "string": "Required to redeem"
+  },
   "3SVI5p": {
     "string": "Warning"
   },
@@ -1247,6 +1315,10 @@
   "3eV79b": {
     "context": "settings search result kind badge",
     "string": "Hub"
+  },
+  "3ekgth": {
+    "context": "voucher save composition segment",
+    "string": "Codes"
   },
   "3evXPj": {
     "string": "Leave your note here..."
@@ -1567,6 +1639,10 @@
     "context": "alert",
     "string": "Warehouse limit reached"
   },
+  "5IQoMa": {
+    "context": "Expanded help for discount value setup",
+    "string": "Percentage discounts use one value across channels. Fixed amounts are set per channel currency."
+  },
   "5JT4v2": {
     "context": "dialog header",
     "string": "Send Invoice"
@@ -1616,6 +1692,10 @@
   "5ShHx2": {
     "context": "tooltip for disabled buttons",
     "string": "You don't have permission to manage extensions"
+  },
+  "5TKyvj": {
+    "context": "setup task title",
+    "string": "Set the discount value"
   },
   "5TUpjG": {
     "context": "product attribute entity type",
@@ -1738,6 +1818,14 @@
     "context": "weight",
     "string": "{fromValue} {fromUnit} - {toValue} {toUnit}"
   },
+  "5xOAYZ": {
+    "context": "voucher details section title",
+    "string": "Details"
+  },
+  "5zv4lF": {
+    "context": "Expanded help for codes setup",
+    "string": "A voucher without codes can’t be redeemed. Add one memorable code for campaigns, or generate unique codes for one-time use."
+  },
   "6+zuTC": {
     "context": "gift card sidebar, meta when a customer is assigned",
     "string": "Restricted"
@@ -1817,6 +1905,10 @@
   "6I1Qdg": {
     "context": "bulk publish available for purchase toggle description",
     "string": "When off, customers can still see the products but cannot buy them."
+  },
+  "6ImMXG": {
+    "context": "voucher redemptions when usage limit is exhausted",
+    "string": "No redemptions left"
   },
   "6IteaF": {
     "string": "Apps are available for Saleor Cloud users. Most of them are available for self-hosting."
@@ -1914,6 +2006,10 @@
     "context": "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop is in legacy stock-availability mode (stock visibility filtered through shipping zones).",
     "string": "Customers see this stock when the warehouse is assigned to a channel and covered by a shipping zone for the destination."
   },
+  "6eSgIe": {
+    "context": "voucher detail section nav item",
+    "string": "Countries"
+  },
   "6fAGSm": {
     "context": "Product is not visible via public API",
     "string": "Not visible"
@@ -1973,6 +2069,10 @@
     "context": "section title",
     "string": "Address Validation"
   },
+  "6wQfpJ": {
+    "context": "voucher minimum order value channel input aria label",
+    "string": "Minimal order value for {channelName}"
+  },
   "6xC/Ls": {
     "context": "informations about product seo, header",
     "string": "SEO Information"
@@ -2030,6 +2130,10 @@
     "context": "gift card metadata dialog header",
     "string": "Gift card metadata"
   },
+  "79Vlq2": {
+    "context": "setup task description when no channels",
+    "string": "Choose which sales channels this voucher is available in."
+  },
   "7A+FJl": {
     "context": "link",
     "string": "View profile"
@@ -2052,6 +2156,10 @@
   "7CpvZg": {
     "context": "Expanded help for shipping setup. Based on Saleor shipping zones: zones set countries/methods and must be linked to the channel for checkout rates.",
     "string": "Shipping zones define which countries you deliver to and which rates customers see at checkout. Assign this channel to a zone that covers your default country so shoppers can choose a shipping method."
+  },
+  "7DXZAW": {
+    "context": "voucher catalogue collections row description",
+    "string": "Discount lines in these collections."
   },
   "7E7y/o": {
     "context": "bulk publish review table cost price column",
@@ -2491,6 +2599,10 @@
     "context": "column header",
     "string": "Customer e-mail"
   },
+  "94nQ+l": {
+    "context": "Expanded help for shipping countries setup",
+    "string": "Saleor treats an empty country list as worldwide. Assign countries to restrict free shipping, or skip this step if worldwide is intentional."
+  },
   "95oJ5d": {
     "context": "button",
     "string": "Go back to dashboard"
@@ -2765,6 +2877,10 @@
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
   },
+  "AD5gDx": {
+    "context": "voucher redemptions card used detail when unlimited",
+    "string": "{used} used · no total cap"
+  },
   "ADvpV/": {
     "context": "Product can be purchased by customers",
     "string": "Purchasable"
@@ -2795,6 +2911,10 @@
     "context": "create attribute dialog header",
     "string": "Create attribute"
   },
+  "APz/Zo": {
+    "context": "voucher detail section nav item",
+    "string": "Limits"
+  },
   "AQ+9Ez": {
     "string": "We’ve encountered an unexpected error"
   },
@@ -2813,9 +2933,17 @@
     "context": "success toast after assigning products; category is a singular FK so assign moves",
     "string": "Product moved to this category"
   },
+  "AULKso": {
+    "context": "voucher discount scope section hint",
+    "string": "Changing this changes which other settings apply, so pick it first."
+  },
   "AUaL7R": {
     "context": "notification",
     "string": "Selected models were published."
+  },
+  "AV7GES": {
+    "context": "voucher redemptions card used of limit detail line",
+    "string": "{used} of {limit} used"
   },
   "AVF5T5": {
     "context": "voucher end date, switch button",
@@ -3189,6 +3317,10 @@
     "context": "shipping method types help example row three cart",
     "string": "$150, 2 kg"
   },
+  "C2FRIv": {
+    "context": "voucher schedule card intro",
+    "string": "Applies to all assigned channels. Outside this range, the voucher cannot be redeemed at checkout."
+  },
   "C2N30x": {
     "context": "app has been removed",
     "string": "Extension removed"
@@ -3321,6 +3453,10 @@
     "context": "bulk actions button label",
     "string": "Delete model"
   },
+  "CQS9eE": {
+    "context": "voucher requirements section intro",
+    "string": "Optional thresholds customers must meet before the voucher can be applied."
+  },
   "CQTTke": {
     "string": "Refund request sent to payment provider"
   },
@@ -3355,6 +3491,10 @@
   "CWqmRU": {
     "context": "customer's address book when no customer name is available, header",
     "string": "Address Book"
+  },
+  "CXIW51": {
+    "context": "voucher discount scope section title",
+    "string": "What the voucher discounts"
   },
   "CXTIq8": {
     "string": "Search engine description"
@@ -3450,6 +3590,10 @@
   },
   "CrnqOK": {
     "string": "Country tax rates updated"
+  },
+  "Csi0Bk": {
+    "context": "voucher metadata dialog header",
+    "string": "Voucher Metadata"
   },
   "CsnhUR": {
     "context": "channels list warehouses and shipping zones column",
@@ -3587,6 +3731,10 @@
   "DTL7sE": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {warehouseName}?"
+  },
+  "DTsM7N": {
+    "context": "voucher detail menu item",
+    "string": "Delete voucher"
   },
   "DVgMit": {
     "context": "transaction event type, transaction was chargeback by payment provider",
@@ -3923,6 +4071,10 @@
     "context": "shipping method channel coverage summary",
     "string": "Priced for {configured} of {total} channels"
   },
+  "FBIsuH": {
+    "context": "voucher type pill scope: specific products",
+    "string": "Products"
+  },
   "FBtqtl": {
     "context": "payment status",
     "string": "Unpaid"
@@ -3952,10 +4104,6 @@
   "FOJ5Ak": {
     "context": "bulk publish confirm visibility hidden from listings detail",
     "string": "Products will not appear in storefront listings."
-  },
-  "FOa+Xd": {
-    "context": "voucher value requirement",
-    "string": "Min. Order Value"
   },
   "FOehC/": {
     "context": "label",
@@ -4042,6 +4190,10 @@
     "context": "bulk unassign attributes from the active product or model type",
     "string": "Unassign"
   },
+  "FgR9Yp": {
+    "context": "bulk publish product missing category chip",
+    "string": "No category"
+  },
   "FiO/W/": {
     "string": "Delete categories"
   },
@@ -4060,6 +4212,10 @@
   "FkRNk+": {
     "context": "field placeholder",
     "string": "Description of a shipping zone."
+  },
+  "Flraxf": {
+    "context": "voucher minimum quantity validation error",
+    "string": "Enter at least 1 item."
   },
   "FmeBxD": {
     "context": "custom app tokens list - missing token name",
@@ -4165,6 +4321,10 @@
   "G4g5Ii": {
     "context": "tab name",
     "string": "All Collections"
+  },
+  "G4lYrt": {
+    "context": "voucher type pill in header",
+    "string": "Free shipping"
   },
   "G5ETO0": {
     "string": "Categories deleted"
@@ -4283,10 +4443,6 @@
     "context": "order history message",
     "string": "Payment was authorized"
   },
-  "GVinbz": {
-    "context": "column title",
-    "string": "Value"
-  },
   "GXxpRA": {
     "context": "channel detail title secondary meta after status pill",
     "string": "{country} · {currency}"
@@ -4364,6 +4520,10 @@
   "Gm3fGD": {
     "context": "footer hint for the next required setup task",
     "string": "Next up: {task}"
+  },
+  "GoSeIN": {
+    "context": "voucher type pill combining discount scope and amount type",
+    "string": "{scope} · {amount}"
   },
   "GoZ/jJ": {
     "context": "bulk publish confirm visibility all enabled detail",
@@ -4509,10 +4669,6 @@
   "HKNVcY": {
     "context": "Product availability summary when live in some but not all channels",
     "string": "Live in {liveCount} of {count} channels"
-  },
-  "HLqWXA": {
-    "context": "voucher value requirement",
-    "string": "Usage Limit"
   },
   "HLr8KQ": {
     "context": "plain text attribute type",
@@ -4673,6 +4829,10 @@
     "context": "status pill for fully authorized payment",
     "string": "Fully Authorized"
   },
+  "HwPG8K": {
+    "context": "voucher setup card title",
+    "string": "Finish setting up this voucher"
+  },
   "HwTMFL": {
     "string": "Go to channels"
   },
@@ -4698,6 +4858,10 @@
     "context": "is filter range or value",
     "string": "equal to"
   },
+  "I+XcO2": {
+    "context": "voucher save composition segment for staged country assignments",
+    "string": "Countries"
+  },
   "I+czjk": {
     "context": "VariantDetailsChannelsAvailabilityCard subtitle. Counts channel listings, not customer-facing availability or stock. Phrasing must not imply purchasability.",
     "string": "Listed in {publishedInChannelsCount} of {availableChannelsCount} channels"
@@ -4719,6 +4883,10 @@
   "I1Mz7h": {
     "string": "Manage Collection Channel Availability"
   },
+  "I1rBO+": {
+    "context": "voucher catalogue assign categories aria label",
+    "string": "Assign categories"
+  },
   "I2wCwj": {
     "context": "swatch attribute image label",
     "string": "Image"
@@ -4735,6 +4903,10 @@
     "context": "button label",
     "string": "Edit reason"
   },
+  "I69KV3": {
+    "context": "voucher discount amount type",
+    "string": "Fixed amount"
+  },
   "I6Bv55": {
     "context": "success notification after saving store settings",
     "string": "Store settings updated"
@@ -4746,6 +4918,10 @@
   "I7X2uK": {
     "context": "button to clear selected product media items",
     "string": "Clear"
+  },
+  "I81b5g": {
+    "context": "setup checklist review section subtitle",
+    "string": "Optional campaign controls"
   },
   "IBw72y": {
     "context": "switch button",
@@ -4913,6 +5089,10 @@
   "Ila7WO": {
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
+  },
+  "InEAQM": {
+    "context": "voucher redemptions constraint chip when applyOncePerCustomer is on",
+    "string": "Once per customer"
   },
   "Io6O//": {
     "context": "setup review row title for installed payment apps",
@@ -5214,6 +5394,10 @@
     "context": "product type is digital or physical",
     "string": "Type"
   },
+  "JufrQR": {
+    "context": "voucher fixed amount channel input aria label",
+    "string": "Fixed amount for {channelName}"
+  },
   "JwICkk": {
     "context": "warning dialog description when SKU and stock are not set",
     "string": "You haven't set a SKU prefix or initial stock. The variants will be created without these values. You can add them later by editing individual variants."
@@ -5424,6 +5608,10 @@
   "Kxiige": {
     "string": "Generated Token"
   },
+  "KysW5s": {
+    "context": "voucher apply once per customer toggle description",
+    "string": "Each customer account can redeem this voucher only once, no matter which code they use."
+  },
   "KzgcFV": {
     "context": "category attribute entity type",
     "string": "Categories"
@@ -5454,6 +5642,10 @@
   "L7j412": {
     "context": "no models placeholder",
     "string": "No models found"
+  },
+  "L7ykCS": {
+    "context": "voucher schedule card title",
+    "string": "Schedule"
   },
   "L8J/jr": {
     "context": "status pill when order is fully paid",
@@ -5569,6 +5761,10 @@
     "context": "Section heading for issues that affect order fulfillment (shipping zones, shipping methods)",
     "string": "Shipping"
   },
+  "LYeyWD": {
+    "context": "voucher discount amount section title",
+    "string": "Discount amount"
+  },
   "La3xKC": {
     "context": "Description of public API verification feature",
     "string": "Check if customers can actually purchase this product"
@@ -5653,6 +5849,10 @@
   "LxGbUN": {
     "context": "tax strategy status for flat rates",
     "string": "Flat rates"
+  },
+  "M/xjya": {
+    "context": "voucher scope tile title",
+    "string": "Entire order"
   },
   "M3OlSr": {
     "context": "error message",
@@ -5928,6 +6128,10 @@
     "context": "dialog header",
     "string": "Unassign attribute from model type"
   },
+  "N9fBvI": {
+    "context": "voucher percentage value helper",
+    "string": "A percentage means the same thing in every currency, so one value covers all channels."
+  },
   "NA7KFR": {
     "context": "shipping method types help weight-based bullet",
     "string": "<strong>Weight-based</strong> — total weight within min/max limits."
@@ -6042,6 +6246,10 @@
     "context": "inline add attribute value placeholder",
     "string": "Type a value and press Enter"
   },
+  "NZQM64": {
+    "context": "voucher detail section nav item",
+    "string": "Requirements"
+  },
   "NZtcLb": {
     "context": "gift card bulk create success dialog content",
     "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
@@ -6126,6 +6334,10 @@
   "NxeDbG": {
     "context": "image upload",
     "string": "Drop here to upload"
+  },
+  "NyoC9W": {
+    "context": "voucher scope tile description",
+    "string": "Only discounts lines matching the categories, collections, products or variants you choose below."
   },
   "Nyxzpe": {
     "context": "onboarding step description",
@@ -6291,6 +6503,10 @@
   "OjNTfe": {
     "context": "built-in attribute list filter preset",
     "string": "Product attributes"
+  },
+  "OkLJNT": {
+    "context": "aria-label for collapsed main nav drawer trigger",
+    "string": "Open navigation"
   },
   "Om1LKj": {
     "context": "stock input label",
@@ -6498,6 +6714,9 @@
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
   },
+  "PWG97N": {
+    "string": "You must assign the voucher to at least one channel"
+  },
   "PWJpiZ": {
     "context": "gift card instrument card, last redemption timestamp",
     "string": "Last used {date}"
@@ -6601,6 +6820,10 @@
     "context": "page header",
     "string": "Create Voucher"
   },
+  "Pst6mm": {
+    "context": "helper under percentage input when voucher has no channel listings yet",
+    "string": "Assign channels in Availability to apply this percentage at checkout."
+  },
   "PuQb0P": {
     "string": "Reward"
   },
@@ -6615,6 +6838,10 @@
   "PwJvsc": {
     "context": "address search input label in order address edit dialog",
     "string": "Search addresses"
+  },
+  "PwrYMn": {
+    "context": "setup review row description",
+    "string": "Cap total redemptions or limit use to once per customer."
   },
   "PxvG+u": {
     "context": "grant refund table, add reason button",
@@ -6669,6 +6896,10 @@
     "context": "order refund amount",
     "string": "Previously refunded"
   },
+  "Q6Rz5F": {
+    "context": "voucher catalogue variants row description",
+    "string": "Discount only the selected product variants."
+  },
   "Q6VRrE": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
@@ -6722,6 +6953,10 @@
   },
   "QHDtwH": {
     "string": "Has category"
+  },
+  "QIB6Eo": {
+    "context": "voucher setup card subtitle while incomplete",
+    "string": "Customers can’t redeem this voucher until the required steps are done. Finish them now or come back later."
   },
   "QJG+d/": {
     "context": "staff added type order discount",
@@ -6870,6 +7105,10 @@
   "R4gIJc": {
     "string": "Search by model name..."
   },
+  "R5IYxa": {
+    "context": "bulk publish picker helper about missing category filter",
+    "string": "Products without a category are hidden because they cannot be published."
+  },
   "R5r0+F": {
     "context": "Badge label showing total number of app problems",
     "string": "{count, plural, one {{count} problem} other {{count} problems}}"
@@ -6902,6 +7141,10 @@
     "context": "sale status",
     "string": "Expired"
   },
+  "RD29Kd": {
+    "context": "accessible label for voucher redemptions constraint chips",
+    "string": "Usage constraints"
+  },
   "REVk27": {
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
@@ -6909,6 +7152,10 @@
   "RFbzxF": {
     "context": "attribute label placeholder in embedded create form",
     "string": "e.g. Gift wrap style"
+  },
+  "RGL8Oi": {
+    "context": "voucher minimum order requirement description",
+    "string": "Checkout subtotal in each channel's currency must meet this amount."
   },
   "RK6l3Z": {
     "context": "radio button label",
@@ -6982,6 +7229,10 @@
     "context": "order draft channel name",
     "string": "Channel"
   },
+  "RiF1QH": {
+    "context": "voucher redemptions constraint chip when singleUse is on",
+    "string": "Single-use codes"
+  },
   "RiQ0v1": {
     "context": "installed extensions section name",
     "string": "Installed"
@@ -7007,6 +7258,14 @@
   "RmEeMP": {
     "context": "dialog header",
     "string": "Deactivate Extension"
+  },
+  "RmWKtT": {
+    "context": "bulk publish missing category validation",
+    "string": "{count, plural, one {# product has} other {# products have}} no category. Assign a category before publishing, or turn off Publish in Defaults."
+  },
+  "Rmm9i1": {
+    "context": "notice when single-use toggle is locked because voucher codes were already used",
+    "string": "Can't change this after a code has been used in an order or checkout."
   },
   "Rp/Okl": {
     "string": "Shipping Weight Unit"
@@ -7045,6 +7304,14 @@
   "RzsKm8": {
     "string": "Shipping methods"
   },
+  "S0QRww": {
+    "context": "voucher schedule header status when not started yet",
+    "string": "Scheduled"
+  },
+  "S0ntb5": {
+    "context": "voucher minimum quantity zero behavior hint",
+    "string": "Must be 1 or more. Zero has no effect — turn this setting off instead."
+  },
   "S1hCno": {
     "context": "Dialog confirmation when voiding transaction authorization",
     "string": "Are you sure you want to void this transaction?"
@@ -7052,6 +7319,10 @@
   "S1u2pa": {
     "context": "app settings error",
     "string": "Failed to fetch extension settings"
+  },
+  "S210hh": {
+    "context": "setup task complete",
+    "string": "{count} {count, plural, one {code} other {codes}} ready"
   },
   "S22jIs": {
     "context": "button",
@@ -7086,6 +7357,10 @@
   "S8kqP9": {
     "string": "Conditions"
   },
+  "SA8Gdr": {
+    "context": "voucher channel availability empty state description",
+    "string": "Assign channels so this voucher can be redeemed at checkout. Set discount value and minimum order per channel in Discount and Requirements."
+  },
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
@@ -7101,6 +7376,10 @@
   "SDgGcU": {
     "context": "Button to manually mark order as paid without actual payment",
     "string": "Mark as Paid"
+  },
+  "SFAoiO": {
+    "context": "voucher schedule header status when currently redeemable",
+    "string": "Active"
   },
   "SGdcJD": {
     "string": "Enter code"
@@ -7814,6 +8093,10 @@
     "context": "product detail page, top-bar metadata button tooltip",
     "string": "Edit product metadata"
   },
+  "V6SjsS": {
+    "context": "setup task complete",
+    "string": "{count} {count, plural, one {channel} other {channels}} assigned"
+  },
   "V8FhTt": {
     "context": "collection label",
     "string": "Hidden"
@@ -7821,6 +8104,10 @@
   "V8M174": {
     "context": "embedded attribute values section hint",
     "string": "The choices merchants can select. Add at least one."
+  },
+  "V8aQTU": {
+    "context": "channel order setting name referenced in redemptions hint",
+    "string": "Include draft orders in voucher usage"
   },
   "VEE4gD": {
     "context": "error message",
@@ -7904,6 +8191,10 @@
   "VYK2nN": {
     "string": "Product details"
   },
+  "VYhySD": {
+    "context": "setup task description when shipping voucher has no countries",
+    "string": "No countries selected means free shipping worldwide. Limit the list if this offer should only apply in some markets."
+  },
   "VZsE96": {
     "string": "Collection Name"
   },
@@ -7970,6 +8261,10 @@
   "Vwqh4L": {
     "context": "dialog subtitle explaining what user should do",
     "string": "Select attribute values to create all possible variant combinations"
+  },
+  "VxLx9C": {
+    "context": "voucher catalogue categories row title",
+    "string": "Categories"
   },
   "VxRMgP": {
     "context": "product type metadata dialog header",
@@ -8251,6 +8546,10 @@
   "X7jl6w": {
     "string": "Orders"
   },
+  "X8yh5A": {
+    "context": "voucher sidebar redemptions card title",
+    "string": "Redemptions"
+  },
   "X90ElB": {
     "context": "dialog header",
     "string": "Delete Webhook"
@@ -8504,6 +8803,10 @@
     "context": "Dry run items list item",
     "string": "Item:"
   },
+  "Xzp951": {
+    "context": "voucher codes section intro",
+    "string": "All codes share the same discount rules. Delete codes you no longer want customers to redeem."
+  },
   "Y/SXVb": {
     "string": "The operation cannot be performed right now. This might be due to a pending installation with the same identifier."
   },
@@ -8530,9 +8833,17 @@
     "context": "setup task description when shipping zones already exist",
     "string": "Assign existing shipping zones, or create a new zone with a flat rate."
   },
+  "Y32ij8": {
+    "context": "voucher minimum quantity requirement description",
+    "string": "Total quantity of eligible items in checkout must be at least this number."
+  },
   "Y3ELdI": {
     "context": "unassign attribute from model type, button",
     "string": "Unassign"
+  },
+  "Y3ITmU": {
+    "context": "setup review row description",
+    "string": "Require a minimum order value or item quantity before the code applies."
   },
   "Y3UhI+": {
     "context": "embedded attribute values section title",
@@ -8634,6 +8945,10 @@
     "context": "product types section name",
     "string": "Product Types"
   },
+  "YSi2+b": {
+    "context": "voucher redemptions schedule status when active without end date",
+    "string": "Redeemable now."
+  },
   "YTvn5m": {
     "context": "automatic completion zero delay warning message",
     "string": "Setting delay to 0 will complete checkouts immediately after payment. This may break your storefront if it expects the Checkout object to remain available. ({link})"
@@ -8662,6 +8977,10 @@
     "context": "bulk publish confirm stock quantity range",
     "string": "{min} – {max} units per variant"
   },
+  "YZ6Pdq": {
+    "context": "notice when usage limit controls are locked because voucher codes were already used",
+    "string": "Can't change the total usage limit after a code has been used in an order or checkout."
+  },
   "YaCu4U": {
     "context": "Health check status when product can be purchased",
     "string": "Customers can buy this product"
@@ -8669,6 +8988,10 @@
   "YdeHZX": {
     "context": "unassign products from shipping method, button",
     "string": "Unassign"
+  },
+  "Ydfy6M": {
+    "context": "voucher single-use code toggle title",
+    "string": "One use per code"
   },
   "YgE6ga": {
     "context": "imperial unit system",
@@ -8715,6 +9038,10 @@
   "Ykw8k5": {
     "context": "dialog title",
     "string": "Delete collections"
+  },
+  "YmZVN0": {
+    "context": "voucher catalogue section intro",
+    "string": "Discount applies to checkout lines matching any assigned category, collection, product, or variant. Products must be available in the voucher's channels."
   },
   "YmweRb": {
     "context": "setup review row description when warehouses are ready",
@@ -8820,9 +9147,6 @@
     "context": "Description for hidden status",
     "string": "Not visible to customers"
   },
-  "ZCSOaS": {
-    "string": "Limit to voucher code use once"
-  },
   "ZD3/vJ": {
     "context": "gift card customer unassigned success message",
     "string": "Customer unassigned"
@@ -8916,6 +9240,10 @@
   "ZayvsI": {
     "context": "metric unit system",
     "string": "Metric"
+  },
+  "ZclWIw": {
+    "context": "setup task description when no codes",
+    "string": "Create a shared code or generate unique codes customers can enter at checkout."
   },
   "Zd3Eew": {
     "context": "subsection header",
@@ -9065,6 +9393,10 @@
   },
   "aCdAsI": {
     "string": "Copy to clipboard"
+  },
+  "aFA7tU": {
+    "context": "voucher catalogue assign collections aria label",
+    "string": "Assign collections"
   },
   "aFVFeH": {
     "context": "submit button",
@@ -9361,6 +9693,10 @@
   "bPshhv": {
     "string": "Search vouchers..."
   },
+  "bQCV7I": {
+    "context": "voucher redemptions counting explanation callout",
+    "string": "Counts redemptions across all codes combined, not per code. Draft orders are counted only in channels whose order settings have {settingName} switched on — that is set per channel, so this total can mix both."
+  },
   "bRJD/v": {
     "context": "button",
     "string": "Create permission group"
@@ -9419,10 +9755,6 @@
   "bbSkxt": {
     "context": "export scope section header for products",
     "string": "Products to include"
-  },
-  "bcf60I": {
-    "context": "voucher",
-    "string": "Applies to"
   },
   "bdScE/": {
     "context": "grant refund table, column header",
@@ -9556,6 +9888,10 @@
     "context": "status",
     "string": "Active"
   },
+  "c48xJ+": {
+    "context": "voucher channel status description when active",
+    "string": "Voucher can be redeemed in this channel now"
+  },
   "c5B5Cg": {
     "context": "password login mode option description",
     "string": "No user can log in with a password"
@@ -9574,6 +9910,10 @@
   "c5tWY8": {
     "context": "dialog title",
     "string": "Generate Variants"
+  },
+  "c6fIOT": {
+    "context": "voucher channel status description when ended",
+    "string": "Voucher redeem window ended on {date}"
   },
   "c7Pl4C": {
     "context": "bulk publish to channel wizard title",
@@ -9659,10 +9999,6 @@
   "cNCKU1": {
     "context": "ripple video announcement CTA to explore Saleor Pulse",
     "string": "Explore Pulse"
-  },
-  "cNSLLO": {
-    "context": "button",
-    "string": "Unassign and save"
   },
   "cNXv4f": {
     "string": "Fulfillment cancelled"
@@ -9971,6 +10307,10 @@
     "context": "products export type label",
     "string": "products"
   },
+  "deqK6f": {
+    "context": "voucher catalogue section intro when empty",
+    "string": "Assign at least one category, collection, product, or variant. The discount applies to checkout lines matching any assignment."
+  },
   "diq8M5": {
     "context": "payment apps list truncated warning",
     "string": "Showing the first 100 extensions. Open installed extensions to see payment apps beyond this limit."
@@ -10049,6 +10389,10 @@
   "e92Uxp": {
     "context": "order history message",
     "string": "Updated fulfillment group's tracking number"
+  },
+  "e9TVRT": {
+    "context": "voucher detail section nav item",
+    "string": "Discount"
   },
   "e9z98s": {
     "string": "You don't have access to this permission"
@@ -10129,6 +10473,14 @@
   "ecM5eL": {
     "context": "page title - creating custom app",
     "string": "Add extension manually"
+  },
+  "ecd+JV": {
+    "context": "voucher detail section navigation aria label",
+    "string": "Voucher settings sections"
+  },
+  "efbank": {
+    "context": "bulk publish progress error when product fetch misses a row",
+    "string": "Could not load product data."
   },
   "eiRboK": {
     "context": "collection channel status description when hidden",
@@ -10354,6 +10706,10 @@
     "context": "TopNav destination link tooltip to home / sign in",
     "string": "Home"
   },
+  "fmgZv9": {
+    "context": "setup task title for specific-product vouchers",
+    "string": "Assign eligible products"
+  },
   "fo7nfa": {
     "context": "fixed amount",
     "string": "Fixed Amount"
@@ -10376,6 +10732,10 @@
   "ftOPoy": {
     "context": "bulk actions button label",
     "string": "Unpublish"
+  },
+  "ftQBOK": {
+    "context": "setup task title for free-shipping vouchers",
+    "string": "Confirm shipping countries"
   },
   "ftcHpD": {
     "string": "Customer created"
@@ -10432,6 +10792,10 @@
   "g8lXTL": {
     "context": "swatch attribute",
     "string": "Swatch"
+  },
+  "g8qmQt": {
+    "context": "setup task description when value missing",
+    "string": "Enter a percentage or fixed amount so checkout knows how much to take off."
   },
   "g9M3PH": {
     "string": "Issues found.{break}Review extension alerts."
@@ -10511,6 +10875,10 @@
   "gSTyF7": {
     "context": "channel order setting label for order expiration",
     "string": "Expire abandoned {unconfirmed} orders"
+  },
+  "gToMwN": {
+    "context": "voucher apply once per order description",
+    "string": "When off, the discount is calculated for every eligible line in the order."
   },
   "gWUWig": {
     "context": "channel inventory allocation description when fewer than two",
@@ -10638,10 +11006,6 @@
   "h5P++h": {
     "string": "Variants"
   },
-  "h65vZI": {
-    "context": "times voucher used",
-    "string": "Used"
-  },
   "h75GAF": {
     "context": "voucher",
     "string": "Times used"
@@ -10764,6 +11128,10 @@
   "hjamEg": {
     "context": "loading state on load more variants button in assign variant dialog",
     "string": "Loading more"
+  },
+  "hk2GiM": {
+    "context": "voucher catalogue assign products aria label",
+    "string": "Assign products"
   },
   "hkENym": {
     "string": "Customer"
@@ -10983,6 +11351,10 @@
     "context": "vouchers section name",
     "string": "Vouchers"
   },
+  "iWLskA": {
+    "context": "voucher redemptions schedule status when active with end date",
+    "string": "Redeemable now, until {date}."
+  },
   "iWbl/h": {
     "string": "Partially returned"
   },
@@ -11183,6 +11555,10 @@
     "context": "ripple action linking to documentation",
     "string": "See docs"
   },
+  "jFNmsS": {
+    "context": "voucher percentage value field label",
+    "string": "Percentage off"
+  },
   "jGGnSZ": {
     "context": "page header",
     "string": "Primary Address"
@@ -11231,9 +11607,17 @@
     "context": "settings search alias",
     "string": "invoice address"
   },
+  "jT/uX4": {
+    "context": "voucher staff only description",
+    "string": "Only staff users can apply this voucher at checkout."
+  },
   "jUuHVn": {
     "context": "description",
     "string": "No members found"
+  },
+  "jVfo2X": {
+    "context": "voucher total usage limit description",
+    "string": "Caps total redemptions across all customers and codes."
   },
   "jWTXmC": {
     "context": "selected media count badge in variant media selection dialog",
@@ -11245,6 +11629,10 @@
   },
   "ja+tNj": {
     "string": "requests access to new permissions."
+  },
+  "jbIfCD": {
+    "context": "voucher scope tile title",
+    "string": "Free shipping"
   },
   "jd/LWa": {
     "string": "Voucher applies to all countries"
@@ -11298,6 +11686,10 @@
     "context": "settings search alias",
     "string": "payment capture"
   },
+  "jpd7vl": {
+    "context": "voucher detail section nav item",
+    "string": "Details"
+  },
   "jpyNZL": {
     "context": "section description for customer accounts",
     "string": "Control how customers register and sign in to your storefront."
@@ -11338,6 +11730,10 @@
     "context": "app privacy policy link",
     "string": "View this extension's privacy policy."
   },
+  "jwwgtR": {
+    "context": "setup review row title",
+    "string": "Minimum requirements"
+  },
   "jxCLwG": {
     "context": "bulk edit toggle label",
     "string": "Edit in bulk"
@@ -11361,6 +11757,10 @@
   "k+HcTv": {
     "context": "product type",
     "string": "Type"
+  },
+  "k+wydb": {
+    "context": "voucher shipping discount amount helper",
+    "string": "A free-shipping voucher waives the whole shipping cost, so there is no amount to set."
   },
   "k/mTEl": {
     "context": "distance units type",
@@ -11493,6 +11893,10 @@
     "context": "page header",
     "string": "Order #{orderNumber}"
   },
+  "kPbIlj": {
+    "context": "voucher type pill amount type: percentage",
+    "string": "%"
+  },
   "kQq6/o": {
     "context": "info when addresses search is unsuccessful",
     "string": "No results found"
@@ -11570,6 +11974,10 @@
   "kgVqk1": {
     "string": "Category name"
   },
+  "kgxmKe": {
+    "context": "voucher save composition segment",
+    "string": "General settings"
+  },
   "ki2FY7": {
     "context": "Badge label for webhook delivery error problems",
     "string": "Webhook delivery"
@@ -11642,6 +12050,10 @@
   "kyOwDW": {
     "context": "aria-label for the error icon inside a channel issue badge",
     "string": "Error"
+  },
+  "kzSE40": {
+    "context": "link text to countries section",
+    "string": "Countries"
   },
   "l0a2tU": {
     "context": "onboarding step description",
@@ -11882,6 +12294,10 @@
     "context": "password reset, button",
     "string": "Send an email with reset link"
   },
+  "lmMHMT": {
+    "context": "voucher discount section title",
+    "string": "Discount"
+  },
   "lnteBJ": {
     "context": "country rates list label for the default rate",
     "string": "Country default rate"
@@ -11912,9 +12328,17 @@
   "ltSmln": {
     "string": "Shipping zone deleted"
   },
+  "ltUYde": {
+    "context": "voucher catalogue products row description",
+    "string": "Discount specific products and all their variants."
+  },
   "ltbVdP": {
     "context": "settings search alias",
     "string": "password authentication"
+  },
+  "ltpFLR": {
+    "context": "voucher detail section nav item",
+    "string": "Eligible products"
   },
   "lwjzVj": {
     "string": "Edit order"
@@ -12076,6 +12500,10 @@
   "mbOuGl": {
     "context": "customer gift cards card issue button",
     "string": "Issue new card"
+  },
+  "mfz2Td": {
+    "context": "setup task title",
+    "string": "Assign channels"
   },
   "mgFyBA": {
     "string": "This name should be unique"
@@ -12419,6 +12847,10 @@
   "o68j+t": {
     "string": "Search staff members..."
   },
+  "o7d4A1": {
+    "context": "voucher save composition segment for staged product assignments",
+    "string": "Catalogue"
+  },
   "o7ePJQ": {
     "string": "Go to customers"
   },
@@ -12520,6 +12952,10 @@
   },
   "oUxBlO": {
     "string": "Line details for {productName}"
+  },
+  "oVM/qc": {
+    "context": "voucher minimum order value spreadsheet paste hint",
+    "string": "You can paste from a spreadsheet. Select a field and paste a column of values to fill amounts down the list."
   },
   "oWIL0E": {
     "context": "order header date, older than yesterday",
@@ -12658,6 +13094,14 @@
     "context": "Product save pipeline step label",
     "string": "Product details"
   },
+  "p7GaL2": {
+    "context": "voucher apply once per customer toggle title",
+    "string": "One use per customer"
+  },
+  "p96fcM": {
+    "context": "voucher discount amount section hint",
+    "string": "Choose how the discount is calculated."
+  },
   "p9bXAy": {
     "context": "default transaction name",
     "string": "Transaction"
@@ -12718,6 +13162,10 @@
     "context": "status",
     "string": "Deactivated"
   },
+  "pIxpPI": {
+    "context": "voucher fixed amount per channel section title",
+    "string": "Amount off, per channel"
+  },
   "pJ5/7G": {
     "string": "Close and hide all hints"
   },
@@ -12767,6 +13215,10 @@
     "context": "Apply filters button text in modal picker",
     "string": "Filter"
   },
+  "pTSCWo": {
+    "context": "setup task complete when countries are restricted",
+    "string": "{count} {count, plural, one {country} other {countries}} selected"
+  },
   "pTja1U": {
     "context": "page content field hint",
     "string": "Main body content of the model page"
@@ -12805,6 +13257,10 @@
   "pc36KX": {
     "context": "PageTypeDeleteWarningDialog multiple consent label",
     "string": "Yes, I want to delete those model types and assigned models"
+  },
+  "pcUWaj": {
+    "context": "setup task CTA",
+    "string": "Assign items"
   },
   "pdJlXC": {
     "string": "See all global search results"
@@ -12853,6 +13309,10 @@
   "ppUdc+": {
     "context": "bulk publish default stock helper",
     "string": "Prefills stock on the next step only. Clear any row there to skip updating that product."
+  },
+  "pq/k18": {
+    "context": "voucher scope tile description",
+    "string": "Waives the shipping cost. You can limit it to specific countries."
   },
   "ps+h1G": {
     "context": "checkbox label description",
@@ -12919,6 +13379,10 @@
   "q/aqcy": {
     "context": "collection details section nav item",
     "string": "General information"
+  },
+  "q0I4vu": {
+    "context": "voucher fixed amount per channel section hint",
+    "string": "A fixed amount has to be set in each channel's own currency — 10 USD is not 10 PLN."
   },
   "q0TV+c": {
     "context": "no countries found in assign countries dialog",
@@ -13118,6 +13582,10 @@
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
   },
+  "qbT0tS": {
+    "context": "voucher redemptions remaining detail line",
+    "string": "{count, plural, one {# redemption left} other {# redemptions left}}"
+  },
   "qbcNjQ": {
     "context": "table header column",
     "string": "Tax name"
@@ -13179,6 +13647,14 @@
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
   },
+  "qqCv2r": {
+    "context": "voucher type pill amount type: fixed",
+    "string": "Fixed"
+  },
+  "qqS0hY": {
+    "context": "voucher channel status when schedule has ended",
+    "string": "Ended"
+  },
   "qrWOxx": {
     "string": "No members found"
   },
@@ -13204,6 +13680,10 @@
   "qvaap2": {
     "context": "order detail page, top-bar metadata button tooltip",
     "string": "Edit order metadata"
+  },
+  "qvjq6v": {
+    "context": "setup task CTA",
+    "string": "Set value"
   },
   "qwp4zK": {
     "context": "Health check subtitle when product can be purchased",
@@ -13477,6 +13957,10 @@
     "context": "settings search result kind badge",
     "string": "Setting"
   },
+  "s699+F": {
+    "context": "voucher channel status when schedule has not started",
+    "string": "Scheduled"
+  },
   "s6Wgi3": {
     "context": "role label for product-level type assignment",
     "string": "Product"
@@ -13512,6 +13996,10 @@
     "context": "allow legacy gift card use label",
     "string": "Allow legacy gift card use"
   },
+  "sFHqd1": {
+    "context": "voucher catalogue categories row description",
+    "string": "Discount lines in these categories."
+  },
   "sFynTT": {
     "context": "grant refund, refund card title",
     "string": "Refund"
@@ -13524,9 +14012,17 @@
     "context": "header name input",
     "string": "Should match `x-*`, `authorization*`, or `brokerproperties`."
   },
+  "sIsiBT": {
+    "context": "voucher catalogue section title",
+    "string": "Eligible products"
+  },
   "sK1FPw": {
     "context": "categories section name",
     "string": "Categories"
+  },
+  "sKbtzQ": {
+    "context": "voucher catalogue collections row title",
+    "string": "Collections"
   },
   "sOlOZB": {
     "context": "gift cards page subheader",
@@ -13555,6 +14051,10 @@
   "sS5aVm": {
     "context": "voucher discount type",
     "string": "Free Shipping"
+  },
+  "sT2PzH": {
+    "context": "voucher metadata button title",
+    "string": "Edit voucher metadata"
   },
   "sW9IyX": {
     "context": "dialog header",
@@ -13661,6 +14161,10 @@
   "spjKeI": {
     "string": "Fulfillment approved"
   },
+  "sqz22u": {
+    "context": "footer when redeem blockers are done",
+    "string": "Required steps are complete."
+  },
   "srtbbS": {
     "context": "gift card currency mismatch with delivery channel callout",
     "string": "The selected channel uses {channelCurrency}, but this gift card is in {giftCardCurrency}. The customer can still receive the code by email, but they will only be able to redeem it in {giftCardCurrency} channels at checkout."
@@ -13760,6 +14264,10 @@
     "context": "customer overview, recent net sales tooltip",
     "string": "Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
   },
+  "tQnYA/": {
+    "context": "voucher details section intro",
+    "string": "Internal name for staff. Customers redeem voucher codes at checkout, not this label."
+  },
   "tR+UuE": {
     "string": "User doesn't exist. Please check your email in URL"
   },
@@ -13774,6 +14282,10 @@
   "tTuCYj": {
     "context": "all gift cards label",
     "string": "All Gift Cards"
+  },
+  "tU6CwL": {
+    "context": "voucher limits section intro",
+    "string": "Control how many times this voucher can be redeemed and who can use it."
   },
   "tUlsq+": {
     "string": "Translating"
@@ -13912,10 +14424,6 @@
   "tzMNF3": {
     "string": "Status"
   },
-  "u/hkKO": {
-    "context": "voucher has no requirements",
-    "string": "None"
-  },
   "u/vOPu": {
     "string": "Paid"
   },
@@ -13999,6 +14507,10 @@
     "context": "dialog header",
     "string": "Changed Customer"
   },
+  "uGkXA1": {
+    "context": "voucher schedule header status when redeem window ended",
+    "string": "Ended"
+  },
   "uGqPKY": {
     "string": "Select a Model Type. All Models extending the type will be available as refund reasons when issuing a refund."
   },
@@ -14064,8 +14576,16 @@
     "context": "attribute class a11y label prefix",
     "string": "Attribute class"
   },
+  "uVscLr": {
+    "context": "setup task CTA",
+    "string": "Review countries"
+  },
   "uX+Vg7": {
     "string": "Voucher updated"
+  },
+  "uXa7/n": {
+    "context": "voucher redemptions constraint chip when onlyForStaff is on",
+    "string": "Staff only"
   },
   "uY8rPp": {
     "context": "button label to cancel product removal",
@@ -14183,6 +14703,10 @@
     "context": "bulk publish picker filter label",
     "string": "Only products not in channel"
   },
+  "uuPymz": {
+    "context": "voucher redemptions card channels count meta",
+    "string": "{count, plural, one {# channel} other {# channels}}"
+  },
   "uvVmpA": {
     "context": "collection detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete collection"
@@ -14264,6 +14788,14 @@
     "context": "automatic completion cut-off date info message",
     "string": "Setting a cut-off date will not stop checkouts that are already in the process of being completed."
   },
+  "v9qlem": {
+    "context": "voucher redemptions schedule status when not yet started",
+    "string": "Redeemable from {date}."
+  },
+  "vAU2vD": {
+    "context": "voucher catalogue variants row title",
+    "string": "Variants"
+  },
   "vAxm7u": {
     "string": "You must select a channel first and select at least one gift"
   },
@@ -14343,16 +14875,16 @@
   "vSLaZ7": {
     "string": "Select a reason type"
   },
+  "vSdHfr": {
+    "context": "setup task complete when shipping voucher has empty countries (worldwide)",
+    "string": "Worldwide — no country limit"
+  },
   "vTN5DZ": {
     "context": "button",
     "string": "Discard"
   },
   "vTPu1s": {
     "string": "Code Quantity (max {maxCodes})"
-  },
-  "vTgRTZ": {
-    "context": "limit voucher",
-    "string": "Limit to one use per customer"
   },
   "vUY6ir": {
     "string": "Amount must be higher than 0 when you transfer funds"
@@ -14382,6 +14914,10 @@
   "vY17L8": {
     "context": "window title",
     "string": "Create Model type"
+  },
+  "vY7jZc": {
+    "context": "setup task title",
+    "string": "Add a code"
   },
   "vYMZxh": {
     "context": "delete custom app",
@@ -14629,6 +15165,10 @@
     "context": "column header",
     "string": "Visibility"
   },
+  "wMpoVP": {
+    "context": "voucher single-use code toggle description",
+    "string": "Each code can be redeemed only once, then that code is deactivated. Other codes on this voucher stay usable."
+  },
   "wNQzS/": {
     "string": "The primary address of this customer."
   },
@@ -14767,6 +15307,10 @@
     "context": "label for enabling grouped model type tabs",
     "string": "Group similar model types"
   },
+  "x/Bb2C": {
+    "context": "voucher catalogue row assigned count status",
+    "string": "{count, plural, =0 {None assigned} one {# assigned} other {# assigned}}"
+  },
   "x/N8AY": {
     "context": "field translation status",
     "string": "Translated"
@@ -14827,6 +15371,10 @@
     "context": "open granted refund editor from line expanded panel",
     "string": "Edit & transfer"
   },
+  "xEyXOV": {
+    "context": "pagination next page button aria label",
+    "string": "Next page"
+  },
   "xFSJR1": {
     "context": "recent changes shortcut",
     "string": "What's New"
@@ -14843,6 +15391,10 @@
   },
   "xKLf5H": {
     "string": "Developed by {developer}"
+  },
+  "xMlT+z": {
+    "context": "voucher detail section nav item",
+    "string": "Codes"
   },
   "xNElry": {
     "context": "Transaction card title with name",
@@ -14884,6 +15436,10 @@
   "xVn5B0": {
     "context": "added new attribute value",
     "string": "Added new value"
+  },
+  "xWhlz+": {
+    "context": "setup review row title",
+    "string": "Usage limits"
   },
   "xWtZEw": {
     "context": "expand canceled shipments in line expanded panel",
@@ -14956,6 +15512,10 @@
   },
   "xrKHS6": {
     "string": "Success"
+  },
+  "xsd8Wt": {
+    "context": "bulk publish review missing category warning",
+    "string": "{count, plural, one {# product has} other {# products have}} no category and cannot be published: {productNames}. Assign a category on the product, or turn off Publish in Defaults."
   },
   "xtUXnK": {
     "context": "export all items to csv file",
@@ -15181,6 +15741,10 @@
     "context": "Availability card subtitle showing entity channel count",
     "string": "{entityType} in {listed} of {total} channels"
   },
+  "yv/8Fb": {
+    "context": "setup task complete",
+    "string": "{count} eligible {count, plural, one {item} other {items}} assigned"
+  },
   "yvdudc": {
     "context": "channel inventory create dropdown item",
     "string": "Create warehouse"
@@ -15194,6 +15758,10 @@
   },
   "z/2AZY": {
     "string": "Discount type"
+  },
+  "z/lMXM": {
+    "context": "voucher redemptions card codes count meta",
+    "string": "{count, plural, one {# code} other {# codes}}"
   },
   "z/pKCq": {
     "context": "structure name",
@@ -15218,6 +15786,10 @@
     "context": "order status",
     "string": "Expired"
   },
+  "z4dBU1": {
+    "context": "voucher shipping countries callout",
+    "string": "Limit this to particular destinations in {countriesLink} below. Otherwise it applies everywhere you ship."
+  },
   "z4qMx5": {
     "string": "Open in a new tab"
   },
@@ -15238,6 +15810,10 @@
   "zDAOAk": {
     "context": "channel catalog unpublished row status",
     "string": "{count} unpublished"
+  },
+  "zDhdcC": {
+    "context": "voucher save composition segment",
+    "string": "Channels"
   },
   "zDvDnG": {
     "context": "modal header",
@@ -15261,6 +15837,14 @@
   "zIeG3b": {
     "context": "dialog description when canceling unapproved fulfillment",
     "string": "This fulfillment has not been approved yet. Canceling removes the pending shipment and does not require restocking inventory."
+  },
+  "zJeRkq": {
+    "context": "voucher scope tile description",
+    "string": "Takes the discount off the order subtotal, whatever is in the basket."
+  },
+  "zJj3p5": {
+    "context": "setup task description when catalogue empty",
+    "string": "Choose categories, collections, products, or variants this voucher applies to."
   },
   "zJpP1T": {
     "context": "create new structure, header",
@@ -15303,6 +15887,10 @@
     "context": "order history message",
     "string": "Order was cancelled"
   },
+  "zS26Pl": {
+    "context": "voucher channel status description when scheduled",
+    "string": "Voucher becomes redeemable on {date}"
+  },
   "zSDfq0": {
     "string": "Use flat tax rate"
   },
@@ -15333,6 +15921,10 @@
   "zZCCqz": {
     "context": "button",
     "string": "Assign countries"
+  },
+  "zZaxb8": {
+    "context": "Expanded help for channel setup",
+    "string": "Vouchers only apply in assigned channels. Assign every market where shoppers should be able to use this code."
   },
   "zb1rmx": {
     "context": "alert message",

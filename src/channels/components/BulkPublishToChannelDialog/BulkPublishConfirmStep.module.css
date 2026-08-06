@@ -71,7 +71,19 @@
 }
 
 .progressRow {
-  align-items: center;
+  align-items: flex-start;
+}
+
+.progressContent {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--mu-spacing-0.5);
+}
+
+.progressError {
+  color: var(--mu-colors-text-critical);
 }
 
 .icon {

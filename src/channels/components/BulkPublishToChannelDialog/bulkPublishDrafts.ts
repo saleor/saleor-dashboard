@@ -8,6 +8,7 @@ import {
 export type BulkPublishProductForDraft = {
   id: string;
   name: string;
+  category: { id: string } | null;
   channelListings: Array<{ channel: { id: string } }> | null;
   productVariants: {
     totalCount: number;
@@ -123,6 +124,7 @@ export const createProductDrafts = ({
       variantCount,
       exceedsVariantLimit,
       hasManyVariants,
+      hasCategory: product.category !== null,
       alreadyInChannel:
         product.channelListings?.some(listing => listing.channel.id === channelId) ?? false,
       price: "",
@@ -175,6 +177,12 @@ export const getDraftsExceedingVariantLimit = (
 
 export const getDraftsWithManyVariants = (drafts: ProductPublishDraft[]): ProductPublishDraft[] =>
   drafts.filter(draft => draft.hasManyVariants);
+
+/** Products that cannot be published because Saleor requires a category. */
+export const getDraftsMissingCategoryForPublish = (
+  drafts: ProductPublishDraft[],
+  isPublished: boolean,
+): ProductPublishDraft[] => (isPublished ? drafts.filter(draft => !draft.hasCategory) : []);
 
 export const getDraftsWithInvalidStock = (drafts: ProductPublishDraft[]): ProductPublishDraft[] =>
   drafts.filter(draft => !isValidBulkPublishStock(draft.stock));

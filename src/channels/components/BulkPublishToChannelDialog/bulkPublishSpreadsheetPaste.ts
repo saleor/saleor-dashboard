@@ -1,34 +1,20 @@
 import { type ProductPublishDraft } from "@dashboard/channels/components/BulkPublishToChannelDialog/types";
 import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
+import {
+  parseSpreadsheetClipboard,
+  trimEmptyTrailingRows,
+} from "@dashboard/utils/spreadsheetPaste/parseSpreadsheetClipboard";
 import { type ClipboardEvent } from "react";
 
-// Future PR: extract generic spreadsheet paste util and reuse in Datagrid cells.
+// Multi-field paste for bulk publish. Generic parse lives in utils/spreadsheetPaste.
 // See docs/follow-ups/spreadsheet-paste-reuse.md
 
 export type BulkPublishPasteField = "price" | "costPrice" | "stock";
 
+export { parseSpreadsheetClipboard };
+
 const FIELD_ORDER_WITH_STOCK: BulkPublishPasteField[] = ["price", "costPrice", "stock"];
 const FIELD_ORDER_WITHOUT_STOCK: BulkPublishPasteField[] = ["price", "costPrice"];
-
-export const parseSpreadsheetClipboard = (text: string): string[][] => {
-  const normalized = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trimEnd();
-
-  if (normalized === "") {
-    return [];
-  }
-
-  return normalized.split("\n").map(row => row.split("\t"));
-};
-
-const trimEmptyTrailingRows = (grid: string[][]): string[][] => {
-  const rows = [...grid];
-
-  while (rows.length > 0 && rows[rows.length - 1].every(cell => cell.trim() === "")) {
-    rows.pop();
-  }
-
-  return rows;
-};
 
 const getFieldsFromPasteStart = (
   startField: BulkPublishPasteField,

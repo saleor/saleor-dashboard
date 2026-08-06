@@ -1,13 +1,14 @@
 // @ts-strict-ignore
 import { type ChannelVoucherData, validateVoucherPrice } from "@dashboard/channels/utils";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
-import { DiscountTypeEnum, type RequirementsPicker } from "@dashboard/discounts/types";
+import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { DiscountErrorCode, type DiscountErrorFragment, VoucherTypeEnum } from "@dashboard/graphql";
 import { type ChangeEvent, type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type RequireOnlyOne } from "@dashboard/misc";
+import { validatePrice } from "@dashboard/products/utils/validation";
 import { arrayDiff } from "@dashboard/utils/arrays";
 
-import { getAddedChannelsInputFromFormData } from "./data";
+import { clearInactiveVoucherDiscountDrafts, getAddedChannelsInputFromFormData } from "./data";
 
 interface ChannelArgs {
   discountValue: string;
@@ -37,6 +38,57 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
     }
 
     change(event);
+  };
+}
+
+export function createVoucherScopeChangeHandler(change: FormChange) {
+  return (scope: string, currentDiscountType: DiscountTypeEnum) => {
+    if (scope === DiscountTypeEnum.SHIPPING) {
+      change({
+        target: {
+          name: "discountType",
+          value: DiscountTypeEnum.SHIPPING,
+        },
+      });
+      change({
+        target: {
+          name: "type",
+          value: VoucherTypeEnum.ENTIRE_ORDER,
+        },
+      });
+
+      return;
+    }
+
+    change({
+      target: {
+        name: "type",
+        value: scope,
+      },
+    });
+
+    if (currentDiscountType === DiscountTypeEnum.SHIPPING) {
+      change({
+        target: {
+          name: "discountType",
+          value: DiscountTypeEnum.VALUE_PERCENTAGE,
+        },
+      });
+    }
+  };
+}
+
+export function createDiscountAmountTypeChangeHandler(change: FormChange) {
+  return (amountType: "PERCENTAGE" | "FIXED") => {
+    change({
+      target: {
+        name: "discountType",
+        value:
+          amountType === "PERCENTAGE"
+            ? DiscountTypeEnum.VALUE_PERCENTAGE
+            : DiscountTypeEnum.VALUE_FIXED,
+      },
+    });
   };
 }
 
@@ -90,11 +142,14 @@ export function createVoucherUpdateHandler(
   setLocalErrors: (errors: DiscountErrorFragment[]) => void,
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
-    const { channelListings, discountType, requirementsPicker } = formData;
+    // Drop the inactive amount draft before validate/save (toggle keeps both until Save).
+    const data = clearInactiveVoucherDiscountDrafts(formData);
+    const { channelListings, discountType, percentageDiscountValue, requirementsPicker } = data;
     const { valid, invalidChannels } = validateChannelListing(
       channelListings,
       discountType,
       requirementsPicker,
+      percentageDiscountValue,
     );
 
     const localErrors: DiscountErrorFragment[] = !valid
@@ -115,7 +170,7 @@ export function createVoucherUpdateHandler(
       return localErrors;
     }
 
-    return submit(formData);
+    return submit(data);
   };
 }
 
@@ -123,9 +178,48 @@ export function validateChannelListing(
   channelListings: ChannelVoucherData[],
   discountType: DiscountTypeEnum,
   requirementsPicker: RequirementsPicker,
+  percentageDiscountValue = "",
 ) {
   // When discount type is shipping, there is no need to check if all selected channels have a discount value
   if (discountType === DiscountTypeEnum.SHIPPING) {
+    return {
+      valid: true,
+      invalidChannels: [],
+    };
+  }
+
+  // Percentage uses one draft value for all channels — validate that, not per-channel fixed drafts.
+  // Do not run validateVoucherPrice on a synthetic channel: empty minSpent would fail whenever
+  // requirements are ORDER, even if the percentage itself is valid.
+  if (discountType === DiscountTypeEnum.VALUE_PERCENTAGE) {
+    // Percentage is persisted on channel listings only. With no channels assigned, an empty
+    // draft must not block unrelated saves (e.g. renaming) — and the % input used to be hidden
+    // behind the empty-channels placeholder, so validation failures looked like a dead Save.
+    if (!channelListings?.length) {
+      return {
+        valid: true,
+        invalidChannels: [],
+      };
+    }
+
+    if (validatePrice(percentageDiscountValue)) {
+      return {
+        valid: false,
+        invalidChannels: channelListings.map(channel => channel.id),
+      };
+    }
+
+    if (requirementsPicker === RequirementsPicker.ORDER) {
+      const invalidMinSpentChannels = channelListings
+        .filter(channel => validatePrice(channel.minSpent))
+        .map(channel => channel.id);
+
+      return {
+        valid: !invalidMinSpentChannels.length,
+        invalidChannels: invalidMinSpentChannels,
+      };
+    }
+
     return {
       valid: true,
       invalidChannels: [],

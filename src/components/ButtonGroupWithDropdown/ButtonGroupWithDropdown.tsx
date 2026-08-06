@@ -47,6 +47,7 @@ export const ButtonGroupWithDropdown = ({
         <Button
           className={styles.segment}
           variant={variant}
+          type="button"
           onClick={onClick}
           data-test-id={testId}
           disabled={disabled}
@@ -60,6 +61,7 @@ export const ButtonGroupWithDropdown = ({
           <Button
             className={styles.segment}
             variant={variant}
+            type="button"
             icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             disabled={disabled}
           />

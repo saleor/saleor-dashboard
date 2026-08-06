@@ -41,7 +41,7 @@ export function ChannelAvailabilityItem<T extends ChannelAvailabilitySummary>({
         alignItems="center"
         gap={2}
         paddingX={4}
-        paddingY={3}
+        paddingY={2}
         width="100%"
         cursor="pointer"
         onClick={() => {

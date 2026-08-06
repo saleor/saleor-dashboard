@@ -18,7 +18,11 @@ export const parseDateTimeToDateAndTime = (
     return { date: "", time: "" };
   }
 
-  const date = dateObj.toISOString().split("T")[0];
+  const date = [
+    dateObj.getFullYear(),
+    String(dateObj.getMonth() + 1).padStart(2, "0"),
+    String(dateObj.getDate()).padStart(2, "0"),
+  ].join("-");
   const time = dateObj.toTimeString().slice(0, 5);
 
   return { date, time };

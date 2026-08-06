@@ -12,9 +12,20 @@ export type CollectionChannels = Pick<
   "isPublished" | "publishedAt" | "channel"
 >;
 
-const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
-const isScheduled = (channelData: CollectionChannels) =>
-  channelData?.publishedAt && !channelData?.isPublished;
+const PUBLICATION_CLOCK_TOLERANCE_MS = 2000;
+
+const isScheduled = (channelData: CollectionChannels) => {
+  if (!channelData?.isPublished || !channelData.publishedAt) {
+    return false;
+  }
+
+  const publishedAt = Date.parse(channelData.publishedAt);
+
+  return Number.isFinite(publishedAt) && publishedAt > Date.now() + PUBLICATION_CLOCK_TOLERANCE_MS;
+};
+
+const isActive = (channelData: CollectionChannels) =>
+  Boolean(channelData?.isPublished) && !isScheduled(channelData);
 
 export const getDropdownColor = (channels: CollectionChannels[]) => {
   if (channels.some(isActive)) {

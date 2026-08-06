@@ -40,6 +40,7 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   type ChannelCreateMutation,
   type ChannelDeleteMutation,
+  ChannelErrorCode,
   type ChannelErrorFragment,
   type ChannelUpdateMutation,
   PermissionEnum,
@@ -59,6 +60,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getMutationStatus } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -185,91 +187,109 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     automaticCompletionCutOffDate,
     automaticCompletionCutOffTime,
   }: FormData) => {
-    const getCutOffDateTimeISO = (): string | null => {
-      if (!automaticCompletionCutOffDate) {
-        return null;
+    try {
+      const getCutOffDateTimeISO = (): string | null => {
+        if (!automaticCompletionCutOffDate) {
+          return null;
+        }
+
+        const time = automaticCompletionCutOffTime || "00:00";
+
+        return new Date(`${automaticCompletionCutOffDate}T${time}`).toISOString();
+      };
+
+      // Build automaticCompletion input - only include delay and cutOffDate when enabled
+      const automaticCompletionInput: {
+        enabled: boolean;
+        delay?: number | null;
+        cutOffDate?: string | null;
+      } = {
+        enabled: automaticallyCompleteCheckouts,
+      };
+
+      if (automaticallyCompleteCheckouts) {
+        // Convert delay to number or null (handle empty string case)
+        const delayValue = automaticCompletionDelay;
+
+        if (delayValue === null || delayValue === undefined || delayValue === "") {
+          automaticCompletionInput.delay = null;
+        } else {
+          automaticCompletionInput.delay = Number(delayValue);
+        }
+
+        automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
       }
 
-      const time = automaticCompletionCutOffTime || "00:00";
-
-      return new Date(`${automaticCompletionCutOffDate}T${time}`).toISOString();
-    };
-
-    // Build automaticCompletion input - only include delay and cutOffDate when enabled
-    const automaticCompletionInput: {
-      enabled: boolean;
-      delay?: number | null;
-      cutOffDate?: string | null;
-    } = {
-      enabled: automaticallyCompleteCheckouts,
-    };
-
-    if (automaticallyCompleteCheckouts) {
-      // Convert delay to number or null (handle empty string case)
-      const delayValue = automaticCompletionDelay;
-
-      if (delayValue === null || delayValue === undefined || delayValue === "") {
-        automaticCompletionInput.delay = null;
-      } else {
-        automaticCompletionInput.delay = Number(delayValue);
-      }
-
-      automaticCompletionInput.cutOffDate = getCutOffDateTimeISO();
-    }
-
-    const updateChannelMutation = updateChannel({
-      variables: {
-        id: data?.channel.id,
-        input: {
-          name,
-          checkoutSettings: {
-            automaticCompletion: automaticCompletionInput,
-            allowLegacyGiftCardUse,
-          },
-          slug,
-          defaultCountry,
-          addShippingZones: shippingZonesIdsToAdd,
-          removeShippingZones: shippingZonesIdsToRemove,
-          addWarehouses: warehousesIdsToAdd,
-          removeWarehouses: warehousesIdsToRemove,
-          stockSettings: {
-            allocationStrategy,
-          },
-          paymentSettings: {
-            defaultTransactionFlowStrategy,
-            releaseFundsForExpiredCheckouts,
-            checkoutTtlBeforeReleasingFunds: releaseFundsForExpiredCheckouts
-              ? checkoutTtlBeforeReleasingFunds || 0
-              : checkoutTtlBeforeReleasingFunds,
-          },
-          orderSettings: {
-            markAsPaidStrategy,
-            expireOrdersAfter: expireOrdersAfter || 0,
-            deleteExpiredOrdersAfter,
-            allowUnpaidOrders,
-            automaticallyConfirmAllNewOrders,
-            automaticallyFulfillNonShippableGiftCard,
+      const updateChannelMutation = updateChannel({
+        variables: {
+          id: data?.channel.id,
+          input: {
+            name,
+            checkoutSettings: {
+              automaticCompletion: automaticCompletionInput,
+              allowLegacyGiftCardUse,
+            },
+            slug,
+            defaultCountry,
+            addShippingZones: shippingZonesIdsToAdd,
+            removeShippingZones: shippingZonesIdsToRemove,
+            addWarehouses: warehousesIdsToAdd,
+            removeWarehouses: warehousesIdsToRemove,
+            stockSettings: {
+              allocationStrategy,
+            },
+            paymentSettings: {
+              defaultTransactionFlowStrategy,
+              releaseFundsForExpiredCheckouts,
+              checkoutTtlBeforeReleasingFunds: releaseFundsForExpiredCheckouts
+                ? checkoutTtlBeforeReleasingFunds || 0
+                : checkoutTtlBeforeReleasingFunds,
+            },
+            orderSettings: {
+              markAsPaidStrategy,
+              expireOrdersAfter: expireOrdersAfter || 0,
+              deleteExpiredOrdersAfter,
+              allowUnpaidOrders,
+              automaticallyConfirmAllNewOrders,
+              automaticallyFulfillNonShippableGiftCard,
+            },
           },
         },
-      },
-      // Shipping zones are a separate query — without this, Activate stays
-      // disabled after Save even though assigns persisted.
-      refetchQueries: getChannelDetailsRefetchQueries(id),
-      awaitRefetchQueries: true,
-    });
+        // Shipping zones are a separate query — without this, Activate stays
+        // disabled after Save even though assigns persisted.
+        refetchQueries: getChannelDetailsRefetchQueries(id),
+        awaitRefetchQueries: true,
+      });
 
-    const resultChannel = await updateChannelMutation;
-    const errors = await extractMutationErrors(updateChannelMutation);
+      const resultChannel = await updateChannelMutation;
+      const errors = await extractMutationErrors(updateChannelMutation);
 
-    if (!errors?.length) {
-      await reorderChannelWarehouses({
+      if (errors?.length) {
+        return errors;
+      }
+
+      const reorderErrors = await reorderChannelWarehouses({
         channelId: id,
         warehousesToDisplay,
         warehouses: resultChannel.data?.channelUpdate.channel?.warehouses,
       });
-    }
 
-    return errors;
+      return reorderErrors;
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+
+      return [
+        {
+          __typename: "ChannelError",
+          code: ChannelErrorCode.GRAPHQL_ERROR,
+          field: null,
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
+        },
+      ];
+    }
   };
 
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
@@ -370,25 +390,43 @@ const ChannelDetails = ({ id, params }: ChannelDetailsProps) => {
     [duplicateSource, intl],
   );
   const handleDuplicateChannel = async (formData: ChannelCreateFormData) => {
-    const createChannelMutation = createChannel({
-      variables: {
-        input: buildChannelCreateInput(formData, { duplicateFrom: duplicateSource }),
-      },
-    });
-    const result = await createChannelMutation;
-    const errors = await extractMutationErrors(createChannelMutation);
-    const channelId = result.data?.channelCreate?.channel?.id;
+    try {
+      const createChannelMutation = createChannel({
+        variables: {
+          input: buildChannelCreateInput(formData, { duplicateFrom: duplicateSource }),
+        },
+      });
+      const result = await createChannelMutation;
+      const errors = await extractMutationErrors(createChannelMutation);
+      const channelId = result.data?.channelCreate?.channel?.id;
 
-    if (!errors?.length && channelId) {
-      if (refetchUser) {
-        await refetchUser();
+      if (!errors?.length && channelId) {
+        if (refetchUser) {
+          await refetchUser();
+        }
+
+        closeModal();
+        navigate(channelUrl(channelId, { action: "setup" }));
       }
 
-      closeModal();
-      navigate(channelUrl(channelId, { action: "setup" }));
-    }
+      return errors;
+    } catch {
+      const message = intl.formatMessage(commonMessages.somethingWentWrong);
 
-    return errors;
+      notify({
+        status: "error",
+        text: message,
+      });
+
+      return [
+        {
+          __typename: "ChannelError",
+          code: ChannelErrorCode.GRAPHQL_ERROR,
+          field: null,
+          message,
+        },
+      ];
+    }
   };
   const duplicatePreparing =
     params.action === "duplicate" &&

@@ -12,6 +12,7 @@ import {
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
 import { useIntl } from "react-intl";
 
@@ -34,6 +35,12 @@ export const useChannelSetupActions = ({
 }: UseChannelSetupActionsArgs) => {
   const intl = useIntl();
   const notify = useNotifier();
+  const notifyUnexpectedError = (): void => {
+    notify({
+      status: "error",
+      text: intl.formatMessage(commonMessages.somethingWentWrong),
+    });
+  };
 
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation();
   const [updateChannel, updateChannelOpts] = useChannelUpdateMutation();
@@ -45,161 +52,173 @@ export const useChannelSetupActions = ({
   const handleCreateWarehouse = async (
     data: CreateWarehouseForChannelFormData,
   ): Promise<WarehouseErrorFragment[]> => {
-    const createResult = await createWarehouse({
-      variables: {
-        input: {
-          name: data.name,
-          address: {
-            companyName: data.companyName,
-            city: data.city,
-            cityArea: data.cityArea,
-            country: findValueInEnum(data.country, CountryCode),
-            countryArea: data.countryArea,
-            phone: data.phone,
-            postalCode: data.postalCode,
-            streetAddress1: data.streetAddress1,
-            streetAddress2: data.streetAddress2,
-          },
-        },
-      },
-    });
-    const createErrors = createResult.data?.createWarehouse?.errors ?? [];
-
-    if (createErrors.length) {
-      return createErrors;
-    }
-
-    const warehouseId = createResult.data?.createWarehouse?.warehouse?.id;
-
-    if (!warehouseId) {
-      return [];
-    }
-
-    const assignErrors = await extractMutationErrors(
-      updateChannel({
+    try {
+      const createResult = await createWarehouse({
         variables: {
-          id: channelId,
           input: {
-            addWarehouses: [warehouseId],
+            name: data.name,
+            address: {
+              companyName: data.companyName,
+              city: data.city,
+              cityArea: data.cityArea,
+              country: findValueInEnum(data.country, CountryCode),
+              countryArea: data.countryArea,
+              phone: data.phone,
+              postalCode: data.postalCode,
+              streetAddress1: data.streetAddress1,
+              streetAddress2: data.streetAddress2,
+            },
           },
         },
-        refetchQueries: getChannelDetailsRefetchQueries(channelId),
-      }),
-    );
-
-    if (assignErrors.length) {
-      notify({
-        status: "error",
-        text:
-          assignErrors[0]?.message ||
-          intl.formatMessage({
-            id: "kwS+Nw",
-            defaultMessage: "Warehouse was created but could not be assigned to this channel",
-          }),
       });
+      const createErrors = createResult.data?.createWarehouse?.errors ?? [];
+
+      if (createErrors.length) {
+        return createErrors;
+      }
+
+      const warehouseId = createResult.data?.createWarehouse?.warehouse?.id;
+
+      if (!warehouseId) {
+        return [];
+      }
+
+      const assignErrors = await extractMutationErrors(
+        updateChannel({
+          variables: {
+            id: channelId,
+            input: {
+              addWarehouses: [warehouseId],
+            },
+          },
+          refetchQueries: getChannelDetailsRefetchQueries(channelId),
+        }),
+      );
+
+      if (assignErrors.length) {
+        notify({
+          status: "error",
+          text:
+            assignErrors[0]?.message ||
+            intl.formatMessage({
+              id: "kwS+Nw",
+              defaultMessage: "Warehouse was created but could not be assigned to this channel",
+            }),
+        });
+
+        return [];
+      }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          id: "g9PCqW",
+          defaultMessage: "Warehouse created and assigned",
+        }),
+      });
+      onWarehouseCreated();
+
+      return [];
+    } catch {
+      notifyUnexpectedError();
 
       return [];
     }
-
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        id: "g9PCqW",
-        defaultMessage: "Warehouse created and assigned",
-      }),
-    });
-    onWarehouseCreated();
-
-    return [];
   };
 
   const handleCreateShipping = async (
     data: CreateShippingForChannelFormData,
     countryCode: string,
   ): Promise<ShippingErrorFragment[]> => {
-    const zoneResult = await createShippingZone({
-      variables: {
-        input: {
-          name: data.zoneName,
-          countries: [countryCode],
-          addChannels: [channelId],
-          addWarehouses: warehouseIds,
+    try {
+      const zoneResult = await createShippingZone({
+        variables: {
+          input: {
+            name: data.zoneName,
+            countries: [countryCode],
+            addChannels: [channelId],
+            addWarehouses: warehouseIds,
+          },
         },
-      },
-    });
-    const zoneErrors = zoneResult.data?.shippingZoneCreate?.errors ?? [];
-
-    if (zoneErrors.length) {
-      return zoneErrors;
-    }
-
-    const zoneId = zoneResult.data?.shippingZoneCreate?.shippingZone?.id;
-
-    if (!zoneId) {
-      return [];
-    }
-
-    const rateResult = await createShippingRate({
-      variables: {
-        input: {
-          name: data.rateName,
-          shippingZone: zoneId,
-          type: ShippingMethodTypeEnum.PRICE,
-        },
-      },
-    });
-    const rateErrors = rateResult.data?.shippingPriceCreate?.errors ?? [];
-
-    if (rateErrors.length) {
-      return rateErrors;
-    }
-
-    const rateId = rateResult.data?.shippingPriceCreate?.shippingMethod?.id;
-
-    if (!rateId) {
-      return [];
-    }
-
-    const listingResult = await updateShippingMethodListing({
-      variables: {
-        id: rateId,
-        input: {
-          addChannels: [
-            {
-              channelId,
-              price: data.price,
-            },
-          ],
-        },
-      },
-      refetchQueries: getChannelDetailsRefetchQueries(channelId),
-    });
-    const listingErrors = listingResult.data?.shippingMethodChannelListingUpdate?.errors ?? [];
-
-    if (listingErrors.length) {
-      notify({
-        status: "error",
-        text:
-          listingErrors[0]?.message ||
-          intl.formatMessage({
-            id: "nOGSLQ",
-            defaultMessage: "Could not set the shipping rate price for this channel",
-          }),
       });
+      const zoneErrors = zoneResult.data?.shippingZoneCreate?.errors ?? [];
+
+      if (zoneErrors.length) {
+        return zoneErrors;
+      }
+
+      const zoneId = zoneResult.data?.shippingZoneCreate?.shippingZone?.id;
+
+      if (!zoneId) {
+        return [];
+      }
+
+      const rateResult = await createShippingRate({
+        variables: {
+          input: {
+            name: data.rateName,
+            shippingZone: zoneId,
+            type: ShippingMethodTypeEnum.PRICE,
+          },
+        },
+      });
+      const rateErrors = rateResult.data?.shippingPriceCreate?.errors ?? [];
+
+      if (rateErrors.length) {
+        return rateErrors;
+      }
+
+      const rateId = rateResult.data?.shippingPriceCreate?.shippingMethod?.id;
+
+      if (!rateId) {
+        return [];
+      }
+
+      const listingResult = await updateShippingMethodListing({
+        variables: {
+          id: rateId,
+          input: {
+            addChannels: [
+              {
+                channelId,
+                price: data.price,
+              },
+            ],
+          },
+        },
+        refetchQueries: getChannelDetailsRefetchQueries(channelId),
+      });
+      const listingErrors = listingResult.data?.shippingMethodChannelListingUpdate?.errors ?? [];
+
+      if (listingErrors.length) {
+        notify({
+          status: "error",
+          text:
+            listingErrors[0]?.message ||
+            intl.formatMessage({
+              id: "nOGSLQ",
+              defaultMessage: "Could not set the shipping rate price for this channel",
+            }),
+        });
+
+        return [];
+      }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          id: "5R7tCW",
+          defaultMessage: "Shipping zone and rate created",
+        }),
+      });
+      onShippingCreated();
+
+      return [];
+    } catch {
+      notifyUnexpectedError();
 
       return [];
     }
-
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        id: "5R7tCW",
-        defaultMessage: "Shipping zone and rate created",
-      }),
-    });
-    onShippingCreated();
-
-    return [];
   };
 
   const handleAssignWarehouse = async (warehouseIdsToAdd: string[]) => {
@@ -217,7 +236,15 @@ export const useChannelSetupActions = ({
         },
         refetchQueries: getChannelDetailsRefetchQueries(channelId),
       }),
-    );
+    ).catch(() => {
+      notifyUnexpectedError();
+
+      return null;
+    });
+
+    if (!errors) {
+      return;
+    }
 
     if (errors.length) {
       notify({
@@ -261,7 +288,15 @@ export const useChannelSetupActions = ({
         },
         refetchQueries: getChannelDetailsRefetchQueries(channelId),
       }),
-    );
+    ).catch(() => {
+      notifyUnexpectedError();
+
+      return null;
+    });
+
+    if (!errors) {
+      return;
+    }
 
     if (errors.length) {
       notify({

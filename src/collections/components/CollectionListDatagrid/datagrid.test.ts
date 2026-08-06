@@ -65,8 +65,8 @@ describe("CollectionListDatagrid datagrid utils", () => {
           id: "223",
           name: "Channel",
         },
-        isPublished: false,
-        publishedAt: "2021-09-09T12:00:00+00:00",
+        isPublished: true,
+        publishedAt: "2099-09-09T12:00:00+00:00",
       } as CollectionChannels;
 
       // Act
@@ -120,6 +120,33 @@ describe("CollectionListDatagrid datagrid utils", () => {
       // Assert
       expect(result).toEqual({
         status: "success",
+        label: "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
+      });
+    });
+
+    it("should return scheduled when a channel has a future publication date", () => {
+      // Arrange
+      const collection = {
+        channelListings: [
+          {
+            __typename: "CollectionChannelListing",
+            channel: {
+              __typename: "Channel",
+              id: "223",
+              name: "Channel",
+            },
+            isPublished: true,
+            publishedAt: "2099-09-09T12:00:00+00:00",
+          },
+        ],
+      } as unknown as Collection;
+
+      // Act
+      const result = getAvailabilityLabel(collection, intl);
+
+      // Assert
+      expect(result).toEqual({
+        status: "scheduled",
         label: "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
       });
     });

@@ -42,6 +42,7 @@ export const Menu = ({ items, dataTestId, trigger }: TopNavMenuProps) => {
           <Button
             icon={<Settings size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
             variant="secondary"
+            type="button"
             data-test-id="show-more-button"
             title={intl.formatMessage(topNavMessages.moreActions)}
           />

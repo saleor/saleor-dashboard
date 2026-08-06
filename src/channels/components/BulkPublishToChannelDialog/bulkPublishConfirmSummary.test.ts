@@ -14,6 +14,7 @@ const createDraft = (overrides: Partial<ProductPublishDraft>): ProductPublishDra
   variantCount: 1,
   exceedsVariantLimit: false,
   hasManyVariants: false,
+  hasCategory: true,
   alreadyInChannel: false,
   price: "",
   costPrice: "",

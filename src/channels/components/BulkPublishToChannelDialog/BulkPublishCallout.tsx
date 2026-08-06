@@ -1,5 +1,5 @@
 import { Text } from "@saleor/macaw-ui-next";
-import { CircleAlertIcon, TriangleAlertIcon } from "lucide-react";
+import { Info, type LucideIcon, TriangleAlert } from "lucide-react";
 import { type ReactNode } from "react";
 
 import styles from "./BulkPublishCallout.module.css";
@@ -14,16 +14,16 @@ interface BulkPublishCalloutProps {
 
 const variantConfig: Record<
   BulkPublishCalloutVariant,
-  { className: string; Icon: typeof CircleAlertIcon; textColor: "default1" | "default2" }
+  { className: string; Icon: LucideIcon; textColor: "default1" | "default2" }
 > = {
   info: {
     className: styles.calloutInfo,
-    Icon: CircleAlertIcon,
+    Icon: Info,
     textColor: "default2",
   },
   warning: {
     className: styles.calloutWarning,
-    Icon: TriangleAlertIcon,
+    Icon: TriangleAlert,
     textColor: "default1",
   },
 };

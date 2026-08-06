@@ -49,6 +49,7 @@ export const ChannelPaymentGatewaysSection = ({
           <Box>
             <Button
               variant="secondary"
+              type="button"
               data-test-id="payment-gateways-explore"
               onClick={() => navigate(ExtensionsUrls.resolveExploreExtensionsUrl())}
             >
@@ -83,6 +84,7 @@ export const ChannelPaymentGatewaysSection = ({
               <Button
                 variant="secondary"
                 size="small"
+                type="button"
                 data-test-id={`payment-gateway-configure-${app.id}`}
                 onClick={() => navigate(resolvePaymentAppConfigureUrl(app))}
               >

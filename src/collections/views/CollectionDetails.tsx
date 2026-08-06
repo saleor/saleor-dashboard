@@ -7,6 +7,7 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
+  CollectionErrorCode,
   type CollectionInput,
   type CollectionUpdateMutation,
   useCollectionChannelListingUpdateMutation,
@@ -140,94 +141,118 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     { formId: COLLECTION_DETAILS_FORM_ID, deferDirtyOnConfirm: true },
   );
   const handleImmediateCollectionImageMutation = async (
-    input: Pick<CollectionInput, "backgroundImage">,
+    input: Pick<CollectionInput, "backgroundImage"> &
+      Partial<Pick<CollectionInput, "backgroundImageAlt">>,
   ) => {
     const uploadFile = input.backgroundImage instanceof File ? input.backgroundImage : null;
 
-    await runImageMutation({
-      file: uploadFile,
-      mutate: async () => {
-        const result = await updateCollection({
-          variables: {
-            id,
-            input,
-          },
-        });
-        const errors = getMutationErrors(result);
+    try {
+      await runImageMutation({
+        file: uploadFile,
+        mutate: async () => {
+          const result = await updateCollection({
+            variables: {
+              id,
+              input,
+            },
+          });
+          const errors = getMutationErrors(result);
 
-        if (errors.length === 0) {
-          notifyCollectionUpdated();
-          closeModal();
+          if (errors.length === 0) {
+            notifyCollectionUpdated();
+            closeModal();
 
-          if (uploadFile) {
-            await refetch();
+            if (uploadFile) {
+              await refetch();
+            }
+
+            return true;
           }
 
-          return true;
-        }
+          if (result.data) {
+            handleCollectionUpdateErrors(result.data);
+          }
 
+          return false;
+        },
+      });
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(errorMessages.somethingWentWrong),
+      });
+    }
+  };
+  const handleUpdate = async (formData: CollectionUpdateData) => {
+    try {
+      if (!collection?.id) {
+        return [];
+      }
+
+      const input: CollectionInput = {
+        backgroundImageAlt: formData.backgroundImageAlt,
+        description: getParsedDataForJsonStringField(formData.description),
+        name: formData.name,
+        seo: {
+          description: formData.seoDescription,
+          title: formData.seoTitle,
+        },
+        slug: formData.slug,
+      };
+      const result = await updateCollection({
+        variables: {
+          id,
+          input,
+        },
+      });
+      const collectionErrors = getMutationErrors(result);
+
+      if (collectionErrors.length > 0) {
         if (result.data) {
           handleCollectionUpdateErrors(result.data);
         }
 
-        return false;
-      },
-    });
-  };
-  const handleUpdate = async (formData: CollectionUpdateData) => {
-    if (!collection?.id) {
-      return [];
-    }
-
-    const input: CollectionInput = {
-      backgroundImageAlt: formData.backgroundImageAlt,
-      description: getParsedDataForJsonStringField(formData.description),
-      name: formData.name,
-      seo: {
-        description: formData.seoDescription,
-        title: formData.seoTitle,
-      },
-      slug: formData.slug,
-    };
-    const result = await updateCollection({
-      variables: {
-        id,
-        input,
-      },
-    });
-    const collectionErrors = getMutationErrors(result);
-
-    if (collectionErrors.length > 0) {
-      if (result.data) {
-        handleCollectionUpdateErrors(result.data);
+        return collectionErrors;
       }
 
-      return collectionErrors;
-    }
+      const channelUpdateVariables = getCollectionChannelsUpdateVariables(
+        collection.id,
+        collectionChannelsChoices,
+        formData.channelListings,
+      );
+      let channelErrors = [];
 
-    const channelUpdateVariables = getCollectionChannelsUpdateVariables(
-      collection.id,
-      collectionChannelsChoices,
-      formData.channelListings,
-    );
-    let channelErrors = [];
+      if (channelUpdateVariables) {
+        const channelResult = await updateChannels({
+          variables: channelUpdateVariables,
+        });
 
-    if (channelUpdateVariables) {
-      const channelResult = await updateChannels({
-        variables: channelUpdateVariables,
+        channelErrors = channelResult.data?.collectionChannelListingUpdate?.errors ?? [];
+      }
+
+      const errors = [...collectionErrors, ...channelErrors];
+
+      if (errors.length === 0) {
+        handleCollectionUpdateSuccess();
+        await refetch();
+      }
+
+      return errors;
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(errorMessages.somethingWentWrong),
       });
 
-      channelErrors = channelResult.data?.collectionChannelListingUpdate?.errors ?? [];
+      return [
+        {
+          __typename: "CollectionError",
+          code: CollectionErrorCode.GRAPHQL_ERROR,
+          field: null,
+          message: intl.formatMessage(errorMessages.somethingWentWrong),
+        },
+      ];
     }
-
-    const errors = [...collectionErrors, ...channelErrors];
-
-    if (errors.length === 0) {
-      handleCollectionUpdateSuccess();
-      await refetch();
-    }
-
-    return errors;
   };
   const saveErrors = [
     ...(updateCollectionOpts.data?.collectionUpdate.errors ?? []),
@@ -310,7 +335,12 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
       <CollectionDeleteImageDialog
         confirmButtonState={updateCollectionOpts.status}
         onClose={closeModal}
-        onConfirm={() => handleImmediateCollectionImageMutation({ backgroundImage: null })}
+        onConfirm={() =>
+          handleImmediateCollectionImageMutation({
+            backgroundImage: null,
+            backgroundImageAlt: "",
+          })
+        }
         open={params.action === "removeImage"}
       />
     </>

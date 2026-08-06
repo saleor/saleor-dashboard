@@ -27,13 +27,14 @@ export const isProductAvailableInVoucherChannels = (
   productChannels?: ProductChannels,
   selectedChannels?: SelectedChannel[],
 ) => {
-  // If there are no selected channels, the product is available in all channels
-  if (!selectedChannels) {
+  // No voucher channel restriction yet — allow assigning products during setup.
+  // (`[]` must match `undefined`; create/details often pass an empty listings array.)
+  if (!selectedChannels?.length) {
     return true;
   }
 
   // If there are no product channels, the product is not available in any channel
-  if (!productChannels) {
+  if (!productChannels?.length) {
     return false;
   }
 

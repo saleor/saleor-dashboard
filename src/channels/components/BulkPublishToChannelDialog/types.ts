@@ -48,6 +48,8 @@ export type ProductPublishDraft = {
   exceedsVariantLimit: boolean;
   /** True when publishing may take longer due to variant count. */
   hasManyVariants: boolean;
+  /** Saleor requires a category before a product can be published. */
+  hasCategory: boolean;
   alreadyInChannel: boolean;
   /** Single price applied to all variants of this product */
   price: string;
@@ -63,6 +65,7 @@ export type PublishProgressItem = {
   productId: string;
   name: string;
   status: PublishProgressStatus;
+  errorMessage?: string;
 };
 
 export const BULK_PUBLISH_MAX_PRODUCTS = 50;

@@ -778,6 +778,9 @@ export const VoucherDetailsFragmentDoc = gql`
   applyOncePerCustomer
   onlyForStaff
   singleUse
+  codesCount: codes {
+    totalCount
+  }
   variantsCount: variants {
     totalCount
   }
@@ -790,6 +793,11 @@ export const VoucherDetailsFragmentDoc = gql`
   categoriesCount: categories {
     totalCount
   }
+}
+    ${VoucherFragmentDoc}`;
+export const VoucherCatalogueFragmentDoc = gql`
+    fragment VoucherCatalogue on Voucher {
+  id
   products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
@@ -873,8 +881,7 @@ export const VoucherDetailsFragmentDoc = gql`
     __typename
   }
 }
-    ${VoucherFragmentDoc}
-${ChannelListingProductWithoutPricingFragmentDoc}
+    ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
 export const PromotionRuleChannelFragmentDoc = gql`
     fragment PromotionRuleChannel on Channel {
@@ -5698,6 +5705,9 @@ export const BulkPublishProductsDataDocument = gql`
       node {
         id
         name
+        category {
+          id
+        }
         channelListings {
           channel {
             id
@@ -8505,11 +8515,13 @@ export const VoucherCataloguesAddDocument = gql`
     }
     voucher {
       ...VoucherDetails
+      ...VoucherCatalogue
     }
   }
 }
     ${DiscountErrorFragmentDoc}
-${VoucherDetailsFragmentDoc}`;
+${VoucherDetailsFragmentDoc}
+${VoucherCatalogueFragmentDoc}`;
 export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 
 /**
@@ -8553,11 +8565,13 @@ export const VoucherCataloguesRemoveDocument = gql`
     }
     voucher {
       ...VoucherDetails
+      ...VoucherCatalogue
     }
   }
 }
     ${DiscountErrorFragmentDoc}
-${VoucherDetailsFragmentDoc}`;
+${VoucherDetailsFragmentDoc}
+${VoucherCatalogueFragmentDoc}`;
 export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.VoucherCataloguesRemoveMutation, Types.VoucherCataloguesRemoveMutationVariables>;
 
 /**
@@ -9184,7 +9198,7 @@ export type SaleDetailsQueryHookResult = ReturnType<typeof useSaleDetailsQuery>;
 export type SaleDetailsLazyQueryHookResult = ReturnType<typeof useSaleDetailsLazyQuery>;
 export type SaleDetailsQueryResult = Apollo.QueryResult<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>;
 export const VoucherDetailsDocument = gql`
-    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    query VoucherDetails($id: ID!) {
   voucher(id: $id) {
     ...VoucherDetails
   }
@@ -9204,14 +9218,6 @@ export const VoucherDetailsDocument = gql`
  * const { data, loading, error } = useVoucherDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
- *      after: // value for 'after'
- *      before: // value for 'before'
- *      first: // value for 'first'
- *      last: // value for 'last'
- *      includeProducts: // value for 'includeProducts'
- *      includeCollections: // value for 'includeCollections'
- *      includeCategories: // value for 'includeCategories'
- *      includeVariants: // value for 'includeVariants'
  *   },
  * });
  */
@@ -9226,6 +9232,50 @@ export function useVoucherDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQuery>;
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
+export const VoucherCatalogueDocument = gql`
+    query VoucherCatalogue($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+  voucher(id: $id) {
+    id
+    ...VoucherCatalogue
+  }
+}
+    ${VoucherCatalogueFragmentDoc}`;
+
+/**
+ * __useVoucherCatalogueQuery__
+ *
+ * To run a query within a React component, call `useVoucherCatalogueQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVoucherCatalogueQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVoucherCatalogueQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
+ *      includeVariants: // value for 'includeVariants'
+ *   },
+ * });
+ */
+export function useVoucherCatalogueQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>(VoucherCatalogueDocument, options);
+      }
+export function useVoucherCatalogueLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>(VoucherCatalogueDocument, options);
+        }
+export type VoucherCatalogueQueryHookResult = ReturnType<typeof useVoucherCatalogueQuery>;
+export type VoucherCatalogueLazyQueryHookResult = ReturnType<typeof useVoucherCatalogueLazyQuery>;
+export type VoucherCatalogueQueryResult = Apollo.QueryResult<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>;
 export const VoucherAssignedIdsDocument = gql`
     query VoucherAssignedIds($id: ID!, $first: Int!) {
   voucher(id: $id) {

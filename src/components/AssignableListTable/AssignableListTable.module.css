@@ -1,0 +1,80 @@
+/* Shared with Collection/Category ProductsTable visual language. */
+
+.table {
+  table-layout: fixed;
+}
+
+.headerRow {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.headerRow > td {
+  padding: var(--mu-spacing-2) !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: var(--mu-colors-border-default1) !important;
+  overflow: hidden;
+}
+
+.headerRow > td:last-child {
+  padding: 0 var(--mu-spacing-2) 0 0 !important;
+}
+
+.checkboxCell {
+  padding: 0 0 0 var(--mu-spacing-4) !important;
+}
+
+.checkboxCellCard {
+  padding: 0 0 0 var(--mu-spacing-6) !important;
+}
+
+.headerRow > td:first-child.checkboxCell {
+  padding: 0 0 0 var(--mu-spacing-4) !important;
+}
+
+.headerRow > td:first-child.checkboxCellCard {
+  padding: 0 0 0 var(--mu-spacing-6) !important;
+}
+
+.headerRow + tr > td {
+  border-top-width: 0 !important;
+}
+
+.truncateCell {
+  overflow: hidden;
+  max-width: 0;
+}
+
+.cellContent {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-3);
+  height: 100%;
+  min-width: 0;
+  padding: var(--mu-spacing-2);
+}
+
+.cellLink {
+  display: block;
+  height: 100%;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.rowDelete {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.row:hover .rowDelete,
+.row:focus-within .rowDelete {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .rowDelete {
+    opacity: 1;
+  }
+}

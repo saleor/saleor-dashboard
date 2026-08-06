@@ -233,7 +233,7 @@ const CollectionDetailsPage = ({
                 />
               </DetailPageContent>
             </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
+            <DetailPageLayout.RightSidebar paddingTop={6}>
               <div>
                 <CollectionChannelAvailabilityCard
                   channels={currentChannels}

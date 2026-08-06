@@ -24,16 +24,25 @@ export function createShippingZoneAddHandler(
       return;
     }
 
+    const shippingZonesIdsToAdd = zonesToAdd.reduce(
+      (ids, zone) =>
+        data.shippingZonesIdsToRemove.includes(zone.id)
+          ? ids
+          : getUpdatedIdsWithNewId(ids, zone.id),
+      data.shippingZonesIdsToAdd,
+    );
+    const shippingZonesIdsToRemove = zonesToAdd.reduce(
+      (ids, zone) =>
+        data.shippingZonesIdsToRemove.includes(zone.id)
+          ? getUpdatedIdsWithoutNewId(ids, zone.id)
+          : ids,
+      data.shippingZonesIdsToRemove,
+    );
+
     set({
       ...data,
-      shippingZonesIdsToRemove: zonesToAdd.reduce(
-        (ids, zone) => getUpdatedIdsWithoutNewId(ids, zone.id),
-        data.shippingZonesIdsToRemove,
-      ),
-      shippingZonesIdsToAdd: zonesToAdd.reduce(
-        (ids, zone) => getUpdatedIdsWithNewId(ids, zone.id),
-        data.shippingZonesIdsToAdd,
-      ),
+      shippingZonesIdsToRemove,
+      shippingZonesIdsToAdd,
       shippingZonesToDisplay: [
         ...(data.shippingZonesToDisplay ?? []),
         ...zonesToAdd,
@@ -47,10 +56,14 @@ export function createShippingZoneRemoveHandler(
   set: (data: Partial<FormData>) => void,
 ) {
   return (zoneId: string) => {
+    const wasStagedAdd = data.shippingZonesIdsToAdd.includes(zoneId);
+
     set({
       ...data,
       shippingZonesIdsToAdd: getUpdatedIdsWithoutNewId(data.shippingZonesIdsToAdd, zoneId),
-      shippingZonesIdsToRemove: getUpdatedIdsWithNewId(data.shippingZonesIdsToRemove, zoneId),
+      shippingZonesIdsToRemove: wasStagedAdd
+        ? data.shippingZonesIdsToRemove
+        : getUpdatedIdsWithNewId(data.shippingZonesIdsToRemove, zoneId),
       shippingZonesToDisplay: data.shippingZonesToDisplay!.filter(getByUnmatchingId(zoneId)),
     });
   };
@@ -69,16 +82,25 @@ export function createWarehouseAddHandler(data: FormData, set: (data: Partial<Fo
       return;
     }
 
+    const warehousesIdsToAdd = warehousesToAdd.reduce(
+      (ids, warehouse) =>
+        data.warehousesIdsToRemove.includes(warehouse.id)
+          ? ids
+          : getUpdatedIdsWithNewId(ids, warehouse.id),
+      data.warehousesIdsToAdd,
+    );
+    const warehousesIdsToRemove = warehousesToAdd.reduce(
+      (ids, warehouse) =>
+        data.warehousesIdsToRemove.includes(warehouse.id)
+          ? getUpdatedIdsWithoutNewId(ids, warehouse.id)
+          : ids,
+      data.warehousesIdsToRemove,
+    );
+
     set({
       ...data,
-      warehousesIdsToRemove: warehousesToAdd.reduce(
-        (ids, warehouse) => getUpdatedIdsWithoutNewId(ids, warehouse.id),
-        data.warehousesIdsToRemove,
-      ),
-      warehousesIdsToAdd: warehousesToAdd.reduce(
-        (ids, warehouse) => getUpdatedIdsWithNewId(ids, warehouse.id),
-        data.warehousesIdsToAdd,
-      ),
+      warehousesIdsToRemove,
+      warehousesIdsToAdd,
       warehousesToDisplay: [...data.warehousesToDisplay, ...(warehousesToAdd as ChannelWarehouses)],
     });
   };
@@ -89,10 +111,14 @@ export function createWarehouseRemoveHandler(
   set: (data: Partial<FormData>) => void,
 ) {
   return (warehouseId: string) => {
+    const wasStagedAdd = data.warehousesIdsToAdd.includes(warehouseId);
+
     set({
       ...data,
       warehousesIdsToAdd: getUpdatedIdsWithoutNewId(data.warehousesIdsToAdd, warehouseId),
-      warehousesIdsToRemove: getUpdatedIdsWithNewId(data.warehousesIdsToRemove, warehouseId),
+      warehousesIdsToRemove: wasStagedAdd
+        ? data.warehousesIdsToRemove
+        : getUpdatedIdsWithNewId(data.warehousesIdsToRemove, warehouseId),
       warehousesToDisplay: data.warehousesToDisplay.filter(getByUnmatchingId(warehouseId)),
     });
   };

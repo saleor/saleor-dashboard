@@ -35,6 +35,9 @@ export const BulkPublishProductPickerToolbar = ({
       <Text size={1} color="default2" className={styles.helper}>
         <FormattedMessage {...messages.excludeListedInChannelHelper} />
       </Text>
+      <Text size={1} color="default2" className={styles.helper}>
+        <FormattedMessage {...messages.excludeMissingCategoryHelper} />
+      </Text>
     </Box>
   </Box>
 );

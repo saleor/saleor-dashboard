@@ -81,6 +81,7 @@ export const ChannelInventoryCard = ({
       return (
         <Button
           variant="secondary"
+          type="button"
           data-test-id="inventory-assign-warehouse"
           onClick={onAssignWarehouse}
           disabled={disabled}
@@ -94,6 +95,7 @@ export const ChannelInventoryCard = ({
       return (
         <Button
           variant="secondary"
+          type="button"
           data-test-id="inventory-create-warehouse"
           onClick={onCreateWarehouse}
           disabled={disabled}

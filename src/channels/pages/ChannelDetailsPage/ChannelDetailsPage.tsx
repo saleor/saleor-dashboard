@@ -28,6 +28,7 @@ import {
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -546,32 +547,26 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             <DetailPageLayout.Content>
               <ChannelSectionScrollProvider selectSection={selectSection}>
                 {setupCard}
-                <Box display="flex" gap={4} paddingX={6} paddingTop={6} paddingBottom={6}>
-                  <Box
-                    display={{ mobile: "none", tablet: "block", desktop: "block" }}
-                    flexShrink="0"
-                    __width="25%"
-                    __minWidth="10rem"
-                  >
+                <DetailPageSectionLayout
+                  nav={
                     <ChannelSectionNav
                       items={sectionNavItems}
                       activeId={activeSectionId}
                       onSelect={selectSection}
                     />
-                  </Box>
-                  <Box flexGrow="1" __minWidth="0" display="flex" flexDirection="column" gap={4}>
-                    <ChannelForm
-                      {...channelFormProps}
-                      sectionLayout
-                      trailingSection={
-                        <>
-                          {paymentGatewaysSection}
-                          {reviewSections}
-                        </>
-                      }
-                    />
-                  </Box>
-                </Box>
+                  }
+                >
+                  <ChannelForm
+                    {...channelFormProps}
+                    sectionLayout
+                    trailingSection={
+                      <>
+                        {paymentGatewaysSection}
+                        {reviewSections}
+                      </>
+                    }
+                  />
+                </DetailPageSectionLayout>
               </ChannelSectionScrollProvider>
             </DetailPageLayout.Content>
             {showRightSidebar && (

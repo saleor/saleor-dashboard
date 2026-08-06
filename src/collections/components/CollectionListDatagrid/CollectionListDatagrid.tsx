@@ -121,7 +121,7 @@ export const CollectionListDatagrid = ({
         onSort(columnName);
       }
     },
-    [visibleColumns, onSort],
+    [onSort, selectedChannelId, visibleColumns],
   );
 
   return (

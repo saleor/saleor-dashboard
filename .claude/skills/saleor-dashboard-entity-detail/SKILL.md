@@ -45,6 +45,7 @@ DetailPageLayout
 ├── Content
 │   ├── SetupChecklist (optional — guided setup only when entity has readiness funnel)
 │   └── [ DetailSectionNav | sections ] — nav only when 4+ scroll sections
+│         Use `DetailPageSectionLayout` (nav rail `25%` / `min 10rem` + main `gap={4}`)
 │         1. DetailSettingsCard — general / identity / media
 │         2. Primary entity content — products, rates, lists, …
 │         3. SEO — last in the main column (default)
@@ -74,7 +75,8 @@ DetailPageLayout
 | `DetailPageLayout`           | exists                 | All entity details                                                                                                                                                                                                                                      |
 | `DetailGroupBox`             | exists                 | Foldable nested blocks (rates, postal codes, metadata editor) — not primary settings cards                                                                                                                                                              |
 | `DetailSettingsCard`         | exists                 | Sectioned settings — title + optional `headerEnd` in header band; leading copy in `intro` row                                                                                                                                                           |
-| `DetailPageContent`          | exists                 | Main-column stack (`gap={4}` + `paddingX/Y={6}`) for settings / SEO / lists                                                                                                                                                                             |
+| `DetailPageContent`          | exists                 | Single-column main stack (`gap={4}` + `paddingX/Y={6}`) — collections, categories, gift cards **without** section nav                                                                                                                                   |
+| `DetailPageSectionLayout`    | exists                 | **Nav rail + main column** — use with `DetailSectionNav` on long detail pages (channels, vouchers). Owns outer padding once; main column is `gap={4}` only. **Do not nest `DetailPageContent` inside.**                                                 |
 | `DetailSettingToggleRow`     | exists                 | Boolean setting row (title + description + Toggle); optional nested fields when on                                                                                                                                                                      |
 | `DetailSettingRadioGroup`    | **lift from channels** | Strategy radios with recommended/legacy badges                                                                                                                                                                                                          |
 | `DetailSectionNav`           | exists                 | 4+ sections on a long detail page                                                                                                                                                                                                                       |
@@ -86,6 +88,33 @@ DetailPageLayout
 | `SavebarCompositionHint`     | exists                 | Presentational “Unsaved changes: …” — entity wrappers supply segments                                                                                                                                                                                   |
 
 Until extraction lands during Phase B, keep legacy `DashboardCard` for shipping-style hints — do not use `SettingsSection` on entity detail.
+
+### `DetailPageSectionLayout` + `DetailSectionNav`
+
+Path: `src/components/DetailPageSectionLayout/DetailPageSectionLayout.tsx` · nav primitive: `src/components/DetailSectionNav/`.
+
+**Canonical reference:** `ChannelDetailsPage` (first consumer).
+
+Use when the main column has **4+ scroll targets** and needs a sticky left rail. Constants: `DETAIL_PAGE_SECTION_NAV_WIDTH` (`25%`), `DETAIL_PAGE_SECTION_NAV_MIN_WIDTH` (`10rem`). Nav is hidden on mobile (`display: none` below tablet).
+
+```tsx
+import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
+import { ChannelSectionNav } from "@dashboard/channels/components/ChannelSectionNav/ChannelSectionNav";
+
+<DetailPageLayout.Content>
+  <DetailPageSectionLayout
+    nav={<ChannelSectionNav items={items} activeId={activeId} onSelect={selectSection} />}
+  >
+    <ChannelSection id={...}>...</ChannelSection>
+  </DetailPageSectionLayout>
+</DetailPageLayout.Content>
+```
+
+| Do                                                                        | Don't                                                                                  |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Render `DetailSection` / `DetailSettingsCard` sections as direct children | Nest `DetailPageContent` inside (doubles horizontal padding and skews the 25/75 split) |
+| Reuse `DetailPageSectionLayout` for every new section-nav detail page     | Copy `__width="25%"` / `__minWidth="10rem"` inline in each view                        |
+| Feature-specific nav wrappers (`ChannelSectionNav`, `VoucherSectionNav`)  | Put feature labels in the shared layout component                                      |
 
 **Phase B workflow:** improve a pilot view (collections) in slices; extract `Detail*` when the slice needs it; rewire channels in the same PR. See plan: dogfood-driven extraction, not library-first.
 
@@ -217,11 +246,12 @@ Three established patterns — pick by **depth of per-channel config**, not by e
 
 ### Foldable blocks (`DetailGroupBox` vs accordion cards)
 
-| Pattern                   | Component            | Visual                                                              | Use when                                                                                                           |
-| ------------------------- | -------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Nested list row**       | `DetailGroupBox`     | Gray header band, chevron, `Title2`, optional `headerEnd` meta      | **Repeatable child entities** inside a parent card — shipping zone rates, metadata editor rows, postal code groups |
-| **Legacy optional block** | `SeoForm` (wrapped)  | `DashboardCard` + Macaw `Accordion`, Complete/Incomplete in trigger | Pages **without** section nav and without `DetailSettingsCard` — create flows, short forms                         |
-| **Section settings**      | `DetailSettingsCard` | Tinted card header, always-visible body                             | Primary scroll targets on long detail pages (General, Media, SEO with `SeoForm` `unwrapped`)                       |
+| Pattern                   | Component                    | Visual                                                                                                            | Use when                                                                                                           |
+| ------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Nested list row**       | `DetailGroupBox` (`primary`) | Gray header band, chevron, `Title2`, optional `headerEnd` meta                                                    | **Repeatable child entities** inside a parent card — shipping zone rates, metadata editor rows, postal code groups |
+| **Foldable section card** | `DetailGroupBox` (`card`)    | Same chrome as `DetailSettingsCard` (tinted header, card padding, size-5 title) + chevron; `headerEnd` for Assign | When the foldable **is** the section card (e.g. Countries) — do not nest inside `DetailSettingsCard`               |
+| **Legacy optional block** | `SeoForm` (wrapped)          | `DashboardCard` + Macaw `Accordion`, Complete/Incomplete in trigger                                               | Pages **without** section nav and without `DetailSettingsCard` — create flows, short forms                         |
+| **Section settings**      | `DetailSettingsCard`         | Tinted card header, always-visible body                                                                           | Primary scroll targets on long detail pages (General, Media, SEO with `SeoForm` `unwrapped`)                       |
 
 **SEO on entity detail:**
 

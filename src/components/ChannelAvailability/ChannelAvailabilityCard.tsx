@@ -1,4 +1,3 @@
-import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
@@ -88,14 +87,15 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
   const listedChannelsCount = channels.length;
   const entityTypeLabel = intl.formatMessage(channelAvailabilityEntityMessages[entityType]);
   const emptyTitle = emptyTitleProp ?? intl.formatMessage(channelAvailabilityMessages.emptyTitle);
+  const hasChannels = channels.length > 0;
 
   return (
-    <DashboardCard data-test-id="availability-card">
-      <DashboardCard.Header>
-        <Box display="flex" flexDirection="column" gap={1}>
-          <DashboardCard.Title>
+    <Box className={styles.card} data-test-id="availability-card">
+      <Box className={styles.header}>
+        <Box className={styles.headerText}>
+          <Text size={5} fontWeight="bold" as="h2">
             {intl.formatMessage(channelAvailabilityMessages.availabilityTitle)}
-          </DashboardCard.Title>
+          </Text>
           {!isLoading && (
             <Text size={2} color="default2" data-test-id="channel-availability-subtitle">
               {intl.formatMessage(channelAvailabilityMessages.availabilitySubtitle, {
@@ -107,48 +107,46 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
           )}
         </Box>
         {onManageClick && (
-          <DashboardCard.Toolbar>
-            <RequirePermissions requiredPermissions={managePermissions}>
-              <Button
-                variant="secondary"
-                onClick={onManageClick}
-                data-test-id="channels-availability-manage-button"
-                type="button"
-              >
-                {intl.formatMessage(channelAvailabilityMessages.manageButton)}
-              </Button>
-            </RequirePermissions>
-          </DashboardCard.Toolbar>
+          <RequirePermissions requiredPermissions={managePermissions}>
+            <Button
+              variant="secondary"
+              onClick={onManageClick}
+              data-test-id="channels-availability-manage-button"
+              type="button"
+            >
+              {intl.formatMessage(channelAvailabilityMessages.manageButton)}
+            </Button>
+          </RequirePermissions>
         )}
-      </DashboardCard.Header>
+      </Box>
 
-      <DashboardCard.Content>
-        {isLoading ? (
-          <Box padding={4}>
-            <Skeleton __height="14px" marginBottom={2} />
-            <Skeleton __height="14px" __width="60%" />
-          </Box>
-        ) : channels.length === 0 ? (
-          <Box className={styles.emptyState} data-test-id="channel-availability-empty">
-            <Box className={styles.emptyLeading}>
-              <Box className={styles.emptyIcon} aria-hidden>
-                <Globe size={iconSize.small} strokeWidth={iconStrokeWidth} />
-              </Box>
-              <Box className={styles.emptyCopy}>
-                <Text size={3} fontWeight="medium">
-                  {emptyTitle}
-                </Text>
-                <Text size={2} color="default2">
-                  {emptyDescription}
-                </Text>
-              </Box>
+      {isLoading ? (
+        <Box className={styles.loading}>
+          <Skeleton __height="14px" marginBottom={2} />
+          <Skeleton __height="14px" __width="60%" />
+        </Box>
+      ) : !hasChannels ? (
+        <Box className={styles.emptyState} data-test-id="channel-availability-empty">
+          <Box className={styles.emptyLeading}>
+            <Box className={styles.emptyIcon} aria-hidden>
+              <Globe size={iconSize.small} strokeWidth={iconStrokeWidth} />
+            </Box>
+            <Box className={styles.emptyCopy}>
+              <Text size={3} fontWeight="medium">
+                {emptyTitle}
+              </Text>
+              <Text size={2} color="default2">
+                {emptyDescription}
+              </Text>
             </Box>
           </Box>
-        ) : (
-          <Box display="flex" flexDirection="column" gap={4}>
-            {banner}
+        </Box>
+      ) : (
+        <>
+          {banner ? <Box className={styles.banner}>{banner}</Box> : null}
 
-            {showSearch && (
+          {showSearch ? (
+            <Box className={styles.body}>
               <ChannelSearchInput
                 value={searchQuery}
                 onChange={setSearchQuery}
@@ -156,62 +154,52 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
                   channelAvailabilityMessages.searchChannelsPlaceholder,
                 )}
               />
-            )}
+            </Box>
+          ) : null}
 
-            {filteredChannels.length === 0 ? (
-              <Box
-                padding={4}
-                borderWidth={1}
-                borderStyle="solid"
-                borderColor="default1"
-                borderRadius={4}
-              >
-                <Text size={2} color="default2">
-                  {intl.formatMessage(channelAvailabilityMessages.noChannelsMatchSearch)}
-                </Text>
-              </Box>
-            ) : (
-              <>
-                <Box
-                  borderWidth={1}
-                  borderStyle="solid"
-                  borderColor="default1"
-                  borderRadius={4}
-                  overflow="hidden"
-                >
-                  {variant === "list" ? (
-                    paginatedChannels.map((channel, index) => (
-                      <ChannelAvailabilityListItem
+          {filteredChannels.length === 0 ? (
+            <Box className={styles.body}>
+              <Text size={2} color="default2">
+                {intl.formatMessage(channelAvailabilityMessages.noChannelsMatchSearch)}
+              </Text>
+            </Box>
+          ) : (
+            <>
+              <Box className={styles.list}>
+                {variant === "list" ? (
+                  paginatedChannels.map((channel, index) => (
+                    <ChannelAvailabilityListItem
+                      key={channel.id}
+                      channel={channel}
+                      isLast={index === paginatedChannels.length - 1}
+                      status={getChannelStatus(channel)}
+                      leadingVisual={listLeadingVisual}
+                    />
+                  ))
+                ) : (
+                  <Accordion
+                    value={expandedChannelId ?? ""}
+                    onValueChange={(value: string) => setExpandedChannelId(value || undefined)}
+                  >
+                    {paginatedChannels.map((channel, index) => (
+                      <ChannelAvailabilityItem
                         key={channel.id}
                         channel={channel}
+                        rowIndex={index}
                         isLast={index === paginatedChannels.length - 1}
+                        isOpen={expandedChannelId === channel.id}
+                        onClose={() => setExpandedChannelId(undefined)}
                         status={getChannelStatus(channel)}
-                        leadingVisual={listLeadingVisual}
-                      />
-                    ))
-                  ) : (
-                    <Accordion
-                      value={expandedChannelId ?? ""}
-                      onValueChange={(value: string) => setExpandedChannelId(value || undefined)}
-                    >
-                      {paginatedChannels.map((channel, index) => (
-                        <ChannelAvailabilityItem
-                          key={channel.id}
-                          channel={channel}
-                          rowIndex={index}
-                          isLast={index === paginatedChannels.length - 1}
-                          isOpen={expandedChannelId === channel.id}
-                          onClose={() => setExpandedChannelId(undefined)}
-                          status={getChannelStatus(channel)}
-                        >
-                          {renderChannelDetails!(channel)}
-                        </ChannelAvailabilityItem>
-                      ))}
-                    </Accordion>
-                  )}
-                </Box>
+                      >
+                        {renderChannelDetails!(channel)}
+                      </ChannelAvailabilityItem>
+                    ))}
+                  </Accordion>
+                )}
+              </Box>
 
-                {showPagination && (
+              {showPagination ? (
+                <Box className={styles.listFooter}>
                   <ChannelPagination
                     currentPage={currentPage}
                     totalPages={totalPages}
@@ -219,13 +207,13 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
                     pageSize={pageSize}
                     onPageChange={setCurrentPage}
                   />
-                )}
-              </>
-            )}
-          </Box>
-        )}
-      </DashboardCard.Content>
-    </DashboardCard>
+                </Box>
+              ) : null}
+            </>
+          )}
+        </>
+      )}
+    </Box>
   );
 }
 

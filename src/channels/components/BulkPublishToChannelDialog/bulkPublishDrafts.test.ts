@@ -5,6 +5,7 @@ import {
   createProductDrafts,
   getAppliedDefaultStock,
   getDraftsExceedingVariantLimit,
+  getDraftsMissingCategoryForPublish,
   getDraftsMissingPrice,
   getDraftsWithInvalidCostPrice,
   getDraftsWithInvalidStock,
@@ -24,6 +25,7 @@ describe("bulkPublishDrafts", () => {
     {
       id: "p1",
       name: "Product A",
+      category: { id: "cat1" },
       channelListings: [{ channel: { id: "ch1" } }],
       productVariants: {
         totalCount: 2,
@@ -33,6 +35,7 @@ describe("bulkPublishDrafts", () => {
     {
       id: "p2",
       name: "Product B",
+      category: { id: "cat1" },
       channelListings: null,
       productVariants: {
         totalCount: 1,
@@ -48,6 +51,7 @@ describe("bulkPublishDrafts", () => {
           {
             id: "p1",
             name: "Product 1",
+            category: { id: "cat1" },
             channelListings: null,
             productVariants: {
               totalCount: 120,
@@ -69,6 +73,7 @@ describe("bulkPublishDrafts", () => {
           {
             id: "p1",
             name: "Product 1",
+            category: { id: "cat1" },
             channelListings: null,
             productVariants: {
               totalCount: 501,
@@ -81,6 +86,28 @@ describe("bulkPublishDrafts", () => {
 
       expect(drafts[0].exceedsVariantLimit).toBe(true);
       expect(drafts[0].hasManyVariants).toBe(true);
+    });
+
+    it("flags products without a category", () => {
+      // Arrange & Act
+      const drafts = createProductDrafts({
+        products: [
+          {
+            id: "p1",
+            name: "Uncategorized",
+            category: null,
+            channelListings: null,
+            productVariants: {
+              totalCount: 1,
+              edges: [{ node: { id: "v1" } }],
+            },
+          },
+        ],
+        channelId: "ch1",
+      });
+
+      // Assert
+      expect(drafts[0].hasCategory).toBe(false);
     });
 
     it("creates drafts with empty price and stock", () => {
@@ -96,6 +123,7 @@ describe("bulkPublishDrafts", () => {
           variantCount: 2,
           exceedsVariantLimit: false,
           hasManyVariants: false,
+          hasCategory: true,
           alreadyInChannel: true,
           price: "",
           costPrice: "",
@@ -107,6 +135,7 @@ describe("bulkPublishDrafts", () => {
           variantCount: 1,
           exceedsVariantLimit: false,
           hasManyVariants: false,
+          hasCategory: true,
           alreadyInChannel: false,
           price: "",
           costPrice: "",
@@ -270,12 +299,14 @@ describe("bulkPublishDrafts", () => {
           {
             id: "p1",
             name: "Small",
+            category: { id: "cat1" },
             channelListings: null,
             productVariants: { totalCount: 5, edges: [{ node: { id: "v1" } }] },
           },
           {
             id: "p2",
             name: "Large",
+            category: { id: "cat1" },
             channelListings: null,
             productVariants: { totalCount: 501, edges: [{ node: { id: "v2" } }] },
           },
@@ -287,6 +318,35 @@ describe("bulkPublishDrafts", () => {
     });
   });
 
+  describe("getDraftsMissingCategoryForPublish", () => {
+    it("returns uncategorized drafts only when publishing", () => {
+      // Arrange
+      const drafts = createProductDrafts({
+        products: [
+          {
+            id: "p1",
+            name: "With category",
+            category: { id: "cat1" },
+            channelListings: null,
+            productVariants: { totalCount: 1, edges: [{ node: { id: "v1" } }] },
+          },
+          {
+            id: "p2",
+            name: "No category",
+            category: null,
+            channelListings: null,
+            productVariants: { totalCount: 1, edges: [{ node: { id: "v2" } }] },
+          },
+        ],
+        channelId: "ch1",
+      });
+
+      // Act & Assert
+      expect(getDraftsMissingCategoryForPublish(drafts, true)).toEqual([drafts[1]]);
+      expect(getDraftsMissingCategoryForPublish(drafts, false)).toEqual([]);
+    });
+  });
+
   describe("getDraftsWithManyVariants", () => {
     it("returns drafts above the many-variants threshold", () => {
       const drafts = createProductDrafts({
@@ -294,12 +354,14 @@ describe("bulkPublishDrafts", () => {
           {
             id: "p1",
             name: "Small",
+            category: { id: "cat1" },
             channelListings: null,
             productVariants: { totalCount: 50, edges: [{ node: { id: "v1" } }] },
           },
           {
             id: "p2",
             name: "Medium",
+            category: { id: "cat1" },
             channelListings: null,
             productVariants: { totalCount: 150, edges: [{ node: { id: "v2" } }] },
           },

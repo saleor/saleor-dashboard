@@ -260,6 +260,37 @@ Inside cards, sidebars, provenance, tooltips, and other product UI chrome, prefe
 
 Do not hand-roll `Globe` + blue `Link` for channel names.
 
+## Price inputs (`PriceFieldV2`) — preferred
+
+**Use [`PriceFieldV2`](../../src/components/PriceFieldV2/PriceFieldV2.tsx) for all new money/amount fields** (channel prices, voucher fixed amounts, cost prices, etc.). Do not add new `type="number"` money inputs or revive legacy `PriceField`.
+
+| Concern                      | How                                                                                                     |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Component                    | `PriceFieldV2` — right-aligned, tabular nums, currency as `endAdornment`                                |
+| Typing / paste normalization | `formatPriceInput` via `usePriceFieldV2` (US/EU/Swiss separators, currency decimal places)              |
+| Blur                         | Pads to currency decimals (`10.2` → `10.20` for USD)                                                    |
+| Spreadsheet column paste     | `sanitizeSpreadsheetPrice` + `applySpreadsheetColumnPaste` / bulk-publish multi-field paste             |
+| Currency prop                | Pass **currency code** (`USD`, `PLN`) as `currencySymbol` — drives both adornment and decimal precision |
+
+**Canonical references:**
+
+- Bulk publish review: `BulkPublishReviewRow.tsx` (`PriceFieldV2` + TSV paste)
+- Voucher fixed amount per channel: `VoucherFixedAmountChannelList.tsx`
+
+```tsx
+import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
+
+<PriceFieldV2
+  size="small"
+  currencySymbol={channel.currencyCode}
+  value={price}
+  onChange={setPrice}
+  aria-label={…}
+/>
+```
+
+Row-list UIs with aligned amount columns should support spreadsheet paste (`onPasteCapture` + `src/utils/spreadsheetPaste/`). See also `docs/follow-ups/spreadsheet-paste-reuse.md`.
+
 ## Entity detail settings card (`DetailSettingsCard`)
 
 Primary bordered settings surface on entity detail pages. Full rules (primary vs secondary header, card vs section, Vercel restraint) live in [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md).
@@ -286,3 +317,4 @@ Secondary sidebar ops cards (`AssignListCard`, `ChannelInventoryCard`) use **whi
 - **No legacy `@dashboard/components/Accordion` for new foldable sections** - Use `DetailGroupBox` (see above)
 - **No `border` + `box-shadow` on elevated surfaces** - See [`saleor-dashboard-smooth-shadow`](./saleor-dashboard-smooth-shadow/SKILL.md)
 - **No bare browser heading styles for card titles** - Do not style only string `title`s; the primitive must style all title nodes
+- **No new `type="number"` money fields** - Use `PriceFieldV2` (see above)

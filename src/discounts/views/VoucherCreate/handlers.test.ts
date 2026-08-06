@@ -12,6 +12,7 @@ const formData: FormData = {
   name: "name",
   value: 1,
   discountType: DiscountTypeEnum.SHIPPING,
+  percentageDiscountValue: "",
   endDate: "2021-01-01",
   endTime: "00:00",
   hasEndDate: false,

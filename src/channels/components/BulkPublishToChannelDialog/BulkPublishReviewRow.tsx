@@ -87,6 +87,11 @@ export const BulkPublishReviewRow = memo(
                 />
               </Chip>
             ) : null}
+            {!draft.hasCategory ? (
+              <Chip size="small">
+                <FormattedMessage {...messages.productMissingCategory} />
+              </Chip>
+            ) : null}
           </Box>
         </Box>
         <Box className={fieldGroupClassName}>

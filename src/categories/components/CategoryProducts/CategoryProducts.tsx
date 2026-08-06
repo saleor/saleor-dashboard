@@ -156,10 +156,17 @@ export const CategoryProducts = ({
     },
     [intl, notify],
   );
+  const refetchCategoryProductsSafely = async (): Promise<void> => {
+    try {
+      await refetchCategoryProducts();
+    } catch {
+      notifyProductCategoryFailure();
+    }
+  };
 
   const updateProductCategory = useCallback(
     async (productIds: string[], categoryValue: string | null) => {
-      const results = await Promise.all(
+      const results = await Promise.allSettled(
         productIds.map(productId =>
           updateProduct({
             variables: {
@@ -169,9 +176,17 @@ export const CategoryProducts = ({
           }),
         ),
       );
-      const errors = results.flatMap(resultItem => resultItem.data?.productUpdate?.errors ?? []);
+      const errors = results.flatMap(resultItem =>
+        resultItem.status === "fulfilled"
+          ? (resultItem.value.data?.productUpdate?.errors ?? [])
+          : [],
+      );
       const success =
-        errors.length === 0 && results.every(resultItem => Boolean(resultItem.data?.productUpdate));
+        errors.length === 0 &&
+        results.every(
+          resultItem =>
+            resultItem.status === "fulfilled" && Boolean(resultItem.value.data?.productUpdate),
+        );
 
       return {
         success,
@@ -192,7 +207,7 @@ export const CategoryProducts = ({
     if (!success) {
       clearPending([productId]);
       notifyProductCategoryFailure(errorMessage);
-      await refetchCategoryProducts();
+      await refetchCategoryProductsSafely();
 
       return;
     }
@@ -201,8 +216,8 @@ export const CategoryProducts = ({
       status: "success",
       text: intl.formatMessage(messages.productUnassigned),
     });
-    await refetchCategoryProducts();
     clearPending([productId]);
+    await refetchCategoryProductsSafely();
   };
 
   const handleAssignationChange = async (selectedProducts: Container[]) => {
@@ -218,7 +233,7 @@ export const CategoryProducts = ({
 
     if (!success) {
       notifyProductCategoryFailure(errorMessage);
-      await refetchCategoryProducts();
+      await refetchCategoryProductsSafely();
 
       return;
     }
@@ -228,7 +243,7 @@ export const CategoryProducts = ({
       text: intl.formatMessage(messages.productAssigned),
     });
     closeModal();
-    await refetchCategoryProducts();
+    await refetchCategoryProductsSafely();
   };
 
   const handleBulkUnassign = async () => {
@@ -246,7 +261,7 @@ export const CategoryProducts = ({
     if (!success) {
       clearPending(productIds);
       notifyProductCategoryFailure(errorMessage);
-      await refetchCategoryProducts();
+      await refetchCategoryProductsSafely();
 
       return;
     }
@@ -256,8 +271,8 @@ export const CategoryProducts = ({
       text: intl.formatMessage(messages.productsUnassigned),
     });
     reset();
-    await refetchCategoryProducts();
     clearPending(productIds);
+    await refetchCategoryProductsSafely();
   };
 
   return (
@@ -285,6 +300,7 @@ export const CategoryProducts = ({
             disabled={disabled}
             variant="secondary"
             size="small"
+            type="button"
             onClick={() => openModal("assign")}
           >
             <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />

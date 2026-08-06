@@ -50,7 +50,7 @@ export function ChannelAvailabilityListItem<T extends ChannelAvailabilitySummary
       alignItems="center"
       gap={2}
       paddingX={4}
-      paddingY={3}
+      paddingY={2}
       borderBottomWidth={isLast ? 0 : 1}
       borderBottomStyle="solid"
       borderColor="default1"

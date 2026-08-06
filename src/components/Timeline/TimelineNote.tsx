@@ -160,11 +160,15 @@ export const TimelineNote = ({
               <Text size={2} color="default2" whiteSpace="nowrap">
                 {relatedId ? (
                   <Box
-                    as="span"
+                    as="button"
+                    type="button"
                     display="inline-flex"
                     alignItems="center"
                     gap={1}
-                    cursor="pointer"
+                    padding={0}
+                    borderWidth={0}
+                    __backgroundColor="transparent"
+                    __cursor="pointer"
                     onClick={handleScrollToRelatedNote}
                   >
                     <FormattedMessage defaultMessage="edited" id="Zx1w1e" />

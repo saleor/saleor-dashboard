@@ -121,6 +121,16 @@ const CollectionProducts = ({
     notifyOnNetworkStatusChange: true,
     variables: { id, ...paginationState },
   });
+  const refetchCollectionProductsSafely = async (): Promise<void> => {
+    try {
+      await refetchCollectionProducts();
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+    }
+  };
 
   const products = mapEdgesToItems(data?.collection?.products);
   const { markPending, clearPending, filterOutPending } = useOptimisticPendingIds();
@@ -203,15 +213,25 @@ const CollectionProducts = ({
   ) => {
     markPending([productId]);
 
-    const result = await unassignProduct({
-      variables: {
-        collectionId: id,
-        productIds: [productId],
-        ...paginationState,
-      },
-    });
+    try {
+      const result = await unassignProduct({
+        variables: {
+          collectionId: id,
+          productIds: [productId],
+          ...paginationState,
+        },
+      });
 
-    if ((result.data?.collectionRemoveProducts?.errors.length ?? 0) > 0) {
+      if ((result.data?.collectionRemoveProducts?.errors.length ?? 0) > 0) {
+        clearPending([productId]);
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+
+        return;
+      }
+    } catch {
       clearPending([productId]);
       notify({
         status: "error",
@@ -222,6 +242,7 @@ const CollectionProducts = ({
     }
 
     clearPending([productId]);
+    await refetchCollectionProductsSafely();
   };
 
   const handleAssignationChange = async (products: Container[]) => {
@@ -233,22 +254,36 @@ const CollectionProducts = ({
       return;
     }
 
-    const response = await assignProduct({
-      variables: {
-        ...paginationState,
-        collectionId: id,
-        productIds,
-        moves: productIds.map(productId => ({ productId, sortOrder: 0 })),
-      },
-    });
+    try {
+      const response = await assignProduct({
+        variables: {
+          ...paginationState,
+          collectionId: id,
+          productIds,
+          moves: productIds.map(productId => ({ productId, sortOrder: 0 })),
+        },
+      });
 
-    if ((response.data?.collectionAddProducts?.errors.length ?? 0) > 0) {
+      if ((response.data?.collectionAddProducts?.errors.length ?? 0) > 0) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+
+        return;
+      }
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+
       return;
     }
 
     closeModal();
 
-    await refetchCollectionProducts();
+    await refetchCollectionProductsSafely();
   };
 
   return (
@@ -276,6 +311,7 @@ const CollectionProducts = ({
             disabled={disabled}
             variant="secondary"
             size="small"
+            type="button"
             onClick={() => openModal("assign")}
           >
             <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
@@ -347,15 +383,25 @@ const CollectionProducts = ({
           markPending(productIds);
           closeModal();
 
-          const result = await unassignProduct({
-            variables: {
-              ...paginationState,
-              collectionId: id,
-              productIds,
-            },
-          });
+          try {
+            const result = await unassignProduct({
+              variables: {
+                ...paginationState,
+                collectionId: id,
+                productIds,
+              },
+            });
 
-          if ((result.data?.collectionRemoveProducts?.errors.length ?? 0) > 0) {
+            if ((result.data?.collectionRemoveProducts?.errors.length ?? 0) > 0) {
+              clearPending(productIds);
+              notify({
+                status: "error",
+                text: intl.formatMessage(commonMessages.somethingWentWrong),
+              });
+
+              return;
+            }
+          } catch {
             clearPending(productIds);
             notify({
               status: "error",
@@ -366,6 +412,7 @@ const CollectionProducts = ({
           }
 
           clearPending(productIds);
+          await refetchCollectionProductsSafely();
         }}
         open={params.action === "unassign"}
         title={intl.formatMessage({

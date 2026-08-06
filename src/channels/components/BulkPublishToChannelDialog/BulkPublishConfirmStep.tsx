@@ -132,7 +132,14 @@ export const BulkPublishConfirmStep = ({
               <Box className={styles.icon} data-status={item.status}>
                 <ProgressIcon status={item.status} />
               </Box>
-              <Text>{item.name}</Text>
+              <Box className={styles.progressContent}>
+                <Text>{item.name}</Text>
+                {item.status === "error" && item.errorMessage ? (
+                  <Text size={2} className={styles.progressError}>
+                    {item.errorMessage}
+                  </Text>
+                ) : null}
+              </Box>
             </Box>
           ))}
         </Box>

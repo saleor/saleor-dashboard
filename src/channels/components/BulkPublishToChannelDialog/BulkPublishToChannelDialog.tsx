@@ -41,13 +41,18 @@ import {
   createProductDrafts,
   getAppliedDefaultStock,
   getDraftsExceedingVariantLimit,
+  getDraftsMissingCategoryForPublish,
   getDraftsMissingPrice,
   getDraftsWithInvalidCostPrice,
   getDraftsWithInvalidStock,
   isValidBulkPublishStock,
   mergeProductDrafts,
 } from "./bulkPublishDrafts";
-import { isProductListedInChannel } from "./bulkPublishProductChannelFilter";
+import { withBulkPublishCategoryWhere } from "./bulkPublishPickerWhere";
+import {
+  isProductListedInChannel,
+  isProductMissingCategory,
+} from "./bulkPublishProductChannelFilter";
 import { BulkPublishProductPickerToolbar } from "./BulkPublishProductPickerToolbar";
 import { BulkPublishReviewStep } from "./BulkPublishReviewStep";
 import { isValidBulkPublishStockWarehouseSelection } from "./bulkPublishStockWarehouses";
@@ -81,6 +86,7 @@ const defaultDefaults: BulkPublishDefaults = {
 const bulkPublishProductSearchVariables: SearchProductsQueryVariables = {
   ...DEFAULT_INITIAL_SEARCH_DATA,
   first: BULK_PUBLISH_PICKER_PAGE_SIZE,
+  where: withBulkPublishCategoryWhere(),
 };
 
 interface BulkPublishToChannelDialogProps extends DialogProps {
@@ -91,7 +97,7 @@ interface BulkPublishToChannelDialogProps extends DialogProps {
 }
 
 export const BulkPublishToChannelDialog = (props: BulkPublishToChannelDialogProps) => (
-  <ModalProductFilterProvider excludedFilters={["channel"]}>
+  <ModalProductFilterProvider excludedFilters={["channel", "hasCategory"]}>
     <BulkPublishToChannelDialogContent {...props} />
   </ModalProductFilterProvider>
 );
@@ -123,8 +129,7 @@ const BulkPublishToChannelDialogContent = ({
   );
   const [excludeListedInChannel, setExcludeListedInChannel] = useState(true);
   const [showExitDialog, setShowExitDialog] = useState(false);
-  const { setIsDirty, setBlockDialogClose, setExitDialogDescription, resetFormsState } =
-    useExitFormDialog();
+  const { setIsDirty, setBlockDialogClose, setExitDialogDescription } = useExitFormDialog();
   const isSelectStep = step === BulkPublishStep.SELECT;
 
   const [productSearchVariables, setProductSearchVariables] =
@@ -136,9 +141,15 @@ const BulkPublishToChannelDialogContent = ({
   const pickerFetchMoreProps = getSearchFetchMoreProps(result, loadMore);
   const [searchGeneration, setSearchGeneration] = useState(0);
 
-  const excludeListedProduct = useCallback(
-    (product: (typeof pickerProducts)[number]) => isProductListedInChannel(product, channel.id),
-    [channel.id],
+  const excludePickerProduct = useCallback(
+    (product: (typeof pickerProducts)[number]) => {
+      if (isProductMissingCategory(product)) {
+        return true;
+      }
+
+      return excludeListedInChannel ? isProductListedInChannel(product, channel.id) : false;
+    },
+    [channel.id, excludeListedInChannel],
   );
 
   const handleExcludeListedInChannelChange = useCallback((value: boolean) => {
@@ -150,7 +161,7 @@ const BulkPublishToChannelDialogContent = ({
       setSearchGeneration(generation => generation + 1);
       setProductSearchVariables({
         ...bulkPublishProductSearchVariables,
-        where: filterVariables,
+        where: withBulkPublishCategoryWhere(filterVariables),
         channel: channelSlug,
         query,
       });
@@ -186,7 +197,7 @@ const BulkPublishToChannelDialogContent = ({
     confirmButtonState: "default",
     maxSelection: BULK_PUBLISH_MAX_PRODUCTS,
     selectAllMode: "when-scoped",
-    excludeProduct: excludeListedInChannel ? excludeListedProduct : undefined,
+    excludeProduct: excludePickerProduct,
     backfillResetKey: `${searchGeneration}:${excludeListedInChannel}`,
     // Turning the "already in channel" filter on must drop selections made while it was off.
     pruneUnavailableSelection: true,
@@ -271,8 +282,7 @@ const BulkPublishToChannelDialogContent = ({
   const dismissExitPrompts = useCallback(() => {
     setShowExitDialog(false);
     releaseLeaveTrap();
-    resetFormsState();
-  }, [releaseLeaveTrap, resetFormsState]);
+  }, [releaseLeaveTrap]);
 
   const handleRequestClose = useCallback(() => {
     // Only block while a publish request is in flight. After failures, users must
@@ -284,6 +294,7 @@ const BulkPublishToChannelDialogContent = ({
     // Publish already ran (partial/total failure). Skip the unsaved-wizard prompt —
     // some listings may already exist on the channel.
     if (isPublishing) {
+      onSuccess?.();
       releaseLeaveTrap();
       onClose();
 
@@ -474,6 +485,22 @@ const BulkPublishToChannelDialogContent = ({
       return;
     }
 
+    const missingCategoryDrafts = getDraftsMissingCategoryForPublish(
+      productDrafts,
+      defaults.isPublished,
+    );
+
+    if (missingCategoryDrafts.length > 0) {
+      notify({
+        status: "error",
+        text: intl.formatMessage(messages.missingCategoryForPublish, {
+          count: missingCategoryDrafts.length,
+        }),
+      });
+
+      return;
+    }
+
     const invalidStockDrafts = defaults.stock.enabled
       ? getDraftsWithInvalidStock(productDrafts)
       : [];
@@ -640,7 +667,7 @@ const BulkPublishToChannelDialogContent = ({
           <DashboardModal.Actions alignItems="center">
             {isSelectStep ? (
               <>
-                <BackButton disabled={submitting || isPublishing} onClick={handleRequestClose}>
+                <BackButton disabled={submitting} onClick={handleRequestClose}>
                   <FormattedMessage {...buttonMessages.cancel} />
                 </BackButton>
                 <Button
@@ -672,7 +699,7 @@ const BulkPublishToChannelDialogContent = ({
                   showRetryFailed ? (
                     <Button
                       data-test-id="bulk-publish-retry"
-                      disabled={submitting || isPublishing}
+                      disabled={submitting}
                       onClick={handleRetryFailed}
                       variant="primary"
                     >

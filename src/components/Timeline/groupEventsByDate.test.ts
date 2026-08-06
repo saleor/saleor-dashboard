@@ -14,6 +14,10 @@ describe("getDateGroupKey", () => {
     expect(getDateGroupKey(null)).toBe("UNKNOWN");
   });
 
+  it("returns UNKNOWN for invalid dates", () => {
+    expect(getDateGroupKey("not-a-date")).toBe("UNKNOWN");
+  });
+
   it("returns TODAY for events from today", () => {
     expect(getDateGroupKey("2024-06-15T08:00:00Z")).toBe("TODAY");
     expect(getDateGroupKey("2024-06-15T23:59:59Z")).toBe("TODAY");

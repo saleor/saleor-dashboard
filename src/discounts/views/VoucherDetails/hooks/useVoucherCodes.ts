@@ -69,8 +69,8 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   const voucherCodesPagination = isServerPagination
     ? serverVoucherCodesPagination
     : clientVoucherCodesPagination;
-  const { selectedVoucherCodesIds, handleSetSelectedVoucherCodesIds, clearRowSelection } =
-    useVoucherCodesRowSelection(voucherCodes);
+  const { selectedVoucherCodesIds, setSelectedVoucherCodesIds, clearRowSelection } =
+    useVoucherCodesRowSelection();
 
   const [voucherCodeBulkDelete, voucherCodeBulkDeleteOpts] = useVoucherCodeBulkDeleteMutation({
     onCompleted: data => {
@@ -224,7 +224,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodesSettings,
     updateVoucherCodesListSettings: handleUpdateVoucherCodesListSettings,
     selectedVoucherCodesIds,
-    handleSetSelectedVoucherCodesIds,
+    setSelectedVoucherCodesIds,
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,

@@ -85,14 +85,32 @@ export const useAssignProductPicker = ({
   pruneUnavailableSelection = false,
   onMaxSelectionReached,
 }: UseAssignProductPickerProps) => {
+  const hasChannelRestriction = Boolean(selectedChannels?.length);
+
   const products = useMemo(
-    () => (excludeProduct ? rawProducts.filter(product => !excludeProduct(product)) : rawProducts),
-    [excludeProduct, rawProducts],
+    () =>
+      rawProducts.filter(product => {
+        if (excludeProduct?.(product)) {
+          return false;
+        }
+
+        // Hide channel-mismatched rows so the list is actionable and backfill can
+        // pull more pages (showing a full page of disabled rows blocked scroll UX).
+        if (
+          hasChannelRestriction &&
+          !isProductAvailableInVoucherChannels(product.channelListings, selectedChannels)
+        ) {
+          return false;
+        }
+
+        return true;
+      }),
+    [excludeProduct, hasChannelRestriction, rawProducts, selectedChannels],
   );
 
   // Client-side exclusion is itself a scope (e.g. "hide already listed"), so select-all
   // should appear even when the user hasn't typed a query yet.
-  const hasExclusionFilter = Boolean(excludeProduct);
+  const hasExclusionFilter = Boolean(excludeProduct) || hasChannelRestriction;
 
   const backfill = usePickerBackfill({
     enabled: hasExclusionFilter,

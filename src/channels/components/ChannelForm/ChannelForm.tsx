@@ -146,6 +146,7 @@ export const ChannelForm = ({
             <Button
               variant="tertiary"
               size="small"
+              type="button"
               className={styles.slugCopyButton}
               onClick={() => copy(data.slug)}
               aria-label={intl.formatMessage(buttonMessages.copyToClipboard)}

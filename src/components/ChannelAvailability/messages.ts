@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-export type ChannelAvailabilityEntityType = "product" | "collection" | "shippingMethod";
+export type ChannelAvailabilityEntityType = "product" | "collection" | "shippingMethod" | "voucher";
 
 export const channelAvailabilityEntityMessages = defineMessages<ChannelAvailabilityEntityType>({
   product: {
@@ -16,6 +16,11 @@ export const channelAvailabilityEntityMessages = defineMessages<ChannelAvailabil
   shippingMethod: {
     id: "x4B8Yd",
     defaultMessage: "Shipping method",
+    description: "Entity type label for channel availability panel subtitles",
+  },
+  voucher: {
+    id: "09q72K",
+    defaultMessage: "Voucher",
     description: "Entity type label for channel availability panel subtitles",
   },
 });

@@ -1,5 +1,6 @@
 import {
   isProductListedInChannel,
+  isProductMissingCategory,
   type ProductChannelListings,
 } from "./bulkPublishProductChannelFilter";
 
@@ -23,5 +24,14 @@ describe("isProductListedInChannel", () => {
 
     // Act & Assert
     expect(isProductListedInChannel(product, "ch1")).toBe(false);
+  });
+});
+
+describe("isProductMissingCategory", () => {
+  it("detects products without a category", () => {
+    // Arrange & Act & Assert
+    expect(isProductMissingCategory({ category: null })).toBe(true);
+    expect(isProductMissingCategory({ category: undefined })).toBe(true);
+    expect(isProductMissingCategory({ category: { id: "cat1" } })).toBe(false);
   });
 });

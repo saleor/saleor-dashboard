@@ -152,6 +152,7 @@ export const CategorySubcategories = ({
             <Button
               variant="tertiary"
               size="small"
+              type="button"
               onClick={handleCollapseAllSubcategories}
               data-test-id="collapse-all-subcategories"
             >
@@ -166,6 +167,7 @@ export const CategorySubcategories = ({
             ) : null}
             <Button
               variant="secondary"
+              type="button"
               data-test-id="create-subcategory"
               disabled={disabled}
               onClick={onCreateSubcategory}

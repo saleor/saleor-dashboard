@@ -160,7 +160,7 @@ const ProductsTableBody = ({
               height="100%"
             >
               {!!selected && (
-                <Button variant="secondary" size="small" onClick={onUnassignClick}>
+                <Button variant="secondary" size="small" type="button" onClick={onUnassignClick}>
                   <FormattedMessage
                     id="67V0c0"
                     defaultMessage="Unassign"

@@ -6,8 +6,12 @@ interface DetailPageContentProps extends Omit<BoxProps, "children"> {
 }
 
 /**
- * Main-column stack for entity detail pages — shared padding and vertical gap
- * between DetailSettingsCard / SEO / list sections.
+ * Main-column stack for entity detail pages without a section nav rail.
+ * Applies shared padding and vertical gap between DetailSettingsCard / SEO / list sections.
+ *
+ * When the page uses `DetailPageSectionLayout` + `DetailSectionNav`, render sections
+ * directly in the layout's main column instead — do not nest this component there
+ * (it would double horizontal padding and shrink the nav/content ratio).
  */
 export const DetailPageContent = ({ children, ...rest }: DetailPageContentProps): JSX.Element => (
   <Box

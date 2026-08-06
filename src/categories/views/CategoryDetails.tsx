@@ -10,6 +10,7 @@ import {
   type CategoryDeleteMutation,
   type CategoryInput,
   type CategoryUpdateMutation,
+  ProductErrorCode,
   type ProductErrorFragment,
   useCategoryBulkDeleteMutation,
   useCategoryCreateMutation,
@@ -160,7 +161,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
       closeModal();
       notify({
         status: "success",
-        text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
+        text: intl.formatMessage({ id: "G5ETO0", defaultMessage: "Categories deleted" }),
       });
     }
   };
@@ -186,53 +187,78 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
     },
   });
   const handleImmediateCategoryImageMutation = async (
-    input: Pick<CategoryInput, "backgroundImage">,
+    input: Pick<CategoryInput, "backgroundImage"> &
+      Partial<Pick<CategoryInput, "backgroundImageAlt">>,
   ) => {
     const uploadFile = input.backgroundImage instanceof File ? input.backgroundImage : null;
 
-    await runImageMutation({
-      file: uploadFile,
-      mutate: async () => {
-        const result = await updateCategory({
-          variables: {
-            id,
-            input,
-          },
-        });
-        const errors = getMutationErrors(result);
+    try {
+      await runImageMutation({
+        file: uploadFile,
+        mutate: async () => {
+          const result = await updateCategory({
+            variables: {
+              id,
+              input,
+            },
+          });
+          const errors = getMutationErrors(result);
 
-        if (errors.length === 0) {
-          closeModal();
+          if (errors.length === 0) {
+            closeModal();
 
-          if (uploadFile) {
-            await refetch();
+            if (uploadFile) {
+              await refetch();
+            }
+
+            return true;
           }
 
-          return true;
-        }
-
-        return false;
-      },
-    });
-  };
-  const handleUpdate = async (formData: CategoryUpdateData) =>
-    extractMutationErrors(
-      updateCategory({
-        variables: {
-          id,
-          input: {
-            backgroundImageAlt: formData.backgroundImageAlt,
-            description: getParsedDataForJsonStringField(formData?.description!),
-            name: formData.name,
-            seo: {
-              description: formData.seoDescription,
-              title: formData.seoTitle,
-            },
-            slug: formData.slug,
-          },
+          return false;
         },
-      }),
-    );
+      });
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(errorMessages.somethingWentWrong),
+      });
+    }
+  };
+  const handleUpdate = async (formData: CategoryUpdateData): Promise<ProductErrorFragment[]> => {
+    try {
+      return await extractMutationErrors(
+        updateCategory({
+          variables: {
+            id,
+            input: {
+              backgroundImageAlt: formData.backgroundImageAlt,
+              description: getParsedDataForJsonStringField(formData?.description!),
+              name: formData.name,
+              seo: {
+                description: formData.seoDescription,
+                title: formData.seoTitle,
+              },
+              slug: formData.slug,
+            },
+          },
+        }),
+      );
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(errorMessages.somethingWentWrong),
+      });
+
+      return [
+        {
+          __typename: "ProductError",
+          code: ProductErrorCode.GRAPHQL_ERROR,
+          field: null,
+          message: intl.formatMessage(errorMessages.somethingWentWrong),
+        },
+      ];
+    }
+  };
 
   if (category === null) {
     return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
@@ -316,7 +342,12 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
       <CategoryDeleteImageDialog
         confirmButtonState={updateResult.status}
         onClose={closeModal}
-        onConfirm={() => handleImmediateCategoryImageMutation({ backgroundImage: null })}
+        onConfirm={() =>
+          handleImmediateCategoryImageMutation({
+            backgroundImage: null,
+            backgroundImageAlt: "",
+          })
+        }
         open={params.action === "removeImage"}
       />
 

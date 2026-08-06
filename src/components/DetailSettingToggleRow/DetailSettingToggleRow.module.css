@@ -57,6 +57,5 @@
   display: flex;
   flex-direction: column;
   gap: var(--mu-spacing-1);
-  padding: var(--mu-spacing-4) var(--mu-spacing-6) var(--mu-spacing-4) calc(var(--mu-spacing-6) * 2);
-  border-top: 1px dashed var(--mu-colors-border-default1);
+  padding: var(--mu-spacing-2) var(--mu-spacing-6) var(--mu-spacing-4);
 }

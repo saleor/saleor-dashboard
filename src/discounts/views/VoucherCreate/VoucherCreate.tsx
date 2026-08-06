@@ -4,6 +4,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import {
   type CategoryFilterInput,
@@ -12,8 +13,6 @@ import {
   type SearchCategoriesWithTotalProductsQueryVariables,
   type SearchCollectionsWithTotalProductsQueryVariables,
   type SearchProductsQueryVariables,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
 } from "@dashboard/graphql";
@@ -27,7 +26,6 @@ import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCateg
 import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -50,8 +48,6 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
     VoucherCreateUrlQueryParams
@@ -73,26 +69,15 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     setCurrentChannels,
     toggleAllChannels,
   } = useChannels(
-    allChannels,
+    // Create starts with no channel listings — users assign via Manage.
+    // `allChannels` is only for the picker dialog, not the initial selection.
+    [],
     params?.action,
     { closeModal, openModal },
     { formId: VOUCHER_CREATE_FORM_ID },
   );
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
-  const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
-    onCompleted: data => {
-      if (data.voucherCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "HoBGng",
-            defaultMessage: "Voucher created",
-          }),
-        });
-        navigate(voucherUrl(data.voucherCreate.voucher.id), { replace: true });
-      }
-    },
-  });
+  const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({});
 
   const assignProductSearchVariables: SearchProductsQueryVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
@@ -199,18 +184,47 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       return false;
     }
 
+    if (data.channelListings.length === 0) {
+      notify({
+        status: "error",
+        text: intl.formatMessage({
+          id: "PWG97N",
+          defaultMessage: "You must assign the voucher to at least one channel",
+        }),
+      });
+
+      return false;
+    }
+
     return true;
   };
-  const handleCreate = createHandler(
+  const createVoucher = createHandler(
     variables => voucherCreate({ variables }),
     updateChannels,
     handleFormValidate,
   );
-  const handleSubmit = createMetadataCreateHandler(
-    handleCreate,
-    updateMetadata,
-    updatePrivateMetadata,
-  );
+  const handleSubmit = async (data: FormData) => {
+    const result = await createVoucher(data);
+
+    if (result && "id" in result && result.id) {
+      notify({
+        status: "success",
+        text: intl.formatMessage({
+          id: "HoBGng",
+          defaultMessage: "Voucher created",
+        }),
+      });
+      navigate(voucherUrl(result.id), { replace: true });
+
+      return [];
+    }
+
+    if (result && "errors" in result) {
+      return result.errors;
+    }
+
+    return ["Could not create voucher"];
+  };
 
   return (
     <>

@@ -1,28 +1,32 @@
 # Follow-up: Reuse spreadsheet paste beyond bulk publish
 
-Tracked for a **future PR** (not part of the bulk-publish / `PriceFieldV2` pilot).
+## Status
 
-## Context
+Partial extraction done:
 
-Bulk publish review step uses TSV paste fill-down/across for price, cost price, and stock:
+| Piece                            | Location                                                                                |
+| -------------------------------- | --------------------------------------------------------------------------------------- |
+| Clipboard parse                  | `src/utils/spreadsheetPaste/parseSpreadsheetClipboard.ts`                               |
+| Single-column fill-down          | `src/utils/spreadsheetPaste/applySpreadsheetColumnPaste.ts`                             |
+| Price sanitizing                 | `src/components/PriceFieldV2/utils.ts` (`sanitizeSpreadsheetPrice`)                     |
+| Multi-field bulk publish adapter | `bulkPublishSpreadsheetPaste.ts` (still owns stock integer sanitize + multi-column map) |
 
-- `src/channels/components/BulkPublishToChannelDialog/bulkPublishSpreadsheetPaste.ts`
-- `onPasteCapture` on row inputs in `BulkPublishReviewStep.tsx`
+**Preferred money input:** `PriceFieldV2` — see [`saleor-dashboard-styles`](../../.claude/skills/saleor-dashboard-styles/SKILL.md#price-inputs-pricefieldv2--preferred).
 
-Price sanitizing already lives in `src/components/PriceFieldV2/utils.ts` (`sanitizeSpreadsheetPrice`, `padPriceToDecimalPlaces`). Stock integer sanitizing is still in the bulk-publish file (`sanitizeSpreadsheetInteger`).
+## Consumers today
 
-## What to extract (generic layer)
+- Bulk publish review — multi-column paste (price / cost / stock)
+- Voucher fixed amount per channel — single-column paste via `applySpreadsheetColumnPaste`
+
+## Remaining work
 
 ```
 src/utils/spreadsheetPaste/
-  parseSpreadsheetClipboard.ts      # move from bulk publish
-  sanitizeSpreadsheetInteger.ts     # move from bulk publish (or colocate with PriceFieldV2 utils)
-  applySpreadsheetPaste.ts          # generic rows[] + field order + sanitizer map
-
-channels/.../bulkPublishSpreadsheetPaste.ts  # thin adapter for ProductPublishDraft
+  sanitizeSpreadsheetInteger.ts     # move from bulk publish
+  applySpreadsheetPaste.ts          # generic multi-field map (bulk publish shape)
 ```
 
-Generic API sketch:
+Generic multi-field API sketch:
 
 ```typescript
 applySpreadsheetPaste<T>({
@@ -35,36 +39,14 @@ applySpreadsheetPaste<T>({
 }): { rows: T[]; handled: boolean };
 ```
 
-Plus a small `handleSpreadsheetFieldPaste` helper for `onPasteCapture` on form inputs.
+### Where to wire next
 
-## Where to wire it
+1. **Product variants Datagrid** — `MoneyCell` / `NumberCell` paste sanitizers (`sanitizeSpreadsheetPrice` / integer)
+2. Other row-list form UIs with aligned price columns — `applySpreadsheetColumnPaste` or multi-field helper
+3. Single-field forms — `PriceFieldV2` alone is enough; no spreadsheet util unless multi-row columns exist
 
-### 1. Product variants Datagrid (highest impact)
+## Tests
 
-Glide Data Grid already handles multi-cell paste. Per-cell `onPaste` in custom renderers only needs better sanitizers — **not** the full `applySpreadsheetPaste` grid logic.
-
-| Cell         | File                                                      | Today               | Change                                      |
-| ------------ | --------------------------------------------------------- | ------------------- | ------------------------------------------- |
-| Price / cost | `src/components/Datagrid/customCells/Money/MoneyCell.tsx` | `parseFloat(value)` | `sanitizeSpreadsheetPrice(value, currency)` |
-| Stock qty    | `src/components/Datagrid/customCells/NumberCell.tsx`      | basic regex         | `sanitizeSpreadsheetInteger(value)`         |
-
-Consider pairing with `PriceFieldV2` / `usePriceFieldV2` in `MoneyCellEdit` when migrating off legacy `PriceField`.
-
-### 2. Other row-list form UIs
-
-Any future UI with aligned price/stock columns (same pattern as bulk publish review) should use the generic `applySpreadsheetPaste` + `onPasteCapture` wrapper.
-
-### 3. Single-field forms (low value)
-
-Variant pricing page, orders, gift cards — normal input paste + `formatPriceInput` is enough. No spreadsheet util needed unless multiple columns are added.
-
-## Tests to move/add
-
-- Move `parseSpreadsheetClipboard` / integer sanitizer tests to generic module.
-- Keep bulk-publish adapter tests thin (draft shape + field order only).
-- Add/update `MoneyCell` / `NumberCell` paste tests for EU/US formats and currency padding.
-
-## Related
-
-- `PriceFieldV2` pilot: `src/components/PriceFieldV2/`
-- Datagrid skill: `.claude/skills/saleor-dashboard-datagrid/SKILL.md`
+- `applySpreadsheetColumnPaste.test.ts`
+- Bulk-publish adapter tests (`bulkPublishSpreadsheetPaste.test.ts`)
+- `PriceFieldV2` utils / hook tests

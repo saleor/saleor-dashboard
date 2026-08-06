@@ -30,6 +30,11 @@ export const getDateGroupKey = (date: string | null | undefined): TimelineDateGr
   }
 
   const eventDate = new Date(date);
+
+  if (Number.isNaN(eventDate.getTime())) {
+    return "UNKNOWN";
+  }
+
   const currentDate = new Date();
   const daysAgo = calendarDaysBetween(eventDate, currentDate);
 

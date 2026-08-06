@@ -5,8 +5,14 @@ import { type FocusEvent } from "react";
 import styles from "./PriceFieldV2.module.css";
 import { type PriceFieldV2ChangeHandler, usePriceFieldV2 } from "./usePriceFieldV2";
 
+/**
+ * Preferred money/amount input for the Dashboard.
+ * Currency-aware typing + blur padding; pair with spreadsheet paste helpers for row lists.
+ * See saleor-dashboard-styles skill → "Price inputs (PriceFieldV2)".
+ */
 export interface PriceFieldV2Props
   extends Omit<InputProps, "onChange" | "value" | "type" | "inputMode"> {
+  /** Currency code (e.g. USD) — used for adornment and decimal precision. */
   currencySymbol: string;
   value: string;
   onChange: PriceFieldV2ChangeHandler;

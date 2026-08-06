@@ -18,6 +18,10 @@ Conventions for `DetailPageLayout` entity views under `src/<feature>/`.
 
 For expandable sections (advanced settings, rate rows, postal ranges, etc.) use **`DetailGroupBox`** with `Title2` — documented in [`saleor-dashboard-styles`](../saleor-dashboard-styles/SKILL.md#foldable-sections-detailgroupbox). Do not introduce new UI with the legacy `@dashboard/components/Accordion`.
 
+## Section nav layout
+
+Long detail pages with **`DetailSectionNav`** (4+ scroll sections) use **`DetailPageSectionLayout`** — nav rail at `25%` width (`min 10rem`) + main column with `gap={4}`. Do not nest **`DetailPageContent`** inside (that component is for single-column pages only). See [`saleor-dashboard-entity-detail`](../saleor-dashboard-entity-detail/SKILL.md) for the full table and example.
+
 ## Settings sections (`DetailSettingsCard`)
 
 On entity detail pages, group fields in **`DetailSettingsCard`** (not `DashboardCard` or nested cards). Full language:

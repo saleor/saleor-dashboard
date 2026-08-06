@@ -257,33 +257,31 @@ export const SetupChecklist = ({
   return (
     <Box className={clsx(styles.card, className)} data-test-id={dataTestId}>
       <Box className={styles.header}>
-        <Box display="flex" flexDirection="column" gap={1} minWidth={0} flexGrow="1">
-          <Box className={styles.titleRow}>
-            <Text size={6} fontWeight="bold" as="h2">
-              {title}
-            </Text>
-            {badge}
-          </Box>
-          {subtitle && (
-            <Text size={3} color="default2">
-              {subtitle}
-            </Text>
-          )}
+        <Box className={styles.titleRow}>
+          <Text size={6} fontWeight="bold" as="h2">
+            {title}
+          </Text>
+          {badge}
+          <Text
+            size={2}
+            color="default2"
+            className={styles.progressCount}
+            data-test-id="setup-checklist-progress"
+            aria-label={`${resolvedProgress.done} of ${resolvedProgress.total}`}
+          >
+            <FormattedMessage
+              id="RvRHDy"
+              defaultMessage="{done} of {total}"
+              description="setup checklist progress counter"
+              values={{ done: resolvedProgress.done, total: resolvedProgress.total }}
+            />
+          </Text>
         </Box>
-        <Text
-          size={2}
-          color="default2"
-          className={styles.progressCount}
-          data-test-id="setup-checklist-progress"
-          aria-label={`${resolvedProgress.done} of ${resolvedProgress.total}`}
-        >
-          <FormattedMessage
-            id="RvRHDy"
-            defaultMessage="{done} of {total}"
-            description="setup checklist progress counter"
-            values={{ done: resolvedProgress.done, total: resolvedProgress.total }}
-          />
-        </Text>
+        {subtitle && (
+          <Text size={3} color="default2">
+            {subtitle}
+          </Text>
+        )}
       </Box>
 
       {tasksSection && (

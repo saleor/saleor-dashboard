@@ -111,6 +111,7 @@ const BackgroundImagePreview = ({
                 data-test-id={testIds?.delete ?? "delete-entity-background-image"}
                 variant="tertiary"
                 size="small"
+                type="button"
                 className={styles.deleteButton}
                 onClick={event => {
                   stopDropzoneActivation(event);

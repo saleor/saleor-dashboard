@@ -619,6 +619,10 @@ export const voucherDetails: VoucherDetailsFragment = {
   applyOncePerOrder: false,
   singleUse: false,
   onlyForStaff: false,
+  codesCount: {
+    __typename: "VoucherCodeCountableConnection",
+    totalCount: 0,
+  },
   categoriesCount: {
     __typename: "CategoryCountableConnection",
     totalCount: 0,
@@ -634,17 +638,6 @@ export const voucherDetails: VoucherDetailsFragment = {
   variantsCount: {
     __typename: "ProductVariantCountableConnection",
     totalCount: 0,
-  },
-  categories: {
-    __typename: "CategoryCountableConnection",
-    edges: [],
-    pageInfo: {
-      __typename: "PageInfo",
-      endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
-    },
   },
   channelListings: [
     {
@@ -665,17 +658,6 @@ export const voucherDetails: VoucherDetailsFragment = {
       },
     },
   ],
-  collections: {
-    __typename: "CollectionCountableConnection",
-    edges: [],
-    pageInfo: {
-      __typename: "PageInfo",
-      endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
-    },
-  },
   countries: [
     {
       __typename: "CountryDisplay",
@@ -687,17 +669,6 @@ export const voucherDetails: VoucherDetailsFragment = {
   endDate: null,
   id: "Vm91Y2hlcjoy",
   minCheckoutItemsQuantity: 0,
-  products: {
-    __typename: "ProductCountableConnection",
-    edges: [],
-    pageInfo: {
-      __typename: "PageInfo",
-      endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
-    },
-  },
   startDate: "2018-11-27",
   type: VoucherTypeEnum.ENTIRE_ORDER,
   usageLimit: null,

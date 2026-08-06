@@ -52,7 +52,9 @@ export const TimelineAddNote = ({
     }
   };
 
-  const defaultPlaceholder = intl.formatMessage({
+  // Macaw Textarea keeps ::placeholder transparent until focus (floating-label pattern).
+  // Without a label the field looks empty — fall back so the empty state always has a hint.
+  const defaultNoteHint = intl.formatMessage({
     id: "3evXPj",
     defaultMessage: "Leave your note here...",
   });
@@ -66,8 +68,8 @@ export const TimelineAddNote = ({
       <Box position="relative">
         <Textarea
           disabled={disabled}
-          label={label}
-          placeholder={placeholder ?? defaultPlaceholder}
+          label={label ?? defaultNoteHint}
+          placeholder={placeholder ?? defaultNoteHint}
           onChange={onChange}
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}

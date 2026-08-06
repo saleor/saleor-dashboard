@@ -133,7 +133,7 @@ export const VoucherCatalogueUnassignDialog = ({
             onClick={onConfirm}
             transitionState={confirmButtonState}
           >
-            <FormattedMessage description="button" id="cNSLLO" defaultMessage="Unassign and save" />
+            <FormattedMessage description="button" id="Gkip05" defaultMessage="Unassign" />
           </ConfirmButton>
         </DashboardModal.Actions>
       </DashboardModal.Content>

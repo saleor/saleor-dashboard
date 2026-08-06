@@ -159,6 +159,7 @@ export const ChannelSetupCard = ({
       ) : (
         <Button
           variant="primary"
+          type="button"
           data-test-id="setup-assign-warehouse"
           onClick={onAssignWarehouse}
           disabled={disabled}
@@ -171,6 +172,7 @@ export const ChannelSetupCard = ({
     ) : canCreateWarehouse ? (
       <Button
         variant="primary"
+        type="button"
         data-test-id="setup-create-warehouse"
         onClick={onCreateWarehouse}
         disabled={disabled}
@@ -206,6 +208,7 @@ export const ChannelSetupCard = ({
       ) : (
         <Button
           variant="primary"
+          type="button"
           data-test-id="setup-create-shipping"
           onClick={onCreateShipping}
           disabled={disabled}
@@ -320,6 +323,7 @@ export const ChannelSetupCard = ({
               {onDismiss && (
                 <Button
                   variant="tertiary"
+                  type="button"
                   onClick={onDismiss}
                   disabled={disabled}
                   data-test-id="setup-dismiss"
@@ -332,6 +336,7 @@ export const ChannelSetupCard = ({
               {showActivate && (
                 <Button
                   variant="primary"
+                  type="button"
                   onClick={onActivate}
                   disabled={!canActivate || activateDisabled || disabled}
                   data-test-id="setup-activate-channel"

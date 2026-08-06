@@ -18,6 +18,7 @@ const DeletableItem = ({ onDelete, id, disabled = false }: DeletableItemProps) =
   return (
     <Button
       variant="tertiary"
+      type="button"
       icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
       onClick={handleDelete}
       disabled={disabled}

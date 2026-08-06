@@ -12,6 +12,7 @@ const createDrafts = (count: number): ProductPublishDraft[] =>
     variantCount: 1,
     exceedsVariantLimit: false,
     hasManyVariants: false,
+    hasCategory: true,
     alreadyInChannel: false,
     price: "",
     costPrice: "",

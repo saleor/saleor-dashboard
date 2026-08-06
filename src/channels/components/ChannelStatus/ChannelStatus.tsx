@@ -14,6 +14,7 @@ interface ChannelStatusProps {
 export const ChannelStatus = ({ isActive, disabled, onClick }: ChannelStatusProps): ReactNode => (
   <Button
     variant="secondary"
+    type="button"
     disabled={disabled}
     onClick={onClick}
     data-test-id="channel-status-button"

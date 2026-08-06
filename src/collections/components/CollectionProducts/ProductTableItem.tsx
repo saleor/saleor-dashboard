@@ -148,6 +148,7 @@ export const ProductTableItem = ({
           <Button
             data-test-id="delete-icon"
             variant="tertiary"
+            type="button"
             onClick={event => product && onProductUnassign(product.id, event)}
             title={intl.formatMessage(buttonMessages.delete)}
             icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}

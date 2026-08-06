@@ -1,6 +1,7 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type MenuItem, SubMenu } from "@dashboard/components/SubMenu";
 import { Box, Button, Popover } from "@saleor/macaw-ui-next";
-import { ChevronDown, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -14,17 +15,17 @@ interface VoucherCodesAddButtonProps {
 export const VoucherCodesAddButton = ({
   onMultiCodesGenerate,
   onSingleCodesGenerate,
-}: VoucherCodesAddButtonProps) => {
+}: VoucherCodesAddButtonProps): JSX.Element => {
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
   const intl = useIntl();
   const handleMultupleCodesGenerate = useCallback(() => {
     onMultiCodesGenerate();
     setSubMenuOpen(false);
-  }, []);
+  }, [onMultiCodesGenerate]);
   const handleManualCodeGenerate = useCallback(() => {
     onSingleCodesGenerate();
     setSubMenuOpen(false);
-  }, []);
+  }, [onSingleCodesGenerate]);
   const subMenuItems = useMemo<MenuItem[]>(
     () => [
       {
@@ -40,16 +41,15 @@ export const VoucherCodesAddButton = ({
         onClick: handleMultupleCodesGenerate,
       },
     ],
-    [handleMultupleCodesGenerate, handleManualCodeGenerate],
+    [handleMultupleCodesGenerate, handleManualCodeGenerate, intl],
   );
 
   return (
     <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>
       <Popover.Trigger>
-        <Button data-test-id="add-code-button" type="button">
-          <Plus />
+        <Button data-test-id="add-code-button" type="button" size="small">
+          <Plus size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
           {intl.formatMessage(messages.addCode)}
-          <ChevronDown />
         </Button>
       </Popover.Trigger>
       <Popover.Content align="end">

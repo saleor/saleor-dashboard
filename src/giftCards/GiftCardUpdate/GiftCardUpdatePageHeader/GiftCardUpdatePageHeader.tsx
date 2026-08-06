@@ -25,7 +25,7 @@ import { useIntl } from "react-intl";
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
-import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
+import { GiftCardEnableDisableSection } from "./GiftCardEnableDisableSection";
 import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
 
 const GiftCardUpdatePageHeader = () => {

@@ -186,7 +186,7 @@ describe("isProductAvailableInVoucherChannels", () => {
     expect(result).toBe(false);
   });
 
-  it("should return false when empty voucher channels", () => {
+  it("should return true when voucher channels are an empty array", () => {
     // Arrange
     const mockProductChannels = [
       { channel: { id: "1" } },
@@ -198,10 +198,10 @@ describe("isProductAvailableInVoucherChannels", () => {
     const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
-    expect(result).toBe(false);
+    expect(result).toBe(true);
   });
 
-  it("should return false when empty voucher and product channels", () => {
+  it("should return true when voucher and product channels are both empty", () => {
     // Arrange
     const mockProductChannels = [] as ProductChannels;
     const mockVariantChannels = [] as SelectedChannel[];
@@ -210,10 +210,10 @@ describe("isProductAvailableInVoucherChannels", () => {
     const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
-    expect(result).toBe(false);
+    expect(result).toBe(true);
   });
 
-  it("should return true when no voucher channels", () => {
+  it("should return true when voucher channels are undefined", () => {
     // Arrange
     const mockProductChannels = [] as ProductChannels;
     const mockVariantChannels = undefined;
@@ -225,7 +225,7 @@ describe("isProductAvailableInVoucherChannels", () => {
     expect(result).toBe(true);
   });
 
-  it("should return false when no products channels", () => {
+  it("should return true when voucher channels are empty even if product channels are missing", () => {
     // Arrange
     const mockProductChannels = undefined;
     const mockVariantChannels = [] as SelectedChannel[];
@@ -234,6 +234,6 @@ describe("isProductAvailableInVoucherChannels", () => {
     const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
-    expect(result).toBe(false);
+    expect(result).toBe(true);
   });
 });
