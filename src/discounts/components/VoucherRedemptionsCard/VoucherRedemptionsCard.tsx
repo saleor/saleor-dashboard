@@ -144,53 +144,66 @@ export const VoucherRedemptionsCard = ({
         </Box>
 
         <Box>
-          {hasUsageLimit && progress ? (
-            <Box
-              className={styles.meterTrack}
-              role="progressbar"
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={progress.percentage}
-              data-test-id="voucher-redemptions-meter"
-            >
-              <Box className={styles.meterFill} __width={`${progress.percentage}%`} aria-hidden />
+          {loading ? (
+            <Box display="flex" flexDirection="column" gap={2} aria-busy="true">
+              <Skeleton __width="9rem" __height="0.875rem" />
+              <Skeleton __width="11rem" __height="0.875rem" />
             </Box>
-          ) : null}
-
-          <Box className={styles.details} marginTop={hasUsageLimit && progress ? 2 : 0}>
-            <Text size={2} color="default2" display="block">
+          ) : (
+            <>
               {hasUsageLimit && progress ? (
-                <FormattedMessage
-                  {...messages.usedOfLimit}
-                  values={{ used: progress.used, limit: progress.limit }}
-                />
-              ) : (
-                <FormattedMessage {...messages.usedUnlimited} values={{ used }} />
-              )}
-            </Text>
-            {hasUsageLimit && progress ? (
-              <Text size={2} color="default2" display="block">
-                {progress.isExhausted ? (
-                  <FormattedMessage {...messages.remainingNone} />
-                ) : (
-                  <FormattedMessage
-                    {...messages.remaining}
-                    values={{ count: progress.remaining }}
+                <Box
+                  className={styles.meterTrack}
+                  role="progressbar"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={progress.percentage}
+                  data-test-id="voucher-redemptions-meter"
+                >
+                  <Box
+                    className={styles.meterFill}
+                    __width={`${progress.percentage}%`}
+                    aria-hidden
                   />
-                )}
-              </Text>
-            ) : null}
-          </Box>
+                </Box>
+              ) : null}
 
-          <Text
-            size={2}
-            color="default2"
-            display="block"
-            className={styles.status}
-            data-test-id="voucher-redemptions-schedule"
-          >
-            {scheduleStatus}
-          </Text>
+              <Box className={styles.details} marginTop={hasUsageLimit && progress ? 2 : 0}>
+                <Text size={2} color="default2" display="block">
+                  {hasUsageLimit && progress ? (
+                    <FormattedMessage
+                      {...messages.usedOfLimit}
+                      values={{ used: progress.used, limit: progress.limit }}
+                    />
+                  ) : (
+                    <FormattedMessage {...messages.usedUnlimited} values={{ used }} />
+                  )}
+                </Text>
+                {hasUsageLimit && progress ? (
+                  <Text size={2} color="default2" display="block">
+                    {progress.isExhausted ? (
+                      <FormattedMessage {...messages.remainingNone} />
+                    ) : (
+                      <FormattedMessage
+                        {...messages.remaining}
+                        values={{ count: progress.remaining }}
+                      />
+                    )}
+                  </Text>
+                ) : null}
+              </Box>
+
+              <Text
+                size={2}
+                color="default2"
+                display="block"
+                className={styles.status}
+                data-test-id="voucher-redemptions-schedule"
+              >
+                {scheduleStatus}
+              </Text>
+            </>
+          )}
         </Box>
 
         {!loading && constraintChips.length > 0 ? (

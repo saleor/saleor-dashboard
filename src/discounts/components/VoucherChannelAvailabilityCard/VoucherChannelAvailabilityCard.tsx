@@ -17,6 +17,7 @@ interface VoucherChannelAvailabilityCardProps {
   channels: ChannelVoucherData[];
   totalChannelsCount: number;
   disabled?: boolean;
+  loading?: boolean;
   managePermissions: PermissionEnum[];
   onManageClick: () => void;
   /** Used only to derive per-channel Active / Scheduled / Ended status. */
@@ -32,6 +33,7 @@ const toChannelSummary = (channel: ChannelVoucherData): ChannelAvailabilitySumma
 export const VoucherChannelAvailabilityCard = ({
   channels,
   totalChannelsCount,
+  loading = false,
   managePermissions,
   onManageClick,
   scheduleData,
@@ -83,6 +85,7 @@ export const VoucherChannelAvailabilityCard = ({
       variant="list"
       channels={channelSummaries}
       totalChannelsCount={totalChannelsCount}
+      isLoading={loading}
       emptyDescription={intl.formatMessage(messages.emptyDescription)}
       onManageClick={onManageClick}
       managePermissions={managePermissions}

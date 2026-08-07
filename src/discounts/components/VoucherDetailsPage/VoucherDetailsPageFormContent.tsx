@@ -196,7 +196,10 @@ export const VoucherDetailsPageFormContent = ({
   const intl = useIntl();
   const { data, change, set, triggerChange, changedData, setIsSubmitDisabled } = form;
   const allErrors = [...localErrors, ...errors];
-  const { showCatalogue, showCountries } = resolveVoucherSectionVisibility(data);
+  // Form mounts only after voucher exists — keep type-dependent sections gated on data.
+  const visibility = resolveVoucherSectionVisibility(data);
+  const showCatalogue = visibility.showCatalogue;
+  const showCountries = visibility.showCountries;
   const sectionNavItems = useVoucherSectionNavItems({ showCatalogue, showCountries });
   const sectionIds = getVoucherSectionIds({ showCatalogue, showCountries });
   const { activeId, selectSection } = useVoucherSectionScrollSpy({ sectionIds });
@@ -437,7 +440,6 @@ export const VoucherDetailsPageFormContent = ({
             onlyForStaff={data.onlyForStaff}
             applyOncePerCustomer={data.applyOncePerCustomer}
             singleUse={data.singleUse}
-            loading={!voucher}
           />
           <VoucherScheduleCard
             data={{

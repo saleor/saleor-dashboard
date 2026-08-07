@@ -10,7 +10,7 @@ import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Ticket } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -86,6 +86,42 @@ export const VoucherCodesTable = ({
     },
     [onSelectedCodesChange],
   );
+
+  // Table-shaped shell (header + row + pagination) — not a single anonymous bar.
+  if (loading && codes.length === 0) {
+    return (
+      <Box data-test-id="voucher-codes-table-skeleton" aria-busy="true">
+        <Box
+          paddingX={ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET}
+          paddingY={3}
+          display="flex"
+          flexDirection="column"
+          gap={3}
+        >
+          <Box display="flex" alignItems="center" gap={4}>
+            <Skeleton __width="1rem" __height="1rem" />
+            <Skeleton __width="3.5rem" __height="0.875rem" />
+            <Skeleton __width="3.5rem" __height="0.875rem" />
+            <Box __marginLeft="auto">
+              <Skeleton __width="3rem" __height="0.875rem" />
+            </Box>
+          </Box>
+          <Skeleton __height="3rem" borderRadius={2} />
+        </Box>
+        <Box
+          paddingX={ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET}
+          paddingY={3}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={3}
+        >
+          <Skeleton __width="7rem" __height="1.5rem" />
+          <Skeleton __width="5rem" __height="1.5rem" />
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <>

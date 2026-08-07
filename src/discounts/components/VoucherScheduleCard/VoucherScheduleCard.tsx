@@ -4,7 +4,7 @@ import {
   type VoucherScheduleDateData,
 } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/getVoucherSchedulePhase";
 import { type DiscountErrorFragment } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type ChangeEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,6 +15,7 @@ interface VoucherScheduleCardProps {
   data: VoucherScheduleDateData;
   errors: DiscountErrorFragment[];
   disabled?: boolean;
+  loading?: boolean;
   onChange: (event: ChangeEvent<any>) => void;
 }
 
@@ -22,6 +23,7 @@ export const VoucherScheduleCard = ({
   data,
   errors,
   disabled,
+  loading = false,
   onChange,
 }: VoucherScheduleCardProps): JSX.Element => {
   const intl = useIntl();
@@ -39,9 +41,13 @@ export const VoucherScheduleCard = ({
         <Text size={5} fontWeight="bold" as="h2">
           <FormattedMessage {...messages.title} />
         </Text>
-        <Text size={2} color="default2" data-test-id="voucher-schedule-status">
-          {intl.formatMessage(statusMessage)}
-        </Text>
+        {loading ? (
+          <Skeleton __width="4rem" __height="0.875rem" data-test-id="voucher-schedule-status" />
+        ) : (
+          <Text size={2} color="default2" data-test-id="voucher-schedule-status">
+            {intl.formatMessage(statusMessage)}
+          </Text>
+        )}
       </Box>
       <Box className={styles.intro}>
         <Text size={3} color="default2">
@@ -49,13 +55,27 @@ export const VoucherScheduleCard = ({
         </Text>
       </Box>
       <Box className={styles.body} data-test-id="voucher-availability-schedule">
-        <DiscountDates
-          data={data}
-          disabled={!!disabled}
-          errors={errors}
-          onChange={onChange}
-          unwrapped
-        />
+        {loading ? (
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap={3}
+            data-test-id="voucher-schedule-skeleton"
+            aria-busy="true"
+          >
+            <Skeleton __height="2.5rem" />
+            <Skeleton __height="2.5rem" />
+            <Skeleton __height="2.5rem" />
+          </Box>
+        ) : (
+          <DiscountDates
+            data={data}
+            disabled={!!disabled}
+            errors={errors}
+            onChange={onChange}
+            unwrapped
+          />
+        )}
       </Box>
     </Box>
   );

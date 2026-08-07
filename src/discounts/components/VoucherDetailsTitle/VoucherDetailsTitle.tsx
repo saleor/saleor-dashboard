@@ -18,9 +18,23 @@ export const VoucherDetailsTitle = ({ voucher, name }: VoucherDetailsTitleProps)
   const intl = useIntl();
 
   if (!voucher) {
+    // Name · type pill · schedule/status — three title meta slots (time hint optional).
     return (
-      <Box display="flex" alignItems="center" gap={2}>
-        <Skeleton __width="10em" />
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={2}
+        paddingRight={3}
+        __minWidth="0"
+        data-test-id="voucher-details-title-skeleton"
+        aria-busy="true"
+      >
+        <Skeleton __width="9rem" __height="1.25rem" flexShrink="0" />
+        <Skeleton __width="5.5rem" __height="1.375rem" borderRadius={3} flexShrink="0" />
+        <Box display="flex" alignItems="center" gap={1} flexShrink="0">
+          <Skeleton __width="0.5rem" __height="0.5rem" borderRadius="100%" />
+          <Skeleton __width="4.5rem" __height="0.875rem" />
+        </Box>
       </Box>
     );
   }

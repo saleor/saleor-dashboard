@@ -13,7 +13,7 @@ Conventions for **models you work with daily** — edit surfaces under `src/<fea
 
 **Not this skill:** Configuration hubs under Configuration → use `Settings*` in [`src/components/Settings/`](../../src/components/Settings/) (`SettingsSection`, `SettingsHubLayout`). Same row _idea_, different surface — do not put entity detail UI in `src/components/Settings/`.
 
-**Also see:** [`saleor-dashboard-detail-pages`](./saleor-dashboard-detail-pages/SKILL.md) (metadata modal, TopNav wiring), [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) (tokens, `DetailGroupBox`), [`saleor-dashboard-microcopy`](./saleor-dashboard-microcopy/SKILL.md) (hint copy), [`saleor-dashboard-feedback`](./saleor-dashboard-feedback/SKILL.md) (toasts vs inline/banner errors), [`saleor-dashboard-datagrid`](./saleor-dashboard-datagrid/SKILL.md) (product lists on detail pages).
+**Also see:** [`saleor-dashboard-detail-pages`](./saleor-dashboard-detail-pages/SKILL.md) (metadata modal, TopNav wiring), [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) (tokens, `DetailGroupBox`), [`saleor-dashboard-microcopy`](./saleor-dashboard-microcopy/SKILL.md) (hint copy), [`saleor-dashboard-feedback`](./saleor-dashboard-feedback/SKILL.md) (toasts vs inline/banner errors), [`saleor-dashboard-loading`](./saleor-dashboard-loading/SKILL.md) (skeletons, page gates, no fake defaults), [`saleor-dashboard-datagrid`](./saleor-dashboard-datagrid/SKILL.md) (product lists on detail pages).
 
 ### External reference — [Vercel design resources](https://vercel.com/design)
 
@@ -323,7 +323,7 @@ Savebar on entity detail: `Spacer` + composition hint (optional) + Cancel + Conf
 - [ ] **Sidebar** — operational cards only (`CollectionChannelAvailabilityCard`, `AssignListCard`, widgets)
 - [ ] **Staged assigns** — membership changes in form until Save when assign dialogs exist
 - [ ] **Savebar hint** — `SavebarCompositionHint` when Save bundles fields + sidebar + listings
-- [ ] **Loading** — layout-shaped loading (skeleton/throbber matching grid), not content jump
+- [ ] **Loading** — follow [`saleor-dashboard-loading`](./saleor-dashboard-loading/SKILL.md): layout-shaped shell, gate Form until entity exists, no fake selected defaults / metrics
 - [ ] **Setup** — `SetupChecklist` only when entity has a real readiness funnel
 
 ---

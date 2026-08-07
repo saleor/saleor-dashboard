@@ -96,7 +96,9 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
           <Text size={5} fontWeight="bold" as="h2">
             {intl.formatMessage(channelAvailabilityMessages.availabilityTitle)}
           </Text>
-          {!isLoading && (
+          {isLoading ? (
+            <Skeleton __height="14px" __width="10rem" />
+          ) : (
             <Text size={2} color="default2" data-test-id="channel-availability-subtitle">
               {intl.formatMessage(channelAvailabilityMessages.availabilitySubtitle, {
                 entityType: entityTypeLabel,
@@ -113,6 +115,7 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
               onClick={onManageClick}
               data-test-id="channels-availability-manage-button"
               type="button"
+              disabled={isLoading}
             >
               {intl.formatMessage(channelAvailabilityMessages.manageButton)}
             </Button>
@@ -121,9 +124,32 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
       </Box>
 
       {isLoading ? (
-        <Box className={styles.loading}>
-          <Skeleton __height="14px" marginBottom={2} />
-          <Skeleton __height="14px" __width="60%" />
+        <Box
+          className={styles.loading}
+          aria-busy="true"
+          data-test-id="channel-availability-loading"
+        >
+          <Box display="flex" flexDirection="column" gap={0}>
+            {[0, 1, 2].map(index => (
+              <Box
+                key={index}
+                display="flex"
+                alignItems="center"
+                gap={2}
+                paddingX={4}
+                paddingY={2}
+                borderBottomWidth={index === 2 ? 0 : 1}
+                borderBottomStyle="solid"
+                borderColor="default1"
+              >
+                <Skeleton __width="0.5rem" __height="0.5rem" borderRadius="100%" />
+                <Skeleton
+                  __height="14px"
+                  __width={index === 0 ? "70%" : index === 1 ? "55%" : "40%"}
+                />
+              </Box>
+            ))}
+          </Box>
         </Box>
       ) : !hasChannels ? (
         <Box className={styles.emptyState} data-test-id="channel-availability-empty">

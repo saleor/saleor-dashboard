@@ -43,6 +43,7 @@ import { type VoucherCode } from "../VoucherCodesDatagrid/types";
 import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import { voucherDetailsPageMessages as messages } from "./messages";
 import { VoucherDetailsPageFormContent } from "./VoucherDetailsPageFormContent";
+import { VoucherDetailsPageLoading } from "./VoucherDetailsPageLoading";
 
 export enum VoucherDetailsPageTab {
   categories = "categories",
@@ -90,7 +91,8 @@ interface VoucherDetailsPageProps
   tabItemsCount: VoucherTabItemsCount;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  voucher: VoucherDetailsPageVoucher;
+  /** Undefined/null until the details query resolves — page shows a loading shell. */
+  voucher: VoucherDetailsPageVoucher | null | undefined;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
   savedChannelListings: ChannelVoucherData[];
@@ -204,6 +206,20 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  // Keep the layout shell until the first codes fetch settles so we don't flash
+  // half-loaded UI. Keyed by voucher id so refetches after reveal stay on the form.
+  const [revealedForVoucherId, setRevealedForVoucherId] = React.useState<string | null>(null);
+
+  React.useEffect(
+    function revealWhenPrimaryQueriesSettle() {
+      if (voucher && !voucherCodesLoading) {
+        setRevealedForVoucherId(voucher.id);
+      }
+    },
+    [voucher, voucherCodesLoading],
+  );
+
+  const hasRevealedContent = !!voucher && revealedForVoucherId === voucher.id;
 
   const openPlaygroundURL = () => {
     context.setDevModeContent(voucherGraphiQLQuery);
@@ -322,8 +338,16 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     return items;
   }, [disabled, extensionMenuItems, intl, onRemove, onShowSetupChecklist]);
 
+  // Do not mount Form with invented ENTIRE_ORDER / VALUE_FIXED defaults — that flashes
+  // the wrong discount selection before voucher syncs (Geist: no fake selected state).
+  // Also wait for the initial codes query so the page doesn't reveal in half-loaded frames.
+  if (!voucher || !hasRevealedContent) {
+    return <VoucherDetailsPageLoading voucher={voucher} />;
+  }
+
   return (
     <Form
+      key={voucher.id}
       confirmLeave
       formId={VOUCHER_UPDATE_FORM_ID}
       initial={initialForm}

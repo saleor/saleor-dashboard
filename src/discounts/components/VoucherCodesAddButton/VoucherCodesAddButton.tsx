@@ -10,11 +10,14 @@ import { messages } from "./messages";
 interface VoucherCodesAddButtonProps {
   onMultiCodesGenerate: () => void;
   onSingleCodesGenerate: () => void;
+  /** Reserves header layout while the page shell loads — no menu. */
+  disabled?: boolean;
 }
 
 export const VoucherCodesAddButton = ({
   onMultiCodesGenerate,
   onSingleCodesGenerate,
+  disabled = false,
 }: VoucherCodesAddButtonProps): JSX.Element => {
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
   const intl = useIntl();
@@ -43,6 +46,15 @@ export const VoucherCodesAddButton = ({
     ],
     [handleMultupleCodesGenerate, handleManualCodeGenerate, intl],
   );
+
+  if (disabled) {
+    return (
+      <Button data-test-id="add-code-button" type="button" size="small" disabled>
+        <Plus size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+        {intl.formatMessage(messages.addCode)}
+      </Button>
+    );
+  }
 
   return (
     <Popover open={isSubMenuOpen} onOpenChange={setSubMenuOpen}>

@@ -9,7 +9,7 @@ import { DiscountErrorCode, type DiscountErrorFragment } from "@dashboard/graphq
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Lock } from "lucide-react";
 import { type ChangeEvent, type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -41,6 +41,7 @@ const LockedSettingNotice = ({
 interface VoucherLimitsProps {
   data: VoucherDetailsPageFormData;
   disabled: boolean;
+  loading?: boolean;
   errors: DiscountErrorFragment[];
   initialUsageLimit: number;
   onChange: (event: ChangeEvent<any>) => void;
@@ -51,6 +52,7 @@ interface VoucherLimitsProps {
 export const VoucherLimits = ({
   data,
   disabled,
+  loading = false,
   errors,
   initialUsageLimit,
   onChange,
@@ -93,141 +95,159 @@ export const VoucherLimits = ({
       }
       contentFlush
     >
-      <DetailSettingToggleRow
-        testId="has-usage-limit"
-        title={intl.formatMessage(messages.hasUsageLimit)}
-        description={
-          <FormattedMessage
-            id="jVfo2X"
-            defaultMessage="Caps total redemptions across all customers and codes."
-            description="voucher total usage limit description"
-          />
-        }
-        pressed={data.hasUsageLimit}
-        onPressedChange={pressed => {
-          onChange({
-            target: {
-              name: "hasUsageLimit",
-              value: pressed,
-            },
-          } as ChangeEvent<any>);
-          setData({ usageLimit: initialUsageLimit });
-        }}
-        disabled={disabled || usageSettingsLocked}
-        notice={
-          usageLimitShowLockNotice ? (
-            <LockedSettingNotice data-test-id="usage-limit-locked-notice">
-              {usageLimitLockedNotice}
-            </LockedSettingNotice>
-          ) : null
-        }
-      >
-        {data.hasUsageLimit ? (
-          <DetailSettingNestedField>
-            {isNewVoucher ? (
-              <TextField
-                data-test-id="usage-limit"
-                disabled={disabled || usageSettingsLocked}
-                error={!!formErrors.usageLimit || data.usageLimit <= 0}
-                helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
-                label={intl.formatMessage(messages.usageLimit)}
-                name={"usageLimit" as keyof VoucherDetailsPageFormData}
-                value={data.usageLimit}
-                onChange={onChange}
-                type="number"
-                fullWidth
-                inputProps={{
-                  min: 1,
-                }}
+      {loading ? (
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap={1}
+          paddingX={6}
+          paddingY={4}
+          data-test-id="usage-limit-section-skeleton"
+        >
+          <Skeleton __height="3.5rem" />
+          <Skeleton __height="3.5rem" />
+          <Skeleton __height="3.5rem" />
+          <Skeleton __height="3.5rem" />
+        </Box>
+      ) : (
+        <>
+          <DetailSettingToggleRow
+            testId="has-usage-limit"
+            title={intl.formatMessage(messages.hasUsageLimit)}
+            description={
+              <FormattedMessage
+                id="jVfo2X"
+                defaultMessage="Caps total redemptions across all customers and codes."
+                description="voucher total usage limit description"
               />
-            ) : (
-              <Grid variant="uniform">
-                <TextField
-                  data-test-id="usage-limit"
-                  disabled={disabled || usageSettingsLocked}
-                  error={!!formErrors.usageLimit || data.usageLimit <= 0}
-                  helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
-                  label={intl.formatMessage(messages.usageLimit)}
-                  name={"usageLimit" as keyof VoucherDetailsPageFormData}
-                  value={data.usageLimit}
-                  onChange={onChange}
-                  type="number"
-                  inputProps={{
-                    min: 1,
-                  }}
-                />
-                <div className={styles.usesLeftLabelWrapper}>
-                  <Text size={2} fontWeight="light">
-                    {intl.formatMessage(messages.usesLeftCaption)}
-                  </Text>
-                  <Text>{usesLeft >= 0 ? usesLeft : 0}</Text>
-                </div>
-              </Grid>
-            )}
-          </DetailSettingNestedField>
-        ) : null}
-      </DetailSettingToggleRow>
+            }
+            pressed={data.hasUsageLimit}
+            onPressedChange={pressed => {
+              onChange({
+                target: {
+                  name: "hasUsageLimit",
+                  value: pressed,
+                },
+              } as ChangeEvent<any>);
+              setData({ usageLimit: initialUsageLimit });
+            }}
+            disabled={disabled || usageSettingsLocked}
+            notice={
+              usageLimitShowLockNotice ? (
+                <LockedSettingNotice data-test-id="usage-limit-locked-notice">
+                  {usageLimitLockedNotice}
+                </LockedSettingNotice>
+              ) : null
+            }
+          >
+            {data.hasUsageLimit ? (
+              <DetailSettingNestedField>
+                {isNewVoucher ? (
+                  <TextField
+                    data-test-id="usage-limit"
+                    disabled={disabled || usageSettingsLocked}
+                    error={!!formErrors.usageLimit || data.usageLimit <= 0}
+                    helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
+                    label={intl.formatMessage(messages.usageLimit)}
+                    name={"usageLimit" as keyof VoucherDetailsPageFormData}
+                    value={data.usageLimit}
+                    onChange={onChange}
+                    type="number"
+                    fullWidth
+                    inputProps={{
+                      min: 1,
+                    }}
+                  />
+                ) : (
+                  <Grid variant="uniform">
+                    <TextField
+                      data-test-id="usage-limit"
+                      disabled={disabled || usageSettingsLocked}
+                      error={!!formErrors.usageLimit || data.usageLimit <= 0}
+                      helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
+                      label={intl.formatMessage(messages.usageLimit)}
+                      name={"usageLimit" as keyof VoucherDetailsPageFormData}
+                      value={data.usageLimit}
+                      onChange={onChange}
+                      type="number"
+                      inputProps={{
+                        min: 1,
+                      }}
+                    />
+                    <div className={styles.usesLeftLabelWrapper}>
+                      <Text size={2} fontWeight="light">
+                        {intl.formatMessage(messages.usesLeftCaption)}
+                      </Text>
+                      <Text>{usesLeft >= 0 ? usesLeft : 0}</Text>
+                    </div>
+                  </Grid>
+                )}
+              </DetailSettingNestedField>
+            ) : null}
+          </DetailSettingToggleRow>
 
-      <DetailSettingToggleRow
-        testId="apply-once-per-customer"
-        title={intl.formatMessage(messages.applyOncePerCustomer)}
-        description={<FormattedMessage {...messages.applyOncePerCustomerDescription} />}
-        pressed={data.applyOncePerCustomer}
-        onPressedChange={pressed =>
-          onChange({
-            target: {
-              name: "applyOncePerCustomer",
-              value: pressed,
-            },
-          } as ChangeEvent<any>)
-        }
-        disabled={disabled}
-      />
-
-      <DetailSettingToggleRow
-        testId="single-use"
-        title={intl.formatMessage(messages.singleUse)}
-        description={<FormattedMessage {...messages.singleUseDescription} />}
-        pressed={data.singleUse}
-        onPressedChange={pressed =>
-          onChange({
-            target: {
-              name: "singleUse",
-              value: pressed,
-            },
-          } as ChangeEvent<any>)
-        }
-        disabled={disabled || usageSettingsLocked}
-        notice={
-          singleUseShowLockNotice ? (
-            <LockedSettingNotice data-test-id="single-use-locked-notice">
-              {singleUseLockedNotice}
-            </LockedSettingNotice>
-          ) : null
-        }
-      />
-
-      <DetailSettingToggleRow
-        testId="only-for-staff"
-        title={intl.formatMessage(messages.onlyForStaff)}
-        description={
-          <FormattedMessage
-            id="jT/uX4"
-            defaultMessage="Only staff users can apply this voucher at checkout."
-            description="voucher staff only description"
+          <DetailSettingToggleRow
+            testId="apply-once-per-customer"
+            title={intl.formatMessage(messages.applyOncePerCustomer)}
+            description={<FormattedMessage {...messages.applyOncePerCustomerDescription} />}
+            pressed={data.applyOncePerCustomer}
+            onPressedChange={pressed =>
+              onChange({
+                target: {
+                  name: "applyOncePerCustomer",
+                  value: pressed,
+                },
+              } as ChangeEvent<any>)
+            }
+            disabled={disabled}
           />
-        }
-        pressed={data.onlyForStaff}
-        onPressedChange={pressed =>
-          onChange({
-            target: {
-              name: "onlyForStaff",
-              value: pressed,
-            },
-          } as ChangeEvent<any>)
-        }
-        disabled={disabled}
-      />
+
+          <DetailSettingToggleRow
+            testId="single-use"
+            title={intl.formatMessage(messages.singleUse)}
+            description={<FormattedMessage {...messages.singleUseDescription} />}
+            pressed={data.singleUse}
+            onPressedChange={pressed =>
+              onChange({
+                target: {
+                  name: "singleUse",
+                  value: pressed,
+                },
+              } as ChangeEvent<any>)
+            }
+            disabled={disabled || usageSettingsLocked}
+            notice={
+              singleUseShowLockNotice ? (
+                <LockedSettingNotice data-test-id="single-use-locked-notice">
+                  {singleUseLockedNotice}
+                </LockedSettingNotice>
+              ) : null
+            }
+          />
+
+          <DetailSettingToggleRow
+            testId="only-for-staff"
+            title={intl.formatMessage(messages.onlyForStaff)}
+            description={
+              <FormattedMessage
+                id="jT/uX4"
+                defaultMessage="Only staff users can apply this voucher at checkout."
+                description="voucher staff only description"
+              />
+            }
+            pressed={data.onlyForStaff}
+            onPressedChange={pressed =>
+              onChange({
+                target: {
+                  name: "onlyForStaff",
+                  value: pressed,
+                },
+              } as ChangeEvent<any>)
+            }
+            disabled={disabled}
+          />
+        </>
+      )}
     </DetailSettingsCard>
   );
 };
