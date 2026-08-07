@@ -1269,6 +1269,10 @@
   "3Eyq0y": {
     "string": "Mark as paid manually if the payment is confirmed"
   },
+  "3GIhuP": {
+    "context": "toast title after voucher delete succeeds",
+    "string": "Voucher deleted"
+  },
   "3Gkj+d": {
     "context": "button to reset cut-off date to saved value",
     "string": "Reset to saved value"
@@ -2345,9 +2349,6 @@
   "80g19N": {
     "string": "View on GitHub"
   },
-  "83egc7": {
-    "string": "Manually enter the voucher code."
-  },
   "84VEY1": {
     "string": "Shipping rate updated"
   },
@@ -2873,6 +2874,10 @@
   "A1KX3d": {
     "context": "simple product create pricing empty state",
     "string": "Add channels in the Channels section to set prices"
+  },
+  "A26ZaZ": {
+    "context": "toast title when voucher save fails",
+    "string": "Couldn't save voucher"
   },
   "A6mmoM": {
     "context": "Reassurance under verification badge when API reports stock but the channel has no shipping zones in direct mode",
@@ -3615,6 +3620,10 @@
   "CrnqOK": {
     "string": "Country tax rates updated"
   },
+  "CsDZaw": {
+    "context": "toast description when create is blocked by missing codes",
+    "string": "Add at least one code"
+  },
   "Csi0Bk": {
     "context": "voucher metadata dialog header",
     "string": "Voucher Metadata"
@@ -3713,9 +3722,6 @@
   "DJFPzq": {
     "context": "button",
     "string": "Confirm"
-  },
-  "DJatYh": {
-    "string": "Generate multiple codes at once"
   },
   "DK+8PB": {
     "string": "This channel has already been created"
@@ -4361,9 +4367,6 @@
     "context": "pill status for fully captured outcome",
     "string": "Fully captured"
   },
-  "GA+Djy": {
-    "string": "Are you sure you want to delete these voucher codes?"
-  },
   "GAmGog": {
     "context": "value input label",
     "string": "Discount value"
@@ -4399,6 +4402,10 @@
   "GGhg9z": {
     "context": "order header date, earlier today",
     "string": "Created today at {time}"
+  },
+  "GHu/0h": {
+    "context": "toast description when save fails due to voucher code errors",
+    "string": "Fix the codes section and try again."
   },
   "GIuS7b": {
     "string": "creating custom extensions"
@@ -4444,9 +4451,6 @@
   "GP0zGO": {
     "context": "dialog header",
     "string": "Select destination channel:"
-  },
-  "GTCg9O": {
-    "string": "You must add at least one voucher code"
   },
   "GTg7rP": {
     "context": "configuration menu item title",
@@ -4674,6 +4678,10 @@
   "HAlOn1": {
     "string": "Name"
   },
+  "HBLYWs": {
+    "context": "toast title when voucher delete fails",
+    "string": "Couldn't delete voucher. Try again."
+  },
   "HBrAXs": {
     "context": "channel status",
     "string": "Active"
@@ -4828,9 +4836,6 @@
   "HnZCl7": {
     "context": "search input placeholder",
     "string": "Search tax countries"
-  },
-  "HoBGng": {
-    "string": "Voucher created"
   },
   "Hpd7i6": {
     "context": "collection channel status when published",
@@ -4996,6 +5001,10 @@
   "ILgbKN": {
     "context": "key-value field button add more key-value pairs",
     "string": "Add more"
+  },
+  "ILhY5I": {
+    "context": "voucher save composition segment for start/end availability window",
+    "string": "Schedule"
   },
   "ILrXJV": {
     "string": "Press {key1} {key2} to send"
@@ -5886,9 +5895,6 @@
     "context": "error message",
     "string": "Maximum weight must be higher than minimum"
   },
-  "M59JhX": {
-    "string": "Manual"
-  },
   "M61TN/": {
     "context": "product type shippable",
     "string": "Shippable"
@@ -6355,6 +6361,10 @@
     "context": "gift card history message",
     "string": "Gift card was deactivated"
   },
+  "NwA0hL": {
+    "context": "toast title when voucher create fails or is blocked",
+    "string": "Couldn't create voucher"
+  },
   "NwQXZp": {
     "context": "status",
     "string": "Not active"
@@ -6742,9 +6752,6 @@
     "context": "WarehousesSection select field label",
     "string": "Warehouse"
   },
-  "PWG97N": {
-    "string": "You must assign the voucher to at least one channel"
-  },
   "PWJpiZ": {
     "context": "gift card instrument card, last redemption timestamp",
     "string": "Last used {date}"
@@ -7090,6 +7097,10 @@
   "QjPJ78": {
     "context": "close full-screen",
     "string": "Close"
+  },
+  "QjaBoT": {
+    "context": "voucher add-code menu: bulk generate",
+    "string": "Generate codes"
   },
   "QjwEr6": {
     "string": "Go to categories"
@@ -7739,9 +7750,6 @@
   "TTbx89": {
     "context": "Short tooltip for OrderSettings.automaticallyFulfillNonShippableGiftCard",
     "string": "Auto-fulfills non-shippable gift card lines when the order is created."
-  },
-  "TV940D": {
-    "string": "{count, plural, one {# voucher code deleted} other {# voucher codes deleted}}"
   },
   "TVR4E6": {
     "string": "Open playground"
@@ -8913,9 +8921,6 @@
     "context": "app extensions subsection",
     "string": "Apps"
   },
-  "Y8XVvH": {
-    "string": "Failed to delete voucher codes"
-  },
   "Y9lv8z": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
@@ -9610,9 +9615,6 @@
     "context": "ChannelsSection subtitle",
     "string": "Assign channels to this shipping zone so we know which orders will be supported"
   },
-  "awNXI/": {
-    "string": "Auto-generate codes"
-  },
   "axFFaD": {
     "context": "range input label",
     "string": "Postal codes (end)"
@@ -9725,6 +9727,10 @@
   "bKlRVC": {
     "context": "section title for customer login and registration settings",
     "string": "Customer accounts"
+  },
+  "bKrF/Q": {
+    "context": "Dismiss all currently visible toast notifications",
+    "string": "Dismiss"
   },
   "bL/Wrc": {
     "context": "plugin status",
@@ -10981,6 +10987,10 @@
     "context": "Entity type label for channel availability panel subtitles",
     "string": "Collection"
   },
+  "giyyan": {
+    "context": "toast description when create is blocked by missing channels",
+    "string": "Assign at least one channel"
+  },
   "gj3MUg": {
     "context": "gift card history message",
     "string": "Gift card was resent"
@@ -11284,6 +11294,10 @@
   "i+Vox0": {
     "context": "invoice generating has finished, header",
     "string": "Invoice Generated"
+  },
+  "i+v5kJ": {
+    "context": "voucher add-code menu hint for manual entry",
+    "string": "Enter a single code"
   },
   "i/ZhxL": {
     "context": "section header returned",
@@ -13033,6 +13047,10 @@
   "oX2TAb": {
     "string": "Select gifts"
   },
+  "oX9wx8": {
+    "context": "helper text when usage limit is zero or negative",
+    "string": "Enter a limit of at least 1."
+  },
   "oYGfnY": {
     "string": "ZIP / Postal code"
   },
@@ -13815,6 +13833,10 @@
     "context": "model seo options description",
     "string": "Add search engine title and description to make this model easier to find"
   },
+  "rAWeFD": {
+    "context": "voucher add-code menu hint for bulk generate",
+    "string": "Create multiple codes at once"
+  },
   "rBfhUQ": {
     "context": "Banner description after partial product save failure",
     "string": "Saving runs in steps. Review what applied below, fix the problem, and save again."
@@ -14104,6 +14126,9 @@
   "sKbtzQ": {
     "context": "voucher catalogue collections row title",
     "string": "Collections"
+  },
+  "sO+uiz": {
+    "string": "These codes will be removed when you save the voucher."
   },
   "sOlOZB": {
     "context": "gift cards page subheader",
@@ -14447,10 +14472,6 @@
     "context": "order status",
     "string": "Draft"
   },
-  "toastDismissAll.dismissAll": {
-    "context": "Dismiss all visible toast notifications",
-    "string": "Dismiss"
-  },
   "tpM9O2": {
     "context": "empty state when attribute is not assigned to product types",
     "string": "Not used on any product types yet."
@@ -14664,9 +14685,6 @@
   "uVscLr": {
     "context": "setup task CTA",
     "string": "Review countries"
-  },
-  "uX+Vg7": {
-    "string": "Voucher updated"
   },
   "uXa7/n": {
     "context": "voucher redemptions constraint chip when onlyForStaff is on",
@@ -14892,6 +14910,10 @@
     "context": "enabled status option label",
     "string": "Enabled"
   },
+  "vCIhp5": {
+    "context": "voucher add-code menu: enter one code by hand",
+    "string": "Manual code"
+  },
   "vCt3/t": {
     "context": "channel setup card title",
     "string": "Finish setting up this channel"
@@ -14934,6 +14956,10 @@
   "vGfmv8": {
     "context": "card title, app install page, about privacy",
     "string": "Info"
+  },
+  "vKVMsA": {
+    "context": "toast description pointing merchants to inline field errors",
+    "string": "Check the highlighted fields and try again."
   },
   "vLc9Td": {
     "context": "Title for public API verification section",
@@ -15547,6 +15573,10 @@
     "context": "gift card detail page, top-bar metadata button tooltip",
     "string": "Edit gift card metadata"
   },
+  "xceetm": {
+    "context": "toast title after voucher save succeeds",
+    "string": "Voucher updated"
+  },
   "xeMcID": {
     "string": "Warehouse created"
   },
@@ -15901,6 +15931,10 @@
   "z9wQ/U": {
     "context": "no variant stock in warehouse",
     "string": "No Stock"
+  },
+  "zBtMtz": {
+    "context": "toast title after voucher create succeeds",
+    "string": "Voucher created"
   },
   "zCb8fX": {
     "string": "Weight"
