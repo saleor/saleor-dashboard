@@ -1381,6 +1381,19 @@ export type AppManifestExtension = {
   url: Scalars['String']['output'];
 };
 
+/**
+ * Preview of the changes a manifest reload would apply.
+ *
+ * Added in Saleor 3.24.
+ */
+export type AppManifestReloadPreview = {
+  __typename: 'AppManifestReloadPreview';
+  /** The installed app's current state, serialized in the manifest shape. Covers only the fields a reload applies. */
+  currentManifest: Scalars['JSONString']['output'];
+  /** The freshly fetched manifest, serialized in the same shape as `currentManifest`. */
+  incomingManifest: Scalars['JSONString']['output'];
+};
+
 export type AppManifestRequiredSaleorVersion = {
   __typename: 'AppManifestRequiredSaleorVersion';
   /** Required Saleor version as semver range. */
@@ -1613,6 +1626,25 @@ export type AppReenableSyncWebhooks = {
   /** @deprecated Use `errors` field instead. */
   appErrors: Array<AppError>;
   errors: Array<AppError>;
+};
+
+/**
+ * Reload an installed app from its manifest URL: the app's fields, permissions, extensions and webhooks are updated to match the manifest. Webhooks are matched by name; a webhook renamed in the manifest is deleted and recreated. The `isActive` flag of existing webhooks and of the app itself, and app tokens, are never modified. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+ *
+ * Added in Saleor 3.24.
+ *
+ * Triggers the following webhook events:
+ * - APP_UPDATED (async): An app was reloaded from its manifest.
+ */
+export type AppReloadManifest = {
+  __typename: 'AppReloadManifest';
+  /** App reloaded from its manifest. */
+  app: Maybe<App>;
+  /** @deprecated Use `errors` field instead. */
+  appErrors: Array<AppError>;
+  errors: Array<AppError>;
+  /** Current and incoming manifest, for reviewing the changes. */
+  preview: Maybe<AppManifestReloadPreview>;
 };
 
 /**
@@ -12492,6 +12524,15 @@ export type Mutation = {
    */
   appReenableSyncWebhooks: Maybe<AppReenableSyncWebhooks>;
   /**
+   * Reload an installed app from its manifest URL: the app's fields, permissions, extensions and webhooks are updated to match the manifest. Webhooks are matched by name; a webhook renamed in the manifest is deleted and recreated. The `isActive` flag of existing webhooks and of the app itself, and app tokens, are never modified. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+   *
+   * Added in Saleor 3.24.
+   *
+   * Triggers the following webhook events:
+   * - APP_UPDATED (async): An app was reloaded from its manifest.
+   */
+  appReloadManifest: Maybe<AppReloadManifest>;
+  /**
    * Retry failed installation of new app.
    *
    * Requires one of the following permissions: MANAGE_APPS.
@@ -14872,6 +14913,13 @@ export type MutationAppProblemDismissArgs = {
 
 export type MutationAppReenableSyncWebhooksArgs = {
   appId: Scalars['ID']['input'];
+};
+
+
+export type MutationAppReloadManifestArgs = {
+  dryRun?: InputMaybe<Scalars['Boolean']['input']>;
+  expectedIncomingManifest: InputMaybe<Scalars['JSONString']['input']>;
+  id: Scalars['ID']['input'];
 };
 
 

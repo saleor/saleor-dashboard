@@ -302,6 +302,11 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Deactivate",
     description: "button",
   },
+  reload: {
+    id: "h3Os+T",
+    defaultMessage: "Reload",
+    description: "button",
+  },
   back: {
     id: "0OfZJA",
     defaultMessage: "Back",

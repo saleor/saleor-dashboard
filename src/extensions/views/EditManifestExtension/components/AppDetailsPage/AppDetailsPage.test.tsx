@@ -59,6 +59,7 @@ describe("Apps AppDetailsPage", () => {
     const onAppActivateOpen = jest.fn();
     const onAppDeactivateOpen = jest.fn();
     const onAppDeleteOpen = jest.fn();
+    const onAppReloadOpen = jest.fn();
 
     // Act
     render(
@@ -68,6 +69,7 @@ describe("Apps AppDetailsPage", () => {
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
+        onAppReloadOpen={onAppReloadOpen}
       />,
     );
     // Assert
@@ -76,6 +78,7 @@ describe("Apps AppDetailsPage", () => {
       onAppActivateOpen,
       onAppDeactivateOpen,
       onAppDeleteOpen,
+      onAppReloadOpen,
     });
     expect(mockAboutCard).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -109,6 +112,7 @@ describe("Apps AppDetailsPage", () => {
         onAppActivateOpen={jest.fn()}
         onAppDeactivateOpen={jest.fn()}
         onAppDeleteOpen={jest.fn()}
+        onAppReloadOpen={jest.fn()}
       />,
       { wrapper: Wrapper },
     );
@@ -130,6 +134,7 @@ describe("Apps AppDetailsPage", () => {
         onAppActivateOpen={jest.fn()}
         onAppDeactivateOpen={jest.fn()}
         onAppDeleteOpen={jest.fn()}
+        onAppReloadOpen={jest.fn()}
       />,
       { wrapper: Wrapper },
     );
@@ -150,6 +155,7 @@ describe("Apps AppDetailsPage", () => {
         onAppActivateOpen={jest.fn()}
         onAppDeactivateOpen={jest.fn()}
         onAppDeleteOpen={jest.fn()}
+        onAppReloadOpen={jest.fn()}
       />,
       { wrapper: Wrapper },
     );

@@ -2678,6 +2678,10 @@
     "context": "sale status",
     "string": "Active"
   },
+  "Ao/xqN": {
+    "context": "dialog header",
+    "string": "Reload Extension"
+  },
   "AqXzM2": {
     "string": "Order #{orderNumber}"
   },
@@ -5817,6 +5821,10 @@
     "context": "product availability",
     "string": "Available for purchase"
   },
+  "P27U3T": {
+    "context": "reload extension fetch error",
+    "string": "Could not load the manifest changes."
+  },
   "P4Hja1": {
     "string": "Create new shipping zone"
   },
@@ -7820,6 +7828,10 @@
     "context": "product types section name",
     "string": "Product Types"
   },
+  "YQrhBK": {
+    "context": "app has been reloaded from its manifest",
+    "string": "Extension reloaded"
+  },
   "YTvn5m": {
     "context": "automatic completion zero delay warning message",
     "string": "Setting delay to 0 will complete checkouts immediately after payment. This may break your storefront if it expects the Checkout object to remain available. ({link})"
@@ -8224,6 +8236,10 @@
   "aFVFeH": {
     "context": "submit button",
     "string": "Add manual capture"
+  },
+  "aGWXHy": {
+    "context": "reload extension up to date",
+    "string": "This extension is up to date with its manifest. There is nothing to apply."
   },
   "aHIrs/": {
     "string": "Failed to load filter data. Please refresh page to try again."
@@ -9482,6 +9498,10 @@
     "context": "gift card history message",
     "string": "Gift card was deactivated by {deactivatedBy}"
   },
+  "gBCpJ0": {
+    "context": "reload extension warning",
+    "string": "Applying these changes can grant the extension new permissions and delete webhooks that are not defined in the manifest."
+  },
   "gCZYcl": {
     "context": "tooltip shown when shipping method is selected but no other options exist",
     "string": "No alternative shipping methods available"
@@ -9505,6 +9525,10 @@
   "gGSCAj": {
     "context": "general translation section subtitle",
     "string": "Core content shown on the storefront"
+  },
+  "gH3lNV": {
+    "context": "reload extension description",
+    "string": "Review the changes between the current state of {name} and its manifest before applying them."
   },
   "gHB1Wx": {
     "context": "Number of countries covered by shipping",
@@ -9653,6 +9677,10 @@
   },
   "h2vipu": {
     "string": "Code"
+  },
+  "h3Os+T": {
+    "context": "button",
+    "string": "Reload"
   },
   "h5P++h": {
     "string": "Variants"

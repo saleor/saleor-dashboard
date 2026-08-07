@@ -187,6 +187,13 @@ export default defineConfig(({ command, mode }) => {
         output: {
           sourcemap,
           manualChunks: id => {
+            // @pierre/diffs pulls in shiki (syntax highlighting) — keep it in
+            // its own chunk instead of the eagerly-loaded vendor bundle. It is
+            // only imported via React.lazy in AppReloadDialog.
+            if (/node_modules\/(@pierre|@shikijs|shiki)\//.test(id)) {
+              return "manifest-diff-vendor";
+            }
+
             if (id.includes("node_modules")) {
               return "vendor";
             }

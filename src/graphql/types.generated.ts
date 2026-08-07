@@ -11502,6 +11502,15 @@ export type AppDeactivateMutationVariables = Exact<{
 
 export type AppDeactivateMutation = { __typename: 'Mutation', appDeactivate: { __typename: 'AppDeactivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
+export type AppReloadManifestMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  dryRun?: InputMaybe<Scalars['Boolean']['input']>;
+  expectedIncomingManifest?: InputMaybe<Scalars['JSONString']['input']>;
+}>;
+
+
+export type AppReloadManifestMutation = { __typename: 'Mutation', appReloadManifest: { __typename: 'AppReloadManifest', app: { __typename: 'App', id: string } | null, preview: { __typename: 'AppManifestReloadPreview', currentManifest: string, incomingManifest: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
 export type AppProblemDismissMutationVariables = Exact<{
   input: AppProblemDismissInput;
 }>;

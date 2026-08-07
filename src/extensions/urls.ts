@@ -60,7 +60,7 @@ export const MANIFEST_ATTR = "manifestUrl";
 export type ExtensionInstallQueryParams = { [MANIFEST_ATTR]?: string };
 export type ExtensionsListUrlDialog = "app-installation-remove";
 export type ExtensionsListUrlQueryParams = Dialog<ExtensionsListUrlDialog> & SingleAction;
-export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete";
+export type AppDetailsUrlDialog = "app-activate" | "app-deactivate" | "app-delete" | "app-reload";
 export interface AppDetailsUrlMountQueryParams {
   attributeId?: string;
   attributeIds?: string[];

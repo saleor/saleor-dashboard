@@ -6,6 +6,11 @@ export const messages = defineMessages({
     defaultMessage: "Extension removed",
     description: "app has been removed",
   },
+  appReloaded: {
+    id: "YQrhBK",
+    defaultMessage: "Extension reloaded",
+    description: "app has been reloaded from its manifest",
+  },
   failedDeliveriesLogsNoLongerAvailable: {
     id: "m9I/YK",
     defaultMessage: "Failed deliveries logs are not available",
