@@ -175,6 +175,7 @@ const buildChannelListingLocalErrors = (
       field: "discountValue",
       channels: validation.invalidDiscountValueChannels,
       message: "Invalid discount value",
+      voucherCodes: null,
     });
   }
 
@@ -185,6 +186,7 @@ const buildChannelListingLocalErrors = (
       field: "minSpent",
       channels: validation.invalidMinSpentChannels,
       message: "Invalid minimum spend",
+      voucherCodes: null,
     });
   }
 
