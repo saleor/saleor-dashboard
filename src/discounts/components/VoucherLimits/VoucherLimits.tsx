@@ -5,6 +5,7 @@ import {
 } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
 import { Grid } from "@dashboard/components/Grid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import { DiscountErrorCode, type DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
@@ -62,6 +63,10 @@ export const VoucherLimits = ({
   const intl = useIntl();
   const formErrors = getFormErrors(["usageLimit", "singleUse"], errors);
   const usesLeft = data.usageLimit - data.used;
+  const hasInvalidUsageLimit = data.hasUsageLimit && data.usageLimit <= 0;
+  const usageLimitHelperText =
+    getDiscountErrorMessage(formErrors.usageLimit, intl) ||
+    (hasInvalidUsageLimit ? intl.formatMessage(voucherFeedbackMessages.usageLimitMin) : undefined);
   // API also locks when a code sits on an open checkout (voucher.used can still be 0).
   // Disable only for recorded redemptions; on VOUCHER_ALREADY_USED keep the control
   // enabled so the merchant can undo the rejected change, but show the notice.
@@ -146,8 +151,8 @@ export const VoucherLimits = ({
                   <TextField
                     data-test-id="usage-limit"
                     disabled={disabled || usageSettingsLocked}
-                    error={!!formErrors.usageLimit || data.usageLimit <= 0}
-                    helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
+                    error={!!formErrors.usageLimit || hasInvalidUsageLimit}
+                    helperText={usageLimitHelperText}
                     label={intl.formatMessage(messages.usageLimit)}
                     name={"usageLimit" as keyof VoucherDetailsPageFormData}
                     value={data.usageLimit}
@@ -163,8 +168,8 @@ export const VoucherLimits = ({
                     <TextField
                       data-test-id="usage-limit"
                       disabled={disabled || usageSettingsLocked}
-                      error={!!formErrors.usageLimit || data.usageLimit <= 0}
-                      helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
+                      error={!!formErrors.usageLimit || hasInvalidUsageLimit}
+                      helperText={usageLimitHelperText}
                       label={intl.formatMessage(messages.usageLimit)}
                       name={"usageLimit" as keyof VoucherDetailsPageFormData}
                       value={data.usageLimit}

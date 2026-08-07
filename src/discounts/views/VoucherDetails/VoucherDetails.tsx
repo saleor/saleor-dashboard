@@ -11,9 +11,14 @@ import AssignProductDialog from "@dashboard/components/AssignProductDialog";
 import AssignVariantDialog from "@dashboard/components/AssignVariantDialog";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  DEFAULT_NOTIFICATION_SHOW_TIME,
+  PAGINATE_BY,
+} from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
+import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
 import { VoucherDeleteDialog } from "@dashboard/discounts/components/VoucherDeleteDialog/VoucherDeleteDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
@@ -21,6 +26,8 @@ import VoucherDetailsPage, {
   type VoucherTabItemsCount,
 } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { VoucherMetadataDialog } from "@dashboard/discounts/components/VoucherMetadataDialog/VoucherMetadataDialog";
+import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
+import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
 import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
 import { useVoucherSetupCardDismiss } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDismiss";
 import { useVoucherSetupCardDisplayReady } from "@dashboard/discounts/components/VoucherSetupCard/useVoucherSetupCardDisplayReady";
@@ -32,6 +39,7 @@ import {
   type VoucherUrlQueryParams,
 } from "@dashboard/discounts/urls";
 import { getAssignedVariantIds } from "@dashboard/discounts/utils";
+import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
   type CategoryFilterInput,
@@ -45,6 +53,7 @@ import {
   useVoucherCataloguesAddMutation,
   useVoucherCataloguesRemoveMutation,
   useVoucherChannelListingUpdateMutation,
+  useVoucherCodeBulkDeleteMutation,
   useVoucherDeleteMutation,
   useVoucherDetailsQuery,
   useVoucherUpdateMutation,
@@ -294,13 +303,14 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     voucherCodesSettings,
     selectedVoucherCodesIds,
     addedVoucherCodes,
+    pendingRemovedCodeIds,
     voucherCodesRefetch,
     setSelectedVoucherCodesIds,
     updateVoucherCodesListSettings,
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
-    handleClearAddedVoucherCodes,
+    handleClearStagedVoucherCodes,
   } = useVoucherCodes({ id });
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
@@ -344,16 +354,36 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     },
     { formId: VOUCHER_UPDATE_FORM_ID, deferDirtyOnConfirm: true },
   );
-  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({
+    // Field errors are mapped inline; VoucherDetails owns the single save-failure toast.
+    disableErrorHandling: true,
+  });
   const notifySaved = () =>
     notify({
       status: "success",
-      text: intl.formatMessage({
-        id: "uX+Vg7",
-        defaultMessage: "Voucher updated",
-      }),
+      title: intl.formatMessage(voucherFeedbackMessages.voucherUpdated),
     });
+  const notifySaveFailed = (saveErrors: Array<{ field?: string | null }> = []) => {
+    const hasCodesError = saveErrors.some(isVoucherCodesError);
+
+    if (hasCodesError) {
+      scrollToVoucherSection(voucherSectionIds.codes);
+    }
+
+    notify({
+      status: "error",
+      title: intl.formatMessage(voucherFeedbackMessages.couldNotSaveVoucher),
+      text: intl.formatMessage(
+        hasCodesError
+          ? voucherFeedbackMessages.fixCodesAndTryAgain
+          : voucherFeedbackMessages.checkHighlightedFields,
+      ),
+      // Inline/section errors own the recovery; toast is a short ack.
+      autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+    });
+  };
   const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({
+    disableErrorHandling: true,
     onCompleted: data => {
       // Only patch the voucher cache here. Success toast / clearing draft codes must wait
       // until channel + catalogue mutations in createUpdateHandler also succeed.
@@ -369,17 +399,33 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     },
   });
   const [voucherDelete, voucherDeleteOpts] = useVoucherDeleteMutation({
+    disableErrorHandling: true,
     onCompleted: data => {
       if (data.voucherDelete.errors.length === 0) {
-        notifySaved();
+        notify({
+          status: "success",
+          title: intl.formatMessage(voucherFeedbackMessages.voucherDeleted),
+        });
         navigate(voucherListUrl(), { replace: true });
+
+        return;
       }
+
+      notify({
+        status: "error",
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotDeleteVoucher),
+      });
     },
   });
   const [voucherCataloguesRemove, voucherCataloguesRemoveOpts] = useVoucherCataloguesRemoveMutation(
-    {},
+    { disableErrorHandling: true },
   );
-  const [voucherCataloguesAdd, voucherCataloguesAddOpts] = useVoucherCataloguesAddMutation({});
+  const [voucherCataloguesAdd, voucherCataloguesAddOpts] = useVoucherCataloguesAddMutation({
+    disableErrorHandling: true,
+  });
+  const [voucherCodeBulkDelete] = useVoucherCodeBulkDeleteMutation({
+    disableErrorHandling: true,
+  });
   const selectedUnassignIds = params.ids ?? [];
   const selectedUnassignIdsCount = selectedUnassignIds.length;
   const canOpenBulkActionDialog = selectedUnassignIdsCount > 0;
@@ -395,7 +441,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     {
       cataloguesAdd: voucherCataloguesAdd,
       cataloguesRemove: voucherCataloguesRemove,
+      voucherCodesDelete: voucherCodeBulkDelete,
       getCatalogueDraft: () => catalogueDraft,
+      getPendingRemovedCodeIds: () => pendingRemovedCodeIds,
       catalogueQueryVariables,
     },
   );
@@ -404,12 +452,14 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
 
     if (!errors?.length) {
       notifySaved();
-      handleClearAddedVoucherCodes();
+      handleClearStagedVoucherCodes();
       voucherCodesRefetch();
       resetCatalogueDraft();
       reset();
       refetch();
       refetchCatalogue();
+    } else {
+      notifySaveFailed(errors);
     }
 
     return errors;
@@ -592,6 +642,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
         voucher={voucherForPage}
         voucherCodes={voucherCodes}
         addedVoucherCodes={addedVoucherCodes}
+        pendingRemovedCodeIds={pendingRemovedCodeIds}
         voucherCodesPagination={voucherCodesPagination}
         voucherCodesLoading={voucherCodesLoading}
         voucherCodesSettings={voucherCodesSettings}

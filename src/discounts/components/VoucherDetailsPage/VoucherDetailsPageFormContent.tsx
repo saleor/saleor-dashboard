@@ -88,6 +88,8 @@ interface VoucherDetailsPageFormContentProps extends ChannelProps {
   voucherCodes: VoucherCode[];
   /** Draft codes pending save — live source for dirty/save (form.codes syncs via initial). */
   addedVoucherCodes: VoucherCode[];
+  /** Server code node ids staged for delete on Save. */
+  pendingRemovedCodeIds?: string[];
   hasCatalogueDraftChanges?: boolean;
   hasCountriesDraftChanges?: boolean;
   voucherCodesLoading: boolean;
@@ -145,6 +147,7 @@ export const VoucherDetailsPageFormContent = ({
   selectedVoucherCodesIds,
   voucherCodes,
   addedVoucherCodes,
+  pendingRemovedCodeIds = [],
   hasCatalogueDraftChanges = false,
   hasCountriesDraftChanges = false,
   voucherCodesLoading,
@@ -213,6 +216,7 @@ export const VoucherDetailsPageFormContent = ({
     {
       hasCatalogue: hasCatalogueDraftChanges,
       hasCountries: hasCountriesDraftChanges,
+      pendingRemovedCodesCount: pendingRemovedCodeIds.length,
     },
   );
   const hasUnsavedChanges = hasVoucherSaveComposition(saveComposition);
@@ -237,6 +241,7 @@ export const VoucherDetailsPageFormContent = ({
     voucher,
     formData: data,
     voucherCodes,
+    pendingRemovedCodesCount: pendingRemovedCodeIds.length,
     tabItemsCount,
     countriesCount: voucher?.countries?.length ?? 0,
   });
@@ -329,6 +334,7 @@ export const VoucherDetailsPageFormContent = ({
               voucherCodesPagination={voucherCodesPagination}
               onSettingsChange={onVoucherCodesSettingsChange}
               settings={voucherCodesSettings}
+              errors={errors}
             />
           </VoucherSection>
           <VoucherSection id={voucherSectionIds.discount}>
@@ -403,7 +409,7 @@ export const VoucherDetailsPageFormContent = ({
             <VoucherRequirements
               data={data}
               disabled={disabled}
-              errors={errors}
+              errors={allErrors}
               onChange={change}
               onChannelChange={handleChannelChange}
               onChannelsChange={handleChannelsChange}
@@ -428,7 +434,12 @@ export const VoucherDetailsPageFormContent = ({
             used={data.used}
             hasUsageLimit={data.hasUsageLimit}
             usageLimit={data.usageLimit}
-            codesCount={(voucher?.codesCount?.totalCount ?? 0) + addedVoucherCodes.length}
+            codesCount={Math.max(
+              0,
+              (voucher?.codesCount?.totalCount ?? 0) +
+                addedVoucherCodes.length -
+                pendingRemovedCodeIds.length,
+            )}
             channelsCount={data.channelListings.length}
             scheduleData={{
               startDate: data.startDate,

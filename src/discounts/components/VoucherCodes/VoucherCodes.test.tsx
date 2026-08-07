@@ -107,7 +107,7 @@ describe("VoucherCodes", () => {
     // Assert
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
     expect(
-      await screen.findByText(/are you sure you want to delete these voucher codes?/i),
+      await screen.findByText(/these codes will be removed when you save the voucher/i),
     ).toBeInTheDocument();
 
     // Act
@@ -144,7 +144,7 @@ describe("VoucherCodes", () => {
     // Assert
     expect(await screen.findByRole("dialog")).toBeInTheDocument();
     expect(
-      await screen.findByText(/are you sure you want to delete these voucher codes?/i),
+      await screen.findByText(/these codes will be removed when you save the voucher/i),
     ).toBeInTheDocument();
 
     // Act

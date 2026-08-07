@@ -21,6 +21,11 @@ export const voucherDetailsPageMessages = defineMessages({
     defaultMessage: "General settings",
     description: "voucher save composition segment",
   },
+  saveCompositionSchedule: {
+    id: "ILhY5I",
+    defaultMessage: "Schedule",
+    description: "voucher save composition segment for start/end availability window",
+  },
   saveCompositionChannels: {
     id: "zDhdcC",
     defaultMessage: "Channels",

@@ -3,6 +3,7 @@ import { arrayDiff } from "@dashboard/utils/arrays";
 
 export interface VoucherSaveComposition {
   hasGeneral: boolean;
+  hasSchedule: boolean;
   hasChannels: boolean;
   hasCodes: boolean;
   hasCatalogue: boolean;
@@ -22,12 +23,9 @@ const GENERAL_FIELD_KEYS = [
   "usageLimit",
   "requirementsPicker",
   "minCheckoutItemsQuantity",
-  "startDate",
-  "startTime",
-  "endDate",
-  "endTime",
-  "hasEndDate",
 ] as const;
+
+const SCHEDULE_FIELD_KEYS = ["startDate", "startTime", "endDate", "endTime", "hasEndDate"] as const;
 
 const hasChannelListingsChanges = (
   channelListings: ChannelVoucherData[],
@@ -62,20 +60,24 @@ export const buildVoucherSaveComposition = (
   {
     hasCatalogue = false,
     hasCountries = false,
+    pendingRemovedCodesCount = 0,
   }: {
     hasCatalogue?: boolean;
     hasCountries?: boolean;
+    pendingRemovedCodesCount?: number;
   } = {},
 ): VoucherSaveComposition => ({
   hasGeneral: GENERAL_FIELD_KEYS.some(field => changedFieldNames.includes(field)),
+  hasSchedule: SCHEDULE_FIELD_KEYS.some(field => changedFieldNames.includes(field)),
   hasChannels: hasChannelListingsChanges(channelListings, baselineChannelListings),
-  hasCodes: draftCodesCount > 0,
+  hasCodes: draftCodesCount > 0 || pendingRemovedCodesCount > 0,
   hasCatalogue,
   hasCountries,
 });
 
 export const hasVoucherSaveComposition = (composition: VoucherSaveComposition): boolean =>
   composition.hasGeneral ||
+  composition.hasSchedule ||
   composition.hasChannels ||
   composition.hasCodes ||
   composition.hasCatalogue ||
@@ -83,6 +85,7 @@ export const hasVoucherSaveComposition = (composition: VoucherSaveComposition): 
 
 export const EMPTY_VOUCHER_SAVE_COMPOSITION: VoucherSaveComposition = {
   hasGeneral: false,
+  hasSchedule: false,
   hasChannels: false,
   hasCodes: false,
   hasCatalogue: false,

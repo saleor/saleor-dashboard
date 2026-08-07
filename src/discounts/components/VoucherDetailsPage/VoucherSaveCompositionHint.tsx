@@ -28,6 +28,10 @@ export const VoucherSaveCompositionHint = ({
     segments.push(intl.formatMessage(messages.saveCompositionGeneral));
   }
 
+  if (resolved.hasSchedule) {
+    segments.push(intl.formatMessage(messages.saveCompositionSchedule));
+  }
+
   if (resolved.hasChannels) {
     segments.push(intl.formatMessage(messages.saveCompositionChannels));
   }

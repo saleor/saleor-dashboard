@@ -405,6 +405,7 @@ const VoucherCreatePage = ({
                   selectedCodesIds={selectedRowIds}
                   settings={settings}
                   voucherCodesPagination={pagination}
+                  errors={errors}
                 />
               </VoucherSection>
               <VoucherSection id={voucherSectionIds.discount}>

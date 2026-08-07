@@ -985,6 +985,7 @@ export const DiscountErrorFragmentDoc = gql`
   field
   channels
   message
+  voucherCodes
 }
     `;
 export const PromotionCreateErrorFragmentDoc = gql`

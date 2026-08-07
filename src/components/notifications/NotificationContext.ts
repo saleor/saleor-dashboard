@@ -7,7 +7,8 @@ type Status = "success" | "error" | "info" | "warning";
  * next to the problem: field errors → inline; setup blockers → banner/checklist;
  * long jobs → BackgroundTasks; bulk ops → one aggregated notify, not N toasts.
  * The queue dedupes by status + title — repeat notifies replace the same toast.
- * Errors and `actionBtn` stay until dismissed.
+ * Errors and `actionBtn` stay until dismissed by default; pass `autohide` when
+ * the page already shows a persistent recovery surface (field/section error).
  */
 export interface INotification {
   actionBtn?: {

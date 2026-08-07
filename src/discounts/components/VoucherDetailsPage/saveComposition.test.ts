@@ -31,6 +31,7 @@ describe("buildVoucherSaveComposition", () => {
 
     // Assert
     expect(composition.hasGeneral).toBe(true);
+    expect(composition.hasSchedule).toBe(false);
     expect(composition.hasChannels).toBe(false);
     expect(composition.hasCodes).toBe(false);
     expect(composition.hasCatalogue).toBe(false);
@@ -57,6 +58,7 @@ describe("buildVoucherSaveComposition", () => {
 
     // Assert
     expect(composition.hasGeneral).toBe(false);
+    expect(composition.hasSchedule).toBe(false);
     expect(composition.hasChannels).toBe(true);
     expect(hasVoucherSaveComposition(composition)).toBe(true);
   });
@@ -101,7 +103,18 @@ describe("buildVoucherSaveComposition", () => {
     expect(hasVoucherSaveComposition(composition)).toBe(true);
   });
 
-  it("returns general for schedule field changes", () => {
+  it("returns codes when server codes are staged for delete", () => {
+    // Arrange
+    const composition = buildVoucherSaveComposition([], baselineChannels, baselineChannels, 0, {
+      pendingRemovedCodesCount: 3,
+    });
+
+    // Assert
+    expect(composition.hasCodes).toBe(true);
+    expect(hasVoucherSaveComposition(composition)).toBe(true);
+  });
+
+  it("returns schedule (not general) for schedule field changes", () => {
     // Arrange
     const composition = buildVoucherSaveComposition(
       ["startDate"],
@@ -111,7 +124,8 @@ describe("buildVoucherSaveComposition", () => {
     );
 
     // Assert
-    expect(composition.hasGeneral).toBe(true);
+    expect(composition.hasSchedule).toBe(true);
+    expect(composition.hasGeneral).toBe(false);
   });
 
   it("ignores unrelated changed fields for general", () => {
@@ -125,5 +139,6 @@ describe("buildVoucherSaveComposition", () => {
 
     // Assert
     expect(composition.hasGeneral).toBe(false);
+    expect(composition.hasSchedule).toBe(false);
   });
 });

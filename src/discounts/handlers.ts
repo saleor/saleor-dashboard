@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { type ChannelVoucherData, validateVoucherPrice } from "@dashboard/channels/utils";
+import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { DiscountErrorCode, type DiscountErrorFragment, VoucherTypeEnum } from "@dashboard/graphql";
@@ -137,6 +137,60 @@ export const getChannelsVariables = (
   };
 };
 
+const emptyChannelListingValidation = (): ChannelListingValidationResult => ({
+  valid: true,
+  invalidDiscountValueChannels: [],
+  invalidMinSpentChannels: [],
+  invalidChannels: [],
+});
+
+const toChannelListingValidation = ({
+  invalidDiscountValueChannels,
+  invalidMinSpentChannels,
+}: {
+  invalidDiscountValueChannels: string[];
+  invalidMinSpentChannels: string[];
+}): ChannelListingValidationResult => {
+  const invalidChannels = [
+    ...new Set([...invalidDiscountValueChannels, ...invalidMinSpentChannels]),
+  ];
+
+  return {
+    valid: invalidChannels.length === 0,
+    invalidDiscountValueChannels,
+    invalidMinSpentChannels,
+    invalidChannels,
+  };
+};
+
+const buildChannelListingLocalErrors = (
+  validation: ChannelListingValidationResult,
+): DiscountErrorFragment[] => {
+  const localErrors: DiscountErrorFragment[] = [];
+
+  if (validation.invalidDiscountValueChannels.length) {
+    localErrors.push({
+      __typename: "DiscountError",
+      code: DiscountErrorCode.INVALID,
+      field: "discountValue",
+      channels: validation.invalidDiscountValueChannels,
+      message: "Invalid discount value",
+    });
+  }
+
+  if (validation.invalidMinSpentChannels.length) {
+    localErrors.push({
+      __typename: "DiscountError",
+      code: DiscountErrorCode.INVALID,
+      field: "minSpent",
+      channels: validation.invalidMinSpentChannels,
+      message: "Invalid minimum spend",
+    });
+  }
+
+  return localErrors;
+};
+
 export function createVoucherUpdateHandler(
   submit: (data: VoucherDetailsPageFormData) => SubmitPromise<any[]>,
   setLocalErrors: (errors: DiscountErrorFragment[]) => void,
@@ -145,24 +199,13 @@ export function createVoucherUpdateHandler(
     // Drop the inactive amount draft before validate/save (toggle keeps both until Save).
     const data = clearInactiveVoucherDiscountDrafts(formData);
     const { channelListings, discountType, percentageDiscountValue, requirementsPicker } = data;
-    const { valid, invalidChannels } = validateChannelListing(
+    const validation = validateChannelListing(
       channelListings,
       discountType,
       requirementsPicker,
       percentageDiscountValue,
     );
-
-    const localErrors: DiscountErrorFragment[] = !valid
-      ? [
-          {
-            __typename: "DiscountError",
-            code: DiscountErrorCode.INVALID,
-            field: "discountValue",
-            channels: invalidChannels,
-            message: "Invalid discount value",
-          },
-        ]
-      : [];
+    const localErrors = buildChannelListingLocalErrors(validation);
 
     setLocalErrors(localErrors);
 
@@ -174,18 +217,25 @@ export function createVoucherUpdateHandler(
   };
 }
 
+export interface ChannelListingValidationResult {
+  valid: boolean;
+  /** Channels with an invalid discount amount / percentage. */
+  invalidDiscountValueChannels: string[];
+  /** Channels with an invalid order minimum spend. */
+  invalidMinSpentChannels: string[];
+  /** Union of both field lists (legacy callers / tests). */
+  invalidChannels: string[];
+}
+
 export function validateChannelListing(
   channelListings: ChannelVoucherData[],
   discountType: DiscountTypeEnum,
   requirementsPicker: RequirementsPicker,
   percentageDiscountValue = "",
-) {
+): ChannelListingValidationResult {
   // When discount type is shipping, there is no need to check if all selected channels have a discount value
   if (discountType === DiscountTypeEnum.SHIPPING) {
-    return {
-      valid: true,
-      invalidChannels: [],
-    };
+    return emptyChannelListingValidation();
   }
 
   // Percentage uses one draft value for all channels — validate that, not per-channel fixed drafts.
@@ -196,42 +246,41 @@ export function validateChannelListing(
     // draft must not block unrelated saves (e.g. renaming) — and the % input used to be hidden
     // behind the empty-channels placeholder, so validation failures looked like a dead Save.
     if (!channelListings?.length) {
-      return {
-        valid: true,
-        invalidChannels: [],
-      };
+      return emptyChannelListingValidation();
     }
 
     if (validatePrice(percentageDiscountValue)) {
-      return {
-        valid: false,
-        invalidChannels: channelListings.map(channel => channel.id),
-      };
+      return toChannelListingValidation({
+        invalidDiscountValueChannels: channelListings.map(channel => channel.id),
+        invalidMinSpentChannels: [],
+      });
     }
 
     if (requirementsPicker === RequirementsPicker.ORDER) {
-      const invalidMinSpentChannels = channelListings
-        .filter(channel => validatePrice(channel.minSpent))
-        .map(channel => channel.id);
-
-      return {
-        valid: !invalidMinSpentChannels.length,
-        invalidChannels: invalidMinSpentChannels,
-      };
+      return toChannelListingValidation({
+        invalidDiscountValueChannels: [],
+        invalidMinSpentChannels: channelListings
+          .filter(channel => validatePrice(channel.minSpent))
+          .map(channel => channel.id),
+      });
     }
 
-    return {
-      valid: true,
-      invalidChannels: [],
-    };
+    return emptyChannelListingValidation();
   }
 
-  const invalidChannelListings = channelListings
-    ?.filter(channel => validateVoucherPrice(requirementsPicker, channel))
-    .map(channel => channel.id);
+  const invalidDiscountValueChannels =
+    channelListings
+      ?.filter(channel => validatePrice(channel.discountValue))
+      .map(channel => channel.id) ?? [];
+  const invalidMinSpentChannels =
+    requirementsPicker === RequirementsPicker.ORDER
+      ? (channelListings
+          ?.filter(channel => validatePrice(channel.minSpent))
+          .map(channel => channel.id) ?? [])
+      : [];
 
-  return {
-    valid: !invalidChannelListings.length,
-    invalidChannels: invalidChannelListings,
-  };
+  return toChannelListingValidation({
+    invalidDiscountValueChannels,
+    invalidMinSpentChannels,
+  });
 }

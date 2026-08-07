@@ -3,9 +3,12 @@ import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/cha
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
+import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
+import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import {
   type CategoryFilterInput,
   type CollectionFilterInput,
@@ -76,8 +79,12 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     { closeModal, openModal },
     { formId: VOUCHER_CREATE_FORM_ID },
   );
-  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
-  const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({});
+  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({
+    disableErrorHandling: true,
+  });
+  const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
+    disableErrorHandling: true,
+  });
 
   const assignProductSearchVariables: SearchProductsQueryVariables = {
     ...DEFAULT_INITIAL_SEARCH_DATA,
@@ -173,24 +180,24 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
+      scrollToVoucherSection(voucherSectionIds.codes);
       notify({
         status: "error",
-        text: intl.formatMessage({
-          id: "GTCg9O",
-          defaultMessage: "You must add at least one voucher code",
-        }),
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+        text: intl.formatMessage(voucherFeedbackMessages.addAtLeastOneCode),
+        autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
       });
 
       return false;
     }
 
     if (data.channelListings.length === 0) {
+      handleChannelsModalOpen();
       notify({
         status: "error",
-        text: intl.formatMessage({
-          id: "PWG97N",
-          defaultMessage: "You must assign the voucher to at least one channel",
-        }),
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+        text: intl.formatMessage(voucherFeedbackMessages.assignAtLeastOneChannel),
+        autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
       });
 
       return false;
@@ -206,13 +213,16 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const handleSubmit = async (data: FormData) => {
     const result = await createVoucher(data);
 
+    if (result && "validationFailed" in result && result.validationFailed) {
+      // Toast + scroll/modal already handled in handleFormValidate.
+      // Return a non-empty error list so the form does not treat submit as success.
+      return ["Invalid data"];
+    }
+
     if (result && "id" in result && result.id) {
       notify({
         status: "success",
-        text: intl.formatMessage({
-          id: "HoBGng",
-          defaultMessage: "Voucher created",
-        }),
+        title: intl.formatMessage(voucherFeedbackMessages.voucherCreated),
       });
       navigate(voucherUrl(result.id), { replace: true });
 
@@ -220,8 +230,22 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     }
 
     if (result && "errors" in result) {
+      notify({
+        status: "error",
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+        text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
+        autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+      });
+
       return result.errors;
     }
+
+    notify({
+      status: "error",
+      title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+      text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
+      autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+    });
 
     return ["Could not create voucher"];
   };

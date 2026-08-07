@@ -87,6 +87,53 @@ describe("useNotifier", () => {
       );
     });
 
+    it("respects explicit autohide on error when the page owns recovery", () => {
+      // Arrange
+      const { result } = renderHook(() => useNotifier(), { wrapper });
+      const customAutohide = 5000;
+
+      // Act
+      act(() => {
+        result.current({
+          status: "error",
+          title: "Couldn't save",
+          autohide: customAutohide,
+        });
+      });
+
+      // Assert
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: customAutohide,
+        }),
+      );
+    });
+
+    it("keeps actionBtn sticky even when autohide is set", () => {
+      // Arrange
+      const { result } = renderHook(() => useNotifier(), { wrapper });
+
+      // Act
+      act(() => {
+        result.current({
+          status: "error",
+          title: "Error",
+          autohide: 5000,
+          actionBtn: {
+            label: "Undo",
+            action: jest.fn(),
+          },
+        });
+      });
+
+      // Assert
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: Infinity,
+        }),
+      );
+    });
+
     it("uses custom autohide value when provided", () => {
       // Arrange
       const { result } = renderHook(() => useNotifier(), { wrapper });

@@ -13,6 +13,8 @@ import {
   type VoucherCataloguesRemoveMutationVariables,
   type VoucherChannelListingUpdateMutation,
   type VoucherChannelListingUpdateMutationVariables,
+  type VoucherCodeBulkDeleteMutation,
+  type VoucherCodeBulkDeleteMutationVariables,
   type VoucherDetailsFragment,
   VoucherTypeEnum,
   type VoucherUpdateMutation,
@@ -33,7 +35,11 @@ interface CreateUpdateHandlerOptions {
   cataloguesRemove: (options: {
     variables: VoucherCataloguesRemoveMutationVariables;
   }) => Promise<FetchResult<VoucherCataloguesRemoveMutation>>;
+  voucherCodesDelete: (options: {
+    variables: VoucherCodeBulkDeleteMutationVariables;
+  }) => Promise<FetchResult<VoucherCodeBulkDeleteMutation>>;
   getCatalogueDraft: () => VoucherCatalogueDraft;
+  getPendingRemovedCodeIds: () => string[];
   catalogueQueryVariables: Omit<VoucherCataloguesAddMutationVariables, "id" | "input">;
 }
 
@@ -55,6 +61,7 @@ export function createUpdateHandler(
     const addInput = getCatalogueAddInput(draft);
     const removeInput = getCatalogueRemoveInput(draft);
     const countryCodes = draft.countryCodes;
+    const pendingRemovedCodeIds = options.getPendingRemovedCodeIds();
 
     const requests: Array<Promise<unknown[]>> = [
       updateVoucher({
@@ -89,6 +96,23 @@ export function createUpdateHandler(
         variables: getChannelsVariables(id, data, voucherChannelsChoices),
       }).then(({ data: response }) => response?.voucherChannelListingUpdate.errors ?? []),
     ];
+
+    if (pendingRemovedCodeIds.length > 0) {
+      requests.push(
+        options
+          .voucherCodesDelete({
+            variables: { ids: pendingRemovedCodeIds },
+          })
+          .then(({ data: response }) =>
+            // Map to field:"codes" so save-failure toast / section scroll treat deletes like addCodes errors.
+            (response?.voucherCodeBulkDelete?.errors ?? []).map(error => ({
+              field: "codes",
+              message: error.message,
+              code: error.code,
+            })),
+          ),
+      );
+    }
 
     if (addInput) {
       requests.push(

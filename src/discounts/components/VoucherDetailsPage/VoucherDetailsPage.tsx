@@ -100,6 +100,8 @@ interface VoucherDetailsPageProps
   voucherCodes: VoucherCode[];
   /** Draft codes pending save — synced into form `codes` for submit + dirty state. */
   addedVoucherCodes: VoucherCode[];
+  /** Server code node ids staged for delete on Save. */
+  pendingRemovedCodeIds?: string[];
   /** Staged catalogue / country membership pending Savebar save. */
   hasCatalogueDraftChanges?: boolean;
   hasCountriesDraftChanges?: boolean;
@@ -192,6 +194,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onSelectedCodesChange,
   voucherCodes,
   addedVoucherCodes,
+  pendingRemovedCodeIds = [],
   hasCatalogueDraftChanges = false,
   hasCountriesDraftChanges = false,
   voucherCodesLoading,
@@ -373,6 +376,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
             selectedVoucherCodesIds={selectedVoucherCodesIds}
             voucherCodes={voucherCodes}
             addedVoucherCodes={addedVoucherCodes}
+            pendingRemovedCodeIds={pendingRemovedCodeIds}
             hasCatalogueDraftChanges={hasCatalogueDraftChanges}
             hasCountriesDraftChanges={hasCountriesDraftChanges}
             voucherCodesLoading={voucherCodesLoading}

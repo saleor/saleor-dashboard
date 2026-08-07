@@ -8,6 +8,7 @@ import { type FieldError } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./DiscountDates.module.css";
+import { getDefaultEndDateAfterStart } from "./getDefaultEndDateAfterStart";
 
 interface DiscountDatesProps<ErrorCode> {
   data: {
@@ -42,6 +43,46 @@ const DiscountDatesFields = <ErrorCode,>({
   const apiErrors = getFormErrors(["startDate", "endDate"], errors);
 
   const dateRowClassName = stacked ? styles.dateRowStacked : styles.dateRow;
+
+  const handleHasEndDateChange = (): void => {
+    const enabling = !data.hasEndDate;
+
+    onChange({
+      target: {
+        name: "hasEndDate",
+        value: enabling,
+      },
+    } as ChangeEvent<any>);
+
+    if (!enabling) {
+      return;
+    }
+
+    // Seed end date to the day after start so the calendar opens near a valid choice
+    // instead of an unrelated month (or a leftover date before start).
+    const defaultEndDate = getDefaultEndDateAfterStart(data.startDate);
+    const shouldSetEndDate = !!defaultEndDate && (!data.endDate || data.endDate <= data.startDate);
+
+    if (shouldSetEndDate) {
+      onChange({
+        target: {
+          name: "endDate",
+          value: defaultEndDate,
+        },
+      } as ChangeEvent<any>);
+    }
+
+    if (!data.endTime) {
+      onChange({
+        target: {
+          name: "endTime",
+          // Match start hour when present; otherwise end-of-day so an empty hour
+          // does not look unfinished in the picker.
+          value: data.startTime || "23:59",
+        },
+      } as ChangeEvent<any>);
+    }
+  };
 
   return (
     <Box className={styles.root}>
@@ -86,14 +127,7 @@ const DiscountDatesFields = <ErrorCode,>({
         data-test-id="has-end-date"
         name="hasEndDate"
         disabled={disabled}
-        onCheckedChange={() => {
-          onChange({
-            target: {
-              name: "hasEndDate",
-              value: !data.hasEndDate,
-            },
-          } as ChangeEvent<any>);
-        }}
+        onCheckedChange={handleHasEndDateChange}
         onBlur={onBlur}
       >
         <Text>
@@ -118,6 +152,7 @@ const DiscountDatesFields = <ErrorCode,>({
               label={intl.formatMessage(commonMessages.endDate)}
               value={data.endDate}
               type="date"
+              min={data.startDate || undefined}
               width="100%"
             />
           </Box>
@@ -125,8 +160,8 @@ const DiscountDatesFields = <ErrorCode,>({
             <Input
               data-test-id="end-hour-input"
               disabled={disabled}
-              error={!!apiErrors.endDate}
-              helperText={getCommonFormFieldErrorMessage(apiErrors.endDate, intl)}
+              // API has a single endDate DateTime; empty time defaults to 00:00 in joinDateTime.
+              // Do not paint endDate validation onto the hour field — it reads as "hour required".
               name="endTime"
               onChange={onChange}
               onBlur={onBlur}

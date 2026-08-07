@@ -109,11 +109,12 @@ Sonner/Geist do **not** ship show-more. Canonical fix is **shorter copy**.
 
 ### Behavior
 
-| Status                               | Auto-dismiss                           | Notes                      |
-| ------------------------------------ | -------------------------------------- | -------------------------- |
-| success / info / warning (no action) | ~5s (`DEFAULT_NOTIFICATION_SHOW_TIME`) | Pauses on hover            |
-| error                                | Sticky until dismiss                   | Don’t preempt other toasts |
-| any + `actionBtn`                    | Sticky until dismiss or action         | One clear action label     |
+| Status                               | Auto-dismiss                           | Notes                                                     |
+| ------------------------------------ | -------------------------------------- | --------------------------------------------------------- |
+| success / info / warning (no action) | ~5s (`DEFAULT_NOTIFICATION_SHOW_TIME`) | Pauses on hover                                           |
+| error                                | Sticky until dismiss                   | Default; don’t preempt other toasts                       |
+| error + explicit `autohide`          | That duration                          | Use when field/section already owns recovery (paired ack) |
+| any + `actionBtn`                    | Sticky until dismiss or action         | One clear action label; wins over `autohide`              |
 
 - One terminal toast per user action.
 - Deduping replaces same `status + title` — update description if the detail changed; don’t spam.
@@ -164,7 +165,7 @@ Use this skill when touching `src/discounts/` voucher create/details/list.
 - [ ] Code bulk delete / generate failures → aggregated toast; row/section detail if the merchant must retry specifics
 - [ ] Permission / channel blockers → banner or checklist, not toast-only
 - [ ] No toast on every codes-table refetch or filter change
-- [ ] Error toast copy: couldn’t/failed + recovery; sticky; no raw API blob in `text`
+- [ ] Error toast copy: couldn’t/failed + recovery; sticky by default (or `autohide` when paired with inline/section); no raw API blob in `text`
 - [ ] Action buttons on toasts only for real undo/recovery (not “Close”)
 
 ### Anti-patterns to remove when found
@@ -183,6 +184,7 @@ notify({
   status: "error",
   title: intl.formatMessage(messages.couldNotSaveVoucher),
   text: intl.formatMessage(messages.checkHighlightedFields),
+  autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
 });
 ```
 

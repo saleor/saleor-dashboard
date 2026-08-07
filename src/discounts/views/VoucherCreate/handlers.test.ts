@@ -52,6 +52,22 @@ describe("createHandler", () => {
     expect(updateChannels).not.toHaveBeenCalled();
   });
 
+  it("returns validationFailed without calling mutations when validateFn fails", async () => {
+    // Arrange
+    const voucherCreate = jest.fn();
+    const updateChannels = jest.fn();
+    const validateFn = jest.fn().mockReturnValue(false);
+    const handler = createHandler(voucherCreate, updateChannels, validateFn);
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(result).toEqual({ validationFailed: true });
+    expect(voucherCreate).not.toHaveBeenCalled();
+    expect(updateChannels).not.toHaveBeenCalled();
+  });
+
   it("should call channel update when voucherCreate successes", async () => {
     // Arrange
     const voucherCreate = jest

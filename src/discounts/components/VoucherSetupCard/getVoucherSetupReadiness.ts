@@ -17,6 +17,8 @@ export interface VoucherSetupReadinessInput {
     "discountType" | "type" | "percentageDiscountValue" | "channelListings" | "codes"
   >;
   voucherCodes: VoucherCode[];
+  /** Server codes staged for delete on Save — subtract from saved totals. */
+  pendingRemovedCodesCount?: number;
   tabItemsCount: VoucherTabItemsCount;
   /** Shipping vouchers: empty list means worldwide. */
   countriesCount?: number;
@@ -57,6 +59,7 @@ export const getVoucherSetupReadiness = ({
   voucher,
   formData,
   voucherCodes,
+  pendingRemovedCodesCount = 0,
   tabItemsCount,
   countriesCount: countriesCountInput,
 }: VoucherSetupReadinessInput): VoucherSetupReadiness => {
@@ -64,7 +67,11 @@ export const getVoucherSetupReadiness = ({
   const listedCodesCount = voucherCodes.length;
   const draftCodesCount = formData.codes.length;
   // Prefer the server total when present; otherwise fall back to listed / draft codes.
-  const codesCount = savedCodesCount > 0 ? savedCodesCount : listedCodesCount + draftCodesCount;
+  // Pending removals are already excluded from `voucherCodes` but not from the server total.
+  const codesCount =
+    savedCodesCount > 0
+      ? Math.max(0, savedCodesCount - pendingRemovedCodesCount) + draftCodesCount
+      : listedCodesCount + draftCodesCount;
   const hasCodes = codesCount > 0 || draftCodesCount > 0;
 
   const channelListings = formData.channelListings;

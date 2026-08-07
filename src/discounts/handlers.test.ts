@@ -133,6 +133,29 @@ describe("Discounts / handlers / validateChannelListing", () => {
 
     // Assert
     expect(result.valid).toBe(false);
+    expect(result.invalidMinSpentChannels).toEqual(["2"]);
+    expect(result.invalidDiscountValueChannels).toEqual([]);
     expect(result.invalidChannels).toEqual(["2"]);
+  });
+
+  it("splits fixed discount and min-spent failures onto separate fields", () => {
+    // Arrange
+    const channelListings = [
+      { id: "1", discountValue: "", minSpent: "10" },
+      { id: "2", discountValue: "5", minSpent: "" },
+    ] as ChannelVoucherData[];
+
+    // Act
+    const result = validateChannelListing(
+      channelListings,
+      DiscountTypeEnum.VALUE_FIXED,
+      RequirementsPicker.ORDER,
+    );
+
+    // Assert
+    expect(result.valid).toBe(false);
+    expect(result.invalidDiscountValueChannels).toEqual(["1"]);
+    expect(result.invalidMinSpentChannels).toEqual(["2"]);
+    expect(result.invalidChannels).toEqual(["1", "2"]);
   });
 });

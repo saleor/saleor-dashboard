@@ -27,7 +27,7 @@ export function createHandler(
     const data = clearInactiveVoucherDiscountDrafts(formData);
 
     if (!validateFn(data)) {
-      return { errors: ["Invalid data"] };
+      return { validationFailed: true as const };
     }
 
     const response = await voucherCreate({
