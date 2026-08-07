@@ -1,20 +1,18 @@
 import { type INotification } from "@dashboard/components/notifications";
+import { enqueueToast } from "@dashboard/components/notifications/notificationQueue";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { act, renderHook } from "@testing-library/react";
 import { type PropsWithChildren } from "react";
 import { IntlProvider } from "react-intl";
-import { toast } from "sonner";
 
 import { useNotifier } from "./useNotifier";
 
-jest.mock("sonner", () => ({
-  toast: {
-    custom: jest.fn(),
-  },
+jest.mock("@dashboard/components/notifications/notificationQueue", () => ({
+  enqueueToast: jest.fn(),
 }));
 
-const mockToastCustom = toast.custom as jest.Mock;
+const mockEnqueueToast = enqueueToast as jest.Mock;
 
 const wrapper = ({ children }: PropsWithChildren) => (
   <IntlProvider locale="en" messages={{}}>
@@ -36,7 +34,7 @@ describe("useNotifier", () => {
       expect(typeof result.current).toBe("function");
     });
 
-    it("calls toast.custom when notify is invoked", () => {
+    it("calls enqueueToast when notify is invoked", () => {
       // Arrange
       const { result } = renderHook(() => useNotifier(), { wrapper });
       const notification: INotification = {
@@ -50,7 +48,7 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      expect(mockToastCustom).toHaveBeenCalledTimes(1);
+      expect(mockEnqueueToast).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -65,9 +63,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      expect(mockToastCustom).toHaveBeenCalledWith(expect.any(Function), {
-        duration: DEFAULT_NOTIFICATION_SHOW_TIME,
-      });
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: DEFAULT_NOTIFICATION_SHOW_TIME,
+        }),
+      );
     });
 
     it("uses Infinity duration for error notifications", () => {
@@ -80,9 +80,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      expect(mockToastCustom).toHaveBeenCalledWith(expect.any(Function), {
-        duration: Infinity,
-      });
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: Infinity,
+        }),
+      );
     });
 
     it("uses custom autohide value when provided", () => {
@@ -100,9 +102,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      expect(mockToastCustom).toHaveBeenCalledWith(expect.any(Function), {
-        duration: customAutohide,
-      });
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: customAutohide,
+        }),
+      );
     });
 
     it("uses DEFAULT_NOTIFICATION_SHOW_TIME for info notifications", () => {
@@ -115,9 +119,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      expect(mockToastCustom).toHaveBeenCalledWith(expect.any(Function), {
-        duration: DEFAULT_NOTIFICATION_SHOW_TIME,
-      });
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: DEFAULT_NOTIFICATION_SHOW_TIME,
+        }),
+      );
     });
 
     it("uses DEFAULT_NOTIFICATION_SHOW_TIME for warning notifications", () => {
@@ -130,9 +136,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      expect(mockToastCustom).toHaveBeenCalledWith(expect.any(Function), {
-        duration: DEFAULT_NOTIFICATION_SHOW_TIME,
-      });
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: DEFAULT_NOTIFICATION_SHOW_TIME,
+        }),
+      );
     });
   });
 
@@ -147,10 +155,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.title).toBe("Custom Title");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Custom Title",
+        }),
+      );
     });
 
     it("falls back to 'Success' for success status without title", () => {
@@ -163,10 +172,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.title).toBe("Success");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Success",
+        }),
+      );
     });
 
     it("falls back to 'Error' for error status without title", () => {
@@ -179,10 +189,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.title).toBe("Error");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Error",
+        }),
+      );
     });
 
     it("falls back to 'Warning' for warning status without title", () => {
@@ -195,10 +206,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.title).toBe("Warning");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Warning",
+        }),
+      );
     });
 
     it("falls back to 'Info' for info status without title", () => {
@@ -211,10 +223,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.title).toBe("Info");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Info",
+        }),
+      );
     });
 
     it("falls back to 'Info' when no status is provided", () => {
@@ -227,10 +240,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.title).toBe("Info");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          title: "Info",
+        }),
+      );
     });
   });
 
@@ -249,10 +263,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.description).toBe("Description text");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          description: "Description text",
+        }),
+      );
     });
 
     it("uses apiMessage as description fallback when text is not provided", () => {
@@ -269,10 +284,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.description).toBe("API error message");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          description: "API error message",
+        }),
+      );
     });
 
     it("prefers text over apiMessage when both are provided", () => {
@@ -290,10 +306,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.description).toBe("Primary description");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          description: "Primary description",
+        }),
+      );
     });
   });
 
@@ -316,13 +333,39 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: {
+            label: "Undo",
+            onClick: actionFn,
+          },
+          duration: Infinity,
+        }),
+      );
+    });
 
-      expect(renderedElement.props.action).toEqual({
-        label: "Undo",
-        onClick: actionFn,
+    it("keeps action toasts sticky until dismissed", () => {
+      // Arrange
+      const { result } = renderHook(() => useNotifier(), { wrapper });
+
+      // Act
+      act(() => {
+        result.current({
+          title: "Title",
+          status: "info",
+          actionBtn: {
+            label: "Undo",
+            action: jest.fn(),
+          },
+        });
       });
+
+      // Assert
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          duration: Infinity,
+        }),
+      );
     });
 
     it("does not pass action when actionBtn is not provided", () => {
@@ -335,10 +378,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.action).toBeUndefined();
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: undefined,
+        }),
+      );
     });
   });
 
@@ -358,10 +402,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.type).toBe(expectedType);
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: expectedType,
+        }),
+      );
     });
 
     it("defaults to 'info' type when status is not provided", () => {
@@ -374,28 +419,11 @@ describe("useNotifier", () => {
       });
 
       // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("test-id");
-
-      expect(renderedElement.props.type).toBe("info");
-    });
-  });
-
-  describe("toast id", () => {
-    it("passes toast id to Toast component", () => {
-      // Arrange
-      const { result } = renderHook(() => useNotifier(), { wrapper });
-
-      // Act
-      act(() => {
-        result.current({ title: "Test", status: "success" });
-      });
-
-      // Assert
-      const renderFn = mockToastCustom.mock.calls[0][0];
-      const renderedElement = renderFn("unique-toast-id");
-
-      expect(renderedElement.props.id).toBe("unique-toast-id");
+      expect(mockEnqueueToast).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: "info",
+        }),
+      );
     });
   });
 });

@@ -13,7 +13,7 @@ Conventions for **models you work with daily** — edit surfaces under `src/<fea
 
 **Not this skill:** Configuration hubs under Configuration → use `Settings*` in [`src/components/Settings/`](../../src/components/Settings/) (`SettingsSection`, `SettingsHubLayout`). Same row _idea_, different surface — do not put entity detail UI in `src/components/Settings/`.
 
-**Also see:** [`saleor-dashboard-detail-pages`](./saleor-dashboard-detail-pages/SKILL.md) (metadata modal, TopNav wiring), [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) (tokens, `DetailGroupBox`), [`saleor-dashboard-microcopy`](./saleor-dashboard-microcopy/SKILL.md) (hint copy), [`saleor-dashboard-datagrid`](./saleor-dashboard-datagrid/SKILL.md) (product lists on detail pages).
+**Also see:** [`saleor-dashboard-detail-pages`](./saleor-dashboard-detail-pages/SKILL.md) (metadata modal, TopNav wiring), [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) (tokens, `DetailGroupBox`), [`saleor-dashboard-microcopy`](./saleor-dashboard-microcopy/SKILL.md) (hint copy), [`saleor-dashboard-feedback`](./saleor-dashboard-feedback/SKILL.md) (toasts vs inline/banner errors), [`saleor-dashboard-datagrid`](./saleor-dashboard-datagrid/SKILL.md) (product lists on detail pages).
 
 ### External reference — [Vercel design resources](https://vercel.com/design)
 

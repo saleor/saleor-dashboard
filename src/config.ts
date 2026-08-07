@@ -263,6 +263,7 @@ export const APP_VERSION = process.env.CUSTOM_VERSION || `v${packageInfo.version
 
 export const GTM_ID = process.env.GTM_ID;
 
-export const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
+/** Default toast display time (ms). Floor for readable non-error feedback; Sonner pauses on hover. */
+export const DEFAULT_NOTIFICATION_SHOW_TIME = 5000;
 export const ENABLED_SERVICE_NAME_HEADER =
   (process.env.ENABLED_SERVICE_NAME_HEADER as string) === "true";

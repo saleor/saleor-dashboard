@@ -1,0 +1,157 @@
+/**
+ * Floating toast — smooth-shadow-ring-sm (hairline in the shadow stack).
+ * Never pair with a CSS border. @see saleor-dashboard-smooth-shadow skill
+ */
+.toast {
+  position: relative;
+  width: 380px;
+  overflow: hidden;
+  border: none;
+  background-color: var(--mu-colors-background-default1);
+  --smooth-ring-color: var(--mu-colors-border-default1);
+  --toast-icon-color: var(--mu-colors-text-default2);
+  --toast-progress-color: var(--toast-icon-color);
+  box-shadow:
+    0 18px 47px 0 rgba(0, 0, 0, 0.03),
+    0 7.5px 19px 0 rgba(0, 0, 0, 0.02),
+    0 4px 10.5px 0 rgba(0, 0, 0, 0.02),
+    0 2.3px 5.8px 0 rgba(0, 0, 0, 0.01),
+    0 1.2px 3.1px 0 rgba(0, 0, 0, 0.01),
+    0 0.5px 1.3px 0 rgba(0, 0, 0, 0.01),
+    0 0 0 1px var(--smooth-ring-color);
+}
+
+.icon {
+  color: var(--toast-icon-color);
+}
+
+/*
+ * Icon/progress hues are intentionally more chromatic than Macaw text tokens
+ * (success1/critical1 are dark for body copy and read muddy at icon size).
+ */
+.toastSuccess {
+  --toast-icon-color: oklch(58% 0.17 150);
+}
+
+.toastError {
+  --toast-icon-color: oklch(55% 0.2 25);
+}
+
+.toastWarning {
+  --toast-icon-color: oklch(68% 0.16 70);
+}
+
+.toastInfo {
+  --toast-icon-color: oklch(45% 0.02 260);
+}
+
+.toastDark.toastSuccess {
+  --toast-icon-color: oklch(72% 0.16 150);
+}
+
+.toastDark.toastError {
+  --toast-icon-color: oklch(72% 0.17 25);
+}
+
+.toastDark.toastWarning {
+  --toast-icon-color: oklch(78% 0.14 80);
+}
+
+.toastDark.toastInfo {
+  --toast-icon-color: oklch(78% 0.02 260);
+}
+
+.progressTrack {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 0;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.progressBar {
+  height: 100%;
+  width: 100%;
+  background-color: var(--toast-progress-color);
+  transform-origin: left center;
+  /* Progress is driven by JS (scaleX) so it stays in sync with auto-dismiss. */
+  will-change: transform;
+}
+
+.description {
+  overflow: hidden;
+  /* Animate between measured pixel heights — avoids the empty-space jump of max-height: 500px. */
+  transition: height 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.descriptionText {
+  display: block;
+}
+
+.descriptionTextClamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.fade {
+  pointer-events: none;
+  background: linear-gradient(transparent, var(--mu-colors-background-default1));
+  opacity: 1;
+  transition: opacity 0.18s ease;
+}
+
+.toggle,
+.dismiss {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-top: 4px;
+  color: var(--mu-colors-text-default2);
+  opacity: 0.7;
+}
+
+.toggle:hover,
+.toggle:focus-visible {
+  opacity: 1;
+}
+
+.dismiss {
+  opacity: 0.6;
+}
+
+.dismiss:hover,
+.dismiss:focus-visible {
+  opacity: 1;
+}
+
+.toggle:focus-visible,
+.dismiss:focus-visible {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .description,
+  .fade,
+  .toggle,
+  .dismiss {
+    transition: none;
+  }
+}

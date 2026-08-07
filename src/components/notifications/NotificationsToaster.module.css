@@ -1,0 +1,46 @@
+/**
+ * Host Sonner’s native absolute stack inside our viewport (Savebar-aware inset
+ * + dismiss pill). Do not switch toasts to position:relative/flex — Sonner
+ * frees space by updating --offset transforms, not document flow.
+ */
+.viewport {
+  position: fixed;
+  z-index: 999999999;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.viewport > * {
+  pointer-events: auto;
+}
+
+/* Anchor Sonner inside the viewport; toasts stay position:absolute. */
+.viewport :global([data-sonner-toaster]) {
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+}
+
+.toaster {
+  width: auto !important;
+}
+
+/*
+ * Prefer live --stack-offset (from syncSonnerToastStack) over Sonner’s
+ * prop-based --offset so expand/collapse and mixed heights stay correct.
+ */
+.toaster
+  :global(
+    [data-sonner-toast][data-mounted="true"][data-expanded="true"]:not([data-removed="true"])
+  ) {
+  --y: translateY(calc(var(--lift) * var(--stack-offset, var(--offset))));
+}
+
+/* Queue owns the visible cap — don't let Sonner hide mounted toasts. */
+.toaster :global([data-sonner-toast][data-visible="false"]:not([data-removed="true"])) {
+  opacity: 1;
+  pointer-events: auto;
+}

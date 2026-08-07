@@ -240,6 +240,10 @@
     "context": "setup task CTA",
     "string": "Add codes"
   },
+  "/+k9uY": {
+    "context": "variant stocks section subtitle",
+    "string": "Add channels in Pricing to define warehouse allocation"
+  },
   "//k1GX": {
     "context": "expired on label",
     "string": "Expired on {date}"
@@ -391,6 +395,10 @@
   },
   "/kWzY1": {
     "string": "Are you sure you want to delete this address from users address book?"
+  },
+  "/kh7MF": {
+    "context": "expand truncated toast description",
+    "string": "Show more"
   },
   "/ly15q": {
     "context": "tab label for required attributes",
@@ -676,6 +684,10 @@
     "context": "page header",
     "string": "Order no. {orderNumber} - Refund"
   },
+  "0mHhwz": {
+    "context": "variant pricing channel status description when channel is inactive",
+    "string": "This channel is inactive. Customers cannot purchase from it until it is reactivated."
+  },
   "0mhR+F": {
     "context": "Header row quantity label",
     "string": "Quantity"
@@ -785,6 +797,10 @@
     "context": "sale channel",
     "string": "Channel"
   },
+  "1BjZBQ": {
+    "context": "save button disabled tooltip on shipping rate create",
+    "string": "Set prices for assigned channels to save"
+  },
   "1H+V6k": {
     "context": "error message",
     "string": "Page with these attributes already exists."
@@ -804,6 +820,10 @@
   "1LMrlA": {
     "context": "Expanded help for catalogue setup",
     "string": "Specific-product vouchers only discount the catalogue you assign. Until something is assigned, the code won’t reduce any line items."
+  },
+  "1LaUBN": {
+    "context": "variant pricing channel status when channel is inactive",
+    "string": "Inactive channel"
   },
   "1LiVhv": {
     "context": "section header",
@@ -1214,6 +1234,10 @@
   "38izkC": {
     "context": "placeholder for configuration settings search",
     "string": "Search settings…"
+  },
+  "38mk3k": {
+    "context": "save button disabled tooltip on shipping rate edit",
+    "string": "Set prices for assigned channels to save"
   },
   "3AqOxp": {
     "context": "no category set error",
@@ -2526,6 +2550,10 @@
     "context": "Warning when scheduling an available product for the future",
     "string": "Product will not be purchasable until this date."
   },
+  "8thmJ/": {
+    "context": "empty state when shipping method has no assigned channels",
+    "string": "Assign channels in Availability before configuring this section."
+  },
   "8u1Ks9": {
     "context": "channel activate confirmation dialog body",
     "string": "Are you sure you want to activate {name}? Products and content for this channel will become available to customers."
@@ -2841,6 +2869,10 @@
   "A02NDR": {
     "context": "plain text attribute value was truncated",
     "string": "Attribute value too long and truncated at {length} characters."
+  },
+  "A1KX3d": {
+    "context": "simple product create pricing empty state",
+    "string": "Add channels in the Channels section to set prices"
   },
   "A6mmoM": {
     "context": "Reassurance under verification badge when API reports stock but the channel has no shipping zones in direct mode",
@@ -3607,6 +3639,10 @@
     "context": "webhook input label",
     "string": "Webhook Name"
   },
+  "D0Rbqc": {
+    "context": "collapse truncated toast description",
+    "string": "Show less"
+  },
   "D0hIP2": {
     "context": "gift card history message fallback when customer email is unavailable",
     "string": "a customer"
@@ -4058,10 +4094,6 @@
   "F9hInY": {
     "context": "Product availability in a channel when live and purchasable",
     "string": "Product visible and purchasable"
-  },
-  "F9o33g": {
-    "context": "shipping method channel coverage summary",
-    "string": "Priced for {configured} of {total} channels"
   },
   "FBIsuH": {
     "context": "voucher type pill scope: specific products",
@@ -4646,6 +4678,10 @@
     "context": "channel status",
     "string": "Active"
   },
+  "HEjlAr": {
+    "context": "variant pricing channel status description when channel is active",
+    "string": "This channel is active and the product is published."
+  },
   "HFo3Qe": {
     "context": "successfully created gift card alert title",
     "string": "Gift card created"
@@ -4693,10 +4729,6 @@
   "HRy5qF": {
     "context": "customer overview stat label",
     "string": "Total orders"
-  },
-  "HSYLgD": {
-    "context": "shipping method missing channel listings count",
-    "string": "{count, plural, one {# channel without pricing} other {# channels without pricing}}"
   },
   "HSYM17": {
     "context": "outcome prediction showing resulting order status after capture",
@@ -5708,6 +5740,10 @@
   "LOSNq0": {
     "context": "dialog header",
     "string": "Unassign Categories From Voucher"
+  },
+  "LPkBO3": {
+    "context": "shipping method channel max order value aria label",
+    "string": "Maximum order value for {channelName}"
   },
   "LQg8/p": {
     "context": "customer detail cogs menu, opens the delete-confirmation dialog",
@@ -6800,6 +6836,10 @@
     "context": "add attribute value",
     "string": "Add Value"
   },
+  "Pr3zjN": {
+    "context": "empty state when a shipping method has no channel listings",
+    "string": "No channels assigned to this shipping method yet. Open the method to set availability and prices."
+  },
   "PrxZ/P": {
     "context": "onboarding step description",
     "string": "We'll guide you through the main features so you can start customizing your store. Explore products, orders, collections, customers, and discounts to get familiar with key functions and concepts."
@@ -6881,6 +6921,10 @@
     "context": "Dry run icon label",
     "string": "Dry run"
   },
+  "Q2wt4b": {
+    "context": "variant pricing channel status when product is not published on channel",
+    "string": "Unpublished"
+  },
   "Q4m1CG": {
     "string": "Edit Product"
   },
@@ -6949,6 +6993,10 @@
   "QIB6Eo": {
     "context": "voucher setup card subtitle while incomplete",
     "string": "Customers can’t redeem this voucher until the required steps are done. Finish them now or come back later."
+  },
+  "QIe5rc": {
+    "context": "variant stock spreadsheet paste hint",
+    "string": "You can paste from a spreadsheet. Select a quantity field and paste a column of values to fill stock down the list."
   },
   "QJG+d/": {
     "context": "staff added type order discount",
@@ -7890,6 +7938,10 @@
     "context": "order header date, yesterday",
     "string": "Placed yesterday at {time}"
   },
+  "UPqrEf": {
+    "context": "variant pricing channel status when channel is active",
+    "string": "Active channel"
+  },
   "UQ4Kuh": {
     "context": "input label",
     "string": "Search Staff Members"
@@ -8215,6 +8267,10 @@
   },
   "VkYZQ8": {
     "string": "Current Permissions"
+  },
+  "VlcKLw": {
+    "context": "product variant pricing empty state when channels can be assigned",
+    "string": "Choose channels to set selling and cost prices."
   },
   "VmMDLN": {
     "context": "permission list item description",
@@ -9869,6 +9925,10 @@
   "byP6IC": {
     "string": "Selected"
   },
+  "bzcuDv": {
+    "context": "accessible label for toast dismiss button",
+    "string": "Close notification"
+  },
   "c0hLoI": {
     "string": "Attribute created"
   },
@@ -11017,6 +11077,10 @@
   "hAoqp6": {
     "string": "Failed to save permissions. Refresh the page and try again."
   },
+  "hF952H": {
+    "context": "product variant pricing manage channels button",
+    "string": "Manage channels"
+  },
   "hGI8RO": {
     "context": "PageTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this model type and assigned models"
@@ -11188,6 +11252,10 @@
     "context": "channel details section nav item for installed payment apps",
     "string": "Payment gateways"
   },
+  "hub+oz": {
+    "context": "shipping method channel min order value aria label",
+    "string": "Minimum order value for {channelName}"
+  },
   "hw9Fah": {
     "context": "button",
     "string": "Send invite"
@@ -11198,6 +11266,10 @@
   },
   "hwYzY9": {
     "string": "Note added"
+  },
+  "hxuCJ7": {
+    "context": "product variant pricing spreadsheet paste hint",
+    "string": "You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill selling and cost prices down the list."
   },
   "hyAOPB": {
     "string": "Use Avalara plugin"
@@ -11878,9 +11950,6 @@
   "kMziE/": {
     "string": "PSP Reference"
   },
-  "kN6SLs": {
-    "string": "Min Value"
-  },
   "kPIZ65": {
     "context": "page header",
     "string": "Order #{orderNumber}"
@@ -12097,10 +12166,6 @@
   "l9Lwjh": {
     "context": "order return error title when cannot refund",
     "string": "Couldn't refund products"
-  },
-  "lCEp2/": {
-    "context": "save button disabled tooltip",
-    "string": "Set prices for all channels to save"
   },
   "lCPxtT": {
     "context": "resend code label",
@@ -12440,6 +12505,10 @@
     "context": "Save composition segment for warehouses and allocation strategy",
     "string": "inventory"
   },
+  "mQb4Pd": {
+    "context": "variant pricing channel status description when product is unpublished",
+    "string": "The product is not published on this channel yet."
+  },
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"
@@ -12466,6 +12535,10 @@
   "mWQt3s": {
     "string": "No. of Products"
   },
+  "mWTgxo": {
+    "context": "shipping method order value spreadsheet paste hint",
+    "string": "You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill min and max values down the list."
+  },
   "mWYRZY": {
     "context": "order history message",
     "string": "Products were added to the order"
@@ -12484,6 +12557,10 @@
   "mZrAiu": {
     "context": "extension installation page, label for manifest URL input",
     "string": "Provide Manifest URL"
+  },
+  "mafYbA": {
+    "context": "shipping method detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete shipping method"
   },
   "maxT+q": {
     "context": "save button",
@@ -13089,6 +13166,10 @@
   "p7GaL2": {
     "context": "voucher apply once per customer toggle title",
     "string": "One use per customer"
+  },
+  "p8wPET": {
+    "context": "shipping method assigned channel count when all have prices",
+    "string": "{count, plural, one {# channel} other {# channels}}"
   },
   "p96fcM": {
     "context": "voucher discount amount section hint",
@@ -13790,6 +13871,10 @@
     "context": "status label active",
     "string": "Active"
   },
+  "rQaDCQ": {
+    "context": "product variant channel cost price aria label",
+    "string": "Cost price for {channelName}"
+  },
   "rRxWkt": {
     "context": "dialog header",
     "string": "Change customer"
@@ -13979,6 +14064,10 @@
   "sAqzEK": {
     "context": "no products placeholder",
     "string": "No products available"
+  },
+  "sC3g5c": {
+    "context": "shipping method channel price input aria label",
+    "string": "Price for {channelName}"
   },
   "sDMNfc": {
     "context": "bulk issue structure item",
@@ -14173,6 +14262,10 @@
     "context": "variant pricing section subtitle",
     "string": "There is no channel to define prices for. You need to first add variant to channels to define prices."
   },
+  "swMMqF": {
+    "context": "product variant channel selling price aria label",
+    "string": "Selling price for {channelName}"
+  },
   "sy+pv5": {
     "string": "Email"
   },
@@ -14306,10 +14399,6 @@
     "context": "Header row stock label",
     "string": "Stock"
   },
-  "taS/08": {
-    "context": "variant stocks section subtitle",
-    "string": "Assign this variant to a channel in the product channel manager to define warehouses allocation"
-  },
   "tcOGcd": {
     "context": "matrix section description on editable orders hub",
     "string": "Edit per-channel values here or open a channel for checkout, payment, and other channel settings."
@@ -14357,6 +14446,10 @@
   "toDL5R": {
     "context": "order status",
     "string": "Draft"
+  },
+  "toastDismissAll.dismissAll": {
+    "context": "Dismiss all visible toast notifications",
+    "string": "Dismiss"
   },
   "tpM9O2": {
     "context": "empty state when attribute is not assigned to product types",
@@ -14699,6 +14792,10 @@
     "context": "voucher redemptions card channels count meta",
     "string": "{count, plural, one {# channel} other {# channels}}"
   },
+  "uvHAJz": {
+    "context": "Product variant pricing card subtitle. Counts channel listings, not customer-facing availability or stock.",
+    "string": "Listed on {listedInChannelsCount} of {availableChannelsCount} channels"
+  },
   "uvVmpA": {
     "context": "collection detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete collection"
@@ -14864,6 +14961,10 @@
     "context": "error message",
     "string": "URL not set for an invoice"
   },
+  "vPW5Zc": {
+    "context": "shipping method assigned channels missing a price",
+    "string": "{count, plural, one {# channel without pricing} other {# channels without pricing}}"
+  },
   "vSLaZ7": {
     "string": "Select a reason type"
   },
@@ -14965,9 +15066,6 @@
   },
   "vitgwA": {
     "string": "Search syntax"
-  },
-  "vjsfyn": {
-    "string": "Max Value"
   },
   "vkAWwY": {
     "context": "gift card history message",
@@ -15111,6 +15209,10 @@
   "w7jT4W": {
     "string": "No channels selected"
   },
+  "w87NH1": {
+    "context": "product variant pricing empty state when the product has no channels",
+    "string": "Add channels on the product page before listing this variant."
+  },
   "wAGThK": {
     "context": "dialog header",
     "string": "Delete structures"
@@ -15160,6 +15262,10 @@
   "wMpoVP": {
     "context": "voucher single-use code toggle description",
     "string": "Each code can be redeemed only once, then that code is deactivated. Other codes on this voucher stay usable."
+  },
+  "wN8PkE": {
+    "context": "shipping method channel coverage when some assigned channels lack prices",
+    "string": "Priced for {configured} of {total} channels"
   },
   "wNQzS/": {
     "string": "The primary address of this customer."
@@ -15443,6 +15549,10 @@
   },
   "xeMcID": {
     "string": "Warehouse created"
+  },
+  "xePeMh": {
+    "context": "shipping method detail cogs menu, opens GraphiQL with this method",
+    "string": "Open this shipping method in GraphiQL"
   },
   "xfGZsi": {
     "context": "configuration section name",
