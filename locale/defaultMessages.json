@@ -10987,6 +10987,10 @@
     "context": "bulk publish partial product data fetch failure",
     "string": "Only {loaded} of {selected} selected products could be loaded. Go back and try again."
   },
+  "gZ3jPc": {
+    "context": "toast description when save fails due to catalogue assign errors",
+    "string": "Fix the catalogue section and try again."
+  },
   "gaOXvo": {
     "context": "notification, form submitted",
     "string": "Refund grant for order #{orderNumber} was updated"
@@ -15121,14 +15125,6 @@
     "context": "unfulfilled fulfillment, section header",
     "string": "Unfulfilled order lines"
   },
-  "vchrFixCat": {
-    "context": "toast description when save fails due to catalogue assign errors",
-    "string": "Fix the catalogue section and try again."
-  },
-  "vchrFixCtry": {
-    "context": "toast description when save fails due to country assign errors",
-    "string": "Fix the countries section and try again."
-  },
   "vcwrgW": {
     "string": "No translatable entities found"
   },
@@ -15989,6 +15985,10 @@
   },
   "z4qMx5": {
     "string": "Open in a new tab"
+  },
+  "z5W3Sk": {
+    "context": "toast description when save fails due to country assign errors",
+    "string": "Fix the countries section and try again."
   },
   "z8gJdj": {
     "context": "voucher list scope for specific-product vouchers",
