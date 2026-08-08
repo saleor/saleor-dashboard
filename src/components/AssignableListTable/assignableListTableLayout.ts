@@ -23,7 +23,10 @@ export const getAssignableListCheckboxColumnWidth = (
 ): string => `calc(var(--mu-spacing-${leadingInset}) + 20px)`;
 
 /**
- * Row delete icon + right inset. Keep ≥100px so selection `toolbar` (e.g. Unassign)
- * in the header actions cell is not clipped under `table-layout: fixed`.
+ * Header actions when bulk toolbar is visible (e.g. Unassign).
+ * Wider so the toolbar label is not clipped under `table-layout: fixed`.
  */
 export const ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH = "100px";
+
+/** Row delete icon + right inset when no bulk toolbar is shown. */
+export const ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH_COMPACT = "48px";

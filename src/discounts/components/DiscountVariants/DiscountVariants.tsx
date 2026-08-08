@@ -77,57 +77,63 @@ export const DiscountVariants = ({
           },
           {
             id: "variant",
-            width: "25%",
+            width: "26%",
             header: <FormattedMessage {...messages.discountVariantsTableVariantHeader} />,
             hideHeaderWhenSelected: true,
           },
           {
             id: "type",
-            width: "25%",
+            width: "26%",
             header: <FormattedMessage {...messages.discountVariantsTableProductHeader} />,
             hideHeaderWhenSelected: true,
           },
         ]}
-        renderCells={variant => (
-          <>
-            <AssignableListLinkCell href={productVariantEditPath(variant.id)}>
-              <Box flexShrink="0">
-                {variant.product.thumbnail?.url ? (
-                  <Box
-                    borderColor="default1"
-                    borderWidth={1}
-                    borderRadius={3}
-                    borderStyle="solid"
-                    overflow="hidden"
-                  >
+        renderCells={variant => {
+          const productName = maybe(() => variant.product.name);
+          const variantName = maybe(() => variant.name);
+          const linkTitle = [productName, variantName].filter(Boolean).join(" · ") || undefined;
+
+          return (
+            <>
+              <AssignableListLinkCell href={productVariantEditPath(variant.id)} title={linkTitle}>
+                <Box flexShrink="0">
+                  {variant.product.thumbnail?.url ? (
                     <Box
-                      as="img"
-                      src={variant.product.thumbnail.url}
-                      alt={variant.product.name}
-                      __width="31px"
-                      __height="31px"
-                    />
-                  </Box>
-                ) : (
-                  <EmptyImage />
-                )}
-              </Box>
-              <Text ellipsis display="block">
-                {maybe(() => variant.product.name)}
-              </Text>
-            </AssignableListLinkCell>
-            <AssignableListCell truncate>
-              <Text ellipsis display="block" size={2} color="default2">
-                {maybe(() => variant.name)}
-              </Text>
-            </AssignableListCell>
-            <AssignableListCell truncate>
-              <Text ellipsis display="block" size={2} color="default2">
-                {maybe(() => variant.product.productType.name)}
-              </Text>
-            </AssignableListCell>
-          </>
-        )}
+                      borderColor="default1"
+                      borderWidth={1}
+                      borderRadius={3}
+                      borderStyle="solid"
+                      overflow="hidden"
+                    >
+                      <Box
+                        as="img"
+                        src={variant.product.thumbnail.url}
+                        alt={variant.product.name}
+                        __width="31px"
+                        __height="31px"
+                      />
+                    </Box>
+                  ) : (
+                    <EmptyImage />
+                  )}
+                </Box>
+                <Text ellipsis display="block" minWidth={0} __flex="1">
+                  {productName}
+                </Text>
+              </AssignableListLinkCell>
+              <AssignableListCell truncate>
+                <Text ellipsis display="block" size={2} color="default2">
+                  {variantName}
+                </Text>
+              </AssignableListCell>
+              <AssignableListCell truncate>
+                <Text ellipsis display="block" size={2} color="default2">
+                  {maybe(() => variant.product.productType.name)}
+                </Text>
+              </AssignableListCell>
+            </>
+          );
+        }}
       />
       {variants?.length && onUpdateListSettings ? (
         <Pagination

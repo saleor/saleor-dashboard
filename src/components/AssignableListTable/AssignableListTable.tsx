@@ -13,6 +13,7 @@ import styles from "./AssignableListTable.module.css";
 import {
   ASSIGNABLE_LIST_TABLE_ACTION_INSET,
   ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH,
+  ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH_COMPACT,
   ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET,
   ASSIGNABLE_LIST_TABLE_LEADING_INSET,
   type AssignableListTableLeadingInset,
@@ -83,6 +84,11 @@ export const AssignableListTable = <T extends { id: string }>({
       ? styles.checkboxCellCard
       : styles.checkboxCell;
   const checkboxColumnWidth = getAssignableListCheckboxColumnWidth(leadingInset);
+  // Compact when idle so content columns keep the space; widen only for bulk toolbar.
+  const actionsColumnWidth =
+    selected > 0 && toolbar
+      ? ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH
+      : ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH_COMPACT;
 
   if (items === undefined) {
     return (
@@ -110,12 +116,12 @@ export const AssignableListTable = <T extends { id: string }>({
         <GridTable.Col __width={checkboxColumnWidth} />
         {columns.map(column =>
           column.width ? (
-            <GridTable.Col key={column.id} __width={column.width} />
+            <GridTable.Col key={column.id} style={{ width: column.width }} />
           ) : (
             <GridTable.Col key={column.id} />
           ),
         )}
-        <GridTable.Col __width={ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH} />
+        <GridTable.Col style={{ width: actionsColumnWidth }} />
       </GridTable.Colgroup>
       <GridTable.Body>
         <GridTable.Row className={styles.headerRow}>
@@ -262,13 +268,16 @@ export const AssignableListCell = ({
 
 export const AssignableListLinkCell = ({
   href,
+  title,
   children,
 }: {
   href: string;
+  /** Full label for native browser tooltip when the cell truncates. */
+  title?: string;
   children: ReactNode;
 }): JSX.Element => (
   <GridTable.Cell __height="inherit" padding={0} className={styles.truncateCell}>
-    <Link href={href} inline={false} className={styles.cellLink}>
+    <Link href={href} inline={false} className={styles.cellLink} title={title}>
       <Box className={styles.cellContent}>{children}</Box>
     </Link>
   </GridTable.Cell>

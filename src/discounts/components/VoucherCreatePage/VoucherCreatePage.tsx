@@ -13,7 +13,7 @@ import { CountryList } from "@dashboard/components/CountryList";
 import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
-import { PAGINATE_BY } from "@dashboard/config";
+import { VOUCHER_CATALOGUE_PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import { VoucherCatalogueSection } from "@dashboard/discounts/components/VoucherCatalogueSection/VoucherCatalogueSection";
 import { VoucherChannelAvailabilityCard } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/VoucherChannelAvailabilityCard";
@@ -294,7 +294,7 @@ const VoucherCreatePage = ({
     data.codes,
   );
 
-  const [catalogueNumberOfRows, setCatalogueNumberOfRows] = useState(PAGINATE_BY);
+  const [catalogueNumberOfRows, setCatalogueNumberOfRows] = useState(VOUCHER_CATALOGUE_PAGINATE_BY);
   const handleCatalogueListSettingsUpdate = (key: "rowNumber", value: number) => {
     if (key === "rowNumber") {
       setCatalogueNumberOfRows(value);

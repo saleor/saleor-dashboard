@@ -70,8 +70,8 @@ export const DiscountCollections = ({
         ]}
         renderCells={collection => (
           <>
-            <AssignableListLinkCell href={collectionUrl(collection.id)}>
-              <Text ellipsis display="block">
+            <AssignableListLinkCell href={collectionUrl(collection.id)} title={collection.name}>
+              <Text ellipsis display="block" minWidth={0} __flex="1">
                 {collection.name}
               </Text>
             </AssignableListLinkCell>

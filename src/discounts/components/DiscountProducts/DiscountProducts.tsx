@@ -61,25 +61,29 @@ export const DiscountProducts = ({
         columns={[
           {
             id: "name",
-            width: "40%",
+            // Slightly prefer name, but keep type/availability readable in the catalogue panel.
+            width: "42%",
             header: <FormattedMessage {...messages.discountProductsTableProductHeader} />,
           },
           {
             id: "type",
-            width: "20%",
+            width: "24%",
             header: <FormattedMessage {...messages.discountProductsTableTypeHeader} />,
             hideHeaderWhenSelected: true,
           },
           {
             id: "availability",
-            width: "30%",
+            width: "26%",
             header: <FormattedMessage {...messages.discountProductsTableAvailabilityHeader} />,
             hideHeaderWhenSelected: true,
           },
         ]}
         renderCells={product => (
           <>
-            <AssignableListLinkCell href={productUrl(product.id)}>
+            <AssignableListLinkCell
+              href={productUrl(product.id)}
+              title={maybe(() => product.name) ?? undefined}
+            >
               <Box flexShrink="0">
                 {product.thumbnail?.url ? (
                   <Box
@@ -101,7 +105,7 @@ export const DiscountProducts = ({
                   <EmptyImage />
                 )}
               </Box>
-              <Text ellipsis display="block">
+              <Text ellipsis display="block" minWidth={0} __flex="1">
                 {maybe(() => product.name)}
               </Text>
             </AssignableListLinkCell>
@@ -110,7 +114,7 @@ export const DiscountProducts = ({
                 {maybe(() => product.productType.name)}
               </Text>
             </AssignableListCell>
-            <AssignableListCell>
+            <AssignableListCell truncate>
               {product.channelListings?.length ? (
                 <ProductChannelsAvailability channels={product.channelListings} />
               ) : (

@@ -59,6 +59,8 @@ export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
 /** Embedded voucher codes card — keep the detail page compact. */
 export const VOUCHER_CODES_PAGINATE_BY = 10;
+/** Embedded Eligible products catalogue lists on voucher create/details. */
+export const VOUCHER_CATALOGUE_PAGINATE_BY = 10;
 /** Page size for the product variants datagrid (embedded Glide paints all loaded rows). */
 export const PRODUCT_VARIANTS_PAGINATE_BY = 50;
 /** Page size for variant detail/create sibling navigator (infinite scroll). */

@@ -70,8 +70,8 @@ export const DiscountCategories = ({
         ]}
         renderCells={category => (
           <>
-            <AssignableListLinkCell href={categoryUrl(category.id)}>
-              <Text ellipsis display="block">
+            <AssignableListLinkCell href={categoryUrl(category.id)} title={category.name}>
+              <Text ellipsis display="block" minWidth={0} __flex="1">
                 {category.name}
               </Text>
             </AssignableListLinkCell>

@@ -13,10 +13,11 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
-  PAGINATE_BY,
   PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+  VOUCHER_CATALOGUE_PAGINATE_BY,
 } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
+import { getPreferredVoucherCatalogueTab } from "@dashboard/discounts/components/VoucherCatalogueSection/getPreferredVoucherCatalogueTab";
 import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
 import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
 import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
@@ -222,10 +223,35 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     });
   };
 
-  const [activeTab, setActiveTab] = useState<VoucherDetailsPageTab>(
-    VoucherDetailsPageTab.categories,
-  );
-  const [catalogueNumberOfRows, setCatalogueNumberOfRows] = useState(PAGINATE_BY);
+  // null = follow server preference (first non-empty Eligible products group).
+  const [userCatalogueTab, setUserCatalogueTab] = useState<VoucherDetailsPageTab | null>(null);
+  const [catalogueTabVoucherId, setCatalogueTabVoucherId] = useState(id);
+
+  if (catalogueTabVoucherId !== id) {
+    setCatalogueTabVoucherId(id);
+    setUserCatalogueTab(null);
+  }
+
+  const [catalogueNumberOfRows, setCatalogueNumberOfRows] = useState(VOUCHER_CATALOGUE_PAGINATE_BY);
+  const { data, loading, refetch, updateQuery } = useVoucherDetailsQuery({
+    displayLoader: true,
+    variables: { id },
+  });
+  const preferredCatalogueTab = useMemo(() => {
+    const voucher = data?.voucher;
+
+    if (!voucher || voucher.id !== id) {
+      return VoucherDetailsPageTab.categories;
+    }
+
+    return getPreferredVoucherCatalogueTab({
+      categories: voucher.categoriesCount?.totalCount ?? 0,
+      collections: voucher.collectionsCount?.totalCount ?? 0,
+      products: voucher.productsCount?.totalCount ?? 0,
+      variants: voucher.variantsCount?.totalCount ?? 0,
+    });
+  }, [data?.voucher, id]);
+  const activeTab = userCatalogueTab ?? preferredCatalogueTab;
   const [paginationState, setPaginationState] = useSectionLocalPaginationState(
     catalogueNumberOfRows,
     activeTab,
@@ -238,7 +264,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: VoucherDetailsPageTab) => {
     reset();
-    setActiveTab(tab);
+    setUserCatalogueTab(tab);
   };
   const catalogueQueryInclude: Pick<
     VoucherCatalogueQueryVariables,
@@ -249,10 +275,6 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     includeProducts: activeTab === VoucherDetailsPageTab.products,
     includeVariants: activeTab === VoucherDetailsPageTab.variants,
   };
-  const { data, loading, refetch, updateQuery } = useVoucherDetailsQuery({
-    displayLoader: true,
-    variables: { id },
-  });
   const { data: catalogueData, refetch: refetchCatalogue } = useVoucherCatalogueQuery({
     displayLoader: false,
     skip: !data?.voucher,
