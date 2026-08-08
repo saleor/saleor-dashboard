@@ -78,7 +78,7 @@ export const Pagination = ({
           __width="60px"
           __minWidth="60px"
           options={ROW_NUMBER_OPTIONS}
-          value={currentRowNumberOption ?? ROW_NUMBER_OPTIONS[1]}
+          value={currentRowNumberOption ?? ROW_NUMBER_OPTIONS[0]}
           onChange={handleRowNumberChange}
         />
       </Box>

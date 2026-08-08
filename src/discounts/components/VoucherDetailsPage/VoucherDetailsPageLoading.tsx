@@ -7,6 +7,7 @@ import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSection
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import { VOUCHER_CODES_PAGINATE_BY } from "@dashboard/config";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { voucherListPath } from "@dashboard/discounts/urls";
 import {
@@ -199,7 +200,7 @@ export const VoucherDetailsPageLoading = ({
                 onSelectedCodesChange={noop}
                 onDeleteCode={noop}
                 onBulkDelete={noop}
-                settings={{ rowNumber: 20 }}
+                settings={{ rowNumber: VOUCHER_CODES_PAGINATE_BY }}
                 onSettingsChange={noop}
               />
             </DetailSettingsCard>

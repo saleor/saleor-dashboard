@@ -1,3 +1,4 @@
+import { VOUCHER_CODES_PAGINATE_BY } from "@dashboard/config";
 import useListSettings, { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
@@ -17,9 +18,10 @@ export const useVoucherCodesPagination = (
   voucherCodes: VoucherCode[],
 ): UseVoucherCodesPagination => {
   const { settings, updateListSettings } = useListSettings(ListViews.VOUCHER_CODES);
+  const pageSize = settings.rowNumber || VOUCHER_CODES_PAGINATE_BY;
   const { loadNextPage, loadPreviousPage, pageInfo, pageValues, resetPage } = useLocalPageInfo(
     voucherCodes,
-    settings.rowNumber,
+    pageSize,
   );
 
   return {

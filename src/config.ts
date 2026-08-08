@@ -57,6 +57,8 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
 
 export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
+/** Embedded voucher codes card — keep the detail page compact. */
+export const VOUCHER_CODES_PAGINATE_BY = 10;
 /** Page size for the product variants datagrid (embedded Glide paints all loaded rows). */
 export const PRODUCT_VARIANTS_PAGINATE_BY = 50;
 /** Page size for variant detail/create sibling navigator (infinite scroll). */
@@ -247,7 +249,7 @@ export const defaultListSettings: AppListViewSettings = {
     columns: ["name", "sku"],
   },
   [ListViews.VOUCHER_CODES]: {
-    rowNumber: PAGINATE_BY,
+    rowNumber: VOUCHER_CODES_PAGINATE_BY,
   },
   [ListViews.ORDER_REFUNDS]: {
     rowNumber: PAGINATE_BY,

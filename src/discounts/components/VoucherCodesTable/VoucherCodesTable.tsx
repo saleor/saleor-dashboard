@@ -9,6 +9,7 @@ import { ProductAvailabilityStatusLabel } from "@dashboard/components/ChannelsAv
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { VOUCHER_CODES_PAGINATE_BY } from "@dashboard/config";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Ticket } from "lucide-react";
@@ -197,7 +198,7 @@ export const VoucherCodesTable = ({
       />
       {codes.length > 0 ? (
         <Pagination
-          numberOfRows={settings?.rowNumber ?? 20}
+          numberOfRows={settings?.rowNumber ?? VOUCHER_CODES_PAGINATE_BY}
           onUpdateListSettings={onSettingsChange}
           paddingLeft={ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET}
           beforePagination={

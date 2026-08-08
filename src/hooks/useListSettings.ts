@@ -2,10 +2,18 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import mergeWith from "lodash/mergeWith";
 
-import { type AppListViewSettings, defaultListSettings } from "./../config";
-import { type ListSettings, type ListViews } from "./../types";
+import {
+  type AppListViewSettings,
+  defaultListSettings,
+  PAGINATE_BY,
+  VOUCHER_CODES_PAGINATE_BY,
+} from "./../config";
+import { type ListSettings, ListViews } from "./../types";
 
 export const listSettingsStorageKey = "listConfig";
+/** One-shot: migrate voucher codes page size from the old shared default (20) to 10. */
+export const voucherCodesPageSizeMigrationKey = "listConfig.migrations.voucherCodesDefault10";
+
 export interface UseListSettings<TColumns extends string = string> {
   settings: ListSettings<TColumns>;
   updateListSettings: <T extends keyof ListSettings<TColumns>>(
@@ -28,17 +36,50 @@ const mergeCustomizer = (objValue: unknown, srcValue: unknown) => {
   }
 };
 
+const migrateVoucherCodesDefaultPageSize = (settings: AppListViewSettings): AppListViewSettings => {
+  try {
+    if (typeof localStorage === "undefined") {
+      return settings;
+    }
+
+    if (localStorage.getItem(voucherCodesPageSizeMigrationKey) === "1") {
+      return settings;
+    }
+
+    const storedRowNumber = settings[ListViews.VOUCHER_CODES]?.rowNumber;
+    const nextSettings =
+      storedRowNumber === PAGINATE_BY
+        ? {
+            ...settings,
+            [ListViews.VOUCHER_CODES]: {
+              ...settings[ListViews.VOUCHER_CODES],
+              rowNumber: VOUCHER_CODES_PAGINATE_BY,
+            },
+          }
+        : settings;
+
+    localStorage.setItem(voucherCodesPageSizeMigrationKey, "1");
+
+    return nextSettings;
+  } catch {
+    return settings;
+  }
+};
+
 export default function useListSettings<TColumns extends string = string>(
   listName: ListViews,
 ): UseListSettings<TColumns> {
   const [settings, setListSettings] = useLocalStorage<AppListViewSettings>(
     listSettingsStorageKey,
     storedListSettings => {
-      if (typeof storedListSettings !== "object") {
-        return defaultListSettings;
+      // `typeof null === "object"` — treat null/non-objects as a fresh install.
+      if (!storedListSettings || typeof storedListSettings !== "object") {
+        return migrateVoucherCodesDefaultPageSize(defaultListSettings);
       }
 
-      return mergeWith({}, defaultListSettings, storedListSettings, mergeCustomizer);
+      const merged = mergeWith({}, defaultListSettings, storedListSettings, mergeCustomizer);
+
+      return migrateVoucherCodesDefaultPageSize(merged);
     },
   );
   const updateListSettings = <T extends keyof ListSettings>(key: T, value: ListSettings[T]) =>

@@ -37,7 +37,7 @@ const meta: Meta<typeof VoucherCodesTable> = {
     loading: false,
     disabled: false,
     selectedCodesIds: [],
-    settings: { rowNumber: 20 },
+    settings: { rowNumber: 10 },
     onSettingsChange: fn(),
     onSelectedCodesChange: fn(),
     onDeleteCode: fn(),
