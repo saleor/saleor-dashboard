@@ -1,4 +1,5 @@
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
+import { DiscountTypeEnum } from "@dashboard/discounts/types";
 
 import { buildVoucherSaveComposition, hasVoucherSaveComposition } from "./saveComposition";
 
@@ -8,6 +9,7 @@ const baselineChannels: ChannelVoucherData[] = [
     name: "Channel",
     currency: "USD",
     discountValue: "10",
+    percentageDiscountValue: "20",
     minSpent: "",
   },
 ];
@@ -52,15 +54,28 @@ describe("buildVoucherSaveComposition", () => {
     expect(hasVoucherSaveComposition(composition)).toBe(true);
   });
 
-  it("returns channels when channel listings differ from baseline", () => {
+  it("returns channels when the active amount draft differs from baseline", () => {
     // Arrange
-    const composition = buildVoucherSaveComposition([], updatedChannels, baselineChannels, 0);
+    const composition = buildVoucherSaveComposition([], updatedChannels, baselineChannels, 0, {
+      discountType: DiscountTypeEnum.VALUE_FIXED,
+    });
 
     // Assert
     expect(composition.hasGeneral).toBe(false);
     expect(composition.hasSchedule).toBe(false);
     expect(composition.hasChannels).toBe(true);
     expect(hasVoucherSaveComposition(composition)).toBe(true);
+  });
+
+  it("ignores inactive amount drafts when deciding channel dirtiness", () => {
+    // Arrange — percentage is active; only the fixed draft differs.
+    const composition = buildVoucherSaveComposition([], updatedChannels, baselineChannels, 0, {
+      discountType: DiscountTypeEnum.VALUE_PERCENTAGE,
+    });
+
+    // Assert
+    expect(composition.hasChannels).toBe(false);
+    expect(hasVoucherSaveComposition(composition)).toBe(false);
   });
 
   it("returns channels when channel membership changes", () => {
@@ -74,6 +89,7 @@ describe("buildVoucherSaveComposition", () => {
           name: "Other",
           currency: "EUR",
           discountValue: "",
+          percentageDiscountValue: "",
           minSpent: "",
         },
       ],

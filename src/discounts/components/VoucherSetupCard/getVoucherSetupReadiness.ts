@@ -48,12 +48,24 @@ const countCatalogueItems = (tabItemsCount: VoucherTabItemsCount): number =>
   (tabItemsCount.products ?? 0) +
   (tabItemsCount.variants ?? 0);
 
-const hasValidFixedDiscount = (channelListings: ChannelVoucherData[]): boolean =>
-  channelListings.length > 0 &&
-  !channelListings.some(channel => validatePrice(String(channel.discountValue ?? "")));
+const hasValidChannelDiscount = (
+  channelListings: ChannelVoucherData[],
+  discountType: DiscountTypeEnum,
+): boolean => {
+  if (channelListings.length === 0) {
+    return false;
+  }
 
-const hasValidPercentageDiscount = (percentageDiscountValue: string): boolean =>
-  !validatePrice(percentageDiscountValue);
+  return !channelListings.some(channel =>
+    validatePrice(
+      String(
+        (discountType === DiscountTypeEnum.VALUE_PERCENTAGE
+          ? channel.percentageDiscountValue
+          : channel.discountValue) ?? "",
+      ),
+    ),
+  );
+};
 
 export const getVoucherSetupReadiness = ({
   voucher,
@@ -81,9 +93,7 @@ export const getVoucherSetupReadiness = ({
   const isShipping = formData.discountType === DiscountTypeEnum.SHIPPING;
   const hasDiscountValue = isShipping
     ? true
-    : formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
-      ? hasValidPercentageDiscount(formData.percentageDiscountValue)
-      : hasValidFixedDiscount(channelListings);
+    : hasValidChannelDiscount(channelListings, formData.discountType);
 
   const needsCatalogue = formData.type === VoucherTypeEnum.SPECIFIC_PRODUCT;
   const catalogueCount = countCatalogueItems(tabItemsCount);

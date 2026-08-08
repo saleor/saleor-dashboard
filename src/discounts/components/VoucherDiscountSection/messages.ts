@@ -68,9 +68,9 @@ export const voucherDiscountSectionMessages = defineMessages({
     description: "voucher discount amount type",
   },
   percentageValueHint: {
-    id: "N9fBvI",
+    id: "u3lci+",
     defaultMessage:
-      "A percentage means the same thing in every currency, so one value covers all channels.",
+      "Set a percentage for each channel — values can differ when markets need different offers.",
     description: "voucher percentage value helper",
   },
   percentageOffLabel: {
@@ -82,6 +82,17 @@ export const voucherDiscountSectionMessages = defineMessages({
     id: "Pst6mm",
     defaultMessage: "Assign channels in Availability to apply this percentage at checkout.",
     description: "helper under percentage input when voucher has no channel listings yet",
+  },
+  percentagePerChannelTitle: {
+    id: "4RC7NL",
+    defaultMessage: "Percentage off, per channel",
+    description: "voucher percentage per channel section title",
+  },
+  percentagePasteHint: {
+    id: "ArgcnR",
+    defaultMessage:
+      "You can paste from a spreadsheet. Select a field and paste a column of values to fill percentages down the list.",
+    description: "voucher percentage spreadsheet paste hint",
   },
   shippingAmountHint: {
     id: "k+wydb",

@@ -327,15 +327,18 @@ export const VoucherDetailsPageLoading = ({
 
       <DetailPageLayout.RightSidebar paddingTop={6}>
         <Box display="flex" flexDirection="column" gap={4}>
-          <VoucherRedemptionsCard
-            used={0}
-            hasUsageLimit={false}
-            usageLimit={0}
-            codesCount={0}
-            channelsCount={0}
-            scheduleData={emptyScheduleData}
-            loading
-          />
+          {/* Only skeleton when the entity has a cap — uncapped vouchers omit this card. */}
+          {voucher?.usageLimit != null ? (
+            <VoucherRedemptionsCard
+              used={0}
+              hasUsageLimit
+              usageLimit={voucher.usageLimit}
+              codesCount={0}
+              channelsCount={0}
+              scheduleData={emptyScheduleData}
+              loading
+            />
+          ) : null}
           <VoucherScheduleCard
             data={emptyScheduleData}
             errors={[]}

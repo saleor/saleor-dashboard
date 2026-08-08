@@ -21,11 +21,6 @@ export const voucherRedemptionsMessages = defineMessages({
     defaultMessage: "{used} of {limit} used",
     description: "voucher redemptions card used of limit detail line",
   },
-  usedUnlimited: {
-    id: "AD5gDx",
-    defaultMessage: "{used} used · no total cap",
-    description: "voucher redemptions card used detail when unlimited",
-  },
   remaining: {
     id: "qbT0tS",
     defaultMessage: "{count, plural, one {# redemption left} other {# redemptions left}}",
@@ -66,25 +61,5 @@ export const voucherRedemptionsMessages = defineMessages({
     id: "0rdBWd",
     defaultMessage: "Redemption window ended {date}.",
     description: "voucher redemptions schedule status when ended",
-  },
-  constraintsLabel: {
-    defaultMessage: "Usage constraints",
-    id: "RD29Kd",
-    description: "accessible label for voucher redemptions constraint chips",
-  },
-  constraintStaffOnly: {
-    defaultMessage: "Staff only",
-    id: "uXa7/n",
-    description: "voucher redemptions constraint chip when onlyForStaff is on",
-  },
-  constraintOncePerCustomer: {
-    defaultMessage: "Once per customer",
-    id: "InEAQM",
-    description: "voucher redemptions constraint chip when applyOncePerCustomer is on",
-  },
-  constraintSingleUse: {
-    defaultMessage: "Single-use codes",
-    id: "RiF1QH",
-    description: "voucher redemptions constraint chip when singleUse is on",
   },
 });

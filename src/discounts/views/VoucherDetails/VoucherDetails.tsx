@@ -13,8 +13,8 @@ import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabili
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   DEFAULT_INITIAL_SEARCH_DATA,
-  DEFAULT_NOTIFICATION_SHOW_TIME,
   PAGINATE_BY,
+  PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
 } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
 import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
@@ -321,18 +321,11 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     data?.voucher,
     availableChannels,
   );
-  // Percentage is edited in `percentageDiscountValue`; per-channel `discountValue` is the
-  // fixed-amount draft. For %-saved vouchers the API stores the same number on every
-  // listing — strip it from channel drafts so Fixed doesn't pretfill currency with that %.
-  const voucherChannelsChoices: ChannelVoucherData[] = useMemo(() => {
-    const channels = createSortedChannelsDataFromVoucher(data?.voucher) ?? [];
-
-    if (data?.voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE) {
-      return channels.map(channel => ({ ...channel, discountValue: "" }));
-    }
-
-    return channels;
-  }, [data?.voucher]);
+  // Per-channel drafts: `percentageDiscountValue` vs `discountValue` (seeded by active type).
+  const voucherChannelsChoices: ChannelVoucherData[] = useMemo(
+    () => createSortedChannelsDataFromVoucher(data?.voucher) ?? [],
+    [data?.voucher],
+  );
   const {
     channelListElements,
     channelsToggle,
@@ -379,7 +372,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
           : voucherFeedbackMessages.checkHighlightedFields,
       ),
       // Inline/section errors own the recovery; toast is a short ack.
-      autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+      autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
     });
   };
   const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({
@@ -583,21 +576,14 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
       : data?.voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
-  // Menu reopen uses *saved* readiness — don't read percentage from `currentChannels`,
-  // which clears `discountValue` for %-saved vouchers so Fixed doesn't pretfill.
+  // Menu reopen uses *saved* readiness from channel listings on the voucher payload.
   const setupReadinessForMenu = getVoucherSetupReadiness({
     voucher: voucherForPage,
     formData: {
       discountType: setupDiscountType,
       type: data?.voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-      percentageDiscountValue:
-        setupDiscountType === DiscountTypeEnum.VALUE_PERCENTAGE
-          ? String(
-              data?.voucher?.channelListings?.find(listing => listing.discountValue != null)
-                ?.discountValue ?? "",
-            )
-          : "",
-      channelListings: currentChannels,
+      percentageDiscountValue: "",
+      channelListings: createSortedChannelsDataFromVoucher(data?.voucher) ?? [],
       codes: [],
     },
     voucherCodes,

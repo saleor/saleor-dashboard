@@ -3,7 +3,10 @@ import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/cha
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+} from "@dashboard/config";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
@@ -185,7 +188,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         status: "error",
         title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
         text: intl.formatMessage(voucherFeedbackMessages.addAtLeastOneCode),
-        autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
       });
 
       return false;
@@ -197,7 +200,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         status: "error",
         title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
         text: intl.formatMessage(voucherFeedbackMessages.assignAtLeastOneChannel),
-        autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
       });
 
       return false;
@@ -234,7 +237,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
         status: "error",
         title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
         text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
-        autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
       });
 
       return result.errors;
@@ -244,7 +247,7 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
       status: "error",
       title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
       text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
-      autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+      autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
     });
 
     return ["Could not create voucher"];

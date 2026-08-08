@@ -61,7 +61,10 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   channelListings: ChannelVoucherData[];
   name: string;
   discountType: DiscountTypeEnum;
-  /** Draft for percentage mode — kept separate from per-channel fixed amounts until save. */
+  /**
+   * Legacy form field — kept for create handlers / API shape.
+   * Percentage drafts live on `channelListings[].percentageDiscountValue`.
+   */
   percentageDiscountValue: string;
   endDate: string;
   endTime: string;
@@ -251,26 +254,16 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
 
-  const isPercentageDiscount = discountType === DiscountTypeEnum.VALUE_PERCENTAGE;
-  // Percentage draft (`percentageDiscountValue`) and fixed drafts (`channel.discountValue`)
-  // are independent temp state. Seed % from the voucher payload — channel listings for
-  // %-saved vouchers intentionally have discountValue cleared (see VoucherDetails view).
-  const initialForm: VoucherDetailsPageFormData = useMemo(() => {
-    const percentageDiscountValue = isPercentageDiscount
-      ? String(
-          voucher?.channelListings?.find(listing => listing.discountValue != null)?.discountValue ??
-            "",
-        )
-      : "";
-
-    return {
+  const initialForm: VoucherDetailsPageFormData = useMemo(
+    () => ({
       applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
       applyOncePerOrder: voucher?.applyOncePerOrder || false,
       onlyForStaff: voucher?.onlyForStaff || false,
       channelListings,
       name: voucher?.name || "",
       discountType,
-      percentageDiscountValue,
+      // Unused legacy field — percentages live on `channelListings[].percentageDiscountValue`.
+      percentageDiscountValue: "",
       codes: addedVoucherCodes,
       endDate: splitDateTime(voucher?.endDate ?? "").date,
       endTime: splitDateTime(voucher?.endDate ?? "").time,
@@ -286,16 +279,16 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       singleUse: voucher?.singleUse ?? false,
       metadata: voucher?.metadata.map(mapMetadataItemToInput),
       privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
-    };
-  }, [
-    voucher,
-    channelListings,
-    savedChannelListings,
-    addedVoucherCodes,
-    discountType,
-    isPercentageDiscount,
-    requirementsPickerInitValue,
-  ]);
+    }),
+    [
+      voucher,
+      channelListings,
+      savedChannelListings,
+      addedVoucherCodes,
+      discountType,
+      requirementsPickerInitValue,
+    ],
+  );
 
   const voucherListBackLink = useBackLinkWithState({
     path: voucherListPath,

@@ -5,7 +5,7 @@ import { type VoucherDetailsPageFormData } from "./components/VoucherDetailsPage
 import { DiscountTypeEnum, RequirementsPicker } from "./types";
 
 /**
- * Percentage and per-channel fixed amounts are independent drafts while editing.
+ * Percentage and fixed amounts are independent per-channel drafts while editing.
  * Drop the inactive draft at save time — only the active type is persisted.
  */
 export const clearInactiveVoucherDiscountDrafts = <T extends VoucherDetailsPageFormData>(
@@ -14,6 +14,7 @@ export const clearInactiveVoucherDiscountDrafts = <T extends VoucherDetailsPageF
   if (formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE) {
     return {
       ...formData,
+      percentageDiscountValue: "",
       channelListings: formData.channelListings.map(channel => ({
         ...channel,
         discountValue: "",
@@ -25,6 +26,10 @@ export const clearInactiveVoucherDiscountDrafts = <T extends VoucherDetailsPageF
     return {
       ...formData,
       percentageDiscountValue: "",
+      channelListings: formData.channelListings.map(channel => ({
+        ...channel,
+        percentageDiscountValue: "",
+      })),
     };
   }
 
@@ -35,6 +40,7 @@ export const clearInactiveVoucherDiscountDrafts = <T extends VoucherDetailsPageF
     channelListings: formData.channelListings.map(channel => ({
       ...channel,
       discountValue: "",
+      percentageDiscountValue: "",
     })),
   };
 };
@@ -48,9 +54,8 @@ const getChannelDiscountValue = (
     return 100;
   }
 
-  // Percentage draft is separate from per-channel fixed drafts — only the active type is saved.
   if (formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE) {
-    return formData.percentageDiscountValue;
+    return channel.percentageDiscountValue;
   }
 
   return channel.discountValue;

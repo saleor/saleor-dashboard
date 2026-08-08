@@ -265,5 +265,10 @@ export const GTM_ID = process.env.GTM_ID;
 
 /** Default toast display time (ms). Floor for readable non-error feedback; Sonner pauses on hover. */
 export const DEFAULT_NOTIFICATION_SHOW_TIME = 5000;
+/**
+ * Paired save/create error toasts (inline/section already owns recovery).
+ * Longer than success so merchants can read the pointer before it dismisses.
+ */
+export const PAIRED_ERROR_NOTIFICATION_SHOW_TIME = DEFAULT_NOTIFICATION_SHOW_TIME * 2;
 export const ENABLED_SERVICE_NAME_HEADER =
   (process.env.ENABLED_SERVICE_NAME_HEADER as string) === "true";

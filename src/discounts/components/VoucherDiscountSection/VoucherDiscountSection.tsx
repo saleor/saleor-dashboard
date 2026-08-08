@@ -13,10 +13,9 @@ import { type DiscountErrorFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ShoppingBag, Tag, Truck } from "lucide-react";
-import type * as React from "react";
-import { useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
@@ -118,28 +117,31 @@ export const VoucherDiscountSection = ({
         return;
       }
 
-      createVoucherScopeChangeHandler(onChange)(nextScope, data.discountType);
+      createVoucherScopeChangeHandler(onChange, () => {
+        if (!data.channelListings?.length) {
+          return;
+        }
+
+        onChannelsChange(
+          data.channelListings.map(channel => ({
+            ...channel,
+            discountValue: "",
+            percentageDiscountValue: "",
+          })),
+        );
+      })(nextScope, data.discountType);
     },
-    [data.discountType, onChange, scope],
+    [data.channelListings, data.discountType, onChange, onChannelsChange, scope],
   );
 
   const handleAmountTypeChange = useCallback(
     (nextAmountType: string) => {
-      // Only flip the active type — percentage and per-channel fixed drafts are independent
-      // temp state and must survive toggling; they reset from the server after a successful save.
+      // Only flip the active type — percentage and fixed drafts are independent per channel
+      // and must survive toggling; they reset from the server after a successful save.
       createDiscountAmountTypeChangeHandler(onChange)(nextAmountType as "PERCENTAGE" | "FIXED");
     },
     [onChange],
   );
-
-  const handlePercentageValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({
-      target: {
-        name: "percentageDiscountValue",
-        value: event.target.value,
-      },
-    } as React.ChangeEvent<any>);
-  };
 
   const handleCountriesLinkClick = () => {
     scrollToVoucherSection(voucherSectionIds.countries);
@@ -265,31 +267,26 @@ export const VoucherDiscountSection = ({
                 />
 
                 {isPercentage ? (
-                  <Box className={styles.percentageField}>
-                    <Text size={3} color="default2">
-                      <FormattedMessage {...messages.percentageValueHint} />
-                    </Text>
-                    <Input
-                      className={styles.percentageInput}
-                      data-test-id="discount-value-input"
-                      disabled={disabled}
-                      error={!!formErrors.discountValue}
-                      endAdornment={<Text size={2}>%</Text>}
-                      helperText={
-                        formErrors.discountValue
-                          ? getDiscountErrorMessage(formErrors.discountValue, intl)
-                          : data.channelListings?.length === 0
-                            ? intl.formatMessage(messages.percentageNeedsChannelsHint)
-                            : ""
-                      }
-                      label={intl.formatMessage(messages.percentageOffLabel)}
-                      name="percentageDiscountValue"
-                      onChange={handlePercentageValueChange}
-                      value={data.percentageDiscountValue}
-                      type="number"
-                      size="small"
-                    />
-                  </Box>
+                  data.channelListings?.length === 0 ? (
+                    <Placeholder>
+                      <FormattedMessage {...messages.percentageNeedsChannelsHint} />
+                    </Placeholder>
+                  ) : (
+                    <Box className={styles.fixedAmountBlock}>
+                      <VoucherDiscountSubsectionHeader
+                        title={<FormattedMessage {...messages.percentagePerChannelTitle} />}
+                        hint={<FormattedMessage {...messages.percentageValueHint} />}
+                      />
+                      <VoucherFixedAmountChannelList
+                        amountKind="percentage"
+                        channelListings={data.channelListings}
+                        disabled={disabled}
+                        errors={errors}
+                        onChannelChange={onChannelChange}
+                        onChannelsChange={onChannelsChange}
+                      />
+                    </Box>
+                  )
                 ) : data.channelListings?.length === 0 ? (
                   <Placeholder>
                     <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
@@ -338,7 +335,7 @@ export const VoucherDiscountSection = ({
                       name: "applyOncePerOrder",
                       value: pressed,
                     },
-                  } as React.ChangeEvent<any>)
+                  } as ChangeEvent<any>)
                 }
                 disabled={disabled}
               />

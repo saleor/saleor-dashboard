@@ -12,10 +12,14 @@ import { clearInactiveVoucherDiscountDrafts, getAddedChannelsInputFromFormData }
 
 interface ChannelArgs {
   discountValue: string;
+  percentageDiscountValue: string;
   minSpent: string;
 }
 
-export type ChannelInput = RequireOnlyOne<ChannelArgs, "discountValue" | "minSpent">;
+export type ChannelInput = RequireOnlyOne<
+  ChannelArgs,
+  "discountValue" | "percentageDiscountValue" | "minSpent"
+>;
 
 export function createDiscountTypeChangeHandler(change: FormChange) {
   return (formData: VoucherDetailsPageFormData, event: ChangeEvent) => {
@@ -41,7 +45,10 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
   };
 }
 
-export function createVoucherScopeChangeHandler(change: FormChange) {
+export function createVoucherScopeChangeHandler(
+  change: FormChange,
+  clearShippingChannelAmounts?: () => void,
+) {
   return (scope: string, currentDiscountType: DiscountTypeEnum) => {
     if (scope === DiscountTypeEnum.SHIPPING) {
       change({
@@ -74,6 +81,8 @@ export function createVoucherScopeChangeHandler(change: FormChange) {
           value: DiscountTypeEnum.VALUE_PERCENTAGE,
         },
       });
+      // Shipping saves discountValue=100 on channel listings — wipe so %/fixed don't show 100%.
+      clearShippingChannelAmounts?.();
     }
   };
 }
@@ -100,16 +109,11 @@ export function createChannelsChangeHandler(
   return (id: string, input: ChannelInput) => {
     const channelIndex = channelListings.findIndex(channel => channel.id === id);
     const channel = channelListings[channelIndex];
-    const { discountValue, minSpent } = input;
     const updatedChannels = [
       ...channelListings.slice(0, channelIndex),
       {
         ...channel,
-        ...(minSpent !== undefined
-          ? { minSpent }
-          : {
-              discountValue,
-            }),
+        ...input,
       },
       ...channelListings.slice(channelIndex + 1),
     ];
@@ -198,15 +202,10 @@ export function createVoucherUpdateHandler(
   setLocalErrors: (errors: DiscountErrorFragment[]) => void,
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
-    // Drop the inactive amount draft before validate/save (toggle keeps both until Save).
+    // Drop unused amount drafts before validate/save.
     const data = clearInactiveVoucherDiscountDrafts(formData);
-    const { channelListings, discountType, percentageDiscountValue, requirementsPicker } = data;
-    const validation = validateChannelListing(
-      channelListings,
-      discountType,
-      requirementsPicker,
-      percentageDiscountValue,
-    );
+    const { channelListings, discountType, requirementsPicker } = data;
+    const validation = validateChannelListing(channelListings, discountType, requirementsPicker);
     const localErrors = buildChannelListingLocalErrors(validation);
 
     setLocalErrors(localErrors);
@@ -233,52 +232,31 @@ export function validateChannelListing(
   channelListings: ChannelVoucherData[],
   discountType: DiscountTypeEnum,
   requirementsPicker: RequirementsPicker,
-  percentageDiscountValue = "",
 ): ChannelListingValidationResult {
   // When discount type is shipping, there is no need to check if all selected channels have a discount value
   if (discountType === DiscountTypeEnum.SHIPPING) {
     return emptyChannelListingValidation();
   }
 
-  // Percentage uses one draft value for all channels — validate that, not per-channel fixed drafts.
-  // Do not run validateVoucherPrice on a synthetic channel: empty minSpent would fail whenever
-  // requirements are ORDER, even if the percentage itself is valid.
-  if (discountType === DiscountTypeEnum.VALUE_PERCENTAGE) {
-    // Percentage is persisted on channel listings only. With no channels assigned, an empty
-    // draft must not block unrelated saves (e.g. renaming) — and the % input used to be hidden
-    // behind the empty-channels placeholder, so validation failures looked like a dead Save.
-    if (!channelListings?.length) {
-      return emptyChannelListingValidation();
-    }
-
-    if (validatePrice(percentageDiscountValue)) {
-      return toChannelListingValidation({
-        invalidDiscountValueChannels: channelListings.map(channel => channel.id),
-        invalidMinSpentChannels: [],
-      });
-    }
-
-    if (requirementsPicker === RequirementsPicker.ORDER) {
-      return toChannelListingValidation({
-        invalidDiscountValueChannels: [],
-        invalidMinSpentChannels: channelListings
-          .filter(channel => validatePrice(channel.minSpent))
-          .map(channel => channel.id),
-      });
-    }
-
+  // With no channels assigned, do not block unrelated saves (e.g. renaming).
+  if (!channelListings?.length) {
     return emptyChannelListingValidation();
   }
 
-  const invalidDiscountValueChannels =
-    channelListings
-      ?.filter(channel => validatePrice(channel.discountValue))
-      .map(channel => channel.id) ?? [];
+  const invalidDiscountValueChannels = channelListings
+    .filter(channel =>
+      validatePrice(
+        discountType === DiscountTypeEnum.VALUE_PERCENTAGE
+          ? channel.percentageDiscountValue
+          : channel.discountValue,
+      ),
+    )
+    .map(channel => channel.id);
   const invalidMinSpentChannels =
     requirementsPicker === RequirementsPicker.ORDER
-      ? (channelListings
-          ?.filter(channel => validatePrice(channel.minSpent))
-          .map(channel => channel.id) ?? [])
+      ? channelListings
+          .filter(channel => validatePrice(channel.minSpent))
+          .map(channel => channel.id)
       : [];
 
   return toChannelListingValidation({

@@ -217,6 +217,7 @@ export const VoucherDetailsPageFormContent = ({
       hasCatalogue: hasCatalogueDraftChanges,
       hasCountries: hasCountriesDraftChanges,
       pendingRemovedCodesCount: pendingRemovedCodeIds.length,
+      discountType: data.discountType,
     },
   );
   const hasUnsavedChanges = hasVoucherSaveComposition(saveComposition);
@@ -448,9 +449,6 @@ export const VoucherDetailsPageFormContent = ({
               endDate: data.endDate,
               endTime: data.endTime,
             }}
-            onlyForStaff={data.onlyForStaff}
-            applyOncePerCustomer={data.applyOncePerCustomer}
-            singleUse={data.singleUse}
           />
           <VoucherScheduleCard
             data={{

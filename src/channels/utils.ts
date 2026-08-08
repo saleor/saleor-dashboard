@@ -3,10 +3,12 @@ import {
   type ChannelDetailsFragment,
   type ChannelFragment,
   type CollectionDetailsFragment,
+  DiscountValueTypeEnum,
   type ProductVariantDetailsQuery,
   type ShippingMethodTypeFragment,
   type ShippingZoneQuery,
   type VoucherDetailsFragment,
+  VoucherTypeEnum,
 } from "@dashboard/graphql";
 import { type RequireOnlyOne } from "@dashboard/misc";
 import { validatePrice } from "@dashboard/products/utils/validation";
@@ -75,7 +77,10 @@ export type ChannelPriceAndPreorderArgs = IChannelPriceArgs & {
 export interface ChannelVoucherData {
   id: string;
   name: string;
+  /** Fixed-amount draft for this channel (currency units). */
   discountValue: string;
+  /** Percentage draft for this channel — independent from `discountValue` while editing. */
+  percentageDiscountValue: string;
   currency: string;
   minSpent: string;
 }
@@ -99,6 +104,7 @@ const createVoucherChannels = (data?: ChannelFragment[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
     discountValue: "",
+    percentageDiscountValue: "",
     id: channel.id,
     minSpent: "",
     name: channel.name,
@@ -216,14 +222,27 @@ export const sortChannelShippingDataByName = <T extends { name: string }>(channe
     leftChannel.name.localeCompare(rightChannel.name),
   );
 
-const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragment) =>
-  voucherData?.channelListings?.map(option => ({
-    currency: option.channel.currencyCode || option?.minSpent?.currency || "",
-    discountValue: option.discountValue.toString() || "",
-    id: option.channel.id,
-    minSpent: option?.minSpent?.amount.toString() || "",
-    name: option.channel.name,
-  })) || [];
+const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragment) => {
+  const isShipping = voucherData?.type === VoucherTypeEnum.SHIPPING;
+  const isPercentage =
+    !isShipping && voucherData?.discountValueType === DiscountValueTypeEnum.PERCENTAGE;
+
+  return (
+    voucherData?.channelListings?.map(option => {
+      const apiValue = option.discountValue.toString() || "";
+
+      return {
+        currency: option.channel.currencyCode || option?.minSpent?.currency || "",
+        // Keep % and fixed drafts independent — seed only the active type from the API.
+        discountValue: isPercentage || isShipping ? "" : apiValue,
+        percentageDiscountValue: isPercentage ? apiValue : "",
+        id: option.channel.id,
+        minSpent: option?.minSpent?.amount.toString() || "",
+        name: option.channel.name,
+      };
+    }) || []
+  );
+};
 
 export const createSortedChannelsData = (data?: ChannelFragment[]) =>
   createChannelsData(data)?.sort((channel, nextChannel) =>

@@ -68,25 +68,6 @@
   margin-top: var(--mu-spacing-3);
 }
 
-.constraints {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--mu-spacing-1);
-}
-
-.constraintChip {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px var(--mu-spacing-1);
-  border: 1px solid var(--mu-colors-border-default1);
-  border-radius: 999px;
-  background-color: var(--mu-colors-background-default2);
-  color: var(--mu-colors-text-default2);
-  font-size: 11px;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
 .info {
   display: flex;
   align-items: flex-start;

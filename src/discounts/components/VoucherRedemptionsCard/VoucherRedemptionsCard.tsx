@@ -20,10 +20,6 @@ interface VoucherRedemptionsCardProps {
   codesCount: number | null | undefined;
   channelsCount: number;
   scheduleData: VoucherScheduleDateData;
-  /** Audience / usage constraints — chips render only when true. */
-  onlyForStaff?: boolean;
-  applyOncePerCustomer?: boolean;
-  singleUse?: boolean;
   loading?: boolean;
 }
 
@@ -70,36 +66,20 @@ export const VoucherRedemptionsCard = ({
   codesCount,
   channelsCount,
   scheduleData,
-  onlyForStaff = false,
-  applyOncePerCustomer = false,
-  singleUse = false,
   loading = false,
-}: VoucherRedemptionsCardProps): JSX.Element => {
+}: VoucherRedemptionsCardProps): JSX.Element | null => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
+
+  // Monitoring job only exists with a total cap. Keep the loading shell so the
+  // sidebar doesn’t jump when data resolves.
+  if (!loading && !hasUsageLimit) {
+    return null;
+  }
+
   const resolvedCodesCount = codesCount ?? 0;
-  const progress = hasUsageLimit ? getVoucherRedemptionsProgress({ used, usageLimit }) : null;
+  const progress = getVoucherRedemptionsProgress({ used, usageLimit });
   const scheduleStatus = formatScheduleStatus({ scheduleData, localizeDate, intl });
-  const constraintChips = [
-    onlyForStaff
-      ? {
-          id: "staff-only",
-          label: intl.formatMessage(messages.constraintStaffOnly),
-        }
-      : null,
-    applyOncePerCustomer
-      ? {
-          id: "once-per-customer",
-          label: intl.formatMessage(messages.constraintOncePerCustomer),
-        }
-      : null,
-    singleUse
-      ? {
-          id: "single-use",
-          label: intl.formatMessage(messages.constraintSingleUse),
-        }
-      : null,
-  ].filter((chip): chip is { id: string; label: string } => chip != null);
 
   return (
     <Box className={styles.card} data-test-id="voucher-redemptions-card">
@@ -151,46 +131,34 @@ export const VoucherRedemptionsCard = ({
             </Box>
           ) : (
             <>
-              {hasUsageLimit && progress ? (
-                <Box
-                  className={styles.meterTrack}
-                  role="progressbar"
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={progress.percentage}
-                  data-test-id="voucher-redemptions-meter"
-                >
-                  <Box
-                    className={styles.meterFill}
-                    __width={`${progress.percentage}%`}
-                    aria-hidden
-                  />
-                </Box>
-              ) : null}
+              <Box
+                className={styles.meterTrack}
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={progress.percentage}
+                data-test-id="voucher-redemptions-meter"
+              >
+                <Box className={styles.meterFill} __width={`${progress.percentage}%`} aria-hidden />
+              </Box>
 
-              <Box className={styles.details} marginTop={hasUsageLimit && progress ? 2 : 0}>
+              <Box className={styles.details} marginTop={2}>
                 <Text size={2} color="default2" display="block">
-                  {hasUsageLimit && progress ? (
-                    <FormattedMessage
-                      {...messages.usedOfLimit}
-                      values={{ used: progress.used, limit: progress.limit }}
-                    />
+                  <FormattedMessage
+                    {...messages.usedOfLimit}
+                    values={{ used: progress.used, limit: progress.limit }}
+                  />
+                </Text>
+                <Text size={2} color="default2" display="block">
+                  {progress.isExhausted ? (
+                    <FormattedMessage {...messages.remainingNone} />
                   ) : (
-                    <FormattedMessage {...messages.usedUnlimited} values={{ used }} />
+                    <FormattedMessage
+                      {...messages.remaining}
+                      values={{ count: progress.remaining }}
+                    />
                   )}
                 </Text>
-                {hasUsageLimit && progress ? (
-                  <Text size={2} color="default2" display="block">
-                    {progress.isExhausted ? (
-                      <FormattedMessage {...messages.remainingNone} />
-                    ) : (
-                      <FormattedMessage
-                        {...messages.remaining}
-                        values={{ count: progress.remaining }}
-                      />
-                    )}
-                  </Text>
-                ) : null}
               </Box>
 
               <Text
@@ -205,20 +173,6 @@ export const VoucherRedemptionsCard = ({
             </>
           )}
         </Box>
-
-        {!loading && constraintChips.length > 0 ? (
-          <Box
-            className={styles.constraints}
-            data-test-id="voucher-redemptions-constraints"
-            aria-label={intl.formatMessage(messages.constraintsLabel)}
-          >
-            {constraintChips.map(chip => (
-              <span key={chip.id} className={styles.constraintChip} data-test-id={chip.id}>
-                {chip.label}
-              </span>
-            ))}
-          </Box>
-        ) : null}
 
         <Box className={styles.info}>
           <Info

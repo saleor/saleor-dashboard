@@ -190,10 +190,13 @@ const VoucherCreatePage = ({
       return false;
     }
 
-    const hasInvalidDiscountValue =
-      data.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
-        ? validatePrice(data.percentageDiscountValue)
-        : data.channelListings.some(channel => validatePrice(channel.discountValue));
+    const hasInvalidDiscountValue = data.channelListings.some(channel =>
+      validatePrice(
+        data.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
+          ? channel.percentageDiscountValue
+          : channel.discountValue,
+      ),
+    );
 
     const hasInvalidMinSpent =
       data.requirementsPicker === RequirementsPicker.ORDER &&

@@ -109,12 +109,12 @@ Sonner/Geist do **not** ship show-more. Canonical fix is **shorter copy**.
 
 ### Behavior
 
-| Status                               | Auto-dismiss                           | Notes                                                     |
-| ------------------------------------ | -------------------------------------- | --------------------------------------------------------- |
-| success / info / warning (no action) | ~5s (`DEFAULT_NOTIFICATION_SHOW_TIME`) | Pauses on hover                                           |
-| error                                | Sticky until dismiss                   | Default; don’t preempt other toasts                       |
-| error + explicit `autohide`          | That duration                          | Use when field/section already owns recovery (paired ack) |
-| any + `actionBtn`                    | Sticky until dismiss or action         | One clear action label; wins over `autohide`              |
+| Status                               | Auto-dismiss                           | Notes                                                                                                                                   |
+| ------------------------------------ | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| success / info / warning (no action) | ~5s (`DEFAULT_NOTIFICATION_SHOW_TIME`) | Pauses on hover                                                                                                                         |
+| error                                | Sticky until dismiss                   | Default; don’t preempt other toasts                                                                                                     |
+| error + explicit `autohide`          | That duration                          | Use when field/section already owns recovery (paired ack); prefer `PAIRED_ERROR_NOTIFICATION_SHOW_TIME` (~10s) for save/create failures |
+| any + `actionBtn`                    | Sticky until dismiss or action         | One clear action label; wins over `autohide`                                                                                            |
 
 - One terminal toast per user action.
 - Deduping replaces same `status + title` — update description if the detail changed; don’t spam.
@@ -184,7 +184,7 @@ notify({
   status: "error",
   title: intl.formatMessage(messages.couldNotSaveVoucher),
   text: intl.formatMessage(messages.checkHighlightedFields),
-  autohide: DEFAULT_NOTIFICATION_SHOW_TIME,
+  autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
 });
 ```
 

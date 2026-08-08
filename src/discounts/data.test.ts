@@ -11,6 +11,7 @@ const channelListings: ChannelVoucherData[] = [
     name: "USD",
     currency: "USD",
     discountValue: "10",
+    percentageDiscountValue: "8",
     minSpent: "",
   },
 ];
@@ -22,7 +23,7 @@ const baseForm: VoucherDetailsPageFormData = {
   channelListings,
   name: "Voucher",
   discountType: DiscountTypeEnum.VALUE_PERCENTAGE,
-  percentageDiscountValue: "8",
+  percentageDiscountValue: "",
   endDate: "",
   endTime: "",
   hasEndDate: false,
@@ -41,12 +42,11 @@ const baseForm: VoucherDetailsPageFormData = {
 };
 
 describe("clearInactiveVoucherDiscountDrafts", () => {
-  it("clears per-channel fixed drafts when saving percentage", () => {
+  it("clears fixed drafts when saving percentage", () => {
     // Arrange
     const formData: VoucherDetailsPageFormData = {
       ...baseForm,
       discountType: DiscountTypeEnum.VALUE_PERCENTAGE,
-      percentageDiscountValue: "8",
       channelListings,
     };
 
@@ -54,16 +54,15 @@ describe("clearInactiveVoucherDiscountDrafts", () => {
     const result = clearInactiveVoucherDiscountDrafts(formData);
 
     // Assert
-    expect(result.percentageDiscountValue).toBe("8");
     expect(result.channelListings.map(channel => channel.discountValue)).toEqual([""]);
+    expect(result.channelListings.map(channel => channel.percentageDiscountValue)).toEqual(["8"]);
   });
 
-  it("clears percentage draft when saving fixed", () => {
+  it("clears percentage drafts when saving fixed", () => {
     // Arrange
     const formData: VoucherDetailsPageFormData = {
       ...baseForm,
       discountType: DiscountTypeEnum.VALUE_FIXED,
-      percentageDiscountValue: "8",
       channelListings,
     };
 
@@ -71,8 +70,8 @@ describe("clearInactiveVoucherDiscountDrafts", () => {
     const result = clearInactiveVoucherDiscountDrafts(formData);
 
     // Assert
-    expect(result.percentageDiscountValue).toBe("");
     expect(result.channelListings.map(channel => channel.discountValue)).toEqual(["10"]);
+    expect(result.channelListings.map(channel => channel.percentageDiscountValue)).toEqual([""]);
   });
 
   it("clears both amount drafts when saving shipping", () => {
@@ -80,7 +79,6 @@ describe("clearInactiveVoucherDiscountDrafts", () => {
     const formData: VoucherDetailsPageFormData = {
       ...baseForm,
       discountType: DiscountTypeEnum.SHIPPING,
-      percentageDiscountValue: "8",
       channelListings,
     };
 
@@ -88,7 +86,7 @@ describe("clearInactiveVoucherDiscountDrafts", () => {
     const result = clearInactiveVoucherDiscountDrafts(formData);
 
     // Assert
-    expect(result.percentageDiscountValue).toBe("");
     expect(result.channelListings.map(channel => channel.discountValue)).toEqual([""]);
+    expect(result.channelListings.map(channel => channel.percentageDiscountValue)).toEqual([""]);
   });
 });

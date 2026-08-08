@@ -6,13 +6,14 @@ import { getVoucherSetupReadiness } from "./getVoucherSetupReadiness";
 const baseForm = {
   discountType: DiscountTypeEnum.VALUE_PERCENTAGE,
   type: VoucherTypeEnum.ENTIRE_ORDER,
-  percentageDiscountValue: "10",
+  percentageDiscountValue: "",
   channelListings: [
     {
       id: "ch1",
       name: "Default",
       currency: "USD",
-      discountValue: "10",
+      discountValue: "",
+      percentageDiscountValue: "10",
       minSpent: "0",
     },
   ],
@@ -152,7 +153,10 @@ describe("getVoucherSetupReadiness", () => {
       } as never,
       formData: {
         ...baseForm,
-        percentageDiscountValue: "",
+        channelListings: baseForm.channelListings.map(channel => ({
+          ...channel,
+          percentageDiscountValue: "",
+        })),
       } as never,
       voucherCodes: [],
       tabItemsCount: {},
