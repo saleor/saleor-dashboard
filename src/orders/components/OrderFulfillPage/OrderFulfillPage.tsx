@@ -173,7 +173,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
 
   const changeWarehouseLine =
     params.action === "change-warehouse"
-      ? order?.lines.find(orderLine => orderLine.id === params.lineId)
+      ? order?.lines.find(orderLine => orderLine.id === params.warehouseLineId)
       : undefined;
 
   return (
@@ -259,7 +259,7 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
                               formsetChange={formsetChange}
                               onWarehouseChange={() =>
                                 openModal("change-warehouse", {
-                                  lineId: line.id,
+                                  warehouseLineId: line.id,
                                   warehouseId: formsetData[lineIndex]?.value?.[0]?.warehouse?.id,
                                 })
                               }
@@ -346,14 +346,14 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
             line={changeWarehouseLine}
             currentWarehouseId={params.warehouseId}
             onConfirm={warehouse => {
-              if (!params.lineId || !warehouse) {
+              if (!params.warehouseLineId || !warehouse) {
                 return;
               }
 
-              const lineFormQuantity = formsetData.find(item => item.id === params.lineId)
+              const lineFormQuantity = formsetData.find(item => item.id === params.warehouseLineId)
                 ?.value?.[0]?.quantity;
 
-              formsetChange(params.lineId, [
+              formsetChange(params.warehouseLineId, [
                 {
                   quantity: lineFormQuantity,
                   warehouse,
