@@ -1491,6 +1491,10 @@
   "4Kq3O6": {
     "string": "This unit will be used as default shipping weight"
   },
+  "4RC7NL": {
+    "context": "voucher percentage per channel section title",
+    "string": "Percentage off, per channel"
+  },
   "4Rj36Y": {
     "string": "Create new Model Type"
   },
@@ -2906,10 +2910,6 @@
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
   },
-  "AD5gDx": {
-    "context": "voucher redemptions card used detail when unlimited",
-    "string": "{used} used · no total cap"
-  },
   "ADvpV/": {
     "context": "Product can be purchased by customers",
     "string": "Purchasable"
@@ -3051,6 +3051,10 @@
   "ArctEg": {
     "context": "requires activation checkbox caption",
     "string": "All issued cards require activation by staff before use."
+  },
+  "ArgcnR": {
+    "context": "voucher percentage spreadsheet paste hint",
+    "string": "You can paste from a spreadsheet. Select a field and paste a column of values to fill percentages down the list."
   },
   "AubJ/S": {
     "context": "button",
@@ -5123,10 +5127,6 @@
     "context": "change warehouse dialog description",
     "string": "Choose warehouse from which you want to fulfill {productName}"
   },
-  "InEAQM": {
-    "context": "voucher redemptions constraint chip when applyOncePerCustomer is on",
-    "string": "Once per customer"
-  },
   "Io6O//": {
     "context": "setup review row title for installed payment apps",
     "string": "Payment gateways"
@@ -5977,6 +5977,10 @@
     "context": "column title used by/customer",
     "string": "Used by"
   },
+  "MKTuIa": {
+    "context": "voucher percentage channel input aria label",
+    "string": "Percentage for {channelName}"
+  },
   "MKtgZB": {
     "string": "Only staff users can access the dashboard"
   },
@@ -6161,10 +6165,6 @@
   "N7tQ9P": {
     "context": "dialog header",
     "string": "Unassign attribute from model type"
-  },
-  "N9fBvI": {
-    "context": "voucher percentage value helper",
-    "string": "A percentage means the same thing in every currency, so one value covers all channels."
   },
   "NA7KFR": {
     "context": "shipping method types help weight-based bullet",
@@ -7192,10 +7192,6 @@
     "context": "sale status",
     "string": "Expired"
   },
-  "RD29Kd": {
-    "context": "accessible label for voucher redemptions constraint chips",
-    "string": "Usage constraints"
-  },
   "REVk27": {
     "context": "info text",
     "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
@@ -7279,10 +7275,6 @@
   "RgdgqJ": {
     "context": "order draft channel name",
     "string": "Channel"
-  },
-  "RiF1QH": {
-    "context": "voucher redemptions constraint chip when singleUse is on",
-    "string": "Single-use codes"
   },
   "RiQ0v1": {
     "context": "installed extensions section name",
@@ -14559,6 +14551,10 @@
     "context": "label for empty list in channels list",
     "string": "There are no exceptions for this channel"
   },
+  "u3lci+": {
+    "context": "voucher percentage value helper",
+    "string": "Set a percentage for each channel — values can differ when markets need different offers."
+  },
   "u3sYPH": {
     "context": "independent of any particular day, eg. 11:35",
     "string": "Time"
@@ -14685,10 +14681,6 @@
   "uVscLr": {
     "context": "setup task CTA",
     "string": "Review countries"
-  },
-  "uXa7/n": {
-    "context": "voucher redemptions constraint chip when onlyForStaff is on",
-    "string": "Staff only"
   },
   "uY8rPp": {
     "context": "button label to cancel product removal",
@@ -15122,6 +15114,14 @@
   "vof5TR": {
     "context": "button",
     "string": "Create category"
+  },
+  "voucherSetupSubtitleCreate": {
+    "context": "voucher setup card subtitle on create while incomplete",
+    "string": "Complete the required steps below before Save becomes available."
+  },
+  "voucherSetupTitleCreate": {
+    "context": "voucher setup card title on create",
+    "string": "Set up this voucher"
   },
   "vpTyL1": {
     "context": "error message",

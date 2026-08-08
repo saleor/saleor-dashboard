@@ -34,6 +34,8 @@ import {
   VoucherSection,
   VoucherSectionNav,
 } from "@dashboard/discounts/components/VoucherSectionNav/VoucherSectionNav";
+import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
+import { VoucherSetupCard } from "@dashboard/discounts/components/VoucherSetupCard/VoucherSetupCard";
 import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { type VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
@@ -68,7 +70,7 @@ import isEqual from "lodash/isEqual";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { DiscountTypeEnum, RequirementsPicker } from "../../types";
+import { RequirementsPicker } from "../../types";
 import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
@@ -182,21 +184,27 @@ const VoucherCreatePage = ({
   };
 
   const checkIfSaveIsDisabled = (data: FormData) => {
-    if (disabled || !data.channelListings?.length) {
+    if (disabled) {
       return true;
     }
 
-    if (data.discountType === DiscountTypeEnum.SHIPPING) {
-      return false;
-    }
+    // Same redeem blockers as the setup checklist — Save stays off until create is viable.
+    const readiness = getVoucherSetupReadiness({
+      voucher: null,
+      formData: data,
+      voucherCodes: data.codes,
+      tabItemsCount: {
+        categories: data.categories.length,
+        collections: data.collections.length,
+        products: data.products.length,
+        variants: data.variants.length,
+      },
+      countriesCount: data.countries.length,
+    });
 
-    const hasInvalidDiscountValue = data.channelListings.some(channel =>
-      validatePrice(
-        data.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
-          ? channel.percentageDiscountValue
-          : channel.discountValue,
-      ),
-    );
+    if (!readiness.coreReady) {
+      return true;
+    }
 
     const hasInvalidMinSpent =
       data.requirementsPicker === RequirementsPicker.ORDER &&
@@ -207,7 +215,7 @@ const VoucherCreatePage = ({
       data.requirementsPicker === RequirementsPicker.ITEM &&
       (!Number.isFinite(minQuantity) || minQuantity < 1);
 
-    return !!(hasInvalidDiscountValue || hasInvalidMinSpent || hasInvalidMinQuantity);
+    return !!(hasInvalidMinSpent || hasInvalidMinQuantity);
   };
 
   const { change, data, triggerChange, set, submit, isSaveDisabled } = useForm<FormData, unknown>(
@@ -368,6 +376,14 @@ const VoucherCreatePage = ({
     products: data.products.length,
     variants: data.variants.length,
   };
+  const setupReadiness = getVoucherSetupReadiness({
+    voucher: null,
+    formData: data,
+    voucherCodes: data.codes,
+    tabItemsCount,
+    countriesCount: data.countries.length,
+  });
+  const showSetupCard = !setupReadiness.coreReady;
 
   return (
     <PaginatorContext.Provider value={{ ...specificItemsPagination, paginatorType: "click" }}>
@@ -384,6 +400,14 @@ const VoucherCreatePage = ({
             })}
           />
           <DetailPageLayout.Content>
+            {showSetupCard ? (
+              <VoucherSetupCard
+                variant="create"
+                readiness={setupReadiness}
+                disabled={disabled}
+                onManageChannels={openChannelsModal}
+              />
+            ) : null}
             <DetailPageSectionLayout
               nav={
                 <VoucherSectionNav

@@ -6,11 +6,21 @@ export const messages = defineMessages({
     defaultMessage: "Finish setting up this voucher",
     description: "voucher setup card title",
   },
+  titleCreate: {
+    id: "F/Tado",
+    defaultMessage: "Set up this voucher",
+    description: "voucher setup card title on create",
+  },
   subtitle: {
     id: "QIB6Eo",
     defaultMessage:
       "Customers can’t redeem this voucher until the required steps are done. Finish them now or come back later.",
     description: "voucher setup card subtitle while incomplete",
+  },
+  subtitleCreate: {
+    id: "uBf9aK",
+    defaultMessage: "Complete the required steps below before Save becomes available.",
+    description: "voucher setup card subtitle on create while incomplete",
   },
   allDone: {
     id: "+iGiat",

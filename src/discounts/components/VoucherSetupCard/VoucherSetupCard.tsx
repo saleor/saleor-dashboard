@@ -20,6 +20,8 @@ interface VoucherSetupCardProps {
   disabled?: boolean;
   onDismiss?: () => void;
   onManageChannels: () => void;
+  /** Create uses save-gating copy; edit explains redeem readiness. */
+  variant?: "create" | "edit";
 }
 
 const CtaLabel = ({ children }: { children: ReactNode }) => (
@@ -42,9 +44,11 @@ export const VoucherSetupCard = ({
   disabled,
   onDismiss,
   onManageChannels,
+  variant = "edit",
 }: VoucherSetupCardProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
+  const isCreate = variant === "create";
   const {
     hasCodes,
     hasChannels,
@@ -249,12 +253,12 @@ export const VoucherSetupCard = ({
       <SetupChecklist
         className={clsx(styles.elevated, theme === "defaultDark" && styles.elevatedDark)}
         data-test-id="voucher-setup-card"
-        title={<FormattedMessage {...messages.title} />}
+        title={<FormattedMessage {...(isCreate ? messages.titleCreate : messages.title)} />}
         subtitle={
           coreReady ? (
             <FormattedMessage {...messages.allDone} />
           ) : (
-            <FormattedMessage {...messages.subtitle} />
+            <FormattedMessage {...(isCreate ? messages.subtitleCreate : messages.subtitle)} />
           )
         }
         progress={{ done: progressDone, total: progressTotal }}

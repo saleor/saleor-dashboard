@@ -37,6 +37,25 @@ describe("VoucherSetupCard", () => {
     expect(screen.getByTestId("setup-checklist-progress")).toHaveTextContent("0 of 3");
   });
 
+  it("uses create-oriented copy when variant is create", () => {
+    // Arrange & Act
+    render(
+      <VoucherSetupCard
+        variant="create"
+        readiness={incompleteReadiness}
+        onManageChannels={jest.fn()}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.getByText("Set up this voucher")).toBeInTheDocument();
+    expect(
+      screen.getByText("Complete the required steps below before Save becomes available."),
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId("setup-dismiss")).not.toBeInTheDocument();
+  });
+
   it("includes the catalogue task when the voucher is specific-product scoped", () => {
     // Arrange & Act
     render(
