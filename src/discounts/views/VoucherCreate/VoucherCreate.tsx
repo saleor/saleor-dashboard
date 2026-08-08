@@ -7,6 +7,9 @@ import {
   DEFAULT_INITIAL_SEARCH_DATA,
   PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
 } from "@dashboard/config";
+import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
+import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
+import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
@@ -233,10 +236,31 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     }
 
     if (result && "errors" in result) {
+      const saveErrors = result.errors;
+      const hasCodesError = saveErrors.some(isVoucherCodesError);
+      const hasCatalogueError = saveErrors.some(isVoucherCatalogueError);
+      const hasCountriesError = saveErrors.some(isVoucherCountriesError);
+
+      if (hasCodesError) {
+        scrollToVoucherSection(voucherSectionIds.codes);
+      } else if (hasCatalogueError) {
+        scrollToVoucherSection(voucherSectionIds.catalogue);
+      } else if (hasCountriesError) {
+        scrollToVoucherSection(voucherSectionIds.countries);
+      }
+
+      const recoveryMessage = hasCodesError
+        ? voucherFeedbackMessages.fixCodesAndTryAgain
+        : hasCatalogueError
+          ? voucherFeedbackMessages.fixCatalogueAndTryAgain
+          : hasCountriesError
+            ? voucherFeedbackMessages.fixCountriesAndTryAgain
+            : voucherFeedbackMessages.checkHighlightedFields;
+
       notify({
         status: "error",
         title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
-        text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
+        text: intl.formatMessage(recoveryMessage),
         autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
       });
 

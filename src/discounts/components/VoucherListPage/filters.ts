@@ -37,9 +37,9 @@ const messages = defineMessages({
     description: "voucher channel",
   },
   expired: {
-    id: "t7UwLY",
-    defaultMessage: "Expired",
-    description: "voucher status",
+    id: "eROU3z",
+    defaultMessage: "Ended",
+    description: "voucher status after end date (filter; matches list Status column)",
   },
   fixed: {
     id: "XDBeA+",

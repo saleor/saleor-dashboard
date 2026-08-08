@@ -1,6 +1,7 @@
+import { Callout } from "@dashboard/components/Callout/Callout";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { type SearchProductFragment } from "@dashboard/graphql";
+import { type DiscountErrorFragment, type SearchProductFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { type Node } from "@dashboard/types";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
@@ -14,6 +15,7 @@ import { DiscountProducts } from "../DiscountProducts/DiscountProducts";
 import { DiscountVariants } from "../DiscountVariants/DiscountVariants";
 import { VoucherDetailsPageTab, type VoucherTabItemsCount } from "../VoucherDetailsPage";
 import { voucherCatalogueMessages as messages } from "./messages";
+import { formatVoucherCatalogueErrorMessage } from "./voucherCatalogueErrors";
 import styles from "./VoucherCatalogueSection.module.css";
 
 interface VoucherCatalogueSectionProps {
@@ -23,6 +25,8 @@ interface VoucherCatalogueSectionProps {
   toggleAll: (items: Node[], selected: number) => void;
   toolbar?: ReactNode;
   disabled: boolean;
+  /** Save / catalogue-mutation errors that belong on this section. */
+  errors?: DiscountErrorFragment[];
   activeTab: VoucherDetailsPageTab;
   tabItemsCount: VoucherTabItemsCount;
   categories: Parameters<typeof DiscountCategories>[0]["categories"];
@@ -67,6 +71,7 @@ export const VoucherCatalogueSection = ({
   products,
   variants,
   disabled,
+  errors = [],
   onTabClick,
   onCategoryAssign,
   onCategoryUnassign,
@@ -89,6 +94,7 @@ export const VoucherCatalogueSection = ({
   variantListToolbar,
 }: VoucherCatalogueSectionProps): JSX.Element => {
   const intl = useIntl();
+  const catalogueErrorMessage = formatVoucherCatalogueErrorMessage(errors, intl);
   const categoriesCount = tabItemsCount.categories ?? 0;
   const collectionsCount = tabItemsCount.collections ?? 0;
   const productsCount = tabItemsCount.products ?? 0;
@@ -226,6 +232,11 @@ export const VoucherCatalogueSection = ({
       }
       contentFlush
     >
+      {catalogueErrorMessage ? (
+        <Box paddingX={6} paddingY={4} data-test-id="voucher-catalogue-error">
+          <Callout type="error" title={catalogueErrorMessage} />
+        </Box>
+      ) : null}
       <Box as="ul" className={styles.list}>
         {rows.map(row => {
           const isExpanded = activeTab === row.tab;

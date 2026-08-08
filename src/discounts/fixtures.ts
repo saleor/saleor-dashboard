@@ -177,6 +177,11 @@ export const voucherList: VoucherFragment[] = [
     minCheckoutItemsQuantity: null,
     startDate: "2019-01-03",
     usageLimit: null,
+    used: 0,
+    codesCount: {
+      __typename: "VoucherCodeCountableConnection",
+      totalCount: 1,
+    },
   },
   {
     __typename: "Voucher" as const,
@@ -210,6 +215,11 @@ export const voucherList: VoucherFragment[] = [
     minCheckoutItemsQuantity: 0,
     startDate: "2019-01-03",
     usageLimit: 150,
+    used: 12,
+    codesCount: {
+      __typename: "VoucherCodeCountableConnection",
+      totalCount: 3,
+    },
   },
 ];
 

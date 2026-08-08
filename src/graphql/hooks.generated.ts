@@ -746,6 +746,7 @@ export const VoucherFragmentDoc = gql`
   startDate
   endDate
   usageLimit
+  used
   type
   discountValueType
   countries {
@@ -753,6 +754,9 @@ export const VoucherFragmentDoc = gql`
     country
   }
   minCheckoutItemsQuantity
+  codesCount: codes {
+    totalCount
+  }
   channelListings {
     id
     channel {

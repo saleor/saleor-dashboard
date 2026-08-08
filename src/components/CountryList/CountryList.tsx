@@ -1,3 +1,4 @@
+import { Callout } from "@dashboard/components/Callout/Callout";
 import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type CountryFragment } from "@dashboard/graphql";
@@ -21,6 +22,8 @@ interface CountryListProps {
   title: ReactNode;
   /** Optional subtitle under the title (e.g. voucher limit hint). */
   description?: ReactNode;
+  /** Section-level error (e.g. voucher country assign failure). */
+  errorMessage?: string;
   onCountryAssign: () => void;
   onCountryUnassign: (country: string) => void;
 }
@@ -43,6 +46,7 @@ export const CountryList = ({
   summaryContext,
   title,
   description,
+  errorMessage,
   onCountryAssign,
   onCountryUnassign,
 }: CountryListProps): JSX.Element => {
@@ -119,6 +123,11 @@ export const CountryList = ({
       headerStart={headerStart}
       headerEnd={assignButton}
     >
+      {errorMessage ? (
+        <Box paddingX={6} paddingY={4} data-test-id="country-list-error">
+          <Callout type="error" title={errorMessage} />
+        </Box>
+      ) : null}
       {hasCountriesToRender ? (
         <Box data-test-id="countries-list">
           {sortedLetters.flatMap(letter =>

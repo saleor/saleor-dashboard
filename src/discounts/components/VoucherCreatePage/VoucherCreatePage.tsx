@@ -18,6 +18,7 @@ import DiscountCountrySelectDialog from "@dashboard/discounts/components/Discoun
 import { VoucherCatalogueSection } from "@dashboard/discounts/components/VoucherCatalogueSection/VoucherCatalogueSection";
 import { VoucherChannelAvailabilityCard } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/VoucherChannelAvailabilityCard";
 import { VoucherCodesCard } from "@dashboard/discounts/components/VoucherCodesCard/VoucherCodesCard";
+import { formatVoucherCountriesErrorMessage } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { useSpecificItemsAssign } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssign";
 import { useSpecificItemsPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsPagination";
 import { type VoucherDetailsPageTab } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
@@ -158,6 +159,7 @@ const VoucherCreatePage = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const { activeTab, changeTab } = useActiveTab();
+  const countriesErrorMessage = formatVoucherCountriesErrorMessage(errors, intl);
 
   // Bumped on every new search so the pickers' backfill budget starts over.
   const [searchGeneration, setSearchGeneration] = useState(0);
@@ -451,6 +453,7 @@ const VoucherCreatePage = ({
                     activeTab={mapCreateTabToDetailsTab(activeTab)}
                     tabItemsCount={tabItemsCount}
                     disabled={disabled}
+                    errors={errors}
                     onTabClick={tab => onTabClick(tab as unknown as VoucherCreatePageTab)}
                     categories={paginatedSpecificItems as CategoryWithTotalProductsFragment[]}
                     collections={paginatedSpecificItems as CollectionWithTotalProductsFragment[]}
@@ -506,6 +509,7 @@ const VoucherCreatePage = ({
                         defaultMessage="Voucher is limited to these countries"
                       />
                     }
+                    errorMessage={countriesErrorMessage}
                     onCountryAssign={() => openModal("assign-country")}
                     onCountryUnassign={id => unassignItem(id, "countries")}
                   />

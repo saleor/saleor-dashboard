@@ -5,6 +5,7 @@ import { renderHook } from "@testing-library/react";
 import useListSettings, {
   listSettingsStorageKey,
   voucherCodesPageSizeMigrationKey,
+  voucherListColumnsMigrationKey,
 } from "./useListSettings";
 
 const key = ListViews.CATEGORY_LIST;
@@ -102,5 +103,26 @@ describe("useListSettings", () => {
 
     // Assert
     expect(result.current.settings.rowNumber).toBe(PAGINATE_BY);
+  });
+
+  it("migrates legacy voucher list columns to the status/offer defaults once", () => {
+    // Arrange
+    localStorage.setItem(
+      listSettingsStorageKey,
+      JSON.stringify({
+        ...defaultListSettings,
+        [ListViews.VOUCHER_LIST]: {
+          rowNumber: PAGINATE_BY,
+          columns: ["code", "min-spent", "start-date", "end-date", "value", "limit"],
+        },
+      }),
+    );
+
+    // Act
+    const { result } = renderHook(() => useListSettings(ListViews.VOUCHER_LIST));
+
+    // Assert
+    expect(result.current.settings.columns).toEqual(["code", "status", "value", "type", "limit"]);
+    expect(localStorage.getItem(voucherListColumnsMigrationKey)).toBe("1");
   });
 });

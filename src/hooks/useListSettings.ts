@@ -13,6 +13,17 @@ import { type ListSettings, ListViews } from "./../types";
 export const listSettingsStorageKey = "listConfig";
 /** One-shot: migrate voucher codes page size from the old shared default (20) to 10. */
 export const voucherCodesPageSizeMigrationKey = "listConfig.migrations.voucherCodesDefault10";
+/** One-shot: migrate voucher list columns from date/min-spent defaults to status/offer/scope. */
+export const voucherListColumnsMigrationKey = "listConfig.migrations.voucherListColumnsStatusOffer";
+
+const LEGACY_VOUCHER_LIST_COLUMNS = [
+  "code",
+  "min-spent",
+  "start-date",
+  "end-date",
+  "value",
+  "limit",
+];
 
 export interface UseListSettings<TColumns extends string = string> {
   settings: ListSettings<TColumns>;
@@ -36,29 +47,49 @@ const mergeCustomizer = (objValue: unknown, srcValue: unknown) => {
   }
 };
 
-const migrateVoucherCodesDefaultPageSize = (settings: AppListViewSettings): AppListViewSettings => {
+const columnsMatch = (left: string[] | undefined, right: string[]): boolean =>
+  !!left && left.length === right.length && left.every((column, index) => column === right[index]);
+
+const migrateVoucherListSettings = (settings: AppListViewSettings): AppListViewSettings => {
   try {
     if (typeof localStorage === "undefined") {
       return settings;
     }
 
-    if (localStorage.getItem(voucherCodesPageSizeMigrationKey) === "1") {
-      return settings;
+    let nextSettings = settings;
+
+    if (localStorage.getItem(voucherCodesPageSizeMigrationKey) !== "1") {
+      const storedRowNumber = nextSettings[ListViews.VOUCHER_CODES]?.rowNumber;
+
+      if (storedRowNumber === PAGINATE_BY) {
+        nextSettings = {
+          ...nextSettings,
+          [ListViews.VOUCHER_CODES]: {
+            ...nextSettings[ListViews.VOUCHER_CODES],
+            rowNumber: VOUCHER_CODES_PAGINATE_BY,
+          },
+        };
+      }
+
+      localStorage.setItem(voucherCodesPageSizeMigrationKey, "1");
     }
 
-    const storedRowNumber = settings[ListViews.VOUCHER_CODES]?.rowNumber;
-    const nextSettings =
-      storedRowNumber === PAGINATE_BY
-        ? {
-            ...settings,
-            [ListViews.VOUCHER_CODES]: {
-              ...settings[ListViews.VOUCHER_CODES],
-              rowNumber: VOUCHER_CODES_PAGINATE_BY,
-            },
-          }
-        : settings;
+    if (localStorage.getItem(voucherListColumnsMigrationKey) !== "1") {
+      const storedColumns = nextSettings[ListViews.VOUCHER_LIST]?.columns;
+      const defaultColumns = defaultListSettings[ListViews.VOUCHER_LIST].columns ?? [];
 
-    localStorage.setItem(voucherCodesPageSizeMigrationKey, "1");
+      if (columnsMatch(storedColumns, LEGACY_VOUCHER_LIST_COLUMNS)) {
+        nextSettings = {
+          ...nextSettings,
+          [ListViews.VOUCHER_LIST]: {
+            ...nextSettings[ListViews.VOUCHER_LIST],
+            columns: defaultColumns,
+          },
+        };
+      }
+
+      localStorage.setItem(voucherListColumnsMigrationKey, "1");
+    }
 
     return nextSettings;
   } catch {
@@ -74,12 +105,12 @@ export default function useListSettings<TColumns extends string = string>(
     storedListSettings => {
       // `typeof null === "object"` — treat null/non-objects as a fresh install.
       if (!storedListSettings || typeof storedListSettings !== "object") {
-        return migrateVoucherCodesDefaultPageSize(defaultListSettings);
+        return migrateVoucherListSettings(defaultListSettings);
       }
 
       const merged = mergeWith({}, defaultListSettings, storedListSettings, mergeCustomizer);
 
-      return migrateVoucherCodesDefaultPageSize(merged);
+      return migrateVoucherListSettings(merged);
     },
   );
   const updateListSettings = <T extends keyof ListSettings>(key: T, value: ListSettings[T]) =>

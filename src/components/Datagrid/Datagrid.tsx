@@ -485,6 +485,8 @@ export const Datagrid = ({
 
         if (content) {
           setTooltip(content, event.bounds, [colIndex, -1]);
+        } else {
+          clearTooltip();
         }
       }
 
@@ -492,7 +494,7 @@ export const Datagrid = ({
         onHeaderClicked(colIndex, event);
       }
     },
-    [getColumnTooltipContent, onHeaderClicked, setTooltip],
+    [clearTooltip, getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
   const drawHeader: DrawHeaderCallback = useCallback(
     args => {

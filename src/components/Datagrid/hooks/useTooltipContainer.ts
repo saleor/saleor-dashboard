@@ -27,13 +27,23 @@ export const useTooltipContainer = () => {
   const showTimeoutRef = useRef<number>();
   const tooltipRef = useRef(tooltip);
 
-  tooltipRef.current = tooltip;
-
   const clearShowTimeout = useCallback(() => {
     window.clearTimeout(showTimeoutRef.current);
   }, []);
 
-  useEffect(() => () => clearShowTimeout(), [clearShowTimeout]);
+  useEffect(
+    function syncTooltipRef() {
+      tooltipRef.current = tooltip;
+    },
+    [tooltip],
+  );
+
+  useEffect(
+    function clearShowTimeoutOnUnmount() {
+      return () => clearShowTimeout();
+    },
+    [clearShowTimeout],
+  );
 
   const clearTooltip = useCallback(() => {
     clearShowTimeout();
@@ -93,6 +103,38 @@ export const useTooltipContainer = () => {
       }, CELL_TOOLTIP_SHOW_DELAY_MS);
     },
     [clearShowTimeout],
+  );
+
+  // Header click tooltips stay open until dismissed — clear on outside pointer or Escape.
+  // Defer listener attach so the opening click is not treated as a dismiss.
+  useEffect(
+    function dismissTooltipOnOutsideInteraction() {
+      if (!tooltip) {
+        return;
+      }
+
+      const onPointerDown = () => {
+        clearTooltip();
+      };
+      const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          clearTooltip();
+        }
+      };
+
+      const attachId = window.setTimeout(() => {
+        window.addEventListener("pointerdown", onPointerDown, true);
+      }, 0);
+
+      window.addEventListener("keydown", onKeyDown);
+
+      return () => {
+        window.clearTimeout(attachId);
+        window.removeEventListener("pointerdown", onPointerDown, true);
+        window.removeEventListener("keydown", onKeyDown);
+      };
+    },
+    [clearTooltip, tooltip],
   );
 
   return { tooltip, setTooltip, scheduleTooltip, clearTooltip };

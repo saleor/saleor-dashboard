@@ -78,4 +78,56 @@ describe("useTooltipContainer", () => {
     // Assert
     expect(result.current.tooltip?.content).toBe("header");
   });
+
+  it("dismisses an open tooltip on outside pointerdown", () => {
+    // Arrange
+    const { result } = renderHook(() => useTooltipContainer());
+
+    act(() => {
+      result.current.setTooltip("header", bounds, [1, -1]);
+    });
+    // Effect schedules listener on setTimeout(0) after open — flush that turn.
+    act(() => {
+      jest.runOnlyPendingTimers();
+    });
+
+    // Act
+    act(() => {
+      window.dispatchEvent(new Event("pointerdown", { bubbles: true }));
+    });
+
+    // Assert
+    expect(result.current.tooltip).toBeUndefined();
+  });
+
+  it("dismisses an open tooltip on Escape", () => {
+    // Arrange
+    const { result } = renderHook(() => useTooltipContainer());
+
+    act(() => {
+      result.current.setTooltip("header", bounds, [1, -1]);
+    });
+
+    // Act
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    });
+
+    // Assert
+    expect(result.current.tooltip).toBeUndefined();
+  });
+
+  it("does not dismiss on the same turn as opening", () => {
+    // Arrange
+    const { result } = renderHook(() => useTooltipContainer());
+
+    // Act — pointerdown before the deferred listener attaches
+    act(() => {
+      result.current.setTooltip("header", bounds, [1, -1]);
+      window.dispatchEvent(new Event("pointerdown", { bubbles: true }));
+    });
+
+    // Assert
+    expect(result.current.tooltip?.content).toBe("header");
+  });
 });

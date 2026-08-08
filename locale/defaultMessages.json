@@ -1858,6 +1858,10 @@
     "context": "intro under gift card settings page title",
     "string": "Configure shop-wide defaults for gift cards. Per-card expiration can still be set on each gift card."
   },
+  "61tEqb": {
+    "context": "voucher list scope when free shipping has no country limit",
+    "string": "Worldwide"
+  },
   "6230rS": {
     "string": "Discount rules for carts and draft orders."
   },
@@ -2644,9 +2648,6 @@
     "context": "tile view pagination label",
     "string": "No. of products"
   },
-  "9BvYb9": {
-    "string": "Voucher"
-  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -2701,6 +2702,10 @@
   "9NKTJe": {
     "context": "grant refund within return, reason textarea label",
     "string": "Reason note"
+  },
+  "9O1Wok": {
+    "context": "voucher list scope for entire-order vouchers",
+    "string": "Entire order"
   },
   "9OZ/fr": {
     "context": "open full-screen mode with bulk edit",
@@ -2797,6 +2802,10 @@
   },
   "9jXdkz": {
     "string": "Are you sure you want to delete this category's background image?"
+  },
+  "9jdqUn": {
+    "context": "voucher list discount scope column",
+    "string": "Scope"
   },
   "9kF+go": {
     "string": "AND (implicit)"
@@ -3709,6 +3718,10 @@
     "context": "shipping section name",
     "string": "Shipping Methods"
   },
+  "DBuWYc": {
+    "context": "voucher list status after end date",
+    "string": "Ended"
+  },
   "DDYrvn": {
     "string": "Rule reward value must be less than 100"
   },
@@ -3879,6 +3892,10 @@
     "context": "Add filter button text",
     "string": "Add filter"
   },
+  "EDFd9F": {
+    "context": "voucher list status when redeemable now",
+    "string": "Active"
+  },
   "EDihQs": {
     "string": "Staff member updated"
   },
@@ -4036,6 +4053,10 @@
     "context": "authorize status full",
     "string": "Full"
   },
+  "F/Tado": {
+    "context": "voucher setup card title on create",
+    "string": "Set up this voucher"
+  },
   "F08wV2": {
     "context": "issued by app label",
     "string": "Issued by extension"
@@ -4142,6 +4163,10 @@
   "FOehC/": {
     "context": "label",
     "string": "Manual Amount"
+  },
+  "FQNvg8": {
+    "context": "voucher list percentage offer summary",
+    "string": "{value}% off"
   },
   "FRJRmi": {
     "context": "selected customer gift card is sent to subtitle",
@@ -5304,10 +5329,6 @@
     "context": "address search input placeholder in order address edit dialog",
     "string": "Search addresses"
   },
-  "JV+EiM": {
-    "context": "voucher value",
-    "string": "Value"
-  },
   "JV3DcT": {
     "context": "success notification when product media gallery order is saved",
     "string": "Media order updated"
@@ -5456,6 +5477,10 @@
   },
   "K/gnGg": {
     "string": "If you want to disable this User please uncheck the box below."
+  },
+  "K07PNP": {
+    "context": "voucher list redemptions when usageLimit is null",
+    "string": "{used} used · no cap"
   },
   "K0Scar": {
     "context": "collection metadata dialog header",
@@ -5935,6 +5960,10 @@
     "context": "fallback widget title when extension label and app name are missing",
     "string": "App"
   },
+  "MDiqNb": {
+    "context": "voucher list codes-count suffix (shown muted next to name)",
+    "string": "{count, plural, one {# code} other {# codes}}"
+  },
   "MFC20a": {
     "context": "Number of warehouses configured",
     "string": "{count, plural, one {# warehouse} other {# warehouses}}"
@@ -6321,6 +6350,10 @@
   "Nmbt6C": {
     "context": "custom extension page create, callout message",
     "string": "Unavailable permissions are those exceeding your own access rights. Extensions cannot have more permissions than their creator. Please contact an administrator to either create this extension for you or grant your account the necessary permissions"
+  },
+  "Nn8H6/": {
+    "context": "voucher list discount offer summary column",
+    "string": "Offer"
   },
   "NnhrxZ": {
     "context": "amount of sent refund for transaction",
@@ -8623,6 +8656,10 @@
     "context": "product field",
     "string": "Export Variant Weight"
   },
+  "XCSCir": {
+    "context": "voucher list redemptions used of usage limit",
+    "string": "{used} of {limit}"
+  },
   "XDBeA+": {
     "context": "discount type",
     "string": "Fixed amount"
@@ -10257,6 +10294,10 @@
     "context": "error message",
     "string": "Cannot change the quantity because of insufficient stock"
   },
+  "dACMwD": {
+    "context": "voucher list offer cell for shipping vouchers",
+    "string": "Free shipping"
+  },
   "dAst+b": {
     "context": "attribute values list: no attribute values found",
     "string": "No values found"
@@ -10481,6 +10522,10 @@
   "ePaUMU": {
     "context": "gift card resend dialog fallback when default recipient email is unknown",
     "string": "Default recipient assigned to this gift card"
+  },
+  "eROU3z": {
+    "context": "voucher status after end date (filter; matches list Status column)",
+    "string": "Ended"
   },
   "eRqx44": {
     "string": "Search collections..."
@@ -10838,6 +10883,10 @@
   "g3xSRW": {
     "context": "Product save pipeline step succeeded",
     "string": "Saved"
+  },
+  "g7VKx6": {
+    "context": "voucher list offer when channel amounts differ",
+    "string": "Varies by channel"
   },
   "g8lXTL": {
     "context": "swatch attribute",
@@ -13348,6 +13397,10 @@
   "pdJlXC": {
     "string": "See all global search results"
   },
+  "peYlsZ": {
+    "context": "voucher list used of limit column",
+    "string": "Redemptions"
+  },
   "pepgIN": {
     "string": "Choose the Model Type whose extended Models will serve as refund reasons."
   },
@@ -14279,6 +14332,10 @@
     "context": "variant pricing section subtitle",
     "string": "There is no channel to define prices for. You need to first add variant to channels to define prices."
   },
+  "swKM6Z": {
+    "context": "voucher list name column",
+    "string": "Name"
+  },
   "swMMqF": {
     "context": "product variant channel selling price aria label",
     "string": "Selling price for {channelName}"
@@ -14324,10 +14381,6 @@
   "t4hWFu": {
     "context": "Shown while verification is in progress",
     "string": "Verifying..."
-  },
-  "t7UwLY": {
-    "context": "voucher status",
-    "string": "Expired"
   },
   "t84lbb": {
     "context": "empty list message",
@@ -14519,6 +14572,10 @@
     "context": "bulk publish stock validation",
     "string": "Enter a valid stock level or leave it blank."
   },
+  "tzD1Zi": {
+    "context": "voucher list schedule status column",
+    "string": "Status"
+  },
   "tzMNF3": {
     "string": "Status"
   },
@@ -14596,6 +14653,10 @@
   "u9npnE": {
     "context": "bulk publish validation",
     "string": "Select at least one product to continue."
+  },
+  "uBf9aK": {
+    "context": "voucher setup card subtitle on create while incomplete",
+    "string": "Complete the required steps below before Save becomes available."
   },
   "uCJ+gT": {
     "context": "model metadata dialog header",
@@ -14860,6 +14921,10 @@
     "context": "create channel dialog title",
     "string": "Create channel"
   },
+  "v59gTZ": {
+    "context": "voucher list scope when free shipping is limited to multiple countries",
+    "string": "{count} countries"
+  },
   "v5yLSE": {
     "context": "section title",
     "string": "Stock availability"
@@ -15056,6 +15121,14 @@
     "context": "unfulfilled fulfillment, section header",
     "string": "Unfulfilled order lines"
   },
+  "vchrFixCat": {
+    "context": "toast description when save fails due to catalogue assign errors",
+    "string": "Fix the catalogue section and try again."
+  },
+  "vchrFixCtry": {
+    "context": "toast description when save fails due to country assign errors",
+    "string": "Fix the countries section and try again."
+  },
   "vcwrgW": {
     "string": "No translatable entities found"
   },
@@ -15114,14 +15187,6 @@
   "vof5TR": {
     "context": "button",
     "string": "Create category"
-  },
-  "voucherSetupSubtitleCreate": {
-    "context": "voucher setup card subtitle on create while incomplete",
-    "string": "Complete the required steps below before Save becomes available."
-  },
-  "voucherSetupTitleCreate": {
-    "context": "voucher setup card title on create",
-    "string": "Set up this voucher"
   },
   "vpTyL1": {
     "context": "error message",
@@ -15691,6 +15756,10 @@
   "y/UWBR": {
     "string": "There is no address to show for this customer"
   },
+  "y/e6hl": {
+    "context": "voucher list status before start date",
+    "string": "Scheduled"
+  },
   "y/vChh": {
     "context": "Suffix appended to problem count when critical problems exist",
     "string": "including {count} critical"
@@ -15740,10 +15809,6 @@
   },
   "yHeZRQ": {
     "string": "Product Export Failed"
-  },
-  "yHwvLL": {
-    "context": "voucher uses",
-    "string": "Uses"
   },
   "yIgYca": {
     "context": "notification when every generated SKU already exists",
@@ -15924,6 +15989,10 @@
   },
   "z4qMx5": {
     "string": "Open in a new tab"
+  },
+  "z8gJdj": {
+    "context": "voucher list scope for specific-product vouchers",
+    "string": "Products"
   },
   "z9c6/C": {
     "string": "Deprecated"

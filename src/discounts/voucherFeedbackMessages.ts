@@ -52,6 +52,16 @@ export const voucherFeedbackMessages = defineMessages({
     defaultMessage: "Fix the codes section and try again.",
     description: "toast description when save fails due to voucher code errors",
   },
+  fixCatalogueAndTryAgain: {
+    id: "gZ3jPc",
+    defaultMessage: "Fix the catalogue section and try again.",
+    description: "toast description when save fails due to catalogue assign errors",
+  },
+  fixCountriesAndTryAgain: {
+    id: "z5W3Sk",
+    defaultMessage: "Fix the countries section and try again.",
+    description: "toast description when save fails due to country assign errors",
+  },
   usageLimitMin: {
     id: "oX9wx8",
     defaultMessage: "Enter a limit of at least 1.",

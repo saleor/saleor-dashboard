@@ -17,8 +17,10 @@ import {
   PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
 } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
+import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
 import { VoucherCatalogueUnassignDialog } from "@dashboard/discounts/components/VoucherCatalogueUnassignDialog/VoucherCatalogueUnassignDialog";
 import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
+import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { VoucherDeleteDialog } from "@dashboard/discounts/components/VoucherDeleteDialog/VoucherDeleteDialog";
 import VoucherDetailsPage, {
   VoucherDetailsPageTab,
@@ -358,19 +360,30 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     });
   const notifySaveFailed = (saveErrors: Array<{ field?: string | null }> = []) => {
     const hasCodesError = saveErrors.some(isVoucherCodesError);
+    const hasCatalogueError = saveErrors.some(isVoucherCatalogueError);
+    const hasCountriesError = saveErrors.some(isVoucherCountriesError);
 
+    // Prefer the section that owns recovery; codes first (highest-friction identity).
     if (hasCodesError) {
       scrollToVoucherSection(voucherSectionIds.codes);
+    } else if (hasCatalogueError) {
+      scrollToVoucherSection(voucherSectionIds.catalogue);
+    } else if (hasCountriesError) {
+      scrollToVoucherSection(voucherSectionIds.countries);
     }
+
+    const recoveryMessage = hasCodesError
+      ? voucherFeedbackMessages.fixCodesAndTryAgain
+      : hasCatalogueError
+        ? voucherFeedbackMessages.fixCatalogueAndTryAgain
+        : hasCountriesError
+          ? voucherFeedbackMessages.fixCountriesAndTryAgain
+          : voucherFeedbackMessages.checkHighlightedFields;
 
     notify({
       status: "error",
       title: intl.formatMessage(voucherFeedbackMessages.couldNotSaveVoucher),
-      text: intl.formatMessage(
-        hasCodesError
-          ? voucherFeedbackMessages.fixCodesAndTryAgain
-          : voucherFeedbackMessages.checkHighlightedFields,
-      ),
+      text: intl.formatMessage(recoveryMessage),
       // Inline/section errors own the recovery; toast is a short ack.
       autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
     });

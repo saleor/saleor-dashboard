@@ -37,6 +37,7 @@ import { VoucherChannelAvailabilityCard } from "../VoucherChannelAvailabilityCar
 import { VoucherCodesCard } from "../VoucherCodesCard/VoucherCodesCard";
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
 import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
+import { formatVoucherCountriesErrorMessage } from "../VoucherCountriesErrors/voucherCountriesErrors";
 import { VoucherDetailsTitle } from "../VoucherDetailsTitle/VoucherDetailsTitle";
 import { VoucherDiscountSection } from "../VoucherDiscountSection/VoucherDiscountSection";
 import VoucherInfo from "../VoucherInfo";
@@ -199,6 +200,7 @@ export const VoucherDetailsPageFormContent = ({
   const intl = useIntl();
   const { data, change, set, triggerChange, changedData, setIsSubmitDisabled } = form;
   const allErrors = [...localErrors, ...errors];
+  const countriesErrorMessage = formatVoucherCountriesErrorMessage(allErrors, intl);
   // Form mounts only after voucher exists — keep type-dependent sections gated on data.
   const visibility = resolveVoucherSectionVisibility(data);
   const showCatalogue = visibility.showCatalogue;
@@ -354,6 +356,7 @@ export const VoucherDetailsPageFormContent = ({
                 activeTab={activeTab}
                 tabItemsCount={tabItemsCount}
                 disabled={disabled}
+                errors={allErrors}
                 onTabClick={onTabClick}
                 categories={mapEdgesToItems(voucher?.categories)}
                 collections={mapEdgesToItems(voucher?.collections)}
@@ -401,6 +404,7 @@ export const VoucherDetailsPageFormContent = ({
                     defaultMessage="Voucher is limited to these countries"
                   />
                 }
+                errorMessage={countriesErrorMessage}
                 onCountryAssign={onCountryAssign}
                 onCountryUnassign={onCountryUnassign}
               />
