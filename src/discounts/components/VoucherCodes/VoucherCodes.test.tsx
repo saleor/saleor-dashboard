@@ -171,12 +171,12 @@ describe("VoucherCodes", () => {
       await userEvent.click(addCodeButton);
     });
     await waitFor(() => {
-      expect(screen.getByText(/^manual$/i)).toBeInTheDocument();
+      expect(screen.getByText(/^manual code$/i)).toBeInTheDocument();
     });
 
     // Act
     await act(async () => {
-      await userEvent.click(screen.getByText(/^manual$/i));
+      await userEvent.click(screen.getByText(/^manual code$/i));
     });
 
     // Assert
@@ -206,11 +206,11 @@ describe("VoucherCodes", () => {
     });
 
     // Assert
-    expect(await screen.findByText(/^auto-generate codes$/i)).toBeInTheDocument();
+    expect(await screen.findByText(/^generate codes$/i)).toBeInTheDocument();
 
     // Act
     await act(async () => {
-      await userEvent.click(screen.getByText(/^auto-generate codes$/i));
+      await userEvent.click(screen.getByText(/^generate codes$/i));
     });
 
     // Assert
