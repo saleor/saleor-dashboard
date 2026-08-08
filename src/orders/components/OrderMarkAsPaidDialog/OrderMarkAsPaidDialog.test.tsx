@@ -113,7 +113,7 @@ describe("OrderMarkAsPaidDialog", () => {
     );
 
     // Assert
-    expect(screen.getByText("Invalid value")).toBeInTheDocument();
+    expect(screen.getByText("Reference is too long.")).toBeInTheDocument();
     expect(screen.queryAllByTestId("dialog-error")).toHaveLength(0);
   });
 });
