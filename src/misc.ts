@@ -569,6 +569,8 @@ export const getDotColor = (status: DotStatus, themeValues: ThemeTokensValues) =
       return themeValues.colors.background.critical2;
     case "warning":
       return themeValues.colors.background.warning1;
+    case "neutral":
+      return themeValues.colors.text.defaultDisabled;
   }
 };
 

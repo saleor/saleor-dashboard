@@ -3,8 +3,8 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type Rule } from "@dashboard/discounts/models";
@@ -22,6 +22,7 @@ import {
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import { Box } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 
 import { DiscountDatesWithController } from "../DiscountDates";
@@ -98,7 +99,15 @@ export const DiscountDetailsPage = ({
       onRuleDeleteSubmit={onRuleDeleteSubmit}
       onRuleUpdateSubmit={onRuleUpdateSubmit}
     >
-      {({ rulesErrors, rules, discountType, onDeleteRule, onRuleSubmit, onSubmit }) => (
+      {({
+        rulesErrors,
+        rules,
+        discountType,
+        onDeleteRule,
+        onRuleSubmit,
+        onSubmit,
+        saveComposition,
+      }) => (
         <DetailPageLayout testId="discount-form">
           <TopNav
             href={backLinkHref}
@@ -120,32 +129,34 @@ export const DiscountDetailsPage = ({
           </TopNav>
 
           <DetailPageLayout.Content>
-            <DiscountGeneralInfo
-              error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
-              disabled={disabled}
-              typeDisabled={true}
-            />
+            <DetailPageContent>
+              <DiscountGeneralInfo
+                error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
+                disabled={disabled}
+                typeDisabled={true}
+              />
 
-            <CardSpacer />
-
-            <DiscountRules
-              promotionId={data?.id ?? null}
-              discountType={discountType}
-              errors={rulesErrors}
-              rules={rules}
-              getRuleConfirmButtonState={ruleEditIndex =>
-                ruleEditIndex !== null ? ruleUpdateButtonState : ruleCreateButtonState
-              }
-              deleteButtonState={ruleDeleteButtonState}
-              onRuleDelete={onDeleteRule}
-              onRuleSubmit={onRuleSubmit}
-              channels={channels}
-              disabled={disabled}
-            />
+              <DiscountRules
+                promotionId={data?.id ?? null}
+                discountType={discountType}
+                errors={rulesErrors}
+                rules={rules}
+                getRuleConfirmButtonState={ruleEditIndex =>
+                  ruleEditIndex !== null ? ruleUpdateButtonState : ruleCreateButtonState
+                }
+                deleteButtonState={ruleDeleteButtonState}
+                onRuleDelete={onDeleteRule}
+                onRuleSubmit={onRuleSubmit}
+                channels={channels}
+                disabled={disabled}
+              />
+            </DetailPageContent>
           </DetailPageLayout.Content>
 
-          <DetailPageLayout.RightSidebar>
-            <DiscountDatesWithController errors={errors} disabled={disabled} stacked />
+          <DetailPageLayout.RightSidebar paddingTop={6}>
+            <Box display="flex" flexDirection="column" gap={4}>
+              <DiscountDatesWithController errors={errors} disabled={disabled} />
+            </Box>
           </DetailPageLayout.RightSidebar>
 
           <DiscountSavebar
@@ -154,6 +165,7 @@ export const DiscountDetailsPage = ({
             onSubmit={onSubmit}
             onDelete={onDelete}
             submitButtonState={submitButtonState}
+            composition={saveComposition}
           />
         </DetailPageLayout>
       )}

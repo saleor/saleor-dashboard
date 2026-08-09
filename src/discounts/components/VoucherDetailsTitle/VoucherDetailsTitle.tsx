@@ -56,7 +56,7 @@ export const VoucherDetailsTitle = ({ voucher, name }: VoucherDetailsTitleProps)
       ? "success"
       : promotionStatus === "scheduled"
         ? "scheduled"
-        : "error";
+        : "neutral";
   const typeLabel = getVoucherTypePillLabel(voucher, intl);
   const timeParts = getRelativePromotionTimeParts({
     status: promotionStatus,
