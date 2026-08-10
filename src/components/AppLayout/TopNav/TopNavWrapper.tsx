@@ -16,7 +16,7 @@ export const TopNavWrapper = ({
   <Box
     display={hasSubtitle ? "block" : "flex"}
     alignItems="center"
-    paddingX={6}
+    paddingX={{ mobile: 3, tablet: 6, desktop: 6 }}
     paddingY={5}
     borderBottomWidth={withoutBorder ? 0 : 1}
     borderBottomStyle="solid"

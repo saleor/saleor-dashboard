@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   activateChannel: {
-    id: "LFevQP",
-    defaultMessage: "Activate channel",
+    id: "F5pCN7",
+    defaultMessage: "Activate",
     description: "channel detail top nav CTA when channel is inactive",
   },
   deactivateChannel: {
-    id: "ihUOLR",
-    defaultMessage: "Deactivate channel",
+    id: "6JKTmx",
+    defaultMessage: "Deactivate",
     description: "channel detail top nav CTA when channel is active",
   },
 });

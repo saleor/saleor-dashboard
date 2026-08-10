@@ -18,7 +18,7 @@ export const DetailPageContent = ({ children, ...rest }: DetailPageContentProps)
     display="flex"
     flexDirection="column"
     gap={4}
-    paddingX={6}
+    paddingX={{ mobile: 3, tablet: 6, desktop: 6 }}
     paddingTop={6}
     paddingBottom={6}
     {...rest}

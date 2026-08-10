@@ -101,3 +101,10 @@
 .purchaseSeparator {
   color: var(--mu-colors-text-default2);
 }
+
+@media (max-width: 768px) {
+  .card {
+    margin-left: var(--mu-spacing-3);
+    margin-right: var(--mu-spacing-3);
+  }
+}

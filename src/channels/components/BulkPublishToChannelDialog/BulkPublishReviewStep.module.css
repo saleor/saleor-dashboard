@@ -78,12 +78,31 @@
   flex-shrink: 0;
   gap: var(--mu-spacing-2);
   width: 296px;
+  max-width: 100%;
   grid-template-columns: 1fr 1fr;
 }
 
 .fieldGroupWithStock {
   width: 376px;
+  max-width: 100%;
   grid-template-columns: 1fr 1fr 72px;
+}
+
+@media (max-width: 768px) {
+  .headerRow,
+  .row {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .fieldGroup,
+  .fieldGroupWithStock {
+    width: 100%;
+  }
+
+  .fieldGroupWithStock {
+    grid-template-columns: 1fr 1fr minmax(4rem, 72px);
+  }
 }
 
 .columnHeader {

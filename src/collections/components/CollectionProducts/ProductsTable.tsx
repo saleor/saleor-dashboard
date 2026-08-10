@@ -92,108 +92,110 @@ const ProductsTableBody = ({
   const allChecked = areAllChecked(products, selected);
 
   return (
-    <GridTable borderWidth={0} className={styles.table}>
-      <GridTable.Colgroup>
-        <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_DRAG_COLUMN_WIDTH} />
-        <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_CHECKBOX_COLUMN_WIDTH} />
-        <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_NAME_COLUMN_WIDTH} />
-        <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_TYPE_COLUMN_WIDTH} />
-        <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_AVAILABILITY_COLUMN_WIDTH} />
-        <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_ACTIONS_COLUMN_WIDTH} />
-      </GridTable.Colgroup>
-      <GridTable.Body>
-        <GridTable.Row className={styles.headerRow}>
-          <GridTable.Cell padding={0} borderWidth={0} />
-          <GridTable.Cell padding={0} borderWidth={0}>
-            <Box display="flex" alignItems="center" height="100%">
-              <Checkbox
-                data-test-id="select-all-checkbox"
-                checked={allChecked}
-                disabled={disabled}
-                onCheckedChange={() => toggleAll(products, selected)}
-              />
-            </Box>
-          </GridTable.Cell>
-          <GridTable.Cell borderWidth={0} padding={0}>
-            {selected ? (
-              <Text data-test-id="SelectedText" size={2} lineHeight={2}>
-                <FormattedMessage
-                  id="qu/hXD"
-                  defaultMessage="Selected {number} items"
-                  values={{
-                    number: selected,
-                  }}
+    <Box overflowX="auto" width="100%">
+      <GridTable borderWidth={0} className={styles.table}>
+        <GridTable.Colgroup>
+          <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_DRAG_COLUMN_WIDTH} />
+          <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_CHECKBOX_COLUMN_WIDTH} />
+          <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_NAME_COLUMN_WIDTH} />
+          <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_TYPE_COLUMN_WIDTH} />
+          <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_AVAILABILITY_COLUMN_WIDTH} />
+          <GridTable.Col __width={COLLECTION_PRODUCT_TABLE_ACTIONS_COLUMN_WIDTH} />
+        </GridTable.Colgroup>
+        <GridTable.Body>
+          <GridTable.Row className={styles.headerRow}>
+            <GridTable.Cell padding={0} borderWidth={0} />
+            <GridTable.Cell padding={0} borderWidth={0}>
+              <Box display="flex" alignItems="center" height="100%">
+                <Checkbox
+                  data-test-id="select-all-checkbox"
+                  checked={allChecked}
+                  disabled={disabled}
+                  onCheckedChange={() => toggleAll(products, selected)}
                 />
-              </Text>
-            ) : (
-              <Text size={2} lineHeight={2} color="default2">
-                <FormattedMessage id="6AMFki" defaultMessage="Name" description="product name" />
-              </Text>
-            )}
-          </GridTable.Cell>
-          <GridTable.Cell borderWidth={0} padding={0}>
-            {!selected && (
-              <Text size={2} lineHeight={2} color="default2">
-                <FormattedMessage id="k+HcTv" defaultMessage="Type" description="product type" />
-              </Text>
-            )}
-          </GridTable.Cell>
-          <GridTable.Cell borderWidth={0} padding={0}>
-            {!selected && (
-              <Text size={2} lineHeight={2} color="default2">
-                <FormattedMessage
-                  id="Oe62bR"
-                  defaultMessage="Availability"
-                  description="product availability"
-                />
-              </Text>
-            )}
-          </GridTable.Cell>
-          <GridTable.Cell borderWidth={0} padding={0}>
-            <Box
-              width="100%"
-              paddingRight={COLLECTION_PRODUCT_TABLE_ACTION_INSET}
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-              gap={2}
-              height="100%"
-            >
-              {!!selected && (
-                <Button variant="secondary" size="small" type="button" onClick={onUnassignClick}>
+              </Box>
+            </GridTable.Cell>
+            <GridTable.Cell borderWidth={0} padding={0}>
+              {selected ? (
+                <Text data-test-id="SelectedText" size={2} lineHeight={2}>
                   <FormattedMessage
-                    id="67V0c0"
-                    defaultMessage="Unassign"
-                    description="unassign product from collection, button"
+                    id="qu/hXD"
+                    defaultMessage="Selected {number} items"
+                    values={{
+                      number: selected,
+                    }}
                   />
-                </Button>
+                </Text>
+              ) : (
+                <Text size={2} lineHeight={2} color="default2">
+                  <FormattedMessage id="6AMFki" defaultMessage="Name" description="product name" />
+                </Text>
               )}
-            </Box>
-          </GridTable.Cell>
-        </GridTable.Row>
-        {wrapRows(
-          renderCollection(items, product => {
-            if (!product) {
-              return null;
-            }
+            </GridTable.Cell>
+            <GridTable.Cell borderWidth={0} padding={0}>
+              {!selected && (
+                <Text size={2} lineHeight={2} color="default2">
+                  <FormattedMessage id="k+HcTv" defaultMessage="Type" description="product type" />
+                </Text>
+              )}
+            </GridTable.Cell>
+            <GridTable.Cell borderWidth={0} padding={0}>
+              {!selected && (
+                <Text size={2} lineHeight={2} color="default2">
+                  <FormattedMessage
+                    id="Oe62bR"
+                    defaultMessage="Availability"
+                    description="product availability"
+                  />
+                </Text>
+              )}
+            </GridTable.Cell>
+            <GridTable.Cell borderWidth={0} padding={0}>
+              <Box
+                width="100%"
+                paddingRight={COLLECTION_PRODUCT_TABLE_ACTION_INSET}
+                display="flex"
+                alignItems="center"
+                justifyContent="flex-end"
+                gap={2}
+                height="100%"
+              >
+                {!!selected && (
+                  <Button variant="secondary" size="small" type="button" onClick={onUnassignClick}>
+                    <FormattedMessage
+                      id="67V0c0"
+                      defaultMessage="Unassign"
+                      description="unassign product from collection, button"
+                    />
+                  </Button>
+                )}
+              </Box>
+            </GridTable.Cell>
+          </GridTable.Row>
+          {wrapRows(
+            renderCollection(items, product => {
+              if (!product) {
+                return null;
+              }
 
-            const isSelected = isChecked(product.id);
+              const isSelected = isChecked(product.id);
 
-            return (
-              <ProductTableItem
-                key={product.id}
-                product={product}
-                isSelected={isSelected || false}
-                draggable={draggable}
-                reorderable={reorderable}
-                toggle={toggle}
-                onProductUnassign={onProductUnassign}
-              />
-            );
-          }),
-        )}
-      </GridTable.Body>
-    </GridTable>
+              return (
+                <ProductTableItem
+                  key={product.id}
+                  product={product}
+                  isSelected={isSelected || false}
+                  draggable={draggable}
+                  reorderable={reorderable}
+                  toggle={toggle}
+                  onProductUnassign={onProductUnassign}
+                />
+              );
+            }),
+          )}
+        </GridTable.Body>
+      </GridTable>
+    </Box>
   );
 };
 

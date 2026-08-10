@@ -33,7 +33,12 @@ export const ChannelDetailsTitle = ({ channel }: ChannelDetailsTitleProps): Reac
         label={statusLabel}
         color={channel.isActive ? "success" : "neutral"}
       />
-      <Text color="default2" fontSize={2} __whiteSpace="nowrap">
+      <Text
+        color="default2"
+        fontSize={2}
+        __whiteSpace="nowrap"
+        display={{ mobile: "none", tablet: "block", desktop: "block" }}
+      >
         <FormattedMessage
           {...messages.headerCountryCurrency}
           values={{

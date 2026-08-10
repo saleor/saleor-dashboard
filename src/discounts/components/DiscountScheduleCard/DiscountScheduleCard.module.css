@@ -28,3 +28,10 @@
   padding: var(--mu-spacing-4);
   min-width: 0;
 }
+
+@media (max-width: 768px) {
+  .card {
+    margin-left: var(--mu-spacing-3);
+    margin-right: var(--mu-spacing-3);
+  }
+}

@@ -1958,6 +1958,10 @@
   "6J1m2c": {
     "string": "Create a Model"
   },
+  "6JKTmx": {
+    "context": "channel detail top nav CTA when channel is active",
+    "string": "Deactivate"
+  },
   "6Jgwpc": {
     "string": "No payment received"
   },
@@ -4110,6 +4114,10 @@
     "context": "sale name",
     "string": "Name"
   },
+  "F5pCN7": {
+    "context": "channel detail top nav CTA when channel is inactive",
+    "string": "Activate"
+  },
   "F62RkR": {
     "context": "dialog header",
     "string": "Unassign Variants From Voucher"
@@ -5749,10 +5757,6 @@
   },
   "LCmiky": {
     "string": "Shipping zones deleted"
-  },
-  "LFevQP": {
-    "context": "channel detail top nav CTA when channel is inactive",
-    "string": "Activate channel"
   },
   "LICZeR": {
     "context": "weight",
@@ -11555,10 +11559,6 @@
   },
   "igoIjo": {
     "string": "Line matrix"
-  },
-  "ihUOLR": {
-    "context": "channel detail top nav CTA when channel is active",
-    "string": "Deactivate channel"
   },
   "iidznP": {
     "context": "password login mode option description",

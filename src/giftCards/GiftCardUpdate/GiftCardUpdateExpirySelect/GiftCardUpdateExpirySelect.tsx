@@ -66,7 +66,7 @@ export const GiftCardUpdateExpirySelect = (): JSX.Element => {
           <Text size={3} fontWeight="medium">
             <FormattedMessage {...messages.expiryDateFieldLabel} />
           </Text>
-          <Box __width="22rem">
+          <Box width="100%" __maxWidth="22rem">
             <Input
               type="date"
               name="expiryDate"

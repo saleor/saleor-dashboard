@@ -23,7 +23,13 @@ export const DetailPageSectionLayout = ({
   nav,
   children,
 }: DetailPageSectionLayoutProps): JSX.Element => (
-  <Box display="flex" gap={4} paddingX={6} paddingTop={6} paddingBottom={6}>
+  <Box
+    display="flex"
+    gap={4}
+    paddingX={{ mobile: 3, tablet: 6, desktop: 6 }}
+    paddingTop={6}
+    paddingBottom={6}
+  >
     <Box
       display={{ mobile: "none", tablet: "block", desktop: "block" }}
       flexShrink="0"

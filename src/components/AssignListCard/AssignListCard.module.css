@@ -155,3 +155,10 @@
   flex-shrink: 0;
   white-space: nowrap;
 }
+
+@media (max-width: 768px) {
+  .card {
+    margin-left: var(--mu-spacing-3);
+    margin-right: var(--mu-spacing-3);
+  }
+}
