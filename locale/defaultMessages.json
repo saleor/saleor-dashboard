@@ -264,9 +264,6 @@
     "context": "section description",
     "string": "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely."
   },
-  "/4/nYx": {
-    "string": "Discount updated"
-  },
   "/4bJkA": {
     "context": "header field value, header",
     "string": "Value"
@@ -6502,6 +6499,10 @@
   "OKGd/k": {
     "context": "order history message",
     "string": "Order was created from draft"
+  },
+  "OKVWjP": {
+    "context": "promotion details save success toast",
+    "string": "Promotion updated"
   },
   "ONl3Bh": {
     "context": "consequence of blocking storefront traffic",
