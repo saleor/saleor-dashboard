@@ -1,12 +1,15 @@
 import { Box, type BoxProps } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import type * as React from "react";
 
 import { topBarHeight, topBarHeightSubtitle } from "../consts";
+import styles from "./TopNavWrapper.module.css";
 
 export const TopNavWrapper = ({
   children,
   withoutBorder,
   hasSubtitle,
+  className,
   ...props
 }: {
   children?: React.ReactNode;
@@ -14,9 +17,9 @@ export const TopNavWrapper = ({
   hasSubtitle?: boolean;
 } & BoxProps) => (
   <Box
+    className={clsx(styles.root, className)}
     display={hasSubtitle ? "block" : "flex"}
     alignItems="center"
-    paddingX={{ mobile: 3, tablet: 6, desktop: 6 }}
     paddingY={5}
     borderBottomWidth={withoutBorder ? 0 : 1}
     borderBottomStyle="solid"

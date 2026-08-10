@@ -29,7 +29,24 @@ Box supports sprinkle props for: `display`, `flexDirection`, `alignItems`, `just
 
 All spacing/sizing props accept token numbers: `0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 14 | 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52`
 
-Responsive values: `display={{ mobile: "none", tablet: "flex", desktop: "grid" }}`
+Responsive values work for **layout** props only (`display`, `grid*`, `flex*`, `order`, …):
+
+```tsx
+<Box display={{ mobile: "none", tablet: "flex", desktop: "grid" }} />
+```
+
+**Do not** use responsive objects for spacing (`padding*`, `margin*`, `gap`). Macaw types allow it, but runtime sprinkles only accept state conditions (`default` / `hover` / …) for those props and will throw `SprinklesError` (breaks Storybook + Jest + the live app). Use a CSS module media query instead:
+
+```css
+.root {
+  padding-inline: var(--mu-spacing-6);
+}
+@media (max-width: 768px) {
+  .root {
+    padding-inline: var(--mu-spacing-3);
+  }
+}
+```
 
 Escape hatch for arbitrary CSS values via `__` prefix:
 

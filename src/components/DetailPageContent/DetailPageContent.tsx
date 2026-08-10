@@ -1,5 +1,8 @@
 import { Box, type BoxProps } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { type ReactNode } from "react";
+
+import styles from "./DetailPageContent.module.css";
 
 interface DetailPageContentProps extends Omit<BoxProps, "children"> {
   children: ReactNode;
@@ -13,12 +16,16 @@ interface DetailPageContentProps extends Omit<BoxProps, "children"> {
  * directly in the layout's main column instead — do not nest this component there
  * (it would double horizontal padding and shrink the nav/content ratio).
  */
-export const DetailPageContent = ({ children, ...rest }: DetailPageContentProps): JSX.Element => (
+export const DetailPageContent = ({
+  children,
+  className,
+  ...rest
+}: DetailPageContentProps): JSX.Element => (
   <Box
+    className={clsx(styles.root, className)}
     display="flex"
     flexDirection="column"
     gap={4}
-    paddingX={{ mobile: 3, tablet: 6, desktop: 6 }}
     paddingTop={6}
     paddingBottom={6}
     {...rest}

@@ -1,6 +1,8 @@
 import { Box } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 
+import styles from "./DetailPageSectionLayout.module.css";
+
 /** Sticky section-nav rail width — keep in sync with channel details. */
 export const DETAIL_PAGE_SECTION_NAV_WIDTH = "25%";
 
@@ -23,13 +25,7 @@ export const DetailPageSectionLayout = ({
   nav,
   children,
 }: DetailPageSectionLayoutProps): JSX.Element => (
-  <Box
-    display="flex"
-    gap={4}
-    paddingX={{ mobile: 3, tablet: 6, desktop: 6 }}
-    paddingTop={6}
-    paddingBottom={6}
-  >
+  <Box className={styles.root} display="flex" gap={4} paddingTop={6} paddingBottom={6}>
     <Box
       display={{ mobile: "none", tablet: "block", desktop: "block" }}
       flexShrink="0"
