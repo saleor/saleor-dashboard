@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Voucher create and details follow the entity-detail layout: section nav, discount scope and amount cards, schedule and channel availability in the sidebar, a setup checklist, metadata in the header, and savebar hints for what will be saved. Catalogue and country changes stage until Save. Percentage and fixed-amount drafts stay independent while you switch between them; only the active type is saved. Draft codes are included in Save, and the leave warning / Save button track unsaved general, channel, and code changes.
+Voucher create and details are redesigned so you can finish setup in one place: choose the discount scope and amount, set schedule and channels in the sidebar, and follow a setup checklist. Metadata opens from the header. The save bar shows what will be saved. Product catalogue and country changes wait until you click Save.
