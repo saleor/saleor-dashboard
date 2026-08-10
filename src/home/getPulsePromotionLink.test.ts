@@ -15,6 +15,7 @@ describe("getPulsePromotionLink", () => {
     expect(link).toEqual({
       kind: "internal",
       to: ExtensionsUrls.resolveInstallCustomExtensionUrl(PULSE_MANIFEST_URL),
+      intent: "install",
     });
   });
 
@@ -26,6 +27,19 @@ describe("getPulsePromotionLink", () => {
     expect(link).toEqual({
       kind: "external",
       href: PULSE_APPS_STORE_URL,
+      intent: "explore",
+    });
+  });
+
+  it("returns the installed app page when Pulse is already installed", () => {
+    // Arrange & Act
+    const link = getPulsePromotionLink(true, { installedAppUrl: "/extensions/app/pulse-id" });
+
+    // Assert
+    expect(link).toEqual({
+      kind: "internal",
+      to: "/extensions/app/pulse-id",
+      intent: "open",
     });
   });
 });

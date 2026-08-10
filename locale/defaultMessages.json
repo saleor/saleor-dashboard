@@ -47,6 +47,10 @@
     "context": "aria label for grid view button",
     "string": "Grid view"
   },
+  "+CE3ZW": {
+    "context": "ripple video announcement CTA when Saleor Pulse is already installed",
+    "string": "Open Pulse"
+  },
   "+G2N98": {
     "string": "Install from manifest"
   },
@@ -5670,6 +5674,10 @@
   "Kxiige": {
     "string": "Generated Token"
   },
+  "KynPlY": {
+    "context": "link to open an already installed extension app UI",
+    "string": "Open {appName}"
+  },
   "KysW5s": {
     "context": "voucher apply once per customer toggle description",
     "string": "Each customer account can redeem this voucher only once, no matter which code they use."
@@ -10896,6 +10904,10 @@
     "context": "payment method type other",
     "string": "Other"
   },
+  "g2P/kE": {
+    "context": "shown when user tries to install an extension that is already installed but inactive",
+    "string": "{appName} is installed but disabled."
+  },
   "g3qjSf": {
     "context": "button",
     "string": "Assign categories"
@@ -10998,6 +11010,10 @@
   "gToMwN": {
     "context": "voucher apply once per order description",
     "string": "When off, the discount is calculated for every eligible line in the order."
+  },
+  "gU10OX": {
+    "context": "shown when user tries to install an extension that is already installed",
+    "string": "{appName} is already installed."
   },
   "gWUWig": {
     "context": "channel inventory allocation description when fewer than two",
@@ -13887,6 +13903,10 @@
     "context": "number of included postal code ranges",
     "string": "{number, plural, one {# included postal code range} other {# included postal code ranges}}"
   },
+  "r0blTm": {
+    "context": "ripple action to open Saleor Pulse when already installed",
+    "string": "Open Pulse"
+  },
   "r1aQ2f": {
     "context": "dialog header",
     "string": "Unassign Attribute from Product Type"
@@ -16275,6 +16295,10 @@
   },
   "zxs6G3": {
     "string": "Manage how you ship out orders"
+  },
+  "zyWNgK": {
+    "context": "link to an already installed extension settings page from the install page",
+    "string": "Open settings"
   },
   "zyXcBP": {
     "string": "Sorting by this column requires active filter: {filterName}"

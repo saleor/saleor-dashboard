@@ -5,6 +5,7 @@ import { type Control } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 
 import { EL_ID_MANIFEST_INPUT_LABEL, PLACEHOLDER_MANIFEST_URL } from "../../consts";
+import { type AlreadyInstalledApp } from "../../hooks/useFetchManifest";
 import { type ExtensionInstallFormData } from "../../schema";
 import { ManifestUrlFieldController } from "../ManifestUrlFieldController";
 
@@ -12,10 +13,12 @@ export const ManifestUrlForm = ({
   onSubmit,
   control,
   onPaste,
+  alreadyInstalledApp,
 }: {
   onSubmit: FormEventHandler<HTMLElement>;
   control: Control<ExtensionInstallFormData>;
   onPaste: ClipboardEventHandler<HTMLInputElement>;
+  alreadyInstalledApp?: AlreadyInstalledApp | null;
 }) => {
   return (
     <Box
@@ -35,6 +38,7 @@ export const ManifestUrlForm = ({
         aria-labelledby={EL_ID_MANIFEST_INPUT_LABEL}
         placeholder={PLACEHOLDER_MANIFEST_URL}
         onPaste={onPaste}
+        alreadyInstalledApp={alreadyInstalledApp}
       />
     </Box>
   );
