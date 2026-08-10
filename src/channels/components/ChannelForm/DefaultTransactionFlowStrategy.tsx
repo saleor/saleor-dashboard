@@ -1,57 +1,39 @@
-import Link from "@dashboard/components/Link";
-import { type FormChange } from "@dashboard/hooks/useForm";
-import { TRANSACTION_FLOW_STRATEGY_DOCS_URL } from "@dashboard/links";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui-next";
+import { TransactionFlowStrategyEnum } from "@dashboard/graphql";
 import { FormattedMessage } from "react-intl";
 
+import { ChannelSettingRadioGroup } from "./ChannelSettingRadioGroup";
 import { messages } from "./messages";
 
-interface AllowUnpaidOrdersProps {
-  onChange: FormChange;
-  isChecked: boolean;
-  hasError: boolean;
+interface DefaultTransactionFlowStrategyProps {
+  value: TransactionFlowStrategyEnum;
+  onValueChange: (value: TransactionFlowStrategyEnum) => void;
   disabled?: boolean;
 }
 
 export const DefaultTransactionFlowStrategy = ({
-  onChange,
-  isChecked,
-  hasError,
+  value,
+  onValueChange,
   disabled,
-}: AllowUnpaidOrdersProps) => (
-  <Box paddingX={6}>
-    <Checkbox
-      name="defaultTransactionFlowStrategy"
-      data-test-id="default-transaction-strategy-checkbox"
-      checked={isChecked}
-      error={hasError}
-      onCheckedChange={value =>
-        onChange({ target: { name: "defaultTransactionFlowStrategy", value } })
-      }
-      disabled={disabled}
-    >
-      <Text>
-        <FormattedMessage {...messages.defaultTransactionFlowStrategyLabel} />
-      </Text>{" "}
-    </Checkbox>
-    <Box paddingLeft={4}>
-      {" "}
-      <Text size={3} color="default2" paddingLeft={0.5}>
-        <FormattedMessage
-          {...messages.defaultTransactionFlowStrategyDescription}
-          values={{
-            link: (
-              <Link
-                href={TRANSACTION_FLOW_STRATEGY_DOCS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FormattedMessage defaultMessage="Learn more" id="TdTXXf" />
-              </Link>
-            ),
-          }}
-        />
-      </Text>
-    </Box>
-  </Box>
+}: DefaultTransactionFlowStrategyProps) => (
+  <ChannelSettingRadioGroup
+    testId="default-transaction-strategy"
+    name="defaultTransactionFlowStrategy"
+    title={<FormattedMessage {...messages.defaultTransactionFlowStrategyLabel} />}
+    description={<FormattedMessage {...messages.defaultTransactionFlowStrategyDescription} />}
+    value={value}
+    onValueChange={onValueChange}
+    disabled={disabled}
+    options={[
+      {
+        value: TransactionFlowStrategyEnum.CHARGE,
+        label: <FormattedMessage {...messages.transactionFlowChargeLabel} />,
+        description: <FormattedMessage {...messages.transactionFlowChargeDescription} />,
+      },
+      {
+        value: TransactionFlowStrategyEnum.AUTHORIZATION,
+        label: <FormattedMessage {...messages.transactionFlowAuthorizeLabel} />,
+        description: <FormattedMessage {...messages.transactionFlowAuthorizeDescription} />,
+      },
+    ]}
+  />
 );

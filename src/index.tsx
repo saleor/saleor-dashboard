@@ -37,7 +37,7 @@ import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { legacyRedirects } from "./components/LegacyRedirects";
 import { LocaleProvider } from "./components/Locale";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
-import { NotificationProvider } from "./components/notifications";
+import { NotificationProvider, NotificationsToaster } from "./components/notifications";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
@@ -140,6 +140,7 @@ const App = (): JSX.Element => (
                                         <Routes />
                                       </OnboardingProvider>
                                     </FeatureFlagsProviderWithUser>
+                                    <NotificationsToaster />
                                   </SavebarRefProvider>
                                 </NavigatorSearchProvider>
                               </DevModeProvider>

@@ -42,7 +42,7 @@ const GiftCardsListHeader = () => {
     setFilterPresetOpen,
     selectedRowIds,
   } = useGiftCardList();
-  const openSettings = () => navigate(giftCardSettingsUrl);
+  const openSettings = () => navigate(giftCardSettingsUrl({ from: "gift-cards" }));
 
   const { GIFT_CARD_OVERVIEW_CREATE, GIFT_CARD_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.GIFT_CARD_LIST,

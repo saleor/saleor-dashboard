@@ -16,4 +16,17 @@ export const giftCardPath = (id: string) => urlJoin(giftCardsListPath, id);
 export const giftCardUrl = (id: string, params?: GiftCardUpdatePageUrlQueryParams) =>
   giftCardPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const giftCardSettingsUrl = urlJoin(giftCardsListPath, "settings");
+export const giftCardSettingsPath = urlJoin(giftCardsListPath, "settings");
+
+export type GiftCardSettingsUrlQueryParams = {
+  from?: "gift-cards" | "configuration";
+};
+
+export const giftCardSettingsUrl = (
+  params?: GiftCardSettingsUrlQueryParams & { hash?: string },
+): string => {
+  const query = params?.from ? `?${stringifyQs({ from: params.from })}` : "";
+  const hash = params?.hash ? `#${params.hash}` : "";
+
+  return `${giftCardSettingsPath}${query}${hash}`;
+};

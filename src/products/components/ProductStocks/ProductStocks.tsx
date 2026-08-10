@@ -3,25 +3,30 @@ import { type ChannelData } from "@dashboard/channels/utils";
 import { AssignWarehouseDialog } from "@dashboard/components/AssignWarehouseDialog/AssignWarehouseDialog";
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import { type ProductErrorFragment, type WarehouseFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { type FormsetAtomicData, type FormsetChange } from "@dashboard/hooks/useFormset";
-import { renderCollection } from "@dashboard/misc";
 import { type Container } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
+import { applySpreadsheetColumnPaste } from "@dashboard/utils/spreadsheetPaste/applySpreadsheetColumnPaste";
+import { sanitizeSpreadsheetInteger } from "@dashboard/utils/spreadsheetPaste/sanitizeSpreadsheetInteger";
 import { Box, Button, Checkbox, Input, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import * as React from "react";
+import { type ChangeEvent, type ClipboardEvent, useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
+import styles from "./ProductStocks.module.css";
 import { StockVisibilityHint } from "./StockVisibilityHint";
 import { WarehouseInformationMessage } from "./WarehouseInformationMessage";
+
+export interface ProductStockPasteRow {
+  id: string;
+  label: string;
+  quantityAllocated: number;
+  value: string;
+}
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
@@ -45,6 +50,7 @@ interface ProductStocksProps {
   stocks: ProductStockInput[];
   warehouses: WarehouseFragment[];
   onChange: FormsetChange;
+  onStocksReplace?: (stocks: ProductStockPasteRow[]) => void;
   onFormDataChange: FormChange;
   onWarehouseStockAdd: (warehouseId: string, warehouseName: string) => void;
   onWarehouseStockDelete: (warehouseId: string) => void;
@@ -65,6 +71,7 @@ export const ProductStocks = ({
   warehouses,
   hasMoreWarehouses,
   onChange,
+  onStocksReplace,
   onFormDataChange,
   onWarehouseStockAdd,
   onWarehouseStockDelete,
@@ -74,17 +81,62 @@ export const ProductStocks = ({
   searchWarehouses,
 }: ProductStocksProps) => {
   const intl = useIntl();
-  const [lastStockRowFocus, setLastStockRowFocus] = React.useState(false);
-  const [isAssignWarehousesOpen, setIsAssignWarehousesOpen] = React.useState(false);
+  const [lastStockRowFocus, setLastStockRowFocus] = useState(false);
+  const [isAssignWarehousesOpen, setIsAssignWarehousesOpen] = useState(false);
   const formErrors = getFormErrors(["sku"], errors);
+  const sortedStocks = useMemo(
+    () => [...stocks].sort((left, right) => left.label.localeCompare(right.label)),
+    [stocks],
+  );
+  const stockPasteRows = useMemo<ProductStockPasteRow[]>(
+    () =>
+      sortedStocks.map(stock => ({
+        id: stock.id,
+        label: stock.label,
+        quantityAllocated: stock.data?.quantityAllocated ?? 0,
+        value: stock.value,
+      })),
+    [sortedStocks],
+  );
 
-  const stocksIds = React.useMemo(() => new Set(stocks.map(stock => stock.id)), [stocks]);
+  const stocksIds = useMemo(() => new Set(stocks.map(stock => stock.id)), [stocks]);
 
   // Excluding inside the dialog rather than here lets it notice when a page of warehouses
   // was filtered down to nothing and pull in the next one instead of looking empty.
-  const isWarehouseAlreadyStocked = React.useCallback(
+  const isWarehouseAlreadyStocked = useCallback(
     (warehouse: Container) => stocksIds.has(warehouse.id),
     [stocksIds],
+  );
+
+  const handlePaste = useCallback(
+    (event: ClipboardEvent<HTMLElement>, startIndex: number) => {
+      if (!onStocksReplace) {
+        return;
+      }
+
+      const pastedText = event.clipboardData.getData("text/plain");
+
+      if (pastedText === "") {
+        return;
+      }
+
+      const { rows, handled } = applySpreadsheetColumnPaste({
+        rows: stockPasteRows,
+        startIndex,
+        pastedText,
+        sanitizeCell: cell => sanitizeSpreadsheetInteger(cell),
+        setCell: (row, value) => ({ ...row, value }),
+      });
+
+      if (!handled) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      onStocksReplace(rows);
+    },
+    [onStocksReplace, stockPasteRows],
   );
 
   const handleWarehouseStockAdd = (warehouseId: string, warehouseName: string) => {
@@ -97,7 +149,7 @@ export const ProductStocks = ({
       setLastStockRowFocus(false);
     }
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onFormDataChange(e);
   };
 
@@ -178,74 +230,69 @@ export const ProductStocks = ({
         </Box>
         {productVariantChannelListings?.length > 0 && stocks?.length > 0 && (
           <Box marginTop={5}>
-            <ResponsiveTable>
-              <TableHead>
-                <TableRowLink>
-                  <TableCell>
-                    <Text size={2} color="default2">
-                      <FormattedMessage {...messages.warehouseName} />
-                    </Text>
-                  </TableCell>
-                  <TableCell style={{ width: 100, verticalAlign: "middle" }}>
-                    <Text size={2} color="default2">
-                      <FormattedMessage {...messages.allocated} />
-                    </Text>
-                  </TableCell>
-                  <TableCell style={{ width: 200, verticalAlign: "middle" }}>
-                    <Text size={2} color="default2">
-                      <FormattedMessage {...messages.quantity} />
-                    </Text>
-                  </TableCell>
-                  <TableCell style={{ width: 48 }} />
-                </TableRowLink>
-              </TableHead>
-              <TableBody>
-                {renderCollection(stocks, (stock, index) => {
-                  const handleQuantityChange = createNonNegativeValueChangeHandler(event =>
-                    onChange(stock.id, event.target.value),
-                  );
+            <Box className={styles.list} data-test-id="product-variant-stock-list">
+              <Text size={2} color="default2" className={styles.pasteHint}>
+                <FormattedMessage {...messages.stockPasteHint} />
+              </Text>
+              <Box className={styles.headerRow}>
+                <Text size={2} color="default2">
+                  <FormattedMessage {...messages.warehouseName} />
+                </Text>
+                <Text size={2} color="default2" className={styles.allocatedValue}>
+                  <FormattedMessage {...messages.allocated} />
+                </Text>
+                <Text size={2} color="default2">
+                  <FormattedMessage {...messages.quantity} />
+                </Text>
+                <span />
+              </Box>
+              {stockPasteRows.map((stock, index) => {
+                const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
+                  const { value } = event.target;
 
-                  return (
-                    <TableRowLink
-                      data-test-id={stock.label}
-                      key={`product-stocks-${stock.id}-${index}`}
-                    >
-                      <TableCell>
-                        <Text>{stock.label}</Text>
-                      </TableCell>
-                      <TableCell>
-                        <Text>{stock.data?.quantityAllocated || 0}</Text>
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          data-test-id="stock-input"
-                          disabled={loading}
-                          onChange={handleQuantityChange}
-                          value={stock.value}
-                          size="small"
-                          type="number"
-                          min={0}
-                          ref={input => stocks.length === index + 1 && handleStockInputFocus(input)}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          icon={
-                            <Trash2
-                              size={iconSize.small}
-                              strokeWidth={iconStrokeWidthBySize.small}
-                            />
-                          }
-                          onClick={() => onWarehouseStockDelete(stock.id)}
-                        />
-                      </TableCell>
-                    </TableRowLink>
-                  );
-                })}
-              </TableBody>
-            </ResponsiveTable>
+                  if (value === "" || /^\d+$/.test(value)) {
+                    onChange(stock.id, value);
+                  }
+                };
+
+                return (
+                  <Box key={stock.id} className={styles.row} data-test-id={stock.label}>
+                    <Text size={3} className={styles.warehouseName} title={stock.label}>
+                      {stock.label}
+                    </Text>
+                    <Text size={3} className={styles.allocatedValue}>
+                      {stock.quantityAllocated}
+                    </Text>
+                    <div className={styles.inputCell}>
+                      <Input
+                        data-test-id="stock-input"
+                        disabled={loading}
+                        onChange={handleQuantityChange}
+                        onPasteCapture={event => handlePaste(event, index)}
+                        value={stock.value}
+                        size="small"
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete="off"
+                        ref={input =>
+                          stockPasteRows.length === index + 1 && handleStockInputFocus(input)
+                        }
+                      />
+                    </div>
+                    <Box className={styles.deleteCell}>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        icon={
+                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                        }
+                        onClick={() => onWarehouseStockDelete(stock.id)}
+                      />
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
             <Box paddingTop={3}>
               <StockVisibilityHint />
             </Box>

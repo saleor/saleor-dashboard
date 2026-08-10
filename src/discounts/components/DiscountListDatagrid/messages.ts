@@ -29,7 +29,23 @@ export const columnsMessages = defineMessages({
 
 export const messages = defineMessages({
   empty: {
-    id: "IYuKD6",
-    defaultMessage: "No discounts found",
+    id: "k+H6kK",
+    defaultMessage: "No promotions found",
+    description: "promotions list empty state",
+  },
+  statusActive: {
+    id: "EDFd9F",
+    defaultMessage: "Active",
+    description: "voucher list status when redeemable now",
+  },
+  statusScheduled: {
+    id: "y/e6hl",
+    defaultMessage: "Scheduled",
+    description: "voucher list status before start date",
+  },
+  statusEnded: {
+    id: "DBuWYc",
+    defaultMessage: "Ended",
+    description: "voucher list status after end date",
   },
 });

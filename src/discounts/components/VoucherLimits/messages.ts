@@ -22,9 +22,15 @@ export default defineMessages({
     description: "usage limit uses left caption",
   },
   applyOncePerCustomer: {
-    id: "vTgRTZ",
-    defaultMessage: "Limit to one use per customer",
-    description: "limit voucher",
+    id: "p7GaL2",
+    defaultMessage: "One use per customer",
+    description: "voucher apply once per customer toggle title",
+  },
+  applyOncePerCustomerDescription: {
+    id: "KysW5s",
+    defaultMessage:
+      "Each customer account can redeem this voucher only once, no matter which code they use.",
+    description: "voucher apply once per customer toggle description",
   },
   onlyForStaff: {
     id: "+jHXT3",
@@ -32,7 +38,26 @@ export default defineMessages({
     description: "limit voucher",
   },
   singleUse: {
-    defaultMessage: "Limit to voucher code use once",
-    id: "ZCSOaS",
+    id: "Ydfy6M",
+    defaultMessage: "One use per code",
+    description: "voucher single-use code toggle title",
+  },
+  singleUseDescription: {
+    id: "wMpoVP",
+    defaultMessage:
+      "Each code can be redeemed only once, then that code is deactivated. Other codes on this voucher stay usable.",
+    description: "voucher single-use code toggle description",
+  },
+  singleUseLockedNotice: {
+    defaultMessage: "Can't change this after a code has been used in an order or checkout.",
+    id: "Rmm9i1",
+    description: "notice when single-use toggle is locked because voucher codes were already used",
+  },
+  usageLimitLockedNotice: {
+    defaultMessage:
+      "Can't change the total usage limit after a code has been used in an order or checkout.",
+    id: "YZ6Pdq",
+    description:
+      "notice when usage limit controls are locked because voucher codes were already used",
   },
 });

@@ -8,25 +8,36 @@ import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/A
 import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog";
 import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { CountryList } from "@dashboard/components/CountryList";
+import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
-import { Tab, TabContainer } from "@dashboard/components/Tab";
-import DiscountCategories from "@dashboard/discounts/components/DiscountCategories";
-import DiscountCollections from "@dashboard/discounts/components/DiscountCollections";
+import { VOUCHER_CATALOGUE_PAGINATE_BY } from "@dashboard/config";
 import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
-import DiscountProducts from "@dashboard/discounts/components/DiscountProducts";
+import { VoucherCatalogueSection } from "@dashboard/discounts/components/VoucherCatalogueSection/VoucherCatalogueSection";
+import { VoucherChannelAvailabilityCard } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/VoucherChannelAvailabilityCard";
+import { VoucherCodesCard } from "@dashboard/discounts/components/VoucherCodesCard/VoucherCodesCard";
+import { formatVoucherCountriesErrorMessage } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
 import { useSpecificItemsAssign } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsAssign";
 import { useSpecificItemsPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useSpecificItemsPagination";
+import { type VoucherDetailsPageTab } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
+import { VoucherDiscountSection } from "@dashboard/discounts/components/VoucherDiscountSection/VoucherDiscountSection";
+import { VoucherScheduleCard } from "@dashboard/discounts/components/VoucherScheduleCard/VoucherScheduleCard";
 import {
-  createChannelsChangeHandler,
-  createDiscountTypeChangeHandler,
-} from "@dashboard/discounts/handlers";
-import { itemsQuantityMessages } from "@dashboard/discounts/translations";
+  getVoucherSectionIds,
+  resolveVoucherSectionVisibility,
+  useVoucherSectionNavItems,
+} from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionNavItems";
+import { useVoucherSectionScrollSpy } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
+import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
+import {
+  VoucherSection,
+  VoucherSectionNav,
+} from "@dashboard/discounts/components/VoucherSectionNav/VoucherSectionNav";
+import { getVoucherSetupReadiness } from "@dashboard/discounts/components/VoucherSetupCard/getVoucherSetupReadiness";
+import { VoucherSetupCard } from "@dashboard/discounts/components/VoucherSetupCard/VoucherSetupCard";
+import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { type VoucherCreateUrlQueryParams, voucherListUrl } from "@dashboard/discounts/urls";
 import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
 import {
@@ -44,8 +55,7 @@ import {
   type SearchProductsQuery,
   type SearchProductsQueryVariables,
   type SearchProductVariantFragment,
-  type VoucherDetailsFragment,
-  VoucherTypeEnum,
+  type VoucherCatalogueFragment,
 } from "@dashboard/graphql";
 import { type UseSearchResult } from "@dashboard/hooks/makeSearch";
 import useForm, { type SubmitPromise } from "@dashboard/hooks/useForm";
@@ -56,21 +66,16 @@ import { validatePrice } from "@dashboard/products/utils/validation";
 import { type useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { type ListActionsWithoutToolbar } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Button, Text } from "@saleor/macaw-ui-next";
-import { useMemo, useState } from "react";
+import { Box, Button } from "@saleor/macaw-ui-next";
+import isEqual from "lodash/isEqual";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
-import DiscountVariants from "../DiscountVariants/DiscountVariants";
-import { VoucherCodes } from "../VoucherCodes";
 import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
-import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
-import VoucherRequirements from "../VoucherRequirements";
-import VoucherTypes from "../VoucherTypes";
-import VoucherValue from "../VoucherValue";
+import { VoucherRequirements } from "../VoucherRequirements/VoucherRequirements";
 import { initialForm } from "./const";
 import { useActiveTab } from "./hooks/useActiveTab";
 import { useVoucherCodesPagination } from "./hooks/useVoucherCodesPagination";
@@ -124,10 +129,6 @@ interface VoucherCreatePageProps extends Omit<ListActionsWithoutToolbar, "select
   resetSelected: () => void;
 }
 
-const CategoriesTab = Tab(VoucherCreatePageTab.categories);
-const CollectionsTab = Tab(VoucherCreatePageTab.collections);
-const ProductsTab = Tab(VoucherCreatePageTab.products);
-const VariantsTab = Tab(VoucherCreatePageTab.variants);
 const VoucherCreatePage = ({
   allChannelsCount,
   channelListings = [],
@@ -157,8 +158,8 @@ const VoucherCreatePage = ({
 }: VoucherCreatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const { activeTab, changeTab } = useActiveTab();
+  const countriesErrorMessage = formatVoucherCountriesErrorMessage(errors, intl);
 
   // Bumped on every new search so the pickers' backfill budget starts over.
   const [searchGeneration, setSearchGeneration] = useState(0);
@@ -184,37 +185,79 @@ const VoucherCreatePage = ({
     onCollectionFilterChange?.(filterVariables, channel, query);
   };
 
-  const checkIfSaveIsDisabled = (data: FormData) =>
-    (data.discountType.toString() !== "SHIPPING" &&
-      data.channelListings?.some(
-        channel =>
-          validatePrice(channel.discountValue) ||
-          (data.requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent)),
-      )) ||
-    disabled;
+  const checkIfSaveIsDisabled = (data: FormData) => {
+    if (disabled) {
+      return true;
+    }
 
-  const { change, data, triggerChange, set, submit } = useForm<FormData, unknown>(
+    // Same redeem blockers as the setup checklist — Save stays off until create is viable.
+    const readiness = getVoucherSetupReadiness({
+      voucher: null,
+      formData: data,
+      voucherCodes: data.codes,
+      tabItemsCount: {
+        categories: data.categories.length,
+        collections: data.collections.length,
+        products: data.products.length,
+        variants: data.variants.length,
+      },
+      countriesCount: data.countries.length,
+    });
+
+    if (!readiness.coreReady) {
+      return true;
+    }
+
+    const hasInvalidMinSpent =
+      data.requirementsPicker === RequirementsPicker.ORDER &&
+      data.channelListings.some(channel => validatePrice(channel.minSpent));
+
+    const minQuantity = Number(data.minCheckoutItemsQuantity);
+    const hasInvalidMinQuantity =
+      data.requirementsPicker === RequirementsPicker.ITEM &&
+      (!Number.isFinite(minQuantity) || minQuantity < 1);
+
+    return !!(hasInvalidMinSpent || hasInvalidMinQuantity);
+  };
+
+  const { change, data, triggerChange, set, submit, isSaveDisabled } = useForm<FormData, unknown>(
     { ...initialForm, channelListings },
-    onSubmit,
+    formData => onSubmit({ ...formData, channelListings }),
     {
       confirmLeave: true,
       formId: VOUCHER_CREATE_FORM_ID,
       checkIfSaveIsDisabled,
+      disabled,
     },
   );
 
+  // Keep form channel drafts aligned with the view after channel-modal confirm
+  // (modal writes parent state only; price/paste already dual-write).
+  useEffect(() => {
+    if (!isEqual(data.channelListings, channelListings)) {
+      set({ channelListings });
+    }
+  }, [channelListings, data.channelListings, set]);
+
   const { clearRowSelection, setSelectedVoucherCodesIds, selectedRowIds } =
-    useVoucherCodesSelection(data.codes);
+    useVoucherCodesSelection();
 
-  const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
+  const handleChannelsChange = (channels: ChannelVoucherData[]) => {
+    set({ channelListings: channels });
+    onChannelsChange(channels);
+    triggerChange();
+  };
 
+  // Must update form state in the same tick — controlled price inputs bind to
+  // `data.channelListings`, not parent channel state alone.
   const handleChannelChange = createChannelsChangeHandler(
     data.channelListings,
-    onChannelsChange,
+    channels => {
+      set({ channelListings: channels });
+      onChannelsChange(channels);
+    },
     triggerChange,
   );
-
-  const changeMetadata = makeMetadataChangeHandler(change);
 
   const handleGenerateMultipleCodes = ({
     quantity,
@@ -251,9 +294,16 @@ const VoucherCreatePage = ({
     data.codes,
   );
 
+  const [catalogueNumberOfRows, setCatalogueNumberOfRows] = useState(VOUCHER_CATALOGUE_PAGINATE_BY);
+  const handleCatalogueListSettingsUpdate = (key: "rowNumber", value: number) => {
+    if (key === "rowNumber") {
+      setCatalogueNumberOfRows(value);
+    }
+  };
   const { paginatedSpecificItems, specificItemsPagination, resetSpecificItemsPagination } =
     useSpecificItemsPagination({
       type: activeTab,
+      paginateBy: catalogueNumberOfRows,
       data: {
         categories: data.categories,
         collections: data.collections,
@@ -316,6 +366,27 @@ const VoucherCreatePage = ({
     </Button>
   );
 
+  const mapCreateTabToDetailsTab = (tab: VoucherCreatePageTab): VoucherDetailsPageTab =>
+    tab as unknown as VoucherDetailsPageTab;
+  const { showCatalogue, showCountries } = resolveVoucherSectionVisibility(data);
+  const sectionNavItems = useVoucherSectionNavItems({ showCatalogue, showCountries });
+  const sectionIds = getVoucherSectionIds({ showCatalogue, showCountries });
+  const { activeId, selectSection } = useVoucherSectionScrollSpy({ sectionIds });
+  const tabItemsCount = {
+    categories: data.categories.length,
+    collections: data.collections.length,
+    products: data.products.length,
+    variants: data.variants.length,
+  };
+  const setupReadiness = getVoucherSetupReadiness({
+    voucher: null,
+    formData: data,
+    voucherCodes: data.codes,
+    tabItemsCount,
+    countriesCount: data.countries.length,
+  });
+  const showSetupCard = !setupReadiness.coreReady;
+
   return (
     <PaginatorContext.Provider value={{ ...specificItemsPagination, paginatorType: "click" }}>
       <form onSubmit={submit}>
@@ -331,191 +402,171 @@ const VoucherCreatePage = ({
             })}
           />
           <DetailPageLayout.Content>
-            <VoucherInfo
-              data={data}
-              errors={errors}
-              disabled={disabled}
-              onChange={event => handleDiscountTypeChange(data, event)}
-            />
-            <VoucherCodes
-              codes={paginatedCodes}
-              onDeleteCodes={handleDeleteVoucherCodes}
-              deleteCodesTransitionState="default"
-              onMultiCodesGenerate={handleGenerateMultipleCodes}
-              onSelectVoucherCodesIds={setSelectedVoucherCodesIds}
-              onSettingsChange={onSettingsChange}
-              onCustomCodeGenerate={handleGenerateCustomCode}
-              selectedCodesIds={selectedRowIds}
-              settings={settings}
-              voucherCodesPagination={pagination}
-            />
-            <VoucherTypes data={data} disabled={disabled} errors={errors} onChange={change} />
-            {data.discountType.toString() !== "SHIPPING" ? (
-              <VoucherValue
-                data={data}
+            {showSetupCard ? (
+              <VoucherSetupCard
+                variant="create"
+                readiness={setupReadiness}
                 disabled={disabled}
-                errors={errors}
-                onChannelChange={handleChannelChange}
-                onChange={change}
+                onManageChannels={openChannelsModal}
               />
             ) : null}
-            {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
-            data.discountType.toString() !== "SHIPPING" ? (
-              <>
-                <TabContainer>
-                  <CategoriesTab
-                    isActive={activeTab === VoucherCreatePageTab.categories}
-                    changeTab={onTabClick}
-                    testId="categories-tab"
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.categories, {
-                      quantity: data.categories.length,
-                    })}
-                  </CategoriesTab>
-                  <CollectionsTab
-                    testId="collections-tab"
-                    isActive={activeTab === VoucherCreatePageTab.collections}
-                    changeTab={onTabClick}
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.collections, {
-                      quantity: data.collections.length,
-                    })}
-                  </CollectionsTab>
-                  <ProductsTab
-                    testId="products-tab"
-                    isActive={activeTab === VoucherCreatePageTab.products}
-                    changeTab={onTabClick}
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.products, {
-                      quantity: data.products.length,
-                    })}
-                  </ProductsTab>
-                  <VariantsTab
-                    testId="variants-tab"
-                    isActive={activeTab === VoucherCreatePageTab.variants}
-                    changeTab={onTabClick}
-                  >
-                    {intl.formatMessage(itemsQuantityMessages.variants, {
-                      quantity: data.variants.length,
-                    })}
-                  </VariantsTab>
-                </TabContainer>
-                <CardSpacer />
-                {activeTab === VoucherCreatePageTab.categories ? (
-                  <DiscountCategories
+            <DetailPageSectionLayout
+              nav={
+                <VoucherSectionNav
+                  items={sectionNavItems}
+                  activeId={activeId}
+                  onSelect={selectSection}
+                />
+              }
+            >
+              <VoucherSection id={voucherSectionIds.details}>
+                <VoucherInfo data={data} errors={errors} disabled={disabled} onChange={change} />
+              </VoucherSection>
+              <VoucherSection id={voucherSectionIds.codes}>
+                <VoucherCodesCard
+                  codes={paginatedCodes}
+                  onDeleteCodes={handleDeleteVoucherCodes}
+                  deleteCodesTransitionState="default"
+                  onMultiCodesGenerate={handleGenerateMultipleCodes}
+                  onSelectedCodesChange={setSelectedVoucherCodesIds}
+                  onSettingsChange={onSettingsChange}
+                  onCustomCodeGenerate={handleGenerateCustomCode}
+                  selectedCodesIds={selectedRowIds}
+                  settings={settings}
+                  voucherCodesPagination={pagination}
+                  errors={errors}
+                />
+              </VoucherSection>
+              <VoucherSection id={voucherSectionIds.discount}>
+                <VoucherDiscountSection
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                  onChannelChange={handleChannelChange}
+                  onChannelsChange={handleChannelsChange}
+                />
+              </VoucherSection>
+              {showCatalogue && (
+                <VoucherSection id={voucherSectionIds.catalogue}>
+                  <VoucherCatalogueSection
+                    activeTab={mapCreateTabToDetailsTab(activeTab)}
+                    tabItemsCount={tabItemsCount}
                     disabled={disabled}
-                    onCategoryAssign={() => openModal("assign-category")}
-                    onCategoryUnassign={id => unassignItem(id, VoucherCreatePageTab.categories)}
+                    errors={errors}
+                    onTabClick={tab => onTabClick(tab as unknown as VoucherCreatePageTab)}
                     categories={paginatedSpecificItems as CategoryWithTotalProductsFragment[]}
-                    isChecked={isChecked}
-                    selected={selected.length}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.categories} />}
-                  />
-                ) : activeTab === VoucherCreatePageTab.collections ? (
-                  <DiscountCollections
-                    disabled={disabled}
-                    onCollectionAssign={() => openModal("assign-collection")}
-                    onCollectionUnassign={id => unassignItem(id, VoucherCreatePageTab.collections)}
                     collections={paginatedSpecificItems as CollectionWithTotalProductsFragment[]}
-                    isChecked={isChecked}
-                    selected={selected.length}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.collections} />}
-                  />
-                ) : activeTab === VoucherCreatePageTab.products ? (
-                  <DiscountProducts
-                    disabled={disabled}
-                    onProductAssign={() => openModal("assign-product")}
-                    onProductUnassign={id => unassignItem(id, VoucherCreatePageTab.products)}
                     products={paginatedSpecificItems as SearchProductFragment[]}
-                    isChecked={isChecked}
-                    selected={selected.length}
-                    toggle={toggle}
-                    toggleAll={toggleAll}
-                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.products} />}
-                  />
-                ) : (
-                  <DiscountVariants
-                    disabled={disabled}
-                    onVariantAssign={() => openModal("assign-variant")}
-                    onVariantUnassign={id => unassignItem(id, VoucherCreatePageTab.variants)}
                     variants={
-                      // Types here are problematic as this component expects a graphql object,
-                      // but we are passing a set of data
                       mapLocalVariantsToSavedVariants(
                         paginatedSpecificItems as VoucherCreateProductVariant[],
-                      ) as unknown as VoucherDetailsFragment["variants"]
+                      ) as unknown as VoucherCatalogueFragment["variants"]
                     }
+                    onCategoryAssign={() => openModal("assign-category")}
+                    onCategoryUnassign={id => unassignItem(id, VoucherCreatePageTab.categories)}
+                    onCollectionAssign={() => openModal("assign-collection")}
+                    onCollectionUnassign={id => unassignItem(id, VoucherCreatePageTab.collections)}
+                    onProductAssign={() => openModal("assign-product")}
+                    onProductUnassign={id => unassignItem(id, VoucherCreatePageTab.products)}
+                    onVariantAssign={() => openModal("assign-variant")}
+                    onVariantUnassign={id => unassignItem(id, VoucherCreatePageTab.variants)}
+                    numberOfRows={catalogueNumberOfRows}
+                    onUpdateListSettings={handleCatalogueListSettingsUpdate}
                     isChecked={isChecked}
                     selected={selected.length}
                     toggle={toggle}
                     toggleAll={toggleAll}
-                    toolbar={<BulkUnassignButton type={VoucherCreatePageTab.variants} />}
+                    categoryListToolbar={
+                      <BulkUnassignButton type={VoucherCreatePageTab.categories} />
+                    }
+                    collectionListToolbar={
+                      <BulkUnassignButton type={VoucherCreatePageTab.collections} />
+                    }
+                    productListToolbar={<BulkUnassignButton type={VoucherCreatePageTab.products} />}
+                    variantListToolbar={<BulkUnassignButton type={VoucherCreatePageTab.variants} />}
                   />
-                )}
-              </>
-            ) : null}
-            {data.discountType.toString() === "SHIPPING" ? (
-              <CountryList
-                countries={data.countries}
-                disabled={disabled}
-                emptyText={intl.formatMessage({
-                  id: "jd/LWa",
-                  defaultMessage: "Voucher applies to all countries",
-                })}
-                summaryContext="voucher"
-                title={
-                  <>
-                    {intl.formatMessage({
+                </VoucherSection>
+              )}
+              {showCountries && (
+                <VoucherSection id={voucherSectionIds.countries}>
+                  <CountryList
+                    countries={data.countries}
+                    disabled={disabled}
+                    emptyText={intl.formatMessage({
+                      id: "jd/LWa",
+                      defaultMessage: "Voucher applies to all countries",
+                    })}
+                    summaryContext="voucher"
+                    title={intl.formatMessage({
                       id: "ibnmEd",
                       defaultMessage: "Countries",
                       description: "voucher country range",
                     })}
-                    <Text size={2} fontWeight="light" display="block">
+                    description={
                       <FormattedMessage
                         id="glT6fm"
                         defaultMessage="Voucher is limited to these countries"
                       />
-                    </Text>
-                  </>
-                }
-                onCountryAssign={() => openModal("assign-country")}
-                onCountryUnassign={id => unassignItem(id, "countries")}
-              />
-            ) : null}
-            <VoucherRequirements
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChannelChange={handleChannelChange}
-              onChange={change}
-            />
-            <VoucherLimits
-              data={data}
-              initialUsageLimit={initialForm.usageLimit}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-              setData={set}
-              isNewVoucher
-            />
-            <VoucherDates data={data} disabled={disabled} errors={errors} onChange={change} />
-            <Metadata data={data} onChange={changeMetadata} />
+                    }
+                    errorMessage={countriesErrorMessage}
+                    onCountryAssign={() => openModal("assign-country")}
+                    onCountryUnassign={id => unassignItem(id, "countries")}
+                  />
+                </VoucherSection>
+              )}
+              <VoucherSection id={voucherSectionIds.requirements}>
+                <VoucherRequirements
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChannelChange={handleChannelChange}
+                  onChannelsChange={handleChannelsChange}
+                  onChange={change}
+                />
+              </VoucherSection>
+              <VoucherSection id={voucherSectionIds.limits}>
+                <VoucherLimits
+                  data={data}
+                  initialUsageLimit={initialForm.usageLimit}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                  setData={set}
+                  isNewVoucher
+                />
+              </VoucherSection>
+            </DetailPageSectionLayout>
           </DetailPageLayout.Content>
-          <DetailPageLayout.RightSidebar>
-            <ChannelsAvailabilityCard
-              managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-              allChannelsCount={allChannelsCount}
-              channelsList={data.channelListings.map(channel => ({
-                id: channel.id,
-                name: channel.name,
-              }))}
-              disabled={disabled}
-              openModal={openChannelsModal}
-            />
+          <DetailPageLayout.RightSidebar paddingTop={6}>
+            <Box display="flex" flexDirection="column" gap={4}>
+              <VoucherScheduleCard
+                data={{
+                  startDate: data.startDate,
+                  startTime: data.startTime,
+                  hasEndDate: data.hasEndDate,
+                  endDate: data.endDate,
+                  endTime: data.endTime,
+                }}
+                errors={errors}
+                disabled={disabled}
+                onChange={change}
+              />
+              <VoucherChannelAvailabilityCard
+                channels={data.channelListings}
+                totalChannelsCount={allChannelsCount}
+                disabled={disabled}
+                managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                onManageClick={openChannelsModal}
+                scheduleData={{
+                  startDate: data.startDate,
+                  startTime: data.startTime,
+                  hasEndDate: data.hasEndDate,
+                  endDate: data.endDate,
+                  endTime: data.endTime,
+                }}
+              />
+            </Box>
           </DetailPageLayout.RightSidebar>
           <Savebar>
             <Savebar.Spacer />
@@ -523,7 +574,7 @@ const VoucherCreatePage = ({
             <Savebar.ConfirmButton
               transitionState={saveButtonBarState}
               onClick={submit}
-              disabled={disabled}
+              disabled={isSaveDisabled}
             />
           </Savebar>
         </DetailPageLayout>

@@ -1,48 +1,87 @@
 import { type ChannelShippingData, sortChannelShippingDataByName } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import PriceField from "@dashboard/components/PriceField";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
+import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import { type ShippingChannelsErrorFragment } from "@dashboard/graphql";
-import { normalizeChannelPriceValue } from "@dashboard/shipping/utils/channelPricingState";
 import {
   type ChannelError,
   getFormChannelError,
   getFormChannelErrors,
 } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { TableBody, TableCell } from "@material-ui/core";
+import { applySpreadsheetPaste } from "@dashboard/utils/spreadsheetPaste/applySpreadsheetPaste";
 import { Box, Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
-import { useMemo } from "react";
+import { type ClipboardEvent, useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import shippingPriceTableStyles from "../ShippingPriceTable.module.css";
-import { useStyles } from "./styles";
+import { ShippingMethodChannelsEmptyPlaceholder } from "../ShippingMethodChannelsEmptyPlaceholder/ShippingMethodChannelsEmptyPlaceholder";
+import styles from "./OrderValue.module.css";
 
 interface Value {
   maxValue: string;
   minValue: string;
   price: string;
 }
+
+type OrderValuePasteField = "minValue" | "maxValue";
+
+const ORDER_VALUE_PASTE_FIELDS: OrderValuePasteField[] = ["minValue", "maxValue"];
+
+const getOrderValuePasteFields = (startField: OrderValuePasteField): OrderValuePasteField[] => {
+  const startIndex = ORDER_VALUE_PASTE_FIELDS.indexOf(startField);
+
+  return startIndex === -1 ? [] : ORDER_VALUE_PASTE_FIELDS.slice(startIndex);
+};
+
 interface OrderValueProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
-  onChannelsChange: (channelId: string, value: Value) => void;
+  onChannelChange: (channelId: string, value: Value) => void;
+  onChannelsReplace: (channels: ChannelShippingData[]) => void;
 }
 
-const numberOfColumns = 3;
-
-const OrderValue = ({ channels, errors, disabled, onChannelsChange }: OrderValueProps) => {
-  const classes = useStyles({});
+export const OrderValue = ({
+  channels,
+  errors,
+  disabled,
+  onChannelChange,
+  onChannelsReplace,
+}: OrderValueProps): JSX.Element => {
   const intl = useIntl();
   const formErrors = getFormChannelErrors(
     ["maximumOrderPrice", "minimumOrderPrice"],
     errors as ChannelError[],
   );
   const sortedChannels = useMemo(() => sortChannelShippingDataByName(channels), [channels]);
+
+  const handlePaste = useCallback(
+    (event: ClipboardEvent<HTMLElement>, startIndex: number, startField: OrderValuePasteField) => {
+      const pastedText = event.clipboardData.getData("text/plain");
+
+      if (pastedText === "") {
+        return;
+      }
+
+      const { rows, handled } = applySpreadsheetPaste({
+        rows: sortedChannels,
+        startRowIndex: startIndex,
+        fields: getOrderValuePasteFields(startField),
+        pastedText,
+        sanitize: (_field, cell, row) => sanitizeSpreadsheetPrice(cell, row.currency),
+        setField: (row, field, value) => ({ ...row, [field]: value }),
+      });
+
+      if (!handled) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      onChannelsReplace(rows);
+    },
+    [onChannelsReplace, sortedChannels],
+  );
 
   return (
     <DashboardCard data-test-id="order-value">
@@ -65,106 +104,110 @@ const OrderValue = ({ channels, errors, disabled, onChannelsChange }: OrderValue
         </Box>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <ResponsiveTable
-          className={clsx(classes.table, shippingPriceTableStyles.shippingPriceTable)}
-        >
-          <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
-            <TableCell className={classes.colName}>
-              <span>
+        {sortedChannels.length === 0 ? (
+          <ShippingMethodChannelsEmptyPlaceholder />
+        ) : (
+          <Box className={styles.list} data-test-id="shipping-method-order-value-channel-list">
+            <Text size={2} color="default2" className={styles.pasteHint}>
+              <FormattedMessage
+                id="mWTgxo"
+                defaultMessage="You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill min and max values down the list."
+                description="shipping method order value spreadsheet paste hint"
+              />
+            </Text>
+            <Box className={styles.headerRow}>
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="UymotP"
                   defaultMessage="Channel name"
                   description="channel name"
                 />
-              </span>
-            </TableCell>
-            <TableCell className={classes.colType}>
-              <span>
+              </Text>
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="0FexL7"
                   defaultMessage="Min. value"
                   description="min price in channel"
                 />
-              </span>
-            </TableCell>
-            <TableCell className={classes.colType}>
-              <span>
+              </Text>
+              <Text size={2} color="default2">
                 <FormattedMessage
                   id="ER/yBq"
                   defaultMessage="Max. value"
                   description="max price in channel"
                 />
-              </span>
-            </TableCell>
-          </TableHead>
-          <TableBody>
-            {sortedChannels?.map(channel => {
+              </Text>
+            </Box>
+            {sortedChannels.map((channel, index) => {
               const minError = getFormChannelError(formErrors.minimumOrderPrice, channel.id);
               const maxError = getFormChannelError(formErrors.maximumOrderPrice, channel.id);
 
               return (
-                <TableRowLink key={channel.id}>
-                  <TableCell>
-                    <Text>{channel.name}</Text>
-                  </TableCell>
-                  <TableCell
-                    className={clsx(
-                      classes.price,
-                      shippingPriceTableStyles.shippingPriceTableInputCell,
-                    )}
+                <Box key={channel.id} className={styles.row} data-test-id={channel.name}>
+                  <Text size={3} className={styles.channelName}>
+                    {channel.name}
+                  </Text>
+                  <div
+                    className={styles.inputCell}
+                    onPasteCapture={event => handlePaste(event, index, "minValue")}
                   >
-                    <PriceField
+                    <PriceFieldV2
+                      className={styles.amountInput}
                       data-test-id="min-value-price-input"
                       disabled={disabled}
                       error={!!minError}
-                      label={intl.formatMessage({
-                        id: "kN6SLs",
-                        defaultMessage: "Min Value",
-                      })}
-                      name={`minValue:${channel.name}`}
-                      value={channel.minValue}
-                      onChange={e =>
-                        onChannelsChange(channel.id, {
+                      helperText={minError ? getShippingErrorMessage(minError, intl) : undefined}
+                      currencySymbol={channel.currency}
+                      aria-label={intl.formatMessage(
+                        {
+                          id: "hub+oz",
+                          defaultMessage: "Minimum order value for {channelName}",
+                          description: "shipping method channel min order value aria label",
+                        },
+                        { channelName: channel.name },
+                      )}
+                      value={channel.minValue || ""}
+                      onChange={value =>
+                        onChannelChange(channel.id, {
                           ...channel,
-                          minValue: normalizeChannelPriceValue(e.target.value),
+                          minValue: value,
                         })
                       }
-                      currencySymbol={channel.currency}
-                      hint={minError && getShippingErrorMessage(minError, intl)}
                     />
-                  </TableCell>
-                  <TableCell
-                    className={clsx(
-                      classes.price,
-                      shippingPriceTableStyles.shippingPriceTableInputCell,
-                    )}
+                  </div>
+                  <div
+                    className={styles.inputCell}
+                    onPasteCapture={event => handlePaste(event, index, "maxValue")}
                   >
-                    <PriceField
+                    <PriceFieldV2
+                      className={styles.amountInput}
                       data-test-id="max-value-price-input"
                       disabled={disabled}
                       error={!!maxError}
-                      label={intl.formatMessage({
-                        id: "vjsfyn",
-                        defaultMessage: "Max Value",
-                      })}
-                      name={`maxValue:${channel.name}`}
-                      value={channel.maxValue}
-                      minValue={channel.minValue}
-                      onChange={e =>
-                        onChannelsChange(channel.id, {
+                      helperText={maxError ? getShippingErrorMessage(maxError, intl) : undefined}
+                      currencySymbol={channel.currency}
+                      aria-label={intl.formatMessage(
+                        {
+                          id: "LPkBO3",
+                          defaultMessage: "Maximum order value for {channelName}",
+                          description: "shipping method channel max order value aria label",
+                        },
+                        { channelName: channel.name },
+                      )}
+                      value={channel.maxValue || ""}
+                      onChange={value =>
+                        onChannelChange(channel.id, {
                           ...channel,
-                          maxValue: normalizeChannelPriceValue(e.target.value),
+                          maxValue: value,
                         })
                       }
-                      currencySymbol={channel.currency}
-                      hint={maxError && getShippingErrorMessage(maxError, intl)}
                     />
-                  </TableCell>
-                </TableRowLink>
+                  </div>
+                </Box>
               );
             })}
-          </TableBody>
-        </ResponsiveTable>
+          </Box>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

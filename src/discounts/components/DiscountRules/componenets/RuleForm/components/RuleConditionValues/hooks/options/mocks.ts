@@ -36,6 +36,7 @@ const queryVariablesMock = {
 };
 
 export const searchCategoriesMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchCategoriesDocument,
     variables: {
@@ -107,6 +108,7 @@ export const searchCategoriesMock = {
 };
 
 export const searchCollectionsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchCollectionsDocument,
     variables: {
@@ -149,6 +151,7 @@ export const searchCollectionsMock = {
 };
 
 export const searchProductsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchProductsDocument,
     variables: {
@@ -176,6 +179,7 @@ export const searchProductsMock = {
                 __typename: "ProductType",
               },
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -195,6 +199,7 @@ export const searchProductsMock = {
                 __typename: "ProductType",
               },
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -214,6 +219,7 @@ export const searchProductsMock = {
               },
               channelListings: [],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -233,6 +239,7 @@ export const searchProductsMock = {
               },
               channelListings: [],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -252,6 +259,7 @@ export const searchProductsMock = {
 };
 
 export const searchVariantsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchVariantsDocument,
     variables: {

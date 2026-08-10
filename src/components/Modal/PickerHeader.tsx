@@ -11,37 +11,49 @@ import { Title } from "./Title";
 import { MODAL_HEADER_DIVIDER_GAP_SPACING, MODAL_PADDING_SPACING } from "./tokens";
 
 interface PickerHeaderProps {
-  children: ReactNode;
+  children?: ReactNode;
   description?: ReactNode;
+  /** Hide title and close button — for pickers embedded in wizards that provide their own chrome. */
+  hideChrome?: boolean;
   toolbar?: ReactNode;
 }
 
-export const PickerHeader = ({ children, description, toolbar }: PickerHeaderProps) => {
+export const PickerHeader = ({
+  children,
+  description,
+  hideChrome = false,
+  toolbar,
+}: PickerHeaderProps) => {
   return (
     <Box
       className={modalStyles.modalChromeHeaderWrapper}
       display="flex"
       flexDirection="column"
       flexShrink="0"
-      gap={MODAL_HEADER_DIVIDER_GAP_SPACING}
+      gap={hideChrome ? undefined : MODAL_HEADER_DIVIDER_GAP_SPACING}
     >
-      <ModalChromeHeader alignItems="flex-start">
-        <Box minWidth={0}>
-          <Title>{children}</Title>
-          {description ? (
-            <Text size={2} color="default2" marginTop={3} display="block">
-              {description}
-            </Text>
-          ) : null}
-        </Box>
-        <Close />
-      </ModalChromeHeader>
+      {!hideChrome ? (
+        <ModalChromeHeader alignItems="flex-start">
+          <Box minWidth={0}>
+            <Title>{children}</Title>
+            {description ? (
+              <Text size={2} color="default2" marginTop={3} display="block">
+                {description}
+              </Text>
+            ) : null}
+          </Box>
+          <Close />
+        </ModalChromeHeader>
+      ) : null}
       {toolbar ? (
-        <Box className={styles.toolbar} paddingX={MODAL_PADDING_SPACING}>
+        <Box
+          className={hideChrome ? styles.toolbarEmbedded : styles.toolbar}
+          paddingX={MODAL_PADDING_SPACING}
+        >
           {toolbar}
         </Box>
       ) : null}
-      <ModalDivider />
+      {!hideChrome ? <ModalDivider /> : null}
     </Box>
   );
 };

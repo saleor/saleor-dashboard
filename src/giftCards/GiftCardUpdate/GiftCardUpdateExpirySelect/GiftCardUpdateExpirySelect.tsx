@@ -1,68 +1,85 @@
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import {
+  DetailSettingNestedField,
+  DetailSettingToggleRow,
+} from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
+import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import useGiftCardUpdateForm from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
+import { giftCardSettingsUrl } from "@dashboard/giftCards/urls";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { TextField } from "@material-ui/core";
-import { Checkbox, Text } from "@saleor/macaw-ui-next";
-import { useEffect } from "react";
-import { useIntl } from "react-intl";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardExpirySelectMessages as messages } from "./messages";
-import { useGiftCardExpirySelectStyles as useStyles } from "./styles";
 
-const GiftCardUpdateExpirySelect = () => {
+export const GiftCardUpdateExpirySelect = (): JSX.Element => {
   const intl = useIntl();
-  const classes = useStyles({});
   const {
     change,
     data: { expiryDate },
     formErrors,
   } = useGiftCardUpdateForm();
+  // Local UI state so the toggle can stay on while the date is still empty
+  // (channel expire-orders sets a numeric default instead).
   const [cardExpiresSelected, setCardExpiresSelected] = useStateFromProps(!!expiryDate);
 
-  useEffect(() => {
-    if (!cardExpiresSelected) {
+  const setExpiryEnabled = (enabled: boolean): void => {
+    setCardExpiresSelected(enabled);
+
+    if (!enabled) {
       change({
         target: {
           name: "expiryDate",
-          value: null,
+          value: "",
         },
       });
     }
-  }, [cardExpiresSelected]);
+  };
 
   return (
-    <>
-      <Text>{intl.formatMessage(messages.expiryDateLabel)}</Text>
-      <VerticalSpacer />
-      <Checkbox
-        data-test-id="gift-card-expire-section"
-        name="cardExpires"
-        checked={cardExpiresSelected}
-        onCheckedChange={value => setCardExpiresSelected(value as boolean)}
-        display="inline-flex"
-      >
-        <Text size={3}>{intl.formatMessage(messages.expiryDateCheckboxLabel)}</Text>
-      </Checkbox>
-
-      {cardExpiresSelected && (
-        <TextField
-          error={!!formErrors?.expiryDate}
-          helperText={getGiftCardErrorMessage(formErrors?.expiryDate, intl)}
-          onChange={change}
-          name={"expiryDate"}
-          fullWidth
-          className={classes.dateField}
-          label={intl.formatMessage(messages.expiryDateLabel)}
-          value={expiryDate}
-          InputLabelProps={{
-            shrink: true,
+    <DetailSettingToggleRow
+      testId="gift-card-expire-section"
+      title={<FormattedMessage {...messages.expiryToggleTitle} />}
+      description={
+        <FormattedMessage
+          {...messages.expiryToggleDescription}
+          values={{
+            settingsLink: (
+              <MicrocopyLink
+                to={giftCardSettingsUrl({
+                  from: "gift-cards",
+                  hash: settingsHashes.giftCardsExpiry,
+                })}
+              >
+                <FormattedMessage {...messages.expirySettingsLink} />
+              </MicrocopyLink>
+            ),
           }}
-          type="date"
         />
-      )}
-    </>
+      }
+      pressed={cardExpiresSelected}
+      onPressedChange={setExpiryEnabled}
+    >
+      {cardExpiresSelected ? (
+        <DetailSettingNestedField>
+          <Text size={3} fontWeight="medium">
+            <FormattedMessage {...messages.expiryDateFieldLabel} />
+          </Text>
+          <Box width="100%" __maxWidth="22rem">
+            <Input
+              type="date"
+              name="expiryDate"
+              value={expiryDate ?? ""}
+              error={!!formErrors?.expiryDate}
+              helperText={getGiftCardErrorMessage(formErrors?.expiryDate, intl)}
+              onChange={change}
+              data-test-id="gift-card-expiry-date-input"
+              width="100%"
+            />
+          </Box>
+        </DetailSettingNestedField>
+      ) : null}
+    </DetailSettingToggleRow>
   );
 };
-
-export default GiftCardUpdateExpirySelect;

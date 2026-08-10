@@ -3,14 +3,25 @@ import { type ChannelVoucherData, createSortedVoucherData } from "@dashboard/cha
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+} from "@dashboard/config";
+import { isVoucherCatalogueError } from "@dashboard/discounts/components/VoucherCatalogueSection/voucherCatalogueErrors";
+import { isVoucherCodesError } from "@dashboard/discounts/components/VoucherCodesCard/voucherCodesErrors";
+import { isVoucherCountriesError } from "@dashboard/discounts/components/VoucherCountriesErrors/voucherCountriesErrors";
+import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { scrollToVoucherSection } from "@dashboard/discounts/components/VoucherSectionNav/useVoucherSectionScrollSpy";
+import { voucherSectionIds } from "@dashboard/discounts/components/VoucherSectionNav/voucherSectionIds";
+import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import {
   type CategoryFilterInput,
   type CollectionFilterInput,
   type ProductWhereInput,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
+  type SearchCategoriesWithTotalProductsQueryVariables,
+  type SearchCollectionsWithTotalProductsQueryVariables,
+  type SearchProductsQueryVariables,
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
 } from "@dashboard/graphql";
@@ -24,7 +35,7 @@ import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCateg
 import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import VoucherCreatePage from "../../components/VoucherCreatePage";
@@ -46,8 +57,6 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherUrlDialog,
     VoucherCreateUrlQueryParams
@@ -69,51 +78,59 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     setCurrentChannels,
     toggleAllChannels,
   } = useChannels(
-    allChannels,
+    // Create starts with no channel listings — users assign via Manage.
+    // `allChannels` is only for the picker dialog, not the initial selection.
+    [],
     params?.action,
     { closeModal, openModal },
     { formId: VOUCHER_CREATE_FORM_ID },
   );
-  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({
+    disableErrorHandling: true,
+  });
   const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
-    onCompleted: data => {
-      if (data.voucherCreate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "HoBGng",
-            defaultMessage: "Voucher created",
-          }),
-        });
-        navigate(voucherUrl(data.voucherCreate.voucher.id), { replace: true });
-      }
-    },
+    disableErrorHandling: true,
   });
 
+  const assignProductSearchVariables: SearchProductsQueryVariables = {
+    ...DEFAULT_INITIAL_SEARCH_DATA,
+    first: 100,
+    includeVariants: false,
+  };
+  const assignVariantSearchVariables: SearchProductsQueryVariables = {
+    ...DEFAULT_INITIAL_SEARCH_DATA,
+    includeVariants: true,
+  };
+  const categorySearchInitialVariables: SearchCategoriesWithTotalProductsQueryVariables = {
+    after: DEFAULT_INITIAL_SEARCH_DATA.after,
+    first: DEFAULT_INITIAL_SEARCH_DATA.first,
+  };
+  const collectionSearchInitialVariables: SearchCollectionsWithTotalProductsQueryVariables = {
+    after: DEFAULT_INITIAL_SEARCH_DATA.after,
+    first: DEFAULT_INITIAL_SEARCH_DATA.first,
+  };
+  const [productSearchVariables, setProductSearchVariables] =
+    useState<SearchProductsQueryVariables>(assignProductSearchVariables);
+  const [variantSearchVariables, setVariantSearchVariables] =
+    useState<SearchProductsQueryVariables>(assignVariantSearchVariables);
+  const [categorySearchVariables, setCategorySearchVariables] =
+    useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
+  const [collectionSearchVariables, setCollectionSearchVariables] =
+    useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
   const categoriesSearch = useCategoryWithTotalProductsSearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-    },
+    variables: categorySearchVariables,
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
-    variables: {
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
-    },
+    variables: collectionSearchVariables,
   });
   // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
   // on a large catalog. Ask for more per request so the picker stays useful without leaning on
   // backfill for every page.
-  const assignProductSearchVariables = {
-    ...DEFAULT_INITIAL_SEARCH_DATA,
-    first: 100,
-  };
   const productsSearch = useProductSearch({
-    variables: { ...assignProductSearchVariables, includeVariants: false },
+    variables: productSearchVariables,
   });
   const variantsSearch = useProductSearch({
-    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, includeVariants: true },
+    variables: variantSearchVariables,
   });
 
   const handleProductFilterChange = (
@@ -121,12 +138,11 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     channel: string | undefined,
     query: string,
   ) => {
-    productsSearch.result.refetch({
+    setProductSearchVariables({
       ...assignProductSearchVariables,
       where: filterVariables,
       channel,
       query,
-      includeVariants: false,
     });
   };
 
@@ -135,19 +151,17 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     channel: string | undefined,
     query: string,
   ) => {
-    variantsSearch.result.refetch({
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+    setVariantSearchVariables({
+      ...assignVariantSearchVariables,
       where: filterVariables,
       channel,
       query,
-      includeVariants: true,
     });
   };
 
   const handleCategoryFilterChange = (filterVariables: CategoryFilterInput, query: string) => {
-    categoriesSearch.result.refetch({
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    setCategorySearchVariables({
+      ...categorySearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,
@@ -160,9 +174,8 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     channel: string | undefined,
     query: string,
   ) => {
-    collectionsSearch.result.refetch({
-      after: DEFAULT_INITIAL_SEARCH_DATA.after,
-      first: DEFAULT_INITIAL_SEARCH_DATA.first,
+    setCollectionSearchVariables({
+      ...collectionSearchInitialVariables,
       filter: {
         ...filterVariables,
         search: query,
@@ -173,12 +186,24 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
   const handleFormValidate = (data: VoucherDetailsPageFormData) => {
     if (data.codes.length === 0) {
+      scrollToVoucherSection(voucherSectionIds.codes);
       notify({
         status: "error",
-        text: intl.formatMessage({
-          id: "GTCg9O",
-          defaultMessage: "You must add at least one voucher code",
-        }),
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+        text: intl.formatMessage(voucherFeedbackMessages.addAtLeastOneCode),
+        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+      });
+
+      return false;
+    }
+
+    if (data.channelListings.length === 0) {
+      handleChannelsModalOpen();
+      notify({
+        status: "error",
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+        text: intl.formatMessage(voucherFeedbackMessages.assignAtLeastOneChannel),
+        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
       });
 
       return false;
@@ -186,16 +211,71 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
 
     return true;
   };
-  const handleCreate = createHandler(
+  const createVoucher = createHandler(
     variables => voucherCreate({ variables }),
     updateChannels,
     handleFormValidate,
   );
-  const handleSubmit = createMetadataCreateHandler(
-    handleCreate,
-    updateMetadata,
-    updatePrivateMetadata,
-  );
+  const handleSubmit = async (data: FormData) => {
+    const result = await createVoucher(data);
+
+    if (result && "validationFailed" in result && result.validationFailed) {
+      // Toast + scroll/modal already handled in handleFormValidate.
+      // Return a non-empty error list so the form does not treat submit as success.
+      return ["Invalid data"];
+    }
+
+    if (result && "id" in result && result.id) {
+      notify({
+        status: "success",
+        title: intl.formatMessage(voucherFeedbackMessages.voucherCreated),
+      });
+      navigate(voucherUrl(result.id), { replace: true });
+
+      return [];
+    }
+
+    if (result && "errors" in result) {
+      const saveErrors = result.errors;
+      const hasCodesError = saveErrors.some(isVoucherCodesError);
+      const hasCatalogueError = saveErrors.some(isVoucherCatalogueError);
+      const hasCountriesError = saveErrors.some(isVoucherCountriesError);
+
+      if (hasCodesError) {
+        scrollToVoucherSection(voucherSectionIds.codes);
+      } else if (hasCatalogueError) {
+        scrollToVoucherSection(voucherSectionIds.catalogue);
+      } else if (hasCountriesError) {
+        scrollToVoucherSection(voucherSectionIds.countries);
+      }
+
+      const recoveryMessage = hasCodesError
+        ? voucherFeedbackMessages.fixCodesAndTryAgain
+        : hasCatalogueError
+          ? voucherFeedbackMessages.fixCatalogueAndTryAgain
+          : hasCountriesError
+            ? voucherFeedbackMessages.fixCountriesAndTryAgain
+            : voucherFeedbackMessages.checkHighlightedFields;
+
+      notify({
+        status: "error",
+        title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+        text: intl.formatMessage(recoveryMessage),
+        autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+      });
+
+      return result.errors;
+    }
+
+    notify({
+      status: "error",
+      title: intl.formatMessage(voucherFeedbackMessages.couldNotCreateVoucher),
+      text: intl.formatMessage(voucherFeedbackMessages.checkHighlightedFields),
+      autohide: PAIRED_ERROR_NOTIFICATION_SHOW_TIME,
+    });
+
+    return ["Could not create voucher"];
+  };
 
   return (
     <>

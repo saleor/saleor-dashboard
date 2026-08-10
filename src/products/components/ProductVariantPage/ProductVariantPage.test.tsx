@@ -31,6 +31,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       hasVariants: true,
       __typename: "ProductType" as const,
     },
+    category: null,
     channelListings: [
       {
         id: "123",
@@ -45,6 +46,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           name: "Default",
           slug: "default",
           currencyCode: "USD",
+          isActive: true,
           __typename: "Channel" as const,
         },
       },
@@ -64,6 +66,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       hasVariants: true,
       __typename: "ProductType" as const,
     },
+    category: null,
     channelListings: [
       {
         id: "124",
@@ -78,6 +81,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           name: "Default",
           slug: "default",
           currencyCode: "USD",
+          isActive: true,
           __typename: "Channel" as const,
         },
       },
@@ -206,6 +210,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
             id: "channel-1",
             name: "Default Channel",
             currencyCode: "USD",
+            isActive: true,
           },
         },
       ],

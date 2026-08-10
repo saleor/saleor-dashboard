@@ -1,5 +1,5 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
-import { Radio, Store } from "lucide-react";
+import { Globe, Store } from "lucide-react";
 import { FormattedMessage } from "react-intl";
 
 import styles from "./SettingsOwnershipChip.module.css";
@@ -15,7 +15,7 @@ interface SettingsOwnershipChipProps {
  * Shop and Channel share this component so padding and placement stay consistent.
  */
 export const SettingsOwnershipChip = ({ ownership }: SettingsOwnershipChipProps): JSX.Element => {
-  const Icon = ownership === "shop" ? Store : Radio;
+  const Icon = ownership === "shop" ? Store : Globe;
   const isShop = ownership === "shop";
 
   return (

@@ -1,7 +1,8 @@
 import { describe, expect, it } from "@jest/globals";
 
 import {
-  getConfiguredChannelCount,
+  getAssignedZoneChannels,
+  getPricedChannelCount,
   getPriceSpan,
   type ShippingRate,
   type ZoneChannel,
@@ -35,13 +36,29 @@ const rate: ShippingRate = {
 } as ShippingRate;
 
 describe("shipping zone rate utils", () => {
-  it("counts configured channel listings for zone channels", () => {
+  it("returns only zone channels that have a listing on the rate", () => {
     // Arrange
+    const channels: ZoneChannel[] = [
+      ...zoneChannels,
+      { id: "ch-3", name: "Unused", currencyCode: "USD" },
+    ];
+
     // Act
-    const configuredCount = getConfiguredChannelCount(rate, zoneChannels);
+    const assigned = getAssignedZoneChannels(rate, channels);
 
     // Assert
-    expect(configuredCount).toBe(2);
+    expect(assigned.map(channel => channel.id)).toEqual(["ch-1", "ch-2"]);
+  });
+
+  it("counts assigned channels that have a price", () => {
+    // Arrange
+    const assigned = getAssignedZoneChannels(rate, zoneChannels);
+
+    // Act
+    const pricedCount = getPricedChannelCount(rate, assigned);
+
+    // Assert
+    expect(pricedCount).toBe(2);
   });
 
   it("returns null price span when configured currencies differ", () => {

@@ -32,6 +32,7 @@ export const useShippingZones = (channelId?: string) => {
   });
 
   return {
+    canLoadShippingZones,
     shippingZonesCountData,
     shippingZonesCountLoading,
     channelShippingZonesData,

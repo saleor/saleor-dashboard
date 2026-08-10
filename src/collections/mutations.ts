@@ -120,6 +120,9 @@ export const collectionBulkDelete = gql`
 export const collectionChannelListingUpdate = gql`
   mutation CollectionChannelListingUpdate($id: ID!, $input: CollectionChannelListingUpdateInput!) {
     collectionChannelListingUpdate(id: $id, input: $input) {
+      collection {
+        ...CollectionDetails
+      }
       errors {
         ...CollectionChannelListingError
       }

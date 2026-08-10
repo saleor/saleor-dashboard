@@ -1,0 +1,13 @@
+/* Match legacy PaginationRowNumberSelect spacing before the control. */
+.rowNumberLabel {
+  flex-shrink: 0;
+  padding-right: var(--mu-spacing-2);
+}
+
+/* Compact enough for 3-digit row counts (e.g. 100). */
+.rowNumberSelect {
+  flex-shrink: 0;
+  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}

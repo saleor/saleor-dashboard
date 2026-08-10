@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   transition: transform 0.2s ease;
   transform: rotate(-90deg);
 }
@@ -10,8 +11,72 @@
   transform: rotate(0deg);
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mu-spacing-4);
+  width: 100%;
+  padding: var(--mu-spacing-4) var(--mu-spacing-5);
+}
+
+.headerSecondary {
+  padding: var(--mu-spacing-4);
+}
+
+.headerSecondaryExpanded {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+/* Match DetailSettingsCard header padding. */
+.headerCard {
+  padding: var(--mu-spacing-4) var(--mu-spacing-6);
+  align-items: center;
+}
+
+.headerCardWithEnd {
+  padding-right: var(--mu-spacing-4);
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.headerEnd {
+  align-self: center;
+}
+
 .content {
   overflow: visible;
   border-bottom-left-radius: var(--mu-border-radius-4);
   border-bottom-right-radius: var(--mu-border-radius-4);
+}
+
+.surfaceSecondary {
+  border-radius: 8px;
+}
+
+.surfaceCard {
+  border-radius: 8px;
+}
+
+.contentSecondary {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.contentCard {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }

@@ -1,0 +1,18 @@
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:hover .label {
+  text-decoration: underline;
+}
+
+/*
+ * Keep icon + label on the surrounding text baseline (same approach as Channel inline).
+ * An inline-flex wrapper would sit low because SVG has no baseline.
+ */
+.icon {
+  display: inline;
+  vertical-align: -0.125em;
+  margin-right: 0.25em;
+}

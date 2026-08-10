@@ -452,8 +452,14 @@ export const ChannelDetailsFragmentDoc = gql`
   warehouses {
     ...Warehouse
   }
+  taxConfiguration {
+    id
+    chargeTaxes
+    taxCalculationStrategy
+  }
   orderSettings {
     markAsPaidStrategy
+    expireOrdersAfter
     deleteExpiredOrdersAfter
     allowUnpaidOrders
     automaticallyConfirmAllNewOrders
@@ -461,6 +467,8 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   paymentSettings {
     defaultTransactionFlowStrategy
+    releaseFundsForExpiredCheckouts
+    checkoutTtlBeforeReleasingFunds
   }
   checkoutSettings {
     automaticallyCompleteFullyPaidCheckouts
@@ -513,6 +521,7 @@ export const ChannelListingProductWithoutPricingFragmentDoc = gql`
     name
     slug
     currencyCode
+    isActive
   }
 }
     `;
@@ -740,6 +749,7 @@ export const VoucherFragmentDoc = gql`
   startDate
   endDate
   usageLimit
+  used
   type
   discountValueType
   countries {
@@ -747,6 +757,9 @@ export const VoucherFragmentDoc = gql`
     country
   }
   minCheckoutItemsQuantity
+  codesCount: codes {
+    totalCount
+  }
   channelListings {
     id
     channel {
@@ -772,6 +785,9 @@ export const VoucherDetailsFragmentDoc = gql`
   applyOncePerCustomer
   onlyForStaff
   singleUse
+  codesCount: codes {
+    totalCount
+  }
   variantsCount: variants {
     totalCount
   }
@@ -784,6 +800,11 @@ export const VoucherDetailsFragmentDoc = gql`
   categoriesCount: categories {
     totalCount
   }
+}
+    ${VoucherFragmentDoc}`;
+export const VoucherCatalogueFragmentDoc = gql`
+    fragment VoucherCatalogue on Voucher {
+  id
   products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
     edges {
       node {
@@ -867,8 +888,7 @@ export const VoucherDetailsFragmentDoc = gql`
     __typename
   }
 }
-    ${VoucherFragmentDoc}
-${ChannelListingProductWithoutPricingFragmentDoc}
+    ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
 export const PromotionRuleChannelFragmentDoc = gql`
     fragment PromotionRuleChannel on Channel {
@@ -972,6 +992,7 @@ export const DiscountErrorFragmentDoc = gql`
   field
   channels
   message
+  voucherCodes
 }
     `;
 export const PromotionCreateErrorFragmentDoc = gql`
@@ -1532,6 +1553,8 @@ export const UserBaseFragmentDoc = gql`
 export const GiftCardDataFragmentDoc = gql`
     fragment GiftCardData on GiftCard {
   ...Metadata
+  code
+  displayCode
   last4CodeChars
   boughtInChannel
   createdBy {
@@ -1540,6 +1563,9 @@ export const GiftCardDataFragmentDoc = gql`
   product {
     id
     name
+    thumbnail {
+      url
+    }
   }
   assignedTo {
     ...UserBase
@@ -3299,6 +3325,7 @@ export const ProductVariantFragmentDoc = gql`
         id
         name
         currencyCode
+        isActive
       }
     }
   }
@@ -3340,6 +3367,9 @@ export const SearchProductFragmentDoc = gql`
     ...ChannelListingProductWithoutPricing
   }
   collections {
+    id
+  }
+  category {
     id
   }
 }
@@ -4988,10 +5018,16 @@ export type RootCategoriesQueryHookResult = ReturnType<typeof useRootCategoriesQ
 export type RootCategoriesLazyQueryHookResult = ReturnType<typeof useRootCategoriesLazyQuery>;
 export type RootCategoriesQueryResult = Apollo.QueryResult<Types.RootCategoriesQuery, Types.RootCategoriesQueryVariables>;
 export const CategoryDetailsDocument = gql`
-    query CategoryDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+    query CategoryDetails($id: ID!, $childrenFirst: Int, $childrenAfter: String, $childrenLast: Int, $childrenBefore: String) {
   category(id: $id) {
     ...CategoryDetails
-    children(first: $first, after: $after, last: $last, before: $before) {
+    children(
+      first: $childrenFirst
+      after: $childrenAfter
+      last: $childrenLast
+      before: $childrenBefore
+    ) {
+      totalCount
       edges {
         node {
           ...Category
@@ -4999,21 +5035,6 @@ export const CategoryDetailsDocument = gql`
       }
       pageInfo {
         ...PageInfo
-      }
-    }
-    products(first: $first, after: $after, last: $last, before: $before) {
-      pageInfo {
-        ...PageInfo
-      }
-      edges {
-        cursor
-        node {
-          id
-          name
-          thumbnail {
-            url
-          }
-        }
       }
     }
   }
@@ -5035,10 +5056,10 @@ ${PageInfoFragmentDoc}`;
  * const { data, loading, error } = useCategoryDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
- *      first: // value for 'first'
- *      after: // value for 'after'
- *      last: // value for 'last'
- *      before: // value for 'before'
+ *      childrenFirst: // value for 'childrenFirst'
+ *      childrenAfter: // value for 'childrenAfter'
+ *      childrenLast: // value for 'childrenLast'
+ *      childrenBefore: // value for 'childrenBefore'
  *   },
  * });
  */
@@ -5053,6 +5074,56 @@ export function useCategoryDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQ
 export type CategoryDetailsQueryHookResult = ReturnType<typeof useCategoryDetailsQuery>;
 export type CategoryDetailsLazyQueryHookResult = ReturnType<typeof useCategoryDetailsLazyQuery>;
 export type CategoryDetailsQueryResult = Apollo.QueryResult<Types.CategoryDetailsQuery, Types.CategoryDetailsQueryVariables>;
+export const CategoryProductsDocument = gql`
+    query CategoryProducts($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+  category(id: $id) {
+    id
+    products(first: $first, after: $after, before: $before, last: $last) {
+      edges {
+        node {
+          ...CollectionProduct
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+}
+    ${CollectionProductFragmentDoc}
+${PageInfoFragmentDoc}`;
+
+/**
+ * __useCategoryProductsQuery__
+ *
+ * To run a query within a React component, call `useCategoryProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryProductsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      last: // value for 'last'
+ *      before: // value for 'before'
+ *   },
+ * });
+ */
+export function useCategoryProductsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>(CategoryProductsDocument, options);
+      }
+export function useCategoryProductsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>(CategoryProductsDocument, options);
+        }
+export type CategoryProductsQueryHookResult = ReturnType<typeof useCategoryProductsQuery>;
+export type CategoryProductsLazyQueryHookResult = ReturnType<typeof useCategoryProductsLazyQuery>;
+export type CategoryProductsQueryResult = Apollo.QueryResult<Types.CategoryProductsQuery, Types.CategoryProductsQueryVariables>;
 export const CategoryChildrenDocument = gql`
     query CategoryChildren($id: ID!, $first: Int!, $after: String) {
   category(id: $id) {
@@ -5402,13 +5473,59 @@ export function useChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type ChannelsQueryHookResult = ReturnType<typeof useChannelsQuery>;
 export type ChannelsLazyQueryHookResult = ReturnType<typeof useChannelsLazyQuery>;
 export type ChannelsQueryResult = Apollo.QueryResult<Types.ChannelsQuery, Types.ChannelsQueryVariables>;
+export const ChannelsListShippingCoverageDocument = gql`
+    query ChannelsListShippingCoverage {
+  shippingZones(first: 100) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        channels {
+          id
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelsListShippingCoverageQuery__
+ *
+ * To run a query within a React component, call `useChannelsListShippingCoverageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelsListShippingCoverageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelsListShippingCoverageQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useChannelsListShippingCoverageQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>(ChannelsListShippingCoverageDocument, options);
+      }
+export function useChannelsListShippingCoverageLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>(ChannelsListShippingCoverageDocument, options);
+        }
+export type ChannelsListShippingCoverageQueryHookResult = ReturnType<typeof useChannelsListShippingCoverageQuery>;
+export type ChannelsListShippingCoverageLazyQueryHookResult = ReturnType<typeof useChannelsListShippingCoverageLazyQuery>;
+export type ChannelsListShippingCoverageQueryResult = Apollo.QueryResult<Types.ChannelsListShippingCoverageQuery, Types.ChannelsListShippingCoverageQueryVariables>;
 export const ChannelDocument = gql`
     query Channel($id: ID!) {
   channel(id: $id) {
     ...ChannelDetails
+    ...Metadata
   }
 }
-    ${ChannelDetailsFragmentDoc}`;
+    ${ChannelDetailsFragmentDoc}
+${MetadataFragmentDoc}`;
 
 /**
  * __useChannelQuery__
@@ -5437,6 +5554,279 @@ export function useChannelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type ChannelQueryHookResult = ReturnType<typeof useChannelQuery>;
 export type ChannelLazyQueryHookResult = ReturnType<typeof useChannelLazyQuery>;
 export type ChannelQueryResult = Apollo.QueryResult<Types.ChannelQuery, Types.ChannelQueryVariables>;
+export const ChannelBySlugDocument = gql`
+    query ChannelBySlug($slug: String!) {
+  channel(slug: $slug) {
+    id
+    slug
+  }
+}
+    `;
+
+/**
+ * __useChannelBySlugQuery__
+ *
+ * To run a query within a React component, call `useChannelBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelBySlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useChannelBySlugQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>(ChannelBySlugDocument, options);
+      }
+export function useChannelBySlugLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>(ChannelBySlugDocument, options);
+        }
+export type ChannelBySlugQueryHookResult = ReturnType<typeof useChannelBySlugQuery>;
+export type ChannelBySlugLazyQueryHookResult = ReturnType<typeof useChannelBySlugLazyQuery>;
+export type ChannelBySlugQueryResult = Apollo.QueryResult<Types.ChannelBySlugQuery, Types.ChannelBySlugQueryVariables>;
+export const ChannelSetupReviewStatsDocument = gql`
+    query ChannelSetupReviewStats($channelSlug: String!, $canFetchProducts: Boolean!) {
+  allProducts: products @include(if: $canFetchProducts) {
+    totalCount
+  }
+  listedInChannel: products(channel: $channelSlug) @include(if: $canFetchProducts) {
+    totalCount
+  }
+  channelProducts: products(channel: $channelSlug, filter: {isPublished: true}) @include(if: $canFetchProducts) {
+    totalCount
+  }
+  unpublishedInChannel: products(
+    channel: $channelSlug
+    filter: {isPublished: false}
+  ) @include(if: $canFetchProducts) {
+    totalCount
+  }
+  recentlyPublishedProducts: products(
+    channel: $channelSlug
+    first: 3
+    filter: {isPublished: true}
+    sortBy: {field: PUBLISHED_AT, direction: DESC}
+  ) @include(if: $canFetchProducts) {
+    edges {
+      node {
+        id
+        name
+        thumbnail(size: 128) {
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelSetupReviewStatsQuery__
+ *
+ * To run a query within a React component, call `useChannelSetupReviewStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelSetupReviewStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelSetupReviewStatsQuery({
+ *   variables: {
+ *      channelSlug: // value for 'channelSlug'
+ *      canFetchProducts: // value for 'canFetchProducts'
+ *   },
+ * });
+ */
+export function useChannelSetupReviewStatsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>(ChannelSetupReviewStatsDocument, options);
+      }
+export function useChannelSetupReviewStatsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>(ChannelSetupReviewStatsDocument, options);
+        }
+export type ChannelSetupReviewStatsQueryHookResult = ReturnType<typeof useChannelSetupReviewStatsQuery>;
+export type ChannelSetupReviewStatsLazyQueryHookResult = ReturnType<typeof useChannelSetupReviewStatsLazyQuery>;
+export type ChannelSetupReviewStatsQueryResult = Apollo.QueryResult<Types.ChannelSetupReviewStatsQuery, Types.ChannelSetupReviewStatsQueryVariables>;
+export const ChannelPaymentAppsDocument = gql`
+    query ChannelPaymentApps {
+  apps(first: 100, filter: {isActive: true, type: THIRDPARTY}) {
+    pageInfo {
+      hasNextPage
+    }
+    edges {
+      node {
+        id
+        name
+        isActive
+        type
+        appUrl
+        permissions {
+          code
+        }
+        brand {
+          logo {
+            default(format: WEBP, size: 64)
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useChannelPaymentAppsQuery__
+ *
+ * To run a query within a React component, call `useChannelPaymentAppsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelPaymentAppsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelPaymentAppsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useChannelPaymentAppsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>(ChannelPaymentAppsDocument, options);
+      }
+export function useChannelPaymentAppsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>(ChannelPaymentAppsDocument, options);
+        }
+export type ChannelPaymentAppsQueryHookResult = ReturnType<typeof useChannelPaymentAppsQuery>;
+export type ChannelPaymentAppsLazyQueryHookResult = ReturnType<typeof useChannelPaymentAppsLazyQuery>;
+export type ChannelPaymentAppsQueryResult = Apollo.QueryResult<Types.ChannelPaymentAppsQuery, Types.ChannelPaymentAppsQueryVariables>;
+export const BulkPublishProductsDataDocument = gql`
+    query BulkPublishProductsData($ids: [ID!]!, $first: Int!) {
+  products(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        name
+        category {
+          id
+        }
+        channelListings {
+          channel {
+            id
+          }
+        }
+        productVariants(first: 1) {
+          totalCount
+          edges {
+            node {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBulkPublishProductsDataQuery__
+ *
+ * To run a query within a React component, call `useBulkPublishProductsDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulkPublishProductsDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulkPublishProductsDataQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useBulkPublishProductsDataQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>(BulkPublishProductsDataDocument, options);
+      }
+export function useBulkPublishProductsDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>(BulkPublishProductsDataDocument, options);
+        }
+export type BulkPublishProductsDataQueryHookResult = ReturnType<typeof useBulkPublishProductsDataQuery>;
+export type BulkPublishProductsDataLazyQueryHookResult = ReturnType<typeof useBulkPublishProductsDataLazyQuery>;
+export type BulkPublishProductsDataQueryResult = Apollo.QueryResult<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>;
+export const BulkPublishProductVariantsDocument = gql`
+    query BulkPublishProductVariants($id: ID!, $first: Int!, $after: String) {
+  product(id: $id) {
+    id
+    productVariants(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          channelListings {
+            id
+            channel {
+              id
+            }
+            price {
+              amount
+            }
+          }
+          stocks {
+            id
+            warehouse {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBulkPublishProductVariantsQuery__
+ *
+ * To run a query within a React component, call `useBulkPublishProductVariantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulkPublishProductVariantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulkPublishProductVariantsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useBulkPublishProductVariantsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>(BulkPublishProductVariantsDocument, options);
+      }
+export function useBulkPublishProductVariantsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>(BulkPublishProductVariantsDocument, options);
+        }
+export type BulkPublishProductVariantsQueryHookResult = ReturnType<typeof useBulkPublishProductVariantsQuery>;
+export type BulkPublishProductVariantsLazyQueryHookResult = ReturnType<typeof useBulkPublishProductVariantsLazyQuery>;
+export type BulkPublishProductVariantsQueryResult = Apollo.QueryResult<Types.BulkPublishProductVariantsQuery, Types.BulkPublishProductVariantsQueryVariables>;
 export const CollectionUpdateDocument = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {
@@ -5694,12 +6084,16 @@ export type CollectionBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Typ
 export const CollectionChannelListingUpdateDocument = gql`
     mutation CollectionChannelListingUpdate($id: ID!, $input: CollectionChannelListingUpdateInput!) {
   collectionChannelListingUpdate(id: $id, input: $input) {
+    collection {
+      ...CollectionDetails
+    }
     errors {
       ...CollectionChannelListingError
     }
   }
 }
-    ${CollectionChannelListingErrorFragmentDoc}`;
+    ${CollectionDetailsFragmentDoc}
+${CollectionChannelListingErrorFragmentDoc}`;
 export type CollectionChannelListingUpdateMutationFn = Apollo.MutationFunction<Types.CollectionChannelListingUpdateMutation, Types.CollectionChannelListingUpdateMutationVariables>;
 
 /**
@@ -8130,11 +8524,13 @@ export const VoucherCataloguesAddDocument = gql`
     }
     voucher {
       ...VoucherDetails
+      ...VoucherCatalogue
     }
   }
 }
     ${DiscountErrorFragmentDoc}
-${VoucherDetailsFragmentDoc}`;
+${VoucherDetailsFragmentDoc}
+${VoucherCatalogueFragmentDoc}`;
 export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 
 /**
@@ -8178,11 +8574,13 @@ export const VoucherCataloguesRemoveDocument = gql`
     }
     voucher {
       ...VoucherDetails
+      ...VoucherCatalogue
     }
   }
 }
     ${DiscountErrorFragmentDoc}
-${VoucherDetailsFragmentDoc}`;
+${VoucherDetailsFragmentDoc}
+${VoucherCatalogueFragmentDoc}`;
 export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.VoucherCataloguesRemoveMutation, Types.VoucherCataloguesRemoveMutationVariables>;
 
 /**
@@ -8809,7 +9207,7 @@ export type SaleDetailsQueryHookResult = ReturnType<typeof useSaleDetailsQuery>;
 export type SaleDetailsLazyQueryHookResult = ReturnType<typeof useSaleDetailsLazyQuery>;
 export type SaleDetailsQueryResult = Apollo.QueryResult<Types.SaleDetailsQuery, Types.SaleDetailsQueryVariables>;
 export const VoucherDetailsDocument = gql`
-    query VoucherDetails($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    query VoucherDetails($id: ID!) {
   voucher(id: $id) {
     ...VoucherDetails
   }
@@ -8829,14 +9227,6 @@ export const VoucherDetailsDocument = gql`
  * const { data, loading, error } = useVoucherDetailsQuery({
  *   variables: {
  *      id: // value for 'id'
- *      after: // value for 'after'
- *      before: // value for 'before'
- *      first: // value for 'first'
- *      last: // value for 'last'
- *      includeProducts: // value for 'includeProducts'
- *      includeCollections: // value for 'includeCollections'
- *      includeCategories: // value for 'includeCategories'
- *      includeVariants: // value for 'includeVariants'
  *   },
  * });
  */
@@ -8851,6 +9241,50 @@ export function useVoucherDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQuery>;
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
+export const VoucherCatalogueDocument = gql`
+    query VoucherCatalogue($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+  voucher(id: $id) {
+    id
+    ...VoucherCatalogue
+  }
+}
+    ${VoucherCatalogueFragmentDoc}`;
+
+/**
+ * __useVoucherCatalogueQuery__
+ *
+ * To run a query within a React component, call `useVoucherCatalogueQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVoucherCatalogueQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVoucherCatalogueQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      includeProducts: // value for 'includeProducts'
+ *      includeCollections: // value for 'includeCollections'
+ *      includeCategories: // value for 'includeCategories'
+ *      includeVariants: // value for 'includeVariants'
+ *   },
+ * });
+ */
+export function useVoucherCatalogueQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>(VoucherCatalogueDocument, options);
+      }
+export function useVoucherCatalogueLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>(VoucherCatalogueDocument, options);
+        }
+export type VoucherCatalogueQueryHookResult = ReturnType<typeof useVoucherCatalogueQuery>;
+export type VoucherCatalogueLazyQueryHookResult = ReturnType<typeof useVoucherCatalogueLazyQuery>;
+export type VoucherCatalogueQueryResult = Apollo.QueryResult<Types.VoucherCatalogueQuery, Types.VoucherCatalogueQueryVariables>;
 export const VoucherAssignedIdsDocument = gql`
     query VoucherAssignedIds($id: ID!, $first: Int!) {
   voucher(id: $id) {
@@ -11155,6 +11589,10 @@ export const GiftCardDetailsDocument = gql`
     query GiftCardDetails($id: ID!, $canSeeApp: Boolean!, $canSeeUser: Boolean!) {
   giftCard(id: $id) {
     ...GiftCardData
+    app @include(if: $canSeeApp) {
+      id
+      name
+    }
     events {
       ...GiftCardEvent
       assignedTo {
@@ -16621,6 +17059,7 @@ export const ProductVariantCreateDataDocument = gql`
         id
         name
         currencyCode
+        isActive
       }
     }
     name

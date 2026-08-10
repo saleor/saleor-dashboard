@@ -11,8 +11,9 @@ import { type ExitFormDialogData, type FormData, type FormsData } from "./types"
 
 // Query params used solely to drive URL-based dialogs/modals (see
 // `createDialogActionHandlers`) or other transient in-page UI (e.g. field focus).
-// Toggling these on the same pathname must never trigger the "leave without
-// saving" prompt.
+// Toggling these on the same pathname must not trigger the "leave without
+// saving" prompt for ordinary page forms — unless a dirty form has opted in
+// via `setBlockDialogClose` (URL-driven wizards that own their own dirty state).
 const DIALOG_QUERY_PARAMS = ["action", "id", "ids", "channelId"];
 
 // ConditionalFilter (list pages and modal pickers) serializes filter tokens
@@ -128,9 +129,25 @@ export function useExitFormDialogProvider() {
     [getFormsDataValuesArray],
   );
 
+  const hasDirtyFormBlockingDialogClose = useCallback(
+    () =>
+      getFormsDataValuesArray().some(
+        ({ isDirty, blockDialogClose }) => isDirty && blockDialogClose,
+      ),
+    [getFormsDataValuesArray],
+  );
+
   const setSubmitRef = useCallback(
     <T extends () => SubmitPromise<any[]>>(id: symbol, submitFn: T) => {
       setFormData(id, { submitFn });
+    },
+    [setFormData],
+  );
+
+  const setBlockDialogClose = useCallback(
+    (id: symbol, value: boolean) => {
+      // Registers the form when a dialog opts in before the first setIsDirty call.
+      setFormData(id, { blockDialogClose: value });
     },
     [setFormData],
   );
@@ -196,16 +213,29 @@ export function useExitFormDialogProvider() {
     setStateDefaultValues();
   }, [setStateDefaultValues]);
 
+  const normalizePathname = (pathname: string) => {
+    try {
+      return decodeURIComponent(pathname);
+    } catch {
+      return pathname;
+    }
+  };
+
   const isOnlyQuerying = (transition: typeof history.location) =>
-    // We need to compare to current path and not window location
-    // so it works with browser back button as well
-    transition.pathname === currentLocation.current.pathname;
+    // Compare decoded pathnames: entity URLs use encodeURIComponent(id), and
+    // Saleor GraphQL IDs often end in "=". history may keep the current location
+    // decoded (`...==`) while the next URL is encoded (`...%3D%3D`). Treating
+    // that as a different page wrongly blocks dialog opens on dirty forms and
+    // resets exit-form state on clean ones.
+    normalizePathname(transition.pathname) === normalizePathname(currentLocation.current.pathname);
 
   const shouldBlockNavRef = useRef(shouldBlockNav);
+  const hasDirtyFormBlockingDialogCloseRef = useRef(hasDirtyFormBlockingDialogClose);
   const setStateDefaultValuesRef = useRef(setStateDefaultValues);
 
   useEffect(function syncNavigationBlockRefs() {
     shouldBlockNavRef.current = shouldBlockNav;
+    hasDirtyFormBlockingDialogCloseRef.current = hasDirtyFormBlockingDialogClose;
     setStateDefaultValuesRef.current = setStateDefaultValues;
   });
 
@@ -223,9 +253,28 @@ export function useExitFormDialogProvider() {
       // needs to be done before the shouldBlockNav condition
       // so it doesn't trigger setting default values
       if (isOnlyQuerying(transition)) {
-        // Opening/closing a URL-driven modal (dialog params only) is part of
-        // editing the form, not leaving it, so it must never be blocked.
+        // Opening/closing a URL-driven modal is usually part of editing the page
+        // form, not leaving it. Dialogs that own their own dirty state opt into
+        // blocking that toggle via `setBlockDialogClose`.
         if (isDialogOnlyQueryChange(currentLocation.current.search, transition.search)) {
+          if (shouldBlockNavRef.current() && hasDirtyFormBlockingDialogCloseRef.current()) {
+            navAction.current = transition;
+            lastBlockedAction.current = action;
+            setShowDialog(true);
+
+            return false;
+          }
+
+          setCurrentLocation(transition);
+
+          return null;
+        }
+
+        // No-op same-path push/replace (e.g. dialog calls onSubmit→close then
+        // onClose→close again) are not "leaving" — query already matches.
+        // Skip POP: after "keep editing" we re-push the current URL, and a
+        // second back can target that duplicate entry with identical search.
+        if (action !== "POP" && currentLocation.current.search === transition.search) {
           setCurrentLocation(transition);
 
           return null;
@@ -266,15 +315,51 @@ export function useExitFormDialogProvider() {
 
   useEffect(handleNavigationBlock, [history]);
 
+  const clearDirtyDialogCloseForms = () => {
+    Object.getOwnPropertySymbols(formsData.current).forEach(id => {
+      const form = formsData.current[id];
+
+      if (form?.blockDialogClose) {
+        formsData.current[id] = {
+          ...form,
+          isDirty: false,
+          blockDialogClose: false,
+        };
+      }
+    });
+  };
+
   const continueNavigation = () => {
+    const next = navAction.current;
+    // Closing a URL-driven wizard must not wipe the page form's dirty state —
+    // only the dialog that opted into `blockDialogClose` is being abandoned.
+    const wasDialogOnlyClose =
+      next !== null &&
+      normalizePathname(next.pathname) === normalizePathname(currentLocation.current.pathname) &&
+      isDialogOnlyQueryChange(currentLocation.current.search, next.search);
+
     setBlockNav(false);
+
+    if (wasDialogOnlyClose) {
+      clearDirtyDialogCloseForms();
+      setCurrentLocation(next);
+      routerHistory.push(next.pathname + next.search);
+      setShowDialog(false);
+      setDefaultNavAction();
+      setDescription(null);
+      blockNav.current = true;
+      enableExitDialog.current = hasAnyFormsDirty();
+
+      return;
+    }
+
     setDefaultFormsData();
-    setCurrentLocation(navAction.current);
+    setCurrentLocation(next);
 
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
-    if (navAction.current !== null) {
-      routerHistory.push(navAction.current.pathname + navAction.current.search);
+    if (next !== null) {
+      routerHistory.push(next.pathname + next.search);
     }
 
     setStateDefaultValues();
@@ -319,6 +404,7 @@ export function useExitFormDialogProvider() {
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef,
     setExitDialogDescription,
+    setBlockDialogClose,
     setIsSubmitting,
     setIsSubmitDisabled,
     leave: handleLeave,

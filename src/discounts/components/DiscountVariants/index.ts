@@ -1,2 +1,1 @@
-export { default } from "./DiscountVariants";
-export * from "./DiscountVariants";
+export { DiscountVariants } from "./DiscountVariants";

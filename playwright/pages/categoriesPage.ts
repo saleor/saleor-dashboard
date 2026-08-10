@@ -1,13 +1,10 @@
 import { URL_LIST } from "@data/url";
 import { DeleteDialog } from "@dialogs/deleteDialog";
-import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
 export class CategoriesPage extends BasePage {
   readonly page: Page;
-
-  readonly metadataSeoPage: MetadataSeoPage;
 
   readonly deleteCategoriesDialog: DeleteDialog;
 
@@ -15,17 +12,20 @@ export class CategoriesPage extends BasePage {
     page: Page,
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly createCategoryButton = page.getByTestId("create-category"),
-    readonly productsTabButton = page.getByTestId("products-tab"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
-    readonly productsGridList = page.getByTestId("list"),
+    readonly createCategorySubmitButton = page
+      .getByTestId("create-category-dialog")
+      .getByTestId("submit"),
+    readonly categoryProductsCard = page.getByTestId("category-products"),
     readonly categoryDescriptionEditor = page.getByTestId("rich-text-editor-description"),
-
     readonly categoryDescriptionLoader = page.locator(".codex-editor__loader"),
     readonly categoryNameInput = page.getByTestId("category-name-input").locator("input"),
+    readonly createCategoryDescriptionInput = page
+      .getByTestId("category-description-input")
+      .locator("textarea"),
   ) {
     super(page);
     this.page = page;
-    this.metadataSeoPage = new MetadataSeoPage(page);
     this.deleteCategoriesDialog = new DeleteDialog(page);
   }
 
@@ -48,8 +48,16 @@ export class CategoriesPage extends BasePage {
     await this.saveButton.click();
   }
 
+  async clickCreateCategorySubmitButton() {
+    await this.createCategorySubmitButton.click();
+  }
+
   async typeCategoryName(categoryName: string) {
     await this.categoryNameInput.fill(categoryName);
+  }
+
+  async typeCreateCategoryDescription(categoryDescription: string) {
+    await this.createCategoryDescriptionInput.fill(categoryDescription);
   }
 
   async typeCategoryDescription(categoryDescription: string) {
@@ -61,9 +69,5 @@ export class CategoriesPage extends BasePage {
 
   async clickBulkDeleteButton() {
     await this.bulkDeleteButton.click();
-  }
-
-  async clickProductsTabButton() {
-    await this.productsTabButton.click();
   }
 }

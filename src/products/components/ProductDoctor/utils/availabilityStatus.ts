@@ -1,5 +1,8 @@
 import { type ChannelSummary } from "./types";
 
+type PublicationSummary = Pick<ChannelSummary, "isPublished" | "publishedAt">;
+type PurchaseSummary = Pick<ChannelSummary, "availableForPurchaseAt">;
+
 /**
  * Determines the visibility status of a product in a channel.
  *
@@ -8,7 +11,7 @@ import { type ChannelSummary } from "./types";
  * @returns "live" if visible, "scheduled" if will become visible in future, "hidden" if not published
  */
 export const getAvailabilityStatus = (
-  summary: ChannelSummary,
+  summary: PublicationSummary,
   dateNow: number,
 ): "live" | "scheduled" | "hidden" => {
   // Product is not published - hidden from public API
@@ -42,7 +45,7 @@ export const getAvailabilityStatus = (
  * @param dateNow - Current timestamp in milliseconds
  * @returns true if product can be purchased now
  */
-export const isPurchasable = (summary: ChannelSummary, dateNow: number): boolean => {
+export const isPurchasable = (summary: PurchaseSummary, dateNow: number): boolean => {
   const availableAtTime = summary.availableForPurchaseAt
     ? Date.parse(summary.availableForPurchaseAt)
     : null;

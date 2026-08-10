@@ -8,6 +8,10 @@ import {
 const useGiftCardUpdateDialogs = (): GiftCardUpdateDialogsConsumerProps => {
   const giftCardUpdateDialogsProps = useContext(GiftCardUpdateDialogsContext);
 
+  if (!giftCardUpdateDialogsProps) {
+    throw new Error("useGiftCardUpdateDialogs must be used within a GiftCardUpdateDialogsProvider");
+  }
+
   return giftCardUpdateDialogsProps;
 };
 

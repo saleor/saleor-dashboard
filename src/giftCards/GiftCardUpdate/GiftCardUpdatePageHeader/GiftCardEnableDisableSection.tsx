@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
 import { commonMessages } from "@dashboard/intl";
 import { useIntl } from "react-intl";
@@ -7,24 +6,30 @@ import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCa
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardActivateToggle from "./hooks/useGiftCardActivateToggle";
 
-const GiftCardEnableDisableSection = () => {
+export const GiftCardEnableDisableSection = (): JSX.Element | null => {
   const intl = useIntl();
-  const {
-    giftCard: { id, isActive, isExpired },
-  } = useGiftCardDetails();
+  const { giftCard } = useGiftCardDetails();
   const { giftCardActivate, giftCardDeactivate, currentOpts } = useGiftCardActivateToggle({
-    isActive,
+    isActive: giftCard?.isActive,
   });
-  const handleClick = () =>
-    isActive ? giftCardDeactivate({ variables: { id } }) : giftCardActivate({ variables: { id } });
-  const buttonLabel = isActive ? buttonMessages.disableLabel : buttonMessages.enableLabel;
 
-  if (isExpired) {
+  if (!giftCard || giftCard.isExpired) {
     return null;
   }
 
+  const { id, isActive } = giftCard;
+  const handleClick = (): void => {
+    if (isActive) {
+      giftCardDeactivate({ variables: { id } });
+    } else {
+      giftCardActivate({ variables: { id } });
+    }
+  };
+  const buttonLabel = isActive ? buttonMessages.disableLabel : buttonMessages.enableLabel;
+
   return (
     <ButtonWithLoader
+      variant="secondary"
       data-test-id="enable-button"
       onClick={handleClick}
       transitionState={currentOpts?.status}
@@ -33,5 +38,3 @@ const GiftCardEnableDisableSection = () => {
     </ButtonWithLoader>
   );
 };
-
-export default GiftCardEnableDisableSection;

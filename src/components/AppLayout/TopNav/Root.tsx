@@ -1,5 +1,5 @@
 import { useUser } from "@dashboard/auth/useUser";
-import { Box, type BoxProps, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Text } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren, type ReactNode } from "react";
 
 import useAppChannel from "../AppChannelContext";
@@ -11,6 +11,7 @@ import { TopNavWrapper } from "./TopNavWrapper";
 type TopNavBaseProps = {
   title: React.ReactNode;
   subtitle?: React.ReactNode;
+  /** Compact eyebrow above the title — stacked in the same bar height as the destination button. */
   subtitleTop?: React.ReactNode;
   withoutBorder?: boolean;
   isAlignToRight?: boolean;
@@ -58,23 +59,7 @@ export const Root = ({
     );
 
   return (
-    <TopNavWrapper
-      withoutBorder={withoutBorder}
-      hasSubtitleTop={!!subtitleTop}
-      hasSubtitle={!!subtitle}
-      {...wrapperProps}
-    >
-      {subtitleTop ? (
-        <ContextualLine
-          gridColumn="8"
-          // The subtitle should be aligned with the title, not back button
-          __marginLeft={href ? `calc(${vars.spacing[12]} + ${vars.spacing[1]})` : 0}
-          paddingBottom={0}
-          __marginBottom="-10px"
-        >
-          {subtitleTop}
-        </ContextualLine>
-      ) : null}
+    <TopNavWrapper withoutBorder={withoutBorder} hasSubtitle={!!subtitle} {...wrapperProps}>
       <Box display="flex" alignItems="center" width="100%">
         {href && hrefIcon && hrefTitle ? (
           <TopNavLink to={href} icon={hrefIcon} title={hrefTitle} />
@@ -82,9 +67,25 @@ export const Root = ({
         <Box
           __flex={isAlignToRight ? "1 1 auto" : 0}
           overflow="hidden"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          gap={0.5}
+          minWidth={0}
           title={typeof title === "string" ? title : undefined}
         >
-          <Text size={6} ellipsis display="block">
+          {subtitleTop ? (
+            typeof subtitleTop === "string" ? (
+              <Text size={2} color="default2" ellipsis display="block" __lineHeight={1.15}>
+                {subtitleTop}
+              </Text>
+            ) : (
+              <Box overflow="hidden" __lineHeight={1.15}>
+                {subtitleTop}
+              </Box>
+            )
+          ) : null}
+          <Text size={6} ellipsis display="block" __lineHeight={subtitleTop ? 1.2 : undefined}>
             {title}
           </Text>
         </Box>
@@ -109,7 +110,7 @@ export const Root = ({
         <ContextualLine
           gridColumn="8"
           // The subtitle should be aligned with the title, not back button
-          __marginLeft={href ? `calc(${vars.spacing[12]} + ${vars.spacing[1]})` : 0}
+          __marginLeft={href ? `calc(var(--mu-spacing-12) + var(--mu-spacing-1))` : 0}
           __marginTop={href ? "-0.6rem" : 0}
         >
           {subtitle}

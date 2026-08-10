@@ -2,6 +2,7 @@ import { type FC, type ReactNode } from "react";
 
 import { useInitialAttributesState } from "../API/initialState/attributes/useInitialAttributesState";
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
+import { useInitialDiscountsState } from "../API/initialState/discounts/useInitialDiscountsState";
 import { useInitialGiftCardsState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
 import { useInitialPageState } from "../API/initialState/page/useInitialPageState";
@@ -74,7 +75,8 @@ export const ConditionalDiscountFilterProvider: FC<{
   children: ReactNode;
 }> = ({ children, locationSearch }) => {
   const apiProvider = useDiscountFilterAPIProvider();
-  const valueProvider = useUrlValueProvider(locationSearch, "discount");
+  const initialState = useInitialDiscountsState();
+  const valueProvider = useUrlValueProvider(locationSearch, "discount", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_DISCOUNT_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();

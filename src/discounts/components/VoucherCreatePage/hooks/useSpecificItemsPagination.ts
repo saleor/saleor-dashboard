@@ -14,6 +14,7 @@ type ProductVariant = SearchProductVariantFragment;
 export const useSpecificItemsPagination = ({
   type,
   data,
+  paginateBy = PAGINATE_BY,
 }: {
   type: VoucherCreatePageTab;
   data: {
@@ -22,13 +23,14 @@ export const useSpecificItemsPagination = ({
     products: SearchProductFragment[];
     variants: ProductVariant[];
   };
+  paginateBy?: number;
 }) => {
   const { pageInfo, pageValues, resetPage, loadNextPage, loadPreviousPage } = useLocalPageInfo<
     | CategoryWithTotalProductsFragment
     | CollectionWithTotalProductsFragment
     | SearchProductFragment
     | ProductVariant
-  >(data[type], PAGINATE_BY);
+  >(data[type], paginateBy);
 
   return {
     paginatedSpecificItems: pageValues,

@@ -1,29 +1,30 @@
 import { VOUCHER_CODE_DRAFT_STATUS } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
-import { useVoucherCodeBulkDeleteMutation } from "@dashboard/graphql";
+import { voucherCodeExists } from "@dashboard/discounts/components/VoucherCreatePage/utils";
 import useListSettings from "@dashboard/hooks/useListSettings";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { getMutationStatus } from "@dashboard/misc";
 import { type ListSettings, ListViews } from "@dashboard/types";
-import { useState } from "react";
-import { useIntl } from "react-intl";
+import { useMemo, useState } from "react";
 
 import { getVoucherCodesToDisplay } from "../utils";
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 import { useVoucherCodesRowSelection } from "./useVoucherCodesRowSelection";
 import { useVoucherCodesServer } from "./useVoucherCodesServer";
 
+interface PendingRemovedVoucherCode {
+  id: string;
+  code: string;
+}
+
 export const useVoucherCodes = ({ id }: { id: string }) => {
-  const notify = useNotifier();
-  const intl = useIntl();
   const { settings: voucherCodesSettings, updateListSettings: updateVoucherCodesListSettings } =
     useListSettings(ListViews.VOUCHER_CODES);
   const [isServerPagination, setIsServerPagination] = useState(true);
+  const [pendingRemovedCodes, setPendingRemovedCodes] = useState<PendingRemovedVoucherCode[]>([]);
   const {
     addedVoucherCodes,
     clientVoucherCodes,
     clientVoucherCodesPagination,
     freeSlotsInClientPagianationPage,
-    handleAddVoucherCode,
+    handleAddVoucherCode: addDraftVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteAddedVoucherCodes,
     handleClearAddedVoucherCodes,
@@ -57,6 +58,14 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
           : voucherCodesSettings.rowNumber,
     },
   });
+  const pendingRemovedCodeIds = useMemo(
+    () => pendingRemovedCodes.map(code => code.id),
+    [pendingRemovedCodes],
+  );
+  const pendingRemovedIdSet = useMemo(
+    () => new Set(pendingRemovedCodeIds),
+    [pendingRemovedCodeIds],
+  );
   const voucherCodes = getVoucherCodesToDisplay({
     clientVoucherCodes,
     freeSlotsInClientPagianationPage,
@@ -65,24 +74,45 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     hasServerPaginationPrevPage,
     isServerPagination,
     serverVoucherCodes,
-  });
+  }).filter(code => !code.id || !pendingRemovedIdSet.has(code.id));
   const voucherCodesPagination = isServerPagination
     ? serverVoucherCodesPagination
     : clientVoucherCodesPagination;
-  const { selectedVoucherCodesIds, handleSetSelectedVoucherCodesIds, clearRowSelection } =
-    useVoucherCodesRowSelection(voucherCodes);
+  const { selectedVoucherCodesIds, setSelectedVoucherCodesIds, clearRowSelection } =
+    useVoucherCodesRowSelection();
 
-  const [voucherCodeBulkDelete, voucherCodeBulkDeleteOpts] = useVoucherCodeBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.voucherCodeBulkDelete?.errors.length === 0) {
-        voucherCodesRefetch();
-      }
-    },
-  });
+  const handleClearPendingRemovedVoucherCodes = () => {
+    setPendingRemovedCodes([]);
+  };
+
+  const handleClearStagedVoucherCodes = () => {
+    handleClearAddedVoucherCodes();
+    handleClearPendingRemovedVoucherCodes();
+  };
+
+  const handleAddVoucherCode = (code: string) => {
+    const pendingMatch = pendingRemovedCodes.find(
+      pending => pending.code.toLowerCase() === code.toLowerCase(),
+    );
+
+    // Re-adding a staged-for-delete code cancels the pending remove (catalogue pattern).
+    if (pendingMatch) {
+      setPendingRemovedCodes(codes => codes.filter(pending => pending.id !== pendingMatch.id));
+
+      return;
+    }
+
+    // Reject against drafts and already-saved codes on this page (API would fail on save).
+    if (voucherCodeExists(code, voucherCodes) || voucherCodeExists(code, serverVoucherCodes)) {
+      throw new Error("Code already exists");
+    }
+
+    addDraftVoucherCode(code);
+  };
 
   const handleDeleteVoucherCodes = async (): Promise<boolean> => {
     const draftCodes: string[] = [];
-    const serverCodeIds: string[] = [];
+    const serverCodesToRemove: PendingRemovedVoucherCode[] = [];
 
     for (const codeValue of selectedVoucherCodesIds) {
       const found = voucherCodes.find(vc => vc.code === codeValue);
@@ -90,7 +120,7 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
       if (found?.status === VOUCHER_CODE_DRAFT_STATUS) {
         draftCodes.push(codeValue);
       } else if (found?.id) {
-        serverCodeIds.push(found.id);
+        serverCodesToRemove.push({ id: found.id, code: found.code });
       }
     }
 
@@ -100,40 +130,12 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
       handleDeleteAddedVoucherCodes(draftCodes);
     }
 
-    let serverDeletedCount = 0;
+    if (serverCodesToRemove.length > 0) {
+      setPendingRemovedCodes(codes => {
+        const existingIds = new Set(codes.map(code => code.id));
+        const next = serverCodesToRemove.filter(code => !existingIds.has(code.id));
 
-    if (serverCodeIds.length > 0) {
-      const result = await voucherCodeBulkDelete({ variables: { ids: serverCodeIds } });
-      const errors = result.data?.voucherCodeBulkDelete?.errors ?? [];
-
-      if (errors.length > 0) {
-        notify({
-          status: "error",
-          text: intl.formatMessage({
-            id: "Y8XVvH",
-            defaultMessage: "Failed to delete voucher codes",
-          }),
-        });
-
-        return false;
-      }
-
-      serverDeletedCount = result.data?.voucherCodeBulkDelete?.count ?? 0;
-    }
-
-    const totalDeleted = draftCodes.length + serverDeletedCount;
-
-    if (totalDeleted > 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(
-          {
-            id: "TV940D",
-            defaultMessage:
-              "{count, plural, one {# voucher code deleted} other {# voucher codes deleted}}",
-          },
-          { count: totalDeleted },
-        ),
+        return next.length > 0 ? [...codes, ...next] : codes;
       });
     }
 
@@ -208,8 +210,10 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
   return {
     voucherCodes,
     addedVoucherCodes,
+    pendingRemovedCodeIds,
     voucherCodesLoading,
-    voucherCodesDeleteTransitionState: getMutationStatus(voucherCodeBulkDeleteOpts),
+    // Staging is sync — no live mutation on confirm.
+    voucherCodesDeleteTransitionState: "default" as const,
     voucherCodesPagination: {
       ...voucherCodesPagination,
       pageInfo: {
@@ -224,10 +228,10 @@ export const useVoucherCodes = ({ id }: { id: string }) => {
     voucherCodesSettings,
     updateVoucherCodesListSettings: handleUpdateVoucherCodesListSettings,
     selectedVoucherCodesIds,
-    handleSetSelectedVoucherCodesIds,
+    setSelectedVoucherCodesIds,
     handleAddVoucherCode,
     handleGenerateMultipleCodes,
     handleDeleteVoucherCodes,
-    handleClearAddedVoucherCodes,
+    handleClearStagedVoucherCodes,
   };
 };

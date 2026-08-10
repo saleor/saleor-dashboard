@@ -9,6 +9,7 @@ import {
   type OrderStatusFilter,
   PaymentMethodTypeEnum,
   ProductTypeEnum,
+  PromotionTypeEnum,
   StaffMemberStatus,
   VoucherDiscountType,
 } from "@dashboard/graphql";
@@ -24,6 +25,8 @@ import {
   fulfillmentStatusMessages,
   paymentMethodTypeMessages,
   productTypeMessages,
+  promotionStatusMessages,
+  promotionTypeMessages,
   staffMembersStatusMessages,
   voucherStatusMessages,
 } from "./messages";
@@ -83,6 +86,30 @@ const getVoucherStatusLabel = (status: DiscountStatusEnum, intl: IntlShape) => {
       return intl.formatMessage(voucherStatusMessages.scheduled);
     default:
       return status;
+  }
+};
+
+const getPromotionStatusLabel = (status: DiscountStatusEnum, intl: IntlShape) => {
+  switch (status) {
+    case DiscountStatusEnum.ACTIVE:
+      return intl.formatMessage(promotionStatusMessages.active);
+    case DiscountStatusEnum.EXPIRED:
+      return intl.formatMessage(promotionStatusMessages.ended);
+    case DiscountStatusEnum.SCHEDULED:
+      return intl.formatMessage(promotionStatusMessages.scheduled);
+    default:
+      return status;
+  }
+};
+
+const getPromotionTypeLabel = (type: PromotionTypeEnum, intl: IntlShape) => {
+  switch (type) {
+    case PromotionTypeEnum.CATALOGUE:
+      return intl.formatMessage(promotionTypeMessages.catalogue);
+    case PromotionTypeEnum.ORDER:
+      return intl.formatMessage(promotionTypeMessages.order);
+    default:
+      return type;
   }
 };
 
@@ -176,6 +203,10 @@ export const getLocalizedLabel = (rowType: LeftOperand["type"], value: string, i
       return getDiscountTypeLabel(value as VoucherDiscountType, intl);
     case "voucherStatus":
       return getVoucherStatusLabel(value as DiscountStatusEnum, intl);
+    case "promotionStatus":
+      return getPromotionStatusLabel(value as DiscountStatusEnum, intl);
+    case "promotionType":
+      return getPromotionTypeLabel(value as PromotionTypeEnum, intl);
     case "typeOfProduct":
       return getProductTypeLabel(value as ProductTypeEnum, intl);
     case "staffMemberStatus":

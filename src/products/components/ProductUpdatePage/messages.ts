@@ -22,11 +22,6 @@ export const messages = defineMessages({
       "{count, plural, one {# variant pending delete} other {# variants pending delete}}",
     description: "savebar hint when variants are marked for deletion but not saved yet",
   },
-  saveCompositionIncludes: {
-    id: "DpZRsS",
-    defaultMessage: "Unsaved changes: {segments}",
-    description: "Savebar hint listing which product areas will persist on Save",
-  },
   saveCompositionDetails: {
     id: "FaL3f6",
     defaultMessage: "details",

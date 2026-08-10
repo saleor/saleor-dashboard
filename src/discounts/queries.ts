@@ -110,7 +110,15 @@ export const saleDetails = gql`
 `;
 
 export const voucherDetails = gql`
-  query VoucherDetails(
+  query VoucherDetails($id: ID!) {
+    voucher(id: $id) {
+      ...VoucherDetails
+    }
+  }
+`;
+
+export const voucherCatalogue = gql`
+  query VoucherCatalogue(
     $id: ID!
     $after: String
     $before: String
@@ -122,7 +130,8 @@ export const voucherDetails = gql`
     $includeVariants: Boolean!
   ) {
     voucher(id: $id) {
-      ...VoucherDetails
+      id
+      ...VoucherCatalogue
     }
   }
 `;

@@ -374,11 +374,6 @@ export const messages = defineMessages({
     defaultMessage: "Availability",
     description: "Availability card title",
   },
-  availabilitySubtitle: {
-    id: "h0mEWF",
-    defaultMessage: "In {listed} of {total} channels",
-    description: "Availability card subtitle showing channel count",
-  },
   unsavedChannelChanges: {
     id: "xOrtMG",
     defaultMessage:

@@ -1,4 +1,5 @@
 import { dateCellRenderer } from "@dashboard/components/Datagrid/customCells/DateCell";
+import { voucherScopeCellRenderer } from "@dashboard/discounts/components/VoucherListDatagrid/VoucherScopeCell";
 import useLocale from "@dashboard/hooks/useLocale";
 import { lineMatrixStatusCellRenderer } from "@dashboard/orders/components/OrderLineMatrixDatagrid/LineMatrixStatusCell";
 import { useExtraCells } from "@glideapps/glide-data-grid-cells";
@@ -13,6 +14,7 @@ import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
 import { numberCellRenderer } from "./NumberCell";
 import { pillCellRenderer } from "./PillCell";
+import { primarySecondaryTextCellRenderer } from "./PrimarySecondaryTextCell";
 import { skeletonCellRenderer } from "./SkeletonCell";
 import { statusCellRenderer } from "./StatusCell";
 import { throbberCellRenderer } from "./ThrobberCell";
@@ -28,6 +30,8 @@ export function useCustomCellRenderers() {
       attributeInputTypeCellRenderer,
       attributeTypeCellRenderer,
       statusCellRenderer(themeValues),
+      primarySecondaryTextCellRenderer,
+      voucherScopeCellRenderer,
       moneyCellRenderer(locale),
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),

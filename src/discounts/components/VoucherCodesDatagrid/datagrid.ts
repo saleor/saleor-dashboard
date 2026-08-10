@@ -5,13 +5,16 @@ import {
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { getStatusColor } from "@dashboard/misc";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
 import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
 
-import { columnsMessages, messages } from "./messages";
+import {
+  getVoucherCodeStatusDot,
+  getVoucherCodeStatusLabel,
+} from "../VoucherCodesTable/voucherCodeStatus";
+import { columnsMessages } from "./messages";
 import { type VoucherCode } from "./types";
 
 export const voucherCodesStaticColumnsAdapter = (intl: IntlShape) => [
@@ -56,9 +59,12 @@ export const createGetCellContent =
       case "usage":
         return readonlyTextCell(rowData?.used?.toString() ?? PLACEHOLDER, false);
       case "status": {
-        const status = getStatus(rowData?.isActive);
-        const color = getStatusColor({ status, currentTheme });
-        const statusMessage = getStatusMessage(rowData?.isActive, intl);
+        const status = getVoucherCodeStatusDot(rowData?.isActive);
+        const color = getStatusColor({
+          status: status === "success" || status === "error" ? status : "warning",
+          currentTheme,
+        });
+        const statusMessage = getVoucherCodeStatusLabel(rowData?.isActive, intl);
 
         return tagsCell(
           [
@@ -78,19 +84,3 @@ export const createGetCellContent =
         return readonlyTextCell("", false);
     }
   };
-
-function getStatus(isActive: boolean | undefined): DotStatus {
-  if (isActive === undefined) {
-    return "warning";
-  }
-
-  return isActive ? "success" : "error";
-}
-
-function getStatusMessage(isActive: boolean | undefined, intl: IntlShape) {
-  if (isActive === undefined) {
-    return intl.formatMessage(messages.draft);
-  }
-
-  return isActive ? intl.formatMessage(messages.active) : intl.formatMessage(messages.inactive);
-}

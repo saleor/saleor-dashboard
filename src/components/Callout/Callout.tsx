@@ -1,66 +1,69 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { getStatusColor, type PillStatusType } from "@dashboard/misc";
-import { Box, Text, useTheme } from "@saleor/macaw-ui-next";
-import { AlertTriangle, CircleAlert, Info, type LucideIcon } from "lucide-react";
+import { AlertTriangle, Info, type LucideIcon, XCircle } from "lucide-react";
 import { type ReactNode } from "react";
 
-type CalloutType = "info" | "warning" | "error";
+import styles from "./Callout.module.css";
 
-interface CalloutStyles {
-  status: PillStatusType;
-  iconColor: "warning1" | "critical1" | "default1";
+export type CalloutType = "info" | "warning" | "error";
+
+interface CalloutVariant {
   Icon: LucideIcon;
+  className: string;
 }
 
-const calloutStylesMap: Record<CalloutType, CalloutStyles> = {
+const calloutVariants: Record<CalloutType, CalloutVariant> = {
+  info: {
+    Icon: Info,
+    className: styles.info,
+  },
   warning: {
-    status: "warning",
-    iconColor: "warning1",
-    Icon: CircleAlert,
+    Icon: AlertTriangle,
+    className: styles.warning,
   },
   error: {
-    status: "error",
-    iconColor: "critical1",
-    Icon: AlertTriangle,
-  },
-  info: {
-    status: "neutral",
-    iconColor: "default1",
-    Icon: Info,
+    // Match toast error affordance.
+    Icon: XCircle,
+    className: styles.error,
   },
 };
 
 interface CalloutProps {
-  children?: ReactNode;
-  title: ReactNode;
   type: CalloutType;
+  /** Primary line — required for a11y identity of the callout. */
+  title: ReactNode;
+  /** Optional secondary detail under the title. */
+  children?: ReactNode;
+  className?: string;
+  "data-test-id"?: string;
 }
 
-export const Callout = ({ children, title, type }: CalloutProps): JSX.Element => {
-  const { theme: currentTheme } = useTheme();
-  const { status, iconColor, Icon } = calloutStylesMap[type];
-  const backgroundColor = getStatusColor({ status, currentTheme }).base;
+/**
+ * Section callout for inline guidance or errors.
+ * Neutral default1 surface + border; status via icon / border / title color only.
+ */
+export const Callout = ({
+  type,
+  title,
+  children,
+  className,
+  "data-test-id": dataTestId,
+}: CalloutProps): JSX.Element => {
+  const { Icon, className: typeClassName } = calloutVariants[type];
+  const rootClassName = [styles.callout, typeClassName, className].filter(Boolean).join(" ");
 
   return (
-    <Box
-      display="flex"
-      alignItems="flex-start"
-      gap={3}
-      padding={4}
-      borderRadius={4}
-      __backgroundColor={backgroundColor}
+    <div
+      className={rootClassName}
+      role={type === "error" || type === "warning" ? "alert" : "status"}
+      data-test-id={dataTestId}
     >
-      <Box color={iconColor} __lineHeight="0" flexShrink="0">
+      <div className={styles.icon} aria-hidden>
         <Icon size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-      </Box>
-      <Box display="flex" flexDirection="column" gap={1}>
-        <Box>{title}</Box>
-        {children && (
-          <Text size={3} color="default2">
-            {children}
-          </Text>
-        )}
-      </Box>
-    </Box>
+      </div>
+      <div className={styles.body}>
+        <div className={styles.title}>{title}</div>
+        {children ? <div className={styles.description}>{children}</div> : null}
+      </div>
+    </div>
   );
 };

@@ -57,6 +57,10 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
 
 export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
+/** Embedded voucher codes card — keep the detail page compact. */
+export const VOUCHER_CODES_PAGINATE_BY = 10;
+/** Embedded Eligible products catalogue lists on voucher create/details. */
+export const VOUCHER_CATALOGUE_PAGINATE_BY = 10;
 /** Page size for the product variants datagrid (embedded Glide paints all loaded rows). */
 export const PRODUCT_VARIANTS_PAGINATE_BY = 50;
 /** Page size for variant detail/create sibling navigator (infinite scroll). */
@@ -174,7 +178,8 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.VOUCHER_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["code", "min-spent", "start-date", "end-date", "value", "limit"],
+    // Name · status · offer · scope · redemptions (legacy date/min-spent still pickable).
+    columns: ["code", "status", "value", "type", "limit"],
   },
 
   [ListViews.WAREHOUSE_LIST]: {
@@ -247,7 +252,7 @@ export const defaultListSettings: AppListViewSettings = {
     columns: ["name", "sku"],
   },
   [ListViews.VOUCHER_CODES]: {
-    rowNumber: PAGINATE_BY,
+    rowNumber: VOUCHER_CODES_PAGINATE_BY,
   },
   [ListViews.ORDER_REFUNDS]: {
     rowNumber: PAGINATE_BY,
@@ -263,6 +268,12 @@ export const APP_VERSION = process.env.CUSTOM_VERSION || `v${packageInfo.version
 
 export const GTM_ID = process.env.GTM_ID;
 
-export const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
+/** Default toast display time (ms). Floor for readable non-error feedback; Sonner pauses on hover. */
+export const DEFAULT_NOTIFICATION_SHOW_TIME = 5000;
+/**
+ * Paired save/create error toasts (inline/section already owns recovery).
+ * Longer than success so merchants can read the pointer before it dismisses.
+ */
+export const PAIRED_ERROR_NOTIFICATION_SHOW_TIME = DEFAULT_NOTIFICATION_SHOW_TIME * 2;
 export const ENABLED_SERVICE_NAME_HEADER =
   (process.env.ENABLED_SERVICE_NAME_HEADER as string) === "true";

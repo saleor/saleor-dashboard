@@ -2,31 +2,17 @@
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelVoucherData } from "@dashboard/channels/utils";
-import {
-  TopNav,
-  TopNavDestinationIcon,
-  topNavDestinationMessages,
-} from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { CountryList } from "@dashboard/components/CountryList";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata, type MetadataFormData } from "@dashboard/components/Metadata";
-import { Savebar } from "@dashboard/components/Savebar";
-import { Tab, TabContainer } from "@dashboard/components/Tab";
-import {
-  createChannelsChangeHandler,
-  createDiscountTypeChangeHandler,
-  createVoucherUpdateHandler,
-} from "@dashboard/discounts/handlers";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { createVoucherUpdateHandler } from "@dashboard/discounts/handlers";
 import { voucherGraphiQLQuery } from "@dashboard/discounts/queries";
-import { itemsQuantityMessages } from "@dashboard/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { voucherListPath } from "@dashboard/discounts/urls";
-import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
+import { VOUCHER_UPDATE_FORM_ID } from "@dashboard/discounts/views/VoucherDetails/types";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForVoucherDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -34,7 +20,7 @@ import {
   type DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
-  type SearchProductFragment,
+  type VoucherCatalogueFragment,
   type VoucherDetailsFragment,
   VoucherTypeEnum,
 } from "@dashboard/graphql";
@@ -42,31 +28,22 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Divider, Text } from "@saleor/macaw-ui-next";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import { ListChecks, Trash2 } from "lucide-react";
 import * as React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { useMemo } from "react";
+import { useIntl } from "react-intl";
 
 import { splitDateTime } from "../../../misc";
 import { type ChannelProps, type ListProps, type TabListActions } from "../../../types";
-import DiscountCategories from "../DiscountCategories";
-import DiscountCollections from "../DiscountCollections";
-import DiscountDates from "../DiscountDates";
-import DiscountProducts from "../DiscountProducts";
-import DiscountVariants from "../DiscountVariants";
-import { VoucherCodes } from "../VoucherCodes";
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
 import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
-import VoucherInfo from "../VoucherInfo";
-import VoucherLimits from "../VoucherLimits";
-import VoucherRequirements from "../VoucherRequirements";
-import VoucherSummary from "../VoucherSummary";
-import VoucherTypes from "../VoucherTypes";
-import VoucherValue from "../VoucherValue";
+import { voucherDetailsPageMessages as messages } from "./messages";
+import { VoucherDetailsPageFormContent } from "./VoucherDetailsPageFormContent";
+import { VoucherDetailsPageLoading } from "./VoucherDetailsPageLoading";
 
 export enum VoucherDetailsPageTab {
   categories = "categories",
@@ -84,6 +61,11 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   channelListings: ChannelVoucherData[];
   name: string;
   discountType: DiscountTypeEnum;
+  /**
+   * Legacy form field — kept for create handlers / API shape.
+   * Percentage drafts live on `channelListings[].percentageDiscountValue`.
+   */
+  percentageDiscountValue: string;
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -99,6 +81,9 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   singleUse: boolean;
 }
 
+/** Details form entity plus optional catalogue accordion lists (fetched separately). */
+export type VoucherDetailsPageVoucher = VoucherDetailsFragment & Partial<VoucherCatalogueFragment>;
+
 interface VoucherDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     TabListActions<
@@ -109,14 +94,22 @@ interface VoucherDetailsPageProps
   tabItemsCount: VoucherTabItemsCount;
   errors: DiscountErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  voucher: VoucherDetailsFragment;
+  /** Undefined/null until the details query resolves — page shows a loading shell. */
+  voucher: VoucherDetailsPageVoucher | null | undefined;
   allChannelsCount: number;
   channelListings: ChannelVoucherData[];
+  savedChannelListings: ChannelVoucherData[];
   selectedVoucherCodesIds: string[];
   voucherCodes: VoucherCode[];
+  /** Draft codes pending save — synced into form `codes` for submit + dirty state. */
   addedVoucherCodes: VoucherCode[];
+  /** Server code node ids staged for delete on Save. */
+  pendingRemovedCodeIds?: string[];
+  /** Staged catalogue / country membership pending Savebar save. */
+  hasCatalogueDraftChanges?: boolean;
+  hasCountriesDraftChanges?: boolean;
   voucherCodesLoading: boolean;
-  onSelectVoucherCodesIds: (rows: number[], clearSelection: () => void) => void;
+  onSelectedCodesChange: (ids: string[]) => void;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
   onCollectionAssign: () => void;
@@ -127,11 +120,24 @@ interface VoucherDetailsPageProps
   onProductUnassign: (id: string) => void;
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;
+  catalogueNumberOfRows: number;
+  onCatalogueListSettingsUpdate: (key: "rowNumber", value: number) => void;
   onRemove: () => void;
   onSubmit: (data: VoucherDetailsPageFormData) => void;
   onTabClick: (index: VoucherDetailsPageTab) => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
+  onShowMetadata: () => void;
+  /**
+   * Reopens the setup checklist (clears local dismiss + emphasizes setup).
+   * Shown in the cogs menu when the card is currently hidden.
+   */
+  onShowSetupChecklist?: () => void;
+  /** URL `?action=setup` — forces the checklist visible even if dismissed. */
+  setupEmphasized?: boolean;
+  setupCardDismissed?: boolean;
+  setupCardDisplayReady?: boolean;
+  onDismissSetupCard?: () => void;
   onMultipleVoucherCodesGenerate: (data: GenerateMultipleVoucherCodeFormData) => void;
   onCustomVoucherCodeGenerate: (code: string) => void;
   deleteVoucherCodesTransitionState: ConfirmButtonTransitionState;
@@ -141,23 +147,12 @@ interface VoucherDetailsPageProps
   voucherCodesSettings: UseListSettings["settings"];
 }
 
-const messages = defineMessages({
-  openGraphiQL: {
-    id: "LCPfA9",
-    defaultMessage: "Open this voucher in GraphiQL",
-  },
-});
-
-const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
-const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
-const ProductsTab = Tab(VoucherDetailsPageTab.products);
-const VariantsTab = Tab(VoucherDetailsPageTab.variants);
-
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
   tabItemsCount = {},
   allChannelsCount,
   channelListings = [],
+  savedChannelListings = [],
   disabled,
   errors,
   saveButtonBarState,
@@ -173,9 +168,17 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   onProductUnassign,
   onVariantAssign,
   onVariantUnassign,
+  catalogueNumberOfRows,
+  onCatalogueListSettingsUpdate,
   onTabClick,
   openChannelsModal,
   onRemove,
+  onShowMetadata,
+  onShowSetupChecklist,
+  setupEmphasized = false,
+  setupCardDismissed = false,
+  setupCardDisplayReady = true,
+  onDismissSetupCard,
   onMultipleVoucherCodesGenerate,
   onCustomVoucherCodeGenerate,
   deleteVoucherCodesTransitionState,
@@ -191,27 +194,45 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar,
   variantListToolbar,
   selectedVoucherCodesIds,
-  onSelectVoucherCodesIds,
+  onSelectedCodesChange,
   voucherCodes,
   addedVoucherCodes,
+  pendingRemovedCodeIds = [],
+  hasCatalogueDraftChanges = false,
+  hasCountriesDraftChanges = false,
   voucherCodesLoading,
   voucherCodesPagination,
   onVoucherCodesSettingsChange,
   voucherCodesSettings,
-}: VoucherDetailsPageProps) => {
+}) => {
   const intl = useIntl();
   const context = useDevModeContext();
+  const navigate = useNavigator();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+  // Keep the layout shell until the first codes fetch settles so we don't flash
+  // half-loaded UI. Keyed by voucher id so refetches after reveal stay on the form.
+  const [revealedForVoucherId, setRevealedForVoucherId] = React.useState<string | null>(null);
+
+  React.useEffect(
+    function revealWhenPrimaryQueriesSettle() {
+      if (voucher && !voucherCodesLoading) {
+        setRevealedForVoucherId(voucher.id);
+      }
+    },
+    [voucher, voucherCodesLoading],
+  );
+
+  const hasRevealedContent = !!voucher && revealedForVoucherId === voucher.id;
+
   const openPlaygroundURL = () => {
     context.setDevModeContent(voucherGraphiQLQuery);
     context.setVariables(`{ "id": "${voucher?.id}" }`);
     context.setDevModeVisibility(true);
   };
-  const { lastUsedLocaleOrFallback } = useCachedLocales();
-  const navigate = useNavigator();
-  const { user } = useUser();
-  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
-  const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
-  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
+
   const hasMinimalOrderValueRequirement = voucher?.channelListings?.some(
     listing => listing.minSpent?.amount > 0,
   );
@@ -232,29 +253,42 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       : voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
-  const initialForm: VoucherDetailsPageFormData = {
-    applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
-    applyOncePerOrder: voucher?.applyOncePerOrder || false,
-    onlyForStaff: voucher?.onlyForStaff || false,
-    channelListings,
-    name: voucher?.name || "",
-    discountType,
-    codes: addedVoucherCodes,
-    endDate: splitDateTime(voucher?.endDate ?? "").date,
-    endTime: splitDateTime(voucher?.endDate ?? "").time,
-    hasEndDate: !!voucher?.endDate,
-    hasUsageLimit: !!voucher?.usageLimit,
-    minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
-    requirementsPicker: requirementsPickerInitValue,
-    startDate: splitDateTime(voucher?.startDate ?? "").date,
-    startTime: splitDateTime(voucher?.startDate ?? "").time,
-    type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: voucher?.usageLimit ?? 1,
-    used: voucher?.used ?? 0,
-    singleUse: voucher?.singleUse ?? false,
-    metadata: voucher?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
-  };
+
+  const initialForm: VoucherDetailsPageFormData = useMemo(
+    () => ({
+      applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
+      applyOncePerOrder: voucher?.applyOncePerOrder || false,
+      onlyForStaff: voucher?.onlyForStaff || false,
+      channelListings,
+      name: voucher?.name || "",
+      discountType,
+      // Unused legacy field — percentages live on `channelListings[].percentageDiscountValue`.
+      percentageDiscountValue: "",
+      codes: addedVoucherCodes,
+      endDate: splitDateTime(voucher?.endDate ?? "").date,
+      endTime: splitDateTime(voucher?.endDate ?? "").time,
+      hasEndDate: !!voucher?.endDate,
+      hasUsageLimit: !!voucher?.usageLimit,
+      minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
+      requirementsPicker: requirementsPickerInitValue,
+      startDate: splitDateTime(voucher?.startDate ?? "").date,
+      startTime: splitDateTime(voucher?.startDate ?? "").time,
+      type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
+      usageLimit: voucher?.usageLimit ?? 1,
+      used: voucher?.used ?? 0,
+      singleUse: voucher?.singleUse ?? false,
+      metadata: voucher?.metadata.map(mapMetadataItemToInput),
+      privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
+    }),
+    [
+      voucher,
+      channelListings,
+      savedChannelListings,
+      addedVoucherCodes,
+      discountType,
+      requirementsPickerInitValue,
+    ],
+  );
 
   const voucherListBackLink = useBackLinkWithState({
     path: voucherListPath,
@@ -268,265 +302,132 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     voucher?.id,
   );
 
+  const menuItems = useMemo((): TopNavMenuItem[] => {
+    const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
+      ...item,
+      disabled,
+    }));
+
+    if (onShowSetupChecklist) {
+      items.push({
+        label: intl.formatMessage(messages.showSetupChecklist),
+        onSelect: onShowSetupChecklist,
+        testId: "show-setup-checklist",
+        icon: <ListChecks size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
+    items.push({
+      label: intl.formatMessage(messages.openGraphiQL),
+      onSelect: openPlaygroundURL,
+      testId: "graphiql-redirect",
+      icon: <GraphqlIcon />,
+    });
+    items.push({
+      label: intl.formatMessage(messages.deleteVoucher),
+      onSelect: onRemove,
+      testId: "delete-voucher",
+      color: "critical1",
+      icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+    });
+
+    return items;
+  }, [disabled, extensionMenuItems, intl, onRemove, onShowSetupChecklist]);
+
+  // Do not mount Form with invented ENTIRE_ORDER / VALUE_FIXED defaults — that flashes
+  // the wrong discount selection before voucher syncs (Geist: no fake selected state).
+  // Also wait for the initial codes query so the page doesn't reveal in half-loaded frames.
+  if (!voucher || !hasRevealedContent) {
+    return <VoucherDetailsPageLoading voucher={voucher} />;
+  }
+
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, submit, triggerChange, set }) => {
-        const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
-        const handleChannelChange = createChannelsChangeHandler(
-          data.channelListings,
-          onChannelsChange,
-          triggerChange,
-        );
-        const changeMetadata = makeMetadataChangeHandler(change);
-        const handleSubmit = createVoucherUpdateHandler(submit, setLocalErrors);
-        const allErrors = [...localErrors, ...errors];
+    <Form
+      key={voucher.id}
+      confirmLeave
+      formId={VOUCHER_UPDATE_FORM_ID}
+      initial={initialForm}
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
+      {form => {
+        const handleSubmit = createVoucherUpdateHandler(form.submit, setLocalErrors);
 
         return (
-          <DetailPageLayout>
-            <TopNav
-              href={voucherListBackLink}
-              hrefIcon={<TopNavDestinationIcon.discounts />}
-              hrefTitle={intl.formatMessage(topNavDestinationMessages.allVouchers)}
-              title={voucher?.name}
-            >
-              {canTranslate && (
-                <TranslationsButton
-                  onClick={() =>
-                    navigate(
-                      languageEntityUrl(
-                        lastUsedLocaleOrFallback,
-                        TranslatableEntities.vouchers,
-                        voucher?.id,
-                      ),
-                    )
-                  }
-                />
-              )}
-              <TopNav.Menu
-                items={[
-                  ...extensionMenuItems,
-                  {
-                    label: intl.formatMessage(messages.openGraphiQL),
-                    onSelect: openPlaygroundURL,
-                    testId: "graphiql-redirect",
-                  },
-                ]}
-                dataTestId="menu"
-              />
-            </TopNav>
-            <DetailPageLayout.Content>
-              <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} />
-              <VoucherCodes
-                selectedCodesIds={selectedVoucherCodesIds}
-                onSelectVoucherCodesIds={onSelectVoucherCodesIds}
-                onDeleteCodes={onDeleteVoucherCodes}
-                deleteCodesTransitionState={deleteVoucherCodesTransitionState}
-                loading={voucherCodesLoading}
-                onMultiCodesGenerate={codes => {
-                  triggerChange();
-                  onMultipleVoucherCodesGenerate(codes);
-                }}
-                onCustomCodeGenerate={code => {
-                  triggerChange();
-                  onCustomVoucherCodeGenerate(code);
-                }}
-                disabled={disabled}
-                codes={voucherCodes}
-                voucherCodesPagination={voucherCodesPagination}
-                onSettingsChange={onVoucherCodesSettingsChange}
-                settings={voucherCodesSettings}
-              />
-              <VoucherTypes
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={event => handleDiscountTypeChange(data, event)}
-              />
-              {data.discountType.toString() !== "SHIPPING" ? (
-                <VoucherValue
-                  data={data}
-                  disabled={disabled}
-                  errors={allErrors}
-                  onChange={change}
-                  onChannelChange={handleChannelChange}
-                />
-              ) : null}
-              {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
-              data.discountType.toString() !== "SHIPPING" ? (
-                <>
-                  <TabContainer>
-                    <CategoriesTab
-                      isActive={activeTab === VoucherDetailsPageTab.categories}
-                      changeTab={onTabClick}
-                      testId="categories-tab"
-                    >
-                      {intl.formatMessage(itemsQuantityMessages.categories, {
-                        quantity: tabItemsCount.categories?.toString() || "…",
-                      })}
-                    </CategoriesTab>
-                    <CollectionsTab
-                      testId="collections-tab"
-                      isActive={activeTab === VoucherDetailsPageTab.collections}
-                      changeTab={onTabClick}
-                    >
-                      {intl.formatMessage(itemsQuantityMessages.collections, {
-                        quantity: tabItemsCount.collections?.toString() || "…",
-                      })}
-                    </CollectionsTab>
-                    <ProductsTab
-                      testId="products-tab"
-                      isActive={activeTab === VoucherDetailsPageTab.products}
-                      changeTab={onTabClick}
-                    >
-                      {intl.formatMessage(itemsQuantityMessages.products, {
-                        quantity: tabItemsCount.products?.toString() || "…",
-                      })}
-                    </ProductsTab>
-                    <VariantsTab
-                      testId="variants-tab"
-                      isActive={activeTab === VoucherDetailsPageTab.variants}
-                      changeTab={onTabClick}
-                    >
-                      {intl.formatMessage(itemsQuantityMessages.variants, {
-                        quantity: tabItemsCount.variants?.toString() || "…",
-                      })}
-                    </VariantsTab>
-                  </TabContainer>
-                  <CardSpacer />
-                  {activeTab === VoucherDetailsPageTab.categories ? (
-                    <DiscountCategories
-                      disabled={disabled}
-                      onCategoryAssign={onCategoryAssign}
-                      onCategoryUnassign={onCategoryUnassign}
-                      categories={mapEdgesToItems(voucher?.categories)}
-                      isChecked={isChecked}
-                      selected={selected}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      toolbar={categoryListToolbar}
-                    />
-                  ) : activeTab === VoucherDetailsPageTab.collections ? (
-                    <DiscountCollections
-                      disabled={disabled}
-                      onCollectionAssign={onCollectionAssign}
-                      onCollectionUnassign={onCollectionUnassign}
-                      collections={mapEdgesToItems(voucher?.collections)}
-                      isChecked={isChecked}
-                      selected={selected}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      toolbar={collectionListToolbar}
-                    />
-                  ) : activeTab === VoucherDetailsPageTab.products ? (
-                    <DiscountProducts
-                      disabled={disabled}
-                      onProductAssign={onProductAssign}
-                      onProductUnassign={onProductUnassign}
-                      products={
-                        mapEdgesToItems(voucher?.products) as unknown as SearchProductFragment[]
-                      }
-                      isChecked={isChecked}
-                      selected={selected}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      toolbar={productListToolbar}
-                    />
-                  ) : (
-                    <DiscountVariants
-                      disabled={disabled}
-                      onVariantAssign={onVariantAssign}
-                      onVariantUnassign={onVariantUnassign}
-                      variants={voucher?.variants}
-                      isChecked={isChecked}
-                      selected={selected}
-                      toggle={toggle}
-                      toggleAll={toggleAll}
-                      toolbar={variantListToolbar}
-                    />
-                  )}
-                </>
-              ) : null}
-              {data.discountType.toString() === "SHIPPING" ? (
-                <CountryList
-                  countries={voucher?.countries}
-                  disabled={disabled}
-                  emptyText={intl.formatMessage({
-                    id: "jd/LWa",
-                    defaultMessage: "Voucher applies to all countries",
-                  })}
-                  summaryContext="voucher"
-                  title={
-                    <>
-                      {intl.formatMessage({
-                        id: "ibnmEd",
-                        defaultMessage: "Countries",
-                        description: "voucher country range",
-                      })}
-                      <Text size={2} fontWeight="light" display="block">
-                        <FormattedMessage
-                          id="glT6fm"
-                          defaultMessage="Voucher is limited to these countries"
-                        />
-                      </Text>
-                    </>
-                  }
-                  onCountryAssign={onCountryAssign}
-                  onCountryUnassign={onCountryUnassign}
-                />
-              ) : null}
-              <VoucherRequirements
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-                onChannelChange={handleChannelChange}
-              />
-              <VoucherLimits
-                data={data}
-                initialUsageLimit={initialForm.usageLimit}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-                setData={set}
-                isNewVoucher={false}
-              />
-              <DiscountDates data={data} disabled={disabled} errors={errors} onChange={change} />
-              <Metadata data={data} onChange={changeMetadata} />
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <VoucherSummary voucher={voucher} selectedChannelId={selectedChannelId} />
-              <ChannelsAvailabilityCard
-                managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                allChannelsCount={allChannelsCount}
-                channelsList={data.channelListings.map(channel => ({
-                  id: channel.id,
-                  name: channel.name,
-                }))}
-                disabled={disabled}
-                openModal={openChannelsModal}
-              />
-              {VOUCHER_DETAILS_WIDGETS.length > 0 && voucher?.id && (
-                <>
-                  <CardSpacer />
-                  <Divider />
-                  <AppWidgets
-                    extensions={VOUCHER_DETAILS_WIDGETS}
-                    params={{ voucherId: voucher?.id }}
-                  />
-                </>
-              )}
-            </DetailPageLayout.RightSidebar>
-            <Savebar>
-              <Savebar.DeleteButton onClick={onRemove} />
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(voucherListBackLink)} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBarState}
-                onClick={() => handleSubmit(data)}
-                disabled={disabled}
-              />
-            </Savebar>
-          </DetailPageLayout>
+          <VoucherDetailsPageFormContent
+            form={form}
+            activeTab={activeTab}
+            tabItemsCount={tabItemsCount}
+            errors={errors}
+            localErrors={localErrors}
+            saveButtonBarState={saveButtonBarState}
+            voucher={voucher}
+            allChannelsCount={allChannelsCount}
+            channelListings={channelListings}
+            savedChannelListings={savedChannelListings}
+            initialUsageLimit={initialForm.usageLimit}
+            selectedVoucherCodesIds={selectedVoucherCodesIds}
+            voucherCodes={voucherCodes}
+            addedVoucherCodes={addedVoucherCodes}
+            pendingRemovedCodeIds={pendingRemovedCodeIds}
+            hasCatalogueDraftChanges={hasCatalogueDraftChanges}
+            hasCountriesDraftChanges={hasCountriesDraftChanges}
+            voucherCodesLoading={voucherCodesLoading}
+            voucherCodesPagination={voucherCodesPagination}
+            voucherCodesSettings={voucherCodesSettings}
+            deleteVoucherCodesTransitionState={deleteVoucherCodesTransitionState}
+            voucherListBackLink={voucherListBackLink}
+            menuItems={menuItems}
+            canTranslate={!!canTranslate}
+            onTranslate={() =>
+              navigate(
+                languageEntityUrl(
+                  lastUsedLocaleOrFallback,
+                  TranslatableEntities.vouchers,
+                  voucher?.id,
+                ),
+              )
+            }
+            onShowMetadata={onShowMetadata}
+            onRemove={onRemove}
+            setupEmphasized={setupEmphasized}
+            setupCardDismissed={setupCardDismissed}
+            setupCardDisplayReady={setupCardDisplayReady}
+            onDismissSetupCard={onDismissSetupCard}
+            onCancel={() => navigate(voucherListBackLink)}
+            onSubmit={data => handleSubmit(data)}
+            onTabClick={onTabClick}
+            onChannelsChange={onChannelsChange}
+            openChannelsModal={openChannelsModal}
+            onCategoryAssign={onCategoryAssign}
+            onCategoryUnassign={onCategoryUnassign}
+            onCollectionAssign={onCollectionAssign}
+            onCollectionUnassign={onCollectionUnassign}
+            onCountryAssign={onCountryAssign}
+            onCountryUnassign={onCountryUnassign}
+            onProductAssign={onProductAssign}
+            onProductUnassign={onProductUnassign}
+            onVariantAssign={onVariantAssign}
+            onVariantUnassign={onVariantUnassign}
+            catalogueNumberOfRows={catalogueNumberOfRows}
+            onCatalogueListSettingsUpdate={onCatalogueListSettingsUpdate}
+            onMultipleVoucherCodesGenerate={onMultipleVoucherCodesGenerate}
+            onCustomVoucherCodeGenerate={onCustomVoucherCodeGenerate}
+            onDeleteVoucherCodes={onDeleteVoucherCodes}
+            onSelectedCodesChange={onSelectedCodesChange}
+            onVoucherCodesSettingsChange={onVoucherCodesSettingsChange}
+            voucherWidgets={VOUCHER_DETAILS_WIDGETS}
+            disabled={disabled}
+            selectedChannelId={selectedChannelId}
+            isChecked={isChecked}
+            selected={selected}
+            toggle={toggle}
+            toggleAll={toggleAll}
+            categoryListToolbar={categoryListToolbar}
+            collectionListToolbar={collectionListToolbar}
+            productListToolbar={productListToolbar}
+            variantListToolbar={variantListToolbar}
+          />
         );
       }}
     </Form>

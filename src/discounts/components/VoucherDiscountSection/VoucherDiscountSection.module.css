@@ -1,0 +1,85 @@
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.subsectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-4);
+  padding: var(--mu-spacing-5) var(--mu-spacing-6);
+}
+
+.subsectionDivider {
+  border-top: 1px dashed var(--mu-colors-border-default1);
+}
+
+/* Stack by default — 3-up only when the content column is wide enough (nav still ~25%). */
+.scopeGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mu-spacing-3);
+}
+
+@media (min-width: 1280px) {
+  .scopeGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.amountControlRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-4);
+}
+
+.amountTypeControl {
+  width: 100%;
+  display: flex;
+}
+
+.amountTypeControl > button {
+  flex: 1 1 0;
+  justify-content: center;
+}
+
+.percentageField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-3);
+}
+
+.percentageInput {
+  max-width: 14rem;
+}
+
+.fixedAmountBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-3);
+}
+
+.shippingCallout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mu-spacing-3);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+  padding: var(--mu-spacing-4);
+  background-color: var(--mu-colors-background-default1);
+}
+
+.sectionLink {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.sectionLink:hover {
+  text-decoration: underline;
+}

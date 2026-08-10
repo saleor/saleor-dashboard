@@ -77,6 +77,37 @@ export const voucherStatusMessages = defineMessages({
   },
 });
 
+export const promotionStatusMessages = defineMessages({
+  active: {
+    defaultMessage: "Active",
+    id: "cARfB7",
+    description: "promotion status filter active",
+  },
+  ended: {
+    defaultMessage: "Ended",
+    id: "5VLBgx",
+    description: "promotion status filter ended",
+  },
+  scheduled: {
+    defaultMessage: "Scheduled",
+    id: "3jdRNZ",
+    description: "promotion status filter scheduled",
+  },
+});
+
+export const promotionTypeMessages = defineMessages({
+  catalogue: {
+    defaultMessage: "Catalog",
+    id: "TtRyRv",
+    description: "promotion type filter catalog",
+  },
+  order: {
+    defaultMessage: "Order",
+    id: "WED6ly",
+    description: "promotion type filter order",
+  },
+});
+
 export const collectionFilterMessages = defineMessages({
   published: {
     defaultMessage: "Published",

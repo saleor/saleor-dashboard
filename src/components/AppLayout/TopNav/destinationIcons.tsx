@@ -1,11 +1,13 @@
 import { createTopNavLucideIcon } from "@dashboard/icons/createNavigationLucideIcon";
 import { TopNavModelingIcon } from "@dashboard/icons/Modeling";
 import {
+  FolderTree,
   Gift,
   Globe,
   Grid2x2Plus,
   Home,
   Languages,
+  Layers,
   Package,
   Percent,
   Receipt,
@@ -22,10 +24,17 @@ import {
 /**
  * Destination icons for TopNav href links.
  * Prefer these over a generic back arrow so the control shows where it navigates.
+ *
+ * Catalog destinations stay distinct:
+ * - products → Tag (SKU / sellable item)
+ * - categories → FolderTree (taxonomy)
+ * - collections → Layers (curated grouping)
  */
 export const TopNavDestinationIcon = {
   attributes: createTopNavLucideIcon(Tags),
+  categories: createTopNavLucideIcon(FolderTree),
   channels: createTopNavLucideIcon(Globe),
+  collections: createTopNavLucideIcon(Layers),
   configuration: createTopNavLucideIcon(Settings),
   customers: createTopNavLucideIcon(User),
   discounts: createTopNavLucideIcon(Percent),

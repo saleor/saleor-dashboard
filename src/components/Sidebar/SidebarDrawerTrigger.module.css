@@ -1,0 +1,16 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--mu-spacing-2);
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default2);
+  cursor: pointer;
+}
+
+.trigger:hover {
+  background-color: var(--mu-colors-background-default2);
+}

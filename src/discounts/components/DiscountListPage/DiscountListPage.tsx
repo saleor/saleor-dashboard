@@ -20,7 +20,7 @@ import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { type PromotionFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { type FilterPresetsProps, type PageListProps, type SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
@@ -75,7 +75,7 @@ const DiscountListPage = ({
       <TopNav
         isAlignToRight={false}
         withoutBorder
-        title={intl.formatMessage(commonMessages.discounts)}
+        title={intl.formatMessage(sectionNames.promotions)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
@@ -91,9 +91,9 @@ const DiscountListPage = ({
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
-                id: "a6GDem",
-                defaultMessage: "All discounts",
-                description: "tab name",
+                id: "0gmP/S",
+                defaultMessage: "All promotions",
+                description: "promotions list tab name for all items",
               })}
             />
           </Box>
@@ -133,8 +133,9 @@ const DiscountListPage = ({
               <SearchInput
                 initialSearch={initialSearch}
                 placeholder={intl.formatMessage({
-                  id: "+bhokL",
-                  defaultMessage: "Search discounts...",
+                  id: "1Sfy/9",
+                  defaultMessage: "Search promotions...",
+                  description: "promotions list search input placeholder",
                 })}
                 onSearchChange={onSearchChange}
               />

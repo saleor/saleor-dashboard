@@ -1,8 +1,15 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
-import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
+import { Box, type BoxProps, Button, Select, Text } from "@saleor/macaw-ui-next";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { FormattedMessage } from "react-intl";
+import { type ReactNode } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import styles from "./Pagination.module.css";
+import {
+  COLLECTION_PRODUCT_TABLE_ACTION_INSET,
+  COLLECTION_PRODUCT_TABLE_LEADING_INSET,
+} from "./productTableLayout";
 
 const ROW_NUMBER_OPTIONS = [
   { label: "10", value: "10" },
@@ -14,9 +21,33 @@ const ROW_NUMBER_OPTIONS = [
 interface PaginationProps {
   onUpdateListSettings: (key: "rowNumber", value: number) => void;
   numberOfRows: number;
+  /**
+   * Override left inset (defaults to product-table leading inset).
+   * Numbers are Macaw spacing tokens (`paddingLeft={6}` → spacing-6).
+   * Strings are raw CSS (e.g. `calc(...)`).
+   */
+  paddingLeft?: BoxProps["paddingLeft"] | string;
+  /** Optional action immediately before the pagination arrows (e.g. bulk delete). */
+  beforePagination?: ReactNode;
 }
 
-export const Pagination = ({ onUpdateListSettings, numberOfRows }: PaginationProps) => {
+const getPaddingLeftProps = (
+  paddingLeft: BoxProps["paddingLeft"] | string,
+): Pick<BoxProps, "paddingLeft"> | { __paddingLeft: string } => {
+  if (typeof paddingLeft === "string") {
+    return { __paddingLeft: paddingLeft };
+  }
+
+  return { paddingLeft };
+};
+
+export const Pagination = ({
+  onUpdateListSettings,
+  numberOfRows,
+  paddingLeft = COLLECTION_PRODUCT_TABLE_LEADING_INSET,
+  beforePagination,
+}: PaginationProps): JSX.Element => {
+  const intl = useIntl();
   const { hasNextPage, hasPreviousPage, loadNextPage, loadPreviousPage } = usePaginatorContext();
   const currentRowNumber = String(numberOfRows);
   const currentRowNumberOption = ROW_NUMBER_OPTIONS.find(
@@ -33,31 +64,53 @@ export const Pagination = ({ onUpdateListSettings, numberOfRows }: PaginationPro
       justifyContent="space-between"
       alignItems="center"
       gap={2}
-      width="100%"
-      paddingX={6}
+      {...getPaddingLeftProps(paddingLeft)}
+      paddingRight={COLLECTION_PRODUCT_TABLE_ACTION_INSET}
+      paddingY={2}
     >
-      <Box display="flex" alignItems="center" gap={2}>
-        <Text color="default2" size={1}>
+      <Box display="flex" alignItems="center">
+        <Text color="default2" size={2} className={styles.rowNumberLabel}>
           <FormattedMessage id="nABmvC" defaultMessage="No. of rows" />
         </Text>
         <Select
+          size="small"
+          className={styles.rowNumberSelect}
+          __width="60px"
+          __minWidth="60px"
           options={ROW_NUMBER_OPTIONS}
-          value={currentRowNumberOption ?? ROW_NUMBER_OPTIONS[1]}
+          value={currentRowNumberOption ?? ROW_NUMBER_OPTIONS[0]}
           onChange={handleRowNumberChange}
         />
       </Box>
-      <Box display="flex" gap={2}>
+      <Box display="flex" alignItems="center" gap={2}>
+        {beforePagination}
         <Button
           variant="secondary"
+          size="small"
+          type="button"
           disabled={!hasPreviousPage}
           onClick={loadPreviousPage}
-          icon={<ChevronLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="button-pagination-back"
+          aria-label={intl.formatMessage({
+            id: "/suM59",
+            defaultMessage: "Previous page",
+            description: "pagination previous page button aria label",
+          })}
+          icon={<ChevronLeft size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
         />
         <Button
           variant="secondary"
+          size="small"
+          type="button"
           disabled={!hasNextPage}
           onClick={loadNextPage}
-          icon={<ChevronRight size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+          data-test-id="button-pagination-next"
+          aria-label={intl.formatMessage({
+            id: "xEyXOV",
+            defaultMessage: "Next page",
+            description: "pagination next page button aria label",
+          })}
+          icon={<ChevronRight size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
         />
       </Box>
     </Box>

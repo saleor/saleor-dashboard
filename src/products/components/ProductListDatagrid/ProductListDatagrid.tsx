@@ -1,5 +1,8 @@
 // @ts-strict-ignore
 import { type LazyQueryResult } from "@apollo/client/react";
+import { getProductAvailabilityListingsForDisplay } from "@dashboard/components/ChannelsAvailabilityDropdown/productAvailabilityDatagrid";
+import styles from "@dashboard/components/ChannelsAvailabilityDropdown/ProductChannelsAvailability.module.css";
+import { ProductChannelsAvailabilityTooltip } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductChannelsAvailabilityTooltip";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import { Datagrid } from "@dashboard/components/Datagrid/Datagrid";
@@ -238,6 +241,40 @@ export const ProductListDatagrid = ({
     },
     [visibleColumns, filterDependency.label, intl, selectedChannelId],
   );
+  const handleGetCellTooltipContent = useCallback(
+    (colIndex: number, rowIndex: number) => {
+      const columnId = visibleColumns[colIndex]?.id;
+
+      if (columnId !== "availability") {
+        return null;
+      }
+
+      const rowData = products[rowIndex];
+
+      if (!rowData) {
+        return null;
+      }
+
+      const selectedChannel = rowData.channelListings?.find(
+        listing => listing.channel.id === selectedChannelId,
+      );
+      const listings = getProductAvailabilityListingsForDisplay(
+        rowData.channelListings,
+        selectedChannel,
+      );
+
+      if (!listings.length) {
+        return null;
+      }
+
+      return (
+        <Box className={styles.tooltipContent}>
+          <ProductChannelsAvailabilityTooltip channels={listings} interactive={false} />
+        </Box>
+      );
+    },
+    [products, selectedChannelId, visibleColumns],
+  );
   const getCellContent = useMemo(
     () =>
       createGetCellContent({
@@ -264,6 +301,8 @@ export const ProductListDatagrid = ({
           onColumnResize={handlers.onResize}
           verticalBorder={false}
           getColumnTooltipContent={handleGetColumnTooltipContent}
+          getCellTooltipContent={handleGetCellTooltipContent}
+          cellTooltipSide="left"
           availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClicked}
           emptyText={intl.formatMessage(messages.emptyText)}

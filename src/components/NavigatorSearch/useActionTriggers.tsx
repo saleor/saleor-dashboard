@@ -1,7 +1,7 @@
 import { attributeAddUrl, attributeListUrl } from "@dashboard/attributes/urls";
-import { categoryAddUrl, categoryListUrl } from "@dashboard/categories/urls";
-import { channelAddUrl, channelsListUrl } from "@dashboard/channels/urls";
-import { collectionAddUrl, collectionListUrl } from "@dashboard/collections/urls";
+import { categoryListUrl } from "@dashboard/categories/urls";
+import { channelCreateUrl, channelsListUrl } from "@dashboard/channels/urls";
+import { collectionListUrl } from "@dashboard/collections/urls";
 import Link from "@dashboard/components/Link";
 import { customerAddPath, customerListUrl } from "@dashboard/customers/urls";
 import { saleAddUrl, saleListUrl, voucherAddUrl, voucherListUrl } from "@dashboard/discounts/urls";
@@ -223,7 +223,7 @@ const allActions: TriggerDescriptor[] = [
     },
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
-        <ActionLinkItem href={categoryAddUrl()}>
+        <ActionLinkItem href={categoryListUrl({ action: "create" })}>
           <FormattedMessage id="Uqf8Ny" defaultMessage="Create new category" />
         </ActionLinkItem>
       </Box>
@@ -285,7 +285,7 @@ const allActions: TriggerDescriptor[] = [
     },
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
-        <ActionLinkItem href={collectionAddUrl()}>
+        <ActionLinkItem href={collectionListUrl({ action: "create" })}>
           <FormattedMessage id="O+3CZK" defaultMessage="Create new collection" />
         </ActionLinkItem>
       </Box>
@@ -438,7 +438,7 @@ const allActions: TriggerDescriptor[] = [
     },
     Component: ({ onClick }) => (
       <Box onClick={onClick}>
-        <ActionLinkItem href={channelAddUrl}>
+        <ActionLinkItem href={channelCreateUrl()}>
           <FormattedMessage id="Nuq83+" defaultMessage="Create new channel" />
         </ActionLinkItem>
       </Box>

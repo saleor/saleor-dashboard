@@ -32,6 +32,8 @@ export const BulkDeleteButton = forwardRef<HTMLButtonElement, ProductListDeleteB
               setIsTooltipOpen(false);
             }}
             onClick={handleClick}
+            type="button"
+            size="small"
             icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
             variant="secondary"
             data-test-id="bulk-delete-button"

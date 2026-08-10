@@ -44,8 +44,8 @@ export const VoucherCodesDeleteDialog = ({
         <DashboardModal.Header
           subtitle={
             <FormattedMessage
-              defaultMessage="Are you sure you want to delete these voucher codes?"
-              id="GA+Djy"
+              defaultMessage="These codes will be removed when you save the voucher."
+              id="sO+uiz"
             />
           }
         >

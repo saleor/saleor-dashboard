@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
+import { giftCardSettingsPath } from "@dashboard/giftCards/urls";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import { createConfigurationLucideIcon } from "@dashboard/icons/createNavigationLucideIcon";
 import { ConfigurationModelingIcon } from "@dashboard/icons/Modeling";
@@ -16,8 +17,9 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import {
+  Gift,
+  Globe,
   Package,
-  Radio,
   Receipt,
   Settings,
   Shield,
@@ -37,8 +39,9 @@ const ConfigurationPermissionGroupsIcon = createConfigurationLucideIcon(Shield);
 const ConfigurationShippingIcon = createConfigurationLucideIcon(Truck);
 const ConfigurationWarehousesIcon = createConfigurationLucideIcon(Warehouse);
 const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
-const ConfigurationChannelsIcon = createConfigurationLucideIcon(Radio);
+const ConfigurationChannelsIcon = createConfigurationLucideIcon(Globe);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
+const ConfigurationGiftCardsIcon = createConfigurationLucideIcon(Gift);
 
 /**
  * Configuration IA: merchant jobs, not engineering modules.
@@ -64,6 +67,18 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl(),
           testId: "configuration-menu-site-settings",
+        },
+        {
+          description: intl.formatMessage({
+            id: "hNwVmh",
+            defaultMessage: "Set default expiration for issued and purchased gift cards",
+            description: "configuration menu item description for gift card settings",
+          }),
+          icon: <ConfigurationGiftCardsIcon />,
+          permissions: [PermissionEnum.MANAGE_GIFT_CARD],
+          title: intl.formatMessage(sectionNames.giftCards),
+          url: giftCardSettingsPath,
+          testId: "configuration-menu-gift-cards",
         },
       ],
     },

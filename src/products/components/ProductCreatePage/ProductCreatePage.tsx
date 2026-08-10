@@ -293,6 +293,7 @@ const ProductCreatePage = ({
                     errors={[...errors, ...channelsErrors]}
                     loading={loading}
                     onChange={handlers.changeChannelPrice}
+                    onChannelsReplace={handlers.replaceChannels}
                   />
                   <ProductStocks
                     data={data}
@@ -306,6 +307,7 @@ const ProductCreatePage = ({
                     loading={loading}
                     searchWarehouses={searchWarehouses}
                     onChange={handlers.changeStock}
+                    onStocksReplace={handlers.replaceStocks}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}

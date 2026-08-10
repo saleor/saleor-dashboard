@@ -1,0 +1,10 @@
+.tagsSection {
+  /* Match DetailSettingToggleRow row padding so tags + expiry share one rhythm. */
+  padding: var(--mu-spacing-4) var(--mu-spacing-6);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+/* Skeleton (and any solo tags block) — avoid stacking on the card’s outer border. */
+.tagsSection:last-child {
+  border-bottom: none;
+}

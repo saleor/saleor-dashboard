@@ -8,6 +8,7 @@ import {
   List,
   Text,
 } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
 
 import styles from "./ButtonGroupWithDropdown.module.css";
@@ -31,15 +32,22 @@ export const ButtonGroupWithDropdown = ({
   onClick,
   disabled = false,
   testId,
-  variant,
+  variant = "primary",
+  className,
   ...boxProps
 }: ButtonGroupWithDropdownProps) => {
   return (
     <Dropdown>
-      <Box className={styles.group} {...boxProps}>
+      <Box
+        className={clsx(styles.group, className)}
+        data-variant={variant}
+        data-disabled={disabled || undefined}
+        {...boxProps}
+      >
         <Button
           className={styles.segment}
           variant={variant}
+          type="button"
           onClick={onClick}
           data-test-id={testId}
           disabled={disabled}
@@ -47,12 +55,13 @@ export const ButtonGroupWithDropdown = ({
           {children}
         </Button>
 
-        <Box aria-hidden className={styles.divider} />
+        <Box aria-hidden className={styles.divider} data-variant={variant} />
 
         <Dropdown.Trigger>
           <Button
             className={styles.segment}
             variant={variant}
+            type="button"
             icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             disabled={disabled}
           />

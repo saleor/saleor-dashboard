@@ -1,47 +1,101 @@
-// @ts-strict-ignore
 import { categoryUrl } from "@dashboard/categories/urls";
+import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
+import {
+  AssignableListCell,
+  AssignableListLinkCell,
+  AssignableListTable,
+} from "@dashboard/components/AssignableListTable/AssignableListTable";
+import { ASSIGNABLE_LIST_TABLE_LEADING_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { DashboardCard } from "@dashboard/components/Card";
-import Checkbox from "@dashboard/components/Checkbox";
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableHead from "@dashboard/components/TableHead";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { PAGINATE_BY } from "@dashboard/config";
 import { type CategoryWithTotalProductsFragment } from "@dashboard/graphql";
-import { renderCollection } from "@dashboard/misc";
-import { TableBody, TableCell } from "@material-ui/core";
-import { IconButton } from "@saleor/macaw-ui";
-import { Button, Skeleton } from "@saleor/macaw-ui-next";
-import { Trash2 } from "lucide-react";
+import { type ListActions, type ListProps } from "@dashboard/types";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type ListActions, type ListProps } from "../../../types";
 import { messages } from "./messages";
-import { useStyles } from "./styles";
 
-interface DiscountCategoriesProps extends ListProps, ListActions {
+interface DiscountCategoriesProps extends Omit<ListProps, "onUpdateListSettings">, ListActions {
   categories: CategoryWithTotalProductsFragment[];
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
+  numberOfRows?: number;
+  onUpdateListSettings?: (key: "rowNumber", value: number) => void;
+  /** Skip card chrome when nested under catalogue action rows. */
+  embedded?: boolean;
 }
 
-const numberOfColumns = 4;
-const DiscountCategories = (props: DiscountCategoriesProps) => {
-  const {
-    categories,
-    disabled,
-    onCategoryAssign,
-    onCategoryUnassign,
-    toolbar,
-    toggle,
-    toggleAll,
-    selected,
-    isChecked,
-  } = props;
-  const classes = useStyles(props);
+export const DiscountCategories = ({
+  categories,
+  disabled,
+  onCategoryAssign,
+  onCategoryUnassign,
+  toolbar,
+  toggle,
+  toggleAll,
+  selected,
+  isChecked,
+  numberOfRows = PAGINATE_BY,
+  onUpdateListSettings,
+  embedded = false,
+}: DiscountCategoriesProps): JSX.Element => {
   const intl = useIntl();
+
+  const body = (
+    <>
+      <AssignableListTable<CategoryWithTotalProductsFragment>
+        data-test-id="assigned-specific-products-table"
+        rowTestId="assigned-specific-product"
+        items={categories}
+        disabled={disabled}
+        selected={selected}
+        isChecked={isChecked}
+        toggle={toggle}
+        toggleAll={(items, count) => toggleAll(items, count)}
+        onUnassign={onCategoryUnassign}
+        toolbar={toolbar}
+        emptyMessage={<FormattedMessage {...messages.discountCategoriesNotFound} />}
+        columns={[
+          {
+            id: "name",
+            width: "60%",
+            header: <FormattedMessage {...messages.discountCategoriesTableProductHeader} />,
+          },
+          {
+            id: "products",
+            width: "30%",
+            header: <FormattedMessage {...messages.discountCategoriesTableProductNumber} />,
+            hideHeaderWhenSelected: true,
+          },
+        ]}
+        renderCells={category => (
+          <>
+            <AssignableListLinkCell href={categoryUrl(category.id)} title={category.name}>
+              <Text ellipsis display="block" minWidth={0} __flex="1">
+                {category.name}
+              </Text>
+            </AssignableListLinkCell>
+            <AssignableListCell>
+              <Text size={2} color="default2">
+                {category.products?.totalCount ?? 0}
+              </Text>
+            </AssignableListCell>
+          </>
+        )}
+      />
+      {categories?.length && onUpdateListSettings ? (
+        <Pagination
+          numberOfRows={numberOfRows}
+          onUpdateListSettings={onUpdateListSettings}
+          paddingLeft={ASSIGNABLE_LIST_TABLE_LEADING_INSET}
+        />
+      ) : null}
+    </>
+  );
+
+  if (embedded) {
+    return <div data-test-id="assign-category-section">{body}</div>;
+  }
 
   return (
     <DashboardCard data-test-id="assign-category-section">
@@ -59,84 +113,9 @@ const DiscountCategories = (props: DiscountCategoriesProps) => {
           </Button>
         </DashboardCard.Toolbar>
       </DashboardCard.Header>
-      <DashboardCard.Content>
-        {categories === undefined ? (
-          <Skeleton />
-        ) : categories.length === 0 ? (
-          <Placeholder>
-            <FormattedMessage {...messages.discountCategoriesNotFound} />
-          </Placeholder>
-        ) : (
-          <ResponsiveTable footer={<TablePaginationWithContext />}>
-            <colgroup>
-              <col />
-              <col className={classes.colName} />
-              <col className={classes.colProducts} />
-              <col className={classes.colActions} />
-            </colgroup>
-            <TableHead
-              colSpan={numberOfColumns}
-              selected={selected}
-              disabled={disabled}
-              items={categories}
-              toggleAll={toggleAll}
-              toolbar={toolbar}
-            >
-              <TableCell className={classes.colName}>
-                <FormattedMessage {...messages.discountCategoriesTableProductHeader} />
-              </TableCell>
-              <TableCell className={classes.colProducts}>
-                <FormattedMessage {...messages.discountCategoriesTableProductNumber} />
-              </TableCell>
-              <TableCell />
-            </TableHead>
-            <TableBody data-test-id="assigned-specific-products-table">
-              {renderCollection(categories, category => {
-                const isSelected = category ? isChecked(category.id) : false;
-
-                return (
-                  <TableRowLink
-                    hover={!!category}
-                    key={category ? category.id : "skeleton"}
-                    href={category && categoryUrl(category.id)}
-                    className={classes.tableRow}
-                    selected={isSelected}
-                    data-test-id="assigned-specific-product"
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(category.id)}
-                      />
-                    </TableCell>
-                    <TableCell>{category ? category.name : <Skeleton />}</TableCell>
-                    <TableCell>{category ? category.products?.totalCount : <Skeleton />}</TableCell>
-                    <TableCell className={classes.colActions}>
-                      <TableButtonWrapper>
-                        <IconButton
-                          variant="secondary"
-                          disabled={!category || disabled}
-                          onClick={event => {
-                            event.stopPropagation();
-                            onCategoryUnassign(category.id);
-                          }}
-                        >
-                          <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                        </IconButton>
-                      </TableButtonWrapper>
-                    </TableCell>
-                  </TableRowLink>
-                );
-              })}
-            </TableBody>
-          </ResponsiveTable>
-        )}
-      </DashboardCard.Content>
+      <DashboardCard.Content>{body}</DashboardCard.Content>
     </DashboardCard>
   );
 };
 
 DiscountCategories.displayName = "DiscountCategories";
-export default DiscountCategories;

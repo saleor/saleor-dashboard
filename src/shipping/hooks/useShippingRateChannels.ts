@@ -58,10 +58,26 @@ export function useShippingRateChannels({
     [onChannelsChange, shippingChannels, triggerChange],
   );
 
+  const replaceChannels = useCallback(
+    (nextChannels: ChannelShippingData[]) => {
+      setPricedChannelIds(prev => {
+        const next = new Set(prev);
+
+        getChannelIdsWithPrice(nextChannels).forEach(channelId => next.add(channelId));
+
+        return next;
+      });
+      onChannelsChange(nextChannels);
+      triggerChange();
+    },
+    [onChannelsChange, triggerChange],
+  );
+
   const hasValidChannelPrices = !hasMissingChannelPrices(shippingChannels);
 
   return {
     handleChannelsChange,
+    replaceChannels,
     hasValidChannelPrices,
     pricedChannelIdsList,
   };

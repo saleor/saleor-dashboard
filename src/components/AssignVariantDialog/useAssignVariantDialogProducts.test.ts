@@ -29,6 +29,7 @@ const baseProduct = (overrides: Partial<AssignableSearchProduct> = {}): Assignab
       id: "type-1",
       name: "Type",
     },
+    category: null,
     channelListings,
     collections,
     variants: [

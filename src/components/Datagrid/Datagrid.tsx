@@ -12,6 +12,7 @@ import DataEditor, {
   getMiddleCenterBias,
   type GridCell,
   type GridColumn,
+  type GridMouseEventArgs,
   type GridSelection,
   type HeaderClickedEventArgs,
   type Item,
@@ -52,7 +53,7 @@ import { usePortalClasses } from "./hooks/usePortalClasses";
 import { useRowAnchor } from "./hooks/useRowAnchor";
 import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
-import { useTooltipContainer } from "./hooks/useTooltipContainer";
+import { type TooltipSide, useTooltipContainer } from "./hooks/useTooltipContainer";
 import useStyles, {
   cellHeight,
   rowActionBarWidth as defaultRowActionBarWidth,
@@ -87,6 +88,9 @@ interface DatagridProps {
   getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
   getColumnTooltipContent?: (colIndex: number) => string;
+  getCellTooltipContent?: (colIndex: number, rowIndex: number) => ReactNode;
+  /** Placement for cell hover tooltips. Header click tooltips always use `top`. */
+  cellTooltipSide?: TooltipSide;
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
   loading?: boolean;
@@ -114,6 +118,7 @@ interface DatagridProps {
   showEmptyDatagrid?: boolean;
   rowAnchor?: (item: Item) => string;
   rowHeight?: number | ((index: number) => number);
+  headerHeight?: number;
   actionButtonPosition?: "left" | "right";
   recentlyAddedColumn?: string | null; // Enables scroll to recently added column
   onClearRecentlyAddedColumn?: () => void;
@@ -146,6 +151,8 @@ export const Datagrid = ({
   onRowClick,
   onCellActivated,
   getColumnTooltipContent,
+  getCellTooltipContent,
+  cellTooltipSide = "left",
   readonly = false,
   rowMarkers = "checkbox",
   freezeColumns = 1,
@@ -163,6 +170,7 @@ export const Datagrid = ({
   recentlyAddedColumn,
   onClearRecentlyAddedColumn,
   rowHeight = cellHeight,
+  headerHeight = cellHeight,
   renderHeader,
   navigatorOpts,
   showTopBorder = true,
@@ -198,7 +206,7 @@ export const Datagrid = ({
   const { scrolledToRight } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
-  const { clearTooltip, tooltip, setTooltip } = useTooltipContainer();
+  const { clearTooltip, scheduleTooltip, tooltip, setTooltip } = useTooltipContainer();
   const [uncontrolledSelection, setUncontrolledSelection] = useState<GridSelection>();
   const isSelectionControlled = typeof onControlledSelectionChange === "function";
   const selection = isSelectionControlled ? controlledSelection : uncontrolledSelection;
@@ -227,6 +235,47 @@ export const Datagrid = ({
     hasRowHover,
     onRowHover: setAnchorPosition,
   });
+  const handleItemHovered = useCallback(
+    (args: GridMouseEventArgs) => {
+      handleRowHover(args);
+
+      if (!getCellTooltipContent) {
+        return;
+      }
+
+      if (args.kind !== "cell") {
+        clearTooltip();
+
+        return;
+      }
+
+      const [colIndex, rowIndex] = args.location;
+      const content = getCellTooltipContent(colIndex, rowIndex);
+
+      if (content) {
+        scheduleTooltip(content, args.bounds, args.location, cellTooltipSide, "center");
+      } else {
+        clearTooltip();
+      }
+    },
+    [cellTooltipSide, clearTooltip, getCellTooltipContent, handleRowHover, scheduleTooltip],
+  );
+
+  useEffect(() => {
+    if (!tooltip) {
+      return;
+    }
+
+    const handleScroll = () => {
+      clearTooltip();
+    };
+
+    window.addEventListener("scroll", handleScroll, true);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll, true);
+    };
+  }, [clearTooltip, tooltip]);
 
   // Allow to listen to which row is selected and notfiy parent component
   useEffect(() => {
@@ -435,7 +484,9 @@ export const Datagrid = ({
         const content = getColumnTooltipContent(colIndex);
 
         if (content) {
-          setTooltip(content, event.bounds);
+          setTooltip(content, event.bounds, [colIndex, -1]);
+        } else {
+          clearTooltip();
         }
       }
 
@@ -443,7 +494,7 @@ export const Datagrid = ({
         onHeaderClicked(colIndex, event);
       }
     },
-    [getColumnTooltipContent, onHeaderClicked, setTooltip],
+    [clearTooltip, getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
   const drawHeader: DrawHeaderCallback = useCallback(
     args => {
@@ -645,11 +696,11 @@ export const Datagrid = ({
                     onCellClicked={handleCellClick}
                     onCellActivated={onCellActivated}
                     onGridSelectionChange={handleGridSelectionChange}
-                    onItemHovered={handleRowHover}
+                    onItemHovered={handleItemHovered}
                     getRowThemeOverride={handleGetThemeOverride}
                     gridSelection={selection}
                     rowHeight={rowHeight}
-                    headerHeight={cellHeight}
+                    headerHeight={headerHeight}
                     ref={editor}
                     onPaste
                     isOutsideClick={isMacawPortalOutsideClick}
@@ -715,9 +766,11 @@ export const Datagrid = ({
           </DashboardCard.Content>
         </DashboardCard>
         <TooltipContainer
-          clearTooltip={clearTooltip}
+          key={tooltip ? `${tooltip.location[0]}-${tooltip.location[1]}` : undefined}
           bounds={tooltip?.bounds}
-          title={tooltip?.title}
+          content={tooltip?.content}
+          side={tooltip?.side}
+          align={tooltip?.align}
         />
         {rowAnchor && (
           <a
