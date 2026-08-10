@@ -3,7 +3,7 @@
   flex-direction: column;
   overflow: hidden;
   min-width: 0;
-  /* Match AssignListCard / ChannelAvailabilityCard — sidebar owns no paddingX. */
+  /* Match AssignListCard / VoucherScheduleCard — sidebar owns no paddingX. */
   margin-left: var(--mu-spacing-6);
   margin-right: var(--mu-spacing-6);
   background-color: var(--mu-colors-background-default1);

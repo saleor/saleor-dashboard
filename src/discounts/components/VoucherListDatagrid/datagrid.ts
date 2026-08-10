@@ -89,7 +89,7 @@ const getStatusDot = (status: PromotionStatus): DotStatus => {
     return "scheduled";
   }
 
-  return "error";
+  return "neutral";
 };
 
 export const getVoucherListStatusLabel = ({

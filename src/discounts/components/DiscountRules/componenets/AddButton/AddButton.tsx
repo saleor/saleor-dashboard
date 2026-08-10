@@ -19,6 +19,7 @@ export const AddButton = ({ onClick }: AddButtonProps) => {
       onClick={onClick}
       disabled={disabled}
       variant="primary"
+      size="small"
       data-test-id="add-rule"
     >
       <Plus />

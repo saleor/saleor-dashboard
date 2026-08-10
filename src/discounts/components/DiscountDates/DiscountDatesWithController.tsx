@@ -2,18 +2,18 @@ import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { type CommonError } from "@dashboard/utils/errors/common";
 import { type ChangeEvent, useEffect, useRef } from "react";
 import { useController, useFormContext } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
 
-import DiscountDates from "./DiscountDates";
+import { DiscountScheduleCard } from "../DiscountScheduleCard/DiscountScheduleCard";
+import { discountScheduleMessages } from "../DiscountScheduleCard/messages";
 
 interface DiscountDatesWithControllerProps<ErrorCode> {
   disabled?: boolean;
-  stacked?: boolean;
   errors: Array<CommonError<ErrorCode>>;
 }
 
 export const DiscountDatesWithController = <ErrorCode,>({
   disabled,
-  stacked,
   errors,
 }: DiscountDatesWithControllerProps<ErrorCode>): JSX.Element => {
   const { formState } = useFormContext<DiscoutFormData>();
@@ -43,16 +43,16 @@ export const DiscountDatesWithController = <ErrorCode,>({
   };
 
   return (
-    <DiscountDates
+    <DiscountScheduleCard
       data={field.value}
       disabled={disabled || !!field.disabled}
-      stacked={stacked}
       errors={errors}
       formErrors={{
         startDate: startDateError,
       }}
       onChange={handleChange}
       onBlur={field.onBlur}
+      intro={<FormattedMessage {...discountScheduleMessages.promotionIntro} />}
     />
   );
 };

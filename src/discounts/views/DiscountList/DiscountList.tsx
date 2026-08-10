@@ -13,7 +13,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { commonMessages } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -57,7 +57,7 @@ export const DiscountList = ({ params }: DiscountListProps) => {
         }),
       },
     }),
-    [params, settings.rowNumber],
+    [params, settings.rowNumber, valueProvider.value],
   );
   const { data } = usePromotionsListQuery({
     displayLoader: true,
@@ -112,7 +112,7 @@ export const DiscountList = ({ params }: DiscountListProps) => {
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
-      <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
+      <WindowTitle title={intl.formatMessage(sectionNames.promotions)} />
       <DiscountListPage
         promotions={promotions}
         settings={settings}

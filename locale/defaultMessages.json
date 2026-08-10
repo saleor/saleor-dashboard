@@ -143,9 +143,6 @@
     "context": "button",
     "string": "Activate"
   },
-  "+bhokL": {
-    "string": "Search discounts..."
-  },
   "+dDyb1": {
     "string": "Allocated"
   },
@@ -657,6 +654,10 @@
     "context": "card header and checkbox label",
     "string": "Emit update webhooks for metadata changes"
   },
+  "0gmP/S": {
+    "context": "promotions list tab name for all items",
+    "string": "All promotions"
+  },
   "0hCh0t": {
     "context": "footer when warehouse and shipping are done",
     "string": "Required steps are complete."
@@ -836,6 +837,10 @@
   "1OB3se": {
     "context": "voucher catalogue products row title",
     "string": "Products"
+  },
+  "1Sfy/9": {
+    "context": "promotions list search input placeholder",
+    "string": "Search promotions..."
   },
   "1SwKZV": {
     "context": "create attribute and assign to model type button",
@@ -1351,6 +1356,10 @@
     "context": "order history message",
     "string": "Payment was refunded"
   },
+  "3jdRNZ": {
+    "context": "promotion status filter scheduled",
+    "string": "Scheduled"
+  },
   "3kVRE2": {
     "context": "Checkbox label for setting publication date",
     "string": "Set publication date"
@@ -1724,6 +1733,10 @@
   "5TUpjG": {
     "context": "product attribute entity type",
     "string": "Products"
+  },
+  "5VLBgx": {
+    "context": "promotion status filter ended",
+    "string": "Ended"
   },
   "5Vwnu+": {
     "string": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
@@ -3944,9 +3957,6 @@
     "context": "Shown when country count cannot be determined",
     "string": "Countries: Unknown"
   },
-  "EQpfkS": {
-    "string": "Finished"
-  },
   "ER/yBq": {
     "context": "max price in channel",
     "string": "Max. value"
@@ -5110,9 +5120,6 @@
   "IXswaJ": {
     "context": "checkbox label, fulfillment approval",
     "string": "Send fulfillment email to customer"
-  },
-  "IYuKD6": {
-    "string": "No discounts found"
   },
   "IZQhZu": {
     "context": "channel details section nav item for channel product availability",
@@ -7841,6 +7848,10 @@
     "context": "Dry run sync events alert",
     "string": "Dry run currently is not available for synchronous events"
   },
+  "TtRyRv": {
+    "context": "promotion type filter catalog",
+    "string": "Catalog"
+  },
   "TxYWkD": {
     "context": "page header, edit view",
     "string": "Edit grant refund"
@@ -8437,6 +8448,10 @@
   "WE8IFE": {
     "context": "product name",
     "string": "Product"
+  },
+  "WED6ly": {
+    "context": "promotion type filter order",
+    "string": "Order"
   },
   "WGHw5Q": {
     "context": "Hint under the pinned current variant when it is out of the scroll viewport or not loaded yet",
@@ -9437,10 +9452,6 @@
   "a5msuh": {
     "string": "Yes"
   },
-  "a6GDem": {
-    "context": "tab name",
-    "string": "All discounts"
-  },
   "a6cSKQ": {
     "context": "export all gift cards scope option",
     "string": "All gift cards ({number})"
@@ -9519,6 +9530,10 @@
   },
   "aMwxYb": {
     "string": "Countries"
+  },
+  "aNNB2B": {
+    "context": "promotion save composition segment for name/description/type",
+    "string": "general"
   },
   "aPCrsp": {
     "context": "shipping method name",
@@ -10016,6 +10031,10 @@
   },
   "c8nvms": {
     "string": "Sales"
+  },
+  "cARfB7": {
+    "context": "promotion status filter active",
+    "string": "Active"
   },
   "cBHRxx": {
     "context": "button",
@@ -11877,6 +11896,10 @@
     "context": "attribute product type",
     "string": "Product type"
   },
+  "k+H6kK": {
+    "context": "promotions list empty state",
+    "string": "No promotions found"
+  },
   "k+HcTv": {
     "context": "product type",
     "string": "Type"
@@ -12887,6 +12910,10 @@
     "context": "check to require attribute to have value",
     "string": "Value Required"
   },
+  "nk0i+G": {
+    "context": "promotion general information section intro",
+    "string": "Internal name and type for staff. Customers see promotion effects from rules, not this label."
+  },
   "nkCi/+": {
     "context": "collection channel status description when visible",
     "string": "Collection is visible in this channel"
@@ -13453,6 +13480,10 @@
   "pq/k18": {
     "context": "voucher scope tile description",
     "string": "Waives the shipping cost. You can limit it to specific countries."
+  },
+  "pq4QXb": {
+    "context": "promotion schedule card intro",
+    "string": "Outside this range, the promotion is not active and its rules do not apply at checkout or in the catalog."
   },
   "ps+h1G": {
     "context": "checkbox label description",
@@ -15017,6 +15048,10 @@
   "vGfmv8": {
     "context": "card title, app install page, about privacy",
     "string": "Info"
+  },
+  "vHn/ii": {
+    "context": "promotion save composition segment for active dates",
+    "string": "schedule"
   },
   "vKVMsA": {
     "context": "toast description pointing merchants to inline field errors",

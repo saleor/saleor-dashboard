@@ -1,14 +1,16 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { PromotionTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
-import { Box, Input, Select } from "@saleor/macaw-ui-next";
+import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { discountGeneralInfoMessages as messages } from "./messages";
 
 interface DiscountGeneralInfoProps {
   disabled?: boolean;
@@ -37,17 +39,11 @@ export const DiscountGeneralInfo = ({
   const discountTypes = useMemo(
     () => [
       {
-        label: intl.formatMessage({
-          defaultMessage: "Catalog",
-          id: "GOdq5V",
-        }),
+        label: intl.formatMessage(messages.catalogType),
         value: PromotionTypeEnum.CATALOGUE,
       },
       {
-        label: intl.formatMessage({
-          defaultMessage: "Order",
-          id: "XPruqs",
-        }),
+        label: intl.formatMessage(messages.orderType),
         value: PromotionTypeEnum.ORDER,
       },
     ],
@@ -55,23 +51,23 @@ export const DiscountGeneralInfo = ({
   );
 
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          <FormattedMessage defaultMessage="General information" id="fKrRhF" />
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content display="grid" gap={2}>
+    <DetailSettingsCard
+      data-test-id="discount-general-info-section"
+      title={<FormattedMessage {...messages.title} />}
+      intro={
+        <Text size={3} color="default2">
+          <FormattedMessage {...messages.intro} />
+        </Text>
+      }
+    >
+      <Box display="grid" gap={3}>
         <Box display="grid" __gridTemplateColumns="250px 1fr" gap={3}>
           <Select
             {...typeField}
             data-test-id="discount-type-select"
             size="medium"
             options={discountTypes}
-            label={intl.formatMessage({
-              defaultMessage: "Discount type",
-              id: "z/2AZY",
-            })}
+            label={intl.formatMessage(messages.discountType)}
             disabled={typeDisabled || typeField.disabled}
           />
 
@@ -80,10 +76,7 @@ export const DiscountGeneralInfo = ({
             error={!!error || !!formState.errors?.name}
             helperText={error || formState.errors?.name?.message}
             data-test-id="discount-name-input"
-            label={intl.formatMessage({
-              defaultMessage: "Discount name",
-              id: "gK7mIl",
-            })}
+            label={intl.formatMessage(messages.discountName)}
             disabled={disabled || nameField.disabled}
           />
         </Box>
@@ -109,7 +102,7 @@ export const DiscountGeneralInfo = ({
             name="description"
           />
         )}
-      </DashboardCard.Content>
-    </DashboardCard>
+      </Box>
+    </DetailSettingsCard>
   );
 };
