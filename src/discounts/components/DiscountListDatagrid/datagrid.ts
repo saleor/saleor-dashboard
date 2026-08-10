@@ -136,7 +136,7 @@ export const createGetCellContent =
         const { label, status } = getPromotionListStatusLabel({ promotion: rowData, intl });
 
         return statusCell(status, label, {
-          ...COMMON_CELL_PROPS,
+          cursor: "pointer",
           readonly: true,
           allowOverlay: false,
         });

@@ -1,3 +1,6 @@
+import { PromotionTypeEnum } from "@dashboard/graphql";
+
+import { type DiscoutFormData } from "../../types";
 import { createUpdateHandler, shouldClearPromotionEndDateFirst } from "./handlers";
 
 describe("shouldClearPromotionEndDateFirst", () => {
@@ -58,9 +61,9 @@ describe("createUpdateHandler", () => {
     rules: [],
   };
 
-  const formData = {
+  const formData: DiscoutFormData = {
     name: "Summer",
-    type: "CATALOGUE" as const,
+    type: PromotionTypeEnum.CATALOGUE,
     description: "",
     rules: [],
     dates: {
