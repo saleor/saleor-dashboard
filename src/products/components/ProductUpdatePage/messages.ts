@@ -16,6 +16,12 @@ export const messages = defineMessages({
     defaultMessage: "Open this product in GraphiQL",
     description: "open new window button",
   },
+  showSetupChecklist: {
+    id: "BTI5fl",
+    defaultMessage: "Show setup checklist",
+    description:
+      "product detail menu, reopens the Finish setting up this product card after dismiss",
+  },
   pendingVariantDeletes: {
     id: "w0m9Jc",
     defaultMessage:

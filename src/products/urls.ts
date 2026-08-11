@@ -189,6 +189,7 @@ export type ProductUrlDialog =
   | "remove-media"
   | "assign-attribute-value"
   | "view-metadata"
+  | "setup"
   | ChannelsAction;
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog> & SingleAction;
 export type ProductCreateUrlDialog = "assign-attribute-value" | ChannelsAction;

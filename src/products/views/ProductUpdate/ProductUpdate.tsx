@@ -44,6 +44,7 @@ import { getMutationState } from "../../../misc";
 import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/ProductDeleteDialog";
 import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
+import { useProductSetupCardDismiss } from "../../components/ProductSetupCard/useProductSetupCardDismiss";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import { useProductVariantsGrid } from "../../hooks/useProductVariantsGrid";
 import {
@@ -206,6 +207,12 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
+  const setupEmphasized = params.action === "setup";
+  const {
+    isDismissed: setupCardDismissed,
+    dismiss: dismissSetupCard,
+    undismiss: undismissSetupCard,
+  } = useProductSetupCardDismiss(id);
   const [bulkDeleteProductMedia, bulkDeleteProductMediaOpts] = useProductMediaBulkDeleteMutation({
     onCompleted: data => {
       const result = data.productMediaBulkDelete;
@@ -455,6 +462,24 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         variantsLoading={variantsLoading}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata")}
+        onShowSetupChecklist={
+          product
+            ? () => {
+                undismissSetupCard();
+                openModal("setup");
+              }
+            : undefined
+        }
+        setupEmphasized={setupEmphasized}
+        setupCardDismissed={setupCardDismissed}
+        setupCardDisplayReady={Boolean(product) && !loading}
+        onDismissSetupCard={() => {
+          dismissSetupCard();
+
+          if (setupEmphasized) {
+            closeModal();
+          }
+        }}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={submit}
