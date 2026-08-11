@@ -9,12 +9,15 @@ import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../ProductListDatagrid/messages";
+import { ProductListEmptyState } from "../ProductListEmptyState/ProductListEmptyState";
 import { ProductTile } from "../ProductTile/ProductTile";
 
 interface ProductListTilesProps extends ListProps<ProductListColumns> {
   products: RelayToFlat<ProductListQuery["products"]> | undefined;
   loading?: boolean;
   onTileClick: (id: string) => void;
+  onAdd?: () => void;
+  hasSearchOrFilters?: boolean;
 }
 
 export const ProductListTiles = ({
@@ -24,6 +27,8 @@ export const ProductListTiles = ({
   disabled,
   loading,
   onUpdateListSettings,
+  onAdd,
+  hasSearchOrFilters = false,
 }: ProductListTilesProps) => {
   const intl = useIntl();
   const renderContent = useCallback(() => {
@@ -56,12 +61,22 @@ export const ProductListTiles = ({
       );
     }
 
+    if (onAdd) {
+      return (
+        <ProductListEmptyState
+          hasSearchOrFilters={hasSearchOrFilters}
+          onAdd={onAdd}
+          disabled={disabled}
+        />
+      );
+    }
+
     return (
       <Box padding={6} textAlign="center">
         <Text size={3}>{intl.formatMessage(messages.emptyText)}</Text>
       </Box>
     );
-  }, [intl, loading, onTileClick, products]);
+  }, [disabled, hasSearchOrFilters, intl, loading, onAdd, onTileClick, products]);
 
   return (
     <>

@@ -1,4 +1,7 @@
-import { getProductSetupReadiness } from "./getProductSetupReadiness";
+import {
+  getProductSetupReadiness,
+  type ProductSetupReadinessInput,
+} from "./getProductSetupReadiness";
 
 const shopReadyChannel = {
   id: "ch1",
@@ -13,7 +16,7 @@ const pricedVariant = {
   stocks: [{ warehouseId: "wh1", quantity: 5 }],
 };
 
-const readyInput = {
+const readyInput: ProductSetupReadinessInput = {
   categoryId: "cat1",
   channelListings: [
     {

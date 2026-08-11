@@ -84,7 +84,7 @@ export interface DatagridRenderHeaderProps {
 interface DatagridProps {
   fillHandle?: boolean;
   availableColumns: readonly AvailableColumn[];
-  emptyText: string;
+  emptyText: ReactNode;
   getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
   getColumnTooltipContent?: (colIndex: number) => string;
@@ -757,10 +757,8 @@ export const Datagrid = ({
                 </div>
               </>
             ) : (
-              <Box paddingX={6} paddingBottom={6}>
-                <Placeholder>
-                  <span data-test-id="empty-data-grid-text">{emptyText}</span>
-                </Placeholder>
+              <Box paddingX={6} paddingBottom={6} data-test-id="empty-data-grid-text">
+                {typeof emptyText === "string" ? <Placeholder>{emptyText}</Placeholder> : emptyText}
               </Box>
             )}
           </DashboardCard.Content>

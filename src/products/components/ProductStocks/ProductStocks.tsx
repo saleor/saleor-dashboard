@@ -153,7 +153,8 @@ export const ProductStocks = ({
     onFormDataChange(e);
   };
 
-  const showAssignWarehousesButton = !isCreate && productVariantChannelListings?.length > 0;
+  const showAssignWarehousesButton = productVariantChannelListings?.length > 0;
+  const canAssignWarehouses = showAssignWarehousesButton;
 
   return (
     <DashboardCard>
@@ -222,6 +223,7 @@ export const ProductStocks = ({
             </Box>
             <WarehouseInformationMessage
               isCreate={isCreate}
+              canAssignWarehouses={canAssignWarehouses}
               hasVariants={hasVariants}
               hasStocks={stocks?.length > 0}
               onWarehouseConfigure={onWarehouseConfigure}

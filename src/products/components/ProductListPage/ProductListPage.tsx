@@ -74,6 +74,8 @@ interface ProductListPageProps
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
   clearRowSelection: () => void;
   filterDependency?: FilterElement;
+  /** True when search or conditional filters narrow the list (vs empty catalog). */
+  hasSearchOrFilters?: boolean;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -106,6 +108,7 @@ const ProductListPage = (props: ProductListPageProps) => {
     onProductsDelete,
     clearRowSelection,
     filterDependency,
+    hasSearchOrFilters = false,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -274,6 +277,8 @@ const ProductListPage = (props: ProductListPageProps) => {
             settings={settings}
             selectedChannelId={selectedChannelId}
             onUpdateListSettings={onUpdateListSettings}
+            onAdd={onAdd}
+            hasSearchOrFilters={hasSearchOrFilters}
             rowAnchor={productUrl}
             onRowClick={id => {
               navigate(productUrl(id), {
@@ -288,6 +293,8 @@ const ProductListPage = (props: ProductListPageProps) => {
             loading={listProps.disabled}
             onUpdateListSettings={onUpdateListSettings}
             products={listProps.products}
+            onAdd={onAdd}
+            hasSearchOrFilters={hasSearchOrFilters}
             onTileClick={id => {
               navigate(productUrl(id));
             }}

@@ -338,6 +338,7 @@ const ProductList = ({ params }: ProductListProps) => {
         selectedProductIds={selectedRowIds}
         onSelectProductIds={handleSetSelectedProductIds}
         clearRowSelection={clearRowSelection}
+        hasSearchOrFilters={hasListFilters}
       />
       <ProductBulkDeleteDialog
         open={params.action === "delete"}

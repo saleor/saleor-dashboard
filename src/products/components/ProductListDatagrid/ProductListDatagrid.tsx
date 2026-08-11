@@ -38,6 +38,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
+import { ProductListEmptyState } from "../ProductListEmptyState/ProductListEmptyState";
 import { getAttributeIdFromColumnValue, isAttributeColumnValue } from "../ProductListPage/utils";
 import {
   createGetCellContent,
@@ -72,6 +73,8 @@ interface ProductListDatagridProps
   onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   hasRowHover?: boolean;
   loading: boolean;
+  onAdd?: () => void;
+  hasSearchOrFilters?: boolean;
 }
 
 export const ProductListDatagrid = ({
@@ -91,6 +94,8 @@ export const ProductListDatagrid = ({
   onSelectProductIds,
   hasRowHover,
   rowAnchor,
+  onAdd,
+  hasSearchOrFilters = false,
 }: ProductListDatagridProps) => {
   const isChannelSelected = !!selectedChannelId;
   const intl = useIntl();
@@ -305,7 +310,17 @@ export const ProductListDatagrid = ({
           cellTooltipSide="left"
           availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClicked}
-          emptyText={intl.formatMessage(messages.emptyText)}
+          emptyText={
+            onAdd ? (
+              <ProductListEmptyState
+                hasSearchOrFilters={hasSearchOrFilters}
+                onAdd={onAdd}
+                disabled={disabled}
+              />
+            ) : (
+              intl.formatMessage(messages.emptyText)
+            )
+          }
           getCellContent={getCellContent}
           getCellError={() => false}
           menuItems={() => []}
