@@ -6,6 +6,7 @@ export const staffMemberFragment = gql`
     email
     firstName
     isActive
+    lastLogin
     lastName
   }
 `;
@@ -25,6 +26,10 @@ export const staffMemberDetailsFragment = gql`
       url
     }
     metadata {
+      key
+      value
+    }
+    privateMetadata {
       key
       value
     }

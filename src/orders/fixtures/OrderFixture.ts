@@ -825,6 +825,7 @@ export class OrderFixture {
                 id: "VXNlcjox",
                 email: "test@saleor.io",
                 isActive: true,
+                lastLogin: "2023-01-01T00:00:00Z",
                 firstName: "First Name",
                 lastName: "Last Name",
                 avatar: null,
@@ -924,6 +925,7 @@ export class OrderFixture {
                 firstName: "John",
                 lastName: "Admin",
                 isActive: true,
+                lastLogin: "2023-01-01T00:00:00Z",
                 avatar: null,
               },
             }),
@@ -974,6 +976,7 @@ export class OrderFixture {
                 firstName: "Jane",
                 lastName: "Staff",
                 isActive: true,
+                lastLogin: "2023-01-01T00:00:00Z",
                 avatar: {
                   __typename: "Image",
                   url: "https://i.pravatar.cc/150?u=jane-staff",

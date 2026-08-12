@@ -331,6 +331,7 @@ export const UserFragmentDoc = gql`
   email
   firstName
   lastName
+  isActive
   isStaff
   dateJoined
   metadata {
@@ -1995,6 +1996,7 @@ export const StaffMemberFragmentDoc = gql`
   email
   firstName
   isActive
+  lastLogin
   lastName
 }
     `;
@@ -3609,6 +3611,10 @@ export const StaffMemberDetailsFragmentDoc = gql`
     url
   }
   metadata {
+    key
+    value
+  }
+  privateMetadata {
     key
     value
   }

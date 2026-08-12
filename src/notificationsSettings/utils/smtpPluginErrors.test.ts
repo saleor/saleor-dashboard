@@ -1,3 +1,5 @@
+import { PluginErrorCode } from "@dashboard/graphql";
+
 import { getNonSmtpPluginErrorMessage, mapPluginErrorsToSmtpState } from "./smtpPluginErrors";
 
 describe("mapPluginErrorsToSmtpState", () => {
@@ -6,7 +8,7 @@ describe("mapPluginErrorsToSmtpState", () => {
     const errors = [
       {
         field: "sender_address",
-        code: "PLUGIN_MISCONFIGURED",
+        code: PluginErrorCode.PLUGIN_MISCONFIGURED,
         message: "Missing sender address value.",
       },
     ];
@@ -27,7 +29,7 @@ describe("mapPluginErrorsToSmtpState", () => {
       "Unable to connect to email backend. Make sure that you provided correct values. timeout";
     const errors = ["host", "port", "username", "password", "sender_address"].map(field => ({
       field,
-      code: "PLUGIN_MISCONFIGURED",
+      code: PluginErrorCode.PLUGIN_MISCONFIGURED,
       message,
     }));
 
@@ -44,7 +46,7 @@ describe("mapPluginErrorsToSmtpState", () => {
     const state = mapPluginErrorsToSmtpState([
       {
         field: "set_staff_password_template",
-        code: "INVALID",
+        code: PluginErrorCode.INVALID,
         message: "Broken template",
       },
     ]);
