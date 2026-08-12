@@ -51,6 +51,7 @@ export const DetailGroupBox = ({
       marginTop={resolvedMarginTop}
       data-test-id={dataTestId}
       data-test-is-private={dataTestIsPrivate}
+      data-expanded={isExpanded ? "true" : "false"}
     >
       <Accordion value={expanded} onValueChange={setExpanded}>
         <Accordion.Item value={groupId}>

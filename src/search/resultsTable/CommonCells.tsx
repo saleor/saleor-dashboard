@@ -47,25 +47,23 @@ export const Thumbnail = ({ url, name }: { url?: string; name: string }) => {
 
   return (
     <Box display="flex" alignItems="center" gap={2} height="100%">
-      <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
-        {!imageError ? (
-          <>
-            <Box
-              as="img"
-              src={url}
-              alt={name}
-              __width="31px"
-              __height="31px"
-              display={imageLoaded ? "block" : "none"}
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-            />
-            {!imageLoaded && <Skeleton __width="31px" __height="31px" borderRadius={2} />}
-          </>
-        ) : (
-          <EmptyImage />
-        )}
-      </Box>
+      {url && !imageError ? (
+        <Box borderColor="default1" borderWidth={1} borderRadius={2} borderStyle="solid">
+          <Box
+            as="img"
+            src={url}
+            alt={name}
+            __width="31px"
+            __height="31px"
+            display={imageLoaded ? "block" : "none"}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+          />
+          {!imageLoaded && <Skeleton __width="31px" __height="31px" borderRadius={2} />}
+        </Box>
+      ) : (
+        <EmptyImage />
+      )}
     </Box>
   );
 };

@@ -86,6 +86,7 @@ export interface ProductListUrlQueryParams
     ActiveTab {
   attributeId?: string;
   presestesChanged?: string;
+  "product-type-id"?: string;
 }
 export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);

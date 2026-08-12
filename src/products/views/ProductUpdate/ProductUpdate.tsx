@@ -3,6 +3,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -71,6 +72,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { resetFormsState } = useExitFormDialog();
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -162,6 +164,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           defaultMessage: "Product removed",
         }),
       });
+      resetFormsState();
       navigate(productListUrl());
     },
   });

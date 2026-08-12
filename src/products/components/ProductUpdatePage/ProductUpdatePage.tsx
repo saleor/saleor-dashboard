@@ -12,6 +12,7 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -19,6 +20,7 @@ import { type AttributeInput, Attributes } from "@dashboard/components/Attribute
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
@@ -50,6 +52,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { maybe } from "@dashboard/misc";
 import { ProductExternalMediaDialog } from "@dashboard/products/components/ProductExternalMediaDialog/ProductExternalMediaDialog";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
@@ -69,7 +72,7 @@ import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
 import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
-import { ListChecks } from "lucide-react";
+import { ListChecks, Shapes, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -324,32 +327,17 @@ const ProductUpdatePage = ({
   });
   const showProductDetailsWidgets = PRODUCT_DETAILS_WIDGETS.length > 0 && !!productId;
   const context = useDevModeContext();
-  const openPlaygroundURL = () => {
-    context.setDevModeContent(defaultGraphiQLQuery);
-    context.setVariables(`{ "id": "${product?.id}" }`);
-    context.setDevModeVisibility(true);
-  };
-  const canManageProductTypes =
-    user && hasPermission(PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES, user);
-  const builtInMenuItemsWithoutSetup = useMemo(() => {
-    const items = [];
-
-    if (canManageProductTypes && product?.productType?.id) {
-      items.push({
-        label: intl.formatMessage(messages.openProductTypeSettings),
-        onSelect: () => navigate(productTypeUrl(product.productType.id)),
-        testId: "open-product-type-settings",
-      });
+  const openPlaygroundURL = useCallback(() => {
+    if (!product?.id) {
+      return;
     }
 
-    items.push({
-      label: intl.formatMessage(messages.openGraphiQL),
-      onSelect: openPlaygroundURL,
-      testId: "graphiql-redirect",
-    });
-
-    return items;
-  }, [canManageProductTypes, intl, navigate, product?.productType?.id]);
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${product.id}" }`);
+    context.setDevModeVisibility(true);
+  }, [context, product?.id]);
+  const canManageProductTypes =
+    user && hasPermission(PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES, user);
   const backLinkProductUrl = useBackLinkWithState({
     path: productListPath,
   });
@@ -573,29 +561,48 @@ const ProductUpdatePage = ({
           (doctorVariantsComplete || setupEmphasized) &&
           (setupEmphasized || (!setupCardDismissed && !setupReadiness.coreReady));
 
-        const setupMenuItem =
-          onShowSetupChecklist && !showSetupCard
-            ? [
-                {
-                  label: intl.formatMessage(messages.showSetupChecklist),
-                  onSelect: onShowSetupChecklist,
-                  testId: "show-setup-checklist",
-                  icon: <ListChecks size={16} />,
-                },
-              ]
-            : [];
-        // Setup checklist reopen sits above GraphiQL (entity-detail menu order).
-        const graphiqlIndex = builtInMenuItemsWithoutSetup.findIndex(
-          item => item.testId === "graphiql-redirect",
-        );
-        const builtInMenuItems =
-          graphiqlIndex === -1
-            ? [...builtInMenuItemsWithoutSetup, ...setupMenuItem]
-            : [
-                ...builtInMenuItemsWithoutSetup.slice(0, graphiqlIndex),
-                ...setupMenuItem,
-                ...builtInMenuItemsWithoutSetup.slice(graphiqlIndex),
-              ];
+        const menuItems: TopNavMenuItem[] = extensionMenuItems.map(item => ({
+          label: item.label,
+          onSelect: item.onSelect,
+          testId: item.testId,
+        }));
+
+        if (onShowSetupChecklist && !showSetupCard) {
+          menuItems.push({
+            label: intl.formatMessage(messages.showSetupChecklist),
+            onSelect: onShowSetupChecklist,
+            testId: "show-setup-checklist",
+            icon: <ListChecks size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          });
+        }
+
+        if (canManageProductTypes && product?.productType?.id) {
+          menuItems.push({
+            label: intl.formatMessage(messages.openProductTypeSettings),
+            onSelect: () => navigate(productTypeUrl(product.productType.id)),
+            testId: "open-product-type-settings",
+            icon: <Shapes size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          });
+        }
+
+        if (product?.id) {
+          menuItems.push({
+            label: intl.formatMessage(messages.openGraphiQL),
+            onSelect: openPlaygroundURL,
+            testId: "graphiql-redirect",
+            icon: <GraphqlIcon />,
+          });
+        }
+
+        if (product) {
+          menuItems.push({
+            label: intl.formatMessage(messages.deleteProduct),
+            onSelect: onDelete,
+            testId: "delete-product",
+            color: "critical1",
+            icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          });
+        }
 
         const handleMakeAvailable = () => {
           const opts = getMakeAvailableChannelOpts();
@@ -650,10 +657,16 @@ const ProductUpdatePage = ({
                     }
                   />
                 )}
-                <TopNav.Menu
-                  items={[...extensionMenuItems, ...builtInMenuItems]}
-                  dataTestId="menu"
-                />
+                {menuItems.length > 0 && (
+                  <TopNav.Menu
+                    items={
+                      disabled || !product
+                        ? menuItems.map(item => ({ ...item, disabled: true }))
+                        : menuItems
+                    }
+                    dataTestId="menu"
+                  />
+                )}
               </TopNav>
 
               <DetailPageLayout.Content paddingBottom={10}>
@@ -677,6 +690,13 @@ const ProductUpdatePage = ({
                       diagnosticsForCard.isShippingRequired ??
                       product?.productType?.isShippingRequired ??
                       true
+                    }
+                    productAttributeCount={data.attributes.length}
+                    variantAttributeCount={product?.productType.variantAttributes?.length ?? 0}
+                    onOpenProductType={
+                      canManageProductTypes && product?.productType?.id
+                        ? () => navigate(productTypeUrl(product.productType.id))
+                        : undefined
                     }
                   />
                 ) : null}
@@ -841,7 +861,6 @@ const ProductUpdatePage = ({
               </DetailPageLayout.RightSidebar>
 
               <Savebar>
-                <Savebar.DeleteButton onClick={onDelete} />
                 <Savebar.Spacer />
                 <ProductSaveCompositionHint composition={saveComposition} />
                 <Savebar.CancelButton onClick={() => navigate(productListUrl())} />

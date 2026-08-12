@@ -19004,6 +19004,7 @@ export const SearchProductTypesDocument = gql`
       node {
         id
         name
+        hasVariants
       }
     }
     pageInfo {

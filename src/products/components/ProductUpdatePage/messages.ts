@@ -22,6 +22,11 @@ export const messages = defineMessages({
     description:
       "product detail menu, reopens the Finish setting up this product card after dismiss",
   },
+  deleteProduct: {
+    id: "j6dFO1",
+    defaultMessage: "Delete product",
+    description: "product detail cogs menu, opens the delete-confirmation dialog",
+  },
   pendingVariantDeletes: {
     id: "w0m9Jc",
     defaultMessage:

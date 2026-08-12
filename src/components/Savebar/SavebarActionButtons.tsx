@@ -9,7 +9,7 @@ export const DeleteButton = ({
   children,
   ...props
 }: { children?: React.ReactNode } & ButtonProps) => (
-  <Button variant="error" size="large" data-test-id="button-bar-delete" {...props}>
+  <Button variant="error" size="large" data-test-id="button-bar-delete" {...props} type="button">
     {children || <FormattedMessage {...buttonMessages.delete} />}
   </Button>
 );
@@ -59,7 +59,13 @@ export const CancelButton = ({
   children,
   ...props
 }: { children?: React.ReactNode } & ButtonProps) => (
-  <Button variant="secondary" size="large" data-test-id="button-bar-cancel" {...props}>
+  <Button
+    variant="secondary"
+    size="large"
+    data-test-id="button-bar-cancel"
+    {...props}
+    type="button"
+  >
     {children || <FormattedMessage {...buttonMessages.back} />}
   </Button>
 );

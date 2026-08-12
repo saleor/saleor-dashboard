@@ -156,11 +156,13 @@ export const getProductSetupReadinessFromPage = (
   args: Parameters<typeof buildProductSetupReadinessInput>[0],
 ): ProductSetupReadiness => getProductSetupReadiness(buildProductSetupReadinessInput(args));
 
-/** ChannelOpts payload that publishes + opens purchase for a listing. */
+/** ChannelOpts payload that publishes, lists, and opens purchase for a listing. */
 export const getMakeAvailableChannelOpts = (dateNow: number = Date.now()): ChannelOpts => ({
   isPublished: true,
   // Slightly in the past avoids "scheduled" flash from clock skew.
   publishedAt: new Date(dateNow - CLOCK_TOLERANCE_MS).toISOString(),
   isAvailableForPurchase: true,
   availableForPurchase: new Date(dateNow).toISOString(),
+  // Unlisted-but-purchasable is a valid later choice; go-live should be findable.
+  visibleInListings: true,
 });

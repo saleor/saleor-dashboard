@@ -194,8 +194,9 @@ export const messages = defineMessages({
     description: "setup task title",
   },
   liveDescription: {
-    id: "qAEm7D",
-    defaultMessage: "Publishes the product and opens it for purchase in your sales channels.",
+    id: "/KH2jO",
+    defaultMessage:
+      "Publishes the product, shows it in listings, and opens it for purchase in your sales channels.",
     description: "setup task description when not live",
   },
   liveDone: {
@@ -255,14 +256,30 @@ export const messages = defineMessages({
     defaultMessage: "Optional",
     description: "review row status when SEO fields are empty",
   },
-  availabilityReviewTitle: {
-    id: "KwKTgg",
-    defaultMessage: "Availability details",
+  attributesReviewTitle: {
+    id: "/FYtVx",
+    defaultMessage: "Attributes",
     description: "review row title",
   },
-  availabilityReviewDescription: {
-    id: "zWf/Vr",
-    defaultMessage: "Schedules, listings visibility, and per-channel diagnostics.",
-    description: "review row description",
+  attributesReviewDescriptionEmpty: {
+    id: "OPSxxI",
+    defaultMessage:
+      "Assigned on the product type. They don’t appear on this page until the type has some.",
+    description: "review row when the product type has no attributes",
+  },
+  attributesReviewDescriptionAssigned: {
+    id: "uWxoc+",
+    defaultMessage: "Product and variant fields from the product type.",
+    description: "review row when the product type has attributes",
+  },
+  attributesReviewStatusNone: {
+    id: "835PS4",
+    defaultMessage: "None",
+    description: "review row status when the product type has no attributes",
+  },
+  attributesReviewStatusCount: {
+    id: "oNT0tG",
+    defaultMessage: "{count} on this type",
+    description: "review row status with product + variant attribute count",
   },
 });

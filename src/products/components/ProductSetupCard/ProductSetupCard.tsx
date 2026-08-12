@@ -5,7 +5,7 @@ import {
 } from "@dashboard/components/SetupChecklist/types";
 import { Box, Button, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { ArrowRight, FolderTree, Image, Search, Store, Tag, Warehouse } from "lucide-react";
+import { ArrowRight, FolderTree, Image, Search, Shapes, Store, Tag, Warehouse } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,6 +24,9 @@ interface ProductSetupCardProps {
   /** Sets published + available-for-purchase on listed channels (form draft). */
   onMakeAvailable: () => void;
   isShippingRequired: boolean;
+  productAttributeCount?: number;
+  variantAttributeCount?: number;
+  onOpenProductType?: () => void;
 }
 
 const CtaLabel = ({ children }: { children: ReactNode }) => (
@@ -49,6 +52,9 @@ export const ProductSetupCard = ({
   onFinishChannelSetup,
   onMakeAvailable,
   isShippingRequired,
+  productAttributeCount = 0,
+  variantAttributeCount = 0,
+  onOpenProductType,
 }: ProductSetupCardProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
@@ -230,6 +236,25 @@ export const ProductSetupCard = ({
       ) : undefined,
   });
 
+  const attributeCount = productAttributeCount + variantAttributeCount;
+  const handleAttributesReviewClick = () => {
+    if (productAttributeCount > 0) {
+      scrollToProductSetupTarget("attributes");
+
+      return;
+    }
+
+    if (variantAttributeCount > 0) {
+      scrollToProductSetupTarget("variants");
+
+      return;
+    }
+
+    if (onOpenProductType) {
+      onOpenProductType();
+    }
+  };
+
   const reviewItems: SetupChecklistReviewItem[] = [
     {
       id: "media",
@@ -238,6 +263,29 @@ export const ProductSetupCard = ({
       description: <FormattedMessage {...messages.mediaReviewDescription} />,
       status: <FormattedMessage {...messages.mediaReviewStatus} values={{ count: mediaCount }} />,
       onClick: () => scrollToProductSetupTarget("media"),
+      disabled,
+    },
+    {
+      id: "attributes",
+      icon: <Shapes size={16} />,
+      title: <FormattedMessage {...messages.attributesReviewTitle} />,
+      description: (
+        <FormattedMessage
+          {...(attributeCount > 0
+            ? messages.attributesReviewDescriptionAssigned
+            : messages.attributesReviewDescriptionEmpty)}
+        />
+      ),
+      status:
+        attributeCount > 0 ? (
+          <FormattedMessage
+            {...messages.attributesReviewStatusCount}
+            values={{ count: attributeCount }}
+          />
+        ) : (
+          <FormattedMessage {...messages.attributesReviewStatusNone} />
+        ),
+      onClick: handleAttributesReviewClick,
       disabled,
     },
     {
@@ -256,14 +304,6 @@ export const ProductSetupCard = ({
       onClick: () => scrollToProductSetupTarget("seo"),
       disabled,
     },
-    {
-      id: "availability",
-      icon: <Store size={16} />,
-      title: <FormattedMessage {...messages.availabilityReviewTitle} />,
-      description: <FormattedMessage {...messages.availabilityReviewDescription} />,
-      onClick: () => scrollToProductSetupTarget("availability"),
-      disabled,
-    },
   ];
 
   const nextUpTask = !hasShopReadyChannel
@@ -279,7 +319,7 @@ export const ProductSetupCard = ({
             : null;
 
   return (
-    <Box paddingX={6} paddingTop={6} marginBottom={4}>
+    <Box paddingX={6} paddingTop={6} marginBottom={10}>
       <SetupChecklist
         className={clsx(styles.elevated, theme === "defaultDark" && styles.elevatedDark)}
         data-test-id="product-setup-card"

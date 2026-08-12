@@ -1,3 +1,6 @@
+import { history } from "@dashboard/components/Router";
+import { stringifyQs } from "@dashboard/utils/urls";
+
 import createDialogActionHandlers from "./dialogActionHandlers";
 
 describe("createDialogActionHandlers", () => {
@@ -45,5 +48,35 @@ describe("createDialogActionHandlers", () => {
       }),
       { replace: true },
     );
+  });
+
+  it("keeps current pathname encoding and non-dialog query params when opening a dialog", () => {
+    // Arrange - GraphQL ids often end in "="; url helpers encode them as %3D
+    const originalLocation = history.location;
+
+    history.location = {
+      ...originalLocation,
+      pathname: "/products/UHJvZHVjdDox==",
+      search: "?action=setup&foo=bar",
+    };
+
+    const navigate = jest.fn();
+    const buildProductUrl = (params: Record<string, unknown>) =>
+      `/products/UHJvZHVjdDox%3D%3D?${stringifyQs(params)}`;
+    const [openModal] = createDialogActionHandlers(navigate, buildProductUrl, {
+      action: "setup",
+    });
+
+    try {
+      // Act
+      openModal("remove");
+
+      // Assert
+      expect(navigate).toHaveBeenCalledWith(
+        `/products/UHJvZHVjdDox==?${stringifyQs({ foo: "bar", action: "remove" })}`,
+      );
+    } finally {
+      history.location = originalLocation;
+    }
   });
 });

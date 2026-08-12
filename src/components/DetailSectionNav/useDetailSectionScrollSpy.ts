@@ -1,3 +1,7 @@
+import {
+  getDetailContentScrollParent,
+  scrollElementIntoDetailContent,
+} from "@dashboard/components/Layouts/Detail/scrollElementIntoDetailContent";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { resolveActiveSectionIndex } from "./resolveActiveSectionIndex";
@@ -10,22 +14,6 @@ interface UseDetailSectionScrollSpyArgs {
 
 /** Offset from the content scrollport top used as the “current section” line. */
 const SECTION_MARKER_OFFSET_PX = 48;
-
-const getScrollParent = (element: HTMLElement | null): HTMLElement | null => {
-  let parent = element?.parentElement ?? null;
-
-  while (parent) {
-    const { overflowY } = getComputedStyle(parent);
-
-    if (overflowY === "auto" || overflowY === "scroll") {
-      return parent;
-    }
-
-    parent = parent.parentElement;
-  }
-
-  return null;
-};
 
 const resolveActiveSectionId = (root: HTMLElement, elements: HTMLElement[]): string | undefined => {
   const index = resolveActiveSectionIndex({
@@ -52,18 +40,7 @@ export const scrollToDetailSection = (sectionId: string): void => {
     return;
   }
 
-  const root = getScrollParent(element);
-
-  if (!root) {
-    return;
-  }
-
-  const scrollMarginTop = Number.parseFloat(getComputedStyle(element).scrollMarginTop) || 0;
-  const rootRect = root.getBoundingClientRect();
-  const elementRect = element.getBoundingClientRect();
-  const nextTop = root.scrollTop + (elementRect.top - rootRect.top) - scrollMarginTop;
-
-  root.scrollTo({ top: Math.max(0, nextTop), behavior: "smooth" });
+  scrollElementIntoDetailContent(element);
 };
 
 /**
@@ -102,7 +79,7 @@ export const useDetailSectionScrollSpy = ({
         return;
       }
 
-      const root = getScrollParent(elements[0]);
+      const root = getDetailContentScrollParent(elements[0]);
 
       if (!root) {
         return;

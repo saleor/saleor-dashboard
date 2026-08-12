@@ -118,7 +118,7 @@ describe("getProductSetupSeoStatus", () => {
 });
 
 describe("getMakeAvailableChannelOpts", () => {
-  it("publishes and opens purchase with a past publishedAt to avoid scheduled flash", () => {
+  it("publishes, lists, and opens purchase with a past publishedAt to avoid scheduled flash", () => {
     // Arrange
     const now = Date.parse("2024-06-01T12:00:00.000Z");
 
@@ -128,6 +128,7 @@ describe("getMakeAvailableChannelOpts", () => {
     // Assert
     expect(opts.isPublished).toBe(true);
     expect(opts.isAvailableForPurchase).toBe(true);
+    expect(opts.visibleInListings).toBe(true);
     expect(opts.availableForPurchase).toBe(new Date(now).toISOString());
     expect(Date.parse(opts.publishedAt!)).toBeLessThan(now);
   });

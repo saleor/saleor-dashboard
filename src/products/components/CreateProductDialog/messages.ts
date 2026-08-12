@@ -1,15 +1,25 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  title: {
+    id: "u2QjRn",
+    defaultMessage: "Create product",
+    description: "create product dialog title",
+  },
+  description: {
+    id: "99q9UB",
+    defaultMessage:
+      "Add a product. You can set a price, inventory, and availability after creating it.",
+    description: "create product dialog description",
+  },
+  created: {
+    id: "DO8+uV",
+    defaultMessage: "Product created",
+  },
   productType: {
     id: "w+3Q3e",
     defaultMessage: "Product type",
     description: "input label",
-  },
-  selectProductType: {
-    id: "/yJJvI",
-    defaultMessage: "Select a product type",
-    description: "dialog header",
   },
   createProductTypeTitle: {
     id: "sWLkI9",

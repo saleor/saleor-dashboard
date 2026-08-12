@@ -102,4 +102,49 @@ describe("ProductSetupCard", () => {
     expect(screen.queryByTestId("setup-product-make-available")).not.toBeInTheDocument();
     expect(screen.getByTestId("setup-product-stock")).toBeInTheDocument();
   });
+
+  it("shows attributes as a review row with none when the product type has no attributes", () => {
+    // Arrange & Act
+    render(
+      <ProductSetupCard
+        readiness={incompleteReadiness}
+        onManageChannels={jest.fn()}
+        onFinishChannelSetup={jest.fn()}
+        onMakeAvailable={jest.fn()}
+        isShippingRequired
+        productAttributeCount={0}
+        variantAttributeCount={0}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.getByTestId("setup-checklist-review-attributes")).toBeInTheDocument();
+    expect(screen.getByTestId("setup-checklist-review-attributes")).toHaveTextContent("None");
+  });
+
+  it("opens product type settings from the attributes review row when the type has none", () => {
+    // Arrange
+    const onOpenProductType = jest.fn();
+
+    render(
+      <ProductSetupCard
+        readiness={incompleteReadiness}
+        onManageChannels={jest.fn()}
+        onFinishChannelSetup={jest.fn()}
+        onMakeAvailable={jest.fn()}
+        isShippingRequired
+        productAttributeCount={0}
+        variantAttributeCount={0}
+        onOpenProductType={onOpenProductType}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Act
+    screen.getByTestId("setup-checklist-review-attributes").click();
+
+    // Assert
+    expect(onOpenProductType).toHaveBeenCalled();
+  });
 });

@@ -81,6 +81,7 @@ describe("ProductMedia", () => {
       </TestWrapper>,
     );
 
+    expect(screen.getByTestId("product-media")).toBeInTheDocument();
     expect(screen.getByTestId("product-media-dropzone")).toBeInTheDocument();
 
     const file = new File(["image-bytes"], "shoe.png", { type: "image/png" });

@@ -72,6 +72,8 @@ const useStyles = makeStyles<{
         },
         "& .clip-region": {
           border: `1px solid ${vars.colors.border.accent1}`,
+          display: "flex",
+          alignItems: "stretch",
         },
         "& .gdg-growing-entry": {
           flex: 1,
@@ -84,6 +86,10 @@ const useStyles = makeStyles<{
           // this particular element, like, never ever
           boxShadow: "none !important",
           padding: "0 !important",
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          alignItems: "stretch",
         },
         "& input:not([class*='MuiInputBase']), & textarea": {
           appearance: "none",
@@ -99,6 +105,11 @@ const useStyles = makeStyles<{
         "& input[type='number']:not([class*='MuiInputBase'])": {
           textAlign: "right",
           width: "100%",
+          height: "100%",
+          boxSizing: "border-box",
+          paddingTop: 0,
+          paddingBottom: 0,
+          lineHeight: "normal",
         },
         position: "fixed",
         top: 0,
