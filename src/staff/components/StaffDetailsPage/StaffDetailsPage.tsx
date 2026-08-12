@@ -5,10 +5,13 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
@@ -21,20 +24,35 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { getUserName } from "@dashboard/misc";
 import { StaffStatus } from "@dashboard/staff/components/StaffStatus/StaffStatus";
+import { defaultGraphiQLQuery } from "@dashboard/staff/queries";
 import { isStaffInvitePending } from "@dashboard/staff/staffMemberStatus";
 import { staffListPath } from "@dashboard/staff/urls";
 import { getMemberPermissionGroups, isMemberActive } from "@dashboard/staff/utils";
 import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
 import { Box, Button, type Option, Text } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import { StaffPreferences } from "../StaffPreferences/StaffPreferences";
 import { StaffProperties } from "../StaffProperties/StaffProperties";
 import { isStaffDetailsFormPristine } from "./isStaffDetailsFormPristine";
 import { StaffDetailsTitle } from "./StaffDetailsTitle";
+
+const messages = defineMessages({
+  openGraphiQL: {
+    id: "XETVSq",
+    defaultMessage: "Open this staff member in GraphiQL",
+  },
+  deleteStaffMember: {
+    id: "anFRoJ",
+    defaultMessage: "Delete staff member",
+    description: "staff detail cogs menu, opens the delete-confirmation dialog",
+  },
+});
 
 export interface StaffDetailsFormData {
   email: string;
@@ -126,6 +144,41 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     },
     [disabled, initialForm, staffMember],
   );
+  const staffMemberId = staffMember?.id;
+  const devMode = useDevModeContext();
+  const openPlaygroundURL = useCallback(() => {
+    if (!staffMemberId) {
+      return;
+    }
+
+    devMode.setDevModeContent(defaultGraphiQLQuery);
+    devMode.setVariables(`{ "id": "${staffMemberId}" }`);
+    devMode.setDevModeVisibility(true);
+  }, [devMode, staffMemberId]);
+  const menuItems = useMemo((): TopNavMenuItem[] => {
+    const items: TopNavMenuItem[] = [];
+
+    if (staffMemberId) {
+      items.push({
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <GraphqlIcon />,
+      });
+    }
+
+    if (canRemove && staffMember) {
+      items.push({
+        label: intl.formatMessage(messages.deleteStaffMember),
+        onSelect: onDelete,
+        testId: "delete-staff-member",
+        color: "critical1",
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
+    return items;
+  }, [canRemove, intl, onDelete, openPlaygroundURL, staffMember, staffMemberId]);
 
   return (
     <Form
@@ -221,6 +274,16 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     })}
                   </Button>
                 )}
+                {menuItems.length > 0 && (
+                  <TopNav.Menu
+                    items={
+                      disabled || !staffMember
+                        ? menuItems.map(item => ({ ...item, disabled: true }))
+                        : menuItems
+                    }
+                    dataTestId="menu"
+                  />
+                )}
               </TopNav>
               <DetailPageLayout.Content>
                 <DetailPageContent>
@@ -278,7 +341,6 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 </DetailPageLayout.RightSidebar>
               ) : null}
               <Savebar>
-                {canRemove && <Savebar.DeleteButton onClick={onDelete} />}
                 <Savebar.Spacer />
                 <Savebar.CancelButton onClick={() => navigate(staffListBackLink)} />
                 <Savebar.ConfirmButton
