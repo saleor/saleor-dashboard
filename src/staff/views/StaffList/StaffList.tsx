@@ -28,9 +28,10 @@ import { useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
-import StaffAddMemberDialog, {
+import {
   type AddMemberFormData,
-} from "../../components/StaffAddMemberDialog";
+  StaffAddMemberDialog,
+} from "../../components/StaffAddMemberDialog/StaffAddMemberDialog";
 import StaffListPage from "../../components/StaffListPage";
 import {
   staffListUrl,
@@ -98,15 +99,37 @@ const StaffList = ({ params }: StaffListProps) => {
     },
   });
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
+    // Field errors (e.g. duplicate email) are shown inline on the invite dialog.
+    disableErrorHandling: true,
     onCompleted: data => {
       if (data?.staffCreate?.errors?.length === 0) {
         markOnboardingStepAsCompleted("invite-staff");
         notify({
           status: "success",
-          text: intl.formatMessage({ id: "8a7vg2", defaultMessage: "Staff member invited" }),
+          title: intl.formatMessage({
+            id: "8a7vg2",
+            defaultMessage: "Staff member invited",
+          }),
+          text: intl.formatMessage({
+            id: "DACqZK",
+            defaultMessage: "They should check their email and use the link to set a password.",
+          }),
         });
         navigate(staffMemberDetailsUrl(data?.staffCreate?.user?.id ?? ""));
       }
+    },
+    onError: () => {
+      notify({
+        status: "error",
+        title: intl.formatMessage({
+          id: "SEC9dj",
+          defaultMessage: "Couldn’t send invite",
+        }),
+        text: intl.formatMessage({
+          id: "3kJE8G",
+          defaultMessage: "Something went wrong. Try again.",
+        }),
+      });
     },
   });
   const paginationValues = usePaginator({
@@ -152,7 +175,7 @@ const StaffList = ({ params }: StaffListProps) => {
     addStaffMember({
       variables: {
         input: {
-          addGroups: variables.permissionGroups,
+          addGroups: variables.permissionGroups.map(group => group.value),
           email: variables.email,
           firstName: variables.firstName,
           lastName: variables.lastName,
@@ -197,7 +220,7 @@ const StaffList = ({ params }: StaffListProps) => {
         availablePermissionGroups={mapEdgesToItems(searchPermissionGroupsOpts?.data?.search) ?? []}
         confirmButtonState={addStaffMemberData.status}
         initialSearch=""
-        disabled={loading}
+        disabled={addStaffMemberData.loading}
         errors={addStaffMemberData.data?.staffCreate?.errors || []}
         open={params.action === "add"}
         onClose={closeModal}

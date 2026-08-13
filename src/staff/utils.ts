@@ -23,16 +23,12 @@ export const groupsDiff = (
   };
 };
 
-export const isMemberActive = (staffMember: StaffMemberDetailsFragment | UserFragment) => {
-  if (staffMember && "isActive" in staffMember) {
-    return staffMember.isActive;
-  }
-
-  return false;
-};
+export const isMemberActive = (
+  staffMember: Pick<StaffMemberDetailsFragment | UserFragment, "isActive"> | null | undefined,
+): boolean => staffMember?.isActive === true;
 
 export const getMemberPermissionGroups = (
-  staffMember: StaffMemberDetailsFragment | UserFragment,
+  staffMember: StaffMemberDetailsFragment | UserFragment | null | undefined,
 ) => {
   if (staffMember && "permissionGroups" in staffMember) {
     return staffMember.permissionGroups;

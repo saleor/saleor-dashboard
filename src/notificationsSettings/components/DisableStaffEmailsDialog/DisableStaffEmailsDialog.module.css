@@ -1,0 +1,16 @@
+.bulletList {
+  margin: 0;
+  padding: 0 0 0 1.25em;
+  list-style-type: disc;
+  list-style-position: outside;
+}
+
+.bulletList > li {
+  display: list-item;
+  margin: 0 0 var(--mu-spacing-1);
+  padding: 0;
+}
+
+.bulletList > li:last-child {
+  margin-bottom: 0;
+}

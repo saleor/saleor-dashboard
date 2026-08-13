@@ -30,6 +30,7 @@ const createTransactionEvent = (
       firstName: "John",
       lastName: "Doe",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: {
         __typename: "Image",
         url: "https://example.com/avatar.jpg",
@@ -120,6 +121,7 @@ describe("OrderRefundsViewModel", () => {
       firstName: "John",
       lastName: "Doe",
       isActive: true,
+      lastLogin: "2023-01-01T00:00:00Z",
       avatar: {
         __typename: "Image",
         url: "https://example.com/avatar.jpg",
@@ -599,6 +601,7 @@ Array [
         firstName: "John",
         lastName: "Doe",
         isActive: true,
+        lastLogin: "2023-01-01T00:00:00Z",
         avatar: {
           __typename: "Image" as const,
           url: "https://example.com/user-avatar.jpg",
@@ -624,6 +627,7 @@ Array [
         firstName: "Jane",
         lastName: "Smith",
         isActive: true,
+        lastLogin: "2023-01-01T00:00:00Z",
         avatar: null,
       };
 
@@ -646,6 +650,7 @@ Array [
         firstName: "",
         lastName: "",
         isActive: true,
+        lastLogin: "2023-01-01T00:00:00Z",
         avatar: null,
       };
 
@@ -714,6 +719,7 @@ Array [
         firstName: "John",
         lastName: "Doe",
         isActive: true,
+        lastLogin: "2023-01-01T00:00:00Z",
         avatar: {
           __typename: "Image" as const,
           url: "https://example.com/avatar.jpg",
@@ -794,6 +800,7 @@ Array [
           firstName: "John",
           lastName: "Doe",
           isActive: true,
+          lastLogin: "2023-01-01T00:00:00Z",
           avatar: {
             __typename: "Image" as const,
             url: "https://example.com/avatar.jpg",
