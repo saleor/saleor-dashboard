@@ -49,7 +49,6 @@ import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
-import { ProductTypeVariantMode } from "../ProductTypeVariantMode/ProductTypeVariantMode";
 import { messages } from "./messages";
 import { ProductTypeDetailsTitle } from "./Title";
 
@@ -257,28 +256,23 @@ const ProductTypeDetailsPage = ({
                   onAttributeUnassign={onAttributeUnassign}
                   {...productAttributeList}
                 />
-                <ProductTypeVariantMode
+                <ProductTypeVariantAttributes
+                  testId="assign-variants-attributes"
                   hasVariants={data.hasVariants}
+                  assignedVariantAttributes={productType?.assignedVariantAttributes}
                   disabled={disabled}
+                  type={ProductAttributeType.VARIANT}
+                  onAttributeAssign={onAttributeAdd}
+                  onAttributeCreate={onAttributeCreate}
+                  onAttributeReorder={(event: ReorderEvent) =>
+                    onAttributeReorder(event, ProductAttributeType.VARIANT)
+                  }
+                  onAttributeUnassign={onAttributeUnassign}
                   onHasVariantsToggle={onHasVariantsToggle}
+                  setSelectedVariantAttributes={setSelectedVariantAttributes}
+                  selectedVariantAttributes={selectedVariantAttributes}
+                  {...variantAttributeList}
                 />
-                {data.hasVariants && (
-                  <ProductTypeVariantAttributes
-                    testId="assign-variants-attributes"
-                    assignedVariantAttributes={productType?.assignedVariantAttributes}
-                    disabled={disabled}
-                    type={ProductAttributeType.VARIANT}
-                    onAttributeAssign={onAttributeAdd}
-                    onAttributeCreate={onAttributeCreate}
-                    onAttributeReorder={(event: ReorderEvent) =>
-                      onAttributeReorder(event, ProductAttributeType.VARIANT)
-                    }
-                    onAttributeUnassign={onAttributeUnassign}
-                    setSelectedVariantAttributes={setSelectedVariantAttributes}
-                    selectedVariantAttributes={selectedVariantAttributes}
-                    {...variantAttributeList}
-                  />
-                )}
               </DetailPageContent>
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>

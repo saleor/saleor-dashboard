@@ -1,0 +1,10 @@
+.hint {
+  padding: var(--mu-spacing-4) var(--mu-spacing-6) var(--mu-spacing-3);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-4);
+  padding: var(--mu-spacing-4) var(--mu-spacing-6) var(--mu-spacing-6);
+}
