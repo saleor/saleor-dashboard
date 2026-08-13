@@ -164,7 +164,18 @@ describe("AttributePage top nav", () => {
     renderPage({ attributeProp: undefined });
 
     // Assert
+    expect(screen.getByTestId("attribute-details-loading")).toBeInTheDocument();
     expect(screen.getByTestId("show-attribute-metadata")).toBeDisabled();
+  });
+
+  it("does not render type-dependent sections while attribute data is loading", () => {
+    // Arrange & Act
+    renderPage({ attributeProp: undefined });
+
+    // Assert
+    expect(screen.queryByTestId("attribute-values-mock")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("attribute-details-mock")).not.toBeInTheDocument();
+    expect(screen.queryByText("Filterable in storefront")).not.toBeInTheDocument();
   });
 
   it("does not render the metadata button on create view", () => {

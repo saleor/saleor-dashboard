@@ -117,3 +117,36 @@ describe("AttributeValues bulk selection", () => {
     expect(screen.getByTestId("button-pagination-next")).toBeInTheDocument();
   });
 });
+
+describe("AttributeValues create modal", () => {
+  it("keeps the inline add field inside the values table well", () => {
+    // Arrange & Act
+    render(
+      <AttributeValues
+        addMode="inline"
+        attributeName="Brand"
+        disabled={false}
+        inputType={AttributeInputTypeEnum.DROPDOWN}
+        isChecked={() => false}
+        onInlineValueAdd={jest.fn()}
+        onNextPage={jest.fn()}
+        onPreviousPage={jest.fn()}
+        onValueAdd={jest.fn()}
+        onValueDelete={jest.fn()}
+        onValueReorder={jest.fn()}
+        onValueUpdate={jest.fn()}
+        pageInfo={{ hasNextPage: false, hasPreviousPage: false }}
+        selected={0}
+        toggle={jest.fn()}
+        toggleAll={jest.fn()}
+        toolbar={null}
+        values={[]}
+        variant="embedded"
+      />,
+      { wrapper: TestWrapper },
+    );
+
+    // Assert — the add field lives in the table so ResponsiveTable's bordered well wraps it
+    expect(screen.getByTestId("attribute-value-inline-add").closest("table")).toBeInTheDocument();
+  });
+});

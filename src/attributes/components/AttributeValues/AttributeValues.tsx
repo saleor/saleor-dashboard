@@ -296,7 +296,13 @@ const AttributeValues = ({
               data-test-id="attribute-value-name"
             >
               <Box className={isEmbedded ? styles.embeddedCell : undefined}>
-                {value?.slug ?? <Skeleton />}
+                {value?.slug ? (
+                  <Text size={3} color="default2">
+                    {value.slug}
+                  </Text>
+                ) : (
+                  <Skeleton />
+                )}
               </Box>
             </TableCell>
             <TableCell className={getColumnClassName(classes, isEmbedded, "store")}>
@@ -362,8 +368,14 @@ const AttributeValues = ({
     >
       {hasValueRows || showInlineAddInTable ? (
         <ResponsiveTable
-          bleed
-          className={clsx(tableStyles.assignableTable, isEmbedded && styles.embeddedTable)}
+          // Card variant bleeds into AssignableListCard. The create-modal
+          // (embedded) table keeps ResponsiveTable's bordered well — same
+          // chrome as the Properties card below it.
+          bleed={!isEmbedded}
+          className={clsx(
+            !isEmbedded && tableStyles.assignableTable,
+            isEmbedded && styles.embeddedTable,
+          )}
         >
           {hasValueRows || showInlineAddInTable ? (
             <colgroup>

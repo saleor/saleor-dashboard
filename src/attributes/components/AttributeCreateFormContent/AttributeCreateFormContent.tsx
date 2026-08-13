@@ -132,7 +132,6 @@ export const AttributeCreateFormContent = ({
           onChange={event => set({ referenceTypes: event.target.value })}
           options={referenceTypeOptions}
           value={data.referenceTypes}
-          variant="embedded"
         />
       ) : null}
 

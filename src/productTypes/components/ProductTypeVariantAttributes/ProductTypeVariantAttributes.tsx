@@ -1,4 +1,8 @@
 // @ts-strict-ignore
+import columnStyles from "@dashboard/attributes/components/AttributeListTableSkeleton/attributeListTableColumns.module.css";
+import { AttributeListTableSkeletonRows } from "@dashboard/attributes/components/AttributeListTableSkeleton/AttributeListTableSkeleton";
+import { AttributeValueRequiredCell } from "@dashboard/attributes/components/AttributeValueRequiredCell/AttributeValueRequiredCell";
+import { messages as valueRequiredMessages } from "@dashboard/attributes/components/AttributeValueRequiredCell/messages";
 import { attributeUrl } from "@dashboard/attributes/urls";
 import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
 import { ASSIGNABLE_LIST_TABLE_ACTION_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
@@ -12,6 +16,7 @@ import { SortableTableBody, SortableTableRow } from "@dashboard/components/Sorta
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import { ProductAttributeType, type ProductTypeDetailsQuery } from "@dashboard/graphql";
+import { useOptimisticListReorder } from "@dashboard/hooks/useOptimisticListReorder";
 import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
@@ -24,11 +29,6 @@ import { Trash2 } from "lucide-react";
 import { type KeyboardEvent, type MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useOptimisticListReorder } from "../../hooks/useOptimisticListReorder";
-import columnStyles from "../AttributeListTableSkeleton/attributeListTableColumns.module.css";
-import { AttributeListTableSkeletonRows } from "../AttributeListTableSkeleton/AttributeListTableSkeleton";
-import { AttributeValueRequiredCell } from "../AttributeValueRequiredCell/AttributeValueRequiredCell";
-import { messages as valueRequiredMessages } from "../AttributeValueRequiredCell/messages";
 import { messages } from "./messages";
 import styles from "./ProductTypeVariantAttributes.module.css";
 

@@ -14,6 +14,7 @@ export const pageTypeDetailsFragment = gql`
     ...Metadata
     attributes {
       ...Attribute
+      valueRequired
     }
   }
 `;

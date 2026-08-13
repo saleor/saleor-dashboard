@@ -68,6 +68,7 @@ import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "../AttributeValues/AttributeValues";
+import { AttributePageLoading } from "./AttributePageLoading";
 import { messages } from "./messages";
 import { AttributeDetailsTitle } from "./Title";
 
@@ -241,8 +242,18 @@ const AttributePage = ({
   const productRefSearch = useProductTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
   const pageRefSearch = usePageTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
+  if (attribute === undefined) {
+    return (
+      <AttributePageLoading
+        attributePageBackLink={attributePageBackLink}
+        onShowMetadata={onShowMetadata}
+      />
+    );
+  }
+
   return (
     <Form
+      key={attribute?.id ?? "create"}
       confirmLeave
       initial={initialForm}
       onSubmit={handleSubmit}

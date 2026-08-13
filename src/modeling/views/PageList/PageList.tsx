@@ -20,6 +20,8 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog";
+import { CreateModelTypeDialog } from "@dashboard/modelTypes/components/CreateModelTypeDialog/CreateModelTypeDialog";
+import { useCreateModelType } from "@dashboard/modelTypes/hooks/useCreateModelType";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -226,6 +228,7 @@ const PageList = ({ params }: PageListProps) => {
     PageListUrlDialog,
     PageListUrlQueryParams
   >(navigate, pageListUrl, params);
+  const createModelTypeDialog = useCreateModelType({ onClose: closeModal });
   const [bulkPageRemove, bulkPageRemoveOpts] = usePageBulkRemoveMutation({
     onCompleted: data => {
       if (data.pageBulkDelete?.errors.length === 0) {
@@ -368,6 +371,7 @@ const PageList = ({ params }: PageListProps) => {
         pages={pages}
         onUpdateListSettings={updateListSettings}
         onPageCreate={handlePageCreate}
+        onCreateModelType={() => openModal("create-model-type")}
         activePageTypeName={activePageType?.name}
         onSort={handleSort}
         sort={getSortParams(params)}
@@ -412,6 +416,11 @@ const PageList = ({ params }: PageListProps) => {
           })
         }
         open={params.action === "remove"}
+      />
+      <CreateModelTypeDialog
+        open={params.action === "create-model-type"}
+        onClose={closeModal}
+        {...createModelTypeDialog}
       />
       <PageTypePickerDialog
         confirmButtonState="success"

@@ -2721,6 +2721,7 @@ export const PageTypeDetailsFragmentDoc = gql`
   ...Metadata
   attributes {
     ...Attribute
+    valueRequired
   }
 }
     ${PageTypeFragmentDoc}

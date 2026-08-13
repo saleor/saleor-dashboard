@@ -14,7 +14,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField, pageUrl } from "@dashboard/modeling/urls";
-import { pageTypeAddUrl } from "@dashboard/modelTypes/urls";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type PageListProps, type SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
@@ -39,6 +38,7 @@ interface PageListPageProps extends PageListProps, SortPage<PageListUrlSortField
   onPagesPublish: () => void;
   onPagesUnpublish: () => void;
   onPageCreate: () => void;
+  onCreateModelType: () => void;
   pageTypes: Array<{ id: string; name: string }> | undefined;
   selectedIds: string[];
   activePageTypeName: string | undefined;
@@ -55,6 +55,7 @@ const PageListPage = ({
   onPagesPublish,
   onPagesUnpublish,
   onPageCreate,
+  onCreateModelType,
   pageTypes,
   selectedIds,
   activePageTypeName,
@@ -82,7 +83,7 @@ const PageListPage = ({
       description: "button",
     }),
     testId: "create-page-type",
-    onSelect: () => navigate(pageTypeAddUrl),
+    onSelect: onCreateModelType,
   };
 
   const createLabel = activePageTypeName ? (
