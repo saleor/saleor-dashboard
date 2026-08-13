@@ -5,6 +5,7 @@ import {
 } from "@dashboard/components/ChannelAvailability/messages";
 import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import {
   type ChannelFragment,
   type ProductChannelListingAddInput,
@@ -214,10 +215,8 @@ export const AvailabilityCard = ({
             </Text>
           </Box>
         ) : mergedSummaries.length === 0 ? (
-          <Box padding={4}>
-            <Text size={2} color="default2">
-              {intl.formatMessage(messages.noChannelsListed)}
-            </Text>
+          <Box paddingBottom={6} data-test-id="channel-availability-empty">
+            <Placeholder>{intl.formatMessage(messages.noChannelsListed)}</Placeholder>
           </Box>
         ) : (
           <Box display="flex" flexDirection="column" gap={4}>
@@ -243,17 +242,7 @@ export const AvailabilityCard = ({
 
             {/* No results message */}
             {filteredSummaries.length === 0 ? (
-              <Box
-                padding={4}
-                borderWidth={1}
-                borderStyle="solid"
-                borderColor="default1"
-                borderRadius={4}
-              >
-                <Text size={2} color="default2">
-                  {intl.formatMessage(messages.noChannelsMatchSearch)}
-                </Text>
-              </Box>
+              <Placeholder>{intl.formatMessage(messages.noChannelsMatchSearch)}</Placeholder>
             ) : (
               <>
                 <Box

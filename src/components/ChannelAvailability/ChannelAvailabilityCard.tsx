@@ -1,4 +1,5 @@
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
 import { type PermissionEnum } from "@dashboard/graphql";
@@ -185,9 +186,9 @@ export function ChannelAvailabilityCard<T extends ChannelAvailabilitySummary>({
 
           {filteredChannels.length === 0 ? (
             <Box className={styles.body}>
-              <Text size={2} color="default2">
+              <Placeholder>
                 {intl.formatMessage(channelAvailabilityMessages.noChannelsMatchSearch)}
-              </Text>
+              </Placeholder>
             </Box>
           ) : (
             <>

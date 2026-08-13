@@ -40,14 +40,3 @@
   flex-shrink: 0;
   min-width: 40px;
 }
-
-.emptyState {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
-  padding: 24px;
-  text-align: center;
-  border: 1px solid var(--mu-colors-border-default1);
-  border-radius: 8px;
-}

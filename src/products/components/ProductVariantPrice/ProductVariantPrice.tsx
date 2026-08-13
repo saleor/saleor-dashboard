@@ -6,6 +6,7 @@ import {
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelIcon } from "@dashboard/components/ChannelAvailability/primitives";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import {
@@ -169,18 +170,12 @@ export const ProductVariantPrice = ({
       <DashboardCard>
         <DashboardCard.Header>
           <DashboardCard.Title>{cardTitle}</DashboardCard.Title>
-        </DashboardCard.Header>
-        <DashboardCard.Content>
-          {(emptyStateMessage || manageChannelsButton) && (
-            <Box display="flex" flexDirection="column" gap={4} alignItems="flex-start">
-              {emptyStateMessage && (
-                <Text size={2} color="default2">
-                  {emptyStateMessage}
-                </Text>
-              )}
-              {manageChannelsButton}
-            </Box>
+          {manageChannelsButton && (
+            <DashboardCard.Toolbar>{manageChannelsButton}</DashboardCard.Toolbar>
           )}
+        </DashboardCard.Header>
+        <DashboardCard.Content paddingBottom={6}>
+          {emptyStateMessage ? <Placeholder>{emptyStateMessage}</Placeholder> : null}
         </DashboardCard.Content>
       </DashboardCard>
     );

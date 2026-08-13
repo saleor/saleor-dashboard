@@ -8,15 +8,18 @@ import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./..
 interface VariantDetailsChannelsAvailabilityCardContainerProps {
   children: React.ReactNode;
   cardTitle?: React.ReactNode;
+  /** Open the channel list on mount — used when the body is an empty placeholder. */
+  defaultExpanded?: boolean;
 }
 
 const VariantDetailsChannelsAvailabilityCardContainer = ({
   children,
   cardTitle,
+  defaultExpanded = false,
 }: VariantDetailsChannelsAvailabilityCardContainerProps) => (
   <>
     <DashboardCard>
-      <Accordion>
+      <Accordion defaultValue={defaultExpanded ? "channelListItem" : undefined}>
         <Accordion.Item value="channelListItem">
           {cardTitle || (
             <DashboardCard.Header>
