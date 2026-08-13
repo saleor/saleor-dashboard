@@ -3,13 +3,7 @@ import { createProductTypesQueryVariables } from "@dashboard/components/Conditio
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
-import {
-  type ProductErrorFragment,
-  ProductTypeKindEnum,
-  useProductTypeBulkDeleteMutation,
-  useProductTypeCreateMutation,
-  useProductTypeListQuery,
-} from "@dashboard/graphql";
+import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -33,15 +27,14 @@ import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
-import { getMutationErrors, maybe } from "../../../misc";
+import { maybe } from "../../../misc";
 import { CreateProductTypeDialog } from "../../components/CreateProductTypeDialog/CreateProductTypeDialog";
-import { messages as createProductTypeMessages } from "../../components/CreateProductTypeDialog/messages";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
+import { useCreateProductType } from "../../hooks/useCreateProductType";
 import {
   productTypeListUrl,
   type ProductTypeListUrlDialog,
   type ProductTypeListUrlQueryParams,
-  productTypeUrl,
 } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { getSortQueryVariables } from "./sort";
@@ -95,21 +88,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
     ProductTypeListUrlDialog,
     ProductTypeListUrlQueryParams
   >(navigate, productTypeListUrl, params);
-  const [createProductType, createProductTypeOpts] = useProductTypeCreateMutation({
-    disableErrorHandling: true,
-    onCompleted: data => {
-      if ((data.productTypeCreate?.errors.length ?? 0) > 0) {
-        return;
-      }
-
-      notify({
-        status: "success",
-        text: intl.formatMessage(createProductTypeMessages.created),
-      });
-      closeModal();
-      navigate(productTypeUrl(data.productTypeCreate?.productType?.id ?? ""));
-    },
-  });
+  const createProductTypeDialog = useCreateProductType({ onClose: closeModal });
 
   const {
     selectedPreset,
@@ -211,24 +190,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
       <CreateProductTypeDialog
         open={params.action === "create"}
         onClose={closeModal}
-        confirmButtonState={createProductTypeOpts.status}
-        disabled={createProductTypeOpts.loading}
-        errors={createProductTypeOpts.data?.productTypeCreate?.errors ?? []}
-        onSubmit={async ({ name, kind }) => {
-          const result = await createProductType({
-            variables: {
-              input: {
-                name,
-                kind,
-                hasVariants: false,
-                isShippingRequired: kind !== ProductTypeKindEnum.GIFT_CARD,
-              },
-            },
-          });
-          const errors = getMutationErrors(result);
-
-          return Array.isArray(errors) ? (errors as ProductErrorFragment[]) : [];
-        }}
+        {...createProductTypeDialog}
       />
       {productTypesData && (
         <TypeDeleteWarningDialog

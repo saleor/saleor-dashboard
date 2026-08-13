@@ -9,9 +9,7 @@ import { type ProductErrorWithAttributesFragment } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { productTypeAddUrl } from "@dashboard/productTypes/urls";
 import { type FetchMoreProps } from "@dashboard/types";
 import { Box, Button, DynamicCombobox, Input, type Option, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
@@ -39,6 +37,7 @@ interface CreateProductDialogProps {
   fetchMoreProductTypes: FetchMoreProps;
   initialProductType?: ProductTypeChoice;
   onClose: () => void;
+  onCreateProductType: () => void;
   onSubmit: (data: CreateProductFormData) => SubmitPromise<ProductErrorWithAttributesFragment[]>;
 }
 
@@ -56,10 +55,10 @@ export const CreateProductDialog = ({
   fetchMoreProductTypes,
   initialProductType,
   onClose,
+  onCreateProductType,
   onSubmit,
 }: CreateProductDialogProps): JSX.Element => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const [selectedOption, setSelectedOption] = useState<ProductTypeChoice | null>(null);
   const [query, setQuery] = useState("");
   const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
@@ -110,7 +109,7 @@ export const CreateProductDialog = ({
 
   const handleCreateProductType = () => {
     onClose();
-    navigate(productTypeAddUrl());
+    onCreateProductType();
   };
 
   const fieldErrors = [...(showApiErrors ? apiErrors : []), ...submitErrors]

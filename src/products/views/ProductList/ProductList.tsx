@@ -58,6 +58,8 @@ import {
   type ProductListUrlSortField,
   productUrl,
 } from "@dashboard/products/urls";
+import { CreateProductTypeDialog } from "@dashboard/productTypes/components/CreateProductTypeDialog/CreateProductTypeDialog";
+import { useCreateProductType } from "@dashboard/productTypes/hooks/useCreateProductType";
 import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
@@ -136,6 +138,7 @@ const ProductList = ({ params }: ProductListProps) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
+  const createProductTypeDialog = useCreateProductType({ onClose: closeModal });
   const {
     clearRowSelection,
     selectedRowIds,
@@ -360,6 +363,7 @@ const ProductList = ({ params }: ProductListProps) => {
           updateListSettings(...props);
         }}
         onAdd={() => openModal("create-product")}
+        onCreateProductType={() => openModal("create-product-type")}
         onAll={resetFilters}
         onSearchChange={handleSearchChange}
         filterDependency={channelFilterDependency}
@@ -450,6 +454,7 @@ const ProductList = ({ params }: ProductListProps) => {
             []) as ProductErrorWithAttributesFragment[]
         }
         onClose={closeModal}
+        onCreateProductType={() => openModal("create-product-type")}
         onSubmit={async ({ name, productTypeId, hasVariants }) => {
           const { productId, errors } = await createMinimalProduct({
             name,
@@ -474,6 +479,11 @@ const ProductList = ({ params }: ProductListProps) => {
 
           return [];
         }}
+      />
+      <CreateProductTypeDialog
+        open={params.action === "create-product-type"}
+        onClose={closeModal}
+        {...createProductTypeDialog}
       />
     </PaginatorContext.Provider>
   );

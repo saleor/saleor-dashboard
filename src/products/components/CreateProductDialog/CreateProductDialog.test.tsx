@@ -12,11 +12,6 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
-jest.mock("@dashboard/hooks/useNavigator", () => ({
-  __esModule: true,
-  default: () => jest.fn(),
-}));
-
 const beerType: ProductTypeChoice = {
   label: "Beer",
   value: "pt-beer",
@@ -31,6 +26,7 @@ const defaultProps = {
   fetchProductTypes: jest.fn(),
   fetchMoreProductTypes: { loading: false, hasMore: false, onFetchMore: jest.fn() },
   onClose: jest.fn(),
+  onCreateProductType: jest.fn(),
   onSubmit: jest.fn().mockResolvedValue([]),
 };
 
@@ -77,6 +73,30 @@ describe("CreateProductDialog", () => {
     expect(screen.getByText(messages.emptyTitle.defaultMessage)).toBeInTheDocument();
     expect(screen.getByTestId("create-product-type")).toBeInTheDocument();
     expect(screen.queryByTestId("product-name-input")).not.toBeInTheDocument();
+  });
+
+  it("opens create product type from the empty-shop CTA without leaving the list", async () => {
+    // Arrange
+    const onClose = jest.fn();
+    const onCreateProductType = jest.fn();
+    const user = userEvent.setup();
+
+    render(
+      <CreateProductDialog
+        {...defaultProps}
+        productTypes={[]}
+        onClose={onClose}
+        onCreateProductType={onCreateProductType}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Act
+    await user.click(screen.getByTestId("create-product-type"));
+
+    // Assert
+    expect(onClose).toHaveBeenCalled();
+    expect(onCreateProductType).toHaveBeenCalled();
   });
 
   it("keeps the create form when type search later returns no matches", () => {

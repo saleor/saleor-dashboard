@@ -28,7 +28,6 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { productTypeAddUrl } from "@dashboard/productTypes/urls";
 import {
   type ChannelProps,
   type PageListProps,
@@ -67,6 +66,7 @@ interface ProductListPageProps
   selectedProductIds: string[];
   hasPresetsChanged: boolean;
   onAdd: () => void;
+  onCreateProductType: () => void;
   onExport: () => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
@@ -90,6 +90,7 @@ const ProductListPage = (props: ProductListPageProps) => {
     initialSearch,
     settings,
     onAdd,
+    onCreateProductType,
     onExport,
     onSearchChange,
     onUpdateListSettings,
@@ -130,7 +131,7 @@ const ProductListPage = (props: ProductListPageProps) => {
       description: "button",
     }),
     testId: "add-product-type",
-    onSelect: () => navigate(productTypeAddUrl()),
+    onSelect: () => onCreateProductType(),
   };
   const [storedProductListViewType, setProductListViewType] = useLocalStorage<ProductListViewType>(
     "productListViewType",

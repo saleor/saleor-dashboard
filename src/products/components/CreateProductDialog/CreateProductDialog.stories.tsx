@@ -23,6 +23,7 @@ export const Default: Story = {
     fetchProductTypes: () => undefined,
     fetchMoreProductTypes: { loading: false, hasMore: false, onFetchMore: () => undefined },
     onClose: () => undefined,
+    onCreateProductType: () => undefined,
     onSubmit: async () => [],
   },
 };
