@@ -6,9 +6,8 @@ import { Redirect } from "react-router-dom";
 
 import { filterHomeExtensions } from "./filterHomeExtensions";
 import { HomeEmptyState } from "./HomeEmptyState";
-import { HomeWidgetsGrid } from "./HomeWidgetsGrid";
-import { type HomeActiveTab, HomeWidgetTabs } from "./HomeWidgetTabs";
-import { HomeWidgetView } from "./HomeWidgetView";
+import { HomeTabPanels } from "./HomeTabPanels";
+import { type HomeActiveTab } from "./HomeWidgetTabs";
 import { homeWidgetsUrl, homeWidgetUrl } from "./urls";
 
 const HOMEPAGE_MOUNT = ["HOMEPAGE_WIDGETS"] as const;
@@ -87,23 +86,12 @@ export const HomePage = () => {
     activeTab = { kind: "extension", id: activeFullscreenExtension.id };
   }
 
-  const showWidgetsTab = widgets.length > 0;
-  const isFullscreenTab = activeTab.kind === "extension";
-
   return (
-    <Box display="flex" flexDirection="column" height="100%">
-      <HomeWidgetTabs
-        fullscreenExtensions={fullscreen}
-        showWidgetsTab={showWidgetsTab}
-        activeTab={activeTab}
-      />
-      <Box padding={isFullscreenTab ? 0 : 6} width="100%" __flex="1" __minHeight={0}>
-        {activeTab.kind === "widgets" ? (
-          <HomeWidgetsGrid extensions={widgets} />
-        ) : (
-          <HomeWidgetView extension={activeFullscreenExtension!} />
-        )}
-      </Box>
-    </Box>
+    <HomeTabPanels
+      fullscreen={fullscreen}
+      widgets={widgets}
+      activeTab={activeTab}
+      showWidgetsTab={widgets.length > 0}
+    />
   );
 };

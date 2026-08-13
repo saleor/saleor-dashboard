@@ -5,9 +5,12 @@ import {
   WIDGET_DEFAULT_HEIGHT,
 } from "@dashboard/extensions/hooks/useWidgetIframeAutoHeight";
 import { type AppDetailsUrlMountQueryParams } from "@dashboard/extensions/urls";
+import { usePostToExtension } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/usePostToExtension";
+import { useTokenRefresh } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/useTokenRefresh";
+import { useUpdateAppToken } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/useUpdateAppToken";
 import { useNodeRef } from "@dashboard/hooks/useNodeRef";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
-import { type CSSProperties, useEffect, useRef } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
 
 const hiddenStyle: CSSProperties = { visibility: "hidden" };
 
@@ -25,6 +28,11 @@ interface IframePostProps {
    */
   autoHeight?: boolean;
   loaderType?: "skeleton" | "throbber";
+  /**
+   * Refetches the extension list so a long-lived iframe can receive a fresh JWT
+   * via App Bridge `tokenRefresh` instead of being remounted.
+   */
+  refetch?: () => void;
 }
 
 /**
@@ -40,37 +48,50 @@ export const IframePost = ({
   height = WIDGET_DEFAULT_HEIGHT,
   autoHeight = false,
   loaderType = "skeleton",
+  refetch,
 }: IframePostProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const loadingRef = useRef<HTMLDivElement | null>(null);
   const { ref: iframeRef, node: iframeEl, setRef: setIframeRef } = useNodeRef<HTMLIFrameElement>();
   const appOrigin = new URL(extensionUrl).origin;
+  const [iframeReady, setIframeReady] = useState(false);
+  const postToExtension = usePostToExtension(iframeEl, appOrigin);
 
   useWidgetIframeAutoHeight(iframeEl, autoHeight, { appOrigin });
+  useTokenRefresh(accessToken, refetch);
+  useUpdateAppToken({
+    enabled: iframeReady,
+    appToken: accessToken,
+    postToExtension,
+  });
 
-  useEffect(() => {
-    if (formRef.current) {
-      formRef.current.submit();
-    }
+  useEffect(
+    function submitPostFormAndRevealIframe() {
+      if (formRef.current) {
+        formRef.current.submit();
+      }
 
-    const iframe = iframeRef.current;
-    const loading = loadingRef.current;
+      const iframe = iframeRef.current;
+      const loading = loadingRef.current;
 
-    if (!iframe || !loading) {
-      return;
-    }
+      if (!iframe || !loading) {
+        return;
+      }
 
-    const onload = () => {
-      loading.style.display = "none";
-      iframe.style.visibility = "visible";
-    };
+      const onload = () => {
+        loading.style.display = "none";
+        iframe.style.visibility = "visible";
+        setIframeReady(true);
+      };
 
-    iframe.addEventListener("load", onload);
+      iframe.addEventListener("load", onload);
 
-    return () => {
-      iframe.removeEventListener("load", onload);
-    };
-  }, [iframeRef]);
+      return () => {
+        iframe.removeEventListener("load", onload);
+      };
+    },
+    [iframeRef],
+  );
 
   const boxHeight = autoHeight ? undefined : height;
   const loaderHeight = autoHeight ? WIDGET_DEFAULT_HEIGHT : height;

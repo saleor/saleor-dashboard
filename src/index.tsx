@@ -205,9 +205,13 @@ const Routes = () => {
                   <Switch>
                     {legacyRedirects}
                     <Redirect exact from="/" to="/home" />
-                    <SectionRoute exact path="/home" component={HomePage} />
-                    <SectionRoute exact path="/home/widget/:extensionId" component={HomePage} />
-                    <SectionRoute exact path="/home/widgets" component={HomePage} />
+                    {/* One Route so HomePage stays mounted across tab changes;
+                        separate paths would remount and reboot keep-alive iframes. */}
+                    <SectionRoute
+                      exact
+                      path={["/home", "/home/widget/:extensionId", "/home/widgets"]}
+                      component={HomePage}
+                    />
                     <SectionRoute
                       permissions={[
                         PermissionEnum.MANAGE_PRODUCTS,

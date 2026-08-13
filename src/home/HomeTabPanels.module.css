@@ -1,0 +1,30 @@
+.panels {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+/*
+ * Stack visited iframes in the same slot. Use visibility (not display:none):
+ * hiding with display can unload the nested document in WebKit/Gecko, which
+ * would reboot the app on every tab switch and defeat keep-alive.
+ */
+.panel {
+  position: absolute;
+  inset: 0;
+}
+
+.panelHidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.panelActive {
+  z-index: 1;
+}
+
+.widgetsPanel {
+  overflow: auto;
+  padding: var(--mu-spacing-6);
+}

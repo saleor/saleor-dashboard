@@ -51,6 +51,7 @@ export const ExtensionIframe = ({
           extensionUrl={extensionUrl}
           height={height}
           loaderType={loaderType}
+          refetch={extension.refetch}
         />
       </Box>
     );
@@ -64,6 +65,7 @@ export const ExtensionIframe = ({
         appToken={extension.accessToken}
         appId={extension.app.id}
         dashboardVersion={APP_VERSION}
+        refetch={extension.refetch}
       />
     </Box>
   );
