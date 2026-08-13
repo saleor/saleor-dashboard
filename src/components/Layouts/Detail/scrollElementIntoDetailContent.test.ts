@@ -1,10 +1,12 @@
 import {
   getDetailContentScrollParent,
   scrollElementIntoDetailContent,
+  scrollToDetailSection,
 } from "./scrollElementIntoDetailContent";
 
 describe("scrollElementIntoDetailContent", () => {
   const OriginalResizeObserver = window.ResizeObserver;
+  const originalWindowScrollTo = window.scrollTo;
 
   const drainPendingEndScroll = (): void => {
     const root = document.createElement("div");
@@ -33,6 +35,7 @@ describe("scrollElementIntoDetailContent", () => {
 
   afterEach(() => {
     window.ResizeObserver = OriginalResizeObserver;
+    window.scrollTo = originalWindowScrollTo;
     jest.useRealTimers();
     drainPendingEndScroll();
     document.body.innerHTML = "";
@@ -245,5 +248,123 @@ describe("scrollElementIntoDetailContent", () => {
 
     // Assert
     expect(parent).toBe(root);
+  });
+
+  it("resets ancestor scroll so TopNav is not left shifted", () => {
+    // Arrange
+    const shell = document.createElement("div");
+    const root = document.createElement("div");
+    const element = document.createElement("div");
+
+    Object.defineProperty(shell, "scrollTop", { configurable: true, writable: true, value: 96 });
+    root.setAttribute("data-detail-content-scroll", "true");
+    Object.defineProperty(root, "scrollTop", { value: 0, writable: true });
+    root.scrollTo = jest.fn();
+    root.getBoundingClientRect = () =>
+      ({
+        top: 80,
+        left: 0,
+        bottom: 580,
+        right: 400,
+        width: 400,
+        height: 500,
+        x: 0,
+        y: 80,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    element.getBoundingClientRect = () =>
+      ({
+        top: 80,
+        left: 0,
+        bottom: 280,
+        right: 400,
+        width: 400,
+        height: 200,
+        x: 0,
+        y: 80,
+        toJSON: () => ({}),
+      }) as DOMRect;
+
+    const scrollToWindow = jest.fn();
+
+    window.scrollTo = scrollToWindow;
+    root.appendChild(element);
+    shell.appendChild(root);
+    document.body.appendChild(shell);
+
+    // Act
+    scrollElementIntoDetailContent(element);
+
+    // Assert
+    expect(shell.scrollTop).toBe(0);
+    expect(scrollToWindow).toHaveBeenCalledWith(0, 0);
+  });
+});
+
+describe("scrollToDetailSection", () => {
+  const nativeGetElementById = Document.prototype.getElementById;
+
+  beforeEach(() => {
+    // testUtils/setup stubs getElementById to always return a detached div.
+    document.getElementById = (id: string) => nativeGetElementById.call(document, id);
+  });
+
+  afterEach(() => {
+    document.getElementById = () => document.createElement("div");
+    document.body.innerHTML = "";
+  });
+
+  it("scrolls the detail content pane instead of using scrollIntoView", () => {
+    // Arrange
+    const root = document.createElement("div");
+    const element = document.createElement("div");
+
+    root.setAttribute("data-detail-content-scroll", "true");
+    Object.defineProperty(root, "scrollTop", { value: 0, writable: true });
+    root.scrollTo = jest.fn();
+    root.getBoundingClientRect = () =>
+      ({
+        top: 80,
+        left: 0,
+        bottom: 580,
+        right: 400,
+        width: 400,
+        height: 500,
+        x: 0,
+        y: 80,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    element.id = "email-delivery";
+    element.getBoundingClientRect = () =>
+      ({
+        top: 360,
+        left: 0,
+        bottom: 560,
+        right: 400,
+        width: 400,
+        height: 200,
+        x: 0,
+        y: 360,
+        toJSON: () => ({}),
+      }) as DOMRect;
+    element.scrollIntoView = jest.fn();
+    root.appendChild(element);
+    document.body.appendChild(root);
+
+    // Act
+    const found = scrollToDetailSection("email-delivery");
+
+    // Assert — 0 + (360 - 80) = 280
+    expect(found).toBe(true);
+    expect(root.scrollTo).toHaveBeenCalledWith({ top: 280, behavior: "smooth" });
+    expect(element.scrollIntoView).not.toHaveBeenCalled();
+  });
+
+  it("returns false when the target is not mounted", () => {
+    // Act
+    const found = scrollToDetailSection("email-delivery");
+
+    // Assert
+    expect(found).toBe(false);
   });
 });

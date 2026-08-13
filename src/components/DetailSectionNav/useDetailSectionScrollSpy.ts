@@ -1,10 +1,12 @@
 import {
   getDetailContentScrollParent,
-  scrollElementIntoDetailContent,
+  scrollToDetailSection,
 } from "@dashboard/components/Layouts/Detail/scrollElementIntoDetailContent";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { resolveActiveSectionIndex } from "./resolveActiveSectionIndex";
+
+export { scrollToDetailSection };
 
 interface UseDetailSectionScrollSpyArgs {
   sectionIds: string[];
@@ -27,20 +29,6 @@ const resolveActiveSectionId = (root: HTMLElement, elements: HTMLElement[]): str
   }
 
   return elements[index]?.id;
-};
-
-/**
- * Scroll a section into view inside DetailPageLayout.Content only.
- * Avoid `scrollIntoView` — it also scrolls outer ancestors and shifts TopNav.
- */
-export const scrollToDetailSection = (sectionId: string): void => {
-  const element = document.getElementById(sectionId);
-
-  if (!element) {
-    return;
-  }
-
-  scrollElementIntoDetailContent(element);
 };
 
 /**

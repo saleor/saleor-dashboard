@@ -78,6 +78,24 @@ const pinDetailContentToEndUntilSettled = (root: HTMLElement, element: HTMLEleme
 };
 
 /**
+ * Native `#hash` scrolling and `scrollIntoView` walk every ancestor, including
+ * overflow:hidden shells, and shift TopNav out of the viewport.
+ */
+const resetScrollOutsideContentRoot = (contentRoot: HTMLElement): void => {
+  let parent = contentRoot.parentElement;
+
+  while (parent) {
+    if (parent.scrollTop !== 0) {
+      parent.scrollTop = 0;
+    }
+
+    parent = parent.parentElement;
+  }
+
+  window.scrollTo(0, 0);
+};
+
+/**
  * Scroll a node into view inside DetailPageLayout.Content only.
  * Avoid `scrollIntoView` — it also scrolls outer ancestors and shifts TopNav.
  *
@@ -93,6 +111,8 @@ export const scrollElementIntoDetailContent = (
     return;
   }
 
+  resetScrollOutsideContentRoot(root);
+
   if (align === "end") {
     pinDetailContentToEndUntilSettled(root, element);
 
@@ -107,4 +127,20 @@ export const scrollElementIntoDetailContent = (
   const nextTop = root.scrollTop + (elementRect.top - rootRect.top) - scrollMarginTop;
 
   root.scrollTo({ top: Math.max(0, nextTop), behavior: "smooth" });
+};
+
+/**
+ * Scroll a node with this id into DetailPageLayout.Content only.
+ * Returns false when the node is not mounted yet (settings hash deep-links retry).
+ */
+export const scrollToDetailSection = (sectionId: string): boolean => {
+  const element = document.getElementById(sectionId);
+
+  if (!element) {
+    return false;
+  }
+
+  scrollElementIntoDetailContent(element);
+
+  return true;
 };
