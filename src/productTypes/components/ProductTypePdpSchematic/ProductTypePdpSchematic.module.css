@@ -52,6 +52,7 @@
   padding: var(--mu-spacing-6);
   grid-column: 1;
   grid-row: 1;
+  background-color: var(--mu-colors-background-default2);
 }
 
 .subtitleRow {
