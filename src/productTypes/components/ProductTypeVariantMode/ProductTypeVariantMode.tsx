@@ -1,6 +1,6 @@
-import { DashboardCard } from "@dashboard/components/Card";
-import { Text, Toggle } from "@saleor/macaw-ui-next";
-import { FormattedMessage } from "react-intl";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { DetailSettingToggleRow } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
@@ -14,19 +14,19 @@ export const ProductTypeVariantMode = ({
   hasVariants,
   disabled,
   onHasVariantsToggle,
-}: ProductTypeVariantModeProps) => (
-  <DashboardCard>
-    <DashboardCard.Content>
-      <Toggle
+}: ProductTypeVariantModeProps) => {
+  const intl = useIntl();
+
+  return (
+    <DetailSettingsCard title={intl.formatMessage(messages.title)} contentFlush>
+      <DetailSettingToggleRow
+        title={<FormattedMessage {...messages.usesVariantAttributes} />}
+        description={<FormattedMessage {...messages.usesVariantAttributesDescription} />}
         pressed={hasVariants}
         disabled={disabled}
-        name="hasVariants"
-        onPressedChange={pressed => onHasVariantsToggle(pressed)}
-      >
-        <Text>
-          <FormattedMessage {...messages.usesVariantAttributes} />
-        </Text>
-      </Toggle>
-    </DashboardCard.Content>
-  </DashboardCard>
-);
+        testId="hasVariants"
+        onPressedChange={onHasVariantsToggle}
+      />
+    </DetailSettingsCard>
+  );
+};

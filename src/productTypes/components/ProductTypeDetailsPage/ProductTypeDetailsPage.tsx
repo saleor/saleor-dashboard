@@ -4,8 +4,8 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -38,6 +38,7 @@ import {
   type ReorderEvent,
   type UserError,
 } from "@dashboard/types";
+import { Box } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -232,31 +233,36 @@ const ProductTypeDetailsPage = ({
                 data-test-id="show-product-type-metadata"
                 title={intl.formatMessage(messages.editProductTypeMetadata)}
               />
-              <TopNav.Menu items={menuItems} dataTestId="menu" />
-            </TopNav>
-            <DetailPageLayout.Content paddingBottom={10}>
-              <ProductTypeAttributes
-                testId="assign-products-attributes"
-                attributes={maybe(() => productType.productAttributes)}
-                disabled={disabled}
-                type={ProductAttributeType.PRODUCT}
-                onAttributeAssign={onAttributeAdd}
-                onAttributeCreate={onAttributeCreate}
-                onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, ProductAttributeType.PRODUCT)
+              <TopNav.Menu
+                items={
+                  disabled || !productType
+                    ? menuItems.map(item => ({ ...item, disabled: true }))
+                    : menuItems
                 }
-                onAttributeUnassign={onAttributeUnassign}
-                {...productAttributeList}
+                dataTestId="menu"
               />
-              <CardSpacer />
-              <ProductTypeVariantMode
-                hasVariants={data.hasVariants}
-                disabled={disabled}
-                onHasVariantsToggle={onHasVariantsToggle}
-              />
-              {data.hasVariants && (
-                <>
-                  <CardSpacer />
+            </TopNav>
+            <DetailPageLayout.Content>
+              <DetailPageContent>
+                <ProductTypeAttributes
+                  testId="assign-products-attributes"
+                  attributes={maybe(() => productType.productAttributes)}
+                  disabled={disabled}
+                  type={ProductAttributeType.PRODUCT}
+                  onAttributeAssign={onAttributeAdd}
+                  onAttributeCreate={onAttributeCreate}
+                  onAttributeReorder={(event: ReorderEvent) =>
+                    onAttributeReorder(event, ProductAttributeType.PRODUCT)
+                  }
+                  onAttributeUnassign={onAttributeUnassign}
+                  {...productAttributeList}
+                />
+                <ProductTypeVariantMode
+                  hasVariants={data.hasVariants}
+                  disabled={disabled}
+                  onHasVariantsToggle={onHasVariantsToggle}
+                />
+                {data.hasVariants && (
                   <ProductTypeVariantAttributes
                     testId="assign-variants-attributes"
                     assignedVariantAttributes={productType?.assignedVariantAttributes}
@@ -272,39 +278,37 @@ const ProductTypeDetailsPage = ({
                     selectedVariantAttributes={selectedVariantAttributes}
                     {...variantAttributeList}
                   />
-                </>
-              )}
+                )}
+              </DetailPageContent>
             </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <ProductTypeDetails
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <ProductTypeConfiguration data={data} disabled={disabled} onKindChange={change} />
-              <CardSpacer />
-              <ProductTypeShipping
-                disabled={disabled}
-                data={data}
-                weightUnit={productType?.weight?.unit || defaultWeightUnit}
-                onChange={change}
-              />
-              <CardSpacer />
-              <ProductTypeTaxes
-                disabled={disabled}
-                data={data}
-                taxClasses={taxClasses}
-                taxClassDisplayName={taxClassDisplayName}
-                onChange={event =>
-                  handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
-                }
-                onFetchMore={onFetchMoreTaxClasses}
-              />
+            <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
+              <Box display="flex" flexDirection="column" gap={4}>
+                <ProductTypeDetails
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+                <ProductTypeConfiguration data={data} disabled={disabled} onKindChange={change} />
+                <ProductTypeShipping
+                  disabled={disabled}
+                  data={data}
+                  weightUnit={productType?.weight?.unit || defaultWeightUnit}
+                  onChange={change}
+                />
+                <ProductTypeTaxes
+                  disabled={disabled}
+                  data={data}
+                  taxClasses={taxClasses}
+                  taxClassDisplayName={taxClassDisplayName}
+                  onChange={event =>
+                    handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
+                  }
+                  onFetchMore={onFetchMoreTaxClasses}
+                />
+              </Box>
             </DetailPageLayout.RightSidebar>
             <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} />
               <Savebar.Spacer />
               <Savebar.CancelButton onClick={() => navigate(productTypeListBackLink)} />
               <Savebar.ConfirmButton

@@ -9,10 +9,9 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type ProductTypeFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
-import { productTypeAddUrl, type ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
+import { type ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -34,6 +33,7 @@ interface ProductTypeListPageProps
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (id: number) => void;
   hasPresetsChanged: () => boolean;
+  onCreateProductType: () => void;
 }
 
 const ProductTypeListPage = ({
@@ -47,11 +47,11 @@ const ProductTypeListPage = ({
   onTabUpdate,
   tabs,
   hasPresetsChanged,
+  onCreateProductType,
   disabled,
   ...listProps
 }: ProductTypeListPageProps) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   return (
@@ -88,7 +88,7 @@ const ProductTypeListPage = ({
             <Button
               disabled={disabled}
               variant="primary"
-              onClick={() => navigate(productTypeAddUrl())}
+              onClick={onCreateProductType}
               data-test-id="add-product-type"
             >
               <FormattedMessage

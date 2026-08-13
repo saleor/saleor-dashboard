@@ -15761,40 +15761,6 @@ export function useProductTypeDetailsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ProductTypeDetailsQueryHookResult = ReturnType<typeof useProductTypeDetailsQuery>;
 export type ProductTypeDetailsLazyQueryHookResult = ReturnType<typeof useProductTypeDetailsLazyQuery>;
 export type ProductTypeDetailsQueryResult = Apollo.QueryResult<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>;
-export const ProductTypeCreateDataDocument = gql`
-    query ProductTypeCreateData {
-  shop {
-    defaultWeightUnit
-  }
-}
-    `;
-
-/**
- * __useProductTypeCreateDataQuery__
- *
- * To run a query within a React component, call `useProductTypeCreateDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useProductTypeCreateDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProductTypeCreateDataQuery({
- *   variables: {
- *   },
- * });
- */
-export function useProductTypeCreateDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataDocument, options);
-      }
-export function useProductTypeCreateDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataDocument, options);
-        }
-export type ProductTypeCreateDataQueryHookResult = ReturnType<typeof useProductTypeCreateDataQuery>;
-export type ProductTypeCreateDataLazyQueryHookResult = ReturnType<typeof useProductTypeCreateDataLazyQuery>;
-export type ProductTypeCreateDataQueryResult = Apollo.QueryResult<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>;
 export const ProductMediaCreateDocument = gql`
     mutation ProductMediaCreate($product: ID!, $image: Upload, $alt: String, $mediaUrl: String) {
   productMediaCreate(

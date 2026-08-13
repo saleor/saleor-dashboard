@@ -13156,11 +13156,6 @@ export type ProductTypeDetailsQueryVariables = Exact<{
 
 export type ProductTypeDetailsQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, name: string, slug: string, kind: ProductTypeKindEnum, hasVariants: boolean, isShippingRequired: boolean, productAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, assignedVariantAttributes: Array<{ __typename: 'AssignedVariantAttribute', variantSelection: boolean, attribute: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInDashboard: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }> | null, weight: { __typename: 'Weight', unit: WeightUnitsEnum, value: number } | null, taxClass: { __typename: 'TaxClass', id: string, name: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null } };
 
-export type ProductTypeCreateDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ProductTypeCreateDataQuery = { __typename: 'Query', shop: { __typename: 'Shop', defaultWeightUnit: WeightUnitsEnum | null } };
-
 export type ProductMediaCreateMutationVariables = Exact<{
   product: Scalars['ID']['input'];
   image?: InputMaybe<Scalars['Upload']['input']>;

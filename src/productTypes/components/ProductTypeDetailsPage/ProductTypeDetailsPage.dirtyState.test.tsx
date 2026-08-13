@@ -156,7 +156,7 @@ describe("ProductTypeDetailsPage dirty state", () => {
     );
 
     // Act
-    const nameInput = screen.getByLabelText("Product Type Name");
+    const nameInput = screen.getByLabelText("Name");
 
     await user.clear(nameInput);
     await user.type(nameInput, "Updated product type");
