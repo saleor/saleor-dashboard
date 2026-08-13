@@ -112,7 +112,6 @@ export const ProductVariantNavigation = ({
     scrollContainerRef,
   });
 
-  const hasVariants = variants.length > 0;
   const pinnedThumbnail = pinnedVariant?.media?.filter(mediaObj => mediaObj.type === "IMAGE")[0];
 
   const handleSearchChange = useCallback(
@@ -278,7 +277,7 @@ export const ProductVariantNavigation = ({
               )}
 
               {isCreate && (
-                <ProductVariantEmptyItem hasVariants={hasVariants}>
+                <ProductVariantEmptyItem>
                   <Text>
                     <FormattedMessage {...messages.newVariant} />
                   </Text>
