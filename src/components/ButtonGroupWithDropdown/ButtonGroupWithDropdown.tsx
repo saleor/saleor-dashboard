@@ -13,22 +13,44 @@ import { ChevronDown } from "lucide-react";
 
 import styles from "./ButtonGroupWithDropdown.module.css";
 
+export interface ButtonGroupDropdownOption {
+  label: string;
+  testId?: string;
+  onSelect: <T extends object>(params: T) => void;
+}
+
 interface ButtonGroupWithDropdownProps extends BoxProps {
   onClick?: () => void;
-  options: Array<{
-    label: string;
-    testId?: string;
-    onSelect: <T extends object>(params: T) => void;
-  }>;
+  options: ButtonGroupDropdownOption[];
+  /** First-party actions, rendered above `options` with a separator when both exist. */
+  pinnedOptions?: ButtonGroupDropdownOption[];
   testId?: string;
   disabled?: boolean;
   variant?: ButtonProps["variant"];
 }
 
-// TODO: consider moving this to Macaw UI
+const renderDropdownItems = (
+  items: ButtonGroupDropdownOption[],
+  keyPrefix: string,
+): JSX.Element[] =>
+  items.map((item, idx) => (
+    <Dropdown.Item key={`${keyPrefix}-${idx}`}>
+      <List.Item
+        borderRadius={4}
+        paddingX={1.5}
+        paddingY={2}
+        onClick={item.onSelect}
+        data-test-id={item.testId}
+      >
+        <Text>{item.label}</Text>
+      </List.Item>
+    </Dropdown.Item>
+  ));
+
 export const ButtonGroupWithDropdown = ({
   children,
   options,
+  pinnedOptions = [],
   onClick,
   disabled = false,
   testId,
@@ -36,6 +58,8 @@ export const ButtonGroupWithDropdown = ({
   className,
   ...boxProps
 }: ButtonGroupWithDropdownProps) => {
+  const showSeparator = pinnedOptions.length > 0 && options.length > 0;
+
   return (
     <Dropdown>
       <Box
@@ -64,6 +88,7 @@ export const ButtonGroupWithDropdown = ({
             type="button"
             icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             disabled={disabled}
+            data-test-id={testId ? `${testId}-dropdown` : undefined}
           />
         </Dropdown.Trigger>
       </Box>
@@ -71,19 +96,18 @@ export const ButtonGroupWithDropdown = ({
       <Dropdown.Content align="end">
         <Box>
           <List padding={2} borderRadius={4} boxShadow="defaultOverlay" backgroundColor="default1">
-            {options.map((item, idx) => (
-              <Dropdown.Item key={`button-group-dropdown-item-${idx}`}>
-                <List.Item
-                  borderRadius={4}
-                  paddingX={1.5}
-                  paddingY={2}
-                  onClick={item.onSelect}
-                  data-test-id={item.testId}
-                >
-                  <Text>{item.label}</Text>
-                </List.Item>
-              </Dropdown.Item>
-            ))}
+            {renderDropdownItems(pinnedOptions, "pinned")}
+            {showSeparator ? (
+              <Box
+                role="separator"
+                borderColor="default1"
+                borderTopStyle="solid"
+                borderTopWidth={1}
+                marginY={1}
+                marginX={1}
+              />
+            ) : null}
+            {renderDropdownItems(options, "option")}
           </List>
         </Box>
       </Dropdown.Content>
