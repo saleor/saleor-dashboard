@@ -39,13 +39,14 @@ import {
   type UserError,
 } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui-next";
-import { Trash2 } from "lucide-react";
+import { LayoutTemplate, Trash2 } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
-import { ProductTypeConfiguration } from "../ProductTypeConfiguration/ProductTypeConfiguration";
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
+import { ProductTypePdpSchematic } from "../ProductTypePdpSchematic/ProductTypePdpSchematic";
+import { useProductTypePdpSchematicDismiss } from "../ProductTypePdpSchematic/useProductTypePdpSchematicDismiss";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
@@ -113,6 +114,11 @@ const ProductTypeDetailsPage = ({
 }: ProductTypeDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
+  const {
+    isDismissed: schematicDismissed,
+    dismiss: dismissSchematic,
+    undismiss: undismissSchematic,
+  } = useProductTypePdpSchematicDismiss();
   const context = useDevModeContext();
   const openPlaygroundURL = useCallback(() => {
     context.setDevModeContent(defaultGraphiQLQuery);
@@ -181,6 +187,18 @@ const ProductTypeDetailsPage = ({
   );
   const menuItems = useMemo(
     () => [
+      ...(schematicDismissed
+        ? [
+            {
+              label: intl.formatMessage(messages.showProductPageLegend),
+              onSelect: undismissSchematic,
+              testId: "show-product-page-legend",
+              icon: (
+                <LayoutTemplate size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+              ),
+            },
+          ]
+        : []),
       {
         label: intl.formatMessage(messages.openGraphiQL),
         onSelect: openPlaygroundURL,
@@ -195,7 +213,7 @@ const ProductTypeDetailsPage = ({
         icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
       },
     ],
-    [intl, onDelete, openPlaygroundURL],
+    [intl, onDelete, openPlaygroundURL, schematicDismissed, undismissSchematic],
   );
 
   return (
@@ -243,6 +261,17 @@ const ProductTypeDetailsPage = ({
             </TopNav>
             <DetailPageLayout.Content>
               <DetailPageContent>
+                {!schematicDismissed ? (
+                  <Box paddingBottom={6}>
+                    <ProductTypePdpSchematic
+                      hasVariants={data.hasVariants}
+                      productAttributes={productType?.productAttributes}
+                      assignedVariantAttributes={productType?.assignedVariantAttributes}
+                      selectedVariantAttributeIds={selectedVariantAttributes}
+                      onDismiss={dismissSchematic}
+                    />
+                  </Box>
+                ) : null}
                 <ProductTypeAttributes
                   testId="assign-products-attributes"
                   attributes={maybe(() => productType.productAttributes)}
@@ -283,7 +312,6 @@ const ProductTypeDetailsPage = ({
                   errors={errors}
                   onChange={change}
                 />
-                <ProductTypeConfiguration data={data} disabled={disabled} onKindChange={change} />
                 <ProductTypeShipping
                   disabled={disabled}
                   data={data}

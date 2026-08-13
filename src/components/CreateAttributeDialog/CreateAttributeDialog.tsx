@@ -70,6 +70,7 @@ export const CreateAttributeDialog = ({
   const {
     deleteValueById,
     handleValueCreate,
+    handleValueCreateMany,
     handleValueReorder,
     pageInfo,
     pageValues,
@@ -223,6 +224,7 @@ export const CreateAttributeDialog = ({
                         referenceTypesLoading={Boolean(fetchMoreReferenceTypes?.loading)}
                         onEntityTypeChange={handleEntityTypeChange}
                         onInlineValueAdd={handleValueCreate}
+                        onInlineValuesAdd={handleValueCreateMany}
                         onNextPage={loadNextPage}
                         onPreviousPage={loadPreviousPage}
                         onUpdateListSettings={updateListSettings}

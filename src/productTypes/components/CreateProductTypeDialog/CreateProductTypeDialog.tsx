@@ -5,7 +5,6 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
 import { type ProductErrorFragment, ProductTypeKindEnum } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
@@ -13,6 +12,7 @@ import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ProductTypeKindTiles } from "../ProductTypeKindTiles/ProductTypeKindTiles";
 import { messages } from "./messages";
 
 export interface CreateProductTypeFormData {
@@ -62,31 +62,6 @@ export const CreateProductTypeDialog = ({
     .filter(Boolean)
     .join(" ");
 
-  const kindChoices = [
-    {
-      value: ProductTypeKindEnum.NORMAL,
-      label: (
-        <>
-          <FormattedMessage {...messages.optionNormalTitle} />
-          <Text color="default2" size={2} fontWeight="light" display="block">
-            <FormattedMessage {...messages.optionNormalDescription} />
-          </Text>
-        </>
-      ),
-    },
-    {
-      value: ProductTypeKindEnum.GIFT_CARD,
-      label: (
-        <>
-          <FormattedMessage {...messages.optionGiftCardTitle} />
-          <Text color="default2" size={2} fontWeight="light" display="block">
-            <FormattedMessage {...messages.optionGiftCardDescription} />
-          </Text>
-        </>
-      ),
-    },
-  ];
-
   return (
     <DashboardModal onChange={onClose} open={open}>
       {open ? (
@@ -127,18 +102,11 @@ export const CreateProductTypeDialog = ({
                       data-test-id="product-type-name-input"
                       autoFocus
                     />
-                    <Box>
-                      <Text size={3} fontWeight="medium" as="p" marginBottom={2}>
-                        <FormattedMessage {...messages.kindLabel} />
-                      </Text>
-                      <RadioGroupField
-                        disabled={disabled}
-                        choices={kindChoices}
-                        name="kind"
-                        onChange={change}
-                        value={data.kind}
-                      />
-                    </Box>
+                    <ProductTypeKindTiles
+                      value={data.kind}
+                      disabled={disabled}
+                      onChange={kind => change({ target: { name: "kind", value: kind } })}
+                    />
                     {fieldErrors ? (
                       <Text size={2} color="critical1" as="p">
                         {fieldErrors}

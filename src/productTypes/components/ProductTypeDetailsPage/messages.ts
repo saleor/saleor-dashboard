@@ -10,6 +10,12 @@ export const messages = defineMessages({
     id: "d+F7sb",
     defaultMessage: "Open this product type in GraphiQL",
   },
+  showProductPageLegend: {
+    id: "q7ekHv",
+    defaultMessage: "Show product page legend",
+    description:
+      "product type detail cogs menu, restores the On the product page schematic after dismiss",
+  },
   deleteProductType: {
     id: "MqFTyz",
     defaultMessage: "Delete product type",

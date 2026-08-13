@@ -2984,6 +2984,14 @@ export const ProductTypeDetailsFragmentDoc = gql`
   ...Metadata
   productAttributes {
     ...Attribute
+    choices(first: 1) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
   }
   variantAttributes {
     ...Attribute
@@ -2991,6 +2999,14 @@ export const ProductTypeDetailsFragmentDoc = gql`
   assignedVariantAttributes {
     attribute {
       ...Attribute
+      choices(first: 1) {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
     }
     variantSelection
   }

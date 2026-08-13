@@ -92,24 +92,46 @@ export const useAttributeCreateValues = ({
     [closeValueDialog, editingValueIndex, values],
   );
 
-  const handleValueCreate = useCallback(
-    (input: AttributeValueEditDialogFormData) => {
-      if (isSelected(input, values, areValuesEqual)) {
-        setValueErrors([attributeValueAlreadyExistsError]);
+  const appendCreatedValues = useCallback(
+    (inputs: AttributeValueEditDialogFormData[]): boolean => {
+      let next = values;
+      let addedCount = 0;
+      let hadDuplicate = false;
+
+      inputs.forEach(input => {
+        const name = input.name.trim();
+
+        if (!name) {
+          return;
+        }
+
+        const item: AttributeValueEditDialogFormData = { ...input, name };
+
+        if (isSelected(item, next, areValuesEqual)) {
+          hadDuplicate = true;
+
+          return;
+        }
+
+        next = add(item, next);
+        addedCount += 1;
+      });
+
+      if (addedCount === 0) {
+        if (hadDuplicate) {
+          setValueErrors([attributeValueAlreadyExistsError]);
+        }
 
         return false;
       }
 
-      const newValues = add(input, values);
-
-      setValues(newValues);
+      setValues(next);
       setValueErrors([]);
 
-      const addedToNotVisibleLastPage =
-        newValues.length - pageInfo.startCursor > settings.rowNumber;
+      const addedToNotVisibleLastPage = next.length - pageInfo.startCursor > settings.rowNumber;
 
       if (addedToNotVisibleLastPage) {
-        loadPage(getMaxPage(newValues.length, settings.rowNumber));
+        loadPage(getMaxPage(next.length, settings.rowNumber));
       }
 
       if (valueDialog) {
@@ -119,6 +141,16 @@ export const useAttributeCreateValues = ({
       return true;
     },
     [closeValueDialog, loadPage, pageInfo.startCursor, settings.rowNumber, valueDialog, values],
+  );
+
+  const handleValueCreate = useCallback(
+    (input: AttributeValueEditDialogFormData) => appendCreatedValues([input]),
+    [appendCreatedValues],
+  );
+
+  const handleValueCreateMany = useCallback(
+    (inputs: AttributeValueEditDialogFormData[]) => appendCreatedValues(inputs),
+    [appendCreatedValues],
   );
 
   const deleteValueById = useCallback(
@@ -148,6 +180,7 @@ export const useAttributeCreateValues = ({
     deleteValueById,
     editingValueIndex,
     handleValueCreate,
+    handleValueCreateMany,
     handleValueDelete,
     handleValueReorder,
     handleValueUpdate,

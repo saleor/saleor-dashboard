@@ -45,7 +45,7 @@ describe("CreateProductTypeDialog", () => {
 
     // Act
     await user.type(screen.getByTestId("product-type-name-input"), "Store credit");
-    await user.click(screen.getByLabelText(/Gift card/));
+    await user.click(screen.getByTestId("GIFT_CARD"));
     await user.click(screen.getByTestId("submit"));
 
     // Assert

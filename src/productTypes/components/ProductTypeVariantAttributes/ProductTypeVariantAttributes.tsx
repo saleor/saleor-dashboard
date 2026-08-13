@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { attributeUrl } from "@dashboard/attributes/urls";
+import { ASSIGNABLE_LIST_TABLE_ACTION_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import Checkbox from "@dashboard/components/Checkbox";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { DetailSettingToggleRow } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -12,14 +12,16 @@ import { SortableTableBody, SortableTableRow } from "@dashboard/components/Sorta
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import { ProductAttributeType, type ProductTypeDetailsQuery } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Button, Checkbox, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import capitalize from "lodash/capitalize";
 import { CircleQuestionMark, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { type MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -27,9 +29,6 @@ import styles from "./ProductTypeVariantAttributes.module.css";
 
 const useStyles = makeStyles(
   theme => ({
-    colGrab: {
-      width: 60,
-    },
     colName: {
       width: 200,
     },
@@ -115,15 +114,6 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
   const handleAssignAttribute = () => onAttributeAssign(attributeType);
   const handleCreateAttribute = () => onAttributeCreate(attributeType);
 
-  useEffect(() => {
-    // Populate initial selection - populated inside this component to preserve it's state between data reloads
-    setSelectedVariantAttributes(
-      (assignedVariantAttributes ?? [])
-        .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
-        .filter(Boolean) || [],
-    );
-  }, []);
-
   return (
     <DetailSettingsCard
       data-test-id="variant-attributes"
@@ -169,17 +159,18 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                 <FormattedMessage {...messages.exclusivity} />
               </Text>
             </Box>
-            <ResponsiveTable>
+            <ResponsiveTable bleed className={tableStyles.assignableTable}>
               <colgroup>
-                <col className={classes.colGrab} />
-                <col />
+                <col className={tableStyles.dragCell} />
+                <col className={tableStyles.checkboxCell} />
                 <col className={classes.colName} />
                 <col className={classes.colSlug} />
                 <col className={classes.colVariant} />
-                <col className={tableStyles.colAction} />
+                <col className={tableStyles.actionsCell} />
               </colgroup>
               <TableHead
                 colSpan={numberOfColumns}
+                compact
                 disabled={disabled}
                 dragRows
                 selected={selected}
@@ -190,22 +181,28 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                 toolbar={toolbar}
               >
                 <TableCell className={classes.colName}>
-                  <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
+                  <Text size={2} lineHeight={2} color="default2">
+                    <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
+                  </Text>
                 </TableCell>
                 <TableCell className={classes.colName}>
-                  <FormattedMessage
-                    id="nf3XSt"
-                    defaultMessage="Slug"
-                    description="attribute internal name"
-                  />
+                  <Text size={2} lineHeight={2} color="default2">
+                    <FormattedMessage
+                      id="nf3XSt"
+                      defaultMessage="Slug"
+                      description="attribute internal name"
+                    />
+                  </Text>
                 </TableCell>
                 <TableCell className={classes.colName}>
                   <Box display="flex" alignItems="center" gap={1}>
-                    <FormattedMessage
-                      id="MnScte"
-                      defaultMessage="Variant selection"
-                      description="variant attribute checkbox"
-                    />
+                    <Text size={2} lineHeight={2} color="default2">
+                      <FormattedMessage
+                        id="MnScte"
+                        defaultMessage="Variant selection"
+                        description="variant attribute checkbox"
+                      />
+                    </Text>
                     <Tooltip>
                       <Tooltip.Trigger>
                         <Box color="default2" display="flex" alignItems="center">
@@ -250,20 +247,26 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                   return (
                     <SortableTableRow
                       selected={isVariantSelected}
-                      className={attribute ? classes.link : undefined}
+                      className={clsx(attribute && classes.link, tableStyles.row)}
                       hover={!!attribute}
                       href={attribute ? attributeUrl(attribute.id) : undefined}
                       key={maybe(() => attribute.id)}
                       index={attributeIndex || 0}
                       data-test-id={"id-" + +maybe(() => attribute.id)}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isVariantSelected}
-                          disabled={disabled}
-                          disableClickPropagation
-                          onChange={() => toggle(attribute.id)}
-                        />
+                      <TableCell className={tableStyles.checkboxCell}>
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          height="100%"
+                          onClick={(event: MouseEvent) => event.stopPropagation()}
+                        >
+                          <Checkbox
+                            checked={isVariantSelected}
+                            disabled={disabled}
+                            onCheckedChange={() => toggle(attribute.id)}
+                          />
+                        </Box>
                       </TableCell>
                       <TableCell className={classes.colName} data-test-id="name">
                         {attribute.name ? (
@@ -279,13 +282,15 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                         {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}
                       </TableCell>
                       <TableCell className={classes.colVariant} data-test-id="variant-selection">
-                        <div className={classes.colVariantContent}>
+                        <Box
+                          className={classes.colVariantContent}
+                          onClick={(event: MouseEvent) => event.stopPropagation()}
+                        >
                           <Checkbox
                             data-test-id="variant-selection-checkbox"
                             checked={isSelected}
                             disabled={disabled || variantSelectionDisabled}
-                            disableClickPropagation
-                            onChange={() =>
+                            onCheckedChange={() =>
                               handleContainerAssign(
                                 attribute.id,
                                 isSelected,
@@ -315,23 +320,35 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                               </Tooltip.Content>
                             </Tooltip>
                           )}
-                        </div>
+                        </Box>
                       </TableCell>
-                      <TableCell className={tableStyles.colAction}>
-                        <TableButtonWrapper>
-                          <Button
-                            data-test-id="delete-icon"
-                            disabled={disabled}
-                            variant="tertiary"
-                            onClick={() => onAttributeUnassign(attribute.id)}
-                            icon={
-                              <Trash2
-                                size={iconSize.small}
-                                strokeWidth={iconStrokeWidthBySize.small}
-                              />
-                            }
-                          />
-                        </TableButtonWrapper>
+                      <TableCell className={tableStyles.actionsCell}>
+                        <Box
+                          className={tableStyles.rowDelete}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="flex-end"
+                          paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
+                          width="100%"
+                          height="100%"
+                        >
+                          <TableButtonWrapper>
+                            <Button
+                              data-test-id="delete-icon"
+                              disabled={disabled}
+                              variant="tertiary"
+                              type="button"
+                              onClick={() => onAttributeUnassign(attribute.id)}
+                              title={intl.formatMessage(buttonMessages.delete)}
+                              icon={
+                                <Trash2
+                                  size={iconSize.small}
+                                  strokeWidth={iconStrokeWidthBySize.small}
+                                />
+                              }
+                            />
+                          </TableButtonWrapper>
+                        </Box>
                       </TableCell>
                     </SortableTableRow>
                   );

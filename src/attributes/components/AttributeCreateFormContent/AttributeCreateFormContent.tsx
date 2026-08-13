@@ -40,6 +40,7 @@ interface AttributeCreateFormContentProps
   inputType: AttributeInputTypeEnum;
   onEntityTypeChange: FormChange;
   onInlineValueAdd?: (data: AttributeValueEditDialogFormData) => void;
+  onInlineValuesAdd?: (data: AttributeValueEditDialogFormData[]) => void;
   fetchMoreReferenceTypes?: FetchMoreProps;
   fetchReferenceTypes?: (query: string) => void;
   referenceTypeOptions?: Option[];
@@ -69,6 +70,7 @@ export const AttributeCreateFormContent = ({
   inputType,
   onEntityTypeChange,
   onInlineValueAdd,
+  onInlineValuesAdd,
   fetchMoreReferenceTypes,
   fetchReferenceTypes,
   referenceTypeOptions = [],
@@ -139,6 +141,7 @@ export const AttributeCreateFormContent = ({
           inlineValueAddError={valueAddError}
           inputType={inputType}
           onInlineValueAdd={onInlineValueAdd}
+          onInlineValuesAdd={onInlineValuesAdd}
           onNextPage={onNextPage}
           onPreviousPage={onPreviousPage}
           onUpdateListSettings={onUpdateListSettings}

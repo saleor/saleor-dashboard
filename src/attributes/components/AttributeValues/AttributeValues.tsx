@@ -57,6 +57,7 @@ interface AttributeValuesProps
   inlineValueAddError?: AttributeErrorFragment | null;
   values?: RelayToFlat<AttributeValueListFragment>;
   onInlineValueAdd?: (data: AttributeValueEditDialogFormData) => void;
+  onInlineValuesAdd?: (data: AttributeValueEditDialogFormData[]) => void;
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
@@ -118,6 +119,7 @@ const AttributeValues = ({
   disabled,
   inlineValueAddError = null,
   onInlineValueAdd,
+  onInlineValuesAdd,
   onValueAdd,
   onValueDelete,
   onValueReorder,
@@ -251,6 +253,7 @@ const AttributeValues = ({
     hasRowsAbove: hasValueRows,
     inputType,
     onAdd: onInlineValueAdd!,
+    onAddMany: onInlineValuesAdd,
   };
 
   const valuesTable = (

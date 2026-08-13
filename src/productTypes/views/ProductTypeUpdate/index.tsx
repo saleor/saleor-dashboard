@@ -44,7 +44,7 @@ import { getProductErrorMessage } from "@dashboard/utils/errors";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, {
@@ -58,6 +58,7 @@ import {
   type ProductTypeUrlDialog,
   type ProductTypeUrlQueryParams,
 } from "../../urls";
+import { getVariantSelectionFromAssigned } from "../../utils/productTypePageForm";
 
 interface ProductTypeUpdateProps {
   id: string;
@@ -172,6 +173,25 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   });
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const productType = data?.productType;
+  const productTypeId = productType?.id;
+
+  useLayoutEffect(
+    function hydrateVariantSelection() {
+      if (!productTypeId || productTypeId !== id) {
+        setSelectedVariantAttributes([]);
+
+        return;
+      }
+
+      setSelectedVariantAttributes(
+        getVariantSelectionFromAssigned(productType?.assignedVariantAttributes),
+      );
+    },
+    // Hydrate once per loaded type. Assigned-list identity changes on refetch and
+    // must not wipe unsaved variant-selection checkbox edits.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [id, productTypeId],
+  );
 
   const productTypeDeleteData = useProductTypeDelete({
     singleId: id,

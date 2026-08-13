@@ -25,9 +25,6 @@ jest.mock("../ProductTypeAttributes/ProductTypeAttributes", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-attributes-mock" />,
 }));
-jest.mock("../ProductTypeConfiguration/ProductTypeConfiguration", () => ({
-  ProductTypeConfiguration: () => <div data-test-id="product-type-configuration-mock" />,
-}));
 jest.mock("../ProductTypeShipping/ProductTypeShipping", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-shipping-mock" />,

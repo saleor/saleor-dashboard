@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   title: {
-    id: "DEsXMz",
-    defaultMessage: "Variants",
-    description: "product type variants section header",
+    id: "kUbHkw",
+    defaultMessage: "Variant attributes",
+    description: "product type variant attributes section header",
   },
   usesVariantAttributes: {
-    id: "yq5/lY",
-    defaultMessage: "This type has options",
+    id: "/MkFQn",
+    defaultMessage: "Products of this type have options",
     description: "product type has-variants toggle title",
   },
   usesVariantAttributesDescription: {

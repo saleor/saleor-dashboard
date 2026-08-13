@@ -71,6 +71,7 @@ jest.mock("@dashboard/attributes/hooks/useAttributeCreateValues/useAttributeCrea
   useAttributeCreateValues: () => ({
     deleteValueById: jest.fn(),
     handleValueCreate: jest.fn(),
+    handleValueCreateMany: jest.fn(),
     handleValueReorder: jest.fn(),
     pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: 0 },
     pageValues: mockValues,

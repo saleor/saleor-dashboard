@@ -1,16 +1,10 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  typeConfiguration: {
-    id: "VJ+VCB",
+  kindLabel: {
+    id: "zUfIU1",
     defaultMessage: "Kind",
-    description: "product type kind section header",
-  },
-  kindIntro: {
-    id: "vYVgXg",
-    defaultMessage:
-      "Gift card types issue store credit when purchased. Regular types are everything you sell.",
-    description: "product type kind card intro",
+    description: "product type kind field label",
   },
   optionNormalTitle: {
     id: "+3vnTD",
@@ -18,8 +12,8 @@ export const messages = defineMessages({
     description: "product type kind option",
   },
   optionNormalDescription: {
-    id: "Knk0eK",
-    defaultMessage: "Physical or digital goods.",
+    id: "RAZYKf",
+    defaultMessage: "Physical or digital goods you catalog, price, and sell to customers.",
     description: "product type kind option description",
   },
   optionGiftCardTitle: {
