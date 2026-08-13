@@ -70,6 +70,7 @@ let mockValues: Array<{ name: string; value?: string | null }> = [];
 jest.mock("@dashboard/attributes/hooks/useAttributeCreateValues/useAttributeCreateValues", () => ({
   useAttributeCreateValues: () => ({
     deleteValueById: jest.fn(),
+    deleteValuesByIds: jest.fn(),
     handleValueCreate: jest.fn(),
     handleValueCreateMany: jest.fn(),
     handleValueReorder: jest.fn(),

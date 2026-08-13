@@ -18,6 +18,7 @@ import {
 import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
 import {
   type FetchMoreProps,
+  type ListActions,
   type ListSettings,
   type RelayToFlat,
   type ReorderAction,
@@ -47,6 +48,7 @@ interface AttributeCreateFormContentProps
   referenceTypesLoading?: boolean;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
+  valueList: ListActions;
   pageInfo: {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
@@ -80,6 +82,7 @@ export const AttributeCreateFormContent = ({
   onUpdateListSettings,
   onValueDelete,
   onValueReorder,
+  valueList,
   pageInfo,
   settings,
   set,
@@ -153,16 +156,11 @@ export const AttributeCreateFormContent = ({
           settings={settings}
           values={values}
           variant="embedded"
+          {...valueList}
         />
       ) : null}
 
-      <AttributeProperties
-        errors={apiErrors}
-        data={data}
-        disabled={disabled}
-        onChange={change}
-        variant="embedded"
-      />
+      <AttributeProperties errors={apiErrors} data={data} disabled={disabled} onChange={change} />
 
       <Text size={2} color="default2">
         <FormattedMessage {...messages.footerHint} />

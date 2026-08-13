@@ -1,0 +1,7 @@
+.body {
+  user-select: none;
+}
+
+.dragging {
+  cursor: grabbing;
+}

@@ -3,6 +3,7 @@ import { UserContext } from "@dashboard/auth/useUser";
 import { type AttributeDetailsQuery, PermissionEnum, type UserFragment } from "@dashboard/graphql";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
@@ -57,6 +58,13 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 }));
 
 jest.mock("@dashboard/components/Savebar");
+jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
+  useDevModeContext: () => ({
+    setDevModeContent: jest.fn(),
+    setVariables: jest.fn(),
+    setDevModeVisibility: jest.fn(),
+  }),
+}));
 jest.mock("@dashboard/searches/useProductTypeSearch", () => ({
   __esModule: true,
   default: () => ({
@@ -104,6 +112,13 @@ const defaultProps = {
   onValueDelete: jest.fn(),
   onValueReorder: jest.fn(),
   onValueUpdate: jest.fn(),
+  valueList: {
+    isChecked: () => false,
+    selected: 0,
+    toggle: jest.fn(),
+    toggleAll: jest.fn(),
+    toolbar: null,
+  },
   pageInfo: { hasNextPage: false, hasPreviousPage: false },
   onNextPage: jest.fn(),
   onPreviousPage: jest.fn(),
@@ -159,5 +174,30 @@ describe("AttributePage top nav", () => {
     // Assert
     expect(screen.queryByTestId("show-attribute-metadata")).not.toBeInTheDocument();
     expect(screen.getByTestId("metadata-mock")).toBeInTheDocument();
+    expect(screen.queryByTestId("show-more-button")).not.toBeInTheDocument();
+  });
+
+  it("calls onDelete from the cogs menu", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onDelete = jest.fn();
+
+    render(
+      <AttributePage
+        {...defaultProps}
+        attribute={mockAttribute}
+        onDelete={onDelete}
+        onShowMetadata={jest.fn()}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Act
+    await user.click(screen.getByTestId("show-more-button"));
+    expect(screen.getByTestId("graphiql-redirect")).toBeInTheDocument();
+    await user.click(screen.getByTestId("delete-attribute"));
+
+    // Assert
+    expect(onDelete).toHaveBeenCalled();
   });
 });

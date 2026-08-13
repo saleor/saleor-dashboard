@@ -21,6 +21,8 @@ interface TableHeadProps extends MuiTableHeadProps {
   toggleAll?: (items: Node[], selected: number) => void;
   /** Macaw checkbox + compact header type, matching collection product tables. */
   compact?: boolean;
+  /** Keep column labels visible while rows are selected (bulk actions live elsewhere). */
+  keepColumnHeaders?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -36,7 +38,7 @@ const useStyles = makeStyles(
     },
     compactDrag: {
       padding: 0,
-      width: "calc(var(--mu-spacing-6) + 40px)",
+      width: 40,
     },
     compactCheckbox: {
       padding: 0,
@@ -83,6 +85,7 @@ const TableHead = (props: TableHeadProps) => {
     disabled,
     dragRows,
     items,
+    keepColumnHeaders,
     selected,
     toggleAll,
     toolbar,
@@ -125,7 +128,7 @@ const TableHead = (props: TableHeadProps) => {
             )}
           </TableCell>
         )}
-        {selected ? (
+        {selected && !keepColumnHeaders ? (
           <TableCell colSpan={getColSpan(colSpan, dragRows)}>
             <div className={classes.container}>
               <Text

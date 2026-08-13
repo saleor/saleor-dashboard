@@ -21,4 +21,24 @@ export const messages = defineMessages({
     defaultMessage: "Delete product type",
     description: "product type detail cogs menu, opens the delete-confirmation dialog",
   },
+  saveCompositionGeneral: {
+    id: "CnDveJ",
+    defaultMessage: "general",
+    description: "Save composition segment for product type name and kind",
+  },
+  saveCompositionShipping: {
+    id: "lAKyVW",
+    defaultMessage: "shipping",
+    description: "Save composition segment for product type shipping and weight",
+  },
+  saveCompositionTaxes: {
+    id: "5SScmW",
+    defaultMessage: "taxes",
+    description: "Save composition segment for product type tax class",
+  },
+  saveCompositionVariantSelection: {
+    id: "926zP8",
+    defaultMessage: "variant selection",
+    description: "Save composition segment for variant-selection checkboxes",
+  },
 });

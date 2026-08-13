@@ -50,22 +50,16 @@ export const useAttributeCreateValues = ({
     setValueDialog("add-value");
   }, []);
 
-  const openEditValueDialog = useCallback(
-    (id: string) => {
-      setValueErrors([]);
-      setEditingValueIndex(parseInt(id, 10) + pageInfo.startCursor);
-      setValueDialog("edit-value");
-    },
-    [pageInfo.startCursor],
-  );
+  const openEditValueDialog = useCallback((id: string) => {
+    setValueErrors([]);
+    setEditingValueIndex(parseInt(id, 10));
+    setValueDialog("edit-value");
+  }, []);
 
-  const openRemoveValueDialog = useCallback(
-    (id: string) => {
-      setEditingValueIndex(parseInt(id, 10) + pageInfo.startCursor);
-      setValueDialog("remove-value");
-    },
-    [pageInfo.startCursor],
-  );
+  const openRemoveValueDialog = useCallback((id: string) => {
+    setEditingValueIndex(parseInt(id, 10));
+    setValueDialog("remove-value");
+  }, []);
 
   const closeValueDialog = useCallback(() => {
     setValueDialog(null);
@@ -153,14 +147,17 @@ export const useAttributeCreateValues = ({
     [appendCreatedValues],
   );
 
-  const deleteValueById = useCallback(
-    (id: string) => {
-      const index = parseInt(id, 10) + pageInfo.startCursor;
+  const deleteValueById = useCallback((id: string) => {
+    const index = parseInt(id, 10);
 
-      setValues(remove(values[index], values, areValuesEqual));
-    },
-    [pageInfo.startCursor, values],
-  );
+    setValues(current => remove(current[index], current, areValuesEqual));
+  }, []);
+
+  const deleteValuesByIds = useCallback((ids: string[]) => {
+    const indexes = new Set(ids.map(valueId => parseInt(valueId, 10)));
+
+    setValues(current => current.filter((_, index) => !indexes.has(index)));
+  }, []);
 
   const handleValueReorder = useCallback(
     ({ newIndex, oldIndex }: ReorderEvent) =>
@@ -178,6 +175,7 @@ export const useAttributeCreateValues = ({
   return {
     closeValueDialog,
     deleteValueById,
+    deleteValuesByIds,
     editingValueIndex,
     handleValueCreate,
     handleValueCreateMany,

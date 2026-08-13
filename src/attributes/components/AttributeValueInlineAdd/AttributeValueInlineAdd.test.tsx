@@ -23,6 +23,16 @@ const renderAdd = (
   );
 
 describe("AttributeValueInlineAdd paste", () => {
+  it("shows a hint that lists can be pasted", () => {
+    // Arrange
+    renderAdd({ onAddMany: jest.fn() });
+
+    // Assert
+    expect(
+      screen.getByText(/Paste from a spreadsheet or a comma-separated list/),
+    ).toBeInTheDocument();
+  });
+
   it("proposes splitting comma-separated paste into values", async () => {
     // Arrange
     const onAddMany = jest.fn();

@@ -12,6 +12,7 @@ import {
   Percent,
   Receipt,
   Settings,
+  Shapes,
   Shield,
   Tag,
   Tags,
@@ -27,6 +28,7 @@ import {
  *
  * Catalog destinations stay distinct:
  * - products → Tag (SKU / sellable item)
+ * - product types → Shapes (circle + square + triangle)
  * - categories → FolderTree (taxonomy)
  * - collections → Layers (curated grouping)
  */
@@ -45,6 +47,7 @@ export const TopNavDestinationIcon = {
   orders: createTopNavLucideIcon(Package),
   permissionGroups: createTopNavLucideIcon(Shield),
   products: createTopNavLucideIcon(Tag),
+  productTypes: createTopNavLucideIcon(Shapes),
   shipping: createTopNavLucideIcon(Truck),
   staff: createTopNavLucideIcon(Users),
   taxes: createTopNavLucideIcon(Receipt),

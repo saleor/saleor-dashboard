@@ -1,4 +1,5 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { PaperSignIcon } from "@dashboard/icons/PaperSignIcon";
 import { Box, Button, Text, useTheme } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Image, ShoppingCart } from "lucide-react";
@@ -42,6 +43,7 @@ export interface ProductTypePdpSchematicProps {
     | undefined;
   selectedVariantAttributeIds: string[];
   onDismiss?: () => void;
+  loading?: boolean;
 }
 
 const OptionPlaceholders = ({
@@ -132,12 +134,53 @@ const LegendItem = ({
   </Box>
 );
 
+const SchematicLoadingRegions = (): JSX.Element => (
+  <>
+    <Box className={clsx(styles.region, styles.regionOptions)}>
+      <Text as="span" className={styles.regionLabel}>
+        <FormattedMessage {...messages.shopperPicks} />
+      </Text>
+      {Array.from({ length: 2 }, (_, index) => (
+        <Box key={index} className={styles.optionRow} aria-hidden>
+          <Box className={clsx(styles.sampleSkeleton, styles.optionNameSkeleton)} />
+          <Box className={styles.optionControls}>
+            <Box className={styles.pill} />
+            <Box className={styles.pill} />
+            <Box className={styles.pill} />
+          </Box>
+        </Box>
+      ))}
+    </Box>
+    <Box className={clsx(styles.region, styles.regionFacts)}>
+      <Text as="span" className={styles.regionLabel}>
+        <FormattedMessage {...messages.variantFacts} />
+      </Text>
+      <Box className={styles.badges} aria-hidden>
+        <Box className={styles.sampleSkeleton} />
+        <Box className={styles.sampleSkeleton} />
+      </Box>
+    </Box>
+  </>
+);
+
+const SchematicLoadingSpecs = (): JSX.Element => (
+  <>
+    {Array.from({ length: 2 }, (_, index) => (
+      <Box key={index} className={styles.specRow} aria-hidden>
+        <Box className={clsx(styles.sampleSkeleton, styles.optionNameSkeleton)} />
+        <Box className={styles.sampleSkeleton} />
+      </Box>
+    ))}
+  </>
+);
+
 export const ProductTypePdpSchematic = ({
   hasVariants,
   productAttributes,
   assignedVariantAttributes,
   selectedVariantAttributeIds,
   onDismiss,
+  loading = false,
 }: ProductTypePdpSchematicProps): JSX.Element => {
   const intl = useIntl();
   const { theme } = useTheme();
@@ -154,25 +197,33 @@ export const ProductTypePdpSchematic = ({
       data-test-id="product-type-pdp-schematic"
     >
       <Box className={styles.copy}>
-        <Box className={styles.titleRow}>
-          <Text size={5} fontWeight="bold" as="h2">
-            <FormattedMessage {...messages.title} />
-          </Text>
-          <Box as="span" className={styles.badge}>
-            <FormattedMessage {...messages.badge} />
-          </Box>
-        </Box>
-        <Text size={3} color="default2">
-          <FormattedMessage {...messages.subtitle} />
+        <Text size={5} fontWeight="bold" as="h2">
+          <FormattedMessage {...messages.title} />
         </Text>
+        <Box className={styles.subtitleRow}>
+          <Box
+            as="span"
+            className={styles.legendIcon}
+            color="default1"
+            data-test-id="pdp-schematic-paper-mark"
+            aria-label={intl.formatMessage(messages.badge)}
+          >
+            <PaperSignIcon size={iconSize.small} />
+          </Box>
+          <Text size={3} color="default2">
+            <FormattedMessage {...messages.subtitle} />
+          </Text>
+        </Box>
       </Box>
 
       <Box
         as="figure"
         className={styles.visual}
         aria-label={intl.formatMessage(messages.figureLabel)}
+        aria-busy={loading || undefined}
+        data-test-id={loading ? "pdp-schematic-loading" : undefined}
       >
-        <Box className={styles.pdp}>
+        <Box className={clsx(styles.pdp, loading && styles.pdpLoading)}>
           <Box className={styles.galleryCol} aria-hidden>
             <Box className={styles.gallery} data-test-id="pdp-schematic-image">
               <Box className={styles.galleryFrame}>
@@ -196,62 +247,68 @@ export const ProductTypePdpSchematic = ({
             <Box className={styles.productName} aria-hidden />
             <Box className={styles.price} aria-hidden />
 
-            <Box className={clsx(styles.region, styles.regionOptions)}>
-              <Text as="span" className={styles.regionLabel}>
-                <FormattedMessage {...messages.shopperPicks} />
-              </Text>
-              {hasVariants ? (
-                optionAttributes.length > 0 ? (
-                  <OptionRows attributes={optionAttributes} />
-                ) : (
-                  <Text as="span" className={styles.emptyHint}>
-                    <FormattedMessage {...messages.assignOptions} />
+            {loading ? (
+              <SchematicLoadingRegions />
+            ) : (
+              <>
+                <Box className={clsx(styles.region, styles.regionOptions)}>
+                  <Text as="span" className={styles.regionLabel}>
+                    <FormattedMessage {...messages.shopperPicks} />
                   </Text>
-                )
-              ) : (
-                <Text
-                  as="span"
-                  className={styles.emptyHint}
-                  data-test-id="pdp-schematic-no-pickers"
-                >
-                  <FormattedMessage {...messages.noPickers} />
-                </Text>
-              )}
-            </Box>
-
-            <Box
-              className={clsx(styles.region, styles.regionFacts)}
-              data-test-id="pdp-schematic-badges"
-            >
-              <Text as="span" className={styles.regionLabel}>
-                <FormattedMessage {...messages.variantFacts} />
-              </Text>
-              {hasVariants && badgeAttributes.length > 0 ? (
-                <Box className={styles.badges}>
-                  {badgeAttributes.map(attribute =>
-                    attribute.sampleValue ? (
-                      <Box as="span" key={attribute.id} className={styles.badgeChip}>
-                        {attribute.sampleValue}
-                      </Box>
+                  {hasVariants ? (
+                    optionAttributes.length > 0 ? (
+                      <OptionRows attributes={optionAttributes} />
                     ) : (
-                      <Box
-                        key={attribute.id}
-                        className={styles.sampleSkeleton}
-                        data-test-id="pdp-schematic-sample-skeleton"
-                        aria-hidden
-                      />
-                    ),
+                      <Text as="span" className={styles.emptyHint}>
+                        <FormattedMessage {...messages.assignOptions} />
+                      </Text>
+                    )
+                  ) : (
+                    <Text
+                      as="span"
+                      className={styles.emptyHint}
+                      data-test-id="pdp-schematic-no-pickers"
+                    >
+                      <FormattedMessage {...messages.noPickers} />
+                    </Text>
                   )}
                 </Box>
-              ) : (
-                <Text as="span" className={styles.emptyHint}>
-                  <FormattedMessage
-                    {...(hasVariants ? messages.assignFacts : messages.factsNeedOptions)}
-                    values={optionNameMarkup}
-                  />
-                </Text>
-              )}
-            </Box>
+
+                <Box
+                  className={clsx(styles.region, styles.regionFacts)}
+                  data-test-id="pdp-schematic-badges"
+                >
+                  <Text as="span" className={styles.regionLabel}>
+                    <FormattedMessage {...messages.variantFacts} />
+                  </Text>
+                  {hasVariants && badgeAttributes.length > 0 ? (
+                    <Box className={styles.badges}>
+                      {badgeAttributes.map(attribute =>
+                        attribute.sampleValue ? (
+                          <Box as="span" key={attribute.id} className={styles.badgeChip}>
+                            {attribute.sampleValue}
+                          </Box>
+                        ) : (
+                          <Box
+                            key={attribute.id}
+                            className={styles.sampleSkeleton}
+                            data-test-id="pdp-schematic-sample-skeleton"
+                            aria-hidden
+                          />
+                        ),
+                      )}
+                    </Box>
+                  ) : (
+                    <Text as="span" className={styles.emptyHint}>
+                      <FormattedMessage
+                        {...(hasVariants ? messages.assignFacts : messages.factsNeedOptions)}
+                        values={optionNameMarkup}
+                      />
+                    </Text>
+                  )}
+                </Box>
+              </>
+            )}
 
             <Box className={styles.cta} aria-hidden>
               <ShoppingCart size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
@@ -265,7 +322,11 @@ export const ProductTypePdpSchematic = ({
             <Text as="span" className={styles.regionLabel}>
               <FormattedMessage {...messages.productDetails} />
             </Text>
-            {specAttributes.length > 0 ? (
+            {loading ? (
+              <Box className={styles.specList}>
+                <SchematicLoadingSpecs />
+              </Box>
+            ) : specAttributes.length > 0 ? (
               <Box className={styles.specList}>
                 {specAttributes.map(attribute => (
                   <Box
@@ -326,6 +387,7 @@ export const ProductTypePdpSchematic = ({
             variant="tertiary"
             type="button"
             onClick={onDismiss}
+            disabled={loading}
             data-test-id="pdp-schematic-dismiss"
           >
             <FormattedMessage {...messages.dismiss} />

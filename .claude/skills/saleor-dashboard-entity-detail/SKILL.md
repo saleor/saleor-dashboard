@@ -4,7 +4,8 @@ description: >
   Update design language for daily entity detail views (channels, products, collections,
   shipping zones, warehouses, customers). Use when refactoring or building entity detail
   pages — layout, TopNav, metadata modal, sidebar ops, settings cards, setup checklist,
-  staged assigns, Savebar composition. Not for Configuration hubs (Orders/Tax/Site settings).
+  staged assigns, Savebar composition, or fields that cannot change after create
+  (currency, attribute type). Not for Configuration hubs (Orders/Tax/Site settings).
 ---
 
 # Entity detail update language
@@ -78,6 +79,7 @@ DetailPageLayout
 | `DetailPageContent`          | exists                 | Single-column main stack (`gap={4}` + `paddingX/Y={6}`) — collections, categories, gift cards **without** section nav                                                                                                                                   |
 | `DetailPageSectionLayout`    | exists                 | **Nav rail + main column** — use with `DetailSectionNav` on long detail pages (channels, vouchers). Owns outer padding once; main column is `gap={4}` only. **Do not nest `DetailPageContent` inside.**                                                 |
 | `DetailSettingToggleRow`     | exists                 | Boolean setting row (title + description + Toggle); optional nested fields when on                                                                                                                                                                      |
+| `FixedAtCreationField`       | exists                 | Immutable create-time identity (currency, attribute type) — disabled Input + lock + helper. Not a disabled Combobox.                                                                                                                                    |
 | `DetailSettingRadioGroup`    | **lift from channels** | Strategy radios with recommended/legacy badges                                                                                                                                                                                                          |
 | `DetailSectionNav`           | exists                 | 4+ sections on a long detail page                                                                                                                                                                                                                       |
 | `SetupChecklist`             | exists                 | Entity has required setup steps (channel) or strong diagnostics (product availability)                                                                                                                                                                  |
@@ -86,6 +88,9 @@ DetailPageLayout
 | `ChannelDisplay` / links     | exists                 | Read-only or linked channel name + globe icon (`src/components/Channel/Channel.tsx`)                                                                                                                                                                    |
 | `EntityBackgroundImageField` | exists                 | Shared background image upload/preview/alt for collections, categories, …                                                                                                                                                                               |
 | `SavebarCompositionHint`     | exists                 | Presentational “Unsaved changes: …” — entity wrappers supply segments                                                                                                                                                                                   |
+| `AssignableListCard`         | exists                 | Flush in-card assignable lists (collection/category products, attribute values, product-type attributes, voucher codes). Owns search-band padding and composes table + pagination. **Do not copy CollectionProducts chrome.**                           |
+| `AssignableListTable`        | exists                 | Checkbox + hover-reveal row delete GridTable. `density="compact"` (text) or `"media"` (50px thumbnails). Bulk toolbar in the heading, not the card header.                                                                                              |
+| `AssignableListPagination`   | exists                 | Compact “No. of rows” + chevrons. Top border baked in. `inset`: `card` (spacing-6) / `nested` (spacing-4) / `drag` (40px grip column).                                                                                                                  |
 
 Until extraction lands during Phase B, keep legacy `DashboardCard` for shipping-style hints — do not use `SettingsSection` on entity detail.
 
@@ -174,7 +179,7 @@ Two header patterns; both use a bordered card surface but different chrome.
 
 Primary = settings you edit in place. Secondary = assign/remove membership with count in the header.
 
-`headerEnd` on primary cards: use `size="small"` actions so header height matches title-only cards; right inset matches the Y gap (`spacing-4`). Same for `ChannelAvailabilityCard` Manage in the sidebar toolbar.
+`headerEnd` on primary cards: the card **coerces** macaw `Button` / `ButtonGroupWithDropdown` to `size="small"` so title-only and title+action headers share height. Right inset matches the Y gap (`spacing-4`). Callers pass the action — do not set `size` on `headerEnd` buttons. Same for `ChannelAvailabilityCard` Manage in the sidebar toolbar (set `small` there until that primitive coerces too).
 
 ### `DetailSettingsCard` API (primary settings card)
 
@@ -185,7 +190,7 @@ Path: `src/components/DetailSettingsCard/DetailSettingsCard.tsx`. Storybook: `Co
 | `title`                       | String, `FormattedMessage`, or `DetailSettingsCardTitle` — card always renders **`Text size={5}` bold `as="h2"`**           |
 | `intro`                       | Leading description — **bordered row below header** (Payment gateways pattern). Prefer over `subtitle` for multi-line copy. |
 | `subtitle`                    | Short line under title **inside tinted header** — rare (status/count); don’t put long hints here                            |
-| `headerEnd`                   | Actions on the right (Upload, Manage). Prefer `size="small"` so height matches title-only; right inset `spacing-4`.         |
+| `headerEnd`                   | Actions on the right (Upload, Manage, Assign). Card coerces macaw buttons to `size="small"`; right inset `spacing-4`.       |
 | `contentFlush`                | Full-bleed body (lists, image upload dropzone)                                                                              |
 | `DetailSettingsCardIntro`     | Reusable intro band when stacking multiple intro blocks (catalog warehouse notes)                                           |
 | `DetailSettingsOptionalLabel` | Secondary `size={2}` “Optional” — no brackets; use inside `DetailSettingsCardTitle`                                         |
@@ -205,6 +210,77 @@ Path: `src/components/DetailSettingsCard/DetailSettingsCard.tsx`. Storybook: `Co
   {fields}
 </DetailSettingsCard>
 ```
+
+### Fixed-at-creation fields
+
+Values the API will not let you change after create (channel **currency**, attribute **input type**, attribute **entity** on references).
+
+Use **`FixedAtCreationField`** (`src/components/FixedAtCreationField/FixedAtCreationField.tsx`). Canonical look: channel currency on edit.
+
+| Piece   | Rule                                                                                         |
+| ------- | -------------------------------------------------------------------------------------------- |
+| Control | Disabled macaw **`Input`** — never a disabled `Combobox` / `Select` (chevron looks editable) |
+| Value   | Plain text (e.g. `USD`, `Dropdown`) — no type icons, no dropdown chrome                      |
+| Lock    | Lucide `Lock` in `endAdornment`, `color="default2"`, `iconSize.small`                        |
+| Helper  | **Required.** Pattern: `Fixed at creation. To {goal}, {alternative}.`                        |
+| Create  | Keep a real picker; helper can warn it can’t be changed later                                |
+
+```tsx
+<FixedAtCreationField
+  data-test-id="channel-currency-locked-input"
+  label={intl.formatMessage(messages.channelCurrency)}
+  name="currencyCode"
+  value={data.currencyCode}
+  helperText={intl.formatMessage(messages.channelCurrencyHintLocked)}
+/>
+```
+
+Copy examples:
+
+- Currency: “Fixed at creation. To sell in another currency, create a second channel.”
+- Attribute type: “Fixed at creation. To use a different type, create a new attribute.”
+
+Do **not** grey out a Combobox and leave the chevron. That is the mistake this pattern replaces.
+
+### In-card assignable lists (`AssignableList*`)
+
+Path: `src/components/AssignableListTable/`. Canonical references: collection products, attribute values, product-type attributes, voucher codes.
+
+**Do not copy CollectionProducts CSS, header height, search padding, or pagination chrome into a feature.** Compose:
+
+```tsx
+<AssignableListCard
+  title="…"
+  headerEnd={<Button variant="secondary">Assign …</Button>}
+  search={<SearchInput … />}           // optional — padding owned by the card
+  footer={
+    <AssignableListPagination          // top border owned by pagination
+      inset="drag"                     // card | nested | drag
+      numberOfRows={…}
+      onUpdateListSettings={…}
+    />
+  }
+>
+  <AssignableListTable density="compact" … />
+  {/* MUI drag tables: ResponsiveTable + tableStyles.assignableTable */}
+</AssignableListCard>
+```
+
+| Piece           | Contract (owned by the primitive)                                                                                            |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Card header     | `DetailSettingsCard` tinted band; title `size={5}` bold; `headerEnd` coerced to `small`; with-action right inset `spacing-4` |
+| Search band     | Y `spacing-3`, X `spacing-6`, bottom border                                                                                  |
+| Table heading   | 40px; `Text size={2}`; selected count + bulk action **in the heading**, not the card header                                  |
+| Drag column     | 40px, grip centered, first-cell padding 0                                                                                    |
+| Checkbox column | 20px control + leading inset (`card` = 6, `nested` = 4)                                                                      |
+| Body rows       | `compact` (text) or `media` (50px thumbnails); cell padding `spacing-2`                                                      |
+| Row delete      | Hover or delete-control `:focus-within` (not the row — checkbox focus would pin the icon); always visible on `hover: none`   |
+| Pagination      | Top border; Y `spacing-2`; small select + chevrons; `inset` aligns to first content column                                   |
+| Empty           | `padding={4}` + `Placeholder`                                                                                                |
+
+Tokens live in `assignableListTableLayout.ts`. MUI tables that still need dnd-kit (`SortableTable`) use `tableStyles.assignableTable` so heading height and density match GridTable.
+
+**Anti-patterns:** per-view `.listHeader { height: 40px }`; wrapping pagination in a second top-border box; putting bulk delete in `headerEnd`; `size="medium"` assign buttons in the card header; 50px rows on text-only lists; copying `CollectionProducts/Pagination`.
 
 ### When to use a card vs open section
 
@@ -286,6 +362,7 @@ Shipping-style entity cards with [`DashboardCard.Subtitle`](./saleor-dashboard-m
 11. **SEO last in the main column** — after identity/settings and primary content; exception only when explicitly decided for that entity.
 12. **Primitives own heading typography** — `DetailSettingsCard` / `AssignListCard` / `Title2` set size, weight, and heading level. Callers pass copy only (`string` / `FormattedMessage` / thin wrappers like `DetailSettingsCardTitle`). Never rely on bare browser `<h2>` styles.
 13. **Channel references use `ChannelDisplay` / `ChannelDetailsLink`** — globe icon + normal text color; never a bare blue link for a channel name. Other in-card links prefer `Link color="secondary"` with hover underline. See [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) → Interactive affordances.
+14. **Create-time identity uses `FixedAtCreationField`** — disabled Input + lock + “Fixed at creation. To {goal}, {alternative}.” Never a disabled Combobox/Select.
 
 Not every entity needs all of these. Collections don’t need a setup checklist; channels do.
 
@@ -316,7 +393,7 @@ Savebar on entity detail: `Spacer` + composition hint (optional) + Cancel + Conf
 
 - [ ] **Metadata** — `*MetadataDialog` + `?action=view-metadata`; remove inline metadata on edit ([detail-pages skill](./saleor-dashboard-detail-pages/SKILL.md))
 - [ ] **Header meta** — status pill / secondary meta in title when entity has lifecycle (channel Active/Inactive)
-- [ ] **Main settings** — group fields in `DetailSettingsCard` (or channel reference); toggle/radio rows use `DetailSetting*`
+- [ ] **Main settings** — group fields in `DetailSettingsCard` (or channel reference); toggle/radio rows use `DetailSetting*`; create-time identity uses `FixedAtCreationField`
 - [ ] **Lists / primary content** — products, rates, etc. above SEO
 - [ ] **SEO** — last in main column (`SeoForm` secondary / `columnInset={false}` unless section-nav `unwrapped` exception); document any non-last placement
 - [ ] **Section nav** — optional; add only for long pages like channel details. Skip when stacked cards + foldable blocks already scan well (collections, shipping zones). SEO section last in the map when present.
@@ -332,17 +409,17 @@ Savebar on entity detail: `Spacer` + composition hint (optional) + Cancel + Conf
 
 Reference: [`CollectionDetailsPage`](../../src/collections/components/CollectionDetailsPage/CollectionDetailsPage.tsx).
 
-| Area             | Status                                                                                                                      |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Metadata         | `CollectionMetadataDialog` + `TopNav.MetadataButton`                                                                        |
-| TopNav           | `actionsGap={3}`; back via `href`; **Delete collection** in cogs menu (critical + trash icon), not Savebar                  |
-| Content stack    | `DetailPageContent`                                                                                                         |
-| General / media  | `DetailSettingsCard` + `EntityBackgroundImageField`                                                                         |
-| Products         | `DetailSettingsCard` + `contentFlush`; assign in `headerEnd`; bulk **Unassign** when rows selected; per-row delete on hover |
-| SEO              | **Last** in main column — `SeoForm` secondary / `columnInset={false}`                                                       |
-| Section nav      | **Optional** — skipped; stacked cards scan well without sticky nav                                                          |
-| Sidebar          | `CollectionChannelAvailabilityCard` (accordion)                                                                             |
-| Save composition | `CollectionSaveCompositionHint` → shared `SavebarCompositionHint`                                                           |
+| Area             | Status                                                                                                                                                   |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Metadata         | `CollectionMetadataDialog` + `TopNav.MetadataButton`                                                                                                     |
+| TopNav           | `actionsGap={3}`; back via `href`; **Delete collection** in cogs menu (critical + trash icon), not Savebar                                               |
+| Content stack    | `DetailPageContent`                                                                                                                                      |
+| General / media  | `DetailSettingsCard` + `EntityBackgroundImageField`                                                                                                      |
+| Products         | `AssignableListCard` — assign in `headerEnd`; bulk **Unassign** in the table heading; per-row delete on hover; `AssignableListPagination` `inset="drag"` |
+| SEO              | **Last** in main column — `SeoForm` secondary / `columnInset={false}`                                                                                    |
+| Section nav      | **Optional** — skipped; stacked cards scan well without sticky nav                                                                                       |
+| Sidebar          | `CollectionChannelAvailabilityCard` (accordion)                                                                                                          |
+| Save composition | `CollectionSaveCompositionHint` → shared `SavebarCompositionHint`                                                                                        |
 
 ## Example: category details (dogfood)
 
@@ -354,7 +431,7 @@ Reference: [`CategoryUpdatePage`](../../src/categories/components/CategoryUpdate
 | TopNav           | `actionsGap={3}`; ancestor breadcrumbs in `subtitleTop`; **Delete category** in cogs menu, not Savebar                             |
 | Content stack    | `DetailPageContent` — this node’s content                                                                                          |
 | General / media  | `DetailSettingsCard` + `EntityBackgroundImageField` (immediate upload via `useEntityBackgroundImageUpload`)                        |
-| Products         | Main column `DetailSettingsCard` + `contentFlush` (always visible — not tabbed with children)                                      |
+| Products         | Main column `AssignableListCard` (always visible — not tabbed with children)                                                       |
 | Subcategories    | Right sidebar — reuse `CategorySubcategories` + `CategoryListDatagrid` (tree expand, selection, bulk delete); not custom link rows |
 | SEO              | **Last** in main column — `SeoForm` secondary / `columnInset={false}`                                                              |
 | Sidebar          | Subcategory datagrid only — do not drop tree/selection/bulk behavior for a slim jump list                                          |
@@ -406,6 +483,7 @@ Do not leave edit TopNav as Metadata-only — the cogs menu is required once Del
 | Collection channel availability (accordion)         | `src/collections/components/CollectionChannelAvailabilityCard/`                         |
 | Sidebar assign list (secondary header)              | `src/components/AssignListCard/`; `src/channels/components/ChannelInventoryCard/`       |
 | Sidebar assign + microcopy                          | `src/shipping/components/ShippingZoneSettingsCard/` (`DashboardCard.Subtitle`)          |
+| Fixed-at-creation field                             | `src/components/FixedAtCreationField/` (channel currency, attribute type)               |
 | Configuration hub (not entity detail)               | `src/orders/components/OrderSettingsPage/` (`SettingsHubLayout`)                        |
 
 ---
@@ -426,3 +504,4 @@ Do not leave edit TopNav as Metadata-only — the cogs menu is required once Del
 - Generalizing `ProductDoctor/AvailabilityCard` to collections or shipping (use tier table above)
 - Setup checklist on every entity “for consistency”
 - Section nav on a two-card page
+- Disabled `Combobox` / `Select` for values fixed at creation (chevron looks editable) — use `FixedAtCreationField`

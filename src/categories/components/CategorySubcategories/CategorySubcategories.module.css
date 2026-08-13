@@ -74,10 +74,6 @@
   margin-left: auto;
 }
 
-.pagination {
-  border-top: 1px solid var(--mu-colors-border-default1);
-}
-
 @media (max-width: 768px) {
   .card {
     margin-left: var(--mu-spacing-3);

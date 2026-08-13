@@ -29,6 +29,9 @@ describe("ProductTypePdpSchematic", () => {
 
     // Assert
     expect(screen.getByTestId("product-type-pdp-schematic")).toBeInTheDocument();
+    expect(screen.getByTestId("pdp-schematic-paper-mark")).toHaveAccessibleName("Paper");
+    expect(screen.getByTestId("pdp-schematic-paper-mark").querySelector("svg")).toBeInTheDocument();
+    expect(screen.getByTestId("pdp-schematic-paper-mark")).not.toHaveTextContent("P");
     expect(screen.getByTestId("pdp-schematic-image")).toBeInTheDocument();
     expect(screen.queryByText("Heavyweight hoodie")).not.toBeInTheDocument();
     expect(screen.getAllByTestId("pdp-schematic-option")[0]).toHaveTextContent("Color");
@@ -138,5 +141,27 @@ describe("ProductTypePdpSchematic", () => {
     // Assert
     expect(screen.getByTestId("pdp-schematic-no-pickers")).toBeInTheDocument();
     expect(screen.queryByTestId("pdp-schematic-option")).not.toBeInTheDocument();
+  });
+
+  it("reserves schematic regions while the product type is loading", () => {
+    // Arrange & Act
+    render(
+      <ProductTypePdpSchematic
+        loading
+        hasVariants={false}
+        productAttributes={undefined}
+        assignedVariantAttributes={undefined}
+        selectedVariantAttributeIds={[]}
+        onDismiss={() => undefined}
+      />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.getByTestId("pdp-schematic-loading")).toHaveAttribute("aria-busy", "true");
+    expect(screen.getByTestId("pdp-schematic-legend")).toBeInTheDocument();
+    expect(screen.queryByTestId("pdp-schematic-no-pickers")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("pdp-schematic-option")).not.toBeInTheDocument();
+    expect(screen.getByTestId("pdp-schematic-dismiss")).toBeDisabled();
   });
 });

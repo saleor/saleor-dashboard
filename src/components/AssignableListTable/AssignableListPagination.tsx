@@ -5,11 +5,14 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import styles from "./Pagination.module.css";
+import styles from "./AssignableListPagination.module.css";
 import {
-  COLLECTION_PRODUCT_TABLE_ACTION_INSET,
-  COLLECTION_PRODUCT_TABLE_LEADING_INSET,
-} from "./productTableLayout";
+  ASSIGNABLE_LIST_TABLE_ACTION_INSET,
+  ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET,
+  ASSIGNABLE_LIST_TABLE_DRAG_ALIGNED_LEADING_INSET,
+  ASSIGNABLE_LIST_TABLE_LEADING_INSET,
+  ASSIGNABLE_LIST_TABLE_PAGINATION_PADDING_Y,
+} from "./assignableListTableLayout";
 
 const ROW_NUMBER_OPTIONS = [
   { label: "10", value: "10" },
@@ -18,55 +21,73 @@ const ROW_NUMBER_OPTIONS = [
   { label: "100", value: "100" },
 ];
 
-interface PaginationProps {
+export type AssignableListPaginationInset = "card" | "nested" | "drag";
+
+const INSET: Record<AssignableListPaginationInset, number | string> = {
+  card: ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET,
+  nested: ASSIGNABLE_LIST_TABLE_LEADING_INSET,
+  drag: ASSIGNABLE_LIST_TABLE_DRAG_ALIGNED_LEADING_INSET,
+};
+
+interface AssignableListPaginationProps {
   onUpdateListSettings: (key: "rowNumber", value: number) => void;
   numberOfRows: number;
   /**
-   * Override left inset (defaults to product-table leading inset).
-   * Numbers are Macaw spacing tokens (`paddingLeft={6}` → spacing-6).
-   * Strings are raw CSS (e.g. `calc(...)`).
+   * Left inset aligned to the table’s first content column.
+   * `card` — flush DetailSettingsCard (spacing-6).
+   * `nested` — catalogue / inset panels (spacing-4).
+   * `drag` — tables with a 40px drag column (grip-aligned).
    */
-  paddingLeft?: BoxProps["paddingLeft"] | string;
+  inset?: AssignableListPaginationInset;
+  /**
+   * Override left inset. Numbers are Macaw spacing tokens.
+   * Strings are raw CSS (e.g. `calc(...)`). Prefer `inset` when possible.
+   */
+  paddingLeft?: number | string;
   /** Optional action immediately before the pagination arrows (e.g. bulk delete). */
   beforePagination?: ReactNode;
 }
 
 const getPaddingLeftProps = (
-  paddingLeft: BoxProps["paddingLeft"] | string,
+  paddingLeft: number | string,
 ): Pick<BoxProps, "paddingLeft"> | { __paddingLeft: string } => {
   if (typeof paddingLeft === "string") {
     return { __paddingLeft: paddingLeft };
   }
 
-  return { paddingLeft };
+  return { paddingLeft: paddingLeft as BoxProps["paddingLeft"] };
 };
 
-export const Pagination = ({
+export const AssignableListPagination = ({
   onUpdateListSettings,
   numberOfRows,
-  paddingLeft = COLLECTION_PRODUCT_TABLE_LEADING_INSET,
+  inset = "card",
+  paddingLeft,
   beforePagination,
-}: PaginationProps): JSX.Element => {
+}: AssignableListPaginationProps): JSX.Element => {
   const intl = useIntl();
   const { hasNextPage, hasPreviousPage, loadNextPage, loadPreviousPage } = usePaginatorContext();
   const currentRowNumber = String(numberOfRows);
   const currentRowNumberOption = ROW_NUMBER_OPTIONS.find(
     option => option.value === currentRowNumber,
   );
+  const resolvedPaddingLeft = paddingLeft ?? INSET[inset];
 
-  const handleRowNumberChange = ({ value }: { value: string; label: string }) => {
-    onUpdateListSettings("rowNumber", parseInt(value));
+  const handleRowNumberChange = ({ value }: { value: string; label: string }): void => {
+    onUpdateListSettings("rowNumber", parseInt(value, 10));
   };
 
   return (
     <Box
+      className={styles.footer}
       display="flex"
       justifyContent="space-between"
       alignItems="center"
       gap={2}
-      {...getPaddingLeftProps(paddingLeft)}
-      paddingRight={COLLECTION_PRODUCT_TABLE_ACTION_INSET}
-      paddingY={2}
+      {...getPaddingLeftProps(resolvedPaddingLeft)}
+      paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
+      paddingY={ASSIGNABLE_LIST_TABLE_PAGINATION_PADDING_Y}
+      data-test-id="assignable-list-pagination"
     >
       <Box display="flex" alignItems="center">
         <Text color="default2" size={2} className={styles.rowNumberLabel}>
@@ -116,3 +137,5 @@ export const Pagination = ({
     </Box>
   );
 };
+
+AssignableListPagination.displayName = "AssignableListPagination";

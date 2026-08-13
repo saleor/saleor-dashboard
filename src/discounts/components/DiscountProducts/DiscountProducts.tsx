@@ -1,10 +1,9 @@
-import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
 import {
   AssignableListCell,
   AssignableListLinkCell,
   AssignableListTable,
 } from "@dashboard/components/AssignableListTable/AssignableListTable";
-import { ASSIGNABLE_LIST_TABLE_LEADING_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
@@ -57,6 +56,7 @@ export const DiscountProducts = ({
         toggleAll={(items, count) => toggleAll(items, count)}
         onUnassign={onProductUnassign}
         toolbar={toolbar}
+        density="media"
         emptyMessage={<FormattedMessage {...messages.discountProductsNotFound} />}
         columns={[
           {
@@ -125,10 +125,10 @@ export const DiscountProducts = ({
         )}
       />
       {products?.length && onUpdateListSettings ? (
-        <Pagination
+        <AssignableListPagination
+          inset="nested"
           numberOfRows={numberOfRows}
           onUpdateListSettings={onUpdateListSettings}
-          paddingLeft={ASSIGNABLE_LIST_TABLE_LEADING_INSET}
         />
       ) : null}
     </>

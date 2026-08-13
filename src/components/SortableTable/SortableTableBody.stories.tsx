@@ -17,7 +17,7 @@ type Props = ComponentProps<typeof SortableTableBody>;
 
 const renderRows = () =>
   rows.map((row, index) => (
-    <SortableTableRow key={row.id} index={index}>
+    <SortableTableRow key={row.id} id={row.id} index={index}>
       <TableCell>{row.label}</TableCell>
     </SortableTableRow>
   ));

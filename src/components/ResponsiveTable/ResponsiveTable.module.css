@@ -103,12 +103,18 @@
  * Standard density for in-card assignable lists (collection products,
  * AssignableListTable, product-type attribute tables).
  *
- * Header matches collection ProductsTable: padding-y spacing-2, no 50px min
- * (that height is for thumbnail rows). Body is text-only so it uses the same
- * compact padding instead of the 50px product-row height.
+ * Header and drag column match collection ProductsTable: 40px grip column
+ * with no extra left inset, padding-y spacing-2, no 50px min (that height
+ * is for thumbnail rows). Body is text-only so it uses the same compact
+ * padding instead of the 50px product-row height.
  */
 .assignableTable :global(thead tr),
-.assignableTable :global(thead th),
+.assignableTable :global(thead th) {
+  height: 40px !important;
+  max-height: 40px !important;
+  box-sizing: border-box;
+}
+
 .assignableTable :global(tbody tr) {
   height: unset !important;
   min-height: 0;
@@ -122,7 +128,14 @@
 
 .assignableTable :global(thead th:first-child),
 .assignableTable :global(td:first-child) {
-  padding: 0 0 0 var(--mu-spacing-6) !important;
+  padding: 0 !important;
+}
+
+.assignableTable :global(td:first-child) > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .assignableTable :global(thead th:nth-child(2)) {
@@ -155,7 +168,7 @@
 }
 
 .dragCell {
-  width: calc(var(--mu-spacing-6) + 40px);
+  width: 40px;
 }
 
 .actionsCell {
@@ -170,8 +183,13 @@
   transition: opacity 0.12s ease;
 }
 
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
+/* Reveal on hover, or when the delete control itself is focused. Not row :focus-within — checkbox focus would pin the icon. */
 .row:hover .rowDelete,
-.row:focus-within .rowDelete {
+.rowDelete:focus-within {
   opacity: 1;
 }
 

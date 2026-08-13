@@ -27,9 +27,6 @@ const useStyles = makeStyles(
       width: 40,
     },
     colName: {},
-    colSlug: {
-      width: 300,
-    },
     link: {
       cursor: "pointer",
     },
@@ -47,7 +44,7 @@ interface PageTypeAttributesProps extends ListActions {
   onAttributeUnassign: (id: string) => void;
 }
 
-const numberOfColumns = 5;
+const numberOfColumns = 4;
 const PageTypeAttributes = (props: PageTypeAttributesProps) => {
   const {
     attributes,
@@ -134,7 +131,6 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
               <col className={classes.colGrab} />
               <col />
               <col className={classes.colName} />
-              <col className={classes.colSlug} />
               <col className={tableStyles.colAction} />
             </colgroup>
             <TableHead
@@ -149,13 +145,6 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
               <TableCell className={classes.colName}>
                 <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
               </TableCell>
-              <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="nf3XSt"
-                  defaultMessage="Slug"
-                  description="attribute internal name"
-                />
-              </TableCell>
               <TableCell />
             </TableHead>
             <SortableTableBody onSortEnd={onAttributeReorder}>
@@ -169,6 +158,7 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                     hover={!!attribute}
                     href={attribute ? attributeUrl(attribute.id) : undefined}
                     key={attribute?.id}
+                    id={attribute.id}
                     index={attributeIndex || 0}
                     data-test-id={"id-" + attribute?.id}
                   >
@@ -185,13 +175,11 @@ const PageTypeAttributes = (props: PageTypeAttributesProps) => {
                         <AttributeNameWithTypeIcon
                           name={attribute.name}
                           inputType={attribute.inputType}
+                          secondary={attribute.slug}
                         />
                       ) : (
                         <Skeleton />
                       )}
-                    </TableCell>
-                    <TableCell className={classes.colSlug} data-test-id="slug">
-                      {attribute?.slug || <Skeleton />}
                     </TableCell>
                     <TableCell className={tableStyles.colAction}>
                       <TableButtonWrapper>

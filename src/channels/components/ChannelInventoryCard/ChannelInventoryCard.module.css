@@ -93,14 +93,18 @@
   background-color: var(--mu-colors-background-default1);
 }
 
-/* Keep layout stable; reveal on hover / keyboard focus. Always show on touch. */
+/* Keep layout stable; reveal on hover or delete-control focus. Always show on touch. */
 .rowDelete {
   opacity: 0;
   transition: opacity 0.12s ease;
 }
 
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
 .row:hover .rowDelete,
-.row:focus-within .rowDelete {
+.rowDelete:focus-within {
   opacity: 1;
 }
 

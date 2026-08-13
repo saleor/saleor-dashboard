@@ -1,4 +1,4 @@
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidth, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   Box,
   type BoxProps,
@@ -19,7 +19,7 @@ export interface ButtonGroupDropdownOption {
   onSelect: <T extends object>(params: T) => void;
 }
 
-interface ButtonGroupWithDropdownProps extends BoxProps {
+interface ButtonGroupWithDropdownProps extends Omit<BoxProps, "size"> {
   onClick?: () => void;
   options: ButtonGroupDropdownOption[];
   /** First-party actions, rendered above `options` with a separator when both exist. */
@@ -27,6 +27,7 @@ interface ButtonGroupWithDropdownProps extends BoxProps {
   testId?: string;
   disabled?: boolean;
   variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
 }
 
 const renderDropdownItems = (
@@ -55,10 +56,13 @@ export const ButtonGroupWithDropdown = ({
   disabled = false,
   testId,
   variant = "primary",
+  size,
   className,
   ...boxProps
-}: ButtonGroupWithDropdownProps) => {
+}: ButtonGroupWithDropdownProps): JSX.Element => {
   const showSeparator = pinnedOptions.length > 0 && options.length > 0;
+  const chevronSize = size === "small" ? iconSize.small : iconSize.medium;
+  const chevronStroke = size === "small" ? iconStrokeWidthBySize.small : iconStrokeWidth;
 
   return (
     <Dropdown>
@@ -66,11 +70,13 @@ export const ButtonGroupWithDropdown = ({
         className={clsx(styles.group, className)}
         data-variant={variant}
         data-disabled={disabled || undefined}
+        data-size={size}
         {...boxProps}
       >
         <Button
           className={styles.segment}
           variant={variant}
+          size={size}
           type="button"
           onClick={onClick}
           data-test-id={testId}
@@ -85,8 +91,9 @@ export const ButtonGroupWithDropdown = ({
           <Button
             className={styles.segment}
             variant={variant}
+            size={size}
             type="button"
-            icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+            icon={<ChevronDown size={chevronSize} strokeWidth={chevronStroke} />}
             disabled={disabled}
             data-test-id={testId ? `${testId}-dropdown` : undefined}
           />

@@ -132,6 +132,7 @@ describe("ProductTypeDetailsPage top nav", () => {
     renderPage({ productTypeProp: undefined });
 
     // Assert
+    expect(screen.getByTestId("product-type-details-loading")).toBeInTheDocument();
     expect(screen.getByTestId("show-product-type-metadata")).toBeDisabled();
   });
 

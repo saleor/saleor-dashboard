@@ -3,8 +3,10 @@ name: saleor-dashboard-microcopy
 description: >
   Patterns for helper text, card subheaders, and inline links in Saleor Dashboard.
   Use when adding or styling hints below section titles, explanatory copy above form
-  fields, microcopy with navigation links, or replacing buttons with guidance text.
-  Covers DashboardCard.Subtitle and MicrocopyLink — not accent Link or body paragraphs.
+  fields, microcopy with navigation links, replacing buttons with guidance text,
+  or “Fixed at creation” helpers under locked identity fields.
+  Covers DashboardCard.Subtitle, MicrocopyLink, and FixedAtCreationField copy —
+  not accent Link or body paragraphs.
 ---
 
 # Saleor Dashboard Microcopy
@@ -35,6 +37,7 @@ import { FormattedMessage } from "react-intl";
 - **Under `DashboardCard.Title`** (in `DashboardCard.Header`): subtitle directly below title in a column `Box` — see `OrderValue`, `OrderWeight`.
 - **Above a field inside `DashboardCard.Content`**: subtitle before `Multiselect` / inputs — see `ChannelsSection`, `WarehousesSection`.
 - **Below a field**: subtitle after the control — see `ShippingMethodTaxes` tax-class hint.
+- **Fixed at creation**: helper under a locked `FixedAtCreationField` — `Fixed at creation. To {goal}, {alternative}.` See [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) (channel currency, attribute type). Not a disabled Combobox.
 - **Entity detail `DetailSettingsCard`**: long leading copy in the card’s **`intro` row** (bordered band below header), not in the tinted title band — see Payment gateways, collection SEO. Short Complete/Incomplete status can live in `intro` too.
 
 ### Reference files
@@ -129,6 +132,7 @@ When backend rules make in-context creation fragile (e.g. warehouse must share a
 - [ ] No accent-colored links inside gray hint text
 - [ ] `CardSpacer` between hint blocks and form controls
 - [ ] Optional sections use `DetailSettingsCardTitle optional`, not “(optional)” in the title
+- [ ] Create-time identity uses `FixedAtCreationField` + “Fixed at creation. …” helper — not a disabled Combobox
 - [ ] Messages extracted with `defineMessages` + `FormattedMessage`
 
 ## Related skills

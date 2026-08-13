@@ -1,4 +1,4 @@
-import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
 import {
   AssignableListCell,
   AssignableListTable,
@@ -197,10 +197,10 @@ export const VoucherCodesTable = ({
         )}
       />
       {codes.length > 0 ? (
-        <Pagination
+        <AssignableListPagination
+          inset="card"
           numberOfRows={settings?.rowNumber ?? VOUCHER_CODES_PAGINATE_BY}
           onUpdateListSettings={onSettingsChange}
-          paddingLeft={ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET}
           beforePagination={
             selectedCodesIds.length > 0 ? (
               <BulkDeleteButton onClick={onBulkDelete}>

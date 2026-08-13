@@ -6,9 +6,13 @@
 
 .headerRow {
   background-color: var(--mu-colors-background-default2);
+  height: 40px;
 }
 
 .headerRow > td {
+  height: 40px;
+  max-height: 40px;
+  box-sizing: border-box;
   padding: var(--mu-spacing-2) !important;
   border-top-width: 0 !important;
   border-bottom-width: 1px !important;
@@ -63,13 +67,22 @@
   text-decoration: none;
 }
 
+.rowMedia {
+  height: 50px;
+}
+
 .rowDelete {
   opacity: 0;
   transition: opacity 0.12s ease;
 }
 
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
+/* Reveal on hover, or when the delete control itself is focused. Not row :focus-within — checkbox focus would pin the icon. */
 .row:hover .rowDelete,
-.row:focus-within .rowDelete {
+.rowDelete:focus-within {
   opacity: 1;
 }
 

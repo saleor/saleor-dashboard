@@ -330,17 +330,35 @@ Anti-patterns:
 
 Primary bordered settings surface on entity detail pages. Full rules (primary vs secondary header, card vs section, Vercel restraint) live in [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md).
 
-| Piece              | Style                                                                                            |
-| ------------------ | ------------------------------------------------------------------------------------------------ |
-| Card shell         | `DetailSettingsCard.module.css` — `default1` body, 8px radius, 1px border                        |
-| Primary header     | Tinted `default2` band; `align-items: center`; title left, `headerEnd` right                     |
-| Title              | Always `Text size={5} fontWeight="bold" as="h2"` — string **and** ReactNode titles               |
-| Header with action | `.headerWithEnd` — same Y padding as title-only; `size="small"` actions; right inset `spacing-4` |
-| Leading copy       | `intro` prop — white band + bottom border below header (not under title in tinted band)          |
-| Optional in title  | `DetailSettingsCardTitle optional` + `DetailSettingsOptionalLabel` (`size={2}`, `default2`)      |
-| Body               | `.content` padding `5/6`; `contentFlush` for lists and upload zones                              |
+| Piece              | Style                                                                                                                        |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| Card shell         | `DetailSettingsCard.module.css` — `default1` body, 8px radius, 1px border                                                    |
+| Primary header     | Tinted `default2` band; `align-items: center`; title left, `headerEnd` right                                                 |
+| Title              | Always `Text size={5} fontWeight="bold" as="h2"` — string **and** ReactNode titles                                           |
+| Header with action | `.headerWithEnd` — same Y padding as title-only; card coerces `headerEnd` buttons to `size="small"`; right inset `spacing-4` |
+| Leading copy       | `intro` prop — white band + bottom border below header (not under title in tinted band)                                      |
+| Optional in title  | `DetailSettingsCardTitle optional` + `DetailSettingsOptionalLabel` (`size={2}`, `default2`)                                  |
+| Body               | `.content` padding `5/6`; `contentFlush` for lists and upload zones                                                          |
 
 Secondary sidebar ops cards (`AssignListCard`, `ChannelInventoryCard`) use **white** headers with meta on the right — not `DetailSettingsCard`.
+
+## In-card assignable lists (`AssignableList*`)
+
+Flush lists inside `DetailSettingsCard` (products in a collection, attribute values, voucher codes, product-type attributes). **The primitive owns padding, heading height, hover-reveal delete, and pagination.** Feature views pass columns, rows, and the assign action.
+
+| Piece           | Token / rule                                                                                                     |
+| --------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Composition     | `AssignableListCard` + `AssignableListTable` (or MUI `tableStyles.assignableTable`) + `AssignableListPagination` |
+| Header ± button | Same height either way — `DetailSettingsCard` coerces `headerEnd` to `size="small"`                              |
+| Search          | Card search slot — Y `spacing-3`, X `spacing-6`. Do not pad `SearchInput` in the view.                           |
+| Heading row     | 40px, `Text size={2}`                                                                                            |
+| Rows            | `density="compact"` (text) or `"media"` (50px thumbnails)                                                        |
+| Hover           | Row delete opacity 0 → 1 on hover or delete-control focus (not row `:focus-within`)                              |
+| Pagination      | Component draws the top border. `inset="card" \| "nested" \| "drag"`                                             |
+
+Layout numbers: `src/components/AssignableListTable/assignableListTableLayout.ts`. Full composition and anti-patterns: [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) → In-card assignable lists.
+
+Do **not** add a one-off `.listHeader` / `.pagination { border-top }` in a feature `module.css`.
 
 ## Anti-patterns
 

@@ -161,6 +161,25 @@ describe("ProductTypeDetailsPage dirty state", () => {
     expect(history.location.pathname).toBe(detailPath);
   });
 
+  it("blocks navigation when kind changes", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const history = createMemoryHistory({ initialEntries: [detailPath] });
+
+    renderPage(
+      history,
+      <ProductTypeDetailsPage {...defaultProps} productType={productTypeFixture} />,
+    );
+
+    // Act
+    await user.click(screen.getByTestId("GIFT_CARD"));
+    await user.click(screen.getByTestId("app-header-back-button"));
+
+    // Assert
+    expect(screen.getByTestId("ignore-changes")).toBeInTheDocument();
+    expect(history.location.pathname).toBe(detailPath);
+  });
+
   it("blocks navigation when variant selection changes", async () => {
     // Arrange
     const user = userEvent.setup();

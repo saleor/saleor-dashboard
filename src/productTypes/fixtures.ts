@@ -1221,6 +1221,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null,
+      valueRequired: true,
       choices: detailsChoices("val-author", "John Doe"),
     },
     {
@@ -1234,6 +1235,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null,
+      valueRequired: false,
       choices: detailsChoices("val-language", "English"),
     },
     {
@@ -1247,6 +1249,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null,
+      valueRequired: true,
       choices: detailsChoices("val-publisher", "Saleor Press"),
     },
   ],
@@ -1287,6 +1290,7 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
         inputType: AttributeInputTypeEnum.DROPDOWN,
         visibleInStorefront: true,
         unit: null,
+        valueRequired: true,
         choices: detailsChoices("val-variant-author", "John Doe"),
       },
       variantSelection: true,

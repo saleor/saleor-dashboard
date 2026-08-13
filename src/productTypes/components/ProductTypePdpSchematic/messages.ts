@@ -7,9 +7,9 @@ export const messages = defineMessages({
     description: "product type PDP schematic card title",
   },
   badge: {
-    id: "qErqHD",
+    id: "cGrYq9",
     defaultMessage: "Paper",
-    description: "product type PDP schematic badge — Paper storefront",
+    description: "accessible name for the Paper mark on the PDP schematic",
   },
   subtitle: {
     id: "V4WHQd",

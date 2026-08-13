@@ -1,6 +1,9 @@
 import AttributeSwatchField from "@dashboard/attributes/components/AttributeSwatchField";
+import { AttributeValuePasteProposal } from "@dashboard/attributes/components/AttributeValuePasteProposal/AttributeValuePasteProposal";
+import { attributeValuePasteMessages } from "@dashboard/attributes/components/AttributeValuePasteProposal/messages";
 import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";
 import { getAttributeValueErrorMessage } from "@dashboard/attributes/errors";
+import { useAttributeValuePaste } from "@dashboard/attributes/hooks/useAttributeValuePaste";
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { tableStyles } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { type AttributeErrorFragment, AttributeInputTypeEnum } from "@dashboard/graphql";
@@ -9,11 +12,10 @@ import { TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Plus } from "lucide-react";
-import { type ClipboardEvent, type KeyboardEvent, useState } from "react";
+import { type KeyboardEvent, useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import styles from "./AttributeValueInlineAdd.module.css";
-import { parsePastedAttributeValues } from "./parsePastedAttributeValues";
 
 const messages = defineMessages({
   addValue: {
@@ -40,21 +42,6 @@ const messages = defineMessages({
     id: "SyRul5",
     defaultMessage: "Enter a name, choose a color or image below, then click Add.",
     description: "inline add swatch attribute value instructions",
-  },
-  pasteProposal: {
-    id: "uTjSJn",
-    defaultMessage: "Add {count, plural, one {# value} other {# values}} from this paste?",
-    description: "prompt after pasting a list of attribute values",
-  },
-  pasteAdd: {
-    id: "Luco3D",
-    defaultMessage: "Add values",
-    description: "confirm splitting pasted text into attribute values",
-  },
-  pasteKeep: {
-    id: "z9qQzI",
-    defaultMessage: "Keep as one",
-    description: "keep pasted text as a single attribute value",
   },
 });
 
@@ -85,8 +72,12 @@ export const AttributeValueInlineAdd = ({
 }: AttributeValueInlineAddProps): JSX.Element => {
   const intl = useIntl();
   const [form, setForm] = useState<AttributeValueEditDialogFormData>(emptyForm);
-  const [pendingPaste, setPendingPaste] = useState<string[] | null>(null);
   const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
+  const canPasteMany = Boolean(onAddMany) && !isSwatch;
+  const { pendingPaste, handlePaste, keepAsOneName, clearPendingPaste } = useAttributeValuePaste({
+    disabled,
+    enabled: canPasteMany,
+  });
   const formErrors = getFormErrors(["name"], error ? [error] : []);
   const canAdd = form.name.trim().length > 0 && !disabled;
   const nameError = getAttributeValueErrorMessage(formErrors.name, intl);
@@ -98,28 +89,12 @@ export const AttributeValueInlineAdd = ({
 
     onAdd(form);
     setForm(emptyForm);
-    setPendingPaste(null);
+    clearPendingPaste();
   };
 
   const handleNameChange = (name: string): void => {
-    setPendingPaste(null);
+    clearPendingPaste();
     setForm(current => ({ ...current, name }));
-  };
-
-  const handlePaste = (event: ClipboardEvent<HTMLElement>): void => {
-    if (!onAddMany || disabled) {
-      return;
-    }
-
-    const raw = event.clipboardData.getData("text");
-    const values = parsePastedAttributeValues(raw);
-
-    if (values.length < 2) {
-      return;
-    }
-
-    event.preventDefault();
-    setPendingPaste(values);
   };
 
   const handleAddPasted = (): void => {
@@ -129,16 +104,17 @@ export const AttributeValueInlineAdd = ({
 
     onAddMany(pendingPaste.map(name => ({ name })));
     setForm(emptyForm);
-    setPendingPaste(null);
+    clearPendingPaste();
   };
 
   const handleKeepAsOne = (): void => {
-    if (!pendingPaste) {
+    const name = keepAsOneName();
+
+    if (name === null) {
       return;
     }
 
-    setForm({ name: pendingPaste.join(", ") });
-    setPendingPaste(null);
+    setForm({ name });
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
@@ -237,36 +213,19 @@ export const AttributeValueInlineAdd = ({
         <Box flexShrink="0">{addButton}</Box>
       </Box>
       {pendingPaste ? (
-        <Box className={styles.pasteProposal} data-test-id="attribute-value-paste-proposal">
-          <Text size={2} fontWeight="medium">
-            <FormattedMessage {...messages.pasteProposal} values={{ count: pendingPaste.length }} />
-          </Text>
-          <Text size={2} color="default2">
-            {pendingPaste.join(", ")}
-          </Text>
-          <Box display="flex" gap={2} justifyContent="flex-end">
-            <Button
-              data-test-id="attribute-value-paste-keep"
-              disabled={disabled}
-              onClick={handleKeepAsOne}
-              variant="secondary"
-            >
-              <FormattedMessage {...messages.pasteKeep} />
-            </Button>
-            <Button
-              data-test-id="attribute-value-paste-add"
-              disabled={disabled}
-              onClick={handleAddPasted}
-              variant="primary"
-            >
-              <FormattedMessage {...messages.pasteAdd} />
-            </Button>
-          </Box>
-        </Box>
-      ) : null}
-      {nameError ? (
+        <AttributeValuePasteProposal
+          disabled={disabled}
+          values={pendingPaste}
+          onAdd={handleAddPasted}
+          onKeepAsOne={handleKeepAsOne}
+        />
+      ) : nameError ? (
         <Text size={2} color="critical1">
           {nameError}
+        </Text>
+      ) : canPasteMany ? (
+        <Text size={2} color="default2">
+          <FormattedMessage {...attributeValuePasteMessages.hint} />
         </Text>
       ) : null}
     </Box>

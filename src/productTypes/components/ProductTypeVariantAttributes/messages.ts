@@ -28,4 +28,14 @@ export const messages = defineMessages({
     defaultMessage: "No variant options yet",
     description: "empty state for variant attributes on a product type",
   },
+  variantSelectionOn: {
+    id: "fnXUHh",
+    defaultMessage: "Variant selection on",
+    description: "variant attribute row switch when shoppers pick this attribute",
+  },
+  variantSelectionOff: {
+    id: "JUx8L3",
+    defaultMessage: "Variant selection off",
+    description: "variant attribute row switch when shoppers do not pick this attribute",
+  },
 });

@@ -51,6 +51,9 @@ import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import { ProductTypeTaxes } from "../ProductTypeTaxes/ProductTypeTaxes";
 import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
 import { messages } from "./messages";
+import { ProductTypeDetailsPageLoading } from "./ProductTypeDetailsPageLoading";
+import { ProductTypeSaveCompositionHint } from "./ProductTypeSaveCompositionHint";
+import { buildProductTypeSaveComposition } from "./saveComposition";
 import { ProductTypeDetailsTitle } from "./Title";
 
 interface ChoiceType {
@@ -216,132 +219,153 @@ const ProductTypeDetailsPage = ({
     [intl, onDelete, openPlaygroundURL, schematicDismissed, undismissSchematic],
   );
 
+  if (!productType) {
+    return (
+      <ProductTypeDetailsPageLoading
+        productTypeListBackLink={productTypeListBackLink}
+        schematicDismissed={schematicDismissed}
+        onShowMetadata={onShowMetadata}
+      />
+    );
+  }
+
   return (
     <Form
+      key={productType.id}
       initial={formInitialData}
       onSubmit={onSubmit}
       confirmLeave
       disabled={disabled}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, isSaveDisabled, submit, triggerChange }) => (
-        <>
-          <FormDirtyStateSync
-            enabled={!!productType}
-            isSaveDisabled={isSaveDisabled}
-            triggerChange={triggerChange}
-          />
-          <DetailPageLayout>
-            <TopNav
-              href={productTypeListBackLink}
-              hrefIcon={<TopNavDestinationIcon.products />}
-              hrefTitle={intl.formatMessage(topNavDestinationMessages.allProductTypes)}
-              title={
-                <ProductTypeDetailsTitle
-                  productType={productType ? { name: productType.name } : null}
-                  loading={disabled}
-                />
-              }
-              actionsGap={3}
-            >
-              <TopNav.MetadataButton
-                onClick={onShowMetadata}
-                disabled={!productType}
-                data-test-id="show-product-type-metadata"
-                title={intl.formatMessage(messages.editProductTypeMetadata)}
-              />
-              <TopNav.Menu
-                items={
-                  disabled || !productType
-                    ? menuItems.map(item => ({ ...item, disabled: true }))
-                    : menuItems
+      {({ change, data, isSaveDisabled, submit, triggerChange }) => {
+        const saveComposition = buildProductTypeSaveComposition(
+          data,
+          formInitialData,
+          selectedVariantAttributes,
+          initialVariantSelection,
+        );
+
+        return (
+          <>
+            <FormDirtyStateSync
+              enabled={!!productType}
+              isSaveDisabled={isSaveDisabled}
+              triggerChange={triggerChange}
+            />
+            <DetailPageLayout>
+              <TopNav
+                href={productTypeListBackLink}
+                hrefIcon={<TopNavDestinationIcon.productTypes />}
+                hrefTitle={intl.formatMessage(topNavDestinationMessages.allProductTypes)}
+                title={
+                  <ProductTypeDetailsTitle
+                    productType={productType ? { name: productType.name } : null}
+                    loading={disabled}
+                  />
                 }
-                dataTestId="menu"
-              />
-            </TopNav>
-            <DetailPageLayout.Content>
-              <DetailPageContent>
-                {!schematicDismissed ? (
-                  <Box paddingBottom={6}>
-                    <ProductTypePdpSchematic
-                      hasVariants={data.hasVariants}
-                      productAttributes={productType?.productAttributes}
-                      assignedVariantAttributes={productType?.assignedVariantAttributes}
-                      selectedVariantAttributeIds={selectedVariantAttributes}
-                      onDismiss={dismissSchematic}
-                    />
-                  </Box>
-                ) : null}
-                <ProductTypeAttributes
-                  testId="assign-products-attributes"
-                  attributes={maybe(() => productType.productAttributes)}
-                  disabled={disabled}
-                  type={ProductAttributeType.PRODUCT}
-                  onAttributeAssign={onAttributeAdd}
-                  onAttributeCreate={onAttributeCreate}
-                  onAttributeReorder={(event: ReorderEvent) =>
-                    onAttributeReorder(event, ProductAttributeType.PRODUCT)
+                actionsGap={3}
+              >
+                <TopNav.MetadataButton
+                  onClick={onShowMetadata}
+                  disabled={!productType}
+                  data-test-id="show-product-type-metadata"
+                  title={intl.formatMessage(messages.editProductTypeMetadata)}
+                />
+                <TopNav.Menu
+                  items={
+                    disabled || !productType
+                      ? menuItems.map(item => ({ ...item, disabled: true }))
+                      : menuItems
                   }
-                  onAttributeUnassign={onAttributeUnassign}
-                  {...productAttributeList}
+                  dataTestId="menu"
                 />
-                <ProductTypeVariantAttributes
-                  testId="assign-variants-attributes"
-                  hasVariants={data.hasVariants}
-                  assignedVariantAttributes={productType?.assignedVariantAttributes}
-                  disabled={disabled}
-                  type={ProductAttributeType.VARIANT}
-                  onAttributeAssign={onAttributeAdd}
-                  onAttributeCreate={onAttributeCreate}
-                  onAttributeReorder={(event: ReorderEvent) =>
-                    onAttributeReorder(event, ProductAttributeType.VARIANT)
-                  }
-                  onAttributeUnassign={onAttributeUnassign}
-                  onHasVariantsToggle={onHasVariantsToggle}
-                  setSelectedVariantAttributes={setSelectedVariantAttributes}
-                  selectedVariantAttributes={selectedVariantAttributes}
-                  {...variantAttributeList}
+              </TopNav>
+              <DetailPageLayout.Content>
+                <DetailPageContent>
+                  {!schematicDismissed ? (
+                    <Box paddingBottom={6}>
+                      <ProductTypePdpSchematic
+                        hasVariants={data.hasVariants}
+                        productAttributes={productType?.productAttributes}
+                        assignedVariantAttributes={productType?.assignedVariantAttributes}
+                        selectedVariantAttributeIds={selectedVariantAttributes}
+                        onDismiss={dismissSchematic}
+                      />
+                    </Box>
+                  ) : null}
+                  <ProductTypeAttributes
+                    testId="assign-products-attributes"
+                    attributes={maybe(() => productType.productAttributes)}
+                    disabled={disabled}
+                    type={ProductAttributeType.PRODUCT}
+                    onAttributeAssign={onAttributeAdd}
+                    onAttributeCreate={onAttributeCreate}
+                    onAttributeReorder={(event: ReorderEvent) =>
+                      onAttributeReorder(event, ProductAttributeType.PRODUCT)
+                    }
+                    onAttributeUnassign={onAttributeUnassign}
+                    {...productAttributeList}
+                  />
+                  <ProductTypeVariantAttributes
+                    testId="assign-variants-attributes"
+                    hasVariants={data.hasVariants}
+                    assignedVariantAttributes={productType?.assignedVariantAttributes}
+                    disabled={disabled}
+                    type={ProductAttributeType.VARIANT}
+                    onAttributeAssign={onAttributeAdd}
+                    onAttributeCreate={onAttributeCreate}
+                    onAttributeReorder={(event: ReorderEvent) =>
+                      onAttributeReorder(event, ProductAttributeType.VARIANT)
+                    }
+                    onAttributeUnassign={onAttributeUnassign}
+                    onHasVariantsToggle={onHasVariantsToggle}
+                    setSelectedVariantAttributes={setSelectedVariantAttributes}
+                    selectedVariantAttributes={selectedVariantAttributes}
+                    {...variantAttributeList}
+                  />
+                </DetailPageContent>
+              </DetailPageLayout.Content>
+              <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
+                <Box display="flex" flexDirection="column" gap={4}>
+                  <ProductTypeDetails
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
+                  />
+                  <ProductTypeShipping
+                    disabled={disabled}
+                    data={data}
+                    weightUnit={productType?.weight?.unit || defaultWeightUnit}
+                    onChange={change}
+                  />
+                  <ProductTypeTaxes
+                    disabled={disabled}
+                    data={data}
+                    taxClasses={taxClasses}
+                    taxClassDisplayName={taxClassDisplayName}
+                    onChange={event =>
+                      handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
+                    }
+                    onFetchMore={onFetchMoreTaxClasses}
+                  />
+                </Box>
+              </DetailPageLayout.RightSidebar>
+              <Savebar>
+                <Savebar.Spacer />
+                <ProductTypeSaveCompositionHint composition={saveComposition} />
+                <Savebar.CancelButton onClick={() => navigate(productTypeListBackLink)} />
+                <Savebar.ConfirmButton
+                  transitionState={saveButtonBarState}
+                  onClick={submit}
+                  disabled={isSaveDisabled}
                 />
-              </DetailPageContent>
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
-              <Box display="flex" flexDirection="column" gap={4}>
-                <ProductTypeDetails
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <ProductTypeShipping
-                  disabled={disabled}
-                  data={data}
-                  weightUnit={productType?.weight?.unit || defaultWeightUnit}
-                  onChange={change}
-                />
-                <ProductTypeTaxes
-                  disabled={disabled}
-                  data={data}
-                  taxClasses={taxClasses}
-                  taxClassDisplayName={taxClassDisplayName}
-                  onChange={event =>
-                    handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
-                  }
-                  onFetchMore={onFetchMoreTaxClasses}
-                />
-              </Box>
-            </DetailPageLayout.RightSidebar>
-            <Savebar>
-              <Savebar.Spacer />
-              <Savebar.CancelButton onClick={() => navigate(productTypeListBackLink)} />
-              <Savebar.ConfirmButton
-                transitionState={saveButtonBarState}
-                onClick={submit}
-                disabled={isSaveDisabled}
-              />
-            </Savebar>
-          </DetailPageLayout>
-        </>
-      )}
+              </Savebar>
+            </DetailPageLayout>
+          </>
+        );
+      }}
     </Form>
   );
 };

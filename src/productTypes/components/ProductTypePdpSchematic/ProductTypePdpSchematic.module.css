@@ -54,25 +54,11 @@
   grid-row: 1;
 }
 
-.titleRow {
+.subtitleRow {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--mu-spacing-2);
   min-width: 0;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px var(--mu-spacing-1);
-  border-radius: 999px;
-  border: 1px solid var(--mu-colors-border-default1);
-  background-color: var(--mu-colors-background-default2);
-  color: var(--mu-colors-text-default2);
-  font-size: 11px;
-  line-height: 1.2;
-  white-space: nowrap;
 }
 
 .visual {
@@ -96,6 +82,15 @@
   width: 100%;
   isolation: isolate;
   pointer-events: none;
+}
+
+.pdpLoading {
+  min-height: 16.5rem;
+}
+
+.optionNameSkeleton {
+  width: 3.5rem;
+  height: 10px;
 }
 
 .galleryCol {
@@ -175,23 +170,23 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--mu-spacing-1);
-  padding: var(--mu-spacing-2) var(--mu-spacing-3);
+  gap: 2px;
+  padding: var(--mu-spacing-2);
   border: 1px dashed transparent;
-  border-radius: var(--mu-spacing-2);
+  border-radius: var(--mu-spacing-1);
   background-color: transparent;
 }
 
 .region::after {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border: 1px dashed var(--mu-colors-border-default1);
   border-radius: inherit;
   pointer-events: none;
   transition:
-    inset 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s ease;
+    inset 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
 }
 
 .regionOptions::after {
@@ -420,7 +415,7 @@
 .card:has([data-schematic-region="options"]:hover) .regionOptions::after,
 .card:has([data-schematic-region="specs"]:hover) .regionSpecs::after,
 .card:has([data-schematic-region="facts"]:hover) .regionFacts::after {
-  inset: -5px;
+  inset: -2px;
 }
 
 .card:has([data-schematic-region="options"]:hover) .regionOptions::after {
@@ -546,6 +541,6 @@
   .card:has([data-schematic-region="options"]:hover) .regionOptions::after,
   .card:has([data-schematic-region="specs"]:hover) .regionSpecs::after,
   .card:has([data-schematic-region="facts"]:hover) .regionFacts::after {
-    inset: -1px;
+    inset: 0;
   }
 }

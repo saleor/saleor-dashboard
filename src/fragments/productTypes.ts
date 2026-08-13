@@ -21,6 +21,7 @@ export const productTypeDetailsFragment = gql`
     ...Metadata
     productAttributes {
       ...Attribute
+      valueRequired
       choices(first: 1) {
         edges {
           node {
@@ -32,10 +33,12 @@ export const productTypeDetailsFragment = gql`
     }
     variantAttributes {
       ...Attribute
+      valueRequired
     }
     assignedVariantAttributes {
       attribute {
         ...Attribute
+        valueRequired
         choices(first: 1) {
           edges {
             node {

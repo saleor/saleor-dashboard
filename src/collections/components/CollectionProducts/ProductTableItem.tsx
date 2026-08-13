@@ -1,3 +1,4 @@
+import { ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
@@ -50,7 +51,7 @@ export const ProductTableItem = ({
   return (
     <GridTable.Row
       className={styles.row}
-      __height="50px"
+      __height={ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT}
       data-test-id="assign-product-table-row"
       backgroundColor={{
         hover: "default1Hovered",
