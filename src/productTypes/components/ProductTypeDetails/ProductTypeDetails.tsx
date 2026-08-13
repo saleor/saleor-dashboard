@@ -1,10 +1,11 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { ProductTypeKindEnum } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
 import { Box, Input } from "@saleor/macaw-ui-next";
-import { type ChangeEvent, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductTypeKindTiles } from "../ProductTypeKindTiles/ProductTypeKindTiles";

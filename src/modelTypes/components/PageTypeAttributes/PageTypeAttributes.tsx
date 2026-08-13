@@ -1,5 +1,5 @@
 import { AssignedAttributesCard } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesCard";
-import { type AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
+import { type AttributeFragment, type AttributeTypeEnum } from "@dashboard/graphql";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,7 +12,7 @@ interface AssignedPageTypeAttribute extends AttributeFragment {
 interface PageTypeAttributesProps extends ListActions {
   attributes: AssignedPageTypeAttribute[] | undefined;
   disabled: boolean;
-  type: string;
+  type: AttributeTypeEnum;
   onAttributeAssign: (type: AttributeTypeEnum) => void;
   onAttributeCreate: (type: AttributeTypeEnum) => void;
   onAttributeReorder: ReorderAction;
@@ -30,7 +30,6 @@ const PageTypeAttributes = ({
   ...listActions
 }: PageTypeAttributesProps): JSX.Element => {
   const intl = useIntl();
-  const attributeType = AttributeTypeEnum[type];
 
   return (
     <AssignedAttributesCard
@@ -44,8 +43,8 @@ const PageTypeAttributes = ({
       createTestId="create-attribute"
       createOptionLabel={intl.formatMessage(messages.createAttribute)}
       skeletonTestId="page-attributes-skeleton"
-      onAttributeAssign={() => onAttributeAssign(attributeType)}
-      onAttributeCreate={() => onAttributeCreate(attributeType)}
+      onAttributeAssign={() => onAttributeAssign(type)}
+      onAttributeCreate={() => onAttributeCreate(type)}
       onAttributeReorder={onAttributeReorder}
       onAttributeUnassign={onAttributeUnassign}
       {...listActions}

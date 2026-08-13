@@ -15,7 +15,7 @@ export function moveListItem<T>(
     return items;
   }
 
-  const toIndex = fromIndex + move.sortOrder;
+  const toIndex = fromIndex + (move.sortOrder ?? 0);
   const withoutMoved = [...items.slice(0, fromIndex), ...items.slice(fromIndex + 1)];
 
   return [...withoutMoved.slice(0, toIndex), items[fromIndex], ...withoutMoved.slice(toIndex)];

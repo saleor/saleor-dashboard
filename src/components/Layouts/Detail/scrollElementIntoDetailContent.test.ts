@@ -142,7 +142,17 @@ describe("scrollElementIntoDetailContent", () => {
       writable: true,
       value: 2400,
     });
-    observers[0]?.([{ target: element } as ResizeObserverEntry], {} as ResizeObserver);
+    observers[0]?.([], {
+      disconnect(): void {
+        return undefined;
+      },
+      observe(): void {
+        return undefined;
+      },
+      unobserve(): void {
+        return undefined;
+      },
+    });
 
     // Assert
     expect(root.scrollTo).toHaveBeenLastCalledWith({ top: 2400, behavior: "auto" });

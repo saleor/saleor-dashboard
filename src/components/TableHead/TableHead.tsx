@@ -16,7 +16,7 @@ interface TableHeadProps extends MuiTableHeadProps {
   disabled: boolean;
   dragRows?: boolean;
   selected?: number;
-  items: Node[];
+  items: Node[] | undefined;
   toolbar?: React.ReactNode | React.ReactNodeArray;
   toggleAll?: (items: Node[], selected: number) => void;
   /** Macaw checkbox + compact header type, matching collection product tables. */

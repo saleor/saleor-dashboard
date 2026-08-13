@@ -1,5 +1,5 @@
 import { AssignedAttributesCard } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesCard";
-import { ProductAttributeType, type ProductTypeDetailsQuery } from "@dashboard/graphql";
+import { type ProductAttributeType, type ProductTypeDetailsQuery } from "@dashboard/graphql";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -8,7 +8,7 @@ import { messages } from "./messages";
 interface ProductTypeAttributesProps extends ListActions {
   attributes: NonNullable<ProductTypeDetailsQuery["productType"]>["productAttributes"] | undefined;
   disabled: boolean;
-  type: string;
+  type: ProductAttributeType;
   testId?: string;
   onAttributeAssign: (type: ProductAttributeType) => void;
   onAttributeCreate: (type: ProductAttributeType) => void;
@@ -28,11 +28,10 @@ const ProductTypeAttributes = ({
   ...listActions
 }: ProductTypeAttributesProps): JSX.Element => {
   const intl = useIntl();
-  const attributeType = ProductAttributeType[type];
 
   return (
     <AssignedAttributesCard
-      attributes={attributes}
+      attributes={attributes ?? undefined}
       disabled={disabled}
       title={intl.formatMessage(messages.title)}
       intro={<FormattedMessage {...messages.intro} />}
@@ -47,8 +46,8 @@ const ProductTypeAttributes = ({
       })}
       skeletonTestId="product-attributes-skeleton"
       variantColumn="spacer"
-      onAttributeAssign={() => onAttributeAssign(attributeType)}
-      onAttributeCreate={() => onAttributeCreate(attributeType)}
+      onAttributeAssign={() => onAttributeAssign(type)}
+      onAttributeCreate={() => onAttributeCreate(type)}
       onAttributeReorder={onAttributeReorder}
       onAttributeUnassign={onAttributeUnassign}
       {...listActions}
