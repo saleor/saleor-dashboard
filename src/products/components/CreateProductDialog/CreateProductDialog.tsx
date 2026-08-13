@@ -65,6 +65,9 @@ export const CreateProductDialog = ({
   const [submitErrors, setSubmitErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
   const [showApiErrors, setShowApiErrors] = useState(false);
   const [prevOpen, setPrevOpen] = useState<boolean | null>(null);
+  // Search results reuse `productTypes`. Once we've seen types, keep the create
+  // form even if a later search (or a cached miss on reopen) returns none.
+  const [seenTypes, setSeenTypes] = useState(false);
 
   const debouncedFetchProductTypes = useDebounce(fetchProductTypes, 500);
 
@@ -76,6 +79,10 @@ export const CreateProductDialog = ({
     setShowApiErrors(false);
   } else if (open && initialProductType && !selectedOption) {
     setSelectedOption(initialProductType);
+  }
+
+  if (!seenTypes && ((productTypes?.length ?? 0) > 0 || initialProductType)) {
+    setSeenTypes(true);
   }
 
   useModalDialogOpen(open, {
@@ -92,8 +99,8 @@ export const CreateProductDialog = ({
     return options;
   })();
   const isLoading = Boolean(fetchMoreProductTypes?.loading);
-  const hasTypes = (productTypes?.length ?? 0) > 0;
-  const showEmptyShopState = !isLoading && !hasTypes && !query.trim() && !initialProductType;
+  const showEmptyShopState =
+    !isLoading && !seenTypes && !query.trim() && (productTypes?.length ?? 0) === 0;
 
   const handleScrollEnd = () => {
     if (fetchMoreProductTypes?.hasMore) {

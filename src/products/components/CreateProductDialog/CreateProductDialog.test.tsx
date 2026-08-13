@@ -78,4 +78,31 @@ describe("CreateProductDialog", () => {
     expect(screen.getByTestId("create-product-type")).toBeInTheDocument();
     expect(screen.queryByTestId("product-name-input")).not.toBeInTheDocument();
   });
+
+  it("keeps the create form when type search later returns no matches", () => {
+    // Arrange
+    const { rerender } = render(<CreateProductDialog {...defaultProps} />, { wrapper: Wrapper });
+
+    expect(screen.getByTestId("product-name-input")).toBeInTheDocument();
+
+    // Act — combobox search miss (or cleared query before the unfiltered refetch)
+    rerender(<CreateProductDialog {...defaultProps} productTypes={[]} />);
+
+    // Assert
+    expect(screen.getByTestId("product-name-input")).toBeInTheDocument();
+    expect(screen.queryByTestId("product-type-picker-empty")).not.toBeInTheDocument();
+  });
+
+  it("does not flash the empty-shop screen when reopening after a search miss", () => {
+    // Arrange
+    const { rerender } = render(<CreateProductDialog {...defaultProps} />, { wrapper: Wrapper });
+
+    // Act — close with a cached empty search, then open again
+    rerender(<CreateProductDialog {...defaultProps} open={false} productTypes={[]} />);
+    rerender(<CreateProductDialog {...defaultProps} open productTypes={[]} />);
+
+    // Assert
+    expect(screen.getByTestId("product-name-input")).toBeInTheDocument();
+    expect(screen.queryByTestId("product-type-picker-empty")).not.toBeInTheDocument();
+  });
 });
