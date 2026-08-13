@@ -8,6 +8,7 @@ import { ConfigurationModelingIcon } from "@dashboard/icons/Modeling";
 import { ConfigurationProductsIcon } from "@dashboard/icons/Products";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
+import { notificationsSettingsUrl } from "@dashboard/notificationsSettings/urls";
 import { orderSettingsPath } from "@dashboard/orders/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
@@ -17,6 +18,7 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import {
+  Bell,
   Gift,
   Globe,
   Package,
@@ -42,6 +44,7 @@ const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
 const ConfigurationChannelsIcon = createConfigurationLucideIcon(Globe);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 const ConfigurationGiftCardsIcon = createConfigurationLucideIcon(Gift);
+const ConfigurationNotificationsIcon = createConfigurationLucideIcon(Bell);
 
 /**
  * Configuration IA: merchant jobs, not engineering modules.
@@ -79,6 +82,18 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.giftCards),
           url: giftCardSettingsPath,
           testId: "configuration-menu-gift-cards",
+        },
+        {
+          description: intl.formatMessage({
+            id: "uK4ys2",
+            defaultMessage: "Staff and customer email messages, and how they are delivered",
+            description: "configuration menu item description for notifications",
+          }),
+          icon: <ConfigurationNotificationsIcon />,
+          permissions: [PermissionEnum.MANAGE_PLUGINS],
+          title: intl.formatMessage(sectionNames.notifications),
+          url: notificationsSettingsUrl(),
+          testId: "configuration-menu-notifications",
         },
       ],
     },

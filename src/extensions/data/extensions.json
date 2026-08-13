@@ -464,7 +464,7 @@
             "en": "SMTP"
           },
           "description": {
-            "en": "Take full control over your email communication by creating custom SMTP configurations within Saleor."
+            "en": "Send shopper emails—orders, accounts, and fulfillments—through your own SMTP. Staff Dashboard emails are configured under Notifications."
           },
           "logo": {
             "light": {
@@ -588,38 +588,6 @@
           "id": "mirumee.authentication.openidconnect",
           "name": {
             "en": "OpenID Connect (OIDC)"
-          },
-          "description": null,
-          "logo": {
-            "light": {
-              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
-            },
-            "dark": {
-              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
-            }
-          },
-          "type": "PLUGIN"
-        },
-        {
-          "id": "mirumee.notifications.user_email",
-          "name": {
-            "en": "User Emails"
-          },
-          "description": null,
-          "logo": {
-            "light": {
-              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
-            },
-            "dark": {
-              "source": "https://apps.saleor.io/apps/v3/plugin.svg"
-            }
-          },
-          "type": "PLUGIN"
-        },
-        {
-          "id": "mirumee.notifications.admin_email",
-          "name": {
-            "en": "Admin Emails"
           },
           "description": null,
           "logo": {

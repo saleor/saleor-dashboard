@@ -24,7 +24,11 @@ export const useStaffUserOperations = () => {
       if (!data.staffDelete?.errors.length) {
         notify({
           status: "success",
-          text: intl.formatMessage({ id: "EDihQs", defaultMessage: "Staff member updated" }),
+          text: intl.formatMessage({
+            id: "78fSm3",
+            defaultMessage: "Staff member deleted",
+            description: "success toast after deleting a staff member",
+          }),
         });
         navigate(staffListUrl());
       }

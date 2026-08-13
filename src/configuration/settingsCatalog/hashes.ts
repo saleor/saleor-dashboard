@@ -35,6 +35,12 @@ export const settingsHashes = {
   storeWebhookEmission: "webhook-emission",
   storeStockAvailability: "stock-availability",
   storeAddressValidation: "address-validation",
+
+  // Notifications
+  notificationsStaff: "staff-emails",
+  notificationsCustomer: "customer-emails",
+  notificationsDelivery: "email-delivery",
+  notificationsMessages: "staff-messages",
 } as const;
 
 export type SettingsHash = (typeof settingsHashes)[keyof typeof settingsHashes];

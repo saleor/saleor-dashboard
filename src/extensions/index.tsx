@@ -14,9 +14,17 @@ import { InstalledExtensions } from "@dashboard/extensions/views/InstalledExtens
 import { PermissionEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import NotFound from "@dashboard/NotFound";
+import {
+  ADMIN_EMAIL_PLUGIN_ID,
+  USER_EMAIL_PLUGIN_ID,
+} from "@dashboard/notificationsSettings/constants";
+import {
+  notificationsCustomerEmailsPath,
+  notificationsStaffEmailsPath,
+} from "@dashboard/notificationsSettings/urls";
 import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { useCustomAppToken } from "./hooks/useCustomAppToken";
 import { AddCustomExtension } from "./views/AddCustomExtension/AddCustomExtension";
@@ -90,6 +98,15 @@ const EditPluginExtensionView = ({ match }: RouteComponentProps<{ id: string }>)
 
   if (!id) {
     throw new Error("No ID provided");
+  }
+
+  if (id === ADMIN_EMAIL_PLUGIN_ID) {
+    return <Redirect to={notificationsStaffEmailsPath} />;
+  }
+
+  if (id === USER_EMAIL_PLUGIN_ID) {
+    // Customer transactional email is owned by the SMTP app — same resolver as Configuration.
+    return <Redirect to={notificationsCustomerEmailsPath} />;
   }
 
   return <EditPluginExtension id={id} params={params} />;

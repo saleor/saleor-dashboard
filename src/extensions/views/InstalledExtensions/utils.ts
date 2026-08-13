@@ -1,7 +1,15 @@
 import { type InstalledExtension } from "@dashboard/extensions/types";
 import { type PluginBaseFragment } from "@dashboard/graphql";
+import {
+  ADMIN_EMAIL_PLUGIN_ID,
+  USER_EMAIL_PLUGIN_ID,
+} from "@dashboard/notificationsSettings/constants";
 
-const HIDDEN_PLUGIN_IDS = new Set(["mirumee.webhooks"]);
+const HIDDEN_PLUGIN_IDS = new Set([
+  "mirumee.webhooks",
+  ADMIN_EMAIL_PLUGIN_ID,
+  USER_EMAIL_PLUGIN_ID,
+]);
 
 export const filterOutHiddenPlugins = (plugin: PluginBaseFragment) =>
   !HIDDEN_PLUGIN_IDS.has(plugin.id);

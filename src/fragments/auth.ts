@@ -13,6 +13,7 @@ export const fragmentUser = gql`
     email
     firstName
     lastName
+    isActive
     isStaff
     dateJoined
     metadata {

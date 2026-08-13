@@ -284,6 +284,10 @@
     "context": "button",
     "string": "Assign collections"
   },
+  "/7j98I": {
+    "context": "use custom template option",
+    "string": "Custom"
+  },
   "/8/Ffn": {
     "context": "button",
     "string": "Show"
@@ -561,6 +565,10 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
+  "0GNjGO": {
+    "context": "confirm dialog title when disabling staff email sending",
+    "string": "Turn off staff emails?"
+  },
   "0HBlkO": {
     "string": "Search channels"
   },
@@ -716,6 +724,10 @@
   "0sd4ez": {
     "context": "selected customer channel subtitle",
     "string": "Customer will be sent the gift card code via this channels email address"
+  },
+  "0tk2Vm": {
+    "context": "staff emails settings page title",
+    "string": "Staff emails"
   },
   "0u9Ng0": {
     "context": "Dry run no objects found",
@@ -875,6 +887,14 @@
   },
   "1Znp5B": {
     "string": "Be extra careful with taxes and payment extensions, ensure your configuration selects other extension to be used"
+  },
+  "1cRgKA": {
+    "context": "confirm button when saving default delivery over custom SMTP",
+    "string": "Save"
+  },
+  "1cednX": {
+    "context": "confirm dialog bullet: custom subjects reset",
+    "string": "Custom subjects will be reset to Saleor defaults."
   },
   "1jGDif": {
     "context": "voucher fixed amount spreadsheet paste hint",
@@ -1115,6 +1135,10 @@
   "2i81/P": {
     "context": "section header button",
     "string": "Manage"
+  },
+  "2jHGjL": {
+    "context": "message row status: only subject differs from Saleor default",
+    "string": "Custom subject"
   },
   "2kJxEe": {
     "context": "shipping method channel status description when newly added",
@@ -1361,6 +1385,9 @@
     "context": "promotion status filter scheduled",
     "string": "Scheduled"
   },
+  "3kJE8G": {
+    "string": "Something went wrong. Try again."
+  },
   "3kVRE2": {
     "context": "Checkbox label for setting publication date",
     "string": "Set publication date"
@@ -1593,6 +1620,10 @@
   "4oWCm4": {
     "string": "Tax class updated"
   },
+  "4osJ1F": {
+    "context": "error when SMTP app lookup fails on customer emails redirect",
+    "string": "Couldn’t open customer emails. Try again."
+  },
   "4p3bjX": {
     "context": "tax strategy combobox choice",
     "string": "Use flat rates"
@@ -1688,8 +1719,16 @@
   "5KS3f4": {
     "string": "Structure title"
   },
+  "5L99+F": {
+    "context": "staff member has not signed in yet after invite",
+    "string": "Pending invite"
+  },
   "5M+hLZ": {
     "string": "User permissions"
+  },
+  "5MmwNP": {
+    "context": "dialog header",
+    "string": "Activate staff member"
   },
   "5MtM5w": {
     "context": "model label",
@@ -1832,6 +1871,10 @@
   "5oaFMX": {
     "context": "granted transaction refund quantity in line matrix",
     "string": "Transaction refund"
+  },
+  "5p/P1C": {
+    "context": "staff delivery mode section title",
+    "string": "Staff email delivery"
   },
   "5pHBSU": {
     "context": "switch button",
@@ -2052,6 +2095,10 @@
     "context": "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop is in legacy stock-availability mode (stock visibility filtered through shipping zones).",
     "string": "Customers see this stock when the warehouse is assigned to a channel and covered by a shipping zone for the destination."
   },
+  "6eKMnl": {
+    "context": "placeholder for custom template editor",
+    "string": "Email body (HTML)"
+  },
   "6eSgIe": {
     "context": "voucher detail section nav item",
     "string": "Countries"
@@ -2164,6 +2211,10 @@
     "context": "table header product label",
     "string": "Product"
   },
+  "74H6RX": {
+    "context": "hint when default template mode is selected",
+    "string": "Using the built-in Saleor template for this message."
+  },
   "74Zo/H": {
     "context": "channel slug",
     "string": "Slug"
@@ -2175,6 +2226,10 @@
   "769/mX": {
     "context": "gift card metadata dialog header",
     "string": "Gift card metadata"
+  },
+  "78fSm3": {
+    "context": "success toast after deleting a staff member",
+    "string": "Staff member deleted"
   },
   "79Vlq2": {
     "context": "setup task description when no channels",
@@ -2251,6 +2306,10 @@
   },
   "7JlauX": {
     "string": "Explore"
+  },
+  "7L3jpR": {
+    "context": "notifications settings hub title",
+    "string": "Notifications"
   },
   "7MUx0T": {
     "string": "Discount of {value} through the {channel}"
@@ -2355,10 +2414,6 @@
   "7vnKNE": {
     "context": "structure item name",
     "string": "Name"
-  },
-  "7yKZvp": {
-    "context": "section header",
-    "string": "User Status"
   },
   "7yfkyB": {
     "context": "No variants have stock available",
@@ -2485,6 +2540,10 @@
   "8Q504V": {
     "string": "Metadata"
   },
+  "8QlXZs": {
+    "context": "SMTP host field helper with example and what to exclude",
+    "string": "Hostname only — for example smtp.sendgrid.net. Don’t include https://, smtp://, a port, or a path."
+  },
   "8RDDZP": {
     "context": "date group header when it is the only group on the timeline",
     "string": "Older than 30 days"
@@ -2507,6 +2566,10 @@
   "8XSZSL": {
     "context": "product media bulk delete dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this media item?} other{Are you sure you want to delete {displayQuantity} media items?}}"
+  },
+  "8ZFJV+": {
+    "context": "dialog header for resending staff invite",
+    "string": "Resend invitation"
   },
   "8a4uf/": {
     "context": "dialog content",
@@ -2576,6 +2639,10 @@
   "8sOnqE": {
     "context": "Warning when scheduling an available product for the future",
     "string": "Product will not be purchasable until this date."
+  },
+  "8ss9/7": {
+    "context": "message row status: subject and body are customized",
+    "string": "Custom subject & body"
   },
   "8thmJ/": {
     "context": "empty state when shipping method has no assigned channels",
@@ -3140,6 +3207,10 @@
     "context": "button label",
     "string": "Add reason"
   },
+  "B3TMMF": {
+    "context": "staff delivery mode section description with link to customer emails",
+    "string": "How staff emails are sent. In Saleor, staff communication is separate from customer notifications. For the latter, see {customerEmailsLink}."
+  },
   "B3dqGE": {
     "context": "usage summary for model attribute assignments",
     "string": "{count, plural, one {# model type} other {# model types}}"
@@ -3236,6 +3307,10 @@
   "BVDaKx": {
     "string": "Subtotal discount"
   },
+  "BW9Lnw": {
+    "context": "label above staff email preview",
+    "string": "Preview"
+  },
   "BWpuKl": {
     "string": "Update"
   },
@@ -3273,6 +3348,10 @@
   "BbP+k3": {
     "context": "variant availability in channel",
     "string": "Available"
+  },
+  "BcKoQ9": {
+    "context": "dialog header",
+    "string": "Deactivate staff member"
   },
   "BdS6CQ": {
     "context": "category detail sidebar card title",
@@ -3312,6 +3391,10 @@
   },
   "Bl6896": {
     "string": "Refund amount"
+  },
+  "Blyy4D": {
+    "context": "inline error when both TLS and SSL toggles are enabled",
+    "string": "Use TLS and Use SSL can’t both be on. Turn one off."
   },
   "BmcBt9": {
     "context": "Product availability summary when scheduled in every assigned channel",
@@ -3361,6 +3444,10 @@
   "C+WD8j": {
     "context": "alert message",
     "string": "all of"
+  },
+  "C+XrXi": {
+    "context": "SMTP use TLS toggle",
+    "string": "Use TLS"
   },
   "C+uqjN": {
     "context": "Save composition segment for channel name, slug, currency, country",
@@ -3490,10 +3577,6 @@
   "CKP9+i": {
     "string": "Webhook errors detected."
   },
-  "CLeDae": {
-    "context": "section header",
-    "string": "Preferences"
-  },
   "CN3QZu": {
     "context": "attribute slug field in embedded create form",
     "string": "Code"
@@ -3508,6 +3591,10 @@
   },
   "CPPACf": {
     "string": "The 'customHeaders' field for a webhook in the extension's manifest is invalid. {docsLink} ({errorCode})"
+  },
+  "CPiLc1": {
+    "context": "confirm dialog bullet: don’t-send messages resume with defaults",
+    "string": "Messages set to “Don’t send” will send again with Saleor default templates."
   },
   "CQKgD/": {
     "context": "bulk actions button label",
@@ -3736,6 +3823,9 @@
     "context": "shipping section name",
     "string": "Shipping Methods"
   },
+  "DACqZK": {
+    "string": "They should check their email and use the link to set a password."
+  },
   "DBuWYc": {
     "context": "voucher list status after end date",
     "string": "Ended"
@@ -3838,6 +3928,10 @@
     "context": "dialog header, title",
     "string": "Invoice Generation"
   },
+  "DiMS8t": {
+    "context": "SMTP username field — optional; many servers need it, Saleor does not require it",
+    "string": "SMTP user (optional)"
+  },
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
@@ -3848,6 +3942,10 @@
   "DpVPvW": {
     "context": "bulk publish per product cost price field label",
     "string": "Cost price"
+  },
+  "Ds9qMV": {
+    "context": "email template mode label",
+    "string": "Email body"
   },
   "DtYy/u": {
     "context": "bulk publish stock toggle",
@@ -4103,6 +4201,10 @@
     "context": "success notification when product media items are deleted",
     "string": "{counter,plural,one{Media deleted} other{# media items deleted}}"
   },
+  "F348/L": {
+    "context": "hint in download backup callout",
+    "string": "Download a JSON backup of your subjects and templates if you might need them later."
+  },
   "F3Upht": {
     "string": "Product type deleted"
   },
@@ -4305,6 +4407,10 @@
   },
   "Fn3bE0": {
     "string": "Order line updated"
+  },
+  "FnZMYr": {
+    "context": "disable this notification email",
+    "string": "Don’t send"
   },
   "FokiTS": {
     "context": "bulk publish confirm stock skipped detail",
@@ -4620,6 +4726,10 @@
   "GsBRWL": {
     "string": "Languages"
   },
+  "GsyvkU": {
+    "context": "staff emails active toggle description",
+    "string": "When off, Saleor will not send any of these staff emails."
+  },
   "Gt5T8I": {
     "context": "automatic completion cut-off date warning",
     "string": "If cut-off date is not set, system will automatically use current date & time. If you want to customize this behavior, you can provide custom time (past or the future)"
@@ -4634,6 +4744,10 @@
   "GuihaP": {
     "context": "order transaction refund summary label",
     "string": "Shipping"
+  },
+  "Gv+I7K": {
+    "context": "plugin active toggle title",
+    "string": "Send these emails"
   },
   "GvcIhr": {
     "context": "channel catalog subtitle when product counts are unavailable",
@@ -4902,6 +5016,10 @@
   "HvJPcU": {
     "string": "Category deleted"
   },
+  "HvzN3o": {
+    "context": "staff notification title",
+    "string": "Staff password reset"
+  },
   "HwIhau": {
     "context": "status pill for fully authorized payment",
     "string": "Fully Authorized"
@@ -5000,6 +5118,10 @@
     "context": "setup checklist review section subtitle",
     "string": "Optional campaign controls"
   },
+  "IAmnQ/": {
+    "context": "SMTP sender address field",
+    "string": "Sender email"
+  },
   "IBw72y": {
     "context": "switch button",
     "string": "Is this product shippable?"
@@ -5041,6 +5163,10 @@
   },
   "IH47ID": {
     "string": "Use button above to add new product variants"
+  },
+  "IHqdou": {
+    "context": "staff notification description",
+    "string": "Sent when a staff member requests a password reset."
   },
   "IKvOK+": {
     "context": "Amount error message",
@@ -5307,9 +5433,6 @@
   "JJLkzh": {
     "string": "Select transaction to refund"
   },
-  "JJgJwi": {
-    "string": "Selecting this will change the language of your dashboard"
-  },
   "JMBsrr": {
     "context": "table header available stock label",
     "string": "Available"
@@ -5491,9 +5614,6 @@
     "context": "refund button",
     "string": "Refund"
   },
-  "K/gnGg": {
-    "string": "If you want to disable this User please uncheck the box below."
-  },
   "K07PNP": {
     "context": "voucher list redemptions when usageLimit is null",
     "string": "{used} used · no cap"
@@ -5527,6 +5647,10 @@
   },
   "KFv8hX": {
     "string": "An attribute already exists."
+  },
+  "KGhnca": {
+    "context": "settings search alias",
+    "string": "staff emails invites password smtp"
   },
   "KHI/qv": {
     "string": "You don't have permission to manage products"
@@ -5571,6 +5695,10 @@
   "KTjTMW": {
     "string": "Installation is pending..."
   },
+  "KTpYX7": {
+    "context": "error toast recovery when save failed without field context",
+    "string": "Try again."
+  },
   "KWXwFo": {
     "context": "grant refund table, column header",
     "string": "Unit price"
@@ -5600,6 +5728,10 @@
   },
   "KeO51o": {
     "string": "Channel"
+  },
+  "KehG2Y": {
+    "context": "variable chips legend",
+    "string": "Insert variable"
   },
   "Kf/GoV": {
     "context": "order return reason card, reason textarea label",
@@ -5752,11 +5884,19 @@
     "context": "channel delivery card header when no zones",
     "string": "Required to sell"
   },
+  "LCNVrx": {
+    "context": "inline link label to customer emails / SMTP app",
+    "string": "customer emails"
+  },
   "LCPfA9": {
     "string": "Open this voucher in GraphiQL"
   },
   "LCmiky": {
     "string": "Shipping zones deleted"
+  },
+  "LHmmdv": {
+    "context": "staff notification title",
+    "string": "Export failed"
   },
   "LICZeR": {
     "context": "weight",
@@ -6037,6 +6177,10 @@
     "context": "change assigned gift card customer button",
     "string": "Change"
   },
+  "MMPgsZ": {
+    "context": "staff deactivate dialog confirm button",
+    "string": "Deactivate"
+  },
   "MNZY28": {
     "context": "table column header",
     "string": "Channel threshold"
@@ -6110,6 +6254,10 @@
     "context": "label for available authorization amount",
     "string": "Available to capture (authorized)"
   },
+  "MkPAWX": {
+    "context": "pill on staff details when viewing your own profile",
+    "string": "Me"
+  },
   "Ml19/F": {
     "context": "description for unsupported required attributes error",
     "string": "Required attributes ({attributes}) are not supported.{newline}{newline}To proceed:{newline}1. Make them optional in product type{newline}2. Generate variants{newline}3. Set values manually{newline}4. Restore required setting"
@@ -6139,6 +6287,10 @@
   "MqFTyz": {
     "context": "product type detail cogs menu, opens the delete-confirmation dialog",
     "string": "Delete product type"
+  },
+  "MrTfiO": {
+    "context": "BYO reason: brand from address",
+    "string": "Send from your brand domain (for example orders@yourstore.com)"
   },
   "MwfSVA": {
     "context": "input helper text",
@@ -6440,6 +6592,10 @@
   "O22NIZ": {
     "context": "deletion error message",
     "string": "Cant's delete group which is out of your permission scope"
+  },
+  "O31Ggf": {
+    "context": "staff notification title",
+    "string": "Staff invite"
   },
   "O4QNFx": {
     "context": "alert message",
@@ -6785,6 +6941,10 @@
     "context": "sum of all manual refunds for transaction",
     "string": "Manual refund"
   },
+  "PNbIOd": {
+    "context": "bullet: order and export emails stop",
+    "string": "Order confirmation and CSV export emails to staff will not be sent."
+  },
   "PNq9W/": {
     "context": "back button",
     "string": "Back"
@@ -7096,6 +7256,10 @@
     "context": "product field",
     "string": "Charge Taxes"
   },
+  "QVYKtb": {
+    "context": "default mode hint on cloud",
+    "string": "Saleor Cloud sends staff mail for you. Custom subjects and templates stay locked to Saleor defaults."
+  },
   "QVhelr": {
     "context": "set balance dialog subtitle",
     "string": "What would you like to set the card's balance to? Changing the balance updates both the current and initial amounts."
@@ -7336,6 +7500,10 @@
   "Rj8LxK": {
     "string": "Add search engine title and description to make this collection easier to find"
   },
+  "RjDmqa": {
+    "context": "toast title after resending staff invite",
+    "string": "Invitation resent"
+  },
   "Rjs1CD": {
     "context": "button",
     "string": "Continue"
@@ -7384,6 +7552,10 @@
   "RvRHDy": {
     "context": "setup checklist progress counter",
     "string": "{done} of {total}"
+  },
+  "Rx2Gp6": {
+    "context": "staff notification description",
+    "string": "Sent when a CSV export fails."
   },
   "RyZd9J": {
     "context": "error message",
@@ -7446,6 +7618,10 @@
     "context": "unassign attribute from product type, button",
     "string": "Unassign"
   },
+  "S7m7gp": {
+    "context": "confirm dialog bullet: custom bodies deleted",
+    "string": "Custom email bodies will be deleted."
+  },
   "S8ew6Q": {
     "context": "delete app",
     "string": "Are you sure you want to delete this extension?"
@@ -7472,6 +7648,9 @@
   "SDgGcU": {
     "context": "Button to manually mark order as paid without actual payment",
     "string": "Mark as Paid"
+  },
+  "SEC9dj": {
+    "string": "Couldn’t send invite"
   },
   "SFAoiO": {
     "context": "voucher schedule header status when currently redeemable",
@@ -7580,6 +7759,14 @@
   "SZyphU": {
     "string": "Product type created"
   },
+  "SaHwWJ": {
+    "context": "neutral callout title for downloading staff email backup before save",
+    "string": "Back up first"
+  },
+  "SblSIo": {
+    "context": "staff delivery mode: own SMTP",
+    "string": "Custom SMTP"
+  },
   "Sbz/xB": {
     "context": "open fulfillment metadata from line expanded panel",
     "string": "View fulfillment metadata"
@@ -7610,6 +7797,10 @@
   "SpngiS": {
     "context": "sale status",
     "string": "Status"
+  },
+  "SvVLgH": {
+    "context": "footer line in staff email preview mock",
+    "string": "This is an automatically generated e-mail, please do not reply."
   },
   "SwtcgX": {
     "context": "product media alt text field label",
@@ -7841,6 +8032,10 @@
     "context": "tax classes card header",
     "string": "General information"
   },
+  "TiUzSu": {
+    "context": "notifications settings section name",
+    "string": "Notifications"
+  },
   "TihW9+": {
     "context": "section title",
     "string": "Store details"
@@ -7865,6 +8060,10 @@
     "context": "promotion type filter catalog",
     "string": "Catalog"
   },
+  "Tv4WnJ": {
+    "context": "default mode hint on self-hosted",
+    "string": "Send staff mail with your store’s usual email settings."
+  },
   "TxYWkD": {
     "context": "page header, edit view",
     "string": "Edit grant refund"
@@ -7885,6 +8084,10 @@
     "context": "label for authorized amount",
     "string": "Authorized"
   },
+  "U1U2Zv": {
+    "context": "staff emails hub card description",
+    "string": "Invites, password resets, order alerts, and export results for Dashboard users — including default or custom SMTP for those messages."
+  },
   "U2DyeR": {
     "string": "Are you sure you want to delete structure {menuName}?"
   },
@@ -7903,6 +8106,10 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
+  "U2uWJ0": {
+    "context": "hint when message templates are editable",
+    "string": "Choose Saleor default, a custom subject and body, or don’t send for each message."
+  },
   "U353oB": {
     "context": "configuration section for staff and permission groups",
     "string": "Users & permissions"
@@ -7910,6 +8117,10 @@
   "U4By91": {
     "context": "bulk delete selected subcategories, button tooltip",
     "string": "Delete categories"
+  },
+  "U4Ppt6": {
+    "context": "use default template option",
+    "string": "Saleor default"
   },
   "U5CH0u": {
     "string": "Are you sure you want to delete {name} preset?"
@@ -8296,6 +8507,10 @@
     "context": "setup task description when shipping voucher has no countries",
     "string": "No countries selected means free shipping worldwide. Limit the list if this offer should only apply in some markets."
   },
+  "VZ5qPE": {
+    "context": "BYO reason: compliance",
+    "string": "Manage bounces, suppression lists, and sending history in your email provider"
+  },
   "VZsE96": {
     "string": "Collection Name"
   },
@@ -8502,6 +8717,10 @@
     "context": "Badge label for critical severity problems",
     "string": "Critical"
   },
+  "WQ7yWS": {
+    "context": "toast title when resend invite fails",
+    "string": "Couldn’t resend invitation"
+  },
   "WQMTKI": {
     "context": "list of warehouses",
     "string": "Warehouses A to Z"
@@ -8531,6 +8750,10 @@
   "WWV8aZ": {
     "context": "dialog title",
     "string": "Delete attribute value"
+  },
+  "WXcmOW": {
+    "context": "staff notification description",
+    "string": "Sent to staff when a new order is placed."
   },
   "WY3IXU": {
     "string": "This code already exists"
@@ -8592,6 +8815,10 @@
   "WrlaSD": {
     "context": "catalog setup status when shop has no warehouses",
     "string": "No warehouse"
+  },
+  "WuuXbr": {
+    "context": "callout title when Saleor can’t open an SMTP session",
+    "string": "Couldn’t connect to SMTP"
   },
   "Wv/8tv": {
     "context": "channel catalog action to review unpublished in-channel products",
@@ -8696,6 +8923,13 @@
     "context": "collection channel status description when scheduled",
     "string": "Collection will become visible on {date}"
   },
+  "XE99+s": {
+    "context": "intro when confirming disable staff emails",
+    "string": "You’re turning off all staff Dashboard emails from this page."
+  },
+  "XETVSq": {
+    "string": "Open this staff member in GraphiQL"
+  },
   "XExNls": {
     "context": "callout title for granted refunds not tied to a line",
     "string": "{count, plural, one {# order-level refund needs attention} other {# order-level refunds need attention}}"
@@ -8737,12 +8971,12 @@
     "context": "assign categories to sale and save",
     "string": "Assign and save"
   },
+  "XM9NSO": {
+    "context": "BYO reason: unify providers",
+    "string": "Keep staff and marketing email on the same provider"
+  },
   "XMFpAP": {
     "string": "Each rule is an alternative. Customers get the best matching discount."
-  },
-  "XMrYaA": {
-    "context": "checkbox label",
-    "string": "User is active"
   },
   "XMvH/d": {
     "context": "button label",
@@ -8770,6 +9004,10 @@
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
     "string": "Void"
+  },
+  "XPpy7A": {
+    "context": "intro text above callouts when saving default over custom SMTP",
+    "string": "You’re switching from Custom SMTP to the Default setup."
   },
   "XPruqs": {
     "string": "Order"
@@ -9055,6 +9293,9 @@
     "context": "product types section name",
     "string": "Product Types"
   },
+  "YRe93Y": {
+    "string": "Enter a valid email address"
+  },
   "YSi2+b": {
     "context": "voucher redemptions schedule status when active without end date",
     "string": "Redeemable now."
@@ -9178,6 +9419,10 @@
     "context": "label",
     "string": "Shipping zone name"
   },
+  "Yr1YZv": {
+    "context": "shown when Cloud default delivery locks copy editing",
+    "string": "Saleor Cloud sends this with the default subject and template. Switch to Custom SMTP above to edit copy or turn this email off."
+  },
   "Ys86kI": {
     "string": "Refunded amount will not be automatically returned to the customer. You’ll need to decide on a method and refund via balance sheet section of the order."
   },
@@ -9226,6 +9471,10 @@
   "Z3T6zR": {
     "context": "card title",
     "string": "Return & Replace"
+  },
+  "Z5j3J4": {
+    "context": "staff details interface language card intro",
+    "string": "Choose the language used across the dashboard."
   },
   "Z79yxZ": {
     "context": "Save composition segment for shipping zones",
@@ -9473,6 +9722,10 @@
     "context": "gift card resend dialog recipient section title",
     "string": "Recipient"
   },
+  "a9/3fU": {
+    "context": "staff detail top nav CTA when staff member is active",
+    "string": "Deactivate"
+  },
   "aAAxKp": {
     "context": "table column header",
     "string": "Product"
@@ -9586,6 +9839,10 @@
   "aWzvoq": {
     "string": "{counter,plural,one{Are you sure you want to delete this structure?} other{Are you sure you want to delete {displayQuantity} structures?}}"
   },
+  "aXb6gP": {
+    "context": "notifications settings hub description",
+    "string": "Staff Dashboard emails are configured here. Customer (shopper) emails use the SMTP app — a separate setup."
+  },
   "aXytBR": {
     "string": "A required field is missing in the extension's manifest. {docsLink} ({errorCode})"
   },
@@ -9641,6 +9898,10 @@
   "amQg6f": {
     "context": "voucher status",
     "string": "Active"
+  },
+  "anFRoJ": {
+    "context": "staff detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete staff member"
   },
   "anK7jD": {
     "string": "Product Type"
@@ -9713,6 +9974,10 @@
   "b2Nzq4": {
     "context": "setup review row description when payment apps are installed",
     "string": "Installed payment apps still need to be set up for checkout."
+  },
+  "b5F3lD": {
+    "context": "bullet: invites and password resets stop",
+    "string": "Staff invites and password reset emails will not be sent."
   },
   "b6J/B9": {
     "context": "attribute input type helper in embedded create form",
@@ -9870,6 +10135,10 @@
   "bdScE/": {
     "context": "grant refund table, column header",
     "string": "Reason"
+  },
+  "beOQ/V": {
+    "context": "inline error when a required SMTP field is empty",
+    "string": "Required"
   },
   "bfj3NC": {
     "context": "Button with Manage app label",
@@ -10111,6 +10380,10 @@
   "cLcy6F": {
     "string": "Number of products"
   },
+  "cMyuOj": {
+    "context": "toast body after resending staff invite",
+    "string": "They’ll get a password reset email with a link to set their password."
+  },
   "cN8pa0": {
     "context": "radio button label",
     "string": "Refund with line items"
@@ -10242,6 +10515,10 @@
   "cti4iA": {
     "string": "Read the blog post"
   },
+  "cv1pnG": {
+    "context": "staff details locale select label",
+    "string": "Language"
+  },
   "cvVIV/": {
     "context": "dialog header",
     "string": "Assign Countries"
@@ -10306,6 +10583,10 @@
   "d3jlO3": {
     "context": "Label prefix for the creation date of a recurring problem",
     "string": "Started at"
+  },
+  "d5QslN": {
+    "context": "confirm dialog title when saving default delivery over custom SMTP",
+    "string": "Save Default delivery?"
   },
   "d68yq7": {
     "string": "Delete gift cards"
@@ -10426,6 +10707,10 @@
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk issue gift cards"
   },
+  "daJDoe": {
+    "context": "validation when Custom template mode has empty body",
+    "string": "Add an email body, or choose Saleor default or Don’t send. An empty custom body is not allowed."
+  },
   "dc5KWn": {
     "context": "products export type label",
     "string": "products"
@@ -10433,6 +10718,10 @@
   "deqK6f": {
     "context": "voucher catalogue section intro when empty",
     "string": "Assign at least one category, collection, product, or variant. The discount applies to checkout lines matching any assignment."
+  },
+  "dgd7wb": {
+    "context": "staff detail top nav CTA when staff member is inactive",
+    "string": "Activate"
   },
   "diq8M5": {
     "context": "payment apps list truncated warning",
@@ -10453,9 +10742,17 @@
     "context": "channel link title and a11y label",
     "string": "View orders from {channelName}"
   },
+  "dpr5yI": {
+    "context": "SMTP use SSL toggle",
+    "string": "Use SSL"
+  },
   "drEC/t": {
     "context": "factor label for order promotion propagated to a line",
     "string": "Order promotion (line share)"
+  },
+  "dvpwuq": {
+    "context": "inline error when sender email format is invalid",
+    "string": "Enter a valid email address"
   },
   "dxCVWI": {
     "context": "error message",
@@ -10690,6 +10987,10 @@
     "context": "attributes, section header",
     "string": "Variant Attributes"
   },
+  "f4mftg": {
+    "context": "bullet: can re-enable later",
+    "string": "You can turn this back on later."
+  },
   "f4oJRg": {
     "context": "order transaction refund summary description",
     "string": "The refund amount is calculated automatically based on the items selected. You can modify it manually if needed."
@@ -10845,12 +11146,19 @@
     "context": "deleted multiple attributes",
     "string": "Attributes deleted"
   },
+  "fq4FLl": {
+    "context": "warning callout title when saving default over custom SMTP",
+    "string": "Default delivery uses Saleor’s built-in staff email templates. Saleor does not keep a separate Custom SMTP profile — saving will remove these overrides."
+  },
   "fqJXzO": {
     "context": "order history message",
     "string": "Transaction refund requested"
   },
   "fqXQq6": {
     "string": "Capture request sent to payment provider"
+  },
+  "froISM": {
+    "string": "User with this email already exists"
   },
   "fsBsMy": {
     "context": "button, form submit, grant refund create",
@@ -10870,6 +11178,10 @@
   "fuUksg": {
     "context": "column header",
     "string": "Model Type"
+  },
+  "fuuoDR": {
+    "context": "staff notification description",
+    "string": "Sent when a CSV export finishes successfully."
   },
   "fw+VAN": {
     "context": "product's sku",
@@ -10911,6 +11223,10 @@
   "g2P/kE": {
     "context": "shown when user tries to install an extension that is already installed but inactive",
     "string": "{appName} is installed but disabled."
+  },
+  "g35CVS": {
+    "context": "SMTP password helper",
+    "string": "Leave blank to keep the current password."
   },
   "g3qjSf": {
     "context": "button",
@@ -10969,6 +11285,10 @@
   "gHB1Wx": {
     "context": "Number of countries covered by shipping",
     "string": "{count, plural, one {# country} other {# countries}} covered"
+  },
+  "gIDsue": {
+    "context": "staff deactivate confirmation — explains effect for merchants",
+    "string": "Deactivate {email}? They won’t be able to sign in to the dashboard until you activate them again. Their account and permissions are kept."
   },
   "gK7mIl": {
     "string": "Discount name"
@@ -11083,6 +11403,10 @@
   "gjBiyj": {
     "string": "Loading..."
   },
+  "gkQbh9": {
+    "context": "staff notification title",
+    "string": "Export ready"
+  },
   "gksZwp": {
     "context": "button",
     "string": "Create product type"
@@ -11130,6 +11454,10 @@
   },
   "gzM1em": {
     "string": "Add rule"
+  },
+  "h/3meW": {
+    "context": "staff notification description",
+    "string": "Sent when you invite someone to the Dashboard."
   },
   "h0IgEq": {
     "context": "checkbox",
@@ -11264,6 +11592,9 @@
   "hapYhy": {
     "context": "bulk publish wizard defaults step",
     "string": "Defaults"
+  },
+  "hbNxgV": {
+    "string": "Are you sure you want to activate {email}?"
   },
   "hg79SY": {
     "context": "Label for collection toggle row when publication is scheduled",
@@ -11506,6 +11837,10 @@
     "context": "section notice",
     "string": "Unfulfilled products will be restocked"
   },
+  "iUVLZ9": {
+    "context": "SMTP port field",
+    "string": "SMTP port"
+  },
   "iUhCur": {
     "context": "attributes translation section subtitle",
     "string": "Custom attribute values assigned to this item"
@@ -11587,6 +11922,10 @@
   "ijRTbx": {
     "context": "create shipping for channel dialog title",
     "string": "Create shipping zone"
+  },
+  "ikKMd0": {
+    "context": "dialog description",
+    "string": "Send an invite and assign at least one permission group."
   },
   "ikM00B": {
     "context": "table column header",
@@ -11687,6 +12026,10 @@
     "context": "bulk issue gift cards quantity section header",
     "string": "Gift cards to issue"
   },
+  "j7AoSX": {
+    "context": "hint when notification is turned off",
+    "string": "This email will not be sent."
+  },
   "j7XAly": {
     "context": "create warehouse for channel dialog description",
     "string": "Creates a warehouse and assigns it to this channel as the stock location."
@@ -11705,6 +12048,10 @@
   "jDWPin": {
     "context": "remove failed installation dialog title",
     "string": "Remove failed installation"
+  },
+  "jDZb4p": {
+    "context": "body copy when default delivery selected on cloud",
+    "string": "No SMTP setup needed for invites and other staff messages. Switch to Custom SMTP if you need your brand From address or custom email copy."
   },
   "jDovoJ": {
     "context": "gift card history message",
@@ -11748,6 +12095,10 @@
     "context": "tax classes card header",
     "string": "Tax classes"
   },
+  "jN3XL5": {
+    "context": "SMTP password field — optional; blank keeps the stored secret on update",
+    "string": "Password (optional)"
+  },
   "jNoqH0": {
     "string": "Create promotion"
   },
@@ -11757,6 +12108,10 @@
   "jPVqOL": {
     "context": "settings search alias",
     "string": "order confirmation"
+  },
+  "jQ4VBo": {
+    "context": "success toast after saving email notifications",
+    "string": "Notification settings saved"
   },
   "jQe+kI": {
     "context": "Availability card empty state title when entity has no channel listings",
@@ -11932,6 +12287,10 @@
   "k0rGBI": {
     "string": "Access token is used to authenticate service accounts"
   },
+  "k12W/5": {
+    "context": "BYO email reasons heading",
+    "string": "When to use your own email service"
+  },
   "k20lqw": {
     "string": "Legacy flow detected - select tax strategy from dropdown"
   },
@@ -12026,6 +12385,10 @@
   "kHU+p8": {
     "context": "collapse canceled shipments in line expanded panel",
     "string": "Hide canceled shipments"
+  },
+  "kIas9j": {
+    "context": "SMTP host field",
+    "string": "SMTP host"
   },
   "kIcyUo": {
     "context": "column header",
@@ -12183,6 +12546,10 @@
   "ksIgHn": {
     "context": "Description for warehouse-not-in-zone warning (only fires in legacy stock availability mode)",
     "string": "Warehouses with stock are not covered by any shipping zone in this channel. In legacy stock availability mode this hides the product from customers; assign the warehouse to a shipping zone or switch to direct stock availability."
+  },
+  "ku8aHA": {
+    "context": "custom mode hint",
+    "string": "Send staff mail from your own server and customize subjects and templates."
   },
   "kugtAu": {
     "context": "PageTypeDeleteWarningDialog title",
@@ -12423,6 +12790,10 @@
     "context": "export items as csv file",
     "string": "Plain CSV file"
   },
+  "ljwr2Q": {
+    "context": "email subject field label",
+    "string": "Subject"
+  },
   "ljwv+L": {
     "context": "discount value label",
     "string": "Discount value"
@@ -12570,6 +12941,10 @@
   "mFC5Rq": {
     "string": "Assign Warehouses"
   },
+  "mGKNxS": {
+    "context": "customer emails hub card title",
+    "string": "Customer emails"
+  },
   "mGiA6q": {
     "context": "modal button upload",
     "string": "Upload"
@@ -12581,6 +12956,10 @@
     "context": "button",
     "string": "Create shipping zone"
   },
+  "mKr+Rn": {
+    "context": "body copy when default delivery selected on self-hosted",
+    "string": "Staff mail uses your store’s usual email settings. Switch to Custom SMTP to set your own server and sender in the Dashboard."
+  },
   "mKu838": {
     "context": "customer overview, value tooltip heading for shipping and refund breakdown",
     "string": "From these orders"
@@ -12588,6 +12967,10 @@
   "mLZMb6": {
     "context": "ChannelsSection select field label",
     "string": "Channel"
+  },
+  "mLeZoR": {
+    "context": "staff detail page, top-bar metadata button tooltip",
+    "string": "Edit staff member metadata"
   },
   "mMEpFC": {
     "context": "customer overview, refunded row label in value tooltip",
@@ -12697,9 +13080,6 @@
   "mqwLmD": {
     "string": "Menu updated"
   },
-  "mr9jbO": {
-    "string": "Preferred Language"
-  },
   "mrPzXs": {
     "context": "factor label for catalogue promotion / sale",
     "string": "Catalogue promotion"
@@ -12761,6 +13141,10 @@
     "context": "customer's address book, header",
     "string": "{fullName}'s Address Book"
   },
+  "n6fM40": {
+    "context": "error toast title after failed staff email settings save",
+    "string": "Couldn’t save notification settings"
+  },
   "n8tEIV": {
     "context": "customer overview, last login tooltip",
     "string": "Most recent time this customer signed in to their account."
@@ -12768,6 +13152,10 @@
   "n9JOI3": {
     "context": "money amount input label",
     "string": "Enter amount"
+  },
+  "n9bERs": {
+    "context": "staff details top nav CTA for pending invite",
+    "string": "Resend invitation"
   },
   "nABmvC": {
     "string": "No. of rows"
@@ -13005,6 +13393,10 @@
     "context": "price based shipping methods, section header",
     "string": "Price-based shipping methods"
   },
+  "o0ZEIX": {
+    "context": "settings search alias",
+    "string": "customer emails order confirmation smtp"
+  },
   "o5GUx9": {
     "string": "Outstanding balance"
   },
@@ -13049,6 +13441,10 @@
   "oGsDpe": {
     "context": "bulk publish confirm visibility not available detail",
     "string": "Products will be visible but not available for purchase."
+  },
+  "oGsuHg": {
+    "context": "confirm button when saving with staff emails disabled",
+    "string": "Save"
   },
   "oIL8jk": {
     "context": "error message",
@@ -13752,6 +14148,10 @@
     "context": "Status when product is partially configured",
     "string": "Scheduled"
   },
+  "qZ62YJ": {
+    "context": "error toast recovery when SMTP fields are invalid",
+    "string": "Check the highlighted fields."
+  },
   "qZB1cn": {
     "string": "This Model Type does not have created models yet."
   },
@@ -13982,6 +14382,10 @@
     "context": "Health check error when product not available",
     "string": "Unable to verify"
   },
+  "rNAI8p": {
+    "context": "staff notification title",
+    "string": "Staff order confirmation"
+  },
   "rPAbtu": {
     "context": "order-level validation error without field name in address edit dialog",
     "string": "Order validation failed: {details}. This is not an address field error — fix the order record before addresses can be saved."
@@ -14115,6 +14519,10 @@
   "rxNddi": {
     "string": "Homepage"
   },
+  "rxT4ua": {
+    "context": "customer emails hub card pointing to SMTP app",
+    "string": "Order, account, and fulfillment emails for shoppers are managed in the SMTP app."
+  },
   "rxlJJ/": {
     "context": "grant refund table, column header",
     "string": "Product"
@@ -14156,6 +14564,10 @@
   "s5Huhi": {
     "context": "settings search result kind badge",
     "string": "Setting"
+  },
+  "s6+A2i": {
+    "context": "staff emails page intro",
+    "string": "Choose default delivery or your own SMTP, then adjust which staff messages go out and how they read. This is not the SMTP app used for shopper emails."
   },
   "s699+F": {
     "context": "voucher channel status when schedule has not started",
@@ -14399,6 +14811,10 @@
   "sy+pv5": {
     "string": "Email"
   },
+  "sykM/J": {
+    "context": "SMTP sender name field — optional; Saleor only requires sender email",
+    "string": "Sender name (optional)"
+  },
   "szXISP": {
     "context": "permission group name",
     "string": "Permission Group Name"
@@ -14438,6 +14854,10 @@
     "context": "Shown while verification is in progress",
     "string": "Verifying..."
   },
+  "t5s7MG": {
+    "context": "button to export staff email subjects and templates",
+    "string": "Download subjects & templates (JSON)"
+  },
   "t84lbb": {
     "context": "empty list message",
     "string": "You haven't assigned any member to this permission group yet."
@@ -14449,6 +14869,10 @@
   "tELvPJ": {
     "context": "placeholder for model type tab grouping separator input",
     "string": "Comma-separated list of separators"
+  },
+  "tEjGRk": {
+    "context": "staff delivery mode: platform/env defaults",
+    "string": "Default"
   },
   "tFx7UX": {
     "context": "Reassurance under verification badge when product is not visible to public API",
@@ -14737,6 +15161,10 @@
     "context": "section header",
     "string": "Extension permissions"
   },
+  "uK4ys2": {
+    "context": "configuration menu item description for notifications",
+    "string": "Staff and customer email messages, and how they are delivered"
+  },
   "uKlrEk": {
     "context": "all selected items message",
     "string": "All available {itemsName} have been selected"
@@ -14941,6 +15369,10 @@
     "context": "voucher status",
     "string": "Status"
   },
+  "v+tpSR": {
+    "context": "dialog body explaining password-reset email for resend invite",
+    "string": "We’ll email {email} a link to set their password. It arrives as a password reset message, but works the same as the original invite."
+  },
   "v/1VA6": {
     "context": "add order note, button",
     "string": "Send"
@@ -15078,6 +15510,10 @@
     "context": "toast description pointing merchants to inline field errors",
     "string": "Check the highlighted fields and try again."
   },
+  "vLInt4": {
+    "context": "staff delivery description for Cmd+K / settings search without link",
+    "string": "How staff emails are sent. In Saleor, staff communication is separate from customer notifications."
+  },
   "vLc9Td": {
     "context": "Title for public API verification section",
     "string": "Public API verification"
@@ -15158,6 +15594,10 @@
   "vYMZxh": {
     "context": "delete custom app",
     "string": "By deleting {name}, you will delete all the data and webhooks regarding this extension."
+  },
+  "vYRPvL": {
+    "context": "subsection listing staff notification emails",
+    "string": "Staff messages"
   },
   "vZMs8f": {
     "context": "default product variant indicator",
@@ -15428,6 +15868,10 @@
   "wTHjt3": {
     "string": "Search Orders..."
   },
+  "wUMBnP": {
+    "context": "warning callout title when disabling staff emails",
+    "string": "Saleor will stop sending these messages."
+  },
   "wUQCnQ": {
     "context": "Save filters button text",
     "string": "Save"
@@ -15548,6 +15992,10 @@
     "context": "label for enabling grouped model type tabs",
     "string": "Group similar model types"
   },
+  "x+jH+T": {
+    "context": "switch from default to custom template",
+    "string": "Customize"
+  },
   "x/Bb2C": {
     "context": "voucher catalogue row assigned count status",
     "string": "{count, plural, =0 {None assigned} one {# assigned} other {# assigned}}"
@@ -15667,6 +16115,10 @@
   "xRkj2h": {
     "string": "Are you sure you want to delete {categoryName}?"
   },
+  "xTS+W3": {
+    "context": "confirm dialog bullet: SMTP cleared",
+    "string": "Your SMTP host, credentials, and sender fields will be cleared."
+  },
   "xTyg+p": {
     "string": "No options to select"
   },
@@ -15738,6 +16190,10 @@
   "xl7Fag": {
     "string": "Category created"
   },
+  "xlY/T3": {
+    "context": "staff details sidebar card title for dashboard locale",
+    "string": "Interface language"
+  },
   "xo5UIb": {
     "context": "dialog title",
     "string": "Delete category"
@@ -15762,6 +16218,10 @@
   "xrKHS6": {
     "string": "Success"
   },
+  "xs5hgj": {
+    "context": "SMTP host field placeholder example",
+    "string": "smtp.sendgrid.net"
+  },
   "xsd8Wt": {
     "context": "bulk publish review missing category warning",
     "string": "{count, plural, one {# product has} other {# products have}} no category and cannot be published: {productNames}. Assign a category on the product, or turn off Publish in Defaults."
@@ -15773,6 +16233,10 @@
   "xvKNkf": {
     "context": "Info message when user sets a past publication date",
     "string": "This date is in the past. The product will be visible immediately when you save."
+  },
+  "xw7wKh": {
+    "context": "staff metadata dialog header",
+    "string": "Staff member metadata"
   },
   "xwXFUB": {
     "context": "customer overview, total orders tooltip",
@@ -15981,6 +16445,10 @@
   "ys0jH2": {
     "context": "channel publication status",
     "string": "Published"
+  },
+  "ysIDsl": {
+    "context": "message row status: only email body is customized",
+    "string": "Custom body"
   },
   "ytKTTO": {
     "context": "draft orders section name",
