@@ -63,10 +63,15 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
   const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [
     PermissionEnum.MANAGE_STAFF,
   ]);
+  // `user(id:)` and `me` normalize to the same Apollo User. A cache write from
+  // staff details can replace `userPermissions` and empty the sidebar (only
+  // Home / Extensions have no permission gate). Skip when we do not need the
+  // extra staff fields; otherwise keep the result out of the cache.
   const { data, loading, refetch } = useStaffMemberDetailsQuery({
     displayLoader: true,
     variables: { id },
     skip: isUserSameAsViewer && !hasManageStaffPermission,
+    fetchPolicy: isUserSameAsViewer ? "no-cache" : "cache-first",
   });
   const { deleteResult, deleteStaffMember, updateStaffMember, updateStaffMemberOpts } =
     useStaffUserOperations();
@@ -121,9 +126,7 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
     deleteUserAvatar,
     updateUserAvatar,
   } = useProfileOperations({ closeModal, id, refetch });
-  // Prefer staff details (includes isActive / lastLogin). Own-profile used to always
-  // take the auth User fragment, which lacked those fields → false "Not active".
-  const staffMember = data !== undefined ? data.user : isUserSameAsViewer ? user.user : undefined;
+  const staffMember = isUserSameAsViewer ? (data?.user ?? user.user) : data?.user;
   const canViewCustomerProfile = (data?.user?.orders?.edges.length ?? 0) > 0;
   const canEditMetadata = !!data?.user;
   const isActive = isMemberActive(staffMember);
