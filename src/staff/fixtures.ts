@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import avatarImage from "@assets/images/avatars/avatar.png";
-import { permissions } from "@dashboard/fixtures";
 import {
   type StaffListQuery,
   type StaffMemberAvatarFragment,
@@ -182,10 +181,6 @@ export const staffMember: StaffMemberDetailsFragment = {
   lastLogin: "2024-01-01T00:00:00+00:00",
   lastName: "Smith",
   permissionGroups: [],
-  userPermissions: permissions.map(p => ({
-    ...p,
-    __typename: "UserPermission",
-  })),
   metadata: [],
   privateMetadata: [],
 };

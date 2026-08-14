@@ -3623,10 +3623,6 @@ export const StaffMemberDetailsFragmentDoc = gql`
     name
     userCanManage
   }
-  userPermissions {
-    code
-    name
-  }
   avatar(size: 512) {
     url
   }
