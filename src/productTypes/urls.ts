@@ -22,7 +22,7 @@ export enum ProductTypeListUrlFiltersEnum {
   query = "query",
 }
 export type ProductTypeListUrlFilters = Filters<ProductTypeListUrlFiltersEnum>;
-export type ProductTypeListUrlDialog = "remove" | TabActionDialog;
+export type ProductTypeListUrlDialog = "remove" | "create" | TabActionDialog;
 export enum ProductTypeListUrlSortField {
   name = "name",
   digital = "digital",

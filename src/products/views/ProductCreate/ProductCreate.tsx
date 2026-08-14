@@ -175,7 +175,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         defaultMessage: "Product created",
       }),
     });
-    navigate(productUrl(productId));
+    navigate(productUrl(productId, { action: "setup" }));
   };
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({});

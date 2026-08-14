@@ -1,3 +1,4 @@
+import { scrollToDetailSection } from "@dashboard/components/Layouts/Detail/scrollElementIntoDetailContent";
 import { IS_CLOUD_INSTANCE, PAIRED_ERROR_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { usePluginQuery, usePluginUpdateMutation } from "@dashboard/graphql";
@@ -38,10 +39,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 const scrollToStaffDelivery = (): void => {
-  document.getElementById(settingsHashes.notificationsDelivery)?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
+  scrollToDetailSection(settingsHashes.notificationsDelivery);
 };
 
 export const StaffEmailsView = (): JSX.Element => {

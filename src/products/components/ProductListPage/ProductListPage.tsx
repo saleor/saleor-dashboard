@@ -37,7 +37,7 @@ import {
   type TabPageProps,
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -66,6 +66,7 @@ interface ProductListPageProps
   selectedProductIds: string[];
   hasPresetsChanged: boolean;
   onAdd: () => void;
+  onCreateProductType: () => void;
   onExport: () => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
@@ -89,6 +90,7 @@ const ProductListPage = (props: ProductListPageProps) => {
     initialSearch,
     settings,
     onAdd,
+    onCreateProductType,
     onExport,
     onSearchChange,
     onUpdateListSettings,
@@ -122,6 +124,15 @@ const ProductListPage = (props: ProductListPageProps) => {
     selectedProductIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PRODUCT_OVERVIEW_CREATE);
+  const createProductTypeOption = {
+    label: intl.formatMessage({
+      id: "gksZwp",
+      defaultMessage: "Create product type",
+      description: "button",
+    }),
+    testId: "add-product-type",
+    onSelect: () => onCreateProductType(),
+  };
   const [storedProductListViewType, setProductListViewType] = useLocalStorage<ProductListViewType>(
     "productListViewType",
     DEFAULT_PRODUCT_LIST_VIEW_TYPE,
@@ -187,27 +198,14 @@ const ProductListPage = (props: ProductListPageProps) => {
                 ...extensionMenuItems,
               ]}
             />
-            {extensionCreateButtonItems.length > 0 ? (
-              <ButtonGroupWithDropdown
-                onClick={onAdd}
-                testId={"add-product"}
-                options={extensionCreateButtonItems}
-              >
-                <FormattedMessage
-                  id="JFmOfi"
-                  defaultMessage="Create Product"
-                  description="button"
-                />
-              </ButtonGroupWithDropdown>
-            ) : (
-              <Button data-test-id="add-product" onClick={onAdd}>
-                <FormattedMessage
-                  id="JFmOfi"
-                  defaultMessage="Create Product"
-                  description="button"
-                />
-              </Button>
-            )}
+            <ButtonGroupWithDropdown
+              onClick={onAdd}
+              testId="add-product"
+              pinnedOptions={[createProductTypeOption]}
+              options={extensionCreateButtonItems}
+            >
+              <FormattedMessage id="JFmOfi" defaultMessage="Create Product" description="button" />
+            </ButtonGroupWithDropdown>
           </Box>
         </Box>
       </TopNav>

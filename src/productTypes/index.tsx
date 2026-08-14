@@ -4,19 +4,18 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productTypeAddPath,
-  type ProductTypeAddUrlQueryParams,
   productTypeListPath,
+  productTypeListUrl,
   type ProductTypeListUrlQueryParams,
   ProductTypeListUrlSortField,
   productTypePath,
   type ProductTypeUrlQueryParams,
 } from "./urls";
-import ProductTypeCreateComponent from "./views/ProductTypeCreate";
 import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
@@ -37,16 +36,8 @@ const ProductTypeList = () => {
   );
 };
 
-interface ProductTypeCreateRouteParams {
-  id: string;
-}
-
-const ProductTypeCreate = ({ location }: RouteComponentProps<ProductTypeCreateRouteParams>) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: ProductTypeAddUrlQueryParams = qs;
-
-  return <ProductTypeCreateComponent params={params} />;
-};
+/** Legacy /product-types/add → create dialog on the list. */
+const ProductTypeCreateRedirect = () => <Redirect to={productTypeListUrl({ action: "create" })} />;
 
 interface ProductTypeUpdateRouteParams {
   id: string;
@@ -67,7 +58,7 @@ const ProductTypeRouter = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.productTypes)} />
       <Switch>
         <Route exact path={productTypeListPath} component={ProductTypeList} />
-        <Route exact path={productTypeAddPath} component={ProductTypeCreate} />
+        <Route exact path={productTypeAddPath} component={ProductTypeCreateRedirect} />
         <Route path={productTypePath(":id")} component={ProductTypeUpdate} />
       </Switch>
     </>

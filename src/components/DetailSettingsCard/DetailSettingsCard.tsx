@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { coerceHeaderEndActions } from "./coerceHeaderEndActions";
 import styles from "./DetailSettingsCard.module.css";
 
 interface DetailSettingsCardProps {
@@ -68,7 +69,11 @@ export const DetailSettingsCard = ({
           </Text>
         ) : null}
       </Box>
-      {headerEnd ? <Box className={styles.headerEnd}>{headerEnd}</Box> : null}
+      {headerEnd ? (
+        <Box className={styles.headerEnd} data-test-id="detail-settings-card-header-end">
+          {coerceHeaderEndActions(headerEnd)}
+        </Box>
+      ) : null}
     </Box>
     {intro ? <DetailSettingsCardIntro>{intro}</DetailSettingsCardIntro> : null}
     <Box className={contentFlush ? styles.contentFlush : styles.content}>{children}</Box>

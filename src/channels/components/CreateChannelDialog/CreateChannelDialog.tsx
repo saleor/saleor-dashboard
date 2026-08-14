@@ -203,7 +203,7 @@ const CreateChannelDialogFormContent = ({
     !isSlugChecking;
 
   return (
-    <DashboardModal.Content size="sm" data-test-id="create-channel-dialog">
+    <DashboardModal.Content disableAutofocus size="sm" data-test-id="create-channel-dialog">
       <DashboardModal.Header
         subtitle={
           <FormattedMessage
@@ -233,6 +233,7 @@ const CreateChannelDialogFormContent = ({
               onChange={handleNameChange}
               disabled={disabled}
               data-test-id="channel-name-input"
+              autoFocus
             />
             <Input
               name="slug"

@@ -631,8 +631,15 @@ const ProductUpdateForm = ({
     rest,
   );
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    return props.submit();
+  };
+
   return (
-    <form onSubmit={props.submit} data-test-id="product-update-form">
+    <form onSubmit={handleSubmit} data-test-id="product-update-form">
       <DatagridChangeStateContext.Provider value={datagrid}>
         <RichTextContext.Provider value={richText}>
           {children({ ...props, richText })}

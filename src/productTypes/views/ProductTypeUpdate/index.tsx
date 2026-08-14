@@ -37,6 +37,7 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder, maybe } from "@dashboard/misc";
 import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@dashboard/productTypes/hooks/useProductTypeOperations";
+import { useProductTypeVariantSelection } from "@dashboard/productTypes/hooks/useProductTypeVariantSelection";
 import useAvailableProductAttributeSearch from "@dashboard/searches/useAvailableProductAttributeSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type ReorderEvent } from "@dashboard/types";
@@ -129,7 +130,18 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [assignCreatedAttribute, assignCreatedAttributeOpts] = useAssignProductAttributeMutation();
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation();
-  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<string[]>([]);
+  const {
+    data,
+    loading: dataLoading,
+    refetch,
+  } = useProductTypeDetailsQuery({
+    displayLoader: true,
+    variables: { id },
+  });
+  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
+  const productType = data?.productType;
+  const { selectedVariantAttributes, setSelectedVariantAttributes } =
+    useProductTypeVariantSelection(id, productType?.assignedVariantAttributes);
   const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
     const operations = formData.variantAttributes.map(variantAttribute => ({
       id: variantAttribute.value,
@@ -162,16 +174,6 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       ...productAttributeUpdateResult.data.productAttributeAssignmentUpdate.errors,
     ];
   };
-  const {
-    data,
-    loading: dataLoading,
-    refetch,
-  } = useProductTypeDetailsQuery({
-    displayLoader: true,
-    variables: { id },
-  });
-  const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
-  const productType = data?.productType;
 
   const productTypeDeleteData = useProductTypeDelete({
     singleId: id,
@@ -220,11 +222,14 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     }
   };
   const handleAttributeReorderSuccess = (data: ProductTypeAttributeReorderMutation) => {
-    if (data.productTypeReorderAttributes.errors.length === 0) {
+    const error = data.productTypeReorderAttributes.errors[0];
+
+    if (error) {
       notify({
-        status: "success",
-        text: intl.formatMessage({ id: "6j4TUi", defaultMessage: "Product type updated" }),
+        status: "error",
+        text: getProductErrorMessage(error, intl),
       });
+      refetch();
     }
   };
   const { assignAttribute, deleteProductType, unassignAttribute, reorderAttribute } =
@@ -332,7 +337,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     const attributes =
       type === ProductAttributeType.PRODUCT
         ? data.productType.productAttributes
-        : data.productType.variantAttributes;
+        : (data.productType.assignedVariantAttributes?.map(assigned => assigned.attribute) ??
+          data.productType.variantAttributes);
 
     reorderAttribute.mutate({
       move: {

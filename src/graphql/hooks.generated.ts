@@ -2723,6 +2723,7 @@ export const PageTypeDetailsFragmentDoc = gql`
   ...Metadata
   attributes {
     ...Attribute
+    valueRequired
   }
 }
     ${PageTypeFragmentDoc}
@@ -2986,13 +2987,32 @@ export const ProductTypeDetailsFragmentDoc = gql`
   ...Metadata
   productAttributes {
     ...Attribute
+    valueRequired
+    choices(first: 1) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
   }
   variantAttributes {
     ...Attribute
+    valueRequired
   }
   assignedVariantAttributes {
     attribute {
       ...Attribute
+      valueRequired
+      choices(first: 1) {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
     }
     variantSelection
   }
@@ -4210,6 +4230,42 @@ export function useAttributeValueDeleteMutation(baseOptions?: ApolloReactHooks.M
 export type AttributeValueDeleteMutationHookResult = ReturnType<typeof useAttributeValueDeleteMutation>;
 export type AttributeValueDeleteMutationResult = Apollo.MutationResult<Types.AttributeValueDeleteMutation>;
 export type AttributeValueDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AttributeValueDeleteMutation, Types.AttributeValueDeleteMutationVariables>;
+export const AttributeValueBulkDeleteDocument = gql`
+    mutation AttributeValueBulkDelete($ids: [ID!]!) {
+  attributeValueBulkDelete(ids: $ids) {
+    count
+    errors {
+      ...AttributeError
+    }
+  }
+}
+    ${AttributeErrorFragmentDoc}`;
+export type AttributeValueBulkDeleteMutationFn = Apollo.MutationFunction<Types.AttributeValueBulkDeleteMutation, Types.AttributeValueBulkDeleteMutationVariables>;
+
+/**
+ * __useAttributeValueBulkDeleteMutation__
+ *
+ * To run a mutation, you first call `useAttributeValueBulkDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAttributeValueBulkDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [attributeValueBulkDeleteMutation, { data, loading, error }] = useAttributeValueBulkDeleteMutation({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useAttributeValueBulkDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AttributeValueBulkDeleteMutation, Types.AttributeValueBulkDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AttributeValueBulkDeleteMutation, Types.AttributeValueBulkDeleteMutationVariables>(AttributeValueBulkDeleteDocument, options);
+      }
+export type AttributeValueBulkDeleteMutationHookResult = ReturnType<typeof useAttributeValueBulkDeleteMutation>;
+export type AttributeValueBulkDeleteMutationResult = Apollo.MutationResult<Types.AttributeValueBulkDeleteMutation>;
+export type AttributeValueBulkDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AttributeValueBulkDeleteMutation, Types.AttributeValueBulkDeleteMutationVariables>;
 export const AttributeValueUpdateDocument = gql`
     mutation AttributeValueUpdate($id: ID!, $input: AttributeValueUpdateInput!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
   attributeValueUpdate(id: $id, input: $input) {
@@ -15767,40 +15823,6 @@ export function useProductTypeDetailsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ProductTypeDetailsQueryHookResult = ReturnType<typeof useProductTypeDetailsQuery>;
 export type ProductTypeDetailsLazyQueryHookResult = ReturnType<typeof useProductTypeDetailsLazyQuery>;
 export type ProductTypeDetailsQueryResult = Apollo.QueryResult<Types.ProductTypeDetailsQuery, Types.ProductTypeDetailsQueryVariables>;
-export const ProductTypeCreateDataDocument = gql`
-    query ProductTypeCreateData {
-  shop {
-    defaultWeightUnit
-  }
-}
-    `;
-
-/**
- * __useProductTypeCreateDataQuery__
- *
- * To run a query within a React component, call `useProductTypeCreateDataQuery` and pass it any options that fit your needs.
- * When your component renders, `useProductTypeCreateDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProductTypeCreateDataQuery({
- *   variables: {
- *   },
- * });
- */
-export function useProductTypeCreateDataQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataDocument, options);
-      }
-export function useProductTypeCreateDataLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>(ProductTypeCreateDataDocument, options);
-        }
-export type ProductTypeCreateDataQueryHookResult = ReturnType<typeof useProductTypeCreateDataQuery>;
-export type ProductTypeCreateDataLazyQueryHookResult = ReturnType<typeof useProductTypeCreateDataLazyQuery>;
-export type ProductTypeCreateDataQueryResult = Apollo.QueryResult<Types.ProductTypeCreateDataQuery, Types.ProductTypeCreateDataQueryVariables>;
 export const ProductMediaCreateDocument = gql`
     mutation ProductMediaCreate($product: ID!, $image: Upload, $alt: String, $mediaUrl: String) {
   productMediaCreate(
@@ -19010,6 +19032,7 @@ export const SearchProductTypesDocument = gql`
       node {
         id
         name
+        hasVariants
       }
     }
     pageInfo {

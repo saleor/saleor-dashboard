@@ -26,7 +26,9 @@ import { Trash2 } from "lucide-react";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
+import { CreateModelTypeDialog } from "../../components/CreateModelTypeDialog/CreateModelTypeDialog";
 import PageTypeListPage from "../../components/PageTypeListPage";
+import { useCreateModelType } from "../../hooks/useCreateModelType";
 import {
   pageTypeListUrl,
   type PageTypeListUrlDialog,
@@ -73,6 +75,7 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
     PageTypeListUrlDialog,
     PageTypeListUrlQueryParams
   >(navigate, pageTypeListUrl, params);
+  const createModelTypeDialog = useCreateModelType({ onClose: closeModal });
 
   const paginationValues = usePaginator({
     pageInfo: data?.pageTypes?.pageInfo,
@@ -179,6 +182,12 @@ const PageTypeList = ({ params }: PageTypeListProps) => {
             <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
           </IconButton>
         }
+        onCreateModelType={() => openModal("create")}
+      />
+      <CreateModelTypeDialog
+        open={params.action === "create"}
+        onClose={closeModal}
+        {...createModelTypeDialog}
       />
       {pageTypesData && (
         <TypeDeleteWarningDialog

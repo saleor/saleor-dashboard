@@ -1,0 +1,9 @@
+.pasteProposal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-2);
+  padding: var(--mu-spacing-3);
+  border: 1px dashed var(--mu-colors-border-default1);
+  border-radius: var(--mu-spacing-2);
+  background-color: var(--mu-colors-background-default2);
+}

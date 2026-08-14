@@ -3,6 +3,7 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -44,6 +45,7 @@ import { getMutationState } from "../../../misc";
 import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/ProductDeleteDialog";
 import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
+import { useProductSetupCardDismiss } from "../../components/ProductSetupCard/useProductSetupCardDismiss";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import { useProductVariantsGrid } from "../../hooks/useProductVariantsGrid";
 import {
@@ -70,6 +72,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { resetFormsState } = useExitFormDialog();
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
@@ -161,6 +164,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
           defaultMessage: "Product removed",
         }),
       });
+      resetFormsState();
       navigate(productListUrl());
     },
   });
@@ -206,6 +210,12 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     ProductUrlDialog,
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
+  const setupEmphasized = params.action === "setup";
+  const {
+    isDismissed: setupCardDismissed,
+    dismiss: dismissSetupCard,
+    undismiss: undismissSetupCard,
+  } = useProductSetupCardDismiss(id);
   const [bulkDeleteProductMedia, bulkDeleteProductMediaOpts] = useProductMediaBulkDeleteMutation({
     onCompleted: data => {
       const result = data.productMediaBulkDelete;
@@ -455,6 +465,24 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         variantsLoading={variantsLoading}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata")}
+        onShowSetupChecklist={
+          product
+            ? () => {
+                undismissSetupCard();
+                openModal("setup");
+              }
+            : undefined
+        }
+        setupEmphasized={setupEmphasized}
+        setupCardDismissed={setupCardDismissed}
+        setupCardDisplayReady={Boolean(product) && !loading}
+        onDismissSetupCard={() => {
+          dismissSetupCard();
+
+          if (setupEmphasized) {
+            closeModal();
+          }
+        }}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={submit}

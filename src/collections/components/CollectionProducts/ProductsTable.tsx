@@ -219,7 +219,7 @@ const ProductsTableStatic = (props: ProductsTableProps): JSX.Element => {
 
 const ProductsTableReorderable = (props: ProductsTableProps): JSX.Element => {
   const { products, paginationState } = props;
-  const { items, sensors, isSaving, handleDragEnd } = useProductDrag({
+  const { items, sensors, isSaving, handleDragEnd, handleDragCancel } = useProductDrag({
     products,
     paginationState,
   });
@@ -229,7 +229,12 @@ const ProductsTableReorderable = (props: ProductsTableProps): JSX.Element => {
   }
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+      onDragCancel={handleDragCancel}
+    >
       <ProductsTableBody
         {...props}
         items={items}

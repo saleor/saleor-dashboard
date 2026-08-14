@@ -21,7 +21,7 @@ const DIALOG_QUERY_PARAMS = ["action", "id", "ids", "channelId"];
 // form, so changing it must not trigger the exit prompt either.
 const isFilterQueryKey = (key: string): boolean => /^\d+$/.test(key);
 
-const isTransientQueryKey = (key: string): boolean =>
+export const isTransientQueryKey = (key: string): boolean =>
   DIALOG_QUERY_PARAMS.includes(key) || isFilterQueryKey(key);
 
 // Stringifies with keys sorted so two equivalent query objects with different

@@ -19,7 +19,8 @@
 
 /* Same vertical padding as `.header`; only pull the action in so its right
    inset matches the header’s Y gap (spacing-4), not the wider X (spacing-6).
-   Use size="small" actions in headerEnd so the band stays title-only height. */
+   Use size="small" actions in headerEnd so the band stays title-only height.
+   `DetailSettingsCard` coerces macaw Button / ButtonGroupWithDropdown to small. */
 .headerWithEnd {
   padding-right: var(--mu-spacing-4);
 }

@@ -40,6 +40,7 @@ import {
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { productUrl } from "@dashboard/products/urls";
+import { expandRequiredAttributeErrors } from "@dashboard/products/utils/validation";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -218,7 +219,10 @@ export const ProductVariantCreatePage = ({
         isSaveDisabled,
         attributeRichTextGetters,
       }) => {
-        const errors = [...apiErrors, ...validationErrors];
+        const errors = expandRequiredAttributeErrors(
+          [...apiErrors, ...validationErrors],
+          data.attributes,
+        );
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>

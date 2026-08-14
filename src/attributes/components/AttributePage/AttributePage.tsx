@@ -2,6 +2,7 @@ import {
   AttributeAssignedTypesCard,
   type AttributeAssignedTypesCardProps,
 } from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
+import { defaultGraphiQLQuery } from "@dashboard/attributes/queries";
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import { attributeListPath } from "@dashboard/attributes/urls";
 import {
@@ -20,9 +21,12 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
@@ -43,15 +47,17 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type ChangeEvent, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
-import { type ListSettings, type ReorderAction } from "@dashboard/types";
+import { type ListActions, type ListSettings, type ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { type Option } from "@saleor/macaw-ui-next";
+import { Box, type Option } from "@saleor/macaw-ui-next";
+import { Trash2 } from "lucide-react";
 import type * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -62,6 +68,7 @@ import AttributeOrganization from "../AttributeOrganization";
 import AttributeProperties from "../AttributeProperties";
 import { AttributeReferenceTypesSection } from "../AttributeReferenceTypesSection/AttributeReferenceTypesSection";
 import { AttributeValues } from "../AttributeValues/AttributeValues";
+import { AttributePageLoading } from "./AttributePageLoading";
 import { messages } from "./messages";
 import { AttributeDetailsTitle } from "./Title";
 
@@ -103,6 +110,7 @@ interface AttributePageProps {
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
+  valueList: ListActions;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
   pageInfo: {
@@ -147,6 +155,7 @@ const AttributePage = ({
   onValueDelete,
   onValueReorder,
   onValueUpdate,
+  valueList,
   settings,
   onUpdateListSettings,
   pageInfo,
@@ -164,6 +173,37 @@ const AttributePage = ({
   const navigate = useNavigator();
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const isCreate = attribute === null;
+  const context = useDevModeContext();
+  const openPlaygroundURL = useCallback(() => {
+    if (!attribute?.id) {
+      return;
+    }
+
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${attribute.id}" }`);
+    context.setDevModeVisibility(true);
+  }, [attribute, context]);
+  const menuItems = useMemo((): TopNavMenuItem[] => {
+    if (isCreate) {
+      return [];
+    }
+
+    return [
+      {
+        label: intl.formatMessage(messages.openGraphiQL),
+        onSelect: openPlaygroundURL,
+        testId: "graphiql-redirect",
+        icon: <GraphqlIcon />,
+      },
+      {
+        label: intl.formatMessage(messages.deleteAttribute),
+        onSelect: onDelete,
+        testId: "delete-attribute",
+        color: "critical1",
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      },
+    ];
+  }, [intl, isCreate, onDelete, openPlaygroundURL]);
   const initialForm = useMemo(
     () => getAttributePageInitialForm(attribute, defaultAttributeType),
     [attribute, defaultAttributeType],
@@ -202,8 +242,18 @@ const AttributePage = ({
   const productRefSearch = useProductTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
   const pageRefSearch = usePageTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
+  if (attribute === undefined) {
+    return (
+      <AttributePageLoading
+        attributePageBackLink={attributePageBackLink}
+        onShowMetadata={onShowMetadata}
+      />
+    );
+  }
+
   return (
     <Form
+      key={attribute?.id ?? "create"}
       confirmLeave
       initial={initialForm}
       onSubmit={handleSubmit}
@@ -282,6 +332,8 @@ const AttributePage = ({
                           ? {
                               name: attribute.name,
                               type: attribute.type,
+                              inputType: attribute.inputType,
+                              unit: attribute.unit,
                             }
                           : null
                       }
@@ -313,39 +365,48 @@ const AttributePage = ({
                     }
                   />
                 )}
-              </TopNav>
-              <DetailPageLayout.Content>
-                <AttributeDetails
-                  canChangeType={isCreate}
-                  data={data}
-                  disabled={disabled}
-                  apiErrors={apiErrors}
-                  onChange={handleChange}
-                  onUnitChange={unit => {
-                    if ((data.unit ?? null) !== (unit ?? null)) {
-                      set({ unit });
-                      triggerChange();
+                {menuItems.length > 0 && (
+                  <TopNav.Menu
+                    items={
+                      disabled || !attribute
+                        ? menuItems.map(item => ({ ...item, disabled: true }))
+                        : menuItems
                     }
-                  }}
-                  errors={errors}
-                  setError={setError}
-                  clearErrors={clearErrors}
-                />
-                <CardSpacer />
-                {showReferenceTypes && (
-                  <AttributeReferenceTypesSection
-                    disabled={disabled}
-                    entityType={data.entityType ?? undefined}
-                    fetchMore={fetchMoreReferenceTypes}
-                    fetchOptions={activeRefSearch.search}
-                    loading={Boolean(fetchMoreReferenceTypes?.loading)}
-                    onChange={event => set({ referenceTypes: event.target.value })}
-                    options={referenceTypeOptions}
-                    value={data.referenceTypes}
+                    dataTestId="menu"
                   />
                 )}
-                {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
-                  <>
+              </TopNav>
+              <DetailPageLayout.Content>
+                <DetailPageContent>
+                  <AttributeDetails
+                    canChangeType={isCreate}
+                    data={data}
+                    disabled={disabled}
+                    apiErrors={apiErrors}
+                    onChange={handleChange}
+                    onUnitChange={unit => {
+                      if ((data.unit ?? null) !== (unit ?? null)) {
+                        set({ unit });
+                        triggerChange();
+                      }
+                    }}
+                    errors={errors}
+                    setError={setError}
+                    clearErrors={clearErrors}
+                  />
+                  {showReferenceTypes && (
+                    <AttributeReferenceTypesSection
+                      disabled={disabled}
+                      entityType={data.entityType ?? undefined}
+                      fetchMore={fetchMoreReferenceTypes}
+                      fetchOptions={activeRefSearch.search}
+                      loading={Boolean(fetchMoreReferenceTypes?.loading)}
+                      onChange={event => set({ referenceTypes: event.target.value })}
+                      options={referenceTypeOptions}
+                      value={data.referenceTypes}
+                    />
+                  )}
+                  {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
                     <AttributeValues
                       inputType={data.inputType}
                       disabled={disabled}
@@ -361,35 +422,29 @@ const AttributePage = ({
                       onPreviousPage={onPreviousPage}
                       searchQuery={searchQuery}
                       onSearchChange={onSearchChange}
+                      {...valueList}
                     />
-                  </>
-                )}
-                {attribute === null && (
-                  <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
-                )}
+                  )}
+                  {attribute === null && (
+                    <Metadata data={data} isLoading={disabled} onChange={changeMetadata} />
+                  )}
+                </DetailPageContent>
               </DetailPageLayout.Content>
-              <DetailPageLayout.RightSidebar>
-                {attribute === null && (
-                  <>
+              <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
+                <Box display="flex" flexDirection="column" gap={4}>
+                  {attribute === null && (
                     <AttributeOrganization data={data} disabled={disabled} onChange={change} />
-                    <CardSpacer />
-                  </>
-                )}
-                <AttributeProperties
-                  data={data}
-                  errors={apiErrors}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                {assignedTypes && (
-                  <>
-                    <CardSpacer />
-                    <AttributeAssignedTypesCard {...assignedTypes} />
-                  </>
-                )}
+                  )}
+                  <AttributeProperties
+                    data={data}
+                    errors={apiErrors}
+                    disabled={disabled}
+                    onChange={change}
+                  />
+                  {assignedTypes && <AttributeAssignedTypesCard {...assignedTypes} />}
+                </Box>
               </DetailPageLayout.RightSidebar>
               <Savebar>
-                {attribute !== null && <Savebar.DeleteButton onClick={onDelete} />}
                 <Savebar.Spacer />
                 <Savebar.CancelButton onClick={() => navigate(attributePageBackLink)} />
                 <Savebar.ConfirmButton

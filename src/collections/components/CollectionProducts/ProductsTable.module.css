@@ -4,9 +4,13 @@
 
 .headerRow {
   background-color: var(--mu-colors-background-default2);
+  height: 40px;
 }
 
 .headerRow > td {
+  height: 40px;
+  max-height: 40px;
+  box-sizing: border-box;
   padding: var(--mu-spacing-2) !important;
   border-top-width: 0 !important;
   border-bottom-width: 1px !important;

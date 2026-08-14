@@ -4,7 +4,7 @@ import {
   type MergedAssignedType,
   mergeProductAssignedTypeUsage,
 } from "@dashboard/attributes/utils/mergeProductAssignedTypeUsage";
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { Link } from "@dashboard/components/Link";
 import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { AttributeTypeEnum } from "@dashboard/graphql";
@@ -33,24 +33,30 @@ interface UsageTypeRowProps {
   roles?: AssignedTypeRole[];
 }
 
-const UsageTypeRow = ({ name, href, roles }: UsageTypeRowProps) => {
+const UsageTypeRow = ({ name, href, roles }: UsageTypeRowProps): JSX.Element => {
   const intl = useIntl();
 
   return (
     <Box as="li" className={styles.listItem}>
       <Link href={href} color="secondary" className={styles.typeName}>
-        {name}
+        <Text size={3} fontWeight="medium" as="span">
+          {name}
+        </Text>
       </Link>
       {roles && roles.length > 0 && (
         <span className={styles.roleGroup}>
           {roles.includes("product") && (
             <span className={styles.rolePill}>
-              {intl.formatMessage(attributeAssignedTypesCardMessages.roleProduct)}
+              <Text size={1} color="default2" fontWeight="medium">
+                {intl.formatMessage(attributeAssignedTypesCardMessages.roleProduct)}
+              </Text>
             </span>
           )}
           {roles.includes("variant") && (
             <span className={styles.rolePill}>
-              {intl.formatMessage(attributeAssignedTypesCardMessages.roleVariant)}
+              <Text size={1} color="default2" fontWeight="medium">
+                {intl.formatMessage(attributeAssignedTypesCardMessages.roleVariant)}
+              </Text>
             </span>
           )}
         </span>
@@ -65,7 +71,7 @@ interface UsageListProps {
   showRoles: boolean;
 }
 
-const UsageList = ({ types, getTypeUrl, showRoles }: UsageListProps) => (
+const UsageList = ({ types, getTypeUrl, showRoles }: UsageListProps): JSX.Element => (
   <Box as="ul" className={styles.list} data-test-id="attribute-usage-list">
     {types.map(type => (
       <UsageTypeRow
@@ -91,28 +97,30 @@ interface UsageCardSkeletonProps {
   showRolePills: boolean;
 }
 
-const UsageCardSkeleton = ({ showRolePills }: UsageCardSkeletonProps) => (
-  <Box display="flex" flexDirection="column" gap={3} data-test-id="attribute-usage-card-skeleton">
-    <Skeleton __width="65%" __height="1rem" />
-    <Box as="ul" className={styles.list}>
-      {USAGE_SKELETON_ROW_WIDTHS.map(width => (
-        <Box as="li" key={width} className={styles.listItem}>
-          <Skeleton className={styles.typeNameSkeleton} __width={width} __height="1rem" />
-          {showRolePills && (
-            <Skeleton className={styles.rolePillSkeleton} __width="48px" __height="18px" />
-          )}
-        </Box>
-      ))}
-    </Box>
+const UsageCardSkeleton = ({ showRolePills }: UsageCardSkeletonProps): JSX.Element => (
+  <Box as="ul" className={styles.list} data-test-id="attribute-usage-card-skeleton">
+    {USAGE_SKELETON_ROW_WIDTHS.map(width => (
+      <Box as="li" key={width} className={styles.listItem}>
+        <Skeleton className={styles.typeNameSkeleton} __width={width} __height="1rem" />
+        {showRolePills && (
+          <Skeleton className={styles.rolePillSkeleton} __width="48px" __height="18px" />
+        )}
+      </Box>
+    ))}
   </Box>
 );
 
-const UsageEmptyState = ({ message, hintMessage, linkMessage, href }: UsageEmptyStateProps) => (
+const UsageEmptyState = ({
+  message,
+  hintMessage,
+  linkMessage,
+  href,
+}: UsageEmptyStateProps): JSX.Element => (
   <Box display="flex" flexDirection="column" gap={2}>
-    <DashboardCard.Subtitle fontSize={3} color="default2">
+    <Text size={3} color="default2">
       <FormattedMessage {...message} />
-    </DashboardCard.Subtitle>
-    <DashboardCard.Subtitle fontSize={3} color="default2">
+    </Text>
+    <Text size={3} color="default2">
       <FormattedMessage
         {...hintMessage}
         values={{
@@ -123,7 +131,7 @@ const UsageEmptyState = ({ message, hintMessage, linkMessage, href }: UsageEmpty
           ),
         }}
       />
-    </DashboardCard.Subtitle>
+    </Text>
   </Box>
 );
 
@@ -134,7 +142,7 @@ export const AttributeAssignedTypesCard = ({
   variantTypes,
   modelTypes,
   modelTypesListHasMore = false,
-}: AttributeAssignedTypesCardProps) => {
+}: AttributeAssignedTypesCardProps): JSX.Element => {
   const intl = useIntl();
   const isProductAttribute = attributeType === AttributeTypeEnum.PRODUCT_TYPE;
   const productUsage = mergeProductAssignedTypeUsage(productTypes, variantTypes);
@@ -143,7 +151,7 @@ export const AttributeAssignedTypesCard = ({
   const hasModelUsage = modelTypeCount > 0;
   const isEmpty = isProductAttribute ? !hasProductUsage : !hasModelUsage;
 
-  const productSummary = (() => {
+  const productSummary: string | null = ((): string | null => {
     if (!hasProductUsage) {
       return null;
     }
@@ -166,89 +174,97 @@ export const AttributeAssignedTypesCard = ({
     });
   })();
 
-  if (loading) {
+  const usageSubtitle: string | null | undefined = ((): string | null | undefined => {
+    if (loading || isEmpty) {
+      return undefined;
+    }
+
+    if (isProductAttribute) {
+      return productSummary;
+    }
+
+    return intl.formatMessage(attributeAssignedTypesCardMessages.summaryModelTypes, {
+      count: modelTypeCount,
+    });
+  })();
+
+  const emptyIntro: JSX.Element | undefined = ((): JSX.Element | undefined => {
+    if (loading || !isEmpty) {
+      return undefined;
+    }
+
+    if (isProductAttribute) {
+      return (
+        <UsageEmptyState
+          message={attributeAssignedTypesCardMessages.emptyProductUsage}
+          hintMessage={attributeAssignedTypesCardMessages.assignOnProductTypeHint}
+          linkMessage={attributeAssignedTypesCardMessages.productTypesLink}
+          href={productTypeListUrl()}
+        />
+      );
+    }
+
     return (
-      <DashboardCard data-test-id="attribute-usage-card">
-        <DashboardCard.Header>
-          <DashboardCard.Title>
-            {intl.formatMessage(attributeAssignedTypesCardMessages.title)}
-          </DashboardCard.Title>
-        </DashboardCard.Header>
-        <DashboardCard.Content>
-          <UsageCardSkeleton showRolePills={isProductAttribute} />
-        </DashboardCard.Content>
-      </DashboardCard>
+      <UsageEmptyState
+        message={attributeAssignedTypesCardMessages.emptyModelUsage}
+        hintMessage={attributeAssignedTypesCardMessages.assignOnModelTypeHint}
+        linkMessage={attributeAssignedTypesCardMessages.modelTypesLink}
+        href={pageTypeListUrl()}
+      />
     );
-  }
+  })();
 
   return (
-    <DashboardCard data-test-id="attribute-usage-card">
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage(attributeAssignedTypesCardMessages.title)}
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        {isProductAttribute && isEmpty && (
-          <UsageEmptyState
-            message={attributeAssignedTypesCardMessages.emptyProductUsage}
-            hintMessage={attributeAssignedTypesCardMessages.assignOnProductTypeHint}
-            linkMessage={attributeAssignedTypesCardMessages.productTypesLink}
-            href={productTypeListUrl()}
-          />
-        )}
+    <DetailSettingsCard
+      data-test-id="attribute-usage-card"
+      title={intl.formatMessage(attributeAssignedTypesCardMessages.title)}
+      subtitle={usageSubtitle}
+      intro={emptyIntro}
+      contentFlush
+    >
+      {loading ? (
+        <UsageCardSkeleton showRolePills={isProductAttribute} />
+      ) : (
+        <>
+          {isProductAttribute && hasProductUsage && (
+            <>
+              <UsageList
+                types={productUsage.types}
+                getTypeUrl={productTypeUrl}
+                showRoles={productUsage.productTypeCount > 0 && productUsage.variantTypeCount > 0}
+              />
+              {productUsage.hasMore && (
+                <Box className={styles.truncated}>
+                  <Text size={2} color="default2">
+                    {intl.formatMessage(attributeAssignedTypesCardMessages.truncatedTypes, {
+                      count: ASSIGNED_TYPES_QUERY_LIMIT,
+                    })}
+                  </Text>
+                </Box>
+              )}
+            </>
+          )}
 
-        {!isProductAttribute && isEmpty && (
-          <UsageEmptyState
-            message={attributeAssignedTypesCardMessages.emptyModelUsage}
-            hintMessage={attributeAssignedTypesCardMessages.assignOnModelTypeHint}
-            linkMessage={attributeAssignedTypesCardMessages.modelTypesLink}
-            href={pageTypeListUrl()}
-          />
-        )}
-
-        {isProductAttribute && hasProductUsage && (
-          <Box display="flex" flexDirection="column" gap={3}>
-            <Text size={2} color="default2">
-              {productSummary}
-            </Text>
-            <UsageList
-              types={productUsage.types}
-              getTypeUrl={productTypeUrl}
-              showRoles={productUsage.productTypeCount > 0 && productUsage.variantTypeCount > 0}
-            />
-            {productUsage.hasMore && (
-              <Text size={1} color="default2">
-                {intl.formatMessage(attributeAssignedTypesCardMessages.truncatedTypes, {
-                  count: ASSIGNED_TYPES_QUERY_LIMIT,
-                })}
-              </Text>
-            )}
-          </Box>
-        )}
-
-        {!isProductAttribute && hasModelUsage && modelTypes && (
-          <Box display="flex" flexDirection="column" gap={3}>
-            <Text size={2} color="default2">
-              {intl.formatMessage(attributeAssignedTypesCardMessages.summaryModelTypes, {
-                count: modelTypeCount,
-              })}
-            </Text>
-            <UsageList
-              types={modelTypes.items.map(type => ({ ...type, roles: [] }))}
-              getTypeUrl={pageTypeUrl}
-              showRoles={false}
-            />
-            {modelTypesListHasMore && (
-              <Text size={1} color="default2">
-                {intl.formatMessage(attributeAssignedTypesCardMessages.truncatedTypes, {
-                  count: ASSIGNED_TYPES_QUERY_LIMIT,
-                })}
-              </Text>
-            )}
-          </Box>
-        )}
-      </DashboardCard.Content>
-    </DashboardCard>
+          {!isProductAttribute && hasModelUsage && modelTypes && (
+            <>
+              <UsageList
+                types={modelTypes.items.map(type => ({ ...type, roles: [] }))}
+                getTypeUrl={pageTypeUrl}
+                showRoles={false}
+              />
+              {modelTypesListHasMore && (
+                <Box className={styles.truncated}>
+                  <Text size={2} color="default2">
+                    {intl.formatMessage(attributeAssignedTypesCardMessages.truncatedTypes, {
+                      count: ASSIGNED_TYPES_QUERY_LIMIT,
+                    })}
+                  </Text>
+                </Box>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </DetailSettingsCard>
   );
 };

@@ -1,5 +1,10 @@
 import { UserContext } from "@dashboard/auth/useUser";
-import { AttributeTypeEnum, PermissionEnum, type UserFragment } from "@dashboard/graphql";
+import {
+  AttributeInputTypeEnum,
+  AttributeTypeEnum,
+  PermissionEnum,
+  type UserFragment,
+} from "@dashboard/graphql";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
 import { type ReactElement, type ReactNode } from "react";
@@ -10,6 +15,7 @@ import { AttributeDetailsTitle } from "./Title";
 const attribute = {
   name: "Color",
   type: AttributeTypeEnum.PRODUCT_TYPE,
+  inputType: AttributeInputTypeEnum.DROPDOWN,
 };
 
 const mockUser: UserFragment = {
@@ -63,6 +69,7 @@ describe("AttributeDetailsTitle", () => {
     renderTitle(<AttributeDetailsTitle loading />);
 
     // Assert
+    expect(screen.getByTestId("attribute-details-type-skeleton")).toBeInTheDocument();
     expect(screen.getByTestId("attribute-details-title-skeleton")).toBeInTheDocument();
     expect(screen.getByTestId("attribute-details-class-skeleton")).toBeInTheDocument();
   });
@@ -73,6 +80,7 @@ describe("AttributeDetailsTitle", () => {
 
     // Assert
     expect(screen.getByText("Color")).toBeInTheDocument();
+    expect(screen.getByLabelText("Dropdown")).toBeInTheDocument();
     expect(screen.queryByTestId("attribute-details-title-skeleton")).not.toBeInTheDocument();
   });
 
@@ -82,6 +90,7 @@ describe("AttributeDetailsTitle", () => {
 
     // Assert
     expect(screen.getByText("Color")).toBeInTheDocument();
+    expect(screen.getByLabelText("Dropdown")).toBeInTheDocument();
 
     const classLink = screen.getByText("Product Attribute").closest("a");
 

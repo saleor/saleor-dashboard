@@ -54,6 +54,7 @@ import {
   replaceFormsetChannelListings,
   replaceFormsetStockValues,
 } from "@dashboard/products/utils/handlers";
+import { scrollToVariantAttributeErrors } from "@dashboard/products/utils/scrollToVariantAttributeErrors";
 import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -297,6 +298,8 @@ function useProductVariantCreateForm(
     setValidationErrors(validationProductErrors);
 
     if (validationProductErrors.length > 0) {
+      scrollToVariantAttributeErrors(validationProductErrors);
+
       return validationProductErrors;
     }
 

@@ -6,6 +6,7 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -35,7 +36,10 @@ import { useIntl } from "react-intl";
 import PageTypeAttributes from "../PageTypeAttributes/PageTypeAttributes";
 import PageTypeDetails from "../PageTypeDetails/PageTypeDetails";
 import { messages } from "./messages";
+import { PageTypeDetailsPageLoading } from "./PageTypeDetailsPageLoading";
 import { PageTypeDetailsTitle } from "./Title";
+
+const emptyPageTypeAttributes: NonNullable<PageTypeDetailsFragment["attributes"]> = [];
 
 export interface PageTypeForm extends MetadataFormData {
   name: string;
@@ -137,8 +141,18 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
     [extensionMenuItems, intl, onDelete, openPlaygroundURL],
   );
 
+  if (!pageType) {
+    return (
+      <PageTypeDetailsPageLoading
+        pageTypeListBackLink={pageTypeListBackLink}
+        onShowMetadata={onShowMetadata}
+      />
+    );
+  }
+
   return (
     <Form
+      key={pageType.id}
       confirmLeave
       initial={formInitialData}
       onSubmit={onSubmit}
@@ -173,21 +187,23 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               />
               <TopNav.Menu items={menuItems} dataTestId="menu" />
             </TopNav>
-            <DetailPageLayout.Content paddingBottom={10}>
-              <PageTypeAttributes
-                attributes={pageType?.attributes}
-                disabled={disabled}
-                type={AttributeTypeEnum.PAGE_TYPE}
-                onAttributeAssign={onAttributeAdd}
-                onAttributeCreate={onAttributeCreate}
-                onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
-                }
-                onAttributeUnassign={onAttributeUnassign}
-                {...attributeList}
-              />
+            <DetailPageLayout.Content>
+              <DetailPageContent>
+                <PageTypeAttributes
+                  attributes={pageType.attributes ?? emptyPageTypeAttributes}
+                  disabled={disabled}
+                  type={AttributeTypeEnum.PAGE_TYPE}
+                  onAttributeAssign={onAttributeAdd}
+                  onAttributeCreate={onAttributeCreate}
+                  onAttributeReorder={(event: ReorderEvent) =>
+                    onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
+                  }
+                  onAttributeUnassign={onAttributeUnassign}
+                  {...attributeList}
+                />
+              </DetailPageContent>
             </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
+            <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
               <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
             </DetailPageLayout.RightSidebar>
             <Savebar>

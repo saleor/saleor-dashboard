@@ -10,8 +10,9 @@ import {
   isProductAssignedToCollection,
 } from "@dashboard/collections/utils";
 import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
 import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
-import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
@@ -38,7 +39,6 @@ import { type MouseEvent, useCallback, useEffect, useMemo, useState } from "reac
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListViews } from "../../../types";
-import { Pagination } from "./Pagination";
 import { ProductsTable } from "./ProductsTable";
 import { ProductTableSkeleton } from "./ProductTableSkeleton";
 import { useCollectionId } from "./useCollectionId";
@@ -288,7 +288,7 @@ const CollectionProducts = ({
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
-      <DetailSettingsCard
+      <AssignableListCard
         title={
           collection ? (
             intl.formatMessage(
@@ -310,14 +310,21 @@ const CollectionProducts = ({
             data-test-id="add-product"
             disabled={disabled}
             variant="secondary"
-            size="small"
             type="button"
             onClick={() => openModal("assign")}
           >
             <FormattedMessage id="scHVdW" defaultMessage="Assign product" description="button" />
           </Button>
         }
-        contentFlush
+        footer={
+          !showProductsSkeleton && visibleProducts.length > 0 ? (
+            <AssignableListPagination
+              inset="drag"
+              numberOfRows={numberOfRows}
+              onUpdateListSettings={updateListSettings}
+            />
+          ) : null
+        }
         data-test-id="collection-products"
       >
         {showProductsSkeleton ? (
@@ -342,10 +349,7 @@ const CollectionProducts = ({
             numberOfRows={numberOfRows}
           />
         )}
-        {!showProductsSkeleton && visibleProducts.length > 0 ? (
-          <Pagination numberOfRows={numberOfRows} onUpdateListSettings={updateListSettings} />
-        ) : null}
-      </DetailSettingsCard>
+      </AssignableListCard>
       <AssignProductDialog
         // Empty list means "no channel constraint yet" — passing [] disables every
         // product (intersection with an empty set). Only gate when channels exist.

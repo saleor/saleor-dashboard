@@ -311,6 +311,7 @@ const ProductCreatePage = ({
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}
+                    productVariantChannelListings={data.channelListings}
                     isCreate={true}
                   />
                 </>

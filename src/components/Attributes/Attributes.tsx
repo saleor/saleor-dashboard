@@ -73,7 +73,7 @@ export const Attributes = ({
   const intl = useIntl();
 
   return (
-    <DashboardCard paddingTop={6}>
+    <DashboardCard paddingTop={6} data-test-id="attributes">
       <DashboardCard.Content>
         <Box display="flex" flexDirection="column" gap={1}>
           <Accordion defaultValue="attributes-accordion">

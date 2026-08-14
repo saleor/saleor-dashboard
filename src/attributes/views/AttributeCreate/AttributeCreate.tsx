@@ -1,3 +1,4 @@
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import {
   type AttributeCreateInput,
   AttributeErrorCode,
@@ -6,17 +7,19 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@dashboard/hooks/useLocalPageInfo";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { buttonMessages } from "@dashboard/intl";
 import { getMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, type ReorderEvent } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { add, isSelected, move, remove, updateAtIndex } from "@dashboard/utils/lists";
 import { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import slugify from "slugify";
 
 import AttributePage, { type AttributePageFormData } from "../../components/AttributePage";
@@ -54,6 +57,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
   const intl = useIntl();
   const [values, setValues] = useState<AttributeValueEditDialogFormData[]>([]);
   const [valueErrors, setValueErrors] = useState<AttributeErrorFragment[]>([]);
+  const valueListActions = useBulkActions();
   const { updateListSettings, settings } = useListSettings(ListViews.ATTRIBUTE_VALUE_LIST);
   const { pageInfo, pageValues, loadNextPage, loadPreviousPage, loadPage } = useLocalPageInfo(
     values,
@@ -75,7 +79,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
   });
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const id: ParamId = params.id ? parseInt(params.id, 10) + pageInfo.startCursor : undefined;
+  const id: ParamId = params.id ? parseInt(params.id, 10) : undefined;
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeAddUrlDialog,
     AttributeAddUrlQueryParams
@@ -90,6 +94,14 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
       setValues(newValues);
     }
 
+    valueListActions.reset();
+    closeModal();
+  };
+  const handleValuesDelete = () => {
+    const indexes = new Set((params.ids ?? []).map(valueId => parseInt(valueId, 10)));
+
+    setValues(values.filter((_, index) => !indexes.has(index)));
+    valueListActions.reset();
     closeModal();
   };
   const handleValueUpdate = (input: AttributeValueEditDialogFormData) => {
@@ -103,25 +115,53 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
       closeModal();
     }
   };
-  const handleValueCreate = (input: AttributeValueEditDialogFormData) => {
-    if (isSelected(input, values, areValuesEqual)) {
-      setValueErrors([attributeValueAlreadyExistsError]);
-    } else {
-      const newValues = add(input, values);
+  const handleValueCreateMany = (inputs: AttributeValueEditDialogFormData[]) => {
+    let next = values;
+    let addedCount = 0;
+    let hadDuplicate = false;
 
-      setValues(newValues);
+    inputs.forEach(input => {
+      const name = input.name.trim();
 
-      const addedToNotVisibleLastPage =
-        newValues.length - pageInfo.startCursor > settings.rowNumber;
-
-      if (addedToNotVisibleLastPage) {
-        const maxPage = getMaxPage(newValues.length, settings.rowNumber);
-
-        loadPage(maxPage);
+      if (!name) {
+        return;
       }
 
-      closeModal();
+      const item: AttributeValueEditDialogFormData = { ...input, name };
+
+      if (isSelected(item, next, areValuesEqual)) {
+        hadDuplicate = true;
+
+        return;
+      }
+
+      next = add(item, next);
+      addedCount += 1;
+    });
+
+    if (addedCount === 0) {
+      if (hadDuplicate) {
+        setValueErrors([attributeValueAlreadyExistsError]);
+      }
+
+      return;
     }
+
+    setValues(next);
+    setValueErrors([]);
+
+    const addedToNotVisibleLastPage = next.length - pageInfo.startCursor > settings.rowNumber;
+
+    if (addedToNotVisibleLastPage) {
+      const maxPage = getMaxPage(next.length, settings.rowNumber);
+
+      loadPage(maxPage);
+    }
+
+    closeModal();
+  };
+  const handleValueCreate = (input: AttributeValueEditDialogFormData) => {
+    handleValueCreateMany([input]);
   };
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     setValues(
@@ -172,6 +212,19 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
           id,
         })
       }
+      valueList={{
+        isChecked: valueListActions.isSelected,
+        selected: valueListActions.listElements.length,
+        toggle: valueListActions.toggle,
+        toggleAll: valueListActions.toggleAll,
+        toolbar: (
+          <BulkDeleteButton
+            onClick={() => openModal("remove-values", { ids: valueListActions.listElements })}
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </BulkDeleteButton>
+        ),
+      }}
       saveButtonBarState={attributeCreateOpts.status}
       values={{
         __typename: "AttributeValueCountableConnection" as const,
@@ -194,7 +247,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
                   __typename: "File",
                 }
               : null,
-            id: valueIndex.toString(),
+            id: (pageInfo.startCursor + valueIndex).toString(),
             reference: null,
             slug: slugify(value.name).toLowerCase(),
             sortOrder: valueIndex,
@@ -224,6 +277,7 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
             open={params.action === "add-value"}
             onClose={closeModal}
             onSubmit={handleValueCreate}
+            onSubmitMany={handleValueCreateMany}
             inputType={data.inputType}
           />
           {values.length > 0 && (
@@ -235,6 +289,15 @@ const AttributeDetails = ({ params }: AttributeDetailsProps) => {
                 confirmButtonState="default"
                 onClose={closeModal}
                 onConfirm={handleValueDelete}
+              />
+              <AttributeValueDeleteDialog
+                attributeName=""
+                open={params.action === "remove-values"}
+                name=""
+                quantity={params.ids?.length ?? 0}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onConfirm={handleValuesDelete}
               />
               <AttributeValueEditDialog
                 inputType={data.inputType}

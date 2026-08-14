@@ -3,7 +3,7 @@ import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { productListUrlWithProductType } from "@dashboard/products/urls";
 import { Box, Skeleton, Text, type TextProps, Tooltip } from "@saleor/macaw-ui-next";
-import { Tag } from "lucide-react";
+import { Shapes } from "lucide-react";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -97,7 +97,7 @@ export const ProductTypeDisplay = ({
       data-test-id={dataTestId}
       aria-label={ariaLabel}
     >
-      {!hideIcon && <Tag size={iconSize} aria-hidden="true" />}
+      {!hideIcon && <Shapes size={iconSize} aria-hidden="true" />}
       <span className={styles.name} title={nameTitle}>
         {productType.name}
       </span>

@@ -4,18 +4,18 @@ import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import type * as React from "react";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   modelTypesPath,
   pageTypeAddPath,
+  pageTypeListUrl,
   type PageTypeListUrlQueryParams,
   PageTypeListUrlSortField,
   pageTypePath,
   type PageTypeUrlQueryParams,
 } from "./urls";
-import PageTypeCreate from "./views/PageTypeCreate";
 import PageTypeDetailsComponent from "./views/PageTypeDetails";
 import PageTypeListComponent from "./views/PageTypeList";
 
@@ -25,6 +25,9 @@ const PageTypeList = ({ location }: RouteComponentProps<{}>) => {
 
   return <PageTypeListComponent params={params} />;
 };
+
+/** Legacy /model-types/add → create dialog on the list. */
+const PageTypeCreateRedirect = () => <Redirect to={pageTypeListUrl({ action: "create" })} />;
 
 interface PageTypeDetailsRouteParams {
   id: string;
@@ -45,7 +48,7 @@ const PageTypeRouter = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.modelTypes)} />
       <Switch>
         <Route exact path={modelTypesPath} component={PageTypeList} />
-        <Route exact path={pageTypeAddPath} component={PageTypeCreate} />
+        <Route exact path={pageTypeAddPath} component={PageTypeCreateRedirect} />
         <Route path={pageTypePath(":id")} component={PageTypeDetails} />
       </Switch>
     </>

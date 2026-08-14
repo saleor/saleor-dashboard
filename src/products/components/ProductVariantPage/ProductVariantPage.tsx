@@ -45,6 +45,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { rippleProductVariantMetadata } from "@dashboard/products/ripples/productVariantMetadata";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { expandRequiredAttributeErrors } from "@dashboard/products/utils/validation";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productVariantUrl } from "@dashboard/translations/urls";
@@ -344,7 +345,10 @@ export const ProductVariantPage = ({
                   byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
                 );
                 const media = getSelectedMedia(productMedia, data.media);
-                const errors = [...apiErrors, ...validationErrors];
+                const errors = expandRequiredAttributeErrors(
+                  [...apiErrors, ...validationErrors],
+                  data.attributes,
+                );
                 const priceVariantErrors = [...channelErrors, ...validationErrors];
 
                 return (

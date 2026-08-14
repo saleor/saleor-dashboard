@@ -126,7 +126,8 @@ export const attributeListUrlWithAttributeTypePreset = (attributeType: Attribute
 
 export type AttributeAddUrlDialog = "add-value" | "edit-value" | "remove-value" | "remove-values";
 export type AttributeAddUrlQueryParams = Dialog<AttributeAddUrlDialog> &
-  SingleAction & {
+  SingleAction &
+  BulkAction & {
     type?: AttributeTypeEnum;
   };
 

@@ -1,4 +1,8 @@
 import {
+  EMPTY_IMAGE_ICON_SIZE,
+  getEmptyImageIconDataUri,
+} from "@dashboard/components/EmptyImage/renderEmptyImageIconSvg";
+import {
   type CustomCell,
   type CustomRenderer,
   getMiddleCenterBias,
@@ -40,11 +44,19 @@ export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
       ctx.stroke();
       ctx.clip();
       ctx.drawImage(imageResult, drawX, drawY, size, size);
-    } else {
-      ctx.beginPath();
+    } else if (!image) {
       roundedImage(ctx, drawX, drawY, size, size, 4);
-      ctx.fillStyle = theme.borderColor;
-      ctx.fill();
+      ctx.strokeStyle = theme.borderColor;
+      ctx.stroke();
+
+      const icon = imageLoader.loadOrGetImage(getEmptyImageIconDataUri(theme.textLight), col, row);
+
+      if (icon) {
+        const iconX = drawX + (size - EMPTY_IMAGE_ICON_SIZE) / 2;
+        const iconY = drawY + (size - EMPTY_IMAGE_ICON_SIZE) / 2;
+
+        ctx.drawImage(icon, iconX, iconY, EMPTY_IMAGE_ICON_SIZE, EMPTY_IMAGE_ICON_SIZE);
+      }
     }
 
     ctx.restore();

@@ -5,7 +5,7 @@ import { giftCardSettingsPath } from "@dashboard/giftCards/urls";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import { createConfigurationLucideIcon } from "@dashboard/icons/createNavigationLucideIcon";
 import { ConfigurationModelingIcon } from "@dashboard/icons/Modeling";
-import { ConfigurationProductsIcon } from "@dashboard/icons/Products";
+import { ConfigurationProductTypesIcon } from "@dashboard/icons/ProductTypes";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
 import { notificationsSettingsUrl } from "@dashboard/notificationsSettings/urls";
@@ -139,7 +139,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "n0RwMK",
             defaultMessage: "Define types of products you sell",
           }),
-          icon: <ConfigurationProductsIcon />,
+          icon: <ConfigurationProductTypesIcon />,
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage(sectionNames.productTypes),
           url: productTypeListUrl(),

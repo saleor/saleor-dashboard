@@ -5,12 +5,14 @@ import {
 } from "@dashboard/attributes/utils/data";
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
+import { channelUrl } from "@dashboard/channels/urls";
 import { type ChannelData } from "@dashboard/channels/utils";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -18,6 +20,7 @@ import { type AttributeInput, Attributes } from "@dashboard/components/Attribute
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
@@ -49,6 +52,7 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { maybe } from "@dashboard/misc";
 import { ProductExternalMediaDialog } from "@dashboard/products/components/ProductExternalMediaDialog/ProductExternalMediaDialog";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
@@ -68,6 +72,7 @@ import { type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { type UseRichTextResult } from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
 import { Box, Divider, type Option } from "@saleor/macaw-ui-next";
+import { ListChecks, Shapes, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -77,7 +82,14 @@ import { AvailabilityCard } from "../ProductDoctor/AvailabilityCard";
 import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/useProductAvailabilityDiagnostics";
 import { useProductDoctorVariants } from "../ProductDoctor/hooks/useProductDoctorVariants";
 import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToDiagnosticData";
+import { mergeFormDataWithChannelSummaries } from "../ProductDoctor/utils/mergeChannelSummaries";
 import ProductMedia from "../ProductMedia";
+import {
+  getMakeAvailableChannelOpts,
+  getProductSetupReadinessFromPage,
+} from "../ProductSetupCard/buildProductSetupReadiness";
+import { ProductSetupCard } from "../ProductSetupCard/ProductSetupCard";
+import { scrollToProductSetupTarget } from "../ProductSetupCard/scrollToProductSetupTarget";
 import { ProductShipping } from "../ProductShipping";
 import { ProductTaxes } from "../ProductTaxes/ProductTaxes";
 import { ProductVariants } from "../ProductVariants/ProductVariants";
@@ -163,6 +175,12 @@ interface ProductUpdatePageProps {
   onSeoClick?: () => any;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   initialConstraints?: InitialConstraints & InitialPageConstraints;
+  /** When set, TopNav offers “Show setup checklist”. */
+  onShowSetupChecklist?: () => void;
+  setupEmphasized?: boolean;
+  setupCardDismissed?: boolean;
+  setupCardDisplayReady?: boolean;
+  onDismissSetupCard?: () => void;
 }
 
 const ProductUpdatePage = ({
@@ -232,6 +250,11 @@ const ProductUpdatePage = ({
   onAttributeSelectBlur,
   onFilterChange,
   initialConstraints,
+  onShowSetupChecklist,
+  setupEmphasized = false,
+  setupCardDismissed = false,
+  setupCardDisplayReady = true,
+  onDismissSetupCard,
 }: ProductUpdatePageProps) => {
   // Cache inner form data so it can be passed into App when modal is opened
   const dataCache = useRef<ProductUpdateData | null>(null);
@@ -304,32 +327,17 @@ const ProductUpdatePage = ({
   });
   const showProductDetailsWidgets = PRODUCT_DETAILS_WIDGETS.length > 0 && !!productId;
   const context = useDevModeContext();
-  const openPlaygroundURL = () => {
-    context.setDevModeContent(defaultGraphiQLQuery);
-    context.setVariables(`{ "id": "${product?.id}" }`);
-    context.setDevModeVisibility(true);
-  };
-  const canManageProductTypes =
-    user && hasPermission(PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES, user);
-  const builtInMenuItems = useMemo(() => {
-    const items = [];
-
-    if (canManageProductTypes && product?.productType?.id) {
-      items.push({
-        label: intl.formatMessage(messages.openProductTypeSettings),
-        onSelect: () => navigate(productTypeUrl(product.productType.id)),
-        testId: "open-product-type-settings",
-      });
+  const openPlaygroundURL = useCallback(() => {
+    if (!product?.id) {
+      return;
     }
 
-    items.push({
-      label: intl.formatMessage(messages.openGraphiQL),
-      onSelect: openPlaygroundURL,
-      testId: "graphiql-redirect",
-    });
-
-    return items;
-  }, [canManageProductTypes, intl, navigate, product?.productType?.id]);
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${product.id}" }`);
+    context.setDevModeVisibility(true);
+  }, [context, product?.id]);
+  const canManageProductTypes =
+    user && hasPermission(PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES, user);
   const backLinkProductUrl = useBackLinkWithState({
     path: productListPath,
   });
@@ -528,6 +536,87 @@ const ProductUpdatePage = ({
         const byChannel = mapByChannel(channels);
         const listings = data.channels.updateChannels?.map<ChannelData>(byChannel);
 
+        const mergedChannelSummaries = mergeFormDataWithChannelSummaries(
+          diagnosticsForCard.channelSummaries,
+          data.channels.updateChannels,
+          channels,
+        );
+        const setupReadiness = getProductSetupReadinessFromPage({
+          categoryId: data.category,
+          formChannelListings: data.channels.updateChannels,
+          removeChannelIds: data.channels.removeChannels,
+          channelSummaries: mergedChannelSummaries,
+          diagnostics: diagnosticsForCard,
+          productDiagnostic: productDiagnosticData,
+          mediaCount: media?.length ?? 0,
+          slug: data.slug,
+          seoTitle: data.seoTitle,
+          seoDescription: data.seoDescription,
+        });
+        const showSetupCard =
+          Boolean(product) &&
+          setupCardDisplayReady &&
+          !diagnosticsForCard.isLoading &&
+          // Incomplete doctor walks must not drive readiness; allow force-open via ⚙️.
+          (doctorVariantsComplete || setupEmphasized) &&
+          (setupEmphasized || (!setupCardDismissed && !setupReadiness.coreReady));
+
+        const menuItems: TopNavMenuItem[] = extensionMenuItems.map(item => ({
+          label: item.label,
+          onSelect: item.onSelect,
+          testId: item.testId,
+        }));
+
+        if (onShowSetupChecklist && !showSetupCard) {
+          menuItems.push({
+            label: intl.formatMessage(messages.showSetupChecklist),
+            onSelect: onShowSetupChecklist,
+            testId: "show-setup-checklist",
+            icon: <ListChecks size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          });
+        }
+
+        if (canManageProductTypes && product?.productType?.id) {
+          menuItems.push({
+            label: intl.formatMessage(messages.openProductTypeSettings),
+            onSelect: () => navigate(productTypeUrl(product.productType.id)),
+            testId: "open-product-type-settings",
+            icon: <Shapes size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          });
+        }
+
+        if (product?.id) {
+          menuItems.push({
+            label: intl.formatMessage(messages.openGraphiQL),
+            onSelect: openPlaygroundURL,
+            testId: "graphiql-redirect",
+            icon: <GraphqlIcon />,
+          });
+        }
+
+        if (product) {
+          menuItems.push({
+            label: intl.formatMessage(messages.deleteProduct),
+            onSelect: onDelete,
+            testId: "delete-product",
+            color: "critical1",
+            icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+          });
+        }
+
+        const handleMakeAvailable = () => {
+          const opts = getMakeAvailableChannelOpts();
+          const channelIds =
+            data.channels.updateChannels
+              ?.filter(listing => !(data.channels.removeChannels ?? []).includes(listing.channelId))
+              .map(listing => listing.channelId) ?? [];
+
+          channelIds.forEach(channelId => {
+            handlers.changeChannels(channelId, opts);
+          });
+          scrollToProductSetupTarget("availability");
+        };
+
         const entityType = getReferenceAttributeEntityTypeFromAttribute(
           assignReferencesAttributeId,
           data.attributes,
@@ -568,13 +657,49 @@ const ProductUpdatePage = ({
                     }
                   />
                 )}
-                <TopNav.Menu
-                  items={[...extensionMenuItems, ...builtInMenuItems]}
-                  dataTestId="menu"
-                />
+                {menuItems.length > 0 && (
+                  <TopNav.Menu
+                    items={
+                      disabled || !product
+                        ? menuItems.map(item => ({ ...item, disabled: true }))
+                        : menuItems
+                    }
+                    dataTestId="menu"
+                  />
+                )}
               </TopNav>
 
               <DetailPageLayout.Content paddingBottom={10}>
+                {showSetupCard ? (
+                  <ProductSetupCard
+                    readiness={setupReadiness}
+                    disabled={disabled}
+                    onDismiss={onDismissSetupCard}
+                    onManageChannels={() => setChannelPickerOpen(true)}
+                    onFinishChannelSetup={() => {
+                      if (setupReadiness.setupChannelId) {
+                        navigate(channelUrl(setupReadiness.setupChannelId, { action: "setup" }));
+
+                        return;
+                      }
+
+                      setChannelPickerOpen(true);
+                    }}
+                    onMakeAvailable={handleMakeAvailable}
+                    isShippingRequired={
+                      diagnosticsForCard.isShippingRequired ??
+                      product?.productType?.isShippingRequired ??
+                      true
+                    }
+                    productAttributeCount={data.attributes.length}
+                    variantAttributeCount={product?.productType.variantAttributes?.length ?? 0}
+                    onOpenProductType={
+                      canManageProductTypes && product?.productType?.id
+                        ? () => navigate(productTypeUrl(product.productType.id))
+                        : undefined
+                    }
+                  />
+                ) : null}
                 {saveSteps.length > 0 && onDismissSaveSteps ? (
                   <ProductSaveStepsBanner steps={saveSteps} onDismiss={onDismissSaveSteps} />
                 ) : null}
@@ -628,37 +753,41 @@ const ProductUpdatePage = ({
                     <CardSpacer />
                   </>
                 )}
-                <ProductVariants
-                  productId={productId}
-                  productTypeId={product?.productType.id ?? ""}
-                  productName={product?.name}
-                  errors={variantListErrors}
-                  channels={listings}
-                  limits={limits}
-                  variants={variants}
-                  variantsSearch={variantsSearch}
-                  onVariantsSearchChange={onVariantsSearchChange}
-                  variantsPageInfo={variantsPageInfo}
-                  onVariantsNextPage={onVariantsNextPage}
-                  onVariantsPreviousPage={onVariantsPreviousPage}
-                  variantsRangeLabel={variantsRangeLabel}
-                  variantsTotalCount={variantsTotalCount}
-                  variantsLoading={variantsLoading}
-                  pendingVariantDeleteCount={pendingVariantDeleteCount}
-                  variantAttributes={product?.productType.variantAttributes}
-                  selectionVariantAttributes={product?.productType.selectionVariantAttributes}
-                  nonSelectionVariantAttributes={product?.productType.nonSelectionVariantAttributes}
-                  hasVariants={hasVariants ?? false}
-                  onAttributeValuesSearch={onAttributeValuesSearch}
-                  onChange={handlers.changeVariants}
-                  onStageVariantRemovals={handlers.stageVariantRemovals}
-                  onRowClick={onVariantShow}
-                  onStageVariantCreates={handlers.stageVariantCreates}
-                  stagedVariantCreates={stagedVariantCreates}
-                  onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
-                  onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
-                  onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
-                />
+                <Box data-test-id="product-variants">
+                  <ProductVariants
+                    productId={productId}
+                    productTypeId={product?.productType.id ?? ""}
+                    productName={product?.name}
+                    errors={variantListErrors}
+                    channels={listings}
+                    limits={limits}
+                    variants={variants}
+                    variantsSearch={variantsSearch}
+                    onVariantsSearchChange={onVariantsSearchChange}
+                    variantsPageInfo={variantsPageInfo}
+                    onVariantsNextPage={onVariantsNextPage}
+                    onVariantsPreviousPage={onVariantsPreviousPage}
+                    variantsRangeLabel={variantsRangeLabel}
+                    variantsTotalCount={variantsTotalCount}
+                    variantsLoading={variantsLoading}
+                    pendingVariantDeleteCount={pendingVariantDeleteCount}
+                    variantAttributes={product?.productType.variantAttributes}
+                    selectionVariantAttributes={product?.productType.selectionVariantAttributes}
+                    nonSelectionVariantAttributes={
+                      product?.productType.nonSelectionVariantAttributes
+                    }
+                    hasVariants={hasVariants ?? false}
+                    onAttributeValuesSearch={onAttributeValuesSearch}
+                    onChange={handlers.changeVariants}
+                    onStageVariantRemovals={handlers.stageVariantRemovals}
+                    onRowClick={onVariantShow}
+                    onStageVariantCreates={handlers.stageVariantCreates}
+                    stagedVariantCreates={stagedVariantCreates}
+                    onRemoveStagedVariantCreates={handlers.removeStagedVariantCreates}
+                    onClearStagedVariantCreates={handlers.clearStagedVariantCreates}
+                    onReplaceStagedVariantCreates={handlers.replaceStagedVariantCreates}
+                  />
+                </Box>
                 <CardSpacer />
                 <SeoForm
                   errors={productErrors}
@@ -732,7 +861,6 @@ const ProductUpdatePage = ({
               </DetailPageLayout.RightSidebar>
 
               <Savebar>
-                <Savebar.DeleteButton onClick={onDelete} />
                 <Savebar.Spacer />
                 <ProductSaveCompositionHint composition={saveComposition} />
                 <Savebar.CancelButton onClick={() => navigate(productListUrl())} />

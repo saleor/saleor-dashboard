@@ -1,3 +1,4 @@
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import { ProductErrorCode, type ProductErrorWithAttributesFragment } from "@dashboard/graphql";
 import { type IntlShape } from "react-intl";
 import { z } from "zod";
@@ -17,13 +18,56 @@ const toChannelPriceField = (id: string) => `${id}-channelListing-price`;
 const createRequiredError = (
   field: string,
   message: string | null = null,
+  attributes: string[] = [],
 ): ProductErrorWithAttributesFragment => ({
   __typename: "ProductError",
   code: ProductErrorCode.REQUIRED,
   field,
   message,
-  attributes: [],
+  attributes,
 });
+
+export const isAttributeValueEmpty = (attribute: AttributeInput): boolean => {
+  const values = attribute.value ?? [];
+
+  if (values.length === 0) {
+    return true;
+  }
+
+  return values.every(value => value == null || value === "" || value === "unset");
+};
+
+const getEmptyRequiredAttributeIds = (attributes: AttributeInput[] | undefined): string[] =>
+  (attributes ?? [])
+    .filter(attribute => attribute.data?.isRequired && isAttributeValueEmpty(attribute))
+    .map(attribute => attribute.id);
+
+/**
+ * Attribute rows match `error.attributes` (not `error.field`). API REQUIRED
+ * errors sometimes omit that list — fill it from empty required values so
+ * each field can show an inline error.
+ */
+export const expandRequiredAttributeErrors = (
+  errors: ProductErrorWithAttributesFragment[],
+  attributes: AttributeInput[] | undefined,
+): ProductErrorWithAttributesFragment[] =>
+  errors.flatMap(error => {
+    if (
+      error.code !== ProductErrorCode.REQUIRED ||
+      error.field !== "attributes" ||
+      (error.attributes?.length ?? 0) > 0
+    ) {
+      return [error];
+    }
+
+    const missingIds = getEmptyRequiredAttributeIds(attributes);
+
+    if (missingIds.length === 0) {
+      return [error];
+    }
+
+    return missingIds.map(attributeId => ({ ...error, attributes: [attributeId] }));
+  });
 
 export const validateProductCreateData = (data?: ProductCreateData) => {
   let errors: ProductErrorWithAttributesFragment[] = [];
@@ -104,7 +148,14 @@ export const validateProductVariant = (data: ProductVariantType, intl: IntlShape
     id: "8pVWve",
   });
 
-  return result.success === true
-    ? []
-    : result.error.issues.map(error => handleValidationError(error, data, defaultMessage));
+  const listingErrors =
+    result.success === true
+      ? []
+      : result.error.issues.map(error => handleValidationError(error, data, defaultMessage));
+
+  const attributeErrors = getEmptyRequiredAttributeIds(data.attributes).map(attributeId =>
+    createRequiredError("attributes", defaultMessage, [attributeId]),
+  );
+
+  return [...listingErrors, ...attributeErrors];
 };

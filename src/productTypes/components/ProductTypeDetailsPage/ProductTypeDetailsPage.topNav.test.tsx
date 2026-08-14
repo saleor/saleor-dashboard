@@ -25,18 +25,12 @@ jest.mock("../ProductTypeDetails/ProductTypeDetails", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-details-mock" />,
 }));
-jest.mock("../ProductTypeConfiguration/ProductTypeConfiguration", () => ({
-  ProductTypeConfiguration: () => <div data-test-id="product-type-configuration-mock" />,
-}));
 jest.mock("../ProductTypeShipping/ProductTypeShipping", () => ({
   __esModule: true,
   default: () => <div data-test-id="product-type-shipping-mock" />,
 }));
 jest.mock("../ProductTypeTaxes/ProductTypeTaxes", () => ({
   ProductTypeTaxes: () => <div data-test-id="product-type-taxes-mock" />,
-}));
-jest.mock("../ProductTypeVariantMode/ProductTypeVariantMode", () => ({
-  ProductTypeVariantMode: () => <div data-test-id="product-type-variant-mode-mock" />,
 }));
 jest.mock("../ProductTypeVariantAttributes/ProductTypeVariantAttributes", () => ({
   __esModule: true,
@@ -108,6 +102,10 @@ const renderPage = ({
   );
 
 describe("ProductTypeDetailsPage top nav", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it("renders the metadata button", () => {
     // Arrange & Act
     renderPage({ productTypeProp: productTypeFixture });
@@ -134,6 +132,7 @@ describe("ProductTypeDetailsPage top nav", () => {
     renderPage({ productTypeProp: undefined });
 
     // Assert
+    expect(screen.getByTestId("product-type-details-loading")).toBeInTheDocument();
     expect(screen.getByTestId("show-product-type-metadata")).toBeDisabled();
   });
 
@@ -150,5 +149,28 @@ describe("ProductTypeDetailsPage top nav", () => {
 
     // Assert
     expect(onDelete).toHaveBeenCalled();
+  });
+
+  it("hides the schematic on dismiss and restores it from the cogs menu", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    renderPage({ productTypeProp: productTypeFixture });
+
+    expect(screen.getByTestId("product-type-pdp-schematic")).toBeInTheDocument();
+    expect(screen.queryByTestId("show-product-page-legend")).not.toBeInTheDocument();
+
+    // Act
+    await user.click(screen.getByTestId("pdp-schematic-dismiss"));
+
+    // Assert
+    expect(screen.queryByTestId("product-type-pdp-schematic")).not.toBeInTheDocument();
+
+    // Act
+    await user.click(screen.getByTestId("show-more-button"));
+    await user.click(screen.getByTestId("show-product-page-legend"));
+
+    // Assert
+    expect(screen.getByTestId("product-type-pdp-schematic")).toBeInTheDocument();
   });
 });

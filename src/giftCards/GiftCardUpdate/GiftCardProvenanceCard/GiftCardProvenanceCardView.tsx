@@ -98,18 +98,18 @@ export const GiftCardProvenanceCardView = ({
               inline={false}
               className={styles.productRow}
             >
-              <Box className={styles.productThumb}>
-                {product.thumbnail?.url ? (
+              {product.thumbnail?.url ? (
+                <Box className={styles.productThumb}>
                   <Box
                     as="img"
                     src={product.thumbnail.url}
                     alt=""
                     className={styles.productThumbImg}
                   />
-                ) : (
-                  <EmptyImage />
-                )}
-              </Box>
+                </Box>
+              ) : (
+                <EmptyImage />
+              )}
               <Text size={3} ellipsis className={styles.productName}>
                 {product.name}
               </Text>

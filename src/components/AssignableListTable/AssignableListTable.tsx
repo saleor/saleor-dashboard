@@ -5,6 +5,7 @@ import { Placeholder } from "@dashboard/components/Placeholder";
 import { buttonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { Box, Button, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { Trash2 } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,6 +17,7 @@ import {
   ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH_COMPACT,
   ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET,
   ASSIGNABLE_LIST_TABLE_LEADING_INSET,
+  ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT,
   type AssignableListTableLeadingInset,
   getAssignableListCheckboxColumnWidth,
 } from "./assignableListTableLayout";
@@ -51,6 +53,11 @@ interface AssignableListTableProps<T extends { id: string }> {
    * when flush inside a DetailSettingsCard so rows align with the title.
    */
   leadingInset?: AssignableListTableLeadingInset;
+  /**
+   * `compact` — text-only rows (default). `media` — 50px thumbnail rows
+   * (collection products, discount products & variants).
+   */
+  density?: "compact" | "media";
 }
 
 const areAllChecked = <T,>(items: T[], selected: number): boolean | "indeterminate" => {
@@ -77,6 +84,7 @@ export const AssignableListTable = <T extends { id: string }>({
   rowTestId = "assignable-list-row",
   "data-test-id": dataTestId = "assignable-list-table",
   leadingInset = ASSIGNABLE_LIST_TABLE_LEADING_INSET,
+  density = "compact",
 }: AssignableListTableProps<T>): JSX.Element => {
   const intl = useIntl();
   const checkboxCellClassName =
@@ -177,7 +185,11 @@ export const AssignableListTable = <T extends { id: string }>({
         {renderCollection(items, item => {
           if (!item) {
             return (
-              <GridTable.Row key="skeleton" __height="50px">
+              <GridTable.Row
+                key="skeleton"
+                className={density === "media" ? styles.rowMedia : undefined}
+                __height={density === "media" ? ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT : undefined}
+              >
                 <GridTable.Cell padding={2}>
                   <Skeleton />
                 </GridTable.Cell>
@@ -190,8 +202,8 @@ export const AssignableListTable = <T extends { id: string }>({
           return (
             <GridTable.Row
               key={item.id}
-              className={styles.row}
-              __height="50px"
+              className={clsx(styles.row, density === "media" && styles.rowMedia)}
+              __height={density === "media" ? ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT : undefined}
               data-test-id={rowTestId}
               backgroundColor={{
                 hover: "default1Hovered",

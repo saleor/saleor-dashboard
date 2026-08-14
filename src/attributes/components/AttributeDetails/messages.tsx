@@ -72,6 +72,17 @@ export const messages = defineMessages({
     defaultMessage: "Catalog Input type for Store Owner",
     description: "attribute's editor component",
   },
+  inputTypeHintLocked: {
+    defaultMessage: "Fixed at creation. To use a different type, create a new attribute.",
+    id: "kyFqDF",
+    description: "helper under locked attribute input type on edit",
+  },
+  entityTypeHintLocked: {
+    defaultMessage:
+      "Fixed at creation. To link a different kind of record, create a new attribute.",
+    id: "HMl0xJ",
+    description: "helper under locked attribute entity type on edit",
+  },
   selectUnit: {
     id: "PiSXjb",
     defaultMessage: "Select unit",

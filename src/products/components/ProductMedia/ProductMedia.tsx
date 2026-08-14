@@ -393,7 +393,7 @@ const ProductMedia = (props: ProductMediaProps) => {
   const showGallery = (media?.length ?? 0) > 0 || pendingMedia.length > 0;
 
   return (
-    <DashboardCard>
+    <DashboardCard data-test-id="product-media">
       <DashboardCard.Header>
         <DashboardCard.Title>
           <FormattedMessage {...messages.media} />

@@ -20,7 +20,7 @@ enum PageTypeListUrlFiltersEnum {
   query = "query",
 }
 export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
-export type PageTypeListUrlDialog = "remove" | TabActionDialog;
+export type PageTypeListUrlDialog = "remove" | "create" | TabActionDialog;
 export enum PageTypeListUrlSortField {
   name = "name",
 }

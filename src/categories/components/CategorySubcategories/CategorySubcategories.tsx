@@ -2,7 +2,7 @@ import { useApolloClient } from "@apollo/client";
 import { useCategorySelectionController } from "@dashboard/categories/views/CategoryList/hooks/useCategorySelectionController";
 import { useCategoryTreeController } from "@dashboard/categories/views/CategoryList/hooks/useCategoryTreeController";
 import { collectDescendantIds } from "@dashboard/categories/views/CategoryList/utils/categoryTree";
-import { Pagination } from "@dashboard/collections/components/CollectionProducts/Pagination";
+import { AssignableListPagination } from "@dashboard/components/AssignableListTable/AssignableListPagination";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { PAGINATE_BY } from "@dashboard/config";
 import { type CategoryDetailsQuery } from "@dashboard/graphql";
@@ -179,12 +179,11 @@ export const CategorySubcategories = ({
       </Box>
 
       {hasSubcategories ? (
-        <Box className={styles.pagination}>
-          <Pagination
-            numberOfRows={numberOfRows}
-            onUpdateListSettings={(key, value) => onUpdateListSettings?.(key, value)}
-          />
-        </Box>
+        <AssignableListPagination
+          inset="nested"
+          numberOfRows={numberOfRows}
+          onUpdateListSettings={(key, value) => onUpdateListSettings?.(key, value)}
+        />
       ) : null}
     </Box>
   );
