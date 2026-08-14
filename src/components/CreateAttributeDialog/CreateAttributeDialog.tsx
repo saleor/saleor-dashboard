@@ -154,7 +154,14 @@ export const CreateAttributeDialog = ({
 
   return (
     <>
-      <DashboardModal onChange={onClose} open={open}>
+      <DashboardModal
+        onChange={nextOpen => {
+          if (!nextOpen) {
+            onClose();
+          }
+        }}
+        open={open}
+      >
         {open ? (
           <Form initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
             {({ change, clearErrors, data, errors, set, setError, submit, triggerChange }) => {

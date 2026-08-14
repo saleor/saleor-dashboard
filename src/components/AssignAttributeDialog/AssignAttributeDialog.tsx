@@ -89,7 +89,14 @@ const AssignAttributeDialog = ({
   });
 
   return (
-    <DashboardModal onChange={onClose} open={open}>
+    <DashboardModal
+      onChange={nextOpen => {
+        if (!nextOpen) {
+          onClose();
+        }
+      }}
+      open={open}
+    >
       <DashboardModal.Content size="sm">
         <DashboardModal.PickerHeader
           toolbar={

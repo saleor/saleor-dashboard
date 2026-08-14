@@ -79,4 +79,40 @@ describe("createDialogActionHandlers", () => {
       history.location = originalLocation;
     }
   });
+
+  it("does not produce a double question mark when pathname already ends with ?", () => {
+    // Arrange - pathname polluted by putting entityUrl(id) into LocationDescriptor.pathname
+    const originalLocation = history.location;
+
+    history.location = {
+      ...originalLocation,
+      pathname: "/product-types/UHJvZHVjdFR5cGU6Mg%3D%3D?",
+      search: "",
+    };
+
+    const navigate = jest.fn();
+    const buildProductTypeUrl = (params: Record<string, unknown>) => {
+      const query = stringifyQs(params);
+
+      return query
+        ? `/product-types/UHJvZHVjdFR5cGU6Mg%3D%3D?${query}`
+        : `/product-types/UHJvZHVjdFR5cGU6Mg%3D%3D`;
+    };
+    const [openModal] = createDialogActionHandlers(navigate, buildProductTypeUrl, {});
+
+    try {
+      // Act
+      openModal("assign-attribute", { type: "PRODUCT" });
+
+      // Assert
+      expect(navigate).toHaveBeenCalledWith(
+        `/product-types/UHJvZHVjdFR5cGU6Mg%3D%3D?${stringifyQs({
+          type: "PRODUCT",
+          action: "assign-attribute",
+        })}`,
+      );
+    } finally {
+      history.location = originalLocation;
+    }
+  });
 });
