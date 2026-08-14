@@ -23,9 +23,11 @@ export const useHomeRouteParams = () => {
   };
 };
 
+type HomeExtensionsSplit = ReturnType<typeof filterHomeExtensions>;
+
 const resolveLeftmostTabUrl = (
-  fullscreen: ReturnType<typeof filterHomeExtensions>["fullscreen"],
-  widgets: ReturnType<typeof filterHomeExtensions>["widgets"],
+  fullscreen: HomeExtensionsSplit["fullscreen"],
+  widgets: HomeExtensionsSplit["widgets"],
 ): string | null => {
   if (fullscreen.length > 0) {
     return homeWidgetUrl(fullscreen[0].id);
@@ -36,6 +38,48 @@ const resolveLeftmostTabUrl = (
   }
 
   return null;
+};
+
+const leftmostTab = (fullscreen: HomeExtensionsSplit["fullscreen"]): HomeActiveTab =>
+  fullscreen.length > 0 ? { kind: "extension", id: fullscreen[0].id } : { kind: "widgets" };
+
+/**
+ * Canonicalize /home and stale widget URLs with <Redirect>, but keep rendering
+ * HomeTabPanels for the destination tab. Returning <Redirect> alone unmounts
+ * keep-alive iframes — the sidebar Home item always goes to /home.
+ */
+const resolveHomeTab = ({
+  extensionId,
+  isWidgetsRoute,
+  fullscreen,
+  widgets,
+  leftmostUrl,
+}: {
+  extensionId: string | undefined;
+  isWidgetsRoute: boolean;
+  fullscreen: HomeExtensionsSplit["fullscreen"];
+  widgets: HomeExtensionsSplit["widgets"];
+  leftmostUrl: string;
+}): { activeTab: HomeActiveTab; redirectTo: string | null } => {
+  if (!extensionId && !isWidgetsRoute) {
+    return { activeTab: leftmostTab(fullscreen), redirectTo: leftmostUrl };
+  }
+
+  if (isWidgetsRoute) {
+    if (widgets.length === 0) {
+      return { activeTab: leftmostTab(fullscreen), redirectTo: leftmostUrl };
+    }
+
+    return { activeTab: { kind: "widgets" }, redirectTo: null };
+  }
+
+  const match = fullscreen.find(extension => extension.id === extensionId);
+
+  if (!match) {
+    return { activeTab: leftmostTab(fullscreen), redirectTo: leftmostUrl };
+  }
+
+  return { activeTab: { kind: "extension", id: match.id }, redirectTo: null };
 };
 
 export const HomePage = () => {
@@ -60,38 +104,27 @@ export const HomePage = () => {
 
   const leftmostUrl = resolveLeftmostTabUrl(fullscreen, widgets);
 
-  // Root path - redirect to leftmost tab
-  if (!extensionId && !isWidgetsRoute) {
-    return <Redirect to={leftmostUrl!} />;
+  if (!leftmostUrl) {
+    return <HomeEmptyState />;
   }
 
-  // /home/widgets but no widget extensions - redirect away
-  if (isWidgetsRoute && widgets.length === 0) {
-    return <Redirect to={leftmostUrl!} />;
-  }
-
-  let activeTab: HomeActiveTab;
-  let activeFullscreenExtension: (typeof fullscreen)[number] | undefined;
-
-  if (isWidgetsRoute) {
-    activeTab = { kind: "widgets" };
-  } else {
-    activeFullscreenExtension = fullscreen.find(extension => extension.id === extensionId);
-
-    // URL points to a missing or unauthorized fullscreen extension - redirect to leftmost tab
-    if (!activeFullscreenExtension) {
-      return <Redirect to={leftmostUrl!} />;
-    }
-
-    activeTab = { kind: "extension", id: activeFullscreenExtension.id };
-  }
+  const { activeTab, redirectTo } = resolveHomeTab({
+    extensionId,
+    isWidgetsRoute,
+    fullscreen,
+    widgets,
+    leftmostUrl,
+  });
 
   return (
-    <HomeTabPanels
-      fullscreen={fullscreen}
-      widgets={widgets}
-      activeTab={activeTab}
-      showWidgetsTab={widgets.length > 0}
-    />
+    <>
+      {redirectTo ? <Redirect to={redirectTo} /> : null}
+      <HomeTabPanels
+        fullscreen={fullscreen}
+        widgets={widgets}
+        activeTab={activeTab}
+        showWidgetsTab={widgets.length > 0}
+      />
+    </>
   );
 };

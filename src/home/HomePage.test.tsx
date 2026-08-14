@@ -1,7 +1,8 @@
 import { type Extension } from "@dashboard/extensions/types";
-import { render, renderHook, screen } from "@testing-library/react";
+import { act, render, renderHook, screen } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import type React from "react";
-import { MemoryRouter, Route } from "react-router-dom";
+import { MemoryRouter, Route, Router } from "react-router-dom";
 
 import { HomePage, useHomeRouteParams } from "./HomePage";
 import { HomeTabPanels } from "./HomeTabPanels";
@@ -160,6 +161,42 @@ describe("HomePage states", () => {
       "href",
       expect.stringContaining("extending-dashboard-with-apps"),
     );
+  });
+
+  it("keeps visited Home iframes mounted when /home redirects to the leftmost tab", () => {
+    // Arrange — sidebar Home always navigates to /home, which then redirects
+    // to the leftmost widget. Returning <Redirect> alone would unmount keep-alive.
+    const pulse = panelExtension("pulse", "Pulse");
+    const onboarding = panelExtension("onboarding", "Get ready to sell");
+
+    useExtensionsWithLoadingStateMock.mockReturnValue({
+      extensions: { HOMEPAGE_WIDGETS: [pulse, onboarding] },
+      loading: false,
+    });
+
+    const history = createMemoryHistory({
+      initialEntries: [homeWidgetUrl("onboarding")],
+    });
+
+    render(
+      <Router history={history}>
+        <Route path={["/home/widget/:extensionId", "/home/widgets", "/home"]}>
+          <HomePage />
+        </Route>
+      </Router>,
+    );
+
+    expect(screen.getByTestId("home-widget-view-onboarding")).toBeInTheDocument();
+    expect(screen.queryByTestId("home-widget-view-pulse")).not.toBeInTheDocument();
+
+    // Act
+    act(() => {
+      history.push("/home");
+    });
+
+    // Assert — Pulse becomes the active (leftmost) tab; Onboarding stays mounted
+    expect(screen.getByTestId("home-widget-view-onboarding")).toBeInTheDocument();
+    expect(screen.getByTestId("home-widget-view-pulse")).toBeInTheDocument();
   });
 });
 
