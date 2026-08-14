@@ -59,6 +59,26 @@ describe("useProductTypeVariantSelection", () => {
     expect(result.current.selectedVariantAttributes).toEqual([]);
   });
 
+  it("drops unassigned attributes from a staged selection draft", () => {
+    // Arrange
+    const { result, rerender } = renderHook(
+      ({ assigned }) => useProductTypeVariantSelection(typeId, assigned),
+      { initialProps: { assigned: assignedWithSelection } },
+    );
+
+    act(() => {
+      result.current.setSelectedVariantAttributes(["attr-1", "attr-2"]);
+    });
+
+    // Act — live unassign removes attr-2
+    rerender({
+      assigned: [assignedWithSelection[0]],
+    });
+
+    // Assert
+    expect(result.current.selectedVariantAttributes).toEqual(["attr-1"]);
+  });
+
   it("drops the draft when opening a different product type", () => {
     // Arrange
     const { result, rerender } = renderHook(

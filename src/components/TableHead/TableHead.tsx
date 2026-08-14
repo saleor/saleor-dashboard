@@ -10,6 +10,7 @@ import { FormattedMessage } from "react-intl";
 
 import { type Node } from "../../types";
 import Checkbox from "../Checkbox";
+import styles from "./TableHead.module.css";
 
 interface TableHeadProps extends MuiTableHeadProps {
   colSpan: number;
@@ -98,7 +99,13 @@ const TableHead = (props: TableHeadProps) => {
     <MuiTableHead {...muiTableHeadProps}>
       <TableRowLink>
         {dragRows && (items === undefined || items.length > 0) && (
-          <TableCell className={compact ? classes.compactDrag : undefined} />
+          <TableCell
+            className={clsx(compact && classes.compactDrag, styles.dragSpacer)}
+            aria-hidden
+            data-test-id="drag-column-spacer"
+          >
+            <span className={styles.dragSpacerFill} />
+          </TableCell>
         )}
         {(items === undefined || items.length > 0) && (
           <TableCell

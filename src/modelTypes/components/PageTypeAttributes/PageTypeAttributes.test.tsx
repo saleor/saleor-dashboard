@@ -1,6 +1,7 @@
 import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 
@@ -85,5 +86,34 @@ describe("PageTypeAttributes value required column", () => {
 
     expect(within(authorRow).getByTestId("value-required")).toHaveTextContent("Required");
     expect(within(languageRow).getByTestId("value-required")).toHaveTextContent("Optional");
+  });
+});
+
+describe("PageTypeAttributes row checkbox", () => {
+  it("toggles without navigating to the attribute", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const history = createMemoryHistory({ initialEntries: ["/model-types/1"] });
+    const toggle = jest.fn();
+
+    render(
+      <Router history={history}>
+        <PageTypeAttributes attributes={attributes} {...listProps} toggle={toggle} />
+      </Router>,
+      { wrapper: Wrapper },
+    );
+
+    const row = screen.getByText("Author").closest("tr");
+
+    if (!row) {
+      throw new Error("Expected a table row for the Author attribute");
+    }
+
+    // Act
+    await user.click(within(row).getByRole("checkbox"));
+
+    // Assert
+    expect(toggle).toHaveBeenCalledWith("attr-author");
+    expect(history.location.pathname).toBe("/model-types/1");
   });
 });
