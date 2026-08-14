@@ -6,7 +6,7 @@ import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSear
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
 
@@ -22,7 +22,12 @@ export const useStaffInvite = ({ onSuccess }: UseStaffInviteOptions = {}) => {
   const { markOnboardingStepAsCompleted } = useOnboarding();
   const onSuccessRef = useRef(onSuccess);
 
-  onSuccessRef.current = onSuccess;
+  useEffect(
+    function syncOnSuccessRef() {
+      onSuccessRef.current = onSuccess;
+    },
+    [onSuccess],
+  );
 
   const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
     // Field errors (e.g. duplicate email) are shown inline on the invite dialog.

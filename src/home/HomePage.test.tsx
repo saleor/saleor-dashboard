@@ -200,22 +200,27 @@ describe("HomePage states", () => {
   });
 });
 
-const panelExtension = (id: string, label: string): Extension =>
-  ({
-    id,
-    app: { id: `app-${id}`, appUrl: "https://app.example", name: label, brand: null },
-    accessToken: "token",
-    permissions: [],
-    label,
-    identifier: null,
-    mountName: "HOMEPAGE_WIDGETS",
-    url: `https://app.example/${id}`,
-    open: () => undefined,
-    targetName: "WIDGET",
-    settings: { homeWidgetTarget: { fullscreen: true, method: "POST" } },
-    isSaleorOfficial: true,
-    fromCache: false,
-  }) as Extension;
+const panelExtension = (id: string, label: string): Extension => ({
+  id,
+  app: {
+    __typename: "App",
+    id: `app-${id}`,
+    appUrl: "https://app.example",
+    name: label,
+    brand: null,
+  },
+  accessToken: "token",
+  permissions: [],
+  label,
+  identifier: null,
+  mountName: "HOMEPAGE_WIDGETS",
+  url: `https://app.example/${id}`,
+  open: () => undefined,
+  targetName: "WIDGET",
+  settings: { homeWidgetTarget: { fullscreen: true, method: "POST" } },
+  isSaleorOfficial: true,
+  fromCache: false,
+});
 
 describe("HomeTabPanels keep-alive", () => {
   it("keeps a visited fullscreen widget mounted when switching tabs", () => {
