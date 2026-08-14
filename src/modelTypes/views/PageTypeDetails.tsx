@@ -2,6 +2,7 @@
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
 import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { usePendingAttributeUnassign } from "@dashboard/components/AttributeUnassignDialog/usePendingAttributeUnassign";
 import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
 import { Button } from "@dashboard/components/Button";
 import {
@@ -66,6 +67,7 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
     PageTypeUrlDialog,
     PageTypeUrlQueryParams
   >(navigate, dialogParams => pageTypeUrl(id, dialogParams), params);
+  const pendingUnassign = usePendingAttributeUnassign(params.id);
   const notifySaved = () =>
     notify({
       status: "success",
@@ -111,6 +113,7 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
           status: "success",
           text: intl.formatMessage({ id: "GVGaij", defaultMessage: "Model type updated" }),
         });
+        pendingUnassign.clear();
         closeModal();
         attributeListActions.reset();
       }
@@ -195,20 +198,34 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
 
     return (await submitWithMetadata(formData)) as AttributeErrorFragment[];
   };
-  const handleAttributeUnassign = () =>
+  const handleAttributeUnassign = () => {
+    const attributeId = pendingUnassign.takeAttributeId();
+
+    if (!attributeId) {
+      return;
+    }
+
     unassignAttribute({
       variables: {
         id,
-        ids: [params.id],
+        ids: [attributeId],
       },
     });
-  const handleBulkAttributeUnassign = () =>
+  };
+  const handleBulkAttributeUnassign = () => {
+    const ids = attributeListActions.listElements.filter(Boolean);
+
+    if (ids.length === 0) {
+      return;
+    }
+
     unassignAttribute({
       variables: {
         id,
-        ids: attributeListActions.listElements,
+        ids,
       },
     });
+  };
   const handleAttributeReorder = (event: ReorderEvent) =>
     reorderAttribute({
       variables: {
@@ -258,11 +275,15 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
         }
         onAttributeCreate={() => openModal("create-attribute")}
         onAttributeReorder={handleAttributeReorder}
-        onAttributeUnassign={attributeId =>
+        onAttributeUnassign={attributeId => {
+          if (!pendingUnassign.beginUnassign(attributeId)) {
+            return;
+          }
+
           openModal("unassign-attribute", {
             id: attributeId,
-          })
-        }
+          });
+        }}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata", { id: undefined })}
         onSubmit={handlePageTypeUpdate}
@@ -359,7 +380,8 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
           description: "dialog header",
         })}
         attributeName={getStringOrPlaceholder(
-          data?.pageType.attributes.find(attribute => attribute.id === params.id)?.name,
+          data?.pageType.attributes.find(attribute => attribute.id === pendingUnassign.attributeId)
+            ?.name,
         )}
         confirmButtonState={unassignAttributeOpts.status}
         onClose={closeModal}

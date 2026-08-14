@@ -15,14 +15,17 @@ const renderVariantAttributes = ({
   selectedVariantAttributes = [attributeId],
   setSelectedVariantAttributes = jest.fn(),
   toggle = jest.fn(),
+  onAttributeUnassign = jest.fn(),
 }: {
   selectedVariantAttributes?: string[];
   setSelectedVariantAttributes?: jest.Mock;
   toggle?: jest.Mock;
+  onAttributeUnassign?: jest.Mock;
 } = {}): {
   history: MemoryHistory;
   setSelectedVariantAttributes: jest.Mock;
   toggle: jest.Mock;
+  onAttributeUnassign: jest.Mock;
 } => {
   const history = createMemoryHistory({ initialEntries: [listPath] });
 
@@ -43,14 +46,14 @@ const renderVariantAttributes = ({
         onAttributeAssign={jest.fn()}
         onAttributeCreate={jest.fn()}
         onAttributeReorder={jest.fn()}
-        onAttributeUnassign={jest.fn()}
+        onAttributeUnassign={onAttributeUnassign}
         onHasVariantsToggle={jest.fn()}
       />
     </Router>,
     { wrapper: Wrapper },
   );
 
-  return { history, setSelectedVariantAttributes, toggle };
+  return { history, setSelectedVariantAttributes, toggle, onAttributeUnassign };
 };
 
 describe("ProductTypeVariantAttributes row controls", () => {
@@ -92,6 +95,25 @@ describe("ProductTypeVariantAttributes row controls", () => {
     // Assert
     expect(toggle).toHaveBeenCalledWith(attributeId);
     expect(history.location.pathname).toBe(listPath);
+  });
+
+  it("unassigns with the attribute id, not a null row id", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const { onAttributeUnassign } = renderVariantAttributes();
+    const row = screen.getByText("Author").closest("tr");
+
+    if (!row) {
+      throw new Error("Expected a table row for the Author attribute");
+    }
+
+    await user.hover(row);
+
+    // Act
+    await user.click(within(row).getByTestId("delete-icon"));
+
+    // Assert
+    expect(onAttributeUnassign).toHaveBeenCalledWith(attributeId);
   });
 
   it("shows whether the attribute value is required", () => {

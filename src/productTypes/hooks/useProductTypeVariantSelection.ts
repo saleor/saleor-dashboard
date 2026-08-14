@@ -29,9 +29,24 @@ export const useProductTypeVariantSelection = (
     () => getVariantSelectionFromAssigned(assignedVariantAttributes),
     [assignedVariantAttributes],
   );
+  const assignedIds = useMemo(
+    () => new Set((assignedVariantAttributes ?? []).map(item => item.attribute.id)),
+    [assignedVariantAttributes],
+  );
   const [draft, setDraft] = useState<VariantSelectionDraft | null>(null);
-  const selectedVariantAttributes =
-    productTypeId && draft?.typeId === productTypeId ? draft.ids : serverSelection;
+  const selectedVariantAttributes = useMemo(() => {
+    if (!productTypeId || draft?.typeId !== productTypeId) {
+      return serverSelection;
+    }
+
+    // Live unassign removes membership immediately. Drop those ids from the
+    // staged selection so Save does not send operations for them.
+    if (assignedVariantAttributes == null) {
+      return draft.ids;
+    }
+
+    return draft.ids.filter(attributeId => assignedIds.has(attributeId));
+  }, [assignedIds, assignedVariantAttributes, draft, productTypeId, serverSelection]);
   const setSelectedVariantAttributes = useCallback(
     (ids: string[]) => {
       if (!productTypeId) {
