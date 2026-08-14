@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.24
+
+### Patch Changes
+
+- [#6825](https://github.com/saleor/saleor-dashboard/pull/6825) [`cfb366f`](https://github.com/saleor/saleor-dashboard/commit/cfb366fe2e2770688b3b6fab72d5a78b98c1905b) Thanks [@mirekm](https://github.com/mirekm)! - Fix the sidebar emptying after you open your own staff / account settings page being logged-in as cloud user. Gated sections stay visible instead of disappearing once the page finishes loading.
+
 ## 3.23.23
 
 ### Patch Changes
