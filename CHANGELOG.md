@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.23.26
+
+### Patch Changes
+
+- [#6831](https://github.com/saleor/saleor-dashboard/pull/6831) [`1f2391d`](https://github.com/saleor/saleor-dashboard/commit/1f2391dcec285d5dc067e9ca6ceb574b159f9d73) Thanks [@mirekm](https://github.com/mirekm)! - Fix Assign attribute on product types: clicking the button now opens the dialog again. The same broken links on model types and warehouses are fixed too.
+
 ## 3.23.25
 
 ### Patch Changes
