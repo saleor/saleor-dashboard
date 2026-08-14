@@ -2,6 +2,7 @@ import { ProductAttributeType } from "@dashboard/graphql";
 import { productType } from "@dashboard/productTypes/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 
@@ -58,5 +59,39 @@ describe("ProductTypeAttributes value required column", () => {
 
     expect(within(authorRow).getByTestId("value-required")).toHaveTextContent("Required");
     expect(within(languageRow).getByTestId("value-required")).toHaveTextContent("Optional");
+  });
+});
+
+describe("ProductTypeAttributes row checkbox", () => {
+  it("toggles without navigating to the attribute", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const history = createMemoryHistory({ initialEntries: ["/product-types/1"] });
+    const toggle = jest.fn();
+    const authorId = productType?.productAttributes?.[0]?.id;
+
+    render(
+      <Router history={history}>
+        <ProductTypeAttributes
+          attributes={productType?.productAttributes}
+          {...listProps}
+          toggle={toggle}
+        />
+      </Router>,
+      { wrapper: Wrapper },
+    );
+
+    const row = screen.getByText("Author").closest("tr");
+
+    if (!row || !authorId) {
+      throw new Error("Expected a table row for the Author attribute");
+    }
+
+    // Act
+    await user.click(within(row).getByRole("checkbox"));
+
+    // Assert
+    expect(toggle).toHaveBeenCalledWith(authorId);
+    expect(history.location.pathname).toBe("/product-types/1");
   });
 });

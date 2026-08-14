@@ -9,24 +9,23 @@ import { ASSIGNABLE_LIST_TABLE_ACTION_INSET } from "@dashboard/components/Assign
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Link } from "@dashboard/components/Link";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
+import { TableRowLinkCheckbox } from "@dashboard/components/TableRowLink/TableRowLinkCheckbox";
 import { type AttributeInputTypeEnum } from "@dashboard/graphql";
 import { useOptimisticListReorder } from "@dashboard/hooks/useOptimisticListReorder";
 import { buttonMessages } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableBody, TableCell } from "@material-ui/core";
-import { Box, Button, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
-import { type MouseEvent, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import styles from "./AssignedAttributesCard.module.css";
 
 export interface AssignedAttributeListItem {
   id: string;
@@ -53,11 +52,6 @@ interface AssignedAttributesCardProps extends ListActions {
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
 }
-
-const stopRowNavigation = (event: MouseEvent): void => {
-  event.preventDefault();
-  event.stopPropagation();
-};
 
 export const AssignedAttributesCard = ({
   attributes,
@@ -141,15 +135,25 @@ export const AssignedAttributesCard = ({
             compact
             disabled={disabled || isLoading}
             dragRows
+            keepColumnHeaders
             selected={selected}
             items={isLoading ? undefined : orderedAttributes}
             toggleAll={toggleAll}
-            toolbar={toolbar}
           >
             <TableCell>
-              <Text size={2} lineHeight={2} color="default2">
-                <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
-              </Text>
+              {selected > 0 ? (
+                <Text data-test-id="SelectedText" size={2} lineHeight={2}>
+                  <FormattedMessage
+                    id="imYtnq"
+                    defaultMessage="Selected {number, plural, one {# item} other {# items}}"
+                    values={{ number: selected }}
+                  />
+                </Text>
+              ) : (
+                <Text size={2} lineHeight={2} color="default2">
+                  <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
+                </Text>
+              )}
             </TableCell>
             <TableCell className={columnStyles.colValueRequired}>
               <Text size={2} lineHeight={2} color="default2">
@@ -159,7 +163,20 @@ export const AssignedAttributesCard = ({
             {showVariantSpacer ? (
               <TableCell className={columnStyles.colVariant} aria-hidden />
             ) : null}
-            <TableCell />
+            <TableCell className={tableStyles.actionsCell}>
+              {selected > 0 && toolbar ? (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  width="100%"
+                  height="100%"
+                  paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
+                >
+                  {toolbar}
+                </Box>
+              ) : null}
+            </TableCell>
           </TableHead>
           {isLoading ? (
             <TableBody data-test-id={skeletonTestId} aria-busy="true">
@@ -173,36 +190,29 @@ export const AssignedAttributesCard = ({
                 return (
                   <SortableTableRow
                     selected={isSelected}
-                    className={clsx(styles.link, tableStyles.row)}
+                    className={tableStyles.row}
                     hover
-                    href={attributeUrl(attribute.id)}
                     key={attribute.id}
                     id={attribute.id}
                     index={attributeIndex || 0}
                     data-test-id={"id-" + attribute.id}
                   >
                     <TableCell className={tableStyles.checkboxCell}>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        height="100%"
-                        onClick={stopRowNavigation}
-                        onMouseDown={stopRowNavigation}
-                      >
-                        <Checkbox
-                          checked={isSelected}
-                          disabled={disabled}
-                          onCheckedChange={() => toggle(attribute.id)}
-                        />
-                      </Box>
+                      <TableRowLinkCheckbox
+                        checked={isSelected}
+                        disabled={disabled}
+                        onCheckedChange={() => toggle(attribute.id)}
+                      />
                     </TableCell>
                     <TableCell data-test-id="name">
                       {attribute.name ? (
-                        <AttributeNameWithTypeIcon
-                          name={attribute.name}
-                          inputType={attribute.inputType}
-                          secondary={attribute.slug}
-                        />
+                        <Link href={attributeUrl(attribute.id)} color="secondary">
+                          <AttributeNameWithTypeIcon
+                            name={attribute.name}
+                            inputType={attribute.inputType}
+                            secondary={attribute.slug}
+                          />
+                        </Link>
                       ) : (
                         <Skeleton />
                       )}

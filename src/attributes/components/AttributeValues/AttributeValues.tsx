@@ -12,6 +12,7 @@ import { SearchInput } from "@dashboard/components/SearchInput/SearchInput";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
+import { stopTableRowLinkNavigation } from "@dashboard/components/TableRowLink/stopTableRowLinkNavigation";
 import { PAGINATE_BY } from "@dashboard/config";
 import {
   type AttributeErrorFragment,
@@ -119,8 +120,8 @@ const getColumnClassName = (
   return clsx(baseClassMap[column], isEmbedded && embeddedClassMap[column]);
 };
 
-const stopRowClick = (event: MouseEvent) => {
-  event.stopPropagation();
+const stopRowClick = (event: MouseEvent): void => {
+  stopTableRowLinkNavigation(event);
 };
 
 const AttributeValues = ({

@@ -62,18 +62,12 @@ describe("ProductTypeVariantAttributes row controls", () => {
     const user = userEvent.setup();
     const { history, setSelectedVariantAttributes } = renderVariantAttributes();
     const pill = screen.getByTestId("variant-selection-checkbox");
-    let clickDefaultPrevented = false;
-
-    pill.addEventListener("click", event => {
-      clickDefaultPrevented = event.defaultPrevented;
-    });
 
     // Act
     await user.click(pill);
 
     // Assert
     expect(setSelectedVariantAttributes).toHaveBeenCalledWith([]);
-    expect(clickDefaultPrevented).toBe(true);
     expect(history.location.pathname).toBe(listPath);
   });
 

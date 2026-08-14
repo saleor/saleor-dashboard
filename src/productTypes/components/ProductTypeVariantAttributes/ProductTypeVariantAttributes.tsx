@@ -10,37 +10,27 @@ import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputT
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DetailSettingToggleRow } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Link } from "@dashboard/components/Link";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
+import { TableRowLinkCheckbox } from "@dashboard/components/TableRowLink/TableRowLinkCheckbox";
 import { ProductAttributeType, type ProductTypeDetailsQuery } from "@dashboard/graphql";
 import { useOptimisticListReorder } from "@dashboard/hooks/useOptimisticListReorder";
 import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
 import { TableBody, TableCell } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Checkbox, Skeleton, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
+import { Box, Button, Skeleton, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
 import { Trash2 } from "lucide-react";
-import { type KeyboardEvent, type MouseEvent } from "react";
+import { type KeyboardEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import styles from "./ProductTypeVariantAttributes.module.css";
-
-const useStyles = makeStyles(
-  {
-    colName: {},
-    link: {
-      cursor: "pointer",
-    },
-  },
-  { name: "ProductTypeVariantAttributes" },
-);
 
 interface ProductTypeVariantAttributesProps extends ListActions {
   assignedVariantAttributes: ProductTypeDetailsQuery["productType"]["assignedVariantAttributes"];
@@ -56,11 +46,6 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   onHasVariantsToggle: (hasVariants: boolean) => void;
   setSelectedVariantAttributes: (data: string[]) => void;
   loading?: boolean;
-}
-
-function stopRowLinkClick(event: MouseEvent): void {
-  event.preventDefault();
-  event.stopPropagation();
 }
 
 function handleContainerAssign(
@@ -89,9 +74,7 @@ const VariantSelectionSwitch = ({
   disabledReason?: string;
   onPressedChange: (next: boolean) => void;
 }): JSX.Element => {
-  const toggle = (event: MouseEvent | KeyboardEvent): void => {
-    stopRowLinkClick(event as MouseEvent);
-
+  const toggle = (): void => {
     if (!disabled) {
       onPressedChange(!pressed);
     }
@@ -99,7 +82,8 @@ const VariantSelectionSwitch = ({
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === "Enter" || event.key === " ") {
-      toggle(event);
+      event.preventDefault();
+      toggle();
     }
   };
 
@@ -113,7 +97,6 @@ const VariantSelectionSwitch = ({
         aria-disabled={disabled || undefined}
         data-test-id="variant-selection-checkbox"
         onClick={toggle}
-        onMouseDown={stopRowLinkClick}
         onKeyDown={handleKeyDown}
       >
         <Box className={styles.selectionSwitchToggle} aria-hidden>
@@ -170,7 +153,6 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
     selectedVariantAttributes,
     loading = false,
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
 
   const attributeType = ProductAttributeType[type];
@@ -248,7 +230,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
             <colgroup>
               <col className={tableStyles.dragCell} />
               <col className={tableStyles.checkboxCell} />
-              <col className={classes.colName} />
+              <col />
               <col className={columnStyles.colValueRequired} />
               <col className={columnStyles.colVariant} />
               <col className={tableStyles.actionsCell} />
@@ -258,6 +240,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
               compact
               disabled={disabled || isLoading}
               dragRows
+              keepColumnHeaders
               selected={selected}
               items={
                 isLoading
@@ -267,12 +250,21 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                     )
               }
               toggleAll={toggleAll}
-              toolbar={toolbar}
             >
-              <TableCell className={classes.colName}>
-                <Text size={2} lineHeight={2} color="default2">
-                  <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
-                </Text>
+              <TableCell>
+                {selected > 0 ? (
+                  <Text data-test-id="SelectedText" size={2} lineHeight={2}>
+                    <FormattedMessage
+                      id="imYtnq"
+                      defaultMessage="Selected {number, plural, one {# item} other {# items}}"
+                      values={{ number: selected }}
+                    />
+                  </Text>
+                ) : (
+                  <Text size={2} lineHeight={2} color="default2">
+                    <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
+                  </Text>
+                )}
               </TableCell>
               <TableCell className={columnStyles.colValueRequired}>
                 <Text size={2} lineHeight={2} color="default2">
@@ -288,7 +280,20 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                   />
                 </Text>
               </TableCell>
-              <TableCell />
+              <TableCell className={tableStyles.actionsCell}>
+                {selected > 0 && toolbar ? (
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    width="100%"
+                    height="100%"
+                    paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
+                  >
+                    {toolbar}
+                  </Box>
+                ) : null}
+              </TableCell>
             </TableHead>
             {isLoading ? (
               <TableBody data-test-id="variant-attributes-skeleton" aria-busy="true">
@@ -318,36 +323,29 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                     return (
                       <SortableTableRow
                         selected={isVariantSelected}
-                        className={clsx(attribute && classes.link, tableStyles.row)}
+                        className={tableStyles.row}
                         hover={!!attribute}
-                        href={attribute ? attributeUrl(attribute.id) : undefined}
                         key={maybe(() => attribute.id)}
                         id={attribute.id}
                         index={attributeIndex || 0}
                         data-test-id={"id-" + +maybe(() => attribute.id)}
                       >
                         <TableCell className={tableStyles.checkboxCell}>
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            height="100%"
-                            onClick={stopRowLinkClick}
-                            onMouseDown={stopRowLinkClick}
-                          >
-                            <Checkbox
-                              checked={isVariantSelected}
-                              disabled={disabled}
-                              onCheckedChange={() => toggle(attribute.id)}
-                            />
-                          </Box>
+                          <TableRowLinkCheckbox
+                            checked={isVariantSelected}
+                            disabled={disabled}
+                            onCheckedChange={() => toggle(attribute.id)}
+                          />
                         </TableCell>
-                        <TableCell className={classes.colName} data-test-id="name">
+                        <TableCell data-test-id="name">
                           {attribute.name ? (
-                            <AttributeNameWithTypeIcon
-                              name={attribute.name}
-                              inputType={attribute.inputType}
-                              secondary={attribute.slug}
-                            />
+                            <Link href={attributeUrl(attribute.id)} color="secondary">
+                              <AttributeNameWithTypeIcon
+                                name={attribute.name}
+                                inputType={attribute.inputType}
+                                secondary={attribute.slug}
+                              />
+                            </Link>
                           ) : (
                             <Skeleton />
                           )}
@@ -359,16 +357,7 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                           className={columnStyles.colVariant}
                           data-test-id="variant-selection"
                         >
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            height="100%"
-                            onClickCapture={(event: MouseEvent) => {
-                              event.preventDefault();
-                            }}
-                            onClick={stopRowLinkClick}
-                            onMouseDown={stopRowLinkClick}
-                          >
+                          <Box display="flex" alignItems="center" height="100%">
                             <VariantSelectionSwitch
                               pressed={isSelected}
                               disabled={disabled || variantSelectionDisabled}

@@ -1,10 +1,10 @@
 // @ts-strict-ignore
+import { AssignedAttributesBulkDeleteButton } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesBulkDeleteButton";
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
 import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
 import { usePendingAttributeUnassign } from "@dashboard/components/AttributeUnassignDialog/usePendingAttributeUnassign";
 import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
-import { Button } from "@dashboard/components/Button";
 import {
   type AttributeCreateSubmitData,
   CreateAttributeDialog,
@@ -47,7 +47,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, {
   type ProductTypeForm,
@@ -419,13 +419,14 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           toggle: productAttributeListActions.toggle,
           toggleAll: productAttributeListActions.toggleAll,
           toolbar: (
-            <Button onClick={() => openModal("unassign-product-attributes")}>
-              <FormattedMessage
-                id="S7j+Wf"
-                defaultMessage="Unassign"
-                description="unassign attribute from product type, button"
-              />
-            </Button>
+            <AssignedAttributesBulkDeleteButton
+              onClick={() => openModal("unassign-product-attributes")}
+              label={intl.formatMessage({
+                id: "S7j+Wf",
+                defaultMessage: "Unassign",
+                description: "unassign attribute from product type, button",
+              })}
+            />
           ),
         }}
         variantAttributeList={{
@@ -434,13 +435,14 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           toggle: variantAttributeListActions.toggle,
           toggleAll: variantAttributeListActions.toggleAll,
           toolbar: (
-            <Button onClick={() => openModal("unassign-variant-attributes")}>
-              <FormattedMessage
-                id="S7j+Wf"
-                defaultMessage="Unassign"
-                description="unassign attribute from product type, button"
-              />
-            </Button>
+            <AssignedAttributesBulkDeleteButton
+              onClick={() => openModal("unassign-variant-attributes")}
+              label={intl.formatMessage({
+                id: "S7j+Wf",
+                defaultMessage: "Unassign",
+                description: "unassign attribute from product type, button",
+              })}
+            />
           ),
         }}
         onFetchMoreTaxClasses={fetchMoreTaxClasses}

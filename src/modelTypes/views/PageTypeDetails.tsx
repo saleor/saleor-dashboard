@@ -1,10 +1,10 @@
 // @ts-strict-ignore
+import { AssignedAttributesBulkDeleteButton } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesBulkDeleteButton";
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
 import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
 import { usePendingAttributeUnassign } from "@dashboard/components/AttributeUnassignDialog/usePendingAttributeUnassign";
 import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
-import { Button } from "@dashboard/components/Button";
 import {
   type AttributeCreateSubmitData,
   CreateAttributeDialog,
@@ -39,7 +39,7 @@ import getPageErrorMessage from "@dashboard/utils/errors/page";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
 import PageTypeDetailsPage, { type PageTypeForm } from "../components/PageTypeDetailsPage";
@@ -293,13 +293,14 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
           toggle: attributeListActions.toggle,
           toggleAll: attributeListActions.toggleAll,
           toolbar: (
-            <Button onClick={() => openModal("unassign-attributes")}>
-              <FormattedMessage
-                id="Y3ELdI"
-                defaultMessage="Unassign"
-                description="unassign attribute from model type, button"
-              />
-            </Button>
+            <AssignedAttributesBulkDeleteButton
+              onClick={() => openModal("unassign-attributes")}
+              label={intl.formatMessage({
+                id: "Y3ELdI",
+                defaultMessage: "Unassign",
+                description: "unassign attribute from model type, button",
+              })}
+            />
           ),
         }}
       />
