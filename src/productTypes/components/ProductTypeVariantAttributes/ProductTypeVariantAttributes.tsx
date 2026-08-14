@@ -339,13 +339,15 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
                         </TableCell>
                         <TableCell data-test-id="name">
                           {attribute.name ? (
-                            <Link href={attributeUrl(attribute.id)} color="secondary">
-                              <AttributeNameWithTypeIcon
-                                name={attribute.name}
-                                inputType={attribute.inputType}
-                                secondary={attribute.slug}
-                              />
-                            </Link>
+                            <Box display="inline-flex" maxWidth="100%">
+                              <Link href={attributeUrl(attribute.id)} color="secondary">
+                                <AttributeNameWithTypeIcon
+                                  name={attribute.name}
+                                  inputType={attribute.inputType}
+                                  secondary={attribute.slug}
+                                />
+                              </Link>
+                            </Box>
                           ) : (
                             <Skeleton />
                           )}

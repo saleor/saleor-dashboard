@@ -9,6 +9,13 @@ import { Router } from "react-router-dom";
 import { AssignedAttributesBulkDeleteButton } from "./AssignedAttributesBulkDeleteButton";
 import { type AssignedAttributeListItem, AssignedAttributesCard } from "./AssignedAttributesCard";
 
+// Radix mounts a hidden input inside <form>; jsdom has no ResizeObserver.
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
 const attributeId = "QXR0cmlidXRlOjE=";
 const listPath = "/model-types/1";
 
@@ -29,27 +36,29 @@ const renderCard = (
 
   render(
     <Router history={history}>
-      <AssignedAttributesCard
-        attributes={attributes}
-        disabled={false}
-        title="Attributes"
-        intro="Assigned attributes"
-        empty="No attributes"
-        cardTestId="page-attributes"
-        assignTestId="assign-attributes"
-        createTestId="create-attribute"
-        createOptionLabel="Create attribute"
-        skeletonTestId="page-attributes-skeleton"
-        isChecked={() => false}
-        selected={0}
-        toggle={toggle}
-        toggleAll={jest.fn()}
-        toolbar={null}
-        onAttributeAssign={jest.fn()}
-        onAttributeCreate={jest.fn()}
-        onAttributeReorder={jest.fn()}
-        onAttributeUnassign={jest.fn()}
-      />
+      <form>
+        <AssignedAttributesCard
+          attributes={attributes}
+          disabled={false}
+          title="Attributes"
+          intro="Assigned attributes"
+          empty="No attributes"
+          cardTestId="page-attributes"
+          assignTestId="assign-attributes"
+          createTestId="create-attribute"
+          createOptionLabel="Create attribute"
+          skeletonTestId="page-attributes-skeleton"
+          isChecked={() => false}
+          selected={0}
+          toggle={toggle}
+          toggleAll={jest.fn()}
+          toolbar={null}
+          onAttributeAssign={jest.fn()}
+          onAttributeCreate={jest.fn()}
+          onAttributeReorder={jest.fn()}
+          onAttributeUnassign={jest.fn()}
+        />
+      </form>
     </Router>,
     { wrapper: Wrapper },
   );
