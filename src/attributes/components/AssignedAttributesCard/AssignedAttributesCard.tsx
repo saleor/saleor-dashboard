@@ -185,7 +185,7 @@ export const AssignedAttributesCard = ({
           ) : (
             <SortableTableBody onSortEnd={onSortEnd}>
               {orderedAttributes.map((attribute, attributeIndex) => {
-                const isSelected = isChecked(attribute.id);
+                const isSelected = isChecked(attribute.id) === true;
 
                 return (
                   <SortableTableRow
