@@ -4,7 +4,9 @@ export function resolveAttributeIdToUnassign(
   capturedId: string | null | undefined,
   urlId: string | null | undefined,
 ): string | null {
-  return capturedId || urlId || null;
+  // Prefer the URL id while the dialog is open. After closeModal clears ?id=,
+  // fall back to the click-time id so confirm cannot send null.
+  return urlId || capturedId || null;
 }
 
 /**
