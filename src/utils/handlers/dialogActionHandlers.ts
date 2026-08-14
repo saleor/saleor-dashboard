@@ -44,7 +44,9 @@ const withCurrentLocationIfSamePage = (generatedUrl: string): string => {
   const queryIndex = generatedUrl.indexOf("?");
   const generatedPath = queryIndex >= 0 ? generatedUrl.slice(0, queryIndex) : generatedUrl;
   const generatedSearch = queryIndex >= 0 ? generatedUrl.slice(queryIndex) : "";
-  const currentPath = history.location.pathname;
+  // List links have historically put `entityUrl(id)` (which ends with `?`) into
+  // LocationDescriptor.pathname, so history.pathname can literally contain `?`.
+  const currentPath = history.location.pathname.split("?")[0];
 
   if (normalizePathname(generatedPath) !== normalizePathname(currentPath)) {
     return generatedUrl;

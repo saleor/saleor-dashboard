@@ -14,7 +14,9 @@ import { type ExitFormDialogData, type FormData, type FormsData } from "./types"
 // Toggling these on the same pathname must not trigger the "leave without
 // saving" prompt for ordinary page forms — unless a dirty form has opted in
 // via `setBlockDialogClose` (URL-driven wizards that own their own dirty state).
-const DIALOG_QUERY_PARAMS = ["action", "id", "ids", "channelId"];
+// `type` scopes product/model-type attribute assign/create dialogs
+// (`?action=assign-attribute&type=PRODUCT`).
+const DIALOG_QUERY_PARAMS = ["action", "id", "ids", "channelId", "type"];
 
 // ConditionalFilter (list pages and modal pickers) serializes filter tokens
 // under numeric query keys (?0=...&1=...). Filter state is never part of a

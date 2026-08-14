@@ -4,6 +4,7 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
@@ -20,7 +21,8 @@ import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
 const ProductTypeList = () => {
-  const qs = parseQs(location.search, {
+  const { search } = useLocation();
+  const qs = parseQs(search, {
     ignoreQueryPrefix: true,
     // As a product types list still keeps ids to remove in query params,
     // we need to increase the array limit to 100, default 20,
@@ -30,7 +32,7 @@ const ProductTypeList = () => {
   const params: ProductTypeListUrlQueryParams = asSortParams(qs, ProductTypeListUrlSortField);
 
   return (
-    <ConditionalProductTypesFilterProvider locationSearch={location.search}>
+    <ConditionalProductTypesFilterProvider locationSearch={search}>
       <ProductTypeListComponent params={params} />
     </ConditionalProductTypesFilterProvider>
   );
@@ -44,7 +46,8 @@ interface ProductTypeUpdateRouteParams {
 }
 
 const ProductTypeUpdate = ({ match }: RouteComponentProps<ProductTypeUpdateRouteParams>) => {
-  const qs = parseQs(location.search.substr(1));
+  const { search } = useLocation();
+  const qs = parseQs(search, { ignoreQueryPrefix: true });
   const params: ProductTypeUrlQueryParams = qs;
 
   return <ProductTypeUpdateComponent id={decodeURIComponent(match.params.id)} params={params} />;

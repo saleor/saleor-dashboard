@@ -77,7 +77,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductTypeUrlDialog,
     ProductTypeUrlQueryParams
-  >(navigate, dialogParams => productTypeUrl(id, dialogParams), params);
+  >(navigate, dialogParams => productTypeUrl(id, dialogParams), params, ["type"]);
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
   const assignAttributesActions = useListSelectedItems<string>();
@@ -449,36 +449,6 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
       />
       {!dataLoading && (
         <>
-          {Object.keys(ProductAttributeType).map(key => (
-            <AssignAttributeDialog
-              attributes={mapEdgesToItems(result?.data?.productType?.availableAttributes)}
-              confirmButtonState={assignAttribute.opts.status}
-              errors={maybe(
-                () =>
-                  assignAttribute.opts.data.productAttributeAssign.errors.map(err => err.message),
-                [],
-              )}
-              loading={result.loading}
-              onClose={() => {
-                closeModal();
-                assignAttributesActions.clearSelectedItems();
-              }}
-              onSubmit={handleAssignAttribute}
-              onFetch={search}
-              onFetchMore={loadMore}
-              onOpen={result.refetch}
-              hasMore={maybe(
-                () => result.data.productType.availableAttributes.pageInfo.hasNextPage,
-                false,
-              )}
-              open={
-                params.action === "assign-attribute" && params.type === ProductAttributeType[key]
-              }
-              selected={assignAttributesActions.selectedItems}
-              onToggle={assignAttributesActions.toggleSelectItem}
-              key={key}
-            />
-          ))}
           {productType && (
             <>
               <ProductTypeMetadataDialog
@@ -517,6 +487,33 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           )}
         </>
       )}
+      {Object.keys(ProductAttributeType).map(key => (
+        <AssignAttributeDialog
+          attributes={mapEdgesToItems(result?.data?.productType?.availableAttributes)}
+          confirmButtonState={assignAttribute.opts.status}
+          errors={maybe(
+            () => assignAttribute.opts.data.productAttributeAssign.errors.map(err => err.message),
+            [],
+          )}
+          loading={result.loading}
+          onClose={() => {
+            closeModal();
+            assignAttributesActions.clearSelectedItems();
+          }}
+          onSubmit={handleAssignAttribute}
+          onFetch={search}
+          onFetchMore={loadMore}
+          onOpen={result.refetch}
+          hasMore={maybe(
+            () => result.data.productType.availableAttributes.pageInfo.hasNextPage,
+            false,
+          )}
+          open={params.action === "assign-attribute" && params.type === ProductAttributeType[key]}
+          selected={assignAttributesActions.selectedItems}
+          onToggle={assignAttributesActions.toggleSelectItem}
+          key={key}
+        />
+      ))}
 
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({
