@@ -1,5 +1,51 @@
 # Changelog
 
+## 3.23.23
+
+### Patch Changes
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - Category details are easier to edit in one view: general info and background image together, products you can assign or remove in the main column, subcategories in the sidebar, SEO at the bottom, and metadata from the header. Delete is in the actions menu. Save turns on only when something changed, with a short note of what will be saved.
+
+  Creating a category or collection now opens a small dialog for name and description instead of a full page. After create, you land on the new item’s page to finish channels, SEO, media, and metadata.
+
+  When a collection or shipping rate has no channels yet, the empty state matches inventory and delivery—with clearer guidance to assign channels.
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - Channel setup is faster end to end: create a channel with name, country, and currency, then finish warehouses, shipping, payments, and catalog from the channel page—including a bulk publish wizard to add products with prices and stock in one flow. You can also duplicate a channel (settings, warehouses, and shipping zones; not product listings or taxes).
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - Collection details are redesigned: edit metadata from the header; manage general info, media, and products in one settings area; fold away SEO when you don’t need it; and review channel availability in the sidebar. The save bar shows what will be saved.
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - On the collections list, availability uses a quieter status indicator (like products) instead of a red “No channels” label. Collections that are unpublished or have no channels show a warning style rather than an error style.
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - Gift card details are redesigned: balance and card details up front, assigned customer and where the card came from in the sidebar, metadata from the header, and shop gift card settings from the menu. Status matches channels—Active (green) or Inactive—instead of a red Disabled label, with matching success messages when you activate or deactivate. The activity timeline uses clearer icons and groups events by Today, Yesterday, Last 7 days, Last 30 days, and Older—the same grouping now used in order history.
+
+- [#6818](https://github.com/saleor/saleor-dashboard/pull/6818) [`bd32cb2`](https://github.com/saleor/saleor-dashboard/commit/bd32cb2dea845e12dde98a18a734d53f070cb6e6) Thanks [@mirekm](https://github.com/mirekm)! - Product and model types now match the rest of the dashboard. Create opens a short dialog (name and kind), then you finish attributes, shipping, and tax on the type page. You can create a type from the product or model list without leaving — including a dropdown next to Create product / Create model.
+
+  Type details show how attributes appear on the product page, and creating an attribute accepts a pasted list of values. Model types use the same attribute list as product types (including required values).
+
+- [#6818](https://github.com/saleor/saleor-dashboard/pull/6818) [`bd32cb2`](https://github.com/saleor/saleor-dashboard/commit/bd32cb2dea845e12dde98a18a734d53f070cb6e6) Thanks [@mirekm](https://github.com/mirekm)! - Creating a product is now a short dialog (name and product type). Price, inventory, and availability are finished on the product page with a setup checklist.
+
+  The product list defaults to Product, Availability, Price, Category, Type, Last updated, and Created for new setups (existing column choices are left as they are). Delete lives in the page menu, not on the save bar.
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - Product variant pricing is redesigned for a clearer channel workflow:
+  - **Before:** A separate Availability card managed channel assignment; Pricing was a second step below.
+  - **After:** Use **Manage channels** in the Pricing card to choose where the variant is sold, then set selling and cost prices in the same place.
+
+  You can paste prices from a spreadsheet: tab-separated selling and cost prices fill channel rows on variant create, variant edit, and simple product create. Each channel row shows whether the channel is active, inactive, or unpublished. Warehouse stock quantities also support pasting a column from a spreadsheet.
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - The Promotions list is easier to scan. Each promotion shows Active, Scheduled, or Ended, with a short relative time (for example, when it started or when it ends). You can filter by status and type. The page is titled Promotions instead of Discounts.
+
+- [#6805](https://github.com/saleor/saleor-dashboard/pull/6805) [`88dc106`](https://github.com/saleor/saleor-dashboard/commit/88dc106a8b473de6f0e24c37a3bd74581b0e8db1) Thanks [@mirekm](https://github.com/mirekm)! - Re-installing an extension that is already on your store no longer shows a duplicate-install error. The install page now says the extension is already installed and links you to open it.
+
+  Pulse links in What's New and the homepage video announcement open Pulse directly when it is already installed, instead of sending you through the install flow again.
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - Shipping zone and shipping method prices use improved price fields with spreadsheet paste. Paste a column of prices into Pricing, or paste min and max order values (tab-separated) into Order value, to fill every channel row at once. Shipping zone details are clearer, and each method only lists the channels assigned to it, with accurate totals in the method summary.
+
+- [#6817](https://github.com/saleor/saleor-dashboard/pull/6817) [`dc4f041`](https://github.com/saleor/saleor-dashboard/commit/dc4f04178db52af03a9db06f69a2d4e6b4ed5217) Thanks [@mirekm](https://github.com/mirekm)! - Staff and customer email settings move under Configuration → Notifications: set up staff emails (default delivery or your own SMTP, plus which messages send and how they read) in one place. Open the SMTP app from Customer emails for shopper messages—instead of hunting through Extensions plugins.
+
+- [#6817](https://github.com/saleor/saleor-dashboard/pull/6817) [`dc4f041`](https://github.com/saleor/saleor-dashboard/commit/dc4f04178db52af03a9db06f69a2d4e6b4ed5217) Thanks [@mirekm](https://github.com/mirekm)! - Invite Staff Member uses the standard modal, requires a permission group (defaults to Full Access when available), and shows clearer invite feedback. Staff list and details show status as a pill (Active / Pending invite / Not active); Activate and Deactivate live in the top nav like channels. Staff details edit metadata from the top nav modal like other entity pages, and the cogs menu includes Open in GraphiQL and Delete. Pending invites can resend a set-password link (arrives as a password reset email).
+
+- [#6812](https://github.com/saleor/saleor-dashboard/pull/6812) [`696b6cc`](https://github.com/saleor/saleor-dashboard/commit/696b6ccf5cbd1c4d25d04aba5b7a3b615a5fec3a) Thanks [@mirekm](https://github.com/mirekm)! - Voucher create and details are redesigned so you can finish setup in one place: choose the discount scope and amount, set schedule and channels in the sidebar, and follow a setup checklist. Metadata opens from the header. The save bar shows what will be saved. Product catalogue and country changes wait until you click Save.
+
 ## 3.23.22
 
 ### Patch Changes
