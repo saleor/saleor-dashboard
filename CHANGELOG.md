@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.23.25
+
+### Patch Changes
+
+- [#6828](https://github.com/saleor/saleor-dashboard/pull/6828) [`998c0cf`](https://github.com/saleor/saleor-dashboard/commit/998c0cf6a8658b5cea2af8b69782b5a54a2673c9) Thanks [@mirekm](https://github.com/mirekm)! - Fix the assigned-attribute lists on product types and model types: the row checkbox no longer opens the attribute, selecting rows no longer shifts the columns, and bulk unassign is the same trash icon as the row action.
+
+- [#6828](https://github.com/saleor/saleor-dashboard/pull/6828) [`998c0cf`](https://github.com/saleor/saleor-dashboard/commit/998c0cf6a8658b5cea2af8b69782b5a54a2673c9) Thanks [@mirekm](https://github.com/mirekm)! - Fix unassigning an attribute from a product type or model type. The confirm dialog now keeps the attribute id, so the request no longer sends `null` and the attribute is actually removed.
+
 ## 3.23.24
 
 ### Patch Changes
