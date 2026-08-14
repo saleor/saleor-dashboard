@@ -266,17 +266,17 @@ Path: `src/components/AssignableListTable/`. Canonical references: collection pr
 </AssignableListCard>
 ```
 
-| Piece           | Contract (owned by the primitive)                                                                                            |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Card header     | `DetailSettingsCard` tinted band; title `size={5}` bold; `headerEnd` coerced to `small`; with-action right inset `spacing-4` |
-| Search band     | Y `spacing-3`, X `spacing-6`, bottom border                                                                                  |
-| Table heading   | 40px; `Text size={2}`; selected count + bulk action **in the heading**, not the card header                                  |
-| Drag column     | 40px, grip centered, first-cell padding 0                                                                                    |
-| Checkbox column | 20px control + leading inset (`card` = 6, `nested` = 4)                                                                      |
-| Body rows       | `compact` (text) or `media` (50px thumbnails); cell padding `spacing-2`                                                      |
-| Row delete      | Hover or delete-control `:focus-within` (not the row — checkbox focus would pin the icon); always visible on `hover: none`   |
-| Pagination      | Top border; Y `spacing-2`; small select + chevrons; `inset` aligns to first content column                                   |
-| Empty           | `padding={4}` + `Placeholder`                                                                                                |
+| Piece           | Contract (owned by the primitive)                                                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Card header     | `DetailSettingsCard` tinted band; title `size={5}` bold; `headerEnd` coerced to `small`; with-action right inset `spacing-4`                                          |
+| Search band     | Y `spacing-3`, X `spacing-6`, bottom border                                                                                                                           |
+| Table heading   | 40px; `Text size={2}`; selected count + bulk action **in the heading**, not the card header                                                                           |
+| Drag column     | 40px, grip centered, first-cell padding 0                                                                                                                             |
+| Checkbox column | 20px control + leading inset (`card` = 6, `nested` = 4)                                                                                                               |
+| Body rows       | `compact` (text) or `media` (50px thumbnails); cell padding `spacing-2`                                                                                               |
+| Row delete      | Hover or delete-control `:focus-within` (not the row — checkbox focus would pin the icon); always visible on `hover: none`                                            |
+| Pagination      | Top border (the only separator above the footer); last table row has no bottom border; Y `spacing-2`; small select + chevrons; `inset` aligns to first content column |
+| Empty           | `padding={4}` + `Placeholder`                                                                                                                                         |
 
 Tokens live in `assignableListTableLayout.ts`. MUI tables that still need dnd-kit (`SortableTable`) use `tableStyles.assignableTable` so heading height and density match GridTable.
 

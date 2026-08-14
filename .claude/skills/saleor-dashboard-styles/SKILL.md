@@ -354,7 +354,7 @@ Flush lists inside `DetailSettingsCard` (products in a collection, attribute val
 | Heading row     | 40px, `Text size={2}`                                                                                            |
 | Rows            | `density="compact"` (text) or `"media"` (50px thumbnails)                                                        |
 | Hover           | Row delete opacity 0 → 1 on hover or delete-control focus (not row `:focus-within`)                              |
-| Pagination      | Component draws the top border. `inset="card" \| "nested" \| "drag"`                                             |
+| Pagination      | Component draws the top border. Last table row has no bottom border. `inset="card" \| "nested" \| "drag"`        |
 
 Layout numbers: `src/components/AssignableListTable/assignableListTableLayout.ts`. Full composition and anti-patterns: [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) → In-card assignable lists.
 

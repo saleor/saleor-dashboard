@@ -30,3 +30,8 @@
 .headerRow + tr > td {
   border-top-width: 0 !important;
 }
+
+/* Pagination (or the card edge) owns the separator — last row must not add a second line. */
+.table tr:last-child > td {
+  border-bottom-width: 0 !important;
+}
