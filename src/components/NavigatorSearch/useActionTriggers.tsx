@@ -12,6 +12,7 @@ import { orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
 import { productTypeAddUrl, productTypeListUrl } from "@dashboard/productTypes/urls";
 import { shippingZoneAddUrl, shippingZonesListUrl } from "@dashboard/shipping/urls";
+import { useStaffInviteDialog } from "@dashboard/staff/components/StaffInviteProvider/StaffInviteProvider";
 import { staffListUrl } from "@dashboard/staff/urls";
 import { warehouseAddUrl, warehouseListUrl } from "@dashboard/warehouses/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
@@ -37,6 +38,26 @@ const ActionLinkItem = ({ href, children }: { href: string; children: React.Reac
         </Text>
       </Box>
     </Link>
+  );
+};
+
+const ActionButtonItem = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Box className="command-menu-item" cursor="pointer" role="option" tabIndex={-1}>
+      <Box
+        className="command-menu-item-content"
+        display="flex"
+        alignItems="center"
+        color="default1"
+        gap={2}
+        paddingX={6}
+        paddingY={1.5}
+      >
+        <Text size={2} fontWeight="medium" color="default1">
+          {children}
+        </Text>
+      </Box>
+    </Box>
   );
 };
 
@@ -114,6 +135,27 @@ const allMessages = defineMessages({
     id: "OAuXGE",
   },
 });
+
+const InviteStaffNavigatorItem = ({
+  onClick,
+}: {
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+}) => {
+  const { openInvite } = useStaffInviteDialog();
+
+  return (
+    <Box
+      onClick={event => {
+        onClick?.(event as React.MouseEvent<HTMLAnchorElement>);
+        openInvite();
+      }}
+    >
+      <ActionButtonItem>
+        <FormattedMessage {...allMessages.inviteUser} />
+      </ActionButtonItem>
+    </Box>
+  );
+};
 
 const allActions: TriggerDescriptor[] = [
   {
@@ -532,13 +574,7 @@ const allActions: TriggerDescriptor[] = [
       defaultMessage: "Configuration",
     },
     name: allMessages.inviteUser,
-    Component: ({ onClick }) => (
-      <Box onClick={onClick}>
-        <ActionLinkItem href={staffListUrl({ action: "add" })}>
-          <FormattedMessage {...allMessages.inviteUser} />
-        </ActionLinkItem>
-      </Box>
-    ),
+    Component: InviteStaffNavigatorItem,
   },
   {
     section: allMessages.discountsSection,

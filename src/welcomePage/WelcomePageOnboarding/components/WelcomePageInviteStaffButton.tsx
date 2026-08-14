@@ -1,16 +1,16 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { staffListUrl } from "@dashboard/staff/urls";
+import { useStaffInviteDialog } from "@dashboard/staff/components/StaffInviteProvider/StaffInviteProvider";
 import { Button, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
-import { Link } from "react-router-dom";
 
 import { type PrimaryActionProps } from "./type";
 import { WelcomePageFakeDisabledButton } from "./WelcomePageFakeDisabledButton";
 
 export const WelcomePageInviteStaffButton = ({ onClick }: PrimaryActionProps) => {
   const { user } = useUser();
+  const { openInvite } = useStaffInviteDialog();
   const userPermissions = user?.userPermissions || [];
   const hasPermissionToManageStaff = hasPermissions(userPermissions, [PermissionEnum.MANAGE_STAFF]);
 
@@ -35,10 +35,15 @@ export const WelcomePageInviteStaffButton = ({ onClick }: PrimaryActionProps) =>
   }
 
   return (
-    <Link to={staffListUrl({ action: "add" })} onClick={onClick}>
-      <Button variant="primary">
-        <FormattedMessage defaultMessage="Invite members" id="BBt3jD" description="btn label" />
-      </Button>
-    </Link>
+    <Button
+      data-test-id="onboarding-invite-staff-member"
+      variant="primary"
+      onClick={() => {
+        onClick();
+        openInvite();
+      }}
+    >
+      <FormattedMessage defaultMessage="Invite members" id="BBt3jD" description="btn label" />
+    </Button>
   );
 };
