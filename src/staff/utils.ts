@@ -1,4 +1,5 @@
 import { type StaffMemberDetailsFragment, type UserFragment } from "@dashboard/graphql";
+import { filterHiddenPermissionGroups } from "@dashboard/permissionGroups/utils";
 import difference from "lodash/difference";
 
 import { type StaffDetailsFormData } from "./components/StaffDetailsPage/StaffDetailsPage";
@@ -15,7 +16,9 @@ export const groupsDiff = (
   }
 
   const newGroups = formData.permissionGroups.map(u => u.value);
-  const oldGroups = user.permissionGroups?.map(u => u.id) ?? [];
+  // Hidden groups are excluded from the form, so exclude them here as well
+  // to avoid computing them as removed on save.
+  const oldGroups = filterHiddenPermissionGroups(user.permissionGroups).map(u => u.id);
 
   return {
     addGroups: difference(newGroups, oldGroups),
@@ -31,7 +34,7 @@ export const getMemberPermissionGroups = (
   staffMember: StaffMemberDetailsFragment | UserFragment | null | undefined,
 ) => {
   if (staffMember && "permissionGroups" in staffMember) {
-    return staffMember.permissionGroups;
+    return filterHiddenPermissionGroups(staffMember.permissionGroups);
   }
 
   return [];

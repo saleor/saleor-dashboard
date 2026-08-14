@@ -14,6 +14,7 @@ import { useMemo } from "react";
 
 import PermissionGroupListPage from "../../components/PermissionGroupListPage";
 import { permissionGroupListUrl, type PermissionGroupListUrlQueryParams } from "../../urls";
+import { filterHiddenPermissionGroups } from "../../utils";
 import { getSortQueryVariables } from "./sort";
 
 interface PermissionGroupListProps {
@@ -44,7 +45,7 @@ const PermissionGroupList = ({ params }: PermissionGroupListProps) => {
     queryString: params,
   });
   const handleSort = createSortHandler(navigate, permissionGroupListUrl, params);
-  const permissionGroups = mapEdgesToItems(data?.permissionGroups) ?? [];
+  const permissionGroups = filterHiddenPermissionGroups(mapEdgesToItems(data?.permissionGroups));
 
   return (
     <PaginatorContext.Provider value={paginationValues}>

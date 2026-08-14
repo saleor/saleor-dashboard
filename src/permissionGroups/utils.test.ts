@@ -14,6 +14,7 @@ import {
   channelsDiff,
   checkIfUserHasRestictedAccessToChannels,
   extractPermissionCodes,
+  filterHiddenPermissionGroups,
   getInitialChannels,
   getUserAccessibleChannelsOptions,
   isGroupFullAccess,
@@ -23,6 +24,32 @@ import {
 } from "./utils";
 
 describe("Permission group utils", () => {
+  describe("filterHiddenPermissionGroups", () => {
+    it("should filter out permission groups hidden from the dashboard", () => {
+      // Arrange
+      const groups: Array<{ id: string; name: string }> = [
+        { id: "1", name: "Full Access" },
+        { id: "2", name: "Full Access (Saleor Cloud users)" },
+        { id: "3", name: "Customer Support" },
+      ];
+
+      // Act
+      const visibleGroups = filterHiddenPermissionGroups(groups);
+
+      // Assert
+      expect(visibleGroups).toEqual([
+        { id: "1", name: "Full Access" },
+        { id: "3", name: "Customer Support" },
+      ]);
+    });
+
+    it("should return empty array for null or undefined input", () => {
+      // Arrange // Act // Assert
+      expect(filterHiddenPermissionGroups(null)).toEqual([]);
+      expect(filterHiddenPermissionGroups(undefined)).toEqual([]);
+    });
+  });
+
   describe("channelDiff", () => {
     it("should return empty added and removed channels when user is not eligible to edit channels", () => {
       // Arrange

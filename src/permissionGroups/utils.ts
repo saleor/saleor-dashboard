@@ -11,6 +11,16 @@ import difference from "lodash/difference";
 import { type PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 
 /**
+ * Permission groups managed by Saleor Cloud which should not be displayed in the dashboard.
+ */
+const HIDDEN_PERMISSION_GROUP_NAMES = ["Full Access (Saleor Cloud users)"];
+
+export const filterHiddenPermissionGroups = <T extends { name: string }>(
+  permissionGroups: T[] | null | undefined,
+): T[] =>
+  (permissionGroups ?? []).filter(group => !HIDDEN_PERMISSION_GROUP_NAMES.includes(group.name));
+
+/**
  * Will return true if group has all permissions available in shop assigned.
  */
 export const isGroupFullAccess = (

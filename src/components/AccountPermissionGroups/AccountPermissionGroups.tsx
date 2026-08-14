@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { type SearchPermissionGroupsQuery, type StaffErrorFragment } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
+import { filterHiddenPermissionGroups } from "@dashboard/permissionGroups/utils";
 import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
@@ -32,7 +33,7 @@ const AccountPermissionGroups = (props: AccountPermissionGroupsProps) => {
     onSearchChange,
   } = props;
   const intl = useIntl();
-  const choices = availablePermissionGroups?.map(pg => ({
+  const choices = filterHiddenPermissionGroups(availablePermissionGroups).map(pg => ({
     disabled: !pg.userCanManage,
     label: pg.name,
     value: pg.id,
