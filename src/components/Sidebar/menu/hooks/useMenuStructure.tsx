@@ -1,3 +1,4 @@
+import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { useUser } from "@dashboard/auth/useUser";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
@@ -18,7 +19,7 @@ import {
   extensionsPluginSection,
 } from "@dashboard/extensions/urls";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
-import { PermissionEnum } from "@dashboard/graphql";
+import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
 import { CustomersIcon } from "@dashboard/icons/Customers";
@@ -169,6 +170,14 @@ export function useMenuStructure() {
           url: productTypeListUrl(),
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
         }),
+        createSettingsSubmenuItem({
+          id: "product-attributes",
+          label: intl.formatMessage(sectionNames.productAttributes),
+          url: attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.PRODUCT_TYPE),
+          permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
+          separatorBefore: false,
+          matchSearch: AttributeTypeEnum.PRODUCT_TYPE,
+        }),
       ],
       icon: renderIcon(<ProductsIcon />),
       url: productListUrl(),
@@ -283,6 +292,14 @@ export function useMenuStructure() {
           label: intl.formatMessage(sectionNames.modelTypes),
           url: pageTypeListUrl(),
           permissions: [PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES],
+        }),
+        createSettingsSubmenuItem({
+          id: "model-attributes",
+          label: intl.formatMessage(sectionNames.modelAttributes),
+          url: attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.PAGE_TYPE),
+          permissions: [PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES],
+          separatorBefore: false,
+          matchSearch: AttributeTypeEnum.PAGE_TYPE,
         }),
       ],
       icon: renderIcon(<ModelingIcon />),

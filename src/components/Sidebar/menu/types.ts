@@ -16,4 +16,5 @@ export interface SidebarMenuItem {
   endAdornment?: ReactNode;
   separatorBefore?: boolean;
   labelStyle?: "default" | "settings";
+  matchSearch?: string | string[];
 }

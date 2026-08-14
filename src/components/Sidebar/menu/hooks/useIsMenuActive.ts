@@ -6,5 +6,5 @@ import { isMenuActive } from "../utils";
 export const useIsMenuActive = (menuItem: SidebarMenuItem): boolean => {
   const location = useLocation();
 
-  return isMenuActive(location.pathname, menuItem);
+  return isMenuActive(location.pathname, menuItem, location.search);
 };

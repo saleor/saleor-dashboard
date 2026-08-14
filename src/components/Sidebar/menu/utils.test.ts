@@ -270,6 +270,21 @@ describe("isMenuActive", () => {
 
     expect(result).toBe(true);
   });
+
+  it("should require matchSearch fragments when configured on menu item", () => {
+    const attributesMenuItem: SidebarMenuItem = {
+      ...mockMenuItem,
+      url: "/attributes/",
+      matchSearch: "PRODUCT_TYPE",
+    };
+
+    expect(
+      isMenuActive("/attributes/", attributesMenuItem, "?0%5Bs0.attributeType%5D=PRODUCT_TYPE"),
+    ).toBe(true);
+    expect(
+      isMenuActive("/attributes/", attributesMenuItem, "?0%5Bs0.attributeType%5D=PAGE_TYPE"),
+    ).toBe(false);
+  });
 });
 
 describe("getMenuItemExtension", () => {

@@ -56,4 +56,22 @@ describe("createSettingsSubmenuItem", () => {
     });
     expect(item.icon).toBeTruthy();
   });
+
+  it("creates a settings submenu item without separator when requested", () => {
+    // Arrange & Act
+    const item = createSettingsSubmenuItem({
+      id: "product-attributes",
+      label: "Product attributes",
+      url: "/attributes/",
+      permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
+      separatorBefore: false,
+      matchSearch: "PRODUCT_TYPE",
+    });
+
+    // Assert
+    expect(item).toMatchObject({
+      separatorBefore: false,
+      matchSearch: "PRODUCT_TYPE",
+    });
+  });
 });

@@ -13,11 +13,15 @@ export function createSettingsSubmenuItem({
   label,
   url,
   permissions,
+  separatorBefore = true,
+  matchSearch,
 }: {
   id: string;
   label: string;
   url: string;
   permissions: PermissionEnum[];
+  separatorBefore?: boolean;
+  matchSearch?: string | string[];
 }): SidebarMenuItem {
   return {
     icon: renderSubmenuSettingsIcon(),
@@ -27,7 +31,8 @@ export function createSettingsSubmenuItem({
     url,
     permissions,
     type: "item",
-    separatorBefore: true,
+    separatorBefore,
+    matchSearch,
   };
 }
 

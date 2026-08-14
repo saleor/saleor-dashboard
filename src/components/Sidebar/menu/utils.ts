@@ -69,7 +69,14 @@ export const mapToExtensionsItems = (extensions: Extension[], header: SidebarMen
   return items;
 };
 
-export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
+const matchesSearchFragments = (locationSearch: string, matchSearch: string | string[]) => {
+  const searchFragments = Array.isArray(matchSearch) ? matchSearch : [matchSearch];
+  const normalizedSearch = locationSearch.startsWith("?") ? locationSearch : `?${locationSearch}`;
+
+  return searchFragments.every(fragment => normalizedSearch.includes(fragment));
+};
+
+export function isMenuActive(location: string, menuItem: SidebarMenuItem, locationSearch = "") {
   const menuUrlsToCheck = [...(menuItem.matchUrls || []), menuItem.url]
     .filter((item): item is string => Boolean(item))
     .map(item => item.split("?")[0]);
@@ -111,12 +118,24 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     return false;
   }
 
-  return menuUrlsToCheck.some(menuItemUrl => {
+  const hasMatchingPath = menuUrlsToCheck.some(menuItemUrl => {
     return !!matchPath(activeUrl, {
       exact: menuItemUrl === "/",
       path: menuItemUrl,
     });
   });
+
+  if (!hasMatchingPath) {
+    return false;
+  }
+
+  if (menuItem.matchSearch) {
+    const searchFromLocation = locationSearch || location.split("?")[1] || "";
+
+    return matchesSearchFragments(searchFromLocation, menuItem.matchSearch);
+  }
+
+  return true;
 }
 
 const getPureUrl = (url: string) => {

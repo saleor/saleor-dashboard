@@ -552,6 +552,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Model Types",
     description: "model types section name",
   },
+  modelAttributes: {
+    id: "LAbTYM",
+    defaultMessage: "Model attributes",
+    description: "model attributes section name",
+  },
   content: {
     id: "NelCIl",
     defaultMessage: "Content",
@@ -571,6 +576,11 @@ export const sectionNames = defineMessages({
     id: "YQ3EXR",
     defaultMessage: "Product Types",
     description: "product types section name",
+  },
+  productAttributes: {
+    id: "DHYyRT",
+    defaultMessage: "Product attributes",
+    description: "product attributes section name",
   },
   products: {
     id: "K8xNLe",
