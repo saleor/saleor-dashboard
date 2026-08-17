@@ -101,7 +101,9 @@ export const attributeListUrlWithAttributeType = (attributeType?: AttributeTypeE
   return urlJoin(attributeListPath, "?" + stringify(queryParams));
 };
 
-const builtInAttributeTypePresetTabIndex: Record<AttributeTypeEnum, number> = {
+type BuiltInAttributeType = AttributeTypeEnum.PRODUCT_TYPE | AttributeTypeEnum.PAGE_TYPE;
+
+const builtInAttributeTypePresetTabIndex: Record<BuiltInAttributeType, number> = {
   [AttributeTypeEnum.PRODUCT_TYPE]: 1,
   [AttributeTypeEnum.PAGE_TYPE]: 2,
 };
@@ -121,7 +123,7 @@ export const getAttributeTypeFromBuiltInPresetTab = (
 /**
  * Builds the attribute list URL for a built-in attribute class preset.
  */
-export const attributeListUrlWithAttributeTypePreset = (attributeType: AttributeTypeEnum) =>
+export const attributeListUrlWithAttributeTypePreset = (attributeType: BuiltInAttributeType) =>
   `${attributeListUrlWithAttributeType(attributeType)}&activeTab=${builtInAttributeTypePresetTabIndex[attributeType]}`;
 
 export type AttributeAddUrlDialog = "add-value" | "edit-value" | "remove-value" | "remove-values";
