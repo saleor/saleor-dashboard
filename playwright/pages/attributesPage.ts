@@ -6,6 +6,7 @@ import { DeleteAttributesInBulkDialog } from "@pages/dialogs/deleteAttributesInB
 import { DeleteAttributeValueDialog } from "@pages/dialogs/deleteAttributeValueDialog";
 import { EditAttributeValueDialog } from "@pages/dialogs/editAttributeValueDialog";
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AttributesPage extends BasePage {
   readonly addValueDialog: AddValueDialog;
@@ -26,10 +27,8 @@ export class AttributesPage extends BasePage {
     readonly attributesRows = page.getByTestId("attributes-rows"),
     readonly assignAttributeValueButton = page.getByTestId("assign-value-button"),
     readonly attributeSelect = page.getByTestId("attribute-type-select"),
-    readonly attributeDefaultLabelInput = page
-      .getByTestId("attribute-default-label-input")
-      .locator("input"),
-    readonly attributeCodeInput = page.getByTestId("attribute-code-input").locator("input"),
+    readonly attributeDefaultLabelInput = inputByTestId(page, "attribute-default-label-input"),
+    readonly attributeCodeInput = inputByTestId(page, "attribute-code-input"),
     readonly bulkDeleteAttributesDialog = page.getByTestId("attribute-bulk-delete-dialog"),
     readonly deleteSingleAttributeDialog = page.getByTestId("delete-single-attr-dialog"),
     readonly dialog = page.getByRole("dialog"),

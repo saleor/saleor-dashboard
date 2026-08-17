@@ -2,6 +2,7 @@ import { URL_LIST } from "@data/url";
 import { DeleteDialog } from "@dialogs/deleteDialog";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class CategoriesPage extends BasePage {
   readonly page: Page;
@@ -19,7 +20,7 @@ export class CategoriesPage extends BasePage {
     readonly categoryProductsCard = page.getByTestId("category-products"),
     readonly categoryDescriptionEditor = page.getByTestId("rich-text-editor-description"),
     readonly categoryDescriptionLoader = page.locator(".codex-editor__loader"),
-    readonly categoryNameInput = page.getByTestId("category-name-input").locator("input"),
+    readonly categoryNameInput = inputByTestId(page, "category-name-input"),
     readonly createCategoryDescriptionInput = page
       .getByTestId("category-description-input")
       .locator("textarea"),

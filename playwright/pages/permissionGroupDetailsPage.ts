@@ -4,6 +4,7 @@ import { BasePage } from "./basePage";
 import { AssignPermissionGroupMembersDialog } from "./dialogs/assignPermissionGroupMembersDialog";
 import { DeletePermissionGroupDialog } from "./dialogs/deletePermissionGroupDialog";
 import { UnassignPermissionGroupMembersDialog } from "./dialogs/unassignPermissionGroupMembersDialog";
+import { inputByTestId } from "utils/locators";
 
 export class PermissionGroupDetailsPage extends BasePage {
   readonly assignPermissionGroupMemberDialog: AssignPermissionGroupMembersDialog;
@@ -17,9 +18,7 @@ export class PermissionGroupDetailsPage extends BasePage {
     readonly pageTitle = page
       .getByTestId("page-header")
       .filter({ hasText: "New Permission Group" }),
-    readonly permissionGroupNameInput = page
-      .getByTestId("permission-group-name-input")
-      .locator("input"),
+    readonly permissionGroupNameInput = inputByTestId(page, "permission-group-name-input"),
     readonly channelPermissionsCheckbox = page.getByTestId("all-channel-permissions-checkbox"),
     readonly permissionGroupListItem = page.getByTestId("permission-group-list-item"),
     readonly assignMembersButton = page.getByTestId("assign-members"),

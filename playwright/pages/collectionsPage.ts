@@ -4,6 +4,7 @@ import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
 import { DeleteDialog } from "./dialogs/deleteDialog";
+import { inputByTestId } from "utils/locators";
 
 export class CollectionsPage extends BasePage {
   readonly page: Page;
@@ -22,7 +23,7 @@ export class CollectionsPage extends BasePage {
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly assignedSpecificProductRow = page.getByTestId("assign-product-table-row"),
     readonly assignProductButton = page.getByTestId("add-product"),
-    readonly collectionNameInput = page.getByTestId("collection-name-input").locator("input"),
+    readonly collectionNameInput = inputByTestId(page, "collection-name-input"),
     readonly createCollectionDescriptionInput = page
       .getByTestId("collection-description-input")
       .locator("textarea"),

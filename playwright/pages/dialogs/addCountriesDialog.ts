@@ -1,11 +1,12 @@
 import { type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AddCountriesDialog {
   readonly page: Page;
 
   constructor(
     page: Page,
-    readonly searchCountryInput = page.getByTestId("search-country-input").locator("input"),
+    readonly searchCountryInput = inputByTestId(page, "search-country-input"),
     readonly countryRow = page.getByTestId("country-row"),
     readonly addButton = page.getByTestId("add-button"),
     readonly rowRadioButton = page.locator("input[type='radio']"),

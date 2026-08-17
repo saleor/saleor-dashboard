@@ -31,7 +31,7 @@ export class ProductPage extends BasePage {
     readonly productsNames = page.getByTestId("name"),
     readonly productAvailableInChannelsText = page.getByTestId("availability-card"),
     readonly createProductButton = page.getByTestId("add-product"),
-    readonly cogShowMoreButtonButton = page.getByTestId("menu").getByTestId("show-more-button"),
+    readonly cogShowMoreButtonButton = page.getByTestId("show-more-button"),
     readonly exportButton = page.getByTestId("export"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("delete-product"),

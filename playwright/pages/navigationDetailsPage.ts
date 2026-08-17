@@ -4,6 +4,7 @@ import type { Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 import { AddNavigationMenuItemDialog } from "./dialogs/addNavigationMenuItemDialog";
 import { DeleteDialog } from "./dialogs/deleteDialog";
+import { inputByTestId } from "utils/locators";
 
 export class NavigationDetailsPage extends BasePage {
   addNavigationMenuItemDialog: AddNavigationMenuItemDialog;
@@ -13,7 +14,7 @@ export class NavigationDetailsPage extends BasePage {
   constructor(
     page: Page,
     readonly navigationDetails = page.getByTestId("navigation-menu-details-page"),
-    readonly menuNameInput = page.getByTestId("menu-name").locator("input"),
+    readonly menuNameInput = inputByTestId(page, "menu-name"),
     readonly createMenuItemButton = page.getByTestId("create-new-menu-item"),
     readonly menuItem = page.getByTestId("menu-item"),
     readonly undoButton = page.getByTestId("undo-button"),

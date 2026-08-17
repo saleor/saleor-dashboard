@@ -1,6 +1,7 @@
 import type { Page } from "@playwright/test";
 
 import { AddressForm } from "../forms/addressForm";
+import { inputByTestId } from "utils/locators";
 
 export class AddressDialog {
   readonly addressForm: AddressForm;
@@ -13,14 +14,14 @@ export class AddressDialog {
       .locator('[value="customerAddress"]'),
 
     readonly submitButton = page.getByTestId("submit"),
-    readonly firstNameInput = page.getByTestId("first-name-input").locator("input"),
-    readonly lastNameInput = page.getByTestId("last-name-input").locator("input"),
-    readonly companyNameInput = page.getByTestId("company-name-input").locator("input"),
-    readonly phoneInput = page.getByTestId("phone-input").locator("input"),
-    readonly cityInput = page.getByTestId("city-input").locator("input"),
-    readonly zipInput = page.getByTestId("zip-input").locator("input"),
-    readonly addressLine1Input = page.getByTestId("address-line-1-input").locator("input"),
-    readonly addressLine2Input = page.getByTestId("address-line-2-input").locator("input"),
+    readonly firstNameInput = inputByTestId(page, "first-name-input"),
+    readonly lastNameInput = inputByTestId(page, "last-name-input"),
+    readonly companyNameInput = inputByTestId(page, "company-name-input"),
+    readonly phoneInput = inputByTestId(page, "phone-input"),
+    readonly cityInput = inputByTestId(page, "city-input"),
+    readonly zipInput = inputByTestId(page, "zip-input"),
+    readonly addressLine1Input = inputByTestId(page, "address-line-1-input"),
+    readonly addressLine2Input = inputByTestId(page, "address-line-2-input"),
     readonly countrySelect = page.getByTestId("address-edit-country-select-field"),
     readonly countryAreaSelect = page.getByTestId("address-edit-country-area-field"),
     readonly selectOptions = page.getByTestId("select-option"),

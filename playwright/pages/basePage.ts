@@ -3,6 +3,7 @@ import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
 import { SUCCESS_BANNER_TIMEOUT } from "../../playwright.config";
+import { inputByTestId } from "utils/locators";
 
 export class BasePage {
   readonly page: Page;
@@ -30,7 +31,7 @@ export class BasePage {
     readonly dialog = page.getByRole("dialog"),
     readonly submitButton = page.getByTestId("submit"),
     readonly giftCardInTable = page.locator('[href*="/dashboard/gift-cards/.*]'),
-    readonly selectAllCheckbox = page.getByTestId("select-all-checkbox").locator("input"),
+    readonly selectAllCheckbox = inputByTestId(page, "select-all-checkbox"),
   ) {
     this.page = page;
   }

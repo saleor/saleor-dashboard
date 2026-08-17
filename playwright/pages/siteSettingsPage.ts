@@ -1,14 +1,15 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class SiteSettingsPage extends BasePage {
   constructor(
     page: Page,
-    readonly companyInput = page.getByTestId("company-name-input").locator("input"),
-    readonly addressLine1Input = page.getByTestId("company-address-line-1-input").locator("input"),
-    readonly addressLine2Input = page.getByTestId("company-address-line-2-input").locator("input"),
-    readonly city = page.getByTestId("company-city-input").locator("input"),
+    readonly companyInput = inputByTestId(page, "company-name-input"),
+    readonly addressLine1Input = inputByTestId(page, "company-address-line-1-input"),
+    readonly addressLine2Input = inputByTestId(page, "company-address-line-2-input"),
+    readonly city = inputByTestId(page, "company-city-input"),
     readonly countryInput = page.getByTestId("address-edit-country-select-field"),
     readonly autocompleteDropdownCountry = page.locator(
       '[data-portal-for="autocomplete-dropdown-country"]',
@@ -17,8 +18,8 @@ export class SiteSettingsPage extends BasePage {
       '[data-portal-for="autocomplete-dropdown-country-area"]',
     ),
     readonly countryAreaDropdown = page.getByTestId("address-edit-country-area-field"),
-    readonly zipInput = page.getByTestId("company-zip-input").locator("input"),
-    readonly phoneInput = page.getByTestId("company-phone-input").locator("input"),
+    readonly zipInput = inputByTestId(page, "company-zip-input"),
+    readonly phoneInput = inputByTestId(page, "company-phone-input"),
     readonly emailConfirmationCheckbox = page.getByTestId("require-email-confirmation-checkbox"),
     readonly companyInfoSection = page.getByTestId("company-info"),
   ) {

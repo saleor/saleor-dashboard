@@ -22,7 +22,7 @@ export class ProductTypePage extends BasePage {
     readonly productTypeList = page.getByTestId("product-types-list"),
     readonly rowCheckbox = page.getByTestId("checkbox"),
     readonly createProductTypeDialog = page.getByTestId("create-product-type-dialog"),
-    readonly cogsMenuButton = page.getByTestId("menu").getByTestId("show-more-button"),
+    readonly cogsMenuButton = page.getByTestId("show-more-button"),
     readonly deleteProductTypeMenuItem = page.getByTestId("delete-product-type"),
   ) {
     super(page);

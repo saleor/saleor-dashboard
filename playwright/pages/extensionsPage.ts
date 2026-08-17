@@ -1,6 +1,7 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import { expect, type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class ExtensionsPage extends BasePage {
   readonly page: Page;
@@ -13,7 +14,7 @@ export class ExtensionsPage extends BasePage {
     readonly installedExtensionsList = page.getByTestId("extensions-installed"),
     readonly availableExtensions = page.getByTestId("extensions-list"),
 
-    readonly appManifestUrlInput = page.getByTestId("manifest-url-input").locator("input"),
+    readonly appManifestUrlInput = inputByTestId(page, "manifest-url-input"),
     readonly installAppFromManifestButton = page.getByTestId("install-app-from-manifest"),
     readonly installedExtensionsRow = page.getByTestId("installed-extension-row"),
     readonly extensionViewDetailsButton = page.locator("[data-test-id*='view-details']"),
