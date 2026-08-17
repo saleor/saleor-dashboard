@@ -319,6 +319,28 @@ import type {
   CustomerInput,
   CustomerMetadataUpdated,
   CustomerOrderWhereInput,
+  CustomerType,
+  CustomerTypeAssignAttributes,
+  CustomerTypeAssignAttributesError,
+  CustomerTypeCountableConnection,
+  CustomerTypeCountableEdge,
+  CustomerTypeCreate,
+  CustomerTypeCreateError,
+  CustomerTypeCreateInput,
+  CustomerTypeCreated,
+  CustomerTypeDelete,
+  CustomerTypeDeleteError,
+  CustomerTypeDeleted,
+  CustomerTypeReorderAttributes,
+  CustomerTypeReorderAttributesError,
+  CustomerTypeSortingInput,
+  CustomerTypeUnassignAttributes,
+  CustomerTypeUnassignAttributesError,
+  CustomerTypeUpdate,
+  CustomerTypeUpdateError,
+  CustomerTypeUpdateInput,
+  CustomerTypeUpdated,
+  CustomerTypeWhereInput,
   CustomerUpdate,
   CustomerUpdated,
   CustomerWhereInput,
@@ -1528,6 +1550,12 @@ export type OptionalAccountError = {
   __typename?: 'AccountError';
   /** A type of address that causes the error. */
   addressType?: AccountError['addressType'] | undefined;
+  /**
+ * List of attributes IDs which causes the error.
+ *
+ * Added in Saleor 3.23.
+ */
+  attributes?: AccountError['attributes'] | undefined;
   /** The error code. */
   code?: AccountError['code'] | undefined;
   /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
@@ -4378,7 +4406,7 @@ export const defineAttributeBulkCreateResultFactory: DefineTypeFactoryInterface<
 /**
  * Deletes attributes.
  *
- * Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of each attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -4749,7 +4777,7 @@ export const defineAttributeCreatedFactory: DefineTypeFactoryInterface<
 /**
  * Deletes an attribute.
  *
- * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -4919,7 +4947,7 @@ export const defineAttributeInputTypeEnumFilterInputFactory: DefineTypeFactoryIn
 /**
  * Reorder the values of an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
@@ -5058,7 +5086,7 @@ export const defineAttributeTypeEnumFilterInputFactory: DefineTypeFactoryInterfa
 /**
  * Updates attribute.
  *
- * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_UPDATED (async): An attribute was updated.
@@ -5213,7 +5241,7 @@ export const defineAttributeValueFactory: DefineTypeFactoryInterface<
 /**
  * Deletes values of attributes.
  *
- * Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of each value's attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
@@ -5368,7 +5396,7 @@ export const defineAttributeValueCountableEdgeFactory: DefineTypeFactoryInterfac
 /**
  * Creates a value for an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_CREATED (async): An attribute value was created.
@@ -5456,7 +5484,7 @@ export const defineAttributeValueCreatedFactory: DefineTypeFactoryInterface<
 /**
  * Deletes a value of an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of the value's attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
@@ -5723,7 +5751,7 @@ export const defineAttributeValueTranslationInputFactory: DefineTypeFactoryInter
 /**
  * Updates value of an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of the value's attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
@@ -9881,6 +9909,12 @@ export const defineCustomerBulkUpdateFactory: DefineTypeFactoryInterface<
 
 export type OptionalCustomerBulkUpdateError = {
   __typename?: 'CustomerBulkUpdateError';
+  /**
+ * List of attributes IDs which causes the error.
+ *
+ * Added in Saleor 3.23.
+ */
+  attributes?: CustomerBulkUpdateError['attributes'] | undefined;
   /** The error code. */
   code?: CustomerBulkUpdateError['code'] | undefined;
   /** The error message. */
@@ -10089,6 +10123,18 @@ export const defineCustomerFilterInputFactory: DefineTypeFactoryInterface<
 
 export type OptionalCustomerInput = {
   __typename?: 'CustomerInput';
+  /**
+ * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+ *
+ * Added in Saleor 3.23.
+ */
+  attributes?: Maybe<OptionalAttributeValueInput[]> | undefined;
+  /**
+ * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+ *
+ * Added in Saleor 3.23.
+ */
+  customerType?: CustomerInput['customerType'] | undefined;
   /** Billing address of the customer. */
   defaultBillingAddress?: Maybe<OptionalAddressInput> | undefined;
   /** Shipping address of the customer. */
@@ -10229,6 +10275,575 @@ export const defineCustomerOrderWhereInputFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /**
+ * Represents a type of customer. It allows to segment users and defines what attributes are available to users of this type.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCustomerType = {
+  __typename?: 'CustomerType';
+  /** Customer attributes assigned to this customer type. Attributes that are not visible in the storefront require one of the following permissions to be included: MANAGE_USERS, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES. */
+  attributes?: Maybe<OptionalAttribute[]> | undefined;
+  /**
+ * Customer attributes that can be assigned to the customer type.
+ *
+ * Requires one of the following permissions: MANAGE_USERS, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ */
+  availableAttributes?: Maybe<OptionalAttributeCountableConnection> | undefined;
+  /** The ID of the customer type. */
+  id?: CustomerType['id'] | undefined;
+  /** Whether this is the default customer type. The default customer type is assigned to every newly created user and cannot be deleted. */
+  isDefault?: CustomerType['isDefault'] | undefined;
+  /** List of public metadata items. Can be accessed without permissions. */
+  metadata?: OptionalMetadataItem[] | undefined;
+  /**
+ * A single key from public metadata.
+ *
+ * Tip: Use GraphQL aliases to fetch multiple keys.
+ */
+  metafield?: CustomerType['metafield'] | undefined;
+  /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
+  metafields?: CustomerType['metafields'] | undefined;
+  /** Name of the customer type. */
+  name?: CustomerType['name'] | undefined;
+  /** List of private metadata items. Requires staff permissions to access. */
+  privateMetadata?: OptionalMetadataItem[] | undefined;
+  /**
+ * A single key from private metadata. Requires staff permissions to access.
+ *
+ * Tip: Use GraphQL aliases to fetch multiple keys.
+ */
+  privateMetafield?: CustomerType['privateMetafield'] | undefined;
+  /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
+  privateMetafields?: CustomerType['privateMetafields'] | undefined;
+  /** Slug of the customer type. */
+  slug?: CustomerType['slug'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerType} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeFactoryInterface}
+ */
+export const defineCustomerTypeFactory: DefineTypeFactoryInterface<
+  OptionalCustomerType,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Assign attributes to a given customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+export type OptionalCustomerTypeAssignAttributes = {
+  __typename?: 'CustomerTypeAssignAttributes';
+  /** The updated customer type. */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  errors?: OptionalCustomerTypeAssignAttributesError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeAssignAttributes} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeAssignAttributesFactoryInterface}
+ */
+export const defineCustomerTypeAssignAttributesFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeAssignAttributes,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeAssignAttributesError = {
+  __typename?: 'CustomerTypeAssignAttributesError';
+  /** List of attributes IDs which causes the error. */
+  attributes?: CustomerTypeAssignAttributesError['attributes'] | undefined;
+  /** The error code. */
+  code?: CustomerTypeAssignAttributesError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CustomerTypeAssignAttributesError['field'] | undefined;
+  /** The error message. */
+  message?: CustomerTypeAssignAttributesError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeAssignAttributesError} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeAssignAttributesErrorFactoryInterface}
+ */
+export const defineCustomerTypeAssignAttributesErrorFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeAssignAttributesError,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeCountableConnection = {
+  __typename?: 'CustomerTypeCountableConnection';
+  edges?: OptionalCustomerTypeCountableEdge[] | undefined;
+  /** Pagination data for this connection. */
+  pageInfo?: OptionalPageInfo | undefined;
+  /** A total count of items in the collection. */
+  totalCount?: CustomerTypeCountableConnection['totalCount'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeCountableConnection} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeCountableConnectionFactoryInterface}
+ */
+export const defineCustomerTypeCountableConnectionFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeCountableConnection,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeCountableEdge = {
+  __typename?: 'CustomerTypeCountableEdge';
+  /** A cursor for use in pagination. */
+  cursor?: CustomerTypeCountableEdge['cursor'] | undefined;
+  /** The item at the end of the edge. */
+  node?: OptionalCustomerType | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeCountableEdge} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeCountableEdgeFactoryInterface}
+ */
+export const defineCustomerTypeCountableEdgeFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeCountableEdge,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Creates a new customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_CREATED (async): A new customer type was created.
+ */
+export type OptionalCustomerTypeCreate = {
+  __typename?: 'CustomerTypeCreate';
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  errors?: OptionalCustomerTypeCreateError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeCreate} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeCreateFactoryInterface}
+ */
+export const defineCustomerTypeCreateFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeCreate,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeCreateError = {
+  __typename?: 'CustomerTypeCreateError';
+  /** The error code. */
+  code?: CustomerTypeCreateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CustomerTypeCreateError['field'] | undefined;
+  /** The error message. */
+  message?: CustomerTypeCreateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeCreateError} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeCreateErrorFactoryInterface}
+ */
+export const defineCustomerTypeCreateErrorFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeCreateError,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeCreateInput = {
+  __typename?: 'CustomerTypeCreateInput';
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: CustomerTypeCreateInput['isDefault'] | undefined;
+  /** Name of the customer type. */
+  name?: CustomerTypeCreateInput['name'] | undefined;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: CustomerTypeCreateInput['slug'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeCreateInput} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeCreateInputFactoryInterface}
+ */
+export const defineCustomerTypeCreateInputFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeCreateInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Event sent when new customer type is created.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCustomerTypeCreated = {
+  __typename?: 'CustomerTypeCreated';
+  /** The customer type the event relates to. */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  /** Time of the event. */
+  issuedAt?: CustomerTypeCreated['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: CustomerTypeCreated['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeCreated} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeCreatedFactoryInterface}
+ */
+export const defineCustomerTypeCreatedFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeCreated,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Deletes a customer type. Users of the deleted customer type are reassigned to the default customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_DELETED (async): A customer type was deleted.
+ */
+export type OptionalCustomerTypeDelete = {
+  __typename?: 'CustomerTypeDelete';
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  errors?: OptionalCustomerTypeDeleteError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeDelete} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeDeleteFactoryInterface}
+ */
+export const defineCustomerTypeDeleteFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeDelete,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeDeleteError = {
+  __typename?: 'CustomerTypeDeleteError';
+  /** The error code. */
+  code?: CustomerTypeDeleteError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CustomerTypeDeleteError['field'] | undefined;
+  /** The error message. */
+  message?: CustomerTypeDeleteError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeDeleteError} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeDeleteErrorFactoryInterface}
+ */
+export const defineCustomerTypeDeleteErrorFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeDeleteError,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Event sent when customer type is deleted.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCustomerTypeDeleted = {
+  __typename?: 'CustomerTypeDeleted';
+  /** The customer type the event relates to. */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  /** Time of the event. */
+  issuedAt?: CustomerTypeDeleted['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: CustomerTypeDeleted['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeDeleted} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeDeletedFactoryInterface}
+ */
+export const defineCustomerTypeDeletedFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeDeleted,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Reorder the attributes of a customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+export type OptionalCustomerTypeReorderAttributes = {
+  __typename?: 'CustomerTypeReorderAttributes';
+  /** Customer type from which attributes are reordered. */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  errors?: OptionalCustomerTypeReorderAttributesError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeReorderAttributes} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeReorderAttributesFactoryInterface}
+ */
+export const defineCustomerTypeReorderAttributesFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeReorderAttributes,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeReorderAttributesError = {
+  __typename?: 'CustomerTypeReorderAttributesError';
+  /** List of attributes IDs which causes the error. */
+  attributes?: CustomerTypeReorderAttributesError['attributes'] | undefined;
+  /** The error code. */
+  code?: CustomerTypeReorderAttributesError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CustomerTypeReorderAttributesError['field'] | undefined;
+  /** The error message. */
+  message?: CustomerTypeReorderAttributesError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeReorderAttributesError} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeReorderAttributesErrorFactoryInterface}
+ */
+export const defineCustomerTypeReorderAttributesErrorFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeReorderAttributesError,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeSortingInput = {
+  __typename?: 'CustomerTypeSortingInput';
+  /** Specifies the direction in which to sort customer types. */
+  direction?: CustomerTypeSortingInput['direction'] | undefined;
+  /** Sort customer types by the selected field. */
+  field?: CustomerTypeSortingInput['field'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeSortingInput} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeSortingInputFactoryInterface}
+ */
+export const defineCustomerTypeSortingInputFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeSortingInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Unassign attributes from a given customer type. Values already assigned to users are kept in the database, but are hidden until the attribute is assigned to the user's customer type again.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+export type OptionalCustomerTypeUnassignAttributes = {
+  __typename?: 'CustomerTypeUnassignAttributes';
+  /** The updated customer type. */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  errors?: OptionalCustomerTypeUnassignAttributesError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeUnassignAttributes} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeUnassignAttributesFactoryInterface}
+ */
+export const defineCustomerTypeUnassignAttributesFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeUnassignAttributes,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeUnassignAttributesError = {
+  __typename?: 'CustomerTypeUnassignAttributesError';
+  /** The error code. */
+  code?: CustomerTypeUnassignAttributesError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CustomerTypeUnassignAttributesError['field'] | undefined;
+  /** The error message. */
+  message?: CustomerTypeUnassignAttributesError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeUnassignAttributesError} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeUnassignAttributesErrorFactoryInterface}
+ */
+export const defineCustomerTypeUnassignAttributesErrorFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeUnassignAttributesError,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Updates a customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+export type OptionalCustomerTypeUpdate = {
+  __typename?: 'CustomerTypeUpdate';
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  errors?: OptionalCustomerTypeUpdateError[] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeUpdate} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeUpdateFactoryInterface}
+ */
+export const defineCustomerTypeUpdateFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeUpdate,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeUpdateError = {
+  __typename?: 'CustomerTypeUpdateError';
+  /** The error code. */
+  code?: CustomerTypeUpdateError['code'] | undefined;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: CustomerTypeUpdateError['field'] | undefined;
+  /** The error message. */
+  message?: CustomerTypeUpdateError['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeUpdateError} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeUpdateErrorFactoryInterface}
+ */
+export const defineCustomerTypeUpdateErrorFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeUpdateError,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeUpdateInput = {
+  __typename?: 'CustomerTypeUpdateInput';
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: CustomerTypeUpdateInput['isDefault'] | undefined;
+  /** Name of the customer type. */
+  name?: CustomerTypeUpdateInput['name'] | undefined;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: CustomerTypeUpdateInput['slug'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeUpdateInput} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeUpdateInputFactoryInterface}
+ */
+export const defineCustomerTypeUpdateInputFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeUpdateInput,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Event sent when customer type is updated.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalCustomerTypeUpdated = {
+  __typename?: 'CustomerTypeUpdated';
+  /** The customer type the event relates to. */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  /** Time of the event. */
+  issuedAt?: CustomerTypeUpdated['issuedAt'] | undefined;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<OptionalIssuingPrincipal> | undefined;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<OptionalApp> | undefined;
+  /** Saleor version that triggered the event. */
+  version?: CustomerTypeUpdated['version'] | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeUpdated} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeUpdatedFactoryInterface}
+ */
+export const defineCustomerTypeUpdatedFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeUpdated,
+  {}
+> = defineTypeFactory;
+
+export type OptionalCustomerTypeWhereInput = {
+  __typename?: 'CustomerTypeWhereInput';
+  /** List of conditions that must be met. */
+  AND?: Maybe<OptionalCustomerTypeWhereInput[]> | undefined;
+  /** A list of conditions of which at least one must be met. */
+  OR?: Maybe<OptionalCustomerTypeWhereInput[]> | undefined;
+  ids?: CustomerTypeWhereInput['ids'] | undefined;
+  /** Filter by whether the customer type is the default one. */
+  isDefault?: CustomerTypeWhereInput['isDefault'] | undefined;
+  /** Filter by metadata fields. */
+  metadata?: Maybe<OptionalMetadataFilterInput> | undefined;
+  /** Filter by customer type name. */
+  name?: Maybe<OptionalStringFilterInput> | undefined;
+  /** Filter by customer type slug. */
+  slug?: Maybe<OptionalStringFilterInput> | undefined;
+};
+
+/**
+ * Define factory for {@link CustomerTypeWhereInput} model.
+ *
+ * @param options
+ * @returns factory {@link CustomerTypeWhereInputFactoryInterface}
+ */
+export const defineCustomerTypeWhereInputFactory: DefineTypeFactoryInterface<
+  OptionalCustomerTypeWhereInput,
+  {}
+> = defineTypeFactory;
+
+/**
  * Updates an existing customer.
  *
  * Requires one of the following permissions: MANAGE_USERS.
@@ -10289,6 +10904,18 @@ export type OptionalCustomerWhereInput = {
   OR?: Maybe<OptionalCustomerWhereInput[]> | undefined;
   /** Filter by addresses data associated with user. */
   addresses?: Maybe<OptionalAddressFilterInput> | undefined;
+  /**
+ * Filter by attributes associated with the customer.
+ *
+ * Added in Saleor 3.23.
+ */
+  attributes?: Maybe<OptionalAssignedAttributeWhereInput[]> | undefined;
+  /**
+ * Filter by customer type. Filtering by the default customer type also matches users without an explicitly assigned customer type.
+ *
+ * Added in Saleor 3.23.
+ */
+  customerType?: Maybe<OptionalGlobalIdFilterInput> | undefined;
   /** Filter by date joined. */
   dateJoined?: Maybe<OptionalDateTimeRangeInput> | undefined;
   /** Filter by email address. */
@@ -11068,7 +11695,7 @@ export const defineDraftOrderWhereInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerDeleted | OptionalCustomerMetadataUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantBackInStockForClickAndCollect | OptionalProductVariantBackInStockInChannel | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantDiscountedPriceUpdated | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantOutOfStockForClickAndCollect | OptionalProductVariantOutOfStockInChannel | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
+export type OptionalEvent = OptionalAccountChangeEmailRequested | OptionalAccountConfirmationRequested | OptionalAccountConfirmed | OptionalAccountDeleteRequested | OptionalAccountDeleted | OptionalAccountEmailChanged | OptionalAccountSetPasswordRequested | OptionalAddressCreated | OptionalAddressDeleted | OptionalAddressUpdated | OptionalAppDeleted | OptionalAppInstalled | OptionalAppStatusChanged | OptionalAppUpdated | OptionalAttributeCreated | OptionalAttributeDeleted | OptionalAttributeUpdated | OptionalAttributeValueCreated | OptionalAttributeValueDeleted | OptionalAttributeValueUpdated | OptionalCalculateTaxes | OptionalCategoryCreated | OptionalCategoryDeleted | OptionalCategoryUpdated | OptionalChannelCreated | OptionalChannelDeleted | OptionalChannelMetadataUpdated | OptionalChannelStatusChanged | OptionalChannelUpdated | OptionalCheckoutCreated | OptionalCheckoutFilterShippingMethods | OptionalCheckoutFullyAuthorized | OptionalCheckoutFullyPaid | OptionalCheckoutMetadataUpdated | OptionalCheckoutUpdated | OptionalCollectionCreated | OptionalCollectionDeleted | OptionalCollectionMetadataUpdated | OptionalCollectionUpdated | OptionalCustomerCreated | OptionalCustomerDeleted | OptionalCustomerMetadataUpdated | OptionalCustomerTypeCreated | OptionalCustomerTypeDeleted | OptionalCustomerTypeUpdated | OptionalCustomerUpdated | OptionalDraftOrderCreated | OptionalDraftOrderDeleted | OptionalDraftOrderUpdated | OptionalFulfillmentApproved | OptionalFulfillmentCanceled | OptionalFulfillmentCreated | OptionalFulfillmentMetadataUpdated | OptionalFulfillmentTrackingNumberUpdated | OptionalGiftCardCreated | OptionalGiftCardDeleted | OptionalGiftCardExportCompleted | OptionalGiftCardMetadataUpdated | OptionalGiftCardSent | OptionalGiftCardStatusChanged | OptionalGiftCardUpdated | OptionalInvoiceDeleted | OptionalInvoiceRequested | OptionalInvoiceSent | OptionalListStoredPaymentMethods | OptionalMenuCreated | OptionalMenuDeleted | OptionalMenuItemCreated | OptionalMenuItemDeleted | OptionalMenuItemUpdated | OptionalMenuUpdated | OptionalOrderBulkCreated | OptionalOrderCancelled | OptionalOrderConfirmed | OptionalOrderCreated | OptionalOrderExpired | OptionalOrderFilterShippingMethods | OptionalOrderFulfilled | OptionalOrderFullyPaid | OptionalOrderFullyRefunded | OptionalOrderMetadataUpdated | OptionalOrderPaid | OptionalOrderRefunded | OptionalOrderUpdated | OptionalPageCreated | OptionalPageDeleted | OptionalPageTypeCreated | OptionalPageTypeDeleted | OptionalPageTypeUpdated | OptionalPageUpdated | OptionalPaymentAuthorize | OptionalPaymentCaptureEvent | OptionalPaymentConfirmEvent | OptionalPaymentGatewayInitializeSession | OptionalPaymentGatewayInitializeTokenizationSession | OptionalPaymentListGateways | OptionalPaymentMethodInitializeTokenizationSession | OptionalPaymentMethodProcessTokenizationSession | OptionalPaymentProcessEvent | OptionalPaymentRefundEvent | OptionalPaymentVoidEvent | OptionalPermissionGroupCreated | OptionalPermissionGroupDeleted | OptionalPermissionGroupUpdated | OptionalProductCreated | OptionalProductDeleted | OptionalProductExportCompleted | OptionalProductMediaCreated | OptionalProductMediaDeleted | OptionalProductMediaUpdated | OptionalProductMetadataUpdated | OptionalProductUpdated | OptionalProductVariantBackInStock | OptionalProductVariantBackInStockForClickAndCollect | OptionalProductVariantBackInStockInChannel | OptionalProductVariantCreated | OptionalProductVariantDeleted | OptionalProductVariantDiscountedPriceUpdated | OptionalProductVariantMetadataUpdated | OptionalProductVariantOutOfStock | OptionalProductVariantOutOfStockForClickAndCollect | OptionalProductVariantOutOfStockInChannel | OptionalProductVariantStockUpdated | OptionalProductVariantUpdated | OptionalPromotionCreated | OptionalPromotionDeleted | OptionalPromotionEnded | OptionalPromotionRuleCreated | OptionalPromotionRuleDeleted | OptionalPromotionRuleUpdated | OptionalPromotionStarted | OptionalPromotionUpdated | OptionalSaleCreated | OptionalSaleDeleted | OptionalSaleToggle | OptionalSaleUpdated | OptionalShippingListMethodsForCheckout | OptionalShippingPriceCreated | OptionalShippingPriceDeleted | OptionalShippingPriceUpdated | OptionalShippingZoneCreated | OptionalShippingZoneDeleted | OptionalShippingZoneMetadataUpdated | OptionalShippingZoneUpdated | OptionalShopMetadataUpdated | OptionalStaffCreated | OptionalStaffDeleted | OptionalStaffSetPasswordRequested | OptionalStaffUpdated | OptionalStoredPaymentMethodDeleteRequested | OptionalThumbnailCreated | OptionalTransactionCancelationRequested | OptionalTransactionChargeRequested | OptionalTransactionInitializeSession | OptionalTransactionItemMetadataUpdated | OptionalTransactionProcessSession | OptionalTransactionRefundRequested | OptionalTranslationCreated | OptionalTranslationUpdated | OptionalVoucherCodeExportCompleted | OptionalVoucherCodesCreated | OptionalVoucherCodesDeleted | OptionalVoucherCreated | OptionalVoucherDeleted | OptionalVoucherMetadataUpdated | OptionalVoucherUpdated | OptionalWarehouseCreated | OptionalWarehouseDeleted | OptionalWarehouseMetadataUpdated | OptionalWarehouseUpdated;
 
 /** Event delivery. */
 export type OptionalEventDelivery = {
@@ -15738,7 +16365,7 @@ export type OptionalMutation = {
   /**
  * Deletes attributes.
  *
- * Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of each attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -15769,7 +16396,7 @@ export type OptionalMutation = {
   /**
  * Deletes an attribute.
  *
- * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_DELETED (async): An attribute was deleted.
@@ -15778,7 +16405,7 @@ export type OptionalMutation = {
   /**
  * Reorder the values of an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
@@ -15794,7 +16421,7 @@ export type OptionalMutation = {
   /**
  * Updates attribute.
  *
- * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_UPDATED (async): An attribute was updated.
@@ -15803,7 +16430,7 @@ export type OptionalMutation = {
   /**
  * Deletes values of attributes.
  *
- * Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of each value's attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
@@ -15819,7 +16446,7 @@ export type OptionalMutation = {
   /**
  * Creates a value for an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
+ * Requires one of the following permissions, depending on the attribute type: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_CREATED (async): An attribute value was created.
@@ -15829,7 +16456,7 @@ export type OptionalMutation = {
   /**
  * Deletes a value of an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of the value's attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
@@ -15845,7 +16472,7 @@ export type OptionalMutation = {
   /**
  * Updates value of an attribute.
  *
- * Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+ * Requires one of the following permissions, depending on the type of the value's attribute: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES for `PRODUCT_TYPE` attributes, MANAGE_PAGE_TYPES_AND_ATTRIBUTES for `PAGE_TYPE` attributes, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES for `CUSTOMER_TYPE` attributes.
  *
  * Triggers the following webhook events:
  * - ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
@@ -16207,6 +16834,72 @@ export type OptionalMutation = {
  * - CUSTOMER_DELETED (async): A customer account was deleted.
  */
   customerDelete?: Maybe<OptionalCustomerDelete> | undefined;
+  /**
+ * Assign attributes to a given customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+  customerTypeAssignAttributes?: Maybe<OptionalCustomerTypeAssignAttributes> | undefined;
+  /**
+ * Creates a new customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_CREATED (async): A new customer type was created.
+ */
+  customerTypeCreate?: Maybe<OptionalCustomerTypeCreate> | undefined;
+  /**
+ * Deletes a customer type. Users of the deleted customer type are reassigned to the default customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_DELETED (async): A customer type was deleted.
+ */
+  customerTypeDelete?: Maybe<OptionalCustomerTypeDelete> | undefined;
+  /**
+ * Reorder the attributes of a customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+  customerTypeReorderAttributes?: Maybe<OptionalCustomerTypeReorderAttributes> | undefined;
+  /**
+ * Unassign attributes from a given customer type. Values already assigned to users are kept in the database, but are hidden until the attribute is assigned to the user's customer type again.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+  customerTypeUnassignAttributes?: Maybe<OptionalCustomerTypeUnassignAttributes> | undefined;
+  /**
+ * Updates a customer type.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES.
+ *
+ * Triggers the following webhook events:
+ * - CUSTOMER_TYPE_UPDATED (async): A customer type was updated.
+ */
+  customerTypeUpdate?: Maybe<OptionalCustomerTypeUpdate> | undefined;
   /**
  * Updates an existing customer.
  *
@@ -17940,16 +18633,16 @@ export const defineNameTranslationInputFactory: DefineTypeFactoryInterface<
 > = defineTypeFactory;
 
 /** An object with an ID */
-export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
+export type OptionalNode = OptionalAddress | OptionalAllocation | OptionalApp | OptionalAppExtension | OptionalAppInstallation | OptionalAppProblem | OptionalAppToken | OptionalAttribute | OptionalAttributeTranslatableContent | OptionalAttributeTranslation | OptionalAttributeValue | OptionalAttributeValueTranslatableContent | OptionalAttributeValueTranslation | OptionalCategory | OptionalCategoryTranslatableContent | OptionalCategoryTranslation | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCollectionChannelListing | OptionalCollectionTranslatableContent | OptionalCollectionTranslation | OptionalCustomerEvent | OptionalCustomerType | OptionalEventDelivery | OptionalEventDeliveryAttempt | OptionalExportEvent | OptionalExportFile | OptionalFulfillment | OptionalFulfillmentLine | OptionalGiftCard | OptionalGiftCardEvent | OptionalGiftCardTag | OptionalGroup | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalMenuItemTranslatableContent | OptionalMenuItemTranslation | OptionalOrder | OptionalOrderDiscount | OptionalOrderEvent | OptionalOrderLine | OptionalPage | OptionalPageTranslatableContent | OptionalPageTranslation | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductChannelListing | OptionalProductMedia | OptionalProductTranslatableContent | OptionalProductTranslation | OptionalProductType | OptionalProductVariant | OptionalProductVariantChannelListing | OptionalProductVariantTranslatableContent | OptionalProductVariantTranslation | OptionalPromotion | OptionalPromotionCreatedEvent | OptionalPromotionEndedEvent | OptionalPromotionRule | OptionalPromotionRuleCreatedEvent | OptionalPromotionRuleDeletedEvent | OptionalPromotionRuleTranslatableContent | OptionalPromotionRuleTranslation | OptionalPromotionRuleUpdatedEvent | OptionalPromotionStartedEvent | OptionalPromotionTranslatableContent | OptionalPromotionTranslation | OptionalPromotionUpdatedEvent | OptionalSale | OptionalSaleChannelListing | OptionalSaleTranslatableContent | OptionalSaleTranslation | OptionalShippingMethod | OptionalShippingMethodChannelListing | OptionalShippingMethodPostalCodeRule | OptionalShippingMethodTranslatableContent | OptionalShippingMethodTranslation | OptionalShippingMethodType | OptionalShippingZone | OptionalShopTranslation | OptionalStaffNotificationRecipient | OptionalStock | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransaction | OptionalTransactionEvent | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalVoucherChannelListing | OptionalVoucherTranslatableContent | OptionalVoucherTranslation | OptionalWarehouse | OptionalWebhook;
 
 /**
  * An object with attributes.
  *
  * Added in Saleor 3.22.
  */
-export type OptionalObjectWithAttributes = OptionalPage | OptionalProduct | OptionalProductVariant;
+export type OptionalObjectWithAttributes = OptionalPage | OptionalProduct | OptionalProductVariant | OptionalUser;
 
-export type OptionalObjectWithMetadata = OptionalAddress | OptionalApp | OptionalAttribute | OptionalCategory | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalFulfillment | OptionalGiftCard | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalOrder | OptionalOrderLine | OptionalPage | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductMedia | OptionalProductType | OptionalProductVariant | OptionalPromotion | OptionalSale | OptionalShippingMethod | OptionalShippingMethodType | OptionalShippingZone | OptionalShop | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalWarehouse;
+export type OptionalObjectWithMetadata = OptionalAddress | OptionalApp | OptionalAttribute | OptionalCategory | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalCustomerType | OptionalFulfillment | OptionalGiftCard | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalOrder | OptionalOrderLine | OptionalPage | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductMedia | OptionalProductType | OptionalProductVariant | OptionalPromotion | OptionalSale | OptionalShippingMethod | OptionalShippingMethodType | OptionalShippingZone | OptionalShop | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalWarehouse;
 
 /** Represents an order in the shop. */
 export type OptionalOrder = {
@@ -29189,6 +29882,22 @@ export type OptionalQuery = {
   /** List of the shop's collections. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS. */
   collections?: Maybe<OptionalCollectionCountableConnection> | undefined;
   /**
+ * Look up a customer type by ID.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES, MANAGE_USERS.
+ */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
+  /**
+ * List of the customer types.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP, MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES, MANAGE_USERS.
+ */
+  customerTypes?: Maybe<OptionalCustomerTypeCountableConnection> | undefined;
+  /**
  * List of the shop's customers. This list includes all users who registered through the accountRegister mutation. Additionally, staff users who have placed an order using their account will also appear in this list.
  *
  * Requires one of the following permissions: MANAGE_ORDERS, MANAGE_USERS.
@@ -32507,6 +33216,12 @@ export type OptionalStaffError = {
   __typename?: 'StaffError';
   /** A type of address that causes the error. */
   addressType?: StaffError['addressType'] | undefined;
+  /**
+ * List of attributes IDs which causes the error.
+ *
+ * Added in Saleor 3.23.
+ */
+  attributes?: StaffError['attributes'] | undefined;
   /** The error code. */
   code?: StaffError['code'] | undefined;
   /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
@@ -35688,6 +36403,18 @@ export type OptionalUser = {
   accessibleChannels?: Maybe<OptionalChannel[]> | undefined;
   /** List of all user's addresses. */
   addresses?: OptionalAddress[] | undefined;
+  /**
+ * Get a single attribute assigned to the user by attribute slug. The attribute is looked up among the attributes of the user's customer type. Requires one of the following permissions: MANAGE_USERS, OWNER. The owner can access only attributes that are visible in the storefront.
+ *
+ * Added in Saleor 3.23.
+ */
+  assignedAttribute?: Maybe<OptionalAssignedAttribute> | undefined;
+  /**
+ * List of attributes assigned to the user through the user's customer type. Requires one of the following permissions: MANAGE_USERS, OWNER. The owner can access only attributes that are visible in the storefront.
+ *
+ * Added in Saleor 3.23.
+ */
+  assignedAttributes?: OptionalAssignedAttribute[] | undefined;
   /** The avatar of the user. */
   avatar?: Maybe<OptionalImage> | undefined;
   /** Returns the last open checkout of this user. */
@@ -35698,6 +36425,12 @@ export type OptionalUser = {
   checkoutTokens?: User['checkoutTokens'] | undefined;
   /** Returns checkouts assigned to this user. The query will not initiate any external requests, including fetching external shipping methods, filtering available shipping methods, or performing external tax calculations. */
   checkouts?: Maybe<OptionalCheckoutCountableConnection> | undefined;
+  /**
+ * The customer type assigned to the user. Requires one of the following permissions: MANAGE_USERS, OWNER.
+ *
+ * Added in Saleor 3.23.
+ */
+  customerType?: Maybe<OptionalCustomerType> | undefined;
   /** The data when the user create account. */
   dateJoined?: User['dateJoined'] | undefined;
   /** The default billing address of the user. */
@@ -35900,8 +36633,20 @@ export const defineUserCountableEdgeFactory: DefineTypeFactoryInterface<
 
 export type OptionalUserCreateInput = {
   __typename?: 'UserCreateInput';
+  /**
+ * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+ *
+ * Added in Saleor 3.23.
+ */
+  attributes?: Maybe<OptionalAttributeValueInput[]> | undefined;
   /** Slug of a channel which will be used for notify user. Optional when only one channel exists. */
   channel?: UserCreateInput['channel'] | undefined;
+  /**
+ * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+ *
+ * Added in Saleor 3.23.
+ */
+  customerType?: UserCreateInput['customerType'] | undefined;
   /** Billing address of the customer. */
   defaultBillingAddress?: Maybe<OptionalAddressInput> | undefined;
   /** Shipping address of the customer. */
