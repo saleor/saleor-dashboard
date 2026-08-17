@@ -8,19 +8,26 @@ export class HomePage {
     page: Page,
     readonly channelSelect = page.getByTestId("app-channel-select"),
     readonly channelOptions = page.getByTestId("select-option"),
-    readonly welcomeMessage = page.getByTestId("home-header"),
-    readonly sales = page.getByTestId("sales-analytics"),
-    readonly orders = page.getByTestId("orders-analytics"),
-    readonly activity = page.getByTestId("activity-card"),
-    readonly ordersReadyToFulfill = page.getByTestId("orders-to-fulfill"),
-    readonly paymentsWaitingForCapture = page.getByTestId("orders-to-capture"),
-    readonly productsOutOfStock = page.getByTestId("out-of-stock-analytics"),
+    /**
+     * The home route is extension-driven: it renders widget panels when home
+     * extensions are installed and the Pulse empty state otherwise. The sidebar
+     * entry is the one anchor present for every user and permission set, so use
+     * it to gate "dashboard is loaded" instead of route content.
+     */
+    readonly dashboardLoaded = page.getByTestId("menu-item-label-home"),
+    readonly emptyState = page.getByTestId("home-pulse-cta"),
+    readonly widgetsGrid = page.getByTestId("home-widgets-grid-panel"),
+    readonly fullscreenWidgetPanel = page.locator('[data-test-id^="home-widget-panel-"]'),
   ) {
     this.page = page;
   }
 
   async goto() {
     await this.page.goto(URL_LIST.homePage);
+  }
+
+  async waitForDashboardToLoad(timeout = 30000) {
+    await this.dashboardLoaded.waitFor({ state: "visible", timeout });
   }
 
   async clickChannelSelectButton() {
@@ -31,9 +38,10 @@ export class HomePage {
     await this.channelOptions.filter({ hasNotText: defaultChannelName }).first().click();
   }
 
-  async expectHomePageElementsToBeVisible() {
-    await expect(this.sales).toBeVisible();
-    await expect(this.activity).toBeVisible();
-    await expect(this.productsOutOfStock).toBeVisible();
+  /** Home resolves to a fullscreen widget, the widgets grid, or the empty state. */
+  async expectHomeContentToBeVisible() {
+    await expect(
+      this.fullscreenWidgetPanel.first().or(this.widgetsGrid).or(this.emptyState),
+    ).toBeVisible();
   }
 }

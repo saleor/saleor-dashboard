@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
   draftOrdersPage = new DraftOrdersPage(page);
   mainMenuPage = new MainMenuPage(page);
   await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+  await home.waitForDashboardToLoad();
 });
 test("TC: SALEOR_8 User should be able to navigate to order list as a staff member using ORDER permission #e2e", async () => {
   await mainMenuPage.openOrders();

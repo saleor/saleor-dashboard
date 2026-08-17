@@ -22,7 +22,11 @@ export class AttributesPage extends BasePage {
   constructor(
     page: Page,
     readonly createAttributeButton = page.getByTestId("create-attribute-button"),
-    readonly valueRequiredCheckbox = page.getByLabel("Value Required"),
+    // DetailSettingToggleRow: the pressable element is a role=button div, the
+    // macaw Toggle next to it is aria-hidden and only mirrors the state.
+    readonly valueRequiredToggle = page
+      .getByTestId("attribute-value-required")
+      .locator('[role="button"]'),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly attributesRows = page.getByTestId("attributes-rows"),
     readonly assignAttributeValueButton = page.getByTestId("assign-value-button"),
@@ -40,7 +44,9 @@ export class AttributesPage extends BasePage {
     readonly attrValuesSection = page.getByTestId("attribute-values-section"),
     readonly attrEntityTypeSelect = page.getByTestId("attribute-entity-type-select"),
     readonly attributeSelectOption = page.getByTestId("select-option"),
-    readonly attrVisibleInStorefrontSwitch = page.locator(`[name = "visibleInStorefront"]`),
+    readonly attrVisibleInStorefrontToggle = page
+      .getByTestId("attribute-visible-in-storefront")
+      .locator('[role="button"]'),
     readonly metadataSectionAccordionButton = page
       .getByTestId("metadata-item")
       .getByTestId("expand"),
@@ -108,7 +114,7 @@ export class AttributesPage extends BasePage {
   }
 
   async clickValueRequiredCheckbox() {
-    await this.valueRequiredCheckbox.click();
+    await this.valueRequiredToggle.click();
   }
 
   async clickSaveButton() {
@@ -153,7 +159,7 @@ export class AttributesPage extends BasePage {
   }
 
   async changeAttributeVisibility() {
-    await this.attrVisibleInStorefrontSwitch.click();
+    await this.attrVisibleInStorefrontToggle.click();
   }
 
   async expandMetadataSection() {

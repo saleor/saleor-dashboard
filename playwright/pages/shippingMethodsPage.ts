@@ -26,9 +26,9 @@ export class ShippingMethodsPage extends BasePage {
     readonly shippingZoneName = page.getByTestId("page-header"),
     readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
     readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
+    // data-test-id sits on the button itself, not on a child of it
     readonly deleteShippingRateButtonOnList = page
       .getByTestId("shipping-method-row")
-      .getByRole("button")
       .getByTestId("delete-button"),
     readonly priceBasedRatesSection = page.getByTestId("price-based-rates"),
     readonly weightBasedRatesSection = page.getByTestId("weight-based-rates"),

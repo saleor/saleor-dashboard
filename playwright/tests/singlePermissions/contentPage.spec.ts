@@ -28,7 +28,7 @@ test.beforeEach(async ({ page }) => {
   basePage = new BasePage(page);
   pageTypesPage = new PageTypesPage(page);
   await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+  await home.waitForDashboardToLoad();
 });
 test("TC: SALEOR_14 User should be able to navigate to content list as a staff member using CONTENT aka PAGE permission #e2e", async () => {
   await mainMenuPage.openModels();

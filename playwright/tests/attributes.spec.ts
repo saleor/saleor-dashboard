@@ -39,16 +39,16 @@ for (const attr of attributeClasses) {
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
       await expect(attributesPage.attributesRows).toHaveCount(1);
-      await attributesPage.valueRequiredCheckbox.waitFor({
+      await attributesPage.valueRequiredToggle.waitFor({
         state: "visible",
         timeout: 10000,
       });
-      await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
-        "data-state",
-        "on",
+      await expect(attributesPage.valueRequiredToggle).toBeEnabled();
+      await expect(attributesPage.attrVisibleInStorefrontToggle).toHaveAttribute(
+        "aria-pressed",
+        "true",
       );
-      await expect(attributesPage.valueRequiredCheckbox).toBeChecked();
+      await expect(attributesPage.valueRequiredToggle).toHaveAttribute("aria-pressed", "true");
     });
   }
 }
@@ -77,16 +77,16 @@ for (const attr of attributeClasses) {
       await attributesPage.changeAttributeVisibility();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
-      await attributesPage.valueRequiredCheckbox.waitFor({
+      await attributesPage.valueRequiredToggle.waitFor({
         state: "visible",
         timeout: 10000,
       });
-      await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
-        "data-state",
-        "off",
+      await expect(attributesPage.valueRequiredToggle).toBeEnabled();
+      await expect(attributesPage.attrVisibleInStorefrontToggle).toHaveAttribute(
+        "aria-pressed",
+        "false",
       );
-      await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
+      await expect(attributesPage.valueRequiredToggle).toHaveAttribute("aria-pressed", "false");
     });
   }
 }
@@ -113,16 +113,16 @@ for (const attr of attributeClasses) {
       await attributesPage.clickValueRequiredCheckbox();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
-      await attributesPage.valueRequiredCheckbox.waitFor({
+      await attributesPage.valueRequiredToggle.waitFor({
         state: "visible",
         timeout: 10000,
       });
-      await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
-        "data-state",
-        "on",
+      await expect(attributesPage.valueRequiredToggle).toBeEnabled();
+      await expect(attributesPage.attrVisibleInStorefrontToggle).toHaveAttribute(
+        "aria-pressed",
+        "true",
       );
-      await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
+      await expect(attributesPage.valueRequiredToggle).toHaveAttribute("aria-pressed", "false");
     });
   }
 }
