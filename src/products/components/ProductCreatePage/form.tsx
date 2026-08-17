@@ -50,8 +50,10 @@ import {
 import {
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
+  createChannelsReplaceHandler,
   createPreorderEndDateChangeHandler,
   createProductTypeSelectHandler,
+  replaceFormsetStockValues,
 } from "@dashboard/products/utils/handlers";
 import {
   validateCostPrice,
@@ -71,7 +73,11 @@ import { type Option } from "@saleor/macaw-ui-next";
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { type ProductStockFormsetData, type ProductStockInput } from "../ProductStocks";
+import {
+  type ProductStockFormsetData,
+  type ProductStockInput,
+  type ProductStockPasteRow,
+} from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
@@ -113,6 +119,8 @@ export interface ProductCreateHandlers
     >,
     Record<"changeStock" | "selectAttribute" | "selectAttributeMultiple", FormsetChange<string>>,
     Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
+    Record<"replaceChannels", (listings: ChannelData[]) => void>,
+    Record<"replaceStocks", (stocks: ProductStockPasteRow[]) => void>,
     Record<
       "changeChannels",
       (id: string, data: Omit<ChannelData, "name" | "price" | "currency" | "id">) => void
@@ -288,6 +296,10 @@ function useProductCreateForm(
     triggerChange();
     stocks.change(id, value);
   };
+  const handleStocksReplace = (updatedStocks: ProductStockPasteRow[]) => {
+    triggerChange();
+    stocks.set(replaceFormsetStockValues(stocks.data, updatedStocks));
+  };
   const handleStockAdd = (id: string, label: string) => {
     triggerChange();
     stocks.add({
@@ -315,6 +327,11 @@ function useProductCreateForm(
     triggerChange,
   );
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
+    opts.currentChannels,
+    opts.setChannels,
+    triggerChange,
+  );
+  const handleChannelsReplace = createChannelsReplaceHandler(
     opts.currentChannels,
     opts.setChannels,
     triggerChange,
@@ -419,8 +436,10 @@ function useProductCreateForm(
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
       changeChannels: handleChannelsChange,
+      replaceChannels: handleChannelsReplace,
       changeMetadata,
       changeStock: handleStockChange,
+      replaceStocks: handleStocksReplace,
       changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,

@@ -58,3 +58,14 @@ export const staffMemberDetails = gql`
     }
   }
 `;
+
+export const defaultGraphiQLQuery = `query StaffMemberDetails($id: ID!) {
+  user(id: $id) {
+    id
+    email
+    firstName
+    lastName
+    isStaff
+    isActive
+  }
+}`;

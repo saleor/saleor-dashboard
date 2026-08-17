@@ -15,6 +15,24 @@
   color: var(--mu-colors-text-default1);
 }
 
+.detailsLink {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.detailsLink:focus-visible {
+  outline: 2px solid var(--mu-colors-border-info1);
+  outline-offset: 2px;
+}
+
+.detailsLink:hover .name {
+  text-decoration: underline;
+}
+
 .name {
   display: inline-block;
   max-width: 16rem;
@@ -23,4 +41,18 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: bottom;
+}
+
+/*
+ * Inline variant. An inline-flex box takes its baseline from its first item, and an
+ * SVG icon has none, so the whole channel sits below the surrounding text. Laying it
+ * out as ordinary inline content puts the name back on the shared baseline.
+ */
+.inlineIcon {
+  vertical-align: -0.125em;
+  margin-right: 0.25em;
+}
+
+.inlineName {
+  white-space: nowrap;
 }

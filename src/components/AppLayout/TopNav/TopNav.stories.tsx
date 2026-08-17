@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 import type { ComponentType } from "react";
 import { fn } from "storybook/test";
 
+import { TopNavDestinationIcon } from "./destinationIcons";
 import { TopNav } from "./index";
 
 const mockUser: UserFragment = {
@@ -16,6 +17,7 @@ const mockUser: UserFragment = {
   email: "admin@example.com",
   firstName: "Admin",
   lastName: "User",
+  isActive: true,
   isStaff: true,
   dateJoined: "2024-01-01T00:00:00Z",
   metadata: [],
@@ -58,7 +60,14 @@ export const Default: Story = {
 };
 
 export const WithBackLink: Story = {
-  render: () => <TopNav title="Product Details" href="/products" />,
+  render: () => (
+    <TopNav
+      title="Product Details"
+      href="/products"
+      hrefIcon={<TopNavDestinationIcon.products />}
+      hrefTitle="All products"
+    />
+  ),
 };
 
 export const WithChildren: Story = {
@@ -71,7 +80,12 @@ export const WithChildren: Story = {
 
 export const WithMenu: Story = {
   render: () => (
-    <TopNav title="Product Details" href="/products">
+    <TopNav
+      title="Product Details"
+      href="/products"
+      hrefIcon={<TopNavDestinationIcon.products />}
+      hrefTitle="All products"
+    >
       <TopNav.Menu
         items={[
           { label: "Edit", onSelect: fn(), icon: <TerminalIcon /> },
@@ -84,7 +98,13 @@ export const WithMenu: Story = {
 
 export const WithDetailPageActions: Story = {
   render: () => (
-    <TopNav title="Product Details" href="/products" actionsGap={3}>
+    <TopNav
+      title="Product Details"
+      href="/products"
+      hrefIcon={<TopNavDestinationIcon.products />}
+      hrefTitle="All products"
+      actionsGap={3}
+    >
       <TopNav.MetadataButton title="Edit product metadata" onClick={fn()} />
       <TopNav.Menu
         items={[
@@ -113,13 +133,25 @@ export const WithoutBorder: Story = {
 
 export const WithSubtitle: Story = {
   render: () => (
-    <TopNav title="Category" subtitle="Home / Electronics / Phones" href="/categories" />
+    <TopNav
+      title="Category"
+      subtitle="Home / Electronics / Phones"
+      href="/categories"
+      hrefIcon={<TopNavDestinationIcon.products />}
+      hrefTitle="All categories"
+    />
   ),
 };
 
 export const WithSubtitleTop: Story = {
   render: () => (
-    <TopNav title="Category" subtitleTop="Home / Electronics / Phones" href="/categories" />
+    <TopNav
+      title="Category"
+      subtitleTop="Home / Electronics / Phones"
+      href="/categories"
+      hrefIcon={<TopNavDestinationIcon.products />}
+      hrefTitle="All categories"
+    />
   ),
 };
 

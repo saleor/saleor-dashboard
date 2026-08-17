@@ -1,8 +1,12 @@
 import { type AttributeAssignedTypesCardProps } from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
 import { useAttributeValuesSearch } from "@dashboard/attributes/hooks/useAttributeValuesSearch";
-import { attributeValueFragmentToFormData } from "@dashboard/attributes/utils/data";
+import {
+  type AttributeValueEditDialogFormData,
+  attributeValueFragmentToFormData,
+} from "@dashboard/attributes/utils/data";
 import { getAssignedModelTypesForAttribute } from "@dashboard/attributes/utils/getAssignedModelTypesForAttribute";
 import { mapAssignedTypeConnection } from "@dashboard/attributes/utils/mapAssignedTypeConnection";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import {
   AttributeTypeEnum,
   OrderDirection,
@@ -10,24 +14,27 @@ import {
   useAttributeDeleteMutation,
   useAttributeDetailsQuery,
   useAttributeUpdateMutation,
+  useAttributeValueBulkDeleteMutation,
   useAttributeValueCreateMutation,
   useAttributeValueDeleteMutation,
   useAttributeValueReorderMutation,
   useAttributeValueUpdateMutation,
   usePageTypeListWithAssignedAttributeCountsQuery,
 } from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { buttonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { ListViews, type ReorderEvent } from "@dashboard/types";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { move } from "@dashboard/utils/lists";
 import omit from "lodash/omit";
-import { useCallback, useMemo } from "react";
-import { useIntl } from "react-intl";
+import { useCallback, useMemo, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
 import { AttributeMetadataDialog } from "../../components/AttributeMetadataDialog/AttributeMetadataDialog";
@@ -58,6 +65,8 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
   const [valuesPaginationState, setValuesPaginationState] = useLocalPaginationState(
     settings?.rowNumber,
   );
+  const [isCreatingValues, setIsCreatingValues] = useState(false);
+  const valueListActions = useBulkActions();
 
   const resetPagination = useCallback(() => {
     setValuesPaginationState({
@@ -174,10 +183,45 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
             description: "attribute value deleted",
           }),
         });
+        valueListActions.reset();
         closeModal();
       }
     },
   });
+  const [attributeValueBulkDelete, attributeValueBulkDeleteOpts] =
+    useAttributeValueBulkDeleteMutation({
+      onCompleted: data => {
+        const result = data?.attributeValueBulkDelete;
+
+        if (!result) {
+          return;
+        }
+
+        if (result.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(
+              {
+                id: "GP919l",
+                defaultMessage: "{count, plural, one {Value deleted} other {# values deleted}}",
+                description: "toast after deleting attribute values",
+              },
+              { count: result.count },
+            ),
+          });
+          valueListActions.reset();
+          closeModal();
+          refetch();
+
+          return;
+        }
+
+        notify({
+          status: "error",
+          text: getAttributeErrorMessage(result.errors[0], intl),
+        });
+      },
+    });
   const [attributeValueUpdate, attributeValueUpdateOpts] = useAttributeValueUpdateMutation({
     onCompleted: data => {
       if (data?.attributeValueUpdate?.errors.length === 0) {
@@ -193,21 +237,72 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
       }
     },
   });
-  const [attributeValueCreate, attributeValueCreateOpts] = useAttributeValueCreateMutation({
-    onCompleted: data => {
-      if (data?.attributeValueCreate?.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "xVn5B0",
-            defaultMessage: "Added new value",
-            description: "added new attribute value",
-          }),
-        });
+  const [attributeValueCreate, attributeValueCreateOpts] = useAttributeValueCreateMutation();
+  const notifyValuesAdded = useCallback(
+    (count: number): void => {
+      notify({
+        status: "success",
+        text: intl.formatMessage(
+          {
+            id: "xOFbeR",
+            defaultMessage: "{count, plural, one {Added new value} other {Added # values}}",
+            description: "toast after creating attribute values",
+          },
+          { count },
+        ),
+      });
+    },
+    [intl, notify],
+  );
+  const createAttributeValue = useCallback(
+    async (input: AttributeValueEditDialogFormData) => {
+      const result = await attributeValueCreate({
+        variables: {
+          id,
+          input,
+          firstValues: valuesPaginationState.first,
+          lastValues: valuesPaginationState.last,
+          afterValues: valuesPaginationState.after,
+          beforeValues: valuesPaginationState.before,
+        },
+      });
+
+      return result.data?.attributeValueCreate?.errors ?? [];
+    },
+    [attributeValueCreate, id, valuesPaginationState],
+  );
+  const handleValueCreate = useCallback(
+    async (input: AttributeValueEditDialogFormData) => {
+      const errors = await createAttributeValue(input);
+
+      if (errors.length === 0) {
+        notifyValuesAdded(1);
         closeModal();
       }
     },
-  });
+    [closeModal, createAttributeValue, notifyValuesAdded],
+  );
+  const handleValueCreateMany = useCallback(
+    async (inputs: AttributeValueEditDialogFormData[]) => {
+      setIsCreatingValues(true);
+
+      try {
+        for (const input of inputs) {
+          const errors = await createAttributeValue(input);
+
+          if (errors.length > 0) {
+            return;
+          }
+        }
+
+        notifyValuesAdded(inputs.length);
+        closeModal();
+      } finally {
+        setIsCreatingValues(false);
+      }
+    },
+    [closeModal, createAttributeValue, notifyValuesAdded],
+  );
   const [attributeValueReorder] = useAttributeValueReorderMutation({
     onCompleted: data => {
       if (data?.attributeReorderValues?.errors.length !== 0) {
@@ -291,6 +386,19 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
           id,
         })
       }
+      valueList={{
+        isChecked: valueListActions.isSelected,
+        selected: valueListActions.listElements.length,
+        toggle: valueListActions.toggle,
+        toggleAll: valueListActions.toggleAll,
+        toolbar: (
+          <BulkDeleteButton
+            onClick={() => openModal("remove-values", { ids: valueListActions.listElements })}
+          >
+            <FormattedMessage {...buttonMessages.delete} />
+          </BulkDeleteButton>
+        ),
+      }}
       saveButtonBarState={attributeUpdateOpts.status}
       values={data?.attribute?.choices}
       settings={settings}
@@ -344,26 +452,32 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
               })
             }
           />
-          <AttributeValueEditDialog
-            inputType={attributeFormData.inputType}
-            attributeValue={null}
-            confirmButtonState={attributeValueCreateOpts.status}
-            disabled={isInitialLoading}
-            errors={attributeValueCreateOpts.data?.attributeValueCreate?.errors || []}
-            open={params.action === "add-value"}
+          <AttributeValueDeleteDialog
+            attributeName={data?.attribute?.name ?? "..."}
+            open={params.action === "remove-values"}
+            name=""
+            quantity={params.ids?.length ?? 0}
+            useName={true}
+            confirmButtonState={attributeValueBulkDeleteOpts.status}
             onClose={closeModal}
-            onSubmit={input =>
-              attributeValueCreate({
+            onConfirm={() =>
+              attributeValueBulkDelete({
                 variables: {
-                  id,
-                  input,
-                  firstValues: valuesPaginationState.first,
-                  lastValues: valuesPaginationState.last,
-                  afterValues: valuesPaginationState.after,
-                  beforeValues: valuesPaginationState.before,
+                  ids: params.ids ?? [],
                 },
               })
             }
+          />
+          <AttributeValueEditDialog
+            inputType={attributeFormData.inputType}
+            attributeValue={null}
+            confirmButtonState={isCreatingValues ? "loading" : attributeValueCreateOpts.status}
+            disabled={isInitialLoading || isCreatingValues}
+            errors={attributeValueCreateOpts.data?.attributeValueCreate?.errors || []}
+            open={params.action === "add-value"}
+            onClose={closeModal}
+            onSubmit={handleValueCreate}
+            onSubmitMany={handleValueCreateMany}
           />
           <AttributeValueEditDialog
             inputType={attributeFormData.inputType}

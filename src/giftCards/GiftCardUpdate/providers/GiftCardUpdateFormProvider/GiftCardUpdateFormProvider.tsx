@@ -1,50 +1,45 @@
-import { type MetadataFormData } from "@dashboard/components/Metadata";
 import { giftCardUpdateFormMessages } from "@dashboard/giftCards/GiftCardsList/messages";
 import { useGiftCardPermissions } from "@dashboard/giftCards/hooks/useGiftCardPermissions";
 import {
   type GiftCardErrorFragment,
   type GiftCardUpdateMutation,
   useGiftCardUpdateMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import { type MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
-import useForm, { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
+import useForm, { type UseFormResult } from "@dashboard/hooks/useForm";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { getFormErrors } from "@dashboard/utils/errors";
-import createMetadataUpdateHandler, {
-  type ObjectWithMetadata,
-} from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import getMetadata from "@dashboard/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import difference from "lodash/difference";
-import type * as React from "react";
-import { createContext } from "react";
+import { createContext, type ReactNode, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
   type GiftCardCreateFormData,
   initialData as emptyFormData,
 } from "../../../GiftCardCreateDialog/GiftCardCreateDialogForm";
+import {
+  buildGiftCardSaveComposition,
+  EMPTY_GIFT_CARD_SAVE_COMPOSITION,
+  type GiftCardSaveComposition,
+  hasGiftCardSaveComposition,
+} from "../../saveComposition";
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateFormProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-export type GiftCardUpdateFormData = MetadataFormData &
-  Pick<GiftCardCreateFormData, "tags" | "expiryDate">;
+export type GiftCardUpdateFormData = Pick<GiftCardCreateFormData, "tags" | "expiryDate">;
 
 export interface GiftCardUpdateFormConsumerData extends GiftCardUpdateFormErrors {
   opts: MutationResultWithOpts<GiftCardUpdateMutation>;
+  saveComposition: GiftCardSaveComposition;
+  isSaveDisabled: boolean;
 }
 
 export interface GiftCardUpdateFormErrors {
   formErrors: Record<"tags" | "expiryDate", GiftCardErrorFragment | undefined>;
-  handlers: { changeMetadata: FormChange };
 }
 
 type GiftCardUpdateFormConsumerProps = UseFormResult<GiftCardUpdateFormData> &
@@ -55,12 +50,12 @@ export const GiftCardUpdateFormContext = createContext<GiftCardUpdateFormConsume
 );
 
 export const getGiftCardTagsAddRemoveData = (initTags: string[], changedTags: string[]) => {
-  const removed = difference(initTags, changedTags);
-  const added = difference(changedTags, initTags);
+  const removeTags = initTags.filter(tag => !changedTags.includes(tag));
+  const addTags = changedTags.filter(tag => !initTags.includes(tag));
 
   return {
-    addTags: added,
-    removeTags: removed,
+    addTags,
+    removeTags,
   };
 };
 
@@ -68,21 +63,20 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
   const notify = useNotifier();
   const intl = useIntl();
   const { canSeeCreatedBy } = useGiftCardPermissions();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const { loading: loadingGiftCard, giftCard } = useGiftCardDetails();
   const getInitialData = (): GiftCardUpdateFormData => {
     if (loadingGiftCard || !giftCard) {
-      return { ...emptyFormData, metadata: [], privateMetadata: [] };
+      return {
+        tags: emptyFormData.tags,
+        expiryDate: emptyFormData.expiryDate,
+      };
     }
 
-    const { tags, expiryDate, privateMetadata, metadata } = giftCard;
+    const { tags, expiryDate } = giftCard;
 
     return {
       tags: tags.map(({ name }) => ({ label: name, value: name })),
       expiryDate: expiryDate ?? "",
-      privateMetadata: privateMetadata?.map(mapMetadataItemToInput) ?? [],
-      metadata: metadata?.map(mapMetadataItemToInput) ?? [],
     };
   };
   const [updateGiftCard, updateGiftCardOpts] = useGiftCardUpdateMutation({
@@ -103,14 +97,14 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
   });
   const submit = async ({ tags, expiryDate }: GiftCardUpdateFormData) => {
     if (!giftCard) {
-      return undefined;
+      return [];
     }
 
     const result = await updateGiftCard({
       variables: {
         id: giftCard.id,
         input: {
-          expiryDate,
+          expiryDate: expiryDate || null,
           ...getGiftCardTagsAddRemoveData(
             giftCard.tags.map(el => el.name),
             tags.map(el => el.value),
@@ -120,50 +114,46 @@ const GiftCardUpdateFormProvider = ({ children }: GiftCardUpdateFormProviderProp
       },
     });
 
-    return result?.data?.giftCardUpdate?.errors;
+    return result?.data?.giftCardUpdate?.errors ?? [];
   };
-  const formProps = useForm(getInitialData());
-  const { data, change, formId } = formProps;
-  const giftCardMetadata: ObjectWithMetadata = giftCard ?? {
-    id: "",
-    metadata: [],
-    privateMetadata: [],
-  };
-  const handleSubmit = createMetadataUpdateHandler(
-    giftCardMetadata,
-    submit,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+  const formProps = useForm(getInitialData(), undefined, {
+    confirmLeave: true,
+  });
+  const { data, formId, changedData, triggerChange, setIsSubmitDisabled, handleChange } = formProps;
   const handleFormSubmit = useHandleFormSubmit({
     formId,
-    onSubmit: handleSubmit,
+    onSubmit: submit,
   });
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
-  const changeMetadata = makeMetadataChangeHandler(change);
-  const metadataUpdate = getMetadata(data, isMetadataModified, isPrivateMetadataModified);
-  const submitData: GiftCardUpdateFormData = {
-    ...data,
-    metadata: metadataUpdate.metadata ?? data.metadata,
-    privateMetadata: metadataUpdate.privateMetadata ?? data.privateMetadata,
-  };
-  const formSubmit = () => handleFormSubmit(submitData);
   const formErrors = getFormErrors(
     ["tags", "expiryDate"],
     updateGiftCardOpts?.data?.giftCardUpdate?.errors,
   );
+  const saveComposition = giftCard
+    ? buildGiftCardSaveComposition(Object.keys(changedData))
+    : EMPTY_GIFT_CARD_SAVE_COMPOSITION;
+  const hasUnsavedChanges = hasGiftCardSaveComposition(saveComposition);
+  const isSaveDisabled =
+    loadingGiftCard || !giftCard || updateGiftCardOpts.loading || !hasUnsavedChanges;
+
+  // Keep exit-dialog dirty + submit-disabled in sync with real composition
+  // (reverting edits must clear confirm-leave; Save stays disabled when pristine).
+  useEffect(
+    function syncExitDialogDirtyFromComposition() {
+      triggerChange(hasUnsavedChanges);
+    },
+    [hasUnsavedChanges, triggerChange],
+  );
+
+  setIsSubmitDisabled(isSaveDisabled);
+
   const providerValues: GiftCardUpdateFormConsumerProps = {
     ...formProps,
+    change: handleChange,
     opts: updateGiftCardOpts,
     formErrors,
-    submit: formSubmit,
-    handlers: {
-      changeMetadata,
-    },
+    submit: () => handleFormSubmit(data),
+    saveComposition,
+    isSaveDisabled,
   };
 
   return (

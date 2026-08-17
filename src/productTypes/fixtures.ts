@@ -1179,6 +1179,20 @@ export const productTypes: Array<
   ...productType,
 }));
 
+const detailsChoices = (id: string, name: string) => ({
+  __typename: "AttributeValueCountableConnection" as const,
+  edges: [
+    {
+      __typename: "AttributeValueCountableEdge" as const,
+      node: {
+        __typename: "AttributeValue" as const,
+        id,
+        name,
+      },
+    },
+  ],
+});
+
 export const productType: ProductTypeDetailsQuery["productType"] = {
   __typename: "ProductType" as const,
   hasVariants: false,
@@ -1207,6 +1221,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null,
+      valueRequired: true,
+      choices: detailsChoices("val-author", "John Doe"),
     },
     {
       __typename: "Attribute" as const,
@@ -1219,6 +1235,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null,
+      valueRequired: false,
+      choices: detailsChoices("val-language", "English"),
     },
     {
       __typename: "Attribute" as const,
@@ -1231,6 +1249,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null,
+      valueRequired: true,
+      choices: detailsChoices("val-publisher", "Saleor Press"),
     },
   ],
   taxClass: {
@@ -1270,6 +1290,8 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
         inputType: AttributeInputTypeEnum.DROPDOWN,
         visibleInStorefront: true,
         unit: null,
+        valueRequired: true,
+        choices: detailsChoices("val-variant-author", "John Doe"),
       },
       variantSelection: true,
     },

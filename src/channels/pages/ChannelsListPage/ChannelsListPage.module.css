@@ -1,0 +1,45 @@
+.tableRow {
+  cursor: pointer;
+}
+
+.coverageCell {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-3);
+}
+
+.coverageItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  color: var(--mu-colors-text-default2);
+  white-space: nowrap;
+}
+
+.coverageItemBlocker {
+  color: var(--mu-colors-text-critical1);
+}
+
+/*
+ * Match the row’s vertical inset around the trash icon.
+ * Doubled class + :last-child beats ResponsiveTable’s
+ * `.table td:last-child { padding-right: 4px }` (see CustomerOrders).
+ */
+td.colAction.colAction:last-child,
+th.colAction.colAction:last-child {
+  width: 48px;
+  text-align: right;
+  padding-right: var(--mu-spacing-3) !important;
+}
+
+.colStatus {
+  width: 120px;
+}
+
+.colSetup {
+  width: 240px;
+}
+
+.colCoverage {
+  width: 160px;
+}

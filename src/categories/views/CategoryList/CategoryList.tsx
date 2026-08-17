@@ -1,7 +1,11 @@
 import { useApolloClient } from "@apollo/client";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
-import { useRootCategoriesQuery } from "@dashboard/graphql";
+import {
+  type ProductErrorFragment,
+  useCategoryCreateMutation,
+  useRootCategoriesQuery,
+} from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
@@ -13,10 +17,12 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
+import { getMutationErrors } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { getSortParams } from "@dashboard/utils/sort";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -28,11 +34,14 @@ import {
   type CategoryListPageState,
   CategoryListPageStateProvider,
 } from "../../components/CategoryListPage/categoryListPageState";
+import { CreateCategoryDialog } from "../../components/CreateCategoryDialog/CreateCategoryDialog";
+import { messages as createCategoryMessages } from "../../components/CreateCategoryDialog/messages";
 import {
   categoryListUrl,
   type CategoryListUrlDialog,
   type CategoryListUrlFilters,
   type CategoryListUrlQueryParams,
+  categoryUrl,
 } from "../../urls";
 import {
   CATEGORY_LIST_EXPANDED_IDS_STORAGE_KEY,
@@ -84,6 +93,20 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
     CategoryListUrlDialog,
     CategoryListUrlQueryParams
   >(navigate, categoryListUrl, params);
+  const [createCategory, createCategoryOpts] = useCategoryCreateMutation({
+    onCompleted: data => {
+      if ((data.categoryCreate?.errors.length ?? 0) > 0) {
+        return;
+      }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(createCategoryMessages.created),
+      });
+      closeModal();
+      navigate(categoryUrl(data.categoryCreate?.category?.id ?? ""));
+    },
+  });
 
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
 
@@ -256,6 +279,7 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
           }}
           onTabUpdate={onPresetUpdate}
           onTabSave={() => openModal("save-search")}
+          onCreateCategory={() => openModal("create")}
           tabs={presets.map(tab => tab.name)}
           settings={settings}
           sort={getSortParams(params)}
@@ -267,6 +291,30 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
           }}
         />
       </CategoryListPageStateProvider>
+
+      <CreateCategoryDialog
+        open={params.action === "create"}
+        onClose={closeModal}
+        confirmButtonState={createCategoryOpts.status}
+        disabled={createCategoryOpts.loading}
+        errors={createCategoryOpts.data?.categoryCreate?.errors ?? []}
+        onSubmit={async ({ name, description }) => {
+          const result = await createCategory({
+            variables: {
+              parent: null,
+              input: {
+                name,
+                ...(description
+                  ? { description: getParsedDataForJsonStringField(description) }
+                  : {}),
+              },
+            },
+          });
+          const errors = getMutationErrors(result);
+
+          return Array.isArray(errors) ? (errors as ProductErrorFragment[]) : [];
+        }}
+      />
 
       <CategoryBulkDeleteDialog
         confirmButtonState={categoryBulkDeleteOpts.status}

@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
@@ -27,6 +31,8 @@ const PermissionGroupListPage = (listProps: PermissionGroupListPageProps) => {
       <TopNav
         withoutBorder
         href={configurationMenuUrl}
+        hrefIcon={<TopNavDestinationIcon.configuration />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
         title={intl.formatMessage(sectionNames.permissionGroups)}
       >
         <Button

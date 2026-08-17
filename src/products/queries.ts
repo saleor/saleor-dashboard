@@ -133,6 +133,7 @@ export const productVariantCreateQuery = gql`
           id
           name
           currencyCode
+          isActive
         }
       }
       name

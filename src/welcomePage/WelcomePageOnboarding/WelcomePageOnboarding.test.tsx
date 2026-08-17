@@ -29,6 +29,9 @@ jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
 }));
+jest.mock("@dashboard/staff/components/StaffInviteProvider/StaffInviteProvider", () => ({
+  useStaffInviteDialog: () => ({ openInvite: jest.fn() }),
+}));
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <ApolloMockedProvider>

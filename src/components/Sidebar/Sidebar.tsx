@@ -1,9 +1,9 @@
 import { Box, Drawer } from "@saleor/macaw-ui-next";
-import { Menu } from "lucide-react";
 
 import { SidebarContent } from "./Content";
 import classes from "./Sidebar.module.css";
 import { useSidebarBreakpointContext } from "./SidebarContext";
+import { SidebarDrawerTrigger } from "./SidebarDrawerTrigger";
 
 export const Sidebar = () => {
   const { breakpoint } = useSidebarBreakpointContext();
@@ -19,15 +19,7 @@ export const Sidebar = () => {
         <div className={classes.drawerWide}>
           <Drawer>
             <Drawer.Trigger>
-              <Box
-                as="button"
-                borderWidth={0}
-                backgroundColor="default1"
-                cursor="pointer"
-                data-test-id="sidebar-drawer-open"
-              >
-                <Menu />
-              </Box>
+              <SidebarDrawerTrigger />
             </Drawer.Trigger>
             <Drawer.Content
               backgroundColor="default2"
@@ -55,15 +47,7 @@ export const Sidebar = () => {
       <Box display={{ mobile: "block", tablet: "block", desktop: "none" }}>
         <Drawer>
           <Drawer.Trigger>
-            <Box
-              as="button"
-              borderWidth={0}
-              backgroundColor="default1"
-              cursor="pointer"
-              data-test-id="sidebar-drawer-open"
-            >
-              <Menu />
-            </Box>
+            <SidebarDrawerTrigger />
           </Drawer.Trigger>
           <Drawer.Content
             backgroundColor="default2"

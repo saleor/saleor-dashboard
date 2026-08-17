@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -141,6 +145,8 @@ const OrderGrantRefundPage = ({
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={order ? orderUrl(order?.id) : "#"}
+        hrefIcon={<TopNavDestinationIcon.orders />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
         title={
           <FormattedMessage
             {...(isEdit

@@ -16,6 +16,7 @@ import {
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
 import {
+  type ChannelData,
   type ChannelPriceAndPreorderData,
   type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
@@ -50,7 +51,10 @@ import {
 import {
   createPreorderEndDateChangeHandler,
   getChannelsInput,
+  replaceFormsetChannelListings,
+  replaceFormsetStockValues,
 } from "@dashboard/products/utils/handlers";
+import { scrollToVariantAttributeErrors } from "@dashboard/products/utils/scrollToVariantAttributeErrors";
 import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
@@ -59,7 +63,11 @@ import type * as React from "react";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { type ProductStockFormsetData, type ProductStockInput } from "../ProductStocks";
+import {
+  type ProductStockFormsetData,
+  type ProductStockInput,
+  type ProductStockPasteRow,
+} from "../ProductStocks";
 import {
   concatChannelsBySelection,
   createChannelsWithPreorderInfo,
@@ -111,6 +119,8 @@ export interface ProductVariantCreateHandlers
     Record<"addStock", (id: string, label: string) => void>,
     Record<"deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
+  replaceChannels: (listings: ChannelData[]) => void;
+  replaceStocks: (stocks: ProductStockPasteRow[]) => void;
   updateChannels: (selectedChannelsIds: string[]) => void;
   changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
@@ -238,6 +248,10 @@ function useProductVariantCreateForm(
     triggerChange();
     stocks.change(id, value);
   };
+  const handleStocksReplace = (updatedStocks: ProductStockPasteRow[]) => {
+    triggerChange();
+    stocks.set(replaceFormsetStockValues(stocks.data, updatedStocks));
+  };
   const handleStockDelete = (id: string) => {
     triggerChange();
     stocks.remove(id);
@@ -249,6 +263,10 @@ function useProductVariantCreateForm(
   );
   const handleChannelChange: FormsetChange = (id, value) => {
     channels.change(id, value);
+    triggerChange();
+  };
+  const handleChannelsReplace = (listings: ChannelData[]) => {
+    channels.set(replaceFormsetChannelListings(channels.data, listings));
     triggerChange();
   };
   const handleUpdateChannels = (selectedIds: string[]) => {
@@ -280,6 +298,8 @@ function useProductVariantCreateForm(
     setValidationErrors(validationProductErrors);
 
     if (validationProductErrors.length > 0) {
+      scrollToVariantAttributeErrors(validationProductErrors);
+
       return validationProductErrors;
     }
 
@@ -308,9 +328,11 @@ function useProductVariantCreateForm(
     handlers: {
       addStock: handleStockAdd,
       changeChannels: handleChannelChange,
+      replaceChannels: handleChannelsReplace,
       updateChannels: handleUpdateChannels,
       changeMetadata,
       changeStock: handleStockChange,
+      replaceStocks: handleStocksReplace,
       changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,

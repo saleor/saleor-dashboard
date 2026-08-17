@@ -4,19 +4,18 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   collectionAddPath,
-  type CollectionCreateUrlQueryParams,
   collectionListPath,
+  collectionListUrl,
   type CollectionListUrlQueryParams,
   CollectionListUrlSortField,
   collectionPath,
   type CollectionUrlQueryParams,
 } from "./urls";
-import CollectionCreateView from "./views/CollectionCreate";
 import CollectionDetailsView from "./views/CollectionDetails";
 import CollectionListView from "./views/CollectionList";
 
@@ -45,12 +44,8 @@ const CollectionDetails = ({
   return <CollectionDetailsView id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-const CollectionCreate = ({ location }: RouteComponentProps) => {
-  const qs = parseQs(location.search.substr(1));
-  const params: CollectionCreateUrlQueryParams = qs;
-
-  return <CollectionCreateView params={params} />;
-};
+/** Legacy /collections/add → create dialog on the list. */
+const CollectionCreateRedirect = () => <Redirect to={collectionListUrl({ action: "create" })} />;
 
 const Component = () => {
   const intl = useIntl();
@@ -60,7 +55,7 @@ const Component = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.collections)} />
       <Switch>
         <Route exact path={collectionListPath} component={CollectionList} />
-        <Route exact path={collectionAddPath} component={CollectionCreate} />
+        <Route exact path={collectionAddPath} component={CollectionCreateRedirect} />
         <Route path={collectionPath(":id")} component={CollectionDetails} />
       </Switch>
     </>

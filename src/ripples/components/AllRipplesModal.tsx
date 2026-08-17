@@ -1,11 +1,17 @@
 import githubLogo from "@assets/images/github-logo.svg";
+import { Link } from "@dashboard/components/Link";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { useAnalytics } from "@dashboard/components/ProductAnalytics/useAnalytics";
+import { usePulsePromotionLink } from "@dashboard/home/usePulsePromotionLink";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { PULSE_DOCS_URL } from "@dashboard/links";
 import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { allRipples } from "@dashboard/ripples/allRipples";
 import { useRippleStorage } from "@dashboard/ripples/hooks/useRipplesStorage";
+import { rippleActionMessages } from "@dashboard/ripples/messages";
 import { rippleIntroducedRipples } from "@dashboard/ripples/ripples/introducedRipples";
-import { type Ripple, type RippleType } from "@dashboard/ripples/types";
+import { type Ripple, type RippleAction, type RippleType } from "@dashboard/ripples/types";
+import { isExternalURL } from "@dashboard/utils/urls";
 import { Box, Button, Text, useTheme, vars } from "@saleor/macaw-ui-next";
 import { ChevronRightIcon } from "lucide-react";
 import { cloneElement, isValidElement, type ReactNode, useEffect, useMemo, useState } from "react";
@@ -67,13 +73,11 @@ export const getRipplesSortedAndGroupedByMonths = (
       return acc;
     }, {});
 
-const groupedRipples = getRipplesSortedAndGroupedByMonths(allRipples);
-const flattenedRipples = Object.values(groupedRipples).flat();
-
 const rippleTypeToPillStatus: Record<RippleType, PillStatusType> = {
   feature: "success",
   improvement: "info",
   bugfix: "error",
+  newApp: "attention",
 };
 
 const rippleTypeMessages = defineMessages({
@@ -88,6 +92,11 @@ const rippleTypeMessages = defineMessages({
   bugfix: {
     id: "RUwHjA",
     defaultMessage: "Bug Fix",
+  },
+  newApp: {
+    id: "bqsyq+",
+    defaultMessage: "New App",
+    description: "ripple type badge for a newly available app",
   },
 });
 
@@ -136,29 +145,88 @@ const RippleActionContent = ({ label, isHovered }: { label: string; isHovered: b
   </>
 );
 
-const RippleAction = ({ action }: { action: NonNullable<Ripple["actions"]>[number] }) => {
+const PulseInstallRippleAction = ({
+  action,
+  onActionClick,
+}: {
+  action: NonNullable<Ripple["actions"]>[number];
+  onActionClick: () => void;
+}) => {
+  const pulseLink = usePulsePromotionLink();
+  const resolvedAction = useMemo((): RippleAction => {
+    if (pulseLink.loading) {
+      return action;
+    }
+
+    // Rebuild as RippleActionWithHref — spreading `action` can retain onClick
+    // and violate the mutually exclusive RippleAction union.
+    if (pulseLink.kind === "internal" && pulseLink.intent === "open") {
+      return {
+        href: pulseLink.to,
+        label: rippleActionMessages.openPulse,
+        hideInModal: action.hideInModal,
+      };
+    }
+
+    if (pulseLink.kind === "internal") {
+      return {
+        href: pulseLink.to,
+        label: action.label,
+        hideInModal: action.hideInModal,
+      };
+    }
+
+    return {
+      href: pulseLink.href,
+      label: rippleActionMessages.explorePulse,
+      hideInModal: action.hideInModal,
+    };
+  }, [action, pulseLink]);
+
+  return <RippleAction action={resolvedAction} onActionClick={onActionClick} />;
+};
+
+/** Pulse primary CTA (install/open/explore) — not the docs link. */
+const isPulsePrimaryRippleAction = (action: RippleAction): boolean =>
+  !!action.href && action.href !== PULSE_DOCS_URL;
+
+const RippleAction = ({
+  action,
+  onActionClick,
+}: {
+  action: NonNullable<Ripple["actions"]>[number];
+  onActionClick: () => void;
+}) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const [isHovered, setIsHovered] = useState(false);
   const label = intl.formatMessage(action.label);
 
   if (action.href) {
+    const external = isExternalURL(action.href);
+
+    const handleClick = (): void => {
+      onActionClick();
+
+      if (!external) {
+        navigate(action.href);
+      }
+    };
+
+    // Internal hrefs must go through Dashboard Link (basename / SPA). Opening
+    // them with target="_blank" broke in-app install deep-links under /dashboard.
     return (
-      <Box
-        as="a"
+      <Link
         href={action.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        display="flex"
-        alignItems="center"
-        gap={1}
-        marginTop={3}
-        cursor="pointer"
+        inline={false}
+        className={styles.actionLink}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        textDecoration="none"
+        onClick={handleClick}
       >
         <RippleActionContent label={label} isHovered={isHovered} />
-      </Box>
+      </Link>
     );
   }
 
@@ -168,9 +236,11 @@ const RippleAction = ({ action }: { action: NonNullable<Ripple["actions"]>[numbe
       display="flex"
       alignItems="center"
       gap={1}
-      marginTop={3}
       cursor="pointer"
-      onClick={action.onClick}
+      onClick={() => {
+        action.onClick?.();
+        onActionClick();
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       backgroundColor="transparent"
@@ -186,9 +256,10 @@ interface RippleEntryRowProps {
   ripple: Ripple;
   dateDisplay: string;
   isLast: boolean;
+  onActionClick: () => void;
 }
 
-const RippleEntryRow = ({ ripple, dateDisplay, isLast }: RippleEntryRowProps) => {
+const RippleEntryRow = ({ ripple, dateDisplay, isLast, onActionClick }: RippleEntryRowProps) => {
   return (
     <Box display="flex" gap={4}>
       {/* Timeline column - dot and line */}
@@ -230,15 +301,52 @@ const RippleEntryRow = ({ ripple, dateDisplay, isLast }: RippleEntryRowProps) =>
           {ripple.content.oneLiner}
         </Text>
 
+        {ripple.media?.kind === "video" ? (
+          <Box
+            className={styles.mediaVideoWrap}
+            marginBottom={3}
+            borderRadius={3}
+            overflow="hidden"
+          >
+            <video
+              className={styles.mediaVideo}
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              poster={ripple.media.poster}
+              aria-label={ripple.content.oneLiner}
+            >
+              <source src={ripple.media.src} type="video/mp4" />
+            </video>
+          </Box>
+        ) : null}
+
         {/* Description */}
         <RippleGlobalDescription content={ripple.content.global} />
 
         {/* Actions - filter out actions marked as hideInModal */}
-        {ripple.actions
-          ?.filter(action => !action.hideInModal)
-          .map((action, index) => (
-            <RippleAction key={`${ripple.ID}-action-${index}`} action={action} />
-          ))}
+        {ripple.actions?.some(action => !action.hideInModal) ? (
+          <Box display="flex" flexWrap="wrap" alignItems="center" gap={4} marginTop={3}>
+            {ripple.actions
+              .filter(action => !action.hideInModal)
+              .map((action, index) =>
+                ripple.ID === "saleor-pulse" && isPulsePrimaryRippleAction(action) ? (
+                  <PulseInstallRippleAction
+                    key={`${ripple.ID}-action-${index}`}
+                    action={action}
+                    onActionClick={onActionClick}
+                  />
+                ) : (
+                  <RippleAction
+                    key={`${ripple.ID}-action-${index}`}
+                    action={action}
+                    onActionClick={onActionClick}
+                  />
+                ),
+              )}
+          </Box>
+        ) : null}
       </Box>
     </Box>
   );
@@ -253,6 +361,11 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
   const intl = useIntl();
   const { hideAllRipples, setManuallyHidden } = useRippleStorage();
   const { trackEvent } = useAnalytics();
+
+  const flattenedRipples = useMemo(
+    () => Object.values(getRipplesSortedAndGroupedByMonths(allRipples)).flat(),
+    [],
+  );
 
   const lastUpdatedDate = useMemo(() => {
     const latestRipple = allRipples.reduce((latest, ripple) =>
@@ -308,6 +421,7 @@ export const AllRipplesModal = ({ open, onChange }: AllRipplesModalProps) => {
                 ripple={entry.ripple}
                 dateDisplay={entry.dateDisplay}
                 isLast={index === flattenedRipples.length - 1}
+                onActionClick={handleClose}
               />
             ))}
           </DashboardModal.Inset>

@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -110,6 +114,8 @@ const OrderRefundPage = (props: OrderReturnPageProps) => {
           <DetailPageLayout>
             <TopNav
               href={orderUrl(order?.id)}
+              hrefIcon={<TopNavDestinationIcon.orders />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
               title={intl.formatMessage(orderReturnMessages.pageTitle, {
                 orderNumber: order?.number,
               })}

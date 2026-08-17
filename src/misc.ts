@@ -20,6 +20,7 @@ import Fuse from "fuse.js";
 import moment from "moment-timezone";
 import { type IntlShape } from "react-intl";
 
+import { SCHEDULED_COLOR } from "./colors";
 import { type ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import {
   hueToPillColorDark,
@@ -562,10 +563,14 @@ export const getDotColor = (status: DotStatus, themeValues: ThemeTokensValues) =
     case "success":
       // TODO: add this as success2 to MacawUI
       return "hsla(173, 100%, 26%, 1)";
+    case "scheduled":
+      return SCHEDULED_COLOR;
     case "error":
       return themeValues.colors.background.critical2;
     case "warning":
       return themeValues.colors.background.warning1;
+    case "neutral":
+      return themeValues.colors.text.defaultDisabled;
   }
 };
 

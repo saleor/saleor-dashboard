@@ -1,21 +1,24 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import {
   dateCell,
-  pillCell,
   readonlyTextCell,
+  statusCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { type DiscountListUrlSortField } from "@dashboard/discounts/discountsUrls";
-import { getPromotionStatus, type PromotionStatus } from "@dashboard/discounts/utils";
+import {
+  getPromotionStatus,
+  getRelativePromotionTimeParts,
+  type PromotionStatus,
+} from "@dashboard/discounts/utils";
 import { type PromotionFragment, PromotionTypeEnum } from "@dashboard/graphql";
-import { getStatusColor, type PillStatusType } from "@dashboard/misc";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
-import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
 
-import { columnsMessages } from "./messages";
+import { columnsMessages, messages } from "./messages";
 
 export const dicountListStaticColumnsAdapter = (
   intl: IntlShape,
@@ -32,7 +35,7 @@ export const dicountListStaticColumnsAdapter = (
     {
       id: "status",
       title: intl.formatMessage(columnsMessages.status),
-      width: 150,
+      width: 180,
     },
     {
       id: "type",
@@ -56,17 +59,67 @@ export const dicountListStaticColumnsAdapter = (
 
 const COMMON_CELL_PROPS: Partial<GridCell> = { cursor: "pointer" };
 
+const getStatusDot = (status: PromotionStatus): DotStatus => {
+  if (status === "active") {
+    return "success";
+  }
+
+  if (status === "scheduled") {
+    return "scheduled";
+  }
+
+  return "neutral";
+};
+
+export const getPromotionListStatusLabel = ({
+  promotion,
+  intl,
+  now = new Date(),
+}: {
+  promotion: Pick<PromotionFragment, "startDate" | "endDate">;
+  intl: IntlShape;
+  now?: Date;
+}): { label: string; status: DotStatus } => {
+  const promotionStatus = getPromotionStatus({
+    startDate: promotion.startDate,
+    endDate: promotion.endDate,
+    now,
+  });
+  const statusLabel = intl.formatMessage(
+    promotionStatus === "scheduled"
+      ? messages.statusScheduled
+      : promotionStatus === "finished"
+        ? messages.statusEnded
+        : messages.statusActive,
+  );
+  const timeParts = getRelativePromotionTimeParts({
+    status: promotionStatus,
+    startDate: promotion.startDate,
+    endDate: promotion.endDate,
+    now,
+  });
+  const timeHint = timeParts
+    ? new Intl.RelativeTimeFormat(intl.locale, { numeric: "auto", style: "long" }).format(
+        timeParts.value,
+        timeParts.unit,
+      )
+    : null;
+
+  return {
+    status: getStatusDot(promotionStatus),
+    label: timeHint ? `${statusLabel} · ${timeHint}` : statusLabel,
+  };
+};
+
 export const createGetCellContent =
   ({
     promotions,
     columns,
     intl,
-    currentTheme,
   }: {
     promotions: PromotionFragment[];
     columns: AvailableColumn[];
     intl: IntlShape;
-    currentTheme: DefaultTheme;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = promotions[row];
@@ -79,8 +132,15 @@ export const createGetCellContent =
     switch (columnId) {
       case "name":
         return readonlyTextCell(rowData.name);
-      case "status":
-        return getStatusCellContent(rowData, intl, currentTheme);
+      case "status": {
+        const { label, status } = getPromotionListStatusLabel({ promotion: rowData, intl });
+
+        return statusCell(status, label, {
+          cursor: "pointer",
+          readonly: true,
+          allowOverlay: false,
+        });
+      }
       case "startDate":
         return rowData.startDate
           ? dateCell(rowData.startDate, COMMON_CELL_PROPS)
@@ -95,35 +155,6 @@ export const createGetCellContent =
         return readonlyTextCell("");
     }
   };
-
-const statusToPillColor: Record<PromotionStatus, PillStatusType> = {
-  active: "success",
-  scheduled: "info",
-  finished: "neutral",
-};
-
-function getStatusLabel(status: PromotionStatus, intl: IntlShape): string {
-  switch (status) {
-    case "active":
-      return intl.formatMessage({ defaultMessage: "Active", id: "3a5wL8" });
-    case "scheduled":
-      return intl.formatMessage({ defaultMessage: "Scheduled", id: "cXAlMR" });
-    case "finished":
-      return intl.formatMessage({ defaultMessage: "Finished", id: "EQpfkS" });
-  }
-}
-
-function getStatusCellContent(
-  rowData: PromotionFragment,
-  intl: IntlShape,
-  currentTheme: DefaultTheme,
-): GridCell {
-  const status = getPromotionStatus({ startDate: rowData.startDate, endDate: rowData.endDate });
-  const label = getStatusLabel(status, intl);
-  const color = getStatusColor({ status: statusToPillColor[status], currentTheme });
-
-  return pillCell(label, color, COMMON_CELL_PROPS);
-}
 
 function getDiscountType(promotion: PromotionFragment, intl: IntlShape) {
   switch (promotion.type) {

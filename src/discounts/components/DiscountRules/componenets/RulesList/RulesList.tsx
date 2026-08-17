@@ -55,9 +55,22 @@ export const RulesList = <ErrorCode,>({
 
         return (
           <RuleWrapper key={rule.id || index} hasError={hasError}>
-            <Box display="flex" flexDirection="column" gap={3}>
-              <Box display="flex" justifyContent="space-between" alignItems="flex-start" gap={4}>
-                <Box display="flex" flexDirection="column" gap={1}>
+            <Box display="flex" flexDirection="column" gap={3} __minWidth={0}>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                gap={3}
+                flexWrap="wrap"
+                __minWidth={0}
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap={1}
+                  __minWidth={0}
+                  __flex="1 1 12rem"
+                >
                   <RuleLabel ruleName={rule.name} />
 
                   {rule.channel && (
@@ -71,7 +84,14 @@ export const RulesList = <ErrorCode,>({
                   )}
                 </Box>
 
-                <Box display="flex" alignItems="center" gap={4} flexShrink="0">
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  gap={3}
+                  flexShrink="0"
+                  __flex="0 1 auto"
+                  __maxWidth="100%"
+                >
                   <RewardDisplay rule={rule} currencySymbol={currencySymbol} />
                   <RuleActions
                     onDelete={() => onRuleDelete(index)}

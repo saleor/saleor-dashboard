@@ -7,7 +7,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
-import { type VoucherListUrlSortField, voucherUrl } from "@dashboard/discounts/urls";
+import { VoucherListUrlSortField, voucherUrl } from "@dashboard/discounts/urls";
 import { canBeSorted } from "@dashboard/discounts/views/VoucherList/sort";
 import { type VoucherFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
@@ -71,8 +71,9 @@ export const VoucherListDatagrid = ({
       columns: visibleColumns,
       locale,
       selectedChannelId,
+      intl,
     }),
-    [vouchers, selectedChannelId, locale, visibleColumns],
+    [vouchers, selectedChannelId, locale, visibleColumns, intl],
   );
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
@@ -90,15 +91,18 @@ export const VoucherListDatagrid = ({
   const handleGetColumnTooltipContent = useCallback(
     (col: number): string => {
       const columnName = visibleColumns[col].id as VoucherListUrlSortField;
+      const needsChannel =
+        columnName === VoucherListUrlSortField.value ||
+        columnName === VoucherListUrlSortField.minSpent;
 
-      if (canBeSorted(columnName, !!selectedChannelId)) {
-        return "";
+      // Only channel-dependent sorts show the filter tooltip; status/etc. are not sortable.
+      if (needsChannel && !selectedChannelId) {
+        return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+          filterName: filterDependency?.label ?? "",
+        });
       }
 
-      // Sortable but requrie selected channel
-      return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-        filterName: filterDependency?.label ?? "",
-      });
+      return "";
     },
     [filterDependency, intl, selectedChannelId, visibleColumns],
   );

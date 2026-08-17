@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
 import { customerUrl } from "@dashboard/customers/urls";
@@ -99,6 +103,8 @@ const CustomerAddressListPage = (props: CustomerAddressListPageProps) => {
     <ListPageLayout>
       <TopNav
         href={customerUrl(customer?.id)}
+        hrefIcon={<TopNavDestinationIcon.customers />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.customer)}
         title={
           fullName.trim().length > 0
             ? intl.formatMessage(messages.fullNameAddress, { fullName })

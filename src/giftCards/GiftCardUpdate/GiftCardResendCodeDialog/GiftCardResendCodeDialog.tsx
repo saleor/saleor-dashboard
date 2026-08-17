@@ -112,7 +112,7 @@ export const GiftCardResendCodeDialog = ({ open, onClose }: DialogProps) => {
   isSubmittingRef.current = isSubmitting;
 
   const { formErrors } = useDialogFormReset({
-    apiErrors: submitData?.giftCardResend?.errors ?? [],
+    apiErrors: submitData?.giftCardResend?.errors,
     keys: ["email"],
     open,
     reset,

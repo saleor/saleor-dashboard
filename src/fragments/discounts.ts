@@ -125,6 +125,7 @@ export const voucherFragment = gql`
     startDate
     endDate
     usageLimit
+    used
     type
     discountValueType
     countries {
@@ -132,6 +133,9 @@ export const voucherFragment = gql`
       country
     }
     minCheckoutItemsQuantity
+    codesCount: codes {
+      totalCount
+    }
     channelListings {
       id
       channel {
@@ -167,6 +171,9 @@ export const voucherDetailsFragment = gql`
     applyOncePerCustomer
     onlyForStaff
     singleUse
+    codesCount: codes {
+      totalCount
+    }
     variantsCount: variants {
       totalCount
     }
@@ -179,6 +186,16 @@ export const voucherDetailsFragment = gql`
     categoriesCount: categories {
       totalCount
     }
+  }
+`;
+
+/**
+ * Paginated catalogue membership for the voucher details accordion.
+ * Kept separate from VoucherDetails so tab switches do not change the form query identity.
+ */
+export const voucherCatalogueFragment = gql`
+  fragment VoucherCatalogue on Voucher {
+    id
     products(after: $after, before: $before, first: $first, last: $last)
       @include(if: $includeProducts) {
       edges {

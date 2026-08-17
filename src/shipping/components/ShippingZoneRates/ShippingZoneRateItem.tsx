@@ -15,7 +15,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { shippingZoneMethodsMessages } from "./messages";
 import { ShippingZoneRateChannelTable } from "./ShippingZoneRateChannelTable";
 import {
-  getConfiguredChannelCount,
+  getAssignedZoneChannels,
+  getPricedChannelCount,
   getPriceSpan,
   type ShippingRate,
   type ZoneChannel,
@@ -48,13 +49,15 @@ export const ShippingZoneRateItem = ({
   const intl = useIntl();
   const { locale } = useLocale();
   const navigate = useNavigator();
-  const configuredCount = getConfiguredChannelCount(rate, zoneChannels);
-  const missingCount = zoneChannels.length - configuredCount;
-  const priceSpan = getPriceSpan(rate, zoneChannels);
+  const assignedChannels = getAssignedZoneChannels(rate, zoneChannels);
+  const pricedCount = getPricedChannelCount(rate, assignedChannels);
+  const missingCount = assignedChannels.length - pricedCount;
+  const priceSpan = getPriceSpan(rate, assignedChannels);
 
   return (
     <DetailGroupBox
       groupId={rate.id}
+      marginTop={0}
       dataTestId="shipping-method-row"
       headerStart={<Title2>{rate.name}</Title2>}
       headerEnd={
@@ -67,15 +70,22 @@ export const ShippingZoneRateItem = ({
               />
             </Text>
           )}
-          {zoneChannels.length > 0 && (
+          {assignedChannels.length > 0 && (
             <Text size={2} color="default2">
-              <FormattedMessage
-                {...shippingZoneMethodsMessages.channelsPriced}
-                values={{
-                  configured: configuredCount,
-                  total: zoneChannels.length,
-                }}
-              />
+              {missingCount === 0 ? (
+                <FormattedMessage
+                  {...shippingZoneMethodsMessages.channelsAssigned}
+                  values={{ count: assignedChannels.length }}
+                />
+              ) : (
+                <FormattedMessage
+                  {...shippingZoneMethodsMessages.channelsPriced}
+                  values={{
+                    configured: pricedCount,
+                    total: assignedChannels.length,
+                  }}
+                />
+              )}
             </Text>
           )}
           {missingCount > 0 && (
@@ -142,10 +152,16 @@ export const ShippingZoneRateItem = ({
             <FormattedMessage {...shippingZoneMethodsMessages.assignChannelsHint} />
           </Text>
         </Box>
+      ) : assignedChannels.length === 0 ? (
+        <Box padding={5}>
+          <Text color="default2">
+            <FormattedMessage {...shippingZoneMethodsMessages.noMethodChannelsHint} />
+          </Text>
+        </Box>
       ) : (
         <ShippingZoneRateChannelTable
           rate={rate}
-          zoneChannels={zoneChannels}
+          zoneChannels={assignedChannels}
           variant={variant}
           disabled={disabled}
           getRateChannelSetupHref={getRateChannelSetupHref}

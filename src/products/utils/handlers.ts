@@ -14,6 +14,8 @@ import {
   type VariantMediaUnassignMutationVariables,
 } from "@dashboard/graphql";
 import { type FormChange, type UseFormResult } from "@dashboard/hooks/useForm";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
+import { type ProductStockFormsetData } from "@dashboard/products/components/ProductStocks";
 import { diff } from "fast-array-diff";
 
 export function createChannelsPriceChangeHandler(
@@ -30,6 +32,84 @@ export function createChannelsPriceChangeHandler(
     updateChannels(updatedChannels);
     triggerChange();
   };
+}
+
+export function createChannelsReplaceHandler(
+  channelListings: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
+  triggerChange: () => void,
+) {
+  return (nextListings: ChannelData[]) => {
+    const nextById = new Map(nextListings.map(listing => [listing.id, listing]));
+    const updatedChannels = channelListings.map(channel => {
+      const updated = nextById.get(channel.id);
+
+      if (!updated) {
+        return channel;
+      }
+
+      return {
+        ...channel,
+        costPrice: updated.costPrice,
+        price: updated.price,
+        preorderThreshold: updated.preorderThreshold,
+      };
+    });
+
+    updateChannels(updatedChannels);
+    triggerChange();
+  };
+}
+
+export function replaceFormsetChannelListings<
+  TValue extends {
+    price?: string;
+    costPrice?: string;
+    preorderThreshold?: number | null;
+  },
+>(
+  formsetRows: FormsetData<ChannelPriceAndPreorderData, TValue>,
+  listings: ChannelData[],
+): FormsetData<ChannelPriceAndPreorderData, TValue> {
+  const nextById = new Map(listings.map(listing => [listing.id, listing]));
+
+  return formsetRows.map(row => {
+    const updated = nextById.get(row.id);
+
+    if (!updated) {
+      return row;
+    }
+
+    return {
+      ...row,
+      value: {
+        ...row.value,
+        price: updated.price ?? "",
+        costPrice: updated.costPrice ?? "",
+        preorderThreshold: updated.preorderThreshold ?? row.value.preorderThreshold ?? null,
+      },
+    };
+  });
+}
+
+export function replaceFormsetStockValues(
+  formsetRows: FormsetData<ProductStockFormsetData, string, string>,
+  updates: Array<{ id: string; value: string }>,
+): FormsetData<ProductStockFormsetData, string, string> {
+  const nextById = new Map(updates.map(stock => [stock.id, stock.value]));
+
+  return formsetRows.map(row => {
+    const value = nextById.get(row.id);
+
+    if (value === undefined) {
+      return row;
+    }
+
+    return {
+      ...row,
+      value,
+    };
+  });
 }
 
 export function createChannelsChangeHandler(

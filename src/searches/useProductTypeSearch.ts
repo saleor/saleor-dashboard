@@ -15,6 +15,7 @@ export const searchProductTypes = gql`
         node {
           id
           name
+          hasVariants
         }
       }
       pageInfo {

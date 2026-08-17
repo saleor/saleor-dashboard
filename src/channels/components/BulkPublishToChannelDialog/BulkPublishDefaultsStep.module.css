@@ -1,0 +1,49 @@
+.section {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--mu-spacing-2);
+  row-gap: 12px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  grid-column: 1 / -1;
+}
+
+.option {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  row-gap: 4px;
+}
+
+.optionCheckbox {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+}
+
+.optionLabel {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.optionDescription {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+}
+
+.nestedField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  grid-column: 2;
+}
+
+.indentedContent {
+  grid-column: 2;
+}

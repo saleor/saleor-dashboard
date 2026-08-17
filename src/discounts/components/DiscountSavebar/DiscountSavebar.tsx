@@ -1,8 +1,14 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { useFormContext } from "react-hook-form";
+import { SavebarCompositionHint } from "@dashboard/components/Savebar/SavebarCompositionHint";
 import { useIntl } from "react-intl";
+
+import {
+  EMPTY_PROMOTION_SAVE_COMPOSITION,
+  hasPromotionSaveComposition,
+  type PromotionSaveComposition,
+} from "../DiscountDetailsForm/promotionSaveComposition";
+import { discountSavebarMessages as messages } from "./messages";
 
 interface DiscountSavebarProps {
   disabled: boolean;
@@ -10,6 +16,7 @@ interface DiscountSavebarProps {
   onSubmit: () => void;
   onDelete: () => void;
   submitButtonState: ConfirmButtonTransitionState;
+  composition?: PromotionSaveComposition;
 }
 
 export const DiscountSavebar = ({
@@ -18,37 +25,32 @@ export const DiscountSavebar = ({
   onDelete,
   onCancel,
   submitButtonState,
-}: DiscountSavebarProps) => {
-  const { formState } = useFormContext();
+  composition = EMPTY_PROMOTION_SAVE_COMPOSITION,
+}: DiscountSavebarProps): JSX.Element => {
   const intl = useIntl();
-  const notify = useNotifier();
-  const { isDirty } = formState;
-  const handleSubmit = () => {
-    if (isDirty) {
-      onSubmit();
+  const hasUnsavedChanges = hasPromotionSaveComposition(composition);
+  const isSaveDisabled = disabled || !hasUnsavedChanges;
 
-      return;
-    }
+  const segments: string[] = [];
 
-    // In case form has not been modified, on submit we redirect to discount list with success banner
-    notify({
-      status: "success",
-      text: intl.formatMessage({
-        id: "/4/nYx",
-        defaultMessage: "Discount updated",
-      }),
-    });
-  };
+  if (composition.hasGeneral) {
+    segments.push(intl.formatMessage(messages.saveCompositionGeneral));
+  }
+
+  if (composition.hasSchedule) {
+    segments.push(intl.formatMessage(messages.saveCompositionSchedule));
+  }
 
   return (
     <Savebar>
       <Savebar.DeleteButton onClick={onDelete} />
       <Savebar.Spacer />
+      <SavebarCompositionHint segments={segments} data-test-id="discount-save-composition" />
       <Savebar.CancelButton onClick={onCancel} />
       <Savebar.ConfirmButton
         transitionState={submitButtonState}
-        onClick={handleSubmit}
-        disabled={disabled}
+        onClick={onSubmit}
+        disabled={isSaveDisabled}
       />
     </Savebar>
   );

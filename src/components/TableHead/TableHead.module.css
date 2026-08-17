@@ -1,0 +1,14 @@
+/* Matches ASSIGNABLE_LIST_TABLE_DRAG_COLUMN_PX — empty header cells collapse under table-layout: fixed. */
+.dragSpacer {
+  box-sizing: border-box;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  padding: 0 !important;
+}
+
+.dragSpacerFill {
+  display: block;
+  width: 40px;
+  height: 1px;
+}

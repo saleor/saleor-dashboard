@@ -1,5 +1,7 @@
 import { channelsCatalogEntries } from "./channels";
+import { giftCardsCatalogEntries } from "./giftCards";
 import { configurationHubsCatalogEntries } from "./hubs";
+import { notificationsCatalogEntries } from "./notifications";
 import { ordersCatalogEntries } from "./orders";
 import { refundsCatalogEntries } from "./refunds";
 import { storeCatalogEntries } from "./store";
@@ -14,7 +16,9 @@ export const settingsCatalogEntries: SettingsCatalogEntry[] = [
   ...ordersCatalogEntries,
   ...refundsCatalogEntries,
   ...storeCatalogEntries,
+  ...giftCardsCatalogEntries,
   ...channelsCatalogEntries,
+  ...notificationsCatalogEntries,
   ...configurationHubsCatalogEntries,
 ];
 

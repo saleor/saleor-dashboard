@@ -10,6 +10,18 @@ export function stringifyQs(
   });
 }
 
+/**
+ * Build a url, omitting the query string entirely when there are no params.
+ * A bare trailing "?" is not just cosmetic: url helpers are sometimes passed as
+ * `LocationDescriptor.pathname`, where it ends up inside the path and a later
+ * dialog navigation appends a second "?", making the query unparseable.
+ */
+export function withQuery(path: string, params?: unknown): string {
+  const query = stringifyQs(params);
+
+  return query ? `${path}?${query}` : path;
+}
+
 export function getArrayQueryParam(
   param: string | string[] | Record<string, string> | undefined,
 ): string[] | undefined {

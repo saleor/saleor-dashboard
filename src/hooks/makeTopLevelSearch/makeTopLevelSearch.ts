@@ -28,28 +28,43 @@ function makeTopLevelSearch<TData extends SearchData, TVariables extends BaseSea
   return makeSearch<TData, TVariables>(
     query,
     result => {
-      if (result?.data?.search?.pageInfo?.hasNextPage) {
-        result.loadMore(
-          (prev, next) => {
-            if (prev.search?.pageInfo?.endCursor === next.search?.pageInfo?.endCursor) {
-              return prev;
-            }
+      const pageInfo = result?.data?.search?.pageInfo;
 
+      if (!pageInfo?.hasNextPage) {
+        return false;
+      }
+
+      return result.loadMore(
+        (prev, next) => {
+          // A duplicate cursor means we did not advance. Clearing hasNextPage lets
+          // backfill stop spinning instead of waiting forever for a larger raw count.
+          if (prev.search?.pageInfo?.endCursor === next.search?.pageInfo?.endCursor) {
             return {
               ...prev,
               search: {
                 ...prev.search,
-                edges: [...(prev.search?.edges ?? []), ...(next.search?.edges ?? [])],
-                pageInfo: next.search.pageInfo,
+                pageInfo: {
+                  ...prev.search.pageInfo,
+                  hasNextPage: false,
+                },
               },
             };
-          },
-          {
-            ...result.variables,
-            after: result.data.search.pageInfo.endCursor,
-          },
-        );
-      }
+          }
+
+          return {
+            ...prev,
+            search: {
+              ...prev.search,
+              edges: [...(prev.search?.edges ?? []), ...(next.search?.edges ?? [])],
+              pageInfo: next.search.pageInfo,
+            },
+          };
+        },
+        {
+          ...result.variables,
+          after: pageInfo.endCursor,
+        },
+      );
     },
     options,
   );

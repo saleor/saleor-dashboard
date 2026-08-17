@@ -1,10 +1,5 @@
-import BackButton from "@dashboard/components/BackButton";
-import {
-  ConfirmButton,
-  type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { DashboardModal } from "@dashboard/components/Modal";
-import { buttonMessages } from "@dashboard/intl";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { EntityBackgroundImageDeleteDialog } from "@dashboard/components/EntityBackgroundImageField/EntityBackgroundImageDeleteDialog";
 import { FormattedMessage } from "react-intl";
 
 interface CollectionDeleteImageDialogProps {
@@ -19,46 +14,19 @@ export const CollectionDeleteImageDialog = ({
   onClose,
   onConfirm,
   open,
-}: CollectionDeleteImageDialogProps) => {
-  const isSubmitting = confirmButtonState === "loading";
-
-  const handleClose = (): void => {
-    if (isSubmitting) {
-      return;
+}: CollectionDeleteImageDialogProps) => (
+  <EntityBackgroundImageDeleteDialog
+    confirmButtonState={confirmButtonState}
+    onClose={onClose}
+    onConfirm={onConfirm}
+    open={open}
+    subtitle={
+      <FormattedMessage
+        id="MxhVZv"
+        defaultMessage="Are you sure you want to delete collection's image?"
+      />
     }
-
-    onClose();
-  };
-
-  return (
-    <DashboardModal onChange={handleClose} open={open}>
-      <DashboardModal.Content size="xs">
-        <DashboardModal.Header
-          subtitle={
-            <FormattedMessage
-              id="MxhVZv"
-              defaultMessage="Are you sure you want to delete collection's image?"
-            />
-          }
-        >
-          <FormattedMessage id="fzk04H" defaultMessage="Delete image" description="dialog title" />
-        </DashboardModal.Header>
-
-        <DashboardModal.Actions>
-          <BackButton disabled={isSubmitting} onClick={handleClose} />
-          <ConfirmButton
-            data-test-id="submit"
-            disabled={isSubmitting}
-            onClick={onConfirm}
-            transitionState={confirmButtonState}
-            variant="error"
-          >
-            <FormattedMessage {...buttonMessages.delete} />
-          </ConfirmButton>
-        </DashboardModal.Actions>
-      </DashboardModal.Content>
-    </DashboardModal>
-  );
-};
+  />
+);
 
 CollectionDeleteImageDialog.displayName = "CollectionDeleteImageDialog";

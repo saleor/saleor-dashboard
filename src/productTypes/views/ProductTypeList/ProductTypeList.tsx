@@ -28,7 +28,9 @@ import { useIntl } from "react-intl";
 
 import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
 import { maybe } from "../../../misc";
+import { CreateProductTypeDialog } from "../../components/CreateProductTypeDialog/CreateProductTypeDialog";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
+import { useCreateProductType } from "../../hooks/useCreateProductType";
 import {
   productTypeListUrl,
   type ProductTypeListUrlDialog,
@@ -86,6 +88,7 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
     ProductTypeListUrlDialog,
     ProductTypeListUrlQueryParams
   >(navigate, productTypeListUrl, params);
+  const createProductTypeDialog = useCreateProductType({ onClose: closeModal });
 
   const {
     selectedPreset,
@@ -182,6 +185,12 @@ const ProductTypeList = ({ params }: ProductTypeListProps) => {
           />
         }
         hasPresetsChanged={hasPresetsChanged}
+        onCreateProductType={() => openModal("create")}
+      />
+      <CreateProductTypeDialog
+        open={params.action === "create"}
+        onClose={closeModal}
+        {...createProductTypeDialog}
       />
       {productTypesData && (
         <TypeDeleteWarningDialog

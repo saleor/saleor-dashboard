@@ -1,7 +1,13 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import {
+  DetailSettingNestedField,
+  DetailSettingToggleRow,
+} from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
-import { Checkbox, Input, Text } from "@saleor/macaw-ui-next";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { messages } from "./messages";
 
 interface ProductTypeShippingProps {
   data: {
@@ -22,58 +28,35 @@ const ProductTypeShipping = ({
   const intl = useIntl();
 
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage({
-            id: "/2OOMe",
-            defaultMessage: "Shipping",
-            description: "product type shipping settings, section header",
-          })}
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        <Checkbox
-          checked={data.isShippingRequired}
-          disabled={disabled}
-          name="isShippingRequired"
-          data-test-id="isShippingRequired"
-          onCheckedChange={checked =>
-            onChange({
-              target: { name: "isShippingRequired", value: checked },
-            })
-          }
-          marginBottom={2}
-        >
-          <Text>
-            <FormattedMessage
-              id="IBw72y"
-              defaultMessage="Is this product shippable?"
-              description="switch button"
+    <DetailSettingsCard title={intl.formatMessage(messages.title)} contentFlush>
+      <DetailSettingToggleRow
+        title={<FormattedMessage {...messages.requiresShipping} />}
+        description={<FormattedMessage {...messages.requiresShippingDescription} />}
+        pressed={data.isShippingRequired}
+        disabled={disabled}
+        testId="isShippingRequired"
+        onPressedChange={checked =>
+          onChange({
+            target: { name: "isShippingRequired", value: checked },
+          })
+        }
+      >
+        {data.isShippingRequired ? (
+          <DetailSettingNestedField>
+            <Input
+              disabled={disabled}
+              endAdornment={<Text color="default2">{weightUnit}</Text>}
+              label={intl.formatMessage(messages.weight)}
+              name="weight"
+              helperText={intl.formatMessage(messages.weightHelper)}
+              type="number"
+              value={data.weight || 0}
+              onChange={onChange}
             />
-          </Text>
-        </Checkbox>
-        {data.isShippingRequired && (
-          <Input
-            disabled={disabled}
-            endAdornment={<Text color="default2">{weightUnit}</Text>}
-            label={intl.formatMessage({
-              id: "zCb8fX",
-              defaultMessage: "Weight",
-            })}
-            name="weight"
-            helperText={intl.formatMessage({
-              id: "VOiUXQ",
-              defaultMessage:
-                "Used to calculate rates for shipping for products of this product type, when specific weight is not given",
-            })}
-            type="number"
-            value={data.weight || 0}
-            onChange={onChange}
-          />
-        )}
-      </DashboardCard.Content>
-    </DashboardCard>
+          </DetailSettingNestedField>
+        ) : null}
+      </DetailSettingToggleRow>
+    </DetailSettingsCard>
   );
 };
 

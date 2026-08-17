@@ -84,7 +84,12 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const product = data?.product;
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({
     onCompleted: data => {
-      const variantId = data.productVariantCreate.productVariant.id;
+      const errors = data.productVariantCreate.errors ?? [];
+      const variantId = data.productVariantCreate.productVariant?.id;
+
+      if (errors.length > 0) {
+        return;
+      }
 
       if (!variantId) {
         notify({

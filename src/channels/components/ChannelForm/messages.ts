@@ -1,114 +1,265 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
+  generalSettings: {
+    id: "zE3ga7",
+    defaultMessage: "General settings",
+    description: "channel form card title for name, slug, country, currency",
+  },
   channelName: {
     id: "UymotP",
     defaultMessage: "Channel name",
     description: "channel name",
+  },
+  channelNameHint: {
+    id: "p/8wfM",
+    defaultMessage:
+      "Used in the dashboard. Storefronts may also show it to customers (for example in a market picker).",
+    description: "helper under channel name",
   },
   channelSlug: {
     id: "74Zo/H",
     defaultMessage: "Slug",
     description: "channel slug",
   },
-  channelSettings: {
-    id: "3y4r+z",
-    defaultMessage: "Channel Settings",
-    description: "channel settings",
-  },
-  orderAndCheckoutSettings: {
-    id: "EXPRMd",
-    defaultMessage: "Orders & fulfillment",
-    description: "channel form card title for channel-owned order and checkout settings",
-  },
-  orderAndCheckoutSettingsHint: {
-    id: "n2eKUn",
+  channelSlugHint: {
+    id: "JakPK4",
     defaultMessage:
-      "Settings for this channel only. Compare all channels or edit shop-wide policies in {link}.",
-    description: "channel form hint linking to orders and fulfillment settings hub",
+      "Identifies this channel in the Storefront API. Changing it breaks existing storefront requests.",
+    description: "helper under channel slug",
+  },
+  marketHelper: {
+    id: "ooUWhl",
+    defaultMessage:
+      "A channel is a market: one currency and default country for prices, tax, and checkout. You can set up warehouses and shipping right after creating it.",
+    description: "helper under create channel general info",
+  },
+  advancedSettings: {
+    id: "6xx3Us",
+    defaultMessage: "Advanced settings",
+    description: "accordion title for optional channel order/payment settings on create",
+  },
+  defaultCountryHint: {
+    id: "Q0SbHA",
+    defaultMessage: "Fallback country for tax when checkout has no address yet.",
+    description: "helper under channel default country",
+  },
+  channelCurrencyHintCreate: {
+    id: "xzzNba",
+    defaultMessage: "Prices and payments use this currency. It can’t be changed later.",
+    description: "helper under currency on create",
+  },
+  channelCurrencyHintLocked: {
+    id: "5HXDLH",
+    defaultMessage: "Fixed at creation. To sell in another currency, create a second channel.",
+    description: "helper under locked currency on edit",
+  },
+  ordersSectionTitle: {
+    id: "lm847Q",
+    defaultMessage: "Orders",
+    description: "channel form orders section title",
+  },
+  paymentsCheckoutSectionTitle: {
+    id: "XiQfIl",
+    defaultMessage: "Payments & checkout",
+    description: "channel form payments and checkout section title",
   },
   automaticallyConfirmAllNewOrdersLabel: {
-    id: "RLYfMF",
-    defaultMessage: "Automatically confirm all orders",
-    description: "checkbox label",
+    id: "erZXUi",
+    defaultMessage: "Confirm new orders automatically",
+    description: "channel order setting label",
   },
   automaticallyConfirmAllNewOrdersDescription: {
-    id: "wpAXKX",
-    defaultMessage: "All orders will be automatically confirmed and all payments will be captured.",
-    description: "checkbox label description",
+    id: "ejo6Sh",
+    defaultMessage:
+      "On: orders from checkout arrive as {unfulfilled} and ready to pick. Off: they arrive {unconfirmed} and someone must review each one.",
+    description: "channel order setting description for auto-confirm",
   },
   automaticallyFulfillNonShippableGiftCardLabel: {
-    id: "7UG1Lx",
-    defaultMessage: "Automatically fulfill non shippable gift cards",
-    description: "checkbox gift cards label",
+    id: "pDbKtV",
+    defaultMessage: "Fulfil non-shippable gift cards automatically",
+    description: "channel order setting label for gift cards",
   },
   automaticallyFulfillNonShippableGiftCardDescription: {
-    id: "EewziG",
+    id: "+Vvntt",
     defaultMessage:
-      "When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer",
-    description: "checkbox gift cards label description",
+      "Digital gift cards are marked {fulfilled} and emailed to the customer without waiting for a warehouse step.",
+    description: "channel order setting description for gift cards",
   },
   channelCurrency: {
     id: "9Sz0By",
     defaultMessage: "Currency",
     description: "channel currency",
   },
-  selectedCurrency: {
-    id: "39yi8w",
-    defaultMessage: "Selected currency",
-    description: "selected currency",
-  },
   defaultCountry: {
     id: "tV+Dcm",
     defaultMessage: "Default country",
   },
-  orderExpiration: {
-    id: "kVKTwC",
-    defaultMessage: "Order expiration",
-    description: "order expiration card title",
+  expireOrdersLabel: {
+    id: "gSTyF7",
+    defaultMessage: "Expire abandoned {unconfirmed} orders",
+    description: "channel order setting label for order expiration",
   },
-  orderExpirationDescription: {
-    id: "U+79k0",
+  expireOrdersDescription: {
+    id: "CkmWKG",
+    defaultMessage: "Releases reserved stock from orders that were never confirmed.",
+    description: "channel order setting description for order expiration",
+  },
+  expireOrdersAutoConfirmNotice: {
+    id: "M8ME4X",
     defaultMessage:
-      "The time in days after expired orders will be deleted. Allowed range between 1 and 120.",
-    description: "order expiration card description",
+      "No effect while {autoConfirm} is on — orders become {unfulfilled} straight away and never reach the {unconfirmed} state this applies to.",
+    description: "shown under expire orders when auto-confirm is enabled",
+  },
+  expireOrdersAfterLabel: {
+    id: "OufJut",
+    defaultMessage: "Expire after",
+    description: "label for expireOrdersAfter minutes input",
+  },
+  expireOrdersAfterUnit: {
+    id: "Byk4pC",
+    defaultMessage: "minutes",
+    description: "unit after expireOrdersAfter input",
+  },
+  expireOrdersAfterHint: {
+    id: "vxQsu2",
+    defaultMessage: "Counted from when the order was placed.",
+    description: "helper under expireOrdersAfter input",
+  },
+  deleteExpiredOrdersAfterLabel: {
+    id: "ICT1Lt",
+    defaultMessage: "Delete expired orders after",
+    description: "label for deleteExpiredOrdersAfter days input",
+  },
+  deleteExpiredOrdersAfterUnit: {
+    id: "SBquoC",
+    defaultMessage: "days",
+    description: "unit after deleteExpiredOrdersAfter input",
+  },
+  deleteExpiredOrdersAfterHint: {
+    id: "PGpSUm",
+    defaultMessage: "Permanent. Between 1 and 120 days.",
+    description: "helper under deleteExpiredOrdersAfter input",
   },
   markAsPaid: {
-    id: "L2tvTm",
-    defaultMessage: "Use Transaction flow when marking order as paid",
-    description: "mark as paid strategy checkbox label",
+    id: "+VC8bY",
+    defaultMessage: '"Mark as paid" creates',
+    description: "channel payments mark as paid title",
+  },
+  markAsPaidDescription: {
+    id: "RMoQDQ",
+    defaultMessage: "Which object is attached to the order when staff record a payment by hand.",
+    description: "channel payments mark as paid description",
+  },
+  markAsPaidTransactionLabel: {
+    id: "lkuKaM",
+    defaultMessage: "A Transaction",
+    description: "mark as paid transaction option label",
+  },
+  markAsPaidTransactionDescription: {
+    id: "EyIpfs",
+    defaultMessage:
+      "Matches modern payment apps. Pick this unless you still run legacy payment plugins.",
+    description: "mark as paid transaction option description",
+  },
+  markAsPaidRecommendedBadge: {
+    id: "Gl0VOw",
+    defaultMessage: "recommended",
+    description: "parenthetical marker on recommended channel setting radio option",
+  },
+  markAsPaidPaymentLabel: {
+    id: "oPaVXi",
+    defaultMessage: "A Payment",
+    description: "mark as paid payment option label",
+  },
+  markAsPaidPaymentDescription: {
+    id: "CfuWsg",
+    defaultMessage: "The older object, kept for deprecated payment plugins.",
+    description: "mark as paid payment option description",
+  },
+  markAsPaidLegacyBadge: {
+    id: "OWF2HL",
+    defaultMessage: "legacy",
+    description: "parenthetical marker on legacy channel setting radio option",
   },
   allowUnpaidOrdersLabel: {
-    id: "fuFCpI",
+    id: "v8CmW0",
     defaultMessage: "Allow unpaid orders",
-    description: "allow unpaid orders checkbox label",
+    description: "channel order setting label for unpaid orders",
   },
   allowUnpaidOrdersDescription: {
-    id: "8iUzOU",
-    defaultMessage: "Enables completing checkout with order before a successful payment.",
-    description: "allow unpaid orders checbkox description",
+    id: "TFb4/p",
+    defaultMessage:
+      "Lets checkout complete before payment succeeds. Usual for invoicing and wholesale; risky for card-only storefronts.",
+    description: "channel order setting description for unpaid orders",
   },
   defaultTransactionFlowStrategyLabel: {
-    id: "5O8EIz",
-    defaultMessage: "Authorize transactions instead of charging",
-    description: "Authorize transactions instead of charging",
+    id: "FTCq+9",
+    defaultMessage: "Default transaction flow",
+    description: "channel payments setting title",
   },
   defaultTransactionFlowStrategyDescription: {
-    id: "nwcJVT",
+    id: "/mtpmv",
+    defaultMessage: "What payment apps are asked to do at checkout.",
+    description: "channel payments setting description for transaction flow",
+  },
+  transactionFlowChargeLabel: {
+    id: "6hrHWS",
+    defaultMessage: "Charge immediately",
+    description: "transaction flow charge option label",
+  },
+  transactionFlowChargeDescription: {
+    id: "MAicWa",
+    defaultMessage: "Funds are captured when the order is placed. One step, nothing to chase.",
+    description: "transaction flow charge option description",
+  },
+  transactionFlowAuthorizeLabel: {
+    id: "lZh3Xj",
+    defaultMessage: "Authorise, capture later",
+    description: "transaction flow authorize option label",
+  },
+  transactionFlowAuthorizeDescription: {
+    id: "aBFzDG",
     defaultMessage:
-      "When enabled, all transactions would require an additional step to be charged. ({link})",
-    description: "When enabled, all transactions would require an additional step to be charged.",
+      "Funds are held and must be captured manually. Use when you ship days later or adjust totals before charging.",
+    description: "transaction flow authorize option description",
+  },
+  releaseFundsLabel: {
+    id: "O4a1K+",
+    defaultMessage: "Release held funds for expired checkouts",
+    description: "channel payments release funds label",
+  },
+  releaseFundsDescription: {
+    id: "T8rYzW",
+    defaultMessage:
+      "Voids authorisations left behind by checkouts that were never completed, so customers aren't left with a hold on their card.",
+    description: "channel payments release funds description",
+  },
+  releaseFundsAfterLabel: {
+    id: "B/iTPS",
+    defaultMessage: "Release after",
+    description: "label for checkoutTtlBeforeReleasingFunds hours input",
+  },
+  releaseFundsAfterUnit: {
+    id: "qx2mD0",
+    defaultMessage: "hours",
+    description: "unit after checkoutTtlBeforeReleasingFunds input",
+  },
+  releaseFundsAfterHint: {
+    id: "xPsePF",
+    defaultMessage: "Counted from when the checkout expired.",
+    description: "helper under checkoutTtlBeforeReleasingFunds input",
   },
   automaticallyCompleteCheckoutsLabel: {
-    id: "GFkb2t",
-    defaultMessage: "Automatically complete checkouts when fully paid",
-    description: "automatically complete checkouts checkbox label",
+    id: "iZHrIY",
+    defaultMessage: "Turn fully paid checkouts into orders automatically",
+    description: "channel payments auto-complete checkouts label",
   },
   automaticallyCompleteCheckoutsDescription: {
-    id: "ZZb4E+",
+    id: "7Fj+JA",
     defaultMessage:
-      "When enabled, checkouts detected as fully paid will be completed automatically, without checkoutComplete mutation. {link}",
-    description: "automatically complete checkouts checkbox description",
+      "Your storefront no longer needs to call checkoutComplete once payment is authorised. Only applies to payments made through transactions.",
+    description: "channel payments auto-complete checkouts description",
   },
 
   allowLegacyGiftCardUseLabel: {

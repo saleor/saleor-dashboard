@@ -1,6 +1,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
+import {
+  channelAvailabilityEntityMessages,
+  channelAvailabilityMessages,
+} from "@dashboard/components/ChannelAvailability/messages";
 import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import {
   type ChannelFragment,
   type ProductChannelListingAddInput,
@@ -170,7 +175,8 @@ export const AvailabilityCard = ({
           </DashboardCard.Title>
           {!isLoading && (
             <DashboardCard.Subtitle fontSize={3} color="default2">
-              {intl.formatMessage(messages.availabilitySubtitle, {
+              {intl.formatMessage(channelAvailabilityMessages.availabilitySubtitle, {
+                entityType: intl.formatMessage(channelAvailabilityEntityMessages.product),
                 listed: listedChannelsCount,
                 total: totalChannelsCount,
               })}
@@ -188,7 +194,6 @@ export const AvailabilityCard = ({
         {onManageClick && (
           <Button
             variant="secondary"
-            size="small"
             onClick={onManageClick}
             data-test-id="channels-availability-manage-button"
           >
@@ -210,10 +215,8 @@ export const AvailabilityCard = ({
             </Text>
           </Box>
         ) : mergedSummaries.length === 0 ? (
-          <Box padding={4}>
-            <Text size={2} color="default2">
-              {intl.formatMessage(messages.noChannelsListed)}
-            </Text>
+          <Box paddingBottom={6} data-test-id="channel-availability-empty">
+            <Placeholder>{intl.formatMessage(messages.noChannelsListed)}</Placeholder>
           </Box>
         ) : (
           <Box display="flex" flexDirection="column" gap={4}>
@@ -239,17 +242,7 @@ export const AvailabilityCard = ({
 
             {/* No results message */}
             {filteredSummaries.length === 0 ? (
-              <Box
-                padding={4}
-                borderWidth={1}
-                borderStyle="solid"
-                borderColor="default1"
-                borderRadius={4}
-              >
-                <Text size={2} color="default2">
-                  {intl.formatMessage(messages.noChannelsMatchSearch)}
-                </Text>
-              </Box>
+              <Placeholder>{intl.formatMessage(messages.noChannelsMatchSearch)}</Placeholder>
             ) : (
               <>
                 <Box
@@ -260,8 +253,8 @@ export const AvailabilityCard = ({
                   overflow="hidden"
                 >
                   <Accordion
-                    value={expandedChannel}
-                    onValueChange={(value: string) => setExpandedChannel(value)}
+                    value={expandedChannel ?? ""}
+                    onValueChange={(value: string) => setExpandedChannel(value || undefined)}
                   >
                     {paginatedSummaries.map((summary, index) => {
                       const channelErrors = errors.filter(error =>
@@ -274,6 +267,7 @@ export const AvailabilityCard = ({
                           key={summary.id}
                           summary={summary}
                           originalSummary={channelSummaries.find(s => s.id === summary.id)}
+                          rowIndex={index}
                           isLast={index === paginatedSummaries.length - 1}
                           isDirty={dirtyChannels.includes(summary.id)}
                           isMarkedForRemoval={removeChannels.includes(summary.id)}
@@ -282,7 +276,8 @@ export const AvailabilityCard = ({
                           disabled={disabled}
                           errors={channelErrors}
                           issues={channelIssues}
-                          isExpanded={expandedChannel === summary.id}
+                          isOpen={expandedChannel === summary.id}
+                          onClose={() => setExpandedChannel(undefined)}
                           verificationResult={verification.getChannelResult(summary.id)}
                           onVerify={
                             productId

@@ -1,3 +1,5 @@
+import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
+import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
@@ -13,7 +15,8 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderListUrl, type OrderSettingsUrlQueryParams } from "@dashboard/orders/urls";
 import { parseQs } from "@dashboard/url-utils";
-import { FormattedMessage, useIntl } from "react-intl";
+import { type ReactNode } from "react";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
 import { OrderChannelSettingsMatrix } from "../OrderChannelSettingsMatrix/OrderChannelSettingsMatrix";
@@ -33,12 +36,27 @@ interface OrderSettingsPageProps {
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
-const getOrdersSettingsExitHref = (search: string): string => {
+const getOrdersSettingsExit = (
+  search: string,
+  intl: IntlShape,
+): { href: string; icon: ReactNode; title: string } => {
   const params = parseQs(
     search.startsWith("?") ? search.slice(1) : search,
   ) as OrderSettingsUrlQueryParams;
 
-  return params.from === "orders" ? orderListUrl() : configurationMenuUrl;
+  if (params.from === "orders") {
+    return {
+      href: orderListUrl(),
+      icon: <TopNavDestinationIcon.orders />,
+      title: intl.formatMessage(topNavDestinationMessages.allOrders),
+    };
+  }
+
+  return {
+    href: configurationMenuUrl,
+    icon: <TopNavDestinationIcon.configuration />,
+    title: intl.formatMessage(topNavDestinationMessages.configuration),
+  };
 };
 
 /**
@@ -58,13 +76,15 @@ const OrderSettingsPage = ({
   const {
     location: { search },
   } = useRouter();
-  const exitHref = getOrdersSettingsExitHref(search);
+  const exit = getOrdersSettingsExit(search, intl);
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.ordersAndFulfillment)} />
       <SettingsHubLayout
-        backHref={exitHref}
+        backHref={exit.href}
+        backHrefIcon={exit.icon}
+        backHrefTitle={exit.title}
         title={intl.formatMessage({
           id: "anS/X1",
           defaultMessage: "Orders & fulfillment",
@@ -102,7 +122,7 @@ const OrderSettingsPage = ({
               </SettingsPageContent>
               <Savebar>
                 <Savebar.Spacer />
-                <Savebar.CancelButton onClick={() => navigate(exitHref)} />
+                <Savebar.CancelButton onClick={() => navigate(exit.href)} />
                 <Savebar.ConfirmButton
                   transitionState={saveButtonBarState}
                   onClick={submit}

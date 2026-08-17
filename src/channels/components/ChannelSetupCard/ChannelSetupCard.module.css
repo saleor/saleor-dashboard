@@ -1,0 +1,24 @@
+/**
+ * Elevated surface for the channel setup checklist.
+ * Port of shadow-plugin's `smooth-shadow-ring-sm`: stacked soft shadow with a
+ * 1px hairline baked into the final layer — never pair this with a border.
+ * @see https://shadow.floriankiem.com
+ */
+.elevated {
+  --smooth-ring-color: rgba(0, 0, 0, 0.05);
+  /* Kill SetupChecklist's hard border so we don't get a double edge. */
+  border: none;
+  box-shadow:
+    0 18px 47px 0 rgba(0, 0, 0, 0.03),
+    0 7.5px 19px 0 rgba(0, 0, 0, 0.02),
+    0 4px 10.5px 0 rgba(0, 0, 0, 0.02),
+    0 2.3px 5.8px 0 rgba(0, 0, 0, 0.01),
+    0 1.2px 3.1px 0 rgba(0, 0, 0, 0.01),
+    0 0.5px 1.3px 0 rgba(0, 0, 0, 0.01),
+    0 0 0 1px var(--smooth-ring-color);
+}
+
+/* Outer ring paints on the page behind the card — white hairline in dark. */
+.elevatedDark {
+  --smooth-ring-color: rgba(255, 255, 255, 0.18);
+}

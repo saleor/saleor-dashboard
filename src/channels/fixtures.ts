@@ -2,6 +2,7 @@ import {
   AllocationStrategyEnum,
   type ChannelDetailsFragment,
   MarkAsPaidStrategyEnum,
+  TaxCalculationStrategy,
   TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 
@@ -35,8 +36,15 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -46,6 +54,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -84,8 +94,15 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -95,6 +112,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -133,8 +152,15 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -144,6 +170,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -182,8 +210,15 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -193,6 +228,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -231,8 +268,15 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -242,6 +286,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -280,8 +326,15 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -291,6 +344,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -329,8 +384,15 @@ export const channelsList: ChannelDetailsFragment[] = [
         name: "Warehouse 2",
       },
     ],
+    taxConfiguration: {
+      __typename: "TaxConfiguration",
+      id: "TX1",
+      chargeTaxes: true,
+      taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+    },
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      expireOrdersAfter: null,
       deleteExpiredOrdersAfter: 60,
       allowUnpaidOrders: false,
       automaticallyConfirmAllNewOrders: true,
@@ -340,6 +402,8 @@ export const channelsList: ChannelDetailsFragment[] = [
     paymentSettings: {
       __typename: "PaymentSettings",
       defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+      releaseFundsForExpiredCheckouts: false,
+      checkoutTtlBeforeReleasingFunds: null,
     },
     checkoutSettings: {
       automaticallyCompleteFullyPaidCheckouts: true,
@@ -380,8 +444,15 @@ export const channel: ChannelDetailsFragment = {
       name: "Warehouse 2",
     },
   ],
+  taxConfiguration: {
+    __typename: "TaxConfiguration",
+    id: "TX1",
+    chargeTaxes: true,
+    taxCalculationStrategy: TaxCalculationStrategy.FLAT_RATES,
+  },
   orderSettings: {
     markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+    expireOrdersAfter: null,
     deleteExpiredOrdersAfter: 60,
     allowUnpaidOrders: false,
     automaticallyConfirmAllNewOrders: true,
@@ -391,6 +462,8 @@ export const channel: ChannelDetailsFragment = {
   paymentSettings: {
     __typename: "PaymentSettings",
     defaultTransactionFlowStrategy: TransactionFlowStrategyEnum.CHARGE,
+    releaseFundsForExpiredCheckouts: false,
+    checkoutTtlBeforeReleasingFunds: null,
   },
   checkoutSettings: {
     automaticallyCompleteFullyPaidCheckouts: true,

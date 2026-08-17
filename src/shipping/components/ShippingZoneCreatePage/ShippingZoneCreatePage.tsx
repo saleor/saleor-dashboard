@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { CountryList } from "@dashboard/components/CountryList";
@@ -70,7 +74,12 @@ const ShippingZoneCreatePage = ({
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => (
         <DetailPageLayout gridTemplateColumns={1}>
-          <TopNav href={shippingZonesListUrl()} title={intl.formatMessage(messages.createZone)} />
+          <TopNav
+            href={shippingZonesListUrl()}
+            hrefIcon={<TopNavDestinationIcon.shipping />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allShippingZones)}
+            title={intl.formatMessage(messages.createZone)}
+          />
           <DetailPageLayout.Content>
             <div>
               <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />

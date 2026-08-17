@@ -1,0 +1,4 @@
+.priceFieldV2 input {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

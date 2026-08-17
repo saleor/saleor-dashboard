@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
@@ -105,7 +109,12 @@ const MenuDetailsPage = ({
     >
       {({ change, data, submit }) => (
         <DetailPageLayout>
-          <TopNav href={menuListUrl()} title={menu?.name}>
+          <TopNav
+            href={menuListUrl()}
+            hrefIcon={<TopNavDestinationIcon.modeling />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allStructures)}
+            title={menu?.name}
+          >
             <TopNav.Menu
               items={[
                 ...extensionMenuItems,

@@ -29,6 +29,7 @@ const sampleProduct: Product = {
         name: "Default channel",
         slug: "default",
         currencyCode: "USD",
+        isActive: true,
       },
     },
   ],
@@ -41,8 +42,8 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
         <GridTable.Colgroup>
           <GridTable.Col __width="40px" />
           <GridTable.Col __width="20px" />
-          <GridTable.Col />
-          <GridTable.Col />
+          <GridTable.Col __width="42%" />
+          <GridTable.Col __width="22%" />
           <GridTable.Col />
           <GridTable.Col __width="100px" />
         </GridTable.Colgroup>
@@ -87,5 +88,79 @@ export const NotDraggable: Story = {
 export const NoThumbnail: Story = {
   args: {
     product: { ...sampleProduct, thumbnail: null },
+  },
+};
+
+export const LongLabels: Story = {
+  args: {
+    product: {
+      ...sampleProduct,
+      name: "Premium Organic Fair-Trade Ethiopian Yirgacheffe Single-Origin Coffee Beans",
+      productType: {
+        ...sampleProduct.productType,
+        name: "Specialty Beverages & Artisanal Drink Mixes",
+      },
+    },
+  },
+};
+
+export const MultipleChannels: Story = {
+  args: {
+    product: {
+      ...sampleProduct,
+      channelListings: [
+        {
+          __typename: "ProductChannelListing",
+          id: "pcl-1",
+          isPublished: true,
+          publishedAt: "2026-01-01T00:00:00Z",
+          isAvailableForPurchase: true,
+          availableForPurchaseAt: "2026-01-01T00:00:00Z",
+          visibleInListings: true,
+          channel: {
+            __typename: "Channel",
+            id: "ch-1",
+            name: "US Store",
+            slug: "us",
+            currencyCode: "USD",
+            isActive: true,
+          },
+        },
+        {
+          __typename: "ProductChannelListing",
+          id: "pcl-2",
+          isPublished: true,
+          publishedAt: "2026-01-01T00:00:00Z",
+          isAvailableForPurchase: true,
+          availableForPurchaseAt: "2026-01-01T00:00:00Z",
+          visibleInListings: true,
+          channel: {
+            __typename: "Channel",
+            id: "ch-2",
+            name: "EU Store",
+            slug: "eu",
+            currencyCode: "EUR",
+            isActive: true,
+          },
+        },
+        {
+          __typename: "ProductChannelListing",
+          id: "pcl-3",
+          isPublished: false,
+          publishedAt: null,
+          isAvailableForPurchase: null,
+          availableForPurchaseAt: null,
+          visibleInListings: false,
+          channel: {
+            __typename: "Channel",
+            id: "ch-3",
+            name: "APAC Store",
+            slug: "apac",
+            currencyCode: "JPY",
+            isActive: true,
+          },
+        },
+      ],
+    },
   },
 };

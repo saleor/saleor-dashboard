@@ -45,12 +45,22 @@ export const configurationLucideIconProps = {
   strokeWidth: iconStrokeWidth,
 } as const;
 
+/** Shared Lucide props for TopNav destination links (16px). */
+export const topNavLucideIconProps = {
+  size: iconSize.small,
+  strokeWidth: iconStrokeWidthBySize.small,
+} as const;
+
 /** Match Lucide stroke weight for custom SVG icons on configuration cards. */
 export const getConfigurationCustomIconStrokeWidth = (viewBoxSize: number) =>
   iconStrokeWidth * (viewBoxSize / LUCIDE_VIEWBOX_SIZE);
 
 /** Match Lucide stroke weight for custom SVG icons rendered at navigation icon size. */
 export const getNavigationCustomIconStrokeWidth = (viewBoxSize: number) =>
+  iconStrokeWidthBySize.small * (viewBoxSize / LUCIDE_VIEWBOX_SIZE);
+
+/** Match Lucide stroke weight for custom SVG icons rendered at TopNav icon size. */
+export const getTopNavCustomIconStrokeWidth = (viewBoxSize: number) =>
   iconStrokeWidthBySize.small * (viewBoxSize / LUCIDE_VIEWBOX_SIZE);
 
 export type IconSize = keyof typeof iconSize;

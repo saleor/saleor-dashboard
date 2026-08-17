@@ -1,6 +1,7 @@
 import {
   configurationLucideIconProps,
   navigationLucideIconProps,
+  topNavLucideIconProps,
 } from "@dashboard/components/icons";
 import { type LucideIcon } from "lucide-react";
 
@@ -14,4 +15,10 @@ export const createConfigurationLucideIcon = (Icon: LucideIcon): (() => JSX.Elem
   const ConfigurationLucideIcon = (): JSX.Element => <Icon {...configurationLucideIconProps} />;
 
   return ConfigurationLucideIcon;
+};
+
+export const createTopNavLucideIcon = (Icon: LucideIcon): (() => JSX.Element) => {
+  const TopNavLucideIcon = (): JSX.Element => <Icon {...topNavLucideIconProps} />;
+
+  return TopNavLucideIcon;
 };

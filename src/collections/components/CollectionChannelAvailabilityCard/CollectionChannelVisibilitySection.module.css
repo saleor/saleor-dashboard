@@ -1,0 +1,23 @@
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-3);
+  margin: 0 calc(-1 * var(--mu-spacing-2));
+  padding: var(--mu-spacing-2) var(--mu-spacing-2);
+  border-radius: var(--mu-border-radius-3);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.toggleRow:hover:not([data-disabled="true"]) {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.toggleRow[data-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.toggleControl {
+  flex-shrink: 0;
+}

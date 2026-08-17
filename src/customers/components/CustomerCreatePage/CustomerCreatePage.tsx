@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -145,6 +149,8 @@ const CustomerCreatePage = ({
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={customerListUrl()}
+              hrefIcon={<TopNavDestinationIcon.customers />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allCustomers)}
               title={intl.formatMessage({
                 id: "N76zUg",
                 defaultMessage: "Create Customer",

@@ -13,6 +13,7 @@ export const TranslationsButton = ({ title, ...props }: ButtonProps) => {
       icon={<TranslationsIcon />}
       title={title ?? intl.formatMessage(translationsButtonMessages.openTranslations)}
       {...props}
+      type="button"
     />
   );
 };

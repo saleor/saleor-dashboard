@@ -63,7 +63,14 @@ const RateCreate = ({ id, params }: RateCreateProps) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels(allChannels, params?.action, { closeModal, openModal }, { formId: FORM_ID });
+  } = useChannels(
+    // Create starts with no channel listings — users assign via Manage.
+    // `allChannels` is only for the picker dialog, not the initial selection.
+    [],
+    params?.action,
+    { closeModal, openModal },
+    { formId: FORM_ID },
+  );
   const [state, dispatch] = useReducer(postalCodesReducer, {
     codesToDelete: [],
     inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,

@@ -1,0 +1,49 @@
+.row {
+  position: relative;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.trigger {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background-color: var(--mu-colors-background-default1);
+}
+
+.trigger:hover {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.triggerDisabled,
+.triggerDisabled:hover {
+  background-color: var(--mu-colors-background-default1);
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.trigger[data-state="open"] .chevron {
+  transform: rotate(180deg);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  background-color: var(--mu-colors-background-default1);
+  overflow: hidden;
+}
+
+/* Macaw sets overflow:visible on open — content bleeds through stacked rows during animation */
+.content[data-state="open"] {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+}

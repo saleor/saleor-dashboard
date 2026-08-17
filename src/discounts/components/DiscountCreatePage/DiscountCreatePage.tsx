@@ -1,6 +1,10 @@
-import { TopNav } from "@dashboard/components/AppLayout";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
@@ -12,6 +16,7 @@ import {
 } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
+import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { DiscountCreateForm } from "../DiscountCreateForm";
@@ -41,10 +46,12 @@ export const DiscountCreatePage = ({
 
   return (
     <DiscountCreateForm onSubmit={onSubmit}>
-      {({ rules, discountType, onDeleteRule, onRuleSubmit, submitHandler }) => (
-        <DetailPageLayout gridTemplateColumns={1} testId="discount-form">
+      {({ rules, discountType, onDeleteRule, onRuleSubmit, submitHandler, hasUnsavedChanges }) => (
+        <DetailPageLayout testId="discount-form">
           <TopNav
             href={discountListUrl()}
+            hrefIcon={<TopNavDestinationIcon.discounts />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.allDiscounts)}
             title={intl.formatMessage({
               id: "FWbv/u",
               defaultMessage: "Create Discount",
@@ -53,31 +60,33 @@ export const DiscountCreatePage = ({
           />
 
           <DetailPageLayout.Content>
-            <DiscountGeneralInfo
-              error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
-              disabled={disabled}
-              typeDisabled={false}
-            />
+            <DetailPageContent>
+              <DiscountGeneralInfo
+                error={getCommonFormFieldErrorMessage(formErrors.name, intl)}
+                disabled={disabled}
+                typeDisabled={false}
+              />
 
-            <CardSpacer />
-
-            <DiscountDatesWithController errors={errors} disabled={disabled} />
-
-            <CardSpacer />
-
-            <DiscountRules
-              promotionId={null}
-              discountType={discountType}
-              errors={errors as DiscountRulesErrors<PromotionCreateErrorCode>}
-              channels={channels}
-              disabled={disabled}
-              rules={rules}
-              onRuleDelete={onDeleteRule}
-              onRuleSubmit={onRuleSubmit}
-              getRuleConfirmButtonState={() => "default"}
-              deleteButtonState="default"
-            />
+              <DiscountRules
+                promotionId={null}
+                discountType={discountType}
+                errors={errors as DiscountRulesErrors<PromotionCreateErrorCode>}
+                channels={channels}
+                disabled={disabled}
+                rules={rules}
+                onRuleDelete={onDeleteRule}
+                onRuleSubmit={onRuleSubmit}
+                getRuleConfirmButtonState={() => "default"}
+                deleteButtonState="default"
+              />
+            </DetailPageContent>
           </DetailPageLayout.Content>
+
+          <DetailPageLayout.RightSidebar paddingTop={6}>
+            <Box display="flex" flexDirection="column" gap={4}>
+              <DiscountDatesWithController errors={errors} disabled={disabled} />
+            </Box>
+          </DetailPageLayout.RightSidebar>
 
           <Savebar>
             <Savebar.Spacer />
@@ -85,7 +94,7 @@ export const DiscountCreatePage = ({
             <Savebar.ConfirmButton
               transitionState={submitButtonState}
               onClick={submitHandler}
-              disabled={disabled}
+              disabled={disabled || !hasUnsavedChanges}
             />
           </Savebar>
         </DetailPageLayout>

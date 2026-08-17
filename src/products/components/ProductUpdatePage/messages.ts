@@ -16,16 +16,22 @@ export const messages = defineMessages({
     defaultMessage: "Open this product in GraphiQL",
     description: "open new window button",
   },
+  showSetupChecklist: {
+    id: "BTI5fl",
+    defaultMessage: "Show setup checklist",
+    description:
+      "product detail menu, reopens the Finish setting up this product card after dismiss",
+  },
+  deleteProduct: {
+    id: "j6dFO1",
+    defaultMessage: "Delete product",
+    description: "product detail cogs menu, opens the delete-confirmation dialog",
+  },
   pendingVariantDeletes: {
     id: "w0m9Jc",
     defaultMessage:
       "{count, plural, one {# variant pending delete} other {# variants pending delete}}",
     description: "savebar hint when variants are marked for deletion but not saved yet",
-  },
-  saveCompositionIncludes: {
-    id: "DpZRsS",
-    defaultMessage: "Unsaved changes: {segments}",
-    description: "Savebar hint listing which product areas will persist on Save",
   },
   saveCompositionDetails: {
     id: "FaL3f6",

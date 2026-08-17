@@ -1,0 +1,42 @@
+/*
+ * Shared lightweight skeleton fill for dashboard surfaces.
+ * Applied to macaw Skeleton (global) and dashboard Skeleton component.
+ */
+.dashboard-skeleton,
+[data-macaw-ui-component="Skeleton"] {
+  display: block;
+  flex-shrink: 0;
+  min-height: 1px;
+  min-width: 1px;
+  opacity: 1 !important;
+  background-color: color-mix(
+    in srgb,
+    var(--mu-colors-border-default1) 24%,
+    var(--mu-colors-background-default1)
+  ) !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dashboard-skeleton,
+  [data-macaw-ui-component="Skeleton"] {
+    animation: dashboardSkeletonBreathe 2.4s ease-in-out infinite alternate !important;
+  }
+}
+
+@keyframes dashboardSkeletonBreathe {
+  from {
+    background-color: color-mix(
+      in srgb,
+      var(--mu-colors-border-default1) 20%,
+      var(--mu-colors-background-default1)
+    ) !important;
+  }
+
+  to {
+    background-color: color-mix(
+      in srgb,
+      var(--mu-colors-border-default1) 30%,
+      var(--mu-colors-background-default1)
+    ) !important;
+  }
+}

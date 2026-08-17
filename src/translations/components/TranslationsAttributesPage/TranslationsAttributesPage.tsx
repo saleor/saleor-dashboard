@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type ListSettingsUpdate } from "@dashboard/components/TablePagination";
@@ -126,6 +130,8 @@ export const TranslationsAttributesPage = ({
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.attributes,
         })}
+        hrefIcon={<TopNavDestinationIcon.translations />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.translations)}
         title={intl.formatMessage(
           {
             id: "SPBLzT",

@@ -1,5 +1,30 @@
 import { defineMessages } from "react-intl";
 
+export type ChannelAvailabilityEntityType = "product" | "collection" | "shippingMethod" | "voucher";
+
+export const channelAvailabilityEntityMessages = defineMessages<ChannelAvailabilityEntityType>({
+  product: {
+    id: "SxJ5OG",
+    defaultMessage: "Product",
+    description: "Entity type label for channel availability panel subtitles",
+  },
+  collection: {
+    id: "gimJGK",
+    defaultMessage: "Collection",
+    description: "Entity type label for channel availability panel subtitles",
+  },
+  shippingMethod: {
+    id: "x4B8Yd",
+    defaultMessage: "Shipping method",
+    description: "Entity type label for channel availability panel subtitles",
+  },
+  voucher: {
+    id: "09q72K",
+    defaultMessage: "Voucher",
+    description: "Entity type label for channel availability panel subtitles",
+  },
+});
+
 export const channelAvailabilityMessages = defineMessages({
   availabilityTitle: {
     id: "XQfBeC",
@@ -7,9 +32,9 @@ export const channelAvailabilityMessages = defineMessages({
     description: "Availability card title",
   },
   availabilitySubtitle: {
-    id: "h0mEWF",
-    defaultMessage: "In {listed} of {total} channels",
-    description: "Availability card subtitle showing channel count",
+    id: "yumN1U",
+    defaultMessage: "{entityType} in {listed} of {total} channels",
+    description: "Availability card subtitle showing entity channel count",
   },
   manageButton: {
     id: "E3SyRJ",
@@ -20,6 +45,11 @@ export const channelAvailabilityMessages = defineMessages({
     id: "PQlz1k",
     defaultMessage: "Not listed in any channel",
     description: "Message when entity is not in any channel",
+  },
+  emptyTitle: {
+    id: "jQe+kI",
+    defaultMessage: "No channels assigned",
+    description: "Availability card empty state title when entity has no channel listings",
   },
   searchChannelsPlaceholder: {
     id: "Nsbu46",

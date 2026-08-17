@@ -41,7 +41,8 @@ export function getCommonFormFieldErrorMessage<ErrorCode>(
       case "REQUIRED":
         return intl.formatMessage(commonMessages.requiredField);
       case "INVALID":
-        return intl.formatMessage(commonErrorMessages.invalid);
+        // Prefer the API message when present — "Invalid value" alone is not actionable.
+        return error.message || intl.formatMessage(commonErrorMessages.invalid);
 
       default:
         if (error.message) {

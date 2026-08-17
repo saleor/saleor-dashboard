@@ -1,5 +1,9 @@
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
@@ -48,6 +52,8 @@ const ShippingZonesListPage = ({
     <>
       <TopNav
         href={configurationMenuUrl}
+        hrefIcon={<TopNavDestinationIcon.configuration />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
         title={intl.formatMessage(messages.shippingZonesHeader)}
         withoutBorder
       >

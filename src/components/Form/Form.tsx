@@ -16,6 +16,8 @@ interface FormProps<TData, TErrors>
   formId?: FormId;
   checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<TData>;
   mergeData?: boolean;
+  /** Override default deep merge when `mergeData` is true. */
+  mergeFunc?: (prevData: TData, prevState: TData, data: TData) => TData;
 }
 
 /** @deprecated Use react-hook-form instead */
@@ -29,6 +31,7 @@ function Form<TData, Terrors>({
   checkIfSaveIsDisabled,
   disabled,
   mergeData,
+  mergeFunc,
   ...rest
 }: FormProps<TData, Terrors>) {
   const renderProps = useForm(initial, onSubmit, {
@@ -37,6 +40,7 @@ function Form<TData, Terrors>({
     checkIfSaveIsDisabled,
     disabled,
     mergeData,
+    mergeFunc,
   });
 
   function handleSubmit(event?: React.FormEvent<HTMLFormElement>, cb?: () => void) {

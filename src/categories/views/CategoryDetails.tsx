@@ -1,3 +1,7 @@
+import { CategoryBulkDeleteDialog } from "@dashboard/categories/components/CategoryBulkDeleteDialog/CategoryBulkDeleteDialog";
+import { CategoryDeleteImageDialog } from "@dashboard/categories/components/CategoryDeleteImageDialog/CategoryDeleteImageDialog";
+import { CategoryMetadataDialog } from "@dashboard/categories/components/CategoryMetadataDialog/CategoryMetadataDialog";
+import { useEntityBackgroundImageUpload } from "@dashboard/components/EntityBackgroundImageField/useEntityBackgroundImageUpload";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
@@ -6,43 +10,34 @@ import {
   type CategoryDeleteMutation,
   type CategoryInput,
   type CategoryUpdateMutation,
+  ProductErrorCode,
+  type ProductErrorFragment,
   useCategoryBulkDeleteMutation,
+  useCategoryCreateMutation,
   useCategoryDeleteMutation,
   useCategoryDetailsQuery,
   useCategoryUpdateMutation,
-  useProductBulkDeleteMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
-import useLocalPaginator, {
-  useSectionLocalPaginationState,
-} from "@dashboard/hooks/useLocalPaginator";
+import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { type PaginatorContextValues } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { errorMessages } from "@dashboard/intl";
-import { ProductBulkDeleteDialog } from "@dashboard/products/components/ProductBulkDeleteDialog/ProductBulkDeleteDialog";
+import { commonMessages, errorMessages } from "@dashboard/intl";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import isEqual from "lodash/isEqual";
-import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
-import { extractMutationErrors, maybe } from "../../misc";
-import { productAddUrl } from "../../products/urls";
-import { CategoryBulkDeleteDialog } from "../components/CategoryBulkDeleteDialog/CategoryBulkDeleteDialog";
+import { extractMutationErrors, getMutationErrors, maybe } from "../../misc";
 import { CategoryDeleteDialog } from "../components/CategoryDeleteDialog/CategoryDeleteDialog";
-import {
-  CategoryPageTab,
-  CategoryUpdatePage,
-} from "../components/CategoryUpdatePage/CategoryUpdatePage";
+import { CategoryUpdatePage } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import { type CategoryUpdateData } from "../components/CategoryUpdatePage/form";
+import { CreateCategoryDialog } from "../components/CreateCategoryDialog/CreateCategoryDialog";
+import { messages as createCategoryMessages } from "../components/CreateCategoryDialog/messages";
 import {
   categoryListUrl,
   categoryUrl,
@@ -55,49 +50,66 @@ interface CategoryDetailsProps {
   id: string;
 }
 
+const toPaginatorContext = (pagination: {
+  pageInfo?: {
+    endCursor: string | null;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string | null;
+  };
+  loadNextPage: () => void;
+  loadPreviousPage: () => void;
+  paginatorType: "click";
+}): PaginatorContextValues => ({
+  ...pagination.pageInfo,
+  loadNextPage: pagination.loadNextPage,
+  loadPreviousPage: pagination.loadPreviousPage,
+  paginatorType: pagination.paginatorType,
+});
+
 const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const {
-    clearRowSelection: clearProductRowSelection,
-    selectedRowIds: selectedProductRowIds,
-    setClearDatagridRowSelectionCallback: setClearProductDatagridRowSelectionCallback,
-    setSelectedRowIds: setSelectedProductRowIds,
-  } = useRowSelection();
-  const {
-    clearRowSelection: clearCategryRowSelection,
+    clearRowSelection: clearCategoryRowSelection,
     selectedRowIds: selectedCategoryRowIds,
     setClearDatagridRowSelectionCallback: setClearCategoryDatagridRowSelectionCallback,
     setSelectedRowIds: setSelectedCategoryRowIds,
     excludeFromSelected: excludeCategoryFromSelected,
   } = useRowSelection();
-  const [activeTab, setActiveTab] = useState<CategoryPageTab>(CategoryPageTab.categories);
-  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
-    PAGINATE_BY,
-    activeTab,
-  );
-  const paginate = useLocalPaginator(setPaginationState);
-  const changeTab = (tab: CategoryPageTab) => {
-    clearProductRowSelection();
-    clearCategryRowSelection();
-    setActiveTab(tab);
-  };
   const { settings, updateListSettings } = useListSettings<ListViews.CATEGORY_LIST>(
     ListViews.CATEGORY_LIST,
   );
+  const rowNumber = settings?.rowNumber ?? PAGINATE_BY;
+  const [childrenPaginationState, setChildrenPaginationState] = useLocalPaginationState(rowNumber);
+  const paginateChildren = useLocalPaginator(setChildrenPaginationState);
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
-    variables: { ...paginationState, id },
+    variables: {
+      id,
+      childrenFirst: childrenPaginationState.first,
+      childrenAfter: childrenPaginationState.after,
+      childrenLast: childrenPaginationState.last,
+      childrenBefore: childrenPaginationState.before,
+    },
   });
 
   useRegisterEntityRefresh(refetch);
 
+  const {
+    backgroundImageRevision,
+    backgroundImageUploadPreview,
+    isBackgroundImageUploading,
+    onBackgroundImageUploadPreviewLoaded,
+    runImageMutation,
+  } = useEntityBackgroundImageUpload();
+
   const category = data?.category;
-  const subcategories = mapEdgesToItems(data?.category?.children);
-  const products = mapEdgesToItems(data?.category?.products);
+  const subcategories = mapEdgesToItems(data?.category?.children) ?? [];
+  const subcategoriesPaginator = toPaginatorContext(
+    paginateChildren(data?.category?.children?.pageInfo, childrenPaginationState),
+  );
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data?.categoryDelete?.errors.length === 0) {
       notify({
@@ -107,177 +119,216 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
           defaultMessage: "Category deleted",
         }),
       });
-      clearProductRowSelection();
       navigate(categoryListUrl());
     }
   };
   const [deleteCategory, deleteResult] = useCategoryDeleteMutation({
     onCompleted: handleCategoryDelete,
   });
-  const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
-    clearProductRowSelection();
+  const notifyCategoryUpdated = () => {
+    notify({
+      status: "success",
+      text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
+    });
+  };
+  const handleCategoryUpdateErrors = (data: CategoryUpdateMutation) => {
+    const backgroundImageError = data?.categoryUpdate?.errors.find(
+      error => error.field === ("backgroundImage" as keyof CategoryInput),
+    );
 
-    if (data?.categoryUpdate?.errors.length! > 0) {
-      const backgroundImageError = data?.categoryUpdate?.errors.find(
-        error => error.field === ("backgroundImage" as keyof CategoryInput),
-      );
-
-      if (backgroundImageError) {
-        notify({
-          status: "error",
-          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-          text: intl.formatMessage(errorMessages.imageUploadErrorText),
-        });
-      }
-    } else {
+    if (backgroundImageError) {
       notify({
-        status: "success",
-        text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
+        status: "error",
+        title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+        text: intl.formatMessage(errorMessages.imageUploadErrorText),
       });
+    }
+  };
+  const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
+    if (data?.categoryUpdate?.errors.length! > 0) {
+      handleCategoryUpdateErrors(data);
+    } else {
+      notifyCategoryUpdated();
     }
   };
   const [updateCategory, updateResult] = useCategoryUpdateMutation({
     onCompleted: handleCategoryUpdate,
   });
   const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
-    clearCategryRowSelection();
+    clearCategoryRowSelection();
 
     if (data?.categoryBulkDelete?.errors.length === 0) {
       closeModal();
       notify({
         status: "success",
-        text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
+        text: intl.formatMessage({ id: "G5ETO0", defaultMessage: "Categories deleted" }),
       });
     }
   };
   const [categoryBulkDelete, categoryBulkDeleteOpts] = useCategoryBulkDeleteMutation({
     onCompleted: handleBulkCategoryDelete,
   });
-  const [productBulkDelete, productBulkDeleteOpts] = useProductBulkDeleteMutation({
-    onCompleted: data => {
-      clearProductRowSelection();
-
-      if (data?.productBulkDelete?.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage({ id: "H4Lcuk", defaultMessage: "Category updated" }),
-        });
-        refetch();
-      }
-    },
-  });
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryUrlDialog,
     CategoryUrlQueryParams
   >(navigate, params => categoryUrl(id, params), params);
-  const { pageInfo, ...paginationFunctions } = paginate(
-    activeTab === CategoryPageTab.categories
-      ? data?.category?.children?.pageInfo
-      : data?.category?.products?.pageInfo,
-    paginationState,
-  );
-  const handleUpdate = async (formData: CategoryUpdateData) =>
-    extractMutationErrors(
-      updateCategory({
-        variables: {
-          id,
-          input: {
-            backgroundImageAlt: formData.backgroundImageAlt,
-            description: getParsedDataForJsonStringField(formData?.description!),
-            name: formData.name,
-            seo: {
-              description: formData.seoDescription,
-              title: formData.seoTitle,
-            },
-            slug: formData.slug,
-          },
-        },
-      }),
-    );
-  const handleSetSelectedPrductIds = useCallback(
-    (rows: number[], clearSelection: () => void) => {
-      if (!products) {
+  const [createCategory, createCategoryOpts] = useCategoryCreateMutation({
+    onCompleted: createData => {
+      if ((createData.categoryCreate?.errors.length ?? 0) > 0) {
         return;
       }
 
-      const rowsIds = rows.map(row => products[row].id);
-      const haveSaveValues = isEqual(rowsIds, selectedProductRowIds);
-
-      if (!haveSaveValues) {
-        setSelectedProductRowIds(rowsIds);
-      }
-
-      setClearProductDatagridRowSelectionCallback(clearSelection);
+      notify({
+        status: "success",
+        text: intl.formatMessage(createCategoryMessages.created),
+      });
+      closeModal();
+      navigate(categoryUrl(createData.categoryCreate?.category?.id ?? ""));
     },
-    [
-      products,
-      selectedProductRowIds,
-      setClearProductDatagridRowSelectionCallback,
-      setSelectedProductRowIds,
-    ],
-  );
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.category!,
-    handleUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+  });
+  const handleImmediateCategoryImageMutation = async (
+    input: Pick<CategoryInput, "backgroundImage"> &
+      Partial<Pick<CategoryInput, "backgroundImageAlt">>,
+  ) => {
+    const uploadFile = input.backgroundImage instanceof File ? input.backgroundImage : null;
+
+    try {
+      await runImageMutation({
+        file: uploadFile,
+        mutate: async () => {
+          const result = await updateCategory({
+            variables: {
+              id,
+              input,
+            },
+          });
+          const errors = getMutationErrors(result);
+
+          if (errors.length === 0) {
+            closeModal();
+
+            if (uploadFile) {
+              await refetch();
+            }
+
+            return true;
+          }
+
+          return false;
+        },
+      });
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+    }
+  };
+  const handleUpdate = async (formData: CategoryUpdateData): Promise<ProductErrorFragment[]> => {
+    try {
+      return await extractMutationErrors(
+        updateCategory({
+          variables: {
+            id,
+            input: {
+              backgroundImageAlt: formData.backgroundImageAlt,
+              description: getParsedDataForJsonStringField(formData?.description!),
+              name: formData.name,
+              seo: {
+                description: formData.seoDescription,
+                title: formData.seoTitle,
+              },
+              slug: formData.slug,
+            },
+          },
+        }),
+      );
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+
+      return [
+        {
+          __typename: "ProductError",
+          code: ProductErrorCode.GRAPHQL_ERROR,
+          field: null,
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
+        },
+      ];
+    }
+  };
 
   if (category === null) {
     return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
   }
 
   return (
-    <PaginatorContext.Provider value={{ ...pageInfo, ...paginationFunctions }}>
+    <>
       <WindowTitle title={data?.category?.name!} />
       <CategoryUpdatePage
         categoryId={id}
+        params={params}
         settings={settings}
         onUpdateListSettings={updateListSettings}
-        changeTab={changeTab}
-        currentTab={activeTab}
         category={data?.category}
+        backgroundImageRevision={backgroundImageRevision}
+        backgroundImageUploadPreview={backgroundImageUploadPreview}
+        isBackgroundImageUploading={isBackgroundImageUploading}
+        onBackgroundImageUploadPreviewLoaded={onBackgroundImageUploadPreviewLoaded}
         disabled={loading}
         errors={updateResult?.data?.categoryUpdate?.errors || []}
-        addProductHref={productAddUrl()}
         onDelete={() => openModal("delete")}
-        onImageDelete={() =>
-          updateCategory({
-            variables: {
-              id,
-              input: {
-                backgroundImage: null,
-              },
-            },
-          })
-        }
-        onImageUpload={file =>
-          updateCategory({
-            variables: {
-              id,
-              input: {
-                backgroundImage: file,
-              },
-            },
-          })
-        }
-        onSubmit={handleSubmit}
-        products={products}
-        saveButtonBarState={updateResult.status}
+        onImageDelete={() => openModal("removeImage")}
+        onImageUpload={file => handleImmediateCategoryImageMutation({ backgroundImage: file })}
+        onSubmit={handleUpdate}
         subcategories={subcategories}
+        subcategoryTotalCount={data?.category?.children?.totalCount}
+        subcategoriesPaginator={subcategoriesPaginator}
+        saveButtonBarState={updateResult.status}
         selectedCategoryIds={selectedCategoryRowIds}
         setSelectedCategoryIds={setSelectedCategoryRowIds}
-        clearCategoryRowSelection={clearCategryRowSelection}
+        clearCategoryRowSelection={clearCategoryRowSelection}
         excludeCategoryFromSelected={excludeCategoryFromSelected}
         setClearCategoryDatagridRowSelectionCallback={setClearCategoryDatagridRowSelectionCallback}
-        onSelectProductsIds={handleSetSelectedPrductIds}
+        onShowMetadata={() => openModal("view-metadata")}
+        onCreateSubcategory={() => openModal("create")}
         onCategoriesDelete={() => {
           openModal("delete-categories");
         }}
-        onProductsDelete={() => {
-          openModal("delete-products");
+      />
+
+      <CreateCategoryDialog
+        open={params.action === "create"}
+        parentId={id}
+        parentName={category?.name}
+        onClose={closeModal}
+        confirmButtonState={createCategoryOpts.status}
+        disabled={createCategoryOpts.loading}
+        errors={createCategoryOpts.data?.categoryCreate?.errors ?? []}
+        onSubmit={async ({ name, description }) => {
+          const result = await createCategory({
+            variables: {
+              parent: id,
+              input: {
+                name,
+                ...(description
+                  ? { description: getParsedDataForJsonStringField(description) }
+                  : {}),
+              },
+            },
+          });
+          const errors = getMutationErrors(result);
+
+          return Array.isArray(errors) ? (errors as ProductErrorFragment[]) : [];
         }}
+      />
+
+      <CategoryMetadataDialog
+        open={params.action === "view-metadata" && !!category}
+        onClose={closeModal}
+        category={category}
       />
 
       <CategoryDeleteDialog
@@ -286,6 +337,18 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
         onClose={closeModal}
         onConfirm={() => deleteCategory({ variables: { id } })}
         open={params.action === "delete"}
+      />
+
+      <CategoryDeleteImageDialog
+        confirmButtonState={updateResult.status}
+        onClose={closeModal}
+        onConfirm={() =>
+          handleImmediateCategoryImageMutation({
+            backgroundImage: null,
+            backgroundImageAlt: "",
+          })
+        }
+        open={params.action === "removeImage"}
       />
 
       <CategoryBulkDeleteDialog
@@ -299,19 +362,7 @@ const CategoryDetails = ({ id, params }: CategoryDetailsProps) => {
         }
         open={params.action === "delete-categories"}
       />
-
-      <ProductBulkDeleteDialog
-        confirmButtonState={productBulkDeleteOpts.status}
-        count={maybe(() => selectedProductRowIds.length) ?? 0}
-        onClose={closeModal}
-        onConfirm={() =>
-          productBulkDelete({
-            variables: { ids: selectedProductRowIds },
-          }).then(() => refetch())
-        }
-        open={params.action === "delete-products"}
-      />
-    </PaginatorContext.Provider>
+    </>
   );
 };
 

@@ -212,6 +212,7 @@ export const ProductVariantsHeader = ({
   const showToolbar =
     Boolean(onVariantsSearchChange || variantsPageInfo) &&
     (hasActiveSearch || (variantsTotalCount !== null && variantsTotalCount > 0));
+  const canPaginate = Boolean(variantsPageInfo?.hasNextPage || variantsPageInfo?.hasPreviousPage);
   const runGuarded = onGuardUnsavedAction ?? ((action: () => void) => action());
 
   return (
@@ -294,7 +295,7 @@ export const ProductVariantsHeader = ({
                 <FormattedMessage {...messages.deleteSelected} values={{ count: selectedCount }} />
               </Button>
             )}
-            {variantsRangeLabel && (
+            {canPaginate && variantsRangeLabel && (
               <Text size={2} color="default2" data-test-id="variants-range-label">
                 {pendingVariantDeleteCount > 0
                   ? intl.formatMessage(messages.rangeWithPendingDeletes, {
@@ -304,8 +305,8 @@ export const ProductVariantsHeader = ({
                   : variantsRangeLabel}
               </Text>
             )}
-            {variantsPageInfo && (
-              <Box display="flex" gap={2}>
+            {canPaginate && variantsPageInfo && (
+              <Box display="flex" gap={2} data-test-id="variants-pagination">
                 <Button
                   variant="secondary"
                   disabled={!variantsPageInfo.hasPreviousPage}

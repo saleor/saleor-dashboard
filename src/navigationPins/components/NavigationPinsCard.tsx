@@ -1,6 +1,7 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
+import { Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -35,21 +36,21 @@ export const NavigationPinsCard = () => {
   };
 
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>{intl.formatMessage(messages.userPinsTitle)}</DashboardCard.Title>
-        <DashboardCard.Subtitle>
+    <DetailSettingsCard
+      data-test-id="navigation-pins"
+      title={intl.formatMessage(messages.userPinsTitle)}
+      intro={
+        <Text size={3} color="default2">
           {intl.formatMessage(messages.userPinsDescription)}
-        </DashboardCard.Subtitle>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        <NavigationPinList
-          pins={userPins}
-          emptyMessage={intl.formatMessage(messages.userPinsEmpty)}
-          disabled={submitting}
-          onRemove={handleRemove}
-        />
-      </DashboardCard.Content>
-    </DashboardCard>
+        </Text>
+      }
+    >
+      <NavigationPinList
+        pins={userPins}
+        emptyMessage={intl.formatMessage(messages.userPinsEmpty)}
+        disabled={submitting}
+        onRemove={handleRemove}
+      />
+    </DetailSettingsCard>
   );
 };

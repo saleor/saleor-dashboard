@@ -1,5 +1,6 @@
 import { AttributeCreateFormContent } from "@dashboard/attributes/components/AttributeCreateFormContent/AttributeCreateFormContent";
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import { AttributeValueDeleteDialog } from "@dashboard/attributes/components/AttributeValueDeleteDialog";
 import { useAttributeCreateValues } from "@dashboard/attributes/hooks/useAttributeCreateValues/useAttributeCreateValues";
 import { getAttributePageInitialForm } from "@dashboard/attributes/utils/attributePageForm";
 import {
@@ -7,6 +8,7 @@ import {
   type AttributeValueEditDialogFormData,
 } from "@dashboard/attributes/utils/data";
 import BackButton from "@dashboard/components/BackButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
@@ -23,8 +25,10 @@ import {
 } from "@dashboard/graphql";
 import { type CommonSearchOpts } from "@dashboard/hooks/makeTopLevelSearch/types";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { type ChangeEvent, type SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { buttonMessages } from "@dashboard/intl";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -69,7 +73,9 @@ export const CreateAttributeDialog = ({
   );
   const {
     deleteValueById,
+    deleteValuesByIds,
     handleValueCreate,
+    handleValueCreateMany,
     handleValueReorder,
     pageInfo,
     pageValues,
@@ -81,6 +87,8 @@ export const CreateAttributeDialog = ({
     valueErrors,
     values,
   } = useAttributeCreateValues();
+  const valueListActions = useBulkActions();
+  const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
   const productRefSearch = useProductTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
   const pageRefSearch = usePageTypeSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
@@ -88,7 +96,9 @@ export const CreateAttributeDialog = ({
     setStep(1);
     resetValues();
     setSubmitErrors([]);
-  }, [resetValues]);
+    valueListActions.reset();
+    setBulkDeleteOpen(false);
+  }, [resetValues, valueListActions.reset]);
 
   useModalDialogOpen(open, {
     onClose: resetDialog,
@@ -120,7 +130,7 @@ export const CreateAttributeDialog = ({
           __typename: "File" as const,
         }
       : null,
-    id: valueIndex.toString(),
+    id: (pageInfo.startCursor + valueIndex).toString(),
     reference: null,
     slug: slugify(value.name).toLowerCase(),
     sortOrder: valueIndex,
@@ -143,132 +153,166 @@ export const CreateAttributeDialog = ({
   const isProductTypeAttribute = attributeType === AttributeTypeEnum.PRODUCT_TYPE;
 
   return (
-    <DashboardModal onChange={onClose} open={open}>
-      {open ? (
-        <Form initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
-          {({ change, clearErrors, data, errors, set, setError, submit, triggerChange }) => {
-            const activeRefSearch =
-              data.entityType === AttributeEntityTypeEnum.PAGE ? pageRefSearch : productRefSearch;
-            const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
-              activeRefSearch.result.data?.search,
-            );
-            const fetchMoreReferenceTypes = getSearchFetchMoreProps(
-              activeRefSearch.result as CommonSearchOpts,
-              activeRefSearch.loadMore,
-            );
-            const referenceTypeOptions = (referenceTypes ?? []).map(type => ({
-              label: type.name,
-              value: type.id,
-            }));
-            const handleEntityTypeChange = (event: ChangeEvent) => {
-              if (event.target?.name === "entityType") {
-                set({ referenceTypes: [] });
-                triggerChange();
-              }
+    <>
+      <DashboardModal
+        onChange={nextOpen => {
+          if (!nextOpen) {
+            onClose();
+          }
+        }}
+        open={open}
+      >
+        {open ? (
+          <Form initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
+            {({ change, clearErrors, data, errors, set, setError, submit, triggerChange }) => {
+              const activeRefSearch =
+                data.entityType === AttributeEntityTypeEnum.PAGE ? pageRefSearch : productRefSearch;
+              const referenceTypes = mapEdgesToItems<{ id: string; name: string }>(
+                activeRefSearch.result.data?.search,
+              );
+              const fetchMoreReferenceTypes = getSearchFetchMoreProps(
+                activeRefSearch.result as CommonSearchOpts,
+                activeRefSearch.loadMore,
+              );
+              const referenceTypeOptions = (referenceTypes ?? []).map(type => ({
+                label: type.name,
+                value: type.id,
+              }));
+              const handleEntityTypeChange = (event: ChangeEvent) => {
+                if (event.target?.name === "entityType") {
+                  set({ referenceTypes: [] });
+                  triggerChange();
+                }
 
-              change(event);
-            };
-            const canProceedToStepTwo = data.name.trim().length > 0;
-            const requiresValues = ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType);
-            // Reference types are optional in the API — omitting them allows all items of the entity type.
-            const canSubmit = !requiresValues || values.length > 0;
-            const handleBack = () => {
-              if (step === 2) {
-                setStep(1);
-              } else {
-                onClose();
-              }
-            };
+                change(event);
+              };
+              const canProceedToStepTwo = data.name.trim().length > 0;
+              const requiresValues = ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType);
+              // Reference types are optional in the API — omitting them allows all items of the entity type.
+              const canSubmit = !requiresValues || values.length > 0;
+              const handleBack = () => {
+                if (step === 2) {
+                  setStep(1);
+                } else {
+                  onClose();
+                }
+              };
 
-            return (
-              <>
-                <DashboardModal.Content size="sm" data-test-id="create-attribute-dialog">
-                  <DashboardModal.ContextHeader
-                    contextLabel={contextBadgeLabel}
-                    description={
-                      <FormattedMessage
-                        {...(step === 1
-                          ? isProductTypeAttribute
-                            ? messages.introHintProduct
-                            : messages.introHint
-                          : isProductTypeAttribute
-                            ? messages.stepTwoIntroProduct
-                            : messages.stepTwoIntro)}
-                      />
-                    }
-                    steps={{
-                      current: step,
-                      items: [
-                        { label: <FormattedMessage {...messages.stepGeneral} /> },
-                        { label: <FormattedMessage {...messages.stepAttributeValues} /> },
-                      ],
-                    }}
-                  >
-                    <FormattedMessage {...messages.title} />
-                  </DashboardModal.ContextHeader>
+              return (
+                <>
+                  <DashboardModal.Content size="sm" data-test-id="create-attribute-dialog">
+                    <DashboardModal.ContextHeader
+                      contextLabel={contextBadgeLabel}
+                      description={
+                        <FormattedMessage
+                          {...(step === 1
+                            ? isProductTypeAttribute
+                              ? messages.introHintProduct
+                              : messages.introHint
+                            : isProductTypeAttribute
+                              ? messages.stepTwoIntroProduct
+                              : messages.stepTwoIntro)}
+                        />
+                      }
+                      steps={{
+                        current: step,
+                        items: [
+                          { label: <FormattedMessage {...messages.stepGeneral} /> },
+                          { label: <FormattedMessage {...messages.stepAttributeValues} /> },
+                        ],
+                      }}
+                    >
+                      <FormattedMessage {...messages.title} />
+                    </DashboardModal.ContextHeader>
 
-                  <DashboardModal.Body>
-                    <DashboardModal.Inset>
-                      <AttributeCreateFormContent
-                        apiErrors={displayedErrors}
-                        change={change}
-                        clearErrors={clearErrors}
-                        data={data}
-                        disabled={disabled}
-                        errors={errors}
-                        inputType={data.inputType}
-                        fetchMoreReferenceTypes={fetchMoreReferenceTypes}
-                        fetchReferenceTypes={activeRefSearch.search}
-                        referenceTypeOptions={referenceTypeOptions}
-                        referenceTypesLoading={Boolean(fetchMoreReferenceTypes?.loading)}
-                        onEntityTypeChange={handleEntityTypeChange}
-                        onInlineValueAdd={handleValueCreate}
-                        onNextPage={loadNextPage}
-                        onPreviousPage={loadPreviousPage}
-                        onUpdateListSettings={updateListSettings}
-                        onValueDelete={deleteValueById}
-                        onValueReorder={handleValueReorder}
-                        pageInfo={pageInfo}
-                        set={set}
-                        setError={setError}
-                        settings={settings}
-                        step={step}
-                        triggerChange={triggerChange}
-                        valueAddError={valueErrors[0] ?? null}
-                        values={valueEdges}
-                      />
-                    </DashboardModal.Inset>
-                  </DashboardModal.Body>
+                    <DashboardModal.Body>
+                      <DashboardModal.Inset>
+                        <AttributeCreateFormContent
+                          apiErrors={displayedErrors}
+                          change={change}
+                          clearErrors={clearErrors}
+                          data={data}
+                          disabled={disabled}
+                          errors={errors}
+                          inputType={data.inputType}
+                          fetchMoreReferenceTypes={fetchMoreReferenceTypes}
+                          fetchReferenceTypes={activeRefSearch.search}
+                          referenceTypeOptions={referenceTypeOptions}
+                          referenceTypesLoading={Boolean(fetchMoreReferenceTypes?.loading)}
+                          onEntityTypeChange={handleEntityTypeChange}
+                          onInlineValueAdd={handleValueCreate}
+                          onInlineValuesAdd={handleValueCreateMany}
+                          onNextPage={loadNextPage}
+                          onPreviousPage={loadPreviousPage}
+                          onUpdateListSettings={updateListSettings}
+                          onValueDelete={deleteValueById}
+                          onValueReorder={handleValueReorder}
+                          valueList={{
+                            isChecked: valueListActions.isSelected,
+                            selected: valueListActions.listElements.length,
+                            toggle: valueListActions.toggle,
+                            toggleAll: valueListActions.toggleAll,
+                            toolbar: (
+                              <BulkDeleteButton onClick={() => setBulkDeleteOpen(true)}>
+                                <FormattedMessage {...buttonMessages.delete} />
+                              </BulkDeleteButton>
+                            ),
+                          }}
+                          pageInfo={pageInfo}
+                          set={set}
+                          setError={setError}
+                          settings={settings}
+                          step={step}
+                          triggerChange={triggerChange}
+                          valueAddError={valueErrors[0] ?? null}
+                          values={valueEdges}
+                        />
+                      </DashboardModal.Inset>
+                    </DashboardModal.Body>
 
-                  <DashboardModal.Actions>
-                    <BackButton onClick={handleBack} />
-                    {step === 1 ? (
-                      <Button
-                        variant="primary"
-                        disabled={!canProceedToStepTwo || disabled}
-                        onClick={() => setStep(2)}
-                        data-test-id="create-attribute-next-button"
-                      >
-                        <FormattedMessage {...messages.nextButton} />
-                      </Button>
-                    ) : (
-                      <ConfirmButton
-                        transitionState={confirmButtonState}
-                        type="submit"
-                        disabled={!canSubmit || disabled}
-                        onClick={submit}
-                        data-test-id="create-and-assign-attribute-button"
-                      >
-                        <FormattedMessage {...messages.createAndAssignButton} />
-                      </ConfirmButton>
-                    )}
-                  </DashboardModal.Actions>
-                </DashboardModal.Content>
-              </>
-            );
-          }}
-        </Form>
-      ) : null}
-    </DashboardModal>
+                    <DashboardModal.Actions>
+                      <BackButton onClick={handleBack} />
+                      {step === 1 ? (
+                        <Button
+                          variant="primary"
+                          disabled={!canProceedToStepTwo || disabled}
+                          onClick={() => setStep(2)}
+                          data-test-id="create-attribute-next-button"
+                        >
+                          <FormattedMessage {...messages.nextButton} />
+                        </Button>
+                      ) : (
+                        <ConfirmButton
+                          transitionState={confirmButtonState}
+                          type="submit"
+                          disabled={!canSubmit || disabled}
+                          onClick={submit}
+                          data-test-id="create-and-assign-attribute-button"
+                        >
+                          <FormattedMessage {...messages.createAndAssignButton} />
+                        </ConfirmButton>
+                      )}
+                    </DashboardModal.Actions>
+                  </DashboardModal.Content>
+                </>
+              );
+            }}
+          </Form>
+        ) : null}
+      </DashboardModal>
+      <AttributeValueDeleteDialog
+        attributeName=""
+        open={bulkDeleteOpen}
+        name=""
+        quantity={valueListActions.listElements.length}
+        confirmButtonState="default"
+        onClose={() => setBulkDeleteOpen(false)}
+        onConfirm={() => {
+          deleteValuesByIds(valueListActions.listElements);
+          valueListActions.reset();
+          setBulkDeleteOpen(false);
+        }}
+      />
+    </>
   );
 };

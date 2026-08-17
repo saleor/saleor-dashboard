@@ -9,6 +9,7 @@ import {
   type SearchCategoriesWithTotalProductsQueryVariables,
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import { mapFilterSearchQuery } from "@dashboard/hooks/makeTopLevelSearch/mapFilterSearchQuery";
 
 export const searchCategories = gql`
   query SearchCategories($after: String, $first: Int!, $filter: CategoryFilterInput) {
@@ -48,18 +49,12 @@ export const useCategoryWithTotalProductsSearch = makeTopLevelSearch<
   SearchCategoriesWithTotalProductsQuery,
   SearchCategoriesWithTotalProductsQueryVariables
 >(SearchCategoriesWithTotalProductsDocument, {
-  mapSearchToVariables: (searchQuery, variables) => ({
-    ...variables,
-    filter: { ...variables.filter, search: searchQuery },
-  }),
+  mapSearchToVariables: mapFilterSearchQuery,
 });
 
 export default makeTopLevelSearch<SearchCategoriesQuery, SearchCategoriesQueryVariables>(
   SearchCategoriesDocument,
   {
-    mapSearchToVariables: (searchQuery, variables) => ({
-      ...variables,
-      filter: { ...variables.filter, search: searchQuery },
-    }),
+    mapSearchToVariables: mapFilterSearchQuery,
   },
 );

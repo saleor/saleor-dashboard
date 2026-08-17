@@ -32,7 +32,17 @@ export class InitialVouchersStateResponse implements InitialVouchersState {
       return [token.value] as string[];
     }
 
-    return (entry as ItemOption[]).filter(({ slug }) => slug && token.value.includes(slug));
+    return (entry as ItemOption[]).filter(({ slug }) => {
+      if (!slug) {
+        return false;
+      }
+
+      if (Array.isArray(token.value)) {
+        return token.value.includes(slug);
+      }
+
+      return slug === token.value;
+    });
   }
 
   private getEntryByName(name: string): ItemOption[] {

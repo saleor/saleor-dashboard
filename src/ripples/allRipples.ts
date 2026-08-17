@@ -3,12 +3,14 @@ import { rippleAttributeValuesSearch } from "@dashboard/attributes/ripples/attri
 import { rippleAttributeViewOverhaul } from "@dashboard/attributes/ripples/attributeViewOverhaul";
 import { rippleTypePageCreateAttribute } from "@dashboard/attributes/ripples/typePageCreateAttribute";
 import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
+import { channelCreateSetupFlow } from "@dashboard/channels/ripples/channelCreateSetupFlow";
 import { checkoutAutocompleteSettings } from "@dashboard/channels/ripples/checkoutAutocompleteSettings";
 import { rippleCloudEnvLink } from "@dashboard/components/Sidebar/ripples/cloudEnvLink";
 import { rippleCustomerOverview } from "@dashboard/customers/ripples/customerOverview";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { rippleAppProblems } from "@dashboard/extensions/ripples/appProblems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
+import { rippleSaleorPulse } from "@dashboard/home/ripples/saleorPulse";
 import { rippleGroupedModelTypeTabs } from "@dashboard/modeling/ripples/groupedModelTypeTabs";
 import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
@@ -85,9 +87,11 @@ export const allRipples: Ripple[] = [
 
   // Home
   rippleHomeWidgets,
+  rippleSaleorPulse,
 
   // Channels
   checkoutAutocompleteSettings,
+  channelCreateSetupFlow,
 
   // Shipping
   rippleShippingRateEditor,

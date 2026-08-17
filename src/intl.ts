@@ -502,6 +502,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Configuration",
     description: "configuration section name",
   },
+  notifications: {
+    id: "TiUzSu",
+    defaultMessage: "Notifications",
+    description: "notifications settings section name",
+  },
   customers: {
     id: "McN+wq",
     defaultMessage: "Customers",

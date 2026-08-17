@@ -3,11 +3,12 @@ import { Box, Button, Text, Tooltip, vars } from "@saleor/macaw-ui-next";
 import { InfoIcon, LinkIcon, MessageSquareIcon, Pencil } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date/DateTime";
+import { TimelineLink } from "./TimelineLink";
 import styles from "./TimelineNote.module.css";
 import { TimelineNoteEdit } from "./TimelineNoteEdit";
+import { TimelineStem } from "./TimelineStem";
 import { type Actor } from "./types";
 import { getActorDisplayName, getActorLink, safeStringify } from "./utils";
 
@@ -97,16 +98,7 @@ export const TimelineNote = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Vertical connecting line - hidden for last item in group */}
-      {!isLastInGroup && (
-        <Box
-          position="absolute"
-          __left="19px"
-          __top="32px"
-          __bottom="-20px"
-          __width="1px"
-          backgroundColor="default1Hovered"
-        />
-      )}
+      {!isLastInGroup ? <TimelineStem top="32px" bottom="-20px" /> : null}
 
       <Box display="flex" gap={2} marginBottom={5} width="100%">
         {/* Left icon column - comment bubble icon */}
@@ -153,16 +145,13 @@ export const TimelineNote = ({
           <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
               {actorLink ? (
-                <Link to={actorLink} style={{ textDecoration: "none" }}>
-                  <Text
-                    size={3}
-                    fontWeight="medium"
-                    color="default2"
-                    textDecoration={{ hover: "underline" }}
-                  >
-                    {actorDisplayName}
-                  </Text>
-                </Link>
+                <TimelineLink
+                  href={actorLink}
+                  entity={actor?.type === "app" ? "app" : "staff"}
+                  color="default2"
+                >
+                  {actorDisplayName}
+                </TimelineLink>
               ) : (
                 <Text size={3} fontWeight="medium" color="default2">
                   {actorDisplayName}
@@ -171,11 +160,15 @@ export const TimelineNote = ({
               <Text size={2} color="default2" whiteSpace="nowrap">
                 {relatedId ? (
                   <Box
-                    as="span"
+                    as="button"
+                    type="button"
                     display="inline-flex"
                     alignItems="center"
                     gap={1}
-                    cursor="pointer"
+                    padding={0}
+                    borderWidth={0}
+                    __backgroundColor="transparent"
+                    __cursor="pointer"
                     onClick={handleScrollToRelatedNote}
                   >
                     <FormattedMessage defaultMessage="edited" id="Zx1w1e" />

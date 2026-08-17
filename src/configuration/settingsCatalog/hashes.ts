@@ -20,16 +20,27 @@ export const settingsHashes = {
   refundsRefundReasons: "refund-reasons",
   refundsReturnReasons: "return-reasons",
 
+  // Gift cards
+  giftCardsExpiry: "expiry-date",
+
   // Store
   storeDetails: "store-details",
   storeCompany: "company-information",
   storeCustomerAccounts: "customer-accounts",
   storeEmailConfirmation: "email-confirmation",
   storePasswordLogin: "password-login",
+  storeApiAccess: "api-access",
+  storeStorefrontTraffic: "storefront-traffic",
   storeAdvanced: "advanced",
   storeWebhookEmission: "webhook-emission",
   storeStockAvailability: "stock-availability",
   storeAddressValidation: "address-validation",
+
+  // Notifications
+  notificationsStaff: "staff-emails",
+  notificationsCustomer: "customer-emails",
+  notificationsDelivery: "email-delivery",
+  notificationsMessages: "staff-messages",
 } as const;
 
 export type SettingsHash = (typeof settingsHashes)[keyof typeof settingsHashes];

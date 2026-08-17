@@ -45,6 +45,7 @@ interface PageListPageProps extends PageListProps, SortPage<PageListUrlSortField
   onPagesPublish: () => void;
   onPagesUnpublish: () => void;
   onPageCreate: () => void;
+  onCreateModelType: () => void;
   pageTypes: Array<{ id: string; name: string }> | undefined;
   selectedIds: string[];
   activePageTypeName: string | undefined;
@@ -61,6 +62,7 @@ const PageListPage = ({
   onPagesPublish,
   onPagesUnpublish,
   onPageCreate,
+  onCreateModelType,
   pageTypes,
   selectedIds,
   activePageTypeName,
@@ -82,6 +84,15 @@ const PageListPage = ({
     selectedPageIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(PAGE_OVERVIEW_CREATE);
+  const createModelTypeOption = {
+    label: intl.formatMessage({
+      id: "+qDoi0",
+      defaultMessage: "Create model type",
+      description: "button",
+    }),
+    testId: "create-page-type",
+    onSelect: onCreateModelType,
+  };
 
   const [organizationPinsOpen, setOrganizationPinsOpen] = useState(false);
   const canManageOrganizationPins = Boolean(
@@ -113,19 +124,14 @@ const PageListPage = ({
     <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.models)} withoutBorder>
         {topNavMenuItems.length > 0 && <TopNav.Menu items={topNavMenuItems} />}
-        {extensionCreateButtonItems.length > 0 ? (
-          <ButtonGroupWithDropdown
-            options={extensionCreateButtonItems}
-            onClick={onPageCreate}
-            data-test-id="create-page"
-          >
-            {createLabel}
-          </ButtonGroupWithDropdown>
-        ) : (
-          <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
-            {createLabel}
-          </Button>
-        )}
+        <ButtonGroupWithDropdown
+          pinnedOptions={[createModelTypeOption]}
+          options={extensionCreateButtonItems}
+          onClick={onPageCreate}
+          testId="create-page"
+        >
+          {createLabel}
+        </ButtonGroupWithDropdown>
       </TopNav>
       <Box display="flex" flexDirection="column" __minWidth={0} __minHeight={0}>
         <ModelTypeTabs

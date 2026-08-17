@@ -14,10 +14,13 @@ test("TC: SALEOR_1 Create basic product type #e2e #product-type", async ({ page 
   await productTypePage.gotoProductTypeListPage();
   await productTypePage.clickCreateProductTypeButton();
   await productTypePage.typeProductTypeName(productTypeName);
+  await productTypePage.clickSubmitButton();
+  await productTypePage.expectSuccessBanner();
+  await expect(productTypePage.page).toHaveURL(/\/product-types\/[^?]+/);
+  await expect(productTypePage.nameInput).toHaveValue(productTypeName);
   await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
-  await expect(productTypePage.nameInput).toHaveValue(productTypeName);
 });
 test("TC: SALEOR_2 Create gift card product type #e2e #product-type", async ({ page }) => {
   const productTypePage = new ProductTypePage(page);
@@ -25,8 +28,9 @@ test("TC: SALEOR_2 Create gift card product type #e2e #product-type", async ({ p
   await productTypePage.gotoAddProductTypePage();
   await productTypePage.typeProductTypeName(productTypeName);
   await productTypePage.selectGiftCardButton();
-  await productTypePage.clickSaveButton();
+  await productTypePage.clickSubmitButton();
   await productTypePage.expectSuccessBanner();
+  await expect(productTypePage.page).toHaveURL(/\/product-types\/[^?]+/);
   await expect(productTypePage.nameInput).toHaveValue(productTypeName);
 });
 test("TC: SALEOR_184 As a admin I can edit product type #e2e #product-type", async ({ page }) => {
@@ -38,7 +42,7 @@ test("TC: SALEOR_184 As a admin I can edit product type #e2e #product-type", asy
   await productTypePage.makeProductShippableWithWeight();
   await productTypePage.clickSaveButton();
   await productTypePage.expectSuccessBanner();
-  await expect(productTypePage.isShippingRequired).toBeChecked();
+  await expect(productTypePage.isShippingRequired).toHaveAttribute("aria-pressed", "true");
   await expect(productTypePage.shippingWeightInput).toHaveValue("10");
   await expect(productTypePage.nameInput).toHaveValue(updatedProductTypeName);
 });
@@ -49,7 +53,7 @@ test("TC: SALEOR_185 As a admin user I can delete product type with assigned pro
   const productTypeName = PRODUCT_TYPES.productTypeToBeRemoved.name;
 
   await productTypePage.gotoExistingProductTypePage(PRODUCT_TYPES.productTypeToBeRemoved.id);
-  await productTypePage.clickDeleteButton();
+  await productTypePage.clickDeleteProductType();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeletionCheckbox();
   await productTypePage.deleteProductTypeDialog.clickConfirmDeleteButton();
   await productTypePage.expectSuccessBanner();

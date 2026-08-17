@@ -18,10 +18,10 @@ export const Default: Story = {
   render: () => (
     <ResponsiveTable>
       <SortableTableBody onSortEnd={fn()}>
-        <SortableTableRow index={0}>
+        <SortableTableRow id="row-0" index={0}>
           <TableCell>Sortable row content</TableCell>
         </SortableTableRow>
-        <SortableTableRow index={1}>
+        <SortableTableRow id="row-1" index={1}>
           <TableCell>Second row</TableCell>
         </SortableTableRow>
       </SortableTableBody>
@@ -33,7 +33,7 @@ export const AsLink: Story = {
   render: () => (
     <ResponsiveTable>
       <SortableTableBody onSortEnd={fn()}>
-        <SortableTableRow index={0} href="/products/123/">
+        <SortableTableRow id="product-123" index={0} href="/products/123/">
           <TableCell>Sortable link row</TableCell>
         </SortableTableRow>
       </SortableTableBody>

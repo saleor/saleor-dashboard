@@ -1,0 +1,37 @@
+.table {
+  table-layout: fixed;
+}
+
+.headerRow {
+  background-color: var(--mu-colors-background-default2);
+  height: 40px;
+}
+
+.headerRow > td {
+  height: 40px;
+  max-height: 40px;
+  box-sizing: border-box;
+  padding: var(--mu-spacing-2) !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 1px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: var(--mu-colors-border-default1) !important;
+}
+
+.headerRow > td:first-child,
+.headerRow > td:nth-child(2) {
+  padding: 0 !important;
+}
+
+.headerRow > td:last-child {
+  padding: 0 var(--mu-spacing-2) 0 0 !important;
+}
+
+.headerRow + tr > td {
+  border-top-width: 0 !important;
+}
+
+/* Pagination (or the card edge) owns the separator — last row must not add a second line. */
+.table tr:last-child > td {
+  border-bottom-width: 0 !important;
+}

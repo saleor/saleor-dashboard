@@ -1,5 +1,9 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { TopNav } from "@dashboard/components/AppLayout";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout";
 import { DashboardCard } from "@dashboard/components/Card";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Link from "@dashboard/components/Link";
@@ -92,7 +96,12 @@ export const OrderManualTransactionRefundPage = ({
       transactions={transactions}
     >
       <DetailPageLayout gridTemplateColumns={1}>
-        <TopNav href={orderUrl(orderId)} title={<FormattedMessage {...messages.title} />} />
+        <TopNav
+          href={orderUrl(orderId)}
+          hrefIcon={<TopNavDestinationIcon.orders />}
+          hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
+          title={<FormattedMessage {...messages.title} />}
+        />
 
         <DetailPageLayout.Content>
           <DashboardCard>

@@ -1,4 +1,4 @@
-import { Text } from "@saleor/macaw-ui-next";
+import { SavebarCompositionHint } from "@dashboard/components/Savebar/SavebarCompositionHint";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -70,11 +70,5 @@ export const ProductSaveCompositionHint = ({
     );
   }
 
-  return (
-    <Text size={2} color="default2" data-test-id="product-save-composition">
-      {intl.formatMessage(messages.saveCompositionIncludes, {
-        segments: segments.join(", "),
-      })}
-    </Text>
-  );
+  return <SavebarCompositionHint segments={segments} data-test-id="product-save-composition" />;
 };

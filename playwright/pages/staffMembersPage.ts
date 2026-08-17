@@ -21,7 +21,9 @@ export class StaffMembersPage extends BasePage {
     readonly email = page.getByTestId("staffEmail"),
     readonly permissionsGroupSelectButton = page.getByTestId("permission-groups"),
     readonly permissionGroupOptions = page.getByTestId("select-option"),
-    readonly isActiveCheckbox = page.getByTestId("is-active-checkbox").locator("input"),
+    readonly staffStatusButton = page.getByTestId("staff-status-button"),
+    readonly staffMemberStatus = page.getByTestId("staff-member-status"),
+    readonly dialogSubmitButton = page.getByTestId("submit"),
     readonly selectedPermissions = page.locator("[data-test-id*='selected-option']"),
   ) {
     super(page);
@@ -34,8 +36,12 @@ export class StaffMembersPage extends BasePage {
     await this.page.goto(URL_LIST.staffMembers + id);
   }
 
-  async clickIsActiveCheckbox() {
-    await this.isActiveCheckbox.click();
+  async clickStaffStatusButton() {
+    await this.staffStatusButton.click();
+  }
+
+  async confirmStaffStatusDialog() {
+    await this.dialogSubmitButton.click();
   }
 
   async clickPermissionsGroupSelectButton() {

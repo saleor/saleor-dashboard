@@ -13,6 +13,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   type PostalCodeRuleInclusionTypeEnum,
   type ProductWhereInput,
+  type SearchProductsQueryVariables,
   ShippingMethodTypeEnum,
   type ShippingMethodTypeFragment,
   type ShippingMethodWithPostalCodesFragment,
@@ -90,19 +91,21 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
   const channelsData = data?.shippingZone?.channels;
   const zoneName = data?.shippingZone?.name;
   const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
+  const [productSearchVariables, setProductSearchVariables] =
+    useState<SearchProductsQueryVariables>(DEFAULT_INITIAL_SEARCH_DATA);
   const { loadMore, result: productsSearchOpts } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
+    variables: productSearchVariables,
   });
   const handleProductFilterChange = useCallback(
     (filterVariables: ProductWhereInput, channel: string | undefined, query: string) => {
-      void productsSearchOpts.refetch({
+      setProductSearchVariables({
         ...DEFAULT_INITIAL_SEARCH_DATA,
         where: filterVariables,
         channel,
         query,
       });
     },
-    [productsSearchOpts.refetch],
+    [],
   );
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingRateUrlDialog,
@@ -507,6 +510,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         }
         openChannelsModal={handleChannelsModalOpen}
         focusChannelId={focusChannelId}
+        onFocusChannelComplete={clearFocusChannelFromUrl}
         onChannelsChange={setCurrentChannels}
         onProductUnassign={handleProductUnassign}
         onProductAssign={() => openModal("assign-product")}

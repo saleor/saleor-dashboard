@@ -15,6 +15,8 @@ export const createChannelsWithPreorderInfo = (
     ? product.channelListings.map(listing => ({
         ...listing.channel,
         currency: listing.channel.currencyCode,
+        isActive: listing.channel.isActive ?? true,
+        isPublished: listing.isPublished,
         price: "",
       }))
     : [];

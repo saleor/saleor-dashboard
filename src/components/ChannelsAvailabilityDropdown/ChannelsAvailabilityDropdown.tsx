@@ -20,7 +20,7 @@ export const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityD
   const dropdownColor = useMemo(() => getDropdownColor(channels), [channels]);
 
   if (!channels?.length) {
-    return <Pill label={intl.formatMessage(messages.noChannels)} color="error" />;
+    return <Pill label={intl.formatMessage(messages.noChannels)} color="warning" />;
   }
 
   return (

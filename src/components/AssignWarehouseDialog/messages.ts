@@ -27,4 +27,10 @@ export const messages = defineMessages({
     id: "2gsiR1",
     defaultMessage: "No warehouses found",
   },
+  allLoadedWarehousesFilteredOut: {
+    id: "MQc8k3",
+    defaultMessage:
+      "Every warehouse loaded so far is already added. Search by name, or keep loading the list.",
+    description: "assign warehouse picker, client-side filter emptied the loaded pages",
+  },
 });

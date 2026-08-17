@@ -7,7 +7,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type PageTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
-import { PageTypeListUrlSortField, pageTypeUrl } from "@dashboard/modelTypes/urls";
+import { PageTypeListUrlSortField, pageTypePath } from "@dashboard/modelTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -96,7 +96,7 @@ const PageTypeList = (props: PageTypeListProps) => {
                 href={
                   pageType
                     ? {
-                        pathname: pageTypeUrl(pageType.id),
+                        pathname: pageTypePath(encodeURIComponent(pageType.id)),
                         state: getPrevLocationState(location),
                       }
                     : undefined

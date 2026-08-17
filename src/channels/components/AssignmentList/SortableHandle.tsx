@@ -1,34 +1,16 @@
-import { DragIcon, makeStyles } from "@saleor/macaw-ui";
+import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
 import clsx from "clsx";
+// Legacy shared with AssignmentList — migrate together to @dnd-kit.
+// eslint-disable-next-line no-restricted-imports
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
-
-const useStyles = makeStyles(
-  {
-    drag: {
-      cursor: "grab",
-    },
-  },
-  { name: "SortableHandle" },
-);
 
 interface SortableHandleProps {
   className?: string;
 }
 
 /** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
-const SortableHandle = SortableHandleHoc((props: SortableHandleProps) => {
-  const { className, ...restProps } = props;
-  const classes = useStyles(props);
-
-  return (
-    <DragIcon
-      className={clsx(classes.drag, className)}
-      tabIndex={0}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-      {...restProps}
-    />
-  );
-});
+const SortableHandle = SortableHandleHoc(({ className }: SortableHandleProps) => (
+  <DragHandle className={clsx(className)} tabIndex={0} />
+));
 
 export default SortableHandle;

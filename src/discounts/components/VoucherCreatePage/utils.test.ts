@@ -2,10 +2,8 @@ import {
   generateDraftVoucherCode,
   generateMultipleVoucherCodes,
   getAssignedVariantIdsFromForm,
-  getFilteredProductVariants,
   mapLocalVariantsToSavedVariants,
 } from "@dashboard/discounts/components/VoucherCreatePage/utils";
-import { type SearchProductsOpts } from "@dashboard/discounts/types";
 import { v4 as uuidv4 } from "uuid";
 
 import { type FormData } from "./types";
@@ -170,127 +168,30 @@ describe("mapLocalVariantsToSavedVariants", () => {
   });
 });
 
-describe("getFilteredProductVariants", () => {
-  it("should return empty array when no products available", () => {
-    // Arrange
-    const data = {
-      variants: [],
-    } as unknown as FormData;
-
-    const searchOpts = {
-      data: {
-        search: {
-          edges: [],
-        },
-      },
-    } as unknown as SearchProductsOpts;
-
-    // Act
-    const result = getFilteredProductVariants(data, searchOpts);
-
-    // Assert
-    expect(result).toEqual([]);
-  });
-
-  it("should keep excluded variants visible for AssignVariant selectedIds", () => {
+describe("getAssignedVariantIdsFromForm", () => {
+  it("should return assigned variant ids from form state", () => {
     // Arrange
     const data = {
       variants: [{ id: "variant-1" }, { id: "variant-3" }],
     } as FormData;
 
-    const searchOpts = {
-      data: {
-        search: {
-          edges: [
-            {
-              node: {
-                id: "prod-1",
-                productVariants: {
-                  edges: [
-                    { node: { id: "variant-1" } },
-                    { node: { id: "variant-2" } },
-                    { node: { id: "variant-3" } },
-                  ],
-                },
-              },
-            },
-          ],
-        },
-      },
-    } as SearchProductsOpts;
-
     // Act
-    const result = getFilteredProductVariants(data, searchOpts);
+    const result = getAssignedVariantIdsFromForm(data);
 
     // Assert
-    expect(result).toHaveLength(1);
-    expect(result![0].productVariants!.edges).toHaveLength(3);
-    expect(getAssignedVariantIdsFromForm(data)).toEqual(["variant-1", "variant-3"]);
+    expect(result).toEqual(["variant-1", "variant-3"]);
   });
 
-  it("should handle null variants in products", () => {
+  it("should return an empty list when no variants are assigned", () => {
     // Arrange
     const data = {
-      variants: [{ id: "variant-1" }],
-    } as FormData;
-
-    const searchOpts = {
-      data: {
-        search: {
-          edges: [
-            {
-              node: {
-                id: "prod-1",
-                productVariants: null,
-              },
-            },
-          ],
-        },
-      },
-    } as SearchProductsOpts;
+      variants: [],
+    } as unknown as FormData;
 
     // Act
-    const result = getFilteredProductVariants(data, searchOpts);
+    const result = getAssignedVariantIdsFromForm(data);
 
     // Assert
-    expect(result).toHaveLength(1);
-    expect(result![0].productVariants).toBeNull();
-  });
-
-  it("should maintain product structure without stripping assigned variants", () => {
-    // Arrange
-    const data = {
-      variants: [{ id: "variant-1" }],
-    } as FormData;
-
-    const searchOpts = {
-      data: {
-        search: {
-          edges: [
-            {
-              node: {
-                id: "prod-1",
-                name: "Test Product",
-                productVariants: {
-                  edges: [{ node: { id: "variant-1" } }, { node: { id: "variant-2" } }],
-                },
-              },
-            },
-          ],
-        },
-      },
-    } as SearchProductsOpts;
-
-    // Act
-    const result = getFilteredProductVariants(data, searchOpts);
-
-    // Assert
-    expect(result![0]).toMatchObject({
-      id: "prod-1",
-      name: "Test Product",
-      productVariants: {
-        edges: [{ node: { id: "variant-1" } }, { node: { id: "variant-2" } }],
-      },
-    });
+    expect(result).toEqual([]);
   });
 });

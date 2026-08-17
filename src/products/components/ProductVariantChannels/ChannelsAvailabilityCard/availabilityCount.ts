@@ -10,7 +10,7 @@ import { type FormsetData } from "@dashboard/hooks/useFormset";
 
 /**
  * Counts channel listings for a variant. The result is fed into the
- * "Listed in N of M channels" subtitle on `VariantDetailsChannelsAvailabilityCard`.
+ * "Listed on N of M channels" subtitle on the variant pricing card.
  *
  * Despite the legacy "Availability" naming, this does NOT measure customer-facing
  * availability:

@@ -4,7 +4,12 @@ import { useConditionalFilterContext } from "@dashboard/components/ConditionalFi
 import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
-import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@dashboard/graphql";
+import {
+  type CollectionErrorFragment,
+  useCollectionBulkDeleteMutation,
+  useCollectionListQuery,
+  useCreateCollectionMutation,
+} from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -15,12 +20,13 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { maybe } from "@dashboard/misc";
+import { getMutationErrors, maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
@@ -28,10 +34,13 @@ import { useIntl } from "react-intl";
 
 import { CollectionBulkDeleteDialog } from "../../components/CollectionBulkDeleteDialog/CollectionBulkDeleteDialog";
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
+import { CreateCollectionDialog } from "../../components/CreateCollectionDialog/CreateCollectionDialog";
+import { messages as createCollectionMessages } from "../../components/CreateCollectionDialog/messages";
 import {
   collectionListUrl,
   type CollectionListUrlDialog,
   type CollectionListUrlQueryParams,
+  collectionUrl,
 } from "../../urls";
 import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
@@ -134,6 +143,20 @@ const CollectionList = ({ params }: CollectionListProps) => {
     CollectionListUrlDialog,
     CollectionListUrlQueryParams
   >(navigate, collectionListUrl, params);
+  const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
+    onCompleted: data => {
+      if ((data.collectionCreate?.errors.length ?? 0) > 0) {
+        return;
+      }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(createCollectionMessages.created),
+      });
+      closeModal();
+      navigate(collectionUrl(data.collectionCreate?.collection?.id ?? ""));
+    },
+  });
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.collections.pageInfo),
     paginationState,
@@ -203,6 +226,29 @@ const CollectionList = ({ params }: CollectionListProps) => {
             ids: selectedRowIds,
           })
         }
+        onCreateCollection={() => openModal("create")}
+      />
+      <CreateCollectionDialog
+        open={params.action === "create"}
+        onClose={closeModal}
+        confirmButtonState={createCollectionOpts.status}
+        disabled={createCollectionOpts.loading}
+        errors={createCollectionOpts.data?.collectionCreate?.errors ?? []}
+        onSubmit={async ({ name, description }) => {
+          const result = await createCollection({
+            variables: {
+              input: {
+                name,
+                ...(description
+                  ? { description: getParsedDataForJsonStringField(description) }
+                  : {}),
+              },
+            },
+          });
+          const errors = getMutationErrors(result);
+
+          return Array.isArray(errors) ? (errors as CollectionErrorFragment[]) : [];
+        }}
       />
       <CollectionBulkDeleteDialog
         confirmButtonState={collectionBulkDeleteOpts.status}

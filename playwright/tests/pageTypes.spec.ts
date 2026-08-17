@@ -17,13 +17,9 @@ const createPageType = async (
   await pageTypePage.gotoPageTypeListPage();
   await pageTypePage.clickCreatePageTypeButton();
   await pageTypePage.typePageTypeName(name);
-  const createPageTypeUrl = page.url();
-
-  await Promise.all([
-    page.waitForURL(url => url.toString() !== createPageTypeUrl),
-    pageTypePage.clickSaveButton(),
-  ]);
+  await pageTypePage.clickSubmitButton();
   await pageTypePage.expectSuccessBanner();
+  await expect(page).toHaveURL(/\/model-types\/[^?]+/);
   await expect(pageTypePage.nameInput).toHaveValue(name);
 
   const pageTypeId = new URL(page.url()).pathname.split("/").filter(Boolean).at(-1);

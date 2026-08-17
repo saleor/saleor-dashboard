@@ -1,0 +1,8 @@
+.grid {
+  display: grid;
+  /* Shrink below 600px when the column is narrow — avoids clipping action icons. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 600px), 1fr));
+  gap: var(--mu-spacing-6);
+  min-width: 0;
+  width: 100%;
+}

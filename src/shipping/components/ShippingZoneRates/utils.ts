@@ -1,4 +1,5 @@
 import { type ShippingZoneDetailsFragment } from "@dashboard/graphql";
+import { isMissingPriceValue } from "@dashboard/products/utils/validation";
 
 export const CHANNEL_SEARCH_THRESHOLD = 8;
 
@@ -18,8 +19,21 @@ export const getChannelListing = (
 ): ShippingRateChannelListing | undefined =>
   rate.channelListings?.find(listing => listing.channel.id === channelId);
 
-export const getConfiguredChannelCount = (rate: ShippingRate, zoneChannels: ZoneChannel[]) =>
-  zoneChannels.filter(channel => getChannelListing(rate, channel.id)).length;
+export const hasChannelPrice = (rate: ShippingRate, channelId: string): boolean => {
+  const price = getChannelListing(rate, channelId)?.price?.amount;
+
+  return price != null && !isMissingPriceValue(price);
+};
+
+/** Zone channels that already have a listing on this shipping method. */
+export const getAssignedZoneChannels = (
+  rate: ShippingRate,
+  zoneChannels: ZoneChannel[],
+): ZoneChannel[] => zoneChannels.filter(channel => !!getChannelListing(rate, channel.id));
+
+/** Among the given channels, how many have a price on this rate. */
+export const getPricedChannelCount = (rate: ShippingRate, channels: ZoneChannel[]): number =>
+  channels.filter(channel => hasChannelPrice(rate, channel.id)).length;
 
 export interface PriceSpan {
   currency: string;
@@ -30,7 +44,10 @@ export interface PriceSpan {
 export const getPriceSpan = (rate: ShippingRate, zoneChannels: ZoneChannel[]): PriceSpan | null => {
   const prices = zoneChannels
     .map(channel => getChannelListing(rate, channel.id)?.price)
-    .filter(price => price != null);
+    .filter(
+      (price): price is NonNullable<typeof price> =>
+        price != null && !isMissingPriceValue(price.amount),
+    );
 
   if (prices.length === 0) {
     return null;
@@ -51,7 +68,7 @@ export const getPriceSpan = (rate: ShippingRate, zoneChannels: ZoneChannel[]): P
   };
 };
 
-export const filterZoneChannels = (zoneChannels: ZoneChannel[], query: string) => {
+export const filterZoneChannels = (zoneChannels: ZoneChannel[], query: string): ZoneChannel[] => {
   const normalizedQuery = query.trim().toLowerCase();
 
   if (!normalizedQuery) {

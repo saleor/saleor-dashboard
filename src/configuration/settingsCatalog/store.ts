@@ -71,6 +71,21 @@ const keywords = defineMessages({
     defaultMessage: "address validation",
     description: "settings search alias",
   },
+  storefrontTraffic: {
+    id: "FXSauI",
+    defaultMessage: "storefront traffic",
+    description: "settings search alias",
+  },
+  blockCustomerTraffic: {
+    id: "WAcPLa",
+    defaultMessage: "block anonymous and customer API access",
+    description: "settings search alias",
+  },
+  apiAccess: {
+    id: "pGCyyB",
+    defaultMessage: "api access",
+    description: "settings search alias",
+  },
 });
 
 const hubBreadcrumb = [sectionNames.siteSettings];
@@ -141,6 +156,29 @@ export const storeCatalogEntries: SettingsCatalogEntry[] = [
     breadcrumbs: [...hubBreadcrumb, storeMessages.sectionCustomerAccountsTitle],
     href: settingsHref(siteSettingsPath, settingsHashes.storePasswordLogin),
     hash: settingsHashes.storePasswordLogin,
+    permissions: [PermissionEnum.MANAGE_SETTINGS],
+    ownership: "shop",
+  },
+  {
+    id: "store.api-access",
+    kind: "section",
+    title: storeMessages.sectionApiAccessTitle,
+    description: storeMessages.sectionApiAccessDescription,
+    keywords: [keywords.apiAccess],
+    breadcrumbs: hubBreadcrumb,
+    href: settingsHref(siteSettingsPath, settingsHashes.storeApiAccess),
+    hash: settingsHashes.storeApiAccess,
+    permissions: [PermissionEnum.MANAGE_SETTINGS],
+    ownership: "shop",
+  },
+  {
+    id: "store.storefront-traffic",
+    kind: "setting",
+    title: storeMessages.sectionStorefrontTrafficTitle,
+    keywords: [keywords.storefrontTraffic, keywords.blockCustomerTraffic],
+    breadcrumbs: [...hubBreadcrumb, storeMessages.sectionApiAccessTitle],
+    href: settingsHref(siteSettingsPath, settingsHashes.storeStorefrontTraffic),
+    hash: settingsHashes.storeStorefrontTraffic,
     permissions: [PermissionEnum.MANAGE_SETTINGS],
     ownership: "shop",
   },

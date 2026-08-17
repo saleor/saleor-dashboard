@@ -3,9 +3,10 @@ import {
   type ExtendedGiftCard,
   type GiftCardBase,
 } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";
+import { getGiftCardStatusPresentation } from "./getGiftCardStatusPresentation";
 
 interface GiftCardStatusChipProps<
   T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>,
@@ -13,31 +14,11 @@ interface GiftCardStatusChipProps<
   giftCard: T;
 }
 
-function GiftCardStatusChip<T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>>({
-  giftCard,
-}: GiftCardStatusChipProps<T>) {
-  const { isExpired, isActive } = giftCard;
+export function GiftCardStatusChip<
+  T extends ExtendedGiftCard<GiftCardBase & { isActive: boolean }>,
+>({ giftCard }: GiftCardStatusChipProps<T>): ReactNode {
   const intl = useIntl();
+  const status = getGiftCardStatusPresentation(giftCard);
 
-  if (isExpired) {
-    return (
-      <Pill
-        color="info"
-        label={intl.formatMessage(giftCardStatusChipMessages.expiredStatusLabel)}
-      />
-    );
-  }
-
-  if (!isActive) {
-    return (
-      <Pill
-        color="error"
-        label={intl.formatMessage(giftCardStatusChipMessages.disabledStatusLabel)}
-      />
-    );
-  }
-
-  return null;
+  return <Pill color={status.color} label={intl.formatMessage(status.label)} />;
 }
-
-export default GiftCardStatusChip;

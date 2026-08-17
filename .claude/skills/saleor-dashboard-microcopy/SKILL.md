@@ -3,8 +3,10 @@ name: saleor-dashboard-microcopy
 description: >
   Patterns for helper text, card subheaders, and inline links in Saleor Dashboard.
   Use when adding or styling hints below section titles, explanatory copy above form
-  fields, microcopy with navigation links, or replacing buttons with guidance text.
-  Covers DashboardCard.Subtitle and MicrocopyLink — not accent Link or body paragraphs.
+  fields, microcopy with navigation links, replacing buttons with guidance text,
+  or “Fixed at creation” helpers under locked identity fields.
+  Covers DashboardCard.Subtitle, MicrocopyLink, and FixedAtCreationField copy —
+  not accent Link or body paragraphs.
 ---
 
 # Saleor Dashboard Microcopy
@@ -35,6 +37,8 @@ import { FormattedMessage } from "react-intl";
 - **Under `DashboardCard.Title`** (in `DashboardCard.Header`): subtitle directly below title in a column `Box` — see `OrderValue`, `OrderWeight`.
 - **Above a field inside `DashboardCard.Content`**: subtitle before `Multiselect` / inputs — see `ChannelsSection`, `WarehousesSection`.
 - **Below a field**: subtitle after the control — see `ShippingMethodTaxes` tax-class hint.
+- **Fixed at creation**: helper under a locked `FixedAtCreationField` — `Fixed at creation. To {goal}, {alternative}.` See [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) (channel currency, attribute type). Not a disabled Combobox.
+- **Entity detail `DetailSettingsCard`**: long leading copy in the card’s **`intro` row** (bordered band below header), not in the tinted title band — see Payment gateways, collection SEO. Short Complete/Incomplete status can live in `intro` too.
 
 ### Reference files
 
@@ -43,6 +47,28 @@ import { FormattedMessage } from "react-intl";
 - `src/shipping/components/ShippingZoneSettingsCard/ChannelsSection.tsx`
 - `src/shipping/components/ShippingZoneSettingsCard/WarehousesSection.tsx`
 - `src/shipping/components/ShippingMethodTaxes/ShippingMethodTaxes.tsx`
+
+- `src/shipping/components/ShippingMethodTaxes/ShippingMethodTaxes.tsx`
+- `src/channels/components/ChannelPaymentGatewaysSection/ChannelPaymentGatewaysSection.tsx`
+- `src/collections/components/CollectionDetailsPage/CollectionDetailsPage.tsx` (SEO `intro`)
+
+## Optional labels
+
+Mark optional sections/fields without brackets or title-case noise.
+
+| Do                                                                           | Don't                                               |
+| ---------------------------------------------------------------------------- | --------------------------------------------------- |
+| `DetailSettingsCardTitle` + `optional` prop → `DetailSettingsOptionalLabel`  | `"Background Image (optional)"` in the title string |
+| `commonMessages.optionalField` for field helper text (`Optional`, no parens) | `"(Optional)"` in helper text                       |
+| `Text size={2} color="default2"` beside the title (baseline-aligned)         | Same size/weight as the section title               |
+
+```tsx
+import { DetailSettingsCardTitle } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+
+<DetailSettingsCardTitle optional>
+  <FormattedMessage defaultMessage="Background image" />
+</DetailSettingsCardTitle>;
+```
 
 ## Inline links inside hints
 
@@ -78,11 +104,15 @@ import { warehouseListUrl } from "@dashboard/warehouses/urls";
 
 ### When to use which link
 
-| Component                                      | Use for                                                                  |
-| ---------------------------------------------- | ------------------------------------------------------------------------ |
-| `MicrocopyLink`                                | Links embedded in hint/subtitle sentences                                |
-| `@dashboard/components/Link`                   | Standalone navigation, tables, actions (accent color OK)                 |
-| `InternalLink` / `RouterLink` in custom `Text` | Avoid — duplicate styling; extend `MicrocopyLink` if a variant is needed |
+| Component                                      | Use for                                                                                                      |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `MicrocopyLink`                                | Links embedded in hint/subtitle sentences (inherit color; underline on hover)                                |
+| `Link color="secondary"`                       | In-component / card / sidebar navigation — **prefer this** (`default1`, underline on hover; not accent blue) |
+| `Link` (default `primary`)                     | Rare emphasis where accent blue is intentional (legacy tables/actions)                                       |
+| `ChannelDisplay` / `ChannelDetailsLink`        | Channel name + globe icon (read-only or link to channel details) — see styles skill                          |
+| `InternalLink` / `RouterLink` in custom `Text` | Avoid — duplicate styling; extend `MicrocopyLink` or use `Link color="secondary"`                            |
+
+**Hover is required** for every interactive link: underline and/or color change. See [`saleor-dashboard-styles`](./saleor-dashboard-styles/SKILL.md) → Interactive affordances.
 
 ## i18n
 
@@ -101,9 +131,12 @@ When backend rules make in-context creation fragile (e.g. warehouse must share a
 - [ ] Inline links use `MicrocopyLink` with inherit color/size
 - [ ] No accent-colored links inside gray hint text
 - [ ] `CardSpacer` between hint blocks and form controls
+- [ ] Optional sections use `DetailSettingsCardTitle optional`, not “(optional)” in the title
+- [ ] Create-time identity uses `FixedAtCreationField` + “Fixed at creation. …” helper — not a disabled Combobox
 - [ ] Messages extracted with `defineMessages` + `FormattedMessage`
 
 ## Related skills
 
+- [`saleor-dashboard-entity-detail`](./saleor-dashboard-entity-detail/SKILL.md) — entity detail surfaces vs Configuration
 - Layout/spacing/tokens: `saleor-dashboard-styles`
 - Detail page structure: `saleor-dashboard-detail-pages`
