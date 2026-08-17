@@ -26,6 +26,7 @@ import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { getUserName } from "@dashboard/misc";
+import { NavigationPinsCard } from "@dashboard/navigationPins/components/NavigationPinsCard";
 import { StaffStatus } from "@dashboard/staff/components/StaffStatus/StaffStatus";
 import { defaultGraphiQLQuery } from "@dashboard/staff/queries";
 import { isStaffInvitePending } from "@dashboard/staff/staffMemberStatus";
@@ -305,7 +306,10 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 <DetailPageLayout.RightSidebar paddingTop={6}>
                   <Box display="flex" flexDirection="column" gap={4} paddingX={6}>
                     {canEditPreferences && (
-                      <StaffPreferences locale={locale} onLocaleChange={setLocale} />
+                      <>
+                        <StaffPreferences locale={locale} onLocaleChange={setLocale} />
+                        <NavigationPinsCard />
+                      </>
                     )}
                     {canEditStatus && (
                       <DetailSettingsCard

@@ -383,6 +383,10 @@
     "context": "error when fetching all variants for duplicate detection fails",
     "string": "Could not load existing variants. Close the dialog and try again before generating."
   },
+  "/S1aL9": {
+    "context": "dialog header",
+    "string": "Manage organization pins"
+  },
   "/U8FUp": {
     "string": "Couldn't load activities"
   },
@@ -2175,6 +2179,10 @@
     "context": "order header date, less than a minute ago",
     "string": "Placed just now"
   },
+  "6fll1+": {
+    "context": "sidebar section holding pinned model types",
+    "string": "Favorites"
+  },
   "6fxdUO": {
     "context": "section header",
     "string": "Create New Shipping Zone"
@@ -3628,6 +3636,10 @@
     "context": "input label",
     "string": "Limit quantity per checkout (optional)"
   },
+  "C7PYI9": {
+    "context": "empty state",
+    "string": "You have not pinned any model types yet."
+  },
   "C7eDb9": {
     "string": "Permission groups"
   },
@@ -3805,6 +3817,10 @@
   "CkmWKG": {
     "context": "channel order setting description for order expiration",
     "string": "Releases reserved stock from orders that were never confirmed."
+  },
+  "ClI6NL": {
+    "context": "dialog header",
+    "string": "Pin to navigation"
   },
   "ClKKID": {
     "context": "channel publication status",
@@ -5332,6 +5348,10 @@
   },
   "ILrXJV": {
     "string": "Press {key1} {key2} to send"
+  },
+  "IMH4UI": {
+    "context": "pin scope select label",
+    "string": "Visible to"
   },
   "IMXS9Z": {
     "context": "model type metadata dialog header",
@@ -7730,6 +7750,10 @@
     "context": "gift card sidebar, assigned customer intro microcopy",
     "string": "By default, anyone with the code can redeem this card, including in guest checkout. Assign a customer to restrict redemption to their account."
   },
+  "RkcPCD": {
+    "context": "pin scope option",
+    "string": "Only me"
+  },
   "RlbhwF": {
     "context": "product no longer exists error description",
     "string": "This product is no longer in database so it can’t be replaced, nor returned"
@@ -8314,6 +8338,10 @@
     "context": "label for authorized amount",
     "string": "Authorized"
   },
+  "U0XXbU": {
+    "context": "button, removes a pin",
+    "string": "Remove"
+  },
   "U1U2Zv": {
     "context": "staff emails hub card description",
     "string": "Invites, password resets, order alerts, and export results for Dashboard users — including default or custom SMTP for those messages."
@@ -8541,6 +8569,10 @@
     "context": "product field",
     "string": "Variant Images"
   },
+  "UoEmX9": {
+    "context": "notification",
+    "string": "Removed from navigation"
+  },
   "UpgLo/": {
     "context": "snackbar text",
     "string": "Extension deactivated"
@@ -8700,9 +8732,17 @@
     "context": "TopNav destination link tooltip to parent order",
     "string": "Order"
   },
+  "VP5VVx": {
+    "context": "dialog description",
+    "string": "Choose where {name} should appear in the sidebar."
+  },
   "VQvNZx": {
     "context": "page title",
     "string": "All installed"
+  },
+  "VRHMrY": {
+    "context": "button, removes a model type from the sidebar",
+    "string": "Unpin"
   },
   "VRT9cG": {
     "context": "orders list menu shortcut to settings hub",
@@ -9285,6 +9325,10 @@
   "XWGZLL": {
     "context": "transaction reference subtitle",
     "string": "Transaction reference"
+  },
+  "XXZxyz": {
+    "context": "notification",
+    "string": "Pinned to navigation"
   },
   "XYhE8p": {
     "context": "edit attribute value",
@@ -11096,9 +11140,17 @@
     "context": "Message when product is not in any channel",
     "string": "Product is not listed in any channel"
   },
+  "eBSWv6": {
+    "context": "account settings card subtitle",
+    "string": "Model types you pinned to your sidebar."
+  },
   "eCA3n1": {
     "context": "Health check label for isAvailableForPurchase field",
     "string": "Can add to cart"
+  },
+  "eCczRa": {
+    "context": "validation message",
+    "string": "This section already has the maximum of {max} pins."
   },
   "eEXfCE": {
     "context": "gift card detail cogs menu, opens the delete-confirmation dialog",
@@ -11916,6 +11968,10 @@
   "hkSkNx": {
     "string": "Search Customers"
   },
+  "hklWYW": {
+    "context": "empty state",
+    "string": "No organization pins yet."
+  },
   "hks/QN": {
     "context": "shipping method channel listing missing",
     "string": "Not configured"
@@ -12378,6 +12434,10 @@
   "jHoIFG": {
     "context": "how many sibling variants are loaded vs total",
     "string": "{loaded} of {total}"
+  },
+  "jJG+J7": {
+    "context": "pin target select label",
+    "string": "Section"
   },
   "jKm3k/": {
     "context": "issue gift card success dialog intro",
@@ -13375,6 +13435,10 @@
     "context": "customer gift cards card issue button",
     "string": "Issue new card"
   },
+  "meH8tQ": {
+    "context": "account settings card header",
+    "string": "Navigation pins"
+  },
   "mfz2Td": {
     "context": "setup task title",
     "string": "Assign channels"
@@ -13517,6 +13581,10 @@
   "nGuFx9": {
     "context": "Channel status blocking purchase in a channel",
     "string": "Channel inactive — cannot be purchased"
+  },
+  "nHbJnd": {
+    "context": "label shown instead of the pin button",
+    "string": "Pinned by organization"
   },
   "nIuKz3": {
     "context": "Refund status none",
@@ -16201,6 +16269,10 @@
     "context": "file attribute dropzone hint when replacing an existing file",
     "string": "Drop to replace"
   },
+  "wHaptH": {
+    "context": "pin scope option",
+    "string": "Everyone in the organization"
+  },
   "wJep/X": {
     "context": "refund amounts were settled",
     "string": "Settled"
@@ -16854,6 +16926,10 @@
   },
   "z/2AZY": {
     "string": "Discount type"
+  },
+  "z/T5ab": {
+    "context": "button, adds a model type to the sidebar",
+    "string": "Pin"
   },
   "z/lMXM": {
     "context": "voucher redemptions card codes count meta",

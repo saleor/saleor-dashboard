@@ -4029,6 +4029,12 @@ export const WebhookDetailsFragmentDoc = gql`
   customHeaders
 }
     ${WebhookFragmentDoc}`;
+export const PinnedModelTypeFragmentDoc = gql`
+    fragment PinnedModelType on PageType {
+  id
+  name
+}
+    `;
 export const AnnouncementsDocument = gql`
     query Announcements {
   shop {
@@ -12701,6 +12707,132 @@ export function useModelsOfTypeLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type ModelsOfTypeQueryHookResult = ReturnType<typeof useModelsOfTypeQuery>;
 export type ModelsOfTypeLazyQueryHookResult = ReturnType<typeof useModelsOfTypeLazyQuery>;
 export type ModelsOfTypeQueryResult = Apollo.QueryResult<Types.ModelsOfTypeQuery, Types.ModelsOfTypeQueryVariables>;
+export const UpdateUserNavigationPinsDocument = gql`
+    mutation UpdateUserNavigationPins($input: AccountInput!) {
+  accountUpdate(input: $input) {
+    errors {
+      field
+      message
+      code
+    }
+    user {
+      id
+      metadata {
+        key
+        value
+      }
+    }
+  }
+}
+    `;
+export type UpdateUserNavigationPinsMutationFn = Apollo.MutationFunction<Types.UpdateUserNavigationPinsMutation, Types.UpdateUserNavigationPinsMutationVariables>;
+
+/**
+ * __useUpdateUserNavigationPinsMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserNavigationPinsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserNavigationPinsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserNavigationPinsMutation, { data, loading, error }] = useUpdateUserNavigationPinsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateUserNavigationPinsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateUserNavigationPinsMutation, Types.UpdateUserNavigationPinsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateUserNavigationPinsMutation, Types.UpdateUserNavigationPinsMutationVariables>(UpdateUserNavigationPinsDocument, options);
+      }
+export type UpdateUserNavigationPinsMutationHookResult = ReturnType<typeof useUpdateUserNavigationPinsMutation>;
+export type UpdateUserNavigationPinsMutationResult = Apollo.MutationResult<Types.UpdateUserNavigationPinsMutation>;
+export type UpdateUserNavigationPinsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateUserNavigationPinsMutation, Types.UpdateUserNavigationPinsMutationVariables>;
+export const UpdateShopNavigationPinsDocument = gql`
+    mutation UpdateShopNavigationPins($input: ShopSettingsInput!) {
+  shopSettingsUpdate(input: $input) {
+    errors {
+      field
+      message
+      code
+    }
+    shop {
+      id
+      metadata {
+        key
+        value
+      }
+    }
+  }
+}
+    `;
+export type UpdateShopNavigationPinsMutationFn = Apollo.MutationFunction<Types.UpdateShopNavigationPinsMutation, Types.UpdateShopNavigationPinsMutationVariables>;
+
+/**
+ * __useUpdateShopNavigationPinsMutation__
+ *
+ * To run a mutation, you first call `useUpdateShopNavigationPinsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateShopNavigationPinsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateShopNavigationPinsMutation, { data, loading, error }] = useUpdateShopNavigationPinsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateShopNavigationPinsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateShopNavigationPinsMutation, Types.UpdateShopNavigationPinsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateShopNavigationPinsMutation, Types.UpdateShopNavigationPinsMutationVariables>(UpdateShopNavigationPinsDocument, options);
+      }
+export type UpdateShopNavigationPinsMutationHookResult = ReturnType<typeof useUpdateShopNavigationPinsMutation>;
+export type UpdateShopNavigationPinsMutationResult = Apollo.MutationResult<Types.UpdateShopNavigationPinsMutation>;
+export type UpdateShopNavigationPinsMutationOptions = Apollo.BaseMutationOptions<Types.UpdateShopNavigationPinsMutation, Types.UpdateShopNavigationPinsMutationVariables>;
+export const ShopNavigationPinsDocument = gql`
+    query ShopNavigationPins {
+  shop {
+    id
+    metadata {
+      key
+      value
+    }
+  }
+}
+    `;
+
+/**
+ * __useShopNavigationPinsQuery__
+ *
+ * To run a query within a React component, call `useShopNavigationPinsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShopNavigationPinsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShopNavigationPinsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useShopNavigationPinsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.ShopNavigationPinsQuery, Types.ShopNavigationPinsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ShopNavigationPinsQuery, Types.ShopNavigationPinsQueryVariables>(ShopNavigationPinsDocument, options);
+      }
+export function useShopNavigationPinsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ShopNavigationPinsQuery, Types.ShopNavigationPinsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ShopNavigationPinsQuery, Types.ShopNavigationPinsQueryVariables>(ShopNavigationPinsDocument, options);
+        }
+export type ShopNavigationPinsQueryHookResult = ReturnType<typeof useShopNavigationPinsQuery>;
+export type ShopNavigationPinsLazyQueryHookResult = ReturnType<typeof useShopNavigationPinsLazyQuery>;
+export type ShopNavigationPinsQueryResult = Apollo.QueryResult<Types.ShopNavigationPinsQuery, Types.ShopNavigationPinsQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {

@@ -12751,6 +12751,27 @@ export type ModelsOfTypeQueryVariables = Exact<{
 
 export type ModelsOfTypeQuery = { __typename: 'Query', pages: { __typename: 'PageCountableConnection', edges: Array<{ __typename: 'PageCountableEdge', node: { __typename: 'Page', id: string, title: string } }> } | null };
 
+export type PinnedModelTypeFragment = { __typename: 'PageType', id: string, name: string };
+
+export type UpdateUserNavigationPinsMutationVariables = Exact<{
+  input: AccountInput;
+}>;
+
+
+export type UpdateUserNavigationPinsMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', errors: Array<{ __typename: 'AccountError', field: string | null, message: string | null, code: AccountErrorCode }>, user: { __typename: 'User', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+
+export type UpdateShopNavigationPinsMutationVariables = Exact<{
+  input: ShopSettingsInput;
+}>;
+
+
+export type UpdateShopNavigationPinsMutation = { __typename: 'Mutation', shopSettingsUpdate: { __typename: 'ShopSettingsUpdate', errors: Array<{ __typename: 'ShopError', field: string | null, message: string | null, code: ShopErrorCode }>, shop: { __typename: 'Shop', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null } | null };
+
+export type ShopNavigationPinsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShopNavigationPinsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } };
+
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
