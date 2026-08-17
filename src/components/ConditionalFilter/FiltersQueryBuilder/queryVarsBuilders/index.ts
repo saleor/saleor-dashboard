@@ -12,6 +12,8 @@ export * from "./OrderChannelQueryVarsBuilder";
 export * from "./OrderCustomerIdQueryVarsBuilder";
 export * from "./OrderInvoiceDateQueryVarsBuilder";
 export * from "./ProductTypeQueryVarsBuilder";
+export * from "./PromotionStatusQueryVarsBuilder";
+export * from "./PromotionTypeQueryVarsBuilder";
 export * from "./SlugChannelQueryVarsBuilder";
 export * from "./StaffMemberStatusQueryVarsBuilder";
 export * from "./StaticBooleanQueryVarsBuilder";

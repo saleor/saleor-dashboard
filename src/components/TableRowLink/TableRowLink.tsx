@@ -16,6 +16,7 @@ export interface TableRowLinkProps extends MaterialTableRowPropsType {
   className?: string;
   linkClassName?: string;
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 const useStyles = makeStyles(

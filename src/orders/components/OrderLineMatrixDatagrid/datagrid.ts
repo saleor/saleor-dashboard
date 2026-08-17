@@ -66,38 +66,38 @@ export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableC
   {
     id: STATUS_COLUMN_ID,
     title: intl.formatMessage(messages.status),
-    width: 200,
+    width: 170,
     disableReorder: true,
   },
   {
     id: PRODUCT_COLUMN_ID,
     title: intl.formatMessage(messages.product),
-    width: 280,
+    width: 200,
   },
   {
     id: "sku",
     title: intl.formatMessage(messages.sku),
-    width: 140,
+    width: 110,
   },
   {
     id: "variantName",
     title: intl.formatMessage(messages.variantName),
-    width: 140,
+    width: 110,
   },
   {
     id: "ordered",
     title: intl.formatMessage(messages.ordered),
-    width: 80,
+    width: 70,
   },
   {
     id: "allocated",
     title: intl.formatMessage(messages.allocated),
-    width: 90,
+    width: 80,
   },
   {
     id: "toFulfill",
     title: intl.formatMessage(messages.toFulfill),
-    width: 90,
+    width: 80,
   },
   {
     id: "pendingApproval",
@@ -107,7 +107,7 @@ export const orderLineMatrixStaticColumnsAdapter = (intl: IntlShape): AvailableC
   {
     id: "shipped",
     title: intl.formatMessage(messages.shipped),
-    width: 80,
+    width: 70,
   },
   {
     id: "returned",

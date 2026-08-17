@@ -32,6 +32,7 @@ const mockUser: UserFragment = {
   email: "test@example.com",
   firstName: "Test",
   lastName: "User",
+  isActive: true,
   isStaff: true,
   dateJoined: new Date().toISOString(),
   restrictedAccessToChannels: false,

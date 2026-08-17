@@ -1,5 +1,6 @@
 import { AnnouncementsContainer } from "@dashboard/announcements/components/AnnouncementsContainer/AnnouncementsContainer";
 import useAppState from "@dashboard/hooks/useAppState";
+import { CornerRipplesHost } from "@dashboard/ripples/components/CornerRipplesHost/CornerRipplesHost";
 import { LinearProgress } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import type * as React from "react";
@@ -9,7 +10,7 @@ import NavigatorSearch from "../NavigatorSearch";
 import { useSavebarRef } from "../Savebar/SavebarRefContext";
 import { Sidebar } from "../Sidebar";
 import { SidebarProvider } from "../Sidebar/SidebarContext";
-import { savebarHeight } from "./consts";
+import { borderHeight, savebarHeight } from "./consts";
 import { useStyles } from "./styles";
 
 interface AppLayoutProps {
@@ -60,10 +61,15 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             borderColor="default1"
             zIndex="2"
             __height={isSavebarMounted ? savebarHeight : "0"}
+            // DetailPageLayout withholds 2× borderHeight (Safari overflow guard); the anchor
+            // only adds one border outside its box — overlap so the bar meets sidebar/grid lines.
+            __marginTop={isSavebarMounted ? `-${borderHeight}` : 0}
             overflow="hidden"
           />
         </Box>
       </Box>
+      {/* Fixed to the viewport bottom-left (nav corner); keep out of SidebarContent to avoid double-mount in drawer layouts. */}
+      <CornerRipplesHost />
     </SidebarProvider>
   );
 };

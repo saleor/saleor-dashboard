@@ -12,7 +12,7 @@ import GiftCardListComponent from "./GiftCardsList";
 import { type GiftCardListUrlQueryParams, GiftCardUrlSortField } from "./GiftCardsList/types";
 import GiftCardUpdateComponent from "./GiftCardUpdate";
 import { type GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
-import { giftCardPath, giftCardSettingsUrl, giftCardsListPath } from "./urls";
+import { giftCardPath, giftCardSettingsPath, giftCardsListPath } from "./urls";
 
 const GiftCardUpdatePage = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
@@ -43,7 +43,7 @@ const Component = () => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.giftCards)} />
       <Switch>
-        <Route path={giftCardSettingsUrl} component={GiftCardSettings} />
+        <Route path={giftCardSettingsPath} component={GiftCardSettings} />
         <Route exact path={giftCardsListPath} component={GiftCardList} />
         <Route path={giftCardPath(":id")} component={GiftCardUpdatePage} />
       </Switch>

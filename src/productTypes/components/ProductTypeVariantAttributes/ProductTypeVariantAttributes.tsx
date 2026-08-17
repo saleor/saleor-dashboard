@@ -1,61 +1,41 @@
 // @ts-strict-ignore
+import columnStyles from "@dashboard/attributes/components/AttributeListTableSkeleton/attributeListTableColumns.module.css";
+import { AttributeListTableSkeletonRows } from "@dashboard/attributes/components/AttributeListTableSkeleton/AttributeListTableSkeleton";
+import { AttributeValueRequiredCell } from "@dashboard/attributes/components/AttributeValueRequiredCell/AttributeValueRequiredCell";
+import { messages as valueRequiredMessages } from "@dashboard/attributes/components/AttributeValueRequiredCell/messages";
 import { attributeUrl } from "@dashboard/attributes/urls";
+import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
+import { ASSIGNABLE_LIST_TABLE_ACTION_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import { DashboardCard } from "@dashboard/components/Card";
-import Checkbox from "@dashboard/components/Checkbox";
+import { DetailSettingToggleRow } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { Link } from "@dashboard/components/Link";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
+import { TableRowLinkCheckbox } from "@dashboard/components/TableRowLink/TableRowLinkCheckbox";
 import { ProductAttributeType, type ProductTypeDetailsQuery } from "@dashboard/graphql";
+import { useOptimisticListReorder } from "@dashboard/hooks/useOptimisticListReorder";
+import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
-import { TableCell } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
+import { TableBody, TableCell } from "@material-ui/core";
+import { Box, Button, Skeleton, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
-import { CircleQuestionMark, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { Trash2 } from "lucide-react";
+import { type KeyboardEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    colGrab: {
-      width: 60,
-    },
-    colName: {
-      width: 200,
-    },
-    colSlug: {
-      width: 200,
-    },
-    colVariant: {
-      width: 150,
-    },
-    colVariantContent: {
-      display: "flex",
-      alignItems: "center",
-    },
-    colVariantDisabled: {
-      color: theme.palette.alert.icon.info,
-      opacity: 0.6,
-      "&:hover": {
-        opacity: 1,
-      },
-    },
-    link: {
-      cursor: "pointer",
-    },
-  }),
-  { name: "ProductTypeVariantAttributes" },
-);
+import { messages } from "./messages";
+import styles from "./ProductTypeVariantAttributes.module.css";
 
 interface ProductTypeVariantAttributesProps extends ListActions {
   assignedVariantAttributes: ProductTypeDetailsQuery["productType"]["assignedVariantAttributes"];
   disabled: boolean;
+  hasVariants: boolean;
   type: string;
   testId?: string;
   selectedVariantAttributes: string[];
@@ -63,7 +43,9 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   onAttributeCreate: (type: ProductAttributeType) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
+  onHasVariantsToggle: (hasVariants: boolean) => void;
   setSelectedVariantAttributes: (data: string[]) => void;
+  loading?: boolean;
 }
 
 function handleContainerAssign(
@@ -81,11 +63,80 @@ function handleContainerAssign(
   }
 }
 
+const VariantSelectionSwitch = ({
+  pressed,
+  disabled,
+  disabledReason,
+  onPressedChange,
+}: {
+  pressed: boolean;
+  disabled: boolean;
+  disabledReason?: string;
+  onPressedChange: (next: boolean) => void;
+}): JSX.Element => {
+  const toggle = (): void => {
+    if (!disabled) {
+      onPressedChange(!pressed);
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggle();
+    }
+  };
+
+  const switchControl = (
+    <TableButtonWrapper>
+      <Box
+        className={styles.selectionSwitch}
+        role="button"
+        tabIndex={disabled ? -1 : 0}
+        aria-pressed={pressed}
+        aria-disabled={disabled || undefined}
+        data-test-id="variant-selection-checkbox"
+        onClick={toggle}
+        onKeyDown={handleKeyDown}
+      >
+        <Box className={styles.selectionSwitchToggle} aria-hidden>
+          <Toggle
+            pressed={pressed}
+            onPressedChange={() => undefined}
+            disabled={disabled}
+            tabIndex={-1}
+          />
+        </Box>
+        <Text size={2} color="default2" as="span" className={styles.selectionSwitchLabel}>
+          <FormattedMessage
+            {...(pressed ? messages.variantSelectionOn : messages.variantSelectionOff)}
+          />
+        </Text>
+      </Box>
+    </TableButtonWrapper>
+  );
+
+  if (!disabledReason) {
+    return switchControl;
+  }
+
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>{switchControl}</Tooltip.Trigger>
+      <Tooltip.Content side="bottom">
+        <Tooltip.Arrow />
+        {disabledReason}
+      </Tooltip.Content>
+    </Tooltip>
+  );
+};
+
 const numberOfColumns = 6;
 const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) => {
   const {
     assignedVariantAttributes,
     disabled,
+    hasVariants,
     isChecked,
     selected,
     toggle,
@@ -97,39 +148,33 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
     onAttributeCreate,
     onAttributeReorder,
     onAttributeUnassign,
+    onHasVariantsToggle,
     setSelectedVariantAttributes,
     selectedVariantAttributes,
+    loading = false,
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
 
   const attributeType = ProductAttributeType[type];
   const handleAssignAttribute = () => onAttributeAssign(attributeType);
   const handleCreateAttribute = () => onAttributeCreate(attributeType);
-
-  useEffect(() => {
-    // Populate initial selection - populated inside this component to preserve it's state between data reloads
-    setSelectedVariantAttributes(
-      assignedVariantAttributes
-        .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
-        .filter(Boolean) || [],
-    );
-  }, []);
+  const { items: orderedAssignedVariantAttributes, onSortEnd } = useOptimisticListReorder(
+    assignedVariantAttributes,
+    onAttributeReorder,
+  );
+  const isLoading = loading || assignedVariantAttributes === undefined;
+  const showVariantTable = isLoading || hasVariants;
+  const showVariantEmpty = hasVariants && !isLoading && !assignedVariantAttributes?.length;
 
   return (
-    <DashboardCard data-test-id="variant-attributes">
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage({
-            id: "skEK/i",
-            defaultMessage: "Variant Attributes",
-            description: "section header",
-          })}
-        </DashboardCard.Title>
-        <DashboardCard.Toolbar>
+    <AssignableListCard
+      data-test-id="variant-attributes"
+      title={intl.formatMessage(messages.title)}
+      headerEnd={
+        hasVariants || isLoading ? (
           <ButtonGroupWithDropdown
             variant="secondary"
-            disabled={disabled}
+            disabled={disabled || isLoading}
             onClick={handleAssignAttribute}
             testId={testId}
             options={[
@@ -146,195 +191,239 @@ const ProductTypeVariantAttributes = (props: ProductTypeVariantAttributesProps) 
           >
             <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </ButtonGroupWithDropdown>
-        </DashboardCard.Toolbar>
-      </DashboardCard.Header>
-      <Box paddingX={6}>
-        <DashboardCard.Subtitle fontSize={3} color="default2">
-          <FormattedMessage
-            id="Uxhquh"
-            defaultMessage="Product attributes and variant attributes are mutually exclusive. An attribute cannot be assigned to both sections within the same product type."
-            description="info message about attribute exclusivity in product type"
-          />
-        </DashboardCard.Subtitle>
-      </Box>
-      <DashboardCard.Content>
-        {!assignedVariantAttributes?.length ? (
+        ) : undefined
+      }
+    >
+      {isLoading ? (
+        <Box paddingX={6} paddingY={4} aria-busy="true">
+          <Skeleton __height="3.5rem" />
+        </Box>
+      ) : (
+        <DetailSettingToggleRow
+          title={<FormattedMessage {...messages.usesVariantAttributes} />}
+          description={<FormattedMessage {...messages.usesVariantAttributesDescription} />}
+          pressed={hasVariants}
+          disabled={disabled}
+          testId="hasVariants"
+          onPressedChange={onHasVariantsToggle}
+        />
+      )}
+      {showVariantEmpty ? (
+        <Box className={styles.empty}>
+          <Text size={3} color="default2">
+            <FormattedMessage {...messages.exclusivity} />
+          </Text>
           <Placeholder>
-            <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
+            <FormattedMessage {...messages.empty} />
           </Placeholder>
-        ) : (
-          <ResponsiveTable>
+        </Box>
+      ) : showVariantTable ? (
+        <>
+          {!isLoading ? (
+            <Box className={styles.hint}>
+              <Text size={3} color="default2">
+                <FormattedMessage {...messages.exclusivity} />
+              </Text>
+            </Box>
+          ) : null}
+          <ResponsiveTable bleed className={tableStyles.assignableTable}>
             <colgroup>
-              <col className={classes.colGrab} />
+              <col className={tableStyles.dragCell} />
+              <col className={tableStyles.checkboxCell} />
               <col />
-              <col className={classes.colName} />
-              <col className={classes.colSlug} />
-              <col className={classes.colVariant} />
-              <col className={tableStyles.colAction} />
+              <col className={columnStyles.colValueRequired} />
+              <col className={columnStyles.colVariant} />
+              <col className={tableStyles.actionsCell} />
             </colgroup>
             <TableHead
               colSpan={numberOfColumns}
-              disabled={disabled}
+              compact
+              disabled={disabled || isLoading}
               dragRows
+              keepColumnHeaders
               selected={selected}
-              items={assignedVariantAttributes?.map(
-                selectedAttribute => selectedAttribute.attribute,
-              )}
+              items={
+                isLoading
+                  ? undefined
+                  : orderedAssignedVariantAttributes.map(
+                      selectedAttribute => selectedAttribute.attribute,
+                    )
+              }
               toggleAll={toggleAll}
-              toolbar={toolbar}
             >
-              <TableCell className={classes.colName}>
-                <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
+              <TableCell>
+                {selected > 0 ? (
+                  <Text data-test-id="SelectedText" size={2} lineHeight={2}>
+                    <FormattedMessage
+                      id="imYtnq"
+                      defaultMessage="Selected {number, plural, one {# item} other {# items}}"
+                      values={{ number: selected }}
+                    />
+                  </Text>
+                ) : (
+                  <Text size={2} lineHeight={2} color="default2">
+                    <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
+                  </Text>
+                )}
               </TableCell>
-              <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="nf3XSt"
-                  defaultMessage="Slug"
-                  description="attribute internal name"
-                />
+              <TableCell className={columnStyles.colValueRequired}>
+                <Text size={2} lineHeight={2} color="default2">
+                  <FormattedMessage {...valueRequiredMessages.column} />
+                </Text>
               </TableCell>
-              <TableCell className={classes.colName}>
-                <Box display="flex" alignItems="center" gap={1}>
+              <TableCell className={columnStyles.colVariant}>
+                <Text size={2} lineHeight={2} color="default2">
                   <FormattedMessage
-                    id="4k9rMQ"
-                    defaultMessage="Variant Selection"
+                    id="MnScte"
+                    defaultMessage="Variant selection"
                     description="variant attribute checkbox"
                   />
-                  <Tooltip>
-                    <Tooltip.Trigger>
-                      <Box color="default2" display="flex" alignItems="center">
-                        <CircleQuestionMark
-                          size={iconSize.small}
-                          strokeWidth={iconStrokeWidthBySize.small}
-                        />
-                      </Box>
-                    </Tooltip.Trigger>
-                    <Tooltip.Content side="bottom">
-                      <Tooltip.Arrow />
-                      <FormattedMessage
-                        id="xfypNP"
-                        defaultMessage="When enabled, this attribute will be used to distinguish variants on the storefront."
-                        description="tooltip for variant selection column header"
-                      />
-                    </Tooltip.Content>
-                  </Tooltip>
-                </Box>
+                </Text>
               </TableCell>
-              <TableCell />
-            </TableHead>
-            <SortableTableBody onSortEnd={onAttributeReorder}>
-              {assignedVariantAttributes.map((assignedVariantAttribute, attributeIndex) => {
-                const { attribute } = assignedVariantAttribute;
-                const isVariantSelected = assignedVariantAttribute
-                  ? isChecked(attribute.id)
-                  : false;
-                const isSelected = !!selectedVariantAttributes.find(
-                  selectedAttribute => selectedAttribute === attribute.id,
-                );
-                const variantSelectionDisabled = ![
-                  "DROPDOWN",
-                  "BOOLEAN",
-                  "SWATCH",
-                  "NUMERIC",
-                ].includes(attribute.inputType);
-                const readableAttributeInputType = capitalize(
-                  attribute.inputType.split("_").join(" "),
-                );
-
-                return (
-                  <SortableTableRow
-                    selected={isVariantSelected}
-                    className={attribute ? classes.link : undefined}
-                    hover={!!attribute}
-                    href={attribute ? attributeUrl(attribute.id) : undefined}
-                    key={maybe(() => attribute.id)}
-                    index={attributeIndex || 0}
-                    data-test-id={"id-" + +maybe(() => attribute.id)}
+              <TableCell className={tableStyles.actionsCell}>
+                {selected > 0 && toolbar ? (
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    width="100%"
+                    height="100%"
+                    paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isVariantSelected}
-                        disabled={disabled}
-                        disableClickPropagation
-                        onChange={() => toggle(attribute.id)}
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colName} data-test-id="name">
-                      {attribute.name ? (
-                        <AttributeNameWithTypeIcon
-                          name={attribute.name}
-                          inputType={attribute.inputType}
-                        />
-                      ) : (
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell className={classes.colSlug} data-test-id="slug">
-                      {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}
-                    </TableCell>
-                    <TableCell className={classes.colVariant} data-test-id="variant-selection">
-                      <div className={classes.colVariantContent}>
-                        <Checkbox
-                          data-test-id="variant-selection-checkbox"
-                          checked={isSelected}
-                          disabled={disabled || variantSelectionDisabled}
-                          disableClickPropagation
-                          onChange={() =>
-                            handleContainerAssign(
-                              attribute.id,
-                              isSelected,
-                              selectedVariantAttributes,
-                              setSelectedVariantAttributes,
-                            )
-                          }
-                        />
-                        {!!variantSelectionDisabled && (
-                          <Tooltip>
-                            <Tooltip.Trigger>
-                              <CircleQuestionMark
-                                size={iconSize.small}
-                                strokeWidth={iconStrokeWidthBySize.small}
-                                className={classes.colVariantDisabled}
-                              />
-                            </Tooltip.Trigger>
-                            <Tooltip.Content side="bottom">
-                              <Tooltip.Arrow />
-                              <FormattedMessage
-                                id="vlLyvk"
-                                defaultMessage="{inputType} attributes cannot be used as variant selection attributes."
-                                values={{
-                                  inputType: readableAttributeInputType,
-                                }}
-                              />
-                            </Tooltip.Content>
-                          </Tooltip>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell className={tableStyles.colAction}>
-                      <TableButtonWrapper>
-                        <Button
-                          data-test-id="delete-icon"
-                          disabled={disabled}
-                          variant="tertiary"
-                          onClick={() => onAttributeUnassign(attribute.id)}
-                          icon={
-                            <Trash2
-                              size={iconSize.small}
-                              strokeWidth={iconStrokeWidthBySize.small}
+                    {toolbar}
+                  </Box>
+                ) : null}
+              </TableCell>
+            </TableHead>
+            {isLoading ? (
+              <TableBody data-test-id="variant-attributes-skeleton" aria-busy="true">
+                <AttributeListTableSkeletonRows variantColumn="selection" />
+              </TableBody>
+            ) : (
+              <SortableTableBody onSortEnd={onSortEnd}>
+                {orderedAssignedVariantAttributes.map(
+                  (assignedVariantAttribute, attributeIndex) => {
+                    const { attribute } = assignedVariantAttribute;
+                    const isVariantSelected = assignedVariantAttribute
+                      ? isChecked(attribute.id)
+                      : false;
+                    const isSelected = !!selectedVariantAttributes.find(
+                      selectedAttribute => selectedAttribute === attribute.id,
+                    );
+                    const variantSelectionDisabled = ![
+                      "DROPDOWN",
+                      "BOOLEAN",
+                      "SWATCH",
+                      "NUMERIC",
+                    ].includes(attribute.inputType);
+                    const readableAttributeInputType = capitalize(
+                      attribute.inputType.split("_").join(" "),
+                    );
+
+                    return (
+                      <SortableTableRow
+                        selected={isVariantSelected}
+                        className={tableStyles.row}
+                        hover={!!attribute}
+                        key={maybe(() => attribute.id)}
+                        id={attribute.id}
+                        index={attributeIndex || 0}
+                        data-test-id={"id-" + +maybe(() => attribute.id)}
+                      >
+                        <TableCell className={tableStyles.checkboxCell}>
+                          <TableRowLinkCheckbox
+                            checked={isVariantSelected}
+                            disabled={disabled}
+                            onCheckedChange={() => toggle(attribute.id)}
+                          />
+                        </TableCell>
+                        <TableCell data-test-id="name">
+                          {attribute.name ? (
+                            <Box display="inline-flex" maxWidth="100%">
+                              <Link href={attributeUrl(attribute.id)} color="secondary">
+                                <AttributeNameWithTypeIcon
+                                  name={attribute.name}
+                                  inputType={attribute.inputType}
+                                  secondary={attribute.slug}
+                                />
+                              </Link>
+                            </Box>
+                          ) : (
+                            <Skeleton />
+                          )}
+                        </TableCell>
+                        <TableCell className={columnStyles.colValueRequired}>
+                          <AttributeValueRequiredCell valueRequired={attribute.valueRequired} />
+                        </TableCell>
+                        <TableCell
+                          className={columnStyles.colVariant}
+                          data-test-id="variant-selection"
+                        >
+                          <Box display="flex" alignItems="center" height="100%">
+                            <VariantSelectionSwitch
+                              pressed={isSelected}
+                              disabled={disabled || variantSelectionDisabled}
+                              disabledReason={
+                                variantSelectionDisabled
+                                  ? intl.formatMessage(
+                                      {
+                                        id: "vlLyvk",
+                                        defaultMessage:
+                                          "{inputType} attributes cannot be used as variant selection attributes.",
+                                      },
+                                      { inputType: readableAttributeInputType },
+                                    )
+                                  : undefined
+                              }
+                              onPressedChange={() =>
+                                handleContainerAssign(
+                                  attribute.id,
+                                  isSelected,
+                                  selectedVariantAttributes,
+                                  setSelectedVariantAttributes,
+                                )
+                              }
                             />
-                          }
-                        />
-                      </TableButtonWrapper>
-                    </TableCell>
-                  </SortableTableRow>
-                );
-              })}
-            </SortableTableBody>
+                          </Box>
+                        </TableCell>
+                        <TableCell className={tableStyles.actionsCell}>
+                          <Box
+                            className={tableStyles.rowDelete}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="flex-end"
+                            paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
+                            width="100%"
+                            height="100%"
+                          >
+                            <TableButtonWrapper>
+                              <Button
+                                data-test-id="delete-icon"
+                                disabled={disabled}
+                                variant="tertiary"
+                                type="button"
+                                onClick={() => onAttributeUnassign(attribute.id)}
+                                title={intl.formatMessage(buttonMessages.delete)}
+                                icon={
+                                  <Trash2
+                                    size={iconSize.small}
+                                    strokeWidth={iconStrokeWidthBySize.small}
+                                  />
+                                }
+                              />
+                            </TableButtonWrapper>
+                          </Box>
+                        </TableCell>
+                      </SortableTableRow>
+                    );
+                  },
+                )}
+              </SortableTableBody>
+            )}
           </ResponsiveTable>
-        )}
-      </DashboardCard.Content>
-    </DashboardCard>
+        </>
+      ) : null}
+    </AssignableListCard>
   );
 };
 

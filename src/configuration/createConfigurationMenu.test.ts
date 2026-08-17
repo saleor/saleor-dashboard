@@ -28,7 +28,22 @@ describe("createConfigurationMenu", () => {
     expect(labels).not.toContain("Multichannel");
     expect(allUrls.some(url => url?.includes("refunds-settings"))).toBe(false);
     expect(allUrls.some(url => url?.includes("site-settings"))).toBe(true);
+    expect(allUrls.some(url => url?.includes("gift-cards/settings"))).toBe(true);
+    expect(allUrls.some(url => url?.includes("notifications-settings"))).toBe(true);
     expect(allUrls.some(url => url?.includes("orders/settings"))).toBe(true);
+  });
+
+  it("places site settings, gift cards, and notifications under Store", () => {
+    // Arrange / Act
+    const store = createConfigurationMenu(intl).find(section => section.label === "Store");
+    const testIds = store?.menuItems.map(item => item.testId);
+
+    // Assert
+    expect(testIds).toEqual([
+      "configuration-menu-site-settings",
+      "configuration-menu-gift-cards",
+      "configuration-menu-notifications",
+    ]);
   });
 
   it("places channels and taxes under Markets & channels", () => {

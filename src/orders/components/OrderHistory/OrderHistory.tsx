@@ -4,8 +4,11 @@ import { DashboardCard } from "@dashboard/components/Card";
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
 import Form from "@dashboard/components/Form";
 import { Pill } from "@dashboard/components/Pill";
+import { groupEventsByDate } from "@dashboard/components/Timeline/groupEventsByDate";
 import { Timeline, TimelineAddNote } from "@dashboard/components/Timeline/Timeline";
+import { TimelineDateGroupHeader } from "@dashboard/components/Timeline/TimelineDateGroupHeader";
 import { TimelineEvent } from "@dashboard/components/Timeline/TimelineEvent";
+import { TimelineLink } from "@dashboard/components/Timeline/TimelineLink";
 import { TimelineNote } from "@dashboard/components/Timeline/TimelineNote";
 import { toActor } from "@dashboard/components/Timeline/utils";
 import {
@@ -18,72 +21,13 @@ import { ORDER_EVENTS_DOCS_URL } from "@dashboard/links";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Box, Text, vars } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link } from "react-router-dom";
 
 import { ExtendedTimelineEvent } from "./ExtendedTimelineEvent";
 import { HistoryComponentLoader } from "./HistoryComponentLoader";
 import { getEventMessage } from "./messages";
 import { OrderHistoryDate } from "./OrderHistoryDate";
 import { OrderLineItem } from "./OrderLineItem";
-import { groupEventsByDate, isTimelineEventOfType } from "./utils";
-
-// Date group header component with internationalized labels
-const DateGroupHeader = ({ groupKey }: { groupKey: string }) => {
-  const intl = useIntl();
-
-  const getLabel = (key: string): string => {
-    switch (key) {
-      case "TODAY":
-        return intl.formatMessage({
-          id: "zWgbGg",
-          defaultMessage: "Today",
-        });
-      case "YESTERDAY":
-        return intl.formatMessage({
-          id: "IradBW",
-          defaultMessage: "Yesterday",
-          description: "date group header",
-        });
-      case "LAST_7_DAYS":
-        return intl.formatMessage({
-          id: "0/Y0nG",
-          defaultMessage: "Last 7 days",
-          description: "date group header",
-        });
-      case "LAST_30_DAYS":
-        return intl.formatMessage({
-          id: "4kcpaI",
-          defaultMessage: "Last 30 days",
-          description: "date group header",
-        });
-      case "OLDER":
-        return intl.formatMessage({
-          id: "LU8dtl",
-          defaultMessage: "Older",
-          description: "date group header",
-        });
-      default:
-        return intl.formatMessage({
-          id: "yn7Stx",
-          defaultMessage: "Unknown",
-          description: "date group header",
-        });
-    }
-  };
-
-  return (
-    <Box paddingY={3}>
-      <Text
-        size={2}
-        fontWeight="medium"
-        color="default2"
-        style={{ textTransform: "uppercase", letterSpacing: "0.05em" }}
-      >
-        {getLabel(groupKey)}
-      </Text>
-    </Box>
-  );
-};
+import { isTimelineEventOfType } from "./utils";
 
 export interface FormData {
   message: string;
@@ -153,6 +97,7 @@ const OrderHistory = ({
                     }
                   }}
                   onSubmit={submit}
+                  showTimelineConnector={history.length > 0}
                   label={intl.formatMessage({
                     id: "LgbKvU",
                     defaultMessage: "Comment",
@@ -347,11 +292,14 @@ const OrderHistory = ({
                             <Text size={2} color="default2">
                               <FormattedMessage id="pSqXo6" defaultMessage="Related Order" />
                             </Text>
-                            <Link to={orderUrl(event.relatedOrder.id)}>
-                              <Text size={2} textDecoration="underline">
-                                #{event.relatedOrder.number}
-                              </Text>
-                            </Link>
+                            <TimelineLink
+                              href={orderUrl(event.relatedOrder.id)}
+                              entity="order"
+                              color="default2"
+                              size={2}
+                            >
+                              #{event.relatedOrder.number}
+                            </TimelineLink>
                           </Box>
                         )}
                       </Box>
@@ -373,9 +321,11 @@ const OrderHistory = ({
                 );
               };
 
+              const isSoleGroup = groupedEvents.length === 1;
+
               return groupedEvents.map(([dateKey, events]) => (
                 <Box key={dateKey}>
-                  {groupedEvents.length > 1 && <DateGroupHeader groupKey={dateKey} />}
+                  <TimelineDateGroupHeader groupKey={dateKey} isSoleGroup={isSoleGroup} />
                   {events.map((event, index) => renderEvent(event, index, events))}
                 </Box>
               ));

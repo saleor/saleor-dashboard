@@ -1,0 +1,35 @@
+import {
+  ASSIGNABLE_LIST_TABLE_ACTION_INSET,
+  ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH,
+  ASSIGNABLE_LIST_TABLE_CHECKBOX_CONTROL_PX,
+  ASSIGNABLE_LIST_TABLE_DRAG_ALIGNED_LEADING_INSET,
+  ASSIGNABLE_LIST_TABLE_DRAG_COLUMN_PX,
+} from "@dashboard/components/AssignableListTable/assignableListTableLayout";
+
+/** Matches `DetailSettingsCard` `.headerWithEnd` right inset (Assign product button). */
+export const COLLECTION_PRODUCT_TABLE_ACTION_INSET = ASSIGNABLE_LIST_TABLE_ACTION_INSET;
+
+/** Width of the drag column in `ProductsTable` colgroup. */
+export const COLLECTION_PRODUCT_TABLE_DRAG_COLUMN_PX = ASSIGNABLE_LIST_TABLE_DRAG_COLUMN_PX;
+export const COLLECTION_PRODUCT_TABLE_DRAG_COLUMN_WIDTH = `${ASSIGNABLE_LIST_TABLE_DRAG_COLUMN_PX}px`;
+
+export const COLLECTION_PRODUCT_TABLE_CHECKBOX_COLUMN_PX =
+  ASSIGNABLE_LIST_TABLE_CHECKBOX_CONTROL_PX;
+export const COLLECTION_PRODUCT_TABLE_CHECKBOX_COLUMN_WIDTH = `${ASSIGNABLE_LIST_TABLE_CHECKBOX_CONTROL_PX}px`;
+
+export const COLLECTION_PRODUCT_TABLE_NAME_COLUMN_WIDTH = "40%";
+
+/** Product type names are short; keep this column tight for availability copy. */
+export const COLLECTION_PRODUCT_TABLE_TYPE_COLUMN_WIDTH = "14%";
+
+export const COLLECTION_PRODUCT_TABLE_AVAILABILITY_COLUMN_WIDTH = "30%";
+
+export const COLLECTION_PRODUCT_TABLE_ACTIONS_COLUMN_WIDTH =
+  ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH;
+
+/**
+ * Footer left inset — matches the drag grip centered in the 40px column
+ * plus the same `spacing-2` inset used on the header's leading cells.
+ */
+export const COLLECTION_PRODUCT_TABLE_LEADING_INSET =
+  ASSIGNABLE_LIST_TABLE_DRAG_ALIGNED_LEADING_INSET;

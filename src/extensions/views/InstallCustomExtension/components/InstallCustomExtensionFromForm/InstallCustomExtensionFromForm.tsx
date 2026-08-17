@@ -6,6 +6,7 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import {
   type Control,
+  type UseFormClearErrors,
   type UseFormGetValues,
   type UseFormHandleSubmit,
   type UseFormSetError,
@@ -28,21 +29,29 @@ export const InstallCustomExtensionFromForm = ({
   handleSubmit,
   getValues,
   setError,
+  clearErrors,
   watch,
 }: {
   control: Control<ExtensionInstallFormData>;
   handleSubmit: UseFormHandleSubmit<ExtensionInstallFormData>;
   setError: UseFormSetError<ExtensionInstallFormData>;
+  clearErrors: UseFormClearErrors<ExtensionInstallFormData>;
   getValues: UseFormGetValues<ExtensionInstallFormData>;
   watch: UseFormWatch<ExtensionInstallFormData>;
 }) => {
   const intl = useIntl();
 
-  const { submitFetchManifest, manifest, lastFetchedManifestUrl, isFetchingManifest } =
-    useFetchManifest({
-      getValues,
-      setError,
-    });
+  const {
+    submitFetchManifest,
+    manifest,
+    lastFetchedManifestUrl,
+    isFetchingManifest,
+    alreadyInstalledApp,
+  } = useFetchManifest({
+    getValues,
+    setError,
+    clearErrors,
+  });
 
   const { flush: flushDebouncedSubmit } = useAutoSubmit({
     watch,
@@ -74,6 +83,7 @@ export const InstallCustomExtensionFromForm = ({
         <ManifestUrlForm
           control={control}
           onSubmit={handleSubmit(submitFetchManifest)}
+          alreadyInstalledApp={alreadyInstalledApp}
           onPaste={() => {
             // On paste immediately submit form
             // Wait for next tick when debounced submit is scheduled and call it immedioately

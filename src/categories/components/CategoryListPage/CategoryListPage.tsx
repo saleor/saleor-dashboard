@@ -1,5 +1,5 @@
 import { rippleExpandedSubcategories } from "@dashboard/categories/ripples/expandedSubcategories";
-import { categoryAddUrl, type CategoryListUrlSortField } from "@dashboard/categories/urls";
+import { type CategoryListUrlSortField } from "@dashboard/categories/urls";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
@@ -13,7 +13,6 @@ import {
   getExtensionsItemsForCategoryOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import {
@@ -38,6 +37,7 @@ interface CategoryTableProps
   hasPresetsChanged: boolean;
   onTabDelete: (tabIndex: number) => void;
   onTabUpdate: (tabName: string) => void;
+  onCreateCategory: () => void;
 }
 
 export const CategoryListPage = ({
@@ -51,6 +51,7 @@ export const CategoryListPage = ({
   onTabDelete,
   onTabSave,
   onTabUpdate,
+  onCreateCategory,
   hasPresetsChanged,
   ...listProps
 }: CategoryTableProps): JSX.Element => {
@@ -69,7 +70,6 @@ export const CategoryListPage = ({
     hasExpandedSubcategories,
     onCollapseAllSubcategories,
   } = useCategoryListPageState();
-  const navigate = useNavigator();
 
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -112,16 +112,12 @@ export const CategoryListPage = ({
               <ButtonGroupWithDropdown
                 options={extensionCreateButtonItems}
                 data-test-id="create-category"
-                onClick={() => navigate(categoryAddUrl())}
+                onClick={onCreateCategory}
               >
                 <FormattedMessage {...messages.createCategory} />
               </ButtonGroupWithDropdown>
             ) : (
-              <Button
-                data-test-id="create-category"
-                onClick={() => navigate(categoryAddUrl())}
-                variant="primary"
-              >
+              <Button data-test-id="create-category" onClick={onCreateCategory} variant="primary">
                 <FormattedMessage {...messages.createCategory} />
               </Button>
             )}

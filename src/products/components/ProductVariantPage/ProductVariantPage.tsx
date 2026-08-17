@@ -7,7 +7,11 @@ import {
 import { hasPermission } from "@dashboard/auth/misc";
 import { useUser } from "@dashboard/auth/useUser";
 import { type ChannelPriceData } from "@dashboard/channels/utils";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -38,10 +42,10 @@ import {
   type SearchWarehousesQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { rippleProductVariantMetadata } from "@dashboard/products/ripples/productVariantMetadata";
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { expandRequiredAttributeErrors } from "@dashboard/products/utils/validation";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { TranslationsButton } from "@dashboard/translations/components/TranslationsButton/TranslationsButton";
 import { productVariantUrl } from "@dashboard/translations/urls";
@@ -234,6 +238,8 @@ export const ProductVariantPage = ({
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={productUrl(productId)}
+        hrefIcon={<TopNavDestinationIcon.products />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.product)}
         actionsGap={3}
         title={
           loading ? (
@@ -339,7 +345,10 @@ export const ProductVariantPage = ({
                   byAttributeScope(VariantAttributeScope.VARIANT_SELECTION),
                 );
                 const media = getSelectedMedia(productMedia, data.media);
-                const errors = [...apiErrors, ...validationErrors];
+                const errors = expandRequiredAttributeErrors(
+                  [...apiErrors, ...validationErrors],
+                  data.attributes,
+                );
                 const priceVariantErrors = [...channelErrors, ...validationErrors];
 
                 return (
@@ -351,12 +360,20 @@ export const ProductVariantPage = ({
                       errors={errors}
                     />
                     <CardSpacer />
-                    <VariantDetailsChannelsAvailabilityCard
-                      variant={variant}
-                      listings={data.channelListings}
-                      disabled={loading}
-                      onManageClick={toggleManageChannels}
+                    <ProductVariantPrice
+                      disabled={!variant}
+                      productVariantChannelListings={data.channelListings.map(channel => ({
+                        ...channel.data,
+                        ...channel.value,
+                      }))}
+                      errors={priceVariantErrors}
+                      loading={loading}
+                      onChange={handlers.changeChannels}
+                      onChannelsReplace={handlers.replaceChannels}
+                      onManageClick={variant ? toggleManageChannels : undefined}
+                      availableChannelsCount={variant?.product?.channelListings?.length}
                     />
+                    <CardSpacer />
                     {variant?.product?.productType && (
                       <VariantAttributesSection
                         title={intl.formatMessage(messages.nonSelectionAttributes)}
@@ -444,17 +461,6 @@ export const ProductVariantPage = ({
                       onImageAdd={toggleModal}
                     />
                     <CardSpacer />
-                    <ProductVariantPrice
-                      disabled={!variant}
-                      productVariantChannelListings={data.channelListings.map(channel => ({
-                        ...channel.data,
-                        ...channel.value,
-                      }))}
-                      errors={priceVariantErrors}
-                      loading={loading}
-                      onChange={handlers.changeChannels}
-                    />
-                    <CardSpacer />
                     <ProductVariantCheckoutSettings
                       data={data}
                       disabled={loading}
@@ -487,6 +493,7 @@ export const ProductVariantPage = ({
                       errors={errors}
                       stocks={data.stocks}
                       onChange={handlers.changeStock}
+                      onStocksReplace={handlers.replaceStocks}
                       onFormDataChange={change}
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}

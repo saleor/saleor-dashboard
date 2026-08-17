@@ -33,6 +33,7 @@ describe("InstallCustomExtension", () => {
       manifest: null,
       lastFetchedManifestUrl: undefined,
       isFetchingManifest: false,
+      alreadyInstalledApp: null,
     });
 
     mockUseInstallApp.mockReturnValue({

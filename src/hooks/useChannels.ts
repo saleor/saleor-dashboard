@@ -15,13 +15,21 @@ interface Modal {
 const getChannelIds = <T extends Channel>(channels: T[] | undefined | null) =>
   (channels ?? []).map(channel => channel.id);
 
+interface UseChannelsOpts extends WithFormId {
+  /**
+   * When true, channel picker confirm does not force the exit dialog dirty flag.
+   * Use for page forms that compute dirty state from a diff against saved data.
+   */
+  deferDirtyOnConfirm?: boolean;
+}
+
 function useChannels<T extends Channel, A>(
   channels: T[] | undefined,
   action: A | ChannelsAction,
   { closeModal, openModal }: Modal,
-  opts: WithFormId,
+  opts: UseChannelsOpts,
 ) {
-  const { formId } = opts;
+  const { formId, deferDirtyOnConfirm = false } = opts;
   const { setIsDirty } = useExitFormDialog({
     formId,
   });
@@ -43,9 +51,12 @@ function useChannels<T extends Channel, A>(
 
     if (!isEqual(currentChannels, nextChannels)) {
       setCurrentChannels(nextChannels);
-      // hack so channels also update exit form dialog provider
-      // despite not setting page's form data "changed" prop
-      setIsDirty(true);
+
+      if (!deferDirtyOnConfirm) {
+        // hack so channels also update exit form dialog provider
+        // despite not setting page's form data "changed" prop
+        setIsDirty(true);
+      }
     }
 
     closeModal();

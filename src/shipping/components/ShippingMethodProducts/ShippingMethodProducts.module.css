@@ -1,6 +1,5 @@
 /*
- * Cell inset for excluded-products table — mirrors ShippingPriceTable.module.css
- * with column widths for checkbox / product / action layout.
+ * Cell inset for excluded-products table — column widths for checkbox / product / action layout.
  */
 .excludedProductsTable.excludedProductsTable th,
 .excludedProductsTable.excludedProductsTable td {

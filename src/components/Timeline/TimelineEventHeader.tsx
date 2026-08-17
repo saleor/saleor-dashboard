@@ -1,15 +1,16 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
-import { Link } from "react-router-dom";
 
 import { DateTime } from "../Date/DateTime";
-import styles from "./TimelineEvent.module.css";
+import { type TimelineEntity, TimelineLink } from "./TimelineLink";
 import { type Actor } from "./types";
 import { getActorDisplayName, getActorLink } from "./utils";
 
 export interface TitleElement {
   text: string;
   link?: string;
+  /** Saleor entity icon when `link` is set. */
+  entity?: TimelineEntity;
 }
 
 interface TimelineEventHeaderProps {
@@ -21,6 +22,14 @@ interface TimelineEventHeaderProps {
   tooltip?: ReactNode;
   actor?: Actor;
 }
+
+const actorEntity = (actor: Actor | undefined): TimelineEntity | undefined => {
+  if (!actor) {
+    return undefined;
+  }
+
+  return actor.type === "app" ? "app" : "staff";
+};
 
 export const TimelineEventHeader = ({
   title,
@@ -43,11 +52,9 @@ export const TimelineEventHeader = ({
     <Text size={3} color="default2" as="span" marginLeft={1}>
       by{" "}
       {actorLink ? (
-        <Link to={actorLink} className={styles.userLink}>
-          <Text size={3} color="default2" as="span">
-            {actorName}
-          </Text>
-        </Link>
+        <TimelineLink href={actorLink} entity={actorEntity(actor)} color="default2">
+          {actorName}
+        </TimelineLink>
       ) : (
         <Text size={3} color="default2" as="span">
           {actorName}
@@ -73,14 +80,14 @@ export const TimelineEventHeader = ({
           )}
           {elements.length > 0 && (
             <Box display="flex" alignItems="center" flexDirection="row" flexWrap="wrap">
-              {elements.map(({ text, link }, index) => {
+              {elements.map(({ text, link, entity }, index) => {
                 if (link) {
                   return (
-                    <Link to={link} key={`timeline-event-${link}-${index}`}>
-                      <Text marginRight={0.5} size={3} color="default1" textDecoration="underline">
+                    <Box as="span" marginRight={0.5} key={`timeline-event-${link}-${index}`}>
+                      <TimelineLink href={link} entity={entity}>
                         {text}
-                      </Text>
-                    </Link>
+                      </TimelineLink>
+                    </Box>
                   );
                 }
 

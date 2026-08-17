@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -96,7 +100,12 @@ const WarehouseDetailsPage = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={warehouseListBackLink} title={warehouse?.name}>
+            <TopNav
+              href={warehouseListBackLink}
+              hrefIcon={<TopNavDestinationIcon.warehouses />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allWarehouses)}
+              title={warehouse?.name}
+            >
               <Button
                 variant="secondary"
                 icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}

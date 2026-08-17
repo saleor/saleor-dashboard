@@ -15,9 +15,10 @@ export const SetUpPricingButton = ({ disabled, href }: SetUpPricingButtonProps) 
   return (
     <Button
       disabled={disabled}
-      variant="tertiary"
+      variant="secondary"
       size="small"
       data-test-id="set-up-pricing"
+      whiteSpace="nowrap"
       onClick={event => {
         event.stopPropagation();
         navigate(href);

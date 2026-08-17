@@ -1,31 +1,27 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useGiftCardDetails from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Divider } from "@saleor/macaw-ui-next";
+import { Box, Divider } from "@saleor/macaw-ui-next";
 
 import { giftCardsListPath } from "../urls";
-import GiftCardHistory from "./GiftCardHistory/GiftCardHistory";
-import GiftCardUpdateDetailsCard from "./GiftCardUpdateDetailsCard";
-import GiftCardUpdateInfoCard from "./GiftCardUpdateInfoCard";
+import { GiftCardAssignedCustomerCard } from "./GiftCardAssignedCustomerCard/GiftCardAssignedCustomerCard";
+import { GiftCardBalanceCard } from "./GiftCardBalanceCard/GiftCardBalanceCard";
+import { GiftCardHistory } from "./GiftCardHistory/GiftCardHistory";
+import { GiftCardProvenanceCard } from "./GiftCardProvenanceCard/GiftCardProvenanceCard";
+import { GiftCardSaveCompositionHint } from "./GiftCardSaveCompositionHint";
+import { GiftCardUpdateDetailsCard } from "./GiftCardUpdateDetailsCard/GiftCardUpdateDetailsCard";
 import GiftCardUpdatePageHeader from "./GiftCardUpdatePageHeader";
-import useGiftCardUpdateDialogs from "./providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import useGiftCardUpdate from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdate";
 import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 
 const GiftCardUpdatePage = () => {
-  const { openDeleteDialog } = useGiftCardUpdateDialogs();
   const navigate = useNavigator();
-  const {
-    submit,
-    data,
-    handlers: { changeMetadata },
-  } = useGiftCardUpdateForm();
+  const { submit, saveComposition, isSaveDisabled } = useGiftCardUpdateForm();
   const {
     opts: { loading: loadingUpdate, status },
   } = useGiftCardUpdate();
@@ -37,30 +33,37 @@ const GiftCardUpdatePage = () => {
     <DetailPageLayout>
       <GiftCardUpdatePageHeader />
       <DetailPageLayout.Content>
-        <GiftCardUpdateDetailsCard />
-        <CardSpacer />
-        <Metadata data={data} onChange={changeMetadata} />
-        <GiftCardHistory />
+        <DetailPageContent>
+          <GiftCardBalanceCard />
+          <GiftCardUpdateDetailsCard />
+          <GiftCardHistory />
+        </DetailPageContent>
       </DetailPageLayout.Content>
       <DetailPageLayout.RightSidebar>
-        <GiftCardUpdateInfoCard />
-        {GIFT_CARD_DETAILS_WIDGETS.length > 0 && giftCard?.id && (
-          <>
-            <CardSpacer />
-            <Divider />
-            <AppWidgets
-              extensions={GIFT_CARD_DETAILS_WIDGETS}
-              params={{ giftCardId: giftCard.id }}
-            />
-          </>
-        )}
+        <Box display="flex" flexDirection="column" gap={4} paddingY={6}>
+          <GiftCardAssignedCustomerCard />
+          <GiftCardProvenanceCard />
+          {GIFT_CARD_DETAILS_WIDGETS.length > 0 && giftCard?.id && (
+            <>
+              <Divider />
+              <AppWidgets
+                extensions={GIFT_CARD_DETAILS_WIDGETS}
+                params={{ giftCardId: giftCard.id }}
+              />
+            </>
+          )}
+        </Box>
       </DetailPageLayout.RightSidebar>
 
       <Savebar>
-        <Savebar.DeleteButton onClick={openDeleteDialog} />
         <Savebar.Spacer />
+        <GiftCardSaveCompositionHint composition={saveComposition} />
         <Savebar.CancelButton onClick={() => navigate(giftCardsListPath)} />
-        <Savebar.ConfirmButton transitionState={status} onClick={submit} disabled={loadingUpdate} />
+        <Savebar.ConfirmButton
+          transitionState={status}
+          onClick={submit}
+          disabled={isSaveDisabled || loadingUpdate}
+        />
       </Savebar>
     </DetailPageLayout>
   );

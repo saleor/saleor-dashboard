@@ -50,6 +50,7 @@ export const pageType: PageTypeDetailsFragment = {
       type: AttributeTypeEnum.PAGE_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       unit: null,
+      valueRequired: true,
     },
     {
       __typename: "Attribute" as const,
@@ -62,6 +63,7 @@ export const pageType: PageTypeDetailsFragment = {
       type: AttributeTypeEnum.PAGE_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       unit: null,
+      valueRequired: false,
     },
     {
       __typename: "Attribute" as const,
@@ -74,6 +76,7 @@ export const pageType: PageTypeDetailsFragment = {
       type: AttributeTypeEnum.PAGE_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       unit: null,
+      valueRequired: true,
     },
   ],
   privateMetadata: [],

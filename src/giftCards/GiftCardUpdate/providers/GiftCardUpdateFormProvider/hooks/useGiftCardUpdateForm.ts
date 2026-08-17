@@ -1,19 +1,25 @@
 import { type UseFormResult } from "@dashboard/hooks/useForm";
-import omit from "lodash/omit";
 import { useContext } from "react";
 
 import {
+  type GiftCardUpdateFormConsumerData,
   GiftCardUpdateFormContext,
   type GiftCardUpdateFormData,
-  type GiftCardUpdateFormErrors,
 } from "../GiftCardUpdateFormProvider";
 
-type UseGiftCardUpdateFormProps = UseFormResult<GiftCardUpdateFormData> & GiftCardUpdateFormErrors;
+type UseGiftCardUpdateFormProps = UseFormResult<GiftCardUpdateFormData> &
+  Omit<GiftCardUpdateFormConsumerData, "opts">;
 
-const useGiftCardUpdate = (): UseGiftCardUpdateFormProps => {
+const useGiftCardUpdateForm = (): UseGiftCardUpdateFormProps => {
   const giftCardUpdateFormProviderProps = useContext(GiftCardUpdateFormContext);
 
-  return omit(giftCardUpdateFormProviderProps, ["opts"]);
+  if (!giftCardUpdateFormProviderProps) {
+    throw new Error("useGiftCardUpdateForm must be used within a GiftCardUpdateFormProvider");
+  }
+
+  const { opts: _opts, ...rest } = giftCardUpdateFormProviderProps;
+
+  return rest;
 };
 
-export default useGiftCardUpdate;
+export default useGiftCardUpdateForm;

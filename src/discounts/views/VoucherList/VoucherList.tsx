@@ -46,15 +46,19 @@ const VoucherList = ({ params }: VoucherListProps) => {
   const notify = useNotifier();
   const { updateListSettings, settings } = useListSettings(ListViews.VOUCHER_LIST);
   const { valueProvider } = useConditionalFilterContext();
-  const { filters, channel } = createVoucherQueryVariables(valueProvider.value);
+  // Conditional Filters own channel for the query; URL `params.channel` is legacy-only.
+  const { filters, channel: channelSlug } = createVoucherQueryVariables(valueProvider.value);
 
   usePaginationReset(voucherListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
   const { availableChannels } = useAppChannel(false);
-  const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
+  // Prefer Conditional Filter channel so Offer/min-spent sort matches Filters (N).
+  const selectedChannel = availableChannels.find(
+    availableChannel => availableChannel.slug === (channelSlug ?? params.channel),
+  );
   const channelOpts = availableChannels
-    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    ? mapNodeToChoice(availableChannels, availableChannel => availableChannel.slug)
     : null;
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherListUrlDialog,
@@ -69,9 +73,9 @@ const VoucherList = ({ params }: VoucherListProps) => {
         search: params.query,
       },
       sort: getSortQueryVariables(params),
-      channel,
+      channel: channelSlug,
     }),
-    [params, settings.rowNumber, valueProvider.value, channel],
+    [params, settings.rowNumber, valueProvider.value, channelSlug],
   );
 
   const { data, refetch } = useVoucherListQuery({

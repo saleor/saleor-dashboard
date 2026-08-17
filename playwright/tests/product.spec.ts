@@ -20,28 +20,17 @@ test.beforeEach(({ page }) => {
 test("TC: SALEOR_3 Create basic product with variants #e2e #product", async () => {
   await productPage.gotoProductListPage();
   await productPage.clickCreateProductButton();
+  await productCreateDialog.typeName(`e2e-productName-${Date.now()}`);
   await productCreateDialog.selectProductTypeWithVariants();
   await productCreateDialog.clickConfirmButton();
-  await productPage.typeNameDescAndRating();
-  await productPage.addSeo();
-  await productPage.addAllMetaData();
-  await productPage.selectFirstCategory();
-  await productPage.selectFirstTaxOption();
-  await productPage.clickSaveButton();
-  await productPage.expectSuccessBanner();
+  await expect(productPage.page.getByTestId("product-setup-card")).toBeVisible();
 });
 test("TC: SALEOR_5 Create basic - single product type - product without variants #e2e #product", async () => {
   await productPage.gotoCreateProductPage(PRODUCTS.singleProductType.id);
-  await productPage.rightSideDetailsPage.selectOneChannelAsAvailableWhenMoreSelected("Channel-PLN");
-  await productPage.typeNameDescAndRating();
-  await productPage.addSeo();
-  await productPage.addAllMetaData();
-  await productPage.selectFirstCategory();
-  await productPage.selectFirstTaxOption();
-  await productPage.typeSellingPriceForChannel("PLN");
-  await productPage.typeCostPrice("PLN");
-  await productPage.clickSaveButton();
-  await productPage.expectSuccessBanner();
+  await productCreateDialog.typeName(`e2e-productName-${Date.now()}`);
+  await expect(productCreateDialog.confirmButton).toBeEnabled();
+  await productCreateDialog.clickConfirmButton();
+  await expect(productPage.page.getByTestId("product-setup-card")).toBeVisible();
 });
 test("TC: SALEOR_26 Create basic info variant - via edit variant page #e2e #product", async () => {
   const variantName = `TC: SALEOR_26 - variant name - ${new Date().toISOString()}`;

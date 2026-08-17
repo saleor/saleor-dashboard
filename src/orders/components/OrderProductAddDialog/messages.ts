@@ -47,6 +47,17 @@ export const messages = defineMessages({
     defaultMessage: "Loading more",
     description: "loading state label on the load more variants button",
   },
+  allLoadedProductsFilteredOut: {
+    id: "iKc9yr",
+    defaultMessage:
+      "Every product loaded so far is unavailable in this channel. Search by name, or keep loading the catalog.",
+    description: "order add product picker, channel pricing filter emptied the loaded pages",
+  },
+  loadMoreProducts: {
+    id: "p4L3Gb",
+    defaultMessage: "Load more products",
+    description: "button, order add product picker loads the next pages",
+  },
   loadMoreVariantsProgress: {
     id: "gf1eAF",
     defaultMessage: "Showing {shown} with a price in this channel · {loaded} of {total} loaded",

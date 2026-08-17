@@ -7,6 +7,14 @@ if (!global.structuredClone) {
   global.structuredClone = (obj: any) => JSON.parse(JSON.stringify(obj));
 }
 
+type StoredRipplesRecord = Record<
+  string,
+  {
+    manuallyHidden: boolean;
+    firstSeenAt: number;
+  }
+>;
+
 // Mock ripples for testing
 const mockRipple1: Ripple = {
   type: "feature",
@@ -50,6 +58,14 @@ describe("RipplesStorage", () => {
   let mockUpdateState: jest.Mock;
   let storage: RipplesStorage;
   const currentTime = 1640995200000;
+
+  const resolveUpdate = (prev: StoredRipplesRecord = {}): StoredRipplesRecord => {
+    expect(mockUpdateState).toHaveBeenCalled();
+
+    const updater = mockUpdateState.mock.calls[mockUpdateState.mock.calls.length - 1][0];
+
+    return typeof updater === "function" ? updater(prev) : updater;
+  };
 
   beforeEach(() => {
     mockUpdateState = jest.fn();
@@ -157,12 +173,11 @@ describe("RipplesStorage", () => {
 
   describe("setFirstSeenFlag", () => {
     it("should set first seen timestamp for new ripple", () => {
-      // Arrange
-      // Act
+      // Arrange & Act
       storage.setFirstSeenFlag(mockRipple1);
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate({})).toEqual({
         [mockRipple1.ID]: {
           firstSeenAt: currentTime,
         },
@@ -172,13 +187,14 @@ describe("RipplesStorage", () => {
     it("should not override existing first seen timestamp", () => {
       // Arrange
       const existingTime = currentTime - 1000;
-      const storageWithExistingRipple = new RipplesStorage(
-        {
-          [mockRipple1.ID]: {
-            manuallyHidden: false,
-            firstSeenAt: existingTime,
-          },
+      const existingState = {
+        [mockRipple1.ID]: {
+          manuallyHidden: false,
+          firstSeenAt: existingTime,
         },
+      };
+      const storageWithExistingRipple = new RipplesStorage(
+        existingState,
         mockUpdateState,
         mockAllRipples,
       );
@@ -186,28 +202,25 @@ describe("RipplesStorage", () => {
       // Act
       storageWithExistingRipple.setFirstSeenFlag(mockRipple1);
 
-      // Assert
-      expect(mockUpdateState).not.toHaveBeenCalled();
+      // Assert — updater is called but returns the same prev reference
+      expect(resolveUpdate(existingState)).toBe(existingState);
     });
 
     it("should preserve existing manuallyHidden flag when setting first seen", () => {
       // Arrange
-      const storageWithPartialData = new RipplesStorage(
-        {
-          [mockRipple1.ID]: {
-            manuallyHidden: true,
-            firstSeenAt: undefined as any,
-          },
+      const prev = {
+        [mockRipple1.ID]: {
+          manuallyHidden: true,
+          firstSeenAt: undefined as any,
         },
-        mockUpdateState,
-        mockAllRipples,
-      );
+      };
+      const storageWithPartialData = new RipplesStorage(prev, mockUpdateState, mockAllRipples);
 
       // Act
       storageWithPartialData.setFirstSeenFlag(mockRipple1);
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate(prev)).toEqual({
         [mockRipple1.ID]: {
           manuallyHidden: true,
           firstSeenAt: currentTime,
@@ -218,12 +231,11 @@ describe("RipplesStorage", () => {
 
   describe("setManuallyHidden", () => {
     it("should set manually hidden flag for new ripple", () => {
-      // Arrange
-      // Act
+      // Arrange & Act
       storage.setManuallyHidden(mockRipple1);
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate({})).toEqual({
         [mockRipple1.ID]: {
           manuallyHidden: true,
         },
@@ -233,22 +245,19 @@ describe("RipplesStorage", () => {
     it("should set manually hidden flag for existing ripple", () => {
       // Arrange
       const existingTime = currentTime - 1000;
-      const storageWithExistingRipple = new RipplesStorage(
-        {
-          [mockRipple1.ID]: {
-            manuallyHidden: false,
-            firstSeenAt: existingTime,
-          },
+      const prev = {
+        [mockRipple1.ID]: {
+          manuallyHidden: false,
+          firstSeenAt: existingTime,
         },
-        mockUpdateState,
-        mockAllRipples,
-      );
+      };
+      const storageWithExistingRipple = new RipplesStorage(prev, mockUpdateState, mockAllRipples);
 
       // Act
       storageWithExistingRipple.setManuallyHidden(mockRipple1);
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate(prev)).toEqual({
         [mockRipple1.ID]: {
           manuallyHidden: true,
           firstSeenAt: existingTime,
@@ -278,7 +287,7 @@ describe("RipplesStorage", () => {
       storageWithMultipleRipples.setManuallyHidden(mockRipple1);
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate(existingData)).toEqual({
         [mockRipple1.ID]: {
           manuallyHidden: true,
           firstSeenAt: currentTime - 1000,
@@ -293,12 +302,11 @@ describe("RipplesStorage", () => {
 
   describe("hideAllRipples", () => {
     it("should hide all ripples from injected allRipples array", () => {
-      // Arrange
-      // Act
+      // Arrange & Act
       storage.hideAllRipples();
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate({})).toEqual({
         [mockRipple1.ID]: { manuallyHidden: true },
         [mockRipple2.ID]: { manuallyHidden: true },
         [mockRipple3.ID]: { manuallyHidden: true },
@@ -308,22 +316,19 @@ describe("RipplesStorage", () => {
     it("should preserve existing data when hiding all ripples", () => {
       // Arrange
       const existingTime = currentTime - 1000;
-      const storageWithExistingData = new RipplesStorage(
-        {
-          [mockRipple1.ID]: {
-            manuallyHidden: false,
-            firstSeenAt: existingTime,
-          },
+      const prev = {
+        [mockRipple1.ID]: {
+          manuallyHidden: false,
+          firstSeenAt: existingTime,
         },
-        mockUpdateState,
-        mockAllRipples,
-      );
+      };
+      const storageWithExistingData = new RipplesStorage(prev, mockUpdateState, mockAllRipples);
 
       // Act
       storageWithExistingData.hideAllRipples();
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate(prev)).toEqual({
         [mockRipple1.ID]: {
           manuallyHidden: true,
           firstSeenAt: existingTime,
@@ -341,7 +346,7 @@ describe("RipplesStorage", () => {
       storageWithNoRipples.hideAllRipples();
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({});
+      expect(resolveUpdate({})).toEqual({});
     });
 
     it("should handle ripples that already exist in storage", () => {
@@ -367,7 +372,7 @@ describe("RipplesStorage", () => {
       storageWithMixedData.hideAllRipples();
 
       // Assert
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate(existingData)).toEqual({
         [mockRipple1.ID]: {
           manuallyHidden: true,
           firstSeenAt: currentTime - 1000,
@@ -396,7 +401,7 @@ describe("RipplesStorage", () => {
 
       // Assert
       expect(originalState).toEqual({});
-      expect(mockUpdateState).toHaveBeenCalledWith({
+      expect(resolveUpdate({})).toEqual({
         [mockRipple1.ID]: {
           firstSeenAt: currentTime,
         },

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
 import { ResponsiveTable } from "../ResponsiveTable/ResponsiveTable";
-import SortableHandle from "./SortableHandle";
+import { SortableHandle } from "./SortableHandle";
 import { SortableTableBody } from "./SortableTableBody";
 import { SortableTableRow } from "./SortableTableRow";
 
@@ -19,7 +19,7 @@ export const Default: Story = {
   render: () => (
     <ResponsiveTable>
       <SortableTableBody onSortEnd={fn()}>
-        <SortableTableRow index={0}>
+        <SortableTableRow id="row-0" index={0}>
           <TableCell>Sortable row with handle</TableCell>
         </SortableTableRow>
       </SortableTableBody>
@@ -31,7 +31,7 @@ export const Disabled: Story = {
   render: () => (
     <ResponsiveTable>
       <SortableTableBody onSortEnd={fn()} disabled>
-        <SortableTableRow index={0}>
+        <SortableTableRow id="row-0" index={0}>
           <TableCell>Disabled sortable row</TableCell>
         </SortableTableRow>
       </SortableTableBody>

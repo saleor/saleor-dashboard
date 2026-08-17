@@ -1,9 +1,10 @@
 // @ts-strict-ignore
+import { AssignedAttributesBulkDeleteButton } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesBulkDeleteButton";
 import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
 import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { usePendingAttributeUnassign } from "@dashboard/components/AttributeUnassignDialog/usePendingAttributeUnassign";
 import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
-import { Button } from "@dashboard/components/Button";
 import {
   type AttributeCreateSubmitData,
   CreateAttributeDialog,
@@ -37,6 +38,7 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { getStringOrPlaceholder, maybe } from "@dashboard/misc";
 import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@dashboard/productTypes/hooks/useProductTypeOperations";
+import { useProductTypeVariantSelection } from "@dashboard/productTypes/hooks/useProductTypeVariantSelection";
 import useAvailableProductAttributeSearch from "@dashboard/searches/useAvailableProductAttributeSearch";
 import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
 import { type ReorderEvent } from "@dashboard/types";
@@ -45,7 +47,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, {
   type ProductTypeForm,
@@ -58,6 +60,11 @@ import {
   type ProductTypeUrlDialog,
   type ProductTypeUrlQueryParams,
 } from "../../urls";
+import {
+  buildProductTypeSaveInput,
+  buildVariantSelectionOperations,
+  findProductTypeAttributeName,
+} from "../../utils/productTypePageForm";
 
 interface ProductTypeUpdateProps {
   id: string;
@@ -70,7 +77,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductTypeUrlDialog,
     ProductTypeUrlQueryParams
-  >(navigate, dialogParams => productTypeUrl(id, dialogParams), params);
+  >(navigate, dialogParams => productTypeUrl(id, dialogParams), params, ["type"]);
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
   const assignAttributesActions = useListSelectedItems<string>();
@@ -129,39 +136,6 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [assignCreatedAttribute, assignCreatedAttributeOpts] = useAssignProductAttributeMutation();
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation();
-  const [selectedVariantAttributes, setSelectedVariantAttributes] = useState<string[]>([]);
-  const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
-    const operations = formData.variantAttributes.map(variantAttribute => ({
-      id: variantAttribute.value,
-      variantSelection: selectedVariantAttributes.includes(variantAttribute.value),
-    }));
-    const productAttributeUpdateResult = await updateProductAttributes({
-      variables: {
-        productTypeId: id,
-        operations,
-      },
-    });
-    const result = await updateProductType({
-      variables: {
-        id,
-        input: {
-          hasVariants: formData.hasVariants,
-          isShippingRequired: formData.isShippingRequired,
-          name: formData.name,
-          kind: formData.kind,
-          productAttributes: formData.productAttributes.map(choice => choice.value),
-          taxClass: formData.taxClassId || null,
-          variantAttributes: formData.variantAttributes.map(choice => choice.value),
-          weight: formData.weight,
-        },
-      },
-    });
-
-    return [
-      ...result.data.productTypeUpdate.errors,
-      ...productAttributeUpdateResult.data.productAttributeAssignmentUpdate.errors,
-    ];
-  };
   const {
     data,
     loading: dataLoading,
@@ -172,6 +146,35 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
   });
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
   const productType = data?.productType;
+  const { selectedVariantAttributes, setSelectedVariantAttributes } =
+    useProductTypeVariantSelection(id, productType?.assignedVariantAttributes);
+  const pendingUnassign = usePendingAttributeUnassign(params.id);
+  const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
+    const operations = buildVariantSelectionOperations(
+      productType?.assignedVariantAttributes,
+      selectedVariantAttributes,
+    );
+    const productAttributeUpdateResult =
+      operations.length > 0
+        ? await updateProductAttributes({
+            variables: {
+              productTypeId: id,
+              operations,
+            },
+          })
+        : undefined;
+    const result = await updateProductType({
+      variables: {
+        id,
+        input: buildProductTypeSaveInput(formData),
+      },
+    });
+
+    return [
+      ...result.data.productTypeUpdate.errors,
+      ...(productAttributeUpdateResult?.data.productAttributeAssignmentUpdate.errors ?? []),
+    ];
+  };
 
   const productTypeDeleteData = useProductTypeDelete({
     singleId: id,
@@ -202,6 +205,7 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
         status: "success",
         text: intl.formatMessage({ id: "6j4TUi", defaultMessage: "Product type updated" }),
       });
+      pendingUnassign.clear();
       closeModal();
       productAttributeListActions.reset();
       variantAttributeListActions.reset();
@@ -220,11 +224,14 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
     }
   };
   const handleAttributeReorderSuccess = (data: ProductTypeAttributeReorderMutation) => {
-    if (data.productTypeReorderAttributes.errors.length === 0) {
+    const error = data.productTypeReorderAttributes.errors[0];
+
+    if (error) {
       notify({
-        status: "success",
-        text: intl.formatMessage({ id: "6j4TUi", defaultMessage: "Product type updated" }),
+        status: "error",
+        text: getProductErrorMessage(error, intl),
       });
+      refetch();
     }
   };
   const { assignAttribute, deleteProductType, unassignAttribute, reorderAttribute } =
@@ -311,28 +318,50 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
 
     return (await submitWithMetadata(formData)) as AttributeErrorFragment[];
   };
-  const handleAttributeUnassign = () =>
+  const handleAttributeUnassign = () => {
+    const attributeId = pendingUnassign.takeAttributeId();
+
+    if (!attributeId) {
+      return;
+    }
+
     unassignAttribute.mutate({
       id,
-      ids: [params.id],
+      ids: [attributeId],
     });
-  const handleBulkProductAttributeUnassign = () =>
+  };
+  const handleBulkProductAttributeUnassign = () => {
+    const ids = productAttributeListActions.listElements.filter(Boolean);
+
+    if (ids.length === 0) {
+      return;
+    }
+
     unassignAttribute.mutate({
       id,
-      ids: productAttributeListActions.listElements,
+      ids,
     });
-  const handleBulkVariantAttributeUnassign = () =>
+  };
+  const handleBulkVariantAttributeUnassign = () => {
+    const ids = variantAttributeListActions.listElements.filter(Boolean);
+
+    if (ids.length === 0) {
+      return;
+    }
+
     unassignAttribute.mutate({
       id,
-      ids: variantAttributeListActions.listElements,
+      ids,
     });
+  };
   const loading =
     updateProductTypeOpts.loading || updateProductAttributesOpts.loading || dataLoading;
   const handleAttributeReorder = (event: ReorderEvent, type: ProductAttributeType) => {
     const attributes =
       type === ProductAttributeType.PRODUCT
         ? data.productType.productAttributes
-        : data.productType.variantAttributes;
+        : (data.productType.assignedVariantAttributes?.map(assigned => assigned.attribute) ??
+          data.productType.variantAttributes);
 
     reorderAttribute.mutate({
       move: {
@@ -371,11 +400,15 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           })
         }
         onAttributeReorder={handleAttributeReorder}
-        onAttributeUnassign={attributeId =>
+        onAttributeUnassign={attributeId => {
+          if (!pendingUnassign.beginUnassign(attributeId)) {
+            return;
+          }
+
           openModal("unassign-attribute", {
             id: attributeId,
-          })
-        }
+          });
+        }}
         onDelete={() => openModal("remove")}
         onShowMetadata={() => openModal("view-metadata", { id: undefined })}
         onHasVariantsToggle={handleProductTypeVariantsToggle}
@@ -386,13 +419,14 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           toggle: productAttributeListActions.toggle,
           toggleAll: productAttributeListActions.toggleAll,
           toolbar: (
-            <Button onClick={() => openModal("unassign-product-attributes")}>
-              <FormattedMessage
-                id="S7j+Wf"
-                defaultMessage="Unassign"
-                description="unassign attribute from product type, button"
-              />
-            </Button>
+            <AssignedAttributesBulkDeleteButton
+              onClick={() => openModal("unassign-product-attributes")}
+              label={intl.formatMessage({
+                id: "S7j+Wf",
+                defaultMessage: "Unassign",
+                description: "unassign attribute from product type, button",
+              })}
+            />
           ),
         }}
         variantAttributeList={{
@@ -401,49 +435,20 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           toggle: variantAttributeListActions.toggle,
           toggleAll: variantAttributeListActions.toggleAll,
           toolbar: (
-            <Button onClick={() => openModal("unassign-variant-attributes")}>
-              <FormattedMessage
-                id="S7j+Wf"
-                defaultMessage="Unassign"
-                description="unassign attribute from product type, button"
-              />
-            </Button>
+            <AssignedAttributesBulkDeleteButton
+              onClick={() => openModal("unassign-variant-attributes")}
+              label={intl.formatMessage({
+                id: "S7j+Wf",
+                defaultMessage: "Unassign",
+                description: "unassign attribute from product type, button",
+              })}
+            />
           ),
         }}
         onFetchMoreTaxClasses={fetchMoreTaxClasses}
       />
       {!dataLoading && (
         <>
-          {Object.keys(ProductAttributeType).map(key => (
-            <AssignAttributeDialog
-              attributes={mapEdgesToItems(result?.data?.productType?.availableAttributes)}
-              confirmButtonState={assignAttribute.opts.status}
-              errors={maybe(
-                () =>
-                  assignAttribute.opts.data.productAttributeAssign.errors.map(err => err.message),
-                [],
-              )}
-              loading={result.loading}
-              onClose={() => {
-                closeModal();
-                assignAttributesActions.clearSelectedItems();
-              }}
-              onSubmit={handleAssignAttribute}
-              onFetch={search}
-              onFetchMore={loadMore}
-              onOpen={result.refetch}
-              hasMore={maybe(
-                () => result.data.productType.availableAttributes.pageInfo.hasNextPage,
-                false,
-              )}
-              open={
-                params.action === "assign-attribute" && params.type === ProductAttributeType[key]
-              }
-              selected={assignAttributesActions.selectedItems}
-              onToggle={assignAttributesActions.toggleSelectItem}
-              key={key}
-            />
-          ))}
           {productType && (
             <>
               <ProductTypeMetadataDialog
@@ -482,6 +487,33 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           )}
         </>
       )}
+      {Object.keys(ProductAttributeType).map(key => (
+        <AssignAttributeDialog
+          attributes={mapEdgesToItems(result?.data?.productType?.availableAttributes)}
+          confirmButtonState={assignAttribute.opts.status}
+          errors={maybe(
+            () => assignAttribute.opts.data.productAttributeAssign.errors.map(err => err.message),
+            [],
+          )}
+          loading={result.loading}
+          onClose={() => {
+            closeModal();
+            assignAttributesActions.clearSelectedItems();
+          }}
+          onSubmit={handleAssignAttribute}
+          onFetch={search}
+          onFetchMore={loadMore}
+          onOpen={result.refetch}
+          hasMore={maybe(
+            () => result.data.productType.availableAttributes.pageInfo.hasNextPage,
+            false,
+          )}
+          open={params.action === "assign-attribute" && params.type === ProductAttributeType[key]}
+          selected={assignAttributesActions.selectedItems}
+          onToggle={assignAttributesActions.toggleSelectItem}
+          key={key}
+        />
+      ))}
 
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({
@@ -512,12 +544,8 @@ const ProductTypeUpdate = ({ id, params }: ProductTypeUpdateProps) => {
           defaultMessage: "Unassign Attribute From Product Type",
           description: "dialog header",
         })}
-        attributeName={maybe(
-          () =>
-            [...data.productType.productAttributes, ...data.productType.variantAttributes].find(
-              attribute => attribute.id === params.id,
-            ).name,
-          "...",
+        attributeName={getStringOrPlaceholder(
+          findProductTypeAttributeName(data?.productType, pendingUnassign.attributeId),
         )}
         confirmButtonState={unassignAttribute.opts.status}
         onClose={closeModal}

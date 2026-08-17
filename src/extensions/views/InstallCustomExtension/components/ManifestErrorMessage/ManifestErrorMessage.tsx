@@ -1,3 +1,4 @@
+import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import {
   appManifestErrorMessages,
   messages as extensionMessages,
@@ -13,6 +14,7 @@ import type * as React from "react";
 import { type FieldError } from "react-hook-form";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
+import { type AlreadyInstalledApp } from "../../hooks/useFetchManifest";
 import {
   MANIFEST_URL_CLIENT_VALIDATION_INVALID_FORMAT,
   MANIFEST_URL_CLIENT_VALIDATION_REQUIRED,
@@ -62,14 +64,63 @@ const getFieldErrorMessage = (error: FieldError, intl: IntlShape): string | Reac
   return error.message || intl.formatMessage(commonErrorMessages.unknownError);
 };
 
+const AlreadyInstalledMessage = ({
+  alreadyInstalledApp,
+}: {
+  alreadyInstalledApp: AlreadyInstalledApp;
+}) => {
+  const messageDescriptor =
+    alreadyInstalledApp.isActive === false
+      ? appManifestErrorMessages.alreadyInstalledDisabled
+      : appManifestErrorMessages.alreadyInstalled;
+  const linkMessageDescriptor =
+    alreadyInstalledApp.linkTarget === "app"
+      ? appManifestErrorMessages.openInstalledApp
+      : appManifestErrorMessages.openInstalledExtensionSettings;
+
+  return (
+    <Text size={2} color="default2" display="inline-block">
+      <FormattedMessage
+        {...messageDescriptor}
+        values={{
+          appName: alreadyInstalledApp.name,
+        }}
+      />{" "}
+      <MicrocopyLink to={alreadyInstalledApp.href}>
+        <FormattedMessage
+          {...linkMessageDescriptor}
+          values={{ appName: alreadyInstalledApp.name }}
+        />
+      </MicrocopyLink>
+    </Text>
+  );
+};
+
 export const ManifestErrorMessage = ({
   error,
+  alreadyInstalledApp,
   className,
   ...props
 }: {
-  error: FieldError | null | undefined;
+  error?: FieldError | null;
+  alreadyInstalledApp?: AlreadyInstalledApp | null;
 } & BoxProps) => {
   const intl = useIntl();
+
+  if (alreadyInstalledApp) {
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        gap={2}
+        aria-live="polite"
+        className={className}
+        {...props}
+      >
+        <AlreadyInstalledMessage alreadyInstalledApp={alreadyInstalledApp} />
+      </Box>
+    );
+  }
 
   if (!error) {
     return null;

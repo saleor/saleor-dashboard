@@ -1,0 +1,18 @@
+.codeCell {
+  min-width: 0;
+  width: 100%;
+}
+
+/* Fill the cell so long codes can ellipsis, but don’t grow the label past its text
+   (flex: 0 1 auto) — keeps the copy control immediately after the code. */
+.codeCell > * {
+  min-width: 0;
+  width: 100%;
+}
+
+.codeText {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}

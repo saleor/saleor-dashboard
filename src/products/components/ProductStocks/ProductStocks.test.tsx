@@ -11,10 +11,20 @@ describe("WarehouseInformationMessage", () => {
     onWarehouseConfigure: jest.fn(),
   };
 
-  it("should render message for creating product", () => {
+  it("should render message for creating product when warehouses cannot be assigned yet", () => {
     const { getByText } = render(<WarehouseInformationMessage isCreate {...defaultProps} />);
 
     expect(getByText(messages.warehouseMessageProductOnCreate.defaultMessage)).toBeInTheDocument();
+  });
+
+  it("should render configure warehouse on create when assign is available", () => {
+    const { getByText, queryByText } = render(
+      <WarehouseInformationMessage isCreate canAssignWarehouses {...defaultProps} />,
+    );
+
+    // Assert — deferred create copy is replaced by configure-warehouse guidance
+    expect(queryByText(messages.warehouseMessageProductOnCreate.defaultMessage)).toBeNull();
+    expect(getByText(/configure a warehouse/i)).toBeInTheDocument();
   });
 
   it("should render message for creating variant", () => {

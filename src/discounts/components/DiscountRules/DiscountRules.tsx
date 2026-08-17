@@ -1,10 +1,10 @@
-import { DashboardCard } from "@dashboard/components/Card";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { type Rule } from "@dashboard/discounts/models";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import { type ChannelFragment, type PromotionTypeEnum } from "@dashboard/graphql";
 import { type CommonError } from "@dashboard/utils/errors/common";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -52,15 +52,18 @@ export const DiscountRules = <ErrorCode,>({
   const [isLoaded, setIsLoaded] = useState(false);
   const { opepnGrapQLPlayground } = useGraphQLPlayground();
 
-  useEffect(() => {
-    if (!isLoaded && !disabled) {
-      setIsLoaded(true);
-    }
-  }, [disabled]);
+  useEffect(
+    function markRulesLoadedWhenEnabled() {
+      if (!isLoaded && !disabled) {
+        setIsLoaded(true);
+      }
+    },
+    [disabled, isLoaded],
+  );
 
   const ruleInitialValues = useMemo(() => {
     return ruleEditIndex !== null ? rules[ruleEditIndex] : null;
-  }, [ruleEditIndex]);
+  }, [ruleEditIndex, rules]);
   const handleRuleEdit = (editIndex: number) => {
     setRuleEditIndex(editIndex);
     setIsModalOpen(true);
@@ -108,19 +111,17 @@ export const DiscountRules = <ErrorCode,>({
       channels={channels}
       disabled={disabled}
     >
-      <DashboardCard marginBottom={20}>
-        <DashboardCard.Header>
-          <Box display="flex" flexDirection="column">
-            <DashboardCard.Title>{intl.formatMessage(messages.title)}</DashboardCard.Title>
-            <DashboardCard.Subtitle fontSize={3} color="default2">
-              {intl.formatMessage(messages.titleDescription)}
-            </DashboardCard.Subtitle>
-          </Box>
-          <DashboardCard.Toolbar>
-            <AddButton onClick={() => setIsModalOpen(true)} />
-          </DashboardCard.Toolbar>
-        </DashboardCard.Header>
-        <DashboardCard.Content data-test-id="rule-list">
+      <DetailSettingsCard
+        data-test-id="discount-rules-section"
+        title={intl.formatMessage(messages.title)}
+        intro={
+          <Text size={3} color="default2">
+            {intl.formatMessage(messages.titleDescription)}
+          </Text>
+        }
+        headerEnd={<AddButton onClick={() => setIsModalOpen(true)} />}
+      >
+        <Box data-test-id="rule-list">
           <RulesList
             loading={!isLoaded || ruleConditionsValues.loading}
             rules={rules}
@@ -128,25 +129,25 @@ export const DiscountRules = <ErrorCode,>({
             onRuleDelete={handleOpenRuleDeleteModal}
             errors={errors}
           />
-        </DashboardCard.Content>
+        </Box>
+      </DetailSettingsCard>
 
-        {isModalOpen && (
-          <RuleFormModal
-            confirmButtonState={getRuleConfirmButtonState(ruleEditIndex)}
-            onClose={handleRuleModalClose}
-            initialFormValues={ruleInitialValues}
-            onSubmit={handleRuleModalSubmit}
-          >
-            <RuleForm errors={errors} openPlayground={handleOpenPlayground} />
-          </RuleFormModal>
-        )}
-        <RuleDeleteModal
-          confirmButtonState={deleteButtonState}
-          open={ruleDeleteIndex !== null}
-          onClose={() => setRuleDeleteIndex(null)}
-          onConfirm={handleRuleDelete}
-        />
-      </DashboardCard>
+      {isModalOpen && (
+        <RuleFormModal
+          confirmButtonState={getRuleConfirmButtonState(ruleEditIndex)}
+          onClose={handleRuleModalClose}
+          initialFormValues={ruleInitialValues}
+          onSubmit={handleRuleModalSubmit}
+        >
+          <RuleForm errors={errors} openPlayground={handleOpenPlayground} />
+        </RuleFormModal>
+      )}
+      <RuleDeleteModal
+        confirmButtonState={deleteButtonState}
+        open={ruleDeleteIndex !== null}
+        onClose={() => setRuleDeleteIndex(null)}
+        onConfirm={handleRuleDelete}
+      />
     </DiscountRulesContextProvider>
   );
 };

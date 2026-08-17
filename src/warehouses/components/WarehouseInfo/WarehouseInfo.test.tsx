@@ -88,7 +88,7 @@ describe("WarehouseInfo", () => {
       </Wrapper>,
     );
 
-    expect(screen.getByText("Invalid value")).toBeInTheDocument();
+    expect(screen.getByText("Name is required")).toBeInTheDocument();
 
     const nameInput = screen.getByTestId("warehouse-name-input").querySelector("input");
 
@@ -107,7 +107,7 @@ describe("WarehouseInfo", () => {
       </Wrapper>,
     );
 
-    expect(screen.getByText("Invalid value")).toBeInTheDocument();
+    expect(screen.getByText("Invalid email format")).toBeInTheDocument();
 
     const emailInput = screen.getByTestId("company-email-input").querySelector("input");
 

@@ -4,38 +4,17 @@ import {
   SearchProductsDocument,
   SearchVariantsDocument,
 } from "@dashboard/graphql";
+import { allPermissions } from "@dashboard/hooks/makeQuery";
 
 const queryVariablesMock = {
+  ...allPermissions,
   after: null,
   first: 20,
   query: "",
-  PERMISSION_HANDLE_CHECKOUTS: false,
-  PERMISSION_HANDLE_PAYMENTS: false,
-  PERMISSION_HANDLE_TAXES: false,
-  PERMISSION_IMPERSONATE_USER: false,
-  PERMISSION_MANAGE_APPS: false,
-  PERMISSION_MANAGE_CHANNELS: false,
-  PERMISSION_MANAGE_CHECKOUTS: false,
-  PERMISSION_MANAGE_DISCOUNTS: false,
-  PERMISSION_MANAGE_GIFT_CARD: false,
-  PERMISSION_MANAGE_MENUS: false,
-  PERMISSION_MANAGE_OBSERVABILITY: false,
-  PERMISSION_MANAGE_ORDERS: false,
-  PERMISSION_MANAGE_ORDERS_IMPORT: false,
-  PERMISSION_MANAGE_PAGES: false,
-  PERMISSION_MANAGE_PAGE_TYPES_AND_ATTRIBUTES: false,
-  PERMISSION_MANAGE_PLUGINS: false,
-  PERMISSION_MANAGE_PRODUCTS: false,
-  PERMISSION_MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES: false,
-  PERMISSION_MANAGE_SETTINGS: false,
-  PERMISSION_MANAGE_SHIPPING: false,
-  PERMISSION_MANAGE_STAFF: false,
-  PERMISSION_MANAGE_TAXES: false,
-  PERMISSION_MANAGE_TRANSLATIONS: false,
-  PERMISSION_MANAGE_USERS: false,
 };
 
 export const searchCategoriesMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchCategoriesDocument,
     variables: {
@@ -107,6 +86,7 @@ export const searchCategoriesMock = {
 };
 
 export const searchCollectionsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchCollectionsDocument,
     variables: {
@@ -149,6 +129,7 @@ export const searchCollectionsMock = {
 };
 
 export const searchProductsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchProductsDocument,
     variables: {
@@ -176,6 +157,7 @@ export const searchProductsMock = {
                 __typename: "ProductType",
               },
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -195,6 +177,7 @@ export const searchProductsMock = {
                 __typename: "ProductType",
               },
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -214,6 +197,7 @@ export const searchProductsMock = {
               },
               channelListings: [],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -233,6 +217,7 @@ export const searchProductsMock = {
               },
               channelListings: [],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -252,6 +237,7 @@ export const searchProductsMock = {
 };
 
 export const searchVariantsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchVariantsDocument,
     variables: {

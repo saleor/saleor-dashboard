@@ -1,14 +1,5 @@
-import { type ProductTypeKindEnum, type TaxClassBaseFragment } from "@dashboard/graphql";
+import { type TaxClassBaseFragment } from "@dashboard/graphql";
 import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
-
-export const makeProductTypeKindChangeHandler =
-  (onChange: FormChange, onKindChange: (kind: ProductTypeKindEnum) => void) =>
-  (event: React.ChangeEvent<any>) => {
-    const kind = event.target.value as ProductTypeKindEnum;
-
-    onKindChange(kind);
-    onChange(event);
-  };
 
 export function handleTaxClassChange(
   event: ChangeEvent,

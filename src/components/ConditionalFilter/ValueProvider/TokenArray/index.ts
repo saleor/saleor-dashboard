@@ -7,6 +7,7 @@ import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   type AttributesFetchingParams,
   type CollectionFetchingParams,
+  type DiscountFetchingParams,
   type FetchingParams,
   type FetchingParamsType,
   type GiftCardsFetchingParams,
@@ -16,6 +17,7 @@ import {
   type StaffMembersFetchingParams,
   toAttributesFetchingParams,
   toCollectionFetchingParams,
+  toDiscountsFetchingParams,
   toFetchingParams,
   toGiftCardsFetchingParams,
   toOrderFetchingParams,
@@ -94,6 +96,13 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
         return this.asFlatArray()
           .filter(token => token.isLoadable())
           .reduce<VoucherFetchingParams>(toVouchersFetchingParams, params as VoucherFetchingParams);
+      case "discount":
+        return this.asFlatArray()
+          .filter(token => token.isLoadable())
+          .reduce<DiscountFetchingParams>(
+            toDiscountsFetchingParams,
+            params as DiscountFetchingParams,
+          );
       case "page":
         return this.asFlatArray()
           .filter(token => token.isLoadable())

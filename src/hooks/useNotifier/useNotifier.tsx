@@ -2,12 +2,12 @@ import {
   type INotification,
   type INotificationCallback,
 } from "@dashboard/components/notifications";
-import { Toast } from "@dashboard/components/notifications/Toast";
-import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
+import { enqueueToast } from "@dashboard/components/notifications/notificationQueue";
 import { commonMessages } from "@dashboard/intl";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
-import { toast } from "sonner";
+
+import { getNotificationDuration } from "./utils";
 
 export type UseNotifierResult = INotificationCallback;
 
@@ -16,10 +16,7 @@ function useNotifier(): UseNotifierResult {
 
   const notify = useCallback(
     (options: INotification) => {
-      const duration =
-        options.status === "error"
-          ? Infinity
-          : (options.autohide ?? DEFAULT_NOTIFICATION_SHOW_TIME);
+      const duration = getNotificationDuration(options);
 
       // Build description - use apiMessage as fallback if no text
       const description = options.text || options.apiMessage;
@@ -42,27 +39,20 @@ function useNotifier(): UseNotifierResult {
       const title = options.title || getDefaultTitle();
       const type = options.status || "info";
 
-      toast.custom(
-        id => (
-          <Toast
-            id={id}
-            type={type}
-            title={title}
-            description={description}
-            action={
-              options.actionBtn
-                ? {
-                    label: options.actionBtn.label,
-                    onClick: options.actionBtn.action,
-                  }
-                : undefined
+      // Queue mounts at most MAX_VISIBLE_TOASTS; overflow waits until a visible
+      // toast is dismissed. Toast owns auto-dismiss + progress.
+      enqueueToast({
+        type,
+        title,
+        description,
+        duration,
+        action: options.actionBtn
+          ? {
+              label: options.actionBtn.label,
+              onClick: options.actionBtn.action,
             }
-          />
-        ),
-        {
-          duration,
-        },
-      );
+          : undefined,
+      });
     },
     [intl],
   );

@@ -40,7 +40,6 @@ export const VariantDetailsChannelsAvailabilityCard = ({
       onManageClick={onManageClick}
       disabled={disabled}
       availabilityCount={getAvailabilityCountForVariant(variant, listings)}
-      isEmpty={listings.length === 0}
     />
   </AvailabilityCard>
 );
@@ -59,7 +58,6 @@ export const ProductDetailsChannelsAvailabilityCard = ({
       onManageClick={onManageClick}
       disabled={disabled}
       availabilityCount={getAvailabilityCountForProduct(product, listings)}
-      isEmpty={listings.length === 0}
     />
   </AvailabilityCard>
 );

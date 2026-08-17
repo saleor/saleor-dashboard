@@ -1,6 +1,10 @@
 import { useUser } from "@dashboard/auth/useUser";
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -125,7 +129,12 @@ export const PermissionGroupDetailsPage = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={permissionGroupListBackLink} title={permissionGroup?.name} />
+            <TopNav
+              href={permissionGroupListBackLink}
+              hrefIcon={<TopNavDestinationIcon.permissionGroups />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allPermissionGroups)}
+              title={permissionGroup?.name}
+            />
             <DetailPageLayout.Content>
               <PermissionGroupInfo
                 data={data}

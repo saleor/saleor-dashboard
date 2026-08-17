@@ -152,4 +152,10 @@ ResponsiveTable.displayName = "ResponsiveTable";
 export const tableStyles = {
   colAction: styles.colAction,
   cellFlush: styles.cellFlush,
+  assignableTable: styles.assignableTable,
+  checkboxCell: styles.checkboxCell,
+  dragCell: styles.dragCell,
+  actionsCell: styles.actionsCell,
+  row: styles.row,
+  rowDelete: styles.rowDelete,
 };

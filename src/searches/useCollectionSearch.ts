@@ -9,6 +9,7 @@ import {
   type SearchCollectionsWithTotalProductsQueryVariables,
 } from "@dashboard/graphql";
 import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import { mapFilterSearchQuery } from "@dashboard/hooks/makeTopLevelSearch/mapFilterSearchQuery";
 
 export const searchCollections = gql`
   query SearchCollections(
@@ -55,18 +56,12 @@ export const useCollectionWithTotalProductsSearch = makeTopLevelSearch<
   SearchCollectionsWithTotalProductsQuery,
   SearchCollectionsWithTotalProductsQueryVariables
 >(SearchCollectionsWithTotalProductsDocument, {
-  mapSearchToVariables: (searchQuery, variables) => ({
-    ...variables,
-    filter: { ...variables.filter, search: searchQuery },
-  }),
+  mapSearchToVariables: mapFilterSearchQuery,
 });
 
 export default makeTopLevelSearch<SearchCollectionsQuery, SearchCollectionsQueryVariables>(
   SearchCollectionsDocument,
   {
-    mapSearchToVariables: (searchQuery, variables) => ({
-      ...variables,
-      filter: { ...variables.filter, search: searchQuery },
-    }),
+    mapSearchToVariables: mapFilterSearchQuery,
   },
 );

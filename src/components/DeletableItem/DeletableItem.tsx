@@ -1,19 +1,28 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { IconButton } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 
 interface DeletableItemProps {
   onDelete: (id: string) => void;
   id: string;
+  disabled?: boolean;
 }
 
-const DeletableItem = ({ onDelete, id }: DeletableItemProps) => {
-  const handleDelete = () => onDelete(id);
+const DeletableItem = ({ onDelete, id, disabled = false }: DeletableItemProps) => {
+  const handleDelete = () => {
+    if (!disabled) {
+      onDelete(id);
+    }
+  };
 
   return (
-    <IconButton variant="secondary" onClick={handleDelete}>
-      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-    </IconButton>
+    <Button
+      variant="tertiary"
+      type="button"
+      icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+      onClick={handleDelete}
+      disabled={disabled}
+    />
   );
 };
 

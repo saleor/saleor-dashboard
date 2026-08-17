@@ -8,23 +8,14 @@ interface CreateVariantTitleProps {
   onManageClick: () => void;
   disabled: boolean;
   availabilityCount: Record<string, number | undefined>;
-  isEmpty: boolean;
 }
 
 export const CreateVariantTitle = ({
   onManageClick,
   disabled,
   availabilityCount,
-  isEmpty,
 }: CreateVariantTitleProps) => {
   const intl = useIntl();
-  const getCaptionText = () => {
-    if (isEmpty) {
-      return intl.formatMessage(messages.noItemsAvailable);
-    }
-
-    return intl.formatMessage(messages.subtitle, availabilityCount);
-  };
 
   return (
     <DashboardCard.Header>
@@ -32,7 +23,7 @@ export const CreateVariantTitle = ({
         <Box display="grid" gap={2}>
           {intl.formatMessage(messages.title)}
           <Text size={2} color="default2">
-            {getCaptionText()}
+            {intl.formatMessage(messages.subtitle, availabilityCount)}
           </Text>
         </Box>
       </DashboardCard.Title>

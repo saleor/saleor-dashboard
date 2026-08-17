@@ -1,0 +1,17 @@
+.root {
+  display: block;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.grab {
+  cursor: grab;
+}
+
+.grabbing {
+  cursor: grabbing;
+}
+
+.notAllowed {
+  cursor: not-allowed;
+}

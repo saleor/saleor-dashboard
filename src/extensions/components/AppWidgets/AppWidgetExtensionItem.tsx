@@ -103,6 +103,7 @@ export const AppWidgetExtensionItem = ({
           extensionId={extension.id}
           extensionUrl={extensionUrl}
           params={params}
+          refetch={extension.refetch}
         />
       ) : (
         <AppFrame

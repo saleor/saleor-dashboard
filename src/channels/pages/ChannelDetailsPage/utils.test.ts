@@ -146,7 +146,7 @@ describe("ChannelDetailsPage utils", () => {
   describe("parseDateTimeToDateAndTime", () => {
     it("parses valid ISO datetime string", () => {
       // Arrange
-      const dateTime = "2024-12-15T14:30:00Z";
+      const dateTime = new Date(2024, 11, 15, 14, 30).toISOString();
 
       // Act
       const result = parseDateTimeToDateAndTime(dateTime);
@@ -154,6 +154,17 @@ describe("ChannelDetailsPage utils", () => {
       // Assert
       expect(result.date).toBe("2024-12-15");
       expect(result.time).toBe("14:30");
+    });
+
+    it("keeps the local calendar date when parsing a UTC datetime", () => {
+      // Arrange
+      const dateTime = new Date(2024, 11, 15, 0, 30).toISOString();
+
+      // Act
+      const result = parseDateTimeToDateAndTime(dateTime);
+
+      // Assert
+      expect(result).toEqual({ date: "2024-12-15", time: "00:30" });
     });
 
     it("returns empty strings for null input", () => {
@@ -202,7 +213,7 @@ describe("ChannelDetailsPage utils", () => {
 
     it("parses datetime with milliseconds", () => {
       // Arrange
-      const dateTime = "2024-12-15T14:30:45.123Z";
+      const dateTime = new Date(2024, 11, 15, 14, 30, 45, 123).toISOString();
 
       // Act
       const result = parseDateTimeToDateAndTime(dateTime);
@@ -214,7 +225,7 @@ describe("ChannelDetailsPage utils", () => {
 
     it("returns time in HH:MM format", () => {
       // Arrange
-      const dateTime = "2024-12-15T09:05:00Z";
+      const dateTime = new Date(2024, 11, 15, 9, 5).toISOString();
 
       // Act
       const result = parseDateTimeToDateAndTime(dateTime);

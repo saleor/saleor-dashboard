@@ -1,3 +1,4 @@
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -28,24 +29,12 @@ export const VariantPreviewList = ({ previews }: VariantPreviewListProps) => {
   const hasContent = newCount > 0 || existingCount > 0;
 
   if (!hasContent) {
-    return (
-      <Box className={styles.emptyState}>
-        <Text size={2} color="default2">
-          {intl.formatMessage(messages.selectPrompt)}
-        </Text>
-      </Box>
-    );
+    return <Placeholder>{intl.formatMessage(messages.selectPrompt)}</Placeholder>;
   }
 
   // All selected combinations already exist
   if (newCount === 0 && existingCount > 0) {
-    return (
-      <Box className={styles.emptyState}>
-        <Text size={2} color="default2">
-          {intl.formatMessage(messages.allAlreadyExist)}
-        </Text>
-      </Box>
-    );
+    return <Placeholder>{intl.formatMessage(messages.allAlreadyExist)}</Placeholder>;
   }
 
   return (

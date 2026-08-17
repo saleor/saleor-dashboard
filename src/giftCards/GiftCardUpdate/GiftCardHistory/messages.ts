@@ -12,25 +12,15 @@ const giftCardHistoryMessages = defineMessages({
     description: "notifier message",
   },
   historyHeaderTitle: {
-    id: "4Z0O2B",
-    defaultMessage: "Gift Card Timeline",
-    description: "section header title",
+    id: "byCwum",
+    defaultMessage: "Timeline",
+    description: "gift card detail page, activity timeline section title",
   },
 });
 const giftCardHistoryTimelineMessages = defineMessages({
-  activated: {
-    id: "fExm0/",
-    defaultMessage: "Gift card was activated by {activatedBy}",
-    description: "gift card history message",
-  },
   activatedAnonymous: {
     id: "pCy5EP",
     defaultMessage: "Gift card was activated",
-    description: "gift card history message",
-  },
-  balanceReset: {
-    id: "aEc9Ar",
-    defaultMessage: "Gift card balance was reset by {resetBy}",
     description: "gift card history message",
   },
   balanceResetAnonymous: {
@@ -38,30 +28,14 @@ const giftCardHistoryTimelineMessages = defineMessages({
     defaultMessage: "Gift card balance was reset",
     description: "gift card history message",
   },
-  balanceResetWithAmount: {
-    id: "YlJchr",
-    defaultMessage: "Gift card balance was reset from {oldBalance} to {newBalance} by {resetBy}",
-    description: "gift card history message",
-  },
   balanceResetWithAmountAnonymous: {
     id: "OsHE5l",
     defaultMessage: "Gift card balance was reset from {oldBalance} to {newBalance}",
     description: "gift card history message",
   },
-  balanceAdjusted: {
-    id: "1O/T5n",
-    defaultMessage: "Gift card balance was adjusted by {adjustedBy}",
-    description: "gift card history message",
-  },
   balanceAdjustedAnonymous: {
     id: "cSLXjT",
     defaultMessage: "Gift card balance was adjusted",
-    description: "gift card history message",
-  },
-  balanceAdjustedWithAmount: {
-    id: "hAyk99",
-    defaultMessage:
-      "Gift card balance was adjusted from {oldBalance} to {newBalance} by {adjustedBy}",
     description: "gift card history message",
   },
   balanceAdjustedWithAmountAnonymous: {
@@ -74,29 +48,14 @@ const giftCardHistoryTimelineMessages = defineMessages({
     defaultMessage: "Gift card was bought in order {orderNumber}",
     description: "gift card history message",
   },
-  deactivated: {
-    id: "gAqkrG",
-    defaultMessage: "Gift card was deactivated by {deactivatedBy}",
-    description: "gift card history message",
-  },
   deactivatedAnonymous: {
     id: "NvwS/N",
     defaultMessage: "Gift card was deactivated",
     description: "gift card history message",
   },
-  expiryDateUpdate: {
-    id: "vQunFc",
-    defaultMessage: "Gift card expiry date was updated by {expiryUpdatedBy}",
-    description: "gift card history message",
-  },
   expiryDateUpdateAnonymous: {
     id: "fLhj3a",
     defaultMessage: "Gift card expiry date was updated",
-    description: "gift card history message",
-  },
-  issued: {
-    id: "30X9S8",
-    defaultMessage: "Gift card was issued by {issuedBy}",
     description: "gift card history message",
   },
   issuedAnonymous: {
@@ -129,34 +88,24 @@ const giftCardHistoryTimelineMessages = defineMessages({
     defaultMessage: "Gift card was refunded in an order",
     description: "gift card history message",
   },
-  usedInOrder: {
-    id: "Uu2B2G",
-    defaultMessage: "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>",
-    description: "gift card history message",
-  },
   usedInOrderAnonymous: {
     id: "408KSO",
     defaultMessage: "Gift card was used as a payment method on order {orderLink}",
     description: "gift card history message",
+  },
+  usedInOrderNoLink: {
+    id: "CI5owv",
+    defaultMessage: "Gift card was used as a payment method on an order",
+    description: "gift card history message when order link is unavailable",
   },
   assignedToUser: {
     id: "GOKr7S",
     defaultMessage: "Gift card was assigned to {customer}",
     description: "gift card history message",
   },
-  assignedToUserBy: {
-    id: "6a+Epp",
-    defaultMessage: "Gift card was assigned to {customer} by {assignedBy}",
-    description: "gift card history message",
-  },
   unassignedFromUser: {
     id: "AXEs7u",
     defaultMessage: "Gift card was unassigned from {customer}",
-    description: "gift card history message",
-  },
-  unassignedFromUserBy: {
-    id: "Za3SQQ",
-    defaultMessage: "Gift card was unassigned from {customer} by {unassignedBy}",
     description: "gift card history message",
   },
   assignmentCustomerFallback: {

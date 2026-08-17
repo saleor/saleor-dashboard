@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout";
 import { Callout, calloutTitleMessages } from "@dashboard/components/Callout";
 import { HookFormInput } from "@dashboard/components/HookFormInput";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -85,6 +89,8 @@ export function AddCustomExtension({ setToken }: { setToken: (token: string) => 
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
+        hrefIcon={<TopNavDestinationIcon.extensions />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.extensions)}
         __height="auto"
         title={intl.formatMessage(headerTitles.addCustomExtension)}
         subtitle={

@@ -4,7 +4,12 @@ export interface ChannelAvailabilitySummary {
   currencyCode: string;
 }
 
-export type ChannelAvailabilityStatusType = "success" | "warning" | "error";
+export type ChannelAvailabilityStatusType =
+  | "success"
+  | "warning"
+  | "error"
+  | "scheduled"
+  | "hidden";
 
 export type ChannelAvailabilityBadgeType = "error" | "draft";
 

@@ -2,10 +2,14 @@ import {
   type ChannelPriceAndPreorderData,
   type IChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
+import { DashboardCard } from "@dashboard/components/Card";
 import { Divider } from "@dashboard/components/Divider";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 import { type PropsWithChildren } from "react";
+import { FormattedMessage } from "react-intl";
 
+import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
 import { type ProductChannelListing } from "./../types";
 import { ChannelsListItem } from "./ChannelsListItem";
 import { useFilteredChannelListing } from "./useFilteredChannelListing";
@@ -27,7 +31,15 @@ export const AvailabilityCard = ({
   });
 
   if (allAvailableListings.length === 0) {
-    return <CardContainer cardTitle={children}>{null}</CardContainer>;
+    return (
+      <CardContainer cardTitle={children} defaultExpanded>
+        <DashboardCard.Content paddingBottom={6} data-test-id="channel-availability-empty">
+          <Placeholder>
+            <FormattedMessage {...messages.noItemsAvailable} />
+          </Placeholder>
+        </DashboardCard.Content>
+      </CardContainer>
+    );
   }
 
   return (

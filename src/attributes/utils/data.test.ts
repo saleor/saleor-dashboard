@@ -35,6 +35,7 @@ const createMockReferenceData = (data: {
       thumbnail: null,
       channelListings: null,
       collections: null,
+      category: null,
       productVariants: p.variants
         ? {
             __typename: "ProductVariantCountableConnection" as const,

@@ -31,10 +31,22 @@ export const rootCategories = gql`
 `;
 
 export const categoryDetails = gql`
-  query CategoryDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+  query CategoryDetails(
+    $id: ID!
+    $childrenFirst: Int
+    $childrenAfter: String
+    $childrenLast: Int
+    $childrenBefore: String
+  ) {
     category(id: $id) {
       ...CategoryDetails
-      children(first: $first, after: $after, last: $last, before: $before) {
+      children(
+        first: $childrenFirst
+        after: $childrenAfter
+        last: $childrenLast
+        before: $childrenBefore
+      ) {
+        totalCount
         edges {
           node {
             ...Category
@@ -44,19 +56,22 @@ export const categoryDetails = gql`
           ...PageInfo
         }
       }
-      products(first: $first, after: $after, last: $last, before: $before) {
+    }
+  }
+`;
+
+export const categoryProducts = gql`
+  query CategoryProducts($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
+    category(id: $id) {
+      id
+      products(first: $first, after: $after, before: $before, last: $last) {
+        edges {
+          node {
+            ...CollectionProduct
+          }
+        }
         pageInfo {
           ...PageInfo
-        }
-        edges {
-          cursor
-          node {
-            id
-            name
-            thumbnail {
-              url
-            }
-          }
         }
       }
     }

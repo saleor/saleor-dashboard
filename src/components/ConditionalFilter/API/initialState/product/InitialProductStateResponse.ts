@@ -107,7 +107,19 @@ export class InitialProductStateResponse implements InitialProductState {
       return [token.value] as string[];
     }
 
-    return this.getEntryByName(token.name).filter(({ slug }) => slug && token.value.includes(slug));
+    // Exact match only — String.includes would treat "default-channel" as a hit for
+    // "default-channel-copy" and rehydrate the wrong channel after duplication.
+    return this.getEntryByName(token.name).filter(({ slug }) => {
+      if (!slug) {
+        return false;
+      }
+
+      if (Array.isArray(token.value)) {
+        return token.value.includes(slug);
+      }
+
+      return slug === token.value;
+    });
   }
 
   private getEntryByName(name: string) {

@@ -12,6 +12,7 @@ import {
   type WebhookDeliveryProblem,
 } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { resolveInstalledAppHref } from "@dashboard/extensions/utils/resolveInstalledAppHref";
 import {
   byActivePlugin,
   filterOutHiddenPlugins,
@@ -71,32 +72,6 @@ const getExtensionLogo = ({
   }
 
   return <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />;
-};
-
-const resolveExtensionHref = ({
-  id,
-  type,
-  isActive,
-  appUrl,
-}: {
-  id?: string;
-  type: AppTypeEnum | null;
-  isActive: boolean | null;
-  appUrl?: string | null;
-}) => {
-  if (!id) {
-    return undefined;
-  }
-
-  if (type === AppTypeEnum.LOCAL) {
-    return ExtensionsUrls.editCustomExtensionUrl(id);
-  }
-
-  if (!isActive || !appUrl) {
-    return ExtensionsUrls.resolveEditManifestExtensionUrl(id);
-  }
-
-  return ExtensionsUrls.resolveViewManifestExtensionUrl(id);
 };
 
 const buildWebhookProblem = (
@@ -177,7 +152,7 @@ export const useInstalledExtensions = () => {
             isActive,
             loading: !eventDeliveriesData?.apps,
           }),
-          href: resolveExtensionHref({ id, type, isActive, appUrl }),
+          href: resolveInstalledAppHref({ id, type, isActive, appUrl }),
           problems: allProblems,
           appType: type,
           activeProblemCount: activeProblemsForApp.length,

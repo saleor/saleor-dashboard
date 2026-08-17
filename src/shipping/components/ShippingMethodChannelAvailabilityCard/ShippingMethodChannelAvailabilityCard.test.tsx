@@ -190,9 +190,7 @@ describe("ShippingMethodChannelAvailabilityCard", () => {
 
     // Assert
     expect(screen.queryByTestId("channel-availability-subtitle")).not.toBeInTheDocument();
-    expect(
-      screen.queryByText("This shipping rate is not available in any channel"),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText("No channels assigned")).not.toBeInTheDocument();
     expect(screen.getByTestId("availability-card")).toBeInTheDocument();
   });
 });

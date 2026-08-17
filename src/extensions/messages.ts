@@ -538,6 +538,27 @@ export const appManifestErrorMessages = defineMessages({
     // TODO: Add docs link when we have docs page with explanation
     defaultMessage: "The extension identifier is already in use. ({errorCode})",
   },
+  alreadyInstalled: {
+    id: "gU10OX",
+    defaultMessage: "{appName} is already installed.",
+    description: "shown when user tries to install an extension that is already installed",
+  },
+  alreadyInstalledDisabled: {
+    id: "g2P/kE",
+    defaultMessage: "{appName} is installed but disabled.",
+    description:
+      "shown when user tries to install an extension that is already installed but inactive",
+  },
+  openInstalledApp: {
+    id: "KynPlY",
+    defaultMessage: "Open {appName}",
+    description: "link to open an already installed extension app UI",
+  },
+  openInstalledExtensionSettings: {
+    id: "zyWNgK",
+    defaultMessage: "Open settings",
+    description: "link to an already installed extension settings page from the install page",
+  },
   forbidden: {
     // AppErrorCode.FORBIDDEN
     defaultMessage: "You are not allowed to perform this action. ({errorCode})",

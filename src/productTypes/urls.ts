@@ -1,5 +1,5 @@
 import { type ProductTypeKindEnum } from "@dashboard/graphql";
-import { stringifyQs } from "@dashboard/utils/urls";
+import { withQuery } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
 import {
@@ -22,7 +22,7 @@ export enum ProductTypeListUrlFiltersEnum {
   query = "query",
 }
 export type ProductTypeListUrlFilters = Filters<ProductTypeListUrlFiltersEnum>;
-export type ProductTypeListUrlDialog = "remove" | TabActionDialog;
+export type ProductTypeListUrlDialog = "remove" | "create" | TabActionDialog;
 export enum ProductTypeListUrlSortField {
   name = "name",
   digital = "digital",
@@ -35,7 +35,7 @@ export type ProductTypeListUrlQueryParams = ActiveTab &
   ProductTypeListUrlFilters &
   ProductTypeListUrlSort;
 export const productTypeListUrl = (params?: ProductTypeListUrlQueryParams) =>
-  productTypeListPath + "?" + stringifyQs(params);
+  withQuery(productTypeListPath, params);
 
 interface ProductTypeAddUrlKind {
   kind?: ProductTypeKindEnum;
@@ -43,7 +43,7 @@ interface ProductTypeAddUrlKind {
 export type ProductTypeAddUrlQueryParams = ProductTypeAddUrlKind;
 export const productTypeAddPath = urlJoin(productTypeSection, "add");
 export const productTypeAddUrl = (params?: ProductTypeAddUrlQueryParams) =>
-  productTypeAddPath + "?" + stringifyQs(params);
+  withQuery(productTypeAddPath, params);
 
 export const productTypePath = (id: string) => urlJoin(productTypeSection, id);
 export type ProductTypeUrlDialog =
@@ -60,4 +60,4 @@ export type ProductTypeUrlQueryParams = BulkAction &
     type?: string;
   };
 export const productTypeUrl = (id: string, params?: ProductTypeUrlQueryParams) =>
-  productTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+  withQuery(productTypePath(encodeURIComponent(id)), params);

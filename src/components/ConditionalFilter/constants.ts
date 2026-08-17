@@ -100,6 +100,30 @@ export const STATIC_CONDITIONS = {
       value: "input-2",
     },
   ],
+  promotionStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
+  promotionType: [
+    {
+      type: "select",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
   createdAt: [
     { type: "datetime", label: "lower", value: "input-1" },
     { type: "datetime", label: "greater", value: "input-2" },
@@ -351,6 +375,18 @@ export const STATIC_PRODUCT_OPTIONS: LeftOperand[] = [
 ];
 
 export const STATIC_DISCOUNT_OPTIONS: LeftOperand[] = [
+  {
+    value: "promotionStatus",
+    label: "Status",
+    type: "promotionStatus",
+    slug: "promotionStatus",
+  },
+  {
+    value: "promotionType",
+    label: "Type",
+    type: "promotionType",
+    slug: "promotionType",
+  },
   {
     value: "startDate",
     label: "Start date",

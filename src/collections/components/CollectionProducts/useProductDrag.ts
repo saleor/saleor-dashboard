@@ -1,4 +1,5 @@
 import { type PaginationState } from "@dashboard/hooks/useLocalPaginator";
+import { useSuppressClickAfterDrag } from "@dashboard/hooks/useSuppressClickAfterDrag";
 import {
   type DragEndEvent,
   KeyboardSensor,
@@ -7,7 +8,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { type Product } from "./types";
 import { useProductReorder } from "./useProductReorder";
@@ -20,6 +21,7 @@ interface ProductDragProps {
 export const useProductDrag = ({ products, paginationState }: ProductDragProps) => {
   const [items, setItems] = useState(products);
   const { move, data } = useProductReorder({ paginationState });
+  const suppressClickAfterDrag = useSuppressClickAfterDrag();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -32,28 +34,38 @@ export const useProductDrag = ({ products, paginationState }: ProductDragProps) 
     setItems(products);
   }, [products]);
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      suppressClickAfterDrag();
 
-    if (active.id !== over?.id) {
-      setItems(items => {
-        const oldIndex = items.findIndex(item => item.id === active.id);
-        const newIndex = items.findIndex(item => item.id === over?.id);
-        const diff = oldIndex - newIndex;
-        const moved = arrayMove(items, oldIndex, newIndex);
-        const productId = active.id as string;
+      const { active, over } = event;
 
-        move(moved, productId, diff);
+      if (active.id !== over?.id) {
+        setItems(currentItems => {
+          const oldIndex = currentItems.findIndex(item => item.id === active.id);
+          const newIndex = currentItems.findIndex(item => item.id === over?.id);
+          const diff = oldIndex - newIndex;
+          const moved = arrayMove(currentItems, oldIndex, newIndex);
+          const productId = active.id as string;
 
-        return moved;
-      });
-    }
-  };
+          move(moved, productId, diff);
+
+          return moved;
+        });
+      }
+    },
+    [move, suppressClickAfterDrag],
+  );
+
+  const handleDragCancel = useCallback(() => {
+    suppressClickAfterDrag();
+  }, [suppressClickAfterDrag]);
 
   return {
     isSaving: data?.loading,
     sensors,
     items,
     handleDragEnd,
+    handleDragCancel,
   };
 };

@@ -1,6 +1,10 @@
 // @ts-strict-ignore
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -97,6 +101,8 @@ export const CustomExtensionDetailsPage = (props: CustomExtensionDetailsPageProp
         <DetailPageLayout>
           <TopNav
             href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
+            hrefIcon={<TopNavDestinationIcon.extensions />}
+            hrefTitle={intl.formatMessage(topNavDestinationMessages.extensions)}
             title={app?.name || ""}
           ></TopNav>
           <DetailPageLayout.Content>

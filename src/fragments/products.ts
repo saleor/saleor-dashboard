@@ -73,6 +73,7 @@ export const channelListingProductWithoutPricingFragment = gql`
       name
       slug
       currencyCode
+      isActive
     }
   }
 `;
@@ -353,6 +354,7 @@ export const fragmentVariant = gql`
           id
           name
           currencyCode
+          isActive
         }
       }
     }
@@ -389,6 +391,9 @@ export const searchProduct = gql`
       ...ChannelListingProductWithoutPricing
     }
     collections {
+      id
+    }
+    category {
       id
     }
   }

@@ -5,6 +5,7 @@ import useRouter from "use-react-router";
 
 import { type InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
 import { type InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { type InitialDiscountAPIState } from "../API/initialState/discounts/useInitialDiscountsState";
 import { type InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { type InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
 import { type InitialPageAPIState } from "../API/initialState/page/useInitialPageState";
@@ -23,6 +24,7 @@ import { TokenArray } from "./TokenArray";
 import {
   type AttributesFetchingParams,
   type CollectionFetchingParams,
+  type DiscountFetchingParams,
   type FetchingParams,
   getEmptyFetchingPrams,
   type GiftCardsFetchingParams,
@@ -75,6 +77,11 @@ export const useUrlValueProvider = (
         case "voucher":
           (initialState as InitialVoucherAPIState).fetchQueries(
             fetchingParams as VoucherFetchingParams,
+          );
+          break;
+        case "discount":
+          (initialState as InitialDiscountAPIState).fetchQueries(
+            fetchingParams as DiscountFetchingParams,
           );
           break;
         case "page":

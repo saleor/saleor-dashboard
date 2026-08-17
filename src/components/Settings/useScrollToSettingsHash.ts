@@ -1,3 +1,4 @@
+import { scrollToDetailSection } from "@dashboard/components/Layouts/Detail/scrollElementIntoDetailContent";
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 
@@ -6,6 +7,9 @@ const HASH_SCROLL_TIMEOUT_MS = 10000;
 /**
  * Scrolls to `#hash` targets on settings hubs after navigation from search / Cmd+K.
  * Retries via MutationObserver until the target mounts (e.g. channel matrix after load).
+ *
+ * Uses the detail content pane only — `scrollIntoView` also scrolls outer ancestors
+ * and clips TopNav.
  */
 export const useScrollToSettingsHash = (): void => {
   const { hash, pathname, search } = useLocation();
@@ -24,14 +28,11 @@ export const useScrollToSettingsHash = (): void => {
           return true;
         }
 
-        const element = document.getElementById(id);
-
-        if (!element) {
+        if (!scrollToDetailSection(id)) {
           return false;
         }
 
         completed = true;
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
 
         return true;
       };

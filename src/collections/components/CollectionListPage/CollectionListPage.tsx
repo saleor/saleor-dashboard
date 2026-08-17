@@ -1,10 +1,6 @@
 // @ts-strict-ignore
 import { type Collections } from "@dashboard/collections/types";
-import {
-  collectionAddUrl,
-  type CollectionListUrlSortField,
-  collectionUrl,
-} from "@dashboard/collections/urls";
+import { type CollectionListUrlSortField, collectionUrl } from "@dashboard/collections/urls";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
@@ -47,6 +43,7 @@ interface CollectionListPageProps
   hasPresetsChanged: () => boolean;
   onSelectCollectionIds: (rows: number[], clearSelection: () => void) => void;
   onCollectionsDelete: () => void;
+  onCreateCollection: () => void;
   onTabDelete: (id: number) => void;
 }
 
@@ -66,6 +63,7 @@ const CollectionListPage = ({
   hasPresetsChanged,
   selectedCollectionIds,
   onCollectionsDelete,
+  onCreateCollection,
   ...listProps
 }: CollectionListPageProps) => {
   const intl = useIntl();
@@ -117,7 +115,7 @@ const CollectionListPage = ({
               <ButtonGroupWithDropdown
                 options={extensionCreateButtonItems}
                 data-test-id="create-collection"
-                onClick={() => navigate(collectionAddUrl())}
+                onClick={onCreateCollection}
                 disabled={disabled}
               >
                 <FormattedMessage
@@ -129,7 +127,7 @@ const CollectionListPage = ({
             ) : (
               <Button
                 data-test-id="create-collection"
-                onClick={() => navigate(collectionAddUrl())}
+                onClick={onCreateCollection}
                 disabled={disabled}
               >
                 <FormattedMessage

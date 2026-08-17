@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-2);
+  min-width: 0;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

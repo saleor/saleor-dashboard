@@ -7,6 +7,10 @@ import { useScrollToSettingsHash } from "./useScrollToSettingsHash";
 interface SettingsHubLayoutProps {
   title: ReactNode;
   backHref: string;
+  /** Icon representing the destination of `backHref`. */
+  backHrefIcon: ReactNode;
+  /** Tooltip / aria-label for the destination of `backHref`. */
+  backHrefTitle: string;
   children: ReactNode;
 }
 
@@ -17,13 +21,21 @@ interface SettingsHubLayoutProps {
 export const SettingsHubLayout = ({
   title,
   backHref,
+  backHrefIcon,
+  backHrefTitle,
   children,
 }: SettingsHubLayoutProps): JSX.Element => {
   useScrollToSettingsHash();
 
   return (
     <DetailPageLayout gridTemplateColumns={1} width="100%">
-      <TopNav href={backHref} title={title} gridColumn="full" />
+      <TopNav
+        href={backHref}
+        hrefIcon={backHrefIcon}
+        hrefTitle={backHrefTitle}
+        title={title}
+        gridColumn="full"
+      />
       <DetailPageLayout.Content gridColumn="full" width="100%">
         {children}
       </DetailPageLayout.Content>

@@ -14,6 +14,7 @@ import {
   productImagePath,
   type ProductImageUrlQueryParams,
   productListPath,
+  productListUrl,
   type ProductListUrlQueryParams,
   ProductListUrlSortField,
   productPath,
@@ -24,7 +25,6 @@ import {
   type ProductVariantEditUrlQueryParams,
   productVariantLegacyEditPath,
 } from "./urls";
-import ProductCreateComponent from "./views/ProductCreate";
 import ProductImageComponent from "./views/ProductImage";
 import ProductListComponent from "./views/ProductList";
 import ProductUpdateComponent from "./views/ProductUpdate";
@@ -62,7 +62,7 @@ const ProductList = ({ location }: RouteComponentProps<any>) => {
     </ConditionalProductFilterProvider>
   );
 };
-const ProductUpdate = ({ match }: RouteComponentProps<MatchParams>) => {
+const ProductUpdate = ({ match, location }: RouteComponentProps<MatchParams>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: ProductUrlQueryParams = qs;
 
@@ -76,11 +76,18 @@ const ProductUpdate = ({ match }: RouteComponentProps<MatchParams>) => {
     />
   );
 };
-const ProductCreate = () => {
-  const qs = parseQs(location.search.substr(1));
-  const params: ProductCreateUrlQueryParams = qs;
+/** Legacy /products/add → create dialog on the list. */
+const ProductCreateRedirect = ({ location }: RouteComponentProps<{}>) => {
+  const qs = parseQs(location.search.substr(1)) as ProductCreateUrlQueryParams;
 
-  return <ProductCreateComponent params={params} />;
+  return (
+    <Redirect
+      to={productListUrl({
+        action: "create-product",
+        ...(qs["product-type-id"] ? { "product-type-id": qs["product-type-id"] } : {}),
+      })}
+    />
+  );
 };
 const ProductVariant = ({ match }: RouteComponentProps<matchParamsProductVariant>) => {
   const qs = parseQs(location.search.substr(1));
@@ -128,7 +135,7 @@ const Component = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.products)} />
       <Switch>
         <Route exact path={productListPath} component={ProductList} />
-        <Route exact path={productAddPath} component={ProductCreate} />
+        <Route exact path={productAddPath} component={ProductCreateRedirect} />
         <Route exact path={productVariantAddPath(":id")} component={ProductVariantCreate} />
         {/* Redirect old product variant path to new format
          * TODO: Remove in Saleor Dashboard 3.23 */}

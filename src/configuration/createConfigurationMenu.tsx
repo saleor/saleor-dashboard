@@ -1,12 +1,14 @@
 // @ts-strict-ignore
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
+import { giftCardSettingsPath } from "@dashboard/giftCards/urls";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import { createConfigurationLucideIcon } from "@dashboard/icons/createNavigationLucideIcon";
 import { ConfigurationModelingIcon } from "@dashboard/icons/Modeling";
-import { ConfigurationProductsIcon } from "@dashboard/icons/Products";
+import { ConfigurationProductTypesIcon } from "@dashboard/icons/ProductTypes";
 import { sectionNames } from "@dashboard/intl";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
+import { notificationsSettingsUrl } from "@dashboard/notificationsSettings/urls";
 import { orderSettingsPath } from "@dashboard/orders/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
@@ -16,8 +18,10 @@ import { staffListUrl } from "@dashboard/staff/urls";
 import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
 import { warehouseSection } from "@dashboard/warehouses/urls";
 import {
+  Bell,
+  Gift,
+  Globe,
   Package,
-  Radio,
   Receipt,
   Settings,
   Shield,
@@ -37,8 +41,10 @@ const ConfigurationPermissionGroupsIcon = createConfigurationLucideIcon(Shield);
 const ConfigurationShippingIcon = createConfigurationLucideIcon(Truck);
 const ConfigurationWarehousesIcon = createConfigurationLucideIcon(Warehouse);
 const ConfigurationOrderSettingsIcon = createConfigurationLucideIcon(Package);
-const ConfigurationChannelsIcon = createConfigurationLucideIcon(Radio);
+const ConfigurationChannelsIcon = createConfigurationLucideIcon(Globe);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
+const ConfigurationGiftCardsIcon = createConfigurationLucideIcon(Gift);
+const ConfigurationNotificationsIcon = createConfigurationLucideIcon(Bell);
 
 /**
  * Configuration IA: merchant jobs, not engineering modules.
@@ -64,6 +70,30 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl(),
           testId: "configuration-menu-site-settings",
+        },
+        {
+          description: intl.formatMessage({
+            id: "hNwVmh",
+            defaultMessage: "Set default expiration for issued and purchased gift cards",
+            description: "configuration menu item description for gift card settings",
+          }),
+          icon: <ConfigurationGiftCardsIcon />,
+          permissions: [PermissionEnum.MANAGE_GIFT_CARD],
+          title: intl.formatMessage(sectionNames.giftCards),
+          url: giftCardSettingsPath,
+          testId: "configuration-menu-gift-cards",
+        },
+        {
+          description: intl.formatMessage({
+            id: "uK4ys2",
+            defaultMessage: "Staff and customer email messages, and how they are delivered",
+            description: "configuration menu item description for notifications",
+          }),
+          icon: <ConfigurationNotificationsIcon />,
+          permissions: [PermissionEnum.MANAGE_PLUGINS],
+          title: intl.formatMessage(sectionNames.notifications),
+          url: notificationsSettingsUrl(),
+          testId: "configuration-menu-notifications",
         },
       ],
     },
@@ -109,7 +139,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             id: "n0RwMK",
             defaultMessage: "Define types of products you sell",
           }),
-          icon: <ConfigurationProductsIcon />,
+          icon: <ConfigurationProductTypesIcon />,
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage(sectionNames.productTypes),
           url: productTypeListUrl(),

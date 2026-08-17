@@ -177,6 +177,11 @@ export const voucherList: VoucherFragment[] = [
     minCheckoutItemsQuantity: null,
     startDate: "2019-01-03",
     usageLimit: null,
+    used: 0,
+    codesCount: {
+      __typename: "VoucherCodeCountableConnection",
+      totalCount: 1,
+    },
   },
   {
     __typename: "Voucher" as const,
@@ -210,6 +215,11 @@ export const voucherList: VoucherFragment[] = [
     minCheckoutItemsQuantity: 0,
     startDate: "2019-01-03",
     usageLimit: 150,
+    used: 12,
+    codesCount: {
+      __typename: "VoucherCodeCountableConnection",
+      totalCount: 3,
+    },
   },
 ];
 
@@ -316,6 +326,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -351,6 +362,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -386,6 +398,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -421,6 +434,7 @@ export const sale: SaleDetailsFragment = {
                 id: "123",
                 name: "Channel1",
                 slug: "channel1",
+                isActive: true,
               },
               isAvailableForPurchase: false,
               isPublished: true,
@@ -481,6 +495,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-USD",
                   slug: "channel-usd",
                   currencyCode: "USD",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -521,6 +536,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-USD",
                   slug: "channel-usd",
                   currencyCode: "USD",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -561,6 +577,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-USD",
                   slug: "channel-usd",
                   currencyCode: "USD",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -577,6 +594,7 @@ export const sale: SaleDetailsFragment = {
                   name: "Channel-PLN",
                   slug: "channel-pln",
                   currencyCode: "PLN",
+                  isActive: true,
                   __typename: "Channel",
                 },
                 __typename: "ProductChannelListing",
@@ -611,6 +629,10 @@ export const voucherDetails: VoucherDetailsFragment = {
   applyOncePerOrder: false,
   singleUse: false,
   onlyForStaff: false,
+  codesCount: {
+    __typename: "VoucherCodeCountableConnection",
+    totalCount: 0,
+  },
   categoriesCount: {
     __typename: "CategoryCountableConnection",
     totalCount: 0,
@@ -626,17 +648,6 @@ export const voucherDetails: VoucherDetailsFragment = {
   variantsCount: {
     __typename: "ProductVariantCountableConnection",
     totalCount: 0,
-  },
-  categories: {
-    __typename: "CategoryCountableConnection",
-    edges: [],
-    pageInfo: {
-      __typename: "PageInfo",
-      endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
-    },
   },
   channelListings: [
     {
@@ -657,17 +668,6 @@ export const voucherDetails: VoucherDetailsFragment = {
       },
     },
   ],
-  collections: {
-    __typename: "CollectionCountableConnection",
-    edges: [],
-    pageInfo: {
-      __typename: "PageInfo",
-      endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
-    },
-  },
   countries: [
     {
       __typename: "CountryDisplay",
@@ -679,17 +679,6 @@ export const voucherDetails: VoucherDetailsFragment = {
   endDate: null,
   id: "Vm91Y2hlcjoy",
   minCheckoutItemsQuantity: 0,
-  products: {
-    __typename: "ProductCountableConnection",
-    edges: [],
-    pageInfo: {
-      __typename: "PageInfo",
-      endCursor: "YXJyYXljb25uZWN0aW9uOjM=",
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: "YXJyYXljb25uZWN0aW9uOjA=",
-    },
-  },
   startDate: "2018-11-27",
   type: VoucherTypeEnum.ENTIRE_ORDER,
   usageLimit: null,

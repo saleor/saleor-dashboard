@@ -1,5 +1,7 @@
 import { type ProductChannels, type SelectedChannel } from "./types";
 import {
+  applySelectAllVisibleToggle,
+  getSelectAllVisibleCheckboxState,
   getSelectedIdsFromDict,
   hasMultiSelectionChanged,
   hasSingleSelectionChanged,
@@ -72,6 +74,74 @@ describe("hasSingleSelectionChanged", () => {
   });
 });
 
+describe("getSelectAllVisibleCheckboxState", () => {
+  it("returns unchecked when no visible products are selected", () => {
+    // Arrange & Act
+    const state = getSelectAllVisibleCheckboxState(["p1", "p2"], {});
+
+    // Assert
+    expect(state).toEqual({ checked: false, indeterminate: false });
+  });
+
+  it("returns checked when all visible products are selected", () => {
+    // Arrange & Act
+    const state = getSelectAllVisibleCheckboxState(["p1", "p2"], {
+      p1: true,
+      p2: true,
+    });
+
+    // Assert
+    expect(state).toEqual({ checked: true, indeterminate: false });
+  });
+
+  it("returns indeterminate when some visible products are selected", () => {
+    // Arrange & Act
+    const state = getSelectAllVisibleCheckboxState(["p1", "p2"], { p1: true });
+
+    // Assert
+    expect(state).toEqual({ checked: false, indeterminate: true });
+  });
+});
+
+describe("applySelectAllVisibleToggle", () => {
+  it("selects all visible products", () => {
+    // Arrange & Act
+    const { nextDict, skipped } = applySelectAllVisibleToggle({
+      productsDict: {},
+      selectableVisibleIds: ["p1", "p2"],
+    });
+
+    // Assert
+    expect(nextDict).toEqual({ p1: true, p2: true });
+    expect(skipped).toBe(0);
+  });
+
+  it("deselects all visible products when all are already selected", () => {
+    // Arrange & Act
+    const { nextDict, skipped } = applySelectAllVisibleToggle({
+      productsDict: { p1: true, p2: true, p3: true },
+      selectableVisibleIds: ["p1", "p2"],
+    });
+
+    // Assert
+    expect(nextDict).toEqual({ p1: false, p2: false, p3: true });
+    expect(skipped).toBe(0);
+  });
+
+  it("stops at maxSelection and reports skipped products", () => {
+    // Arrange & Act
+    const { nextDict, skipped } = applySelectAllVisibleToggle({
+      productsDict: { existing: true },
+      selectableVisibleIds: ["p1", "p2", "p3"],
+      maxSelection: 2,
+    });
+
+    // Assert
+    expect(nextDict).toEqual({ existing: true, p1: true });
+    expect(skipped).toBe(2);
+  });
+});
+
 describe("isProductAvailableInVoucherChannels", () => {
   it("should return true when product has at least one channel common with voucher", () => {
     // Arrange
@@ -116,7 +186,7 @@ describe("isProductAvailableInVoucherChannels", () => {
     expect(result).toBe(false);
   });
 
-  it("should return false when empty voucher channels", () => {
+  it("should return true when voucher channels are an empty array", () => {
     // Arrange
     const mockProductChannels = [
       { channel: { id: "1" } },
@@ -128,10 +198,10 @@ describe("isProductAvailableInVoucherChannels", () => {
     const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
-    expect(result).toBe(false);
+    expect(result).toBe(true);
   });
 
-  it("should return false when empty voucher and product channels", () => {
+  it("should return true when voucher and product channels are both empty", () => {
     // Arrange
     const mockProductChannels = [] as ProductChannels;
     const mockVariantChannels = [] as SelectedChannel[];
@@ -140,10 +210,10 @@ describe("isProductAvailableInVoucherChannels", () => {
     const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
-    expect(result).toBe(false);
+    expect(result).toBe(true);
   });
 
-  it("should return true when no voucher channels", () => {
+  it("should return true when voucher channels are undefined", () => {
     // Arrange
     const mockProductChannels = [] as ProductChannels;
     const mockVariantChannels = undefined;
@@ -155,7 +225,7 @@ describe("isProductAvailableInVoucherChannels", () => {
     expect(result).toBe(true);
   });
 
-  it("should return false when no products channels", () => {
+  it("should return true when voucher channels are empty even if product channels are missing", () => {
     // Arrange
     const mockProductChannels = undefined;
     const mockVariantChannels = [] as SelectedChannel[];
@@ -164,6 +234,6 @@ describe("isProductAvailableInVoucherChannels", () => {
     const result = isProductAvailableInVoucherChannels(mockProductChannels, mockVariantChannels);
 
     // Assert
-    expect(result).toBe(false);
+    expect(result).toBe(true);
   });
 });

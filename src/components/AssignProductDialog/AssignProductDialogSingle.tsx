@@ -166,7 +166,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
                 fullWidth
                 InputProps={{
                   autoComplete: "off",
-                  endAdornment: loading && <SaleorThrobber size={16} />,
+                  endAdornment: loading && !showListLoading ? <SaleorThrobber size={16} /> : null,
                 }}
               />
 

@@ -50,22 +50,16 @@ export const useAttributeCreateValues = ({
     setValueDialog("add-value");
   }, []);
 
-  const openEditValueDialog = useCallback(
-    (id: string) => {
-      setValueErrors([]);
-      setEditingValueIndex(parseInt(id, 10) + pageInfo.startCursor);
-      setValueDialog("edit-value");
-    },
-    [pageInfo.startCursor],
-  );
+  const openEditValueDialog = useCallback((id: string) => {
+    setValueErrors([]);
+    setEditingValueIndex(parseInt(id, 10));
+    setValueDialog("edit-value");
+  }, []);
 
-  const openRemoveValueDialog = useCallback(
-    (id: string) => {
-      setEditingValueIndex(parseInt(id, 10) + pageInfo.startCursor);
-      setValueDialog("remove-value");
-    },
-    [pageInfo.startCursor],
-  );
+  const openRemoveValueDialog = useCallback((id: string) => {
+    setEditingValueIndex(parseInt(id, 10));
+    setValueDialog("remove-value");
+  }, []);
 
   const closeValueDialog = useCallback(() => {
     setValueDialog(null);
@@ -92,24 +86,46 @@ export const useAttributeCreateValues = ({
     [closeValueDialog, editingValueIndex, values],
   );
 
-  const handleValueCreate = useCallback(
-    (input: AttributeValueEditDialogFormData) => {
-      if (isSelected(input, values, areValuesEqual)) {
-        setValueErrors([attributeValueAlreadyExistsError]);
+  const appendCreatedValues = useCallback(
+    (inputs: AttributeValueEditDialogFormData[]): boolean => {
+      let next = values;
+      let addedCount = 0;
+      let hadDuplicate = false;
+
+      inputs.forEach(input => {
+        const name = input.name.trim();
+
+        if (!name) {
+          return;
+        }
+
+        const item: AttributeValueEditDialogFormData = { ...input, name };
+
+        if (isSelected(item, next, areValuesEqual)) {
+          hadDuplicate = true;
+
+          return;
+        }
+
+        next = add(item, next);
+        addedCount += 1;
+      });
+
+      if (addedCount === 0) {
+        if (hadDuplicate) {
+          setValueErrors([attributeValueAlreadyExistsError]);
+        }
 
         return false;
       }
 
-      const newValues = add(input, values);
-
-      setValues(newValues);
+      setValues(next);
       setValueErrors([]);
 
-      const addedToNotVisibleLastPage =
-        newValues.length - pageInfo.startCursor > settings.rowNumber;
+      const addedToNotVisibleLastPage = next.length - pageInfo.startCursor > settings.rowNumber;
 
       if (addedToNotVisibleLastPage) {
-        loadPage(getMaxPage(newValues.length, settings.rowNumber));
+        loadPage(getMaxPage(next.length, settings.rowNumber));
       }
 
       if (valueDialog) {
@@ -121,14 +137,27 @@ export const useAttributeCreateValues = ({
     [closeValueDialog, loadPage, pageInfo.startCursor, settings.rowNumber, valueDialog, values],
   );
 
-  const deleteValueById = useCallback(
-    (id: string) => {
-      const index = parseInt(id, 10) + pageInfo.startCursor;
-
-      setValues(remove(values[index], values, areValuesEqual));
-    },
-    [pageInfo.startCursor, values],
+  const handleValueCreate = useCallback(
+    (input: AttributeValueEditDialogFormData) => appendCreatedValues([input]),
+    [appendCreatedValues],
   );
+
+  const handleValueCreateMany = useCallback(
+    (inputs: AttributeValueEditDialogFormData[]) => appendCreatedValues(inputs),
+    [appendCreatedValues],
+  );
+
+  const deleteValueById = useCallback((id: string) => {
+    const index = parseInt(id, 10);
+
+    setValues(current => remove(current[index], current, areValuesEqual));
+  }, []);
+
+  const deleteValuesByIds = useCallback((ids: string[]) => {
+    const indexes = new Set(ids.map(valueId => parseInt(valueId, 10)));
+
+    setValues(current => current.filter((_, index) => !indexes.has(index)));
+  }, []);
 
   const handleValueReorder = useCallback(
     ({ newIndex, oldIndex }: ReorderEvent) =>
@@ -146,8 +175,10 @@ export const useAttributeCreateValues = ({
   return {
     closeValueDialog,
     deleteValueById,
+    deleteValuesByIds,
     editingValueIndex,
     handleValueCreate,
+    handleValueCreateMany,
     handleValueDelete,
     handleValueReorder,
     handleValueUpdate,

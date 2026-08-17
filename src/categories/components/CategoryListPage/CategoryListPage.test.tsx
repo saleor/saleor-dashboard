@@ -113,6 +113,7 @@ const createProps = (overrides: Partial<ComponentProps<typeof CategoryListPage>>
   onTabDelete: jest.fn(),
   onTabSave: jest.fn(),
   onTabUpdate: jest.fn(),
+  onCreateCategory: jest.fn(),
   hasPresetsChanged: false,
   sort: {
     sort: CategoryListUrlSortField.name,

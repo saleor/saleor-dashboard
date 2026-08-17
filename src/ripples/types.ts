@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { type MessageDescriptor } from "react-intl";
 
-export type RippleType = "feature" | "improvement" | "bugfix";
+export type RippleType = "feature" | "improvement" | "bugfix" | "newApp";
 
 /**
  * Base properties shared by all action types
@@ -72,4 +72,12 @@ export type Ripple = {
    * Each action must have either onClick (for in-app actions) or href (for external links).
    */
   actions?: RippleAction[];
+  /**
+   * Optional media shown in the global "What's New" list (e.g. a promo video).
+   */
+  media?: {
+    kind: "video";
+    src: string;
+    poster?: string;
+  };
 };

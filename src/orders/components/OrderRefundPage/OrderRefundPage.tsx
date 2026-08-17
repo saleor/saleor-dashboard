@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { FulfillmentStatus, type OrderErrorFragment } from "@dashboard/graphql";
@@ -56,6 +60,8 @@ const OrderRefundPage = (props: OrderRefundPageProps) => {
           <DetailPageLayout>
             <TopNav
               href={orderUrl(order?.id)}
+              hrefIcon={<TopNavDestinationIcon.orders />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
               title={intl.formatMessage(
                 {
                   id: "0krqBj",

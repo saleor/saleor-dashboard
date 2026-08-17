@@ -1,0 +1,10 @@
+/* Spacing sprinkles are not media-responsive in macaw — use CSS for viewport padding. */
+.root {
+  padding-inline: var(--mu-spacing-6);
+}
+
+@media (max-width: 768px) {
+  .root {
+    padding-inline: var(--mu-spacing-3);
+  }
+}

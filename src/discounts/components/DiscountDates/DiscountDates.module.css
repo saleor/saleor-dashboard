@@ -1,0 +1,37 @@
+.root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.dateRow,
+.dateRowStacked {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mu-spacing-4);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.dateRowStacked {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+/*
+ * Each field keeps a ~14rem basis so two-across only fits when the row is wide
+ * enough. Narrow sidebar / small screens wrap Start Hour onto the next line.
+ */
+.field {
+  box-sizing: border-box;
+  flex: 1 1 14rem;
+  min-width: min(100%, 14rem);
+  max-width: 100%;
+}
+
+.dateRowStacked .field {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+}
