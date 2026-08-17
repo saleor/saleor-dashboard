@@ -706,6 +706,7 @@ export enum AttributeTranslateErrorCode {
 }
 
 export enum AttributeTypeEnum {
+  CUSTOMER_TYPE = 'CUSTOMER_TYPE',
   PAGE_TYPE = 'PAGE_TYPE',
   PRODUCT_TYPE = 'PRODUCT_TYPE'
 }
@@ -2265,6 +2266,18 @@ export type CustomerFilterInput = {
 };
 
 export type CustomerInput = {
+  /**
+   * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AttributeValueInput>>;
+  /**
+   * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<Scalars['ID']['input']>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
@@ -2355,6 +2368,97 @@ export type CustomerOrderWhereInput = {
   voucherCode?: InputMaybe<StringFilterInput>;
 };
 
+export enum CustomerTypeAssignAttributesErrorCode {
+  ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeCreateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
+}
+
+export type CustomerTypeCreateInput = {
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Name of the customer type. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum CustomerTypeDeleteErrorCode {
+  CANNOT_DELETE_DEFAULT = 'CANNOT_DELETE_DEFAULT',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeReorderAttributesErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeSortField {
+  /** Sort customer types by name. */
+  NAME = 'NAME',
+  /** Sort customer types by slug. */
+  SLUG = 'SLUG'
+}
+
+export type CustomerTypeSortingInput = {
+  /** Specifies the direction in which to sort customer types. */
+  direction: OrderDirection;
+  /** Sort customer types by the selected field. */
+  field: CustomerTypeSortField;
+};
+
+export enum CustomerTypeUnassignAttributesErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeUpdateErrorCode {
+  CANNOT_UNSET_DEFAULT = 'CANNOT_UNSET_DEFAULT',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
+}
+
+export type CustomerTypeUpdateInput = {
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Name of the customer type. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CustomerTypeWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<CustomerTypeWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<CustomerTypeWhereInput>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** Filter by whether the customer type is the default one. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by customer type name. */
+  name?: InputMaybe<StringFilterInput>;
+  /** Filter by customer type slug. */
+  slug?: InputMaybe<StringFilterInput>;
+};
+
 export type CustomerWhereInput = {
   /** List of conditions that must be met. */
   AND?: InputMaybe<Array<CustomerWhereInput>>;
@@ -2362,6 +2466,18 @@ export type CustomerWhereInput = {
   OR?: InputMaybe<Array<CustomerWhereInput>>;
   /** Filter by addresses data associated with user. */
   addresses?: InputMaybe<AddressFilterInput>;
+  /**
+   * Filter by attributes associated with the customer.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
+  /**
+   * Filter by customer type. Filtering by the default customer type also matches users without an explicitly assigned customer type.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by date joined. */
   dateJoined?: InputMaybe<DateTimeRangeInput>;
   /** Filter by email address. */
@@ -4987,11 +5103,6 @@ export enum OrderAction {
   VOID = 'VOID'
 }
 
-export type OrderAddNoteInput = {
-  /** Note message. */
-  message: Scalars['String']['input'];
-};
-
 /**
  * Determine a current authorize status for order.
  *
@@ -6420,6 +6531,7 @@ export enum PermissionEnum {
   MANAGE_APPS = 'MANAGE_APPS',
   MANAGE_CHANNELS = 'MANAGE_CHANNELS',
   MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
+  MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES = 'MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES',
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
@@ -8854,8 +8966,20 @@ export enum UploadErrorCode {
 }
 
 export type UserCreateInput = {
+  /**
+   * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** Slug of a channel which will be used for notify user. Optional when only one channel exists. */
   channel?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<Scalars['ID']['input']>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
@@ -9308,6 +9432,24 @@ export enum WebhookEventTypeAsyncEnum {
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  /**
+   * A new customer type is created.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  /**
+   * A customer type is deleted.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  /**
+   * A customer type is updated.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A draft order is created. */
@@ -9647,6 +9789,24 @@ export enum WebhookEventTypeEnum {
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  /**
+   * A new customer type is created.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  /**
+   * A customer type is deleted.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  /**
+   * A customer type is updated.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A draft order is created. */
@@ -10046,6 +10206,9 @@ export enum WebhookSampleEventTypeEnum {
   CUSTOMER_CREATED = 'CUSTOMER_CREATED',
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
