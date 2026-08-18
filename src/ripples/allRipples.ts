@@ -15,6 +15,7 @@ import { rippleGroupedModelTypeTabs } from "@dashboard/modeling/ripples/groupedM
 import { rippleModelMetadata } from "@dashboard/modeling/ripples/modelMetadata";
 import { rippleModelTypeTabs } from "@dashboard/modeling/ripples/modelTypeTabs";
 import { ripplePagesAreModels } from "@dashboard/modeling/ripples/pagesAreModels";
+import { rippleNavigationPins } from "@dashboard/navigationPins/ripples/navigationPins";
 import { rippleDraftOrderMetadata } from "@dashboard/orders/ripples/draftOrderMetadata";
 import { rippleRefreshedOrderSections } from "@dashboard/orders/ripples/newOrderSummary";
 import { rippleNewRefundReasons } from "@dashboard/orders/ripples/newRefundReasons";
@@ -109,6 +110,7 @@ export const allRipples: Ripple[] = [
 
   // Sidebar
   rippleCloudEnvLink,
+  rippleNavigationPins,
 ];
 
 /**

@@ -1,12 +1,14 @@
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { Button, Text } from "@saleor/macaw-ui-next";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Pin, PinOff } from "lucide-react";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useNavigationPins } from "../hooks/useNavigationPins";
 import { navigationPinMessages as messages } from "../messages";
+import { rippleNavigationPins } from "../ripples/navigationPins";
 import { isPinned, removePinsById } from "../serialization";
 import { PinModelTypeDialog } from "./PinModelTypeDialog";
 
@@ -56,7 +58,8 @@ export const NavigationPinButton = ({ modelTypeId, modelTypeName }: NavigationPi
   };
 
   return (
-    <>
+    <Box display="flex" alignItems="center" gap={2}>
+      <Ripple model={rippleNavigationPins} />
       <Button
         variant="secondary"
         disabled={submitting}
@@ -74,6 +77,6 @@ export const NavigationPinButton = ({ modelTypeId, modelTypeName }: NavigationPi
           modelTypeName={modelTypeName ?? ""}
         />
       )}
-    </>
+    </Box>
   );
 };

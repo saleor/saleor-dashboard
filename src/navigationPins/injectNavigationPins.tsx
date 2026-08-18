@@ -2,6 +2,7 @@ import { type SidebarMenuItem } from "@dashboard/components/Sidebar/menu/types";
 import { PermissionEnum } from "@dashboard/graphql";
 import { pageListUrlWithPageType } from "@dashboard/modeling/urls";
 
+import { SidebarUnpinButton } from "./components/SidebarUnpinButton";
 import { FAVORITES_TARGET_ID } from "./constants";
 import { type ResolvedNavigationPin } from "./types";
 
@@ -12,6 +13,9 @@ const toMenuItem = (pin: ResolvedNavigationPin): SidebarMenuItem => ({
   // Without this a user who cannot open the model list would get a link that bounces them.
   permissions: [PermissionEnum.MANAGE_PAGES],
   type: "item",
+  // Organization pins are not the viewer's to remove — they are managed from the model list.
+  endAdornment:
+    pin.scope === "user" ? <SidebarUnpinButton pinId={pin.id} pinName={pin.name} /> : undefined,
 });
 
 interface InjectOptions {
