@@ -10,7 +10,8 @@ const context: SearchActionContext = {
   params: { productId: "UHJvZHVjdDox" },
 };
 
-// Neither label contains "avatax" - only the owning app's name does.
+// Neither label contains "avatax" - only the owning app's name does. Likewise
+// "inventory" appears only in the second action's aliases.
 const actions: ContextualSearchAction[] = [
   {
     id: "extension-1",
@@ -24,6 +25,7 @@ const actions: ContextualSearchAction[] = [
     label: "Sync to external catalog",
     section: "App actions",
     appName: "Catalog Sync",
+    aliases: ["Inventory", "stock feed"],
     onSelect: () => undefined,
   },
 ];
@@ -65,5 +67,22 @@ describe("SearchActionsList", () => {
 
     // Assert
     expect(screen.getByText("Configure tax classes")).toBeInTheDocument();
+  });
+
+  it("finds an action by an alias that appears in neither its label nor its app name", () => {
+    // Arrange & Act
+    renderList("inventory");
+
+    // Assert
+    expect(screen.getByText("Sync to external catalog")).toBeInTheDocument();
+    expect(screen.queryByText("Configure tax classes")).not.toBeInTheDocument();
+  });
+
+  it("does not surface an action for a query matching none of its aliases", () => {
+    // Arrange & Act
+    renderList("refunds");
+
+    // Assert
+    expect(screen.queryByText("Sync to external catalog")).not.toBeInTheDocument();
   });
 });
