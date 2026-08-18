@@ -81,7 +81,7 @@ export function useProductUpdateForm(
     () => getProductUpdatePageFormData(product, productVariants),
     // Intentionally omit productVariants: simple-product fields come from
     // product.defaultVariant. Re-binding to the paginated grid would reset
-    // SKU/preorder when the user searches or pages the variants table.
+    // SKU when the user searches or pages the variants table.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [product],
   );
@@ -562,10 +562,6 @@ export function useProductUpdateForm(
 
   const isValid = () => {
     if (!data.name) {
-      return false;
-    }
-
-    if (data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime) {
       return false;
     }
 

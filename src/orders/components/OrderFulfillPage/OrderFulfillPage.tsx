@@ -111,14 +111,12 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
         data: null,
         id: line.id,
         label: getAttributesCaption(line?.variant?.attributes),
-        value: line?.variant?.preorder
-          ? null
-          : [
-              {
-                quantity: line.quantityToFulfill,
-                warehouse: getDefaultFulfillWarehouse(line),
-              },
-            ],
+        value: [
+          {
+            quantity: line.quantityToFulfill,
+            warehouse: getDefaultFulfillWarehouse(line),
+          },
+        ],
       })),
     [linesToFulfill],
   );
@@ -151,7 +149,6 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const notAllowedToFulfillUnpaid =
     shopSettings?.fulfillmentAutoApprove && !shopSettings?.fulfillmentAllowUnpaid && !order?.isPaid;
   const areWarehousesSet = formsetData
-    .filter(item => !!item?.value) // preorder case
     .filter(item => item?.value?.[0]?.quantity)
     .every(line => line.value.every(v => v.warehouse));
   const shouldEnableSave = () => {
@@ -164,14 +161,12 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     }
 
     const isAtLeastOneFulfilled = formsetData?.some(el => el.value?.[0]?.quantity > 0);
-    const overfulfill = formsetData
-      .filter(item => !!item?.value) // this can be removed after preorder is dropped
-      .some(item => {
-        const formQuantityFulfilled = item?.value?.[0]?.quantity;
-        const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
+    const overfulfill = formsetData.some(item => {
+      const formQuantityFulfilled = item?.value?.[0]?.quantity;
+      const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
 
-        return formQuantityFulfilled > quantityToFulfill;
-      });
+      return formQuantityFulfilled > quantityToFulfill;
+    });
 
     return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };

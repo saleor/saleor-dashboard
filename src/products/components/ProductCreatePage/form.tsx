@@ -41,7 +41,6 @@ import useFormset, {
   type FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { errorMessages } from "@dashboard/intl";
 import {
   type AttributeValuesMetadata,
   getAttributeInputFromProductType,
@@ -51,7 +50,6 @@ import {
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
   createChannelsReplaceHandler,
-  createPreorderEndDateChangeHandler,
   createProductTypeSelectHandler,
   replaceFormsetStockValues,
 } from "@dashboard/products/utils/handlers";
@@ -71,7 +69,6 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
 import { type Option } from "@saleor/macaw-ui-next";
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 
 import {
   type ProductStockFormsetData,
@@ -94,11 +91,6 @@ export interface ProductCreateFormData extends MetadataFormData {
   slug: string;
   stockQuantity: number;
   trackInventory: boolean;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime: string;
   weight: string;
   taxClassId: string;
 }
@@ -130,7 +122,6 @@ export interface ProductCreateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock", (id: string, label: string) => void>,
     Record<"deleteStock", (id: string) => void> {
-  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
   selectAttributeReferenceAdditionalData: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
@@ -184,7 +175,6 @@ function useProductCreateForm(
   loading: boolean,
   opts: UseProductCreateFormOpts,
 ): UseProductCreateFormOutput {
-  const intl = useIntl();
   const [validationErrors, setValidationErrors] = useState<ProductErrorWithAttributesFragment[]>(
     [],
   );
@@ -207,11 +197,6 @@ function useProductCreateForm(
     taxClassId: "",
     trackInventory: false,
     weight: "",
-    globalSoldUnits: 0,
-    globalThreshold: "",
-    isPreorder: false,
-    hasPreorderEndDate: false,
-    preorderEndDateTime: "",
   };
   const form = useForm(
     {
@@ -336,11 +321,6 @@ function useProductCreateForm(
     opts.setChannels,
     triggerChange,
   );
-  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
-    form,
-    triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
-  );
   const data: ProductCreateData = {
     ...formData,
     attributes: getAttributesDisplayData(attributes.data, attributesWithNewFileValue.data, {
@@ -401,10 +381,6 @@ function useProductCreateForm(
       return false;
     }
 
-    if (data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime) {
-      return false;
-    }
-
     if (opts.selectedProductType?.hasVariants) {
       return true;
     }
@@ -440,7 +416,6 @@ function useProductCreateForm(
       changeMetadata,
       changeStock: handleStockChange,
       replaceStocks: handleStocksReplace,
-      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

@@ -60,7 +60,6 @@ export const STATIC_CONDITIONS = {
     { type: "datetime.range", label: "between", value: "input-3" },
   ],
   isClickAndCollect: [{ type: "select", label: "is", value: "input-1" }],
-  isPreorder: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardBought: [{ type: "select", label: "is", value: "input-1" }],
   code: [{ type: "text", label: "is", value: "input-1" }],
