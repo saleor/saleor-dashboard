@@ -535,7 +535,6 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Milk 1",
           quantityAvailable: 50,
-          preorder: null,
           __typename: "ProductVariant",
           product: {
             __typename: "Product",
@@ -686,7 +685,6 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Milk 1",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -837,7 +835,6 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           name: "Milk 2",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -993,7 +990,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 1",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1151,7 +1147,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 1",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1309,7 +1304,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             name: "Milk 2",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1467,7 +1461,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 3",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1625,7 +1618,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 3",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1912,7 +1904,6 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Digital Book",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -2063,7 +2054,6 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Digital Book",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -2214,7 +2204,6 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           name: "Digital Book",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -2370,7 +2359,6 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Digital Book",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2528,7 +2516,6 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Digital Book",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2686,7 +2673,6 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             name: "Digital Book",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2966,7 +2952,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Saleor Demo Product",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3124,7 +3109,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Saleor Demo Product",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3282,7 +3266,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             name: "Saleor Demo Product",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3662,7 +3645,7 @@ describe("getOrderFulfillSubmitItems", () => {
     ]);
   });
 
-  it("skips preorder lines without stock allocations", () => {
+  it("skips lines without stock allocations", () => {
     // Arrange
     const formsetData = [
       {

@@ -22,7 +22,6 @@ import {
   useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductVariantDetailsQuery,
-  useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useVariantDeleteMutation,
   useVariantMediaAssignMutation,
@@ -152,10 +151,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     skip: !channels.length,
   });
 
-  const [deactivatePreorder, deactivatePreoderOpts] = useProductVariantPreorderDeactivateMutation(
-    {},
-  );
-  const handleDeactivateVariantPreorder = (id: string) => deactivatePreorder({ variables: { id } });
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
   const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
@@ -166,7 +161,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     updateVariantOpts.loading ||
     assignMediaOpts.loading ||
     unassignMediaOpts.loading ||
-    deactivatePreoderOpts.loading ||
     reorderProductVariantsOpts.loading ||
     deleteAttributeValueOpts.loading;
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
@@ -203,12 +197,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         quantityLimitPerCustomer: Number(data.quantityLimitPerCustomer) || null,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
-        preorder: data.isPreorder
-          ? {
-              globalThreshold: data.globalThreshold ? parseInt(data.globalThreshold, 10) : null,
-              endDate: data?.preorderEndDateTime || null,
-            }
-          : null,
         weight: weight(data.weight),
         firstValues: 10,
         name: data.variantName,
@@ -341,8 +329,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
         searchWarehousesResult={searchWarehousesResult}
         searchWarehouses={searchWarehouses}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
-        onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
-        variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}
         assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}

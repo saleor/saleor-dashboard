@@ -1723,9 +1723,6 @@ export const OrderLineFragmentDoc = gql`
     id
     name
     quantityAvailable
-    preorder {
-      endDate
-    }
     stocks {
       ...Stock
     }
@@ -2588,9 +2585,6 @@ export const OrderFulfillLineFragmentDoc = gql`
     id
     name
     sku
-    preorder {
-      endDate
-    }
     attributes {
       values {
         id
@@ -3069,13 +3063,6 @@ export const ProductWithChannelListingsFragmentDoc = gql`
 }
     ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PriceRangeFragmentDoc}`;
-export const PreorderFragmentDoc = gql`
-    fragment Preorder on PreorderData {
-  globalThreshold
-  globalSoldUnits
-  endDate
-}
-    `;
 export const ChannelListingProductVariantFragmentDoc = gql`
     fragment ChannelListingProductVariant on ProductVariantChannelListing {
   id
@@ -3089,10 +3076,6 @@ export const ChannelListingProductVariantFragmentDoc = gql`
   }
   costPrice {
     ...Money
-  }
-  preorderThreshold {
-    quantity
-    soldUnits
   }
 }
     ${MoneyFragmentDoc}`;
@@ -3117,9 +3100,6 @@ export const ProductDetailsVariantFragmentDoc = gql`
     ...Stock
   }
   trackInventory
-  preorder {
-    ...Preorder
-  }
   channelListings {
     ...ChannelListingProductVariant
   }
@@ -3127,7 +3107,6 @@ export const ProductDetailsVariantFragmentDoc = gql`
 }
     ${AttributeValueDetailsFragmentDoc}
 ${StockFragmentDoc}
-${PreorderFragmentDoc}
 ${ChannelListingProductVariantFragmentDoc}`;
 export const ProductVariantSiblingFragmentDoc = gql`
     fragment ProductVariantSibling on ProductVariant {
@@ -3254,9 +3233,6 @@ export const ProductFragmentDoc = gql`
     id
     sku
     trackInventory
-    preorder {
-      ...Preorder
-    }
   }
   category {
     id
@@ -3290,7 +3266,6 @@ export const ProductFragmentDoc = gql`
 }
     ${ProductVariantAttributesFragmentDoc}
 ${MetadataFragmentDoc}
-${PreorderFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${ProductMediaFragmentDoc}
 ${WeightFragmentDoc}`;
@@ -3359,9 +3334,6 @@ export const ProductVariantFragmentDoc = gql`
     ...Stock
   }
   trackInventory
-  preorder {
-    ...Preorder
-  }
   weight {
     ...Weight
   }
@@ -3372,7 +3344,6 @@ ${SelectedVariantAttributeFragmentDoc}
 ${ProductMediaFragmentDoc}
 ${ChannelListingProductVariantFragmentDoc}
 ${StockFragmentDoc}
-${PreorderFragmentDoc}
 ${WeightFragmentDoc}`;
 export const SearchProductFragmentDoc = gql`
     fragment SearchProduct on Product {
@@ -16232,7 +16203,7 @@ export type VariantDeleteMutationHookResult = ReturnType<typeof useVariantDelete
 export type VariantDeleteMutationResult = Apollo.MutationResult<Types.VariantDeleteMutation>;
 export type VariantDeleteMutationOptions = Apollo.BaseMutationOptions<Types.VariantDeleteMutation, Types.VariantDeleteMutationVariables>;
 export const VariantUpdateDocument = gql`
-    mutation VariantUpdate($addStocks: [StockInput!]!, $removeStocks: [ID!]!, $id: ID!, $attributes: [AttributeValueInput!], $sku: String, $quantityLimitPerCustomer: Int, $trackInventory: Boolean!, $stocks: [StockInput!]!, $preorder: PreorderSettingsInput, $weight: WeightScalar, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $name: String!) {
+    mutation VariantUpdate($addStocks: [StockInput!]!, $removeStocks: [ID!]!, $id: ID!, $attributes: [AttributeValueInput!], $sku: String, $quantityLimitPerCustomer: Int, $trackInventory: Boolean!, $stocks: [StockInput!]!, $weight: WeightScalar, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String, $name: String!) {
   productVariantStocksDelete(warehouseIds: $removeStocks, variantId: $id) {
     errors {
       ...ProductVariantStocksDeleteError
@@ -16265,7 +16236,7 @@ export const VariantUpdateDocument = gql`
   }
   productVariantUpdate(
     id: $id
-    input: {attributes: $attributes, sku: $sku, trackInventory: $trackInventory, preorder: $preorder, weight: $weight, quantityLimitPerCustomer: $quantityLimitPerCustomer, name: $name}
+    input: {attributes: $attributes, sku: $sku, trackInventory: $trackInventory, weight: $weight, quantityLimitPerCustomer: $quantityLimitPerCustomer, name: $name}
   ) {
     errors {
       ...ProductErrorWithAttributes
@@ -16303,7 +16274,6 @@ export type VariantUpdateMutationFn = Apollo.MutationFunction<Types.VariantUpdat
  *      quantityLimitPerCustomer: // value for 'quantityLimitPerCustomer'
  *      trackInventory: // value for 'trackInventory'
  *      stocks: // value for 'stocks'
- *      preorder: // value for 'preorder'
  *      weight: // value for 'weight'
  *      firstValues: // value for 'firstValues'
  *      afterValues: // value for 'afterValues'
@@ -16875,41 +16845,6 @@ export function useProductVariantChannelListingUpdateMutation(baseOptions?: Apol
 export type ProductVariantChannelListingUpdateMutationHookResult = ReturnType<typeof useProductVariantChannelListingUpdateMutation>;
 export type ProductVariantChannelListingUpdateMutationResult = Apollo.MutationResult<Types.ProductVariantChannelListingUpdateMutation>;
 export type ProductVariantChannelListingUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantChannelListingUpdateMutation, Types.ProductVariantChannelListingUpdateMutationVariables>;
-export const ProductVariantPreorderDeactivateDocument = gql`
-    mutation ProductVariantPreorderDeactivate($id: ID!) {
-  productVariantPreorderDeactivate(id: $id) {
-    errors {
-      ...ProductError
-    }
-  }
-}
-    ${ProductErrorFragmentDoc}`;
-export type ProductVariantPreorderDeactivateMutationFn = Apollo.MutationFunction<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
-
-/**
- * __useProductVariantPreorderDeactivateMutation__
- *
- * To run a mutation, you first call `useProductVariantPreorderDeactivateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useProductVariantPreorderDeactivateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [productVariantPreorderDeactivateMutation, { data, loading, error }] = useProductVariantPreorderDeactivateMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useProductVariantPreorderDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>(ProductVariantPreorderDeactivateDocument, options);
-      }
-export type ProductVariantPreorderDeactivateMutationHookResult = ReturnType<typeof useProductVariantPreorderDeactivateMutation>;
-export type ProductVariantPreorderDeactivateMutationResult = Apollo.MutationResult<Types.ProductVariantPreorderDeactivateMutation>;
-export type ProductVariantPreorderDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.ProductVariantPreorderDeactivateMutation, Types.ProductVariantPreorderDeactivateMutationVariables>;
 export const ProductVariantBulkUpdateDocument = gql`
     mutation ProductVariantBulkUpdate($product: ID!, $input: [ProductVariantBulkUpdateInput!]!, $errorPolicy: ErrorPolicyEnum) {
   productVariantBulkUpdate(

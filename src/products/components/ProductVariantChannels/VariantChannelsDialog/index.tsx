@@ -1,8 +1,5 @@
 // @ts-strict-ignore
-import {
-  type ChannelPriceAndPreorderData,
-  type IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
+import { type IChannelPriceArgs, type VariantChannelPriceData } from "@dashboard/channels/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { areSelectedChannelIdsEqual } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
@@ -14,7 +11,7 @@ import { type ProductChannelListing } from "../types";
 
 interface VariantChannelsDialogProps {
   channelListings: ProductChannelListing;
-  selectedChannelListings?: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  selectedChannelListings?: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   open: boolean;
   onClose: () => void;
   onConfirm: (selectedIds: string[]) => void;
