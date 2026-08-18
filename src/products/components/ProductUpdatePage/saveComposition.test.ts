@@ -34,7 +34,7 @@ describe("buildProductSaveComposition", () => {
     // Arrange / Act
     const composition = buildProductSaveComposition({
       ...emptyInput,
-      changedFieldNames: ["sku", "trackInventory", "isPreorder"],
+      changedFieldNames: ["sku", "trackInventory"],
     });
 
     // Assert

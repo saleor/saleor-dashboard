@@ -15,11 +15,6 @@ export const messages = defineMessages({
     id: "vuKrlW",
     defaultMessage: "Stock",
   },
-  variantInPreorder: {
-    id: "eAFU/E",
-    defaultMessage: "Variant currently in preorder",
-    description: "product inventory, checkbox",
-  },
   trackInventory: {
     id: "TjGYna",
     defaultMessage: "Track Inventory",
@@ -72,12 +67,6 @@ export const messages = defineMessages({
     defaultMessage: "Assign Warehouses",
     description: "button",
   },
-  preorderEndDateSetup: {
-    id: "REVk27",
-    defaultMessage:
-      "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling",
-    description: "info text",
-  },
   endDateCancel: {
     id: "bk2M4q",
     defaultMessage: "Cancel end date",
@@ -87,38 +76,6 @@ export const messages = defineMessages({
     id: "tqJwfo",
     defaultMessage: "Set end date",
     description: "button",
-  },
-  preorderProductsAvailability: {
-    id: "Gz+4CI",
-    defaultMessage:
-      "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone.",
-    description: "info text",
-  },
-  preorderTresholdLabel: {
-    id: "/iijFq",
-    defaultMessage: "Global threshold",
-    description: "input label",
-  },
-  preorderTresholdDescription: {
-    id: "HYC6cH",
-    defaultMessage:
-      "Threshold that cannot be exceeded even if per channel thresholds are still available",
-    description: "input description",
-  },
-  preorderTresholdUnitsLeft: {
-    id: "JkO0jp",
-    defaultMessage: "{unitsLeft} units left",
-    description: "input description",
-  },
-  preorderTresholdUnlimited: {
-    id: "tlGXkh",
-    defaultMessage: "Unlimited",
-    description: "input description",
-  },
-  soldUnits: {
-    id: "HcQEUk",
-    defaultMessage: "Sold units",
-    description: "table column header, sold units preorder quantity",
   },
   channelTreshold: {
     id: "MNZY28",

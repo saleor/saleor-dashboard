@@ -144,14 +144,6 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
           trackInventory: true,
           weight: weight(formData.weight),
           quantityLimitPerCustomer: Number(formData.quantityLimitPerCustomer) || null,
-          preorder: formData.isPreorder
-            ? {
-                globalThreshold: formData.globalThreshold
-                  ? parseInt(formData.globalThreshold, 10)
-                  : null,
-                endDate: formData.preorderEndDateTime || null,
-              }
-            : undefined,
         },
         firstValues: 10,
       },
@@ -175,7 +167,6 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
           channelId: listing.id,
           costPrice: listing.value.costPrice || null,
           price: listing.value.price,
-          preorderThreshold: listing.value.preorderThreshold,
         })),
       },
     });
