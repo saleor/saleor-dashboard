@@ -13741,7 +13741,11 @@ export const defineGiftCardEventFilterInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Event sent when gift card export is completed. */
+/**
+ * Event sent when gift card export is completed.
+ *
+ * Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+ */
 export type OptionalGiftCardExportCompleted = {
   __typename?: 'GiftCardExportCompleted';
   /** The export file for gift cards. */
@@ -25777,7 +25781,11 @@ export const defineProductErrorFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Event sent when product export is completed. */
+/**
+ * Event sent when product export is completed.
+ *
+ * Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+ */
 export type OptionalProductExportCompleted = {
   __typename?: 'ProductExportCompleted';
   /** The export file for products. */
@@ -37256,6 +37264,8 @@ export const defineVoucherCodeCountableEdgeFactory: DefineTypeFactoryInterface<
  * Event sent when voucher code export is completed.
  *
  * Added in Saleor 3.18.
+ *
+ * Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
  */
 export type OptionalVoucherCodeExportCompleted = {
   __typename?: 'VoucherCodeExportCompleted';
