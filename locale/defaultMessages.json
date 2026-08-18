@@ -1200,6 +1200,10 @@
     "context": "model attribute class tile description",
     "string": "Assign on model types for content pages."
   },
+  "2lcUqL": {
+    "context": "dialog description",
+    "string": "{name} will be removed from your sidebar. You can pin it again at any time."
+  },
   "2m2Xi9": {
     "context": "scope helper for editable order line metadata section",
     "string": "Metadata stored on this order line only. Changes here do not update the product variant."
@@ -10130,6 +10134,10 @@
   "aTe9zV": {
     "context": "customer overview stat label: average order value of recent orders",
     "string": "Avg order value"
+  },
+  "aUJaqW": {
+    "context": "dialog header",
+    "string": "Unpin from navigation"
   },
   "aUUgUV": {
     "context": "Button with  app settings label",

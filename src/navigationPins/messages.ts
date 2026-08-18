@@ -86,6 +86,16 @@ export const navigationPinMessages = defineMessages({
     defaultMessage: "Removed from navigation",
     description: "notification",
   },
+  unpinConfirmTitle: {
+    id: "aUJaqW",
+    defaultMessage: "Unpin from navigation",
+    description: "dialog header",
+  },
+  unpinConfirmDescription: {
+    id: "2lcUqL",
+    defaultMessage: "{name} will be removed from your sidebar. You can pin it again at any time.",
+    description: "dialog description",
+  },
   remove: {
     id: "U0XXbU",
     defaultMessage: "Remove",
