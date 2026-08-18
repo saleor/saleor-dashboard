@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.23.27
+
+### Patch Changes
+
+- [#6783](https://github.com/saleor/saleor-dashboard/pull/6783) [`cde3b38`](https://github.com/saleor/saleor-dashboard/commit/cde3b38937dd7e990eb9ed92bb18f8ccaefe83cb) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Model types can now be pinned to the sidebar. Open the model list, pick a model type tab, and use the Pin button next to the search field to add it as a shortcut — clicking the pinned entry reopens the list filtered to that model type.
+
+  Pins can go into a new Favorites section at the top of the sidebar, or into an existing section such as Catalog or Fulfillment, up to three per section. Users with permission to manage settings can also pin for the whole organization, so everyone sees the same shortcut; those pins are marked "Pinned by organization" and are removed from "Manage organization pins" in the model list's menu.
+
+  Your own pins are listed under Navigation pins on your account page, where you can remove them at any time.
+
+- [#6837](https://github.com/saleor/saleor-dashboard/pull/6837) [`1bff02e`](https://github.com/saleor/saleor-dashboard/commit/1bff02ee2f76b58270697a62e919540d14416e84) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Preorder is no longer part of the Dashboard UI. The preorder API is deprecated in Saleor Core and will be removed, so the Dashboard no longer reads or writes any preorder field: variant forms no longer send preorder settings or per-channel preorder thresholds, the "End preorder" dialog is gone, and order fulfillment and return screens no longer show the "still in preorder" warning. Preorder variants created through the API keep working — Core still blocks fulfilling them, and the Dashboard now surfaces that as an error message. To model pre-sales, create the planned quantity in a warehouse or turn off `trackInventory` to sell without a stock limit.
+
 ## 3.23.26
 
 ### Patch Changes
