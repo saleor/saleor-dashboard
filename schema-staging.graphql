@@ -1886,9 +1886,6 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
   """A gift card metadata is updated."""
   GIFT_CARD_METADATA_UPDATED
 
-  """A gift card export is completed."""
-  GIFT_CARD_EXPORT_COMPLETED
-
   """A new menu created."""
   MENU_CREATED
 
@@ -2074,7 +2071,7 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
   PRODUCT_METADATA_UPDATED
 
   """A product export is completed."""
-  PRODUCT_EXPORT_COMPLETED
+  PRODUCT_EXPORT_COMPLETED @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """A new product type is created."""
   PRODUCT_TYPE_CREATED
@@ -2268,9 +2265,6 @@ enum WebhookEventTypeEnum @doc(category: "Webhooks") {
 
   """A voucher metadata is updated."""
   VOUCHER_METADATA_UPDATED
-
-  """A voucher code export is completed."""
-  VOUCHER_CODE_EXPORT_COMPLETED
 
   """An observability event is created."""
   OBSERVABILITY @deprecated(reason: "The observability feature is no longer supported. This event will be removed in Saleor 3.24.")
@@ -2516,9 +2510,6 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
   """A gift card metadata is updated."""
   GIFT_CARD_METADATA_UPDATED
 
-  """A gift card export is completed."""
-  GIFT_CARD_EXPORT_COMPLETED
-
   """A new menu created."""
   MENU_CREATED
 
@@ -2704,7 +2695,7 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
   PRODUCT_METADATA_UPDATED
 
   """A product export is completed."""
-  PRODUCT_EXPORT_COMPLETED
+  PRODUCT_EXPORT_COMPLETED @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """A new product type is created."""
   PRODUCT_TYPE_CREATED
@@ -2898,9 +2889,6 @@ enum WebhookEventTypeAsyncEnum @doc(category: "Webhooks") {
 
   """A voucher metadata is updated."""
   VOUCHER_METADATA_UPDATED
-
-  """A voucher code export is completed."""
-  VOUCHER_CODE_EXPORT_COMPLETED
 
   """An observability event is created."""
   OBSERVABILITY @deprecated(reason: "The observability feature is no longer supported. This event will be removed in Saleor 3.24.")
@@ -14309,7 +14297,6 @@ enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   GIFT_CARD_SENT
   GIFT_CARD_STATUS_CHANGED
   GIFT_CARD_METADATA_UPDATED
-  GIFT_CARD_EXPORT_COMPLETED
   MENU_CREATED
   MENU_UPDATED
   MENU_DELETED
@@ -14366,7 +14353,7 @@ enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   PRODUCT_UPDATED
   PRODUCT_DELETED
   PRODUCT_METADATA_UPDATED
-  PRODUCT_EXPORT_COMPLETED
+  PRODUCT_EXPORT_COMPLETED @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
   PRODUCT_TYPE_CREATED
   PRODUCT_TYPE_UPDATED
   PRODUCT_TYPE_DELETED
@@ -14424,7 +14411,6 @@ enum WebhookSampleEventTypeEnum @doc(category: "Webhooks") {
   VOUCHER_CODES_CREATED
   VOUCHER_CODES_DELETED
   VOUCHER_METADATA_UPDATED
-  VOUCHER_CODE_EXPORT_COMPLETED
   OBSERVABILITY @deprecated(reason: "The observability feature is no longer supported. This event will be removed in Saleor 3.24.")
   THUMBNAIL_CREATED
   SHOP_METADATA_UPDATED
@@ -17782,8 +17768,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
   webhookDelete(
-    """ID of a webhook to delete."""
-    id: ID!
+    """ID of a webhook to delete. Cannot be used together with `identifier`."""
+    id: ID
+
+    """
+    App-provided identifier of a webhook to delete. Identifiers are unique per app only, so this argument is available exclusively to an app referencing its own webhook; staff users must use `id`. Cannot be used together with `id`.
+    
+    Added in Saleor 3.23.
+    """
+    identifier: String
   ): WebhookDelete @doc(category: "Webhooks")
 
   """
@@ -17792,8 +17785,15 @@ type Mutation {
   Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
   webhookUpdate(
-    """ID of a webhook to update."""
-    id: ID!
+    """ID of a webhook to update. Cannot be used together with `identifier`."""
+    id: ID
+
+    """
+    App-provided identifier of a webhook to update. Identifiers are unique per app only, so this argument is available exclusively to an app referencing its own webhook; staff users must use `id`. Cannot be used together with `id`.
+    
+    Added in Saleor 3.23.
+    """
+    identifier: String
 
     """Fields required to update a webhook."""
     input: WebhookUpdateInput!
@@ -20964,33 +20964,6 @@ type Mutation {
     """Fields required to export product data."""
     input: ExportProductsInput!
   ): ExportProducts @doc(category: "Products") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, PRODUCT_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
-
-  """
-  Export gift cards to csv file. 
-  
-  Requires one of the following permissions: MANAGE_GIFT_CARD.
-  
-  Triggers the following webhook events:
-  - NOTIFY_USER (async): A notification for the exported file.
-  - GIFT_CARD_EXPORT_COMPLETED (async): A notification for the exported file.
-  """
-  exportGiftCards(
-    """Fields required to export gift cards data."""
-    input: ExportGiftCardsInput!
-  ): ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
-
-  """
-  Export voucher codes to csv/xlsx file. 
-  
-  Requires one of the following permissions: MANAGE_DISCOUNTS.
-  
-  Triggers the following webhook events:
-  - VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
-  """
-  exportVoucherCodes(
-    """Fields required to export voucher codes."""
-    input: ExportVoucherCodesInput!
-  ): ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: []) @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 
   """
   Upload a file. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
@@ -30869,66 +30842,6 @@ enum FileTypesEnum {
 }
 
 """
-Export gift cards to csv file. 
-
-Requires one of the following permissions: MANAGE_GIFT_CARD.
-
-Triggers the following webhook events:
-- NOTIFY_USER (async): A notification for the exported file.
-- GIFT_CARD_EXPORT_COMPLETED (async): A notification for the exported file.
-"""
-type ExportGiftCards @doc(category: "Gift cards") @webhookEventsInfo(asyncEvents: [NOTIFY_USER, GIFT_CARD_EXPORT_COMPLETED], syncEvents: []) {
-  """
-  The newly created export file job which is responsible for export data.
-  """
-  exportFile: ExportFile
-  errors: [ExportError!]!
-}
-
-input ExportGiftCardsInput @doc(category: "Gift cards") {
-  """Determine which gift cards should be exported."""
-  scope: ExportScope!
-
-  """Filtering options for gift cards."""
-  filter: GiftCardFilterInput
-
-  """List of gift cards IDs to export."""
-  ids: [ID!]
-
-  """Type of exported file."""
-  fileType: FileTypesEnum!
-}
-
-"""
-Export voucher codes to csv/xlsx file. 
-
-Requires one of the following permissions: MANAGE_DISCOUNTS.
-
-Triggers the following webhook events:
-- VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
-"""
-type ExportVoucherCodes @doc(category: "Discounts") @webhookEventsInfo(asyncEvents: [VOUCHER_CODE_EXPORT_COMPLETED], syncEvents: []) {
-  """
-  The newly created export file job which is responsible for export data.
-  """
-  exportFile: ExportFile
-  errors: [ExportError!]!
-}
-
-input ExportVoucherCodesInput @doc(category: "Discounts") {
-  """
-  The ID of the voucher. If provided, exports all codes belonging to the voucher.
-  """
-  voucherId: ID
-
-  """List of voucher code IDs to export."""
-  ids: [ID!]
-
-  """Type of exported file."""
-  fileType: FileTypesEnum!
-}
-
-"""
 Upload a file. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec 
 
 Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_STAFF_USER.
@@ -36046,24 +35959,6 @@ type GiftCardMetadataUpdated implements Event @doc(category: "Gift cards") {
   giftCard: GiftCard
 }
 
-"""Event sent when gift card export is completed."""
-type GiftCardExportCompleted implements Event @doc(category: "Gift cards") {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The export file for gift cards."""
-  export: ExportFile
-}
-
 """Event sent when new menu is created."""
 type MenuCreated implements Event @doc(category: "Menu") {
   """Time of the event."""
@@ -36286,7 +36181,11 @@ type ProductMetadataUpdated implements Event @doc(category: "Products") {
   category: Category
 }
 
-"""Event sent when product export is completed."""
+"""
+Event sent when product export is completed.
+
+Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+"""
 type ProductExportCompleted implements Event @doc(category: "Products") {
   """Time of the event."""
   issuedAt: DateTime
@@ -36301,7 +36200,7 @@ type ProductExportCompleted implements Event @doc(category: "Products") {
   recipient: App
 
   """The export file for products."""
-  export: ExportFile
+  export: ExportFile @deprecated(reason: "Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.")
 }
 
 """
@@ -37827,24 +37726,6 @@ type VoucherMetadataUpdated implements Event @doc(category: "Discounts") {
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Voucher
-}
-
-"""Event sent when voucher code export is completed."""
-type VoucherCodeExportCompleted implements Event @doc(category: "Discounts") {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """The export file for voucher codes."""
-  export: ExportFile
 }
 
 """Event sent when new warehouse is created."""

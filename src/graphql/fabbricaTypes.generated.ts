@@ -9614,10 +9614,17 @@ export type GiftCardEventsEnum =
   | 'UPDATED'
   | 'USED_IN_ORDER';
 
-/** Event sent when gift card export is completed. */
+/**
+ * Event sent when gift card export is completed.
+ *
+ * Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+ */
 export type GiftCardExportCompleted = Event & {
   __typename: 'GiftCardExportCompleted';
-  /** The export file for gift cards. */
+  /**
+   * The export file for gift cards.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   export: Maybe<ExportFile>;
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
@@ -17244,7 +17251,8 @@ export type MutationWebhookCreateArgs = {
 
 
 export type MutationWebhookDeleteArgs = {
-  id: Scalars['ID']['input'];
+  id: InputMaybe<Scalars['ID']['input']>;
+  identifier: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -17261,7 +17269,8 @@ export type MutationWebhookTriggerArgs = {
 
 
 export type MutationWebhookUpdateArgs = {
-  id: Scalars['ID']['input'];
+  id: InputMaybe<Scalars['ID']['input']>;
+  identifier: InputMaybe<Scalars['String']['input']>;
   input: WebhookUpdateInput;
 };
 
@@ -22740,10 +22749,17 @@ export type ProductErrorCode =
   | 'UNSUPPORTED_MEDIA_PROVIDER'
   | 'UNSUPPORTED_MIME_TYPE';
 
-/** Event sent when product export is completed. */
+/**
+ * Event sent when product export is completed.
+ *
+ * Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+ */
 export type ProductExportCompleted = Event & {
   __typename: 'ProductExportCompleted';
-  /** The export file for products. */
+  /**
+   * The export file for products.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   export: Maybe<ExportFile>;
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
@@ -32452,10 +32468,15 @@ export type VoucherCodeCountableEdge = {
  * Event sent when voucher code export is completed.
  *
  * Added in Saleor 3.18.
+ *
+ * Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
  */
 export type VoucherCodeExportCompleted = Event & {
   __typename: 'VoucherCodeExportCompleted';
-  /** The export file for voucher codes. */
+  /**
+   * The export file for voucher codes.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   export: Maybe<ExportFile>;
   /** Time of the event. */
   issuedAt: Maybe<Scalars['DateTime']['output']>;
