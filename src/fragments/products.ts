@@ -26,14 +26,6 @@ export const fragmentMoneyWithFractionDigits = gql`
   }
 `;
 
-export const fragmentPreorder = gql`
-  fragment Preorder on PreorderData {
-    globalThreshold
-    globalSoldUnits
-    endDate
-  }
-`;
-
 export const priceRangeFragment = gql`
   fragment PriceRange on TaxedMoneyRange {
     start {
@@ -91,10 +83,6 @@ export const channelListingProductVariantFragment = gql`
     }
     costPrice {
       ...Money
-    }
-    preorderThreshold {
-      quantity
-      soldUnits
     }
   }
 `;
@@ -184,9 +172,6 @@ export const productDetailsVariant = gql`
       ...Stock
     }
     trackInventory
-    preorder {
-      ...Preorder
-    }
     channelListings {
       ...ChannelListingProductVariant
     }
@@ -240,9 +225,6 @@ export const productFragmentDetails = gql`
       id
       sku
       trackInventory
-      preorder {
-        ...Preorder
-      }
     }
     category {
       id
@@ -366,9 +348,6 @@ export const fragmentVariant = gql`
       ...Stock
     }
     trackInventory
-    preorder {
-      ...Preorder
-    }
     weight {
       ...Weight
     }

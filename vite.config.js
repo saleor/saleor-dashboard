@@ -64,6 +64,8 @@ export default defineConfig(({ command, mode }) => {
 
     npm_package_version,
     PORT_DEVSERVER,
+    // Set by process managers/proxies (e.g. portless) that assign a port to the child process
+    PORT,
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -131,7 +133,9 @@ export default defineConfig(({ command, mode }) => {
     publicDir: "../public",
     envDir: "..",
     server: {
-      port: PORT_DEVSERVER || 9000,
+      port: PORT || PORT_DEVSERVER || 9000,
+      // When a port is assigned to us, fail loudly instead of drifting to another one
+      strictPort: Boolean(PORT),
       fs: {
         allow: [searchForWorkspaceRoot(process.cwd()), "../.."],
       },

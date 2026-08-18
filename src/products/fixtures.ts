@@ -274,7 +274,6 @@ export const product: (
     id: "pv75934",
     sku: "59661-34207",
     trackInventory: true,
-    preorder: null,
   },
   description: JSON.stringify(content),
   id: "p10171",
@@ -701,7 +700,6 @@ export const product: (
         },
       ],
       trackInventory: true,
-      preorder: null,
       channelListings: [
         {
           id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNTM=",
@@ -721,11 +719,6 @@ export const product: (
             amount: 1.5,
             currency: "USD",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -747,11 +740,6 @@ export const product: (
             amount: 6.0,
             currency: "PLN",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -804,7 +792,6 @@ export const product: (
       ],
       stocks: [],
       trackInventory: true,
-      preorder: null,
       channelListings: [
         {
           id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNEM=",
@@ -824,11 +811,6 @@ export const product: (
             amount: 2.0,
             currency: "USD",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -850,11 +832,6 @@ export const product: (
             amount: 8.0,
             currency: "PLN",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -974,7 +951,6 @@ export const product: (
         },
       ],
       trackInventory: true,
-      preorder: null,
       channelListings: [
         {
           id: "UHJvZHVjdFZhcmlhbnRDaSAD3w2FubmVsTGlzdGluZzoyNTM=",
@@ -994,11 +970,6 @@ export const product: (
             amount: 1.0,
             currency: "USD",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -1020,11 +991,6 @@ export const product: (
             amount: 4.0,
             currency: "PLN",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -1089,7 +1055,6 @@ export const product: (
         },
       ],
       trackInventory: true,
-      preorder: null,
       channelListings: [
         {
           id: "UHJvZHVjdFZhcmlhbnRDaSAD3w2FubmVsTGlzdGluZzoyNzU=",
@@ -1108,11 +1073,6 @@ export const product: (
             amount: 2.5,
             currency: "EUR",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -1177,7 +1137,6 @@ export const product: (
         },
       ],
       trackInventory: true,
-      preorder: null,
       channelListings: [
         {
           id: "UHJvZHVjdFZhcmlhbnRDaSAD3w2FubmVsTGlzdGluZzoyNzY=",
@@ -1196,11 +1155,6 @@ export const product: (
             amount: 2.0,
             currency: "GBP",
             __typename: "Money",
-          },
-          preorderThreshold: {
-            quantity: null,
-            soldUnits: 0,
-            __typename: "PreorderThreshold",
           },
           __typename: "ProductVariantChannelListing",
         },
@@ -3656,11 +3610,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         amount: 10,
         currency: "USD",
       },
-      preorderThreshold: {
-        __typename: "PreorderThreshold",
-        quantity: 0,
-        soldUnits: 0,
-      },
     },
     {
       id: "UHJvZHVjdFZhcmlhbnRDaGGSAEdsWsTGlzdGluZzoyNTM=",
@@ -3680,11 +3629,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
         __typename: "Money",
         amount: 20,
         currency: "USD",
-      },
-      preorderThreshold: {
-        __typename: "PreorderThreshold",
-        quantity: 0,
-        soldUnits: 0,
       },
     },
   ],
@@ -4146,12 +4090,6 @@ export const variant = (placeholderImage: string): ProductVariantFragment => ({
     },
   ],
   trackInventory: true,
-  preorder: {
-    __typename: "PreorderData",
-    endDate: null,
-    globalSoldUnits: null,
-    globalThreshold: 0,
-  },
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,

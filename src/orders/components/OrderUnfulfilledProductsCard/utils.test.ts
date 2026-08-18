@@ -32,7 +32,6 @@ const line: OrderLineFragment = {
     id: "variantId==",
     name: "M",
     quantityAvailable: 700,
-    preorder: null,
     stocks: null,
     product: {
       __typename: "Product",

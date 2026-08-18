@@ -1655,7 +1655,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               name: "XS",
               quantityAvailable: 10,
-              preorder: null,
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1836,7 +1835,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               name: "XS",
               quantityAvailable: 10,
-              preorder: null,
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -2019,7 +2017,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "Soft",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2170,7 +2167,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "XXL",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2482,7 +2478,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "Hard",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2633,7 +2628,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "15-1337",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2797,7 +2791,6 @@ export const fulfillOrderLine = (placeholderImage: string): OrderFulfillLineFrag
     sku: "5-1337",
     attributes: [],
     trackInventory: true,
-    preorder: null,
     stocks: [
       {
         id: "stock_test_id1",

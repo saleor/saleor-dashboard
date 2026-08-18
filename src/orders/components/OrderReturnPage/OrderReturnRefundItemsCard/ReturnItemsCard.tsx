@@ -171,7 +171,6 @@ const ItemsCard = ({
               const { isSelected } = getReplacementDataFromItems(itemsSelections, id);
               const isReplacable = !!variant && !isRefunded;
               const isReturnable = !!variant;
-              const isPreorder = !!variant?.preorder;
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
               const anyLineWithoutVariant = lines.some(({ variant }) => !variant);
               const productNameCellWidth = anyLineWithoutVariant ? "30%" : "50%";
@@ -196,7 +195,6 @@ const ItemsCard = ({
                   <TableCell align="right">
                     {isReturnable && (
                       <QuantityInput
-                        disabled={isPreorder}
                         className={classes.quantityField}
                         data-test-id={"quantityInput" + line?.id}
                         value={currentQuantity}
@@ -209,7 +207,7 @@ const ItemsCard = ({
                     )}
                   </TableCell>
                   <TableCell align="center">
-                    {isReplacable && !isPreorder && (
+                    {isReplacable && (
                       <Checkbox
                         checked={isSelected}
                         onCheckedChange={value => onChangeSelected(id, value as boolean)}

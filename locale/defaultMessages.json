@@ -383,6 +383,10 @@
     "context": "error when fetching all variants for duplicate detection fails",
     "string": "Could not load existing variants. Close the dialog and try again before generating."
   },
+  "/S1aL9": {
+    "context": "dialog header",
+    "string": "Manage organization pins"
+  },
   "/U8FUp": {
     "string": "Couldn't load activities"
   },
@@ -411,10 +415,6 @@
   },
   "/glQgs": {
     "string": "No channels found"
-  },
-  "/iijFq": {
-    "context": "input label",
-    "string": "Global threshold"
   },
   "/jEC3m": {
     "context": "product media gallery dropzone hint",
@@ -1195,6 +1195,10 @@
   "2lW0vk": {
     "context": "model attribute class tile description",
     "string": "Assign on model types for content pages."
+  },
+  "2lcUqL": {
+    "context": "dialog description",
+    "string": "{name} will be removed from your sidebar. You can pin it again at any time."
   },
   "2m2Xi9": {
     "context": "scope helper for editable order line metadata section",
@@ -2083,9 +2087,6 @@
   "6LqbaB": {
     "string": "Collection created"
   },
-  "6QjMei": {
-    "string": "Preorder end time needs to be set in the future"
-  },
   "6RQKxH": {
     "context": "order history message",
     "string": "Invoice no. {invoiceNumber} was updated"
@@ -2174,6 +2175,10 @@
   "6fIHWa": {
     "context": "order header date, less than a minute ago",
     "string": "Placed just now"
+  },
+  "6fll1+": {
+    "context": "sidebar section holding pinned model types",
+    "string": "Favorites"
   },
   "6fxdUO": {
     "context": "section header",
@@ -3628,6 +3633,10 @@
     "context": "input label",
     "string": "Limit quantity per checkout (optional)"
   },
+  "C7PYI9": {
+    "context": "empty state",
+    "string": "You have not pinned any model types yet."
+  },
   "C7eDb9": {
     "string": "Permission groups"
   },
@@ -3805,6 +3814,10 @@
   "CkmWKG": {
     "context": "channel order setting description for order expiration",
     "string": "Releases reserved stock from orders that were never confirmed."
+  },
+  "ClI6NL": {
+    "context": "dialog header",
+    "string": "Pin to navigation"
   },
   "ClKKID": {
     "context": "channel publication status",
@@ -4921,10 +4934,6 @@
   "GyXEWS": {
     "string": "App created"
   },
-  "Gz+4CI": {
-    "context": "info text",
-    "string": "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone."
-  },
   "GzbSQk": {
     "context": "Status label when object is scheduled to publish in a channel",
     "string": "Scheduled to publish"
@@ -5088,10 +5097,6 @@
     "context": "channel delivery card header count",
     "string": "{count} assigned"
   },
-  "HYC6cH": {
-    "context": "input description",
-    "string": "Threshold that cannot be exceeded even if per channel thresholds are still available"
-  },
   "HYHLsB": {
     "context": "product field",
     "string": "Export Variant ID"
@@ -5110,10 +5115,6 @@
   "Hc58JL": {
     "context": "card title",
     "string": "Balance after requests"
-  },
-  "HcQEUk": {
-    "context": "table column header, sold units preorder quantity",
-    "string": "Sold units"
   },
   "Hd3E1g": {
     "context": "table header column",
@@ -5332,6 +5333,10 @@
   },
   "ILrXJV": {
     "string": "Press {key1} {key2} to send"
+  },
+  "IMH4UI": {
+    "context": "pin scope select label",
+    "string": "Visible to"
   },
   "IMXS9Z": {
     "context": "model type metadata dialog header",
@@ -5710,10 +5715,6 @@
   "Jk8bsM": {
     "context": "badge next to customer name marking this user as staff",
     "string": "Staff"
-  },
-  "JkO0jp": {
-    "context": "input description",
-    "string": "{unitsLeft} units left"
   },
   "JkUOSW": {
     "context": "product type detail page, top-bar metadata button tooltip",
@@ -7623,10 +7624,6 @@
     "context": "sale status",
     "string": "Expired"
   },
-  "REVk27": {
-    "context": "info text",
-    "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
-  },
   "RFbzxF": {
     "context": "attribute label placeholder in embedded create form",
     "string": "e.g. Gift wrap style"
@@ -7729,6 +7726,10 @@
   "RkDcW2": {
     "context": "gift card sidebar, assigned customer intro microcopy",
     "string": "By default, anyone with the code can redeem this card, including in guest checkout. Assign a customer to restrict redemption to their account."
+  },
+  "RkcPCD": {
+    "context": "pin scope option",
+    "string": "Only me"
   },
   "RlbhwF": {
     "context": "product no longer exists error description",
@@ -8314,6 +8315,10 @@
     "context": "label for authorized amount",
     "string": "Authorized"
   },
+  "U0XXbU": {
+    "context": "button, removes a pin",
+    "string": "Remove"
+  },
   "U1U2Zv": {
     "context": "staff emails hub card description",
     "string": "Invites, password resets, order alerts, and export results for Dashboard users — including default or custom SMTP for those messages."
@@ -8541,6 +8546,10 @@
     "context": "product field",
     "string": "Variant Images"
   },
+  "UoEmX9": {
+    "context": "notification",
+    "string": "Removed from navigation"
+  },
   "UpgLo/": {
     "context": "snackbar text",
     "string": "Extension deactivated"
@@ -8700,9 +8709,17 @@
     "context": "TopNav destination link tooltip to parent order",
     "string": "Order"
   },
+  "VP5VVx": {
+    "context": "dialog description",
+    "string": "Choose where {name} should appear in the sidebar."
+  },
   "VQvNZx": {
     "context": "page title",
     "string": "All installed"
+  },
+  "VRHMrY": {
+    "context": "button, removes a model type from the sidebar",
+    "string": "Unpin"
   },
   "VRT9cG": {
     "context": "orders list menu shortcut to settings hub",
@@ -9225,10 +9242,6 @@
   "XMFpAP": {
     "string": "Each rule is an alternative. Customers get the best matching discount."
   },
-  "XMvH/d": {
-    "context": "button label",
-    "string": "ACCEPT"
-  },
   "XNQPEn": {
     "context": "settings search alias",
     "string": "store name"
@@ -9285,6 +9298,10 @@
   "XWGZLL": {
     "context": "transaction reference subtitle",
     "string": "Transaction reference"
+  },
+  "XXZxyz": {
+    "context": "notification",
+    "string": "Pinned to navigation"
   },
   "XYhE8p": {
     "context": "edit attribute value",
@@ -9454,10 +9471,6 @@
   "Y3zr/B": {
     "context": "voucher application, switch button",
     "string": "Apply only to a single cheapest eligible product"
-  },
-  "Y4cy0i": {
-    "context": "dialog header",
-    "string": "Ending preorder"
   },
   "Y6amBy": {
     "context": "setup checklist required section title",
@@ -10086,6 +10099,10 @@
   "aTe9zV": {
     "context": "customer overview stat label: average order value of recent orders",
     "string": "Avg order value"
+  },
+  "aUJaqW": {
+    "context": "dialog header",
+    "string": "Unpin from navigation"
   },
   "aUUgUV": {
     "context": "Button with  app settings label",
@@ -10946,9 +10963,6 @@
     "context": "ripple action",
     "string": "Create a channel"
   },
-  "dTCWqt": {
-    "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
-  },
   "dTkmON": {
     "context": "edit tracking button",
     "string": "Edit tracking"
@@ -11088,17 +11102,21 @@
   "e9z98s": {
     "string": "You don't have access to this permission"
   },
-  "eAFU/E": {
-    "context": "product inventory, checkbox",
-    "string": "Variant currently in preorder"
-  },
   "eB6oHa": {
     "context": "Message when product is not in any channel",
     "string": "Product is not listed in any channel"
   },
+  "eBSWv6": {
+    "context": "account settings card subtitle",
+    "string": "Model types you pinned to your sidebar."
+  },
   "eCA3n1": {
     "context": "Health check label for isAvailableForPurchase field",
     "string": "Can add to cart"
+  },
+  "eCczRa": {
+    "context": "validation message",
+    "string": "This section already has the maximum of {max} pins."
   },
   "eEXfCE": {
     "context": "gift card detail cogs menu, opens the delete-confirmation dialog",
@@ -11916,6 +11934,10 @@
   "hkSkNx": {
     "string": "Search Customers"
   },
+  "hklWYW": {
+    "context": "empty state",
+    "string": "No organization pins yet."
+  },
   "hks/QN": {
     "context": "shipping method channel listing missing",
     "string": "Not configured"
@@ -12379,6 +12401,10 @@
     "context": "how many sibling variants are loaded vs total",
     "string": "{loaded} of {total}"
   },
+  "jJG+J7": {
+    "context": "pin target select label",
+    "string": "Section"
+  },
   "jKm3k/": {
     "context": "issue gift card success dialog intro",
     "string": "Copy the code below to share with the customer."
@@ -12627,10 +12653,6 @@
   "k6kIUq": {
     "context": "password login mode option",
     "string": "Enabled"
-  },
-  "k6sfZr": {
-    "context": "tooltip content when product is in preorder",
-    "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
   },
   "k6uom3": {
     "context": "configuration section for shipping zones and warehouses",
@@ -13375,6 +13397,10 @@
     "context": "customer gift cards card issue button",
     "string": "Issue new card"
   },
+  "meH8tQ": {
+    "context": "account settings card header",
+    "string": "Navigation pins"
+  },
   "mfz2Td": {
     "context": "setup task title",
     "string": "Assign channels"
@@ -13517,6 +13543,10 @@
   "nGuFx9": {
     "context": "Channel status blocking purchase in a channel",
     "string": "Channel inactive — cannot be purchased"
+  },
+  "nHbJnd": {
+    "context": "label shown instead of the pin button",
+    "string": "Pinned by organization"
   },
   "nIuKz3": {
     "context": "Refund status none",
@@ -15346,10 +15376,6 @@
   "tl1/1E": {
     "string": "Learn more about {orderManagement}"
   },
-  "tlGXkh": {
-    "context": "input description",
-    "string": "Unlimited"
-  },
   "tmcdrp": {
     "string": "ID:"
   },
@@ -16201,6 +16227,10 @@
     "context": "file attribute dropzone hint when replacing an existing file",
     "string": "Drop to replace"
   },
+  "wHaptH": {
+    "context": "pin scope option",
+    "string": "Everyone in the organization"
+  },
   "wJep/X": {
     "context": "refund amounts were settled",
     "string": "Settled"
@@ -16854,6 +16884,10 @@
   },
   "z/2AZY": {
     "string": "Discount type"
+  },
+  "z/T5ab": {
+    "context": "button, adds a model type to the sidebar",
+    "string": "Pin"
   },
   "z/lMXM": {
     "context": "voucher redemptions card codes count meta",

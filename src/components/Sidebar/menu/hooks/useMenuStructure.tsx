@@ -32,6 +32,9 @@ import { TranslationsIcon } from "@dashboard/icons/Translations";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { pageListPath } from "@dashboard/modeling/urls";
 import { pageTypeListUrl } from "@dashboard/modelTypes/urls";
+import { messages as navigationPinMessages } from "@dashboard/navigationPins/constants";
+import { useResolvedNavigationPins } from "@dashboard/navigationPins/hooks/useResolvedNavigationPins";
+import { injectNavigationPins } from "@dashboard/navigationPins/injectNavigationPins";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { productListUrl } from "@dashboard/products/urls";
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
@@ -41,7 +44,7 @@ import { menuListUrl } from "@dashboard/structures/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import isEmpty from "lodash/isEmpty";
-import { Search } from "lucide-react";
+import { Search, Star } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { SidebarIconSlot } from "../../SidebarIconSlot";
@@ -55,6 +58,7 @@ export function useMenuStructure() {
   const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
   const intl = useIntl();
   const { user } = useUser();
+  const navigationPins = useResolvedNavigationPins();
 
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
@@ -317,6 +321,11 @@ export function useMenuStructure() {
       type: "item",
     },
   ];
+  // Pins are injected before filtering, so one whose host section is hidden drops out with it.
+  const menuItemsWithPins = injectNavigationPins(menuItems, navigationPins, {
+    favoritesLabel: intl.formatMessage(navigationPinMessages.favorites),
+    favoritesIcon: renderIcon(<Star {...navigationLucideIconProps} />),
+  });
   const isMenuItemPermitted = (menuItem: SidebarMenuItem) => {
     const userPermissions = (user?.userPermissions || []).map(permission => permission.code);
 
@@ -329,7 +338,7 @@ export function useMenuStructure() {
   const getFilteredMenuItems = (menuItems: SidebarMenuItem[]) =>
     menuItems.filter(isMenuItemPermitted);
 
-  return menuItems.reduce((resultItems: SidebarMenuItem[], menuItem: SidebarMenuItem) => {
+  return menuItemsWithPins.reduce((resultItems: SidebarMenuItem[], menuItem: SidebarMenuItem) => {
     if (!isMenuItemPermitted(menuItem)) {
       return resultItems;
     }
