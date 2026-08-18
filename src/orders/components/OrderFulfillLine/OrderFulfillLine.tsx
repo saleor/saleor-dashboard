@@ -35,8 +35,7 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
   const classes = useStyles();
   const intl = useIntl();
   const isDeletedVariant = !line?.variant;
-  const isPreorder = !!line.variant?.preorder;
-  const lineFormQuantity = isPreorder ? 0 : formsetData[lineIndex]?.value?.[0]?.quantity;
+  const lineFormQuantity = formsetData[lineIndex]?.value?.[0]?.quantity;
   const lineFormWarehouse = formsetData[lineIndex]?.value?.[0]?.warehouse;
   const isFulfillingLine = (lineFormQuantity ?? 0) > 0;
   const overfulfill = lineFormQuantity > line.quantityToFulfill;
@@ -71,7 +70,7 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
         className={classes.colName}
         thumbnail={line?.thumbnail?.url}
         badge={
-          isPreorder || !line?.variant ? (
+          !line?.variant ? (
             <Tooltip>
               <Tooltip.Trigger>
                 <div className={classes.warningIcon}>
@@ -80,11 +79,7 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
               </Tooltip.Trigger>
               <Tooltip.Content side="bottom">
                 <Tooltip.Arrow />
-                <Box __maxWidth={350}>
-                  {intl.formatMessage(
-                    isPreorder ? messages.preorderWarning : messages.deletedVariantWarning,
-                  )}
-                </Box>
+                <Box __maxWidth={350}>{intl.formatMessage(messages.deletedVariantWarning)}</Box>
               </Tooltip.Content>
             </Tooltip>
           ) : undefined
@@ -96,69 +91,61 @@ const OrderFulfillLine = (props: OrderFulfillLineProps) => {
         />
       </TableCellAvatar>
       <TableCell className={classes.colSku}>{line.variant?.sku}</TableCell>
-      {isPreorder ? (
-        <TableCell className={classes.colQuantity} />
-      ) : (
-        <TableCell
-          className={classes.colQuantity}
-          key={warehouseStock?.id ?? "deletedVariant" + lineIndex}
-        >
-          <QuantityInput
-            value={lineFormQuantity ?? 0}
-            max={line.quantityToFulfill}
-            isError={overfulfill}
-            onChange={event => {
-              const quantity = parseInt(event.target.value, 10);
+      <TableCell
+        className={classes.colQuantity}
+        key={warehouseStock?.id ?? "deletedVariant" + lineIndex}
+      >
+        <QuantityInput
+          value={lineFormQuantity ?? 0}
+          max={line.quantityToFulfill}
+          isError={overfulfill}
+          onChange={event => {
+            const quantity = parseInt(event.target.value, 10);
 
-              formsetChange(line.id, [
-                {
-                  quantity: Number.isNaN(quantity) ? 0 : quantity,
-                  warehouse: lineFormWarehouse,
-                },
-              ]);
-            }}
-          />
-        </TableCell>
-      )}
+            formsetChange(line.id, [
+              {
+                quantity: Number.isNaN(quantity) ? 0 : quantity,
+                warehouse: lineFormWarehouse,
+              },
+            ]);
+          }}
+        />
+      </TableCell>
       <TableCell className={classes.colStock} key="total">
-        {lineFormWarehouse ? (isPreorder || isDeletedVariant ? undefined : availableQuantity) : "-"}
+        {lineFormWarehouse ? (isDeletedVariant ? undefined : availableQuantity) : "-"}
       </TableCell>
       <TableCell className={clsx(classes.colWarehouse, styles.warehouseCell)}>
-        {isPreorder ? (
-          "-"
-        ) : (
-          <Box
-            role="button"
-            tabIndex={isFulfillingLine ? 0 : -1}
-            aria-disabled={!isFulfillingLine}
-            onClick={isFulfillingLine ? onWarehouseChange : undefined}
-            onKeyDown={event => {
-              if (!isFulfillingLine) {
-                return;
-              }
+        <Box
+          role="button"
+          tabIndex={isFulfillingLine ? 0 : -1}
+          aria-disabled={!isFulfillingLine}
+          onClick={isFulfillingLine ? onWarehouseChange : undefined}
+          onKeyDown={event => {
+            if (!isFulfillingLine) {
+              return;
+            }
 
-              if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                onWarehouseChange();
-              }
-            }}
-            className={isFulfillingLine ? styles.warehouseInput : styles.warehouseInputDisabled}
-            padding={2}
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              onWarehouseChange();
+            }
+          }}
+          className={isFulfillingLine ? styles.warehouseInput : styles.warehouseInputDisabled}
+          padding={2}
+          width="100%"
+        >
+          <Input
+            readOnly
+            disabled={!isFulfillingLine}
+            size="small"
             width="100%"
-          >
-            <Input
-              readOnly
-              disabled={!isFulfillingLine}
-              size="small"
-              width="100%"
-              aria-label={intl.formatMessage(messages.warehouse)}
-              placeholder={intl.formatMessage(messages.selectWarehouse)}
-              value={lineFormWarehouse?.name}
-              endAdornment={<ChevronDown size={16} />}
-              data-test-id="select-warehouse-button"
-            />
-          </Box>
-        )}
+            aria-label={intl.formatMessage(messages.warehouse)}
+            placeholder={intl.formatMessage(messages.selectWarehouse)}
+            value={lineFormWarehouse?.name}
+            endAdornment={<ChevronDown size={16} />}
+            data-test-id="select-warehouse-button"
+          />
+        </Box>
       </TableCell>
     </TableRowLink>
   );

@@ -490,3 +490,67 @@ describe("getMenuItemExtension", () => {
     expect(result).toBeUndefined();
   });
 });
+
+describe("isMenuActive with navigation pins", () => {
+  const pinFor = (id: string): SidebarMenuItem => ({
+    id: `navigation-pin-favorites-${id}`,
+    label: "Pinned type",
+    url: `/models/?pageTypes%5B0%5D=${id}`,
+    type: "item",
+  });
+
+  it("marks only the pin matching the selected model type", () => {
+    // Arrange
+    const location = "/models/?pageTypes%5B0%5D=type-a";
+
+    // Act & Assert
+    expect(isMenuActive(location, pinFor("type-a"))).toBe(true);
+    expect(isMenuActive(location, pinFor("type-b"))).toBe(false);
+  });
+
+  it("does not mark any pin on the unfiltered model list", () => {
+    // Act & Assert
+    expect(isMenuActive("/models/", pinFor("type-a"))).toBe(false);
+  });
+
+  it("does not mark a pin when a group selects several model types", () => {
+    // Arrange
+    const location = "/models/?pageTypes%5B0%5D=type-a&pageTypes%5B1%5D=type-b";
+
+    // Act & Assert
+    expect(isMenuActive(location, pinFor("type-a"))).toBe(false);
+  });
+
+  it("still marks the plain Models item while a pin is selected", () => {
+    // Arrange
+    const models: SidebarMenuItem = {
+      id: "models",
+      label: "Models",
+      url: "/models/",
+      type: "item",
+    };
+
+    // Act & Assert
+    expect(isMenuActive("/models/?pageTypes%5B0%5D=type-a", models)).toBe(true);
+  });
+});
+
+describe("isMenuActive for the Favorites group header", () => {
+  const favorites: SidebarMenuItem = {
+    id: "navigation-pin-favorites-section",
+    label: "Favorites",
+    url: "/models/?pageTypes%5B0%5D=type-a",
+    type: "itemGroup",
+  };
+
+  it("is not active on an unfiltered model list", () => {
+    // Act & Assert — regression: the header lit up on every model list page
+    expect(isMenuActive("/models/?asc=true&sort=title", favorites)).toBe(false);
+    expect(isMenuActive("/models/", favorites)).toBe(false);
+  });
+
+  it("is not active when a different pinned type is selected", () => {
+    // Act & Assert
+    expect(isMenuActive("/models/?pageTypes%5B0%5D=type-b", favorites)).toBe(false);
+  });
+});

@@ -16,7 +16,6 @@ const listing: ChannelData[] = [
     currency: "USD",
     price: "",
     costPrice: "",
-    preorderThreshold: 0,
   },
 ];
 
@@ -109,7 +108,6 @@ describe("ProductVariantPrice", () => {
         currency: "USD",
         price: "0",
         costPrice: "",
-        preorderThreshold: 0,
       },
     ];
 
@@ -144,7 +142,6 @@ describe("ProductVariantPrice", () => {
     // Assert
     expect(onChange).toHaveBeenCalledWith("1", {
       price: "12.50",
-      preorderThreshold: 0,
       costPrice: "",
     });
   });
@@ -160,7 +157,6 @@ describe("ProductVariantPrice", () => {
         costPrice: "",
         isActive: false,
         isPublished: true,
-        preorderThreshold: 0,
       },
     ];
 
@@ -182,7 +178,6 @@ describe("ProductVariantPrice", () => {
         currency: "USD",
         price: "",
         costPrice: "",
-        preorderThreshold: 0,
       },
       {
         id: "2",
@@ -190,7 +185,6 @@ describe("ProductVariantPrice", () => {
         currency: "EUR",
         price: "",
         costPrice: "",
-        preorderThreshold: 0,
       },
     ];
 
@@ -220,7 +214,6 @@ describe("ProductVariantPrice", () => {
         currency: "EUR",
         price: "45.00",
         costPrice: "4.00",
-        preorderThreshold: 0,
       },
       {
         id: "1",
@@ -228,7 +221,6 @@ describe("ProductVariantPrice", () => {
         currency: "USD",
         price: "80.00",
         costPrice: "30.00",
-        preorderThreshold: 0,
       },
     ]);
   });

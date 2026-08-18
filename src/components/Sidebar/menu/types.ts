@@ -16,4 +16,6 @@ export interface SidebarMenuItem {
   endAdornment?: ReactNode;
   separatorBefore?: boolean;
   labelStyle?: "default" | "settings";
+  /** Expand this group on mount even when nothing inside it is active. */
+  defaultExpanded?: boolean;
 }

@@ -17,9 +17,11 @@ interface Props {
 export const ItemGroup = ({ menuItem }: Props) => {
   const location = useLocation();
 
-  const hasSubmenuActive = menuItem?.children.some(item => isMenuActive(location.pathname, item));
-  const isActive = isMenuActive(location.pathname, menuItem) && !hasSubmenuActive;
-  const isExpanded = isActive || hasSubmenuActive;
+  // Navigation pins are distinguished by query string, so the search has to travel along.
+  const activeLocation = location.pathname + location.search;
+  const hasSubmenuActive = menuItem?.children.some(item => isMenuActive(activeLocation, item));
+  const isActive = isMenuActive(activeLocation, menuItem) && !hasSubmenuActive;
+  const isExpanded = isActive || hasSubmenuActive || Boolean(menuItem.defaultExpanded);
 
   const handleMenuGroupClick = () => {
     if (menuItem.onClick) {
