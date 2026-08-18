@@ -33,8 +33,6 @@ export interface ChannelData {
   availableForPurchaseAt?: string;
   isAvailableForPurchase?: boolean;
   visibleInListings?: boolean;
-  preorderThreshold?: number;
-  unitsSold?: number;
 }
 
 export interface ChannelPriceData {
@@ -45,13 +43,13 @@ export interface ChannelPriceData {
   costPrice?: string;
 }
 
-interface IChannelPriceArgs {
+export interface IChannelPriceArgs {
   price: string;
   costPrice: string;
 }
 export type ChannelPriceArgs = RequireOnlyOne<IChannelPriceArgs, "price" | "costPrice">;
 
-export interface ChannelPriceAndPreorderData {
+export interface VariantChannelPriceData {
   id: string;
   name: string;
   currency: string;
@@ -59,20 +57,7 @@ export interface ChannelPriceAndPreorderData {
   costPrice?: string;
   isActive?: boolean;
   isPublished?: boolean;
-  preorderThreshold?: number | null;
-  unitsSold?: number;
 }
-
-export interface IChannelPriceAndPreorderArgs {
-  price: string;
-  costPrice: string;
-  preorderThreshold?: number | null;
-  unitsSold?: number;
-}
-export type ChannelPriceAndPreorderArgs = IChannelPriceArgs & {
-  preorderThreshold: number | null;
-  unitsSold?: number;
-};
 
 export interface ChannelVoucherData {
   id: string;
@@ -112,7 +97,7 @@ const createVoucherChannels = (data?: ChannelFragment[]) =>
 
 export const createVariantChannels = (
   data?: ProductVariantDetailsQuery["productVariant"],
-): ChannelPriceAndPreorderData[] => {
+): VariantChannelPriceData[] => {
   if (data) {
     return (
       data?.channelListings?.map(listing => {

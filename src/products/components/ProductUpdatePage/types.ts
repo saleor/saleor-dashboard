@@ -48,11 +48,6 @@ export interface ProductUpdateFormData {
   seoTitle: string;
   sku: string;
   trackInventory: boolean;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
   weight: string;
 }
 export interface ProductUpdateData extends ProductUpdateFormData {

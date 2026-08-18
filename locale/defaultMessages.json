@@ -416,10 +416,6 @@
   "/glQgs": {
     "string": "No channels found"
   },
-  "/iijFq": {
-    "context": "input label",
-    "string": "Global threshold"
-  },
   "/jEC3m": {
     "context": "product media gallery dropzone hint",
     "string": "Drag and drop or click to upload"
@@ -2090,9 +2086,6 @@
   },
   "6LqbaB": {
     "string": "Collection created"
-  },
-  "6QjMei": {
-    "string": "Preorder end time needs to be set in the future"
   },
   "6RQKxH": {
     "context": "order history message",
@@ -4941,10 +4934,6 @@
   "GyXEWS": {
     "string": "App created"
   },
-  "Gz+4CI": {
-    "context": "info text",
-    "string": "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone."
-  },
   "GzbSQk": {
     "context": "Status label when object is scheduled to publish in a channel",
     "string": "Scheduled to publish"
@@ -5108,10 +5097,6 @@
     "context": "channel delivery card header count",
     "string": "{count} assigned"
   },
-  "HYC6cH": {
-    "context": "input description",
-    "string": "Threshold that cannot be exceeded even if per channel thresholds are still available"
-  },
   "HYHLsB": {
     "context": "product field",
     "string": "Export Variant ID"
@@ -5130,10 +5115,6 @@
   "Hc58JL": {
     "context": "card title",
     "string": "Balance after requests"
-  },
-  "HcQEUk": {
-    "context": "table column header, sold units preorder quantity",
-    "string": "Sold units"
   },
   "Hd3E1g": {
     "context": "table header column",
@@ -5734,10 +5715,6 @@
   "Jk8bsM": {
     "context": "badge next to customer name marking this user as staff",
     "string": "Staff"
-  },
-  "JkO0jp": {
-    "context": "input description",
-    "string": "{unitsLeft} units left"
   },
   "JkUOSW": {
     "context": "product type detail page, top-bar metadata button tooltip",
@@ -7647,10 +7624,6 @@
     "context": "sale status",
     "string": "Expired"
   },
-  "REVk27": {
-    "context": "info text",
-    "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
-  },
   "RFbzxF": {
     "context": "attribute label placeholder in embedded create form",
     "string": "e.g. Gift wrap style"
@@ -9269,10 +9242,6 @@
   "XMFpAP": {
     "string": "Each rule is an alternative. Customers get the best matching discount."
   },
-  "XMvH/d": {
-    "context": "button label",
-    "string": "ACCEPT"
-  },
   "XNQPEn": {
     "context": "settings search alias",
     "string": "store name"
@@ -9502,10 +9471,6 @@
   "Y3zr/B": {
     "context": "voucher application, switch button",
     "string": "Apply only to a single cheapest eligible product"
-  },
-  "Y4cy0i": {
-    "context": "dialog header",
-    "string": "Ending preorder"
   },
   "Y6amBy": {
     "context": "setup checklist required section title",
@@ -10998,9 +10963,6 @@
     "context": "ripple action",
     "string": "Create a channel"
   },
-  "dTCWqt": {
-    "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
-  },
   "dTkmON": {
     "context": "edit tracking button",
     "string": "Edit tracking"
@@ -11139,10 +11101,6 @@
   },
   "e9z98s": {
     "string": "You don't have access to this permission"
-  },
-  "eAFU/E": {
-    "context": "product inventory, checkbox",
-    "string": "Variant currently in preorder"
   },
   "eB6oHa": {
     "context": "Message when product is not in any channel",
@@ -12695,10 +12653,6 @@
   "k6kIUq": {
     "context": "password login mode option",
     "string": "Enabled"
-  },
-  "k6sfZr": {
-    "context": "tooltip content when product is in preorder",
-    "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
   },
   "k6uom3": {
     "context": "configuration section for shipping zones and warehouses",
@@ -15421,10 +15375,6 @@
   },
   "tl1/1E": {
     "string": "Learn more about {orderManagement}"
-  },
-  "tlGXkh": {
-    "context": "input description",
-    "string": "Unlimited"
   },
   "tmcdrp": {
     "string": "ID:"

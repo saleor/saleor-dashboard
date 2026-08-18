@@ -35,10 +35,6 @@ export type ProductStockInput = FormsetAtomicData<ProductStockFormsetData, strin
 interface ProductStockFormData {
   sku: string;
   trackInventory: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime?: string;
 }
 
 interface ProductStocksProps {

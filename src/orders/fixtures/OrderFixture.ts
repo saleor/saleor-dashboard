@@ -291,10 +291,6 @@ export class OrderFixture {
         id: "variant-id-1",
         name: "Test Variant",
         quantityAvailable: 100,
-        preorder: {
-          __typename: "PreorderData",
-          endDate: null,
-        },
         stocks: [
           {
             __typename: "Stock",
@@ -377,10 +373,6 @@ export class OrderFixture {
             id: "",
             name: "",
             quantityAvailable: 0,
-            preorder: {
-              __typename: "PreorderData",
-              endDate: undefined,
-            },
             stocks: [],
             product: {
               __typename: "Product",

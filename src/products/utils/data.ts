@@ -213,11 +213,6 @@ export function getProductUpdatePageFormData(
     slug: product?.slug || "",
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
-    isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
-    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
-    hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate,
   };
 }
 

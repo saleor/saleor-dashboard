@@ -2826,17 +2826,6 @@ export type ExportFileSortingInput = {
   field: ExportFileSortField;
 };
 
-export type ExportGiftCardsInput = {
-  /** Type of exported file. */
-  fileType: FileTypesEnum;
-  /** Filtering options for gift cards. */
-  filter?: InputMaybe<GiftCardFilterInput>;
-  /** List of gift cards IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** Determine which gift cards should be exported. */
-  scope: ExportScope;
-};
-
 export type ExportInfoInput = {
   /** List of attribute ids witch should be exported. */
   attributes?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -2869,15 +2858,6 @@ export enum ExportScope {
   /** Export products with given ids. */
   IDS = 'IDS'
 }
-
-export type ExportVoucherCodesInput = {
-  /** Type of exported file. */
-  fileType: FileTypesEnum;
-  /** List of voucher code IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** The ID of the voucher. If provided, exports all codes belonging to the voucher. */
-  voucherId?: InputMaybe<Scalars['ID']['input']>;
-};
 
 export enum ExternalNotificationErrorCodes {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
@@ -9471,8 +9451,6 @@ export enum WebhookEventTypeAsyncEnum {
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card export is completed. */
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A gift card has been sent. */
@@ -9555,7 +9533,10 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A product export is completed. */
+  /**
+   * A product export is completed.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
@@ -9670,8 +9651,6 @@ export enum WebhookEventTypeAsyncEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /** A voucher code export is completed. */
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
@@ -9828,8 +9807,6 @@ export enum WebhookEventTypeEnum {
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card export is completed. */
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A gift card has been sent. */
@@ -9956,7 +9933,10 @@ export enum WebhookEventTypeEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A product export is completed. */
+  /**
+   * A product export is completed.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
@@ -10082,8 +10062,6 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /** A voucher code export is completed. */
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
@@ -10220,7 +10198,6 @@ export enum WebhookSampleEventTypeEnum {
   FULFILLMENT_TRACKING_NUMBER_UPDATED = 'FULFILLMENT_TRACKING_NUMBER_UPDATED',
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
@@ -10261,6 +10238,7 @@ export enum WebhookSampleEventTypeEnum {
   PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /** @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools. */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
   PRODUCT_MEDIA_DELETED = 'PRODUCT_MEDIA_DELETED',
@@ -10312,7 +10290,6 @@ export enum WebhookSampleEventTypeEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_DELETED = 'VOUCHER_DELETED',
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
