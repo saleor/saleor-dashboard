@@ -41,6 +41,7 @@ test("TC: SALEOR_32 Add price rate to shipping method - with excluded zip codes 
   await shippingRatesPage.typeRateDescription();
   await shippingRatesPage.typeRateMinDeliveryTime();
   await shippingRatesPage.typeRateMaxDeliveryTime();
+  await shippingRatesPage.assignAllChannels();
   await shippingRatesPage.typeMaxAndMinValues();
   await shippingRatesPage.typePrice();
   await shippingRatesPage.addPostalCodeRange();
@@ -63,6 +64,7 @@ test("TC: SALEOR_33 Add weight rate to shipping method - with included zip codes
   await shippingRatesPage.typeRateDescription();
   await shippingRatesPage.typeRateMinDeliveryTime();
   await shippingRatesPage.typeRateMaxDeliveryTime();
+  await shippingRatesPage.assignAllChannels();
   await shippingRatesPage.typeMaxAndMinWeights();
   await shippingRatesPage.typePrice();
   await shippingRatesPage.clickIncludePostalCodesRadioButton();

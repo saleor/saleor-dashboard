@@ -33,7 +33,6 @@ export class ProductPage extends BasePage {
     readonly createProductButton = page.getByTestId("add-product"),
     readonly cogShowMoreButtonButton = page.getByTestId("show-more-button"),
     readonly exportButton = page.getByTestId("export"),
-    readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
     readonly deleteProductButton = page.getByTestId("delete-product"),
     readonly productNameInput = page.locator("[name='name']"),
     readonly addProductButton = page.getByTestId("add-product"),
@@ -131,10 +130,6 @@ export class ProductPage extends BasePage {
 
   async clickChooseMediaVariantButton() {
     await this.chooseMediaVariantButton.click();
-  }
-
-  async clickBulkDeleteButton() {
-    await this.submitButton.click();
   }
 
   async addSeo() {

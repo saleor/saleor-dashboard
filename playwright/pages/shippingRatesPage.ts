@@ -88,6 +88,17 @@ export class ShippingRatesPage extends BasePage {
     await this.shippingRateNameInput.fill(rateName);
   }
 
+  /**
+   * A newly created rate starts with no channel listings (see RateCreate:
+   * "Create starts with no channel listings — users assign via Manage"), and
+   * Pricing / Order Value render a placeholder until at least one is assigned.
+   */
+  async assignAllChannels() {
+    await this.rightSideDetailsPage.manageChannelsButton.click();
+    await this.rightSideDetailsPage.channelSelectDialog.clickAllChannelsCheckbox();
+    await this.rightSideDetailsPage.channelSelectDialog.clickConfirmButton();
+  }
+
   async typePrice(price = "329") {
     await this.priceInput.fill(price);
   }
