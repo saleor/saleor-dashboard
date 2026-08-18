@@ -4,7 +4,7 @@ import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
 import { DeleteDialog } from "./dialogs/deleteDialog";
-import { inputByTestId } from "utils/locators";
+import { inputByTestId, textareaByTestId } from "utils/locators";
 
 export class CollectionsPage extends BasePage {
   readonly page: Page;
@@ -24,9 +24,10 @@ export class CollectionsPage extends BasePage {
     readonly assignedSpecificProductRow = page.getByTestId("assign-product-table-row"),
     readonly assignProductButton = page.getByTestId("add-product"),
     readonly collectionNameInput = inputByTestId(page, "collection-name-input"),
-    readonly createCollectionDescriptionInput = page
-      .getByTestId("collection-description-input")
-      .locator("textarea"),
+    readonly createCollectionDescriptionInput = textareaByTestId(
+      page,
+      "collection-description-input",
+    ),
   ) {
     super(page);
     this.page = page;

@@ -4,6 +4,7 @@ import { BasePage } from "@pages/basePage";
 import { AssignCountriesDialog } from "@pages/dialogs/assignCountriesDialog";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import type { Page } from "@playwright/test";
+import { textareaByTestId } from "utils/locators";
 
 export class ShippingMethodsPage extends BasePage {
   rightSideDetailsPage: RightSideDetailsPage;
@@ -19,12 +20,11 @@ export class ShippingMethodsPage extends BasePage {
     readonly addWeightRateButton = page.getByTestId("add-weight-rate"),
     readonly createShippingZoneButton = page.getByTestId("add-shipping-zone"),
     readonly shippingZoneNameInput = page.getByTestId("shipping-zone-name"),
-    readonly shippingZoneDescriptionField = page
-      .getByTestId("shipping-zone-description")
-      .locator("textarea"),
+    readonly shippingZoneDescriptionField = textareaByTestId(page, "shipping-zone-description"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly shippingZoneName = page.getByTestId("page-header"),
-    readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),
+    readonly showMoreMenuButton = page.getByTestId("show-more-button"),
+    readonly deleteShippingRateMenuItem = page.getByTestId("delete-shipping-method"),
     readonly shippingRateNameInput = page.getByTestId("shipping-rate-name-input"),
     // data-test-id sits on the button itself, not on a child of it
     readonly deleteShippingRateButtonOnList = page
@@ -102,6 +102,8 @@ export class ShippingMethodsPage extends BasePage {
   }
 
   async clickDeleteShippingRateButton() {
-    await this.deleteShippingRateButton.click();
+    // Rate delete lives in the TopNav menu now, not on the savebar
+    await this.showMoreMenuButton.click();
+    await this.deleteShippingRateMenuItem.click();
   }
 }

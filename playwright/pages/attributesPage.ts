@@ -22,6 +22,7 @@ export class AttributesPage extends BasePage {
   constructor(
     page: Page,
     readonly createAttributeButton = page.getByTestId("create-attribute-button"),
+    readonly cogsMenuButton = page.getByTestId("show-more-button"),
     // DetailSettingToggleRow: the pressable element is a role=button div, the
     // macaw Toggle next to it is aria-hidden and only mirrors the state.
     readonly valueRequiredToggle = page
@@ -47,10 +48,12 @@ export class AttributesPage extends BasePage {
     readonly attrVisibleInStorefrontToggle = page
       .getByTestId("attribute-visible-in-storefront")
       .locator('[role="button"]'),
-    readonly metadataSectionAccordionButton = page
-      .getByTestId("metadata-item")
-      .getByTestId("expand"),
+    // Attribute metadata moved into a TopNav-triggered modal; inside a modal
+    // MetadataCard drops the accordion, so there is nothing to expand.
+    readonly showMetadataButton = page.getByTestId("show-attribute-metadata"),
+    readonly metadataModalSaveButton = page.getByRole("dialog").getByTestId("save"),
     readonly metadataAddFieldButton = page.getByTestId("metadata-item").getByTestId("add-field"),
+    readonly deleteAttributeMenuItem = page.getByTestId("delete-attribute"),
     readonly metadataKeyInput = page.getByTestId("metadata-key-input").first(),
     readonly metadataValueInput = page.getByTestId("metadata-value-input").first(),
   ) {
@@ -162,8 +165,18 @@ export class AttributesPage extends BasePage {
     await this.attrVisibleInStorefrontToggle.click();
   }
 
-  async expandMetadataSection() {
-    await this.metadataSectionAccordionButton.first().click();
+  async openMetadataModal() {
+    await this.showMetadataButton.click();
+    await this.metadataAddFieldButton.first().waitFor({ state: "visible", timeout: 10000 });
+  }
+
+  async saveMetadataModal() {
+    await this.metadataModalSaveButton.click();
+  }
+
+  async clickDeleteAttributeFromMenu() {
+    await this.cogsMenuButton.click();
+    await this.deleteAttributeMenuItem.click();
   }
 
   async addMetadataField() {

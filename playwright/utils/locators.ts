@@ -9,3 +9,7 @@ import { type Locator, type Page } from "@playwright/test";
  */
 export const inputByTestId = (scope: Page | Locator, testId: string): Locator =>
   scope.locator(`[data-test-id="${testId}"] input, input[data-test-id="${testId}"]`);
+
+/** Same split as `inputByTestId`, for MUI `TextField` multiline vs macaw `Textarea`. */
+export const textareaByTestId = (scope: Page | Locator, testId: string): Locator =>
+  scope.locator(`[data-test-id="${testId}"] textarea, textarea[data-test-id="${testId}"]`);

@@ -2,7 +2,7 @@ import { URL_LIST } from "@data/url";
 import { DeleteDialog } from "@dialogs/deleteDialog";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
-import { inputByTestId } from "utils/locators";
+import { inputByTestId, textareaByTestId } from "utils/locators";
 
 export class CategoriesPage extends BasePage {
   readonly page: Page;
@@ -21,9 +21,7 @@ export class CategoriesPage extends BasePage {
     readonly categoryDescriptionEditor = page.getByTestId("rich-text-editor-description"),
     readonly categoryDescriptionLoader = page.locator(".codex-editor__loader"),
     readonly categoryNameInput = inputByTestId(page, "category-name-input"),
-    readonly createCategoryDescriptionInput = page
-      .getByTestId("category-description-input")
-      .locator("textarea"),
+    readonly createCategoryDescriptionInput = textareaByTestId(page, "category-description-input"),
   ) {
     super(page);
     this.page = page;

@@ -76,6 +76,10 @@ export class ProductTypePage extends BasePage {
 
     await console.log("Navigating to product type details: " + existingProductTypeUrl);
     await this.page.goto(existingProductTypeUrl);
+    // The loading skeleton renders its own TopNav menu holding only
+    // graphiql-redirect, so acting before the real page mounts opens a menu
+    // without the delete entry.
+    await this.assignProductAttributeButton.waitFor({ state: "visible", timeout: 30000 });
   }
 
   async clickBulkDeleteButton() {
