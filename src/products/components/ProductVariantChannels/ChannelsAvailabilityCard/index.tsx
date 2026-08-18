@@ -1,7 +1,4 @@
-import {
-  type ChannelPriceAndPreorderData,
-  type IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
+import { type IChannelPriceArgs, type VariantChannelPriceData } from "@dashboard/channels/utils";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 
 import { type Product, type Variant } from "./../types";
@@ -14,14 +11,14 @@ import { CreateVariantTitle } from "./CreateVariantTitle";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
-  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  listings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   onManageClick: () => void;
   disabled: boolean;
 }
 
 interface ProductDetailsChannelsAvailabilityCardProps {
   product: Product;
-  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  listings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   onManageClick: () => void;
   disabled: boolean;
 }

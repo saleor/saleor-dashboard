@@ -1,7 +1,4 @@
-import {
-  type ChannelPriceAndPreorderData,
-  type IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
+import { type IChannelPriceArgs, type VariantChannelPriceData } from "@dashboard/channels/utils";
 import {
   type ProductVariantCreateDataQuery,
   type ProductVariantFragment,
@@ -22,7 +19,7 @@ const mockedListings = [
     id: "2",
     label: "Channel-USD",
   },
-] as unknown as FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+] as unknown as FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
 const mockedVariant = {
   product: {
     channelListings: [
@@ -80,7 +77,7 @@ describe("getAvailabilityCountForVariant", () => {
   it("should return correct counts when no channels are available", () => {
     // Arrange
     const item = mockedVariant;
-    const listings = [] as FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+    const listings = [] as FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
     // Act
     const result = getAvailabilityCountForVariant(item, listings);
 
@@ -121,7 +118,7 @@ describe("getAvailabilityCountForProduct", () => {
   it("should return correct counts when no channels are available", () => {
     // Arrange
     const item = mockedProduct;
-    const listings = [] as FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+    const listings = [] as FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
     // Act
     const result = getAvailabilityCountForProduct(item, listings);
 

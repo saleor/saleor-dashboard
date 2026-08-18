@@ -62,7 +62,6 @@ import { ProductStocks } from "../ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
-import { ProductVariantEndPreorderDialog } from "../ProductVariantEndPreorderDialog/ProductVariantEndPreorderDialog";
 import { ProductVariantMediaSelectDialog } from "../ProductVariantImageSelectDialog/ProductVariantMediaSelectDialog";
 import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantName from "../ProductVariantName";
@@ -141,8 +140,6 @@ interface ProductVariantPageProps {
   onCloseDialog: () => void;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   initialConstraints?: InitialConstraints & InitialPageConstraints;
-  onVariantPreorderDeactivate: (id: string) => void;
-  variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: (move: VariantReorderMove) => void;
   onAttributeSelectBlur: () => void;
   onDelete: () => any;
@@ -178,8 +175,6 @@ export const ProductVariantPage = ({
   onDelete,
   onShowMetadata,
   onSubmit,
-  onVariantPreorderDeactivate,
-  variantDeactivatePreoderButtonState,
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
@@ -211,15 +206,10 @@ export const ProductVariantPage = ({
   const { isOpen: isManageChannelsModalOpen, toggle: toggleManageChannels } = useManageChannels();
   const [isModalOpened, setModalStatus] = useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
-  const [isEndPreorderModalOpened, setIsEndPreorderModalOpened] = useState(false);
   const productMedia = [...(variant?.product?.media ?? [])]?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1,
   );
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-  const handleDeactivatePreorder = async () => {
-    await onVariantPreorderDeactivate(variant.id);
-    setIsEndPreorderModalOpened(false);
-  };
   const handleAssignReferenceAttribute = (
     attributeValues: Container[],
     data: ProductVariantUpdateData,
@@ -563,15 +553,6 @@ export const ProductVariantPage = ({
           </div>
         </Grid>
       </DetailPageLayout.Content>
-      {!!variant?.preorder && (
-        <ProductVariantEndPreorderDialog
-          confirmButtonState={variantDeactivatePreoderButtonState}
-          onClose={() => setIsEndPreorderModalOpened(false)}
-          onConfirm={handleDeactivatePreorder}
-          open={isEndPreorderModalOpened}
-          variantGlobalSoldUnits={variant?.preorder?.globalSoldUnits}
-        />
-      )}
     </DetailPageLayout>
   );
 };

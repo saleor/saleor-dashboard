@@ -1,7 +1,7 @@
 import {
   type ChannelData,
-  type ChannelPriceAndPreorderArgs,
   type ChannelPriceArgs,
+  type IChannelPriceArgs,
   sortChannelShippingDataByName,
 } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -46,7 +46,7 @@ interface ProductVariantPriceProps {
   errors: Array<ProductErrorFragment | ProductChannelListingErrorFragment>;
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (id: string, data: ChannelPriceArgs | ChannelPriceAndPreorderArgs) => void;
+  onChange?: (id: string, data: ChannelPriceArgs | IChannelPriceArgs) => void;
   onChannelsReplace?: (listings: ChannelData[]) => void;
   onManageClick?: () => void;
   listedInChannelsCount?: number;
@@ -289,7 +289,6 @@ export const ProductVariantPrice = ({
                       onChange?.(listing.id, {
                         costPrice: listing.costPrice ?? "",
                         price: value,
-                        preorderThreshold: listing.preorderThreshold ?? null,
                       })
                     }
                   />
@@ -319,7 +318,6 @@ export const ProductVariantPrice = ({
                       onChange?.(listing.id, {
                         costPrice: value,
                         price: listing.price ?? "",
-                        preorderThreshold: listing.preorderThreshold ?? null,
                       })
                     }
                   />

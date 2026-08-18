@@ -29,7 +29,6 @@ const isStaticBoolean = (rowType: RowType) => {
     "isGiftCardBought",
     "isGiftCardUsed",
     "hasInvoices",
-    "isPreorder",
     "giftCardUsed",
     "hasFulfillments",
   ].includes(rowType);

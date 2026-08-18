@@ -1,7 +1,4 @@
-import {
-  type ChannelPriceAndPreorderData,
-  type IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
+import { type IChannelPriceArgs, type VariantChannelPriceData } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Divider } from "@dashboard/components/Divider";
 import { Placeholder } from "@dashboard/components/Placeholder";
@@ -16,7 +13,7 @@ import { useFilteredChannelListing } from "./useFilteredChannelListing";
 import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 
 interface AvailabilityCardProps {
-  allAvailableListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  allAvailableListings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   productChannelListings: ProductChannelListing | undefined;
 }
 
