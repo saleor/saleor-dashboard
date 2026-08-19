@@ -10,7 +10,6 @@ const createAttribute = (overrides: Partial<AttributeFragment> = {}): AttributeF
   type: AttributeTypeEnum.PAGE_TYPE,
   visibleInStorefront: true,
   filterableInStorefront: false,
-  filterableInDashboard: true,
   unit: null,
   inputType: null,
   ...overrides,

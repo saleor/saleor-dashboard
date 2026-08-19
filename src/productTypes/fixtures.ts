@@ -24,7 +24,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInDashboard: false,
       filterableInStorefront: false,
       name: "Author",
       slug: "author",
@@ -97,7 +96,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInDashboard: false,
       filterableInStorefront: false,
       name: "Box Size",
       slug: "box-size",
@@ -210,7 +208,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       type: AttributeTypeEnum.PRODUCT_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: false,
-      filterableInDashboard: false,
       filterableInStorefront: false,
       name: "Brand",
       slug: "brand",
@@ -263,7 +260,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInDashboard: false,
       filterableInStorefront: false,
       name: "Candy Box Size",
       slug: "candy-box-size",
@@ -356,7 +352,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInDashboard: false,
       filterableInStorefront: false,
       name: "Coffee Genre",
       slug: "coffee-genre",
@@ -429,7 +424,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInDashboard: false,
       filterableInStorefront: false,
       name: "Collar",
       slug: "collar",
@@ -1073,7 +1067,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   metadata: edge.node.metadata ?? [],
   privateMetadata: edge.node.privateMetadata ?? [],
   visibleInStorefront: edge.node.visibleInStorefront ?? false,
-  filterableInDashboard: edge.node.filterableInDashboard ?? false,
   filterableInStorefront: edge.node.filterableInStorefront ?? false,
 }));
 
@@ -1212,7 +1205,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
   productAttributes: [
     {
       __typename: "Attribute" as const,
-      filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
@@ -1226,7 +1218,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     },
     {
       __typename: "Attribute" as const,
-      filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
@@ -1240,7 +1231,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     },
     {
       __typename: "Attribute" as const,
-      filterableInDashboard: true,
       filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       name: "Publisher",
@@ -1261,7 +1251,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
   variantAttributes: [
     {
       ...attributes[1],
-      filterableInDashboard: true,
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true,
@@ -1269,7 +1258,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     },
     {
       ...attributes[6],
-      filterableInDashboard: true,
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true,
@@ -1281,7 +1269,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       __typename: "AssignedVariantAttribute" as const,
       attribute: {
         __typename: "Attribute" as const,
-        filterableInDashboard: true,
         filterableInStorefront: false,
         id: "UHJvZHVjdEF0dHJpYnV0ATo5",
         name: "Author",

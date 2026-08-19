@@ -128,7 +128,6 @@ interface AttributePageProps {
 export interface AttributePageFormData extends MetadataFormData {
   type?: AttributeTypeEnum;
   availableInGrid: boolean;
-  filterableInDashboard: boolean;
   inputType: AttributeInputTypeEnum;
   entityType: AttributeEntityTypeEnum | null;
   filterableInStorefront: boolean;
