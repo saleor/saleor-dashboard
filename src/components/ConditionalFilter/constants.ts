@@ -1,4 +1,6 @@
-import { isMainSchema } from "@dashboard/graphql";
+// Imported from the leaf module, not the @dashboard/graphql barrel: tests that replace the whole
+// barrel with jest.mock would otherwise leave isMainSchema undefined at module evaluation time.
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 
 import { type ConditionItem } from "./FilterElement/ConditionOptions";
 import { type ItemOption } from "./FilterElement/ConditionValue";

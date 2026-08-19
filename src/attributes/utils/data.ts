@@ -8,7 +8,6 @@ import {
   type AttributeValueFragment,
   type AttributeValueInput,
   type FileUploadMutation,
-  isMainSchema,
   type PageSelectedAttributeFragment,
   type ProductFragment,
   type SearchCategoriesQuery,
@@ -18,6 +17,7 @@ import {
   type SelectedVariantAttributeFragment,
   type UploadErrorFragment,
 } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { type Container, type RelayToFlat } from "@dashboard/types";

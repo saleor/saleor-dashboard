@@ -6,7 +6,8 @@ import { attributeInputTypeCell } from "@dashboard/components/Datagrid/customCel
 import { attributeTypeCell } from "@dashboard/components/Datagrid/customCells/AttributeTypeCell";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type AttributeFragment, isMainSchema } from "@dashboard/graphql";
+import { type AttributeFragment } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { translateBoolean } from "@dashboard/intl";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";

@@ -4,7 +4,8 @@ import {
   DetailSettingNestedField,
   DetailSettingToggleRow,
 } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
-import { type AttributeErrorFragment, AttributeTypeEnum, isMainSchema } from "@dashboard/graphql";
+import { type AttributeErrorFragment, AttributeTypeEnum } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
