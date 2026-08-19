@@ -65,6 +65,17 @@ describe("AttributeProperties", () => {
     expect(screen.getByLabelText("Position in faceted navigation")).toHaveValue("2");
   });
 
+  it("marks filterable in storefront as deprecated", () => {
+    // Arrange & Act
+    render(
+      <AttributeProperties data={formData} disabled={false} errors={[]} onChange={jest.fn()} />,
+      { wrapper: Wrapper },
+    );
+
+    // Assert
+    expect(screen.getByText("Deprecated")).toBeInTheDocument();
+  });
+
   it("hides storefront filter settings for model attributes", () => {
     // Arrange & Act
     render(

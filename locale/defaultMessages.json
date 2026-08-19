@@ -1204,6 +1204,10 @@
     "context": "scope helper for editable order line metadata section",
     "string": "Metadata stored on this order line only. Changes here do not update the product variant."
   },
+  "2nj61B": {
+    "context": "badge on a setting that will be removed from the API",
+    "string": "Deprecated"
+  },
   "2nnp9+": {
     "context": "Info box title when product is not available for purchase",
     "string": "Visible but not purchasable."
@@ -7794,6 +7798,10 @@
   "S0QRww": {
     "context": "voucher schedule header status when not started yet",
     "string": "Scheduled"
+  },
+  "S0kwG+": {
+    "context": "tooltip explaining why a setting is deprecated",
+    "string": "Will be removed in 3.24. Use attribute metadata instead"
   },
   "S0ntb5": {
     "context": "voucher minimum quantity zero behavior hint",

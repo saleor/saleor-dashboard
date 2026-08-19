@@ -8,6 +8,7 @@ import {
   type AttributeValueFragment,
   type AttributeValueInput,
   type FileUploadMutation,
+  isMainSchema,
   type PageSelectedAttributeFragment,
   type ProductFragment,
   type SearchCategoriesQuery,
@@ -141,16 +142,27 @@ function getFileOrReferenceAttributeData(
   };
 }
 
+/**
+ * `filterableInStorefront` and `storefrontSearchPosition` are removed from the API in 3.24,
+ * so the staging schema build stops sending them. Drop this (and the form fields) once staging becomes main.
+ */
+export const DEPRECATED_FACETED_NAVIGATION_INPUT = isMainSchema()
+  ? {}
+  : { filterableInStorefront: undefined, storefrontSearchPosition: undefined };
+
 export function getAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[],
 ) {
   if (data.inputType === AttributeInputTypeEnum.SWATCH) {
-    return getSwatchAttributeData(data, values);
+    return { ...getSwatchAttributeData(data, values), ...DEPRECATED_FACETED_NAVIGATION_INPUT };
   } else if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
-    return getSimpleAttributeData(data, values);
+    return { ...getSimpleAttributeData(data, values), ...DEPRECATED_FACETED_NAVIGATION_INPUT };
   } else {
-    return getFileOrReferenceAttributeData(data, values);
+    return {
+      ...getFileOrReferenceAttributeData(data, values),
+      ...DEPRECATED_FACETED_NAVIGATION_INPUT,
+    };
   }
 }
 
