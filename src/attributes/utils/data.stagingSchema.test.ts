@@ -11,7 +11,6 @@ jest.mock("@dashboard/graphql/schemaVersion", () => ({
 const formData: AttributePageFormData = {
   availableInGrid: true,
   entityType: null,
-  filterableInDashboard: true,
   filterableInStorefront: true,
   inputType: AttributeInputTypeEnum.DROPDOWN,
   metadata: [],
@@ -37,6 +36,5 @@ describe("getAttributeData with staging schema", () => {
     // Assert
     expect(input.filterableInStorefront).toBeUndefined();
     expect(input.storefrontSearchPosition).toBeUndefined();
-    expect(input.filterableInDashboard).toBe(true);
   });
 });

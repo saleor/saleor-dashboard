@@ -11,7 +11,6 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
   __typename: "Attribute" as const,
   availableInGrid: true,
   entityType: null,
-  filterableInDashboard: false,
   filterableInStorefront: true,
   id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
   inputType: AttributeInputTypeEnum.DROPDOWN,
@@ -104,7 +103,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: true,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
     name: "Author",
@@ -173,7 +171,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PAGE,
-    filterableInDashboard: true,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo2",
     name: "Box Size",
@@ -280,7 +277,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: false,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToz",
     name: "Brand",
@@ -330,7 +326,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: true,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo4",
     name: "Candy Box Size",
@@ -418,7 +413,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PAGE,
-    filterableInDashboard: true,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo1",
     name: "Coffee Genre",
@@ -487,7 +481,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: false,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToy",
     name: "Collar",
@@ -575,7 +568,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PAGE,
-    filterableInDashboard: false,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZTox",
     name: "Color",
@@ -644,7 +636,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: true,
     filterableInStorefront: false,
     id: "UHJvZHVjdEF0dHJpYnV0ZToxMg==",
     name: "Cover",
@@ -787,7 +778,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: true,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo3",
     name: "Flavor",
@@ -854,7 +844,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: false,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
     name: "Language",
@@ -921,7 +910,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PAGE,
-    filterableInDashboard: true,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
     name: "Publisher",
@@ -988,7 +976,6 @@ export const attributes: Array<
   {
     __typename: "Attribute" as const,
     entityType: AttributeEntityTypeEnum.PRODUCT,
-    filterableInDashboard: true,
     filterableInStorefront: true,
     id: "UHJvZHVjdEF0dHJpYnV0ZTo0",
     name: "Size",

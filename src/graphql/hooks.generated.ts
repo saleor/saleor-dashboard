@@ -239,7 +239,6 @@ export const AttributeFragmentDoc = gql`
   slug
   type
   visibleInStorefront
-  filterableInDashboard
   filterableInStorefront
   unit
   inputType
