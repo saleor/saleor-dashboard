@@ -1,59 +1,71 @@
-// @ts-strict-ignore
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { ProductTypeKindEnum } from "@dashboard/graphql";
+import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { type UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import { Input } from "@saleor/macaw-ui-next";
-import type * as React from "react";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "./messages";
+import { ProductTypeKindTiles } from "../ProductTypeKindTiles/ProductTypeKindTiles";
 
 interface ProductTypeDetailsProps {
   data?: {
     name: string;
+    kind: ProductTypeKindEnum;
   };
   autoFocus?: boolean;
   disabled: boolean;
   errors: UserError[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: (event: ChangeEvent<any>) => void;
 }
 
-const ProductTypeDetails = (props: ProductTypeDetailsProps) => {
-  const { autoFocus = false, data, disabled, errors, onChange } = props;
+const ProductTypeDetails = ({
+  autoFocus = false,
+  data,
+  disabled,
+  errors,
+  onChange,
+}: ProductTypeDetailsProps): JSX.Element => {
   const intl = useIntl();
   const nameInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (!autoFocus || disabled) {
-      return;
-    }
+  useEffect(
+    function focusNameInput() {
+      if (!autoFocus || disabled) {
+        return;
+      }
 
-    nameInputRef.current?.focus();
-  }, [autoFocus, disabled]);
+      nameInputRef.current?.focus();
+    },
+    [autoFocus, disabled],
+  );
 
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          {intl.formatMessage(commonMessages.generalInformations)}
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
+    <DetailSettingsCard
+      title={intl.formatMessage(commonMessages.generalInformations)}
+      data-test-id="product-type-general-information"
+    >
+      <Box display="flex" flexDirection="column" gap={5}>
         <Input
           ref={nameInputRef}
           disabled={disabled}
           error={!!getFieldError(errors, "name")}
           width="100%"
           helperText={getFieldError(errors, "name")?.message}
-          label={intl.formatMessage(messages.productTypeName)}
+          label={intl.formatMessage(commonMessages.name)}
           name="name"
           onChange={onChange}
-          value={data.name}
+          value={data?.name ?? ""}
         />
-      </DashboardCard.Content>
-    </DashboardCard>
+        <ProductTypeKindTiles
+          value={data?.kind ?? ProductTypeKindEnum.NORMAL}
+          disabled={disabled}
+          onChange={kind => onChange({ target: { name: "kind", value: kind } })}
+        />
+      </Box>
+    </DetailSettingsCard>
   );
 };
 

@@ -41,7 +41,6 @@ import useFormset, {
   type FormsetData,
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { errorMessages } from "@dashboard/intl";
 import {
   type AttributeValuesMetadata,
   getAttributeInputFromProductType,
@@ -50,8 +49,9 @@ import {
 import {
   createChannelsChangeHandler,
   createChannelsPriceChangeHandler,
-  createPreorderEndDateChangeHandler,
+  createChannelsReplaceHandler,
   createProductTypeSelectHandler,
+  replaceFormsetStockValues,
 } from "@dashboard/products/utils/handlers";
 import {
   validateCostPrice,
@@ -69,9 +69,12 @@ import useRichText from "@dashboard/utils/richText/useRichText";
 import { type OutputData } from "@editorjs/editorjs";
 import { type Option } from "@saleor/macaw-ui-next";
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useState } from "react";
-import { useIntl } from "react-intl";
 
-import { type ProductStockFormsetData, type ProductStockInput } from "../ProductStocks";
+import {
+  type ProductStockFormsetData,
+  type ProductStockInput,
+  type ProductStockPasteRow,
+} from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
   category: string;
@@ -88,11 +91,6 @@ export interface ProductCreateFormData extends MetadataFormData {
   slug: string;
   stockQuantity: number;
   trackInventory: boolean;
-  isPreorder: boolean;
-  globalThreshold: string;
-  globalSoldUnits: number;
-  hasPreorderEndDate: boolean;
-  preorderEndDateTime: string;
   weight: string;
   taxClassId: string;
 }
@@ -113,6 +111,8 @@ export interface ProductCreateHandlers
     >,
     Record<"changeStock" | "selectAttribute" | "selectAttributeMultiple", FormsetChange<string>>,
     Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
+    Record<"replaceChannels", (listings: ChannelData[]) => void>,
+    Record<"replaceStocks", (stocks: ProductStockPasteRow[]) => void>,
     Record<
       "changeChannels",
       (id: string, data: Omit<ChannelData, "name" | "price" | "currency" | "id">) => void
@@ -122,7 +122,6 @@ export interface ProductCreateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock", (id: string, label: string) => void>,
     Record<"deleteStock", (id: string) => void> {
-  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
   selectAttributeReferenceAdditionalData: FormsetAdditionalDataChange<AttributeValuesMetadata[]>;
@@ -176,7 +175,6 @@ function useProductCreateForm(
   loading: boolean,
   opts: UseProductCreateFormOpts,
 ): UseProductCreateFormOutput {
-  const intl = useIntl();
   const [validationErrors, setValidationErrors] = useState<ProductErrorWithAttributesFragment[]>(
     [],
   );
@@ -199,11 +197,6 @@ function useProductCreateForm(
     taxClassId: "",
     trackInventory: false,
     weight: "",
-    globalSoldUnits: 0,
-    globalThreshold: "",
-    isPreorder: false,
-    hasPreorderEndDate: false,
-    preorderEndDateTime: "",
   };
   const form = useForm(
     {
@@ -288,6 +281,10 @@ function useProductCreateForm(
     triggerChange();
     stocks.change(id, value);
   };
+  const handleStocksReplace = (updatedStocks: ProductStockPasteRow[]) => {
+    triggerChange();
+    stocks.set(replaceFormsetStockValues(stocks.data, updatedStocks));
+  };
   const handleStockAdd = (id: string, label: string) => {
     triggerChange();
     stocks.add({
@@ -319,10 +316,10 @@ function useProductCreateForm(
     opts.setChannels,
     triggerChange,
   );
-  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
-    form,
+  const handleChannelsReplace = createChannelsReplaceHandler(
+    opts.currentChannels,
+    opts.setChannels,
     triggerChange,
-    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText),
   );
   const data: ProductCreateData = {
     ...formData,
@@ -384,10 +381,6 @@ function useProductCreateForm(
       return false;
     }
 
-    if (data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime) {
-      return false;
-    }
-
     if (opts.selectedProductType?.hasVariants) {
       return true;
     }
@@ -419,9 +412,10 @@ function useProductCreateForm(
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
       changeChannels: handleChannelsChange,
+      replaceChannels: handleChannelsReplace,
       changeMetadata,
       changeStock: handleStockChange,
-      changePreorderEndDate: handlePreorderEndDateChange,
+      replaceStocks: handleStocksReplace,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

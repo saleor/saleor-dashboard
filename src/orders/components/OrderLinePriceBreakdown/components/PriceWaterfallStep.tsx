@@ -6,6 +6,8 @@ import { type ReactNode } from "react";
 interface PriceWaterfallStepProps {
   /** Short label, e.g. "Catalogue promotion". */
   label: string;
+  /** Optional pill rendered next to the label, e.g. an "Overridden" marker. */
+  tag?: ReactNode;
   /** Optional secondary line: e.g. promotion name, voucher code, reason. */
   detail?: ReactNode;
   /** Money amount associated with the step. Discount steps display as `−$X`,
@@ -23,6 +25,7 @@ interface PriceWaterfallStepProps {
 
 export const PriceWaterfallStep = ({
   label,
+  tag,
   detail,
   amount,
   sign = "minus",
@@ -47,13 +50,16 @@ export const PriceWaterfallStep = ({
       data-test-id={testIdSuffix ? `price-waterfall-step-${testIdSuffix}` : undefined}
     >
       <Box display="flex" flexDirection="column" gap={0.5} __minWidth={0}>
-        <Text
-          size={2}
-          color={isStart || isEnd ? "default1" : "default2"}
-          fontWeight={isEnd ? "bold" : "regular"}
-        >
-          {label}
-        </Text>
+        <Box display="flex" alignItems="center" gap={2}>
+          <Text
+            size={2}
+            color={isStart || isEnd ? "default1" : "default2"}
+            fontWeight={isEnd ? "bold" : "regular"}
+          >
+            {label}
+          </Text>
+          {tag}
+        </Box>
         {detail && (
           <Text size={1} color="default2">
             {detail}

@@ -144,5 +144,14 @@ export interface LinePriceWaterfall {
   /** totalPrice.gross (final paid for the line; tax-inclusive in the same
    *  units as the catalog price). */
   end: MoneyFragment;
+  /** True when the line's unit price was set custom (via a price override on
+   *  the checkout/order line) rather than derived from the catalog price. The
+   *  base (`start`) row surfaces this so the "original price" is understood as
+   *  an overridden value, not the catalog value. */
+  isPriceOverridden: boolean;
+  /** Human-readable reason recorded alongside the price override, when the app
+   *  that set it provided one. Null when overridden without a reason or not
+   *  overridden at all. */
+  priceOverrideReason: string | null;
   warnings: PriceWarning[];
 }

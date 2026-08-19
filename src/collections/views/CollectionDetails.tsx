@@ -2,28 +2,27 @@
 import { createCollectionChannels, createCollectionChannelsData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { useEntityBackgroundImageUpload } from "@dashboard/components/EntityBackgroundImageField/useEntityBackgroundImageUpload";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
+  CollectionErrorCode,
   type CollectionInput,
   type CollectionUpdateMutation,
   useCollectionChannelListingUpdateMutation,
   useCollectionDetailsQuery,
   useCollectionUpdateMutation,
   useRemoveCollectionMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useChannels from "@dashboard/hooks/useChannels";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { errorMessages } from "@dashboard/intl";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { commonMessages, errorMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, getMutationState, maybe } from "../../misc";
@@ -31,12 +30,14 @@ import { CollectionDeleteDialog } from "../components/CollectionDeleteDialog/Col
 import { CollectionDeleteImageDialog } from "../components/CollectionDeleteImageDialog/CollectionDeleteImageDialog";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
 import { type CollectionUpdateData } from "../components/CollectionDetailsPage/form";
+import { CollectionMetadataDialog } from "../components/CollectionMetadataDialog/CollectionMetadataDialog";
 import {
   collectionListUrl,
   collectionUrl,
   type CollectionUrlDialog,
   type CollectionUrlQueryParams,
 } from "../urls";
+import { getCollectionChannelsUpdateVariables } from "../utils";
 import { COLLECTION_DETAILS_FORM_ID } from "./consts";
 
 interface CollectionDetailsProps {
@@ -52,34 +53,43 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
     CollectionUrlDialog,
     CollectionUrlQueryParams
   >(navigate, params => collectionUrl(id, params), params);
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [updateChannels, updateChannelsOpts] = useCollectionChannelListingUpdateMutation({});
   const { availableChannels } = useAppChannel(false);
-  const handleCollectionUpdate = (data: CollectionUpdateMutation) => {
-    if (data.collectionUpdate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage({ id: "E2uiWk", defaultMessage: "Collection updated" }),
-      });
-      navigate(collectionUrl(id));
-    } else {
-      const backgroundImageError = data.collectionUpdate.errors.find(
-        error => error.field === ("backgroundImage" as keyof CollectionInput),
-      );
+  const channelCurrencies = useMemo(
+    () => Object.fromEntries(availableChannels.map(channel => [channel.id, channel.currencyCode])),
+    [availableChannels],
+  );
+  const {
+    backgroundImageRevision,
+    backgroundImageUploadPreview,
+    isBackgroundImageUploading,
+    onBackgroundImageUploadPreviewLoaded,
+    runImageMutation,
+  } = useEntityBackgroundImageUpload();
+  const notifyCollectionUpdated = () => {
+    notify({
+      status: "success",
+      text: intl.formatMessage({ id: "E2uiWk", defaultMessage: "Collection updated" }),
+    });
+  };
+  const handleCollectionUpdateSuccess = () => {
+    notifyCollectionUpdated();
+    navigate(collectionUrl(id));
+  };
+  const handleCollectionUpdateErrors = (data: CollectionUpdateMutation) => {
+    const backgroundImageError = data.collectionUpdate.errors.find(
+      error => error.field === ("backgroundImage" as keyof CollectionInput),
+    );
 
-      if (backgroundImageError) {
-        notify({
-          status: "error",
-          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-          text: intl.formatMessage(errorMessages.imageUploadErrorText),
-        });
-      }
+    if (backgroundImageError) {
+      notify({
+        status: "error",
+        title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+        text: intl.formatMessage(errorMessages.imageUploadErrorText),
+      });
     }
   };
-  const [updateCollection, updateCollectionOpts] = useCollectionUpdateMutation({
-    onCompleted: handleCollectionUpdate,
-  });
+  const [updateCollection, updateCollectionOpts] = useCollectionUpdateMutation({});
 
   const [removeCollection, removeCollectionOpts] = useRemoveCollectionMutation({
     onCompleted: data => {
@@ -128,56 +138,135 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
       closeModal,
       openModal,
     },
-    { formId: COLLECTION_DETAILS_FORM_ID },
+    { formId: COLLECTION_DETAILS_FORM_ID, deferDirtyOnConfirm: true },
   );
-  const handleUpdate = async (formData: CollectionUpdateData) => {
-    const input: CollectionInput = {
-      backgroundImageAlt: formData.backgroundImageAlt,
-      description: getParsedDataForJsonStringField(formData.description),
-      name: formData.name,
-      seo: {
-        description: formData.seoDescription,
-        title: formData.seoTitle,
-      },
-      slug: formData.slug,
-    };
-    const result = await updateCollection({
-      variables: {
-        id,
-        input,
-      },
-    });
-    const initialIds = collectionChannelsChoices.map(channel => channel.id);
-    const modifiedIds = formData.channelListings.map(channel => channel.id);
-    const idsDiff = arrayDiff(initialIds, modifiedIds);
+  const handleImmediateCollectionImageMutation = async (
+    input: Pick<CollectionInput, "backgroundImage"> &
+      Partial<Pick<CollectionInput, "backgroundImageAlt">>,
+  ) => {
+    const uploadFile = input.backgroundImage instanceof File ? input.backgroundImage : null;
 
-    updateChannels({
-      variables: {
-        id: collection.id,
-        input: {
-          addChannels: formData.channelListings.map(channel => ({
-            channelId: channel.id,
-            isPublished: channel.isPublished,
-            publishedAt: channel.publishedAt,
-          })),
-          removeChannels: idsDiff.removed,
+    try {
+      await runImageMutation({
+        file: uploadFile,
+        mutate: async () => {
+          const result = await updateCollection({
+            variables: {
+              id,
+              input,
+            },
+          });
+          const errors = getMutationErrors(result);
+
+          if (errors.length === 0) {
+            notifyCollectionUpdated();
+            closeModal();
+
+            if (uploadFile) {
+              await refetch();
+            }
+
+            return true;
+          }
+
+          if (result.data) {
+            handleCollectionUpdateErrors(result.data);
+          }
+
+          return false;
         },
-      },
-    });
-
-    return getMutationErrors(result);
+      });
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+    }
   };
-  const handleSubmit = createMetadataUpdateHandler(
-    data?.collection,
-    handleUpdate,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
+  const handleUpdate = async (formData: CollectionUpdateData) => {
+    try {
+      if (!collection?.id) {
+        return [];
+      }
 
+      const input: CollectionInput = {
+        backgroundImageAlt: formData.backgroundImageAlt,
+        description: getParsedDataForJsonStringField(formData.description),
+        name: formData.name,
+        seo: {
+          description: formData.seoDescription,
+          title: formData.seoTitle,
+        },
+        slug: formData.slug,
+      };
+      const result = await updateCollection({
+        variables: {
+          id,
+          input,
+        },
+      });
+      const collectionErrors = getMutationErrors(result);
+
+      if (collectionErrors.length > 0) {
+        if (result.data) {
+          handleCollectionUpdateErrors(result.data);
+        }
+
+        return collectionErrors;
+      }
+
+      const channelUpdateVariables = getCollectionChannelsUpdateVariables(
+        collection.id,
+        collectionChannelsChoices,
+        formData.channelListings,
+      );
+      let channelErrors = [];
+
+      if (channelUpdateVariables) {
+        const channelResult = await updateChannels({
+          variables: channelUpdateVariables,
+        });
+
+        channelErrors = channelResult.data?.collectionChannelListingUpdate?.errors ?? [];
+      }
+
+      const errors = [...collectionErrors, ...channelErrors];
+
+      if (errors.length === 0) {
+        handleCollectionUpdateSuccess();
+
+        const refetchResult = await refetch();
+
+        // Keep local channel draft aligned with the server payload so scheduled
+        // publishedAt serialization differences cannot leave the form dirty.
+        setCurrentChannels(createCollectionChannelsData(refetchResult.data?.collection));
+      }
+
+      return errors;
+    } catch {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
+
+      return [
+        {
+          __typename: "CollectionError",
+          code: CollectionErrorCode.GRAPHQL_ERROR,
+          field: null,
+          message: intl.formatMessage(commonMessages.somethingWentWrong),
+        },
+      ];
+    }
+  };
+  const saveErrors = [
+    ...(updateCollectionOpts.data?.collectionUpdate.errors ?? []),
+    ...(updateChannelsOpts.data?.collectionChannelListingUpdate.errors ?? []),
+  ];
   const formTransitionState = getMutationState(
-    updateCollectionOpts.called,
-    updateCollectionOpts.loading,
-    updateCollectionOpts.data?.collectionUpdate.errors,
+    updateCollectionOpts.called || updateChannelsOpts.called,
+    updateCollectionOpts.loading || updateChannelsOpts.loading,
+    saveErrors,
   );
 
   if (collection === null) {
@@ -208,28 +297,32 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
       <CollectionDetailsPage
         disabled={loading || updateChannelsOpts.loading}
         collection={data?.collection}
+        backgroundImageRevision={backgroundImageRevision}
+        backgroundImageUploadPreview={backgroundImageUploadPreview}
+        isBackgroundImageUploading={isBackgroundImageUploading}
+        onBackgroundImageUploadPreviewLoaded={onBackgroundImageUploadPreviewLoaded}
         channelsErrors={updateChannelsOpts?.data?.collectionChannelListingUpdate.errors || []}
         errors={updateCollectionOpts?.data?.collectionUpdate.errors || []}
         onCollectionRemove={() => openModal("remove")}
         onImageDelete={() => openModal("removeImage")}
-        onImageUpload={file =>
-          updateCollection({
-            variables: {
-              id,
-              input: {
-                backgroundImage: file,
-              },
-            },
-          })
-        }
-        onSubmit={handleSubmit}
+        onImageUpload={file => handleImmediateCollectionImageMutation({ backgroundImage: file })}
+        onSubmit={handleUpdate}
         saveButtonBarState={formTransitionState}
         currentChannels={currentChannels}
+        savedChannelListings={collectionChannelsChoices}
         channelsCount={availableChannels.length}
+        channelCurrencies={channelCurrencies}
         selectedChannelId={selectedChannel}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
+        onShowMetadata={() => openModal("view-metadata")}
         params={params}
+      />
+
+      <CollectionMetadataDialog
+        open={params.action === "view-metadata" && !!collection}
+        onClose={closeModal}
+        collection={collection}
       />
 
       <CollectionDeleteDialog
@@ -248,13 +341,9 @@ const CollectionDetails = ({ id, params }: CollectionDetailsProps) => {
         confirmButtonState={updateCollectionOpts.status}
         onClose={closeModal}
         onConfirm={() =>
-          updateCollection({
-            variables: {
-              id,
-              input: {
-                backgroundImage: null,
-              },
-            },
+          handleImmediateCollectionImageMutation({
+            backgroundImage: null,
+            backgroundImageAlt: "",
           })
         }
         open={params.action === "removeImage"}

@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@saleor/macaw-ui-next";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { IntlProvider } from "react-intl";
 import { toast } from "sonner";
 
 import { Toast, type ToastProps } from "./Toast";
@@ -20,9 +21,11 @@ const defaultProps: ToastProps = {
 
 const renderToast = (props: Partial<ToastProps> = {}) =>
   render(
-    <ThemeProvider>
-      <Toast {...defaultProps} {...props} />
-    </ThemeProvider>,
+    <IntlProvider locale="en" messages={{}}>
+      <ThemeProvider>
+        <Toast {...defaultProps} {...props} />
+      </ThemeProvider>
+    </IntlProvider>,
   );
 
 describe("Toast", () => {
@@ -97,18 +100,47 @@ describe("Toast", () => {
   });
 
   describe("close functionality", () => {
+    it("calls onRemoved before toast.dismiss when close button is clicked", () => {
+      // Arrange
+      const onRemoved = jest.fn();
+
+      renderToast({ id: "dismiss-test-id", onRemoved });
+
+      // Act
+      fireEvent.click(screen.getByRole("button", { name: "Close notification" }));
+
+      // Assert
+      expect(onRemoved).toHaveBeenCalledTimes(1);
+      expect(mockToastDismiss).toHaveBeenCalledWith("dismiss-test-id");
+    });
+
     it("calls toast.dismiss when close button is clicked", () => {
       // Arrange
       renderToast({ id: "dismiss-test-id" });
 
       // Act
-      const closeButtons = screen.getAllByRole("button");
-      const closeButton = closeButtons.find(btn => btn.querySelector("svg"));
-
-      fireEvent.click(closeButton!);
+      fireEvent.click(screen.getByRole("button", { name: "Close notification" }));
 
       // Assert
       expect(mockToastDismiss).toHaveBeenCalledWith("dismiss-test-id");
+    });
+  });
+
+  describe("progress hairline", () => {
+    it("renders a progress indicator when duration is finite", () => {
+      // Arrange & Act
+      renderToast({ type: "success", duration: 6000 });
+
+      // Assert
+      expect(screen.getByTestId("toast-progress")).toBeInTheDocument();
+    });
+
+    it("does not render progress when duration is infinite", () => {
+      // Arrange & Act
+      renderToast({ type: "error", duration: Infinity });
+
+      // Assert
+      expect(screen.queryByTestId("toast-progress")).not.toBeInTheDocument();
     });
   });
 
@@ -168,7 +200,7 @@ describe("Toast", () => {
       expect(screen.getByText(longDescription)).toBeInTheDocument();
     });
 
-    it("renders description container with overflow styles", () => {
+    it("applies clamped description class for long copy", () => {
       // Arrange
       const longDescription = "This is a very long description that spans multiple lines. ".repeat(
         10,
@@ -177,32 +209,11 @@ describe("Toast", () => {
       // Act
       renderToast({ description: longDescription.trim() });
 
-      // Assert - verify the container has the truncation styles applied
+      // Assert
       const descriptionElement = screen.getByText(longDescription.trim());
 
       expect(descriptionElement).toBeInTheDocument();
-      expect(descriptionElement).toHaveStyle({ overflow: "hidden" });
-    });
-
-    it("responds to mouse enter events on description container", async () => {
-      // Arrange
-      const description = "A description that can be hovered";
-
-      renderToast({ description });
-
-      // Act
-      const descriptionElement = screen.getByText(description);
-      const descriptionContainer = descriptionElement.closest('[class*="_18fs8ps"]');
-
-      if (descriptionContainer) {
-        fireEvent.mouseEnter(descriptionContainer);
-        fireEvent.mouseLeave(descriptionContainer);
-      }
-
-      // Assert - the component handles mouse events without errors
-      await waitFor(() => {
-        expect(descriptionElement).toBeInTheDocument();
-      });
+      expect(descriptionElement.className).toMatch(/descriptionTextClamped/);
     });
   });
 

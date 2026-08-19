@@ -111,8 +111,8 @@ export const extensionList = gql`
       edges {
         node {
           id
-          identifier
           label
+          identifier
           url
           mountName
           targetName

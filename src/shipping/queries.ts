@@ -76,3 +76,15 @@ export const shippingZonesCount = gql`
     }
   }
 `;
+
+export const shippingMethodGraphiQLQuery = `query ShippingMethodDetails($id: ID!) {
+  node(id: $id) {
+    ... on ShippingMethodType {
+      id
+      name
+      type
+      minimumDeliveryDays
+      maximumDeliveryDays
+    }
+  }
+}`;

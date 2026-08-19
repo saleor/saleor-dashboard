@@ -103,6 +103,12 @@ export interface ProductDiagnosticData {
       quantity: number;
     }>;
   }>;
+  /**
+   * Total variants on the product (from connection.totalCount).
+   * When the grid is paginated this can exceed `variants.length`.
+   * Null when unknown (legacy callers that still pass a full list omit it).
+   */
+  variantsTotalCount: number | null;
 }
 
 export interface ChannelSummary {

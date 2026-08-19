@@ -1,9 +1,10 @@
 // @ts-strict-ignore
+import { iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { type ProductListQuery } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
 import { Box, sprinkles, Text, vars } from "@saleor/macaw-ui-next";
-import { Package } from "lucide-react";
+import { Image } from "lucide-react";
 
 import { getTileStatus } from "./utils";
 
@@ -42,12 +43,15 @@ export const ProductTile = ({ product, onClick }: ProductTileProps) => (
         display="flex"
         alignItems="center"
         justifyContent="center"
-        backgroundColor="default2"
+        borderWidth={1}
+        borderStyle="solid"
+        borderColor="default1"
+        color="default2"
       >
         <Box __width="40%" __height="40%">
-          <Package
-            size="fill"
-            color="defaultDisabled"
+          <Image
+            size="100%"
+            strokeWidth={iconStrokeWidthBySize.large}
             data-test-id={`placeholder-svg-${product.id}`}
           />
         </Box>

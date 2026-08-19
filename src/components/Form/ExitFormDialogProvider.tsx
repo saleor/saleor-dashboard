@@ -12,6 +12,8 @@ export const ExitFormDialogContext = createContext<ExitFormDialogData>({
   setIsDirty: () => undefined,
   setEnableExitDialog: () => undefined,
   setExitDialogSubmitRef: () => undefined,
+  setExitDialogDescription: () => undefined,
+  setBlockDialogClose: () => undefined,
   shouldBlockNavigation: () => false,
   showDialog: false,
   setIsSubmitting: () => undefined,
@@ -22,7 +24,7 @@ export const ExitFormDialogContext = createContext<ExitFormDialogData>({
 });
 
 const ExitFormDialogProvider = ({ children }) => {
-  const { handleClose, handleLeave, providerData, showDialog, shouldBlockNav } =
+  const { handleClose, handleLeave, providerData, showDialog, shouldBlockNav, description } =
     useExitFormDialogProvider();
   const shouldBlockNavRef = useRef(shouldBlockNav);
 
@@ -41,7 +43,12 @@ const ExitFormDialogProvider = ({ children }) => {
 
   return (
     <ExitFormDialogContext.Provider value={providerData}>
-      <ExitFormDialog isOpen={showDialog} onLeave={handleLeave} onClose={handleClose} />
+      <ExitFormDialog
+        isOpen={showDialog}
+        onLeave={handleLeave}
+        onClose={handleClose}
+        description={description}
+      />
       {children}
     </ExitFormDialogContext.Provider>
   );

@@ -4,10 +4,14 @@ import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { mediaFallbackMessages } from "./messages";
+import { useImageLoadRetry } from "./useImageLoadRetry";
 
 interface MediaWithFallbackProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "alt"> {
   // Extend to allow "null" because GraphQL can return it. It's suger to avoid extra mapping in parents
   alt?: string | null;
+  /** Shown instead of a skeleton while `src` is loading (e.g. local blob preview after upload). */
+  placeholderSrc?: string | null;
+  onPlaceholderUnused?: () => void;
 }
 
 export const MediaWithFallback = ({
@@ -15,9 +19,12 @@ export const MediaWithFallback = ({
   alt,
   className,
   style,
+  placeholderSrc,
+  onPlaceholderUnused,
   ...rest
 }: MediaWithFallbackProps) => {
   const [loadingStatus, setLoadingStatus] = useState<"loading" | "loaded" | "error">("loading");
+  const { attempt, handleError } = useImageLoadRetry(src);
 
   const hasError = loadingStatus === "error";
   const isLoaded = loadingStatus === "loaded";
@@ -42,15 +49,39 @@ export const MediaWithFallback = ({
     );
   }
 
+  const handleLoad = () => {
+    setLoadingStatus("loaded");
+    onPlaceholderUnused?.();
+  };
+
   return (
     <>
-      {!isLoaded && <Skeleton __width="100%" __height="100%" />}
+      {!isLoaded && placeholderSrc ? (
+        <img
+          className={className}
+          src={placeholderSrc}
+          alt=""
+          aria-hidden
+          style={style}
+          data-test-id="media-placeholder"
+        />
+      ) : null}
+      {!isLoaded && !placeholderSrc ? <Skeleton __width="100%" __height="100%" /> : null}
       <img
+        // Remounting forces the browser to re-request the URL after each backoff delay.
+        key={attempt}
         className={className}
         src={src}
         alt={alt ?? undefined}
-        onLoad={() => setLoadingStatus("loaded")}
-        onError={() => setLoadingStatus("error")}
+        onLoad={handleLoad}
+        onError={() => {
+          // Saleor serves 503 while a thumbnail is still being generated, so keep the
+          // loading state and retry; give up only once the backoff budget is exhausted.
+          if (!handleError()) {
+            setLoadingStatus("error");
+            onPlaceholderUnused?.();
+          }
+        }}
         style={isLoaded ? { ...style } : { ...style, display: "none" }}
         {...rest}
       />

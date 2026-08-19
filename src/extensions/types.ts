@@ -74,13 +74,19 @@ export type InstalledExtension = {
 
 export interface Extension {
   id: string;
-  // Stable per-app extension identifier from the manifest. Null when the app
-  // does not declare one; the preference key resolver falls back to `id` then.
-  identifier: string | null;
   app: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["app"];
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
+  /**
+   * App-defined identifier, unique per app. Used to reference a specific
+   * extension - e.g. when a widget opens a POPUP extension via the `openPopup`
+   * App Bridge action. Null for apps/extensions that don't declare it.
+   *
+   * Also the stable half of the extension preference key; the resolver falls
+   * back to `id` when it is null.
+   */
+  identifier: string | null;
   mountName: AllAppExtensionMounts;
   url: string;
   open: () => void;
@@ -99,6 +105,12 @@ export interface Extension {
    * POST) must wait until this is false.
    */
   fromCache: boolean;
+  /**
+   * Refetches the extension-list query this extension came from, yielding a
+   * fresh access token. Keeps the JWT current so a long-open dashboard doesn't
+   * hand a stale token to the widget iframe or an `openPopup`-triggered popup.
+   */
+  refetch?: () => void;
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {

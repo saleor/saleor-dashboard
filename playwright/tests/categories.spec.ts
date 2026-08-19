@@ -15,20 +15,19 @@ test("TC: SALEOR_102 Create basic category #e2e #category", async () => {
   await categoriesPage.waitForDatagridLoaderToDisappear();
   await categoriesPage.clickCreateNewCategoryButton();
   await categoriesPage.typeCategoryName("Utils");
-  await categoriesPage.typeCategoryDescription("Utils description");
-  await categoriesPage.metadataSeoPage.fillSeoSection();
-  await categoriesPage.metadataSeoPage.expandAndAddAllMetadata();
-  await categoriesPage.clickSaveButton();
+  await categoriesPage.typeCreateCategoryDescription("Utils description");
+  await categoriesPage.clickCreateCategorySubmitButton();
   await categoriesPage.expectSuccessBanner();
+  await expect(categoriesPage.page).toHaveURL(/\/categories\/.+/);
+  await expect(categoriesPage.categoryNameInput).toHaveValue("Utils");
 });
 test("TC: SALEOR_103 Edit category #e2e #category", async () => {
   await categoriesPage.gotoExistingCategoriesPage(CATEGORIES.categoryToBeUpdated.id);
   await categoriesPage.typeCategoryName("Updated category");
   await categoriesPage.typeCategoryDescription("Utils description updated");
-  await categoriesPage.clickProductsTabButton();
   await categoriesPage.clickSaveButton();
   await categoriesPage.expectSuccessBanner();
-  await expect(categoriesPage.productsGridList).toContainText("beer to be updated");
+  await expect(categoriesPage.categoryProductsCard).toContainText("beer to be updated");
 });
 test("TC: SALEOR_104 Bulk delete categories #e2e #category", async () => {
   await categoriesPage.gotoCategoryListView();

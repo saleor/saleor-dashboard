@@ -33,6 +33,7 @@ import * as React from "react";
 
 import styles from "./TimelineEvent.module.css";
 import { TimelineEventHeader, type TitleElement } from "./TimelineEventHeader";
+import { TimelineStem } from "./TimelineStem";
 import { type Actor } from "./types";
 import { safeStringify } from "./utils";
 
@@ -146,15 +147,63 @@ interface TimelineEventProps {
   eventData?: unknown;
   actor?: Actor;
   eventType?: OrderEventsEnum | null;
+  /**
+   * Explicit glyph for non-order timelines (e.g. gift cards). Takes precedence over
+   * `eventType` map lookup; avatar still wins when provided.
+   */
+  icon?: IconComponent;
   isLastInGroup?: boolean;
+  avatar?: { url?: string | null; alt?: string } | null;
 }
 
 const ICON_COLOR = vars.colors.text.default2;
 
+// Renders the actor's avatar in the dot slot, falling back to the event icon.
+const EventDot = ({
+  eventType,
+  icon,
+  avatar,
+}: {
+  eventType?: OrderEventsEnum | null;
+  icon?: IconComponent;
+  avatar?: { url?: string | null; alt?: string } | null;
+}) => {
+  if (avatar?.url) {
+    return (
+      <Box
+        borderRadius="100%"
+        overflow="hidden"
+        borderStyle="solid"
+        borderWidth={1}
+        borderColor="default1"
+        __width="32px"
+        __height="32px"
+        flexShrink="0"
+      >
+        <img
+          src={avatar.url}
+          alt={avatar.alt ?? ""}
+          width={32}
+          height={32}
+          style={{ objectFit: "cover", display: "block" }}
+        />
+      </Box>
+    );
+  }
+
+  return <EventIcon eventType={eventType} icon={icon} />;
+};
+
 // Icon wrapper component with circle background
-const EventIcon = ({ eventType }: { eventType?: OrderEventsEnum | null }) => {
+const EventIcon = ({
+  eventType,
+  icon,
+}: {
+  eventType?: OrderEventsEnum | null;
+  icon?: IconComponent;
+}) => {
   const { theme: currentTheme } = useTheme();
-  const IconComponent = eventType ? eventIconMap[eventType] : undefined;
+  const IconComponent = icon ?? (eventType ? eventIconMap[eventType] : undefined);
   const statusType = eventType ? eventStatusMap[eventType] : undefined;
 
   // Get colors from pill status system for consistency with Order pills
@@ -196,7 +245,9 @@ export const TimelineEvent = (props: TimelineEventProps) => {
     eventData,
     actor,
     eventType,
+    icon,
     isLastInGroup,
+    avatar,
   } = props;
   const hasChildren = children && React.Children.toArray(children).filter(Boolean).length > 0;
 
@@ -231,16 +282,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
   return (
     <Box display="flex" width="100%" position="relative" className={styles.eventRow}>
       {/* Vertical connecting line - hidden for last item in group */}
-      {!isLastInGroup && (
-        <Box
-          position="absolute"
-          __left="19px"
-          __top="32px"
-          __bottom="-20px"
-          __width="1px"
-          backgroundColor="default1Hovered"
-        />
-      )}
+      {!isLastInGroup ? <TimelineStem top="32px" bottom="-20px" /> : null}
 
       <Box display="flex" marginBottom={5} width="100%">
         {hasChildren ? (
@@ -261,7 +303,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
                   position="relative"
                   __zIndex="1"
                 >
-                  <EventIcon eventType={eventType} />
+                  <EventDot eventType={eventType} icon={icon} avatar={avatar} />
                 </Box>
                 {/* Chevron */}
                 <Accordion.Trigger
@@ -324,7 +366,7 @@ export const TimelineEvent = (props: TimelineEventProps) => {
               position="relative"
               __zIndex="1"
             >
-              <EventIcon eventType={eventType} />
+              <EventDot eventType={eventType} icon={icon} avatar={avatar} />
             </Box>
             <Box width="100%" display="flex" alignItems="center" __minHeight="32px">
               <TimelineEventHeader

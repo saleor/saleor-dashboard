@@ -31,6 +31,7 @@ jest.mock("./appActionsHandler", () => ({
     useHandlePopupCloseAction: jest.fn(),
     useHandleWidgetResizeAction: jest.fn(),
     useHandleRefreshEntityAction: jest.fn(),
+    useHandleOpenPopupAction: jest.fn(),
   },
 }));
 
@@ -46,6 +47,7 @@ describe("useAppActions", () => {
     core: "1.0.0",
     dashboard: "2.0.0",
   };
+  const mockTarget = "WIDGET" as const;
 
   const mockPostToExtension = jest.fn();
   const mockHandleNotification = jest.fn();
@@ -57,6 +59,7 @@ describe("useAppActions", () => {
   const mockHandlePopupClose = jest.fn();
   const mockHandleWidgetResize = jest.fn();
   const mockHandleRefreshEntity = jest.fn();
+  const mockHandleOpenPopup = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -91,6 +94,9 @@ describe("useAppActions", () => {
     (AppActionsHandler.useHandleRefreshEntityAction as jest.Mock).mockReturnValue({
       handle: mockHandleRefreshEntity,
     });
+    (AppActionsHandler.useHandleOpenPopupAction as jest.Mock).mockReturnValue({
+      handle: mockHandleOpenPopup,
+    });
 
     // Reset capture message mock to return a proper scope
     mockCaptureMessage.mockImplementation((_message, callback) => {
@@ -116,7 +122,7 @@ describe("useAppActions", () => {
     } as unknown as Actions;
 
     renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Act
@@ -161,7 +167,7 @@ describe("useAppActions", () => {
     } as unknown as Actions;
 
     renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Act
@@ -179,6 +185,36 @@ describe("useAppActions", () => {
     expect(mockCaptureMessage).not.toHaveBeenCalled();
   });
 
+  it("should route openPopup action to the open popup handler", () => {
+    // Arrange
+    const openPopupAction = {
+      type: "openPopup",
+      payload: {
+        actionId: "popup-1",
+        extensionIdentifier: "main-popup",
+        appParams: "eyJtb2RlIjoiZnVsbCJ9",
+      },
+    } as unknown as Actions;
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
+    );
+
+    // Act
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: openPopupAction,
+        }),
+      );
+    });
+
+    // Assert
+    expect(mockHandleOpenPopup).toHaveBeenCalledWith(openPopupAction);
+    expect(mockCaptureMessage).not.toHaveBeenCalled();
+  });
+
   it("should ignore messages without type and actionId (e.g., from browser extensions)", () => {
     // Arrange
     const extensionMessage = {
@@ -187,7 +223,7 @@ describe("useAppActions", () => {
     };
 
     renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Act
@@ -218,7 +254,7 @@ describe("useAppActions", () => {
     } as Actions;
 
     renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Act
@@ -255,7 +291,7 @@ describe("useAppActions", () => {
     mockHandleNotification.mockReturnValue(mockResponse);
 
     renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Act
@@ -290,7 +326,7 @@ describe("useAppActions", () => {
     mockHandleWidgetResize.mockReturnValue(mockResponse);
 
     renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     act(() => {
@@ -323,7 +359,7 @@ describe("useAppActions", () => {
     mockHandleNotifyReady.mockReturnValue(mockResponse);
 
     const { result } = renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Assert initial state
@@ -359,7 +395,7 @@ describe("useAppActions", () => {
     mockHandleNotification.mockReturnValue(undefined);
 
     renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Act
@@ -382,7 +418,7 @@ describe("useAppActions", () => {
     const removeEventListenerSpy = jest.spyOn(window, "removeEventListener");
 
     const { unmount } = renderHook(() =>
-      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions),
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
     );
 
     // Act

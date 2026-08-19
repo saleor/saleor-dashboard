@@ -1,0 +1,79 @@
+.stack {
+  /* Fixed size so the stack does not depend on the ambient font size. */
+  --catalog-thumbnail-size: 2.75rem;
+
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+}
+
+.item + .item {
+  margin-left: calc(var(--catalog-thumbnail-size) * -0.35);
+}
+
+.link {
+  display: block;
+  width: var(--catalog-thumbnail-size);
+  height: var(--catalog-thumbnail-size);
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--mu-colors-background-default2);
+  /* Light ring on the image edge, dark hairline outside — keeps stacked thumbnails readable. */
+  box-shadow:
+    0 0 0 1px var(--mu-colors-background-default1),
+    0 0 0 2px var(--mu-colors-border-default1);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.link:hover {
+  transform: translateY(-1px);
+  z-index: 4;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--mu-colors-border-info1);
+  outline-offset: 2px;
+  z-index: 4;
+}
+
+.item:nth-child(1) .link {
+  z-index: 1;
+}
+
+.item:nth-child(2) .link {
+  z-index: 2;
+}
+
+.item:nth-child(3) .link {
+  z-index: 3;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--mu-colors-text-default3);
+}
+
+.placeholderIcon {
+  width: 45%;
+  height: 45%;
+}

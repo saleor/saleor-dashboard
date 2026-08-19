@@ -15,11 +15,6 @@ export const messages = defineMessages({
     id: "vuKrlW",
     defaultMessage: "Stock",
   },
-  variantInPreorder: {
-    id: "eAFU/E",
-    defaultMessage: "Variant currently in preorder",
-    description: "product inventory, checkbox",
-  },
   trackInventory: {
     id: "TjGYna",
     defaultMessage: "Track Inventory",
@@ -46,9 +41,8 @@ export const messages = defineMessages({
     description: "header, allocated product quantity",
   },
   noChannelWarehousesAllocation: {
-    id: "taS/08",
-    defaultMessage:
-      "Assign this variant to a channel in the product channel manager to define warehouses allocation",
+    id: "/+k9uY",
+    defaultMessage: "Add channels in Pricing to define warehouse allocation",
     description: "variant stocks section subtitle",
   },
   configureWarehouseForVariant: {
@@ -73,12 +67,6 @@ export const messages = defineMessages({
     defaultMessage: "Assign Warehouses",
     description: "button",
   },
-  preorderEndDateSetup: {
-    id: "REVk27",
-    defaultMessage:
-      "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling",
-    description: "info text",
-  },
   endDateCancel: {
     id: "bk2M4q",
     defaultMessage: "Cancel end date",
@@ -88,38 +76,6 @@ export const messages = defineMessages({
     id: "tqJwfo",
     defaultMessage: "Set end date",
     description: "button",
-  },
-  preorderProductsAvailability: {
-    id: "Gz+4CI",
-    defaultMessage:
-      "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone.",
-    description: "info text",
-  },
-  preorderTresholdLabel: {
-    id: "/iijFq",
-    defaultMessage: "Global threshold",
-    description: "input label",
-  },
-  preorderTresholdDescription: {
-    id: "HYC6cH",
-    defaultMessage:
-      "Threshold that cannot be exceeded even if per channel thresholds are still available",
-    description: "input description",
-  },
-  preorderTresholdUnitsLeft: {
-    id: "JkO0jp",
-    defaultMessage: "{unitsLeft} units left",
-    description: "input description",
-  },
-  preorderTresholdUnlimited: {
-    id: "tlGXkh",
-    defaultMessage: "Unlimited",
-    description: "input description",
-  },
-  soldUnits: {
-    id: "HcQEUk",
-    defaultMessage: "Sold units",
-    description: "table column header, sold units preorder quantity",
   },
   channelTreshold: {
     id: "MNZY28",
@@ -149,5 +105,11 @@ export const messages = defineMessages({
       "Customers see this stock when the warehouse is assigned to a channel and covered by a shipping zone for the destination.",
     description:
       "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop is in legacy stock-availability mode (stock visibility filtered through shipping zones).",
+  },
+  stockPasteHint: {
+    id: "QIe5rc",
+    defaultMessage:
+      "You can paste from a spreadsheet. Select a quantity field and paste a column of values to fill stock down the list.",
+    description: "variant stock spreadsheet paste hint",
   },
 });

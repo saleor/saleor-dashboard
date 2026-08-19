@@ -84,6 +84,15 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     return false;
   }
 
+  // Navigation pins all share the /models/ path and differ only by the pageTypes filter, so
+  // path matching alone would light every pin at once.
+  if (isMenuItemNavigationPin(menuItem)) {
+    return (
+      activeUrl === (menuItem.url ?? "").split("?")[0] &&
+      isSamePageTypeFilter(location, menuItem.url ?? "")
+    );
+  }
+
   const orderDraftListPath = orderDraftListUrl().split("?")[0];
   const orderListPath = orderListUrl().split("?")[0];
   const isDraftOrderDetailPage = getOrderDraftDetailId(activeUrl) !== null;
@@ -127,6 +136,31 @@ const getPureUrl = (url: string) => {
   return url;
 };
 const isMenuItemExtension = (menuItem: SidebarMenuItem) => menuItem.id.startsWith("extension-");
+
+const isMenuItemNavigationPin = (menuItem: SidebarMenuItem) =>
+  menuItem.id.startsWith("navigation-pin-");
+
+/** Collects pageTypes values regardless of how qs indexed them (`pageTypes`, `pageTypes[0]`, …). */
+const getPageTypeFilter = (url: string): string => {
+  const query = url.split("?")[1];
+
+  if (!query) {
+    return "";
+  }
+
+  const values: string[] = [];
+
+  new URLSearchParams(query).forEach((value, key) => {
+    if (key === "pageTypes" || key.startsWith("pageTypes[")) {
+      values.push(value);
+    }
+  });
+
+  return values.sort().join(",");
+};
+
+const isSamePageTypeFilter = (location: string, menuItemUrl: string) =>
+  getPageTypeFilter(location) === getPageTypeFilter(menuItemUrl);
 
 export const getMenuItemExtension = (
   extensions: Record<

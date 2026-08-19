@@ -12,9 +12,20 @@ export type CollectionChannels = Pick<
   "isPublished" | "publishedAt" | "channel"
 >;
 
-const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
-const isScheduled = (channelData: CollectionChannels) =>
-  channelData?.publishedAt && !channelData?.isPublished;
+const PUBLICATION_CLOCK_TOLERANCE_MS = 2000;
+
+const isScheduled = (channelData: CollectionChannels) => {
+  if (!channelData?.isPublished || !channelData.publishedAt) {
+    return false;
+  }
+
+  const publishedAt = Date.parse(channelData.publishedAt);
+
+  return Number.isFinite(publishedAt) && publishedAt > Date.now() + PUBLICATION_CLOCK_TOLERANCE_MS;
+};
+
+const isActive = (channelData: CollectionChannels) =>
+  Boolean(channelData?.isPublished) && !isScheduled(channelData);
 
 export const getDropdownColor = (channels: CollectionChannels[]) => {
   if (channels.some(isActive)) {
@@ -25,7 +36,20 @@ export const getDropdownColor = (channels: CollectionChannels[]) => {
     return "warning";
   }
 
-  return "error";
+  // Empty / all-unpublished — warning, not critical (quieter list chrome).
+  return "warning";
+};
+
+export const getDropdownStatus = (channels: CollectionChannels[]): DotStatus => {
+  if (channels.some(isActive)) {
+    return "success";
+  }
+
+  if (channels.some(isScheduled)) {
+    return "scheduled";
+  }
+
+  return "warning";
 };
 
 export const getChannelAvailabilityColor = (channelData: CollectionChannels): PillColor => {
@@ -37,7 +61,7 @@ export const getChannelAvailabilityColor = (channelData: CollectionChannels): Pi
     return "warning";
   }
 
-  return "error";
+  return "warning";
 };
 
 export const getChannelAvailabilityLabel = (channelData: CollectionChannels): MessageDescriptor => {
@@ -57,10 +81,10 @@ export const getChannelAvailabilityStatus = (channelData: CollectionChannels): D
   }
 
   if (isScheduled(channelData)) {
-    return "warning";
+    return "scheduled";
   }
 
-  return "error";
+  return "warning";
 };
 
 export const mapChannelsToPills = (channelData: CollectionChannels[]): Pill[] =>

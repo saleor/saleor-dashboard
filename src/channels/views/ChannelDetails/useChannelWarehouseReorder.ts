@@ -1,7 +1,12 @@
 import { type ChannelWarehouse } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import { calculateItemsOrderMoves } from "@dashboard/channels/views/ChannelDetails/handlers";
-import { useChannelReorderWarehousesMutation, type WarehouseFragment } from "@dashboard/graphql";
+import {
+  type ChannelErrorFragment,
+  useChannelReorderWarehousesMutation,
+  type WarehouseFragment,
+} from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { useIntl } from "react-intl";
 
@@ -10,22 +15,9 @@ export const useChannelWarehousesReorder = () => {
   const intl = useIntl();
 
   const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
-    useChannelReorderWarehousesMutation({
-      onCompleted: data => {
-        const errors = data?.channelReorderWarehouses?.errors ?? [];
+    useChannelReorderWarehousesMutation();
 
-        if (errors.length) {
-          errors.forEach(error =>
-            notify({
-              status: "error",
-              text: getChannelsErrorMessage(error, intl),
-            }),
-          );
-        }
-      },
-    });
-
-  const handleChannelWarehousesReorder = ({
+  const handleChannelWarehousesReorder = async ({
     warehousesToDisplay,
     warehouses,
     channelId,
@@ -33,19 +25,30 @@ export const useChannelWarehousesReorder = () => {
     channelId: string;
     warehouses: WarehouseFragment[];
     warehousesToDisplay: ChannelWarehouse[];
-  }) => {
+  }): Promise<ChannelErrorFragment[]> => {
     const moves = calculateItemsOrderMoves(warehouses, warehousesToDisplay);
 
     if (!moves.length) {
-      return;
+      return [];
     }
 
-    return reorderChannelWarehouses({
-      variables: {
-        channelId,
-        moves,
-      },
-    });
+    const errors = await extractMutationErrors(
+      reorderChannelWarehouses({
+        variables: {
+          channelId,
+          moves,
+        },
+      }),
+    );
+
+    errors.forEach(error =>
+      notify({
+        status: "error",
+        text: getChannelsErrorMessage(error, intl),
+      }),
+    );
+
+    return errors;
   };
 
   return {

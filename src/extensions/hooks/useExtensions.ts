@@ -6,6 +6,7 @@ import {
 } from "@dashboard/extensions/domain/app-extension-manifest-available-mounts";
 import { appExtensionManifestOptionsSchemaWithDefault } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { AppExtensionManifestTarget } from "@dashboard/extensions/domain/app-extension-manifest-target";
+import { useRegisterExtensions } from "@dashboard/extensions/extension-registry";
 import { isSaleorOfficialAppUrl } from "@dashboard/extensions/isSaleorOfficialAppUrl";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { newTabActions } from "@dashboard/extensions/new-tab-actions";
@@ -26,10 +27,12 @@ const prepareExtensionsWithActions = ({
   extensions,
   openAppInContext,
   fromCache,
+  refetch,
 }: {
   extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>;
   openAppInContext: (appData: AppExtensionActiveParams) => void;
   fromCache: boolean;
+  refetch: () => void;
 }): ExtensionWithParams[] =>
   extensions
     .filter(({ id, url, label, mountName, app }) => {
@@ -47,11 +50,11 @@ const prepareExtensionsWithActions = ({
     .map(
       ({
         id,
-        identifier,
         accessToken,
         permissions,
         url,
         label,
+        identifier,
         mountName,
         targetName,
         app,
@@ -72,17 +75,18 @@ const prepareExtensionsWithActions = ({
 
         return {
           id,
-          identifier,
           app,
           accessToken: accessToken || "",
           permissions: permissions.map(({ code }) => code),
           url,
           label,
+          identifier,
           mountName: ALL_APP_EXTENSION_MOUNTS.parse(mountName),
           targetName: AppExtensionManifestTarget.parse(targetName),
           settings,
           isSaleorOfficial: isSaleorOfficialAppUrl(resolvedUrl),
           fromCache,
+          refetch,
           /**
            * Only available for NEW_TAB, POPUP, APP_PAGE
            * TODO: Change interface to *not* contain this method if type is WIDGET
@@ -180,7 +184,7 @@ const useExtensionsCore = <T extends AllAppExtensionMounts>(
     return snapshotRef.current;
   });
 
-  const { data, error } = useExtensionListQuery({
+  const { data, error, refetch } = useExtensionListQuery({
     fetchPolicy: "cache-and-network",
     variables: {
       filter: {
@@ -192,9 +196,13 @@ const useExtensionsCore = <T extends AllAppExtensionMounts>(
 
   const hasLiveData = Boolean(data);
   const liveNodes = mapEdgesToItems(data?.appExtensions ?? undefined) || [];
-  const fromCache = !hasLiveData && Boolean(snapshot);
-  const sourceNodes = hasLiveData ? liveNodes : (snapshot ?? []);
-  const loading = !hasLiveData && !snapshot && !error;
+  // An empty `[]` snapshot is not evidence of "no extensions" — it may be a
+  // stale write from a previous empty visit. Only a non-empty snapshot is safe
+  // to paint before the network responds (avoids flashing empty-state UIs).
+  const hasUsableSnapshot = Array.isArray(snapshot) && snapshot.length > 0;
+  const fromCache = !hasLiveData && hasUsableSnapshot;
+  const sourceNodes = hasLiveData ? liveNodes : hasUsableSnapshot && snapshot ? snapshot : [];
+  const loading = !hasLiveData && !hasUsableSnapshot && !error;
 
   // Persist a fresh, token-free snapshot whenever live data arrives.
   useEffect(() => {
@@ -208,7 +216,12 @@ const useExtensionsCore = <T extends AllAppExtensionMounts>(
     extensions: sourceNodes,
     openAppInContext: activate,
     fromCache,
+    refetch,
   });
+
+  // Publish the page's loaded extensions so the global popup context can resolve
+  // an `openPopup` action's target against extensions co-located on this page.
+  useRegisterExtensions(mountList.join(","), extensions);
 
   return { extensions: buildExtensionsMap(extensions, mountList), loading };
 };

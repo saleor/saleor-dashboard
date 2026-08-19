@@ -25,7 +25,7 @@ describe("ExitFormDialog", () => {
     expect(props.onClose).not.toHaveBeenCalled();
   });
 
-  it("closes when ignore changes is clicked", async () => {
+  it("calls onLeave without onClose when ignore changes is clicked", async () => {
     // Arrange
     const props = {
       onClose: jest.fn(),
@@ -34,11 +34,14 @@ describe("ExitFormDialog", () => {
     };
     const user = userEvent.setup();
     // Act
-    const { getByTestId } = render(<ExitFormDialog {...props} />);
+    const { getByTestId, rerender } = render(<ExitFormDialog {...props} />);
 
     await user.click(getByTestId("ignore-changes"));
+    // Simulate parent closing the dialog after leave (same as ExitFormDialogProvider).
+    rerender(<ExitFormDialog {...props} isOpen={false} />);
     // Assert
-    expect(props.onLeave).toHaveBeenCalled();
+    expect(props.onLeave).toHaveBeenCalledTimes(1);
+    expect(props.onClose).not.toHaveBeenCalled();
   });
   it("closes when keep editing is clicked", async () => {
     // Arrange
@@ -46,11 +49,13 @@ describe("ExitFormDialog", () => {
       onClose: jest.fn(),
       onLeave: jest.fn(),
       isOpen: true,
+      description: "Media changes are already saved.",
     };
     const user = userEvent.setup();
     // Act
-    const { getByTestId } = render(<ExitFormDialog {...props} />);
+    const { getByTestId, getByText } = render(<ExitFormDialog {...props} />);
 
+    expect(getByText("Media changes are already saved.")).toBeInTheDocument();
     await user.click(getByTestId("back"));
     // Assert
     expect(props.onClose).toHaveBeenCalled();

@@ -99,6 +99,110 @@
   text-align: right;
 }
 
+/*
+ * Standard density for in-card assignable lists (collection products,
+ * AssignableListTable, product-type attribute tables).
+ *
+ * Header and drag column match collection ProductsTable: 40px grip column
+ * with no extra left inset, padding-y spacing-2, no 50px min (that height
+ * is for thumbnail rows). Body is text-only so it uses the same compact
+ * padding instead of the 50px product-row height.
+ */
+.assignableTable :global(thead tr),
+.assignableTable :global(thead th) {
+  height: 40px !important;
+  max-height: 40px !important;
+  box-sizing: border-box;
+}
+
+.assignableTable :global(tbody tr) {
+  height: unset !important;
+  min-height: 0;
+}
+
+.assignableTable :global(thead th) {
+  line-height: 1;
+  vertical-align: middle;
+  padding: var(--mu-spacing-2) !important;
+}
+
+.assignableTable :global(thead th:first-child),
+.assignableTable :global(td:first-child) {
+  padding: 0 !important;
+}
+
+.assignableTable :global(td:first-child) > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.assignableTable :global(thead th:nth-child(2)) {
+  padding: 0 !important;
+}
+
+.assignableTable :global(thead th:nth-child(2) > *) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.assignableTable :global(thead th:last-child) {
+  padding: 0 !important;
+}
+
+.assignableTable :global(tbody td) {
+  padding: var(--mu-spacing-2) !important;
+}
+
+.assignableTable td.checkboxCell,
+.assignableTable td.checkboxCell:first-child,
+.assignableTable td.actionsCell,
+.assignableTable td.actionsCell:last-child {
+  padding: 0 !important;
+}
+
+.checkboxCell {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+}
+
+.dragCell {
+  width: 40px;
+  min-width: 40px;
+}
+
+.actionsCell {
+  width: 48px;
+  min-width: 48px;
+}
+
+.row {
+}
+
+.rowDelete {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
+/* Reveal on hover, or when the delete control itself is focused. Not row :focus-within — checkbox focus would pin the icon. */
+.row:hover .rowDelete,
+.rowDelete:focus-within {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .rowDelete {
+    opacity: 1;
+  }
+}
+
 .colActionWide {
   width: 120px;
   text-align: right;

@@ -33,6 +33,9 @@ export const attributeFragment = gql`
     type
     visibleInStorefront
     filterableInDashboard
+    # Removed from the API in 3.24, still queried because it is only deprecated in both schemas
+    # today. All UI/mutation usage is already gated behind isMainSchema() — delete this line and
+    # its remaining readers once staging becomes main.
     filterableInStorefront
     unit
     inputType

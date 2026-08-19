@@ -1,0 +1,69 @@
+.leading {
+  display: inline-grid;
+  grid-template-columns: 3.25ch 2.75rem;
+  column-gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.code {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--mu-colors-text-default1);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.symbol {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--mu-colors-text-default2);
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.countries {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1 1 auto;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--mu-colors-text-default2);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/*
+ * Macaw always renders `label` as primary option text and filters by that string.
+ * We keep the full searchable label (code + symbol + countries) but hide that node
+ * visually when our leading marker is present, so adornments show the layout.
+ * Options render in a portal, so this must be :global and scoped via :has(marker).
+ */
+:global([data-test-id="select-option"]:has([data-currency-option-leading])) {
+  position: relative;
+  align-items: center;
+  gap: 12px;
+  height: auto;
+  min-height: unset;
+  white-space: normal;
+}
+
+:global([data-test-id="select-option"]:has([data-currency-option-leading]) > *:nth-child(2)) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  flex: 0 0 0 !important;
+  max-width: 0 !important;
+}

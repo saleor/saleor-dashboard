@@ -19,12 +19,10 @@ import {
   OrderGrantedRefundStatusEnum,
   type OrderListQuery,
   type OrderPaymentFragment,
-  type OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
   type PaymentGatewayFragment,
   type SearchCustomersQuery,
-  type SearchOrderVariantQuery,
   type SearchWarehousesQuery,
   type ShopOrderSettingsFragment,
   TransactionActionEnum,
@@ -34,6 +32,7 @@ import {
   TransactionKind,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
+import { type OrderSearchProduct } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import { staffMember } from "@dashboard/staff/fixtures";
 import { type RelayToFlat } from "@dashboard/types";
 import { warehouseForPickup, warehouseList } from "@dashboard/warehouses/fixtures";
@@ -1629,6 +1628,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               currency: "USD",
             },
             unitDiscountReason: null,
+            priceOverrideReason: null,
+            isPriceOverridden: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1654,7 +1655,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               name: "XS",
               quantityAvailable: 10,
-              preorder: null,
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1808,6 +1808,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               currency: "USD",
             },
             unitDiscountReason: null,
+            priceOverrideReason: null,
+            isPriceOverridden: null,
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
@@ -1833,7 +1835,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               name: "XS",
               quantityAvailable: 10,
-              preorder: null,
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1989,6 +1990,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2014,7 +2017,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "Soft",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2138,6 +2140,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2163,7 +2167,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "XXL",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2267,7 +2270,6 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     },
   },
   totalAuthorized: prepareMoney(234.93),
-  totalCaptured: prepareMoney(0),
   totalBalance: {
     __typename: "Money",
     amount: 0,
@@ -2449,6 +2451,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2474,7 +2478,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "Hard",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2598,6 +2601,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         currency: "USD",
       },
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       unitDiscountValue: 0,
       unitPrice: {
@@ -2623,7 +2628,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
         id: "dsfsfuhb",
         name: "15-1337",
         quantityAvailable: 10,
-        preorder: null,
         product: {
           __typename: "Product",
           id: "UHJvZHVjdDo1",
@@ -2707,7 +2711,6 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
     },
   },
   totalAuthorized: prepareMoney(234.93),
-  totalCaptured: prepareMoney(0),
   totalBalance: {
     __typename: "Money" as const,
     amount: 168.3,
@@ -2788,7 +2791,6 @@ export const fulfillOrderLine = (placeholderImage: string): OrderFulfillLineFrag
     sku: "5-1337",
     attributes: [],
     trackInventory: true,
-    preorder: null,
     stocks: [
       {
         id: "stock_test_id1",
@@ -2830,9 +2832,7 @@ export const shippingMethods = [
   { country: "whole world", id: 1, name: "DHL", price: {} },
   { country: "Afghanistan", id: 2, name: "UPS" },
 ];
-export const orderLineSearch = (
-  placeholderImage: string,
-): RelayToFlat<SearchOrderVariantQuery["search"]> => [
+export const orderLineSearch = (placeholderImage: string): OrderSearchProduct[] => [
   {
     __typename: "Product" as const,
     id: "UHJvZHVjdDo3Mg==",
@@ -2841,6 +2841,9 @@ export const orderLineSearch = (
       __typename: "Image" as const,
       url: placeholderImage,
     },
+    variantsTotalCount: 3,
+    variantsHasNextPage: false,
+    variantsEndCursor: null,
     variants: [
       {
         __typename: "ProductVariant" as const,
@@ -2930,6 +2933,9 @@ export const orderLineSearch = (
       __typename: "Image" as const,
       url: placeholderImage,
     },
+    variantsTotalCount: 3,
+    variantsHasNextPage: false,
+    variantsEndCursor: null,
     variants: [
       {
         __typename: "ProductVariant" as const,
@@ -3048,16 +3054,13 @@ export const invoices: InvoiceFragment[] = [
   },
 ];
 
-export const orderSettings: OrderSettingsFragment = {
-  __typename: "OrderSettings",
-  automaticallyConfirmAllNewOrders: true,
-  automaticallyFulfillNonShippableGiftCard: false,
-};
-
 export const shopOrderSettings: ShopOrderSettingsFragment = {
   __typename: "Shop",
   fulfillmentAutoApprove: true,
   fulfillmentAllowUnpaid: true,
+  reserveStockDurationAnonymousUser: 10,
+  reserveStockDurationAuthenticatedUser: 10,
+  limitQuantityPerCheckout: 50,
 };
 
 export const warehouseSearch: SearchWarehousesQuery["search"] = {

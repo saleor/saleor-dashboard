@@ -35,6 +35,11 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Is gift",
     description: "order line is gift",
   },
+  priceOverrideReason: {
+    id: "IX6V42",
+    defaultMessage: "Price override reason",
+    description: "order line price override reason",
+  },
   reason: {
     id: "GY93MP",
     defaultMessage: "Reason",

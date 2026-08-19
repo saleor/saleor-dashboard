@@ -25,6 +25,8 @@ export const SingleItem = ({ menuItem }: Props) => {
       onClick={handleMenuItemClick}
       data-test-id={`menu-item-label-${menuItem.id}`}
       position="relative"
+      // Hover/focus root for adornments that reveal themselves on the row (e.g. unpin).
+      className="sidebar-single-item"
     >
       <Link
         to={menuItem.url || ""}

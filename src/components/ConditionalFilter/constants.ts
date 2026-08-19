@@ -1,3 +1,7 @@
+// Imported from the leaf module, not the @dashboard/graphql barrel: tests that replace the whole
+// barrel with jest.mock would otherwise leave isMainSchema undefined at module evaluation time.
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
+
 import { type ConditionItem } from "./FilterElement/ConditionOptions";
 import { type ItemOption } from "./FilterElement/ConditionValue";
 import { type LeftOperand } from "./LeftOperandsProvider";
@@ -60,7 +64,6 @@ export const STATIC_CONDITIONS = {
     { type: "datetime.range", label: "between", value: "input-3" },
   ],
   isClickAndCollect: [{ type: "select", label: "is", value: "input-1" }],
-  isPreorder: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardUsed: [{ type: "select", label: "is", value: "input-1" }],
   isGiftCardBought: [{ type: "select", label: "is", value: "input-1" }],
   code: [{ type: "text", label: "is", value: "input-1" }],
@@ -91,6 +94,30 @@ export const STATIC_CONDITIONS = {
   voucherStatus: [
     {
       type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
+  promotionStatus: [
+    {
+      type: "combobox",
+      label: "is",
+      value: "input-1",
+    },
+    {
+      type: "multiselect",
+      label: "in",
+      value: "input-2",
+    },
+  ],
+  promotionType: [
+    {
+      type: "select",
       label: "is",
       value: "input-1",
     },
@@ -351,6 +378,18 @@ export const STATIC_PRODUCT_OPTIONS: LeftOperand[] = [
 ];
 
 export const STATIC_DISCOUNT_OPTIONS: LeftOperand[] = [
+  {
+    value: "promotionStatus",
+    label: "Status",
+    type: "promotionStatus",
+    slug: "promotionStatus",
+  },
+  {
+    value: "promotionType",
+    label: "Type",
+    type: "promotionType",
+    slug: "promotionType",
+  },
   {
     value: "startDate",
     label: "Start date",
@@ -778,14 +817,21 @@ export const STAFF_MEMBER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+// filterableInStorefront is removed from the API in 3.24
+const FILTERABLE_IN_STOREFRONT_OPTIONS: LeftOperand[] = isMainSchema()
+  ? [
+      {
+        value: "filterableInStorefront",
+        label: "Filterable in Storefront",
+        type: "filterableInStorefront",
+        slug: "filterableInStorefront",
+        maxOccurrences: 1,
+      },
+    ]
+  : [];
+
 export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
-  {
-    value: "filterableInStorefront",
-    label: "Filterable in Storefront",
-    type: "filterableInStorefront",
-    slug: "filterableInStorefront",
-    maxOccurrences: 1,
-  },
+  ...FILTERABLE_IN_STOREFRONT_OPTIONS,
   {
     value: "isVariantOnly",
     label: "Variant only",

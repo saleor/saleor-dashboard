@@ -21,7 +21,7 @@ export enum CollectionListUrlFiltersEnum {
   channel = "channel",
 }
 export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;
-export type CollectionListUrlDialog = "remove" | TabActionDialog;
+export type CollectionListUrlDialog = "remove" | "create" | TabActionDialog;
 export enum CollectionListUrlSortField {
   name = "name",
   availability = "availability",
@@ -38,12 +38,16 @@ export const collectionListUrl = (params?: CollectionListUrlQueryParams) =>
   collectionSectionUrl + "?" + stringifyQs(params);
 
 export const collectionPath = (id: string) => urlJoin(collectionSectionUrl, id);
-export type CollectionUrlDialog = "remove" | "removeImage" | "assign" | "unassign" | ChannelsAction;
+export type CollectionUrlDialog =
+  | "remove"
+  | "removeImage"
+  | "assign"
+  | "unassign"
+  | "view-metadata"
+  | ChannelsAction;
 export type CollectionUrlQueryParams = BulkAction & Dialog<CollectionUrlDialog>;
-export type CollectionCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const collectionUrl = (id: string, params?: CollectionUrlQueryParams) =>
   collectionPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
+/** Legacy full-page create path; redirects to list `?action=create`. */
 export const collectionAddPath = urlJoin(collectionSectionUrl, "add");
-export const collectionAddUrl = (params?: CollectionCreateUrlQueryParams) =>
-  collectionAddPath + "?" + stringifyQs(params);

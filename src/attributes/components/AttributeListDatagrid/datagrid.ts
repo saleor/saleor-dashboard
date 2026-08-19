@@ -7,6 +7,7 @@ import { attributeTypeCell } from "@dashboard/components/Datagrid/customCells/At
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { type AttributeFragment } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { translateBoolean } from "@dashboard/intl";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -47,11 +48,16 @@ export const attributesListStaticColumnsAdapter = (
       title: intl.formatMessage(columnsMessages.visible),
       width: 200,
     },
-    {
-      id: "use-in-faceted-search",
-      title: intl.formatMessage(columnsMessages.useInFacetedSearch),
-      width: 200,
-    },
+    // filterableInStorefront is removed from the API in 3.24
+    ...(isMainSchema()
+      ? [
+          {
+            id: "use-in-faceted-search",
+            title: intl.formatMessage(columnsMessages.useInFacetedSearch),
+            width: 200,
+          },
+        ]
+      : []),
   ].map(column => ({
     ...column,
     icon: getColumnSortDirectionIcon(sort, column.id, {

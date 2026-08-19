@@ -46,6 +46,7 @@ export const voucherCataloguesAdd = gql`
       }
       voucher {
         ...VoucherDetails
+        ...VoucherCatalogue
       }
     }
   }
@@ -70,6 +71,7 @@ export const voucherCataloguesRemove = gql`
       }
       voucher {
         ...VoucherDetails
+        ...VoucherCatalogue
       }
     }
   }

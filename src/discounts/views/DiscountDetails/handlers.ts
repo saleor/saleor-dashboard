@@ -17,10 +17,33 @@ import difference from "lodash/difference";
 
 import { type DiscoutFormData } from "../../types";
 
+/**
+ * Saleor promotionUpdate validates dates with
+ * `cleaned_input.get("end_date") or instance.end_date`, so `endDate: null` is ignored
+ * for validation. Clearing the end while moving start past the previous end fails.
+ * Clear end date in a separate mutation first when that conflict would occur.
+ */
+export const shouldClearPromotionEndDateFirst = ({
+  hasEndDate,
+  nextStartDate,
+  currentEndDate,
+}: {
+  hasEndDate: boolean;
+  nextStartDate: string | null;
+  currentEndDate: string | null | undefined;
+}): boolean => {
+  if (hasEndDate || !currentEndDate || !nextStartDate) {
+    return false;
+  }
+
+  return new Date(nextStartDate).getTime() > new Date(currentEndDate).getTime();
+};
+
 export const createUpdateHandler = (
   promotion: PromotionDetailsFragment | undefined | null,
   update: (
-    varaibles: PromotionUpdateMutationVariables,
+    variables: PromotionUpdateMutationVariables,
+    options?: { silent?: boolean },
   ) => Promise<FetchResult<PromotionUpdateMutation>>,
 ) => {
   return async (data: DiscoutFormData) => {
@@ -28,15 +51,39 @@ export const createUpdateHandler = (
       return;
     }
 
+    const startDate = joinDateTime(data.dates.startDate, data.dates.startTime);
+    const endDate = data.dates.hasEndDate
+      ? joinDateTime(data.dates.endDate, data.dates.endTime)
+      : null;
+
+    if (
+      shouldClearPromotionEndDateFirst({
+        hasEndDate: data.dates.hasEndDate,
+        nextStartDate: startDate,
+        currentEndDate: promotion.endDate,
+      })
+    ) {
+      const clearEndResponse = await update(
+        {
+          id: promotion.id,
+          input: { endDate: null },
+        },
+        { silent: true },
+      );
+      const clearEndErrors = getMutationErrors(clearEndResponse);
+
+      if (clearEndErrors.length) {
+        return { errors: clearEndErrors };
+      }
+    }
+
     const updateResponse = await update({
       id: promotion.id,
       input: {
         name: data.name,
         description: data.description ? JSON.parse(data.description) : null,
-        startDate: joinDateTime(data.dates.startDate, data.dates.startTime),
-        endDate: data.dates.hasEndDate
-          ? joinDateTime(data.dates.endDate, data.dates.endTime)
-          : null,
+        startDate,
+        endDate,
       },
     });
     const errors = getMutationErrors(updateResponse);

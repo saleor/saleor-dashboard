@@ -1,4 +1,9 @@
-import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
+import {
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+  TopNavLink,
+  TopNavWrapper,
+} from "@dashboard/components/AppLayout";
 import { AppAvatar } from "@dashboard/extensions/components/AppAvatar/AppAvatar";
 import { type AppLogo } from "@dashboard/extensions/types";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
@@ -6,7 +11,7 @@ import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsP
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./message";
 
@@ -20,7 +25,7 @@ interface AppPageNavProps {
   appId: string;
   appLogoUrl?: string | undefined | null;
   /**
-   * Render a back arrow only if an URL is provided.
+   * Render a destination link only if an URL is provided.
    */
   goBackUrl?: string;
   /**
@@ -40,6 +45,7 @@ export const AppPageNav = ({
   appId,
   showMangeAppButton = true,
 }: AppPageNavProps) => {
+  const intl = useIntl();
   const navigate = useNavigator();
   const { hasManagedAppsPermission } = useHasManagedAppsPermission();
   const navigateToManageAppScreen = () => {
@@ -59,7 +65,14 @@ export const AppPageNav = ({
     <TopNavWrapper>
       <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
         <Box display="flex" gap={2} alignItems="center">
-          {goBackUrl && <TopNavLink to={goBackUrl} variant="secondary" />}
+          {goBackUrl && (
+            <TopNavLink
+              to={goBackUrl}
+              variant="secondary"
+              icon={<TopNavDestinationIcon.extensions />}
+              title={intl.formatMessage(topNavDestinationMessages.extensions)}
+            />
+          )}
           <Box display="flex" gap={4} alignItems="center">
             <AppAvatar size={8} logo={logo} />
             <Box display="flex" flexDirection="column">

@@ -14,7 +14,12 @@ import {
 export const modelingSection = "/models/";
 
 export const pageListPath = modelingSection;
-export type PageListUrlDialog = "publish" | "unpublish" | "remove" | "create-page";
+export type PageListUrlDialog =
+  | "publish"
+  | "unpublish"
+  | "remove"
+  | "create-page"
+  | "create-model-type";
 export enum PageListUrlSortField {
   title = "title",
   slug = "slug",

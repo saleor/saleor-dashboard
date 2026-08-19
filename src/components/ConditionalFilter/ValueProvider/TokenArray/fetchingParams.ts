@@ -42,6 +42,11 @@ export interface VoucherFetchingParams {
   voucherStatus: string[];
 }
 
+export interface DiscountFetchingParams {
+  promotionStatus: string[];
+  promotionType: string[];
+}
+
 export interface PageFetchingParams {
   pageTypes: string[];
 }
@@ -82,6 +87,7 @@ export interface CategoryFetchingParams {
 type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute" | "attributeReference">;
 type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
+type DiscountParamsKeys = keyof DiscountFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
 type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
@@ -127,6 +133,11 @@ const emptyVoucherFetchingParams: VoucherFetchingParams = {
   channel: [],
   discountType: [],
   voucherStatus: [],
+};
+
+const emptyDiscountFetchingParams: DiscountFetchingParams = {
+  promotionStatus: [],
+  promotionType: [],
 };
 
 const emptyPageFetchingParams: PageFetchingParams = {
@@ -243,6 +254,18 @@ export const toVouchersFetchingParams = (p: VoucherFetchingParams, c: UrlToken) 
   return p;
 };
 
+export const toDiscountsFetchingParams = (p: DiscountFetchingParams, c: UrlToken) => {
+  const key = c.name as DiscountParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
   const key = c.name as PageParamsKeys;
 
@@ -334,6 +357,7 @@ export type FetchingParamsType =
   | GiftCardsFetchingParams
   | PageFetchingParams
   | VoucherFetchingParams
+  | DiscountFetchingParams
   | ProductTypesFetchingParams
   | StaffMembersFetchingParams
   | AttributesFetchingParams
@@ -347,6 +371,8 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyOrderFetchingParams;
     case "voucher":
       return emptyVoucherFetchingParams;
+    case "discount":
+      return emptyDiscountFetchingParams;
     case "page":
       return emptyPageFetchingParams;
     case "gift-cards":

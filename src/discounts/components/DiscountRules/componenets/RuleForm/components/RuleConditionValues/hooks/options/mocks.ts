@@ -4,38 +4,17 @@ import {
   SearchProductsDocument,
   SearchVariantsDocument,
 } from "@dashboard/graphql";
+import { allPermissions } from "@dashboard/hooks/makeQuery";
 
 const queryVariablesMock = {
+  ...allPermissions,
   after: null,
   first: 20,
   query: "",
-  PERMISSION_HANDLE_CHECKOUTS: false,
-  PERMISSION_HANDLE_PAYMENTS: false,
-  PERMISSION_HANDLE_TAXES: false,
-  PERMISSION_IMPERSONATE_USER: false,
-  PERMISSION_MANAGE_APPS: false,
-  PERMISSION_MANAGE_CHANNELS: false,
-  PERMISSION_MANAGE_CHECKOUTS: false,
-  PERMISSION_MANAGE_DISCOUNTS: false,
-  PERMISSION_MANAGE_GIFT_CARD: false,
-  PERMISSION_MANAGE_MENUS: false,
-  PERMISSION_MANAGE_OBSERVABILITY: false,
-  PERMISSION_MANAGE_ORDERS: false,
-  PERMISSION_MANAGE_ORDERS_IMPORT: false,
-  PERMISSION_MANAGE_PAGES: false,
-  PERMISSION_MANAGE_PAGE_TYPES_AND_ATTRIBUTES: false,
-  PERMISSION_MANAGE_PLUGINS: false,
-  PERMISSION_MANAGE_PRODUCTS: false,
-  PERMISSION_MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES: false,
-  PERMISSION_MANAGE_SETTINGS: false,
-  PERMISSION_MANAGE_SHIPPING: false,
-  PERMISSION_MANAGE_STAFF: false,
-  PERMISSION_MANAGE_TAXES: false,
-  PERMISSION_MANAGE_TRANSLATIONS: false,
-  PERMISSION_MANAGE_USERS: false,
 };
 
 export const searchCategoriesMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchCategoriesDocument,
     variables: {
@@ -107,6 +86,7 @@ export const searchCategoriesMock = {
 };
 
 export const searchCollectionsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchCollectionsDocument,
     variables: {
@@ -149,11 +129,13 @@ export const searchCollectionsMock = {
 };
 
 export const searchProductsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchProductsDocument,
     variables: {
       ...queryVariablesMock,
       channel: "test",
+      includeVariants: false,
     },
   },
   result: {
@@ -174,162 +156,8 @@ export const searchProductsMock = {
                 name: "Bear",
                 __typename: "ProductType",
               },
-              variants: [
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
-                  name: "1l",
-                  sku: "43226647",
-                  product: {
-                    id: "UHJvZHVjdDo3Mg==",
-                    name: "Apple Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
-                  name: "2l",
-                  sku: "80884671",
-                  product: {
-                    id: "UHJvZHVjdDo3Mg==",
-                    name: "Apple Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 7,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 28,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
-                  name: "500ml",
-                  sku: "93855755",
-                  product: {
-                    id: "UHJvZHVjdDo3Mg==",
-                    name: "Apple Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjc=/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-              ],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -348,165 +176,8 @@ export const searchProductsMock = {
                 name: "Bear",
                 __typename: "ProductType",
               },
-              variants: [
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjA5",
-                  name: "1l",
-                  sku: "27512590",
-                  product: {
-                    id: "UHJvZHVjdDo3NA==",
-                    name: "Banana Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
-                      __typename: "Image",
-                    },
-                    channelListings: [],
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjEw",
-                  name: "2l",
-                  sku: "40636347",
-                  product: {
-                    id: "UHJvZHVjdDo3NA==",
-                    name: "Banana Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
-                      __typename: "Image",
-                    },
-                    channelListings: [],
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 7,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 28,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjA4",
-                  name: "500ml",
-                  sku: "45328412",
-                  product: {
-                    id: "UHJvZHVjdDo3NA==",
-                    name: "Banana Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjk=/256/",
-                      __typename: "Image",
-                    },
-                    channelListings: [],
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-              ],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -525,162 +196,8 @@ export const searchProductsMock = {
                 __typename: "ProductType",
               },
               channelListings: [],
-              variants: [
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjI1",
-                  name: "2l",
-                  sku: "21438542",
-                  product: {
-                    id: "UHJvZHVjdDo3OQ==",
-                    name: "Bean Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 7,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 28,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjIz",
-                  name: "500ml",
-                  sku: "57211177",
-                  product: {
-                    id: "UHJvZHVjdDo3OQ==",
-                    name: "Bean Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MjI0",
-                  name: "1l",
-                  sku: "57423879",
-                  product: {
-                    id: "UHJvZHVjdDo3OQ==",
-                    name: "Bean Juice",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjE0/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-              ],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -699,264 +216,8 @@ export const searchProductsMock = {
                 __typename: "ProductType",
               },
               channelListings: [],
-              variants: [
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk5",
-                  name: "XL",
-                  sku: "19230637",
-                  product: {
-                    id: "UHJvZHVjdDoxMTU=",
-                    name: "Black Hoodie",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk4",
-                  name: "L",
-                  sku: "22119503",
-                  product: {
-                    id: "UHJvZHVjdDoxMTU=",
-                    name: "Black Hoodie",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6MzAw",
-                  name: "XXL",
-                  sku: "61630747",
-                  product: {
-                    id: "UHJvZHVjdDoxMTU=",
-                    name: "Black Hoodie",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk2",
-                  name: "S",
-                  sku: "62783187",
-                  product: {
-                    id: "UHJvZHVjdDoxMTU=",
-                    name: "Black Hoodie",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-                {
-                  id: "UHJvZHVjdFZhcmlhbnQ6Mjk3",
-                  name: "M",
-                  sku: "91406604",
-                  product: {
-                    id: "UHJvZHVjdDoxMTU=",
-                    name: "Black Hoodie",
-                    thumbnail: {
-                      url: "https://feature-checkout-and-order-promotions.api.saleor.rocks/thumbnail/UHJvZHVjdE1lZGlhOjQ2/256/",
-                      __typename: "Image",
-                    },
-                    productType: {
-                      id: "1",
-                      name: "Bear",
-                      __typename: "ProductType",
-                    },
-                  },
-                  channelListings: [
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDox",
-                        isActive: true,
-                        name: "Channel-USD",
-                        currencyCode: "USD",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 5,
-                        currency: "USD",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                    {
-                      channel: {
-                        id: "Q2hhbm5lbDoy",
-                        isActive: true,
-                        name: "Channel-PLN",
-                        currencyCode: "PLN",
-                        __typename: "Channel",
-                      },
-                      price: {
-                        amount: 20,
-                        currency: "PLN",
-                        __typename: "Money",
-                      },
-                      __typename: "ProductVariantChannelListing",
-                    },
-                  ],
-                  __typename: "ProductVariant",
-                },
-              ],
               collections: [],
+              category: null,
               __typename: "Product",
             },
             __typename: "ProductCountableEdge",
@@ -972,16 +233,11 @@ export const searchProductsMock = {
         __typename: "ProductCountableConnection",
       },
     },
-    extensions: {
-      cost: {
-        requestedQueryCost: 120,
-        maximumAvailable: 50000,
-      },
-    },
   },
 };
 
 export const searchVariantsMock = {
+  maxUsageCount: Number.POSITIVE_INFINITY,
   request: {
     query: SearchVariantsDocument,
     variables: {

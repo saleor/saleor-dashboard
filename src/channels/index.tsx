@@ -3,17 +3,17 @@ import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
 import { useIntl } from "react-intl";
-import { type RouteComponentProps, Switch } from "react-router-dom";
+import { Redirect, type RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
   channelAddPath,
+  channelCreateUrl,
   channelPath,
   channelsListPath,
   type ChannelsListUrlQueryParams,
   ChannelsListUrlSortField,
 } from "./urls";
-import ChannelCreateComponent from "./views/ChannelCreate";
 import ChannelDetailsComponent from "./views/ChannelDetails";
 import ChannelsListComponent from "./views/ChannelsList";
 
@@ -37,7 +37,7 @@ const ChannelsSection = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.channels)} />
       <Switch>
         <Route exact path={channelsListPath} component={ChannelsList} />
-        <Route exact path={channelAddPath} component={ChannelCreateComponent} />
+        <Route exact path={channelAddPath} render={() => <Redirect to={channelCreateUrl()} />} />
         <Route exact path={channelPath(":id")} component={ChannelDetails} />
       </Switch>
     </>

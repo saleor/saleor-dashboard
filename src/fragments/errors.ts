@@ -56,6 +56,7 @@ export const discountErrorFragment = gql`
     field
     channels
     message
+    voucherCodes
   }
 `;
 
@@ -124,14 +125,6 @@ export const orderErrorFragment = gql`
     addressType
     message
     orderLines
-  }
-`;
-
-export const orderSettingsErrorFragment = gql`
-  fragment OrderSettingsError on OrderSettingsError {
-    code
-    field
-    message
   }
 `;
 

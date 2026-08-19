@@ -8,6 +8,9 @@ export const productMediaCreateMutation = gql`
       errors {
         ...ProductError
       }
+      media {
+        id
+      }
       product {
         id
         media {
@@ -53,10 +56,6 @@ export const productVariantSetDefault = gql`
       product {
         id
         defaultVariant {
-          id
-          name
-        }
-        variants {
           id
           name
         }
@@ -108,7 +107,6 @@ export const variantUpdateMutation = gql`
     $quantityLimitPerCustomer: Int
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
-    $preorder: PreorderSettingsInput
     $weight: WeightScalar
     $firstValues: Int
     $afterValues: String
@@ -152,7 +150,6 @@ export const variantUpdateMutation = gql`
         attributes: $attributes
         sku: $sku
         trackInventory: $trackInventory
-        preorder: $preorder
         weight: $weight
         quantityLimitPerCustomer: $quantityLimitPerCustomer
         name: $name
@@ -203,6 +200,17 @@ export const productMediaDeleteMutation = gql`
   }
 `;
 
+export const productMediaBulkDeleteMutation = gql`
+  mutation ProductMediaBulkDelete($ids: [ID!]!) {
+    productMediaBulkDelete(ids: $ids) {
+      errors {
+        ...ProductError
+      }
+      count
+    }
+  }
+`;
+
 export const productMediaUpdateMutation = gql`
   mutation ProductMediaUpdate($id: ID!, $alt: String!) {
     productMediaUpdate(id: $id, input: { alt: $alt }) {
@@ -235,14 +243,6 @@ export const variantMediaAssignMutation = gql`
           media {
             ...ProductMedia
           }
-          variants {
-            id
-            name
-            sku
-            media {
-              ...ProductMedia
-            }
-          }
         }
       }
     }
@@ -264,14 +264,6 @@ export const variantMediaUnassignMutation = gql`
           id
           media {
             ...ProductMedia
-          }
-          variants {
-            id
-            name
-            sku
-            media {
-              ...ProductMedia
-            }
           }
         }
       }
@@ -385,16 +377,6 @@ export const ProductVariantChannelListingUpdateMutation = gql`
       }
       errors {
         ...ProductChannelListingError
-      }
-    }
-  }
-`;
-
-export const ProductVariantPreorderDeactivateMutation = gql`
-  mutation ProductVariantPreorderDeactivate($id: ID!) {
-    productVariantPreorderDeactivate(id: $id) {
-      errors {
-        ...ProductError
       }
     }
   }

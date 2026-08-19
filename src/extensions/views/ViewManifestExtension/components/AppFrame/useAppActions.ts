@@ -17,6 +17,7 @@ export const useAppActions = (
     core: string;
     dashboard: string;
   },
+  target: "POPUP" | "WIDGET" | "APP_PAGE",
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
   const { handle: handleNotification } = AppActionsHandler.useHandleNotificationAction();
@@ -33,6 +34,7 @@ export const useAppActions = (
   const { handle: handlePopupClose } = AppActionsHandler.useHandlePopupCloseAction();
   const { handle: handleWidgetResize } = AppActionsHandler.useHandleWidgetResizeAction(frameEl);
   const { handle: handleRefreshEntity } = AppActionsHandler.useHandleRefreshEntityAction();
+  const { handle: handleOpenPopup } = AppActionsHandler.useHandleOpenPopupAction(appId, target);
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -72,6 +74,9 @@ export const useAppActions = (
       }
       case "refreshEntity": {
         return handleRefreshEntity(action);
+      }
+      case "openPopup": {
+        return handleOpenPopup(action);
       }
       default: {
         const actionType = (action as unknown as { type?: string })?.type;

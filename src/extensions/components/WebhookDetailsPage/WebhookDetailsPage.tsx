@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -122,7 +126,12 @@ export const WebhookDetailsPage = ({
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
+            <TopNav
+              href={backUrl}
+              hrefIcon={<TopNavDestinationIcon.extensions />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.extensions)}
+              title={getHeaderTitle(intl, webhook)}
+            />
             <DetailPageLayout.Content>
               <Box paddingX={6}>
                 <WebhookInfo

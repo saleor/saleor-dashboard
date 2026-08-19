@@ -1,7 +1,10 @@
+import accordionStyles from "@dashboard/components/ChannelAvailability/channelAvailabilityAccordion.module.css";
+import { ChannelAvailabilityStatusTooltip } from "@dashboard/components/ChannelAvailability/ChannelAvailabilityStatusTooltip";
 import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { type ProductChannelListingErrorFragment } from "@dashboard/graphql";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
-import { Accordion, Box, Button, Spinner, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Accordion, Box, Button, Spinner, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { AlertTriangle, ChevronDown, CircleAlert, Info, Search } from "lucide-react";
 import * as React from "react";
 import { useIntl } from "react-intl";
@@ -38,6 +41,7 @@ interface AvailabilityChannelItemProps {
   summary: ChannelSummary;
   originalSummary?: ChannelSummary;
   isLast: boolean;
+  rowIndex: number;
   isDirty?: boolean;
   isMarkedForRemoval?: boolean;
   isNew?: boolean;
@@ -46,7 +50,8 @@ interface AvailabilityChannelItemProps {
   errors?: ProductChannelListingErrorFragment[];
   /** Diagnostic issues for this channel */
   issues?: AvailabilityIssue[];
-  isExpanded?: boolean;
+  isOpen?: boolean;
+  onClose?: () => void;
   /** Public API verification result for this channel */
   verificationResult?: ChannelVerificationResult;
   onVerify?: () => void;
@@ -65,6 +70,7 @@ export const AvailabilityChannelItem = ({
   summary,
   originalSummary,
   isLast,
+  rowIndex,
   isDirty = false,
   isMarkedForRemoval = false,
   isNew = false,
@@ -72,7 +78,8 @@ export const AvailabilityChannelItem = ({
   disabled = false,
   errors = [],
   issues = [],
-  isExpanded = false,
+  isOpen = false,
+  onClose,
   verificationResult,
   onVerify,
   useLegacyShippingZoneStockAvailability = true,
@@ -176,93 +183,85 @@ export const AvailabilityChannelItem = ({
   return (
     <Accordion.Item
       value={summary.id}
+      className={accordionStyles.row}
+      __zIndex={rowIndex + 1}
       borderBottomWidth={isLast ? 0 : 1}
       borderBottomStyle="solid"
       borderColor="default1"
     >
-      <Accordion.Trigger>
-        <Box
-          display="flex"
-          alignItems="center"
-          gap={2}
-          paddingX={4}
-          paddingY={3}
-          width="100%"
-          cursor={isEffectivelyDisabled ? "not-allowed" : "pointer"}
-          backgroundColor={{
-            default: "transparent",
-            hover: isEffectivelyDisabled ? "transparent" : "default2",
-          }}
-          opacity={isMarkedForRemoval ? "0.6" : "1"}
-          __transition="background-color 0.2s ease, opacity 0.2s ease"
-        >
-          <Box display="flex" alignItems="center" gap={2} __flex="1" __minWidth="0px">
-            <Tooltip>
-              <Tooltip.Trigger>
-                <Box>
-                  <StatusDot
-                    status={status}
-                    hasIssues={hasHeaderIssues}
-                    issueType={issueBadgeProps?.type ?? "warning"}
-                  />
-                </Box>
-              </Tooltip.Trigger>
-              <Tooltip.Content side="right">
-                <Tooltip.Arrow />
-                <Box display="flex" flexDirection="column" gap={1}>
-                  <Text size={2} fontWeight="medium">
-                    {getStatusLabel()}
-                  </Text>
-                  <Text size={1} color="default2">
-                    {getStatusDescription()}
-                  </Text>
-                  {issueBadgeProps && (
-                    <Text
-                      size={1}
-                      color={issueBadgeProps.type === "error" ? "critical1" : "warning1"}
-                    >
-                      {intl.formatMessage(messages.channelHasIssues, {
-                        count: issueBadgeProps.count,
-                      })}
-                    </Text>
-                  )}
-                </Box>
-              </Tooltip.Content>
-            </Tooltip>
-            <Text
-              size={3}
-              fontWeight="medium"
-              textOverflow="ellipsis"
-              overflow="hidden"
-              whiteSpace="nowrap"
-              title={summary.name}
-            >
-              {summary.name}
-            </Text>
-            {issueBadgeProps && (
-              <IssueBadge count={issueBadgeProps.count} type={issueBadgeProps.type} />
-            )}
-          </Box>
-          <Box display="flex" alignItems="center" gap={2}>
-            {errors.length > 0 && <ErrorBadge />}
-            {isNew && <NewBadge />}
-            {isMarkedForRemoval && <ToRemoveBadge />}
-            {isDirty && <DirtyBadge />}
-            <CurrencyBadge currency={summary.currencyCode} />
-            <Box display="flex" alignItems="center" transition="ease" className="accordion-chevron">
-              <ChevronDown
-                size={16}
-                style={{
-                  transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "transform 0.2s ease",
-                }}
-              />
-            </Box>
+      <Accordion.Trigger
+        className={clsx(
+          accordionStyles.trigger,
+          isEffectivelyDisabled && accordionStyles.triggerDisabled,
+        )}
+        display="flex"
+        alignItems="center"
+        gap={2}
+        paddingX={4}
+        paddingY={3}
+        width="100%"
+        cursor={isEffectivelyDisabled ? "not-allowed" : "pointer"}
+        opacity={isMarkedForRemoval ? "0.6" : "1"}
+        __transition="opacity 0.2s ease"
+        disabled={isEffectivelyDisabled}
+        onClick={() => {
+          if (isOpen && onClose) {
+            onClose();
+          }
+        }}
+      >
+        <Box display="flex" alignItems="center" gap={2} __flex="1" __minWidth="0px">
+          <ChannelAvailabilityStatusTooltip
+            label={getStatusLabel()}
+            description={getStatusDescription()}
+            extra={
+              issueBadgeProps ? (
+                <Text size={1} color={issueBadgeProps.type === "error" ? "critical1" : "warning1"}>
+                  {intl.formatMessage(messages.channelHasIssues, {
+                    count: issueBadgeProps.count,
+                  })}
+                </Text>
+              ) : undefined
+            }
+          >
+            <StatusDot
+              status={status}
+              hasIssues={hasHeaderIssues}
+              issueType={issueBadgeProps?.type ?? "warning"}
+            />
+          </ChannelAvailabilityStatusTooltip>
+          <Text
+            size={3}
+            fontWeight="medium"
+            textOverflow="ellipsis"
+            overflow="hidden"
+            whiteSpace="nowrap"
+            title={summary.name}
+          >
+            {summary.name}
+          </Text>
+          {issueBadgeProps && (
+            <IssueBadge count={issueBadgeProps.count} type={issueBadgeProps.type} />
+          )}
+        </Box>
+        <Box display="flex" alignItems="center" gap={2}>
+          {errors.length > 0 && <ErrorBadge />}
+          {isNew && <NewBadge />}
+          {isMarkedForRemoval && <ToRemoveBadge />}
+          {isDirty && <DirtyBadge />}
+          <CurrencyBadge currency={summary.currencyCode} />
+          <Box
+            display="flex"
+            alignItems="center"
+            transition="ease"
+            className={accordionStyles.chevron}
+          >
+            <ChevronDown size={16} />
           </Box>
         </Box>
       </Accordion.Trigger>
 
-      <Accordion.Content>
+      <Accordion.Content className={accordionStyles.content}>
         <Box paddingX={4} paddingBottom={4}>
           <Box paddingBottom={2}>
             <Box

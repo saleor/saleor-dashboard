@@ -1,7 +1,10 @@
+import { type AttributeInput } from "@dashboard/components/Attributes";
+import { ProductErrorCode, type ProductErrorWithAttributesFragment } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 
 import { type ProductCreateData } from "../components/ProductCreatePage";
 import {
+  expandRequiredAttributeErrors,
   type ProductVariantType,
   validateProductCreateData,
   validateProductVariant,
@@ -83,6 +86,18 @@ describe("validateProductCreateData", () => {
     // Assert
     expect(errors).toEqual([]);
   });
+  it("returns empty errors when data is undefined", () => {
+    // Arrange
+    const data = undefined;
+    // Act
+    const errors = validateProductCreateData(data);
+
+    // Assert
+    expect(errors).toEqual([]);
+  });
+});
+
+describe("validateProductVariant", () => {
   it("returns 'required' errors on product variant form if price is not provided", () => {
     const intl = useIntl();
 
@@ -124,13 +139,144 @@ describe("validateProductCreateData", () => {
       message: "This field cannot be blank",
     });
   });
-  it("returns empty errors when data is undefined", () => {
+
+  it("returns a required error for each empty required attribute", () => {
+    const intl = useIntl();
+
     // Arrange
-    const data = undefined;
+    const data = {
+      channelListings: [{ id: "channel1", value: { price: "10" } }],
+      variantName: "Large",
+      attributes: [
+        {
+          id: "attr-color",
+          label: "Color",
+          value: [],
+          data: { isRequired: true, values: [] },
+        },
+        {
+          id: "attr-size",
+          label: "Size",
+          value: ["unset"],
+          data: { isRequired: true, values: [] },
+        },
+        {
+          id: "attr-material",
+          label: "Material",
+          value: ["cotton"],
+          data: { isRequired: true, values: [] },
+        },
+        {
+          id: "attr-note",
+          label: "Note",
+          value: [],
+          data: { isRequired: false, values: [] },
+        },
+      ],
+    } as unknown as ProductVariantType;
+
     // Act
-    const errors = validateProductCreateData(data);
+    const variantErrors = validateProductVariant(data, intl);
 
     // Assert
-    expect(errors).toEqual([]);
+    expect(variantErrors).toEqual([
+      {
+        __typename: "ProductError",
+        attributes: ["attr-color"],
+        code: "REQUIRED",
+        field: "attributes",
+        message: "This field cannot be blank",
+      },
+      {
+        __typename: "ProductError",
+        attributes: ["attr-size"],
+        code: "REQUIRED",
+        field: "attributes",
+        message: "This field cannot be blank",
+      },
+    ]);
+  });
+});
+
+describe("expandRequiredAttributeErrors", () => {
+  it("splits a generic attributes REQUIRED error into one error per empty required attribute", () => {
+    // Arrange
+    const errors: ProductErrorWithAttributesFragment[] = [
+      {
+        __typename: "ProductError",
+        code: ProductErrorCode.REQUIRED,
+        field: "attributes",
+        message: "All required attributes must take a value.",
+        attributes: [],
+      },
+    ];
+    const attributes = [
+      {
+        id: "attr-color",
+        label: "Color",
+        value: [],
+        data: { isRequired: true, values: [] },
+      },
+      {
+        id: "attr-size",
+        label: "Size",
+        value: ["unset"],
+        data: { isRequired: true, values: [] },
+      },
+      {
+        id: "attr-note",
+        label: "Note",
+        value: [],
+        data: { isRequired: false, values: [] },
+      },
+    ] as unknown as AttributeInput[];
+
+    // Act
+    const expanded = expandRequiredAttributeErrors(errors, attributes);
+
+    // Assert
+    expect(expanded).toEqual([
+      {
+        __typename: "ProductError",
+        code: ProductErrorCode.REQUIRED,
+        field: "attributes",
+        message: "All required attributes must take a value.",
+        attributes: ["attr-color"],
+      },
+      {
+        __typename: "ProductError",
+        code: ProductErrorCode.REQUIRED,
+        field: "attributes",
+        message: "All required attributes must take a value.",
+        attributes: ["attr-size"],
+      },
+    ]);
+  });
+
+  it("leaves errors that already name attributes unchanged", () => {
+    // Arrange
+    const errors: ProductErrorWithAttributesFragment[] = [
+      {
+        __typename: "ProductError",
+        code: ProductErrorCode.REQUIRED,
+        field: "attributes",
+        message: "This field cannot be blank",
+        attributes: ["attr-color"],
+      },
+    ];
+    const attributes = [
+      {
+        id: "attr-color",
+        label: "Color",
+        value: [],
+        data: { isRequired: true, values: [] },
+      },
+    ] as unknown as AttributeInput[];
+
+    // Act
+    const expanded = expandRequiredAttributeErrors(errors, attributes);
+
+    // Assert
+    expect(expanded).toEqual(errors);
   });
 });

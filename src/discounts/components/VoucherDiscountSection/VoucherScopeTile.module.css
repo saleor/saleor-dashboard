@@ -1,0 +1,23 @@
+.tile {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  border-width: 1px;
+  border-color: var(--mu-colors-border-default1);
+  box-sizing: border-box;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.tile:hover:not(.tileChecked):not(:disabled) {
+  border-color: var(--mu-colors-border-default1Hovered, var(--mu-colors-border-default1));
+}
+
+/* 1px border + 1px outer ring = 2px primary without negative margin (keeps dividers visible). */
+.tileChecked {
+  border-color: var(--mu-colors-text-default1);
+  box-shadow: 0 0 0 1px var(--mu-colors-text-default1);
+}

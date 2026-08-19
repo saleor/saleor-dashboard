@@ -15,6 +15,13 @@ export interface ExitFormDialogData {
   setIsDirty: (id: symbol, isDirty: boolean) => void;
   setExitDialogSubmitRef: (id: symbol, submitFn: SubmitFn) => void;
   setEnableExitDialog: (value: boolean) => void;
+  setExitDialogDescription: (description: React.ReactNode | null) => void;
+  /**
+   * When true for a dirty form, closing a URL-driven dialog (e.g. clearing `?action=`)
+   * is treated as leaving and shows the exit prompt. Page forms leave this off so
+   * opening/closing unrelated modals never interrupts editing.
+   */
+  setBlockDialogClose: (id: symbol, value: boolean) => void;
   shouldBlockNavigation: () => boolean;
   showDialog: boolean;
   setIsSubmitting: (value: boolean) => void;
@@ -27,4 +34,5 @@ export interface ExitFormDialogData {
 export interface FormData {
   isDirty: boolean;
   submitFn: SubmitFn | null;
+  blockDialogClose?: boolean;
 }

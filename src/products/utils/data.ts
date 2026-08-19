@@ -188,7 +188,7 @@ export function getProductUpdatePageFormData(
   product: ProductFragment,
   variants: ProductDetailsVariantFragment[],
 ): ProductUpdateFormData {
-  const variant = product?.variants[0];
+  const variant = product?.defaultVariant ?? variants?.[0];
 
   return {
     category: maybe(() => product.category.id, ""),
@@ -207,22 +207,12 @@ export function getProductUpdatePageFormData(
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
     sku: maybe(
-      () =>
-        product.productType.hasVariants
-          ? undefined
-          : variants && variants[0]
-            ? variants[0].sku
-            : undefined,
+      () => (product.productType.hasVariants ? undefined : (variant?.sku ?? undefined)),
       "",
     ),
     slug: product?.slug || "",
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
-    isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
-    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
-    hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDateTime: variant?.preorder?.endDate,
   };
 }
 

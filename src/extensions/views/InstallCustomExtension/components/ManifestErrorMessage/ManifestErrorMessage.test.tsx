@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { type FieldError } from "react-hook-form";
 import { IntlProvider } from "react-intl";
+import { MemoryRouter } from "react-router-dom";
 
 import { AppErrorCode } from "../../../../../graphql/types.generated";
 import {
@@ -12,15 +13,31 @@ import { ManifestErrorMessage } from "./ManifestErrorMessage";
 describe("ManifestErrorMessage", () => {
   const renderWithError = (error: FieldError | null) =>
     render(
-      <IntlProvider
-        messages={{}}
-        locale="en"
-        onError={() => {
-          /* Suppress missing translation errors in console during test if any fallbacks occur */
-        }}
-      >
-        <ManifestErrorMessage error={error} />
-      </IntlProvider>,
+      <MemoryRouter>
+        <IntlProvider
+          messages={{}}
+          locale="en"
+          onError={() => {
+            /* Suppress missing translation errors in console during test if any fallbacks occur */
+          }}
+        >
+          <ManifestErrorMessage error={error} />
+        </IntlProvider>
+      </MemoryRouter>,
+    );
+
+  const renderAlreadyInstalled = (alreadyInstalledApp: {
+    name: string;
+    href: string;
+    isActive: boolean | null;
+    linkTarget: "app" | "settings";
+  }) =>
+    render(
+      <MemoryRouter>
+        <IntlProvider locale="en" messages={{}} onError={() => undefined}>
+          <ManifestErrorMessage error={null} alreadyInstalledApp={alreadyInstalledApp} />
+        </IntlProvider>
+      </MemoryRouter>,
     );
 
   it("renders nothing when error is null", () => {
@@ -67,7 +84,7 @@ describe("ManifestErrorMessage", () => {
     // Check the error message text with placeholder
     expect(screen.getByText(/The extension's manifest has an invalid format/)).toBeInTheDocument();
     expect(screen.getByText(/{docsLink}/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/INVALID_MANIFEST_FORMAT/)).toBeInTheDocument();
   });
 
   it("renders backend error without specific documentation link", () => {
@@ -80,7 +97,7 @@ describe("ManifestErrorMessage", () => {
     renderWithError(error);
     // Assert
     expect(screen.getByText(/You are not allowed to perform this action/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/FORBIDDEN/)).toBeInTheDocument();
   });
 
   it("renders generic fallback error message for unknown client error string", () => {
@@ -94,7 +111,7 @@ describe("ManifestErrorMessage", () => {
 
     // Assert
     expect(screen.getByText(/An unexpected error occurred/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/client/)).toBeInTheDocument();
   });
 
   it("renders generic 'Unknown error' message for unknown error object", () => {
@@ -107,7 +124,41 @@ describe("ManifestErrorMessage", () => {
     renderWithError(error);
     // Assert
     expect(screen.getByText(/An unexpected error occurred/)).toBeInTheDocument();
-    expect(screen.getByText(/{errorCode}/)).toBeInTheDocument();
+    expect(screen.getByText(/unknown/)).toBeInTheDocument();
+  });
+
+  it("renders an already-installed message with a named open link", () => {
+    // Arrange
+    renderAlreadyInstalled({
+      name: "Saleor Pulse",
+      href: "/extensions/app/pulse-app-id",
+      isActive: true,
+      linkTarget: "app",
+    });
+
+    // Assert
+    expect(screen.getByText(/Saleor Pulse is already installed/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Open Saleor Pulse" })).toHaveAttribute(
+      "href",
+      "/extensions/app/pulse-app-id",
+    );
+  });
+
+  it("renders a disabled already-installed message with a settings link", () => {
+    // Arrange
+    renderAlreadyInstalled({
+      name: "Saleor Pulse",
+      href: "/extensions/app/pulse-app-id/edit",
+      isActive: false,
+      linkTarget: "settings",
+    });
+
+    // Assert
+    expect(screen.getByText(/Saleor Pulse is installed but disabled/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Open settings" })).toHaveAttribute(
+      "href",
+      "/extensions/app/pulse-app-id/edit",
+    );
   });
 
   it("sets aria-live='polite' on the root Box when error is displayed", () => {

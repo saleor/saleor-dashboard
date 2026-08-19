@@ -1,0 +1,21 @@
+.adornment {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* Space between swatch and label — keeps text column aligned */
+  margin-right: 8px;
+  line-height: 0;
+  /* Let list-item / input clicks hit the combobox row, not the swatch */
+  pointer-events: none;
+}
+
+/*
+ * Macaw DynamicCombobox wraps startAdornment in a stretched Box with no
+ * align-items. Fill that wrapper and flex-center (list rows omit this).
+ */
+.adornmentInput {
+  align-self: stretch;
+  height: 100%;
+}

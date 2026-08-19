@@ -35,6 +35,32 @@ export const giftCardTimelineNoteAdd = gql`
   }
 `;
 
+export const giftCardAssignUser = gql`
+  mutation GiftCardAssignUser($id: ID!, $userId: ID!) {
+    giftCardAssignUser(id: $id, userId: $userId) {
+      errors {
+        ...GiftCardError
+      }
+      giftCard {
+        ...GiftCardData
+      }
+    }
+  }
+`;
+
+export const giftCardUnassignUser = gql`
+  mutation GiftCardUnassignUser($id: ID!) {
+    giftCardUnassignUser(id: $id) {
+      errors {
+        ...GiftCardError
+      }
+      giftCard {
+        ...GiftCardData
+      }
+    }
+  }
+`;
+
 export const giftCardBulkActivate = gql`
   mutation GiftCardBulkActivate($ids: [ID!]!) {
     giftCardBulkActivate(ids: $ids) {

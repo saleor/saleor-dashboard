@@ -4,7 +4,7 @@ import { PermissionEnum, type UserFragment } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ComponentProps } from "react";
 
-import { ChannelDisplay, ClickableChannel } from "./Channel";
+import { ChannelDetailsLink, ChannelDisplay, ClickableChannel } from "./Channel";
 
 const mockUser: UserFragment = {
   __typename: "User",
@@ -12,6 +12,7 @@ const mockUser: UserFragment = {
   email: "admin@example.com",
   firstName: "Admin",
   lastName: "User",
+  isActive: true,
   isStaff: true,
   dateJoined: "2024-01-01T00:00:00Z",
   metadata: [],
@@ -71,6 +72,10 @@ export const Clickable: Story = {
       <ClickableChannel {...args} />
     </UserContext.Provider>
   ),
+};
+
+export const DetailsLink: Story = {
+  render: (args: ComponentProps<typeof ChannelDisplay>) => <ChannelDetailsLink {...args} />,
 };
 
 export const LargerSize: Story = {

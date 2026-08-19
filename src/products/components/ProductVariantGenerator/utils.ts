@@ -170,6 +170,81 @@ export function extractExistingCombinations(
 }
 
 /**
+ * Keeps only selection attributes — they alone determine variant uniqueness in Saleor.
+ */
+export function toExistingVariantData(
+  variants: ExistingVariantData,
+  selectionAttributeIds: Set<string>,
+): ExistingVariantData {
+  return variants.map(variant => ({
+    attributes: variant.attributes
+      .filter(attr => selectionAttributeIds.has(attr.attribute.id))
+      .map(attr => ({
+        attribute: { id: attr.attribute.id },
+        values: attr.values.map(v => ({ slug: v.slug })),
+      })),
+  }));
+}
+
+/**
+ * Drops inputs whose SKU already exists elsewhere so the rest of the batch can proceed.
+ */
+export function excludeInputsWithCollidingSkus(
+  inputs: ProductVariantBulkCreateInput[],
+  collidingSkus: ReadonlySet<string>,
+): {
+  kept: ProductVariantBulkCreateInput[];
+  skippedSkus: string[];
+} {
+  if (collidingSkus.size === 0) {
+    return { kept: inputs, skippedSkus: [] };
+  }
+
+  const skippedSkus: string[] = [];
+  const kept = inputs.filter(input => {
+    if (input.sku && collidingSkus.has(input.sku)) {
+      skippedSkus.push(input.sku);
+
+      return false;
+    }
+
+    return true;
+  });
+
+  return { kept, skippedSkus };
+}
+
+/**
+ * Converts staged bulk-create inputs into the generator's existing-variant shape
+ * so draft creates show as Exists and are skipped on regenerate.
+ */
+export function stagedCreatesToExistingVariantData(
+  creates: ProductVariantBulkCreateInput[],
+): ExistingVariantData {
+  return creates.map(input => ({
+    attributes: (input.attributes ?? []).flatMap(attribute => {
+      // An input without an attribute id can never match a generator combination
+      if (!attribute.id) {
+        return [];
+      }
+
+      const slugs = [
+        ...(attribute.values ?? []),
+        attribute.dropdown?.value,
+        attribute.swatch?.value,
+      ].filter((slug): slug is string => Boolean(slug));
+
+      return [
+        {
+          attribute: { id: attribute.id },
+          values: slugs.map(slug => ({ slug })),
+        },
+      ];
+    }),
+  }));
+}
+
+/**
  * Builds the proper BulkAttributeValueInput based on attribute type.
  * Uses the dedicated field for each type instead of the deprecated 'values' field.
  */

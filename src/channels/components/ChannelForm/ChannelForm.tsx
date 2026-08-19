@@ -1,32 +1,32 @@
-import { AutomaticallyCompleteCheckouts } from "@dashboard/channels/components/ChannelForm/automatic-checkout-complete/AutomaticallyCompleteCheckouts";
 import {
   type ChannelShippingZones,
   type ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import { DashboardCard } from "@dashboard/components/Card";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { FixedAtCreationField } from "@dashboard/components/FixedAtCreationField/FixedAtCreationField";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import {
   type ChannelErrorFragment,
   type CountryCode,
-  isStagingSchema,
-  MarkAsPaidStrategyEnum,
+  type MarkAsPaidStrategyEnum,
   type StockSettingsInput,
-  TransactionFlowStrategyEnum,
+  type TransactionFlowStrategyEnum,
 } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
-import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
-import { commonMessages } from "@dashboard/intl";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { buttonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import { Box, Button, DynamicCombobox, Input, type Option, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, DynamicCombobox, Input, type Option } from "@saleor/macaw-ui-next";
 import { Copy } from "lucide-react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { type ReactNode } from "react";
+import { useIntl } from "react-intl";
 
-import { AllowLegacyGiftCardUse } from "./AllowLegacyGiftCardUse";
-import { AllowUnpaidOrders } from "./AllowUnpaidOrders";
-import { DefaultTransactionFlowStrategy } from "./DefaultTransactionFlowStrategy";
-import { MarkAsPaid } from "./MarkAsPaid";
+import { channelSectionIds } from "../ChannelSectionNav/channelSectionIds";
+import { ChannelSection } from "../ChannelSectionNav/ChannelSectionNav";
+import styles from "./ChannelForm.module.css";
+import { ChannelOrdersSection } from "./ChannelOrdersSection";
+import { ChannelPaymentsCheckoutSection } from "./ChannelPaymentsCheckoutSection";
 import { messages } from "./messages";
 
 export interface FormData extends StockSettingsInput {
@@ -41,9 +41,16 @@ export interface FormData extends StockSettingsInput {
   warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
+  /** Minutes until unpaid unconfirmed orders expire; `0` / `null` disables. */
+  expireOrdersAfter: number | null;
   deleteExpiredOrdersAfter: number;
   allowUnpaidOrders: boolean;
+  automaticallyConfirmAllNewOrders: boolean;
+  automaticallyFulfillNonShippableGiftCard: boolean;
   defaultTransactionFlowStrategy: TransactionFlowStrategyEnum;
+  releaseFundsForExpiredCheckouts: boolean;
+  /** Hours after checkout expiry before releasing held funds; unused when release is off. */
+  checkoutTtlBeforeReleasingFunds: number | null;
   automaticallyCompleteCheckouts: boolean;
   automaticCompletionDelay: number | string | null;
   automaticCompletionCutOffDate: string;
@@ -54,229 +61,178 @@ export interface FormData extends StockSettingsInput {
 interface ChannelFormProps {
   data: FormData;
   disabled: boolean;
-  currencyCodes?: Option[];
   errors: ChannelErrorFragment[];
-  selectedCurrencyCode?: string;
   selectedCountryDisplayName: string;
   countries: Option[];
-  // Saved values from backend for automatic checkout completion warnings
+  /**
+   * Edit layout: wrap General / Orders / Payments in scroll-spy sections
+   * (parent owns padding + section nav; sidebar stays separate).
+   */
+  sectionLayout?: boolean;
+  /** Rendered after the Payments section when section layout is enabled. */
+  trailingSection?: ReactNode;
   savedAutomaticallyCompleteCheckouts: boolean;
   savedAutomaticCompletionCutOffDate: string;
   savedAutomaticCompletionCutOffTime: string;
   onChange: FormChange;
-  onCurrencyCodeChange?: (event: ChangeEvent) => void;
-  onDefaultCountryChange: (event: ChangeEvent) => void;
-  onMarkAsPaidStrategyChange: () => void;
-  onTransactionFlowStrategyChange: () => void;
-  onAutomaticallyCompleteCheckoutsChange: () => void;
-  onAllowLegacyGiftCardUseChange?: () => void;
+  onDefaultCountryChange: (event: { target: { name: string; value: string } }) => void;
 }
 
 export const ChannelForm = ({
-  currencyCodes,
   data,
   disabled,
   errors,
-  selectedCurrencyCode,
   selectedCountryDisplayName,
   countries,
+  sectionLayout = false,
+  trailingSection,
   savedAutomaticallyCompleteCheckouts,
   savedAutomaticCompletionCutOffDate,
   savedAutomaticCompletionCutOffTime,
   onChange,
-  onCurrencyCodeChange,
   onDefaultCountryChange,
-  onMarkAsPaidStrategyChange,
-  onTransactionFlowStrategyChange,
-  onAutomaticallyCompleteCheckoutsChange,
-  onAllowLegacyGiftCardUseChange,
 }: ChannelFormProps) => {
   const intl = useIntl();
   const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    [
-      "name",
-      "slug",
-      "currencyCode",
-      "defaultCountry",
-      "deleteExpiredOrdersAfter",
-      "automaticCompletionDelay",
-      "automaticCompletionCutOffDate",
-    ],
+    ["name", "slug", "currencyCode", "defaultCountry"],
     errors,
   );
-  const renderCurrencySelection = currencyCodes && typeof onCurrencyCodeChange === "function";
 
-  return (
-    <>
-      <DashboardCard>
-        <DashboardCard.Header>
-          <DashboardCard.Title>
-            {intl.formatMessage(commonMessages.generalInformations)}
-          </DashboardCard.Title>
-        </DashboardCard.Header>
-        <DashboardCard.Content data-test-id="general-information">
-          <Input
-            error={!!formErrors.name}
-            helperText={getChannelsErrorMessage(formErrors?.name, intl)}
-            disabled={disabled}
-            label={intl.formatMessage(messages.channelName)}
-            name="name"
-            value={data.name}
-            onChange={onChange}
-            data-test-id="channel-name-input"
-          />
-          <FormSpacer />
-          <Input
-            data-test-id="slug-name-input"
-            error={!!formErrors.slug}
-            helperText={getChannelsErrorMessage(formErrors?.slug, intl)}
-            disabled={disabled}
-            label={intl.formatMessage(messages.channelSlug)}
-            name="slug"
-            value={data.slug}
-            onChange={onChange}
-            endAdornment={
-              <Button
-                variant="tertiary"
-                onClick={() => copy(data.slug)}
-                textTransform="uppercase"
-                icon={<Copy size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-              />
-            }
-          />
-        </DashboardCard.Content>
-      </DashboardCard>
-      <Box display="grid" __gridTemplateColumns="2fr 1fr" rowGap={2}>
-        <Text size={5} fontWeight="bold" margin={6}>
-          <FormattedMessage {...messages.channelSettings} />
-        </Text>
-        <Text size={5} fontWeight="bold" margin={6}>
-          <FormattedMessage {...messages.orderExpiration} />
-        </Text>
-        <Box paddingX={6}>
-          {renderCurrencySelection ? (
+  const ordersSection = (
+    <ChannelOrdersSection data={data} disabled={disabled} errors={errors} onChange={onChange} />
+  );
+
+  const paymentsCheckoutSection = (
+    <ChannelPaymentsCheckoutSection
+      data={data}
+      disabled={disabled}
+      errors={errors}
+      savedAutomaticallyCompleteCheckouts={savedAutomaticallyCompleteCheckouts}
+      savedAutomaticCompletionCutOffDate={savedAutomaticCompletionCutOffDate}
+      savedAutomaticCompletionCutOffTime={savedAutomaticCompletionCutOffTime}
+      onChange={onChange}
+    />
+  );
+
+  const nameError = getChannelsErrorMessage(formErrors?.name, intl);
+  const slugError = getChannelsErrorMessage(formErrors?.slug, intl);
+  const countryError = getChannelsErrorMessage(formErrors?.defaultCountry, intl);
+
+  const generalCard = (
+    <DetailSettingsCard
+      data-test-id="general-information"
+      title={intl.formatMessage(messages.generalSettings)}
+    >
+      <Box display="flex" flexDirection="column" gap={4}>
+        <Input
+          error={!!formErrors.name}
+          helperText={nameError || intl.formatMessage(messages.channelNameHint)}
+          disabled={disabled}
+          label={intl.formatMessage(messages.channelName)}
+          name="name"
+          value={data.name}
+          onChange={onChange}
+        />
+        <Input
+          data-test-id="slug-name-input"
+          error={!!formErrors.slug}
+          helperText={slugError || intl.formatMessage(messages.channelSlugHint)}
+          disabled={disabled}
+          label={intl.formatMessage(messages.channelSlug)}
+          name="slug"
+          value={data.slug}
+          onChange={onChange}
+          endAdornment={
+            <Button
+              variant="tertiary"
+              size="small"
+              type="button"
+              className={styles.slugCopyButton}
+              onClick={() => copy(data.slug)}
+              aria-label={intl.formatMessage(buttonMessages.copyToClipboard)}
+              icon={<Copy size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
+            />
+          }
+        />
+        <Box
+          display="flex"
+          flexDirection={{ mobile: "column", tablet: "row", desktop: "row" }}
+          gap={4}
+        >
+          <Box __flex="1 1 0" __minWidth="0" width="100%">
             <DynamicCombobox
-              data-test-id="channel-currency-select-input"
+              data-test-id="country-select-input"
               disabled={disabled}
-              error={!!formErrors.currencyCode}
-              label={intl.formatMessage(messages.channelCurrency)}
-              helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
-              options={currencyCodes}
-              name="currencyCode"
+              error={!!formErrors.defaultCountry}
+              label={intl.formatMessage(messages.defaultCountry)}
+              helperText={countryError || intl.formatMessage(messages.defaultCountryHint)}
+              options={countries}
+              name="defaultCountry"
               value={{
-                label: selectedCurrencyCode ?? "",
-                value: selectedCurrencyCode ?? "",
+                label: selectedCountryDisplayName,
+                value: data.defaultCountry,
               }}
-              onChange={e =>
-                onCurrencyCodeChange({
+              onChange={v =>
+                onDefaultCountryChange({
                   target: {
-                    value: e?.value ?? "",
-                    name: "currencyCode",
+                    value: v?.value ?? "",
+                    name: "defaultCountry",
                   },
                 })
               }
             />
-          ) : (
-            <Box display="flex" flexDirection="column">
-              <Text size={2}>
-                <FormattedMessage {...messages.selectedCurrency} />
-              </Text>
-              <Text>{data.currencyCode}</Text>
-            </Box>
-          )}
+          </Box>
+          <Box __flex="1 1 0" __minWidth="0" width="100%">
+            <FixedAtCreationField
+              data-test-id="channel-currency-locked-input"
+              helperText={intl.formatMessage(messages.channelCurrencyHintLocked)}
+              label={intl.formatMessage(messages.channelCurrency)}
+              name="currencyCode"
+              value={data.currencyCode}
+            />
+          </Box>
         </Box>
-        <Text size={2} paddingX={6}>
-          <FormattedMessage {...messages.orderExpirationDescription} />
-        </Text>
-        <Box paddingX={6}>
-          <DynamicCombobox
-            data-test-id="country-select-input"
-            disabled={disabled}
-            error={!!formErrors.defaultCountry}
-            label={intl.formatMessage(messages.defaultCountry)}
-            helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
-            options={countries}
-            name="defaultCountry"
-            value={{
-              label: selectedCountryDisplayName,
-              value: data.defaultCountry,
-            }}
-            onChange={v =>
-              onDefaultCountryChange({
-                target: {
-                  value: v?.value ?? "",
-                  name: "defaultCountry",
-                },
-              })
-            }
-          />
-        </Box>
-        <Box paddingX={6}>
-          <Input
-            name="deleteExpiredOrdersAfter"
-            data-test-id="delete-expired-order-input"
-            value={data.deleteExpiredOrdersAfter}
-            error={!!formErrors.deleteExpiredOrdersAfter}
-            type="number"
-            label="TTL"
-            onChange={onChange}
-            min={0}
-            max={120}
-            // TODO: Should be removed after single autocomplete
-            // select is migrated to macaw inputs
-            __height={12.5}
-          />
-        </Box>
-        <MarkAsPaid
-          isChecked={data.markAsPaidStrategy === MarkAsPaidStrategyEnum.TRANSACTION_FLOW}
-          onCheckedChange={onMarkAsPaidStrategyChange}
-          hasError={!!formErrors.markAsPaidStrategy}
-          disabled={disabled}
-        />
-        <Box />
-        <AllowUnpaidOrders
-          onChange={onChange}
-          isChecked={data.allowUnpaidOrders}
-          hasError={!!formErrors.allowUnpaidOrders}
-          disabled={disabled}
-        />
-        <Box />
-        <DefaultTransactionFlowStrategy
-          onChange={onTransactionFlowStrategyChange}
-          isChecked={
-            data.defaultTransactionFlowStrategy === TransactionFlowStrategyEnum.AUTHORIZATION
-          }
-          hasError={!!formErrors.defaultTransactionFlowStrategy}
-          disabled={disabled}
-        />
-        <Box />
-        <AutomaticallyCompleteCheckouts
-          hasError={!!formErrors.automaticCompletionDelay}
-          isChecked={data.automaticallyCompleteCheckouts}
-          disabled={disabled}
-          delay={data.automaticCompletionDelay}
-          cutOffDate={data.automaticCompletionCutOffDate}
-          cutOffTime={data.automaticCompletionCutOffTime}
-          cutOffDateError={!!formErrors.automaticCompletionCutOffDate}
-          savedIsEnabled={savedAutomaticallyCompleteCheckouts}
-          savedCutOffDate={savedAutomaticCompletionCutOffDate}
-          savedCutOffTime={savedAutomaticCompletionCutOffTime}
-          onCheckboxChange={onAutomaticallyCompleteCheckoutsChange}
-          onDelayChange={onChange}
-          onCutOffDateChange={onChange}
-          onCutOffTimeChange={onChange}
-        />
-        <Box />
-        {isStagingSchema() && (
-          <AllowLegacyGiftCardUse
-            onChange={onAllowLegacyGiftCardUseChange ? onAllowLegacyGiftCardUseChange : () => {}}
-            hasError={!!formErrors.allowLegacyGiftCardUse}
-            isChecked={data.allowLegacyGiftCardUse!}
-            disabled={disabled}
-          />
-        )}
       </Box>
-    </>
+    </DetailSettingsCard>
+  );
+
+  const ordersCard = (
+    <DetailSettingsCard
+      data-test-id="channel-orders-settings"
+      title={intl.formatMessage(messages.ordersSectionTitle)}
+      contentFlush
+    >
+      {ordersSection}
+    </DetailSettingsCard>
+  );
+
+  const paymentsCard = (
+    <DetailSettingsCard
+      data-test-id="channel-payments-checkout-settings"
+      title={intl.formatMessage(messages.paymentsCheckoutSectionTitle)}
+      contentFlush
+    >
+      {paymentsCheckoutSection}
+    </DetailSettingsCard>
+  );
+
+  if (sectionLayout) {
+    return (
+      <Box display="flex" flexDirection="column" gap={4}>
+        <ChannelSection id={channelSectionIds.general}>{generalCard}</ChannelSection>
+        <ChannelSection id={channelSectionIds.orders}>{ordersCard}</ChannelSection>
+        <ChannelSection id={channelSectionIds.payments}>{paymentsCard}</ChannelSection>
+        {trailingSection}
+      </Box>
+    );
+  }
+
+  return (
+    <Box paddingX={6} paddingBottom={8} display="flex" flexDirection="column" gap={4}>
+      {generalCard}
+      {ordersCard}
+      {paymentsCard}
+    </Box>
   );
 };

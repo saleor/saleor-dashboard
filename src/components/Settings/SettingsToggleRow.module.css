@@ -1,0 +1,16 @@
+.row {
+  transition: background-color 0.12s ease;
+}
+
+.row:hover:not([data-disabled="true"]) {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.row[data-disabled="true"] {
+  opacity: 0.65;
+}
+
+.description {
+  line-height: 1.45;
+  max-width: 40rem;
+}

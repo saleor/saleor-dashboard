@@ -223,4 +223,24 @@ describe("ConditionalFilter / API / InitialProductStateResponse", () => {
     // Assert
     expect(result).toEqual(expectedOutput);
   });
+
+  it("should match channel slug exactly so a copy does not resolve to its source", () => {
+    // Arrange
+    const initialState = InitialProductStateResponse.empty();
+
+    initialState.channel = [
+      { label: "Default Channel", value: "channel-1", slug: "default-channel" },
+      { label: "Default Channel Copy", value: "channel-2", slug: "default-channel-copy" },
+    ];
+
+    const token = UrlToken.fromUrlEntry(new UrlEntry("s0.channel", "default-channel-copy"));
+
+    // Act
+    const result = initialState.filterByUrlToken(token);
+
+    // Assert
+    expect(result).toEqual([
+      { label: "Default Channel Copy", value: "channel-2", slug: "default-channel-copy" },
+    ]);
+  });
 });

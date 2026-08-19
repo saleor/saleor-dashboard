@@ -1,32 +1,15 @@
-import { OrderDiscountType } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen } from "@testing-library/react";
 
+import {
+  discountedWaterfall,
+  overriddenNoDiscountWaterfall,
+  overriddenNoReasonWaterfall,
+} from "../fixtures";
 import { type LinePriceWaterfall } from "../utils/types";
 import { LinePriceWaterfallModal } from "./LinePriceWaterfallModal";
 
-const waterfall: LinePriceWaterfall = {
-  lineId: "line-1",
-  productName: "White Plimsolls",
-  variantName: "41",
-  productSku: "white-plimsolls-41",
-  thumbnailUrl: "https://example.com/thumb.png",
-  quantity: 1,
-  fractionDigits: 2,
-  start: { __typename: "Money", amount: 100, currency: "USD" },
-  end: { __typename: "Money", amount: 60, currency: "USD" },
-  factors: [
-    {
-      kind: "catalogue_promotion",
-      name: "Summer sale",
-      signedDelta: { __typename: "Money", amount: 40, currency: "USD" },
-      sourceType: OrderDiscountType.SALE,
-    },
-  ],
-  warnings: [],
-};
-
-const renderModal = (onClose = jest.fn()) =>
+const renderModal = (waterfall: LinePriceWaterfall = discountedWaterfall, onClose = jest.fn()) =>
   render(
     <Wrapper>
       <LinePriceWaterfallModal waterfall={waterfall} onClose={onClose} />
@@ -38,7 +21,7 @@ describe("LinePriceWaterfallModal", () => {
     // Arrange
     const onClose = jest.fn();
 
-    renderModal(onClose);
+    renderModal(discountedWaterfall, onClose);
 
     // Act
     fireEvent.click(screen.getByTestId("close-button"));
@@ -55,5 +38,33 @@ describe("LinePriceWaterfallModal", () => {
     // Assert
     expect(screen.getByTestId("price-waterfall-step-start")).toBeInTheDocument();
     expect(screen.getByTestId("price-waterfall-step-end")).toBeInTheDocument();
+  });
+
+  it("shows the overridden badge and reason on the base row when the price was overridden", () => {
+    // Arrange // Act
+    renderModal(overriddenNoDiscountWaterfall);
+
+    // Assert
+    expect(screen.getByTestId("price-waterfall-overridden-badge")).toBeInTheDocument();
+    expect(
+      screen.getByText(overriddenNoDiscountWaterfall.priceOverrideReason!),
+    ).toBeInTheDocument();
+  });
+
+  it("shows a fallback explainer when overridden without a recorded reason", () => {
+    // Arrange // Act
+    renderModal(overriddenNoReasonWaterfall);
+
+    // Assert
+    expect(screen.getByTestId("price-waterfall-overridden-badge")).toBeInTheDocument();
+    expect(screen.getByText("Custom price set for this line")).toBeInTheDocument();
+  });
+
+  it("does not show the overridden badge for a non-overridden line", () => {
+    // Arrange // Act
+    renderModal(discountedWaterfall);
+
+    // Assert
+    expect(screen.queryByTestId("price-waterfall-overridden-badge")).not.toBeInTheDocument();
   });
 });

@@ -18,3 +18,25 @@
   border-top: 1px solid var(--mu-colors-border-default1);
   background-color: var(--mu-colors-background-default2);
 }
+
+.mediaVideoWrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+}
+
+.mediaVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.actionLink {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  text-decoration: none;
+  cursor: pointer;
+}

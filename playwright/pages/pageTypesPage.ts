@@ -16,8 +16,9 @@ export class PageTypesPage extends BasePage {
   constructor(
     page: Page,
     readonly createPageTypeButton = page.getByTestId("create-page-type"),
-    readonly nameInput = page.getByTestId("page-type-name").locator("input"),
+    readonly nameInput = page.getByTestId("page-type-name"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly createPageTypeDialog = page.getByTestId("create-model-type-dialog"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-page-types"),
     readonly pageTypeList = page.getByTestId("page-types-list"),
     readonly rowCheckbox = page.getByTestId("checkbox"),
@@ -48,10 +49,11 @@ export class PageTypesPage extends BasePage {
 
   async clickCreatePageTypeButton() {
     await this.createPageTypeButton.click();
+    await this.createPageTypeDialog.waitFor();
   }
 
   async typePageTypeName(name: string) {
-    await this.nameInput.fill(name);
+    await this.createPageTypeDialog.getByTestId("page-type-name-input").fill(name);
   }
 
   async updatePageTypeName(name: string) {

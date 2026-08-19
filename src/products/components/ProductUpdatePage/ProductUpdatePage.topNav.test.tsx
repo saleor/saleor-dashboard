@@ -2,6 +2,7 @@ import { type ProductDetailsQuery } from "@dashboard/graphql";
 import { product } from "@dashboard/products/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
@@ -47,6 +48,11 @@ jest.mock("./form", () => ({
       handlers: {
         changeChannels: jest.fn(),
         changeVariants: jest.fn(),
+        stageVariantRemovals: jest.fn(),
+        stageVariantCreates: jest.fn(),
+        removeStagedVariantCreates: jest.fn(),
+        clearStagedVariantCreates: jest.fn(),
+        replaceStagedVariantCreates: jest.fn(),
         selectCategory: jest.fn(),
         selectCollection: jest.fn(),
         selectTaxClass: jest.fn(),
@@ -62,6 +68,15 @@ jest.mock("./form", () => ({
       },
       submit: jest.fn(),
       isSaveDisabled: false,
+      pendingVariantDeleteCount: 0,
+      stagedVariantCreates: [],
+      saveComposition: {
+        hasDetails: false,
+        dirtyChannelCount: 0,
+        variantEditCount: 0,
+        variantCreateCount: 0,
+        variantDeleteCount: 0,
+      },
       formErrors: {},
       attributeRichTextGetters: {},
       richText: { getValue: jest.fn() },
@@ -95,12 +110,22 @@ const mockProduct = product(placeholderImage) as unknown as NonNullable<
   ProductDetailsQuery["product"]
 >;
 
-const renderPage = (onShowMetadata = jest.fn()) =>
-  render(
+const renderPage = (
+  overrides: {
+    onShowMetadata?: () => void;
+    onDelete?: () => void;
+    product?: typeof mockProduct | undefined;
+  } = {},
+) => {
+  const onShowMetadata = overrides.onShowMetadata ?? jest.fn();
+  const onDelete = overrides.onDelete ?? jest.fn();
+  const product = "product" in overrides ? overrides.product : mockProduct;
+
+  return render(
     <Wrapper>
       <MemoryRouter>
         <ProductUpdatePage
-          productId={mockProduct.id}
+          productId={product?.id ?? "test-id"}
           channels={[]}
           channelsErrors={[]}
           variantListErrors={[]}
@@ -114,7 +139,7 @@ const renderPage = (onShowMetadata = jest.fn()) =>
           limits={null as never}
           variants={[]}
           media={[]}
-          product={mockProduct}
+          product={product}
           saveButtonBarState="default"
           taxClasses={[]}
           fetchMoreTaxClasses={{ hasMore: false, loading: false, onFetchMore: jest.fn() }}
@@ -124,9 +149,10 @@ const renderPage = (onShowMetadata = jest.fn()) =>
           fetchAttributeValues={jest.fn()}
           refetch={jest.fn()}
           onSubmit={jest.fn()}
-          onDelete={jest.fn()}
+          onDelete={onDelete}
           onShowMetadata={onShowMetadata}
           onImageDelete={jest.fn()}
+          onImagesDelete={jest.fn()}
           onImageUpload={jest.fn()}
           onMediaUrlUpload={jest.fn()}
           onVariantShow={jest.fn()}
@@ -138,6 +164,7 @@ const renderPage = (onShowMetadata = jest.fn()) =>
       </MemoryRouter>
     </Wrapper>,
   );
+};
 
 describe("ProductUpdatePage top nav", () => {
   it("renders the metadata button in the header", () => {
@@ -152,7 +179,7 @@ describe("ProductUpdatePage top nav", () => {
     // Arrange
     const onShowMetadata = jest.fn();
 
-    renderPage(onShowMetadata);
+    renderPage({ onShowMetadata });
 
     // Act
     screen.getByTestId("show-product-metadata").click();
@@ -163,50 +190,30 @@ describe("ProductUpdatePage top nav", () => {
 
   it("disables the metadata button when product is not loaded", () => {
     // Arrange & Act
-    render(
-      <Wrapper>
-        <MemoryRouter>
-          <ProductUpdatePage
-            productId="test-id"
-            channels={[]}
-            channelsErrors={[]}
-            variantListErrors={[]}
-            errors={[]}
-            categories={[]}
-            collections={[]}
-            attributeValues={[]}
-            disabled={false}
-            fetchMoreCategories={{ hasMore: false, loading: false, onFetchMore: jest.fn() }}
-            fetchMoreCollections={{ hasMore: false, loading: false, onFetchMore: jest.fn() }}
-            limits={null as never}
-            variants={[]}
-            media={[]}
-            product={undefined}
-            saveButtonBarState="default"
-            taxClasses={[]}
-            fetchMoreTaxClasses={{ hasMore: false, loading: false, onFetchMore: jest.fn() }}
-            isSimpleProduct={false}
-            fetchCategories={jest.fn()}
-            fetchCollections={jest.fn()}
-            fetchAttributeValues={jest.fn()}
-            refetch={jest.fn()}
-            onSubmit={jest.fn()}
-            onDelete={jest.fn()}
-            onShowMetadata={jest.fn()}
-            onImageDelete={jest.fn()}
-            onImageUpload={jest.fn()}
-            onMediaUrlUpload={jest.fn()}
-            onVariantShow={jest.fn()}
-            onAssignReferencesClick={jest.fn()}
-            onCloseDialog={jest.fn()}
-            onAttributeSelectBlur={jest.fn()}
-            onAttributeValuesSearch={jest.fn()}
-          />
-        </MemoryRouter>
-      </Wrapper>,
-    );
+    renderPage({ product: undefined });
 
     // Assert
     expect(screen.getByTestId("show-product-metadata")).toBeDisabled();
+  });
+
+  it("opens GraphiQL and delete from the cogs menu", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const onDelete = jest.fn();
+
+    renderPage({ onDelete });
+
+    // Act
+    await user.click(screen.getByTestId("show-more-button"));
+
+    // Assert
+    expect(screen.getByTestId("graphiql-redirect")).toBeInTheDocument();
+    expect(screen.getByTestId("delete-product")).toBeInTheDocument();
+
+    // Act
+    await user.click(screen.getByTestId("delete-product"));
+
+    // Assert
+    expect(onDelete).toHaveBeenCalled();
   });
 });

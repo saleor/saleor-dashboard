@@ -20,6 +20,7 @@ export const Content = ({
       gridColumn="8"
       gridRow={{ mobile: "6", tablet: "12", desktop: "12" }}
       {...rest}
+      data-detail-content-scroll="true"
     >
       {children}
     </Box>

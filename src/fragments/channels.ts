@@ -32,13 +32,23 @@ export const channelDetailsFragment = gql`
     warehouses {
       ...Warehouse
     }
+    taxConfiguration {
+      id
+      chargeTaxes
+      taxCalculationStrategy
+    }
     orderSettings {
       markAsPaidStrategy
+      expireOrdersAfter
       deleteExpiredOrdersAfter
       allowUnpaidOrders
+      automaticallyConfirmAllNewOrders
+      automaticallyFulfillNonShippableGiftCard
     }
     paymentSettings {
       defaultTransactionFlowStrategy
+      releaseFundsForExpiredCheckouts
+      checkoutTtlBeforeReleasingFunds
     }
     checkoutSettings {
       automaticallyCompleteFullyPaidCheckouts

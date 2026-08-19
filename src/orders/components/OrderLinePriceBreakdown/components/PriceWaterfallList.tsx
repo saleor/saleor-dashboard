@@ -1,7 +1,7 @@
 import { roundMoneyByDigits } from "@dashboard/components/Money";
 import { voucherUrl } from "@dashboard/discounts/urls";
 import { type MoneyFragment } from "@dashboard/graphql";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Chip, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { type IntlShape, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -57,6 +57,12 @@ export const PriceWaterfallList = ({ waterfall }: PriceWaterfallListProps) => {
     >
       <PriceWaterfallStep
         label={intl.formatMessage(messages.startLabel, { quantity: waterfall.quantity })}
+        tag={waterfall.isPriceOverridden ? <OverriddenBadge intl={intl} /> : undefined}
+        detail={
+          waterfall.isPriceOverridden
+            ? (waterfall.priceOverrideReason ?? intl.formatMessage(messages.overriddenNoReason))
+            : undefined
+        }
         amount={waterfall.start}
         sign="none"
         emphasis="start"
@@ -73,6 +79,22 @@ export const PriceWaterfallList = ({ waterfall }: PriceWaterfallListProps) => {
     </Box>
   );
 };
+
+/** Subtle pill shown next to the base-price row when the line's unit price was
+ *  set custom. Keeps the "original price" from reading as the catalog price. */
+function OverriddenBadge({ intl }: { intl: IntlShape }) {
+  return (
+    <Chip
+      size="small"
+      backgroundColor="accent1Pressed"
+      borderColor="accent1"
+      color="default1"
+      data-test-id="price-waterfall-overridden-badge"
+    >
+      {intl.formatMessage(messages.overriddenBadge)}
+    </Chip>
+  );
+}
 
 function getFactorLabel(factor: PriceFactor, intl: IntlShape): string {
   switch (factor.kind) {

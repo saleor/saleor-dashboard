@@ -36,7 +36,7 @@ runs:
       env:
         BACKUP_NAME: ${{ inputs.BACKUP_NAMESPACE }}
       run: |
-        BACKUPS=$(pnpx saleor backup list --name="$BACKUP_NAME" --latest --json)
+        BACKUPS=$(saleor backup list --name="$BACKUP_NAME" --latest --json)
         BACKUP_ID=$(echo "$BACKUPS" | jq -r '.[0].key')
         BACKUP_VER=$(echo "$BACKUPS" | jq -r '.[0].saleor_version')
         BACKUP_NAME=$(echo "$BACKUPS" | jq -r '.[0].name')

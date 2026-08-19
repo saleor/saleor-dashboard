@@ -3,16 +3,18 @@ import {
   type CategoryWithTotalProductsFragment,
   type CollectionWithTotalProductsFragment,
   type SearchProductFragment,
+  type SearchProductVariantFragment,
 } from "@dashboard/graphql";
 import useLocalPageInfo from "@dashboard/hooks/useLocalPageInfo";
 
 import { type VoucherCreatePageTab } from "../types";
 
-type ProductVariant = NonNullable<SearchProductFragment["variants"]>[number];
+type ProductVariant = SearchProductVariantFragment;
 
 export const useSpecificItemsPagination = ({
   type,
   data,
+  paginateBy = PAGINATE_BY,
 }: {
   type: VoucherCreatePageTab;
   data: {
@@ -21,13 +23,14 @@ export const useSpecificItemsPagination = ({
     products: SearchProductFragment[];
     variants: ProductVariant[];
   };
+  paginateBy?: number;
 }) => {
   const { pageInfo, pageValues, resetPage, loadNextPage, loadPreviousPage } = useLocalPageInfo<
     | CategoryWithTotalProductsFragment
     | CollectionWithTotalProductsFragment
     | SearchProductFragment
     | ProductVariant
-  >(data[type], PAGINATE_BY);
+  >(data[type], paginateBy);
 
   return {
     paginatedSpecificItems: pageValues,

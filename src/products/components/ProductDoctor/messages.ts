@@ -374,10 +374,11 @@ export const messages = defineMessages({
     defaultMessage: "Availability",
     description: "Availability card title",
   },
-  availabilitySubtitle: {
-    id: "h0mEWF",
-    defaultMessage: "In {listed} of {total} channels",
-    description: "Availability card subtitle showing channel count",
+  unsavedChannelChanges: {
+    id: "xOrtMG",
+    defaultMessage:
+      "{count, plural, one {# channel has unsaved changes} other {# channels have unsaved changes}}",
+    description: "Availability card hint when channel listings are dirty",
   },
   manageButton: {
     id: "E3SyRJ",
@@ -388,6 +389,12 @@ export const messages = defineMessages({
     id: "eB6oHa",
     defaultMessage: "Product is not listed in any channel",
     description: "Message when product is not in any channel",
+  },
+  variantsCatalogUnavailable: {
+    id: "lXs9kz",
+    defaultMessage:
+      "Could not load all variants for availability checks. Refresh the page to try again.",
+    description: "Error when Product Doctor variant catalog walk fails",
   },
   status_live: {
     id: "F0BhK/",

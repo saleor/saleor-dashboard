@@ -26,14 +26,6 @@ export const fragmentMoneyWithFractionDigits = gql`
   }
 `;
 
-export const fragmentPreorder = gql`
-  fragment Preorder on PreorderData {
-    globalThreshold
-    globalSoldUnits
-    endDate
-  }
-`;
-
 export const priceRangeFragment = gql`
   fragment PriceRange on TaxedMoneyRange {
     start {
@@ -73,6 +65,7 @@ export const channelListingProductWithoutPricingFragment = gql`
       name
       slug
       currencyCode
+      isActive
     }
   }
 `;
@@ -90,10 +83,6 @@ export const channelListingProductVariantFragment = gql`
     }
     costPrice {
       ...Money
-    }
-    preorderThreshold {
-      quantity
-      soldUnits
     }
   }
 `;
@@ -183,13 +172,42 @@ export const productDetailsVariant = gql`
       ...Stock
     }
     trackInventory
-    preorder {
-      ...Preorder
-    }
     channelListings {
       ...ChannelListingProductVariant
     }
     quantityLimitPerCustomer
+  }
+`;
+
+/** Slim variant row for the detail/create sibling navigator. */
+export const productVariantSibling = gql`
+  fragment ProductVariantSibling on ProductVariant {
+    id
+    name
+    sku
+    media {
+      id
+      url(size: 200)
+      type
+      oembedData
+    }
+  }
+`;
+
+/** Minimal variant shape for Generate Variants duplicate detection (all pages). */
+export const productVariantGeneratorExisting = gql`
+  fragment ProductVariantGeneratorExisting on ProductVariant {
+    id
+    sku
+    attributes {
+      attribute {
+        id
+      }
+      values {
+        id
+        slug
+      }
+    }
   }
 `;
 
@@ -205,6 +223,8 @@ export const productFragmentDetails = gql`
     rating
     defaultVariant {
       id
+      sku
+      trackInventory
     }
     category {
       id
@@ -221,9 +241,6 @@ export const productFragmentDetails = gql`
       ...ProductMedia
     }
     isAvailable
-    variants {
-      ...ProductDetailsVariant
-    }
     productType {
       id
       name
@@ -319,17 +336,7 @@ export const fragmentVariant = gql`
           id
           name
           currencyCode
-        }
-      }
-      variants {
-        id
-        name
-        sku
-        media {
-          id
-          url(size: 200)
-          type
-          oembedData
+          isActive
         }
       }
     }
@@ -341,9 +348,6 @@ export const fragmentVariant = gql`
       ...Stock
     }
     trackInventory
-    preorder {
-      ...Preorder
-    }
     weight {
       ...Weight
     }
@@ -365,38 +369,58 @@ export const searchProduct = gql`
     channelListings {
       ...ChannelListingProductWithoutPricing
     }
-    variants {
-      id
-      name
-      sku
-      product {
-        id
-        name
-        thumbnail {
-          url
-          __typename
-        }
-        productType {
-          id
-          name
-          __typename
-        }
-      }
-      channelListings {
-        channel {
-          id
-          isActive
-          name
-          currencyCode
-        }
-        price {
-          amount
-          currency
-        }
-      }
-    }
     collections {
       id
+    }
+    category {
+      id
+    }
+  }
+`;
+
+/**
+ * Cap for variants embedded in SearchProducts when includeVariants is true.
+ * Keep in sync with SearchProducts `productVariants(first: …)` — codegen
+ * cannot interpolate this constant.
+ *
+ * Stay conservative: cost ≈ products.first × this × SearchProductVariant.
+ * Cloud rejects the query (HTTP 400) when this is too high (e.g. 50).
+ * Load-more uses ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE (single product).
+ */
+export const SEARCH_PRODUCT_VARIANTS_PAGE_SIZE = 20;
+
+/** Page size for AssignVariant Load more (one product — safe at 50). */
+export const ASSIGN_VARIANT_LOAD_MORE_PAGE_SIZE = 50;
+
+export const searchProductVariant = gql`
+  fragment SearchProductVariant on ProductVariant {
+    id
+    name
+    sku
+    product {
+      id
+      name
+      thumbnail {
+        url
+        __typename
+      }
+      productType {
+        id
+        name
+        __typename
+      }
+    }
+    channelListings {
+      channel {
+        id
+        isActive
+        name
+        currencyCode
+      }
+      price {
+        amount
+        currency
+      }
     }
   }
 `;

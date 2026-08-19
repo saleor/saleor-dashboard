@@ -37,7 +37,6 @@ describe("Multiple file upload handler", () => {
       onBeforeUpload: jest.fn(),
       onCompleted: jest.fn(files => expect(files.length).toBe(testFiles.length)),
       onError: jest.fn(),
-      onStart: jest.fn(),
     };
     const handle = createMultiFileUploadHandler((_, fileIndex) => {
       const promise = new Promise<void>((resolve, reject) => {
@@ -58,5 +57,40 @@ describe("Multiple file upload handler", () => {
       expect(cbs.onError).toBeCalledTimes(1);
       done();
     });
+  });
+
+  it("uploads with limited concurrency", async () => {
+    // Arrange
+    let inFlight = 0;
+    let maxInFlight = 0;
+    const uploadOrder: number[] = [];
+    const cbs = {
+      onAfterUpload: jest.fn(),
+      onError: jest.fn(),
+      onCompleted: jest.fn(),
+    };
+    const handle = createMultiFileUploadHandler(
+      async (_file, fileIndex) => {
+        inFlight += 1;
+        maxInFlight = Math.max(maxInFlight, inFlight);
+        uploadOrder.push(fileIndex);
+        await Promise.resolve();
+        inFlight -= 1;
+
+        return `result-${fileIndex}`;
+      },
+      { ...cbs, concurrency: 2 },
+    );
+
+    // Act
+    await handle(testFiles);
+
+    // Assert
+    expect(maxInFlight).toBe(2);
+    expect(cbs.onAfterUpload).toHaveBeenCalledTimes(testFiles.length);
+    expect(cbs.onAfterUpload.mock.calls[0][2]).toBe("result-0");
+    expect(cbs.onError).not.toHaveBeenCalled();
+    expect(cbs.onCompleted).toHaveBeenCalledTimes(1);
+    expect(uploadOrder).toHaveLength(testFiles.length);
   });
 });

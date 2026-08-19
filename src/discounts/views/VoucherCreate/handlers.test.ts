@@ -12,6 +12,7 @@ const formData: FormData = {
   name: "name",
   value: 1,
   discountType: DiscountTypeEnum.SHIPPING,
+  percentageDiscountValue: "",
   endDate: "2021-01-01",
   endTime: "00:00",
   hasEndDate: false,
@@ -48,6 +49,22 @@ describe("createHandler", () => {
     // Assert
     expect(result).toEqual({ errors: ["Could not update channels"] });
     expect(voucherCreate).toHaveBeenCalled();
+    expect(updateChannels).not.toHaveBeenCalled();
+  });
+
+  it("returns validationFailed without calling mutations when validateFn fails", async () => {
+    // Arrange
+    const voucherCreate = jest.fn();
+    const updateChannels = jest.fn();
+    const validateFn = jest.fn().mockReturnValue(false);
+    const handler = createHandler(voucherCreate, updateChannels, validateFn);
+
+    // Act
+    const result = await handler(formData);
+
+    // Assert
+    expect(result).toEqual({ validationFailed: true });
+    expect(voucherCreate).not.toHaveBeenCalled();
     expect(updateChannels).not.toHaveBeenCalled();
   });
 

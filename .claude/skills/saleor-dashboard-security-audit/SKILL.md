@@ -1,11 +1,11 @@
 ---
 name: saleor-dashboard-security-audit
-description: Triage `pnpm audit` security findings and propose batched, accept-first dependency fixes. Use when asked to run a security audit, fix security vulnerabilities, update vulnerable packages, or analyze pnpm audit output.
+description: Triage OSV and `pnpm audit` security findings and propose batched, accept-first dependency fixes. Use when asked to run a security audit, fix security vulnerabilities, update vulnerable packages, or analyze dependency audit output.
 ---
 
 # Dependency Security Audit & Fix Triage
 
-Goal: turn `pnpm audit` noise into a small set of **accept-first** batches the user can approve and merge independently. Do NOT apply fixes until the user accepts the proposal. NEVER fix everything in one commit.
+Goal: turn dependency audit findings into a small set of **accept-first** batches the user can approve and merge independently. Do NOT apply fixes until the user accepts the proposal. NEVER fix everything in one commit.
 
 ## Always install through Socket Firewall (sfw)
 
@@ -40,21 +40,56 @@ Key config already in `pnpm-workspace.yaml`:
 
 ### 1. Collect & parse
 
+Run both scanners. OSV is the advisory inventory because it checks every
+package/version in `pnpm-lock.yaml` against the databases aggregated by OSV.
+`pnpm audit` supplements it with pnpm dependency paths and npm-specific
+remediation data; do not treat it as the complete advisory source.
+OSV-Scanner is required; if it is missing, install the official binary (on
+macOS with Homebrew: `brew install osv-scanner`) rather than skipping this scan.
+
 ```bash
-pnpm audit --json > /tmp/audit.json   # the human table truncates; JSON is the source of truth
+osv_status=0
+osv-scanner scan source -L pnpm-lock.yaml --format json > /tmp/osv-audit.json || osv_status=$?
+if [ "$osv_status" -gt 1 ]; then exit "$osv_status"; fi
+
+pnpm audit --json > /tmp/pnpm-audit.json
 ```
 
-Parse it into a severity-sorted table. The `advisories` object has everything; `actions` only suggests partial fixes. For each advisory capture: `module_name`, current version(s), `patched_versions`, `severity`, `cvss.score`, and the dependency path (top-level dep = 2nd path segment; `path.split(">").length === 2` means it's a **direct** dep). Useful one-liner:
+OSV-Scanner exits with status 1 when it finds vulnerabilities, so only statuses
+greater than 1 are scanner errors. Parse `/tmp/osv-audit.json` first, merging
+records by `id` and `aliases`, then join the pnpm findings by package and
+installed version.
 
-```bash
+In the pnpm JSON, `actions` only suggests partial fixes. Each advisory carries:
+`module_name`, `severity`, `patched_versions`, `vulnerable_versions`, `title`,
+`github_advisory_id`, `url`, `cwe`, and `findings[].version` /
+`findings[].paths`. The dependency path (top-level dep = 2nd path segment;
+`path.split(">").length === 2` means it's a **direct** dep) tells you
+direct-vs-transitive. Useful one-liner:
+
+```js
 node -e '
-const a=Object.values(JSON.parse(require("fs").readFileSync("/tmp/audit.json","utf8")).advisories);
+const a=Object.values(JSON.parse(require("fs").readFileSync("/tmp/pnpm-audit.json","utf8")).advisories);
 const o={critical:0,high:1,moderate:2,low:3};
-a.sort((x,y)=>(o[x.severity]-o[y.severity])||(y.cvss?.score||0)-(x.cvss?.score||0));
+a.sort((x,y)=>(o[x.severity]-o[y.severity])||x.module_name.localeCompare(y.module_name));
 for(const v of a){const p=v.findings.flatMap(f=>f.paths);
 const tops=[...new Set(p.map(s=>s.split(">")[1]||s))];const direct=p.some(s=>s.split(">").length===2);
-console.log(`[${v.severity}] ${v.module_name} ${v.findings.map(f=>f.version)} -> ${v.patched_versions} cvss=${v.cvss?.score||"-"} ${direct?"DIRECT":""}\n   ${v.title}\n   via: ${tops.join(" | ")}`);}'
+console.log(`[${v.severity}] ${v.module_name} ${v.findings.map(f=>f.version)} -> ${v.patched_versions} ${v.github_advisory_id} ${direct?"DIRECT":""}\n   ${v.title}\n   via: ${tops.join(" | ")}`);}'
 ```
+
+> **Note — no CVSS in `pnpm audit` output.** pnpm's audit JSON does **not**
+> include a `cvss` field (only `severity`). For full details on a record found
+> by OSV-Scanner, use the [OSV API](https://osv.dev/). It accepts either the
+> OSV/GHSA ID or its CVE alias:
+>
+> ```bash
+> curl -fsSL "https://api.osv.dev/v1/vulns/GHSA-479c-33wc-g2pg"
+> curl -fsSL "https://api.osv.dev/v1/vulns/CVE-2026-23869"
+> ```
+>
+> Check `aliases` for the corresponding CVE/GHSA IDs and `severity` for CVSS
+> vectors. When OSV has no quantitative score, use the source database's
+> severity; use `pnpm audit`'s severity only for pnpm-only metadata.
 
 ### 2. Check the age gate for every proposed target
 
@@ -69,7 +104,7 @@ npm view <pkg> time --json   # find the patched version's publish date
 
 ### 3. Prioritize (in order)
 
-1. **Severity first** — criticals (RCE, injection) before highs before moderate/low. Use CVSS as the tiebreak.
+1. **Severity first** — criticals (RCE, injection) before highs before moderate/low. `pnpm audit` no longer emits CVSS, so sort by `severity`; if you need a quantitative tiebreak, look up the advisory by GHSA/CVE ID in OSV and use its CVSS vector.
 2. **Patch over major** — a major bump (e.g. `uuid` 9→11) is a breaking change; split it out as its own effort needing code review, never bundle it into a routine audit batch.
 3. **Group related packages** — one override often clears many advisories (e.g. a single `dompurify` bump cleared ~9 findings; one `picomatch`/`ws`/`brace-expansion` bump covers all paths). Bump tool families together (eslint + plugins, all `@graphql-codegen/*`, etc.).
 4. **Prefer the older age-OK fix** over bypassing the age gate (see step 2).
@@ -85,12 +120,13 @@ Split into small, independently-mergeable batches. A good default split:
 - **Batch E — Moderate/low transitive overrides.**
 - **Batch F — Deferred / needs-decision**: fixes whose only patch is too-new (bypass-or-wait), major breaking bumps, and CVEs already in `auditConfig.ignoreCves`. Present these as explicit choices, don't silently skip them.
 
-Present a report: per batch list package, current→target, severity/CVSS, dep path, age status, and the exact `pnpm-workspace.yaml` / `package.json` edit. Ask the user which batches to apply.
+Present a report: per batch list package, current→target, severity (+ GHSA id / CVE), dep path, age status, and the exact `pnpm-workspace.yaml` / `package.json` edit. Ask the user which batches to apply.
 
 ### 5. After acceptance (per batch)
 
 1. Edit `pnpm-workspace.yaml` overrides (or `package.json` for direct deps).
 2. `sfw pnpm install` to update `pnpm-lock.yaml` (always through Socket Firewall — see above).
-3. `pnpm audit` to confirm the targeted findings are gone and nothing regressed.
+3. Re-run both OSV-Scanner and `pnpm audit` to confirm the targeted findings are
+   gone and nothing regressed.
 4. For build/runtime-affecting deps (`vite`, etc.), run `pnpm run build` / relevant tests.
 5. One commit per batch. Skip changesets — dependency security bumps are internal (see `saleor-dashboard-changesets`).

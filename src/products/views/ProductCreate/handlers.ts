@@ -51,12 +51,6 @@ const getSimpleProductVariables = (formData: ProductCreateData, productId: strin
       quantity: parseInt(stock.value, 10),
       warehouse: stock.id,
     })),
-    preorder: formData.isPreorder
-      ? {
-          globalThreshold: formData.globalThreshold ? parseInt(formData.globalThreshold, 10) : null,
-          endDate: formData.preorderEndDateTime || null,
-        }
-      : null,
     trackInventory: formData.trackInventory,
   },
   firstValues: VALUES_PAGINATE_BY,
@@ -118,7 +112,7 @@ export function createHandler(
           title: formData.seoTitle,
         },
         slug: formData.slug,
-        taxClass: formData.taxClassId,
+        taxClass: formData.taxClassId || null,
         weight: weight(formData.weight),
       },
     };

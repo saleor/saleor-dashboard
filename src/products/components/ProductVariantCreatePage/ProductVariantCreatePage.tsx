@@ -4,7 +4,11 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
@@ -35,15 +39,10 @@ import {
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
+import { expandRequiredAttributeErrors } from "@dashboard/products/utils/validation";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
-import {
-  type Container,
-  type FetchMoreProps,
-  type RelayToFlat,
-  type ReorderAction,
-} from "@dashboard/types";
+import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -55,6 +54,7 @@ import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannels
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
+import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
 import { ProductVariantPrice } from "../ProductVariantPrice";
 import {
   type ProductVariantCreateData,
@@ -107,7 +107,7 @@ interface ProductVariantCreatePageProps {
   attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
-  onVariantReorder: ReorderAction;
+  onVariantReorder: (move: VariantReorderMove) => void;
   onWarehouseConfigure: () => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
@@ -219,17 +219,24 @@ export const ProductVariantCreatePage = ({
         isSaveDisabled,
         attributeRichTextGetters,
       }) => {
-        const errors = [...apiErrors, ...validationErrors];
+        const errors = expandRequiredAttributeErrors(
+          [...apiErrors, ...validationErrors],
+          data.attributes,
+        );
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav href={productUrl(productId)} title={header} />
+            <TopNav
+              href={productUrl(productId)}
+              hrefIcon={<TopNavDestinationIcon.products />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.product)}
+              title={header}
+            />
             <DetailPageLayout.Content>
               <Grid variant="inverted">
                 <div>
                   <ProductVariantNavigation
                     fallbackThumbnail={product?.thumbnail?.url}
-                    variants={product?.variants}
                     productId={productId}
                     defaultVariantId={defaultVariantId}
                     onReorder={onVariantReorder}
@@ -239,11 +246,18 @@ export const ProductVariantCreatePage = ({
                 <div>
                   <ProductVariantName value={data.variantName} onChange={change} errors={errors} />
                   <CardSpacer />
-                  <ProductDetailsChannelsAvailabilityCard
-                    disabled={disabled}
-                    listings={data.channelListings}
-                    product={product}
-                    onManageClick={toggleManageChannels}
+                  <ProductVariantPrice
+                    disabled={!product}
+                    productVariantChannelListings={data.channelListings.map(channel => ({
+                      ...channel.data,
+                      ...channel.value,
+                    }))}
+                    errors={errors}
+                    loading={!product}
+                    onChange={handlers.changeChannels}
+                    onChannelsReplace={handlers.replaceChannels}
+                    onManageClick={product ? toggleManageChannels : undefined}
+                    availableChannelsCount={product?.channelListings?.length}
                   />
                   <CardSpacer />
                   {product?.productType?.hasVariants && (
@@ -339,17 +353,6 @@ export const ProductVariantCreatePage = ({
                     onChange={change}
                   />
                   <CardSpacer />
-                  <ProductVariantPrice
-                    disabled={!product}
-                    productVariantChannelListings={data.channelListings.map(channel => ({
-                      ...channel.data,
-                      ...channel.value,
-                    }))}
-                    errors={errors}
-                    loading={!product}
-                    onChange={handlers.changeChannels}
-                  />
-                  <CardSpacer />
                   <ProductStocks
                     data={data}
                     warehouses={mapEdgesToItems(searchWarehousesResult?.data?.search) ?? []}
@@ -362,6 +365,7 @@ export const ProductVariantCreatePage = ({
                     loading={!product}
                     searchWarehouses={searchWarehouses}
                     onChange={handlers.changeStock}
+                    onStocksReplace={handlers.replaceStocks}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}

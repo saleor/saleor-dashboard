@@ -16,6 +16,7 @@ export const MetadataButton = ({ title, ripple, ...props }: MetadataButtonProps)
       icon={<Code size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
       title={title}
       {...props}
+      type="button"
     />
     {ripple ? (
       <Box position="absolute" __top="-4px" __right="-4px">

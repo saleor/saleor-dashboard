@@ -13,7 +13,6 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   accessToken: "token",
   appUrl: "http://localhost:8888/app",
   manifestUrl: "http://localhost:8888/api/manifest",
-  configurationUrl: "htpp://localhost:8888/configuration",
   created: "2020-06-02T12:24:26.818138+00:00",
   dataPrivacyUrl: "http://localhost:8888/app-data-privacy",
   homepageUrl: "http://localhost:8888/homepage",

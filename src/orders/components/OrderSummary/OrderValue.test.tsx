@@ -650,6 +650,41 @@ describe("OrderValue", () => {
       // Assert
       expect(screen.queryByTitle("Gift card amount used")).not.toBeInTheDocument();
     });
+
+    it("should not render a stray 0 when gift card amount used is zero", () => {
+      // Arrange — React would render `{0 && ...}` as a text node "0"; amount can be 0 when a
+      // USED_IN_ORDER event exists but the gift card balance did not change.
+      const props = {
+        ...baseProps,
+        giftCardsAmount: 0,
+        usedGiftCards: [
+          {
+            __typename: "GiftCard" as const,
+            id: "gc-1",
+            last4CodeChars: "ABCD",
+            currentBalance: { __typename: "Money" as const, amount: 25, currency: "USD" },
+            events: [],
+          },
+        ],
+      };
+
+      // Act
+      const { container } = render(
+        <RouterWrapper>
+          <OrderValue {...props} />
+        </RouterWrapper>,
+      );
+
+      // Assert
+      expect(screen.queryByTitle("Gift card amount used")).not.toBeInTheDocument();
+
+      const summaryList = container.querySelector("ul");
+      const hasStrayZeroTextNode = Array.from(summaryList?.childNodes ?? []).some(
+        node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim() === "0",
+      );
+
+      expect(hasStrayZeroTextNode).toBe(false);
+    });
   });
 
   describe("Taxes display", () => {

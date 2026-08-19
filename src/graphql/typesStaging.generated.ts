@@ -77,6 +77,25 @@ export type Scalars = {
   _Any: { input: any; output: any; }
 };
 
+/**
+ * AccountConfirmMode set the account merging mode for anonymous objects.
+ *
+ *     This dictates the behavior of the `confirmAccount()` mutation for
+ *     password-based authentication when attempting to merge orders & giftcard
+ *     that aren't associated to a user account.
+ *
+ *     Modes:
+ *
+ *     - MERGE_DISABLED disables merging only when the authentication method
+ *       is password (i.e., when not using OIDC)
+ *     - REQUIRE_PASSWORD enables account merging who accounts that use password
+ *       authentication but it requires the user to enter their password
+ */
+export enum AccountConfirmModeEnum {
+  MERGE_DISABLED = 'MERGE_DISABLED',
+  REQUIRE_PASSWORD = 'REQUIRE_PASSWORD'
+}
+
 export enum AccountErrorCode {
   ACCOUNT_NOT_CONFIRMED = 'ACCOUNT_NOT_CONFIRMED',
   ACTIVATE_OWN_ACCOUNT = 'ACTIVATE_OWN_ACCOUNT',
@@ -238,6 +257,7 @@ export enum AnnouncementImportanceEnum {
 
 export enum AppErrorCode {
   DUPLICATED_EXTENSION_IDENTIFIER = 'DUPLICATED_EXTENSION_IDENTIFIER',
+  DUPLICATED_WEBHOOK_IDENTIFIER = 'DUPLICATED_WEBHOOK_IDENTIFIER',
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -686,6 +706,7 @@ export enum AttributeTranslateErrorCode {
 }
 
 export enum AttributeTypeEnum {
+  CUSTOMER_TYPE = 'CUSTOMER_TYPE',
   PAGE_TYPE = 'PAGE_TYPE',
   PRODUCT_TYPE = 'PRODUCT_TYPE'
 }
@@ -2221,7 +2242,6 @@ export enum CustomerEventsEnum {
   ACCOUNT_CREATED = 'ACCOUNT_CREATED',
   ACCOUNT_DEACTIVATED = 'ACCOUNT_DEACTIVATED',
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
-  DIGITAL_LINK_DOWNLOADED = 'DIGITAL_LINK_DOWNLOADED',
   EMAIL_ASSIGNED = 'EMAIL_ASSIGNED',
   EMAIL_CHANGED = 'EMAIL_CHANGED',
   EMAIL_CHANGED_REQUEST = 'EMAIL_CHANGED_REQUEST',
@@ -2246,6 +2266,18 @@ export type CustomerFilterInput = {
 };
 
 export type CustomerInput = {
+  /**
+   * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AttributeValueInput>>;
+  /**
+   * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<Scalars['ID']['input']>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
@@ -2336,6 +2368,97 @@ export type CustomerOrderWhereInput = {
   voucherCode?: InputMaybe<StringFilterInput>;
 };
 
+export enum CustomerTypeAssignAttributesErrorCode {
+  ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeCreateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
+}
+
+export type CustomerTypeCreateInput = {
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Name of the customer type. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum CustomerTypeDeleteErrorCode {
+  CANNOT_DELETE_DEFAULT = 'CANNOT_DELETE_DEFAULT',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeReorderAttributesErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeSortField {
+  /** Sort customer types by name. */
+  NAME = 'NAME',
+  /** Sort customer types by slug. */
+  SLUG = 'SLUG'
+}
+
+export type CustomerTypeSortingInput = {
+  /** Specifies the direction in which to sort customer types. */
+  direction: OrderDirection;
+  /** Sort customer types by the selected field. */
+  field: CustomerTypeSortField;
+};
+
+export enum CustomerTypeUnassignAttributesErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export enum CustomerTypeUpdateErrorCode {
+  CANNOT_UNSET_DEFAULT = 'CANNOT_UNSET_DEFAULT',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
+}
+
+export type CustomerTypeUpdateInput = {
+  /** Determines if the customer type should become the default one, assigned to every newly created user. Passing `true` clears the flag on the current default customer type - exactly one default customer type always exists. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Name of the customer type. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Slug of the customer type. If not provided, it will be generated from the name. */
+  slug?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CustomerTypeWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<CustomerTypeWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<CustomerTypeWhereInput>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** Filter by whether the customer type is the default one. */
+  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by customer type name. */
+  name?: InputMaybe<StringFilterInput>;
+  /** Filter by customer type slug. */
+  slug?: InputMaybe<StringFilterInput>;
+};
+
 export type CustomerWhereInput = {
   /** List of conditions that must be met. */
   AND?: InputMaybe<Array<CustomerWhereInput>>;
@@ -2343,6 +2466,18 @@ export type CustomerWhereInput = {
   OR?: InputMaybe<Array<CustomerWhereInput>>;
   /** Filter by addresses data associated with user. */
   addresses?: InputMaybe<AddressFilterInput>;
+  /**
+   * Filter by attributes associated with the customer.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AssignedAttributeWhereInput>>;
+  /**
+   * Filter by customer type. Filtering by the default customer type also matches users without an explicitly assigned customer type.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<GlobalIdFilterInput>;
   /** Filter by date joined. */
   dateJoined?: InputMaybe<DateTimeRangeInput>;
   /** Filter by email address. */
@@ -2691,17 +2826,6 @@ export type ExportFileSortingInput = {
   field: ExportFileSortField;
 };
 
-export type ExportGiftCardsInput = {
-  /** Type of exported file. */
-  fileType: FileTypesEnum;
-  /** Filtering options for gift cards. */
-  filter?: InputMaybe<GiftCardFilterInput>;
-  /** List of gift cards IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** Determine which gift cards should be exported. */
-  scope: ExportScope;
-};
-
 export type ExportInfoInput = {
   /** List of attribute ids witch should be exported. */
   attributes?: InputMaybe<Array<Scalars['ID']['input']>>;
@@ -2734,15 +2858,6 @@ export enum ExportScope {
   /** Export products with given ids. */
   IDS = 'IDS'
 }
-
-export type ExportVoucherCodesInput = {
-  /** Type of exported file. */
-  fileType: FileTypesEnum;
-  /** List of voucher code IDs to export. */
-  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** The ID of the voucher. If provided, exports all codes belonging to the voucher. */
-  voucherId?: InputMaybe<Scalars['ID']['input']>;
-};
 
 export enum ExternalNotificationErrorCodes {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
@@ -4968,11 +5083,6 @@ export enum OrderAction {
   VOID = 'VOID'
 }
 
-export type OrderAddNoteInput = {
-  /** Note message. */
-  message: Scalars['String']['input'];
-};
-
 /**
  * Determine a current authorize status for order.
  *
@@ -5391,7 +5501,6 @@ export type OrderEventTypeEnumFilterInput = {
 
 export enum OrderEventsEmailsEnum {
   CONFIRMED = 'CONFIRMED',
-  DIGITAL_LINKS = 'DIGITAL_LINKS',
   FULFILLMENT_CONFIRMATION = 'FULFILLMENT_CONFIRMATION',
   ORDER_CANCEL = 'ORDER_CANCEL',
   ORDER_CONFIRMATION = 'ORDER_CONFIRMATION',
@@ -6402,6 +6511,7 @@ export enum PermissionEnum {
   MANAGE_APPS = 'MANAGE_APPS',
   MANAGE_CHANNELS = 'MANAGE_CHANNELS',
   MANAGE_CHECKOUTS = 'MANAGE_CHECKOUTS',
+  MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES = 'MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES',
   MANAGE_DISCOUNTS = 'MANAGE_DISCOUNTS',
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
@@ -7021,8 +7131,6 @@ export enum ProductTypeConfigurable {
 }
 
 export enum ProductTypeEnum {
-  /** @deprecated DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead. */
-  DIGITAL = 'DIGITAL',
   SHIPPABLE = 'SHIPPABLE'
 }
 
@@ -7043,8 +7151,6 @@ export type ProductTypeInput = {
    * @deprecated The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
    */
   hasVariants?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Determines if products are digital - doesn't have any effect, it's present for backward-compatibility. */
-  isDigital?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if shipping is required for products of this variant. */
   isShippingRequired?: InputMaybe<Scalars['Boolean']['input']>;
   /** The product type kind. */
@@ -7074,11 +7180,6 @@ export enum ProductTypeKindEnum {
 }
 
 export enum ProductTypeSortField {
-  /**
-   * Sort products by type.
-   * @deprecated DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.
-   */
-  DIGITAL = 'DIGITAL',
   /** Sort products by name. */
   NAME = 'NAME',
   /** Sort products by shipping. */
@@ -7958,8 +8059,16 @@ export enum ShopErrorCode {
 }
 
 export type ShopSettingsInput = {
+  /** Controls the method used for merging existing orders and giftcards when password-based authentication is used. Learn more at https://docs.saleor.io/upgrade-guides/core/migrate-account-merging */
+  accountConfirmMergeMode?: InputMaybe<AccountConfirmModeEnum>;
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Determines whether the GraphQL API accepts storefront requests (anonymous requests and authenticated non-staff customers). When disabled, only apps and staff users may call the API directly; all other requests are rejected with an HTTP 401 and the `STOREFRONT_TRAFFIC_NOT_ALLOWED` error code.
+   *
+   * Added in Saleor 3.23.
+   */
+  allowStorefrontTraffic?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Charge taxes on shipping.
    * @deprecated To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
@@ -8837,8 +8946,20 @@ export enum UploadErrorCode {
 }
 
 export type UserCreateInput = {
+  /**
+   * List of attribute values to assign to the user. The attributes must belong to the customer type the user ends up with.
+   *
+   * Added in Saleor 3.23.
+   */
+  attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** Slug of a channel which will be used for notify user. Optional when only one channel exists. */
   channel?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * ID of the customer type to assign to the user. If not provided when creating a customer, the default customer type is assigned.
+   *
+   * Added in Saleor 3.23.
+   */
+  customerType?: InputMaybe<Scalars['ID']['input']>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
@@ -9146,6 +9267,12 @@ export type WebhookCreateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The name of the webhook. */
@@ -9285,6 +9412,24 @@ export enum WebhookEventTypeAsyncEnum {
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  /**
+   * A new customer type is created.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  /**
+   * A customer type is deleted.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  /**
+   * A customer type is updated.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A draft order is created. */
@@ -9306,8 +9451,6 @@ export enum WebhookEventTypeAsyncEnum {
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card export is completed. */
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A gift card has been sent. */
@@ -9390,7 +9533,10 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A product export is completed. */
+  /**
+   * A product export is completed.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
@@ -9505,8 +9651,6 @@ export enum WebhookEventTypeAsyncEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /** A voucher code export is completed. */
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
@@ -9624,6 +9768,24 @@ export enum WebhookEventTypeEnum {
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  /**
+   * A new customer type is created.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  /**
+   * A customer type is deleted.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  /**
+   * A customer type is updated.
+   *
+   * Added in Saleor 3.23.
+   */
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   /** A draft order is created. */
@@ -9645,8 +9807,6 @@ export enum WebhookEventTypeEnum {
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /** A gift card export is completed. */
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A gift card has been sent. */
@@ -9773,7 +9933,10 @@ export enum WebhookEventTypeEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /** A product export is completed. */
+  /**
+   * A product export is completed.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
+   */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
@@ -9899,8 +10062,6 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  /** A voucher code export is completed. */
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   /** A new voucher created. */
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
@@ -10023,6 +10184,9 @@ export enum WebhookSampleEventTypeEnum {
   CUSTOMER_CREATED = 'CUSTOMER_CREATED',
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
+  CUSTOMER_TYPE_CREATED = 'CUSTOMER_TYPE_CREATED',
+  CUSTOMER_TYPE_DELETED = 'CUSTOMER_TYPE_DELETED',
+  CUSTOMER_TYPE_UPDATED = 'CUSTOMER_TYPE_UPDATED',
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
@@ -10034,7 +10198,6 @@ export enum WebhookSampleEventTypeEnum {
   FULFILLMENT_TRACKING_NUMBER_UPDATED = 'FULFILLMENT_TRACKING_NUMBER_UPDATED',
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
@@ -10075,6 +10238,7 @@ export enum WebhookSampleEventTypeEnum {
   PERMISSION_GROUP_UPDATED = 'PERMISSION_GROUP_UPDATED',
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   PRODUCT_DELETED = 'PRODUCT_DELETED',
+  /** @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools. */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
   PRODUCT_MEDIA_DELETED = 'PRODUCT_MEDIA_DELETED',
@@ -10126,7 +10290,6 @@ export enum WebhookSampleEventTypeEnum {
   TRANSLATION_UPDATED = 'TRANSLATION_UPDATED',
   VOUCHER_CODES_CREATED = 'VOUCHER_CODES_CREATED',
   VOUCHER_CODES_DELETED = 'VOUCHER_CODES_DELETED',
-  VOUCHER_CODE_EXPORT_COMPLETED = 'VOUCHER_CODE_EXPORT_COMPLETED',
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   VOUCHER_DELETED = 'VOUCHER_DELETED',
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
@@ -10162,6 +10325,12 @@ export type WebhookUpdateInput = {
    * @deprecated Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
+  /**
+   * The unique identifier of the webhook, set by the app. Unique per app. Maximum length is 256 characters. Pass a blank value to clear it.
+   *
+   * Added in Saleor 3.23.
+   */
+  identifier?: InputMaybe<Scalars['String']['input']>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   /** The new name of the webhook. */

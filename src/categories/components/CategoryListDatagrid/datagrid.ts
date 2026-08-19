@@ -17,6 +17,12 @@ import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
+export interface SidebarColumnWidths {
+  name: number;
+  subcategories: number;
+  products: number;
+}
+
 interface CreateGetCellContentOptions {
   isCategoryExpanded?: (categoryId: string) => boolean;
   isCategoryChildrenLoading?: (categoryId: string) => boolean;
@@ -24,6 +30,8 @@ interface CreateGetCellContentOptions {
   getCategoryDepth?: (categoryId: string) => number;
   formatLoadMoreLabel?: (remainingCount: number) => string;
   loadMoreCellThemeOverride?: Partial<Theme>;
+  /** Soften count columns (e.g. sidebar Subs/Prods) to secondary text. */
+  countCellThemeOverride?: Partial<Theme>;
 }
 
 export const categoryListExpandColumn: AvailableColumn = {
@@ -58,6 +66,28 @@ export const categoryListStaticColumnsAdapter = (
     icon: sort ? getColumnSortDirectionIcon(sort, column.id) : undefined,
   }));
 
+/** Sidebar membership list — fixed three columns; widths supplied by the container measure. */
+export const categoryListSidebarColumnsAdapter = (
+  intl: IntlShape,
+  widths: SidebarColumnWidths,
+): AvailableColumn[] => [
+  {
+    id: "name",
+    title: intl.formatMessage(columnsMessages.name),
+    width: widths.name,
+  },
+  {
+    id: "subcategories",
+    title: intl.formatMessage(columnsMessages.sidebarSubcategories),
+    width: widths.subcategories,
+  },
+  {
+    id: "products",
+    title: intl.formatMessage(columnsMessages.sidebarProducts),
+    width: widths.products,
+  },
+];
+
 const getLoadMoreCount = (remainingCount: number): number =>
   Math.min(SUBCATEGORIES_PAGE_SIZE, remainingCount);
 
@@ -72,6 +102,7 @@ export const createGetCellContent =
       getCategoryDepth,
       formatLoadMoreLabel,
       loadMoreCellThemeOverride,
+      countCellThemeOverride,
     }: CreateGetCellContentOptions = {},
   ) =>
   ([column, row]: Item): GridCell => {
@@ -130,9 +161,19 @@ export const createGetCellContent =
         return readonlyTextCell(formatIndentedTreeLabel(categoryRow.name ?? "", depth));
       }
       case "subcategories":
-        return readonlyTextCell(categoryRow?.children?.totalCount?.toString() ?? "");
+        return readonlyTextCell(
+          categoryRow?.children?.totalCount?.toString() ?? "",
+          true,
+          "normal",
+          countCellThemeOverride,
+        );
       case "products":
-        return readonlyTextCell(categoryRow?.products?.totalCount?.toString() ?? "");
+        return readonlyTextCell(
+          categoryRow?.products?.totalCount?.toString() ?? "",
+          true,
+          "normal",
+          countCellThemeOverride,
+        );
       default:
         return readonlyTextCell("", false);
     }

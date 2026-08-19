@@ -48,11 +48,11 @@ describe("Extensions / hooks / useExtensions", () => {
           node: {
             __typename: "AppExtension",
             id: "ext1",
-            identifier: null,
             accessToken: "token1",
             permissions: [{ code: PermissionEnum.MANAGE_ORDERS, __typename: "Permission" }],
             url: "https://example.com/ext1",
             label: "Extension 1",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "POPUP",
             settings: {},
@@ -70,11 +70,11 @@ describe("Extensions / hooks / useExtensions", () => {
         {
           node: {
             id: "ext2",
-            identifier: null,
             accessToken: "token2",
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext2",
             label: "Extension 2",
+            identifier: null,
             mountName: "PRODUCT_DETAILS_MORE_ACTIONS",
             targetName: "APP_PAGE",
             app: {
@@ -94,11 +94,11 @@ describe("Extensions / hooks / useExtensions", () => {
           __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext3",
-            identifier: null,
             accessToken: null,
             permissions: [{ code: PermissionEnum.MANAGE_CHANNELS, __typename: "Permission" }],
             url: "https://example.com/ext3",
             label: "Extension 3",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "POPUP",
             app: {
@@ -117,11 +117,11 @@ describe("Extensions / hooks / useExtensions", () => {
           __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext4",
-            identifier: null,
             accessToken: "token4",
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext4",
             label: "Extension 4",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -140,11 +140,11 @@ describe("Extensions / hooks / useExtensions", () => {
           __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext5",
-            identifier: null,
             accessToken: "token5",
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "https://example.com/ext5",
             label: "Extension 5",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -165,11 +165,11 @@ describe("Extensions / hooks / useExtensions", () => {
           __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext6",
-            identifier: null,
             accessToken: "token6",
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "/ext6",
             label: "Extension 6",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -190,11 +190,11 @@ describe("Extensions / hooks / useExtensions", () => {
           __typename: "AppExtensionCountableEdge",
           node: {
             id: "ext7",
-            identifier: null,
             accessToken: "token7",
             permissions: [{ code: PermissionEnum.MANAGE_PRODUCTS, __typename: "Permission" }],
             url: "/ext7",
             label: "Extension 7",
+            identifier: null,
             mountName: "PRODUCT_OVERVIEW_CREATE",
             targetName: "NEW_TAB",
             app: {
@@ -253,6 +253,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_ORDERS],
           url: "https://example.com/ext1",
           label: "Extension 1",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "POPUP",
           settings: {},
@@ -268,6 +269,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_CHANNELS],
           url: "https://example.com/ext3",
           label: "Extension 3",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "POPUP",
           settings: {},
@@ -283,6 +285,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext4",
           label: "Extension 4",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: {},
@@ -298,6 +301,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext5",
           label: "Extension 5",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "POST" } },
@@ -313,6 +317,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext6",
           label: "Extension 6",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "GET" } },
@@ -329,6 +334,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "/ext7",
           label: "Extension 7",
+          identifier: null,
           mountName: "PRODUCT_OVERVIEW_CREATE",
           targetName: "NEW_TAB",
           settings: { newTabTarget: { method: "POST" } },
@@ -347,6 +353,7 @@ describe("Extensions / hooks / useExtensions", () => {
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           url: "https://example.com/ext2",
           label: "Extension 2",
+          identifier: null,
           mountName: "PRODUCT_DETAILS_MORE_ACTIONS",
           targetName: "APP_PAGE",
           settings: {},
@@ -687,6 +694,24 @@ describe("Extensions / hooks / useExtensions", () => {
 
     it("reports loading=true when there is no data and no snapshot", () => {
       // Arrange
+      useExtensionListQueryMock.mockReturnValue({ data: undefined, error: undefined });
+
+      // Act
+      const { result } = renderHook(() =>
+        useExtensionsWithLoadingState(["PRODUCT_OVERVIEW_CREATE"] as const),
+      );
+
+      // Assert
+      expect(result.current.loading).toBe(true);
+      expect(result.current.extensions.PRODUCT_OVERVIEW_CREATE).toEqual([]);
+    });
+
+    it("reports loading=true for an empty snapshot until live data arrives", () => {
+      // Arrange - a prior empty visit persisted `[]`. That must not short-circuit
+      // loading, or homepage empty-state UIs flash before the network confirms.
+      const key = getExtensionsSnapshotKey(["PRODUCT_OVERVIEW_CREATE"]);
+
+      localStorage.setItem(key, JSON.stringify([]));
       useExtensionListQueryMock.mockReturnValue({ data: undefined, error: undefined });
 
       // Act

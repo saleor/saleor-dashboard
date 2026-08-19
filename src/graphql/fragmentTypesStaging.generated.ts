@@ -85,6 +85,9 @@
       "CustomerCreated",
       "CustomerDeleted",
       "CustomerMetadataUpdated",
+      "CustomerTypeCreated",
+      "CustomerTypeDeleted",
+      "CustomerTypeUpdated",
       "CustomerUpdated",
       "DraftOrderCreated",
       "DraftOrderDeleted",
@@ -96,7 +99,6 @@
       "FulfillmentTrackingNumberUpdated",
       "GiftCardCreated",
       "GiftCardDeleted",
-      "GiftCardExportCompleted",
       "GiftCardMetadataUpdated",
       "GiftCardSent",
       "GiftCardStatusChanged",
@@ -202,7 +204,6 @@
       "TransactionRefundRequested",
       "TranslationCreated",
       "TranslationUpdated",
-      "VoucherCodeExportCompleted",
       "VoucherCodesCreated",
       "VoucherCodesDeleted",
       "VoucherCreated",
@@ -248,6 +249,7 @@
       "CollectionTranslatableContent",
       "CollectionTranslation",
       "CustomerEvent",
+      "CustomerType",
       "EventDelivery",
       "EventDeliveryAttempt",
       "ExportEvent",
@@ -325,7 +327,8 @@
     "ObjectWithAttributes": [
       "Page",
       "Product",
-      "ProductVariant"
+      "ProductVariant",
+      "User"
     ],
     "ObjectWithMetadata": [
       "Address",
@@ -336,6 +339,7 @@
       "Checkout",
       "CheckoutLine",
       "Collection",
+      "CustomerType",
       "Fulfillment",
       "GiftCard",
       "Invoice",

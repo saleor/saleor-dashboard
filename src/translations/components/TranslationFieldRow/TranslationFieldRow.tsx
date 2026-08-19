@@ -1,6 +1,7 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Pill } from "@dashboard/components/Pill";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { isFieldTranslationComplete } from "@dashboard/translations/progress";
 import { type TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { type OutputData } from "@editorjs/editorjs";
@@ -227,6 +228,7 @@ export const TranslationFieldRow = ({
               <Text fontWeight="medium" size={3}>
                 {field.displayName}
               </Text>
+              {field.ripple && <Ripple model={field.ripple} />}
             </Box>
             {field.hint && (
               <Text size={2} color="default2">

@@ -107,9 +107,6 @@ export const fragmentOrderLine = gql`
       id
       name
       quantityAvailable
-      preorder {
-        endDate
-      }
       stocks {
         ...Stock
       }
@@ -147,6 +144,8 @@ export const fragmentOrderLine = gql`
     }
     unitDiscountValue
     unitDiscountReason
+    priceOverrideReason
+    isPriceOverridden
     unitDiscountType
     undiscountedUnitPrice {
       currency
@@ -496,10 +495,6 @@ export const fragmentOrderDetails = gql`
     totalAuthorized {
       ...Money
     }
-    # TODO: Remove me
-    totalCaptured {
-      ...Money
-    }
     totalCharged {
       ...Money
     }
@@ -581,17 +576,13 @@ export const fragmentFulfillmentMetadata = gql`
   }
 `;
 
-export const fragmentOrderSettings = gql`
-  fragment OrderSettings on OrderSettings {
-    automaticallyConfirmAllNewOrders
-    automaticallyFulfillNonShippableGiftCard
-  }
-`;
-
 export const fragmentShopOrderSettings = gql`
   fragment ShopOrderSettings on Shop {
     fulfillmentAutoApprove
     fulfillmentAllowUnpaid
+    reserveStockDurationAnonymousUser
+    reserveStockDurationAuthenticatedUser
+    limitQuantityPerCheckout
   }
 `;
 
@@ -630,9 +621,6 @@ export const fragmentOrderFulfillLine = gql`
       id
       name
       sku
-      preorder {
-        endDate
-      }
       attributes {
         values {
           id

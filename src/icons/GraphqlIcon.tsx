@@ -1,20 +1,25 @@
-import { navigationLucideIconProps } from "@dashboard/components/icons";
+import {
+  getNavigationCustomIconStrokeWidth,
+  navigationLucideIconProps,
+} from "@dashboard/components/icons";
 import { Box } from "@saleor/macaw-ui-next";
 
+const GRAPHQL_VIEWBOX_WIDTH = 24;
+/** Hex lines intersect more than typical Lucide shapes at the same nominal stroke. */
+const graphqlStrokeWidth = getNavigationCustomIconStrokeWidth(GRAPHQL_VIEWBOX_WIDTH) - 0.15;
 const graphqlVertexRadius = 2.25;
-const graphqlIconOffsetX = 1;
-const graphqlIconOffsetY = 2;
+const graphqlIconOpacity = 0.95;
 
 export const GraphqlIcon = (): JSX.Element => (
-  <Box __transform={`translate(${graphqlIconOffsetX}px, ${graphqlIconOffsetY}px)`}>
+  <Box __opacity={graphqlIconOpacity}>
     <svg
       width={navigationLucideIconProps.size}
       height={navigationLucideIconProps.size}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="2 0 24 24"
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={navigationLucideIconProps.strokeWidth}
+      strokeWidth={graphqlStrokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
       data-macaw-ui-candidate

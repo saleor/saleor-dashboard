@@ -1,5 +1,6 @@
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { orderLineSearch } from "@dashboard/orders/fixtures";
+import { type OrderSearchProduct } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -18,6 +19,7 @@ describe("OrderProductAddDialog", () => {
     loading: false,
     hasMore: false,
     channelName: "Channel-PLN",
+    channel: "channel-pln",
     onClose: jest.fn(),
     onFetch: jest.fn(),
     onFetchMore: jest.fn(),
@@ -68,5 +70,29 @@ describe("OrderProductAddDialog", () => {
 
     // Assert
     expect(onSubmit).toHaveBeenCalledWith([expect.objectContaining({ id: firstVariantId })]);
+  });
+
+  it("shows a load more variants control instead of a truncation hint", () => {
+    // Arrange
+    const truncatedProduct: OrderSearchProduct = {
+      ...products[0],
+      variantsHasNextPage: true,
+      variantsEndCursor: "cursor-1",
+      variantsTotalCount: 69,
+    };
+
+    // Act
+    render(
+      <Wrapper>
+        <OrderProductAddDialog {...defaultProps} products={[truncatedProduct]} />
+      </Wrapper>,
+    );
+
+    // Assert
+    expect(screen.getByTestId("load-more-variants")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Load more variants/ })).toBeInTheDocument();
+    expect(screen.getByTestId("load-more-variants-progress")).toBeInTheDocument();
+    expect(screen.queryByText(/Showing .* of .* variants/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/remaining/)).not.toBeInTheDocument();
   });
 });

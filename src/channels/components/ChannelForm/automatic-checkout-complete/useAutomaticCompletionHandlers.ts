@@ -28,7 +28,11 @@ export const useAutomaticCompletionHandlers = ({
 
   const handleSetCurrentDateTime = useCallback((): void => {
     const now = new Date();
-    const date = now.toISOString().split("T")[0];
+    const date = [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0"),
+    ].join("-");
     const time = now.toTimeString().slice(0, 5);
 
     onCutOffDateChange({

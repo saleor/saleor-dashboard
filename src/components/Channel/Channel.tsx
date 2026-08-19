@@ -1,9 +1,10 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { channelUrl } from "@dashboard/channels/urls";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { orderListUrlWithChannel } from "@dashboard/orders/urls";
 import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
-import { Radio } from "lucide-react";
+import { Globe } from "lucide-react";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -45,6 +46,16 @@ interface ChannelProps {
    */
   color?: TextProps["color"];
   /**
+   * Macaw font weight token used for the channel name.
+   * @default "medium"
+   */
+  fontWeight?: TextProps["fontWeight"];
+  /**
+   * Render inline for embedding in headings or sentences.
+   * @default false
+   */
+  inline?: boolean;
+  /**
    * Optional override for the `data-test-id` attribute.
    * @default "channel-display"
    */
@@ -54,6 +65,10 @@ interface ChannelProps {
    * @default channel.name
    */
   title?: string;
+}
+
+interface ChannelLinkProps extends ChannelProps {
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const ICON_SIZE_BY_TEXT_SIZE: Record<ChannelTextSize, number> = {
@@ -76,6 +91,8 @@ export const ChannelDisplay = ({
   hideInactiveStatus = false,
   size = 2,
   color = "default2",
+  fontWeight = "medium",
+  inline = false,
   "data-test-id": dataTestId = "channel-display",
   title,
 }: ChannelProps): JSX.Element => {
@@ -98,19 +115,25 @@ export const ChannelDisplay = ({
     <Text
       size={size}
       color={color}
-      fontWeight="medium"
-      display="flex"
-      alignItems="center"
-      gap={1}
+      fontWeight={fontWeight}
+      display={inline ? "inline" : "flex"}
+      alignItems={inline ? undefined : "center"}
+      gap={inline ? undefined : 1}
       data-test-id={dataTestId}
       aria-label={ariaLabel}
     >
-      {!hideIcon && <Radio size={iconSize} aria-hidden="true" />}
-      <span className={styles.name} title={nameTitle}>
+      {!hideIcon && (
+        <Globe
+          size={iconSize}
+          aria-hidden="true"
+          className={inline ? styles.inlineIcon : undefined}
+        />
+      )}
+      <span className={inline ? styles.inlineName : styles.name} title={nameTitle}>
         {channel.name}
       </span>
       {isInactive && !hideInactiveStatus && (
-        <Text size={size} color="critical1" fontWeight="medium">
+        <Text size={size} color="default2" fontWeight="regular">
           ({intl.formatMessage(messages.inactive)})
         </Text>
       )}
@@ -120,7 +143,7 @@ export const ChannelDisplay = ({
   return content;
 };
 
-export const ClickableChannel = (props: ChannelProps): JSX.Element => {
+export const ClickableChannel = (props: ChannelLinkProps): JSX.Element => {
   const { channel } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();
@@ -147,6 +170,31 @@ export const ClickableChannel = (props: ChannelProps): JSX.Element => {
       className={styles.link}
       title={linkLabel}
       aria-label={linkLabel}
+    >
+      <ChannelDisplay {...props} title={linkLabel} />
+    </RouterLink>
+  );
+};
+
+export const ChannelDetailsLink = ({ onClick, ...props }: ChannelLinkProps): JSX.Element => {
+  const { channel } = props;
+  const intl = useIntl();
+
+  if (!channel?.id) {
+    return <ChannelDisplay {...props} />;
+  }
+
+  const linkLabel = intl.formatMessage(messages.viewChannelDetails, {
+    channelName: channel.name,
+  });
+
+  return (
+    <RouterLink
+      to={channelUrl(channel.id)}
+      className={styles.detailsLink}
+      title={linkLabel}
+      aria-label={linkLabel}
+      onClick={onClick}
     >
       <ChannelDisplay {...props} title={linkLabel} />
     </RouterLink>

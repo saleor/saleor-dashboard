@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
@@ -158,7 +162,12 @@ const TaxChannelsPage = (props: TaxChannelsPageProps) => {
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
-            <TopNav title={<TaxPageTitle />} href={configurationMenuUrl} />
+            <TopNav
+              title={<TaxPageTitle />}
+              href={configurationMenuUrl}
+              hrefIcon={<TopNavDestinationIcon.configuration />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
+            />
             <DetailPageLayout.Content>
               <Box padding={6}>
                 <PageTabs value="channels" onChange={handleTabChange}>

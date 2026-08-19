@@ -4,8 +4,8 @@ import { createSvgIcon, type SvgIconProps } from "@material-ui/core";
  * @deprecated This icon uses Material-UI which is deprecated. Please use Lucide React icons instead.
  * @see https://lucide.dev/ for available icons
  * @example
- * import { Radio } from "lucide-react";
- * // Use <Radio /> instead
+ * import { Globe } from "lucide-react";
+ * // Use <Globe /> instead
  */
 const ChannelsIcon = createSvgIcon(
   <path

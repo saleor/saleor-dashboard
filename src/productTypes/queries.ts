@@ -47,11 +47,3 @@ export const defaultGraphiQLQuery = `query ProductTypeDetails($id: ID!) {
     slug
   }
 }`;
-
-export const productTypeCreateDataQuery = gql`
-  query ProductTypeCreateData {
-    shop {
-      defaultWeightUnit
-    }
-  }
-`;

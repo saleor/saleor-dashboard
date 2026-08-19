@@ -2,14 +2,16 @@ import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon, CopyIcon } from "lucide-react";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 
 interface CopyableTextProps {
   text: string;
+  /** When set, render instead of the default text label (copy still uses `text`). */
+  children?: ReactNode;
 }
 
-export const CopyableText = ({ text }: CopyableTextProps): JSX.Element => {
+export const CopyableText = ({ text, children }: CopyableTextProps): JSX.Element => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const [showCopyButton, setShowCopyButton] = useState(false);
@@ -25,12 +27,13 @@ export const CopyableText = ({ text }: CopyableTextProps): JSX.Element => {
       onFocus={() => setShowCopyButton(true)}
       onBlur={() => setShowCopyButton(false)}
     >
-      <Text size={2}>{text}</Text>
+      {children ?? <Text size={2}>{text}</Text>}
       <Box
         style={{
           opacity: showCopyButton ? 1 : 0,
           transition: "opacity 0.15s ease-in-out",
         }}
+        pointerEvents={showCopyButton ? "auto" : "none"}
       >
         <Button
           variant="tertiary"

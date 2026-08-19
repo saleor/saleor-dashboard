@@ -99,6 +99,32 @@ export const appExtensionManifest = z
     {
       message: "homeWidgetTarget options can only be set on WIDGET target",
     },
+  )
+  .refine(
+    data => {
+      // views option is specific to the SEARCH_ACTION mount
+      if (data.options?.views && data.mountName !== "SEARCH_ACTION") {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "views option can only be set on SEARCH_ACTION mount",
+    },
+  )
+  .refine(
+    data => {
+      // aliases option is specific to the SEARCH_ACTION mount
+      if (data.options?.aliases && data.mountName !== "SEARCH_ACTION") {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: "aliases option can only be set on SEARCH_ACTION mount",
+    },
   );
 
 export type AppExtensionManifest = z.infer<typeof appExtensionManifest>;

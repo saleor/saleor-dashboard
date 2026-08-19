@@ -32,6 +32,7 @@ import { OrderMetadataDialog } from "@dashboard/orders/components/OrderMetadataD
 import { getVariantSearchAddress, isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { mapSearchOrderVariantsForAdd } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
 import { type PartialMutationProviderOutput } from "@dashboard/types";
@@ -278,11 +279,13 @@ export const OrderDraftDetails = ({
         loading={variantSearchOpts.loading}
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
-        products={mapEdgesToItems(variantSearchOpts?.data?.search)}
+        products={mapSearchOrderVariantsForAdd(mapEdgesToItems(variantSearchOpts?.data?.search))}
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
         channelName={order.channel.name}
+        channel={order.channel.slug}
+        address={getVariantSearchAddress(order)}
         onSubmit={variants =>
           extractMutationErrors(
             orderLinesAdd.mutate({

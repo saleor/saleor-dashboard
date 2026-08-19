@@ -1,0 +1,12 @@
+/*
+ * Vertical stem centered on the icon column (macaw width={10} = --mu-spacing-10).
+ * translateX(-50%) keeps the 1px rule on the column midline regardless of rem scaling.
+ * Color comes from macaw `backgroundColor` on TimelineStem.
+ */
+.stem {
+  position: absolute;
+  left: calc(var(--mu-spacing-10) / 2);
+  width: 1px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}

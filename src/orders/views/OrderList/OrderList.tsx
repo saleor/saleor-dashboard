@@ -33,7 +33,7 @@ import {
   orderListUrl,
   type OrderListUrlDialog,
   type OrderListUrlQueryParams,
-  orderSettingsPath,
+  orderSettingsUrl,
   orderUrl,
 } from "../../urls";
 import { getFilterQueryParam, storageUtils } from "./filters";
@@ -163,7 +163,7 @@ const OrderList = ({ params }: OrderListProps) => {
         initialSearch={params.query || ""}
         tabs={presets.map(tab => tab.name)}
         onAll={resetFilters}
-        onSettingsOpen={() => navigate(orderSettingsPath)}
+        onSettingsOpen={() => navigate(orderSettingsUrl({ from: "orders" }))}
         params={params}
         hasPresetsChanged={hasPresetsChanged()}
       />

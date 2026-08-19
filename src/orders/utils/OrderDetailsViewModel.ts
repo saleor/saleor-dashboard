@@ -15,7 +15,6 @@ export interface OrderTotalAmounts {
   totalBalance: OrderDetailsFragment["totalBalance"];
   totalCanceled: OrderDetailsFragment["totalCanceled"];
   totalCancelPending: OrderDetailsFragment["totalCancelPending"];
-  totalCaptured: OrderDetailsFragment["totalCaptured"];
   totalCharged: OrderDetailsFragment["totalCharged"];
   totalChargePending: OrderDetailsFragment["totalChargePending"];
   totalRefunded: OrderDetailsFragment["totalRefunded"];

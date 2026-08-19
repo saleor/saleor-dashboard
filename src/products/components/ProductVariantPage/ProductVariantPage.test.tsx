@@ -31,6 +31,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       hasVariants: true,
       __typename: "ProductType" as const,
     },
+    category: null,
     channelListings: [
       {
         id: "123",
@@ -45,6 +46,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           name: "Default",
           slug: "default",
           currencyCode: "USD",
+          isActive: true,
           __typename: "Channel" as const,
         },
       },
@@ -64,6 +66,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
       hasVariants: true,
       __typename: "ProductType" as const,
     },
+    category: null,
     channelListings: [
       {
         id: "124",
@@ -78,6 +81,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           name: "Default",
           slug: "default",
           currencyCode: "USD",
+          isActive: true,
           __typename: "Channel" as const,
         },
       },
@@ -93,7 +97,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
     sku: "TEST-SKU",
     quantityLimitPerCustomer: null,
     trackInventory: true,
-    preorder: null,
     metadata: [],
     privateMetadata: [],
     media: [],
@@ -117,7 +120,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
           amount: 5.0,
           currency: "USD",
         },
-        preorderThreshold: null,
       },
     ],
     stocks: [],
@@ -185,15 +187,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
         __typename: "ProductVariant" as const,
         id: "default-variant-id",
       },
-      variants: [
-        {
-          __typename: "ProductVariant" as const,
-          id: "UHJvZHVjdFZhcmlhbnQ6MTQzMw==",
-          name: "Test Variant",
-          sku: "TEST-SKU",
-          media: [],
-        },
-      ],
       thumbnail: {
         __typename: "Image" as const,
         url: "test-thumb.jpg",
@@ -215,6 +208,7 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
             id: "channel-1",
             name: "Default Channel",
             currencyCode: "USD",
+            isActive: true,
           },
         },
       ],
@@ -252,7 +246,6 @@ describe("ProductVariantPage - Reference Attribute Caching", () => {
     onSubmit: jest.fn(),
     onDelete: jest.fn(),
     onShowMetadata: jest.fn(),
-    onVariantPreorderDeactivate: jest.fn(),
     variantDeactivatePreoderButtonState: "default" as const,
     onVariantReorder: jest.fn(),
     onSetDefaultVariant: jest.fn(),

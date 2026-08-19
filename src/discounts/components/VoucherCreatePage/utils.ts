@@ -1,9 +1,3 @@
-import {
-  type SearchCategoriesOpts,
-  type SearchCollectionOpts,
-  type SearchProductsOpts,
-} from "@dashboard/discounts/types";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { v4 as uuidv4 } from "uuid";
 
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
@@ -26,57 +20,8 @@ export const voucherCodeExists = (code: string, voucherCodes: VoucherCode[]) => 
   return voucherCodes.some(voucherCode => voucherCode.code === code);
 };
 
-export const getFilteredCategories = (
-  data: FormData,
-  searchCategoriesOpts: SearchCategoriesOpts,
-) => {
-  const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search);
-  const excludedCategoryIds = data.categories.map(category => category.id);
-
-  return (
-    categories?.filter(suggestedCategory => !excludedCategoryIds.includes(suggestedCategory.id)) ??
-    []
-  );
-};
-
-export const getFilteredCollections = (
-  data: FormData,
-  searchCollectionsOpts: SearchCollectionOpts,
-) => {
-  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
-  const excludedCollectionIds = data.collections.map(collection => collection.id);
-
-  return (
-    collections?.filter(
-      suggestedCollection => !excludedCollectionIds.includes(suggestedCollection.id),
-    ) ?? []
-  );
-};
-
-export const getFilteredProducts = (data: FormData, searchProductsOpts: SearchProductsOpts) => {
-  const products = mapEdgesToItems(searchProductsOpts?.data?.search);
-  const excludedProductIds = data.products.map(product => product.id);
-
-  return (
-    products?.filter(suggestedProduct => !excludedProductIds.includes(suggestedProduct.id)) ?? []
-  );
-};
-
-export const getFilteredProductVariants = (
-  data: FormData,
-  searchProductsOpts: SearchProductsOpts,
-) => {
-  const products = mapEdgesToItems(searchProductsOpts?.data?.search);
-  const excludedVariantIds = data.variants.map(variant => variant.id);
-
-  return products?.map(product => ({
-    ...product,
-    variants:
-      product?.variants?.filter(
-        suggestedVariant => !excludedVariantIds.includes(suggestedVariant.id),
-      ) ?? [],
-  }));
-};
+export const getAssignedVariantIdsFromForm = (data: Pick<FormData, "variants">): string[] =>
+  data.variants.map(variant => variant.id);
 
 export const mapLocalVariantsToSavedVariants = (variants: FormData["variants"]) => {
   return {

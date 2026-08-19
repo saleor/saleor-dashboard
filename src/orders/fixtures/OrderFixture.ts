@@ -122,11 +122,6 @@ export class OrderFixture {
       amount: 0,
       currency: "USD",
     },
-    totalCaptured: {
-      __typename: "Money",
-      amount: 110,
-      currency: "USD",
-    },
     totalCharged: {
       __typename: "Money",
       amount: 110,
@@ -222,6 +217,8 @@ export class OrderFixture {
       quantityFulfilled: 2,
       quantityToFulfill: 0,
       unitDiscountReason: null,
+      priceOverrideReason: null,
+      isPriceOverridden: null,
       unitDiscountType: null,
       allocations: [],
       unitDiscount: {
@@ -294,10 +291,6 @@ export class OrderFixture {
         id: "variant-id-1",
         name: "Test Variant",
         quantityAvailable: 100,
-        preorder: {
-          __typename: "PreorderData",
-          endDate: null,
-        },
         stocks: [
           {
             __typename: "Stock",
@@ -371,6 +364,8 @@ export class OrderFixture {
           quantityToFulfill: 0,
           unitDiscountValue: undefined,
           unitDiscountReason: "",
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: DiscountValueTypeEnum.FIXED,
           allocations: [],
           variant: {
@@ -378,10 +373,6 @@ export class OrderFixture {
             id: "",
             name: "",
             quantityAvailable: 0,
-            preorder: {
-              __typename: "PreorderData",
-              endDate: undefined,
-            },
             stocks: [],
             product: {
               __typename: "Product",
@@ -607,11 +598,6 @@ export class OrderFixture {
       shippingAddress: OrderFixture.address,
       channel: OrderFixture.channel,
       lines: OrderFixture.lines,
-      totalCaptured: {
-        __typename: "Money",
-        amount: 0,
-        currency: "USD",
-      },
       totalCharged: {
         __typename: "Money",
         amount: 0,
@@ -831,6 +817,7 @@ export class OrderFixture {
                 id: "VXNlcjox",
                 email: "test@saleor.io",
                 isActive: true,
+                lastLogin: "2023-01-01T00:00:00Z",
                 firstName: "First Name",
                 lastName: "Last Name",
                 avatar: null,
@@ -930,6 +917,7 @@ export class OrderFixture {
                 firstName: "John",
                 lastName: "Admin",
                 isActive: true,
+                lastLogin: "2023-01-01T00:00:00Z",
                 avatar: null,
               },
             }),
@@ -980,6 +968,7 @@ export class OrderFixture {
                 firstName: "Jane",
                 lastName: "Staff",
                 isActive: true,
+                lastLogin: "2023-01-01T00:00:00Z",
                 avatar: {
                   __typename: "Image",
                   url: "https://i.pravatar.cc/150?u=jane-staff",

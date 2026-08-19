@@ -12,7 +12,7 @@ import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/comp
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
-import type React from "react";
+import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import styles from "./AppWidgetExtensionItem.module.css";
@@ -41,7 +41,7 @@ export const AppWidgetExtensionItem = ({
 
   const settings = settingsValidation.data;
 
-  const renderWithControls = (children: React.ReactNode) => (
+  const renderWithControls = (children: ReactNode) => (
     <Box
       display="flex"
       alignItems="center"
@@ -58,28 +58,39 @@ export const AppWidgetExtensionItem = ({
 
   if (extension.targetName !== "WIDGET") {
     const onClick = () => extension.open(params);
+    let title: string;
+    let suffix: ReactNode;
 
     switch (extension.targetName) {
       case "APP_PAGE":
-        return renderWithControls(
-          <Link onClick={onClick} title={intl.formatMessage(extensionActions.redirectToAppPage)}>
-            {extension.label}
-          </Link>,
-        );
+        title = intl.formatMessage(extensionActions.redirectToAppPage);
+        suffix = null;
+        break;
       case "NEW_TAB":
-        return renderWithControls(
-          <Link onClick={onClick} title={intl.formatMessage(extensionActions.openInNewTab)}>
-            {extension.label}{" "}
+        title = intl.formatMessage(extensionActions.openInNewTab);
+        suffix = (
+          <>
+            {" "}
             <ExternalLink style={{ width: 16, height: 16, verticalAlign: "text-bottom" }} />
-          </Link>,
+          </>
         );
+        break;
       case "POPUP":
-        return renderWithControls(
-          <Link onClick={onClick} title={intl.formatMessage(extensionActions.openInPopup)}>
-            {extension.label}...
-          </Link>,
-        );
+        title = intl.formatMessage(extensionActions.openInPopup);
+        suffix = "...";
+        break;
     }
+
+    return (
+      <Box paddingX={6} data-test-id="app-widget-text">
+        {renderWithControls(
+          <Link onClick={onClick} title={title}>
+            {extension.label}
+            {suffix}
+          </Link>,
+        )}
+      </Box>
+    );
   }
 
   if (extension.fromCache) {
@@ -116,6 +127,7 @@ export const AppWidgetExtensionItem = ({
             extensionId={extension.id}
             extensionUrl={extensionUrl}
             params={params}
+            refetch={extension.refetch}
           />
         ) : (
           <AppFrame
@@ -126,6 +138,9 @@ export const AppWidgetExtensionItem = ({
             appId={extension.app.id}
             dashboardVersion={APP_VERSION}
             params={params}
+            // Keeps the widget's JWT fresh on a long-open dashboard, which also
+            // keeps the token a co-located `openPopup` popup will use current.
+            refetch={extension.refetch}
           />
         )}
       </AppWidgetCard>

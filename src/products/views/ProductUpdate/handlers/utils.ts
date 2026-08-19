@@ -8,9 +8,11 @@ import {
   type ProductChannelListingAddInput,
   type ProductChannelListingUpdateInput,
   type ProductChannelListingUpdateMutationVariables,
+  type ProductDetailsVariantFragment,
   type ProductFragment,
   type ProductUpdateMutationVariables,
   type ProductVariantBulkUpdateInput,
+  type SeoInput,
   type VariantAttributeFragment,
 } from "@dashboard/graphql";
 import { weight } from "@dashboard/misc";
@@ -63,28 +65,35 @@ export function getProductUpdateVariables(
     variables.input["name"] = data.name;
   }
 
-  if (data.rating) {
-    variables.input["rating"] = data.rating;
+  // Presence of the key means the field changed (payload holds changed fields only),
+  // so an empty value is an explicit clear — send null instead of dropping the field.
+  if (data.rating !== undefined) {
+    const rating = parseFloat(String(data.rating));
+
+    variables.input["rating"] = Number.isFinite(rating) ? rating : null;
   }
 
   if (data.slug) {
     variables.input["slug"] = data.slug;
   }
 
-  if (data.taxClassId) {
-    variables.input["taxClass"] = data.taxClassId;
+  if (data.taxClassId !== undefined) {
+    // Empty string clears the product override so Saleor falls back to the product type.
+    variables.input["taxClass"] = data.taxClassId || null;
   }
 
-  if (data.seoDescription || data.seoTitle) {
-    variables.input["seo"] = {};
-  }
+  if (data.seoDescription !== undefined || data.seoTitle !== undefined) {
+    const seo: SeoInput = {};
 
-  if (data.seoDescription && variables.input["seo"]) {
-    variables.input["seo"].description = data.seoDescription;
-  }
+    if (data.seoDescription !== undefined) {
+      seo.description = data.seoDescription;
+    }
 
-  if (data.seoTitle && variables.input["seo"]) {
-    variables.input["seo"].title = data.seoTitle;
+    if (data.seoTitle !== undefined) {
+      seo.title = data.seoTitle;
+    }
+
+    variables.input["seo"] = seo;
   }
 
   if (data.weight !== undefined) {
@@ -166,12 +175,13 @@ export function hasProductChannelsUpdate(data: ProductChannelListingUpdateInput)
 }
 
 export function getBulkVariantUpdateInputs(
-  variants: ProductFragment["variants"],
+  variants: ProductDetailsVariantFragment[],
   data: DatagridChangeOpts,
   variantsAttributes: VariantAttributeFragment[],
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data, variantsAttributes);
 
+  // `removed` uses original indices; `updates`/`added` use post-removal grid indices.
   return variants
     .filter((_, index) => !data.removed.includes(index))
     .map(toUpdateInput)
@@ -182,7 +192,7 @@ export function getBulkVariantUpdateInputs(
 const createToUpdateInput =
   (data: DatagridChangeOpts, variantsAttributes: VariantAttributeFragment[]) =>
   (
-    variant: ProductFragment["variants"][number],
+    variant: ProductDetailsVariantFragment,
     variantIndex: number,
   ): ProductVariantBulkUpdateInput => ({
     id: variant.id,
@@ -195,7 +205,7 @@ const createToUpdateInput =
 const getVariantAttributesForUpdate = (
   data: DatagridChangeOpts,
   variantIndex: number,
-  variant: ProductFragment["variants"][number],
+  variant: ProductDetailsVariantFragment,
   variantsAttributes: VariantAttributeFragment[],
 ) => {
   const updatedAttributes = getAttributeData(data.updates, variantIndex, variantsAttributes);

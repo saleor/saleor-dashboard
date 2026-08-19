@@ -3,6 +3,7 @@ import { type Ripple } from "@dashboard/ripples/types";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/vanilla/utils";
 import lodashSet from "lodash/set";
+import { useCallback, useMemo } from "react";
 
 type StoredRipple = {
   manuallyHidden: boolean;
@@ -15,10 +16,14 @@ const RIPPLE_STORAGE_KEY = "dashboard-ripples";
 
 const storageAtom = atomWithStorage<StoredRipplesRecord>(RIPPLE_STORAGE_KEY, {});
 
+type StateUpdater = (
+  updater: StoredRipplesRecord | ((prev: StoredRipplesRecord) => StoredRipplesRecord),
+) => void;
+
 export class RipplesStorage {
   constructor(
     private storedState: StoredRipplesRecord,
-    private updateState: (newState: StoredRipplesRecord) => void,
+    private updateState: StateUpdater,
     private allRipples: Ripple[],
   ) {}
 
@@ -45,44 +50,67 @@ export class RipplesStorage {
   }
 
   setFirstSeenFlag(ripple: Ripple): void {
-    // Do not override, we only store the first event
-    if (this.storedState[ripple.ID]?.firstSeenAt) {
-      return;
-    }
+    this.updateState(prev => {
+      // Do not override — we only store the first event
+      if (prev[ripple.ID]?.firstSeenAt) {
+        return prev;
+      }
 
-    const newState = structuredClone(this.storedState);
+      const newState = structuredClone(prev);
 
-    lodashSet(newState, `${ripple.ID}.firstSeenAt`, this.now);
-    this.updateState(newState);
+      lodashSet(newState, `${ripple.ID}.firstSeenAt`, this.now);
+
+      return newState;
+    });
   }
 
   setManuallyHidden(ripple: Ripple): void {
-    const newState = structuredClone(this.storedState);
+    // Functional update so a concurrent first-seen write cannot wipe dismiss.
+    this.updateState(prev => {
+      const newState = structuredClone(prev);
 
-    lodashSet(newState, `${ripple.ID}.manuallyHidden`, true);
-    this.updateState(newState);
+      lodashSet(newState, `${ripple.ID}.manuallyHidden`, true);
+
+      return newState;
+    });
   }
 
   hideAllRipples(): void {
-    const newState = structuredClone(this.storedState);
+    this.updateState(prev => {
+      const newState = structuredClone(prev);
 
-    this.allRipples.forEach(ripple => {
-      lodashSet(newState, `${ripple.ID}.manuallyHidden`, true);
+      this.allRipples.forEach(ripple => {
+        lodashSet(newState, `${ripple.ID}.manuallyHidden`, true);
+      });
+
+      return newState;
     });
-
-    this.updateState(newState);
   }
 }
 
 export const useRippleStorage = () => {
   const [storedState, setStoreState] = useAtom(storageAtom);
 
-  const storage = new RipplesStorage(storedState, setStoreState, allRipples);
+  const storage = useMemo(
+    () => new RipplesStorage(storedState, setStoreState, allRipples),
+    [storedState, setStoreState],
+  );
+
+  const setFirstSeenFlag = useCallback(
+    (ripple: Ripple) => storage.setFirstSeenFlag(ripple),
+    [storage],
+  );
+  const getShouldShow = useCallback((ripple: Ripple) => storage.getShouldShow(ripple), [storage]);
+  const setManuallyHidden = useCallback(
+    (ripple: Ripple) => storage.setManuallyHidden(ripple),
+    [storage],
+  );
+  const hideAllRipples = useCallback(() => storage.hideAllRipples(), [storage]);
 
   return {
-    setFirstSeenFlag: (ripple: Ripple) => storage.setFirstSeenFlag(ripple),
-    getShouldShow: (ripple: Ripple) => storage.getShouldShow(ripple),
-    setManuallyHidden: (ripple: Ripple) => storage.setManuallyHidden(ripple),
-    hideAllRipples: () => storage.hideAllRipples(),
+    setFirstSeenFlag,
+    getShouldShow,
+    setManuallyHidden,
+    hideAllRipples,
   };
 };

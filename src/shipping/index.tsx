@@ -42,7 +42,7 @@ const ShippingZoneDetails = ({
 
   return <ShippingZoneDetailsComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
-const RateCreate = ({ match }: RouteComponentProps<{ id: string }>) => {
+const RateCreate = ({ location, match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingRateCreateUrlQueryParams = qs;
 

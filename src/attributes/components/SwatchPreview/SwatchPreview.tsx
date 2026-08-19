@@ -9,12 +9,24 @@ interface SwatchPreviewProps {
   color?: string | null;
   imageUrl?: string | null;
   size?: number;
+  /**
+   * `circle` — compact combobox / datagrid dots (color or image cropped).
+   * `rounded` — larger form previews (default).
+   */
+  shape?: "circle" | "rounded";
 }
 
-export const SwatchPreview = ({ className, color, imageUrl, size = 40 }: SwatchPreviewProps) => {
+export const SwatchPreview = ({
+  className,
+  color,
+  imageUrl,
+  size = 40,
+  shape = "rounded",
+}: SwatchPreviewProps): JSX.Element => {
   const hasImage = Boolean(imageUrl);
   const hasColor = Boolean(color);
   const isEmpty = !hasImage && !hasColor;
+  const shapeClass = shape === "circle" ? styles.swatchPreviewCircle : styles.swatchPreviewRounded;
 
   if (hasImage && imageUrl) {
     return (
@@ -22,7 +34,7 @@ export const SwatchPreview = ({ className, color, imageUrl, size = 40 }: SwatchP
         alt=""
         aria-hidden
         as="img"
-        className={clsx(styles.swatchPreview, className)}
+        className={clsx(styles.swatchPreview, shapeClass, className)}
         data-test-id="swatch-preview"
         objectFit="cover"
         src={imageUrl}
@@ -41,7 +53,12 @@ export const SwatchPreview = ({ className, color, imageUrl, size = 40 }: SwatchP
   return (
     <span
       aria-hidden
-      className={clsx(styles.swatchPreview, isEmpty && styles.swatchPreviewEmpty, className)}
+      className={clsx(
+        styles.swatchPreview,
+        shapeClass,
+        isEmpty && styles.swatchPreviewEmpty,
+        className,
+      )}
       data-test-id="swatch-preview"
       style={previewStyle}
     />

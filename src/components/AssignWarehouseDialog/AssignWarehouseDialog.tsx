@@ -11,9 +11,12 @@ import { messages } from "./messages";
 
 const EMPTY_SEARCH_FILTERS = {};
 
-export interface AssignWarehouseDialogProps extends FetchMoreProps, DialogProps {
+export interface AssignWarehouseDialogProps
+  extends FetchMoreProps,
+    DialogProps,
+    Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {
   confirmButtonState?: ConfirmButtonTransitionState;
-  /** Warehouses available to assign — already filtered by the parent (e.g. exclude assigned). */
+  /** Raw search results. Pass `excludeContainer` to hide the ones already in use. */
   warehouses: WarehouseFragment[];
   loading: boolean;
   onFetch: (query: string) => void;
@@ -71,6 +74,7 @@ export const AssignWarehouseDialog = ({
       confirmButtonState={confirmButtonState}
       containers={containers}
       emptyMessage={emptyMessage}
+      backfillExhaustedMessage={intl.formatMessage(messages.allLoadedWarehousesFilteredOut)}
       labels={labels}
       loading={loading}
       open={open}

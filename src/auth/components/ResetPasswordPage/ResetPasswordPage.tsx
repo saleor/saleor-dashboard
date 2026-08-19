@@ -1,14 +1,14 @@
 import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
+import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
+import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { getAppMountUri } from "@dashboard/config";
 import { type AccountErrorCode } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
 import { Box, Button, Paragraph, Text } from "@saleor/macaw-ui-next";
-import { ArrowLeft } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ChangingPasswordWarning } from "../ChangingPasswordWarning";
@@ -33,10 +33,12 @@ const ResetPasswordPage = (props: ResetPasswordPageProps) => {
         <Box display="flex" flexDirection="column" alignItems="flex-start">
           <Button
             as="a"
-            icon={<ArrowLeft size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
+            icon={<TopNavDestinationIcon.home />}
             href={getAppMountUri()}
             variant="secondary"
             marginBottom={4}
+            title={intl.formatMessage(topNavDestinationMessages.home)}
+            aria-label={intl.formatMessage(topNavDestinationMessages.home)}
           />
 
           <Text size={6} fontWeight="bold" lineHeight={3} marginBottom={2}>

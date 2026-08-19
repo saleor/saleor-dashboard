@@ -4,3 +4,8 @@
   gap: var(--mu-spacing-4);
   padding-top: var(--mu-spacing-4);
 }
+
+.toolbarEmbedded {
+  composes: toolbar;
+  padding-top: var(--mu-spacing-6);
+}

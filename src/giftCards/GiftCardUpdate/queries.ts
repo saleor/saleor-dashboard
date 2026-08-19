@@ -6,8 +6,20 @@ export const giftCardDetails = gql`
   query GiftCardDetails($id: ID!, $canSeeApp: Boolean!, $canSeeUser: Boolean!) {
     giftCard(id: $id) {
       ...GiftCardData
+      app @include(if: $canSeeApp) {
+        id
+        name
+      }
       events {
         ...GiftCardEvent
+        assignedTo {
+          currentAssignedTo @include(if: $canSeeUser) {
+            id
+          }
+          oldAssignedTo @include(if: $canSeeUser) {
+            id
+          }
+        }
         app @include(if: $canSeeApp) {
           id
           name

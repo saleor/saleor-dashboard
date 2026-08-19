@@ -12,17 +12,6 @@ export const messages = defineMessages({
       "Your store's public name and description, used across the storefront and in SEO metadata.",
     description: "section description",
   },
-  sectionCheckoutTitle: {
-    id: "DASYUF",
-    defaultMessage: "Checkout Configuration",
-    description: "section title",
-  },
-  sectionCheckoutDescription: {
-    id: "Av74Fa",
-    defaultMessage:
-      "You can set basic checkout rules that will be applied globally to all your channels",
-    description: "section description",
-  },
   sectionCompanyTitle: {
     id: "rPX1f2",
     defaultMessage: "Company Information",
@@ -33,6 +22,16 @@ export const messages = defineMessages({
     defaultMessage:
       "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers.",
     description: "section description",
+  },
+  sectionCustomerAccountsTitle: {
+    id: "bKlRVC",
+    defaultMessage: "Customer accounts",
+    description: "section title for customer login and registration settings",
+  },
+  sectionCustomerAccountsDescription: {
+    id: "jpyNZL",
+    defaultMessage: "Control how customers register and sign in to your storefront.",
+    description: "section description for customer accounts",
   },
   sectionEmailConfirmationTitle: {
     id: "qNeXG1",
@@ -55,6 +54,64 @@ export const messages = defineMessages({
       "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
     description:
       "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
+  },
+  sectionApiAccessTitle: {
+    id: "GNX9HV",
+    defaultMessage: "API access",
+    description: "section title for GraphQL API access settings",
+  },
+  sectionApiAccessDescription: {
+    id: "NDnOZ0",
+    defaultMessage: "Control which clients are allowed to call the GraphQL API directly.",
+    description: "section description for API access",
+  },
+  sectionStorefrontTrafficTitle: {
+    id: "v286+q",
+    defaultMessage: "Allow storefront traffic",
+    description: "card header and checkbox label",
+  },
+  sectionStorefrontTrafficDescription: {
+    id: "vqSGtP",
+    defaultMessage:
+      "When enabled, anonymous clients and signed-in customers can call the GraphQL API directly. When disabled, only apps and staff users can — every other request is rejected with HTTP 401. <a>Learn more</a>.",
+    description: "section description",
+  },
+  sectionStorefrontTrafficWarningIntro: {
+    id: "9ZJLIE",
+    defaultMessage: "Turning this off blocks storefronts from reaching the API on their own:",
+    description: "intro to list of consequences of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningLogin: {
+    id: "VvqEe2",
+    defaultMessage:
+      "Customer login, password reset and account confirmation stop working — the check runs before the operation is read, so authentication mutations are rejected too.",
+    description: "consequence of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningAnonymous: {
+    id: "ONl3Bh",
+    defaultMessage: "Anonymous browsing and guest checkout are no longer possible.",
+    description: "consequence of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningIntrospection: {
+    id: "TL6F/t",
+    defaultMessage: "Schema introspection requires app or staff credentials.",
+    description: "consequence of blocking storefront traffic",
+  },
+  sectionStorefrontTrafficWarningCache: {
+    id: "7BQ5zc",
+    defaultMessage: "The setting is cached — a change takes up to 5 minutes to reach every worker.",
+    description: "consequence of blocking storefront traffic",
+  },
+  sectionAdvancedTitle: {
+    id: "BgEWXq",
+    defaultMessage: "Advanced",
+    description: "section title for legacy and developer store settings",
+  },
+  sectionAdvancedDescription: {
+    id: "OP3Fgn",
+    defaultMessage:
+      "Legacy API options that may change in future Saleor versions. Prefer defaults unless you know you need these.",
+    description: "section description for advanced store settings",
   },
   sectionWebhookEmissionTitle: {
     id: "R8+DNv",

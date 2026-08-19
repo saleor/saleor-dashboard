@@ -33,7 +33,7 @@ import {
   isOpaqueGlobalId,
   mergeRepeatedOrderLines,
   type OrderLineWithStockWarehouses,
-  type OrderWithTotalAndTotalCaptured,
+  type OrderWithTotalAndTotalCharged,
 } from "./data";
 
 const orderBase: OrderDetailsFragment = {
@@ -148,7 +148,7 @@ describe("Get warehouses used in order", () => {
 });
 describe("Get previously refunded price", () => {
   it("is able to calculate refunded price from order", () => {
-    const order: OrderWithTotalAndTotalCaptured = {
+    const order: OrderWithTotalAndTotalCharged = {
       total: {
         __typename: "TaxedMoney",
         gross: {
@@ -157,7 +157,7 @@ describe("Get previously refunded price", () => {
           currency: "USD",
         },
       },
-      totalCaptured: {
+      totalCharged: {
         __typename: "Money",
         amount: 100,
         currency: "USD",
@@ -535,7 +535,6 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Milk 1",
           quantityAvailable: 50,
-          preorder: null,
           __typename: "ProductVariant",
           product: {
             __typename: "Product",
@@ -634,6 +633,8 @@ describe("Get the total value of all replaced products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -684,7 +685,6 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Milk 1",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -783,6 +783,8 @@ describe("Get the total value of all replaced products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -833,7 +835,6 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           name: "Milk 2",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -932,6 +933,8 @@ describe("Get the total value of all replaced products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -987,7 +990,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 1",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1086,6 +1088,8 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1143,7 +1147,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 1",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1242,6 +1245,8 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1299,7 +1304,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             name: "Milk 2",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1398,6 +1402,8 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1455,7 +1461,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 3",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1554,6 +1559,8 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1611,7 +1618,6 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Milk 3",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1710,6 +1716,8 @@ describe("Get the total value of all replaced products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -1896,7 +1904,6 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Digital Book",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -1995,6 +2002,8 @@ describe("Get the total value of all selected products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2045,7 +2054,6 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           name: "Digital Book",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -2144,6 +2152,8 @@ describe("Get the total value of all selected products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2194,7 +2204,6 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           name: "Digital Book",
           quantityAvailable: 50,
-          preorder: null,
           stocks: [
             {
               id: "stock_test_id1",
@@ -2293,6 +2302,8 @@ describe("Get the total value of all selected products", () => {
           currency: "USD",
         },
         unitDiscountReason: null,
+        priceOverrideReason: null,
+        isPriceOverridden: null,
         unitDiscountType: null,
         unitDiscountValue: 0,
         unitPrice: {
@@ -2348,7 +2359,6 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Digital Book",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2447,6 +2457,8 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2504,7 +2516,6 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Digital Book",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2603,6 +2614,8 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2660,7 +2673,6 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             name: "Digital Book",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2759,6 +2771,8 @@ describe("Get the total value of all selected products", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -2938,7 +2952,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Saleor Demo Product",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3037,6 +3050,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3094,7 +3109,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             name: "Saleor Demo Product",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3193,6 +3207,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3250,7 +3266,6 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             name: "Saleor Demo Product",
             quantityAvailable: 50,
-            preorder: null,
             stocks: [
               {
                 id: "stock_test_id1",
@@ -3349,6 +3364,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             currency: "USD",
           },
           unitDiscountReason: null,
+          priceOverrideReason: null,
+          isPriceOverridden: null,
           unitDiscountType: null,
           unitDiscountValue: 0,
           unitPrice: {
@@ -3628,7 +3645,7 @@ describe("getOrderFulfillSubmitItems", () => {
     ]);
   });
 
-  it("skips preorder lines without stock allocations", () => {
+  it("skips lines without stock allocations", () => {
     // Arrange
     const formsetData = [
       {

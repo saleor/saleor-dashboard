@@ -6,19 +6,10 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
     defaultMessage: "Details",
     description: "details title",
   },
-  setBalanceButtonLabel: {
-    id: "PJDcQs",
-    defaultMessage: "Set Balance",
-    description: "set balance button label",
-  },
-  cardBalanceLabel: {
-    id: "Z/7hyu",
-    defaultMessage: "Card Balance",
-    description: "card balance label",
-  },
-  tagInputLabel: {
-    id: "a+kgkq",
-    defaultMessage: "Card Tag",
-    description: "tag label",
+  tagsIntro: {
+    id: "cofudM",
+    defaultMessage:
+      "Tags help organize and filter gift cards, for example by campaign or bulk issue.",
+    description: "gift card details card, intro for tags field",
   },
 });

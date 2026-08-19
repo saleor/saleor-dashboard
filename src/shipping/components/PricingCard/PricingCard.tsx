@@ -1,22 +1,22 @@
-// @ts-strict-ignore
 import { type ChannelShippingData, sortChannelShippingDataByName } from "@dashboard/channels/utils";
 import { DashboardCard } from "@dashboard/components/Card";
-import PriceField from "@dashboard/components/PriceField";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
+import { sanitizeSpreadsheetPrice } from "@dashboard/components/PriceFieldV2/utils";
 import { type ShippingChannelsErrorFragment } from "@dashboard/graphql";
-import { normalizeChannelPriceValue } from "@dashboard/shipping/utils/channelPricingState";
-import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
+import {
+  type ChannelError,
+  getFormChannelError,
+  getFormChannelErrors,
+} from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { TableBody, TableCell } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
-import { useEffect, useMemo, useRef } from "react";
+import { applySpreadsheetColumnPaste } from "@dashboard/utils/spreadsheetPaste/applySpreadsheetColumnPaste";
+import { Box, Text } from "@saleor/macaw-ui-next";
+import { type ClipboardEvent, useCallback, useEffect, useMemo, useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import shippingPriceTableStyles from "../ShippingPriceTable.module.css";
-import { useStyles } from "./styles";
+import { ShippingMethodChannelsEmptyPlaceholder } from "../ShippingMethodChannelsEmptyPlaceholder/ShippingMethodChannelsEmptyPlaceholder";
+import { shippingZoneMethodsMessages } from "../ShippingZoneRates/messages";
+import styles from "./PricingCard.module.css";
 
 interface Value {
   maxValue: string;
@@ -31,34 +31,49 @@ interface PricingCardProps {
   focusChannelId?: string;
   /** When false, defers focusing until the page has finished loading (e.g. rich-text editor mounted). */
   isFocusReady?: boolean;
+  /** Called once after the deep-linked price input is focused (clear `channelId` from the URL). */
+  onFocusChannelComplete?: () => void;
   onChange: (channelId: string, value: Value) => void;
+  onChannelsReplace: (channels: ChannelShippingData[]) => void;
 }
 
-const numberOfColumns = 2;
-
-const PricingCard = ({
+export const PricingCard = ({
   channels,
   disabled,
   errors,
   focusChannelId,
   isFocusReady = true,
+  onFocusChannelComplete,
   onChange,
-}: PricingCardProps) => {
-  const classes = useStyles({});
+  onChannelsReplace,
+}: PricingCardProps): JSX.Element => {
   const intl = useIntl();
-  const formErrors = getFormChannelErrors(["price"], errors);
+  const formErrors = getFormChannelErrors(["price"], errors as ChannelError[]);
   const sortedChannels = useMemo(() => sortChannelShippingDataByName(channels), [channels]);
-  const focusInputRef = useRef<HTMLInputElement | null>(null);
+  const focusRowRef = useRef<HTMLDivElement | null>(null);
+  const focusedChannelIdRef = useRef<string | null>(null);
 
-  // useEffect (not useLayoutEffect) runs after child effects such as EditorJS
-  // initialization, which would otherwise replace inputs and drop focus.
   useEffect(
-    function focusChannelPriceInput() {
+    function resetFocusTrackingWhenChannelCleared() {
+      if (!focusChannelId) {
+        focusedChannelIdRef.current = null;
+      }
+    },
+    [focusChannelId],
+  );
+
+  useEffect(
+    function focusChannelPriceInputOnce() {
       if (!focusChannelId || !isFocusReady || disabled) {
         return;
       }
 
-      const input = focusInputRef.current;
+      // Channel edits remount/reorder rows and must not steal focus back.
+      if (focusedChannelIdRef.current === focusChannelId) {
+        return;
+      }
+
+      const input = focusRowRef.current?.querySelector("input");
 
       if (!input || input.disabled) {
         return;
@@ -70,8 +85,10 @@ const PricingCard = ({
             return;
           }
 
-          input.closest("tr")?.scrollIntoView({ behavior: "auto", block: "center" });
+          input.scrollIntoView({ behavior: "auto", block: "center" });
           input.focus({ preventScroll: true });
+          focusedChannelIdRef.current = focusChannelId;
+          onFocusChannelComplete?.();
         });
       });
 
@@ -79,7 +96,34 @@ const PricingCard = ({
         window.cancelAnimationFrame(frameId);
       };
     },
-    [disabled, focusChannelId, isFocusReady, sortedChannels],
+    [disabled, focusChannelId, isFocusReady, onFocusChannelComplete, sortedChannels],
+  );
+
+  const handlePaste = useCallback(
+    (event: ClipboardEvent<HTMLElement>, startIndex: number) => {
+      const pastedText = event.clipboardData.getData("text/plain");
+
+      if (pastedText === "") {
+        return;
+      }
+
+      const { rows, handled } = applySpreadsheetColumnPaste({
+        rows: sortedChannels,
+        startIndex,
+        pastedText,
+        sanitizeCell: (cell, row) => sanitizeSpreadsheetPrice(cell, row.currency),
+        setCell: (row, value) => ({ ...row, price: value }),
+      });
+
+      if (!handled) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      onChannelsReplace(rows);
+    },
+    [onChannelsReplace, sortedChannels],
   );
 
   return (
@@ -93,65 +137,77 @@ const PricingCard = ({
           })}
         </DashboardCard.Title>
       </DashboardCard.Header>
-      <DashboardCard.Content className={classes.pricingContent}>
-        <ResponsiveTable
-          className={clsx(classes.table, shippingPriceTableStyles.shippingPriceTable)}
-        >
-          <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
-            <TableCell className={classes.colName}>
-              <span>
+      <DashboardCard.Content>
+        {sortedChannels.length === 0 ? (
+          <ShippingMethodChannelsEmptyPlaceholder />
+        ) : (
+          <Box className={styles.list} data-test-id="shipping-method-pricing-channel-list">
+            <Text size={2} color="default2" className={styles.pasteHint}>
+              <FormattedMessage
+                id="oVM/qc"
+                defaultMessage="You can paste from a spreadsheet. Select a field and paste a column of values to fill amounts down the list."
+                description="voucher minimum order value spreadsheet paste hint"
+              />
+            </Text>
+            <Box className={styles.headerRow}>
+              <Text size={2} color="default2">
                 <FormattedMessage
-                  id="Hj3T7P"
+                  id="UymotP"
                   defaultMessage="Channel name"
-                  description="column title"
+                  description="channel name"
                 />
-              </span>
-            </TableCell>
-            <TableCell className={classes.colType}>
-              <span>
-                <FormattedMessage id="1shOIS" defaultMessage="Price" description="column title" />
-              </span>
-            </TableCell>
-          </TableHead>
-          <TableBody>
-            {sortedChannels?.map(channel => {
+              </Text>
+              <Text size={2} color="default2">
+                <FormattedMessage {...shippingZoneMethodsMessages.priceColumn} />
+              </Text>
+            </Box>
+            {sortedChannels.map((channel, index) => {
               const error = getFormChannelError(formErrors.price, channel.id);
               const isFocusTarget = channel.id === focusChannelId;
 
               return (
-                <TableRowLink key={channel.id} data-test-id={channel.name}>
-                  <TableCell>
-                    <Text>{channel.name}</Text>
-                  </TableCell>
-                  <TableCell className={shippingPriceTableStyles.shippingPriceTableInputCell}>
-                    <PriceField
-                      ref={isFocusTarget ? focusInputRef : undefined}
+                <Box
+                  key={channel.id}
+                  ref={isFocusTarget ? focusRowRef : undefined}
+                  className={styles.row}
+                  data-test-id={channel.name}
+                >
+                  <Text size={3} className={styles.channelName}>
+                    {channel.name}
+                  </Text>
+                  <div
+                    className={styles.inputCell}
+                    onPasteCapture={event => handlePaste(event, index)}
+                  >
+                    <PriceFieldV2
+                      className={styles.amountInput}
                       data-test-id="price-input"
                       disabled={disabled}
                       error={!!error}
-                      label={intl.formatMessage({
-                        id: "1shOIS",
-                        defaultMessage: "Price",
-                        description: "column title",
-                      })}
-                      name="price"
-                      value={channel.price}
-                      onChange={e =>
+                      helperText={error ? getShippingErrorMessage(error, intl) : undefined}
+                      currencySymbol={channel.currency}
+                      aria-label={intl.formatMessage(
+                        {
+                          id: "sC3g5c",
+                          defaultMessage: "Price for {channelName}",
+                          description: "shipping method channel price input aria label",
+                        },
+                        { channelName: channel.name },
+                      )}
+                      value={channel.price || ""}
+                      onChange={value =>
                         onChange(channel.id, {
                           ...channel,
-                          price: normalizeChannelPriceValue(e.target.value),
+                          price: value,
                         })
                       }
-                      currencySymbol={channel.currency}
-                      required
-                      hint={error && getShippingErrorMessage(error, intl)}
                     />
-                  </TableCell>
-                </TableRowLink>
+                  </div>
+                </Box>
               );
             })}
-          </TableBody>
-        </ResponsiveTable>
+          </Box>
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );

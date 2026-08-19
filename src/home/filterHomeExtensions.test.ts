@@ -10,7 +10,6 @@ const userPermissions: UserPermissionFragment[] = [
 
 const buildExtension = (overrides: Partial<Extension>): Extension => ({
   id: "ext-1",
-  identifier: null,
   app: {
     __typename: "App",
     id: "app-1",
@@ -22,6 +21,7 @@ const buildExtension = (overrides: Partial<Extension>): Extension => ({
   accessToken: "token",
   permissions: [],
   label: "Extension",
+  identifier: null,
   mountName: "HOMEPAGE_WIDGETS",
   url: "https://app.example/widget",
   open: () => undefined,

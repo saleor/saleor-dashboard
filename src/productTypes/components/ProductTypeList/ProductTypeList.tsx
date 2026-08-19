@@ -7,7 +7,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type ProductTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
-import { ProductTypeListUrlSortField, productTypeUrl } from "@dashboard/productTypes/urls";
+import { ProductTypeListUrlSortField, productTypePath } from "@dashboard/productTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -122,7 +122,7 @@ const ProductTypeList = ({
                 href={
                   productType
                     ? {
-                        pathname: productTypeUrl(productType.id),
+                        pathname: productTypePath(encodeURIComponent(productType.id)),
                         state: getPrevLocationState(location),
                       }
                     : undefined

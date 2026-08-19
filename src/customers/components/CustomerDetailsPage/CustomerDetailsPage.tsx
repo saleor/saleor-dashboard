@@ -1,6 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Backlink } from "@dashboard/components/Backlink";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -25,7 +28,6 @@ import {
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Divider, Text } from "@saleor/macaw-ui-next";
@@ -201,7 +203,13 @@ const CustomerDetailsPage = ({
       {({ change, data, isSaveDisabled, submit }) => {
         return (
           <DetailPageLayout>
-            <TopNav href={customerBackLink} title={titleNode} actionsGap={3}>
+            <TopNav
+              href={customerBackLink}
+              hrefIcon={<TopNavDestinationIcon.customers />}
+              hrefTitle={intl.formatMessage(topNavDestinationMessages.allCustomers)}
+              title={titleNode}
+              actionsGap={3}
+            >
               {canEditCustomers && (
                 <TopNav.MetadataButton
                   onClick={onShowMetadata}
@@ -217,9 +225,6 @@ const CustomerDetailsPage = ({
               {menuItems.length > 0 && <TopNav.Menu items={menuItems} dataTestId="menu" />}
             </TopNav>
             <DetailPageLayout.Content paddingBottom={10}>
-              <Backlink href={customerBackLink}>
-                {intl.formatMessage(sectionNames.customers)}
-              </Backlink>
               <CustomerOverview customer={customer} />
               <CardSpacer />
               <CustomerInfo

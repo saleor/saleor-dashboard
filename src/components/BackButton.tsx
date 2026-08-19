@@ -8,7 +8,7 @@ interface BackButtonProps extends ButtonProps {
 }
 
 const BackButton = ({ children, ...props }: BackButtonProps) => (
-  <Button data-test-id="back" variant="secondary" {...props}>
+  <Button data-test-id="back" variant="secondary" {...props} type="button">
     {children ?? <FormattedMessage {...buttonMessages.back} />}
   </Button>
 );

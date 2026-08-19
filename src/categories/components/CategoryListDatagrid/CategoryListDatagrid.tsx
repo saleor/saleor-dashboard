@@ -14,16 +14,23 @@ import { DatagridPagination } from "@dashboard/components/TablePagination";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { type PageListProps, type SortPage } from "@dashboard/types";
-import { CompactSelection, type GridSelection, type Item } from "@glideapps/glide-data-grid";
+import {
+  CompactSelection,
+  type GridSelection,
+  type Item,
+  type Theme,
+} from "@glideapps/glide-data-grid";
 import { useTheme } from "@saleor/macaw-ui-next";
-import { type ReactNode, useCallback, useMemo } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import {
   categoryListExpandColumn,
+  categoryListSidebarColumnsAdapter,
   categoryListStaticColumnsAdapter,
   createGetCellContent,
+  type SidebarColumnWidths,
 } from "./datagrid";
 import { messages } from "./messages";
 
@@ -42,7 +49,46 @@ interface CategoryListDatagridProps
   isLoadingMoreSubcategories?: (parentId: string) => boolean;
   getCategoryDepth?: (categoryId: string) => number;
   onLoadMoreSubcategories?: (parentId: string) => void;
+  hidePagination?: boolean;
+  variant?: "default" | "sidebar";
 }
+
+/**
+ * Sidebar row-marker column. Glide centers its ~14px checkbox in this width,
+ * so left inset ≈ (36 − 14) / 2 ≈ 11px while the grid stays full-bleed.
+ */
+const SIDEBAR_ROW_MARKER_WIDTH = 36;
+/**
+ * Compact row/header height for the sidebar. Paired with
+ * `cellVerticalPadding: 11` so Glide draws min(18, 36 − 22) = 14px checkboxes
+ * (closer to macaw `Checkbox` than the default ~18px).
+ */
+const SIDEBAR_ROW_HEIGHT = 36;
+const SIDEBAR_NAME_MIN_WIDTH = 96;
+const SIDEBAR_COUNT_COLUMN_MIN_WIDTH = 72;
+
+const DEFAULT_SIDEBAR_COLUMN_WIDTHS: SidebarColumnWidths = {
+  name: SIDEBAR_NAME_MIN_WIDTH,
+  subcategories: SIDEBAR_COUNT_COLUMN_MIN_WIDTH,
+  products: SIDEBAR_COUNT_COLUMN_MIN_WIDTH,
+};
+
+const SIDEBAR_SELECTED_COLUMNS = ["name", "subcategories", "products"] as const;
+
+const measureSidebarColumnWidths = (
+  containerWidth: number,
+  chromeWidth: number,
+): SidebarColumnWidths => {
+  const available = Math.max(0, containerWidth - chromeWidth);
+  const countColumnWidth = Math.min(SIDEBAR_COUNT_COLUMN_MIN_WIDTH, Math.floor(available * 0.22));
+  const nameWidth = Math.max(SIDEBAR_NAME_MIN_WIDTH, available - countColumnWidth * 2);
+
+  return {
+    name: nameWidth,
+    subcategories: countColumnWidth,
+    products: countColumnWidth,
+  };
+};
 
 export const CategoryListDatagrid = ({
   sort,
@@ -62,15 +108,42 @@ export const CategoryListDatagrid = ({
   isLoadingMoreSubcategories,
   getCategoryDepth,
   onLoadMoreSubcategories,
+  hidePagination = false,
+  variant = "default",
 }: CategoryListDatagridProps): JSX.Element => {
+  const isSidebar = variant === "sidebar";
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [sidebarColumnWidths, setSidebarColumnWidths] = useState(DEFAULT_SIDEBAR_COLUMN_WIDTHS);
   const navigate = useNavigator();
   const location = useLocation();
   const { themeValues } = useTheme();
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
+  const sidebarRowMarkerTheme = useMemo(
+    (): Partial<Theme> => ({
+      // Glide: checkboxSize = min(18, rowHeight − 2 * cellVerticalPadding)
+      cellVerticalPadding: 11,
+      cellHorizontalPadding: 4,
+    }),
+    [],
+  );
+  const sidebarDatagridTheme = useMemo(
+    (): Partial<Theme> => ({
+      bgHeader: themeValues.colors.background.default1,
+      bgHeaderHasFocus: themeValues.colors.background.default1,
+      bgHeaderHovered: themeValues.colors.background.default1,
+      textHeader: themeValues.colors.text.default2,
+      textHeaderSelected: themeValues.colors.text.default2,
+      headerFontStyle: `${themeValues.fontWeight.regular} ${themeValues.fontSize[2]}`,
+    }),
+    [themeValues],
+  );
   const memoizedStaticColumns = useMemo(
-    () => categoryListStaticColumnsAdapter(intl, sort),
-    [intl, sort],
+    () =>
+      isSidebar
+        ? categoryListSidebarColumnsAdapter(intl, sidebarColumnWidths)
+        : categoryListStaticColumnsAdapter(intl, sort),
+    [intl, isSidebar, sidebarColumnWidths, sort],
   );
   const isSelectionControlled = !!onSelectedCategoriesIdsChange;
   const controlledSelection = useMemo<GridSelection>(() => {
@@ -122,13 +195,47 @@ export const CategoryListDatagrid = ({
     },
     [onUpdateListSettings],
   );
-  const { handlers, selectedColumns, staticColumns, visibleColumns } = useColumns({
-    gridName: "category_list",
+  const {
+    handlers,
+    selectedColumns,
+    staticColumns,
+    visibleColumns: persistedVisibleColumns,
+  } = useColumns({
+    gridName: isSidebar ? "category_list_sidebar_v2" : "category_list",
     staticColumns: memoizedStaticColumns,
-    selectedColumns: settings?.columns ?? [],
+    selectedColumns: isSidebar ? [...SIDEBAR_SELECTED_COLUMNS] : (settings?.columns ?? []),
     onSave: handleColumnChange,
   });
   const shouldShowExpandColumn = Boolean(isCategoryExpanded && onCategoryExpandToggle);
+  const sidebarChromeWidth = useMemo(
+    () => SIDEBAR_ROW_MARKER_WIDTH + (shouldShowExpandColumn ? categoryListExpandColumn.width : 0),
+    [shouldShowExpandColumn],
+  );
+  const visibleColumns = useMemo(() => {
+    if (!isSidebar) {
+      return persistedVisibleColumns;
+    }
+
+    return persistedVisibleColumns.map(column => {
+      if (!column) {
+        return column;
+      }
+
+      if (column.id === "name") {
+        return { ...column, width: sidebarColumnWidths.name };
+      }
+
+      if (column.id === "subcategories") {
+        return { ...column, width: sidebarColumnWidths.subcategories };
+      }
+
+      if (column.id === "products") {
+        return { ...column, width: sidebarColumnWidths.products };
+      }
+
+      return column;
+    });
+  }, [isSidebar, persistedVisibleColumns, sidebarColumnWidths]);
   const availableColumns = useMemo(
     () => (shouldShowExpandColumn ? [categoryListExpandColumn, ...visibleColumns] : visibleColumns),
     [shouldShowExpandColumn, visibleColumns],
@@ -144,6 +251,15 @@ export const CategoryListDatagrid = ({
       textDark: themeValues.colors.text.accent1,
     }),
     [themeValues],
+  );
+  const countCellThemeOverride = useMemo(
+    () =>
+      isSidebar
+        ? {
+            textDark: themeValues.colors.text.default2,
+          }
+        : undefined,
+    [isSidebar, themeValues.colors.text.default2],
   );
   const getRowThemeOverride = useCallback(
     (row: number) => {
@@ -171,6 +287,7 @@ export const CategoryListDatagrid = ({
         getCategoryDepth,
         formatLoadMoreLabel,
         loadMoreCellThemeOverride,
+        countCellThemeOverride,
       }),
     [
       rows,
@@ -180,6 +297,7 @@ export const CategoryListDatagrid = ({
       isLoadingMoreSubcategories,
       getCategoryDepth,
       formatLoadMoreLabel,
+      countCellThemeOverride,
       loadMoreCellThemeOverride,
     ],
   );
@@ -284,6 +402,10 @@ export const CategoryListDatagrid = ({
   );
   const handleColumnResize = useCallback(
     (...args: Parameters<typeof handlers.onResize>) => {
+      if (isSidebar) {
+        return;
+      }
+
       const [column] = args;
 
       if (column.id === "expand") {
@@ -292,54 +414,93 @@ export const CategoryListDatagrid = ({
 
       handlers.onResize(...args);
     },
-    [handlers],
+    [handlers, isSidebar],
+  );
+
+  useEffect(
+    function measureSidebarNameColumnWidth() {
+      if (!isSidebar || !containerRef.current) {
+        return undefined;
+      }
+
+      const measureSidebarWidth = (): void => {
+        const width = containerRef.current?.clientWidth ?? 0;
+
+        setSidebarColumnWidths(measureSidebarColumnWidths(width, sidebarChromeWidth));
+      };
+
+      measureSidebarWidth();
+
+      const observer = new ResizeObserver(measureSidebarWidth);
+
+      observer.observe(containerRef.current);
+
+      return () => observer.disconnect();
+    },
+    [isSidebar, sidebarChromeWidth],
   );
 
   return (
-    <DatagridChangeStateContext.Provider value={datagridState}>
-      <Datagrid
-        readonly
-        hasRowHover={hasRowHover}
-        loading={disabled}
-        columnSelect={sort !== undefined ? "single" : undefined}
-        verticalBorder={false}
-        rowMarkers="checkbox-visible"
-        availableColumns={availableColumns}
-        rows={rows?.length ?? 0}
-        getCellContent={getCellContent}
-        getCellError={() => false}
-        emptyText={intl.formatMessage(messages.noData)}
-        onHeaderClicked={handleHeaderClick}
-        rowAnchor={handleRowAnchor}
-        menuItems={() => []}
-        onRowClick={handleRowClick}
-        actionButtonPosition="right"
-        selectionActions={() => selectionActionButton}
-        onColumnResize={handleColumnResize}
-        onColumnMoved={handleColumnMove}
-        onRowSelectionChange={handleRowSelectionChange}
-        getRowThemeOverride={getRowThemeOverride}
-        controlledSelection={isSelectionControlled ? controlledSelection : undefined}
-        onControlledSelectionChange={
-          isSelectionControlled ? handleControlledSelectionChange : undefined
-        }
-        renderColumnPicker={() => (
-          <ColumnPicker
-            onToggle={handlers.onToggle}
-            selectedColumns={selectedColumns}
-            staticColumns={staticColumns}
-          />
-        )}
-        navigatorOpts={{ state: getPrevLocationState(location) }}
-      />
+    <div ref={containerRef}>
+      <DatagridChangeStateContext.Provider value={datagridState}>
+        <Datagrid
+          readonly
+          hasRowHover={hasRowHover}
+          loading={disabled}
+          columnSelect={sort !== undefined ? "single" : undefined}
+          verticalBorder={false}
+          rowMarkers="checkbox-visible"
+          rowMarkerWidth={isSidebar ? SIDEBAR_ROW_MARKER_WIDTH : undefined}
+          rowMarkerTheme={isSidebar ? sidebarRowMarkerTheme : undefined}
+          headerHeight={isSidebar ? SIDEBAR_ROW_HEIGHT : undefined}
+          rowHeight={isSidebar ? SIDEBAR_ROW_HEIGHT : undefined}
+          availableColumns={availableColumns}
+          rows={rows?.length ?? 0}
+          getCellContent={getCellContent}
+          getCellError={() => false}
+          emptyText={intl.formatMessage(messages.noData)}
+          onHeaderClicked={handleHeaderClick}
+          rowAnchor={handleRowAnchor}
+          menuItems={() => []}
+          onRowClick={handleRowClick}
+          actionButtonPosition="right"
+          selectionActions={() => selectionActionButton}
+          onColumnResize={handleColumnResize}
+          onColumnMoved={handleColumnMove}
+          onRowSelectionChange={handleRowSelectionChange}
+          getRowThemeOverride={getRowThemeOverride}
+          controlledSelection={isSelectionControlled ? controlledSelection : undefined}
+          onControlledSelectionChange={
+            isSelectionControlled ? handleControlledSelectionChange : undefined
+          }
+          rowActionBarWidth={isSidebar ? 0 : undefined}
+          showTopBorder={!isSidebar}
+          smoothScrollX={!isSidebar}
+          themeOverride={isSidebar ? sidebarDatagridTheme : undefined}
+          renderColumnPicker={
+            isSidebar
+              ? undefined
+              : () => (
+                  <ColumnPicker
+                    onToggle={handlers.onToggle}
+                    selectedColumns={selectedColumns}
+                    staticColumns={staticColumns}
+                  />
+                )
+          }
+          navigatorOpts={{ state: getPrevLocationState(location) }}
+        />
 
-      <DatagridPagination
-        component="div"
-        colSpan={1}
-        settings={settings}
-        disabled={disabled}
-        onUpdateListSettings={onUpdateListSettings}
-      />
-    </DatagridChangeStateContext.Provider>
+        {!hidePagination ? (
+          <DatagridPagination
+            component="div"
+            colSpan={1}
+            settings={settings}
+            disabled={disabled}
+            onUpdateListSettings={onUpdateListSettings}
+          />
+        ) : null}
+      </DatagridChangeStateContext.Provider>
+    </div>
   );
 };

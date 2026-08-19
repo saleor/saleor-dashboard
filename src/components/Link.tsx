@@ -46,6 +46,8 @@ export const Link = (props: LinkProps): JSX.Element => {
     sprinkles({
       cursor: disabled ? "not-allowed" : "pointer",
       fontSize: "inherit",
+      // Opt in with `underline`. Do not hover-underline by default: Link also
+      // wraps buttons, command rows, and cards that already have their own hover.
       textDecoration: underline ? "underline" : "none",
       color: textColor,
     }),
@@ -67,11 +69,13 @@ export const Link = (props: LinkProps): JSX.Element => {
     }
   };
 
-  // Sprinkles doesn't support display: "inline", so we use inline styles for this
-  const inlineStyle = {
+  // Sprinkles doesn't support display: "inline", so we use inline styles for this.
+  // currentColor keeps any underline on this node (never the UA link blue).
+  const inlineStyle: React.CSSProperties = {
     display: inline ? "inline" : undefined,
+    textDecorationColor: "currentColor",
     ...style,
-  } as const;
+  };
 
   const applySafeRelAttributes = opensNewTab && href && isExternalURL(href);
 

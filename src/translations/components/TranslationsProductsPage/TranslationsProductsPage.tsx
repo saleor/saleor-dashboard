@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
@@ -147,8 +151,10 @@ export const TranslationsProductsPage = ({
       createSeoTranslationSection(intl, {
         seoDescription: data?.product?.seoDescription,
         seoTitle: data?.product?.seoTitle,
+        slug: data?.product?.slug,
         translationSeoDescription: data?.translation?.seoDescription ?? null,
         translationSeoTitle: data?.translation?.seoTitle ?? null,
+        translationSlug: data?.translation?.slug ?? null,
       }),
     ];
 
@@ -217,6 +223,8 @@ export const TranslationsProductsPage = ({
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.products,
         })}
+        hrefIcon={<TopNavDestinationIcon.translations />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.translations)}
         title={intl.formatMessage(
           {
             id: "22x9tu",

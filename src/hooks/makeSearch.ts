@@ -16,7 +16,11 @@ export interface SearchVariables extends BaseSearchVariables {
 }
 
 export interface UseSearchResult<TData, TVariables extends BaseSearchVariables> {
-  loadMore: () => void;
+  /**
+   * Loads the next page. Returns `false` when there is no next page to fetch
+   * (so callers like picker backfill can stop waiting). Otherwise void/Promise.
+   */
+  loadMore: () => false | void | Promise<unknown>;
   result: QueryResult<TData, TVariables>;
   search: (query: string) => void;
   query: string;
@@ -38,12 +42,15 @@ const defaultMapSearchToVariables = <TVariables extends SearchVariables>(
   variables: TVariables,
 ): TVariables => ({
   ...variables,
-  query: searchQuery,
+  // `search()` owns searchQuery. Assign pickers drive query through React variables /
+  // onFilterChange instead — only overwrite when search() has a value, otherwise keep
+  // variables.query so a parent-owned query is not reset to "" on every render.
+  query: searchQuery || variables.query || "",
 });
 
 function makeSearch<TData, TVariables extends BaseSearchVariables>(
   query: DocumentNode,
-  loadMoreFn: (result: UseQueryResult<TData, TVariables>) => void,
+  loadMoreFn: (result: UseQueryResult<TData, TVariables>) => false | void | Promise<unknown>,
   options?: MakeSearchOptions<TVariables>,
 ): UseSearchHook<TData, TVariables> {
   const useSearchQuery = makeQuery<TData, TVariables>(query);
@@ -60,13 +67,20 @@ function makeSearch<TData, TVariables extends BaseSearchVariables>(
       variables: mapSearchToVariables(searchQuery, opts.variables as TVariables),
     });
 
+    // Consumers and loadMore must see the same data. During skip toggles / variable
+    // changes Apollo may clear `data` while `previousData` still has the last page —
+    // if loadMore read raw `data` it would silently no-op while `hasMore` (from the
+    // wrapped result) stayed true, which leaves assign-picker backfill spinning forever.
+    const data = result.data ?? result.previousData;
+    const resultWithData = {
+      ...result,
+      data,
+    };
+
     return {
       query: searchQuery,
-      loadMore: () => loadMoreFn(result),
-      result: {
-        ...result,
-        data: result.data ?? result.previousData,
-      },
+      loadMore: () => loadMoreFn(resultWithData),
+      result: resultWithData,
       search: debouncedSearch,
     };
   }

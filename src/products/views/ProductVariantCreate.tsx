@@ -84,7 +84,12 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const product = data?.product;
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({
     onCompleted: data => {
-      const variantId = data.productVariantCreate.productVariant.id;
+      const errors = data.productVariantCreate.errors ?? [];
+      const variantId = data.productVariantCreate.productVariant?.id;
+
+      if (errors.length > 0) {
+        return;
+      }
 
       if (!variantId) {
         notify({
@@ -108,7 +113,7 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
-  const handleVariantReorder = createVariantReorderHandler(product, reorderProductVariants);
+  const handleVariantReorder = createVariantReorderHandler(productId, reorderProductVariants);
   const handleCreate = async (formData: ProductVariantCreateData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       formData.attributesWithNewFileValue,
@@ -139,14 +144,6 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
           trackInventory: true,
           weight: weight(formData.weight),
           quantityLimitPerCustomer: Number(formData.quantityLimitPerCustomer) || null,
-          preorder: formData.isPreorder
-            ? {
-                globalThreshold: formData.globalThreshold
-                  ? parseInt(formData.globalThreshold, 10)
-                  : null,
-                endDate: formData.preorderEndDateTime || null,
-              }
-            : undefined,
         },
         firstValues: 10,
       },
@@ -170,7 +167,6 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
           channelId: listing.id,
           costPrice: listing.value.costPrice || null,
           price: listing.value.price,
-          preorderThreshold: listing.value.preorderThreshold,
         })),
       },
     });

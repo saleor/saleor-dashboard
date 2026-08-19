@@ -21,6 +21,7 @@ export const ShippingMethodTypesHelpTooltip = () => {
           padding={0}
           borderWidth={0}
           backgroundColor="transparent"
+          color="default2"
           aria-label={intl.formatMessage(shippingMethodTypesHelpMessages.tooltipAriaLabel)}
           data-test-id="shipping-method-types-help"
           onClick={event => event.stopPropagation()}

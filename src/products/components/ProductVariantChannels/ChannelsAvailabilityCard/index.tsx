@@ -1,7 +1,4 @@
-import {
-  type ChannelPriceAndPreorderData,
-  type IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
+import { type IChannelPriceArgs, type VariantChannelPriceData } from "@dashboard/channels/utils";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 
 import { type Product, type Variant } from "./../types";
@@ -14,14 +11,14 @@ import { CreateVariantTitle } from "./CreateVariantTitle";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
-  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  listings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   onManageClick: () => void;
   disabled: boolean;
 }
 
 interface ProductDetailsChannelsAvailabilityCardProps {
   product: Product;
-  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
+  listings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>;
   onManageClick: () => void;
   disabled: boolean;
 }
@@ -40,7 +37,6 @@ export const VariantDetailsChannelsAvailabilityCard = ({
       onManageClick={onManageClick}
       disabled={disabled}
       availabilityCount={getAvailabilityCountForVariant(variant, listings)}
-      isEmpty={listings.length === 0}
     />
   </AvailabilityCard>
 );
@@ -59,7 +55,6 @@ export const ProductDetailsChannelsAvailabilityCard = ({
       onManageClick={onManageClick}
       disabled={disabled}
       availabilityCount={getAvailabilityCountForProduct(product, listings)}
-      isEmpty={listings.length === 0}
     />
   </AvailabilityCard>
 );

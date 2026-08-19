@@ -1,0 +1,32 @@
+.callout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mu-spacing-2);
+  padding: var(--mu-spacing-3);
+  border-radius: 8px;
+}
+
+.calloutInfo {
+  border: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default1);
+  color: var(--mu-colors-text-default2);
+}
+
+.calloutWarning {
+  background-color: var(--mu-colors-background-warning1);
+  color: var(--mu-colors-text-default1);
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin-top: 1px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mu-spacing-1);
+  min-width: 0;
+}

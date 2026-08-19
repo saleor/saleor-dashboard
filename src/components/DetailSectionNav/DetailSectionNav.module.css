@@ -1,0 +1,65 @@
+.nav {
+  position: sticky;
+  top: var(--mu-spacing-4);
+  width: 100%;
+  padding-top: var(--mu-spacing-1);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--mu-colors-border-default1);
+}
+
+.item {
+  position: relative;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: var(--mu-spacing-2) var(--mu-spacing-5);
+  border: none;
+  background: transparent;
+  color: var(--mu-colors-text-default2);
+  font: inherit;
+  font-size: var(--mu-fontSizes-3);
+  /* Constant weight — toggling bold reflows labels and makes the rail jump. */
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: var(--mu-colors-text-default1);
+}
+
+.active .button {
+  color: var(--mu-colors-text-default1);
+}
+
+.active::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 3px;
+  border-radius: 2px;
+  background-color: var(--mu-colors-background-accent1);
+}
+
+.item:first-child.active::before {
+  top: 0;
+}
+
+.item:last-child.active::before {
+  bottom: 0;
+}
+
+.section {
+  scroll-margin-top: var(--mu-spacing-4);
+}

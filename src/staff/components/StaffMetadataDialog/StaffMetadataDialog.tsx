@@ -1,0 +1,78 @@
+import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDialog";
+import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
+import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
+import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
+import { StaffMemberDetailsDocument, type StaffMemberDetailsFragment } from "@dashboard/graphql";
+import { useEffect } from "react";
+import { useIntl } from "react-intl";
+
+interface StaffMetadataDialogProps {
+  open: boolean;
+  onClose: () => void;
+  staffMember: StaffMemberDetailsFragment | undefined | null;
+}
+
+export const StaffMetadataDialog = ({
+  onClose,
+  open,
+  staffMember,
+}: StaffMetadataDialogProps): JSX.Element => {
+  const intl = useIntl();
+  const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
+    initialData: staffMember ?? undefined,
+    onClose,
+    refetchDocument: StaffMemberDetailsDocument,
+  });
+
+  const {
+    metadataFields,
+    privateMetadataFields,
+    metadataErrors,
+    privateMetadataErrors,
+    reset,
+    formIsDirty,
+    handleChange,
+    formData,
+  } = useMetadataForm({
+    graphqlData: staffMember ?? undefined,
+    submitInProgress,
+    lastSubmittedData,
+  });
+
+  useEffect(
+    function resetStaffMetadataFormWhenClosed() {
+      if (!open) {
+        reset();
+      }
+    },
+    [open, reset],
+  );
+
+  return (
+    <MetadataDialog
+      open={open}
+      onClose={onClose}
+      onSave={async () => {
+        await onSubmit(formData);
+      }}
+      title={intl.formatMessage({
+        defaultMessage: "Staff member metadata",
+        description: "staff metadata dialog header",
+        id: "xw7wKh",
+      })}
+      data={{
+        metadata: mapFieldArrayToMetadataInput(metadataFields),
+        privateMetadata: mapFieldArrayToMetadataInput(privateMetadataFields),
+      }}
+      onChange={handleChange}
+      loading={submitInProgress}
+      errors={{
+        metadata: metadataErrors.length ? metadataErrors.join(", ") : undefined,
+        privateMetadata: privateMetadataErrors.length
+          ? privateMetadataErrors.join(", ")
+          : undefined,
+      }}
+      formIsDirty={formIsDirty}
+    />
+  );
+};

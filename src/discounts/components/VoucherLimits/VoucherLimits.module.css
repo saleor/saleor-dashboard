@@ -1,0 +1,22 @@
+.usesLeftLabelWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.lockedNotice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mu-spacing-2);
+}
+
+.lockedNoticeIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--mu-colors-text-default2);
+}
+
+.lockedNoticeText {
+  margin: 0;
+  min-width: 0;
+}

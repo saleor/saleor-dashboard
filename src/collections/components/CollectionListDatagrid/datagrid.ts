@@ -3,17 +3,16 @@ import { type CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
   type CollectionChannels,
-  getChannelAvailabilityColor,
   getChannelAvailabilityLabel,
-  getDropdownColor,
+  getChannelAvailabilityStatus,
+  getDropdownStatus,
 } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
-import { readonlyTextCell, tagsCell } from "@dashboard/components/Datagrid/customCells/cells";
+import { readonlyTextCell, statusCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { getStatusColor } from "@dashboard/misc";
+import { type DotStatus } from "@dashboard/components/StatusDot/StatusDot";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { type GridCell, type Item } from "@glideapps/glide-data-grid";
-import { type DefaultTheme } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -49,13 +48,11 @@ export const createGetCellContent =
     columns,
     intl,
     selectedChannelId,
-    currentTheme,
   }: {
     collections: Collections;
     columns: AvailableColumn[];
     intl: IntlShape;
     selectedChannelId: string;
-    currentTheme: DefaultTheme;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = collections[row];
@@ -75,24 +72,15 @@ export const createGetCellContent =
       case "productCount":
         return readonlyTextCell(rowData?.products?.totalCount?.toString() ?? "");
       case "availability": {
-        const { label, color } = channel
-          ? getAvailabilityLabelWhenSelectedChannel(channel, intl, currentTheme)
-          : getAvailabilityLabel(rowData, intl, currentTheme);
+        const { label, status } = channel
+          ? getAvailabilityLabelWhenSelectedChannel(channel, intl)
+          : getAvailabilityLabel(rowData, intl);
 
-        return tagsCell(
-          [
-            {
-              tag: label,
-              color,
-            },
-          ],
-          [label],
-          {
-            cursor: "pointer",
-            readonly: true,
-            allowOverlay: false,
-          },
-        );
+        return statusCell(status, label, {
+          cursor: "pointer",
+          readonly: true,
+          allowOverlay: false,
+        });
       }
       default:
         return readonlyTextCell("");
@@ -102,36 +90,26 @@ export const createGetCellContent =
 export function getAvailabilityLabelWhenSelectedChannel(
   channel: CollectionChannels,
   intl: IntlShape,
-  currentTheme: DefaultTheme,
-) {
-  const color = getStatusColor({
-    status: getChannelAvailabilityColor(channel),
-    currentTheme,
-  });
-
+): { label: string; status: DotStatus } {
   return {
     label: intl.formatMessage(getChannelAvailabilityLabel(channel)),
-    color: color.base,
+    status: getChannelAvailabilityStatus(channel),
   };
 }
 
 export function getAvailabilityLabel(
   rowData: Collection,
   intl: IntlShape,
-  currentTheme: DefaultTheme,
-) {
-  const availabilityLabel = rowData?.channelListings?.length
+): { label: string; status: DotStatus } {
+  const listings = rowData?.channelListings || [];
+  const label = listings.length
     ? intl.formatMessage(messages.dropdownLabel, {
-        channelCount: rowData?.channelListings?.length,
+        channelCount: listings.length,
       })
     : intl.formatMessage(messages.noChannels);
-  const color = getStatusColor({
-    status: getDropdownColor(rowData?.channelListings || []),
-    currentTheme,
-  });
 
   return {
-    label: availabilityLabel,
-    color: color.base,
+    label,
+    status: getDropdownStatus(listings),
   };
 }

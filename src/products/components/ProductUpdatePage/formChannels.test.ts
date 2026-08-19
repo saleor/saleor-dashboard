@@ -1,6 +1,9 @@
+import { type ProductFragment } from "@dashboard/graphql";
+
 import {
   areChannelFieldsDifferent,
   type ChannelAvailabilityFields,
+  countDirtyChannels,
   updateChannelsInput,
 } from "./formChannels";
 
@@ -157,6 +160,131 @@ describe("ProductUpdatePage - fromChannels", () => {
 
       // Assert
       expect(result).toBe(true);
+    });
+  });
+
+  describe("countDirtyChannels", () => {
+    const originalListings = [
+      {
+        channel: { id: "ch-1" },
+        isPublished: true,
+        publishedAt: "2024-01-01T00:00:00Z",
+        isAvailableForPurchase: true,
+        availableForPurchaseAt: "2024-01-01T00:00:00Z",
+        visibleInListings: true,
+      },
+      {
+        channel: { id: "ch-2" },
+        isPublished: false,
+        publishedAt: null,
+        isAvailableForPurchase: false,
+        availableForPurchaseAt: null,
+        visibleInListings: false,
+      },
+    ] as NonNullable<ProductFragment["channelListings"]>;
+
+    it("returns 0 when channels or listings are missing (product still loading)", () => {
+      // Arrange / Act / Assert
+      expect(countDirtyChannels(undefined, undefined)).toBe(0);
+      expect(countDirtyChannels(null, null)).toBe(0);
+      expect(
+        countDirtyChannels(
+          { removeChannels: undefined as never, updateChannels: undefined as never },
+          undefined,
+        ),
+      ).toBe(0);
+    });
+
+    it("returns 0 when listings match the saved product", () => {
+      // Arrange
+      const channels = {
+        removeChannels: [],
+        updateChannels: originalListings.map(listing => ({
+          channelId: listing.channel.id,
+          isPublished: listing.isPublished,
+          publishedAt: listing.publishedAt,
+          isAvailableForPurchase: listing.isAvailableForPurchase,
+          availableForPurchaseAt: listing.availableForPurchaseAt,
+          visibleInListings: listing.visibleInListings,
+        })),
+      };
+
+      // Act / Assert
+      expect(countDirtyChannels(channels, originalListings)).toBe(0);
+    });
+
+    it("does not count a channel that was touched then reverted", () => {
+      // Arrange — same values as original after a forth-and-back edit
+      const channels = {
+        removeChannels: [],
+        updateChannels: [
+          {
+            channelId: "ch-1",
+            isPublished: true,
+            publishedAt: "2024-01-01T00:00:00Z",
+            isAvailableForPurchase: true,
+            availableForPurchaseAt: "2024-01-01T00:00:00Z",
+            visibleInListings: true,
+          },
+          {
+            channelId: "ch-2",
+            isPublished: false,
+            publishedAt: null,
+            isAvailableForPurchase: false,
+            availableForPurchaseAt: null,
+            visibleInListings: false,
+          },
+        ],
+      };
+
+      // Act / Assert
+      expect(countDirtyChannels(channels, originalListings)).toBe(0);
+    });
+
+    it("counts modified, added, and removed original channels", () => {
+      // Arrange
+      const channels = {
+        removeChannels: ["ch-2"],
+        updateChannels: [
+          {
+            channelId: "ch-1",
+            isPublished: false, // changed
+            publishedAt: "2024-01-01T00:00:00Z",
+            isAvailableForPurchase: true,
+            availableForPurchaseAt: "2024-01-01T00:00:00Z",
+            visibleInListings: true,
+          },
+          {
+            channelId: "ch-new",
+            isPublished: true,
+            publishedAt: null,
+            isAvailableForPurchase: false,
+            availableForPurchaseAt: null,
+            visibleInListings: true,
+          },
+        ],
+      };
+
+      // Act / Assert — ch-1 modified + ch-new added + ch-2 removed
+      expect(countDirtyChannels(channels, originalListings)).toBe(3);
+    });
+
+    it("ignores removeChannels entries that were never on the product", () => {
+      // Arrange
+      const channels = {
+        removeChannels: ["never-listed"],
+        updateChannels: originalListings.map(listing => ({
+          channelId: listing.channel.id,
+          isPublished: listing.isPublished,
+          publishedAt: listing.publishedAt,
+          isAvailableForPurchase: listing.isAvailableForPurchase,
+          availableForPurchaseAt: listing.availableForPurchaseAt,
+          visibleInListings: listing.visibleInListings,
+        })),
+      };
+
+      // Act / Assert
+      expect(countDirtyChannels(channels, originalListings)).toBe(0);
     });
   });
 

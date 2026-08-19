@@ -15,6 +15,12 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { type CountryWithCodeFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import {
+  COUNTRY_PRESET_CODES,
+  type CountryPresetCode,
+} from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog/countryPresets";
+import { togglePresetSelection } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog/presetSelection";
+import { ShippingZoneCountriesAssignDialogQuickPicks } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialogQuickPicks";
 import { toggle } from "@dashboard/utils/lists";
 import { Box } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
@@ -61,6 +67,10 @@ const DiscountCountrySelectDialog = ({
 }: DiscountCountrySelectDialogProps) => {
   const intl = useIntl();
   const countryItems = useMemo(() => toCountryPickerItems(countries), [countries]);
+  const availableCountryCodes = useMemo(
+    () => countryItems.map(country => country.id),
+    [countryItems],
+  );
   const [selectedCountryIds, setSelectedCountryIds] = useState(initial);
   const [baselineCountryIds, setBaselineCountryIds] = useState(initial);
   const {
@@ -74,6 +84,16 @@ const DiscountCountrySelectDialog = ({
   const handleCountryToggle = (country: CountryPickerItem) => {
     setSelectedCountryIds(currentSelected =>
       toggle(country.id, currentSelected, (leftId, rightId) => leftId === rightId),
+    );
+  };
+  const handlePresetToggle = (preset: CountryPresetCode, checked: boolean) => {
+    setSelectedCountryIds(currentSelected =>
+      togglePresetSelection(
+        currentSelected,
+        COUNTRY_PRESET_CODES[preset],
+        availableCountryCodes,
+        checked,
+      ),
     );
   };
   const toggleAllCountries = (items: CountryPickerItem[], selectedCount: number) => {
@@ -141,6 +161,14 @@ const DiscountCountrySelectDialog = ({
                   inPickerToolbar
                   isSearchActive={isSearchActive}
                   onToggle={handleToggleAll}
+                />
+                <ShippingZoneCountriesAssignDialogQuickPicks
+                  availableCountryCodes={availableCountryCodes}
+                  isRestOfTheWorldSelected={false}
+                  selectedCountryIds={selectedCountryIds}
+                  showRestOfTheWorld={false}
+                  onPresetToggle={handlePresetToggle}
+                  onRestOfTheWorldToggle={() => undefined}
                 />
               </Box>
             ) : undefined

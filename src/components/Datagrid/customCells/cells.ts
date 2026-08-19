@@ -17,6 +17,7 @@ import { type Option } from "@saleor/macaw-ui-next";
 import { type DropdownCell, type DropdownCellProps } from "./DropdownCell";
 import { type MoneyCell, type MoneyDiscuntedCell } from "./Money";
 import { hueToPillColorLight, type PillCell, type PillColor, stringToHue } from "./PillCell";
+import { type PrimarySecondaryTextCell } from "./PrimarySecondaryTextCell";
 import { type StatusCell } from "./StatusCell";
 import { type ThumbnailCell } from "./ThumbnailCell";
 
@@ -39,6 +40,7 @@ export function readonlyTextCell(
   value: string,
   hasCursorPointer = true,
   style: TextCell["style"] = "normal",
+  themeOverride?: Partial<Theme>,
 ): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
@@ -48,6 +50,30 @@ export function readonlyTextCell(
     displayData: value,
     kind: GridCellKind.Text,
     style,
+    themeOverride,
+  };
+}
+
+/** Primary label in default text color; optional secondary suffix in muted (default2). */
+export function primarySecondaryTextCell(
+  primary: string,
+  secondary?: string,
+  opts?: Partial<GridCell>,
+): PrimarySecondaryTextCell {
+  const copyData = `${primary}${secondary ?? ""}`;
+
+  return {
+    ...common,
+    ...opts,
+    allowOverlay: false,
+    readonly: true,
+    kind: GridCellKind.Custom,
+    copyData,
+    data: {
+      kind: "primary-secondary-text-cell",
+      primary,
+      secondary,
+    },
   };
 }
 
@@ -174,6 +200,7 @@ export function moneyCell(
   value: number | number[] | null,
   currency: string,
   opts?: Partial<GridCell>,
+  dataOpts?: { hasBreakdown?: boolean },
 ): MoneyCell {
   return {
     ...common,
@@ -183,6 +210,7 @@ export function moneyCell(
       kind: "money-cell",
       value,
       currency,
+      hasBreakdown: dataOpts?.hasBreakdown,
     },
     copyData: value?.toString() ?? "",
   };
@@ -194,10 +222,11 @@ interface MoneyDiscountedCellData {
   undiscounted?: string | number;
   currency: string;
   locale: Locale;
+  hasBreakdown?: boolean;
 }
 
 export function moneyDiscountedCell(
-  { value, undiscounted, currency, locale }: MoneyDiscountedCellData,
+  { value, undiscounted, currency, locale, hasBreakdown }: MoneyDiscountedCellData,
   opts?: Partial<GridCell>,
 ): MoneyDiscuntedCell {
   return {
@@ -210,6 +239,7 @@ export function moneyDiscountedCell(
       currency,
       undiscounted,
       locale,
+      hasBreakdown,
     },
     copyData: value?.toString() ?? "",
   };

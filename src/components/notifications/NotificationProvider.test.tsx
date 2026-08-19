@@ -2,7 +2,7 @@ import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { renderHook } from "@testing-library/react";
 import { type PropsWithChildren, useContext } from "react";
 
-import { NotificationContext } from ".";
+import { NotificationContext } from "./NotificationContext";
 import { NotificationProvider } from "./NotificationProvider";
 
 // Mock sonner

@@ -31,10 +31,10 @@ export class ProductPage extends BasePage {
     readonly productsNames = page.getByTestId("name"),
     readonly productAvailableInChannelsText = page.getByTestId("availability-card"),
     readonly createProductButton = page.getByTestId("add-product"),
-    readonly cogShowMoreButtonButton = page.getByTestId("show-more-button"),
+    readonly cogShowMoreButtonButton = page.getByTestId("menu").getByTestId("show-more-button"),
     readonly exportButton = page.getByTestId("export"),
     readonly bulkDeleteButton = page.getByTestId("bulk-delete-button"),
-    readonly deleteProductButton = page.getByTestId("button-bar-delete"),
+    readonly deleteProductButton = page.getByTestId("delete-product"),
     readonly productNameInput = page.locator("[name='name']"),
     readonly addProductButton = page.getByTestId("add-product"),
     readonly productTypeInput = page.getByTestId("product-type"),
@@ -88,7 +88,9 @@ export class ProductPage extends BasePage {
     await console.log("Navigating to create product view: " + createProductUrl);
     await this.page.goto(createProductUrl);
     await this.waitForDOMToFullyLoad();
-    await this.pageHeader.waitFor({ state: "visible", timeout: 50000 });
+    await this.page
+      .getByTestId("create-product-dialog")
+      .waitFor({ state: "visible", timeout: 50000 });
   }
 
   async searchforProduct(productName: string) {
@@ -107,6 +109,7 @@ export class ProductPage extends BasePage {
   }
 
   async clickDeleteProductButton() {
+    await this.cogShowMoreButtonButton.click();
     await this.deleteProductButton.click();
   }
 

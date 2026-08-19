@@ -8,7 +8,7 @@ import {
 } from "@dashboard/discounts/discountsUrls";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
+import { sectionNames } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
 import { useState } from "react";
 import { useIntl } from "react-intl";
@@ -41,8 +41,8 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
   const discountListBackLink = useBackLinkWithState({
     path: discountSalesListPath,
   });
-  const onSubmit = createUpdateHandler(promotionData?.promotion, variables =>
-    promotionUpdate({ variables }),
+  const onSubmit = createUpdateHandler(promotionData?.promotion, (variables, options) =>
+    promotionUpdate({ variables, silent: options?.silent }),
   );
   const onRuleUpdateSubmit = createRuleUpdateHandler(promotionData?.promotion, variables =>
     promotionRuleUpdate({ variables }),
@@ -69,7 +69,7 @@ export const DiscountDetails = ({ id }: DiscountDetailsProps) => {
 
   return (
     <>
-      <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
+      <WindowTitle title={intl.formatMessage(sectionNames.promotions)} />
       <LabelsMapsProvider promotionData={promotionData}>
         <DiscountDetailsPage
           data={promotionData?.promotion}

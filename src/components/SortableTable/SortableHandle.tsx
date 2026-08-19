@@ -1,43 +1,54 @@
-import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
+import { type DraggableAttributes, type DraggableSyntheticListeners } from "@dnd-kit/core";
 import { TableCell } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { GripVertical } from "lucide-react";
-import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
+import { type MouseEvent, type PointerEvent } from "react";
 
-import { useSortableContext } from "./SortableTableBody";
+import styles from "./SortableHandle.module.css";
 
-const useStyles = makeStyles(
-  theme => ({
-    columnDrag: {
-      "&&&": {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-      },
-      cursor: "grab",
-      width: 40,
-    },
-    disabled: {
-      cursor: "default",
-      opacity: 0.3,
-    },
-  }),
-  { name: "SortableHandle" },
+interface SortableHandleProps {
+  disabled?: boolean;
+  isSorting?: boolean;
+  attributes?: DraggableAttributes;
+  listeners?: DraggableSyntheticListeners;
+}
+
+const stopRowNavigation = (event: MouseEvent<HTMLTableCellElement>): void => {
+  event.stopPropagation();
+};
+
+const preventTextSelection = (
+  event: PointerEvent<HTMLDivElement>,
+  listeners: DraggableSyntheticListeners,
+): void => {
+  listeners?.onPointerDown?.(event);
+  // Stops the browser from starting a native text selection as the pointer moves.
+  event.preventDefault();
+};
+
+export const SortableHandle = ({
+  disabled = false,
+  isSorting = false,
+  attributes,
+  listeners,
+}: SortableHandleProps): JSX.Element => (
+  <TableCell className={clsx(styles.cell, disabled && styles.disabled)} onClick={stopRowNavigation}>
+    <div
+      className={styles.handle}
+      {...(disabled ? undefined : attributes)}
+      {...(disabled ? undefined : listeners)}
+      onPointerDown={
+        disabled
+          ? undefined
+          : (event: PointerEvent<HTMLDivElement>): void => preventTextSelection(event, listeners)
+      }
+    >
+      <DragHandle
+        cursor={disabled ? "not-allowed" : isSorting ? "grabbing" : "grab"}
+        data-test-id="button-drag-handle"
+      />
+    </div>
+  </TableCell>
 );
 
-/** @deprecated This component should use @dnd-kit instead of react-sortable-hoc */
-const SortableHandle = SortableHandleHoc(() => {
-  const classes = useStyles({});
-  const { disabled } = useSortableContext();
-
-  return (
-    <TableCell className={clsx(classes.columnDrag, disabled && classes.disabled)}>
-      <Box display="flex" alignItems="center" height="100%">
-        <GripVertical size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-      </Box>
-    </TableCell>
-  );
-});
-
-export default SortableHandle;
+SortableHandle.displayName = "SortableHandle";

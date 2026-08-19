@@ -69,4 +69,27 @@ describe("CopyableText", () => {
 
     expect(copyIcon).toBeInTheDocument();
   });
+
+  it("copies text when custom children are rendered", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const mockCopy = jest.fn();
+
+    mockUseClipboard.mockReturnValue([false, mockCopy]);
+
+    render(
+      <Wrapper>
+        <CopyableText text="copy-me@example.com">
+          <span>Displayed label</span>
+        </CopyableText>
+      </Wrapper>,
+    );
+
+    // Act
+    await user.click(screen.getByRole("button", { name: /copy to clipboard/i }));
+
+    // Assert
+    expect(screen.getByText("Displayed label")).toBeInTheDocument();
+    expect(mockCopy).toHaveBeenCalledWith("copy-me@example.com");
+  });
 });

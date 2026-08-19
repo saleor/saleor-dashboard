@@ -83,8 +83,8 @@ describe("useVariantDrag", () => {
 
     // Assert
     expect(mockOnReorder).toHaveBeenCalledWith({
-      oldIndex: 0,
-      newIndex: 1,
+      id: "1",
+      sortOrder: 1,
     });
     expect(result.current.isSaving).toBe(false);
   });

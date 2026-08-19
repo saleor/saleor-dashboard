@@ -13,7 +13,6 @@ import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHea
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { type Item } from "@glideapps/glide-data-grid";
-import { useTheme } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -46,7 +45,6 @@ export const CollectionListDatagrid = ({
   selectedChannelId,
 }: CollectionListDatagridProps) => {
   const intl = useIntl();
-  const { theme: currentTheme } = useTheme();
   const datagrid = useDatagridChangeState();
   const collectionListStaticColumns = useMemo(
     () => collectionListStaticColumnsAdapter(intl, sort),
@@ -73,9 +71,8 @@ export const CollectionListDatagrid = ({
       intl,
       columns: visibleColumns,
       selectedChannelId,
-      currentTheme,
     }),
-    [collections, intl, visibleColumns, selectedChannelId, currentTheme],
+    [collections, intl, visibleColumns, selectedChannelId],
   );
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
@@ -124,7 +121,7 @@ export const CollectionListDatagrid = ({
         onSort(columnName);
       }
     },
-    [visibleColumns, onSort],
+    [onSort, selectedChannelId, visibleColumns],
   );
 
   return (

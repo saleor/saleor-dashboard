@@ -4,25 +4,16 @@ import { type ReactNode } from "react";
 
 import { ImagePlaceholder } from "./ImagePlaceholder";
 
-export const ProductVariantEmptyItem = ({
-  children,
-  hasVariants,
-}: {
-  children: ReactNode;
-  hasVariants: boolean;
-}) => (
+export const ProductVariantEmptyItem = ({ children }: { children: ReactNode }) => (
   <Box display="block" borderLeftStyle="solid" __borderLeftWidth={2}>
     <Box
       maxWidth="100%"
       paddingX={2}
-      paddingY={1}
+      paddingY={2}
       display="flex"
       alignItems="center"
       gap={5}
       borderBottomStyle="solid"
-      // Show top border when user creates first variant
-      borderTopStyle={hasVariants ? undefined : "solid"}
-      borderTopWidth={1}
       borderBottomWidth={1}
       borderColor="default1"
     >

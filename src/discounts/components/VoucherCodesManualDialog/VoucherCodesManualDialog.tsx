@@ -7,7 +7,7 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { Box, Input } from "@saleor/macaw-ui-next";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
@@ -26,6 +26,7 @@ export const VoucherCodesManualDialog = ({
   onSubmit,
 }: VoucherCodesManualDialogProps) => {
   const intl = useIntl();
+  const codeInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
   const [code, setCode] = useState("");
   const resetForm = () => {
@@ -54,15 +55,33 @@ export const VoucherCodesManualDialog = ({
     onOpen: resetForm,
   });
 
+  // Opened from the Add-code popover — native autoFocus loses to popover focus restore
+  // and Dialog chrome. Same delayed focus as ProductExternalMediaDialog.
+  useEffect(
+    function focusCodeInputWhenDialogOpens() {
+      if (!open) {
+        return;
+      }
+
+      const timeoutId = window.setTimeout(() => {
+        codeInputRef.current?.focus();
+      }, 50);
+
+      return () => window.clearTimeout(timeoutId);
+    },
+    [open],
+  );
+
   return (
     <DashboardModal open={open} onChange={handleModalClose}>
-      <DashboardModal.Content size="xs">
+      <DashboardModal.Content disableAutofocus size="xs">
         <DashboardModal.Header>{intl.formatMessage(messages.title)}</DashboardModal.Header>
 
         <DashboardModal.Body>
           <DashboardModal.Inset>
             <Box display="grid" gap={3}>
               <Input
+                ref={codeInputRef}
                 data-test-id="enter-code-input"
                 name="code"
                 type="text"

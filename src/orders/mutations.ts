@@ -465,18 +465,7 @@ export const invoiceEmailSendMutation = gql`
 `;
 
 export const orderSettingsUpdateMutation = gql`
-  mutation OrderSettingsUpdate(
-    $orderSettingsInput: OrderSettingsUpdateInput!
-    $shopSettingsInput: ShopSettingsInput!
-  ) {
-    orderSettingsUpdate(input: $orderSettingsInput) {
-      errors {
-        ...OrderSettingsError
-      }
-      orderSettings {
-        ...OrderSettings
-      }
-    }
+  mutation OrderSettingsUpdate($shopSettingsInput: ShopSettingsInput!) {
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {
         ...ShopError

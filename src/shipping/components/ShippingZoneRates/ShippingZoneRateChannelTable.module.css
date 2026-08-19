@@ -2,20 +2,100 @@
   width: 100%;
 }
 
-.channelTableScroll {
+.search {
+  padding: var(--mu-spacing-3) var(--mu-spacing-4);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.list {
   max-height: 300px;
-  overflow-x: auto;
-  overflow-y: auto;
+  overflow: auto;
   width: 100%;
 }
 
-.priceCellContent {
+.headerRow,
+.row {
+  display: grid;
+  align-items: center;
+  gap: var(--mu-spacing-4);
+}
+
+.columnsPrice {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(10.5rem, auto);
+}
+
+.columnsWeight {
+  grid-template-columns: minmax(0, 1fr) minmax(10.5rem, auto);
+}
+
+/* Compact column labels — do not reuse data-row min-height / padding. */
+.headerRow {
+  padding: var(--mu-spacing-1) var(--mu-spacing-4);
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  background-color: var(--mu-colors-background-default2);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.row {
+  padding: var(--mu-spacing-2) var(--mu-spacing-4);
+  min-height: 3.25rem;
+}
+
+.row:not(:last-child) {
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.channelCell {
+  display: flex;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  min-width: 0;
+}
+
+.channelIcon {
+  flex-shrink: 0;
+}
+
+.channelName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rangeCell {
+  min-width: 0;
+}
+
+.priceCell {
   display: flex;
   justify-content: flex-end;
-  width: 100%;
+  align-items: center;
+  min-width: 0;
 }
 
-.channelTableScroll th:last-child,
-.channelTableScroll td:last-child {
-  padding-right: 16px !important;
+/* Currency | whole (fills) | fraction (fixed) — decimals line up across rows. */
+.priceValue {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto 1fr 4.5ch;
+  column-gap: 0.25rem;
+  align-items: baseline;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.currency {
+  font-size: 0.87em;
+}
+
+.whole {
+  min-width: 0;
+  text-align: right;
+}
+
+.fraction {
+  text-align: left;
 }

@@ -32,7 +32,6 @@ const line: OrderLineFragment = {
     id: "variantId==",
     name: "M",
     quantityAvailable: 700,
-    preorder: null,
     stocks: null,
     product: {
       __typename: "Product",
@@ -55,6 +54,8 @@ const line: OrderLineFragment = {
   },
   unitDiscountValue: 0,
   unitDiscountReason: null,
+  priceOverrideReason: null,
+  isPriceOverridden: null,
   unitDiscountType: null,
   undiscountedUnitPrice: {
     __typename: "TaxedMoney",

@@ -1,0 +1,9 @@
+.scopeFilter {
+  padding-bottom: var(--mu-spacing-2);
+}
+
+/* Text renders a span, so without this the hint trails the checkbox and wraps mid-sentence. */
+.helper {
+  display: block;
+  margin-top: var(--mu-spacing-1);
+}

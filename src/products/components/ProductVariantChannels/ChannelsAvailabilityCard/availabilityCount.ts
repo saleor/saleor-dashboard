@@ -1,7 +1,4 @@
-import {
-  type ChannelPriceAndPreorderData,
-  type IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
+import { type IChannelPriceArgs, type VariantChannelPriceData } from "@dashboard/channels/utils";
 import {
   type ProductVariantCreateDataQuery,
   type ProductVariantFragment,
@@ -10,7 +7,7 @@ import { type FormsetData } from "@dashboard/hooks/useFormset";
 
 /**
  * Counts channel listings for a variant. The result is fed into the
- * "Listed in N of M channels" subtitle on `VariantDetailsChannelsAvailabilityCard`.
+ * "Listed on N of M channels" subtitle on the variant pricing card.
  *
  * Despite the legacy "Availability" naming, this does NOT measure customer-facing
  * availability:
@@ -26,7 +23,7 @@ import { type FormsetData } from "@dashboard/hooks/useFormset";
  */
 export const getAvailabilityCountForVariant = (
   item: ProductVariantFragment,
-  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>,
+  listings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>,
 ) => {
   const allAvailableChannelsListings = item?.product?.channelListings?.map(
     ({ channel: { id } }) => id,
@@ -48,7 +45,7 @@ export const getAvailabilityCountForVariant = (
  */
 export const getAvailabilityCountForProduct = (
   item: ProductVariantCreateDataQuery["product"],
-  listings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>,
+  listings: FormsetData<VariantChannelPriceData, IChannelPriceArgs>,
 ) => {
   const listingsIds = listings.map(({ id }) => id);
   const publishedInChannelsListings = item?.channelListings?.filter(lst =>

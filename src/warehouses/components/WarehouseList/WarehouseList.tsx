@@ -10,7 +10,7 @@ import { renderCollection } from "@dashboard/misc";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
+import { WarehouseListUrlSortField, warehousePath } from "@dashboard/warehouses/urls";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
@@ -102,7 +102,7 @@ const WarehouseList = (props: WarehouseListProps) => {
               href={
                 warehouse
                   ? {
-                      pathname: warehouseUrl(warehouse.id),
+                      pathname: warehousePath(encodeURIComponent(warehouse.id)),
                       state: getPrevLocationState(location),
                     }
                   : undefined

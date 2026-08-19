@@ -1,3 +1,7 @@
+.bulkHeaderCell {
+  white-space: nowrap;
+}
+
 .valuesTableWithSection > div > div {
   border-bottom: none;
   border-bottom-left-radius: 0;

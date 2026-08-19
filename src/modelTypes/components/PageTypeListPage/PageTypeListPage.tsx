@@ -1,4 +1,8 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -10,9 +14,8 @@ import {
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { type PageTypeFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { pageTypeAddUrl, type PageTypeListUrlSortField } from "@dashboard/modelTypes/urls";
+import { type PageTypeListUrlSortField } from "@dashboard/modelTypes/urls";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -37,6 +40,7 @@ interface PageTypeListPageProps
   onTabDelete: (id: number) => void;
   hasPresetsChanged: () => boolean;
   selectedPageTypes: string[];
+  onCreateModelType: () => void;
 }
 
 const PageTypeListPage = ({
@@ -51,10 +55,11 @@ const PageTypeListPage = ({
   hasPresetsChanged,
   tabs,
   selectedPageTypes,
+  onCreateModelType,
+  disabled,
   ...listProps
 }: PageTypeListPageProps) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const { PAGE_TYPE_OVERVIEW_CREATE, PAGE_TYPE_OVERVIEW_MORE_ACTIONS } = useExtensions(
@@ -72,6 +77,8 @@ const PageTypeListPage = ({
         isAlignToRight={false}
         withoutBorder
         href={configurationMenuUrl}
+        hrefIcon={<TopNavDestinationIcon.configuration />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.configuration)}
         title={intl.formatMessage(sectionNames.modelTypes)}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
@@ -101,7 +108,8 @@ const PageTypeListPage = ({
           {extensionCreateButtonItems.length > 0 ? (
             <ButtonGroupWithDropdown
               options={extensionCreateButtonItems}
-              onClick={() => navigate(pageTypeAddUrl)}
+              onClick={onCreateModelType}
+              disabled={disabled}
               data-test-id="create-page-type"
             >
               <FormattedMessage
@@ -112,7 +120,8 @@ const PageTypeListPage = ({
             </ButtonGroupWithDropdown>
           ) : (
             <Button
-              onClick={() => navigate(pageTypeAddUrl)}
+              onClick={onCreateModelType}
+              disabled={disabled}
               variant="primary"
               data-test-id="create-page-type"
             >
@@ -128,6 +137,7 @@ const PageTypeListPage = ({
       <Box paddingX={6}>
         <PageTypeList
           {...listProps}
+          disabled={disabled}
           search={{
             placeholder: intl.formatMessage({
               id: "INw68F",

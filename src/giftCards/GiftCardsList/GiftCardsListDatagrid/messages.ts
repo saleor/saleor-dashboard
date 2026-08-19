@@ -20,6 +20,11 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Product",
     description: "column title product",
   },
+  assignedTo: {
+    id: "Tbaoeu",
+    defaultMessage: "Assigned to",
+    description: "column title assigned to customer",
+  },
   balance: {
     id: "MbZHXE",
     defaultMessage: "Balance",
@@ -37,9 +42,5 @@ export const messages = defineMessages({
     id: "Rd0s80",
     defaultMessage: "No gift cards found",
     description: "no cards found title message",
-  },
-  active: {
-    defaultMessage: "Active",
-    id: "3a5wL8",
   },
 });

@@ -1,59 +1,70 @@
-// @ts-strict-ignore
-import { DashboardCard } from "@dashboard/components/Card";
-import GiftCardSettingsExpirySelect, {
-  type GiftCardSettingsExpirySelectProps,
-} from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
-import { makeStyles } from "@saleor/macaw-ui";
-import type * as React from "react";
-import { useIntl } from "react-intl";
+import { SettingsFieldStack } from "@dashboard/components/Settings/SettingsFieldStack";
+import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
+import { SettingsToggleRow } from "@dashboard/components/Settings/SettingsToggleRow";
+import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
+import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField/TimePeriodField";
+import { type GiftCardSettingsErrorFragment } from "@dashboard/graphql";
+import { type FormChange } from "@dashboard/hooks/useForm";
+import { type ChangeEvent } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { getGiftCardSettingsErrorMessage } from "../messages";
 import { type GiftCardSettingsFormData } from "../types";
 import { giftCardExpirySettingsCard as messages } from "./messages";
 
-interface GiftCardExpirySettingsCardProps
-  extends Pick<GiftCardSettingsExpirySelectProps, "errors"> {
+interface GiftCardExpirySettingsCardProps {
   data: GiftCardSettingsFormData;
   disabled: boolean;
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: FormChange;
+  errors?: {
+    expiryPeriod?: GiftCardSettingsErrorFragment;
+  };
 }
 
-const useStyles = makeStyles(
-  () => ({
-    cardTitle: {
-      paddingTop: 0,
-    },
-  }),
-  { name: "GiftCardExpirySettingsCard" },
-);
-const GiftCardExpirySettingsCard = ({
+export const GiftCardExpirySettingsCard = ({
   data,
   disabled,
   errors,
   onChange,
-}: GiftCardExpirySettingsCardProps) => {
+}: GiftCardExpirySettingsCardProps): JSX.Element => {
   const intl = useIntl();
-  const classes = useStyles({});
+
+  const handleToggle = (checked: boolean) => {
+    onChange({
+      target: { name: "expiryPeriodActive", value: checked },
+    } as ChangeEvent<any>);
+  };
 
   return (
-    <DashboardCard data-test-id="gift-card-settings">
-      <DashboardCard.Header>
-        <DashboardCard.Title className={classes.cardTitle}>
-          {intl.formatMessage(messages.expiryDateTitle)}
-        </DashboardCard.Title>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        <GiftCardSettingsExpirySelect
-          expiryPeriodActive={data.expiryPeriodActive}
-          expiryPeriodType={data.expiryPeriodType}
-          expiryPeriodAmount={data.expiryPeriodAmount}
-          change={onChange}
-          disabled={disabled}
-          errors={errors}
-        />
-      </DashboardCard.Content>
-    </DashboardCard>
+    <SettingsSection
+      id={settingsHashes.giftCardsExpiry}
+      data-test-id="gift-card-settings"
+      ownership="shop"
+      title={intl.formatMessage(messages.expiryDateTitle)}
+      description={<FormattedMessage {...messages.expiryDateSectionDescription} />}
+    >
+      <SettingsToggleRow
+        name="expiryPeriodActive"
+        title={<FormattedMessage {...messages.setExpirationPeriodTitle} />}
+        description={<FormattedMessage {...messages.setExpirationPeriodDescription} />}
+        checked={data.expiryPeriodActive}
+        disabled={disabled}
+        onCheckedChange={handleToggle}
+        data-test-id="expiry-period-active"
+      />
+      {data.expiryPeriodActive ? (
+        <SettingsFieldStack>
+          <TimePeriodField
+            isError={!!errors?.expiryPeriod}
+            helperText={getGiftCardSettingsErrorMessage(errors?.expiryPeriod, intl)}
+            change={onChange}
+            periodType={data.expiryPeriodType}
+            periodAmount={data.expiryPeriodAmount}
+            amountFieldName="expiryPeriodAmount"
+            typeFieldName="expiryPeriodType"
+          />
+        </SettingsFieldStack>
+      ) : null}
+    </SettingsSection>
   );
 };
-
-GiftCardExpirySettingsCard.displayName = "GiftCardExpirySettingsCard";
-export default GiftCardExpirySettingsCard;

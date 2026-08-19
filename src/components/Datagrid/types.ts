@@ -14,4 +14,6 @@ export interface AvailableColumn {
   headerAlign?: "left" | "right";
   /** When true, column header cannot be dragged to reorder. */
   disableReorder?: boolean;
+  /** Extra unused grid width is given to this column (glide-data-grid `grow`). */
+  grow?: number;
 }

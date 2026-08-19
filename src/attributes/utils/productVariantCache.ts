@@ -1,8 +1,11 @@
 import { type SearchProductsQuery } from "@dashboard/graphql";
+import { getSearchProductVariants } from "@dashboard/searches/mapSearchProductsForVariantAssign";
 import { type RelayToFlat } from "@dashboard/types";
 
 export type CachedSearchProduct = RelayToFlat<NonNullable<SearchProductsQuery["search"]>>[0];
-type CachedSearchProductVariant = NonNullable<CachedSearchProduct["variants"]>[0];
+type CachedSearchProductVariant = NonNullable<
+  NonNullable<CachedSearchProduct["productVariants"]>["edges"]
+>[number]["node"];
 
 /** Cache available variants in product in order to build fast labels based on selected values in the form */
 export class ProductVariantCacheManagerSingleton {
@@ -25,10 +28,8 @@ export class ProductVariantCacheManagerSingleton {
   private buildVariantMap(product: CachedSearchProduct): Map<string, CachedSearchProductVariant> {
     const variantMap = new Map<string, CachedSearchProductVariant>();
 
-    if (product.variants) {
-      for (const variant of product.variants) {
-        variantMap.set(variant.id, variant);
-      }
+    for (const variant of getSearchProductVariants(product)) {
+      variantMap.set(variant.id, variant);
     }
 
     this.cache.set(product, variantMap);

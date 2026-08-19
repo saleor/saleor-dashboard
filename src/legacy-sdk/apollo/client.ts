@@ -25,6 +25,40 @@ const isTokenRefreshExternal = (
   result: RefreshTokenMutation | ExternalRefreshMutation,
 ): result is ExternalRefreshMutation => "externalRefresh" in result;
 
+/**
+ * Single-flight token refresh shared by every in-flight request.
+ *
+ * When a slept tab wakes up, Apollo replays all of its active queries at once
+ * and each one finds the same expired token. Without coalescing, that fans out
+ * into one refresh mutation per request, and each response invalidates the
+ * others' tokens. Only the call that started the refresh clears the shared
+ * promise, so a caller that merely awaits it can never drop the reference while
+ * the request is still running.
+ */
+const runTokenRefresh = (owner: string) => {
+  if (refreshPromise) {
+    return refreshPromise;
+  }
+
+  const pending = isInternalToken(owner)
+    ? authClient.refreshToken()
+    : authClient.refreshExternalToken();
+
+  refreshPromise = pending;
+
+  void pending
+    .finally(() => {
+      if (refreshPromise === pending) {
+        refreshPromise = null;
+      }
+    })
+    // Rejections are surfaced to whoever awaits `pending`; this only keeps the
+    // bookkeeping chain itself from becoming an unhandled rejection.
+    .catch(() => undefined);
+
+  return pending;
+};
+
 export type FetchConfig = Partial<{
   /**
    * Enable auto token refreshing. Default to `true`.
@@ -81,16 +115,10 @@ export const createFetch =
         if (refreshPromise) {
           await refreshPromise;
         } else if (Date.now() >= expirationTime) {
-          if (isInternalToken(owner)) {
-            await authClient.refreshToken();
-          } else {
-            await authClient.refreshExternalToken();
-          }
+          await runTokenRefresh(owner);
         }
       } catch {
         // ignore
-      } finally {
-        refreshPromise = null;
       }
 
       token = storage.getAccessToken();
@@ -120,14 +148,7 @@ export const createFetch =
 
       if (isUnauthenticated) {
         try {
-          if (refreshPromise) {
-            refreshTokenResponse = await refreshPromise;
-          } else {
-            refreshPromise = isInternalToken(owner)
-              ? authClient.refreshToken()
-              : authClient.refreshExternalToken();
-            refreshTokenResponse = await refreshPromise;
-          }
+          refreshTokenResponse = await runTokenRefresh(owner);
 
           if (
             refreshTokenResponse.data && isTokenRefreshExternal(refreshTokenResponse.data)
@@ -146,8 +167,6 @@ export const createFetch =
           }
         } catch {
           // ignore
-        } finally {
-          refreshPromise = null;
         }
       }
 

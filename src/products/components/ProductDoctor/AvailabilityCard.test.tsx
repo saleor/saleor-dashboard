@@ -131,7 +131,7 @@ describe("AvailabilityCard / DiagnosticSummaryBanner", () => {
     // messages in this suite (e.g. publicApiVariantsInStock).
     const banner = screen.getByTestId("diagnostic-summary-banner");
 
-    expect(banner).toHaveTextContent(/All channels configured correctly · \{count\} advisories/);
+    expect(banner).toHaveTextContent(/All channels configured correctly · 2 advisories/);
     // The singular-only copy must NOT be selected for count > 1.
     expect(banner).not.toHaveTextContent(/1 advisory$/);
   });
@@ -169,6 +169,23 @@ describe("AvailabilityCard / DiagnosticSummaryBanner", () => {
     // must not appear anywhere on the screen.
     expect(screen.queryByTestId("diagnostic-summary-banner")).toBeNull();
     expect(screen.queryByText(/advisory|advisories/i)).toBeNull();
+  });
+});
+
+describe("AvailabilityCard empty state", () => {
+  it("renders a dashed placeholder when the product is not listed in any channel", () => {
+    // Arrange
+    const diagnostics = baseDiagnostics({ channelSummaries: [] });
+
+    // Act
+    render(<AvailabilityCard diagnostics={diagnostics} totalChannelsCount={7} />, {
+      wrapper: Wrapper,
+    });
+
+    // Assert
+    expect(screen.getByTestId("channel-availability-empty")).toBeInTheDocument();
+    expect(screen.getByText("Product is not listed in any channel")).toBeInTheDocument();
+    expect(screen.getByText("Product in 0 of 7 channels")).toBeInTheDocument();
   });
 });
 

@@ -1,17 +1,12 @@
 // @ts-strict-ignore
 import { type LazyQueryResult, type QueryLazyOptions } from "@apollo/client";
-import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
-import {
-  getChannelAvailabilityLabel,
-  getChannelAvailabilityStatus,
-} from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import { getProductAvailabilityStatusCell } from "@dashboard/components/ChannelsAvailabilityDropdown/productAvailabilityDatagrid";
 import { type ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   dateCell,
   moneyCell,
   pillCell,
   readonlyTextCell,
-  statusCell,
   tagsCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
@@ -58,48 +53,49 @@ export const productListStaticColumnAdapter = ({
     {
       id: "name",
       title: intl.formatMessage(commonMessages.product),
-      width: 300,
+      width: 280,
+      grow: 1,
     },
     {
       id: "productType",
       title: intl.formatMessage(columnsMessages.type),
-      width: 200,
+      width: 160,
     },
     {
       id: "description",
       title: intl.formatMessage(commonMessages.description),
-      width: 400,
+      width: 240,
     },
     {
       id: "availability",
       title: intl.formatMessage(columnsMessages.availability),
-      width: 250,
+      width: 200,
     },
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.updatedAt),
-      width: 300,
+      width: 200,
     },
     {
       id: "created",
       title: intl.formatMessage(columnsMessages.created),
-      width: 300,
+      width: 200,
     },
     {
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
-      width: 250,
+      width: 140,
       action: onPriceClick,
     },
     {
       id: "productCategory",
       title: intl.formatMessage(columnsMessages.category),
-      width: 200,
+      width: 180,
     },
     {
       id: "productCollections",
       title: intl.formatMessage(columnsMessages.collections),
-      width: 300,
+      width: 200,
     },
   ].map(column => ({
     ...column,
@@ -302,27 +298,11 @@ function getCollectionsCellContent(
 function getAvailabilityCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
   intl: IntlShape,
-  selectedChannnel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
+  selectedChannel?: RelayToFlat<ProductListQuery["products"]>[number]["channelListings"][number],
 ) {
-  if (selectedChannnel) {
-    return statusCell(
-      getChannelAvailabilityStatus(selectedChannnel),
-      intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
-      COMMON_CELL_PROPS,
-    );
-  }
+  const listings = selectedChannel ? [selectedChannel] : (rowData?.channelListings ?? []);
 
-  if (rowData?.channelListings?.length) {
-    return statusCell(
-      "success",
-      intl.formatMessage(messages.dropdownLabel, {
-        channelCount: rowData?.channelListings?.length,
-      }),
-      COMMON_CELL_PROPS,
-    );
-  } else {
-    return statusCell("error", intl.formatMessage(messages.noChannels), COMMON_CELL_PROPS);
-  }
+  return getProductAvailabilityStatusCell(listings, intl);
 }
 
 function getDescriptionCellContent(

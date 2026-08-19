@@ -1,4 +1,5 @@
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { type ReactNode } from "react";
 
 import { ChannelIcon, CurrencyBadge, DraftBadge, ErrorBadge, StatusDot } from "./primitives";
 import {
@@ -20,28 +21,11 @@ export function ChannelAvailabilityListItem<T extends ChannelAvailabilitySummary
   status,
   leadingVisual = "status-dot",
 }: ChannelAvailabilityListItemProps<T>) {
-  const leading =
+  const leadingVisualNode: ReactNode =
     leadingVisual === "channel-icon" ? (
-      <ChannelIcon />
+      <ChannelIcon statusType={status.type} />
     ) : (
-      <Tooltip>
-        <Tooltip.Trigger>
-          <Box>
-            <StatusDot statusType={status.type} />
-          </Box>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="right">
-          <Tooltip.Arrow />
-          <Box display="flex" flexDirection="column" gap={1}>
-            <Text size={2} fontWeight="medium">
-              {status.label}
-            </Text>
-            <Text size={1} color="default2">
-              {status.description}
-            </Text>
-          </Box>
-        </Tooltip.Content>
-      </Tooltip>
+      <StatusDot statusType={status.type} />
     );
 
   return (
@@ -50,14 +34,29 @@ export function ChannelAvailabilityListItem<T extends ChannelAvailabilitySummary
       alignItems="center"
       gap={2}
       paddingX={4}
-      paddingY={3}
+      paddingY={2}
       borderBottomWidth={isLast ? 0 : 1}
       borderBottomStyle="solid"
       borderColor="default1"
       data-test-id="channel-availability-list-item"
     >
       <Box display="flex" alignItems="center" gap={2} __flex="1" __minWidth="0px">
-        {leading}
+        <Tooltip>
+          <Tooltip.Trigger>
+            <Box>{leadingVisualNode}</Box>
+          </Tooltip.Trigger>
+          <Tooltip.Content side="right">
+            <Tooltip.Arrow />
+            <Box display="flex" flexDirection="column" gap={1}>
+              <Text size={2} fontWeight="medium">
+                {status.label}
+              </Text>
+              <Text size={1} color="default2">
+                {status.description}
+              </Text>
+            </Box>
+          </Tooltip.Content>
+        </Tooltip>
         <Text
           size={3}
           fontWeight="medium"

@@ -185,7 +185,8 @@ const AttributeRow = ({
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
-            type="number"
+            inputMode="decimal"
+            type="text"
             value={attribute.value[0]}
             size="small"
             helperText={getErrorMessage(error, intl)}

@@ -1,5 +1,9 @@
 // @ts-strict-ignore
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import {
+  TopNav,
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -107,14 +111,12 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
         data: null,
         id: line.id,
         label: getAttributesCaption(line?.variant?.attributes),
-        value: line?.variant?.preorder
-          ? null
-          : [
-              {
-                quantity: line.quantityToFulfill,
-                warehouse: getDefaultFulfillWarehouse(line),
-              },
-            ],
+        value: [
+          {
+            quantity: line.quantityToFulfill,
+            warehouse: getDefaultFulfillWarehouse(line),
+          },
+        ],
       })),
     [linesToFulfill],
   );
@@ -147,7 +149,6 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
   const notAllowedToFulfillUnpaid =
     shopSettings?.fulfillmentAutoApprove && !shopSettings?.fulfillmentAllowUnpaid && !order?.isPaid;
   const areWarehousesSet = formsetData
-    .filter(item => !!item?.value) // preorder case
     .filter(item => item?.value?.[0]?.quantity)
     .every(line => line.value.every(v => v.warehouse));
   const shouldEnableSave = () => {
@@ -160,14 +161,12 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     }
 
     const isAtLeastOneFulfilled = formsetData?.some(el => el.value?.[0]?.quantity > 0);
-    const overfulfill = formsetData
-      .filter(item => !!item?.value) // this can be removed after preorder is dropped
-      .some(item => {
-        const formQuantityFulfilled = item?.value?.[0]?.quantity;
-        const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
+    const overfulfill = formsetData.some(item => {
+      const formQuantityFulfilled = item?.value?.[0]?.quantity;
+      const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
 
-        return formQuantityFulfilled > quantityToFulfill;
-      });
+      return formQuantityFulfilled > quantityToFulfill;
+    });
 
     return !overfulfill && isAtLeastOneFulfilled && areWarehousesSet;
   };
@@ -181,6 +180,8 @@ const OrderFulfillPage = (props: OrderFulfillPageProps) => {
     <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={orderUrl(order?.id)}
+        hrefIcon={<TopNavDestinationIcon.orders />}
+        hrefTitle={intl.formatMessage(topNavDestinationMessages.order)}
         title={intl.formatMessage(messages.headerOrderNumberAddFulfillment, {
           orderNumber: order?.number,
         })}

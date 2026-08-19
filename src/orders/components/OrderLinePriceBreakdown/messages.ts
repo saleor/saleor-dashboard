@@ -27,6 +27,16 @@ export const messages = defineMessages({
     defaultMessage: "Final line total",
     description: "ending row of the price waterfall",
   },
+  overriddenBadge: {
+    id: "2IHDvg",
+    defaultMessage: "Overridden",
+    description: "badge marking that the base price was set custom (overridden)",
+  },
+  overriddenNoReason: {
+    id: "+ZVimo",
+    defaultMessage: "Custom price set for this line",
+    description: "fallback detail when a price override has no reason recorded",
+  },
   factorCataloguePromotion: {
     id: "mrPzXs",
     defaultMessage: "Catalogue promotion",

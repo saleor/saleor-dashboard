@@ -244,10 +244,6 @@ export const errorMessages = defineMessages({
     defaultMessage:
       "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
   },
-  preorderEndDateInFutureErrorText: {
-    id: "6QjMei",
-    defaultMessage: "Preorder end time needs to be set in the future",
-  },
   baseCodeErrorMessage: {
     id: "7+GBlj",
     defaultMessage: "Error code {errorCode} {fieldError}",
@@ -502,6 +498,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Configuration",
     description: "configuration section name",
   },
+  notifications: {
+    id: "TiUzSu",
+    defaultMessage: "Notifications",
+    description: "notifications settings section name",
+  },
   customers: {
     id: "McN+wq",
     defaultMessage: "Customers",
@@ -593,9 +594,9 @@ export const sectionNames = defineMessages({
     description: "shipping zones section name",
   },
   siteSettings: {
-    id: "viFkCw",
-    defaultMessage: "Site Settings",
-    description: "site settings section name",
+    id: "HKC6aF",
+    defaultMessage: "Store",
+    description: "store settings section name (formerly site settings)",
   },
   staff: {
     id: "AQFMYU",
@@ -656,6 +657,11 @@ export const sectionNames = defineMessages({
     id: "bW4TOw",
     defaultMessage: "Refunds & returns settings",
     description: "configuration section name for refund and return settings",
+  },
+  ordersAndFulfillment: {
+    id: "Cganz5",
+    defaultMessage: "Orders & fulfillment",
+    description: "configuration section name for orders and fulfillment settings",
   },
 });
 
