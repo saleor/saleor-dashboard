@@ -3,6 +3,7 @@ import { useAttributeValuesSearch } from "@dashboard/attributes/hooks/useAttribu
 import {
   type AttributeValueEditDialogFormData,
   attributeValueFragmentToFormData,
+  DEPRECATED_FACETED_NAVIGATION_INPUT,
 } from "@dashboard/attributes/utils/data";
 import { getAssignedModelTypesForAttribute } from "@dashboard/attributes/utils/getAssignedModelTypesForAttribute";
 import { mapAssignedTypeConnection } from "@dashboard/attributes/utils/mapAssignedTypeConnection";
@@ -360,6 +361,7 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
             ...omit(data, ["entityType", "inputType", "metadata", "privateMetadata"]),
             storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
             referenceTypes: data.referenceTypes.map(ref => ref.value),
+            ...DEPRECATED_FACETED_NAVIGATION_INPUT,
           },
         },
       }),

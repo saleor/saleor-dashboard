@@ -5,11 +5,12 @@ import {
   DetailSettingToggleRow,
 } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
 import { type AttributeErrorFragment, AttributeTypeEnum } from "@dashboard/graphql";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
-import { Input } from "@saleor/macaw-ui-next";
+import { Box, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AttributePageFormData } from "../AttributePage";
@@ -30,7 +31,9 @@ const AttributeProperties = ({
 }: AttributePropertiesProps): JSX.Element => {
   const intl = useIntl();
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
+  // filterableInStorefront and storefrontSearchPosition are removed from the API in 3.24
   const storefrontFacetedNavigationProperties =
+    isMainSchema() &&
     ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(data.inputType) &&
     data.type === AttributeTypeEnum.PRODUCT_TYPE;
 
@@ -53,7 +56,34 @@ const AttributeProperties = ({
 
       {storefrontFacetedNavigationProperties && (
         <DetailSettingToggleRow
-          title={<FormattedMessage {...messages.filterableInStorefront} />}
+          title={
+            <>
+              <FormattedMessage {...messages.filterableInStorefront} />
+              <Tooltip>
+                <Tooltip.Trigger>
+                  {/* stops the row's click-to-toggle from firing when reading the tooltip */}
+                  <Box
+                    as="span"
+                    display="inline-flex"
+                    marginLeft={2}
+                    paddingX={1}
+                    borderRadius={2}
+                    backgroundColor="default2"
+                    cursor="pointer"
+                    onClick={event => event.stopPropagation()}
+                  >
+                    <Text as="span" size={1} color="default2" textTransform="uppercase">
+                      <FormattedMessage {...messages.deprecated} />
+                    </Text>
+                  </Box>
+                </Tooltip.Trigger>
+                <Tooltip.Content side="top">
+                  <Tooltip.Arrow />
+                  <FormattedMessage {...messages.filterableInStorefrontDeprecation} />
+                </Tooltip.Content>
+              </Tooltip>
+            </>
+          }
           description={<FormattedMessage {...messages.filterableInStorefrontCaption} />}
           pressed={data.filterableInStorefront}
           disabled={disabled}

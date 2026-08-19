@@ -12,6 +12,16 @@ export const messages = defineMessages({
       "If enabled, customers can use this attribute to filter products in the storefront.",
     description: "caption",
   },
+  deprecated: {
+    defaultMessage: "Deprecated",
+    id: "2nj61B",
+    description: "badge on a setting that will be removed from the API",
+  },
+  filterableInStorefrontDeprecation: {
+    defaultMessage: "Will be removed in 3.24. Use attribute metadata instead",
+    id: "S0kwG+",
+    description: "tooltip explaining why a setting is deprecated",
+  },
   storefrontSearchPosition: {
     id: "cJ5ASN",
     defaultMessage: "Position in faceted navigation",

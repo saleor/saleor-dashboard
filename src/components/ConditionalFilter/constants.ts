@@ -1,3 +1,7 @@
+// Imported from the leaf module, not the @dashboard/graphql barrel: tests that replace the whole
+// barrel with jest.mock would otherwise leave isMainSchema undefined at module evaluation time.
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
+
 import { type ConditionItem } from "./FilterElement/ConditionOptions";
 import { type ItemOption } from "./FilterElement/ConditionValue";
 import { type LeftOperand } from "./LeftOperandsProvider";
@@ -813,14 +817,21 @@ export const STAFF_MEMBER_OPTIONS: LeftOperand[] = [
   },
 ];
 
+// filterableInStorefront is removed from the API in 3.24
+const FILTERABLE_IN_STOREFRONT_OPTIONS: LeftOperand[] = isMainSchema()
+  ? [
+      {
+        value: "filterableInStorefront",
+        label: "Filterable in Storefront",
+        type: "filterableInStorefront",
+        slug: "filterableInStorefront",
+        maxOccurrences: 1,
+      },
+    ]
+  : [];
+
 export const STATIC_ATTRIBUTES_OPTIONS: LeftOperand[] = [
-  {
-    value: "filterableInStorefront",
-    label: "Filterable in Storefront",
-    type: "filterableInStorefront",
-    slug: "filterableInStorefront",
-    maxOccurrences: 1,
-  },
+  ...FILTERABLE_IN_STOREFRONT_OPTIONS,
   {
     value: "isVariantOnly",
     label: "Variant only",
