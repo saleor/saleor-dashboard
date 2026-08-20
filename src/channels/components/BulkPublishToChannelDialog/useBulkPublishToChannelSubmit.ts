@@ -26,11 +26,14 @@ import { type IntlShape, useIntl } from "react-intl";
 
 import {
   chunkBulkPublishItems,
+  getDraftsMissingPrice,
+  getDraftsWithInvalidPrice,
   getEffectiveStockQuantity,
   hasBulkPublishCostPrice,
-  isValidBulkPublishPrice,
+  hasBulkPublishPrice,
 } from "./bulkPublishDrafts";
 import { getBulkPublishStockWarehouses } from "./bulkPublishStockWarehouses";
+import { buildBulkPublishVariantChannelListingsInput } from "./bulkPublishVariantChannelListings";
 import { buildBulkPublishVariantStocksInput } from "./bulkPublishVariantStocks";
 import {
   type BulkPublishVariantNode,
@@ -99,55 +102,40 @@ const buildVariantBulkUpdateInputs = ({
 }: {
   variants: BulkPublishVariantNode[];
   channelId: string;
-  price: string;
+  price?: string;
   costPrice?: string;
   stock?: {
     warehouseIds: string[];
     quantity: number;
   };
 }): ProductVariantBulkUpdateInput[] =>
-  variants.map(variant => {
-    const existingListing = variant.channelListings?.find(
-      listing => listing.channel.id === channelId,
-    );
-    const stocks = stock
-      ? buildBulkPublishVariantStocksInput({
-          variant,
-          warehouseIds: stock.warehouseIds,
-          quantity: stock.quantity,
-        })
-      : undefined;
+  variants
+    .map((variant): ProductVariantBulkUpdateInput | undefined => {
+      const channelListings = buildBulkPublishVariantChannelListingsInput({
+        variant,
+        channelId,
+        price,
+        costPrice,
+      });
+      const stocks = stock
+        ? buildBulkPublishVariantStocksInput({
+            variant,
+            warehouseIds: stock.warehouseIds,
+            quantity: stock.quantity,
+          })
+        : undefined;
 
-    if (existingListing) {
+      if (!channelListings && !stocks) {
+        return undefined;
+      }
+
       return {
         id: variant.id,
-        channelListings: {
-          update: [
-            {
-              channelListing: existingListing.id,
-              price,
-              ...(costPrice !== undefined ? { costPrice } : {}),
-            },
-          ],
-        },
+        ...(channelListings ? { channelListings } : {}),
         ...(stocks ? { stocks } : {}),
       };
-    }
-
-    return {
-      id: variant.id,
-      channelListings: {
-        create: [
-          {
-            channelId,
-            price,
-            ...(costPrice !== undefined ? { costPrice } : {}),
-          },
-        ],
-      },
-      ...(stocks ? { stocks } : {}),
-    };
-  });
+    })
+    .filter((input): input is ProductVariantBulkUpdateInput => input !== undefined);
 
 export type BulkPublishSubmitResult = {
   failedProductIds: string[];
@@ -205,9 +193,12 @@ export const useBulkPublishToChannelSubmit = ({
         return { failedProductIds: [] };
       }
 
-      const invalidDraft = draftsToPublish.find(draft => !isValidBulkPublishPrice(draft.price));
+      // Same rules the review step enforces — kept here as a backstop against a caller that skips it.
+      const hasUnusablePrice =
+        getDraftsWithInvalidPrice(draftsToPublish).length > 0 ||
+        getDraftsMissingPrice(draftsToPublish).length > 0;
 
-      if (invalidDraft) {
+      if (hasUnusablePrice) {
         notify({
           status: "error",
           text: intl.formatMessage(messages.priceRequired),
@@ -322,7 +313,7 @@ export const useBulkPublishToChannelSubmit = ({
             // when listings were already created (e.g. by a prior failed publish attempt).
             // Also loads stocks so we can create missing rows and update existing ones.
             const variants = await fetchAllBulkPublishProductVariants(client, product.id);
-            const price = draft.price;
+            const price = hasBulkPublishPrice(draft.price) ? draft.price : undefined;
             const costPrice = hasBulkPublishCostPrice(draft.costPrice)
               ? draft.costPrice
               : undefined;

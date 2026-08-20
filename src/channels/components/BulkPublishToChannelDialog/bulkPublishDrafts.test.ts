@@ -1,6 +1,7 @@
 import {
   type BulkPublishProductForDraft,
   chunkBulkPublishItems,
+  countDraftsWithPriceUpdate,
   countVariantsInDrafts,
   createProductDrafts,
   getAppliedDefaultStock,
@@ -8,10 +9,12 @@ import {
   getDraftsMissingCategoryForPublish,
   getDraftsMissingPrice,
   getDraftsWithInvalidCostPrice,
+  getDraftsWithInvalidPrice,
   getDraftsWithInvalidStock,
   getDraftsWithManyVariants,
   getEffectiveStockQuantity,
   hasBulkPublishStock,
+  hasListedDrafts,
   isStillDefaultBulkPublishStock,
   isValidBulkPublishCostPrice,
   isValidBulkPublishPrice,
@@ -485,13 +488,66 @@ describe("bulkPublishDrafts", () => {
   });
 
   describe("getDraftsMissingPrice", () => {
-    it("returns drafts without a valid price", () => {
+    it("only requires a price for products that are not in the channel yet", () => {
+      // Arrange
+      // p1 is already listed in ch1, p2 is not.
       const drafts = createProductDrafts({
         products,
         channelId: "ch1",
       });
 
-      expect(getDraftsMissingPrice(drafts)).toHaveLength(2);
+      // Act
+      const missing = getDraftsMissingPrice(drafts);
+
+      // Assert
+      expect(missing).toHaveLength(1);
+      expect(missing[0].productId).toBe("p2");
+    });
+
+    it("accepts a blank price on a listed product", () => {
+      // Arrange
+      const drafts = createProductDrafts({
+        products: [products[0]],
+        channelId: "ch1",
+      });
+
+      // Act & Assert
+      expect(getDraftsMissingPrice(drafts)).toHaveLength(0);
+    });
+  });
+
+  describe("getDraftsWithInvalidPrice", () => {
+    it("treats a blank price as valid but rejects garbage", () => {
+      // Arrange
+      const [listed, unlisted] = createProductDrafts({ products, channelId: "ch1" });
+
+      // Act & Assert
+      expect(getDraftsWithInvalidPrice([listed])).toHaveLength(0);
+      expect(getDraftsWithInvalidPrice([{ ...unlisted, price: "abc" }])).toHaveLength(1);
+      expect(getDraftsWithInvalidPrice([{ ...unlisted, price: "-1" }])).toHaveLength(1);
+      expect(getDraftsWithInvalidPrice([{ ...unlisted, price: "12.5" }])).toHaveLength(0);
+    });
+  });
+
+  describe("countDraftsWithPriceUpdate", () => {
+    it("counts only drafts with a price filled in", () => {
+      // Arrange
+      const [listed, unlisted] = createProductDrafts({ products, channelId: "ch1" });
+
+      // Act & Assert
+      expect(countDraftsWithPriceUpdate([listed, unlisted])).toBe(0);
+      expect(countDraftsWithPriceUpdate([{ ...listed, price: "10" }, unlisted])).toBe(1);
+    });
+  });
+
+  describe("hasListedDrafts", () => {
+    it("detects whether any product is already in the channel", () => {
+      // Arrange
+      const drafts = createProductDrafts({ products, channelId: "ch1" });
+
+      // Act & Assert
+      expect(hasListedDrafts(drafts)).toBe(true);
+      expect(hasListedDrafts(createProductDrafts({ products, channelId: "ch2" }))).toBe(false);
     });
   });
 

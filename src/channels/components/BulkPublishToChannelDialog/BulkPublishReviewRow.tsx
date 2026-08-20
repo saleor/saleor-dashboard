@@ -2,11 +2,13 @@ import {
   BULK_PUBLISH_MAX_VARIANTS_PER_PRODUCT,
   type ProductPublishDraft,
 } from "@dashboard/channels/components/BulkPublishToChannelDialog/types";
+import { formatMoney, formatMoneyRange } from "@dashboard/components/Money";
 import { PriceFieldV2 } from "@dashboard/components/PriceFieldV2/PriceFieldV2";
 import { Box, Chip, Input, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { type ClipboardEvent, memo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { hasBulkPublishPrice } from "./bulkPublishDrafts";
 import styles from "./BulkPublishReviewStep.module.css";
 import { type BulkPublishPasteField } from "./bulkPublishSpreadsheetPaste";
 import { messages } from "./messages";
@@ -45,9 +47,26 @@ export const BulkPublishReviewRow = memo(
     onFieldPaste,
   }: BulkPublishReviewRowProps) => {
     const intl = useIntl();
+    const { currentListing } = draft;
+    const currentPrice = currentListing?.price;
+    const willChangePrice = hasBulkPublishPrice(draft.price);
+    const pricePlaceholder = currentPrice
+      ? currentPrice.isMixed
+        ? formatMoneyRange(
+            { amount: currentPrice.min, currency },
+            { amount: currentPrice.max, currency },
+            intl.locale,
+          )
+        : formatMoney({ amount: currentPrice.min, currency }, intl.locale)
+      : draft.alreadyInChannel
+        ? intl.formatMessage(messages.reviewPriceUnchangedPlaceholder)
+        : undefined;
+    // A blank price cannot create a listing, so these variants stay unsellable unless one is set.
+    const staleUnlistedVariantCount =
+      !willChangePrice && currentListing ? currentListing.unlistedVariantCount : 0;
 
     return (
-      <Box className={styles.row}>
+      <Box className={styles.row} data-price-changed={willChangePrice ? "true" : undefined}>
         <Box className={styles.rowMain}>
           <Text size={3} fontWeight="medium">
             {draft.name}
@@ -93,6 +112,22 @@ export const BulkPublishReviewRow = memo(
               </Chip>
             ) : null}
           </Box>
+          {currentPrice?.isMixed && willChangePrice ? (
+            <Text size={1} className={styles.rowWarning}>
+              <FormattedMessage
+                {...messages.reviewPriceOverwritesMixed}
+                values={{ count: currentListing?.listedVariantCount ?? 0 }}
+              />
+            </Text>
+          ) : null}
+          {staleUnlistedVariantCount > 0 ? (
+            <Text size={1} className={styles.rowWarning}>
+              <FormattedMessage
+                {...messages.reviewVariantsStayUnlisted}
+                values={{ count: staleUnlistedVariantCount }}
+              />
+            </Text>
+          ) : null}
         </Box>
         <Box className={fieldGroupClassName}>
           <div
@@ -103,6 +138,7 @@ export const BulkPublishReviewRow = memo(
               aria-label={intl.formatMessage(messages.productPrice)}
               size="small"
               currencySymbol={currency}
+              placeholder={pricePlaceholder}
               value={draft.price}
               onChange={price => onFieldChange(draft.productId, "price", price)}
             />
@@ -115,6 +151,11 @@ export const BulkPublishReviewRow = memo(
               aria-label={intl.formatMessage(messages.productCostPrice)}
               size="small"
               currencySymbol={currency}
+              placeholder={
+                draft.alreadyInChannel
+                  ? intl.formatMessage(messages.reviewPriceUnchangedPlaceholder)
+                  : undefined
+              }
               value={draft.costPrice}
               onChange={costPrice => onFieldChange(draft.productId, "costPrice", costPrice)}
             />
