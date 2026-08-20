@@ -32,6 +32,7 @@ jest.mock("./appActionsHandler", () => ({
     useHandleWidgetResizeAction: jest.fn(),
     useHandleRefreshEntityAction: jest.fn(),
     useHandleOpenPopupAction: jest.fn(),
+    useHandleRedirectToAppAction: jest.fn(),
   },
 }));
 
@@ -60,6 +61,7 @@ describe("useAppActions", () => {
   const mockHandleWidgetResize = jest.fn();
   const mockHandleRefreshEntity = jest.fn();
   const mockHandleOpenPopup = jest.fn();
+  const mockHandleRedirectToApp = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -96,6 +98,9 @@ describe("useAppActions", () => {
     });
     (AppActionsHandler.useHandleOpenPopupAction as jest.Mock).mockReturnValue({
       handle: mockHandleOpenPopup,
+    });
+    (AppActionsHandler.useHandleRedirectToAppAction as jest.Mock).mockReturnValue({
+      handle: mockHandleRedirectToApp,
     });
 
     // Reset capture message mock to return a proper scope
@@ -212,6 +217,36 @@ describe("useAppActions", () => {
 
     // Assert
     expect(mockHandleOpenPopup).toHaveBeenCalledWith(openPopupAction);
+    expect(mockCaptureMessage).not.toHaveBeenCalled();
+  });
+
+  it("should route redirectToApp action to the redirect to app handler", () => {
+    // Arrange
+    const redirectToAppAction = {
+      type: "redirectToApp",
+      payload: {
+        actionId: "redirect-to-app-1",
+        appIdentifier: "target.app",
+        path: "/settings",
+      },
+    } satisfies Actions;
+
+    renderHook(() =>
+      useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),
+    );
+
+    // Act
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent("message", {
+          origin: mockAppOrigin,
+          data: redirectToAppAction,
+        }),
+      );
+    });
+
+    // Assert
+    expect(mockHandleRedirectToApp).toHaveBeenCalledWith(redirectToAppAction);
     expect(mockCaptureMessage).not.toHaveBeenCalled();
   });
 

@@ -28,6 +28,11 @@ jest.mock(
   }),
 );
 
+// Needs an Apollo client, tested separately
+jest.mock("@dashboard/extensions/installed-apps-snapshot", () => ({
+  useRefreshInstalledAppsSnapshot: jest.fn(),
+}));
+
 jest.mock("@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame", () => ({
   AppFrame: ({ src, appToken, appId, params, dashboardVersion, coreVersion }: any) => (
     <div
