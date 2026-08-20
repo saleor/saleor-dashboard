@@ -5,7 +5,6 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -112,7 +111,7 @@ const OrderDraftPage = (props: OrderDraftPageProps) => {
   );
   const menuItems = useMemo(
     () => [
-      ...mapExtensionMenuItemsToTopNavItems(extensionMenuItems),
+      ...extensionMenuItems,
       {
         label: intl.formatMessage(orderDetailsPageMessages.cancelOrder),
         onSelect: onDraftRemove,
