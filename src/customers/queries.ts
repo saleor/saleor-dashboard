@@ -7,6 +7,7 @@ export const customerList = gql`
     $first: Int
     $last: Int
     $filter: CustomerFilterInput
+    $where: CustomerWhereInput
     $sort: UserSortingInput
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
@@ -16,6 +17,7 @@ export const customerList = gql`
       first: $first
       last: $last
       filter: $filter
+      where: $where
       sortBy: $sort
     ) {
       edges {
@@ -156,6 +158,14 @@ export const customerAddresses = gql`
   query CustomerAddresses($id: ID!) {
     user(id: $id) {
       ...CustomerAddresses
+    }
+  }
+`;
+
+export const customerTypeAttributesForCustomerQuery = gql`
+  query CustomerTypeAttributesForCustomer($id: ID!) {
+    customerType(id: $id) {
+      ...CustomerTypeOnCustomer
     }
   }
 `;

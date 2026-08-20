@@ -4,17 +4,13 @@ import {
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
-import {
-  type AttributeValueFragment,
-  type PageErrorWithAttributesFragment,
-  type ProductErrorWithAttributesFragment,
-} from "@dashboard/graphql";
+import { type AttributeValueFragment } from "@dashboard/graphql";
 import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { type AttributeInput } from "./Attributes";
-import { type AttributeRowHandlers } from "./types";
+import { type AttributeFieldError, type AttributeRowHandlers } from "./types";
 import { useAttributeDropdown } from "./useAttributeDropdown";
 
 type DropdownRowProps = Pick<
@@ -24,7 +20,7 @@ type DropdownRowProps = Pick<
   attribute: AttributeInput;
   attributeValues: AttributeValueFragment[];
   disabled: boolean;
-  error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
+  error: AttributeFieldError;
   onAttributeSelectBlur?: () => void;
 };
 

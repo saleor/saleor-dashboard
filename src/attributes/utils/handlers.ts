@@ -190,7 +190,7 @@ export function createFetchMoreReferencesHandler(
 
 export function createAttributeFileChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
-  attributesWithNewFileValue: FormsetData<FormsetData<null, File>>,
+  attributesWithNewFileValue: FormsetData<null, File>,
   addAttributeNewFileValue: (data: FormsetAtomicData<null, File>) => void,
   changeAttributeNewFileValue: FormsetChange<File>,
   triggerChange: () => void,

@@ -101,11 +101,15 @@ export const attributeListUrlWithAttributeType = (attributeType?: AttributeTypeE
   return urlJoin(attributeListPath, "?" + stringify(queryParams));
 };
 
-type BuiltInAttributeType = AttributeTypeEnum.PRODUCT_TYPE | AttributeTypeEnum.PAGE_TYPE;
+type BuiltInAttributeType =
+  | AttributeTypeEnum.PRODUCT_TYPE
+  | AttributeTypeEnum.PAGE_TYPE
+  | AttributeTypeEnum.CUSTOMER_TYPE;
 
 const builtInAttributeTypePresetTabIndex: Record<BuiltInAttributeType, number> = {
   [AttributeTypeEnum.PRODUCT_TYPE]: 1,
   [AttributeTypeEnum.PAGE_TYPE]: 2,
+  [AttributeTypeEnum.CUSTOMER_TYPE]: 3,
 };
 
 export const getAttributeTypeFromBuiltInPresetTab = (

@@ -5,6 +5,7 @@ import useRouter from "use-react-router";
 
 import { type InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
 import { type InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { type InitialCustomerAPIState } from "../API/initialState/customers/useInitialCustomerState";
 import { type InitialDiscountAPIState } from "../API/initialState/discounts/useInitialDiscountsState";
 import { type InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { type InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
@@ -24,6 +25,7 @@ import { TokenArray } from "./TokenArray";
 import {
   type AttributesFetchingParams,
   type CollectionFetchingParams,
+  type CustomerFetchingParams,
   type DiscountFetchingParams,
   type FetchingParams,
   getEmptyFetchingPrams,
@@ -86,6 +88,11 @@ export const useUrlValueProvider = (
           break;
         case "page":
           (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
+          break;
+        case "customer":
+          (initialState as InitialCustomerAPIState).fetchQueries(
+            fetchingParams as CustomerFetchingParams,
+          );
           break;
         case "gift-cards":
           (initialState as InitialGiftCardsAPIState).fetchQueries(

@@ -221,6 +221,10 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" },
   ],
+  customerType: [
+    { type: "combobox", label: "is", value: "input-1" },
+    { type: "multiselect", label: "in", value: "input-2" },
+  ],
   currency: [
     {
       type: "select",
@@ -768,6 +772,13 @@ export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
 ];
 
 export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
+  {
+    value: "customerType",
+    label: "Customer type",
+    type: "customerType",
+    slug: "customerType",
+    maxOccurrences: 1,
+  },
   {
     value: "dateJoined",
     label: "Join date",

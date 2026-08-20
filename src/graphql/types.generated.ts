@@ -10743,7 +10743,7 @@ export type RequestPasswordResetMutationVariables = Exact<{
 }>;
 
 
-export type RequestPasswordResetMutation = { __typename: 'Mutation', requestPasswordReset: { __typename: 'RequestPasswordReset', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+export type RequestPasswordResetMutation = { __typename: 'Mutation', requestPasswordReset: { __typename: 'RequestPasswordReset', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }> } | null };
 
 export type AvailableExternalAuthenticationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10930,7 +10930,7 @@ export type BulkPublishProductPricesQueryVariables = Exact<{
 }>;
 
 
-export type BulkPublishProductPricesQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string }, price: { __typename: 'Money', amount: number } | null }> | null } }> } | null } }> } | null };
+export type BulkPublishProductPricesQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string }, price: { __typename: 'Money', amount: number } | null }> | null } }> } | null } }> } | null };
 
 export type BulkPublishProductVariantsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11097,6 +11097,14 @@ export type _SearchPageTypesOperandsQueryVariables = Exact<{
 
 export type _SearchPageTypesOperandsQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, slug: string } }> } | null };
 
+export type _SearchCustomerTypesOperandsQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  customerTypesSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
+}>;
+
+
+export type _SearchCustomerTypesOperandsQuery = { __typename: 'Query', customerTypes: { __typename: 'CustomerTypeCountableConnection', edges: Array<{ __typename: 'CustomerTypeCountableEdge', node: { __typename: 'CustomerType', id: string, name: string, slug: string } }> } | null };
+
 export type _SearchAttributeOperandsQueryVariables = Exact<{
   attributesSlugs?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
   choicesIds?: InputMaybe<Array<Scalars['ID']['input']> | Scalars['ID']['input']>;
@@ -11146,6 +11154,14 @@ export type _GetPageTypesChoicesQueryVariables = Exact<{
 
 
 export type _GetPageTypesChoicesQuery = { __typename: 'Query', pageTypes: { __typename: 'PageTypeCountableConnection', edges: Array<{ __typename: 'PageTypeCountableEdge', node: { __typename: 'PageType', id: string, name: string, slug: string } }> } | null };
+
+export type _GetCustomerTypesChoicesQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+}>;
+
+
+export type _GetCustomerTypesChoicesQuery = { __typename: 'Query', customerTypes: { __typename: 'CustomerTypeCountableConnection', edges: Array<{ __typename: 'CustomerTypeCountableEdge', node: { __typename: 'CustomerType', id: string, name: string, slug: string } }> } | null };
 
 export type _GetPagesChoicesQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -11302,27 +11318,99 @@ export type CheckOrderInvoicesStatusQueryVariables = Exact<{
 
 export type CheckOrderInvoicesStatusQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }> } | null };
 
+export type CustomerTypeCreateMutationVariables = Exact<{
+  input: CustomerTypeCreateInput;
+}>;
+
+
+export type CustomerTypeCreateMutation = { __typename: 'Mutation', customerTypeCreate: { __typename: 'CustomerTypeCreate', errors: Array<{ __typename: 'CustomerTypeCreateError', code: CustomerTypeCreateErrorCode, field: string | null, message: string | null }>, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null } | null };
+
+export type CustomerTypeUpdateMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: CustomerTypeUpdateInput;
+}>;
+
+
+export type CustomerTypeUpdateMutation = { __typename: 'Mutation', customerTypeUpdate: { __typename: 'CustomerTypeUpdate', errors: Array<{ __typename: 'CustomerTypeUpdateError', code: CustomerTypeUpdateErrorCode, field: string | null, message: string | null }>, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null } | null };
+
+export type CustomerTypeDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CustomerTypeDeleteMutation = { __typename: 'Mutation', customerTypeDelete: { __typename: 'CustomerTypeDelete', errors: Array<{ __typename: 'CustomerTypeDeleteError', code: CustomerTypeDeleteErrorCode, field: string | null, message: string | null }>, customerType: { __typename: 'CustomerType', id: string } | null } | null };
+
+export type CustomerTypeAssignAttributesMutationVariables = Exact<{
+  customerTypeId: Scalars['ID']['input'];
+  attributeIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+}>;
+
+
+export type CustomerTypeAssignAttributesMutation = { __typename: 'Mutation', customerTypeAssignAttributes: { __typename: 'CustomerTypeAssignAttributes', errors: Array<{ __typename: 'CustomerTypeAssignAttributesError', code: CustomerTypeAssignAttributesErrorCode, field: string | null, message: string | null, attributes: Array<string> | null }>, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null } | null };
+
+export type CustomerTypeUnassignAttributesMutationVariables = Exact<{
+  customerTypeId: Scalars['ID']['input'];
+  attributeIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+}>;
+
+
+export type CustomerTypeUnassignAttributesMutation = { __typename: 'Mutation', customerTypeUnassignAttributes: { __typename: 'CustomerTypeUnassignAttributes', errors: Array<{ __typename: 'CustomerTypeUnassignAttributesError', code: CustomerTypeUnassignAttributesErrorCode, field: string | null, message: string | null }>, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null } | null };
+
+export type CustomerTypeReorderAttributesMutationVariables = Exact<{
+  customerTypeId: Scalars['ID']['input'];
+  move: ReorderInput;
+}>;
+
+
+export type CustomerTypeReorderAttributesMutation = { __typename: 'Mutation', customerTypeReorderAttributes: { __typename: 'CustomerTypeReorderAttributes', errors: Array<{ __typename: 'CustomerTypeReorderAttributesError', code: CustomerTypeReorderAttributesErrorCode, field: string | null, message: string | null, attributes: Array<string> | null }>, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null } | null };
+
+export type CustomerTypeListQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<CustomerTypeSortingInput>;
+}>;
+
+
+export type CustomerTypeListQuery = { __typename: 'Query', customerTypes: { __typename: 'CustomerTypeCountableConnection', edges: Array<{ __typename: 'CustomerTypeCountableEdge', node: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type CustomerTypeDetailsQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CustomerTypeDetailsQuery = { __typename: 'Query', customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null };
+
+export type CustomerTypeAssignedCustomersCountQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CustomerTypeAssignedCustomersCountQuery = { __typename: 'Query', customers: { __typename: 'UserCountableConnection', totalCount: number | null } | null };
+
 export type UpdateCustomerMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   input: CustomerInput;
 }>;
 
 
-export type UpdateCustomerMutation = { __typename: 'Mutation', customerUpdate: { __typename: 'CustomerUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null } | null };
+export type UpdateCustomerMutation = { __typename: 'Mutation', customerUpdate: { __typename: 'CustomerUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, attributes: Array<{ __typename: 'Attribute', entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null, assignedAttributes: Array<{ __typename: 'AssignedBooleanAttribute', booleanValue: boolean | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedDateAttribute', dateValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedDateTimeAttribute', dateTimeValue: any | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedFileAttribute', fileValue: { __typename: 'File', url: string, contentType: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiCategoryReferenceAttribute', categoryValues: Array<{ __typename: 'Category', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiChoiceAttribute', choiceValues: Array<{ __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiCollectionReferenceAttribute', collectionValues: Array<{ __typename: 'Collection', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiPageReferenceAttribute', pageValues: Array<{ __typename: 'Page', id: string, title: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiProductReferenceAttribute', productValues: Array<{ __typename: 'Product', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiProductVariantReferenceAttribute', variantValues: Array<{ __typename: 'ProductVariant', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedNumericAttribute', numericValue: number | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedPlainTextAttribute', plainTextValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleCategoryReferenceAttribute', categoryValue: { __typename: 'Category', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleChoiceAttribute', choiceValue: { __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleCollectionReferenceAttribute', collectionValue: { __typename: 'Collection', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSinglePageReferenceAttribute', pageValue: { __typename: 'Page', id: string, title: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleProductReferenceAttribute', productValue: { __typename: 'Product', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleProductVariantReferenceAttribute', variantValue: { __typename: 'ProductVariant', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSwatchAttribute', swatchValue: { __typename: 'AssignedSwatchAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedTextAttribute', richTextValue: unknown | null, attribute: { __typename: 'Attribute', id: string, slug: string } }> } | null } | null };
 
 export type CreateCustomerMutationVariables = Exact<{
   input: UserCreateInput;
 }>;
 
 
-export type CreateCustomerMutation = { __typename: 'Mutation', customerCreate: { __typename: 'CustomerCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string } | null } | null };
+export type CreateCustomerMutation = { __typename: 'Mutation', customerCreate: { __typename: 'CustomerCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', id: string } | null } | null };
 
 export type RemoveCustomerMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type RemoveCustomerMutation = { __typename: 'Mutation', customerDelete: { __typename: 'CustomerDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+export type RemoveCustomerMutation = { __typename: 'Mutation', customerDelete: { __typename: 'CustomerDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }> } | null };
 
 export type SetCustomerDefaultAddressMutationVariables = Exact<{
   addressId: Scalars['ID']['input'];
@@ -11331,7 +11419,7 @@ export type SetCustomerDefaultAddressMutationVariables = Exact<{
 }>;
 
 
-export type SetCustomerDefaultAddressMutation = { __typename: 'Mutation', addressSetDefault: { __typename: 'AddressSetDefault', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
+export type SetCustomerDefaultAddressMutation = { __typename: 'Mutation', addressSetDefault: { __typename: 'AddressSetDefault', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type CreateCustomerAddressMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11339,7 +11427,7 @@ export type CreateCustomerAddressMutationVariables = Exact<{
 }>;
 
 
-export type CreateCustomerAddressMutation = { __typename: 'Mutation', addressCreate: { __typename: 'AddressCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
+export type CreateCustomerAddressMutation = { __typename: 'Mutation', addressCreate: { __typename: 'AddressCreate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type UpdateCustomerAddressMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11347,21 +11435,21 @@ export type UpdateCustomerAddressMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCustomerAddressMutation = { __typename: 'Mutation', addressUpdate: { __typename: 'AddressUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
+export type UpdateCustomerAddressMutation = { __typename: 'Mutation', addressUpdate: { __typename: 'AddressUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, address: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
 
 export type RemoveCustomerAddressMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type RemoveCustomerAddressMutation = { __typename: 'Mutation', addressDelete: { __typename: 'AddressDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
+export type RemoveCustomerAddressMutation = { __typename: 'Mutation', addressDelete: { __typename: 'AddressDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null } | null };
 
 export type BulkRemoveCustomersMutationVariables = Exact<{
   ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
 }>;
 
 
-export type BulkRemoveCustomersMutation = { __typename: 'Mutation', customerBulkDelete: { __typename: 'CustomerBulkDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+export type BulkRemoveCustomersMutation = { __typename: 'Mutation', customerBulkDelete: { __typename: 'CustomerBulkDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }> } | null };
 
 export type ListCustomersQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
@@ -11369,6 +11457,7 @@ export type ListCustomersQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   filter?: InputMaybe<CustomerFilterInput>;
+  where?: InputMaybe<CustomerWhereInput>;
   sort?: InputMaybe<UserSortingInput>;
   PERMISSION_MANAGE_ORDERS: Scalars['Boolean']['input'];
 }>;
@@ -11385,7 +11474,7 @@ export type CustomerDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CustomerDetailsQuery = { __typename: 'Query', user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any, number: string, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', currency: string, amount: number } }, subtotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', currency: string, amount: number } } } }> } | null, kpiOrderChannels?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, status: OrderStatus, created: any, channel: { __typename: 'Channel', id: string, name: string, slug: string, isActive: boolean, currencyCode: string } } }> } | null, kpiOrders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, status: OrderStatus, created: any, subtotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } }, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, channel: { __typename: 'Channel', id: string, name: string, slug: string, isActive: boolean, currencyCode: string } } }> } | null, kpiNonCancelledOrderCount?: { __typename: 'OrderCountableConnection', totalCount: number | null } | null, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
+export type CustomerDetailsQuery = { __typename: 'Query', user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, orders?: { __typename: 'OrderCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any, number: string, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', currency: string, amount: number } }, subtotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', currency: string, amount: number } } } }> } | null, kpiOrderChannels?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, status: OrderStatus, created: any, channel: { __typename: 'Channel', id: string, name: string, slug: string, isActive: boolean, currencyCode: string } } }> } | null, kpiOrders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, status: OrderStatus, created: any, subtotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } }, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, channel: { __typename: 'Channel', id: string, name: string, slug: string, isActive: boolean, currencyCode: string } } }> } | null, kpiNonCancelledOrderCount?: { __typename: 'OrderCountableConnection', totalCount: number | null } | null, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, attributes: Array<{ __typename: 'Attribute', entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null, assignedAttributes: Array<{ __typename: 'AssignedBooleanAttribute', booleanValue: boolean | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedDateAttribute', dateValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedDateTimeAttribute', dateTimeValue: any | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedFileAttribute', fileValue: { __typename: 'File', url: string, contentType: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiCategoryReferenceAttribute', categoryValues: Array<{ __typename: 'Category', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiChoiceAttribute', choiceValues: Array<{ __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiCollectionReferenceAttribute', collectionValues: Array<{ __typename: 'Collection', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiPageReferenceAttribute', pageValues: Array<{ __typename: 'Page', id: string, title: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiProductReferenceAttribute', productValues: Array<{ __typename: 'Product', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiProductVariantReferenceAttribute', variantValues: Array<{ __typename: 'ProductVariant', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedNumericAttribute', numericValue: number | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedPlainTextAttribute', plainTextValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleCategoryReferenceAttribute', categoryValue: { __typename: 'Category', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleChoiceAttribute', choiceValue: { __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleCollectionReferenceAttribute', collectionValue: { __typename: 'Collection', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSinglePageReferenceAttribute', pageValue: { __typename: 'Page', id: string, title: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleProductReferenceAttribute', productValue: { __typename: 'Product', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleProductVariantReferenceAttribute', variantValue: { __typename: 'ProductVariant', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSwatchAttribute', swatchValue: { __typename: 'AssignedSwatchAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedTextAttribute', richTextValue: unknown | null, attribute: { __typename: 'Attribute', id: string, slug: string } }> } | null };
 
 export type CustomerAddressesQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11393,6 +11482,13 @@ export type CustomerAddressesQueryVariables = Exact<{
 
 
 export type CustomerAddressesQuery = { __typename: 'Query', user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null } | null };
+
+export type CustomerTypeAttributesForCustomerQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CustomerTypeAttributesForCustomerQuery = { __typename: 'Query', customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, attributes: Array<{ __typename: 'Attribute', entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null };
 
 export type CustomerCreateDataQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -11969,9 +12065,57 @@ export type CollectionProductFragment = { __typename: 'Product', id: string, nam
 
 export type CollectionWithTotalProductsFragment = { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
+export type CustomerTypeFragment = { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean };
+
+export type CustomerTypeDetailsFragment = { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null };
+
 export type CustomerFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string };
 
-export type CustomerDetailsFragment = { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null };
+export type CustomerTypeOnCustomerFragment = { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, attributes: Array<{ __typename: 'Attribute', entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null };
+
+type CustomerAssignedAttribute_AssignedBooleanAttribute_Fragment = { __typename: 'AssignedBooleanAttribute', booleanValue: boolean | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedDateAttribute_Fragment = { __typename: 'AssignedDateAttribute', dateValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedDateTimeAttribute_Fragment = { __typename: 'AssignedDateTimeAttribute', dateTimeValue: any | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedFileAttribute_Fragment = { __typename: 'AssignedFileAttribute', fileValue: { __typename: 'File', url: string, contentType: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedMultiCategoryReferenceAttribute_Fragment = { __typename: 'AssignedMultiCategoryReferenceAttribute', categoryValues: Array<{ __typename: 'Category', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedMultiChoiceAttribute_Fragment = { __typename: 'AssignedMultiChoiceAttribute', choiceValues: Array<{ __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null }>, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedMultiCollectionReferenceAttribute_Fragment = { __typename: 'AssignedMultiCollectionReferenceAttribute', collectionValues: Array<{ __typename: 'Collection', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedMultiPageReferenceAttribute_Fragment = { __typename: 'AssignedMultiPageReferenceAttribute', pageValues: Array<{ __typename: 'Page', id: string, title: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedMultiProductReferenceAttribute_Fragment = { __typename: 'AssignedMultiProductReferenceAttribute', productValues: Array<{ __typename: 'Product', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedMultiProductVariantReferenceAttribute_Fragment = { __typename: 'AssignedMultiProductVariantReferenceAttribute', variantValues: Array<{ __typename: 'ProductVariant', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedNumericAttribute_Fragment = { __typename: 'AssignedNumericAttribute', numericValue: number | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedPlainTextAttribute_Fragment = { __typename: 'AssignedPlainTextAttribute', plainTextValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedSingleCategoryReferenceAttribute_Fragment = { __typename: 'AssignedSingleCategoryReferenceAttribute', categoryValue: { __typename: 'Category', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedSingleChoiceAttribute_Fragment = { __typename: 'AssignedSingleChoiceAttribute', choiceValue: { __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedSingleCollectionReferenceAttribute_Fragment = { __typename: 'AssignedSingleCollectionReferenceAttribute', collectionValue: { __typename: 'Collection', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedSinglePageReferenceAttribute_Fragment = { __typename: 'AssignedSinglePageReferenceAttribute', pageValue: { __typename: 'Page', id: string, title: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedSingleProductReferenceAttribute_Fragment = { __typename: 'AssignedSingleProductReferenceAttribute', productValue: { __typename: 'Product', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedSingleProductVariantReferenceAttribute_Fragment = { __typename: 'AssignedSingleProductVariantReferenceAttribute', variantValue: { __typename: 'ProductVariant', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedSwatchAttribute_Fragment = { __typename: 'AssignedSwatchAttribute', swatchValue: { __typename: 'AssignedSwatchAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+type CustomerAssignedAttribute_AssignedTextAttribute_Fragment = { __typename: 'AssignedTextAttribute', richTextValue: unknown | null, attribute: { __typename: 'Attribute', id: string, slug: string } };
+
+export type CustomerAssignedAttributeFragment = CustomerAssignedAttribute_AssignedBooleanAttribute_Fragment | CustomerAssignedAttribute_AssignedDateAttribute_Fragment | CustomerAssignedAttribute_AssignedDateTimeAttribute_Fragment | CustomerAssignedAttribute_AssignedFileAttribute_Fragment | CustomerAssignedAttribute_AssignedMultiCategoryReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedMultiChoiceAttribute_Fragment | CustomerAssignedAttribute_AssignedMultiCollectionReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedMultiPageReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedMultiProductReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedMultiProductVariantReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedNumericAttribute_Fragment | CustomerAssignedAttribute_AssignedPlainTextAttribute_Fragment | CustomerAssignedAttribute_AssignedSingleCategoryReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedSingleChoiceAttribute_Fragment | CustomerAssignedAttribute_AssignedSingleCollectionReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedSinglePageReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedSingleProductReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedSingleProductVariantReferenceAttribute_Fragment | CustomerAssignedAttribute_AssignedSwatchAttribute_Fragment | CustomerAssignedAttribute_AssignedTextAttribute_Fragment;
+
+export type CustomerDetailsFragment = { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, isConfirmed: boolean, isStaff: boolean, externalReference: string | null, id: string, email: string, firstName: string, lastName: string, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, customerType: { __typename: 'CustomerType', id: string, name: string, slug: string, isDefault: boolean, attributes: Array<{ __typename: 'Attribute', entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, filterableInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null }> | null } | null, assignedAttributes: Array<{ __typename: 'AssignedBooleanAttribute', booleanValue: boolean | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedDateAttribute', dateValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedDateTimeAttribute', dateTimeValue: any | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedFileAttribute', fileValue: { __typename: 'File', url: string, contentType: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiCategoryReferenceAttribute', categoryValues: Array<{ __typename: 'Category', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiChoiceAttribute', choiceValues: Array<{ __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiCollectionReferenceAttribute', collectionValues: Array<{ __typename: 'Collection', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiPageReferenceAttribute', pageValues: Array<{ __typename: 'Page', id: string, title: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiProductReferenceAttribute', productValues: Array<{ __typename: 'Product', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedMultiProductVariantReferenceAttribute', variantValues: Array<{ __typename: 'ProductVariant', id: string, name: string }>, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedNumericAttribute', numericValue: number | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedPlainTextAttribute', plainTextValue: string | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleCategoryReferenceAttribute', categoryValue: { __typename: 'Category', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleChoiceAttribute', choiceValue: { __typename: 'AssignedChoiceAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleCollectionReferenceAttribute', collectionValue: { __typename: 'Collection', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSinglePageReferenceAttribute', pageValue: { __typename: 'Page', id: string, title: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleProductReferenceAttribute', productValue: { __typename: 'Product', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSingleProductVariantReferenceAttribute', variantValue: { __typename: 'ProductVariant', id: string, name: string } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedSwatchAttribute', swatchValue: { __typename: 'AssignedSwatchAttributeValue', name: string | null, slug: string | null } | null, attribute: { __typename: 'Attribute', id: string, slug: string } } | { __typename: 'AssignedTextAttribute', richTextValue: unknown | null, attribute: { __typename: 'Attribute', id: string, slug: string } }> };
 
 export type CustomerAddressesFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, addresses: Array<{ __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } }>, defaultBillingAddress: { __typename: 'Address', id: string } | null, defaultShippingAddress: { __typename: 'Address', id: string } | null };
 
@@ -12005,7 +12149,7 @@ export type ProductChannelListingErrorFragment = { __typename: 'ProductChannelLi
 
 export type CollectionChannelListingErrorFragment = { __typename: 'CollectionChannelListingError', code: ProductErrorCode, field: string | null, message: string | null, channels: Array<string> | null };
 
-export type AccountErrorFragment = { __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null };
+export type AccountErrorFragment = { __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null };
 
 export type DiscountErrorFragment = { __typename: 'DiscountError', code: DiscountErrorCode, field: string | null, channels: Array<string> | null, message: string | null, voucherCodes: Array<string> | null };
 
@@ -12080,6 +12224,18 @@ export type PageBulkPublishErrorFragmentFragment = { __typename: 'PageError', co
 export type PageBulkRemoveErrorFragmentFragment = { __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null };
 
 export type PageTypeDeleteErrorFragmentFragment = { __typename: 'PageError', code: PageErrorCode, field: string | null, message: string | null };
+
+export type CustomerTypeCreateErrorFragment = { __typename: 'CustomerTypeCreateError', code: CustomerTypeCreateErrorCode, field: string | null, message: string | null };
+
+export type CustomerTypeUpdateErrorFragment = { __typename: 'CustomerTypeUpdateError', code: CustomerTypeUpdateErrorCode, field: string | null, message: string | null };
+
+export type CustomerTypeDeleteErrorFragment = { __typename: 'CustomerTypeDeleteError', code: CustomerTypeDeleteErrorCode, field: string | null, message: string | null };
+
+export type CustomerTypeAssignAttributesErrorFragment = { __typename: 'CustomerTypeAssignAttributesError', code: CustomerTypeAssignAttributesErrorCode, field: string | null, message: string | null, attributes: Array<string> | null };
+
+export type CustomerTypeUnassignAttributesErrorFragment = { __typename: 'CustomerTypeUnassignAttributesError', code: CustomerTypeUnassignAttributesErrorCode, field: string | null, message: string | null };
+
+export type CustomerTypeReorderAttributesErrorFragment = { __typename: 'CustomerTypeReorderAttributesError', code: CustomerTypeReorderAttributesErrorCode, field: string | null, message: string | null, attributes: Array<string> | null };
 
 export type ProductVariantStocksDeleteErrorFragment = { __typename: 'StockError', code: StockErrorCode, field: string | null, message: string | null };
 
@@ -13818,6 +13974,16 @@ export type SearchAttributeValuesQueryVariables = Exact<{
 
 export type SearchAttributeValuesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', id: string, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', plainText: string | null, richText: string | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: string | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
 
+export type SearchAvailableCustomerAttributesQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+}>;
+
+
+export type SearchAvailableCustomerAttributesQuery = { __typename: 'Query', customerType: { __typename: 'CustomerType', id: string, availableAttributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, inputType: AttributeInputTypeEnum | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null } | null };
+
 export type SearchAvailableInGridAttributesQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   after?: InputMaybe<Scalars['String']['input']>;
@@ -14173,7 +14339,7 @@ export type UserAccountUpdateMutationVariables = Exact<{
 }>;
 
 
-export type UserAccountUpdateMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', user: { __typename: 'User', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+export type UserAccountUpdateMutation = { __typename: 'Mutation', accountUpdate: { __typename: 'AccountUpdate', user: { __typename: 'User', metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }> } | null };
 
 export type StaffMemberDeleteMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -14187,12 +14353,12 @@ export type UserAvatarUpdateMutationVariables = Exact<{
 }>;
 
 
-export type UserAvatarUpdateMutation = { __typename: 'Mutation', userAvatarUpdate: { __typename: 'UserAvatarUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
+export type UserAvatarUpdateMutation = { __typename: 'Mutation', userAvatarUpdate: { __typename: 'UserAvatarUpdate', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
 
 export type UserAvatarDeleteMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserAvatarDeleteMutation = { __typename: 'Mutation', userAvatarDelete: { __typename: 'UserAvatarDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
+export type UserAvatarDeleteMutation = { __typename: 'Mutation', userAvatarDelete: { __typename: 'UserAvatarDelete', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }>, user: { __typename: 'User', id: string, avatar: { __typename: 'Image', url: string } | null } | null } | null };
 
 export type ChangeUserPasswordMutationVariables = Exact<{
   newPassword: Scalars['String']['input'];
@@ -14200,7 +14366,7 @@ export type ChangeUserPasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangeUserPasswordMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null }> } | null };
+export type ChangeUserPasswordMutation = { __typename: 'Mutation', passwordChange: { __typename: 'PasswordChange', errors: Array<{ __typename: 'AccountError', code: AccountErrorCode, field: string | null, addressType: AddressTypeEnum | null, message: string | null, attributes: Array<string> | null }> } | null };
 
 export type StaffListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;

@@ -3,6 +3,7 @@ import {
   type CategoryFilterInput,
   type CollectionFilterInput,
   type CustomerFilterInput,
+  type CustomerWhereInput,
   type GiftCardFilterInput,
   type OrderDraftFilterInput,
   type OrderWhereInput,
@@ -15,12 +16,13 @@ import {
   type VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { type FilterContainer } from "./FilterElement";
+import { type FilterContainer, FilterElement } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
 import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
 import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
+import { CustomerTypeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/CustomerTypeQueryVarsBuilder";
 import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
 import { FulfillmentStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentStatusQueryVarsBuilder";
 import { FulfillmentWarehouseQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentWarehouseQueryVarsBuilder";
@@ -209,6 +211,28 @@ export const createCustomerQueryVariables = (value: FilterContainer): CustomerFi
   const builder = new FiltersQueryBuilder<CustomerFilterInput>({
     apiType: QUERY_API_TYPES.CUSTOMER,
     filterContainer: value,
+  });
+  const { filters } = builder.build();
+
+  return filters;
+};
+
+export const createCustomerWhereVariables = (value: FilterContainer): CustomerWhereInput => {
+  const customerTypeFilters = value.filter(
+    (item): item is FilterElement =>
+      FilterElement.isFilterElement(item) && item.value.value === "customerType",
+  );
+
+  if (customerTypeFilters.length === 0) {
+    return {};
+  }
+
+  const builder = new FiltersQueryBuilder<CustomerWhereInput>({
+    apiType: QueryApiType.WHERE,
+    filterContainer: customerTypeFilters,
+    filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
+      new CustomerTypeQueryVarsBuilder(),
+    ]),
   });
   const { filters } = builder.build();
 

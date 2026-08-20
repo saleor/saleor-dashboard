@@ -55,6 +55,32 @@ jest.mock("@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCard
 jest.mock("@dashboard/extensions/components/AppWidgets/AppWidgets", () => ({
   AppWidgets: () => <div data-test-id="app-widgets-mock" />,
 }));
+jest.mock("../CustomerTypeCard/CustomerTypeCard", () => ({
+  CustomerTypeCard: ({ disabled }: { disabled: boolean }) => (
+    <div data-test-id="customer-type-card-mock" data-disabled={String(disabled)} />
+  ),
+}));
+jest.mock("@dashboard/customers/hooks/useCustomerDetailsAttributes", () => ({
+  useCustomerDetailsAttributes: () => ({
+    attributeRichTextGetters: {},
+    attributes: [],
+    attributeValues: [],
+    fetchAttributeValues: jest.fn(),
+    fetchMoreAttributeValues: { hasMore: false, loading: false, onFetchMore: jest.fn() },
+    getSubmitData: async () => ({ attributes: [], attributesWithNewFileValue: [] }),
+    handleTypeChange: jest.fn(),
+    handlers: {
+      onAttributeSelectBlur: jest.fn(),
+      onChange: jest.fn(),
+      onFileChange: jest.fn(),
+      onMultiChange: jest.fn(),
+      onReferencesAddClick: jest.fn(),
+      onReferencesRemove: jest.fn(),
+      onReferencesReorder: jest.fn(),
+    },
+    typeAttributesLoading: false,
+  }),
+}));
 
 const mockUseUserPermissions = useUserPermissions as jest.Mock;
 const mockUseExtensions = useExtensions as jest.Mock;
@@ -149,6 +175,20 @@ describe("CustomerDetailsPage", () => {
       expect(getInputByTestId("customer-last-name")).not.toBeDisabled();
       expect(getInputByTestId("customer-email")).not.toBeDisabled();
     });
+
+    it("renders the customer type picker enabled at the top of the sidebar", () => {
+      // Arrange / Act
+      renderPage();
+
+      // Assert
+      const typeCard = screen.getByTestId("customer-type-card-mock");
+      const accountStatus = screen.getByTestId("account-status-mock");
+
+      expect(typeCard).toHaveAttribute("data-disabled", "false");
+      expect(
+        typeCard.compareDocumentPosition(accountStatus) & Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy();
+    });
   });
 
   // Read-only roles: MANAGE_ORDERS and MANAGE_STAFF can both reach the
@@ -210,6 +250,17 @@ describe("CustomerDetailsPage", () => {
       expect(getInputByTestId("customer-first-name")).toBeDisabled();
       expect(getInputByTestId("customer-last-name")).toBeDisabled();
       expect(getInputByTestId("customer-email")).toBeDisabled();
+    });
+
+    it("disables the customer type picker", () => {
+      // Arrange / Act
+      renderPage();
+
+      // Assert
+      expect(screen.getByTestId("customer-type-card-mock")).toHaveAttribute(
+        "data-disabled",
+        "true",
+      );
     });
   });
 

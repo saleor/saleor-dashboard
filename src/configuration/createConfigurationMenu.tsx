@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
+import { customerTypeListUrl } from "@dashboard/customerTypes/urls";
 import { giftCardSettingsPath } from "@dashboard/giftCards/urls";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import { createConfigurationLucideIcon } from "@dashboard/icons/createNavigationLucideIcon";
@@ -27,6 +28,7 @@ import {
   Shield,
   Tags,
   Truck,
+  UserRound,
   Users,
   Warehouse,
 } from "lucide-react";
@@ -45,6 +47,7 @@ const ConfigurationChannelsIcon = createConfigurationLucideIcon(Globe);
 const ConfigurationStoreIcon = createConfigurationLucideIcon(Settings);
 const ConfigurationGiftCardsIcon = createConfigurationLucideIcon(Gift);
 const ConfigurationNotificationsIcon = createConfigurationLucideIcon(Bell);
+const ConfigurationCustomerTypesIcon = createConfigurationLucideIcon(UserRound);
 
 /**
  * Configuration IA: merchant jobs, not engineering modules.
@@ -249,6 +252,43 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.ordersAndFulfillment),
           url: orderSettingsPath,
           testId: "configuration-menu-order-settings",
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage({
+        id: "P6k5H+",
+        defaultMessage: "Customers",
+        description: "configuration section for customer types and attributes",
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            id: "Aab1Pd",
+            defaultMessage: "Define types of customers and the attributes they share",
+            description: "configuration menu item description for customer types",
+          }),
+          icon: <ConfigurationCustomerTypesIcon />,
+          permissions: [PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES],
+          title: intl.formatMessage(sectionNames.customerTypes),
+          url: customerTypeListUrl(),
+          testId: "configuration-menu-customer-types",
+        },
+        {
+          description: intl.formatMessage({
+            id: "qP/udV",
+            defaultMessage: "Manage attributes used for customer types",
+            description: "configuration menu item description for customer attributes",
+          }),
+          icon: <ConfigurationAttributesIcon />,
+          permissions: [PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES],
+          title: intl.formatMessage({
+            id: "LaFUxE",
+            defaultMessage: "Customer attributes",
+            description: "configuration menu item title",
+          }),
+          url: attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.CUSTOMER_TYPE),
+          testId: "configuration-menu-customer-attributes",
         },
       ],
     },

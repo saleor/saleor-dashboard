@@ -2,16 +2,15 @@
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { type FileChoiceType } from "@dashboard/components/FileUploadField";
 import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
-import {
-  type AttributeValueFragment,
-  type PageErrorWithAttributesFragment,
-  type ProductErrorWithAttributesFragment,
-} from "@dashboard/graphql";
+import { type AttributeValueFragment } from "@dashboard/graphql";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { getEntityUrl } from "@dashboard/utils/maps";
 import { type Option } from "@saleor/macaw-ui-next";
 import { type IntlShape } from "react-intl";
+
+import { type AttributeFieldError } from "./types";
 
 export function getAttributeRowLabelProps(attribute: AttributeInput) {
   return {
@@ -130,15 +129,14 @@ export function getMultiDisplayValue(
   });
 }
 
-export function getErrorMessage(
-  err: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment | undefined,
-  intl: IntlShape,
-): string {
+export function getErrorMessage(err: AttributeFieldError | undefined, intl: IntlShape): string {
   switch (err?.__typename) {
     case "ProductError":
       return getProductErrorMessage(err, intl);
     case "PageError":
       return getPageErrorMessage(err, intl);
+    case "AccountError":
+      return getAccountErrorMessage(err, intl);
   }
 }
 

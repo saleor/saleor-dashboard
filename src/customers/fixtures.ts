@@ -1041,6 +1041,15 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
   lastName: "Cooper",
   metadata: [],
   note: null,
+  customerType: {
+    __typename: "CustomerType",
+    id: "Q3VzdG9tZXJUeXBlOjE=",
+    name: "Default",
+    slug: "default",
+    isDefault: true,
+    attributes: [],
+  },
+  assignedAttributes: [],
   orders: {
     __typename: "OrderCountableConnection",
     totalCount: 1,

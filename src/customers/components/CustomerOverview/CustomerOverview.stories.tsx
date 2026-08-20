@@ -56,6 +56,7 @@ const withKpiContext = (channelId = "Q2hhbm5lbDox") => ({
     },
   ],
   loading: false,
+  refetch: async () => undefined,
   setKpiChannelId: () => undefined,
 });
 

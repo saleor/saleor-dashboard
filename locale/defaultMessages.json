@@ -3,6 +3,10 @@
     "context": "Transaction event status - requested",
     "string": "Requested"
   },
+  "+0sSTK": {
+    "context": "customer detail sidebar, link to the selected customer type",
+    "string": "View type"
+  },
   "+23eZr": {
     "context": "bulk publish confirm single stock quantity",
     "string": "{quantity} units per variant"
@@ -54,6 +58,10 @@
   "+CE3ZW": {
     "context": "ripple video announcement CTA when Saleor Pulse is already installed",
     "string": "Open Pulse"
+  },
+  "+FovSZ": {
+    "context": "create attribute from customer type, button",
+    "string": "Create attribute"
   },
   "+G2N98": {
     "string": "Install from manifest"
@@ -191,6 +199,9 @@
   "+jHXT3": {
     "context": "limit voucher",
     "string": "Limit to staff only"
+  },
+  "+kNjdQ": {
+    "string": "Open this customer type in GraphiQL"
   },
   "+kfFIG": {
     "context": "gift card sidebar, empty state title for assigned customer",
@@ -382,6 +393,10 @@
   "/PUjN6": {
     "context": "voucher discount amount type",
     "string": "Percentage"
+  },
+  "/PY0Pq": {
+    "context": "customer detail sidebar, customer type combobox label",
+    "string": "Type"
   },
   "/QIOpX": {
     "context": "error when fetching all variants for duplicate detection fails",
@@ -1212,6 +1227,10 @@
     "context": "scope helper for editable order line metadata section",
     "string": "Metadata stored on this order line only. Changes here do not update the product variant."
   },
+  "2mjpqV": {
+    "context": "helper under customer type name in create dialog",
+    "string": "For example B2B or Wholesale — shared by every customer of this type."
+  },
   "2nj61B": {
     "context": "badge on a setting that will be removed from the API",
     "string": "Deprecated"
@@ -1802,6 +1821,10 @@
     "context": "model label",
     "string": "Hidden"
   },
+  "5Nv7ig": {
+    "context": "customer overview stat label: sum of recent orders net product sales",
+    "string": "Recent total"
+  },
   "5O+fh+": {
     "context": "channel details section nav item",
     "string": "Orders"
@@ -2110,6 +2133,10 @@
     "context": "order transaction refund summary disabled shipping tooltip content",
     "string": "Shipping has already been refunded."
   },
+  "6SiomK": {
+    "context": "customer type default column",
+    "string": "Default"
+  },
   "6Tps09": {
     "string": "Inactive"
   },
@@ -2246,6 +2273,10 @@
   },
   "6sr5Sp": {
     "string": "Either term matches"
+  },
+  "6tlOZ8": {
+    "context": "dialog header",
+    "string": "Unassign attribute from customer type"
   },
   "6vf8AS": {
     "context": "section title",
@@ -3044,9 +3075,17 @@
     "context": "Product category",
     "string": "Category"
   },
+  "9qz+en": {
+    "context": "customer attribute class tile description",
+    "string": "Assign on customer types — loyalty, B2B details, or account metadata."
+  },
   "9ruUqf": {
     "context": "create attribute dialog next step button",
     "string": "Next"
+  },
+  "9rvLbt": {
+    "context": "confirm dialog body when changing a customer's type",
+    "string": "Only {typeName} attributes will show on this customer. Other values stay stored and will show again if you switch back."
   },
   "9seX5T": {
     "context": "attribute values search placeholder",
@@ -3211,6 +3250,10 @@
   },
   "AY7Tuz": {
     "string": "The same object cannot be in both lists"
+  },
+  "Aab1Pd": {
+    "context": "configuration menu item description for customer types",
+    "string": "Define types of customers and the attributes they share"
   },
   "AbyDC7": {
     "context": "section header",
@@ -4503,6 +4546,10 @@
     "context": "page header",
     "string": "Create Discount"
   },
+  "FWwYDW": {
+    "context": "warning callout body after a pending customer type change",
+    "string": "Values from the previous type stay stored. They'll show again if you switch back."
+  },
   "FX7ts2": {
     "context": "error message",
     "string": "Amount should be greater than 0"
@@ -4748,6 +4795,10 @@
     "context": "models section name",
     "string": "Models"
   },
+  "GGKINk": {
+    "context": "customer type scope link in customer header, opens filtered customer list",
+    "string": "View customers of {customerTypeName}"
+  },
   "GGhg9z": {
     "context": "order header date, earlier today",
     "string": "Created today at {time}"
@@ -4769,6 +4820,10 @@
   "GK6pQa": {
     "context": "section description",
     "string": "When enabled, update webhooks (e.g. customerUpdated) are sent even when only metadata changes. When disabled, only metadata-specific webhooks are sent. This legacy behavior will be removed in a future version."
+  },
+  "GKk2yy": {
+    "context": "cannot delete default customer type",
+    "string": "The default customer type cannot be deleted. Mark another customer type as the default first."
   },
   "GLX9II": {
     "context": "billing address",
@@ -5683,6 +5738,9 @@
     "context": "order discount was updated event title",
     "string": "Order discount was updated"
   },
+  "JZ3Liu": {
+    "string": "Deleting this customer type will reassign its customers to the default customer type."
+  },
   "Ja7gHc": {
     "context": "button",
     "string": "Edit"
@@ -5964,6 +6022,10 @@
     "context": "bulk publish product already listed badge",
     "string": "Already listed"
   },
+  "Kk84F1": {
+    "context": "success toast description after saving a customer type change",
+    "string": "Only this type's attributes are shown. Other values stay stored."
+  },
   "KkQkcu": {
     "context": "Short tooltip for OrderSettings.deleteExpiredOrdersAfter (docs: order expiration)",
     "string": "Days after an order expires before it is permanently deleted. Allowed range: 1–120."
@@ -6202,9 +6264,17 @@
     "context": "Description of public API verification feature",
     "string": "Check if customers can actually purchase this product"
   },
+  "LaFUxE": {
+    "context": "configuration menu item title",
+    "string": "Customer attributes"
+  },
   "LaoZt4": {
     "context": "inline add attribute value button",
     "string": "Add"
+  },
+  "Ld9hAH": {
+    "context": "customer type not found error",
+    "string": "Customer type not found."
   },
   "LdNCP/": {
     "context": "Filter or element text",
@@ -6434,6 +6504,9 @@
     "context": "new discount label",
     "string": "New discount value"
   },
+  "MUjTkk": {
+    "string": "Search customer types..."
+  },
   "MVU6ol": {
     "context": "exceeded permissions description",
     "string": "This groups permissions exceeds your own. You are able only to manage permissions that you have."
@@ -6574,6 +6647,10 @@
   "N5UuEK": {
     "context": "header",
     "string": "Items ready to ship"
+  },
+  "N5qrPL": {
+    "context": "customer type detail cogs menu, opens the delete-confirmation dialog",
+    "string": "Delete customer type"
   },
   "N6lfS/": {
     "context": "header",
@@ -6719,6 +6796,10 @@
   "NZtcLb": {
     "context": "gift card bulk create success dialog content",
     "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
+  },
+  "NaEM7l": {
+    "context": "section header",
+    "string": "Customer attributes"
   },
   "NelCIl": {
     "context": "content section name",
@@ -6994,6 +7075,9 @@
     "context": "built-in attribute list filter preset",
     "string": "Product attributes"
   },
+  "OjxWjG": {
+    "string": "{name} is now the default customer type"
+  },
   "OkLJNT": {
     "context": "aria-label for collapsed main nav drawer trigger",
     "string": "Open navigation"
@@ -7102,6 +7186,10 @@
   "P6+RQ1": {
     "context": "no products placeholder",
     "string": "No products found"
+  },
+  "P6k5H+": {
+    "context": "configuration section for customer types and attributes",
+    "string": "Customers"
   },
   "P79U4b": {
     "context": "attribute's slug short code label",
@@ -7793,6 +7881,10 @@
   "Rp/Okl": {
     "string": "Shipping Weight Unit"
   },
+  "RqeG2I": {
+    "context": "customer type attributes card intro",
+    "string": "Shared by every customer of this type — for example loyalty tier or company size."
+  },
   "RqtZQ6": {
     "context": "tax classes card header",
     "string": "Tax class rates"
@@ -8026,6 +8118,10 @@
     "context": "neutral callout title for downloading staff email backup before save",
     "string": "Back up first"
   },
+  "SbbVLS": {
+    "context": "built-in attribute list filter preset",
+    "string": "Customer attributes"
+  },
   "SblSIo": {
     "context": "staff delivery mode: own SMTP",
     "string": "Custom SMTP"
@@ -8056,6 +8152,10 @@
   "SnV3LR": {
     "context": "error when no authorization exists",
     "string": "No payment has been authorized for this order. The full amount of {amount} cannot be captured."
+  },
+  "Snodo/": {
+    "context": "attribute type",
+    "string": "Customer Attribute"
   },
   "SpngiS": {
     "context": "sale status",
@@ -8242,6 +8342,10 @@
   "TQph+r": {
     "context": "progress under load more variants in assign variant dialog",
     "string": "{loaded} of {total} loaded"
+  },
+  "TRR1ry": {
+    "context": "customer type unique name error",
+    "string": "This name is already taken. Please provide another."
   },
   "TRl/Xe": {
     "context": "bulk publish stock warehouse scope section title",
@@ -8530,6 +8634,10 @@
   "UbJf55": {
     "string": "Flat rate ({currency})"
   },
+  "UbQMxi": {
+    "context": "attribute customer type (CUSTOMER_TYPE enum value in filters)",
+    "string": "Customer type"
+  },
   "UcrXYE": {
     "context": "Description for scheduled status when publication date is in the future",
     "string": "Publication scheduled"
@@ -8687,6 +8795,10 @@
   },
   "V2JtVu": {
     "string": "Same as implicit AND, using explicit keyword"
+  },
+  "V4BDBb": {
+    "context": "customer type detail page, top-bar metadata button tooltip",
+    "string": "Edit customer type metadata"
   },
   "V4Pdx+": {
     "context": "product detail page, top-bar metadata button tooltip",
@@ -8847,6 +8959,10 @@
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
+  },
+  "Vqz/Gs": {
+    "context": "cannot unset default customer type",
+    "string": "The default flag cannot be unset. Mark another customer type as the default instead."
   },
   "VrFy8e": {
     "string": "No notes from customer"
@@ -9061,6 +9177,10 @@
   "WYLzkv": {
     "context": "hint that attribute value fields accept pasted lists",
     "string": "Paste from a spreadsheet or a comma-separated list to add several values at once."
+  },
+  "WYrgTS": {
+    "context": "create customer type dialog description",
+    "string": "Name this type, then add attributes on the next screen."
   },
   "WZ2kxO": {
     "context": "Section heading for issues that affect whether a customer can purchase (warehouses, stock, channel listing, pricing)",
@@ -9327,6 +9447,10 @@
   "XT/ZvF": {
     "context": "voucher requirement",
     "string": "Minimum quantity of items"
+  },
+  "XUKj/N": {
+    "context": "success toast title after saving a customer type change",
+    "string": "Customer type changed"
   },
   "XUU9sU": {
     "context": "section header",
@@ -9603,6 +9727,9 @@
   },
   "YRe93Y": {
     "string": "Enter a valid email address"
+  },
+  "YSM9lU": {
+    "string": "No customer types found"
   },
   "YSi2+b": {
     "context": "voucher redemptions schedule status when active without end date",
@@ -9881,6 +10008,10 @@
   },
   "ZRz3hM": {
     "string": "Export Product Stock Quantity to CSV"
+  },
+  "ZSheIU": {
+    "context": "customer type slug field",
+    "string": "Slug"
   },
   "ZTG+Dv": {
     "string": "Draft order will be automatically created for replaced products"
@@ -10521,6 +10652,9 @@
     "context": "shipping method types help example row one cart",
     "string": "$150, 8 kg"
   },
+  "bmi0JZ": {
+    "string": "Customer type created"
+  },
   "bnMF4j": {
     "context": "notification",
     "string": "Selected models were unpublished."
@@ -10528,6 +10662,10 @@
   "bp/i0x": {
     "context": "header",
     "string": "Quantity"
+  },
+  "bp7Fo7": {
+    "context": "customer type slug column",
+    "string": "Slug"
   },
   "bqAJCT": {
     "context": "section header",
@@ -11188,9 +11326,17 @@
   "eRqx44": {
     "string": "Search collections..."
   },
+  "eS3TOX": {
+    "context": "customer type attribute already assigned",
+    "string": "This attribute is already assigned."
+  },
   "eS8xZ6": {
     "context": "card header",
     "string": "Tax class rates: {country}"
+  },
+  "eU9J97": {
+    "context": "customer type detail cogs menu, promotes this type to default",
+    "string": "Set as default"
   },
   "eUcaVH": {
     "context": "gift card resend dialog notification section title",
@@ -11258,6 +11404,10 @@
   "epB7b7": {
     "context": "fulfillment status replaced",
     "string": "Replaced"
+  },
+  "epXIss": {
+    "context": "customer types section name",
+    "string": "Customer Types"
   },
   "erC44f": {
     "context": "filters error messages dependencies missing",
@@ -11572,6 +11722,9 @@
   "g2P/kE": {
     "context": "shown when user tries to install an extension that is already installed but inactive",
     "string": "{appName} is installed but disabled."
+  },
+  "g2VphM": {
+    "string": "Customer type deleted"
   },
   "g35CVS": {
     "context": "SMTP password helper",
@@ -12016,6 +12169,10 @@
   "hqVMLQ": {
     "context": "button",
     "string": "Send"
+  },
+  "hqbdaB": {
+    "context": "customer type unique slug error",
+    "string": "A customer type with this slug already exists. Please provide another."
   },
   "hrhqju": {
     "string": "You are currently logged in using an external identity provider. Logging in through email and password may result in loss of permissions and may render you incapable of managing the store. If you experience trouble authenticating, go back and contact your organization's administrator for assistance."
@@ -13048,6 +13205,10 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to delete this attribute?} other{Are you sure you want to delete {displayQuantity} attributes?}}"
   },
+  "lGDCNw": {
+    "context": "customer type metadata dialog header",
+    "string": "Customer Type Metadata"
+  },
   "lGlDEH": {
     "context": "header",
     "string": "Group members"
@@ -13697,6 +13858,10 @@
     "context": "alert title",
     "string": "Your subscription query requires the following permissions:"
   },
+  "niIDyN": {
+    "context": "customer detail sidebar, customer type section header",
+    "string": "Customer type"
+  },
   "ninItd": {
     "string": "Create customer"
   },
@@ -13907,6 +14072,10 @@
   },
   "oQY0a2": {
     "string": "Address line 2"
+  },
+  "oRfxTZ": {
+    "context": "customer type default status pill",
+    "string": "Default"
   },
   "oSf5JD": {
     "string": "No shipping zones available to add"
@@ -14158,6 +14327,10 @@
   "pJ5/7G": {
     "string": "Close and hide all hints"
   },
+  "pKywOt": {
+    "context": "customer type a11y label prefix",
+    "string": "Customer type"
+  },
   "pLSGmd": {
     "context": "product metadata dialog header",
     "string": "Product Metadata"
@@ -14369,6 +14542,9 @@
     "context": "variant sibling navigator search placeholder",
     "string": "Search variants"
   },
+  "q+SBuc": {
+    "string": "Deleting this customer type will reassign {count} {count, plural, one {customer} other {customers}} to the default customer type."
+  },
   "q/FMPM": {
     "context": "dialog header",
     "string": "Publish models"
@@ -14431,6 +14607,10 @@
   },
   "qC6HKe": {
     "string": "Discount created"
+  },
+  "qC83EA": {
+    "context": "button",
+    "string": "Create customer type"
   },
   "qCH2eZ": {
     "context": "header",
@@ -14510,6 +14690,10 @@
   "qOXgxv": {
     "context": "gift card history message",
     "string": "Gift card was refunded in order {orderLink}"
+  },
+  "qP/udV": {
+    "context": "configuration menu item description for customer attributes",
+    "string": "Manage attributes used for customer types"
   },
   "qP8fZq": {
     "context": "banner when shipping method channels are missing prices",
@@ -14787,6 +14971,9 @@
     "context": "column picker section header",
     "string": "Custom"
   },
+  "rHRoia": {
+    "string": "Customer type updated"
+  },
   "rHoRbE": {
     "context": "Status label when object is unpublished in a channel",
     "string": "Unpublished"
@@ -15049,6 +15236,10 @@
     "context": "header name input",
     "string": "Should match `x-*`, `authorization*`, or `brokerproperties`."
   },
+  "sGdrxC": {
+    "context": "confirm dialog submit when changing a customer's type",
+    "string": "Change type"
+  },
   "sI49ZO": {
     "context": "setup task title",
     "string": "Add inventory"
@@ -15060,6 +15251,10 @@
   "sK1FPw": {
     "context": "categories section name",
     "string": "Categories"
+  },
+  "sK8l2j": {
+    "context": "warning callout title after a pending customer type change",
+    "string": "This type uses different attributes"
   },
   "sKbtzQ": {
     "context": "voucher catalogue collections row title",
@@ -15144,6 +15339,10 @@
   "sdA14A": {
     "context": "Status label when object is published in a channel",
     "string": "Published"
+  },
+  "se+RzK": {
+    "context": "customer detail sidebar, helper under the customer type picker",
+    "string": "This type decides which attributes appear on the customer."
   },
   "se5+j/": {
     "context": "transaction refund tiles transaction name",
@@ -15295,6 +15494,10 @@
     "context": "tab name",
     "string": "All products"
   },
+  "tCPJxK": {
+    "context": "default customer type list badge",
+    "string": "Default"
+  },
   "tELvPJ": {
     "context": "placeholder for model type tab grouping separator input",
     "string": "Comma-separated list of separators"
@@ -15438,6 +15641,10 @@
     "context": "usage summary when attribute is only on variant types",
     "string": "{count, plural, one {# variant type} other {# variant types}}"
   },
+  "tqcnG1": {
+    "context": "unassign attribute from customer type, button",
+    "string": "Unassign"
+  },
   "trx0Os": {
     "context": "settings search result kind badge",
     "string": "Section"
@@ -15487,6 +15694,10 @@
   },
   "tzMNF3": {
     "string": "Status"
+  },
+  "u+ozTE": {
+    "context": "customer type name column",
+    "string": "Customer type name"
   },
   "u/vOPu": {
     "string": "Paid"
@@ -15602,9 +15813,17 @@
     "context": "all selected items message",
     "string": "All available {itemsName} have been selected"
   },
+  "uKuQFH": {
+    "context": "delete customer type dialog title",
+    "string": "Delete customer type"
+  },
   "uL33aH": {
     "context": "Reassurance under verification badge when product is purchasable in direct mode",
     "string": "The public API confirms the product is purchasable. Stock availability is taken directly from the warehouse-channel link, regardless of shipping zones."
+  },
+  "uLd5xR": {
+    "context": "TopNav destination link tooltip to customer types list",
+    "string": "All customer types"
   },
   "uN88fb": {
     "context": "button, submit form",
@@ -15977,6 +16196,10 @@
   "vONi+O": {
     "string": "Country"
   },
+  "vOnJjB": {
+    "context": "hint under general information when this type is the default",
+    "string": "New customers are assigned this type. To delete it, set another customer type as the default first."
+  },
   "vP7g2+": {
     "context": "error message",
     "string": "URL not set for an invoice"
@@ -16240,6 +16463,10 @@
   "wAgQU+": {
     "string": "Select a Model Type. All Models extending the type will be available as return reasons when returning products."
   },
+  "wBEqqa": {
+    "context": "select all customer types preset label",
+    "string": "All customer types"
+  },
   "wBGCR1": {
     "context": "Badge shown when channel is marked for removal",
     "string": "to remove"
@@ -16310,6 +16537,10 @@
     "context": "seo title field hint",
     "string": "Title tag shown in browser tabs and search results"
   },
+  "wSzirL": {
+    "context": "create customer type dialog title",
+    "string": "Create customer type"
+  },
   "wTHjt3": {
     "string": "Search Orders..."
   },
@@ -16323,6 +16554,10 @@
   },
   "wUWSv2": {
     "string": "Products deleted"
+  },
+  "wV0kNo": {
+    "context": "confirm dialog title when changing a customer's type",
+    "string": "Change customer type"
   },
   "wVjyOX": {
     "string": "Fully authorised"
@@ -16363,10 +16598,6 @@
   "weguIe": {
     "context": "deactivate customer dialog, confirm button label",
     "string": "Deactivate"
-  },
-  "wek82T": {
-    "context": "customer overview stat label: sum of recent orders net product sales",
-    "string": "Recent orders total"
   },
   "werrDz": {
     "context": "refunded event title",
@@ -16619,6 +16850,10 @@
   "xi32al": {
     "context": "channel detail cogs menu, opens create dialog prefilled from this channel's settings",
     "string": "Duplicate channel"
+  },
+  "xiOt5R": {
+    "context": "empty state for attributes on a customer type",
+    "string": "No customer attributes yet"
   },
   "xipkZ1": {
     "context": "matrix column header",
@@ -17012,6 +17247,10 @@
   "zE3ga7": {
     "context": "channel form card title for name, slug, country, currency",
     "string": "General settings"
+  },
+  "zFVruN": {
+    "context": "tooltip on customer type label in header when slug is missing and list filter link is unavailable",
+    "string": "Cannot open a filtered customer list for this type. Use the type card to open customer type settings."
   },
   "zGvkK2": {
     "context": "usage summary when attribute is on both product and variant types",

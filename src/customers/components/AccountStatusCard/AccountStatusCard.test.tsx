@@ -19,6 +19,15 @@ const baseCustomer: CustomerDetailsFragment = {
   externalReference: null,
   defaultShippingAddress: null,
   defaultBillingAddress: null,
+  customerType: {
+    __typename: "CustomerType",
+    id: "Q3VzdG9tZXJUeXBlOjE=",
+    name: "Default",
+    slug: "default",
+    isDefault: true,
+    attributes: [],
+  },
+  assignedAttributes: [],
 };
 
 const renderCard = (props: { customer?: CustomerDetailsFragment | null }) =>

@@ -1,9 +1,11 @@
 // @ts-strict-ignore
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
 import { type Customers } from "@dashboard/customers/types";
 import {
@@ -17,6 +19,7 @@ import {
   getExtensionsItemsForCustomerOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
@@ -40,6 +43,7 @@ interface CustomerListPageProps
   loading: boolean;
   onSelectCustomerIds: (rows: number[], clearSelection: () => void) => void;
   onCustomersDelete: () => void;
+  onCreateCustomerType: () => void;
 }
 
 const CustomerListPage = ({
@@ -55,11 +59,16 @@ const CustomerListPage = ({
   selectedCustomerIds,
   hasPresetsChanged,
   onCustomersDelete,
+  onCreateCustomerType,
   ...customerListProps
 }: CustomerListPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const canEditCustomers = useCanEditCustomers();
+  const userPermissions = useUserPermissions();
+  const canCreateCustomerTypes = hasPermissions(userPermissions ?? [], [
+    PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
+  ]);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_LIST,
@@ -69,6 +78,21 @@ const CustomerListPage = ({
     selectedCustomerIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(CUSTOMER_OVERVIEW_CREATE);
+  const createCustomerTypeOption = canCreateCustomerTypes
+    ? [
+        {
+          label: intl.formatMessage({
+            id: "qC83EA",
+            defaultMessage: "Create customer type",
+            description: "button",
+          }),
+          testId: "create-customer-type",
+          onSelect: onCreateCustomerType,
+        },
+      ]
+    : [];
+  const showCreateSplitButton =
+    createCustomerTypeOption.length > 0 || extensionCreateButtonItems.length > 0;
 
   return (
     <>
@@ -100,10 +124,11 @@ const CustomerListPage = ({
           <Box display="flex" alignItems="center" gap={2}>
             {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
             {canEditCustomers &&
-              (extensionCreateButtonItems.length > 0 ? (
+              (showCreateSplitButton ? (
                 <ButtonGroupWithDropdown
+                  pinnedOptions={createCustomerTypeOption}
                   options={extensionCreateButtonItems}
-                  data-test-id="create-customer"
+                  testId="create-customer"
                   onClick={() => navigate(customerAddUrl)}
                 >
                   <FormattedMessage

@@ -232,9 +232,9 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
                   icon={<Banknote size={ICON_SIZE} />}
                   title={
                     <FormattedMessage
-                      defaultMessage="Recent orders total"
+                      defaultMessage="Recent total"
                       description="customer overview stat label: sum of recent orders net product sales"
-                      id="wek82T"
+                      id="5Nv7ig"
                     />
                   }
                   tooltip={

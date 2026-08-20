@@ -5,8 +5,6 @@ import {
   type AttributeValueDetailsFragment,
   type AttributeValueFragment,
   type MeasurementUnitsEnum,
-  type PageErrorWithAttributesFragment,
-  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
@@ -18,7 +16,11 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
 import { AttributeListItem } from "./AttributeListItem";
-import { type AttributeRowHandlers, type VariantAttributeScope } from "./types";
+import {
+  type AttributeFieldError,
+  type AttributeRowHandlers,
+  type VariantAttributeScope,
+} from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
@@ -43,7 +45,7 @@ interface AttributesProps extends AttributeRowHandlers {
   onAttributeSelectBlur: () => void;
   disabled: boolean;
   loading: boolean;
-  errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;
+  errors: AttributeFieldError[];
   title?: React.ReactNode;
   richTextGetters: RichTextGetters<string>;
 }

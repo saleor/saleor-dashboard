@@ -1,8 +1,13 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { createCustomerQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import {
+  createCustomerQueryVariables,
+  createCustomerWhereVariables,
+} from "@dashboard/components/ConditionalFilter/queryVariables";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { CreateCustomerTypeDialog } from "@dashboard/customerTypes/components/CreateCustomerTypeDialog/CreateCustomerTypeDialog";
+import { useCreateCustomerType } from "@dashboard/customerTypes/hooks/useCreateCustomerType";
 import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboard/graphql";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
@@ -47,6 +52,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
   const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
   const { valueProvider } = useConditionalFilterContext();
   const filter = createCustomerQueryVariables(valueProvider.value);
+  const where = createCustomerWhereVariables(valueProvider.value);
 
   usePaginationReset(customerListUrl, params, settings.rowNumber);
 
@@ -80,6 +86,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
         ...filter,
         search: params.query,
       },
+      where: Object.keys(where).length > 0 ? where : undefined,
       sort: getSortQueryVariables(params),
     }),
     [params, settings.rowNumber, valueProvider.value],
@@ -102,6 +109,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
     CustomerListUrlDialog,
     CustomerListUrlQueryParams
   >(navigate, customerListUrl, params);
+  const createCustomerTypeDialog = useCreateCustomerType({ onClose: closeModal });
   const paginationValues = usePaginator({
     pageInfo: data?.customers?.pageInfo,
     paginationState,
@@ -177,6 +185,12 @@ const CustomerList = ({ params }: CustomerListProps) => {
         sort={getSortParams(params)}
         hasPresetsChanged={hasPresetsChanged}
         onCustomersDelete={() => openModal("remove", { ids: selectedRowIds })}
+        onCreateCustomerType={() => openModal("create-customer-type")}
+      />
+      <CreateCustomerTypeDialog
+        open={params.action === "create-customer-type"}
+        onClose={closeModal}
+        {...createCustomerTypeDialog}
       />
       <CustomerBulkDeleteDialog
         confirmButtonState={bulkRemoveCustomersOpts.status}
