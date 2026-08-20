@@ -11,6 +11,16 @@ export const navigationPinMessages = defineMessages({
     defaultMessage: "Unpin",
     description: "button, removes a model type from the sidebar",
   },
+  pinToNav: {
+    defaultMessage: "Pin to nav",
+    id: "HCQlAJ",
+    description: "button, adds a model type to the sidebar",
+  },
+  unpinFromNav: {
+    defaultMessage: "Unpin from nav",
+    id: "8vjjrE",
+    description: "button, removes a model type from the sidebar",
+  },
   pinnedByOrganization: {
     id: "nHbJnd",
     defaultMessage: "Pinned by organization",
