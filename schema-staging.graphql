@@ -3711,22 +3711,22 @@ type Attribute implements Node & ObjectWithMetadata @doc(category: "Attributes")
   """
   Whether the attribute can be filtered in storefront. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
-  filterableInStorefront: Boolean! @deprecated
+  filterableInStorefront: Boolean! @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """
   Whether the attribute can be filtered in dashboard. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
-  filterableInDashboard: Boolean!
+  filterableInDashboard: Boolean! @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.")
 
   """
   Whether the attribute can be displayed in the admin product list. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
-  availableInGrid: Boolean! @deprecated
+  availableInGrid: Boolean! @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """
   The position of the attribute in the storefront navigation (0 by default). Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
   """
-  storefrontSearchPosition: Int! @deprecated
+  storefrontSearchPosition: Int! @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """Returns translated attribute fields for the given language code."""
   translation(
@@ -4481,7 +4481,9 @@ input ProductFilterInput @doc(category: "Products") {
   """Filter on whether product is a gift card or not."""
   giftCard: Boolean
   ids: [ID!]
-  hasPreorderedVariants: Boolean
+
+  """Filter by product with preordered variants."""
+  hasPreorderedVariants: Boolean @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
   slugs: [String!]
 
   """Specifies the channel by which the data should be filtered."""
@@ -4737,7 +4739,7 @@ input ProductWhereInput @doc(category: "Products") {
   giftCard: Boolean
 
   """Filter by product with preordered variants."""
-  hasPreorderedVariants: Boolean
+  hasPreorderedVariants: Boolean @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """Filter by when was the most recent update."""
   updatedAt: DateTimeFilterInput
@@ -7475,7 +7477,7 @@ type ProductVariant implements Node & ObjectWithMetadata & ObjectWithAttributes 
   ): Int
 
   """Preorder data for product variant."""
-  preorder: PreorderData
+  preorder: PreorderData @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """The date and time when the product variant was created."""
   created: DateTime!
@@ -7516,7 +7518,7 @@ type ProductVariantChannelListing implements Node @doc(category: "Products") {
   margin: Int
 
   """Preorder variant data."""
-  preorderThreshold: PreorderThreshold
+  preorderThreshold: PreorderThreshold @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 }
 
 """Represents channel."""
@@ -9409,13 +9411,17 @@ type TaxConfigurationPerCountry @doc(category: "Taxes") {
   useWeightedTaxForShipping: Boolean
 }
 
-"""Represents preorder variant data for channel."""
+"""
+Represents preorder variant data for channel.
+
+DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
+"""
 type PreorderThreshold @doc(category: "Products") {
   """Preorder threshold for product variant in this channel."""
-  quantity: Int
+  quantity: Int @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """Number of sold product variant in this channel."""
-  soldUnits: Int!
+  soldUnits: Int! @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 }
 
 """Represents availability of a variant in the storefront."""
@@ -9845,24 +9851,28 @@ type ProductVariantTranslatableContent implements Node @doc(category: "Products"
   attributeValues: [AttributeValueTranslatableContent!]!
 }
 
-"""Represents preorder settings for product variant."""
+"""
+Represents preorder settings for product variant.
+
+DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
+"""
 type PreorderData @doc(category: "Products") {
   """
   The global preorder threshold for product variant.
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
-  globalThreshold: Int
+  globalThreshold: Int @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """
   Total number of sold product variant during preorder.
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
-  globalSoldUnits: Int!
+  globalSoldUnits: Int! @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """Preorder end date."""
-  endDate: DateTime
+  endDate: DateTime @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 }
 
 """Represents availability of a product in the storefront."""
@@ -10002,7 +10012,9 @@ input ProductVariantFilterInput @doc(category: "Products") {
   search: String
   sku: [String!]
   metadata: [MetadataFilter!]
-  isPreorder: Boolean
+
+  """Filter by variants that are currently in preorder."""
+  isPreorder: Boolean @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
   updatedAt: DateTimeRangeInput
 }
 
@@ -10425,9 +10437,6 @@ input AttributeFilterInput @doc(category: "Attributes") {
   valueRequired: Boolean
   isVariantOnly: Boolean
   visibleInStorefront: Boolean
-  filterableInStorefront: Boolean
-  filterableInDashboard: Boolean
-  availableInGrid: Boolean
   metadata: [MetadataFilter!]
   search: String
   ids: [ID!]
@@ -10435,6 +10444,15 @@ input AttributeFilterInput @doc(category: "Attributes") {
   inCollection: ID
   inCategory: ID
   slugs: [String!]
+
+  """Whether the attribute can be filtered in storefront."""
+  filterableInStorefront: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
+
+  """Whether the attribute can be displayed in the admin product list."""
+  availableInGrid: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
+
+  """Whether the attribute can be filtered in dashboard."""
+  filterableInDashboard: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.")
 
   """Specifies the channel by which the data should be filtered."""
   channel: String @deprecated(reason: "Use root-level channel argument instead.")
@@ -10461,7 +10479,9 @@ input AttributeWhereInput @doc(category: "Attributes") {
   inCategory: ID
   valueRequired: Boolean
   visibleInStorefront: Boolean
-  filterableInDashboard: Boolean
+
+  """Whether the attribute can be filtered in dashboard."""
+  filterableInDashboard: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.")
 
   """List of conditions that must be met."""
   AND: [AttributeWhereInput!]
@@ -16015,7 +16035,9 @@ input OrderFilterInput @doc(category: "Orders") {
   chargeStatus: [OrderChargeStatusEnum!]
   updatedAt: DateTimeRangeInput
   isClickAndCollect: Boolean
-  isPreorder: Boolean
+
+  """Filter by orders containing a variant that is currently in preorder."""
+  isPreorder: Boolean @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
   ids: [ID!]
   checkoutTokens: [UUID!]
   giftCardUsed: Boolean
@@ -17320,18 +17342,18 @@ enum AttributeSortField @doc(category: "Attributes") {
   VISIBLE_IN_STOREFRONT
 
   """Sort attributes by the filterable in storefront flag"""
-  FILTERABLE_IN_STOREFRONT
+  FILTERABLE_IN_STOREFRONT @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """Sort attributes by the filterable in dashboard flag"""
-  FILTERABLE_IN_DASHBOARD
+  FILTERABLE_IN_DASHBOARD @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.")
 
   """Sort attributes by their position in storefront"""
-  STOREFRONT_SEARCH_POSITION
+  STOREFRONT_SEARCH_POSITION @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """
   Sort attributes based on whether they can be displayed or not in a product grid.
   """
-  AVAILABLE_IN_GRID
+  AVAILABLE_IN_GRID @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 }
 
 """Represents ongoing installation of app."""
@@ -19018,14 +19040,16 @@ type Mutation {
   ): ProductVariantReorderAttributeValues @doc(category: "Products")
 
   """
-  Deactivates product variant preorder. It changes all preorder allocation into regular allocation. 
+  Deactivates product variant preorder. It changes all preorder allocation into regular allocation.
+  
+  DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productVariantPreorderDeactivate(
     """ID of a variant which preorder should be deactivated."""
     id: ID!
-  ): ProductVariantPreorderDeactivate @doc(category: "Products")
+  ): ProductVariantPreorderDeactivate @doc(category: "Products") @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """
   Assign an media to a product variant. 
@@ -24241,7 +24265,7 @@ enum ProductErrorCode @doc(category: "Products") {
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL
   UNSUPPORTED_MEDIA_PROVIDER
-  PREORDER_VARIANT_CANNOT_BE_DEACTIVATED
+  PREORDER_VARIANT_CANNOT_BE_DEACTIVATED @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
   INVALID_FILE_TYPE
   UNSUPPORTED_MIME_TYPE
   FILE_SIZE_LIMIT_EXCEEDED
@@ -25053,7 +25077,7 @@ input ProductVariantBulkCreateInput @doc(category: "Products") {
   weight: WeightScalar
 
   """Determines if variant is in preorder."""
-  preorder: PreorderSettingsInput
+  preorder: PreorderSettingsInput @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """
   Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
@@ -25142,12 +25166,17 @@ input BulkAttributeValueInput @doc(category: "Products") {
   dateTime: DateTime
 }
 
+"""
+Preorder settings for a product variant.
+
+DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
+"""
 input PreorderSettingsInput @doc(category: "Products") {
   """The global threshold for preorder variant."""
-  globalThreshold: Int
+  globalThreshold: Int @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """The end date for preorder."""
-  endDate: DateTime
+  endDate: DateTime @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 }
 
 input StockInput @doc(category: "Products") {
@@ -25174,7 +25203,7 @@ input ProductVariantChannelListingAddInput @doc(category: "Products") {
   priorPrice: PositiveDecimal
 
   """The threshold for preorder variant in channel."""
-  preorderThreshold: Int
+  preorderThreshold: Int @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 }
 
 """
@@ -25654,7 +25683,7 @@ input ProductVariantCreateInput @doc(category: "Products") {
   weight: WeightScalar
 
   """Determines if variant is in preorder."""
-  preorder: PreorderSettingsInput
+  preorder: PreorderSettingsInput @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """
   Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
@@ -25836,7 +25865,7 @@ input ProductVariantBulkUpdateInput @doc(category: "Products") {
   weight: WeightScalar
 
   """Determines if variant is in preorder."""
-  preorder: PreorderSettingsInput
+  preorder: PreorderSettingsInput @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """
   Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
@@ -25914,7 +25943,7 @@ input ChannelListingUpdateInput @doc(category: "Products") {
   priorPrice: PositiveDecimal
 
   """The threshold for preorder variant in channel."""
-  preorderThreshold: Int
+  preorderThreshold: Int @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 }
 
 """
@@ -26074,7 +26103,7 @@ input ProductVariantInput @doc(category: "Products") {
   weight: WeightScalar
 
   """Determines if variant is in preorder."""
-  preorder: PreorderSettingsInput
+  preorder: PreorderSettingsInput @deprecated(reason: "Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.")
 
   """
   Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
@@ -26210,7 +26239,9 @@ type ProductVariantReorderAttributeValues @doc(category: "Products") {
 }
 
 """
-Deactivates product variant preorder. It changes all preorder allocation into regular allocation. 
+Deactivates product variant preorder. It changes all preorder allocation into regular allocation.
+
+DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
 """
@@ -31942,18 +31973,18 @@ input AttributeCreateInput @doc(category: "Attributes") {
   visibleInStorefront: Boolean
 
   """Whether the attribute can be filtered in storefront."""
-  filterableInStorefront: Boolean @deprecated
+  filterableInStorefront: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """Whether the attribute can be filtered in dashboard."""
-  filterableInDashboard: Boolean
+  filterableInDashboard: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.")
 
   """
   The position of the attribute in the storefront navigation (0 by default).
   """
-  storefrontSearchPosition: Int @deprecated
+  storefrontSearchPosition: Int @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """Whether the attribute can be displayed in the admin product list."""
-  availableInGrid: Boolean @deprecated
+  availableInGrid: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """External ID of this attribute."""
   externalReference: String
@@ -32059,18 +32090,18 @@ input AttributeUpdateInput @doc(category: "Attributes") {
   visibleInStorefront: Boolean
 
   """Whether the attribute can be filtered in storefront."""
-  filterableInStorefront: Boolean @deprecated
+  filterableInStorefront: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """Whether the attribute can be filtered in dashboard."""
-  filterableInDashboard: Boolean
+  filterableInDashboard: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.")
 
   """
   The position of the attribute in the storefront navigation (0 by default).
   """
-  storefrontSearchPosition: Int @deprecated
+  storefrontSearchPosition: Int @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """Whether the attribute can be displayed in the admin product list."""
-  availableInGrid: Boolean @deprecated
+  availableInGrid: Boolean @deprecated(reason: "This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.")
 
   """External ID of this product."""
   externalReference: String
