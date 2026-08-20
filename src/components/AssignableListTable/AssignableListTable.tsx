@@ -221,7 +221,6 @@ export const AssignableListTable = <T extends { id: string }>({
             return (
               <GridTable.Row
                 key="skeleton"
-                className={density === "media" ? styles.rowMedia : undefined}
                 __height={density === "media" ? ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT : undefined}
               >
                 <GridTable.Cell padding={2}>
@@ -238,11 +237,7 @@ export const AssignableListTable = <T extends { id: string }>({
           return (
             <GridTable.Row
               key={item.id}
-              className={clsx(
-                styles.row,
-                density === "media" && styles.rowMedia,
-                rowHref && styles.rowClickable,
-              )}
+              className={clsx(styles.row, rowHref && styles.rowClickable)}
               __height={density === "media" ? ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT : undefined}
               data-test-id={rowTestId}
               backgroundColor={{

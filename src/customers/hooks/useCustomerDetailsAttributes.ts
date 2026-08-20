@@ -95,8 +95,13 @@ export const useCustomerDetailsAttributes = ({
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
+  /**
+   * Resolves to `false` when the new type's attributes could not be loaded — the caller
+   * must then revert the picked type, otherwise the form would submit the new type
+   * together with the previous type's attribute values.
+   */
   const handleTypeChange = useCallback(
-    async (typeId: string) => {
+    async (typeId: string): Promise<boolean> => {
       const requestId = ++typeChangeRequestId.current;
 
       triggerChange();
@@ -109,7 +114,11 @@ export const useCustomerDetailsAttributes = ({
         });
 
         if (requestId !== typeChangeRequestId.current) {
-          return;
+          return true;
+        }
+
+        if (!result.data?.customerType) {
+          return false;
         }
 
         attributes.set(
@@ -119,6 +128,10 @@ export const useCustomerDetailsAttributes = ({
             previousAttributes: attributes.data,
           }),
         );
+
+        return true;
+      } catch {
+        return false;
       } finally {
         if (requestId === typeChangeRequestId.current) {
           setTypeAttributesLoading(false);

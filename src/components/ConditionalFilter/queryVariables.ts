@@ -2,7 +2,6 @@ import {
   type AttributeFilterInput,
   type CategoryFilterInput,
   type CollectionFilterInput,
-  type CustomerFilterInput,
   type CustomerWhereInput,
   type GiftCardFilterInput,
   type OrderDraftFilterInput,
@@ -16,7 +15,7 @@ import {
   type VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { type FilterContainer, FilterElement } from "./FilterElement";
+import { type FilterContainer } from "./FilterElement";
 import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
@@ -53,7 +52,7 @@ export const QUERY_API_TYPES = {
   PAGE: QueryApiType.FILTER,
   DRAFT_ORDER: QueryApiType.FILTER,
   GIFT_CARD: QueryApiType.FILTER,
-  CUSTOMER: QueryApiType.FILTER,
+  CUSTOMER: QueryApiType.WHERE,
   COLLECTION: QueryApiType.FILTER,
   PRODUCT_TYPE: QueryApiType.FILTER,
   STAFF_MEMBER: QueryApiType.FILTER,
@@ -207,32 +206,21 @@ export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFi
   return filters;
 };
 
-export const createCustomerQueryVariables = (value: FilterContainer): CustomerFilterInput => {
-  const builder = new FiltersQueryBuilder<CustomerFilterInput>({
-    apiType: QUERY_API_TYPES.CUSTOMER,
-    filterContainer: value,
-  });
-  const { filters } = builder.build();
-
-  return filters;
-};
+// Saleor rejects a query that carries both `filter` and `where`, so every customer
+// filter has to go through `where` — `customerType` only exists there anyway.
+const customerFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new CustomerTypeQueryVarsBuilder(),
+  new DateTimeRangeQueryVarsBuilder(), // dateJoined uses DateTimeRangeInput
+  new MetadataFilterInputQueryVarsBuilder(), // metadata uses MetadataFilterInput
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
 
 export const createCustomerWhereVariables = (value: FilterContainer): CustomerWhereInput => {
-  const customerTypeFilters = value.filter(
-    (item): item is FilterElement =>
-      FilterElement.isFilterElement(item) && item.value.value === "customerType",
-  );
-
-  if (customerTypeFilters.length === 0) {
-    return {};
-  }
-
   const builder = new FiltersQueryBuilder<CustomerWhereInput>({
-    apiType: QueryApiType.WHERE,
-    filterContainer: customerTypeFilters,
-    filterDefinitionResolver: new FilterQueryVarsBuilderResolver([
-      new CustomerTypeQueryVarsBuilder(),
-    ]),
+    apiType: QUERY_API_TYPES.CUSTOMER,
+    filterContainer: value,
+    useAndWrapper: true,
+    filterDefinitionResolver: customerFilterDefinitionResolver,
   });
   const { filters } = builder.build();
 

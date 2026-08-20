@@ -335,6 +335,7 @@ const Routes = () => {
                         permissions={[
                           PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
                           PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                          PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
                         ]}
                         path={attributeSection}
                         component={AttributeSection}

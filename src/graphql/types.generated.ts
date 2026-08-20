@@ -11456,8 +11456,8 @@ export type ListCustomersQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  filter?: InputMaybe<CustomerFilterInput>;
   where?: InputMaybe<CustomerWhereInput>;
+  search?: InputMaybe<Scalars['String']['input']>;
   sort?: InputMaybe<UserSortingInput>;
   PERMISSION_MANAGE_ORDERS: Scalars['Boolean']['input'];
 }>;

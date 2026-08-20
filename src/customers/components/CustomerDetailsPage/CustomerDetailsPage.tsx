@@ -45,7 +45,9 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
+import { commonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -339,7 +341,7 @@ const CustomerDetailsPage = ({
                 change({
                   target: {
                     name: "customerTypeId",
-                    value: type.id,
+                    value: type?.id ?? "",
                   },
                 });
               }}
@@ -392,7 +394,7 @@ const CustomerDetailsPage = ({
                       />
                       <CustomerAddresses
                         customer={customer}
-                        disabled={disabled}
+                        disabled={disabled || isReadOnly}
                         manageAddressHref={customerAddressesUrl(customerId)}
                       />
                       <ExternalReferenceCard customer={customer} />
@@ -457,7 +459,7 @@ interface CustomerTypeAndAttributesProps {
   onAttributesDirtyChange: (dirty: boolean) => void;
   onCloseAssignReferences?: () => void;
   onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
-  onTypeChange: (type: { id: string; name: string }) => void;
+  onTypeChange: (type: { id: string; name: string } | null) => void;
   referenceCategories: ReferenceEntitiesSearch["categories"];
   referenceCollections: ReferenceEntitiesSearch["collections"];
   referencePages: ReferenceEntitiesSearch["pages"];
@@ -494,6 +496,7 @@ const CustomerTypeAndAttributes = ({
   triggerChange,
 }: CustomerTypeAndAttributesProps) => {
   const intl = useIntl();
+  const notify = useNotifier();
   const attributeForm = useCustomerDetailsAttributes({
     assignReferencesAttributeId,
     customer,
@@ -544,9 +547,22 @@ const CustomerTypeAndAttributes = ({
         formErrors.customerType ? getAccountErrorMessage(formErrors.customerType, intl) : undefined
       }
       onChange={type => {
+        const previousType = selectedType;
+
         setPickedType(type);
         onTypeChange(type);
-        void attributeForm.handleTypeChange(type.id);
+        void attributeForm.handleTypeChange(type.id).then(loaded => {
+          if (loaded) {
+            return;
+          }
+
+          setPickedType(previousType);
+          onTypeChange(previousType);
+          notify({
+            status: "error",
+            text: intl.formatMessage(commonMessages.somethingWentWrong),
+          });
+        });
       }}
     >
       {attributeForm.attributes.length > 0 ? (

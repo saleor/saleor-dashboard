@@ -8935,14 +8935,14 @@ export type BulkRemoveCustomersMutationHookResult = ReturnType<typeof useBulkRem
 export type BulkRemoveCustomersMutationResult = Apollo.MutationResult<Types.BulkRemoveCustomersMutation>;
 export type BulkRemoveCustomersMutationOptions = Apollo.BaseMutationOptions<Types.BulkRemoveCustomersMutation, Types.BulkRemoveCustomersMutationVariables>;
 export const ListCustomersDocument = gql`
-    query ListCustomers($after: String, $before: String, $first: Int, $last: Int, $filter: CustomerFilterInput, $where: CustomerWhereInput, $sort: UserSortingInput, $PERMISSION_MANAGE_ORDERS: Boolean!) {
+    query ListCustomers($after: String, $before: String, $first: Int, $last: Int, $where: CustomerWhereInput, $search: String, $sort: UserSortingInput, $PERMISSION_MANAGE_ORDERS: Boolean!) {
   customers(
     after: $after
     before: $before
     first: $first
     last: $last
-    filter: $filter
     where: $where
+    search: $search
     sortBy: $sort
   ) {
     edges {
@@ -8979,8 +8979,8 @@ export const ListCustomersDocument = gql`
  *      before: // value for 'before'
  *      first: // value for 'first'
  *      last: // value for 'last'
- *      filter: // value for 'filter'
  *      where: // value for 'where'
+ *      search: // value for 'search'
  *      sort: // value for 'sort'
  *      PERMISSION_MANAGE_ORDERS: // value for 'PERMISSION_MANAGE_ORDERS'
  *   },

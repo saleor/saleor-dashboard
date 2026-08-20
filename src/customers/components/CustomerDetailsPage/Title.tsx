@@ -1,6 +1,8 @@
 import { ClickableCustomerType } from "@dashboard/components/CustomerType/CustomerType";
 import { Pill } from "@dashboard/components/Pill";
+import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
 import { getUserName } from "@dashboard/misc";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedDate, FormattedMessage, useIntl } from "react-intl";
@@ -116,14 +118,34 @@ export const CustomerDetailsTitle = ({
         />
       )}
       {customer.customerType?.name && (
-        <ClickableCustomerType
-          customerType={{
-            id: customer.customerType.id,
-            name: customer.customerType.name,
-            slug: customer.customerType.slug,
-          }}
-          size={3}
-        />
+        <Box
+          position="relative"
+          display="flex"
+          alignItems="center"
+          __height="30px"
+          paddingRight={5}
+        >
+          <ClickableCustomerType
+            customerType={{
+              id: customer.customerType.id,
+              name: customer.customerType.name,
+              slug: customer.customerType.slug,
+            }}
+            size={3}
+          />
+          <Box
+            position="absolute"
+            __top="0"
+            __right="0"
+            __width="30px"
+            __height="30px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Ripple model={rippleCustomerTypes} />
+          </Box>
+        </Box>
       )}
       {customer.dateJoined && (
         <Text size={3} fontWeight="regular" color="default2">

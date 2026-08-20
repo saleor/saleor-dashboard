@@ -43,7 +43,8 @@ import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { getStringOrPlaceholder } from "@dashboard/misc";
+import { commonMessages } from "@dashboard/intl";
+import { getMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import { type ReorderEvent } from "@dashboard/types";
 import getCustomerTypeErrorMessage from "@dashboard/utils/errors/customerType";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -74,6 +75,11 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
       status: "success",
       text: intl.formatMessage({ id: "rHRoia", defaultMessage: "Customer type updated" }),
     });
+  const notifyUnexpectedError = () =>
+    notify({
+      status: "error",
+      text: intl.formatMessage(commonMessages.somethingWentWrong),
+    });
   const [updateCustomerType, updateCustomerTypeOpts] = useCustomerTypeUpdateMutation({
     disableErrorHandling: true,
     onCompleted: updateData => {
@@ -84,26 +90,35 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
         notifySaved();
       }
     },
+    // Field errors render inline on the form; anything else would otherwise fail silently.
+    onError: notifyUnexpectedError,
   });
   const [setDefaultCustomerType, setDefaultCustomerTypeOpts] = useCustomerTypeUpdateMutation({
     disableErrorHandling: true,
     onCompleted: updateData => {
-      if (
-        !updateData.customerTypeUpdate.errors ||
-        updateData.customerTypeUpdate.errors.length === 0
-      ) {
+      const errors = updateData.customerTypeUpdate.errors ?? [];
+
+      if (errors.length > 0) {
         notify({
-          status: "success",
-          text: intl.formatMessage(
-            {
-              id: "OjxWjG",
-              defaultMessage: "{name} is now the default customer type",
-            },
-            { name: updateData.customerTypeUpdate.customerType?.name },
-          ),
+          status: "error",
+          text: getCustomerTypeErrorMessage(errors[0], intl),
         });
+
+        return;
       }
+
+      notify({
+        status: "success",
+        text: intl.formatMessage(
+          {
+            id: "OjxWjG",
+            defaultMessage: "{name} is now the default customer type",
+          },
+          { name: updateData.customerTypeUpdate.customerType?.name },
+        ),
+      });
     },
+    onError: notifyUnexpectedError,
   });
   const [deleteCustomerType, deleteCustomerTypeOpts] = useCustomerTypeDeleteMutation({
     onCompleted: deleteData => {
@@ -164,7 +179,7 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
       },
     });
 
-    return result.data.customerTypeUpdate.errors;
+    return getMutationErrors(result);
   };
   const handleCustomerTypeDelete = () => deleteCustomerType({ variables: { id } });
   const handleSetDefault = () =>
@@ -177,14 +192,17 @@ const CustomerTypeDetails = ({ id, params }: CustomerTypeDetailsProps) => {
       },
     });
   const handleAssignAttribute = async () => {
-    await assignAttribute({
+    const result = await assignAttribute({
       variables: {
         customerTypeId: id,
         attributeIds: assignAttributesActions.selectedItems,
       },
     });
 
-    assignAttributesActions.clearSelectedItems();
+    // Keep the picks when the assign fails, so the user doesn't have to find them again.
+    if (getMutationErrors(result).length === 0) {
+      assignAttributesActions.clearSelectedItems();
+    }
   };
   const handleCreateAttribute = async ({
     formData,

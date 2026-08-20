@@ -4488,6 +4488,10 @@
     "context": "dialog content",
     "string": "Select method you want to use to change address"
   },
+  "FKBNcP": {
+    "context": "customer type chip, opens the customer type settings page",
+    "string": "View {customerTypeName} type"
+  },
   "FN+iLO": {
     "string": "Suggest a change"
   },
@@ -10877,10 +10881,6 @@
   "cSLXjT": {
     "context": "gift card history message",
     "string": "Gift card balance was adjusted"
-  },
-  "cTypeVw": {
-    "context": "customer type chip, opens the customer type settings page",
-    "string": "View {customerTypeName} type"
   },
   "cVjewM": {
     "context": "label for radio button",

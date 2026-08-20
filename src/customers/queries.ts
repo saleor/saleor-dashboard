@@ -6,8 +6,8 @@ export const customerList = gql`
     $before: String
     $first: Int
     $last: Int
-    $filter: CustomerFilterInput
     $where: CustomerWhereInput
+    $search: String
     $sort: UserSortingInput
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
@@ -16,8 +16,8 @@ export const customerList = gql`
       before: $before
       first: $first
       last: $last
-      filter: $filter
       where: $where
+      search: $search
       sortBy: $sort
     ) {
       edges {

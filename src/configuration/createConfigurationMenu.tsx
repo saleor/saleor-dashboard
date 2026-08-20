@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { attributeListUrlWithAttributeTypePreset } from "@dashboard/attributes/urls";
 import { channelsListUrl } from "@dashboard/channels/urls";
+import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
 import { customerTypeListUrl } from "@dashboard/customerTypes/urls";
 import { giftCardSettingsPath } from "@dashboard/giftCards/urls";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
@@ -273,6 +274,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.customerTypes),
           url: customerTypeListUrl(),
           testId: "configuration-menu-customer-types",
+          ripple: rippleCustomerTypes,
         },
         {
           description: intl.formatMessage({

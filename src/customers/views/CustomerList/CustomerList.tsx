@@ -1,8 +1,5 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import {
-  createCustomerQueryVariables,
-  createCustomerWhereVariables,
-} from "@dashboard/components/ConditionalFilter/queryVariables";
+import { createCustomerWhereVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -51,7 +48,6 @@ const CustomerList = ({ params }: CustomerListProps) => {
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
   const { valueProvider } = useConditionalFilterContext();
-  const filter = createCustomerQueryVariables(valueProvider.value);
   const where = createCustomerWhereVariables(valueProvider.value);
 
   usePaginationReset(customerListUrl, params, settings.rowNumber);
@@ -82,11 +78,8 @@ const CustomerList = ({ params }: CustomerListProps) => {
   const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
-      filter: {
-        ...filter,
-        search: params.query,
-      },
       where: Object.keys(where).length > 0 ? where : undefined,
+      search: params.query,
       sort: getSortQueryVariables(params),
     }),
     [params, settings.rowNumber, valueProvider.value],
