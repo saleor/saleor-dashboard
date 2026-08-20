@@ -1,6 +1,7 @@
 import {
   BULK_PUBLISH_MANY_VARIANTS_THRESHOLD,
   BULK_PUBLISH_MAX_VARIANTS_PER_PRODUCT,
+  type BulkPublishCurrentListing,
   type BulkPublishDefaults,
   type ProductPublishDraft,
 } from "@dashboard/channels/components/BulkPublishToChannelDialog/types";
@@ -48,6 +49,12 @@ export const isValidBulkPublishPrice = (price: string): boolean => {
   // Saleor PositiveDecimal is nonnegative (0 or greater), not strictly positive.
   return Number.isFinite(parsed) && parsed >= 0;
 };
+
+export const hasBulkPublishPrice = (price: string): boolean => price.trim() !== "";
+
+/** Empty means "leave the current price alone", so only a filled-in price has to parse. */
+export const isValidBulkPublishPriceInput = (price: string): boolean =>
+  !hasBulkPublishPrice(price) || isValidBulkPublishPrice(price);
 
 export const isValidBulkPublishCostPrice = (costPrice: string): boolean => {
   if (costPrice.trim() === "") {
@@ -105,10 +112,12 @@ export const createProductDrafts = ({
   products,
   channelId,
   defaultStock,
+  currentListings,
 }: {
   products: BulkPublishProductForDraft[];
   channelId: string;
   defaultStock?: string;
+  currentListings?: Map<string, BulkPublishCurrentListing>;
 }): ProductPublishDraft[] => {
   const trimmedDefaultStock = defaultStock?.trim() ?? "";
   const shouldPrefillStock =
@@ -131,6 +140,7 @@ export const createProductDrafts = ({
       price: "",
       costPrice: "",
       stock: shouldPrefillStock ? trimmedDefaultStock : "",
+      currentListing: currentListings?.get(product.id),
     };
   });
 };
@@ -165,12 +175,25 @@ export const mergeProductDrafts = ({
     };
   });
 
+/**
+ * Price is only required where there is nothing to fall back on — Saleor needs a price to create a
+ * channel listing. Products already in the channel keep their existing prices when left blank.
+ */
 export const getDraftsMissingPrice = (drafts: ProductPublishDraft[]): ProductPublishDraft[] =>
-  drafts.filter(draft => !isValidBulkPublishPrice(draft.price));
+  drafts.filter(draft => !draft.alreadyInChannel && !isValidBulkPublishPrice(draft.price));
+
+export const getDraftsWithInvalidPrice = (drafts: ProductPublishDraft[]): ProductPublishDraft[] =>
+  drafts.filter(draft => !isValidBulkPublishPriceInput(draft.price));
 
 export const getDraftsWithInvalidCostPrice = (
   drafts: ProductPublishDraft[],
 ): ProductPublishDraft[] => drafts.filter(draft => !isValidBulkPublishCostPrice(draft.costPrice));
+
+export const countDraftsWithPriceUpdate = (drafts: ProductPublishDraft[]): number =>
+  drafts.filter(draft => hasBulkPublishPrice(draft.price)).length;
+
+export const hasListedDrafts = (drafts: ProductPublishDraft[]): boolean =>
+  drafts.some(draft => draft.alreadyInChannel);
 
 export const getDraftsExceedingVariantLimit = (
   drafts: ProductPublishDraft[],

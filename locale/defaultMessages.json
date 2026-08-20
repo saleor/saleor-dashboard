@@ -375,6 +375,10 @@
     "context": "product type has-variants toggle title",
     "string": "Products of this type have options"
   },
+  "/NkQFN": {
+    "context": "bulk publish review warning when one price replaces varied variant prices",
+    "string": "Overwrites {count, plural, one {# variant price} other {# different variant prices}}"
+  },
   "/PUjN6": {
     "context": "voucher discount amount type",
     "string": "Percentage"
@@ -988,6 +992,10 @@
   },
   "1wyZpQ": {
     "string": "These passwords are too similar"
+  },
+  "1xn94O": {
+    "context": "bulk publish review price placeholder when the price is kept",
+    "string": "Unchanged"
   },
   "1y3hRg": {
     "context": "hint linking to model types settings",
@@ -2164,6 +2172,10 @@
     "context": "Footnote shown beneath the per-warehouse stock table on the variant detail page when the shop is in legacy stock-availability mode (stock visibility filtered through shipping zones).",
     "string": "Customers see this stock when the warehouse is assigned to a channel and covered by a shipping zone for the destination."
   },
+  "6e2YdE": {
+    "context": "bulk publish confirm products with no price change",
+    "string": "{count, plural, one {# product keeps its current prices} other {# products keep their current prices}}"
+  },
   "6eKMnl": {
     "context": "placeholder for custom template editor",
     "string": "Email body (HTML)"
@@ -2766,6 +2778,10 @@
   "8vQGO0": {
     "context": "tooltip content when line's variant has been deleted",
     "string": "This variant no longer exists. You can still fulfill it."
+  },
+  "8vjjrE": {
+    "context": "button, removes a model type from the sidebar",
+    "string": "Unpin from nav"
   },
   "8wYH6R": {
     "context": "homepage empty state headline promoting Pulse",
@@ -3454,6 +3470,10 @@
     "context": "page title - installing app with manifestUrl provided",
     "string": "Add extension"
   },
+  "BZyOKE": {
+    "context": "bulk publish already listed badge tooltip",
+    "string": "{hasStock, select, true {Already in this channel. Leave price or stock blank to keep the current values.} other {Already in this channel. Leave the price blank to keep the current prices.}}"
+  },
   "BalldE": {
     "string": "Order line"
   },
@@ -3500,6 +3520,10 @@
   "BgEWXq": {
     "context": "section title for legacy and developer store settings",
     "string": "Advanced"
+  },
+  "BhLnBj": {
+    "context": "bulk publish review warning about variants left without a channel listing",
+    "string": "{count, plural, one {# variant has no price here and stays unlisted} other {# variants have no price here and stay unlisted}}. Set a price to publish {count, plural, one {it} other {them}}."
   },
   "BikTYV": {
     "context": "Collection is visible in channel without scheduled date",
@@ -3583,6 +3607,10 @@
   },
   "C0MnAi": {
     "string": "off"
+  },
+  "C1+aT0": {
+    "context": "bulk publish review table price column hint",
+    "string": "Blank keeps current"
   },
   "C1aDzb": {
     "context": "shipping method types help example row three cart",
@@ -4279,6 +4307,10 @@
     "context": "Expanded help for channel setup",
     "string": "Saleor sells through channels (like markets). Each channel needs a stock location—and shipping if you deliver—before customers can check out."
   },
+  "Em4Fzl": {
+    "context": "bulk publish price validation",
+    "string": "Enter a price for products that are not in this channel yet."
+  },
   "EoNN9v": {
     "context": "Label for visible in listings toggle",
     "string": "Show in listings"
@@ -4556,6 +4588,10 @@
     "context": "voucher minimum quantity validation error",
     "string": "Enter at least 1 item."
   },
+  "FmZAfR": {
+    "context": "bulk publish review count of products whose price will change",
+    "string": "{count, plural, =0 {No price changes} one {# price change} other {# price changes}}"
+  },
   "FmeBxD": {
     "context": "custom app tokens list - missing token name",
     "string": "(unknown)"
@@ -4804,6 +4840,10 @@
     "context": "Tooltip explanation for legacy stock-availability mode",
     "string": "Stock is considered available only when the warehouse is both assigned to this channel and covered by an active shipping zone for the destination address."
   },
+  "GYXouB": {
+    "context": "bulk publish confirm title when no price is set",
+    "string": "Prices unchanged"
+  },
   "GbBCmr": {
     "context": "window title",
     "string": "Order #{orderNumber}"
@@ -4962,6 +5002,10 @@
     "context": "url",
     "string": "URL"
   },
+  "H31h5O": {
+    "context": "bulk publish price format validation",
+    "string": "Enter a valid price or leave it blank to keep the current one."
+  },
   "H4Lcuk": {
     "string": "Category updated"
   },
@@ -5006,6 +5050,10 @@
   "HBrAXs": {
     "context": "channel status",
     "string": "Active"
+  },
+  "HCQlAJ": {
+    "context": "button, adds a model type to the sidebar",
+    "string": "Pin to nav"
   },
   "HEjlAr": {
     "context": "variant pricing channel status description when channel is active",
@@ -6939,10 +6987,6 @@
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
   },
-  "Oct6t4": {
-    "context": "bulk publish price validation",
-    "string": "Enter a valid price for every product."
-  },
   "Oe62bR": {
     "context": "product availability",
     "string": "Availability"
@@ -8811,10 +8855,6 @@
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
-  },
-  "VnPjPG": {
-    "context": "bulk publish already listed badge tooltip",
-    "string": "{hasStock, select, true {Prices and stock will be updated across all variants.} other {Prices will be updated across all variants.}}"
   },
   "VrFy8e": {
     "string": "No notes from customer"

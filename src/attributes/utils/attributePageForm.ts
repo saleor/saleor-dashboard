@@ -11,7 +11,6 @@ type Attribute = NonNullable<AttributeDetailsQuery["attribute"]>;
 
 export interface AttributeUpdateComparableData {
   availableInGrid: boolean;
-  filterableInDashboard: boolean;
   filterableInStorefront: boolean;
   name: string;
   referenceTypes: string[];
@@ -30,7 +29,6 @@ export function getAttributePageInitialForm(
     return {
       availableInGrid: true,
       entityType: null,
-      filterableInDashboard: true,
       filterableInStorefront: true,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       metadata: [],
@@ -49,7 +47,6 @@ export function getAttributePageInitialForm(
   return {
     availableInGrid: attribute.availableInGrid,
     entityType: attribute.entityType,
-    filterableInDashboard: attribute.filterableInDashboard,
     filterableInStorefront: attribute.filterableInStorefront,
     inputType: attribute.inputType ?? AttributeInputTypeEnum.DROPDOWN,
     metadata: [],
@@ -73,7 +70,6 @@ export function getAttributeUpdateComparableData(
 
   return {
     availableInGrid: data.availableInGrid,
-    filterableInDashboard: data.filterableInDashboard,
     filterableInStorefront: data.filterableInStorefront,
     name: data.name,
     referenceTypes: [...data.referenceTypes.map(ref => ref.value)].sort(),

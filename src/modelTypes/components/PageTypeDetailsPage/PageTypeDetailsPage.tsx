@@ -4,7 +4,6 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { mapExtensionMenuItemsToTopNavItems } from "@dashboard/components/AppLayout/TopNav/mapExtensionMenuItems";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -123,7 +122,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
   );
   const menuItems = useMemo(
     () => [
-      ...mapExtensionMenuItemsToTopNavItems(extensionMenuItems),
+      ...extensionMenuItems,
       {
         label: intl.formatMessage(messages.openGraphiQL),
         onSelect: openPlaygroundURL,

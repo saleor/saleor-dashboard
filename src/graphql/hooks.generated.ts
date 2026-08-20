@@ -239,7 +239,6 @@ export const AttributeFragmentDoc = gql`
   slug
   type
   visibleInStorefront
-  filterableInDashboard
   filterableInStorefront
   unit
   inputType
@@ -5799,6 +5798,64 @@ export function useBulkPublishProductsDataLazyQuery(baseOptions?: ApolloReactHoo
 export type BulkPublishProductsDataQueryHookResult = ReturnType<typeof useBulkPublishProductsDataQuery>;
 export type BulkPublishProductsDataLazyQueryHookResult = ReturnType<typeof useBulkPublishProductsDataLazyQuery>;
 export type BulkPublishProductsDataQueryResult = Apollo.QueryResult<Types.BulkPublishProductsDataQuery, Types.BulkPublishProductsDataQueryVariables>;
+export const BulkPublishProductPricesDocument = gql`
+    query BulkPublishProductPrices($ids: [ID!]!, $first: Int!, $variantsFirst: Int!) {
+  products(first: $first, where: {ids: $ids}) {
+    edges {
+      node {
+        id
+        productVariants(first: $variantsFirst) {
+          totalCount
+          edges {
+            node {
+              id
+              channelListings {
+                id
+                channel {
+                  id
+                }
+                price {
+                  amount
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useBulkPublishProductPricesQuery__
+ *
+ * To run a query within a React component, call `useBulkPublishProductPricesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBulkPublishProductPricesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBulkPublishProductPricesQuery({
+ *   variables: {
+ *      ids: // value for 'ids'
+ *      first: // value for 'first'
+ *      variantsFirst: // value for 'variantsFirst'
+ *   },
+ * });
+ */
+export function useBulkPublishProductPricesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.BulkPublishProductPricesQuery, Types.BulkPublishProductPricesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.BulkPublishProductPricesQuery, Types.BulkPublishProductPricesQueryVariables>(BulkPublishProductPricesDocument, options);
+      }
+export function useBulkPublishProductPricesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.BulkPublishProductPricesQuery, Types.BulkPublishProductPricesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.BulkPublishProductPricesQuery, Types.BulkPublishProductPricesQueryVariables>(BulkPublishProductPricesDocument, options);
+        }
+export type BulkPublishProductPricesQueryHookResult = ReturnType<typeof useBulkPublishProductPricesQuery>;
+export type BulkPublishProductPricesLazyQueryHookResult = ReturnType<typeof useBulkPublishProductPricesLazyQuery>;
+export type BulkPublishProductPricesQueryResult = Apollo.QueryResult<Types.BulkPublishProductPricesQuery, Types.BulkPublishProductPricesQueryVariables>;
 export const BulkPublishProductVariantsDocument = gql`
     query BulkPublishProductVariants($id: ID!, $first: Int!, $after: String) {
   product(id: $id) {
