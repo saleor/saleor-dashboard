@@ -55,6 +55,7 @@ const MATCHERS: ViewMatcher[] = [
   { view: "PAGE_TYPE_LIST", path: "/model-types", exact: true },
   { view: "MENU_DETAILS", path: "/structures/:id", param: "menuId" },
   { view: "MENU_LIST", path: "/structures", exact: true },
+  { view: "CHANNEL_DETAILS", path: "/channels/:id", param: "channelId" },
 ];
 
 const EMPTY_CONTEXT: SearchActionContext = { view: null, params: {} };

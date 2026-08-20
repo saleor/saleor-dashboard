@@ -70,10 +70,10 @@ importers:
         version: 5.3.0(@types/react@18.3.23)(lodash@4.18.1)(marked@4.3.0)(react-dom@18.3.1(react@18.3.1))(react-responsive-carousel@3.2.23)(react@18.3.1)
       "@graphiql/plugin-explorer":
         specifier: ^0.1.22
-        version: 0.1.22(@graphiql/react@0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.1.22(@graphiql/react@0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@graphiql/react":
         specifier: ^0.15.0
-        version: 0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
+        version: 0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)
       "@graphiql/toolkit":
         specifier: ^0.8.4
         version: 0.8.4(@types/node@20.19.32)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)
@@ -157,7 +157,7 @@ importers:
         version: 6.6.2
       graphiql:
         specifier: ^2.4.7
-        version: 2.4.7(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
+        version: 2.4.7(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)
       graphql:
         specifier: 16.11.0
         version: 16.11.0
@@ -322,8 +322,8 @@ importers:
         specifier: 1.58.2
         version: 1.58.2
       "@saleor/app-sdk":
-        specifier: 1.12.0
-        version: 1.12.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 1.15.0
+        version: 1.15.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@sentry/cli":
         specifier: ^2.58.2
         version: 2.58.4
@@ -4449,10 +4449,10 @@ packages:
         integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==,
       }
 
-  "@saleor/app-sdk@1.12.0":
+  "@saleor/app-sdk@1.15.0":
     resolution:
       {
-        integrity: sha512-4TmpHmMUlZ8oudPY0V8XvEwf/zyD7P/Uqj/kpRYVXEwYhbsTwOITCk4UidBihQ4269HbZQM/FQFJ2h1OVM3sSg==,
+        integrity: sha512-M3OokC5x/NHJFmiQ9QNFO5lQZZVSa9KUP9X2UHwVOfmGDREiZmp5wN3p0tiZRUZe+2OXBNt7NdRbju8frg5pVA==,
       }
     peerDependencies:
       "@aws-sdk/client-dynamodb": ^3.848.0
@@ -11422,12 +11422,6 @@ packages:
         integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==,
       }
 
-  react-is@18.3.1:
-    resolution:
-      {
-        integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==,
-      }
-
   react-moment@1.2.1:
     resolution:
       {
@@ -13007,6 +13001,7 @@ packages:
       {
         integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==,
       }
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-compile-cache-lib@3.0.1:
@@ -13648,7 +13643,7 @@ snapshots:
 
   "@babel/code-frame@7.29.0":
     dependencies:
-      "@babel/helper-validator-identifier": 7.28.5
+      "@babel/helper-validator-identifier": 7.29.7
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
@@ -13661,10 +13656,10 @@ snapshots:
       "@babel/helper-compilation-targets": 7.28.6
       "@babel/helper-module-transforms": 7.28.6(@babel/core@7.29.0)
       "@babel/helpers": 7.28.6
-      "@babel/parser": 7.29.0
+      "@babel/parser": 7.29.7
       "@babel/template": 7.28.6
       "@babel/traverse": 7.29.0
-      "@babel/types": 7.29.0
+      "@babel/types": 7.29.7
       "@jridgewell/remapping": 2.3.5
       convert-source-map: 2.0.0
       debug: 4.4.3
@@ -13676,8 +13671,8 @@ snapshots:
 
   "@babel/generator@7.29.1":
     dependencies:
-      "@babel/parser": 7.29.0
-      "@babel/types": 7.29.0
+      "@babel/parser": 7.29.7
+      "@babel/types": 7.29.7
       "@jridgewell/gen-mapping": 0.3.13
       "@jridgewell/trace-mapping": 0.3.31
       jsesc: 3.1.0
@@ -14042,17 +14037,17 @@ snapshots:
   "@babel/template@7.28.6":
     dependencies:
       "@babel/code-frame": 7.29.0
-      "@babel/parser": 7.29.0
-      "@babel/types": 7.29.0
+      "@babel/parser": 7.29.7
+      "@babel/types": 7.29.7
 
   "@babel/traverse@7.29.0":
     dependencies:
       "@babel/code-frame": 7.29.0
       "@babel/generator": 7.29.1
       "@babel/helper-globals": 7.28.0
-      "@babel/parser": 7.29.0
+      "@babel/parser": 7.29.7
       "@babel/template": 7.28.6
-      "@babel/types": 7.29.0
+      "@babel/types": 7.29.7
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
@@ -14751,21 +14746,21 @@ snapshots:
       react-number-format: 5.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-responsive-carousel: 3.2.23
 
-  "@graphiql/plugin-explorer@0.1.22(@graphiql/react@0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
+  "@graphiql/plugin-explorer@0.1.22(@graphiql/react@0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
     dependencies:
-      "@graphiql/react": 0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
+      "@graphiql/react": 0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)
       graphiql-explorer: 0.9.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       graphql: 16.11.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  "@graphiql/react@0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)":
+  "@graphiql/react@0.15.0(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)":
     dependencies:
       "@graphiql/toolkit": 0.8.4(@types/node@20.19.32)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)
       "@reach/combobox": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@reach/dialog": 0.17.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@reach/listbox": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      "@reach/menu-button": 0.17.0(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
+      "@reach/menu-button": 0.17.0(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)
       "@reach/tooltip": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@reach/visually-hidden": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       codemirror: 5.65.20
@@ -14784,13 +14779,13 @@ snapshots:
       - graphql-ws
       - react-is
 
-  "@graphiql/react@0.17.6(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)":
+  "@graphiql/react@0.17.6(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)":
     dependencies:
       "@graphiql/toolkit": 0.8.4(@types/node@20.19.32)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)
       "@reach/combobox": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@reach/dialog": 0.17.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@reach/listbox": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      "@reach/menu-button": 0.17.0(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
+      "@reach/menu-button": 0.17.0(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)
       "@reach/tooltip": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@reach/visually-hidden": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 1.2.1
@@ -16574,7 +16569,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.8.1
 
-  "@reach/menu-button@0.17.0(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)":
+  "@reach/menu-button@0.17.0(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)":
     dependencies:
       "@reach/dropdown": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       "@reach/popover": 0.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -16582,7 +16577,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-is: 18.3.1
+      react-is: 17.0.2
       tiny-warning: 1.0.3
       tslib: 2.8.1
 
@@ -16760,7 +16755,7 @@ snapshots:
 
   "@rtsao/scc@1.1.0": {}
 
-  "@saleor/app-sdk@1.12.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
+  "@saleor/app-sdk@1.15.0(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)":
     dependencies:
       "@opentelemetry/api": 1.9.0
       "@opentelemetry/semantic-conventions": 1.30.0
@@ -17810,7 +17805,7 @@ snapshots:
       "@vue/shared": 3.5.27
       csstype: 3.2.3
 
-  "@vue/server-renderer@3.5.27(vue@3.5.27(typescript@5.8.3))":
+  "@vue/server-renderer@3.5.27(vue@3.5.27(typescript@4.9.5))":
     dependencies:
       "@vue/compiler-ssr": 3.5.27
       "@vue/shared": 3.5.27
@@ -19659,9 +19654,9 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  graphiql@2.4.7(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1):
+  graphiql@2.4.7(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1):
     dependencies:
-      "@graphiql/react": 0.17.6(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
+      "@graphiql/react": 0.17.6(@codemirror/language@6.0.0)(@types/node@20.19.32)(@types/react@18.3.23)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react-is@17.0.2)(react@18.3.1)
       "@graphiql/toolkit": 0.8.4(@types/node@20.19.32)(graphql-ws@6.0.7(graphql@16.11.0)(ws@8.19.0))(graphql@16.11.0)
       graphql: 16.11.0
       graphql-language-service: 5.5.0(graphql@16.11.0)
@@ -20682,7 +20677,7 @@ snapshots:
   jsdom@16.7.0:
     dependencies:
       abab: 2.0.6
-      acorn: 8.15.0
+      acorn: 8.16.0
       acorn-globals: 6.0.0
       cssom: 0.4.4
       cssstyle: 2.3.0
@@ -21718,8 +21713,6 @@ snapshots:
 
   react-is@18.2.0: {}
 
-  react-is@18.3.1: {}
-
   react-moment@1.2.1(moment@2.30.1)(prop-types@15.8.1)(react@18.3.1):
     dependencies:
       moment: 2.30.1
@@ -22407,7 +22400,7 @@ snapshots:
   terser@5.46.0:
     dependencies:
       "@jridgewell/source-map": 0.3.11
-      acorn: 8.15.0
+      acorn: 8.16.0
       commander: 2.20.3
       source-map-support: 0.5.21
 
@@ -22835,7 +22828,7 @@ snapshots:
       "@vue/compiler-dom": 3.5.27
       "@vue/compiler-sfc": 3.5.27
       "@vue/runtime-dom": 3.5.27
-      "@vue/server-renderer": 3.5.27(vue@3.5.27(typescript@5.8.3))
+      "@vue/server-renderer": 3.5.27(vue@3.5.27(typescript@4.9.5))
       "@vue/shared": 3.5.27
     optionalDependencies:
       typescript: 4.9.5

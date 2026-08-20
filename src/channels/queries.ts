@@ -161,6 +161,35 @@ export const bulkPublishProductsData = gql`
   }
 `;
 
+export const bulkPublishProductPrices = gql`
+  query BulkPublishProductPrices($ids: [ID!]!, $first: Int!, $variantsFirst: Int!) {
+    products(first: $first, where: { ids: $ids }) {
+      edges {
+        node {
+          id
+          productVariants(first: $variantsFirst) {
+            totalCount
+            edges {
+              node {
+                id
+                channelListings {
+                  id
+                  channel {
+                    id
+                  }
+                  price {
+                    amount
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const bulkPublishProductVariants = gql`
   query BulkPublishProductVariants($id: ID!, $first: Int!, $after: String) {
     product(id: $id) {

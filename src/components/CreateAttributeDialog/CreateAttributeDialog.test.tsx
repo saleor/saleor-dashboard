@@ -206,7 +206,6 @@ describe("CreateAttributeDialog", () => {
     (getAttributePageInitialForm as jest.Mock).mockReturnValueOnce({
       availableInGrid: true,
       entityType: AttributeEntityTypeEnum.PRODUCT_VARIANT,
-      filterableInDashboard: true,
       filterableInStorefront: true,
       inputType: AttributeInputTypeEnum.SINGLE_REFERENCE,
       metadata: [],

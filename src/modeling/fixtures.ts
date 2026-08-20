@@ -92,7 +92,6 @@ export const page: PageDetailsFragment = {
         storefrontSearchPosition: 0,
         type: AttributeTypeEnum.PAGE_TYPE,
         visibleInStorefront: false,
-        filterableInDashboard: false,
         filterableInStorefront: false,
       },
       values: [
@@ -211,7 +210,6 @@ export const page: PageDetailsFragment = {
         storefrontSearchPosition: 0,
         type: AttributeTypeEnum.PAGE_TYPE,
         visibleInStorefront: false,
-        filterableInDashboard: false,
         filterableInStorefront: false,
         referenceTypes: [],
       },

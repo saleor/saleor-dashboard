@@ -67,7 +67,7 @@ export const NavigationPinButton = ({ modelTypeId, modelTypeName }: NavigationPi
         icon={pinnedByUser ? <PinOff size={16} /> : <Pin size={16} />}
         data-test-id="navigation-pin-button"
       >
-        {intl.formatMessage(pinnedByUser ? messages.unpin : messages.pin)}
+        {intl.formatMessage(pinnedByUser ? messages.unpinFromNav : messages.pinToNav)}
       </Button>
       {dialogOpen && (
         <PinModelTypeDialog

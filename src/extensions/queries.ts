@@ -1,5 +1,25 @@
 import { gql } from "@apollo/client";
 
+/**
+ * Thin apps list used to map an app manifest identifier to its Dashboard URL.
+ * Kept minimal because it's cached in localStorage and refreshed on every load.
+ */
+export const installedAppsSnapshot = gql`
+  query InstalledAppsSnapshot {
+    apps(first: 100) {
+      edges {
+        node {
+          id
+          identifier
+          isActive
+          type
+          appUrl
+        }
+      }
+    }
+  }
+`;
+
 export const installedApps = gql`
   query InstalledApps(
     $before: String

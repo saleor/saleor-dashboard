@@ -33,7 +33,10 @@ const OrderFulfill = ({ orderId, params }: OrderFulfillProps) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderFulfillUrlDialog,
     OrderFulfillUrlQueryParams
-  >(navigate, params => orderFulfillUrl(orderId, params), params);
+  >(navigate, params => orderFulfillUrl(orderId, params), params, [
+    "warehouseLineId",
+    "warehouseId",
+  ]);
   const { data: settings, loading: settingsLoading } = useOrderFulfillSettingsQuery({});
   const { data, loading } = useOrderFulfillDataQuery({
     displayLoader: true,

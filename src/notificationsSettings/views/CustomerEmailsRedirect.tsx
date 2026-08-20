@@ -1,12 +1,9 @@
+import { useAppNavigation } from "@dashboard/extensions/hooks/useAppNavigation";
 import { ExtensionsPaths } from "@dashboard/extensions/urls";
-import { findInstalledAppByIdentifier } from "@dashboard/extensions/utils/findInstalledAppByIdentifier";
-import { resolveInstalledAppHref } from "@dashboard/extensions/utils/resolveInstalledAppHref";
-import { useInstalledAppsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { SMTP_APP_IDENTIFIER } from "@dashboard/notificationsSettings/constants";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Box, Spinner, Text } from "@saleor/macaw-ui-next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { notificationsMessages } from "../messages";
@@ -17,52 +14,31 @@ import { notificationsMessages } from "../messages";
  */
 export const CustomerEmailsRedirectView = (): JSX.Element => {
   const navigate = useNavigator();
+  const { navigateToApp } = useAppNavigation();
   const redirected = useRef(false);
-  // Search narrows the page so we don’t miss SMTP when many apps are installed.
-  const { data, loading, error } = useInstalledAppsQuery({
-    displayLoader: true,
-    variables: {
-      first: 25,
-      filter: { search: "smtp" },
-    },
-  });
+  const [failed, setFailed] = useState(false);
 
   useEffect(
     function redirectToSmtpApp() {
-      if (loading || redirected.current) {
-        return;
-      }
-
-      // Query failure: stay in Dashboard with an error — do not assume “not installed”.
-      if (error || data?.apps == null) {
+      if (redirected.current) {
         return;
       }
 
       redirected.current = true;
 
-      const installedApps = mapEdgesToItems(data.apps) ?? [];
-      const smtpApp = findInstalledAppByIdentifier(installedApps, SMTP_APP_IDENTIFIER);
-
-      if (smtpApp) {
-        navigate(
-          resolveInstalledAppHref({
-            id: smtpApp.id,
-            type: smtpApp.type,
-            isActive: smtpApp.isActive,
-            appUrl: smtpApp.appUrl,
-          }),
-          { replace: true },
-        );
-
-        return;
-      }
-
-      navigate(ExtensionsPaths.exploreExtensions, { replace: true });
+      navigateToApp({ identifier: SMTP_APP_IDENTIFIER, replace: true })
+        .then(navigated => {
+          if (!navigated) {
+            navigate(ExtensionsPaths.exploreExtensions, { replace: true });
+          }
+        })
+        // Lookup failure: stay in Dashboard with an error — do not assume “not installed”.
+        .catch(() => setFailed(true));
     },
-    [data?.apps, error, loading, navigate],
+    [navigate, navigateToApp],
   );
 
-  if (error) {
+  if (failed) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" padding={12}>
         <Text size={3} color="default2">

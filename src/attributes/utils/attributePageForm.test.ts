@@ -10,7 +10,6 @@ import {
 const baseFormData: AttributePageFormData = {
   availableInGrid: true,
   entityType: null,
-  filterableInDashboard: true,
   filterableInStorefront: true,
   inputType: AttributeInputTypeEnum.DROPDOWN,
   metadata: [],

@@ -2,7 +2,7 @@ import * as placeholderImage from "@assets/images/sample-product.jpg";
 import { type OrderFulfillDataQuery } from "@dashboard/graphql";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
 
-export const orderToFulfill: OrderFulfillDataQuery["order"] = {
+export const orderToFulfill: NonNullable<OrderFulfillDataQuery["order"]> = {
   __typename: "Order",
   id: "T3JkZXI6Mg==",
   isPaid: true,

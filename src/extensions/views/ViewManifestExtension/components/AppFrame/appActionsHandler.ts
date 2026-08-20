@@ -1,6 +1,7 @@
 import { getAppMountUri } from "@dashboard/config";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { useTriggerEntityRefresh } from "@dashboard/extensions/entity-refresh";
+import { useAppNavigation } from "@dashboard/extensions/hooks/useAppNavigation";
 import {
   applyWidgetHeightToFrame,
   createWidgetResizeOkResponse,
@@ -17,6 +18,7 @@ import {
   type OpenPopup,
   type PopupClose,
   type RedirectAction,
+  type RedirectToApp,
   type RefreshEntity,
   type RequestPermissions,
   type UpdateRouting,
@@ -58,6 +60,7 @@ const useHandleNotificationAction = () => {
 const useHandleRedirectAction = (appId: string) => {
   const navigate = useNavigator();
   const { closeApp } = useExternalApp();
+  const { deactivate } = useActiveAppExtension();
   const intl = useIntl();
   const handleAppDeepChange = (action: RedirectAction) => {
     debug("Handling deep app URL change");
@@ -128,7 +131,10 @@ const useHandleRedirectAction = (appId: string) => {
       window.open(exactLocation);
     } else {
       navigate(action.payload.to);
+      // Dashboard navigated underneath - close whichever popup is open
+      // (legacy ExternalApp dialog or the app-extension popup).
       closeApp();
+      deactivate();
     }
 
     return createResponseStatus(action.payload.actionId, true);
@@ -368,9 +374,74 @@ const useHandleOpenPopupAction = (appId: string, target: "POPUP" | "WIDGET" | "A
   };
 };
 
+/**
+ * `path` comes from an app, so it must stay a subpath of the target app - no
+ * scheme, no protocol-relative host, no traversal out of the app's URL space.
+ */
+const isLocalSubPath = (path: string) =>
+  !/^[a-z][a-z\d+.-]*:/i.test(path) && !path.startsWith("//") && !path.split("/").includes("..");
+
+/**
+ * Resolves another installed app by its manifest identifier and redirects to it
+ * in the same tab, like the Redirect action does.
+ */
+const useHandleRedirectToAppAction = (
+  appId: string,
+  frameEl: HTMLIFrameElement | null,
+  appOrigin: string,
+) => {
+  const postToExtension = usePostToExtension(frameEl, appOrigin);
+  const { handle: handleRedirect } = useHandleRedirectAction(appId);
+  const { resolveAppUrlFromIdentifier } = useAppNavigation();
+
+  return {
+    /**
+     * Always acks with ok - the app can't do anything about an unknown identifier
+     * or a failed lookup, so the Dashboard just doesn't redirect anywhere.
+     * Response is posted asynchronously, once the target app is resolved.
+     */
+    handle: (action: RedirectToApp) => {
+      const { actionId, appIdentifier, path } = action.payload;
+
+      debug(
+        `Handling RedirectToApp action with ID: %s, app identifier: %s`,
+        actionId,
+        appIdentifier,
+      );
+
+      if (path && !isLocalSubPath(path)) {
+        console.warn(`redirectToApp: path "${path}" is not a local subpath`, { appId });
+
+        return postToExtension(createResponseStatus(actionId, true));
+      }
+
+      resolveAppUrlFromIdentifier(appIdentifier, path)
+        .then(to => {
+          if (!to) {
+            console.warn(`redirectToApp: app "${appIdentifier}" is not installed`, { appId });
+
+            return postToExtension(createResponseStatus(actionId, true));
+          }
+
+          return postToExtension(
+            handleRedirect({
+              type: "redirect",
+              payload: { actionId, to, newContext: false },
+            }),
+          );
+        })
+        .catch(e => {
+          console.error(`redirectToApp: couldn't resolve app "${appIdentifier}"`, e);
+          postToExtension(createResponseStatus(actionId, true));
+        });
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleOpenPopupAction,
+  useHandleRedirectToAppAction,
   useHandleRefreshEntityAction,
   useHandleUpdateRoutingAction,
   useHandleRedirectAction,
