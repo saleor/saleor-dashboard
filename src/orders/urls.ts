@@ -304,7 +304,7 @@ export const withOrderFulfillmentDialog = (
   type: undefined,
 });
 
-type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
+type OrderFulfillUrlFiltersType = "warehouseId" | "warehouseLineId" | "lineId";
 type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
 export type OrderFulfillUrlDialog = "change-warehouse";
 export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> & OrderFulfillUrlFilters;
