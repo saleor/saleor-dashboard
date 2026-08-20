@@ -5810,6 +5810,7 @@ export const BulkPublishProductPricesDocument = gql`
             node {
               id
               channelListings {
+                id
                 channel {
                   id
                 }
