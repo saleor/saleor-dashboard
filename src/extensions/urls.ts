@@ -87,6 +87,7 @@ export interface AppDetailsUrlMountQueryParams {
   pageTypeIds?: string[];
   menuId?: string;
   menuIds?: string[];
+  channelId?: string;
   translationContext?: TranslationContext;
   /**
    * Serialized (JSON) arbitrary payload passed by an app via the `openPopup`
