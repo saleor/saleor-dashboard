@@ -1,5 +1,61 @@
 # Changelog
 
+## 3.23.28
+
+### Patch Changes
+
+- [#6845](https://github.com/saleor/saleor-dashboard/pull/6845) [`36f9b43`](https://github.com/saleor/saleor-dashboard/commit/36f9b4339fdb752f319618de7af708055aa06871) Thanks [@mirekm](https://github.com/mirekm)! - When adding products to a channel with the bulk publish wizard, leaving the price blank now keeps each product’s current prices instead of requiring a new price for every product.
+
+  That means you can update stock or visibility for products already in the channel without overwriting variant prices. The review step shows current prices as placeholders, marks rows that will change, and warns before a single price would flatten different variant prices or leave unpriced variants unlisted. New products still need a price so they can be listed in the channel.
+
+- [#6850](https://github.com/saleor/saleor-dashboard/pull/6850) [`2f34302`](https://github.com/saleor/saleor-dashboard/commit/2f343021592b8c92bb712f6fed419d3e3dd7e715) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Close the app extension popup when the app dispatches a `redirect` action to a Dashboard page. Previously the Dashboard navigated behind the popup and the popup stayed open on top of the new page.
+
+- [#6843](https://github.com/saleor/saleor-dashboard/pull/6843) [`21f82cd`](https://github.com/saleor/saleor-dashboard/commit/21f82cd3f98ba03f6a404ec10cadf1c16e7db8da) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The "Filterable in storefront" attribute setting is now marked as deprecated. A `DEPRECATED` badge next to the setting explains, on hover, that the field will be removed in Saleor 3.24 and that attribute metadata should be used instead.
+
+  Dashboard builds running against the staging schema (`FF_USE_STAGING_SCHEMA=true`) already drop the setting entirely: the toggle and its "Position in faceted navigation" field, the "Use in faceted search" column in the attribute list, and the "Filterable in Storefront" filter are hidden, and neither `filterableInStorefront` nor `storefrontSearchPosition` is sent when creating or updating an attribute.
+
+- [#6852](https://github.com/saleor/saleor-dashboard/pull/6852) [`6b22f12`](https://github.com/saleor/saleor-dashboard/commit/6b22f12cf4462f44ac86ca776275c771a42f7ee8) Thanks [@lkostrowski](https://github.com/lkostrowski)! - App extensions listed in the "more actions" menu (e.g. on the product page) now show the app's logo, with a placeholder icon when the app has no logo. Previously most pages rendered extension entries without any icon.
+
+- [#6814](https://github.com/saleor/saleor-dashboard/pull/6814) [`8924d06`](https://github.com/saleor/saleor-dashboard/commit/8924d0679b2acef6154efd4bfefe41e6d2e1d1f8) Thanks [@offx366](https://github.com/offx366)! - Keep every order line in a fulfillment when selecting warehouses, so one tracking number and one customer notification can cover the whole shipment.
+
+- [#6853](https://github.com/saleor/saleor-dashboard/pull/6853) [`c4a0350`](https://github.com/saleor/saleor-dashboard/commit/c4a0350075cc0e6d5fa82260b3b807f410a55ea9) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Support the App Bridge `redirectToApp` action. Apps can now redirect to another installed app by its manifest identifier - the Dashboard resolves the identifier to the installed app, builds its URL, appends the optional `path` and navigates in the same tab, like the `redirect` action does.
+
+- [#6842](https://github.com/saleor/saleor-dashboard/pull/6842) [`3db7306`](https://github.com/saleor/saleor-dashboard/commit/3db73066f5c2589f9b4329174b23a402a1255315) Thanks [@lkostrowski](https://github.com/lkostrowski)! - `SEARCH_ACTION` extensions can now declare `options.aliases` — extra terms the command palette (Cmd+K) matches against, on top of the extension label and the owning app's name.
+
+  Use it when the words a user types are not the words in your label. An action labelled "Configure Avalara" can be found by typing "taxes", "legal" or "avatax":
+
+  ```json
+  {
+    "label": "Configure Avalara",
+    "mount": "SEARCH_ACTION",
+    "target": "POPUP",
+    "url": "https://example.com/action",
+    "options": {
+      "aliases": ["taxes", "legal", "avatax"]
+    }
+  }
+  ```
+
+  Aliases are matched, never displayed, and matching is case-insensitive and typo-tolerant like the rest of the palette. The option is valid only on the `SEARCH_ACTION` mount; setting it elsewhere fails manifest validation.
+
+- [#6849](https://github.com/saleor/saleor-dashboard/pull/6849) [`0d85545`](https://github.com/saleor/saleor-dashboard/commit/0d855450061301aeeb69cd4c2571140c5c6e835c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - `SEARCH_ACTION` extensions can now be scoped to the channel details view with `options.views: ["CHANNEL_DETAILS"]`.
+
+  Use it for actions that only make sense while looking at one channel — a payment app's per-channel configuration, for example. The action appears in the command palette (Cmd+K) only on `/channels/<id>`, and receives that channel's id:
+
+  ```json
+  {
+    "label": "Channel payment settings",
+    "mount": "SEARCH_ACTION",
+    "target": "POPUP",
+    "url": "https://example.com/channel-config",
+    "options": {
+      "views": ["CHANNEL_DETAILS"]
+    }
+  }
+  ```
+
+  The extension is opened with `channelId` as a query param, holding the channel's global id (e.g. `Q2hhbm5lbDox`). Resolve the slug from it if you need one. As with every other view, omitting `options.views` still means the action shows everywhere.
+
 ## 3.23.27
 
 ### Patch Changes
