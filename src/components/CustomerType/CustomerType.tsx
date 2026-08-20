@@ -48,6 +48,11 @@ interface CustomerTypeProps {
    * @default customerType.name
    */
   title?: string;
+  /**
+   * When set, the chip links here instead of the filtered customer list.
+   * Callers must already have decided the user may open this destination.
+   */
+  href?: string;
 }
 
 const ICON_SIZE_BY_TEXT_SIZE: Record<CustomerTypeTextSize, number> = {
@@ -112,10 +117,22 @@ export const CustomerTypeDisplay = ({
 };
 
 export const ClickableCustomerType = (props: CustomerTypeProps): JSX.Element => {
-  const { customerType } = props;
+  const { customerType, href } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();
   const canViewCustomers = hasOneOfPermissions(userPermissions ?? [], CUSTOMER_LIST_PERMISSIONS);
+
+  if (href && customerType?.id) {
+    const linkLabel = intl.formatMessage(messages.viewCustomerType, {
+      customerTypeName: customerType.name,
+    });
+
+    return (
+      <RouterLink to={href} className={styles.link} title={linkLabel} aria-label={linkLabel}>
+        <CustomerTypeDisplay {...props} href={undefined} title={linkLabel} />
+      </RouterLink>
+    );
+  }
 
   if (!customerType?.id || !canViewCustomers) {
     return <CustomerTypeDisplay {...props} />;

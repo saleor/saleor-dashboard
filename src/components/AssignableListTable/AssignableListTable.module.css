@@ -71,8 +71,23 @@
   text-decoration: none;
 }
 
-.rowMedia {
-  height: 50px;
+.rowClickable {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Stretch the leading-cell <a> across the row so cmd-click / middle-click work. */
+.rowLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  color: inherit;
+  text-decoration: none;
+}
+
+.rowLink:focus-visible {
+  outline: 2px solid var(--mu-colors-border-info1);
+  outline-offset: -2px;
 }
 
 .rowDelete {

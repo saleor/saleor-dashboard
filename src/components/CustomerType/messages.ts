@@ -18,4 +18,9 @@ export const messages = defineMessages({
     description:
       "tooltip on customer type label in header when slug is missing and list filter link is unavailable",
   },
+  viewCustomerType: {
+    id: "FKBNcP",
+    defaultMessage: "View {customerTypeName} type",
+    description: "customer type chip, opens the customer type settings page",
+  },
 });

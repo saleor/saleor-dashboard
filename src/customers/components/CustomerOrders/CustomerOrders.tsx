@@ -1,7 +1,6 @@
 import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
 import {
   AssignableListCell,
-  AssignableListLinkCell,
   AssignableListTable,
 } from "@dashboard/components/AssignableListTable/AssignableListTable";
 import { ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
@@ -61,6 +60,8 @@ export const CustomerOrders = ({ orders, viewAllHref }: CustomerOrdersProps): JS
         rowTestId="customer-order-row"
         items={orders}
         selection="none"
+        getRowHref={order => orderUrl(order.id)}
+        getRowLabel={order => `#${order.number}`}
         leadingInset={ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET}
         emptyMessage={<FormattedMessage {...messages.empty} />}
         emptyIcon={
@@ -98,11 +99,11 @@ export const CustomerOrders = ({ orders, viewAllHref }: CustomerOrdersProps): JS
         ]}
         renderCells={order => (
           <>
-            <AssignableListLinkCell href={orderUrl(order.id)} title={`#${order.number}`}>
+            <AssignableListCell truncate>
               <Text ellipsis display="block" size={2}>
                 #{order.number}
               </Text>
-            </AssignableListLinkCell>
+            </AssignableListCell>
             <AssignableListCell truncate>
               <DateTime date={order.created} plain />
             </AssignableListCell>

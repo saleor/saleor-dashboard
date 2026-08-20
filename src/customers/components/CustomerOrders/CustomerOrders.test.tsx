@@ -58,6 +58,10 @@ describe("CustomerOrders", () => {
     expect(screen.getByText("#8234")).toBeInTheDocument();
     expect(screen.getByTestId("customer-order-status")).toHaveTextContent(/fulfilled/i);
     expect(screen.getByTestId("channel-display")).toHaveTextContent("United States");
+    expect(screen.getByRole("link", { name: "#8234" })).toHaveAttribute(
+      "href",
+      "/orders/T3JkZXI6MTk%3D",
+    );
   });
 
   it("renders an empty state when the customer has no orders", () => {

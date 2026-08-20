@@ -56,12 +56,6 @@ const AddressBlock = ({ label, address }: AddressBlockProps): JSX.Element => {
   );
 };
 
-const ManageAddressesButton = ({ disabled }: { disabled: boolean }): JSX.Element => (
-  <Button data-test-id="manage-addresses" disabled={disabled} variant="secondary">
-    <FormattedMessage {...buttonMessages.manage} />
-  </Button>
-);
-
 const CustomerAddresses = ({
   customer,
   disabled,
@@ -72,10 +66,14 @@ const CustomerAddresses = ({
   const sameAddress = billing && shipping && billing.id === shipping.id;
   const hasAnyAddress = billing !== null || shipping !== null;
   const manageAction = disabled ? (
-    <ManageAddressesButton disabled />
+    <Button data-test-id="manage-addresses" disabled variant="secondary">
+      <FormattedMessage {...buttonMessages.manage} />
+    </Button>
   ) : (
     <Link to={manageAddressHref}>
-      <ManageAddressesButton disabled={false} />
+      <Button data-test-id="manage-addresses" variant="secondary">
+        <FormattedMessage {...buttonMessages.manage} />
+      </Button>
     </Link>
   );
 

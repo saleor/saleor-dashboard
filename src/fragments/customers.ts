@@ -19,6 +19,16 @@ export const customerTypeOnCustomerFragment = gql`
       ...Attribute
       entityType
       valueRequired
+      referenceTypes {
+        ... on ProductType {
+          id
+          name
+        }
+        ... on PageType {
+          id
+          name
+        }
+      }
       choices(first: 20) {
         ...AttributeValueList
       }

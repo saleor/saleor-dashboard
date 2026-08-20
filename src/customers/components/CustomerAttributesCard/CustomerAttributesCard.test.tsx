@@ -137,6 +137,35 @@ describe("CustomerAttributesCard", () => {
     expect(screen.queryByTestId("customer-type-select")).not.toBeInTheDocument();
   });
 
+  it("shows the selected type next to Attributes without linking to type settings", () => {
+    // Arrange / Act
+    renderCard();
+
+    // Assert
+    expect(screen.getByTestId("customer-attributes-type")).toHaveTextContent("Default");
+    expect(screen.getByTestId("customer-attributes-type").closest("a")).toBeNull();
+  });
+
+  it("links the type chip next to Attributes to the customer type page", () => {
+    // Arrange
+    mockUseUserPermissions.mockReturnValue([
+      {
+        __typename: "UserPermission",
+        code: PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
+        name: PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
+      },
+    ]);
+
+    // Act
+    renderCard();
+
+    // Assert
+    expect(screen.getByTestId("customer-attributes-type").closest("a")).toHaveAttribute(
+      "href",
+      "/customer-types/type-1",
+    );
+  });
+
   it("offers View type in the menu when the user can manage customer types", async () => {
     // Arrange
     const user = userEvent.setup();

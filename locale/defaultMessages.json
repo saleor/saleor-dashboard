@@ -10772,10 +10772,6 @@
   "c8nvms": {
     "string": "Sales"
   },
-  "cA7t0E": {
-    "context": "customer detail attributes card, empty state when the type defines none",
-    "string": "This type has no attributes"
-  },
   "cARfB7": {
     "context": "promotion status filter active",
     "string": "Active"
@@ -10881,6 +10877,10 @@
   "cSLXjT": {
     "context": "gift card history message",
     "string": "Gift card balance was adjusted"
+  },
+  "cTypeVw": {
+    "context": "customer type chip, opens the customer type settings page",
+    "string": "View {customerTypeName} type"
   },
   "cVjewM": {
     "context": "label for radio button",
@@ -16991,6 +16991,10 @@
   "yEy4EC": {
     "context": "gift card instrument card, label above current balance",
     "string": "Remaining balance"
+  },
+  "yGUydt": {
+    "context": "customer detail attributes card, empty state when the type defines none",
+    "string": "This type has no attributes"
   },
   "yH56V+": {
     "string": "Ooops!..."

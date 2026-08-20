@@ -108,6 +108,7 @@ describe("getAttributeInputFromCustomerType", () => {
         unit: null,
         valueRequired: false,
         visibleInStorefront: true,
+        referenceTypes: [],
       },
     ],
     id: "type-1",

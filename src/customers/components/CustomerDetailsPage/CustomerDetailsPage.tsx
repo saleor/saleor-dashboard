@@ -1,16 +1,27 @@
 import {
+  getReferenceAttributeEntityTypeFromAttribute,
+  handleContainerReferenceAssignment,
+  type ReferenceEntitiesSearch,
+} from "@dashboard/attributes/utils/data";
+import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { Attributes } from "@dashboard/components/Attributes";
+import AssignAttributeValueDialog, {
+  type AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
+import { type Products } from "@dashboard/components/AssignProductDialog/types";
+import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
@@ -36,6 +47,7 @@ import { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
+import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -78,15 +90,32 @@ export interface CustomerDetailsPageSubmitData
 
 interface CustomerDetailsPageProps {
   attributeFormRevision?: number;
+  assignReferencesAttributeId?: string;
   customerId: string;
   customer: CustomerDetailsQuery["user"];
   disabled: boolean;
   errors: AccountErrorFragment[];
-  saveButtonBar: ConfirmButtonTransitionState;
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
+  onAssignReferencesClick?: (attribute: AttributeInput) => void;
+  onCloseAssignReferences?: () => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   onSubmit: (data: CustomerDetailsPageSubmitData) => SubmitPromise<AccountErrorFragment[]>;
   onDelete: () => void;
   onActivateToggle: () => void;
   onShowMetadata: () => void;
+  referenceCategories?: ReferenceEntitiesSearch["categories"];
+  referenceCollections?: ReferenceEntitiesSearch["collections"];
+  referencePages?: ReferenceEntitiesSearch["pages"];
+  referenceProducts?: ReferenceEntitiesSearch["products"];
+  saveButtonBar: ConfirmButtonTransitionState;
 }
 
 const emptyAttributeSubmitData = async (): Promise<CustomerDetailsAttributeSubmitData> => ({
@@ -94,17 +123,36 @@ const emptyAttributeSubmitData = async (): Promise<CustomerDetailsAttributeSubmi
   attributesWithNewFileValue: [] as FormsetData<null, File>,
 });
 
+const noopAssignReferences = (_attribute: AttributeInput): void => undefined;
+
 const CustomerDetailsPage = ({
   attributeFormRevision = 0,
+  assignReferencesAttributeId,
   customerId,
   customer,
   disabled,
   errors,
+  fetchMoreReferenceCategories,
+  fetchMoreReferenceCollections,
+  fetchMoreReferencePages,
+  fetchMoreReferenceProducts,
+  fetchReferenceCategories,
+  fetchReferenceCollections,
+  fetchReferencePages,
+  fetchReferenceProducts,
+  initialConstraints,
+  onAssignReferencesClick,
+  onCloseAssignReferences,
+  onFilterChange,
   saveButtonBar,
   onSubmit,
   onDelete,
   onActivateToggle,
   onShowMetadata,
+  referenceCategories = [],
+  referenceCollections = [],
+  referencePages = [],
+  referenceProducts = [],
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -268,12 +316,25 @@ const CustomerDetailsPage = ({
             />
             <CustomerTypeAndAttributes
               key={`${customer.id}:${attributeFormRevision}`}
+              assignReferencesAttributeId={assignReferencesAttributeId}
               customer={customer}
               customerTypeId={data.customerTypeId}
               disabled={disabled || isReadOnly}
               errors={errors}
+              fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+              fetchMoreReferenceCollections={fetchMoreReferenceCollections}
+              fetchMoreReferencePages={fetchMoreReferencePages}
+              fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+              fetchReferenceCategories={fetchReferenceCategories}
+              fetchReferenceCollections={fetchReferenceCollections}
+              fetchReferencePages={fetchReferencePages}
+              fetchReferenceProducts={fetchReferenceProducts}
               getSubmitDataRef={getSubmitDataRef}
+              initialConstraints={initialConstraints}
+              onAssignReferencesClick={onAssignReferencesClick}
               onAttributesDirtyChange={setAttributesDirty}
+              onCloseAssignReferences={onCloseAssignReferences}
+              onFilterChange={onFilterChange}
               onTypeChange={type => {
                 change({
                   target: {
@@ -282,6 +343,10 @@ const CustomerDetailsPage = ({
                   },
                 });
               }}
+              referenceCategories={referenceCategories}
+              referenceCollections={referenceCollections}
+              referencePages={referencePages}
+              referenceProducts={referenceProducts}
               triggerChange={triggerChange}
             >
               {({ attributesCard }) => (
@@ -372,31 +437,78 @@ const CustomerDetailsPage = ({
 };
 
 interface CustomerTypeAndAttributesProps {
+  assignReferencesAttributeId?: string;
   children: (slots: { attributesCard: ReactNode }) => ReactNode;
   customer: NonNullable<CustomerDetailsQuery["user"]>;
   customerTypeId: string;
   disabled: boolean;
   errors: AccountErrorFragment[];
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
   getSubmitDataRef: MutableRefObject<() => Promise<CustomerDetailsAttributeSubmitData>>;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
+  onAssignReferencesClick?: (attribute: AttributeInput) => void;
   onAttributesDirtyChange: (dirty: boolean) => void;
+  onCloseAssignReferences?: () => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
   onTypeChange: (type: { id: string; name: string }) => void;
+  referenceCategories: ReferenceEntitiesSearch["categories"];
+  referenceCollections: ReferenceEntitiesSearch["collections"];
+  referencePages: ReferenceEntitiesSearch["pages"];
+  referenceProducts: ReferenceEntitiesSearch["products"];
   triggerChange: () => void;
 }
 
 const CustomerTypeAndAttributes = ({
+  assignReferencesAttributeId,
   children,
   customer,
   customerTypeId,
   disabled,
   errors,
+  fetchMoreReferenceCategories,
+  fetchMoreReferenceCollections,
+  fetchMoreReferencePages,
+  fetchMoreReferenceProducts,
+  fetchReferenceCategories,
+  fetchReferenceCollections,
+  fetchReferencePages,
+  fetchReferenceProducts,
   getSubmitDataRef,
+  initialConstraints,
+  onAssignReferencesClick,
   onAttributesDirtyChange,
+  onCloseAssignReferences,
+  onFilterChange,
   onTypeChange,
+  referenceCategories,
+  referenceCollections,
+  referencePages,
+  referenceProducts,
   triggerChange,
 }: CustomerTypeAndAttributesProps) => {
   const intl = useIntl();
   const attributeForm = useCustomerDetailsAttributes({
+    assignReferencesAttributeId,
     customer,
+    fetchMoreReferenceCategories,
+    fetchMoreReferenceCollections,
+    fetchMoreReferencePages,
+    fetchMoreReferenceProducts,
+    fetchReferenceCategories,
+    fetchReferenceCollections,
+    fetchReferencePages,
+    fetchReferenceProducts,
+    referenceCategories,
+    referenceCollections,
+    referencePages,
+    referenceProducts,
     triggerChange,
   });
   const [pickedType, setPickedType] = useState<{ id: string; name: string } | null>(null);
@@ -451,16 +563,77 @@ const CustomerTypeAndAttributes = ({
           onChange={attributeForm.handlers.onChange}
           onFileChange={attributeForm.handlers.onFileChange}
           onMultiChange={attributeForm.handlers.onMultiChange}
-          onReferencesAddClick={attributeForm.handlers.onReferencesAddClick}
-          onReferencesRemove={attributeForm.handlers.onReferencesRemove}
+          onReferencesAddClick={onAssignReferencesClick ?? noopAssignReferences}
+          onReferencesRemove={attributeForm.handlers.selectAttributeReference}
           onReferencesReorder={attributeForm.handlers.onReferencesReorder}
           richTextGetters={attributeForm.attributeRichTextGetters}
         />
       ) : null}
     </CustomerAttributesCard>
   );
+  const assignedAttribute = assignReferencesAttributeId
+    ? attributeForm.attributes.find(({ id }) => id === assignReferencesAttributeId)
+    : undefined;
+  const assignedEntityType = assignReferencesAttributeId
+    ? getReferenceAttributeEntityTypeFromAttribute(
+        assignReferencesAttributeId,
+        attributeForm.attributes,
+      )
+    : undefined;
+  const canOpenAssignReferences =
+    Boolean(assignReferencesAttributeId) &&
+    Boolean(assignedAttribute) &&
+    Boolean(assignedEntityType);
 
-  return children({ attributesCard });
+  const handleCloseAssignReferences = (): void => {
+    onCloseAssignReferences?.();
+  };
+  const handleAssignReferences = (attributeValues: Container[]): void => {
+    if (!assignReferencesAttributeId) {
+      return;
+    }
+
+    handleContainerReferenceAssignment(
+      assignReferencesAttributeId,
+      attributeValues,
+      attributeForm.attributes,
+      {
+        selectAttributeReference: attributeForm.handlers.selectAttributeReference,
+        selectAttributeReferenceAdditionalData:
+          attributeForm.handlers.selectAttributeReferenceAdditionalData,
+      },
+    );
+    onCloseAssignReferences?.();
+  };
+  const handleFetchMoreReferences = (): void => {
+    attributeForm.handlers.fetchMoreReferences?.onFetchMore();
+  };
+
+  return (
+    <>
+      {children({ attributesCard })}
+      {canOpenAssignReferences && assignedAttribute && assignedEntityType ? (
+        <AssignAttributeValueDialog
+          entityType={assignedEntityType}
+          attribute={assignedAttribute}
+          confirmButtonState="default"
+          products={(referenceProducts ?? []) as Products}
+          pages={referencePages ?? []}
+          collections={referenceCollections ?? []}
+          categories={referenceCategories ?? []}
+          hasMore={attributeForm.handlers.fetchMoreReferences?.hasMore ?? false}
+          open={canOpenAssignReferences}
+          onFetch={attributeForm.handlers.fetchReferences}
+          onFetchMore={handleFetchMoreReferences}
+          loading={attributeForm.handlers.fetchMoreReferences?.loading ?? false}
+          onClose={handleCloseAssignReferences}
+          onFilterChange={onFilterChange}
+          initialConstraints={initialConstraints}
+          onSubmit={handleAssignReferences}
+        />
+      ) : null}
+    </>
+  );
 };
 
 CustomerDetailsPage.displayName = "CustomerDetailsPage";

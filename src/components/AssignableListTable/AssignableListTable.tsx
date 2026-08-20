@@ -42,6 +42,13 @@ interface AssignableListTableProps<T extends { id: string }> {
    * `none` — read-only linked rows (customer orders, similar jump lists).
    */
   selection?: "checkbox" | "none";
+  /**
+   * Whole-row jump target for `selection="none"` lists. Ignored when checkboxes
+   * or row delete would compete with the click. One tab stop; cmd-click works.
+   */
+  getRowHref?: (item: T) => string | undefined;
+  /** Accessible name for `getRowHref`. Defaults to the item id. */
+  getRowLabel?: (item: T) => string;
   selected?: number;
   isChecked?: (id: string) => boolean | undefined;
   toggle?: (id: string) => void;
@@ -81,6 +88,8 @@ export const AssignableListTable = <T extends { id: string }>({
   columns,
   disabled,
   selection = "checkbox",
+  getRowHref,
+  getRowLabel,
   selected = 0,
   isChecked = () => false,
   toggle = () => undefined,
@@ -223,11 +232,17 @@ export const AssignableListTable = <T extends { id: string }>({
           }
 
           const isSelected = showSelection ? isChecked(item.id) : false;
+          const rowHref = !showSelection ? getRowHref?.(item) : undefined;
+          const rowLabel = rowHref ? (getRowLabel?.(item) ?? item.id) : undefined;
 
           return (
             <GridTable.Row
               key={item.id}
-              className={clsx(styles.row, density === "media" && styles.rowMedia)}
+              className={clsx(
+                styles.row,
+                density === "media" && styles.rowMedia,
+                rowHref && styles.rowClickable,
+              )}
               __height={density === "media" ? ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT : undefined}
               data-test-id={rowTestId}
               backgroundColor={{
@@ -247,7 +262,17 @@ export const AssignableListTable = <T extends { id: string }>({
                   </Box>
                 </GridTable.Cell>
               ) : (
-                <GridTable.Cell __height="inherit" padding={0} />
+                <GridTable.Cell __height="inherit" padding={0}>
+                  {rowHref ? (
+                    <Link
+                      href={rowHref}
+                      inline={false}
+                      color="secondary"
+                      className={styles.rowLink}
+                      aria-label={rowLabel}
+                    />
+                  ) : null}
+                </GridTable.Cell>
               )}
               {renderCells(item)}
               <GridTable.Cell __height="inherit" padding={0}>

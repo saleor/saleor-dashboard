@@ -1,5 +1,9 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { Callout } from "@dashboard/components/Callout/Callout";
+import {
+  ClickableCustomerType,
+  CustomerTypeDisplay,
+} from "@dashboard/components/CustomerType/CustomerType";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Placeholder } from "@dashboard/components/Placeholder";
@@ -138,10 +142,32 @@ export const CustomerAttributesCard = ({
     setPendingType(nextType);
   };
 
+  const typeChip = selectedType ? (
+    canOpenType ? (
+      <ClickableCustomerType
+        customerType={selectedType}
+        size={3}
+        href={customerTypeUrl(selectedType.id)}
+        data-test-id="customer-attributes-type"
+      />
+    ) : (
+      <CustomerTypeDisplay
+        customerType={selectedType}
+        size={3}
+        data-test-id="customer-attributes-type"
+      />
+    )
+  ) : null;
+
   return (
     <DetailSettingsCard
       data-test-id="customer-attributes"
-      title={<FormattedMessage {...pageMessages.attributesTitle} />}
+      title={
+        <Box display="inline-flex" alignItems="center" gap={2} flexWrap="wrap" minWidth={0}>
+          <FormattedMessage {...pageMessages.attributesTitle} />
+          {typeChip}
+        </Box>
+      }
       headerEnd={
         <Box display="flex" alignItems="center" gap={2}>
           {showPicker && selectedType && !disabled && !isTypeChangePending ? (

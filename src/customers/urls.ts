@@ -92,8 +92,13 @@ export const customerListUrlWithCustomerType = (customerType?: {
 };
 
 export const customerPath = (id: string) => urlJoin(customerSection, id);
-type CustomerUrlDialog = "remove" | "activate" | "deactivate" | "view-metadata";
-export type CustomerUrlQueryParams = Dialog<CustomerUrlDialog>;
+type CustomerUrlDialog =
+  | "remove"
+  | "activate"
+  | "deactivate"
+  | "view-metadata"
+  | "assign-attribute-value";
+export type CustomerUrlQueryParams = Dialog<CustomerUrlDialog> & SingleAction;
 export const customerUrl = (id: string, params?: CustomerUrlQueryParams) =>
   customerPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
