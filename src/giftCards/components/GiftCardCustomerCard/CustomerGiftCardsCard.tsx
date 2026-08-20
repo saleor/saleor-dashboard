@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { DashboardCard } from "@dashboard/components/Card";
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { useCustomerDetails } from "@dashboard/customers/hooks/useCustomerDetails";
 import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
@@ -39,40 +39,36 @@ export const CustomerGiftCardsCard = () => {
 
   return (
     <>
-      <DashboardCard>
-        <DashboardCard.Header>
-          <DashboardCard.Title size={6} fontWeight="medium">
-            <FormattedMessage {...messages.customerGiftCardsCardTitle} />
-          </DashboardCard.Title>
-          <DashboardCard.Toolbar>
-            <Button
-              variant="secondary"
-              onClick={handleCreateNewCardButton}
-              data-test-id="issue-new-gift-card"
-              disabled={!customer}
-            >
-              <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
-            </Button>
-          </DashboardCard.Toolbar>
-        </DashboardCard.Header>
-        <DashboardCard.Content>
-          {loading || !giftCards ? (
-            <Skeleton height={2} />
-          ) : hasGiftCards ? (
-            <CollectionWithDividers
-              collection={giftCards}
-              renderItem={giftCard => (
-                <CustomerGiftCardsCardListItem giftCard={getExtendedGiftCard(giftCard)} />
-              )}
-              withOuterDividers
-            />
-          ) : (
-            <Placeholder>
-              <FormattedMessage {...messages.customerGiftCardsAbsentSubtitle} />
-            </Placeholder>
-          )}
-        </DashboardCard.Content>
-      </DashboardCard>
+      <DetailSettingsCard
+        data-test-id="customer-gift-cards"
+        title={<FormattedMessage {...messages.customerGiftCardsCardTitle} />}
+        headerEnd={
+          <Button
+            variant="secondary"
+            onClick={handleCreateNewCardButton}
+            data-test-id="issue-new-gift-card"
+            disabled={!customer}
+          >
+            <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
+          </Button>
+        }
+      >
+        {loading || !giftCards ? (
+          <Skeleton height={2} />
+        ) : hasGiftCards ? (
+          <CollectionWithDividers
+            collection={giftCards}
+            renderItem={giftCard => (
+              <CustomerGiftCardsCardListItem giftCard={getExtendedGiftCard(giftCard)} />
+            )}
+            withOuterDividers
+          />
+        ) : (
+          <Placeholder>
+            <FormattedMessage {...messages.customerGiftCardsAbsentSubtitle} />
+          </Placeholder>
+        )}
+      </DetailSettingsCard>
       <GiftCardCreateDialogContent
         open={openCreateDialog}
         onClose={closeCreateDialog}

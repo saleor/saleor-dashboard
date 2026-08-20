@@ -6,14 +6,13 @@
 
 .headerRow {
   background-color: var(--mu-colors-background-default2);
-  height: 40px;
 }
 
 .headerRow > td {
-  height: 40px;
-  max-height: 40px;
   box-sizing: border-box;
-  padding: var(--mu-spacing-2) !important;
+  line-height: 1;
+  vertical-align: middle;
+  padding: var(--mu-spacing-1) var(--mu-spacing-2) !important;
   border-top-width: 0 !important;
   border-bottom-width: 1px !important;
   border-bottom-style: solid !important;
@@ -22,7 +21,7 @@
 }
 
 .headerRow > td:last-child {
-  padding: 0 var(--mu-spacing-2) 0 0 !important;
+  padding: var(--mu-spacing-1) var(--mu-spacing-2) var(--mu-spacing-1) 0 !important;
 }
 
 .checkboxCell {

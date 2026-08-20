@@ -3,7 +3,7 @@ import { getExtensionsItemsForCustomerDetails } from "@dashboard/extensions/getE
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { type CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import { customer } from "../../fixtures";
@@ -35,16 +35,12 @@ jest.mock("@dashboard/components/DevModePanel/hooks", () => ({
 jest.mock("../CustomerOverview/CustomerOverview", () => ({
   CustomerOverview: () => <div data-test-id="customer-overview-mock" />,
 }));
-jest.mock("../CustomerOrders", () => ({
-  __esModule: true,
-  default: () => <div data-test-id="customer-orders-mock" />,
+jest.mock("../CustomerOrders/CustomerOrders", () => ({
+  CustomerOrders: () => <div data-test-id="customer-orders-mock" />,
 }));
 jest.mock("../CustomerAddresses", () => ({
   __esModule: true,
   default: () => <div data-test-id="customer-addresses-mock" />,
-}));
-jest.mock("../AccountStatusCard/AccountStatusCard", () => ({
-  AccountStatusCard: () => <div data-test-id="account-status-mock" />,
 }));
 jest.mock("../ExternalReferenceCard/ExternalReferenceCard", () => ({
   ExternalReferenceCard: () => <div data-test-id="external-reference-mock" />,
@@ -69,6 +65,7 @@ jest.mock("@dashboard/customers/hooks/useCustomerDetailsAttributes", () => ({
     fetchMoreAttributeValues: { hasMore: false, loading: false, onFetchMore: jest.fn() },
     getSubmitData: async () => ({ attributes: [], attributesWithNewFileValue: [] }),
     handleTypeChange: jest.fn(),
+    isDirty: false,
     handlers: {
       onAttributeSelectBlur: jest.fn(),
       onChange: jest.fn(),
@@ -86,11 +83,9 @@ const mockUseUserPermissions = useUserPermissions as jest.Mock;
 const mockUseExtensions = useExtensions as jest.Mock;
 const mockGetExtensionsItemsForCustomerDetails = getExtensionsItemsForCustomerDetails as jest.Mock;
 
-// Material-UI TextField wraps the input in a div, and the data-test-id is on
-// the wrapper. To assert `disabled` on the actual input element we have to
-// reach into the wrapper.
+// Macaw Input puts data-test-id on the native input.
 const getInputByTestId = (testId: string): HTMLInputElement =>
-  within(screen.getByTestId(testId)).getByRole("textbox") as HTMLInputElement;
+  screen.getByTestId(testId) as HTMLInputElement;
 
 const renderPage = () =>
   render(
@@ -148,12 +143,12 @@ describe("CustomerDetailsPage", () => {
       expect(screen.getByTestId("show-more-button")).toBeInTheDocument();
     });
 
-    it("renders the savebar (delete/cancel/save buttons)", () => {
+    it("renders the savebar (cancel/save buttons)", () => {
       // Arrange / Act
       renderPage();
 
-      // Assert - the mocked Savebar components render "delete"/"cancel"/"save" text
-      expect(screen.getByRole("button", { name: /delete/i })).toBeInTheDocument();
+      // Assert - delete lives in the cogs menu; savebar is cancel + save
+      expect(screen.queryByRole("button", { name: /delete/i })).not.toBeInTheDocument();
       expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
       expect(screen.getByRole("button", { name: /save/i })).toBeInTheDocument();
     });
@@ -182,11 +177,11 @@ describe("CustomerDetailsPage", () => {
 
       // Assert
       const typeCard = screen.getByTestId("customer-type-card-mock");
-      const accountStatus = screen.getByTestId("account-status-mock");
+      const externalReference = screen.getByTestId("external-reference-mock");
 
       expect(typeCard).toHaveAttribute("data-disabled", "false");
       expect(
-        typeCard.compareDocumentPosition(accountStatus) & Node.DOCUMENT_POSITION_FOLLOWING,
+        typeCard.compareDocumentPosition(externalReference) & Node.DOCUMENT_POSITION_FOLLOWING,
       ).toBeTruthy();
     });
   });

@@ -51,7 +51,7 @@ export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   attributes: FormsetData<AttributeInputData, string[]>,
   triggerChange: () => void,
-): FormsetChange<string> {
+): FormsetChange<string | string[]> {
   return (attributeId: string, value: string | string[]) => {
     const attribute = attributes.find(attribute => attribute.id === attributeId);
 

@@ -1,14 +1,16 @@
-// @ts-strict-ignore
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { Attributes } from "@dashboard/components/Attributes";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
+import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -33,29 +35,35 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Divider } from "@saleor/macaw-ui-next";
-import { type MutableRefObject, type ReactNode, useEffect, useRef, useState } from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { Box, Divider } from "@saleor/macaw-ui-next";
+import { Trash2, UserCheck, UserX } from "lucide-react";
+import {
+  type MutableRefObject,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useIntl } from "react-intl";
 
-import { AccountStatusCard } from "../AccountStatusCard/AccountStatusCard";
 import CustomerAddresses from "../CustomerAddresses";
 import CustomerInfo from "../CustomerInfo";
-import CustomerOrders from "../CustomerOrders";
+import { CustomerOrders } from "../CustomerOrders/CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
 import { CustomerTypeCard } from "../CustomerTypeCard/CustomerTypeCard";
 import { ExternalReferenceCard } from "../ExternalReferenceCard/ExternalReferenceCard";
+import { CustomerDetailsPageLoading } from "./CustomerDetailsPageLoading";
+import { CustomerSaveCompositionHint } from "./CustomerSaveCompositionHint";
+import { messages } from "./messages";
+import { buildCustomerSaveComposition, hasCustomerSaveComposition } from "./saveComposition";
 import { CustomerDetailsTitle } from "./Title";
-
-const messages = defineMessages({
-  openGraphiQL: {
-    id: "oUkVpp",
-    defaultMessage: "Open this customer in GraphiQL",
-  },
-});
 
 export interface CustomerDetailsPageFormData {
   firstName: string;
@@ -117,19 +125,21 @@ const CustomerDetailsPage = ({
   const canEditCustomers = useCanEditCustomers();
   const isReadOnly = !canEditCustomers;
   const context = useDevModeContext();
-  const openPlaygroundURL = () => {
+  const openPlaygroundURL = useCallback(() => {
     context.setDevModeContent(defaultGraphiQLQuery);
     context.setVariables(`{ "id": "${customer?.id}" }`);
     context.setDevModeVisibility(true);
-  };
+  }, [context, customer?.id]);
   const getSubmitDataRef = useRef(emptyAttributeSubmitData);
-  const initialForm: CustomerDetailsPageFormData = {
-    customerTypeId: customer?.customerType?.id || "",
-    email: customer?.email || "",
-    firstName: customer?.firstName || "",
-    lastName: customer?.lastName || "",
-    note: customer?.note || "",
-  };
+  const [attributesDirty, setAttributesDirty] = useState(false);
+  const formIdentity = `${customer?.id ?? "loading"}:${attributeFormRevision}`;
+  const [formIdentityState, setFormIdentityState] = useState(formIdentity);
+
+  if (formIdentityState !== formIdentity) {
+    setFormIdentityState(formIdentity);
+    setAttributesDirty(false);
+  }
+
   const { CUSTOMER_DETAILS_MORE_ACTIONS, CUSTOMER_DETAILS_WIDGETS } = useExtensions(
     extensionMountPoints.CUSTOMER_DETAILS,
   );
@@ -142,52 +152,97 @@ const CustomerDetailsPage = ({
     path: customerListPath,
   });
 
-  // Account-level actions live in the cogs "More actions" menu so destructive
-  // toggles (activate / deactivate) and Delete are not bundled with the form
-  // save. Delete is also kept in the savebar for discoverability. Hidden in
-  // read-only mode because they all hit the customerUpdate / customerDelete
-  // mutations.
-  const builtInMenuItems =
-    customer && canEditCustomers
-      ? [
-          {
-            label: customer.isActive
-              ? intl.formatMessage({
-                  defaultMessage: "Deactivate user",
-                  description: "customer detail cogs menu, deactivates the customer account",
-                  id: "zP3Rb6",
-                })
-              : intl.formatMessage({
-                  defaultMessage: "Activate user",
-                  description:
-                    "customer detail cogs menu, activates a deactivated customer account",
-                  id: "62Rs/K",
-                }),
-            onSelect: onActivateToggle,
-            testId: customer.isActive ? "deactivate-user" : "activate-user",
-          },
-          {
-            label: intl.formatMessage({
-              defaultMessage: "Delete user",
-              description: "customer detail cogs menu, opens the delete-confirmation dialog",
-              id: "LQg8/p",
-            }),
-            onSelect: onDelete,
-            testId: "delete-user",
-            color: "critical1" as const,
-          },
-        ]
-      : [];
-  const menuItems = [...builtInMenuItems, ...extensionMenuItems];
+  const menuItems = useMemo((): TopNavMenuItem[] => {
+    const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
+      label: item.label,
+      onSelect: item.onSelect,
+      testId: item.testId,
+    }));
 
-  menuItems.push({
-    label: intl.formatMessage(messages.openGraphiQL),
-    onSelect: openPlaygroundURL,
-    testId: "graphiql-redirect",
-  });
+    if (customer && canEditCustomers) {
+      items.push(
+        customer.isActive
+          ? {
+              label: intl.formatMessage(messages.deactivateUser),
+              onSelect: onActivateToggle,
+              testId: "deactivate-user",
+              icon: <UserX size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+            }
+          : {
+              label: intl.formatMessage(messages.activateUser),
+              onSelect: onActivateToggle,
+              testId: "activate-user",
+              icon: <UserCheck size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+            },
+      );
+    }
+
+    items.push({
+      label: intl.formatMessage(messages.openGraphiQL),
+      onSelect: openPlaygroundURL,
+      testId: "graphiql-redirect",
+      icon: <GraphqlIcon />,
+    });
+
+    if (customer && canEditCustomers) {
+      items.push({
+        label: intl.formatMessage(messages.deleteUser),
+        onSelect: onDelete,
+        testId: "delete-user",
+        color: "critical1",
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
+    return items;
+  }, [
+    canEditCustomers,
+    customer,
+    extensionMenuItems,
+    intl,
+    onActivateToggle,
+    onDelete,
+    openPlaygroundURL,
+  ]);
+
+  if (!customer) {
+    return (
+      <CustomerDetailsPageLoading
+        canEditCustomers={canEditCustomers}
+        customerBackLink={customerBackLink}
+        customerId={customerId}
+        onShowMetadata={onShowMetadata}
+      />
+    );
+  }
+
+  const initialForm: CustomerDetailsPageFormData = {
+    customerTypeId: customer.customerType?.id || "",
+    email: customer.email || "",
+    firstName: customer.firstName || "",
+    lastName: customer.lastName || "",
+    note: customer.note || "",
+  };
+  const checkIfSaveIsDisabled = (data: CustomerDetailsPageFormData): boolean => {
+    if (disabled || isReadOnly) {
+      return true;
+    }
+
+    return !hasCustomerSaveComposition(
+      buildCustomerSaveComposition({
+        attributesDirty,
+        data,
+        initial: initialForm,
+      }),
+    );
+  };
+  const menuItemsForNav = disabled
+    ? menuItems.map(item => ({ ...item, disabled: true }))
+    : menuItems;
 
   return (
     <Form
+      key={formIdentity}
       confirmLeave
       initial={initialForm}
       onSubmit={async formData => {
@@ -196,113 +251,122 @@ const CustomerDetailsPage = ({
         return onSubmit({ ...formData, ...extras });
       }}
       disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
       {({ change, data, isSaveDisabled, submit, triggerChange }) => {
+        const saveComposition = buildCustomerSaveComposition({
+          attributesDirty,
+          data,
+          initial: initialForm,
+        });
+
         return (
-          <CustomerTypeAndAttributes
-            key={`${customer?.id ?? "loading"}:${attributeFormRevision}`}
-            customer={customer}
-            customerTypeId={data.customerTypeId}
-            disabled={disabled || isReadOnly}
-            errors={errors}
-            getSubmitDataRef={getSubmitDataRef}
-            onTypeChange={type => {
-              change({
-                target: {
-                  name: "customerTypeId",
-                  value: type.id,
-                },
-              });
-            }}
-            triggerChange={triggerChange}
-          >
-            {({ attributesCard, typeCard }) => (
-              <DetailPageLayout>
-                <TopNav
-                  href={customerBackLink}
-                  hrefIcon={<TopNavDestinationIcon.customers />}
-                  hrefTitle={intl.formatMessage(topNavDestinationMessages.allCustomers)}
-                  title={<CustomerDetailsTitle customer={customer} loading={!customer} />}
-                  actionsGap={3}
-                >
-                  {canEditCustomers && (
-                    <TopNav.MetadataButton
-                      onClick={onShowMetadata}
-                      disabled={!customer}
-                      data-test-id="show-customer-metadata"
-                      title={intl.formatMessage({
-                        defaultMessage: "Edit customer metadata",
-                        description: "customer detail page, top-bar metadata button tooltip",
-                        id: "DR3EBs",
-                      })}
-                    />
-                  )}
-                  {menuItems.length > 0 && <TopNav.Menu items={menuItems} dataTestId="menu" />}
-                </TopNav>
-                <DetailPageLayout.Content paddingBottom={10}>
-                  <CustomerOverview customer={customer} />
-                  <CardSpacer />
-                  <CustomerInfo
-                    data={data}
-                    disabled={disabled || isReadOnly}
-                    errors={errors}
-                    onChange={change}
-                  />
-                  {attributesCard}
-                  <CardSpacer />
-                  <CustomerAddresses
-                    customer={customer}
-                    disabled={disabled}
-                    manageAddressHref={customerAddressesUrl(customerId)}
-                  />
-                  <CardSpacer />
-                  <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-                    <CustomerOrders
-                      orders={mapEdgesToItems(customer?.orders)}
-                      viewAllHref={orderListUrlWithCustomerEmail(customer?.email)}
-                    />
-                  </RequirePermissions>
-                </DetailPageLayout.Content>
-                <DetailPageLayout.RightSidebar>
-                  {typeCard}
-                  <CardSpacer />
-                  <AccountStatusCard customer={customer} />
-                  <CardSpacer />
-                  <ExternalReferenceCard customer={customer} />
-                  <CardSpacer />
-                  <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
-                    <CustomerGiftCardsCard />
-                  </RequirePermissions>
-                  {CUSTOMER_DETAILS_WIDGETS.length > 0 && customer?.id && (
-                    <>
-                      <CardSpacer />
-                      <Divider />
-                      <AppWidgets
-                        extensions={CUSTOMER_DETAILS_WIDGETS}
-                        params={{ customerId: customer.id }}
+          <>
+            <FormDirtyStateSync
+              enabled
+              isSaveDisabled={isSaveDisabled}
+              triggerChange={triggerChange}
+            />
+            <CustomerTypeAndAttributes
+              key={`${customer.id}:${attributeFormRevision}`}
+              customer={customer}
+              customerTypeId={data.customerTypeId}
+              disabled={disabled || isReadOnly}
+              errors={errors}
+              getSubmitDataRef={getSubmitDataRef}
+              onAttributesDirtyChange={setAttributesDirty}
+              onTypeChange={type => {
+                change({
+                  target: {
+                    name: "customerTypeId",
+                    value: type.id,
+                  },
+                });
+              }}
+              triggerChange={triggerChange}
+            >
+              {({ attributesCard, typeCard }) => (
+                <DetailPageLayout>
+                  <TopNav
+                    href={customerBackLink}
+                    hrefIcon={<TopNavDestinationIcon.customers />}
+                    hrefTitle={intl.formatMessage(topNavDestinationMessages.allCustomers)}
+                    title={<CustomerDetailsTitle customer={customer} />}
+                    actionsGap={3}
+                  >
+                    {canEditCustomers && (
+                      <TopNav.MetadataButton
+                        onClick={onShowMetadata}
+                        disabled={disabled}
+                        data-test-id="show-customer-metadata"
+                        title={intl.formatMessage(messages.editCustomerMetadata)}
                       />
-                    </>
-                  )}
-                </DetailPageLayout.RightSidebar>
-                <Savebar>
-                  {canEditCustomers ? (
-                    <>
-                      <Savebar.DeleteButton onClick={onDelete} />
-                      <Savebar.Spacer />
-                      <Savebar.CancelButton onClick={() => navigate(customerBackLink)} />
-                      <Savebar.ConfirmButton
-                        transitionState={saveButtonBar}
-                        onClick={submit}
-                        disabled={isSaveDisabled}
+                    )}
+                    {menuItemsForNav.length > 0 && (
+                      <TopNav.Menu items={menuItemsForNav} dataTestId="menu" />
+                    )}
+                  </TopNav>
+                  <DetailPageLayout.Content>
+                    <DetailPageContent>
+                      <CustomerOverview customer={customer} />
+                      <CustomerInfo
+                        data={data}
+                        disabled={disabled || isReadOnly}
+                        errors={errors}
+                        onChange={change}
                       />
-                    </>
-                  ) : (
-                    <Savebar.ReadOnlyLabel />
-                  )}
-                </Savebar>
-              </DetailPageLayout>
-            )}
-          </CustomerTypeAndAttributes>
+                      {attributesCard}
+                      <CustomerAddresses
+                        customer={customer}
+                        disabled={disabled}
+                        manageAddressHref={customerAddressesUrl(customerId)}
+                      />
+                      <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+                        <CustomerOrders
+                          orders={mapEdgesToItems(customer.orders)}
+                          viewAllHref={orderListUrlWithCustomerEmail(customer.email)}
+                        />
+                      </RequirePermissions>
+                    </DetailPageContent>
+                  </DetailPageLayout.Content>
+                  <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
+                    <Box display="flex" flexDirection="column" gap={4}>
+                      {typeCard}
+                      <ExternalReferenceCard customer={customer} />
+                      <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
+                        <CustomerGiftCardsCard />
+                      </RequirePermissions>
+                    </Box>
+                    {CUSTOMER_DETAILS_WIDGETS.length > 0 && customer.id && (
+                      <>
+                        <Divider />
+                        <AppWidgets
+                          extensions={CUSTOMER_DETAILS_WIDGETS}
+                          params={{ customerId: customer.id }}
+                        />
+                      </>
+                    )}
+                  </DetailPageLayout.RightSidebar>
+                  <Savebar>
+                    {canEditCustomers ? (
+                      <>
+                        <Savebar.Spacer />
+                        <CustomerSaveCompositionHint composition={saveComposition} />
+                        <Savebar.CancelButton onClick={() => navigate(customerBackLink)} />
+                        <Savebar.ConfirmButton
+                          transitionState={saveButtonBar}
+                          onClick={submit}
+                          disabled={isSaveDisabled}
+                        />
+                      </>
+                    ) : (
+                      <Savebar.ReadOnlyLabel />
+                    )}
+                  </Savebar>
+                </DetailPageLayout>
+              )}
+            </CustomerTypeAndAttributes>
+          </>
         );
       }}
     </Form>
@@ -311,11 +375,12 @@ const CustomerDetailsPage = ({
 
 interface CustomerTypeAndAttributesProps {
   children: (slots: { attributesCard: ReactNode; typeCard: ReactNode }) => ReactNode;
-  customer: CustomerDetailsQuery["user"];
+  customer: NonNullable<CustomerDetailsQuery["user"]>;
   customerTypeId: string;
   disabled: boolean;
   errors: AccountErrorFragment[];
   getSubmitDataRef: MutableRefObject<() => Promise<CustomerDetailsAttributeSubmitData>>;
+  onAttributesDirtyChange: (dirty: boolean) => void;
   onTypeChange: (type: { id: string; name: string }) => void;
   triggerChange: () => void;
 }
@@ -327,6 +392,7 @@ const CustomerTypeAndAttributes = ({
   disabled,
   errors,
   getSubmitDataRef,
+  onAttributesDirtyChange,
   onTypeChange,
   triggerChange,
 }: CustomerTypeAndAttributesProps) => {
@@ -338,23 +404,35 @@ const CustomerTypeAndAttributes = ({
   const [pickedType, setPickedType] = useState<{ id: string; name: string } | null>(null);
   const formErrors = getFormErrors(["customerType"], errors);
 
-  useEffect(() => {
-    getSubmitDataRef.current = attributeForm.getSubmitData;
-  }, [attributeForm.getSubmitData, getSubmitDataRef]);
+  useEffect(
+    function syncSubmitDataRef() {
+      getSubmitDataRef.current = attributeForm.getSubmitData;
+    },
+    [attributeForm.getSubmitData, getSubmitDataRef],
+  );
+
+  useEffect(
+    function syncAttributesDirty() {
+      onAttributesDirtyChange(attributeForm.isDirty);
+    },
+    [attributeForm.isDirty, onAttributesDirtyChange],
+  );
 
   const selectedType =
     pickedType && pickedType.id === customerTypeId
       ? pickedType
-      : customer?.customerType
+      : customer.customerType
         ? { id: customer.customerType.id, name: customer.customerType.name }
         : null;
 
   const typeCard = (
     <CustomerTypeCard
       selectedType={selectedType}
-      savedTypeId={customer?.customerType?.id ?? null}
+      savedTypeId={customer.customerType?.id ?? null}
       disabled={disabled || attributeForm.typeAttributesLoading}
-      error={getAccountErrorMessage(formErrors.customerType, intl)}
+      error={
+        formErrors.customerType ? getAccountErrorMessage(formErrors.customerType, intl) : undefined
+      }
       onChange={type => {
         setPickedType(type);
         onTypeChange(type);
@@ -364,9 +442,9 @@ const CustomerTypeAndAttributes = ({
   );
   const attributesCard =
     attributeForm.attributes.length > 0 ? (
-      <>
-        <CardSpacer />
+      <DetailSettingsCard title={intl.formatMessage(messages.attributesTitle)}>
         <Attributes
+          unwrapped
           attributes={attributeForm.attributes}
           attributeValues={attributeForm.attributeValues}
           disabled={disabled || attributeForm.typeAttributesLoading}
@@ -383,7 +461,7 @@ const CustomerTypeAndAttributes = ({
           onReferencesReorder={attributeForm.handlers.onReferencesReorder}
           richTextGetters={attributeForm.attributeRichTextGetters}
         />
-      </>
+      </DetailSettingsCard>
     ) : null;
 
   return children({ attributesCard, typeCard });

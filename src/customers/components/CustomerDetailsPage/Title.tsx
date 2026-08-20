@@ -9,6 +9,8 @@ interface CustomerDetailsHeaderCustomer {
   email: string;
   firstName?: string;
   lastName?: string;
+  isActive?: boolean;
+  isConfirmed?: boolean;
   isStaff?: boolean;
   dateJoined?: string;
   customerType?: {
@@ -40,7 +42,10 @@ const useStyles = makeStyles(
   { name: "CustomerDetailsTitle" },
 );
 
-export const CustomerDetailsTitle = ({ customer, loading }: CustomerDetailsTitleProps) => {
+export const CustomerDetailsTitle = ({
+  customer,
+  loading,
+}: CustomerDetailsTitleProps): JSX.Element | null => {
   const classes = useStyles();
   const intl = useIntl();
   const isHeaderLoading = loading && !customer;
@@ -49,6 +54,7 @@ export const CustomerDetailsTitle = ({ customer, loading }: CustomerDetailsTitle
     return (
       <div className={classes.container}>
         <Skeleton __width="12em" data-test-id="customer-details-title-skeleton" />
+        <Skeleton __width="4rem" data-test-id="customer-details-status-skeleton" />
         <Skeleton __width="6rem" data-test-id="customer-details-customer-type-skeleton" />
       </div>
     );
@@ -65,6 +71,39 @@ export const CustomerDetailsTitle = ({ customer, loading }: CustomerDetailsTitle
       <Box className={classes.name} title={customerName}>
         {customerName}
       </Box>
+      {typeof customer.isActive === "boolean" &&
+        (customer.isActive ? (
+          <Pill
+            color="success"
+            label={intl.formatMessage({
+              defaultMessage: "Active",
+              description: "customer account is active",
+              id: "8p8zxN",
+            })}
+            data-test-id="account-status-active"
+          />
+        ) : (
+          <Pill
+            color="neutral"
+            label={intl.formatMessage({
+              defaultMessage: "Inactive",
+              description: "customer account is inactive (deactivated)",
+              id: "3DDUnc",
+            })}
+            data-test-id="account-status-inactive"
+          />
+        ))}
+      {customer.isConfirmed === false && (
+        <Pill
+          color="warning"
+          label={intl.formatMessage({
+            defaultMessage: "Unverified",
+            description: "customer email verification status",
+            id: "D+Nw8P",
+          })}
+          data-test-id="account-status-email-unverified"
+        />
+      )}
       {customer.isStaff && customerName && (
         <Pill
           color="info"

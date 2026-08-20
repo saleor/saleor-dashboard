@@ -61,20 +61,20 @@ export const customerDetails = gql`
             id
             created
             number
-            paymentStatus
+            status
             total {
               gross {
                 currency
                 amount
               }
             }
-            subtotal {
-              net {
-                currency
-                amount
-              }
+            channel {
+              id
+              name
+              slug
+              isActive
+              currencyCode
             }
-            chargeStatus
           }
         }
       }

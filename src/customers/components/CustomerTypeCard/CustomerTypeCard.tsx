@@ -1,6 +1,6 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { Callout } from "@dashboard/components/Callout/Callout";
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { MicrocopyLink } from "@dashboard/components/MicrocopyLink";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PAGINATE_BY } from "@dashboard/config";
@@ -13,7 +13,7 @@ import {
 } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
+import { Box, DynamicCombobox, type Option, Text } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -112,50 +112,46 @@ export const CustomerTypeCard = ({
   };
 
   return (
-    <DashboardCard data-test-id="customer-type">
-      <DashboardCard.Header>
-        <Box display="flex" flexDirection="column" gap={1}>
-          <DashboardCard.Title size={6} fontWeight="medium">
-            <FormattedMessage {...messages.title} />
-          </DashboardCard.Title>
-          <DashboardCard.Subtitle fontSize={3} color="default2">
-            <FormattedMessage {...messages.hint} />
-          </DashboardCard.Subtitle>
-        </Box>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        <Box display="flex" flexDirection="column" gap={2}>
-          <DynamicCombobox
-            data-test-id="customer-type-select"
-            disabled={disabled}
-            error={!!error}
-            helperText={error}
-            label={intl.formatMessage(messages.label)}
-            options={options}
-            value={value}
-            onChange={handleSelect}
-            onInputValueChange={debouncedSearch}
-            onFocus={() => setHasOpened(true)}
-            loading={loading}
-          />
-          {isTypeChangePending ? (
-            <Callout
-              type="warning"
-              data-test-id="customer-type-change-warning"
-              title={<FormattedMessage {...messages.pendingChangeTitle} />}
-            >
-              <FormattedMessage {...messages.pendingChangeDescription} />
-            </Callout>
-          ) : null}
-          {canOpenType && selectedType ? (
-            <DashboardCard.Subtitle fontSize={3} color="default2">
-              <MicrocopyLink to={customerTypeUrl(selectedType.id)}>
-                <FormattedMessage {...messages.viewType} />
-              </MicrocopyLink>
-            </DashboardCard.Subtitle>
-          ) : null}
-        </Box>
-      </DashboardCard.Content>
+    <DetailSettingsCard
+      data-test-id="customer-type"
+      title={<FormattedMessage {...messages.title} />}
+      intro={
+        <Text size={3} color="default2">
+          <FormattedMessage {...messages.hint} />
+        </Text>
+      }
+    >
+      <Box display="flex" flexDirection="column" gap={2}>
+        <DynamicCombobox
+          data-test-id="customer-type-select"
+          disabled={disabled}
+          error={!!error}
+          helperText={error}
+          label={intl.formatMessage(messages.label)}
+          options={options}
+          value={value}
+          onChange={handleSelect}
+          onInputValueChange={debouncedSearch}
+          onFocus={() => setHasOpened(true)}
+          loading={loading}
+        />
+        {isTypeChangePending ? (
+          <Callout
+            type="warning"
+            data-test-id="customer-type-change-warning"
+            title={<FormattedMessage {...messages.pendingChangeTitle} />}
+          >
+            <FormattedMessage {...messages.pendingChangeDescription} />
+          </Callout>
+        ) : null}
+        {canOpenType && selectedType ? (
+          <Text size={3} color="default2">
+            <MicrocopyLink to={customerTypeUrl(selectedType.id)}>
+              <FormattedMessage {...messages.viewType} />
+            </MicrocopyLink>
+          </Text>
+        ) : null}
+      </Box>
       <ChangeCustomerTypeDialog
         open={pendingType !== null}
         typeName={pendingType?.name ?? ""}
@@ -166,7 +162,7 @@ export const CustomerTypeCard = ({
           }
         }}
       />
-    </DashboardCard>
+    </DetailSettingsCard>
   );
 };
 

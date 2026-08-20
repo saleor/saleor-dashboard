@@ -1,6 +1,6 @@
 import { UserContext } from "@dashboard/auth/useUser";
 import { PermissionEnum, type UserFragment } from "@dashboard/graphql";
-import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { ThemeWrapper } from "@test/themeWrapper";
 import { render, screen } from "@testing-library/react";
 import { type ReactElement, type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
@@ -13,6 +13,8 @@ const customer = {
   firstName: "Tom",
   lastName: "Cooper",
   isStaff: false,
+  isActive: true,
+  isConfirmed: true,
   dateJoined: "2017-05-07T09:37:30.124154+00:00",
   customerType: {
     id: "Q3VzdG9tZXJUeXBlOjE=",
@@ -59,7 +61,7 @@ const Wrapper = ({ children }: { children: ReactNode }): JSX.Element => (
         user: mockUser,
       }}
     >
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeWrapper>{children}</ThemeWrapper>
     </UserContext.Provider>
   </MemoryRouter>
 );
@@ -73,6 +75,7 @@ describe("CustomerDetailsTitle", () => {
 
     // Assert
     expect(screen.getByTestId("customer-details-title-skeleton")).toBeInTheDocument();
+    expect(screen.getByTestId("customer-details-status-skeleton")).toBeInTheDocument();
     expect(screen.getByTestId("customer-details-customer-type-skeleton")).toBeInTheDocument();
   });
 
@@ -98,6 +101,26 @@ describe("CustomerDetailsTitle", () => {
     expect(typeLink?.getAttribute("href")).toContain("/customers?");
     expect(typeLink?.getAttribute("href")).toContain("customerType");
     expect(typeLink?.getAttribute("href")).toContain("b2b");
+    expect(screen.getByTestId("account-status-active")).toBeInTheDocument();
+    expect(screen.queryByTestId("account-status-email-unverified")).not.toBeInTheDocument();
+  });
+
+  it("renders Inactive and Unverified pills for a deactivated unconfirmed customer", () => {
+    // Arrange & Act
+    renderTitle(
+      <CustomerDetailsTitle
+        customer={{
+          ...customer,
+          isActive: false,
+          isConfirmed: false,
+        }}
+      />,
+    );
+
+    // Assert
+    expect(screen.getByTestId("account-status-inactive")).toBeInTheDocument();
+    expect(screen.getByTestId("account-status-email-unverified")).toBeInTheDocument();
+    expect(screen.queryByTestId("account-status-active")).not.toBeInTheDocument();
   });
 
   it("renders customer type without list link when slug is missing", () => {

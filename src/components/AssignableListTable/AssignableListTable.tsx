@@ -16,6 +16,7 @@ import {
   ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH,
   ASSIGNABLE_LIST_TABLE_ACTIONS_COLUMN_WIDTH_COMPACT,
   ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET,
+  ASSIGNABLE_LIST_TABLE_CELL_PADDING,
   ASSIGNABLE_LIST_TABLE_LEADING_INSET,
   ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT,
   type AssignableListTableLeadingInset,
@@ -36,11 +37,16 @@ interface AssignableListTableProps<T extends { id: string }> {
   items: Array<T | null | undefined> | undefined;
   columns: AssignableListColumn[];
   disabled?: boolean;
-  selected: number;
-  isChecked: (id: string) => boolean | undefined;
-  toggle: (id: string) => void;
-  toggleAll: (items: T[], selected: number) => void;
-  onUnassign: (id: string) => void;
+  /**
+   * `checkbox` (default) — bulk select + row delete.
+   * `none` — read-only linked rows (customer orders, similar jump lists).
+   */
+  selection?: "checkbox" | "none";
+  selected?: number;
+  isChecked?: (id: string) => boolean | undefined;
+  toggle?: (id: string) => void;
+  toggleAll?: (items: T[], selected: number) => void;
+  onUnassign?: (id: string) => void;
   /** Bulk action shown in the header when rows are selected. */
   toolbar?: ReactNode;
   emptyMessage: ReactNode;
@@ -68,14 +74,17 @@ const areAllChecked = <T,>(items: T[], selected: number): boolean | "indetermina
   return selected !== 0;
 };
 
+const noopToggleAll = <T,>(_items: T[], _selected: number): void => undefined;
+
 export const AssignableListTable = <T extends { id: string }>({
   items,
   columns,
   disabled,
-  selected,
-  isChecked,
-  toggle,
-  toggleAll,
+  selection = "checkbox",
+  selected = 0,
+  isChecked = () => false,
+  toggle = () => undefined,
+  toggleAll = noopToggleAll,
   onUnassign,
   toolbar,
   emptyMessage,
@@ -87,11 +96,14 @@ export const AssignableListTable = <T extends { id: string }>({
   density = "compact",
 }: AssignableListTableProps<T>): JSX.Element => {
   const intl = useIntl();
+  const showSelection = selection === "checkbox";
+  const showRowActions = showSelection && Boolean(onUnassign);
   const checkboxCellClassName =
     leadingInset === ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET
       ? styles.checkboxCellCard
       : styles.checkboxCell;
   const checkboxColumnWidth = getAssignableListCheckboxColumnWidth(leadingInset);
+  const edgeColumnWidth = `calc(var(--mu-spacing-${leadingInset}) - var(--mu-spacing-${ASSIGNABLE_LIST_TABLE_CELL_PADDING}))`;
   // Compact when idle so content columns keep the space; widen only for bulk toolbar.
   const actionsColumnWidth =
     selected > 0 && toolbar
@@ -121,7 +133,11 @@ export const AssignableListTable = <T extends { id: string }>({
   return (
     <GridTable borderWidth={0} className={styles.table} data-test-id={dataTestId}>
       <GridTable.Colgroup>
-        <GridTable.Col __width={checkboxColumnWidth} />
+        {showSelection ? (
+          <GridTable.Col __width={checkboxColumnWidth} />
+        ) : (
+          <GridTable.Col __width={edgeColumnWidth} />
+        )}
         {columns.map(column =>
           column.width ? (
             <GridTable.Col key={column.id} style={{ width: column.width }} />
@@ -129,24 +145,32 @@ export const AssignableListTable = <T extends { id: string }>({
             <GridTable.Col key={column.id} />
           ),
         )}
-        <GridTable.Col style={{ width: actionsColumnWidth }} />
+        {showRowActions ? (
+          <GridTable.Col style={{ width: actionsColumnWidth }} />
+        ) : (
+          <GridTable.Col __width={edgeColumnWidth} />
+        )}
       </GridTable.Colgroup>
       <GridTable.Body>
         <GridTable.Row className={styles.headerRow}>
-          <GridTable.Cell padding={0} borderWidth={0} className={checkboxCellClassName}>
-            <Box display="flex" alignItems="center" height="100%">
-              <Checkbox
-                data-test-id="select-all-checkbox"
-                checked={allChecked}
-                disabled={disabled}
-                onCheckedChange={() => toggleAll(concreteItems, selected)}
-              />
-            </Box>
-          </GridTable.Cell>
+          {showSelection ? (
+            <GridTable.Cell padding={0} borderWidth={0} className={checkboxCellClassName}>
+              <Box display="flex" alignItems="center" height="100%">
+                <Checkbox
+                  data-test-id="select-all-checkbox"
+                  checked={allChecked}
+                  disabled={disabled}
+                  onCheckedChange={() => toggleAll(concreteItems, selected)}
+                />
+              </Box>
+            </GridTable.Cell>
+          ) : (
+            <GridTable.Cell padding={0} borderWidth={0} />
+          )}
           {columns.map((column, index) => (
             <GridTable.Cell key={column.id} borderWidth={0} padding={0}>
-              {selected && index === 0 ? (
-                <Text data-test-id="SelectedText" size={2} lineHeight={2}>
+              {showSelection && selected && index === 0 ? (
+                <Text data-test-id="SelectedText" size={2}>
                   <FormattedMessage
                     id="qu/hXD"
                     defaultMessage="Selected {number} items"
@@ -156,7 +180,6 @@ export const AssignableListTable = <T extends { id: string }>({
               ) : !selected || !column.hideHeaderWhenSelected ? (
                 <Text
                   size={2}
-                  lineHeight={2}
                   color="default2"
                   ellipsis
                   display="block"
@@ -169,17 +192,19 @@ export const AssignableListTable = <T extends { id: string }>({
             </GridTable.Cell>
           ))}
           <GridTable.Cell borderWidth={0} padding={0}>
-            <Box
-              width="100%"
-              paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-              gap={2}
-              height="100%"
-            >
-              {selected ? toolbar : null}
-            </Box>
+            {showRowActions ? (
+              <Box
+                width="100%"
+                paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
+                display="flex"
+                alignItems="center"
+                justifyContent="flex-end"
+                gap={2}
+                height="100%"
+              >
+                {selected ? toolbar : null}
+              </Box>
+            ) : null}
           </GridTable.Cell>
         </GridTable.Row>
         {renderCollection(items, item => {
@@ -197,7 +222,7 @@ export const AssignableListTable = <T extends { id: string }>({
             );
           }
 
-          const isSelected = isChecked(item.id);
+          const isSelected = showSelection ? isChecked(item.id) : false;
 
           return (
             <GridTable.Row
@@ -211,41 +236,47 @@ export const AssignableListTable = <T extends { id: string }>({
               }}
               selected={isSelected}
             >
-              <GridTable.Cell __height="inherit" padding={0} className={checkboxCellClassName}>
-                <Box display="flex" alignItems="center" height="100%">
-                  <Checkbox
-                    checked={isSelected}
-                    disabled={disabled}
-                    onCheckedChange={() => toggle(item.id)}
-                  />
-                </Box>
-              </GridTable.Cell>
+              {showSelection ? (
+                <GridTable.Cell __height="inherit" padding={0} className={checkboxCellClassName}>
+                  <Box display="flex" alignItems="center" height="100%">
+                    <Checkbox
+                      checked={isSelected}
+                      disabled={disabled}
+                      onCheckedChange={() => toggle(item.id)}
+                    />
+                  </Box>
+                </GridTable.Cell>
+              ) : (
+                <GridTable.Cell __height="inherit" padding={0} />
+              )}
               {renderCells(item)}
               <GridTable.Cell __height="inherit" padding={0}>
-                <Box
-                  className={styles.rowDelete}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                  paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
-                  width="100%"
-                  height="100%"
-                >
-                  <Button
-                    data-test-id="delete-icon"
-                    variant="tertiary"
-                    type="button"
-                    disabled={disabled}
-                    onClick={event => {
-                      event.stopPropagation();
-                      onUnassign(item.id);
-                    }}
-                    title={intl.formatMessage(buttonMessages.delete)}
-                    icon={
-                      <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
-                    }
-                  />
-                </Box>
+                {showRowActions && onUnassign ? (
+                  <Box
+                    className={styles.rowDelete}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
+                    width="100%"
+                    height="100%"
+                  >
+                    <Button
+                      data-test-id="delete-icon"
+                      variant="tertiary"
+                      type="button"
+                      disabled={disabled}
+                      onClick={event => {
+                        event.stopPropagation();
+                        onUnassign(item.id);
+                      }}
+                      title={intl.formatMessage(buttonMessages.delete)}
+                      icon={
+                        <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+                      }
+                    />
+                  </Box>
+                ) : null}
               </GridTable.Cell>
             </GridTable.Row>
           );

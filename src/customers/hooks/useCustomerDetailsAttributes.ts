@@ -21,7 +21,7 @@ import useFormset, { type FormsetData } from "@dashboard/hooks/useFormset";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import {
   getAttributeInputFromCustomer,
@@ -44,10 +44,14 @@ export const useCustomerDetailsAttributes = ({
 }: UseCustomerDetailsAttributesOpts) => {
   const attributes = useFormset(getAttributeInputFromCustomer(customer));
   const attributesWithNewFileValue = useFormset<null, File>([]);
+  const [richTextDirty, setRichTextDirty] = useState(false);
   const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
     useMultipleRichText({
       initial: getRichTextDataFromAttributes(attributes.data),
-      triggerChange,
+      triggerChange: () => {
+        setRichTextDirty(true);
+        triggerChange();
+      },
     });
   const client = useApolloClient();
   const [typeAttributesLoading, setTypeAttributesLoading] = useState(false);
@@ -102,6 +106,23 @@ export const useCustomerDetailsAttributes = ({
     };
   }, [attributes.data, attributesWithNewFileValue.data, getAttributeRichTextValues]);
 
+  const isDirty = useMemo(() => {
+    if (richTextDirty || attributesWithNewFileValue.data.length > 0) {
+      return true;
+    }
+
+    const current = attributes.data.map(attribute => ({
+      id: attribute.id,
+      value: attribute.value,
+    }));
+    const initial = getAttributeInputFromCustomer(customer).map(attribute => ({
+      id: attribute.id,
+      value: attribute.value,
+    }));
+
+    return JSON.stringify(current) !== JSON.stringify(initial);
+  }, [attributes.data, attributesWithNewFileValue.data, customer, richTextDirty]);
+
   return {
     attributeRichTextGetters,
     attributes: attributes.data,
@@ -114,6 +135,7 @@ export const useCustomerDetailsAttributes = ({
     },
     getSubmitData,
     handleTypeChange,
+    isDirty,
     handlers: {
       onAttributeSelectBlur: searchAttributeReset,
       onChange: createAttributeChangeHandler(attributes, triggerChange),

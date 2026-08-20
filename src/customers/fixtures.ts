@@ -1,9 +1,7 @@
 import {
   type CustomerAddressesQuery,
   type CustomerDetailsQuery,
-  OrderChargeStatusEnum,
   OrderStatus,
-  PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 
 import { type Customers } from "./types";
@@ -1061,8 +1059,7 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
           created: "2018-05-07T09:37:30.124154+00:00",
           id: "T3JkZXI6MTk=",
           number: "8234",
-          paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-          chargeStatus: OrderChargeStatusEnum.FULL,
+          status: OrderStatus.FULFILLED,
           total: {
             __typename: "TaxedMoney",
             gross: {
@@ -1071,13 +1068,13 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
               currency: "USD",
             },
           },
-          subtotal: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money",
-              amount: 1180.0,
-              currency: "USD",
-            },
+          channel: {
+            __typename: "Channel",
+            id: "Q2hhbm5lbDox",
+            name: "United States",
+            slug: "us",
+            isActive: true,
+            currencyCode: "USD",
           },
         },
       },

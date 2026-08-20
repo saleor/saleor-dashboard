@@ -26,7 +26,7 @@ import {
 } from "./utils";
 
 interface CustomerOverviewProps {
-  customer: CustomerDetailsQuery["user"];
+  customer?: CustomerDetailsQuery["user"] | null;
 }
 
 const ICON_SIZE = 16;

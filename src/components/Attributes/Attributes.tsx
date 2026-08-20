@@ -48,6 +48,8 @@ interface AttributesProps extends AttributeRowHandlers {
   errors: AttributeFieldError[];
   title?: React.ReactNode;
   richTextGetters: RichTextGetters<string>;
+  /** Skip DashboardCard + accordion so entity-detail pages can wrap in DetailSettingsCard. */
+  unwrapped?: boolean;
 }
 
 const messages = defineMessages({
@@ -70,9 +72,35 @@ export const Attributes = ({
   title,
   onAttributeSelectBlur,
   richTextGetters,
+  unwrapped = false,
   ...props
 }: AttributesProps) => {
   const intl = useIntl();
+  const list =
+    attributes.length > 0 ? (
+      <ul>
+        {attributes.map(attribute => (
+          <React.Fragment key={attribute.id}>
+            <AttributeListItem
+              attribute={attribute}
+              errors={errors}
+              attributeValues={attributeValues}
+              onAttributeSelectBlur={onAttributeSelectBlur}
+              richTextGetters={richTextGetters}
+              {...props}
+            />
+          </React.Fragment>
+        ))}
+      </ul>
+    ) : null;
+
+  if (unwrapped) {
+    return (
+      <Box data-test-id="attributes" display="flex" flexDirection="column" gap={1}>
+        {list}
+      </Box>
+    );
+  }
 
   return (
     <DashboardCard paddingTop={6} data-test-id="attributes">
@@ -100,24 +128,7 @@ export const Attributes = ({
                 </Box>
                 <Accordion.TriggerButton dataTestId="expand-icon" />
               </Accordion.Trigger>
-              <Accordion.Content>
-                {attributes.length > 0 && (
-                  <ul>
-                    {attributes.map(attribute => (
-                      <React.Fragment key={attribute.id}>
-                        <AttributeListItem
-                          attribute={attribute}
-                          errors={errors}
-                          attributeValues={attributeValues}
-                          onAttributeSelectBlur={onAttributeSelectBlur}
-                          richTextGetters={richTextGetters}
-                          {...props}
-                        />
-                      </React.Fragment>
-                    ))}
-                  </ul>
-                )}
-              </Accordion.Content>
+              <Accordion.Content>{list}</Accordion.Content>
             </Accordion.Item>
           </Accordion>
         </Box>
