@@ -36,6 +36,24 @@ describe("App Extension Manifest Schema - SEARCH_ACTION mount", () => {
     expect(result.success).toBe(true);
   });
 
+  it("accepts a SEARCH_ACTION extension scoped to CHANNEL_DETAILS", () => {
+    // Arrange
+    const data: AppExtensionManifest = {
+      label: "Channel config",
+      url: "https://example.com/action",
+      mountName: "SEARCH_ACTION",
+      targetName: "POPUP",
+      permissions: [],
+      options: { views: ["CHANNEL_DETAILS"] },
+    };
+
+    // Act
+    const result = appExtensionManifest.safeParse(data);
+
+    // Assert
+    expect(result.success).toBe(true);
+  });
+
   it("accepts SEARCH_ACTION with NEW_TAB and APP_PAGE targets", () => {
     // Act / Assert
     expect(
