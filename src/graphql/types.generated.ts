@@ -10923,6 +10923,15 @@ export type BulkPublishProductsDataQueryVariables = Exact<{
 
 export type BulkPublishProductsDataQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, category: { __typename: 'Category', id: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', channel: { __typename: 'Channel', id: string } }> | null, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string } }> } | null } }> } | null };
 
+export type BulkPublishProductPricesQueryVariables = Exact<{
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+  variantsFirst: Scalars['Int']['input'];
+}>;
+
+
+export type BulkPublishProductPricesQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string }, price: { __typename: 'Money', amount: number } | null }> | null } }> } | null } }> } | null };
+
 export type BulkPublishProductVariantsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
   first: Scalars['Int']['input'];

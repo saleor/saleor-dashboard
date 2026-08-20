@@ -18,6 +18,7 @@ import { ModalProductFilterProvider } from "@dashboard/components/ModalFilters/e
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type SearchProductsQueryVariables,
+  useBulkPublishProductPricesQuery,
   useBulkPublishProductsDataQuery,
 } from "@dashboard/graphql";
 import {
@@ -36,15 +37,19 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { BulkPublishConfirmStep } from "./BulkPublishConfirmStep";
+import { getBulkPublishCurrentListings } from "./bulkPublishCurrentListings";
 import { BulkPublishDefaultsStep } from "./BulkPublishDefaultsStep";
 import {
+  countDraftsWithPriceUpdate,
   createProductDrafts,
   getAppliedDefaultStock,
   getDraftsExceedingVariantLimit,
   getDraftsMissingCategoryForPublish,
   getDraftsMissingPrice,
   getDraftsWithInvalidCostPrice,
+  getDraftsWithInvalidPrice,
   getDraftsWithInvalidStock,
+  hasListedDrafts,
   isValidBulkPublishStock,
   mergeProductDrafts,
 } from "./bulkPublishDrafts";
@@ -61,6 +66,7 @@ import {
   BULK_PUBLISH_MAX_PRODUCTS,
   BULK_PUBLISH_MAX_VARIANTS_PER_PRODUCT,
   BULK_PUBLISH_PICKER_PAGE_SIZE,
+  BULK_PUBLISH_PRICE_SAMPLE_LIMIT,
   type BulkPublishChannel,
   type BulkPublishDefaults,
   type BulkPublishSelectedProduct,
@@ -258,6 +264,11 @@ const BulkPublishToChannelDialogContent = ({
     () => getDraftsExceedingVariantLimit(productDrafts).length > 0,
     [productDrafts],
   );
+  const showPriceDiff = useMemo(() => hasListedDrafts(productDrafts), [productDrafts]);
+  const priceUpdateCount = useMemo(
+    () => countDraftsWithPriceUpdate(productDrafts),
+    [productDrafts],
+  );
 
   useEffect(
     function syncBulkPublishLeaveTrap() {
@@ -336,6 +347,43 @@ const BulkPublishToChannelDialogContent = ({
       first: 1,
     },
   });
+  const { refetch: fetchProductPrices } = useBulkPublishProductPricesQuery({
+    skip: true,
+    variables: {
+      ids: [],
+      first: 1,
+      variantsFirst: BULK_PUBLISH_PRICE_SAMPLE_LIMIT,
+    },
+  });
+
+  /**
+   * Only products already in the channel have prices to keep, and pulling variant prices is the
+   * expensive part of preparing the review step — so the onboarding path skips this entirely.
+   */
+  const loadCurrentListings = useCallback(
+    async (listedProductIds: string[]) => {
+      if (listedProductIds.length === 0) {
+        return undefined;
+      }
+
+      try {
+        const { data } = await fetchProductPrices({
+          ids: listedProductIds,
+          first: listedProductIds.length,
+          variantsFirst: BULK_PUBLISH_PRICE_SAMPLE_LIMIT,
+        });
+
+        return getBulkPublishCurrentListings({
+          products: mapEdgesToItems(data?.products) ?? [],
+          channelId: channel.id,
+        });
+      } catch {
+        // Placeholders and warnings are a convenience — losing them must not block the wizard.
+        return undefined;
+      }
+    },
+    [channel.id, fetchProductPrices],
+  );
 
   const handleNextFromSelect = () => {
     if (selectedProducts.length === 0) {
@@ -418,12 +466,18 @@ const BulkPublishToChannelDialogContent = ({
       }
 
       const appliedDefaultStock = getAppliedDefaultStock(defaults);
+      const currentListings = await loadCurrentListings(
+        products
+          .filter(product => isProductListedInChannel(product, channel.id))
+          .map(product => product.id),
+      );
 
       setProductDrafts(previousDrafts => {
         const freshDrafts = createProductDrafts({
           products,
           channelId: channel.id,
           defaultStock: appliedDefaultStock,
+          currentListings,
         });
 
         if (previousDrafts.length === 0) {
@@ -449,6 +503,17 @@ const BulkPublishToChannelDialogContent = ({
   };
 
   const handleNextFromReview = () => {
+    const invalidPriceDrafts = getDraftsWithInvalidPrice(productDrafts);
+
+    if (invalidPriceDrafts.length > 0) {
+      notify({
+        status: "error",
+        text: intl.formatMessage(messages.priceInvalid),
+      });
+
+      return;
+    }
+
     const missingPriceDrafts = getDraftsMissingPrice(productDrafts);
 
     if (missingPriceDrafts.length > 0) {
@@ -692,6 +757,15 @@ const BulkPublishToChannelDialogContent = ({
                       {...messages.reviewCardSubtitle}
                       values={{ count: productDrafts.length }}
                     />
+                    {showPriceDiff ? (
+                      <>
+                        {" · "}
+                        <FormattedMessage
+                          {...messages.reviewPriceUpdateCount}
+                          values={{ count: priceUpdateCount }}
+                        />
+                      </>
+                    ) : null}
                   </Text>
                 ) : null}
                 <BackButton disabled={submitting || isPreparingReview} onClick={handleBack} />

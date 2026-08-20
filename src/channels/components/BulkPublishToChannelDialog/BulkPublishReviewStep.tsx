@@ -15,6 +15,7 @@ import {
   getDraftsExceedingVariantLimit,
   getDraftsMissingCategoryForPublish,
   getDraftsWithManyVariants,
+  hasListedDrafts,
 } from "./bulkPublishDrafts";
 import { type BulkPublishReviewField, BulkPublishReviewRow } from "./BulkPublishReviewRow";
 import styles from "./BulkPublishReviewStep.module.css";
@@ -63,6 +64,9 @@ export const BulkPublishReviewStep = ({
   );
   const oversizedProductNames = oversizedDrafts.map(draft => draft.name).join(", ");
   const missingCategoryProductNames = missingCategoryDrafts.map(draft => draft.name).join(", ");
+  // Only meaningful once some products already have prices to keep — on a pure onboarding run
+  // every price is required, so a "leave blank" hint would be misleading.
+  const showPriceDiff = useMemo(() => hasListedDrafts(productDrafts), [productDrafts]);
 
   // Rows are memoized, so the handlers they receive have to stay stable across keystrokes.
   const latestDraftsRef = useRef(productDrafts);
@@ -160,6 +164,11 @@ export const BulkPublishReviewStep = ({
                 <Box className={styles.inputCell}>
                   <ReviewColumnHeader
                     title={<FormattedMessage {...messages.reviewColumnPrice} />}
+                    hint={
+                      showPriceDiff ? (
+                        <FormattedMessage {...messages.reviewColumnPriceUnchangedHint} />
+                      ) : undefined
+                    }
                   />
                 </Box>
                 <Box className={styles.inputCell}>
