@@ -41,6 +41,27 @@ describe("TopNav Menu", () => {
     expect(screen.getByTestId("delete-icon")).toBeInTheDocument();
   });
 
+  it("renders app logo for extension items and a placeholder when the app has none", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const items: TopNavMenuItem[] = [
+      { label: "With logo", onSelect: jest.fn(), testId: "ext-1", avatar: "https://app/logo.png" },
+      { label: "No logo", onSelect: jest.fn(), testId: "ext-2", avatar: null },
+    ];
+
+    render(<Menu items={items} />, { wrapper: Wrapper });
+
+    // Act
+    await user.click(screen.getByTestId("show-more-button"));
+
+    // Assert
+    expect(screen.getByTestId("ext-1").querySelector("img")).toHaveAttribute(
+      "src",
+      "https://app/logo.png",
+    );
+    expect(screen.getByTestId("ext-2").querySelector("svg")).toBeInTheDocument();
+  });
+
   it("calls onSelect when a menu item is clicked", async () => {
     // Arrange
     const user = userEvent.setup();

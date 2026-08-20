@@ -1,6 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Button, Dropdown, List, Text, type TextProps } from "@saleor/macaw-ui-next";
-import { CheckSquare, Settings, Square } from "lucide-react";
+import { CheckSquare, Package, Settings, Square } from "lucide-react";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,6 +14,8 @@ export interface TopNavMenuItem {
   checked?: boolean;
   disabled?: boolean;
   icon?: React.ReactNode;
+  /** App extension logo URL. `null` (app has no logo) renders a placeholder; omit for non-extension items. */
+  avatar?: string | null;
 }
 
 interface TopNavMenuProps {
@@ -30,6 +32,36 @@ const menuItemIconStyle: React.CSSProperties = {
   justifyContent: "center",
   lineHeight: 0,
   width: iconSize.small,
+};
+
+const MenuItemIcon = ({ item }: { item: TopNavMenuItem }) => {
+  if (item.avatar !== undefined) {
+    return (
+      <Box style={menuItemIconStyle}>
+        {item.avatar ? (
+          <img
+            src={item.avatar}
+            alt=""
+            width={iconSize.small}
+            height={iconSize.small}
+            style={{ borderRadius: 4, display: "block" }}
+          />
+        ) : (
+          <Package size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} aria-hidden />
+        )}
+      </Box>
+    );
+  }
+
+  if (!item.icon) {
+    return null;
+  }
+
+  return (
+    <Box color={item.color} style={menuItemIconStyle}>
+      {item.icon}
+    </Box>
+  );
 };
 
 export const Menu = ({ items, dataTestId, trigger }: TopNavMenuProps) => {
@@ -74,11 +106,7 @@ export const Menu = ({ items, dataTestId, trigger }: TopNavMenuProps) => {
                       ) : (
                         <Square size={14} aria-hidden />
                       ))}
-                    {item.icon && (
-                      <Box color={item.color} style={menuItemIconStyle}>
-                        {item.icon}
-                      </Box>
-                    )}
+                    <MenuItemIcon item={item} />
                     <Text color={item.color}>{item.label}</Text>
                   </Box>
                 </List.Item>
