@@ -10930,7 +10930,7 @@ export type BulkPublishProductPricesQueryVariables = Exact<{
 }>;
 
 
-export type BulkPublishProductPricesQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, channelListings: Array<{ __typename: 'ProductVariantChannelListing', channel: { __typename: 'Channel', id: string }, price: { __typename: 'Money', amount: number } | null }> | null } }> } | null } }> } | null };
+export type BulkPublishProductPricesQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, productVariants: { __typename: 'ProductVariantCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductVariantCountableEdge', node: { __typename: 'ProductVariant', id: string, channelListings: Array<{ __typename: 'ProductVariantChannelListing', id: string, channel: { __typename: 'Channel', id: string }, price: { __typename: 'Money', amount: number } | null }> | null } }> } | null } }> } | null };
 
 export type BulkPublishProductVariantsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -11777,6 +11777,11 @@ export type AppUpdatePermissionsMutationVariables = Exact<{
 
 
 export type AppUpdatePermissionsMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type InstalledAppsSnapshotQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InstalledAppsSnapshotQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null } }> } | null };
 
 export type InstalledAppsQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;

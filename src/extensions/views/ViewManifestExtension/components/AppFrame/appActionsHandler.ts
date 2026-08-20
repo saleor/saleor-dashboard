@@ -1,6 +1,7 @@
 import { getAppMountUri } from "@dashboard/config";
 import { useActiveAppExtension } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { useTriggerEntityRefresh } from "@dashboard/extensions/entity-refresh";
+import { useAppNavigation } from "@dashboard/extensions/hooks/useAppNavigation";
 import {
   applyWidgetHeightToFrame,
   createWidgetResizeOkResponse,
@@ -372,9 +373,71 @@ const useHandleOpenPopupAction = (appId: string, target: "POPUP" | "WIDGET" | "A
   };
 };
 
+/**
+ * TODO: Replace with the `RedirectToApp` type from app-sdk once it's released.
+ */
+export type RedirectToAppAction = {
+  type: "redirectToApp";
+  payload: {
+    actionId: string;
+    appIdentifier: string;
+    path?: string;
+  };
+};
+
+/**
+ * Resolves another installed app by its manifest identifier and redirects to it
+ * in the same tab, like the Redirect action does.
+ */
+const useHandleRedirectToAppAction = (
+  appId: string,
+  frameEl: HTMLIFrameElement | null,
+  appOrigin: string,
+) => {
+  const postToExtension = usePostToExtension(frameEl, appOrigin);
+  const { handle: handleRedirect } = useHandleRedirectAction(appId);
+  const { resolveAppUrlFromIdentifier } = useAppNavigation();
+
+  return {
+    // Response is posted asynchronously, once the target app is resolved.
+    handle: (action: RedirectToAppAction) => {
+      const { actionId, appIdentifier, path } = action.payload;
+
+      debug(
+        `Handling RedirectToApp action with ID: %s, app identifier: %s`,
+        actionId,
+        appIdentifier,
+      );
+
+      resolveAppUrlFromIdentifier(appIdentifier, path)
+        .then(to => {
+          if (!to) {
+            console.error(`redirectToApp action failed: app "${appIdentifier}" is not installed`, {
+              appId,
+            });
+
+            return postToExtension(createResponseStatus(actionId, false));
+          }
+
+          return postToExtension(
+            handleRedirect({
+              type: "redirect",
+              payload: { actionId, to, newContext: false },
+            }),
+          );
+        })
+        .catch(e => {
+          console.error("redirectToApp action failed: couldn't resolve the target app", e);
+          postToExtension(createResponseStatus(actionId, false));
+        });
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleOpenPopupAction,
+  useHandleRedirectToAppAction,
   useHandleRefreshEntityAction,
   useHandleUpdateRoutingAction,
   useHandleRedirectAction,
