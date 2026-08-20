@@ -58,6 +58,7 @@ const useHandleNotificationAction = () => {
 const useHandleRedirectAction = (appId: string) => {
   const navigate = useNavigator();
   const { closeApp } = useExternalApp();
+  const { deactivate } = useActiveAppExtension();
   const intl = useIntl();
   const handleAppDeepChange = (action: RedirectAction) => {
     debug("Handling deep app URL change");
@@ -128,7 +129,10 @@ const useHandleRedirectAction = (appId: string) => {
       window.open(exactLocation);
     } else {
       navigate(action.payload.to);
+      // Dashboard navigated underneath - close whichever popup is open
+      // (legacy ExternalApp dialog or the app-extension popup).
       closeApp();
+      deactivate();
     }
 
     return createResponseStatus(action.payload.actionId, true);
