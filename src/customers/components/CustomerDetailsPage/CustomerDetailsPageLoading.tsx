@@ -12,15 +12,14 @@ import { customerAddressesUrl } from "@dashboard/customers/urls";
 import { CustomerGiftCardsCard } from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { PermissionEnum } from "@dashboard/graphql";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
-import { commonMessages } from "@dashboard/intl";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import CustomerAddresses from "../CustomerAddresses";
+import { messages as customerInfoMessages } from "../CustomerInfo/messages";
 import { CustomerOrders } from "../CustomerOrders/CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
-import { messages as customerTypeMessages } from "../CustomerTypeCard/messages";
 import { messages } from "./messages";
 import { CustomerDetailsTitle } from "./Title";
 
@@ -74,11 +73,27 @@ export const CustomerDetailsPageLoading = ({
       <DetailPageLayout.Content>
         <DetailPageContent>
           <CustomerOverview customer={undefined} />
+          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+            <CustomerOrders orders={undefined} viewAllHref="#" />
+          </RequirePermissions>
+          <DetailSettingsCard
+            data-test-id="customer-attributes"
+            title={intl.formatMessage(messages.attributesTitle)}
+          >
+            <Box aria-busy="true">
+              <Skeleton __height="2.5rem" />
+            </Box>
+          </DetailSettingsCard>
+        </DetailPageContent>
+      </DetailPageLayout.Content>
+      <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
+        <Box display="flex" flexDirection="column" gap={4}>
           <DetailSettingsCard
             data-test-id="customer-details"
-            title={intl.formatMessage(commonMessages.generalInformations)}
+            title={intl.formatMessage(customerInfoMessages.title)}
           >
             <Box aria-busy="true" display="flex" flexDirection="column" gap={5}>
+              <Skeleton __height="2.5rem" />
               <Skeleton __height="2.5rem" />
               <Skeleton __height="2.5rem" />
               <Skeleton __height="5rem" />
@@ -89,21 +104,6 @@ export const CustomerDetailsPageLoading = ({
             disabled
             manageAddressHref={customerAddressesUrl(customerId)}
           />
-          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-            <CustomerOrders orders={undefined} viewAllHref="#" />
-          </RequirePermissions>
-        </DetailPageContent>
-      </DetailPageLayout.Content>
-      <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
-        <Box display="flex" flexDirection="column" gap={4}>
-          <DetailSettingsCard
-            data-test-id="customer-type"
-            title={intl.formatMessage(customerTypeMessages.title)}
-          >
-            <Box aria-busy="true">
-              <Skeleton __height="2.5rem" />
-            </Box>
-          </DetailSettingsCard>
           <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
             <CustomerGiftCardsCard />
           </RequirePermissions>

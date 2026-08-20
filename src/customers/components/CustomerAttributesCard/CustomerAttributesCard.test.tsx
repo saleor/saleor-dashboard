@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { CustomerTypeCard } from "./CustomerTypeCard";
+import { CustomerAttributesCard } from "./CustomerAttributesCard";
 
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -14,6 +14,10 @@ global.IntersectionObserver = jest.fn().mockImplementation(() => ({
 }));
 
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
+jest.mock("@dashboard/hooks/useNavigator", () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+}));
 jest.mock("@dashboard/graphql", () => {
   const actual = jest.requireActual("@dashboard/graphql");
 
@@ -102,7 +106,7 @@ const renderCard = ({
   render(
     <Wrapper>
       <MemoryRouter>
-        <CustomerTypeCard
+        <CustomerAttributesCard
           savedTypeId={savedTypeId}
           selectedType={selectedType}
           disabled={disabled}
@@ -112,7 +116,7 @@ const renderCard = ({
     </Wrapper>,
   );
 
-describe("CustomerTypeCard", () => {
+describe("CustomerAttributesCard", () => {
   beforeEach(() => {
     mockUseUserPermissions.mockReturnValue([
       {
@@ -123,17 +127,20 @@ describe("CustomerTypeCard", () => {
     ]);
   });
 
-  it("shows the selected customer type", () => {
+  it("keeps the type picker out of the idle attributes card", () => {
     // Arrange / Act
     renderCard();
 
     // Assert
-    expect(screen.getByTestId("customer-type")).toBeInTheDocument();
-    expect(screen.getByTestId("customer-type-select")).toBeInTheDocument();
+    expect(screen.getByTestId("customer-attributes")).toBeInTheDocument();
+    expect(screen.getByText("This type has no attributes")).toBeInTheDocument();
+    expect(screen.queryByTestId("customer-type-select")).not.toBeInTheDocument();
   });
 
-  it("links to the type when the user can manage customer types", () => {
+  it("offers View type in the menu when the user can manage customer types", async () => {
     // Arrange
+    const user = userEvent.setup();
+
     mockUseUserPermissions.mockReturnValue([
       {
         __typename: "UserPermission",
@@ -144,17 +151,35 @@ describe("CustomerTypeCard", () => {
 
     // Act
     renderCard();
+    await user.click(screen.getByTestId("customer-attributes-menu"));
 
     // Assert
-    expect(screen.getByRole("link", { name: /view type/i })).toBeInTheDocument();
+    expect(screen.getByTestId("view-customer-type")).toBeInTheDocument();
   });
 
-  it("hides the type link without customer-type permissions", () => {
-    // Arrange / Act
+  it("hides View type without customer-type permissions", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
     renderCard();
+    await user.click(screen.getByTestId("customer-attributes-menu"));
 
     // Assert
-    expect(screen.queryByRole("link", { name: /view type/i })).not.toBeInTheDocument();
+    expect(screen.queryByTestId("view-customer-type")).not.toBeInTheDocument();
+  });
+
+  it("reveals the type picker from the attributes menu", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    renderCard();
+
+    // Act
+    await user.click(screen.getByTestId("customer-attributes-menu"));
+    await user.click(screen.getByTestId("change-customer-type"));
+
+    // Assert
+    expect(screen.getByTestId("customer-type-select")).toBeInTheDocument();
   });
 
   it("asks for confirmation before applying a type change", async () => {
@@ -165,6 +190,8 @@ describe("CustomerTypeCard", () => {
     renderCard({ onChange });
 
     // Act
+    await user.click(screen.getByTestId("customer-attributes-menu"));
+    await user.click(screen.getByTestId("change-customer-type"));
     await user.click(screen.getByTestId("customer-type-option-type-2"));
 
     // Assert
@@ -184,6 +211,8 @@ describe("CustomerTypeCard", () => {
     const onChange = jest.fn();
 
     renderCard({ onChange });
+    await user.click(screen.getByTestId("customer-attributes-menu"));
+    await user.click(screen.getByTestId("change-customer-type"));
     await user.click(screen.getByTestId("customer-type-option-type-2"));
 
     // Act
@@ -229,11 +258,12 @@ describe("CustomerTypeCard", () => {
     );
   });
 
-  it("hides the pending-change warning when the saved type is selected", () => {
+  it("hides Change type for read-only users", () => {
     // Arrange / Act
-    renderCard();
+    renderCard({ disabled: true });
 
     // Assert
-    expect(screen.queryByTestId("customer-type-change-warning")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("customer-attributes-menu")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("change-customer-type")).not.toBeInTheDocument();
   });
 });

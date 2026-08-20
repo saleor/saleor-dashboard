@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { CustomerTypeCard } from "./CustomerTypeCard";
+import { CustomerAttributesCard } from "./CustomerAttributesCard";
 
-const meta: Meta<typeof CustomerTypeCard> = {
-  title: "Customers / CustomerTypeCard",
-  component: CustomerTypeCard,
+const meta: Meta<typeof CustomerAttributesCard> = {
+  title: "Customers / CustomerAttributesCard",
+  component: CustomerAttributesCard,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof CustomerTypeCard>;
+type Story = StoryObj<typeof CustomerAttributesCard>;
 
 export const Default: Story = {
   args: {

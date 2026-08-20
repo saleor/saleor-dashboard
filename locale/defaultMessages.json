@@ -2040,6 +2040,10 @@
     "context": "informations about product organization, header",
     "string": "Product Organization"
   },
+  "65MiSm": {
+    "context": "Save composition segment for customer name, email, and note",
+    "string": "details"
+  },
   "65j8ft": {
     "context": "dialog title",
     "string": "Create new refund"
@@ -2522,6 +2526,10 @@
   "7qsOwa": {
     "context": "action",
     "string": "Include postal codes"
+  },
+  "7sJ04i": {
+    "context": "customer recent orders table column: fulfillment status",
+    "string": "Order status"
   },
   "7sSOgb": {
     "context": "Indicator label shown when shop has Shop.useLegacyShippingZoneStockAvailability=true",
@@ -4542,6 +4550,10 @@
     "context": "settings search alias",
     "string": "storefront traffic"
   },
+  "FXqc6f": {
+    "context": "Save composition segment for customer attribute values",
+    "string": "attributes"
+  },
   "FXtMVc": {
     "string": "A URL field within the extension's manifest has an invalid format. {docsLink} ({errorCode})"
   },
@@ -6067,6 +6079,10 @@
   "KwvZpP": {
     "context": "zero payment apps status",
     "string": "No payment apps"
+  },
+  "Kx56FE": {
+    "context": "customer recent orders table column: sales channel",
+    "string": "Channel"
   },
   "Kxiige": {
     "string": "Generated Token"
@@ -7648,6 +7664,10 @@
   "Ql7OM1": {
     "string": "Performing a manual refund will immediately trigger a refund request and decrease the transaction’s charged amount, impacting the order balance."
   },
+  "QlSHOW": {
+    "context": "customer detail sidebar, name email and note",
+    "string": "Contact"
+  },
   "Qox+kb": {
     "string": "on field {fieldName}"
   },
@@ -9129,6 +9149,10 @@
     "context": "assign shipping zone dialog search placeholder",
     "string": "Search by shipping zone name"
   },
+  "WU4BPj": {
+    "context": "customer detail, attributes settings card title",
+    "string": "Attributes"
+  },
   "WUKB5Z": {
     "context": "Shown after verification with relative time",
     "string": "Verified {time}"
@@ -9512,6 +9536,10 @@
   "XkX56I": {
     "context": "filters error messages value required",
     "string": "Choose a value"
+  },
+  "XkqRxe": {
+    "context": "Save composition segment for a pending customer type change",
+    "string": "customer type"
   },
   "XlPKAR": {
     "context": "WarehouseSettings private stock description",
@@ -10744,6 +10772,10 @@
   "c8nvms": {
     "string": "Sales"
   },
+  "cA7t0E": {
+    "context": "customer detail attributes card, empty state when the type defines none",
+    "string": "This type has no attributes"
+  },
   "cARfB7": {
     "context": "promotion status filter active",
     "string": "Active"
@@ -10948,38 +10980,6 @@
   },
   "cti4iA": {
     "string": "Read the blog post"
-  },
-  "customerDetails.attributes.title": {
-    "context": "customer detail, attributes settings card title",
-    "string": "Attributes"
-  },
-  "customerDetails.saveComposition.attributes": {
-    "context": "Save composition segment for customer attribute values",
-    "string": "attributes"
-  },
-  "customerDetails.saveComposition.general": {
-    "context": "Save composition segment for customer name, email, and note",
-    "string": "details"
-  },
-  "customerDetails.saveComposition.type": {
-    "context": "Save composition segment for a pending customer type change",
-    "string": "customer type"
-  },
-  "customerOrders.column.channel": {
-    "context": "customer recent orders table column: sales channel",
-    "string": "Channel"
-  },
-  "customerOrders.column.order": {
-    "context": "customer recent orders table column: order number",
-    "string": "Order"
-  },
-  "customerOrders.column.status": {
-    "context": "customer recent orders table column: fulfillment status",
-    "string": "Order status"
-  },
-  "customerOrders.column.total": {
-    "context": "customer recent orders table column: order total including shipping and tax",
-    "string": "Total"
   },
   "cv1pnG": {
     "context": "staff details locale select label",
@@ -13854,10 +13854,6 @@
     "context": "alert title",
     "string": "Your subscription query requires the following permissions:"
   },
-  "niIDyN": {
-    "context": "customer detail sidebar, customer type section header",
-    "string": "Customer type"
-  },
   "ninItd": {
     "string": "Create customer"
   },
@@ -14796,6 +14792,10 @@
   },
   "qgQeVW": {
     "string": "Generate Voucher Codes"
+  },
+  "qiBefD": {
+    "context": "customer recent orders table column: order total including shipping and tax",
+    "string": "Total"
   },
   "qjT9IB": {
     "context": "savebar label shown on detail pages where the current user lacks permission to edit",
@@ -16861,6 +16861,10 @@
   "xlY/T3": {
     "context": "staff details sidebar card title for dashboard locale",
     "string": "Interface language"
+  },
+  "xmv4OJ": {
+    "context": "customer recent orders table column: order number",
+    "string": "Order"
   },
   "xo5UIb": {
     "context": "dialog title",

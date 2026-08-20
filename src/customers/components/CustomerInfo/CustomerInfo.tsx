@@ -8,6 +8,8 @@ import { Box, Input, Textarea } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
+import { messages } from "./messages";
+
 interface CustomerInfoProps {
   data: {
     firstName: string;
@@ -26,33 +28,28 @@ const CustomerInfo = (props: CustomerInfoProps) => {
   const formErrors = getFormErrors(["firstName", "lastName", "email", "note"], errors);
 
   return (
-    <DetailSettingsCard
-      data-test-id="customer-details"
-      title={intl.formatMessage(commonMessages.generalInformations)}
-    >
+    <DetailSettingsCard data-test-id="customer-details" title={intl.formatMessage(messages.title)}>
       <Box display="flex" flexDirection="column" gap={5}>
-        <Box display="grid" __gridTemplateColumns="1fr 1fr" gap={5}>
-          <Input
-            data-test-id="customer-first-name"
-            disabled={disabled}
-            error={!!formErrors.firstName}
-            helperText={getAccountErrorMessage(formErrors.firstName, intl)}
-            name="firstName"
-            label={intl.formatMessage(commonMessages.firstName)}
-            value={data.firstName}
-            onChange={onChange}
-          />
-          <Input
-            data-test-id="customer-last-name"
-            disabled={disabled}
-            error={!!formErrors.lastName}
-            helperText={getAccountErrorMessage(formErrors.lastName, intl)}
-            name="lastName"
-            label={intl.formatMessage(commonMessages.lastName)}
-            value={data.lastName}
-            onChange={onChange}
-          />
-        </Box>
+        <Input
+          data-test-id="customer-first-name"
+          disabled={disabled}
+          error={!!formErrors.firstName}
+          helperText={getAccountErrorMessage(formErrors.firstName, intl)}
+          name="firstName"
+          label={intl.formatMessage(commonMessages.firstName)}
+          value={data.firstName}
+          onChange={onChange}
+        />
+        <Input
+          data-test-id="customer-last-name"
+          disabled={disabled}
+          error={!!formErrors.lastName}
+          helperText={getAccountErrorMessage(formErrors.lastName, intl)}
+          name="lastName"
+          label={intl.formatMessage(commonMessages.lastName)}
+          value={data.lastName}
+          onChange={onChange}
+        />
         <Input
           data-test-id="customer-email"
           disabled={disabled}

@@ -7,7 +7,6 @@ import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu
 import { Attributes } from "@dashboard/components/Attributes";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
-import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
@@ -54,10 +53,10 @@ import {
 import { useIntl } from "react-intl";
 
 import CustomerAddresses from "../CustomerAddresses";
+import { CustomerAttributesCard } from "../CustomerAttributesCard/CustomerAttributesCard";
 import CustomerInfo from "../CustomerInfo";
 import { CustomerOrders } from "../CustomerOrders/CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
-import { CustomerTypeCard } from "../CustomerTypeCard/CustomerTypeCard";
 import { ExternalReferenceCard } from "../ExternalReferenceCard/ExternalReferenceCard";
 import { CustomerDetailsPageLoading } from "./CustomerDetailsPageLoading";
 import { CustomerSaveCompositionHint } from "./CustomerSaveCompositionHint";
@@ -285,7 +284,7 @@ const CustomerDetailsPage = ({
               }}
               triggerChange={triggerChange}
             >
-              {({ attributesCard, typeCard }) => (
+              {({ attributesCard }) => (
                 <DetailPageLayout>
                   <TopNav
                     href={customerBackLink}
@@ -309,29 +308,28 @@ const CustomerDetailsPage = ({
                   <DetailPageLayout.Content>
                     <DetailPageContent>
                       <CustomerOverview customer={customer} />
-                      <CustomerInfo
-                        data={data}
-                        disabled={disabled || isReadOnly}
-                        errors={errors}
-                        onChange={change}
-                      />
-                      {attributesCard}
-                      <CustomerAddresses
-                        customer={customer}
-                        disabled={disabled}
-                        manageAddressHref={customerAddressesUrl(customerId)}
-                      />
                       <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                         <CustomerOrders
                           orders={mapEdgesToItems(customer.orders)}
                           viewAllHref={orderListUrlWithCustomerEmail(customer.email)}
                         />
                       </RequirePermissions>
+                      {attributesCard}
                     </DetailPageContent>
                   </DetailPageLayout.Content>
                   <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
                     <Box display="flex" flexDirection="column" gap={4}>
-                      {typeCard}
+                      <CustomerInfo
+                        data={data}
+                        disabled={disabled || isReadOnly}
+                        errors={errors}
+                        onChange={change}
+                      />
+                      <CustomerAddresses
+                        customer={customer}
+                        disabled={disabled}
+                        manageAddressHref={customerAddressesUrl(customerId)}
+                      />
                       <ExternalReferenceCard customer={customer} />
                       <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
                         <CustomerGiftCardsCard />
@@ -374,7 +372,7 @@ const CustomerDetailsPage = ({
 };
 
 interface CustomerTypeAndAttributesProps {
-  children: (slots: { attributesCard: ReactNode; typeCard: ReactNode }) => ReactNode;
+  children: (slots: { attributesCard: ReactNode }) => ReactNode;
   customer: NonNullable<CustomerDetailsQuery["user"]>;
   customerTypeId: string;
   disabled: boolean;
@@ -425,8 +423,8 @@ const CustomerTypeAndAttributes = ({
         ? { id: customer.customerType.id, name: customer.customerType.name }
         : null;
 
-  const typeCard = (
-    <CustomerTypeCard
+  const attributesCard = (
+    <CustomerAttributesCard
       selectedType={selectedType}
       savedTypeId={customer.customerType?.id ?? null}
       disabled={disabled || attributeForm.typeAttributesLoading}
@@ -438,11 +436,8 @@ const CustomerTypeAndAttributes = ({
         onTypeChange(type);
         void attributeForm.handleTypeChange(type.id);
       }}
-    />
-  );
-  const attributesCard =
-    attributeForm.attributes.length > 0 ? (
-      <DetailSettingsCard title={intl.formatMessage(messages.attributesTitle)}>
+    >
+      {attributeForm.attributes.length > 0 ? (
         <Attributes
           unwrapped
           attributes={attributeForm.attributes}
@@ -461,10 +456,11 @@ const CustomerTypeAndAttributes = ({
           onReferencesReorder={attributeForm.handlers.onReferencesReorder}
           richTextGetters={attributeForm.attributeRichTextGetters}
         />
-      </DetailSettingsCard>
-    ) : null;
+      ) : null}
+    </CustomerAttributesCard>
+  );
 
-  return children({ attributesCard, typeCard });
+  return children({ attributesCard });
 };
 
 CustomerDetailsPage.displayName = "CustomerDetailsPage";

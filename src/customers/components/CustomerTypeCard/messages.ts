@@ -1,11 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  title: {
-    id: "niIDyN",
-    defaultMessage: "Customer type",
-    description: "customer detail sidebar, customer type section header",
-  },
   hint: {
     id: "se+RzK",
     defaultMessage: "This type decides which attributes appear on the customer.",
@@ -15,6 +10,11 @@ export const messages = defineMessages({
     id: "/PY0Pq",
     defaultMessage: "Type",
     description: "customer detail sidebar, customer type combobox label",
+  },
+  emptyAttributes: {
+    id: "yGUydt",
+    defaultMessage: "This type has no attributes",
+    description: "customer detail attributes card, empty state when the type defines none",
   },
   viewType: {
     id: "+0sSTK",

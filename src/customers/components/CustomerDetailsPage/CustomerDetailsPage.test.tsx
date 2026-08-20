@@ -51,9 +51,9 @@ jest.mock("@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCard
 jest.mock("@dashboard/extensions/components/AppWidgets/AppWidgets", () => ({
   AppWidgets: () => <div data-test-id="app-widgets-mock" />,
 }));
-jest.mock("../CustomerTypeCard/CustomerTypeCard", () => ({
-  CustomerTypeCard: ({ disabled }: { disabled: boolean }) => (
-    <div data-test-id="customer-type-card-mock" data-disabled={String(disabled)} />
+jest.mock("../CustomerAttributesCard/CustomerAttributesCard", () => ({
+  CustomerAttributesCard: ({ disabled }: { disabled: boolean }) => (
+    <div data-test-id="customer-attributes-mock" data-disabled={String(disabled)} />
   ),
 }));
 jest.mock("@dashboard/customers/hooks/useCustomerDetailsAttributes", () => ({
@@ -171,18 +171,22 @@ describe("CustomerDetailsPage", () => {
       expect(getInputByTestId("customer-email")).not.toBeDisabled();
     });
 
-    it("renders the customer type picker enabled at the top of the sidebar", () => {
+    it("puts contact and addresses in the sidebar, not a type card", () => {
       // Arrange / Act
       renderPage();
 
       // Assert
-      const typeCard = screen.getByTestId("customer-type-card-mock");
-      const externalReference = screen.getByTestId("external-reference-mock");
+      const contact = screen.getByTestId("customer-details");
+      const addresses = screen.getByTestId("customer-addresses-mock");
 
-      expect(typeCard).toHaveAttribute("data-disabled", "false");
+      expect(screen.getByTestId("customer-attributes-mock")).toHaveAttribute(
+        "data-disabled",
+        "false",
+      );
       expect(
-        typeCard.compareDocumentPosition(externalReference) & Node.DOCUMENT_POSITION_FOLLOWING,
+        contact.compareDocumentPosition(addresses) & Node.DOCUMENT_POSITION_FOLLOWING,
       ).toBeTruthy();
+      expect(screen.queryByTestId("customer-type-card-mock")).not.toBeInTheDocument();
     });
   });
 
@@ -247,12 +251,12 @@ describe("CustomerDetailsPage", () => {
       expect(getInputByTestId("customer-email")).toBeDisabled();
     });
 
-    it("disables the customer type picker", () => {
+    it("disables customer type changes on the attributes card", () => {
       // Arrange / Act
       renderPage();
 
       // Assert
-      expect(screen.getByTestId("customer-type-card-mock")).toHaveAttribute(
+      expect(screen.getByTestId("customer-attributes-mock")).toHaveAttribute(
         "data-disabled",
         "true",
       );
