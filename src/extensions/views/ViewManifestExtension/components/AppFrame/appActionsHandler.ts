@@ -18,6 +18,7 @@ import {
   type OpenPopup,
   type PopupClose,
   type RedirectAction,
+  type RedirectToApp,
   type RefreshEntity,
   type RequestPermissions,
   type UpdateRouting,
@@ -374,16 +375,11 @@ const useHandleOpenPopupAction = (appId: string, target: "POPUP" | "WIDGET" | "A
 };
 
 /**
- * TODO: Replace with the `RedirectToApp` type from app-sdk once it's released.
+ * `path` comes from an app, so it must stay a subpath of the target app - no
+ * scheme, no protocol-relative host, no traversal out of the app's URL space.
  */
-export type RedirectToAppAction = {
-  type: "redirectToApp";
-  payload: {
-    actionId: string;
-    appIdentifier: string;
-    path?: string;
-  };
-};
+const isLocalSubPath = (path: string) =>
+  !/^[a-z][a-z\d+.-]*:/i.test(path) && !path.startsWith("//") && !path.split("/").includes("..");
 
 /**
  * Resolves another installed app by its manifest identifier and redirects to it
@@ -399,8 +395,12 @@ const useHandleRedirectToAppAction = (
   const { resolveAppUrlFromIdentifier } = useAppNavigation();
 
   return {
-    // Response is posted asynchronously, once the target app is resolved.
-    handle: (action: RedirectToAppAction) => {
+    /**
+     * Always acks with ok - the app can't do anything about an unknown identifier
+     * or a failed lookup, so the Dashboard just doesn't redirect anywhere.
+     * Response is posted asynchronously, once the target app is resolved.
+     */
+    handle: (action: RedirectToApp) => {
       const { actionId, appIdentifier, path } = action.payload;
 
       debug(
@@ -409,14 +409,18 @@ const useHandleRedirectToAppAction = (
         appIdentifier,
       );
 
+      if (path && !isLocalSubPath(path)) {
+        console.warn(`redirectToApp: path "${path}" is not a local subpath`, { appId });
+
+        return postToExtension(createResponseStatus(actionId, true));
+      }
+
       resolveAppUrlFromIdentifier(appIdentifier, path)
         .then(to => {
           if (!to) {
-            console.error(`redirectToApp action failed: app "${appIdentifier}" is not installed`, {
-              appId,
-            });
+            console.warn(`redirectToApp: app "${appIdentifier}" is not installed`, { appId });
 
-            return postToExtension(createResponseStatus(actionId, false));
+            return postToExtension(createResponseStatus(actionId, true));
           }
 
           return postToExtension(
@@ -427,8 +431,8 @@ const useHandleRedirectToAppAction = (
           );
         })
         .catch(e => {
-          console.error("redirectToApp action failed: couldn't resolve the target app", e);
-          postToExtension(createResponseStatus(actionId, false));
+          console.error(`redirectToApp: couldn't resolve app "${appIdentifier}"`, e);
+          postToExtension(createResponseStatus(actionId, true));
         });
     },
   };

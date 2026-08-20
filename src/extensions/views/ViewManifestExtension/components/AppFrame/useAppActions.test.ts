@@ -229,7 +229,7 @@ describe("useAppActions", () => {
         appIdentifier: "target.app",
         path: "/settings",
       },
-    } as unknown as Actions;
+    } satisfies Actions;
 
     renderHook(() =>
       useAppActions(mockFrameEl, mockAppOrigin, mockAppId, mockAppToken, mockVersions, mockTarget),

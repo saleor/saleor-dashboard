@@ -609,10 +609,10 @@ describe("AppActionsHandler", function () {
       });
     });
 
-    it("Responds with error when app is not installed", async () => {
+    it("Acks without navigating when app is not installed", async () => {
       // Arrange
       mockApolloQuery.mockResolvedValue({ data: installedApps });
-      jest.spyOn(console, "error").mockImplementation(() => undefined);
+      jest.spyOn(console, "warn").mockImplementation(() => undefined);
 
       const { result } = renderHook(() =>
         AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
@@ -631,7 +631,67 @@ describe("AppActionsHandler", function () {
       await waitFor(() => {
         expect(mockPostToExtension).toHaveBeenCalledWith({
           type: "response",
-          payload: { actionId: "123", ok: false },
+          payload: { actionId: "123", ok: true },
+        });
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
+    it.each([
+      "https://evil.example.com",
+      "//evil.example.com",
+      "javascript:alert(1)",
+      "../../login",
+    ])("Acks without navigating when path %s is not a local subpath", async path => {
+      // Arrange
+      mockApolloQuery.mockResolvedValue({ data: installedApps });
+      jest.spyOn(console, "warn").mockImplementation(() => undefined);
+
+      const { result } = renderHook(() =>
+        AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
+      );
+
+      // Act
+      result.current.handle({
+        type: "redirectToApp",
+        payload: {
+          actionId: "123",
+          appIdentifier: "target.app",
+          path,
+        },
+      });
+
+      // Assert
+      expect(mockPostToExtension).toHaveBeenCalledWith({
+        type: "response",
+        payload: { actionId: "123", ok: true },
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
+    it("Acks without navigating when the apps lookup fails", async () => {
+      // Arrange
+      mockApolloQuery.mockRejectedValue(new Error("Network error"));
+      jest.spyOn(console, "error").mockImplementation(() => undefined);
+
+      const { result } = renderHook(() =>
+        AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
+      );
+
+      // Act
+      result.current.handle({
+        type: "redirectToApp",
+        payload: {
+          actionId: "123",
+          appIdentifier: "target.app",
+        },
+      });
+
+      // Assert
+      await waitFor(() => {
+        expect(mockPostToExtension).toHaveBeenCalledWith({
+          type: "response",
+          payload: { actionId: "123", ok: true },
         });
       });
       expect(mockNavigate).not.toHaveBeenCalled();

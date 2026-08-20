@@ -2,10 +2,8 @@ import { type Actions, type DispatchResponseEvent } from "@saleor/app-sdk/app-br
 import { captureMessage } from "@sentry/react";
 import { useEffect, useState } from "react";
 
-import { AppActionsHandler, type RedirectToAppAction } from "./appActionsHandler";
+import { AppActionsHandler } from "./appActionsHandler";
 import { usePostToExtension } from "./usePostToExtension";
-
-type HandledActions = Actions | RedirectToAppAction;
 
 /**
  * TODO Refactor to named attributes
@@ -46,7 +44,7 @@ export const useAppActions = (
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
   const [handshakeDone, setHandshakeDone] = useState(false);
-  const handleAction = (action: HandledActions | undefined): DispatchResponseEvent | void => {
+  const handleAction = (action: Actions | undefined): DispatchResponseEvent | void => {
     switch (action?.type) {
       case "notification": {
         return handleNotification(action);
@@ -111,7 +109,7 @@ export const useAppActions = (
   };
 
   useEffect(() => {
-    const handler = (event: MessageEvent<HandledActions>) => {
+    const handler = (event: MessageEvent<Actions>) => {
       if (event.origin !== appOrigin) {
         return;
       }
