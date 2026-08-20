@@ -33,6 +33,7 @@ const VIEWS_ARRAY = [
   "PAGE_TYPE_DETAILS",
   "MENU_LIST",
   "MENU_DETAILS",
+  "CHANNEL_DETAILS",
 ] as const;
 
 export const AppExtensionViews = z.enum(VIEWS_ARRAY);

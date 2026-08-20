@@ -133,11 +133,7 @@ export const CategoryUpdatePage = ({
   }, [category?.id, context]);
 
   const menuItems = useMemo((): TopNavMenuItem[] => {
-    const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
-      label: item.label,
-      onSelect: item.onSelect,
-      testId: item.testId,
-    }));
+    const items: TopNavMenuItem[] = [...extensionMenuItems];
 
     if (category?.id) {
       items.push({

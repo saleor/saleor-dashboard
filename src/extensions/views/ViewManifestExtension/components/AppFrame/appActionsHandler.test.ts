@@ -1,10 +1,28 @@
 import * as dashboardConfig from "@dashboard/config";
-import { renderHook } from "@testing-library/react";
+import { AppTypeEnum } from "@dashboard/graphql";
+import { renderHook, waitFor } from "@testing-library/react";
 import * as ReactIntl from "react-intl";
 import { type IntlShape } from "react-intl";
 
 import * as ExternalAppContext from "../ExternalAppContext/ExternalAppContext";
 import { AppActionsHandler } from "./appActionsHandler";
+
+const mockApolloQuery = jest.fn();
+
+jest.mock("@apollo/client", () => {
+  const actualModule = jest.requireActual("@apollo/client");
+
+  return {
+    ...actualModule,
+    useApolloClient: () => ({ query: mockApolloQuery }),
+  };
+});
+
+const mockPostToExtension = jest.fn();
+
+jest.mock("./usePostToExtension", () => ({
+  usePostToExtension: () => mockPostToExtension,
+}));
 
 jest.mock("@dashboard/config", () => {
   const actualModule = jest.requireActual("@dashboard/config");
@@ -68,6 +86,8 @@ describe("AppActionsHandler", function () {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    // Installed apps are cached in localStorage between resolutions
+    localStorage.clear();
   });
   /**
    * jsdom doesn't allow src code to write to window.location.href,
@@ -339,6 +359,20 @@ describe("AppActionsHandler", function () {
         expect(mockNavigate).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledWith("/orders");
       });
+      it("Closes the open popup when redirecting within the dashboard", () => {
+        // Arrange & Act
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "/orders",
+            newContext: false,
+          },
+        });
+
+        // Assert
+        expect(mockDeactivate).toHaveBeenCalledTimes(1);
+      });
       it("Update route within the same app", () => {
         // Arrange
         const mockHistoryPushState = jest.fn();
@@ -503,6 +537,164 @@ describe("AppActionsHandler", function () {
           ok: true,
         },
       });
+    });
+  });
+  describe("useHandleRedirectToAppAction", () => {
+    const installedApps = {
+      apps: {
+        edges: [
+          {
+            node: {
+              id: "target-app-id",
+              identifier: "target.app",
+              manifestUrl: "https://target.example.com/api/manifest",
+              isActive: true,
+              name: "Target app",
+              type: AppTypeEnum.THIRDPARTY,
+              appUrl: "https://target.example.com/app",
+            },
+          },
+        ],
+      },
+    };
+
+    it("Resolves app by identifier and redirects to its URL with appended path", async () => {
+      // Arrange
+      mockApolloQuery.mockResolvedValue({ data: installedApps });
+
+      const { result } = renderHook(() =>
+        AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
+      );
+
+      // Act
+      result.current.handle({
+        type: "redirectToApp",
+        payload: {
+          actionId: "123",
+          appIdentifier: "target.app",
+          path: "/settings",
+        },
+      });
+
+      // Assert
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/extensions/app/target-app-id/settings?");
+      });
+      expect(mockPostToExtension).toHaveBeenCalledWith({
+        type: "response",
+        payload: { actionId: "123", ok: true },
+      });
+    });
+
+    it("Redirects to app root when no path is passed", async () => {
+      // Arrange
+      mockApolloQuery.mockResolvedValue({ data: installedApps });
+
+      const { result } = renderHook(() =>
+        AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
+      );
+
+      // Act
+      result.current.handle({
+        type: "redirectToApp",
+        payload: {
+          actionId: "123",
+          appIdentifier: "target.app",
+        },
+      });
+
+      // Assert
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/extensions/app/target-app-id?");
+      });
+    });
+
+    it("Acks without navigating when app is not installed", async () => {
+      // Arrange
+      mockApolloQuery.mockResolvedValue({ data: installedApps });
+      jest.spyOn(console, "warn").mockImplementation(() => undefined);
+
+      const { result } = renderHook(() =>
+        AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
+      );
+
+      // Act
+      result.current.handle({
+        type: "redirectToApp",
+        payload: {
+          actionId: "123",
+          appIdentifier: "not.installed.app",
+        },
+      });
+
+      // Assert
+      await waitFor(() => {
+        expect(mockPostToExtension).toHaveBeenCalledWith({
+          type: "response",
+          payload: { actionId: "123", ok: true },
+        });
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
+    it.each([
+      "https://evil.example.com",
+      "//evil.example.com",
+      "javascript:alert(1)",
+      "../../login",
+    ])("Acks without navigating when path %s is not a local subpath", async path => {
+      // Arrange
+      mockApolloQuery.mockResolvedValue({ data: installedApps });
+      jest.spyOn(console, "warn").mockImplementation(() => undefined);
+
+      const { result } = renderHook(() =>
+        AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
+      );
+
+      // Act
+      result.current.handle({
+        type: "redirectToApp",
+        payload: {
+          actionId: "123",
+          appIdentifier: "target.app",
+          path,
+        },
+      });
+
+      // Assert
+      expect(mockPostToExtension).toHaveBeenCalledWith({
+        type: "response",
+        payload: { actionId: "123", ok: true },
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
+    it("Acks without navigating when the apps lookup fails", async () => {
+      // Arrange
+      mockApolloQuery.mockRejectedValue(new Error("Network error"));
+      jest.spyOn(console, "error").mockImplementation(() => undefined);
+
+      const { result } = renderHook(() =>
+        AppActionsHandler.useHandleRedirectToAppAction("XYZ", null, "https://app.example.com"),
+      );
+
+      // Act
+      result.current.handle({
+        type: "redirectToApp",
+        payload: {
+          actionId: "123",
+          appIdentifier: "target.app",
+        },
+      });
+
+      // Assert
+      await waitFor(() => {
+        expect(mockPostToExtension).toHaveBeenCalledWith({
+          type: "response",
+          payload: { actionId: "123", ok: true },
+        });
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
     });
   });
   describe("useHandlePermissionRequest", () => {

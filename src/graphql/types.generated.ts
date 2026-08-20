@@ -11857,6 +11857,11 @@ export type AppUpdatePermissionsMutationVariables = Exact<{
 
 export type AppUpdatePermissionsMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
 
+export type InstalledAppsSnapshotQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InstalledAppsSnapshotQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, identifier: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null } }> } | null };
+
 export type InstalledAppsQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
