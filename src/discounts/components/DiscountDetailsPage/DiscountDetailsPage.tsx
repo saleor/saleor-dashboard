@@ -25,6 +25,7 @@ import { DiscountDetailsForm } from "../DiscountDetailsForm";
 import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
 import { DiscountRules } from "../DiscountRules";
 import { DiscountSavebar } from "../DiscountSavebar";
+import { OfferSavingsPreview } from "../OfferSavingsPreview/OfferSavingsPreview";
 import { DiscountDetailsTitle } from "./Title";
 
 const messages = defineMessages({
@@ -133,6 +134,8 @@ export const DiscountDetailsPage = ({
               channels={channels}
               disabled={disabled}
             />
+
+            <OfferSavingsPreview promotionId={data?.id ?? null} />
           </DetailPageLayout.Content>
 
           <DetailPageLayout.RightSidebar>

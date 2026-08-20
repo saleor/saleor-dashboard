@@ -152,6 +152,39 @@ export const promotionDetails = gql`
   }
 `;
 
+export const promotionOfferSavingsPreview = gql`
+  query PromotionOfferSavingsPreview($id: ID!) {
+    promotion(id: $id) {
+      id
+      offerSavingsPreview {
+        offerCount
+        channelCount
+        offers {
+          productId
+          productName
+          channelSlug
+          originalPrice {
+            amount
+            currency
+          }
+          promotionalPrice {
+            amount
+            currency
+          }
+          savingsAmount {
+            amount
+            currency
+          }
+        }
+        warnings {
+          code
+          message
+        }
+      }
+    }
+  }
+`;
+
 export const ruleConditionsSelectedOptionsDetails = gql`
   query RuleConditionsSelectedOptionsDetails(
     $categoriesIds: [ID!]

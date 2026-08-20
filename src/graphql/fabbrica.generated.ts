@@ -523,6 +523,9 @@ import type {
   MoveProductInput,
   Mutation,
   NameTranslationInput,
+  OfferPreviewItem,
+  OfferPreviewWarning,
+  OfferSavingsPreview,
   Order,
   OrderAddNote,
   OrderAddNoteInput,
@@ -17951,6 +17954,138 @@ export type OptionalObjectWithAttributes = OptionalPage | OptionalProduct | Opti
 
 export type OptionalObjectWithMetadata = OptionalAddress | OptionalApp | OptionalAttribute | OptionalCategory | OptionalChannel | OptionalCheckout | OptionalCheckoutLine | OptionalCollection | OptionalFulfillment | OptionalGiftCard | OptionalInvoice | OptionalMenu | OptionalMenuItem | OptionalOrder | OptionalOrderLine | OptionalPage | OptionalPageType | OptionalPayment | OptionalProduct | OptionalProductMedia | OptionalProductType | OptionalProductVariant | OptionalPromotion | OptionalSale | OptionalShippingMethod | OptionalShippingMethodType | OptionalShippingZone | OptionalShop | OptionalTaxClass | OptionalTaxConfiguration | OptionalTransactionItem | OptionalUser | OptionalVoucher | OptionalWarehouse;
 
+/**
+ * A job advertisement price preview for one channel.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalOfferPreviewItem = {
+  __typename?: 'OfferPreviewItem';
+  /**
+ * Slug of the active EUR publication channel.
+ *
+ * Added in Saleor 3.23.
+ */
+  channelSlug?: OfferPreviewItem['channelSlug'] | undefined;
+  /**
+ * Standard EUR listing price before this campaign.
+ *
+ * Added in Saleor 3.23.
+ */
+  originalPrice?: OptionalMoney | undefined;
+  /**
+ * ID of the matching product (job advertisement).
+ *
+ * Added in Saleor 3.23.
+ */
+  productId?: OfferPreviewItem['productId'] | undefined;
+  /**
+ * Name of the matching product (job advertisement).
+ *
+ * Added in Saleor 3.23.
+ */
+  productName?: OfferPreviewItem['productName'] | undefined;
+  /**
+ * EUR listing price after this campaign.
+ *
+ * Added in Saleor 3.23.
+ */
+  promotionalPrice?: OptionalMoney | undefined;
+  /**
+ * EUR savings produced by this campaign.
+ *
+ * Added in Saleor 3.23.
+ */
+  savingsAmount?: OptionalMoney | undefined;
+};
+
+/**
+ * Define factory for {@link OfferPreviewItem} model.
+ *
+ * @param options
+ * @returns factory {@link OfferPreviewItemFactoryInterface}
+ */
+export const defineOfferPreviewItemFactory: DefineTypeFactoryInterface<
+  OptionalOfferPreviewItem,
+  {}
+> = defineTypeFactory;
+
+/**
+ * A non-fatal campaign preview warning.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalOfferPreviewWarning = {
+  __typename?: 'OfferPreviewWarning';
+  /**
+ * Stable warning code for programmatic handling.
+ *
+ * Added in Saleor 3.23.
+ */
+  code?: OfferPreviewWarning['code'] | undefined;
+  /**
+ * Operator-facing explanation of the preview warning.
+ *
+ * Added in Saleor 3.23.
+ */
+  message?: OfferPreviewWarning['message'] | undefined;
+};
+
+/**
+ * Define factory for {@link OfferPreviewWarning} model.
+ *
+ * @param options
+ * @returns factory {@link OfferPreviewWarningFactoryInterface}
+ */
+export const defineOfferPreviewWarningFactory: DefineTypeFactoryInterface<
+  OptionalOfferPreviewWarning,
+  {}
+> = defineTypeFactory;
+
+/**
+ * Read-only pricing preview for a hiring campaign.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OptionalOfferSavingsPreview = {
+  __typename?: 'OfferSavingsPreview';
+  /**
+ * Number of active EUR channels represented in returned offers.
+ *
+ * Added in Saleor 3.23.
+ */
+  channelCount?: OfferSavingsPreview['channelCount'] | undefined;
+  /**
+ * Total number of matching product and channel pairs.
+ *
+ * Added in Saleor 3.23.
+ */
+  offerCount?: OfferSavingsPreview['offerCount'] | undefined;
+  /**
+ * Matching job advertisement previews, capped at 100 entries.
+ *
+ * Added in Saleor 3.23.
+ */
+  offers?: OptionalOfferPreviewItem[] | undefined;
+  /**
+ * Non-fatal limitations or empty-state explanations.
+ *
+ * Added in Saleor 3.23.
+ */
+  warnings?: OptionalOfferPreviewWarning[] | undefined;
+};
+
+/**
+ * Define factory for {@link OfferSavingsPreview} model.
+ *
+ * @param options
+ * @returns factory {@link OfferSavingsPreviewFactoryInterface}
+ */
+export const defineOfferSavingsPreviewFactory: DefineTypeFactoryInterface<
+  OptionalOfferSavingsPreview,
+  {}
+> = defineTypeFactory;
+
 /** Represents an order in the shop. */
 export type OptionalOrder = {
   __typename?: 'Order';
@@ -27691,6 +27826,14 @@ export type OptionalPromotion = {
   metafields?: Promotion['metafields'] | undefined;
   /** Name of the promotion. */
   name?: Promotion['name'] | undefined;
+  /**
+ * Preview matching published job advertisements in active EUR channels. Returns at most 100 offer entries and does not activate the promotion.
+ *
+ * Added in Saleor 3.23.
+ *
+ * Requires one of the following permissions: MANAGE_DISCOUNTS.
+ */
+  offerSavingsPreview?: OptionalOfferSavingsPreview | undefined;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata?: OptionalMetadataItem[] | undefined;
   /**

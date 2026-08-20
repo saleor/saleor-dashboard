@@ -16786,6 +16786,105 @@ export type ObjectWithMetadataPrivateMetafieldsArgs = {
   keys: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
+/**
+ * A job advertisement price preview for one channel.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OfferPreviewItem = {
+  __typename: 'OfferPreviewItem';
+  /**
+   * Slug of the active EUR publication channel.
+   *
+   * Added in Saleor 3.23.
+   */
+  channelSlug: Scalars['String']['output'];
+  /**
+   * Standard EUR listing price before this campaign.
+   *
+   * Added in Saleor 3.23.
+   */
+  originalPrice: Money;
+  /**
+   * ID of the matching product (job advertisement).
+   *
+   * Added in Saleor 3.23.
+   */
+  productId: Scalars['ID']['output'];
+  /**
+   * Name of the matching product (job advertisement).
+   *
+   * Added in Saleor 3.23.
+   */
+  productName: Scalars['String']['output'];
+  /**
+   * EUR listing price after this campaign.
+   *
+   * Added in Saleor 3.23.
+   */
+  promotionalPrice: Money;
+  /**
+   * EUR savings produced by this campaign.
+   *
+   * Added in Saleor 3.23.
+   */
+  savingsAmount: Money;
+};
+
+/**
+ * A non-fatal campaign preview warning.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OfferPreviewWarning = {
+  __typename: 'OfferPreviewWarning';
+  /**
+   * Stable warning code for programmatic handling.
+   *
+   * Added in Saleor 3.23.
+   */
+  code: Scalars['String']['output'];
+  /**
+   * Operator-facing explanation of the preview warning.
+   *
+   * Added in Saleor 3.23.
+   */
+  message: Scalars['String']['output'];
+};
+
+/**
+ * Read-only pricing preview for a hiring campaign.
+ *
+ * Added in Saleor 3.23.
+ */
+export type OfferSavingsPreview = {
+  __typename: 'OfferSavingsPreview';
+  /**
+   * Number of active EUR channels represented in returned offers.
+   *
+   * Added in Saleor 3.23.
+   */
+  channelCount: Scalars['Int']['output'];
+  /**
+   * Total number of matching product and channel pairs.
+   *
+   * Added in Saleor 3.23.
+   */
+  offerCount: Scalars['Int']['output'];
+  /**
+   * Matching job advertisement previews, capped at 100 entries.
+   *
+   * Added in Saleor 3.23.
+   */
+  offers: Array<OfferPreviewItem>;
+  /**
+   * Non-fatal limitations or empty-state explanations.
+   *
+   * Added in Saleor 3.23.
+   */
+  warnings: Array<OfferPreviewWarning>;
+};
+
 /** Represents an order in the shop. */
 export type Order = Node & ObjectWithMetadata & {
   __typename: 'Order';
@@ -24240,6 +24339,14 @@ export type Promotion = Node & ObjectWithMetadata & {
   metafields: Maybe<Scalars['Metadata']['output']>;
   /** Name of the promotion. */
   name: Scalars['String']['output'];
+  /**
+   * Preview matching published job advertisements in active EUR channels. Returns at most 100 offer entries and does not activate the promotion.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Requires one of the following permissions: MANAGE_DISCOUNTS.
+   */
+  offerSavingsPreview: OfferSavingsPreview;
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata: Array<MetadataItem>;
   /**

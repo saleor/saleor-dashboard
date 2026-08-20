@@ -3228,6 +3228,27 @@ export type ObjectWithMetadataFieldPolicy = {
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type OfferPreviewItemKeySpecifier = ('channelSlug' | 'originalPrice' | 'productId' | 'productName' | 'promotionalPrice' | 'savingsAmount' | OfferPreviewItemKeySpecifier)[];
+export type OfferPreviewItemFieldPolicy = {
+	channelSlug?: FieldPolicy<any> | FieldReadFunction<any>,
+	originalPrice?: FieldPolicy<any> | FieldReadFunction<any>,
+	productId?: FieldPolicy<any> | FieldReadFunction<any>,
+	productName?: FieldPolicy<any> | FieldReadFunction<any>,
+	promotionalPrice?: FieldPolicy<any> | FieldReadFunction<any>,
+	savingsAmount?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type OfferPreviewWarningKeySpecifier = ('code' | 'message' | OfferPreviewWarningKeySpecifier)[];
+export type OfferPreviewWarningFieldPolicy = {
+	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type OfferSavingsPreviewKeySpecifier = ('channelCount' | 'offerCount' | 'offers' | 'warnings' | OfferSavingsPreviewKeySpecifier)[];
+export type OfferSavingsPreviewFieldPolicy = {
+	channelCount?: FieldPolicy<any> | FieldReadFunction<any>,
+	offerCount?: FieldPolicy<any> | FieldReadFunction<any>,
+	offers?: FieldPolicy<any> | FieldReadFunction<any>,
+	warnings?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type OrderKeySpecifier = ('actions' | 'authorizeStatus' | 'availableCollectionPoints' | 'availableShippingMethods' | 'billingAddress' | 'canFinalize' | 'channel' | 'chargeStatus' | 'checkoutId' | 'collectionPointName' | 'created' | 'customerNote' | 'deliveryMethod' | 'discount' | 'discountName' | 'discounts' | 'displayGrossPrices' | 'errors' | 'events' | 'externalReference' | 'fulfillments' | 'giftCards' | 'grantedRefunds' | 'id' | 'invoices' | 'isPaid' | 'isShippingRequired' | 'languageCode' | 'languageCodeEnum' | 'lines' | 'metadata' | 'metafield' | 'metafields' | 'number' | 'origin' | 'original' | 'paymentStatus' | 'paymentStatusDisplay' | 'payments' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'redirectUrl' | 'shippingAddress' | 'shippingMethod' | 'shippingMethodName' | 'shippingMethods' | 'shippingPrice' | 'shippingTaxClass' | 'shippingTaxClassMetadata' | 'shippingTaxClassName' | 'shippingTaxClassPrivateMetadata' | 'shippingTaxRate' | 'status' | 'statusDisplay' | 'subtotal' | 'taxExemption' | 'token' | 'total' | 'totalAuthorizePending' | 'totalAuthorized' | 'totalBalance' | 'totalCancelPending' | 'totalCanceled' | 'totalCaptured' | 'totalChargePending' | 'totalCharged' | 'totalGrantedRefund' | 'totalRefundPending' | 'totalRefunded' | 'totalRemainingGrant' | 'trackingClientId' | 'transactions' | 'translatedDiscountName' | 'undiscountedShippingPrice' | 'undiscountedTotal' | 'updatedAt' | 'user' | 'userEmail' | 'voucher' | 'voucherCode' | 'weight' | OrderKeySpecifier)[];
 export type OrderFieldPolicy = {
 	actions?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5169,7 +5190,7 @@ export type ProductVariantUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PromotionKeySpecifier = ('createdAt' | 'description' | 'endDate' | 'events' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'rules' | 'startDate' | 'translation' | 'type' | 'updatedAt' | PromotionKeySpecifier)[];
+export type PromotionKeySpecifier = ('createdAt' | 'description' | 'endDate' | 'events' | 'id' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'offerSavingsPreview' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'rules' | 'startDate' | 'translation' | 'type' | 'updatedAt' | PromotionKeySpecifier)[];
 export type PromotionFieldPolicy = {
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
 	description?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5180,6 +5201,7 @@ export type PromotionFieldPolicy = {
 	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafields?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	offerSavingsPreview?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -8908,6 +8930,18 @@ export type StrictTypedTypePolicies = {
 	ObjectWithMetadata?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ObjectWithMetadataKeySpecifier | (() => undefined | ObjectWithMetadataKeySpecifier),
 		fields?: ObjectWithMetadataFieldPolicy,
+	},
+	OfferPreviewItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OfferPreviewItemKeySpecifier | (() => undefined | OfferPreviewItemKeySpecifier),
+		fields?: OfferPreviewItemFieldPolicy,
+	},
+	OfferPreviewWarning?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OfferPreviewWarningKeySpecifier | (() => undefined | OfferPreviewWarningKeySpecifier),
+		fields?: OfferPreviewWarningFieldPolicy,
+	},
+	OfferSavingsPreview?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OfferSavingsPreviewKeySpecifier | (() => undefined | OfferSavingsPreviewKeySpecifier),
+		fields?: OfferSavingsPreviewFieldPolicy,
 	},
 	Order?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | OrderKeySpecifier | (() => undefined | OrderKeySpecifier),

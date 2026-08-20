@@ -826,6 +826,9 @@
     "context": "header",
     "string": "Custom request headers"
   },
+  "2BSc10": {
+    "string": "Review affected job advertisements and employer pricing before activation."
+  },
   "2CBcub": {
     "context": "CreateVariantTitle manage",
     "string": "Manage"
@@ -3106,6 +3109,9 @@
     "context": "shipping section name",
     "string": "Shipping Methods"
   },
+  "DAx3D1": {
+    "string": "Employer savings"
+  },
   "DDYrvn": {
     "string": "Rule reward value must be less than 100"
   },
@@ -3188,6 +3194,9 @@
   },
   "DbNXK5": {
     "string": "Saleor could not connect to the provided manifest URL. ({errorCode})"
+  },
+  "DcR2sX": {
+    "string": "We couldn't load the offer preview. Select Preview offer to try again."
   },
   "Dd0Dwl": {
     "string": "Go to promotions"
@@ -3785,6 +3794,9 @@
   "GVinbz": {
     "context": "column title",
     "string": "Value"
+  },
+  "GY4TaU": {
+    "string": "Standard listing price"
   },
   "GY93MP": {
     "context": "order line return/refund reason",
@@ -4388,6 +4400,9 @@
     "context": "export scope option disabled when list has no active filters",
     "string": "Apply filters or search on the list to enable this option."
   },
+  "JCJQKi": {
+    "string": "{offerCount, plural, one {# offer} other {# offers}} across {channelCount, plural, one {# channel} other {# channels}}"
+  },
   "JDvxO6": {
     "context": "search gift card placeholder",
     "string": "Search Gift Cards (e.g. by code, email, user name)"
@@ -4566,6 +4581,9 @@
   "Jp+4eZ": {
     "context": "shipping zone country list summary",
     "string": "{count, plural, one {Delivers to # country} other {Delivers to # countries}}"
+  },
+  "JqeFqy": {
+    "string": "Campaign price"
   },
   "JqiqNj": {
     "string": "Something went wrong"
@@ -5268,6 +5286,9 @@
   "NQgbYA": {
     "string": "Account Settings"
   },
+  "NRCihE": {
+    "string": "Publication channel: {channelSlug}"
+  },
   "NSOHa/": {
     "context": "gift card export dialog intro",
     "string": "Choose which gift cards to export and the file format. Only active, unused gift cards are included."
@@ -5751,6 +5772,9 @@
   "PhXtJy": {
     "context": "factor label for line-level voucher discount",
     "string": "Voucher (line)"
+  },
+  "PiNOJH": {
+    "string": "No matching offers"
   },
   "PiSXjb": {
     "context": "check to require numeric attribute unit",
@@ -6359,6 +6383,9 @@
   },
   "SceSNp": {
     "string": "Remove following permissions:"
+  },
+  "SdXHGa": {
+    "string": "No matching job advertisements are configured for this campaign."
   },
   "SdnSCt": {
     "context": "note about separators input in model type tab grouping help",
@@ -7969,6 +7996,9 @@
   "aSn2Ud": {
     "string": "Add reason"
   },
+  "aTCWOh": {
+    "string": "Offer savings preview"
+  },
   "aTDks/": {
     "context": "order return reason card, structured reason select label",
     "string": "Reason"
@@ -8463,6 +8493,9 @@
   },
   "cS1wAx": {
     "string": "I know what I'm doing - confirm"
+  },
+  "cUZ5hl": {
+    "string": "Preview offer"
   },
   "cVjewM": {
     "context": "label for radio button",
@@ -10845,6 +10878,9 @@
   "oB0y5Y": {
     "context": "order status",
     "string": "Unfulfilled"
+  },
+  "oD+y0j": {
+    "string": "Select Preview offer to calculate the current campaign impact."
   },
   "oEFc87": {
     "context": "Warning when no shipping zones configured",

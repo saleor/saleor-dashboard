@@ -8897,6 +8897,66 @@ export function usePromotionDetailsLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type PromotionDetailsQueryHookResult = ReturnType<typeof usePromotionDetailsQuery>;
 export type PromotionDetailsLazyQueryHookResult = ReturnType<typeof usePromotionDetailsLazyQuery>;
 export type PromotionDetailsQueryResult = Apollo.QueryResult<Types.PromotionDetailsQuery, Types.PromotionDetailsQueryVariables>;
+export const PromotionOfferSavingsPreviewDocument = gql`
+    query PromotionOfferSavingsPreview($id: ID!) {
+  promotion(id: $id) {
+    id
+    offerSavingsPreview {
+      offerCount
+      channelCount
+      offers {
+        productId
+        productName
+        channelSlug
+        originalPrice {
+          amount
+          currency
+        }
+        promotionalPrice {
+          amount
+          currency
+        }
+        savingsAmount {
+          amount
+          currency
+        }
+      }
+      warnings {
+        code
+        message
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __usePromotionOfferSavingsPreviewQuery__
+ *
+ * To run a query within a React component, call `usePromotionOfferSavingsPreviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePromotionOfferSavingsPreviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePromotionOfferSavingsPreviewQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePromotionOfferSavingsPreviewQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.PromotionOfferSavingsPreviewQuery, Types.PromotionOfferSavingsPreviewQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.PromotionOfferSavingsPreviewQuery, Types.PromotionOfferSavingsPreviewQueryVariables>(PromotionOfferSavingsPreviewDocument, options);
+      }
+export function usePromotionOfferSavingsPreviewLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.PromotionOfferSavingsPreviewQuery, Types.PromotionOfferSavingsPreviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.PromotionOfferSavingsPreviewQuery, Types.PromotionOfferSavingsPreviewQueryVariables>(PromotionOfferSavingsPreviewDocument, options);
+        }
+export type PromotionOfferSavingsPreviewQueryHookResult = ReturnType<typeof usePromotionOfferSavingsPreviewQuery>;
+export type PromotionOfferSavingsPreviewLazyQueryHookResult = ReturnType<typeof usePromotionOfferSavingsPreviewLazyQuery>;
+export type PromotionOfferSavingsPreviewQueryResult = Apollo.QueryResult<Types.PromotionOfferSavingsPreviewQuery, Types.PromotionOfferSavingsPreviewQueryVariables>;
 export const RuleConditionsSelectedOptionsDetailsDocument = gql`
     query RuleConditionsSelectedOptionsDetails($categoriesIds: [ID!], $collectionsIds: [ID!], $productsIds: [ID!], $variantsIds: [ID!]) {
   categories(first: 100, where: {ids: $categoriesIds}) {
