@@ -5,14 +5,15 @@ export interface ExtensionMenuItem {
   label: string;
   testId: string;
   onSelect: (params: AppDetailsUrlMountQueryParams) => void;
-  avatar?: string;
+  /** Always set for extensions — `null` means the app has no logo (renders a placeholder). */
+  avatar: string | null;
 }
 
 const mapToMenuItem = ({ label, id, open, app }: ExtensionWithParams): ExtensionMenuItem => ({
   label,
   testId: `extension-${id}`,
   onSelect: open,
-  avatar: app.brand?.logo.default,
+  avatar: app.brand?.logo.default ?? null,
 });
 
 const getExtensionItemsWithoutParams = (extensions: ExtensionWithParams[]) =>

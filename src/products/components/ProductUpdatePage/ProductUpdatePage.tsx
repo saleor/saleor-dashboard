@@ -561,11 +561,7 @@ const ProductUpdatePage = ({
           (doctorVariantsComplete || setupEmphasized) &&
           (setupEmphasized || (!setupCardDismissed && !setupReadiness.coreReady));
 
-        const menuItems: TopNavMenuItem[] = extensionMenuItems.map(item => ({
-          label: item.label,
-          onSelect: item.onSelect,
-          testId: item.testId,
-        }));
+        const menuItems: TopNavMenuItem[] = [...extensionMenuItems];
 
         if (onShowSetupChecklist && !showSetupCard) {
           menuItems.push({
