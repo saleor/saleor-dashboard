@@ -339,6 +339,20 @@ describe("AppActionsHandler", function () {
         expect(mockNavigate).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledWith("/orders");
       });
+      it("Closes the open popup when redirecting within the dashboard", () => {
+        // Arrange & Act
+        hookRenderResult.result.current.handle({
+          type: "redirect",
+          payload: {
+            actionId: "123",
+            to: "/orders",
+            newContext: false,
+          },
+        });
+
+        // Assert
+        expect(mockDeactivate).toHaveBeenCalledTimes(1);
+      });
       it("Update route within the same app", () => {
         // Arrange
         const mockHistoryPushState = jest.fn();
