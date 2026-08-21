@@ -3,15 +3,37 @@ import { StrikethroughIcon } from "@dashboard/icons/StrikethroughIcon";
 import { type ToolConstructable, type ToolSettings } from "@editorjs/editorjs";
 import Embed from "@editorjs/embed";
 import Header from "@editorjs/header";
+import Image from "@editorjs/image";
 import List from "@editorjs/list";
 import Paragraph from "@editorjs/paragraph";
 import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
 import createGenericInlineTool from "editorjs-inline-tool";
 
+import {
+  ALLOWED_RICH_TEXT_IMAGE_MIME_TYPES,
+  type UploadRichTextImage,
+} from "./useUploadRichTextImage";
+
 const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
 
-export const tools: Record<string, ToolConstructable | ToolSettings> = {
+// Used in read-only contexts so existing image blocks still render, while any
+// upload attempt (which shouldn't happen in read-only) safely fails.
+const rejectUpload: UploadRichTextImage = async () => ({ success: 0, file: { url: "" } });
+
+export interface GetToolsOpts {
+  /**
+   * Uploader wired to Saleor's `fileUpload` mutation. Omit in read-only contexts -
+   * the image tool is still registered (so saved image blocks render), but new
+   * uploads are rejected.
+   */
+  uploadImage?: UploadRichTextImage;
+}
+
+export const getTools = ({ uploadImage }: GetToolsOpts = {}): Record<
+  string,
+  ToolConstructable | ToolSettings
+> => ({
   embed: Embed,
   header: {
     class: Header,
@@ -43,6 +65,17 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     class: Paragraph,
     inlineToolbar,
   },
+  image: {
+    class: Image,
+    config: {
+      // Only `uploadByFile` is provided (no `uploadByUrl`) so all images are
+      // uploaded through Saleor's media storage rather than hotlinked.
+      uploader: {
+        uploadByFile: uploadImage ?? rejectUpload,
+      },
+      types: ALLOWED_RICH_TEXT_IMAGE_MIME_TYPES.join(", "),
+    },
+  },
   strikethrough: createGenericInlineTool({
     sanitize: {
       s: {},
@@ -51,4 +84,4 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     tagName: "s",
     toolboxIcon: StrikethroughIcon,
   }),
-};
+});
