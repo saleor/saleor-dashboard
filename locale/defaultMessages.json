@@ -13384,6 +13384,10 @@
     "context": "variant pricing channel status description when product is unpublished",
     "string": "The product is not published on this channel yet."
   },
+  "mQib3Y": {
+    "context": "placeholder for attribute dropdown combobox",
+    "string": "Search values"
+  },
   "mSCZd4": {
     "context": "Webhook details asynchronous events",
     "string": "Asynchronous"

@@ -178,12 +178,12 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     result: searchCategoriesOpts,
   } = useReferenceCategorySearch(refAttr);
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues = getAttributeValues;
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
@@ -204,11 +204,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
 
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
     refetchProducts: searchProductsOpts.refetch,

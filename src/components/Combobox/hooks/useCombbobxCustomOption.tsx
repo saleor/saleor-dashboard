@@ -1,6 +1,7 @@
 import { type Option } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
+import { AddNewValueAdornment } from "../components/AddNewValueAdornment";
 import { messages } from "../messages";
 
 export const useCombbobxCustomOption = ({
@@ -25,6 +26,7 @@ export const useCombbobxCustomOption = ({
         {
           label: customValueLabel,
           value: query,
+          startAdornment: <AddNewValueAdornment />,
         },
       ]
     : [];
