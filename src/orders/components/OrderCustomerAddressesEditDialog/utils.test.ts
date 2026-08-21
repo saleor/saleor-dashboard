@@ -54,6 +54,7 @@ const createAccountError = (
   field: null,
   addressType: null,
   message: "This field cannot be blank",
+  attributes: null,
   ...overrides,
 });
 

@@ -4,6 +4,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Box, Paragraph, Text } from "@saleor/macaw-ui-next";
@@ -103,6 +104,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
                               item.testId + "-settings-subsection-" + item.title.toLowerCase()
                             }
                             display="flex"
+                            position="relative"
                           >
                             <Box>{item.icon}</Box>
                             <Box>
@@ -113,6 +115,20 @@ export const ConfigurationPage = (props: ConfigurationPageProps) => {
                                 {item.description}
                               </Paragraph>
                             </Box>
+                            {item.ripple && (
+                              // The tile itself is a link — reading the hint must not navigate.
+                              <Box
+                                position="absolute"
+                                __top="12px"
+                                __right="12px"
+                                onClick={event => {
+                                  event.preventDefault();
+                                  event.stopPropagation();
+                                }}
+                              >
+                                <Ripple model={item.ripple} />
+                              </Box>
+                            )}
                           </Box>
                         </Link>
                       ))}

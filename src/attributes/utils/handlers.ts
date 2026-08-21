@@ -51,7 +51,7 @@ export function createAttributeMultiChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
   attributes: FormsetData<AttributeInputData, string[]>,
   triggerChange: () => void,
-): FormsetChange<string> {
+): FormsetChange<string | string[]> {
   return (attributeId: string, value: string | string[]) => {
     const attribute = attributes.find(attribute => attribute.id === attributeId);
 
@@ -190,7 +190,7 @@ export function createFetchMoreReferencesHandler(
 
 export function createAttributeFileChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
-  attributesWithNewFileValue: FormsetData<FormsetData<null, File>>,
+  attributesWithNewFileValue: FormsetData<null, File>,
   addAttributeNewFileValue: (data: FormsetAtomicData<null, File>) => void,
   changeAttributeNewFileValue: FormsetChange<File>,
   triggerChange: () => void,

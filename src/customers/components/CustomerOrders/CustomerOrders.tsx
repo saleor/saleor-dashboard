@@ -1,184 +1,126 @@
-import { DashboardCard } from "@dashboard/components/Card";
+import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
+import {
+  AssignableListCell,
+  AssignableListTable,
+} from "@dashboard/components/AssignableListTable/AssignableListTable";
+import { ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
+import { ChannelDisplay } from "@dashboard/components/Channel/Channel";
 import { DateTime } from "@dashboard/components/Date/DateTime";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
-import { Placeholder } from "@dashboard/components/Placeholder";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { type CustomerDetailsQuery } from "@dashboard/graphql";
-import { renderCollection } from "@dashboard/misc";
-import { OrderPaymentStatusPill } from "@dashboard/orders/components/OrderPaymentSummaryCard/components/OrderPaymentStatusPill";
+import { Pill } from "@dashboard/components/Pill";
+import { type CustomerDetailsQuery, type OrderStatus } from "@dashboard/graphql";
+import { transformOrderStatus } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
 import { type RelayToFlat } from "@dashboard/types";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
-import { Box, Button, Skeleton, sprinkles, Text, Tooltip } from "@saleor/macaw-ui-next";
-import clsx from "clsx";
-import { Info } from "lucide-react";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { ShoppingCart } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import styles from "./CustomerOrders.module.css";
+import { messages } from "./messages";
 
-const textRightStyle = sprinkles({
-  textAlign: "right",
-});
-
-const NetColumnHeader = (): JSX.Element => {
-  const intl = useIntl();
-
-  return (
-    <Box className={styles.amountHeaderContent}>
-      <FormattedMessage
-        id="QcXdj6"
-        defaultMessage="Net"
-        description="customer recent orders table column: net product sales after discounts"
-      />
-      <Tooltip>
-        <Tooltip.Trigger>
-          <Box
-            as="button"
-            type="button"
-            display="flex"
-            alignItems="center"
-            cursor="pointer"
-            padding={0}
-            borderWidth={0}
-            backgroundColor="transparent"
-            aria-label={intl.formatMessage({
-              id: "02j7gU",
-              defaultMessage: "Net order value explanation",
-              description: "customer recent orders table, net column tooltip aria label",
-            })}
-            data-test-id="customer-orders-net-hint"
-            onClick={event => event.stopPropagation()}
-          >
-            <Info size={13} />
-          </Box>
-        </Tooltip.Trigger>
-        <Tooltip.Content side="top" className={styles.tooltipContent}>
-          <Tooltip.Arrow />
-          <Text size={2} color="default1">
-            <FormattedMessage
-              id="wPhgkN"
-              defaultMessage="Product revenue after discounts. Excludes shipping and tax. Matches the net sales figures in the overview above."
-              description="customer recent orders table, net column tooltip"
-            />
-          </Text>
-        </Tooltip.Content>
-      </Tooltip>
-    </Box>
-  );
-};
+type CustomerRecentOrder = NonNullable<
+  RelayToFlat<NonNullable<NonNullable<CustomerDetailsQuery["user"]>["orders"]>>
+>[number];
 
 interface CustomerOrdersProps {
-  orders: RelayToFlat<NonNullable<NonNullable<CustomerDetailsQuery["user"]>["orders"]>>;
+  orders: Array<CustomerRecentOrder | null | undefined> | undefined;
   viewAllHref: string;
 }
 
-const CustomerOrders = (props: CustomerOrdersProps) => {
-  const { orders, viewAllHref } = props;
+const OrderStatusPill = ({ status }: { status: OrderStatus }): JSX.Element => {
   const intl = useIntl();
+  const { localized, status: color } = transformOrderStatus(status, intl);
 
+  return <Pill label={localized} color={color} data-test-id="customer-order-status" />;
+};
+
+export const CustomerOrders = ({ orders, viewAllHref }: CustomerOrdersProps): JSX.Element => {
   return (
-    <DashboardCard>
-      <DashboardCard.Header>
-        <DashboardCard.Title size={6} fontWeight="medium">
-          {intl.formatMessage({
-            id: "1LiVhv",
-            defaultMessage: "Recent Orders",
-            description: "section header",
-          })}
-        </DashboardCard.Title>
-        <DashboardCard.Toolbar>
+    <AssignableListCard
+      data-test-id="customer-orders"
+      title={<FormattedMessage {...messages.title} />}
+      headerEnd={
+        orders === undefined ? (
+          <Button variant="secondary" disabled>
+            <FormattedMessage {...messages.viewAll} />
+          </Button>
+        ) : (
           <Link to={viewAllHref}>
             <Button variant="secondary">
-              <FormattedMessage id="3+990c" defaultMessage="View all orders" description="button" />
+              <FormattedMessage {...messages.viewAll} />
             </Button>
           </Link>
-        </DashboardCard.Toolbar>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        {orders === undefined ? (
-          <Skeleton />
-        ) : orders.length === 0 ? (
-          <Placeholder>
-            <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
-          </Placeholder>
-        ) : (
-          <ResponsiveTable>
-            <TableHead>
-              <TableRowLink>
-                <TableCell>
-                  <FormattedMessage
-                    id="nTF6tG"
-                    defaultMessage="No. of Order"
-                    description="number of order"
-                  />
-                </TableCell>
-                <TableCell>
-                  <FormattedMessage
-                    id="ri3kK9"
-                    defaultMessage="Date"
-                    description="order placement date"
-                  />
-                </TableCell>
-                <TableCell>
-                  <FormattedMessage
-                    id="pURrk1"
-                    defaultMessage="Status"
-                    description="order status"
-                  />
-                </TableCell>
-                <TableCell className={styles.amountHeaderCell} align="right">
-                  <NetColumnHeader />
-                </TableCell>
-                <TableCell
-                  className={clsx(styles.amountHeaderCell, styles.lastAmountCell)}
-                  align="right"
-                >
-                  <FormattedMessage
-                    id="DGgIIw"
-                    defaultMessage="Gross"
-                    description="customer recent orders table column: checkout total including shipping and tax"
-                  />
-                </TableCell>
-              </TableRowLink>
-            </TableHead>
-            <TableBody>
-              {renderCollection(orders, order => (
-                <TableRowLink
-                  hover={!!order}
-                  className={
-                    order
-                      ? sprinkles({
-                          cursor: "pointer",
-                        })
-                      : undefined
-                  }
-                  href={order && orderUrl(order.id)}
-                  key={order ? order.id : "skeleton"}
-                >
-                  <TableCell>{order?.number ? "#" + order.number : <Skeleton />}</TableCell>
-                  <TableCell>
-                    {order?.created ? <DateTime date={order.created} plain /> : <Skeleton />}
-                  </TableCell>
-                  <TableCell>
-                    {order ? <OrderPaymentStatusPill order={order} /> : <Skeleton />}
-                  </TableCell>
-                  <TableCell className={textRightStyle} align="right">
-                    {order?.subtotal?.net ? <Money money={order.subtotal.net} /> : <Skeleton />}
-                  </TableCell>
-                  <TableCell className={clsx(textRightStyle, styles.lastAmountCell)} align="right">
-                    {order?.total.gross ? <Money money={order.total.gross} /> : <Skeleton />}
-                  </TableCell>
-                </TableRowLink>
-              ))}
-            </TableBody>
-          </ResponsiveTable>
+        )
+      }
+    >
+      <AssignableListTable<CustomerRecentOrder>
+        data-test-id="customer-orders-table"
+        rowTestId="customer-order-row"
+        items={orders}
+        selection="none"
+        getRowHref={order => orderUrl(order.id)}
+        getRowLabel={order => `#${order.number}`}
+        leadingInset={ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET}
+        emptyMessage={<FormattedMessage {...messages.empty} />}
+        emptyIcon={
+          <Box color="default2" display="flex" aria-hidden>
+            <ShoppingCart size={iconSize.large} strokeWidth={iconStrokeWidthBySize.large} />
+          </Box>
+        }
+        columns={[
+          {
+            id: "number",
+            width: "16%",
+            header: <FormattedMessage {...messages.orderColumn} />,
+          },
+          {
+            id: "date",
+            width: "22%",
+            header: <FormattedMessage {...messages.dateColumn} />,
+          },
+          {
+            id: "status",
+            width: "22%",
+            header: <FormattedMessage {...messages.statusColumn} />,
+          },
+          {
+            id: "total",
+            width: "18%",
+            align: "end",
+            header: <FormattedMessage {...messages.totalColumn} />,
+          },
+          {
+            id: "channel",
+            width: "22%",
+            header: <FormattedMessage {...messages.channelColumn} />,
+          },
+        ]}
+        renderCells={order => (
+          <>
+            <AssignableListCell truncate>
+              <Text ellipsis display="block" size={2}>
+                #{order.number}
+              </Text>
+            </AssignableListCell>
+            <AssignableListCell truncate>
+              <DateTime date={order.created} plain />
+            </AssignableListCell>
+            <AssignableListCell>
+              <OrderStatusPill status={order.status} />
+            </AssignableListCell>
+            <AssignableListCell align="end">
+              {order.total.gross ? <Money money={order.total.gross} /> : "-"}
+            </AssignableListCell>
+            <AssignableListCell truncate>
+              <ChannelDisplay channel={order.channel ?? undefined} size={2} />
+            </AssignableListCell>
+          </>
         )}
-      </DashboardCard.Content>
-    </DashboardCard>
+      />
+    </AssignableListCard>
   );
 };
 
 CustomerOrders.displayName = "CustomerOrders";
-export default CustomerOrders;

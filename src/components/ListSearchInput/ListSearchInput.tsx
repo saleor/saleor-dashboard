@@ -2,25 +2,30 @@ import Debounce from "@dashboard/components/Debounce";
 import { Search } from "lucide-react";
 import { type ChangeEvent, useEffect, useState } from "react";
 
-import { SearchTooltip } from "../../../components/AppLayout/ListFilters/components/SearchTooltip/SearchTooltip";
-import styles from "./ModelSearchInput.module.css";
+import { SearchTooltip } from "../AppLayout/ListFilters/components/SearchTooltip/SearchTooltip";
+import styles from "./ListSearchInput.module.css";
 
-interface ModelSearchInputProps {
+interface ListSearchInputProps {
   initialSearch: string;
   placeholder: string;
   onSearchChange: (value: string) => void;
   showTooltip?: boolean;
 }
 
-export const ModelSearchInput = ({
+export const ListSearchInput = ({
   initialSearch,
   placeholder,
   onSearchChange,
   showTooltip = true,
-}: ModelSearchInputProps) => {
+}: ListSearchInputProps): JSX.Element => {
   const [search, setSearch] = useState(initialSearch);
 
-  useEffect(() => setSearch(initialSearch), [initialSearch]);
+  useEffect(
+    function syncSearchFromUrl() {
+      setSearch(initialSearch);
+    },
+    [initialSearch],
+  );
 
   return (
     <Debounce debounceFn={onSearchChange} time={500}>
@@ -51,4 +56,4 @@ export const ModelSearchInput = ({
   );
 };
 
-ModelSearchInput.displayName = "ModelSearchInput";
+ListSearchInput.displayName = "ListSearchInput";

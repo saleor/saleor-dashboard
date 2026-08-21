@@ -2,6 +2,7 @@ import { type FC, type ReactNode } from "react";
 
 import { useInitialAttributesState } from "../API/initialState/attributes/useInitialAttributesState";
 import { useInitialCollectionState } from "../API/initialState/collections/useInitialCollectionsState";
+import { useInitialCustomerState } from "../API/initialState/customers/useInitialCustomerState";
 import { useInitialDiscountsState } from "../API/initialState/discounts/useInitialDiscountsState";
 import { useInitialGiftCardsState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { useInitialOrderState } from "../API/initialState/orders/useInitialOrderState";
@@ -241,7 +242,8 @@ export const ConditionalCustomerFilterProvider: FC<{
 }> = ({ children, locationSearch }) => {
   const apiProvider = useCustomerAPIProvider();
 
-  const valueProvider = useUrlValueProvider(locationSearch, "customer");
+  const initialState = useInitialCustomerState();
+  const valueProvider = useUrlValueProvider(locationSearch, "customer", initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider(STATIC_CUSTOMER_OPTIONS);
   const containerState = useContainerState(valueProvider);
   const filterWindow = useFilterWindow();

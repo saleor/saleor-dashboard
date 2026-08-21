@@ -24,6 +24,7 @@ interface CustomerDetailsConsumerProps {
   setKpiChannelId: (channelId: string | undefined) => void;
   kpiChannels: ChannelFromOrder[];
   effectiveKpiChannelId: string | undefined;
+  refetch: () => Promise<unknown>;
 }
 
 export const CustomerDetailsContext = createContext<CustomerDetailsConsumerProps | null>(null);
@@ -106,9 +107,10 @@ export const CustomerDetailsProvider = ({
       kpiChannelId,
       kpiChannels,
       loading,
+      refetch,
       setKpiChannelId,
     }),
-    [customer, effectiveKpiChannelId, kpiChannelId, kpiChannels, loading, setKpiChannelId],
+    [customer, effectiveKpiChannelId, kpiChannelId, kpiChannels, loading, refetch, setKpiChannelId],
   );
 
   return (

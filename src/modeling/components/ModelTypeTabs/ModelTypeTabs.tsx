@@ -50,10 +50,18 @@ export interface ModelTypeTabsProps {
    * Grouping state owned by the parent so a single source of truth drives both the
    * tab strip and the parent's count bookkeeping. Falls back to a local hook instance
    * when rendered standalone (Storybook, tests).
+   * Pass `false` to keep a flat type strip (no name-splitting) and hide grouping settings
+   * — used by customers today, and the hook to turn grouping on later.
    */
-  grouping?: ModelTypeTabGrouping;
+  grouping?: ModelTypeTabGrouping | false;
   /** Optional slot anchored to the right of the strip, sharing the bottom border. */
   rightSlot?: ReactNode;
+  /** localStorage key for pinned tabs. Defaults to the models list key. */
+  pinStorageKey?: string;
+  /** data-test-id on the tablist. */
+  testId?: string;
+  /** Prefix for per-tab test ids (`{prefix}-{id}`). */
+  testIdPrefix?: string;
 }
 
 type ModelTypeTabStripItem = { kind: "all"; id: string; name: string } | ModelTabNode;
@@ -296,6 +304,8 @@ const GroupTabDropdown = ({ group, selectedIds, counts, onTabChange }: GroupTabD
   );
 };
 
+const DISABLED_GROUPING_OPTIONS = { enabled: false } as const;
+
 export const ModelTypeTabs = ({
   pageTypes,
   selectedIds,
@@ -303,17 +313,29 @@ export const ModelTypeTabs = ({
   onTabChange,
   grouping,
   rightSlot,
+  pinStorageKey = PINNED_TABS_STORAGE_KEY,
+  testId = "model-type-tabs",
+  testIdPrefix = "model-type-tab",
 }: ModelTypeTabsProps) => {
   const intl = useIntl();
   const stripRef = useRef<HTMLDivElement>(null);
   const measureTabRefs = useRef<Array<HTMLElement | null>>([]);
   const [visibleCount, setVisibleCount] = useState<number | null>(null);
   const visibleCountRef = useRef<number | null>(null);
-  const [pinnedIds, setPinnedIds] = useLocalStorage<string[]>(PINNED_TABS_STORAGE_KEY, []);
+  const [pinnedIds, setPinnedIds] = useLocalStorage<string[]>(pinStorageKey, []);
   // Used only when no parent-owned grouping is supplied (standalone rendering).
   const fallbackGrouping = useModelTypeTabGrouping();
+  const groupingEnabledFlag = grouping !== false;
   const { separator, setSeparator, groupingEnabled, setGroupingEnabled, groupingOptions } =
-    grouping ?? fallbackGrouping;
+    grouping === false
+      ? {
+          separator: "",
+          setSeparator: () => undefined,
+          groupingEnabled: false,
+          setGroupingEnabled: () => undefined,
+          groupingOptions: DISABLED_GROUPING_OPTIONS,
+        }
+      : (grouping ?? fallbackGrouping);
 
   visibleCountRef.current = visibleCount;
 
@@ -451,11 +473,11 @@ export const ModelTypeTabs = ({
               <CountPill count={count} active={isActive} />
             </Box>
           ),
-          testId: `model-type-tab-${getStripItemId(item)}`,
+          testId: `${testIdPrefix}-${getStripItemId(item)}`,
           onSelect: () => onTabChange(getStripItemSelection(item)),
         };
       }),
-    [counts, onTabChange, overflowItems, selectedIds],
+    [counts, onTabChange, overflowItems, selectedIds, testIdPrefix],
   );
 
   const renderTabPin = (item: ModelTypeTabStripItem, isActive: boolean) => {
@@ -475,7 +497,7 @@ export const ModelTypeTabs = ({
         aria-label={intl.formatMessage(
           pinned ? modelTypeTabsMessages.unpinTab : modelTypeTabsMessages.pinTab,
         )}
-        data-test-id={`model-type-tab-pin-${itemId}`}
+        data-test-id={`${testIdPrefix}-pin-${itemId}`}
         onClick={event => {
           event.stopPropagation();
           togglePin(itemId);
@@ -518,7 +540,7 @@ export const ModelTypeTabs = ({
           role="tab"
           aria-selected={isActive}
           className={styles.groupTab}
-          data-test-id={`model-type-tab-${itemId}`}
+          data-test-id={`${testIdPrefix}-${itemId}`}
         >
           <button
             type="button"
@@ -546,7 +568,7 @@ export const ModelTypeTabs = ({
         aria-selected={isActive}
         className={styles.tab}
         onClick={() => onTabChange(getStripItemSelection(item))}
-        data-test-id={`model-type-tab-${itemId}`}
+        data-test-id={`${testIdPrefix}-${itemId}`}
       >
         {renderTabLabel(item, isActive)}
         {renderTabPin(item, isActive)}
@@ -592,7 +614,7 @@ export const ModelTypeTabs = ({
         role="tablist"
         ref={stripRef}
         className={styles.strip}
-        data-test-id="model-type-tabs"
+        data-test-id={testId}
         style={measuring ? { visibility: "hidden" } : undefined}
       >
         {displayItems.map(item => renderTab(item, isStripItemActive(item, selectedIds)))}
@@ -603,7 +625,7 @@ export const ModelTypeTabs = ({
             variant="tertiary"
             size="small"
             options={overflowOptions}
-            testId="model-type-tabs-more"
+            testId={`${testId}-more`}
             className={styles.moreButton}
           >
             {intl.formatMessage(modelTypeTabsMessages.moreTab)}
@@ -612,12 +634,14 @@ export const ModelTypeTabs = ({
       )}
       <div className={styles.trailingSlot}>
         {rightSlot}
-        <ModelTypeTabsSettings
-          separator={separator}
-          groupingEnabled={groupingEnabled}
-          onSeparatorChange={setSeparator}
-          onGroupingEnabledChange={setGroupingEnabled}
-        />
+        {groupingEnabledFlag ? (
+          <ModelTypeTabsSettings
+            separator={separator}
+            groupingEnabled={groupingEnabled}
+            onSeparatorChange={setSeparator}
+            onGroupingEnabledChange={setGroupingEnabled}
+          />
+        ) : null}
       </div>
     </div>
   );

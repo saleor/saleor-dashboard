@@ -1,10 +1,16 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
-import { createCustomerQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
-import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
+import { createCustomerWhereVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { CreateCustomerTypeDialog } from "@dashboard/customerTypes/components/CreateCustomerTypeDialog/CreateCustomerTypeDialog";
+import { useCreateCustomerType } from "@dashboard/customerTypes/hooks/useCreateCustomerType";
+import {
+  CustomerTypeSortField,
+  type CustomerWhereInput,
+  OrderDirection,
+  useBulkRemoveCustomersMutation,
+  useCustomerTypeListQuery,
+  useListCustomersQuery,
+} from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
@@ -23,22 +29,72 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { CustomerBulkDeleteDialog } from "../../components/CustomerBulkDeleteDialog/CustomerBulkDeleteDialog";
 import CustomerListPage from "../../components/CustomerListPage";
 import {
+  ALL_CUSTOMERS_TAB_ID,
+  type CustomerTypeTabCount,
+} from "../../components/CustomerTypeTabs/CustomerTypeTabs";
+import {
   customerListUrl,
   type CustomerListUrlDialog,
   type CustomerListUrlQueryParams,
 } from "../../urls";
-import { getFilterOpts, getFilterQueryParam, storageUtils } from "./filters";
+import { getFilterQueryParam } from "./filters";
 import { getSortQueryVariables } from "./sort";
+import { useCustomerTypeTabCounts } from "./useCustomerTypeTabCounts";
 
 interface CustomerListProps {
   params: CustomerListUrlQueryParams;
 }
+
+const normalizeCustomerTypes = (
+  value: string | string[] | Record<string, string> | undefined,
+): string[] => {
+  if (!value) {
+    return [];
+  }
+
+  if (Array.isArray(value)) {
+    return [...new Set(value.filter(Boolean))];
+  }
+
+  if (typeof value === "object") {
+    return [...new Set(Object.values(value).filter(Boolean))];
+  }
+
+  return [value];
+};
+
+const mergeCustomerListWhere = (
+  filterWhere: CustomerWhereInput,
+  selectedCustomerTypes: string[],
+): CustomerWhereInput | undefined => {
+  const typeWhere: CustomerWhereInput | undefined =
+    selectedCustomerTypes.length === 0
+      ? undefined
+      : selectedCustomerTypes.length === 1
+        ? { customerType: { eq: selectedCustomerTypes[0] } }
+        : { customerType: { oneOf: selectedCustomerTypes } };
+  const hasFilterWhere = Object.keys(filterWhere).length > 0;
+
+  if (typeWhere && hasFilterWhere) {
+    return { AND: [filterWhere, typeWhere] };
+  }
+
+  if (typeWhere) {
+    return typeWhere;
+  }
+
+  if (hasFilterWhere) {
+    return filterWhere;
+  }
+
+  return undefined;
+};
 
 const CustomerList = ({ params }: CustomerListProps) => {
   const navigate = useNavigator();
@@ -46,9 +102,18 @@ const CustomerList = ({ params }: CustomerListProps) => {
   const intl = useIntl();
   const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
   const { valueProvider } = useConditionalFilterContext();
-  const filter = createCustomerQueryVariables(valueProvider.value);
+  const filterWhere = createCustomerWhereVariables(valueProvider.value);
 
   usePaginationReset(customerListUrl, params, settings.rowNumber);
+
+  const selectedCustomerTypesKey = Array.isArray(params.customerTypes)
+    ? params.customerTypes.join(",")
+    : (params.customerTypes ?? "");
+  const selectedCustomerTypes = useMemo(
+    () => normalizeCustomerTypes(params.customerTypes),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedCustomerTypesKey],
+  );
 
   const {
     clearRowSelection,
@@ -56,33 +121,19 @@ const CustomerList = ({ params }: CustomerListProps) => {
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
   } = useRowSelection(params);
-  const {
-    selectedPreset,
-    presets,
-    hasPresetsChanged,
-    onPresetChange,
-    onPresetDelete,
-    onPresetSave,
-    onPresetUpdate,
-    setPresetIdToDelete,
-    getPresetNameToDelete,
-  } = useFilterPresets({
-    params,
-    reset: clearRowSelection,
-    getUrl: customerListUrl,
-    storageUtils,
-  });
   const paginationState = createPaginationState(settings.rowNumber, params);
+  const where = useMemo(
+    () => mergeCustomerListWhere(filterWhere, selectedCustomerTypes),
+    [filterWhere, selectedCustomerTypes],
+  );
   const newQueryVariables = useMemo(
     () => ({
       ...paginationState,
-      filter: {
-        ...filter,
-        search: params.query,
-      },
+      where,
+      search: params.query,
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber, valueProvider.value],
+    [params, settings.rowNumber, where],
   );
 
   const { data, refetch } = useListCustomersQuery({
@@ -90,7 +141,75 @@ const CustomerList = ({ params }: CustomerListProps) => {
     variables: newQueryVariables,
   });
   const customers = mapEdgesToItems(data?.customers);
-  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
+  const { data: customerTypesData, loading: customerTypesLoading } = useCustomerTypeListQuery({
+    fetchPolicy: "cache-and-network",
+    variables: {
+      first: 100,
+      sort: { field: CustomerTypeSortField.NAME, direction: OrderDirection.ASC },
+    },
+  });
+  const customerTypes = useMemo(
+    () => mapEdgesToItems(customerTypesData?.customerTypes) ?? undefined,
+    [customerTypesData],
+  );
+
+  // Drop type ids that are absent from the tab list only when some ids are still recognized.
+  // Keep the URL filter when none are in the tab list (e.g. outside the first fetched page),
+  // so deep-linked type tabs still filter the list server-side.
+  useEffect(
+    function dropUnknownCustomerTypeIds() {
+      if (!customerTypes || customerTypesLoading || selectedCustomerTypes.length === 0) {
+        return;
+      }
+
+      const validIds = selectedCustomerTypes.filter(id =>
+        customerTypes.some(customerType => customerType.id === id),
+      );
+
+      if (validIds.length === selectedCustomerTypes.length || validIds.length === 0) {
+        return;
+      }
+
+      navigate(
+        customerListUrl({
+          ...params,
+          customerTypes: validIds,
+        }),
+        { replace: true },
+      );
+    },
+    // Sanitize when the tab selection or type catalog changes. Spreading `params` from this
+    // render preserves search/sort; do not depend on the whole params object (new each render).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedCustomerTypes, customerTypes, customerTypesLoading, navigate],
+  );
+
+  const { counts, setCount, fetchers } = useCustomerTypeTabCounts({
+    customerTypes,
+    selectedCustomerTypes,
+    allTabId: ALL_CUSTOMERS_TAB_ID,
+    pageSize: settings.rowNumber,
+  });
+
+  const activeCount: CustomerTypeTabCount | undefined = data?.customers
+    ? {
+        value: data.customers.edges.length,
+        hasMore: !!data.customers.pageInfo.hasNextPage,
+      }
+    : undefined;
+  const activeTabCountKey =
+    selectedCustomerTypes.length === 1 ? selectedCustomerTypes[0] : ALL_CUSTOMERS_TAB_ID;
+
+  useEffect(
+    function syncActiveTabCount() {
+      if (activeCount) {
+        setCount(activeTabCountKey, activeCount);
+      }
+    },
+    [activeCount?.value, activeCount?.hasMore, activeTabCountKey, setCount],
+  );
+
+  const [, , handleSearchChange] = createFilterHandlers({
     cleanupFn: clearRowSelection,
     createUrl: customerListUrl,
     getFilterQueryParam,
@@ -102,6 +221,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
     CustomerListUrlDialog,
     CustomerListUrlQueryParams
   >(navigate, customerListUrl, params);
+  const createCustomerTypeDialog = useCreateCustomerType({ onClose: closeModal });
   const paginationValues = usePaginator({
     pageInfo: data?.customers?.pageInfo,
     paginationState,
@@ -130,6 +250,20 @@ const CustomerList = ({ params }: CustomerListProps) => {
     },
   });
   const handleSort = createSortHandler(navigate, customerListUrl, params);
+  const handleTabChange = useCallback(
+    (ids: string[]) => {
+      clearRowSelection();
+      navigate(
+        customerListUrl({
+          ...params,
+          customerTypes: ids.length ? ids : undefined,
+          after: undefined,
+          before: undefined,
+        }),
+      );
+    },
+    [clearRowSelection, navigate, params],
+  );
   const handleSetSelectedCustomerIds = useCallback(
     (rows: number[], clearSelection: () => void) => {
       if (!customers) {
@@ -147,25 +281,21 @@ const CustomerList = ({ params }: CustomerListProps) => {
     },
     [customers, selectedRowIds, setClearDatagridRowSelectionCallback, setSelectedRowIds],
   );
+  const activeCustomerType = useMemo(
+    () =>
+      selectedCustomerTypes.length === 1
+        ? customerTypes?.find(customerType => customerType.id === selectedCustomerTypes[0])
+        : undefined,
+    [customerTypes, selectedCustomerTypes],
+  );
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
+      {fetchers}
       <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
       <CustomerListPage
-        selectedFilterPreset={selectedPreset}
-        filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
-        onFilterChange={changeFilters}
-        onFilterPresetsAll={resetFilters}
-        onFilterPresetChange={onPresetChange}
-        onFilterPresetDelete={(id: number) => {
-          setPresetIdToDelete(id);
-          openModal("delete-search");
-        }}
-        onFilterPresetPresetSave={() => openModal("save-search")}
-        onFilterPresetUpdate={onPresetUpdate}
-        filterPresets={presets.map(preset => preset.name)}
         customers={customers}
         settings={settings}
         disabled={!data}
@@ -175,8 +305,18 @@ const CustomerList = ({ params }: CustomerListProps) => {
         selectedCustomerIds={selectedRowIds}
         onSelectCustomerIds={handleSetSelectedCustomerIds}
         sort={getSortParams(params)}
-        hasPresetsChanged={hasPresetsChanged}
         onCustomersDelete={() => openModal("remove", { ids: selectedRowIds })}
+        onCreateCustomerType={() => openModal("create-customer-type")}
+        customerTypes={customerTypes}
+        selectedTypeIds={selectedCustomerTypes}
+        activeCustomerTypeName={activeCustomerType?.name}
+        tabCounts={counts}
+        onTabChange={handleTabChange}
+      />
+      <CreateCustomerTypeDialog
+        open={params.action === "create-customer-type"}
+        onClose={closeModal}
+        {...createCustomerTypeDialog}
       />
       <CustomerBulkDeleteDialog
         confirmButtonState={bulkRemoveCustomersOpts.status}
@@ -190,19 +330,6 @@ const CustomerList = ({ params }: CustomerListProps) => {
           })
         }
         open={params.action === "remove" && selectedRowIds?.length > 0}
-      />
-      <SaveFilterTabDialog
-        open={params.action === "save-search"}
-        confirmButtonState="default"
-        onClose={closeModal}
-        onSubmit={onPresetSave}
-      />
-      <DeleteFilterTabDialog
-        open={params.action === "delete-search"}
-        confirmButtonState="default"
-        onClose={closeModal}
-        onSubmit={onPresetDelete}
-        tabName={getPresetNameToDelete()}
       />
     </PaginatorContext.Provider>
   );

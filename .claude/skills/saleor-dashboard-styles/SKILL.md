@@ -351,7 +351,7 @@ Flush lists inside `DetailSettingsCard` (products in a collection, attribute val
 | Composition     | `AssignableListCard` + `AssignableListTable` (or MUI `tableStyles.assignableTable`) + `AssignableListPagination` |
 | Header ± button | Same height either way — `DetailSettingsCard` coerces `headerEnd` to `size="small"`                              |
 | Search          | Card search slot — Y `spacing-3`, X `spacing-6`. Do not pad `SearchInput` in the view.                           |
-| Heading row     | 40px, `Text size={2}`                                                                                            |
+| Heading row     | Compact subhead: Y `spacing-1`, `Text size={2}` — same as Pricing / channel column labels                        |
 | Rows            | `density="compact"` (text) or `"media"` (50px thumbnails)                                                        |
 | Hover           | Row delete opacity 0 → 1 on hover or delete-control focus (not row `:focus-within`)                              |
 | Pagination      | Component draws the top border. Last table row has no bottom border. `inset="card" \| "nested" \| "drag"`        |
