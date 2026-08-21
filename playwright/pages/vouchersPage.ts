@@ -6,6 +6,7 @@ import { BasePage } from "@pages/basePage";
 import { expect, type Page } from "@playwright/test";
 
 import { DeleteDialog } from "./dialogs/deleteDialog";
+import { inputByTestId } from "utils/locators";
 
 export class VouchersPage extends BasePage {
   readonly page: Page;
@@ -36,15 +37,13 @@ export class VouchersPage extends BasePage {
     readonly usageLimitSection = page.getByTestId("usage-limit-section"),
     readonly valueSection = page.getByTestId("value-section"),
     readonly minimumRequirementsSection = page.getByTestId("minimum-requirements-section"),
-    readonly usageLimitInput = page.getByTestId("usage-limit").locator("input"),
+    readonly usageLimitInput = inputByTestId(page, "usage-limit"),
     readonly assignedSpecificProductsTable = page.getByTestId("assigned-specific-products-table"),
     readonly assignedSpecificProductRow = page.getByTestId("assigned-specific-product"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly voucherNameInput = page.getByTestId("voucher-name-input"),
     readonly discountValueInput = page.getByTestId("discount-value-input"),
-    readonly minimumQuantityOfItemsInput = page
-      .getByTestId("minimum-quantity-of-items-input")
-      .locator("input"),
+    readonly minimumQuantityOfItemsInput = inputByTestId(page, "minimum-quantity-of-items-input"),
     readonly minRequirementsValueInput = page.getByTestId("price-field"),
     readonly startDateInput = page.getByTestId("start-date-input"),
     readonly endDateInput = page.getByTestId("end-date-input"),

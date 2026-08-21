@@ -1,5 +1,6 @@
 import { BasePage } from "@pages/basePage";
 import { expect, type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AssignProductsDialog extends BasePage {
   constructor(
@@ -8,7 +9,7 @@ export class AssignProductsDialog extends BasePage {
     readonly backButton = page.getByTestId("back"),
     readonly assignButton = page.getByTestId("submit"),
     readonly assignAndSaveButton = page.getByTestId("submit"),
-    readonly searchInput = page.getByTestId("product-search-input").locator("input"),
+    readonly searchInput = inputByTestId(page, "product-search-input"),
   ) {
     super(page);
   }

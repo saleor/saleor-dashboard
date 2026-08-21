@@ -1,11 +1,12 @@
 import { type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AddNavigationMenuDialog {
   readonly page: Page;
 
   constructor(
     page: Page,
-    readonly menuNameInput = page.getByTestId("menu-name-input").locator("input"),
+    readonly menuNameInput = inputByTestId(page, "menu-name-input"),
     readonly saveButton = page.getByTestId("submit"),
     readonly backButton = page.getByTestId("back"),
   ) {

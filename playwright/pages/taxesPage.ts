@@ -4,6 +4,7 @@ import { AddCountriesDialog } from "@dialogs/addCountriesDialog";
 import { MetadataSeoPage } from "@pageElements/metadataSeoPage";
 import { BasePage } from "@pages/basePage";
 import { expect, type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class TaxesPage extends BasePage {
   readonly page: Page;
@@ -35,23 +36,20 @@ export class TaxesPage extends BasePage {
     readonly exceptionCountryGrossPriceCheckbox = page.getByTestId("display-gross-prices-checkbox"),
     readonly checkBoxCheckedState = page.locator("Mui-checked"),
     readonly exceptionCountriesCheckBoxCheckedState = page.locator("[class*='Mui-checked']"),
-    readonly searchTaxClassInput = page.getByTestId("search-tax-class-input").locator("input"),
+    readonly searchTaxClassInput = inputByTestId(page, "search-tax-class-input"),
     readonly searchedCountryRows = page.getByTestId("country-rows"),
 
     readonly searchTaxCountryInput = page.getByRole("textbox", { name: "Search tax countries" }),
-    readonly taxClassNameInput = page.getByTestId("class-name-input").locator("input"),
-    readonly noTaxRateInput = page.getByTestId("No Taxes").locator("input"),
-    readonly defaultRateInput = page.getByTestId("Country default rate").locator("input"),
-    readonly audioProductsRateInput = page
-      .getByTestId("Audio Products (tapes, cds etc.)")
-      .locator("input"),
-    readonly dataServicesRateInput = page
-      .getByTestId("Data services - storage and retrieval ")
-      .locator("input"),
-    readonly standardRateInput = page.getByTestId("standard").locator("input"),
-    readonly temporaryUnmappedRateInput = page
-      .getByTestId("Temporary Unmapped Other SKU - taxable default")
-      .locator("input"),
+    readonly taxClassNameInput = inputByTestId(page, "class-name-input"),
+    readonly noTaxRateInput = inputByTestId(page, "No Taxes"),
+    readonly defaultRateInput = inputByTestId(page, "Country default rate"),
+    readonly audioProductsRateInput = inputByTestId(page, "Audio Products (tapes, cds etc.)"),
+    readonly dataServicesRateInput = inputByTestId(page, "Data services - storage and retrieval "),
+    readonly standardRateInput = inputByTestId(page, "standard"),
+    readonly temporaryUnmappedRateInput = inputByTestId(
+      page,
+      "Temporary Unmapped Other SKU - taxable default",
+    ),
   ) {
     super(page);
     this.page = page;

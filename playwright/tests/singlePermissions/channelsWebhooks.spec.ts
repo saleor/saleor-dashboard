@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
   home = new HomePage(page);
 
   await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+  await home.waitForDashboardToLoad();
 });
 
 test("TC: SALEOR_11 User should be able to navigate to channel list as a staff member using CHANNEL permission #e2e", async () => {

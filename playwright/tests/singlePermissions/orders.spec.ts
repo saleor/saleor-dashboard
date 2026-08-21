@@ -19,17 +19,19 @@ test.beforeEach(async ({ page }) => {
   draftOrdersPage = new DraftOrdersPage(page);
   mainMenuPage = new MainMenuPage(page);
   await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+  await home.waitForDashboardToLoad();
 });
 test("TC: SALEOR_8 User should be able to navigate to order list as a staff member using ORDER permission #e2e", async () => {
   await mainMenuPage.openOrders();
   await expect(ordersPage.createOrderButton).toBeVisible();
   await ordersPage.expectGridToBeAttached();
-  await mainMenuPage.expectMenuItemsCount(6);
+  // Home, Search, Fulfillment, Orders, Drafts, Customers, Extensions, Configuration
+  await mainMenuPage.expectMenuItemsCount(8);
 });
 test("TC: SALEOR_9 User should be able to navigate to draft list as a staff member using ORDER permission #e2e", async () => {
   await mainMenuPage.openDrafts();
   await expect(draftOrdersPage.createDraftOrderButton).toBeVisible();
   await draftOrdersPage.expectGridToBeAttached();
-  await mainMenuPage.expectMenuItemsCount(6);
+  // Home, Search, Fulfillment, Orders, Drafts, Customers, Extensions, Configuration
+  await mainMenuPage.expectMenuItemsCount(8);
 });

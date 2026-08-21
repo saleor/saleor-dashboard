@@ -63,6 +63,9 @@ test("TC: SALEOR_189 As an admin user I can delete page type with assigned conte
   const pageTypeId = await createPageType(page, pageTypePage, pageTypeName);
 
   await page.goto(`${URL_LIST.addPageType}${encodeURIComponent(pageTypeId)}`);
+  // The model type from ?page-type-id is fetched async and only then lands in
+  // form data; saving earlier trips the client-side "pageType is required" check.
+  await expect(pageTypePage.modelTypeSelect).toHaveValue(pageTypeName);
   await page.locator("[name='title']").fill(modelName);
   const createModelUrl = page.url();
 

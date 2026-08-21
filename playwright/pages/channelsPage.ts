@@ -20,21 +20,22 @@ export class ChannelPage extends BasePage {
     readonly channelsListTable = page.getByTestId("channel-list"),
     readonly channelNameInput = page.getByTestId("channel-name-input"),
     readonly orderExpirationInput = page.getByTestId("delete-expired-order-input"),
-    readonly transactionFlowCheckbox = page
-      .getByTestId("order-settings-mark-as-paid")
-      .locator("button")
-      .first(),
-    readonly allowUnpaidOrdersCheckbox = page
-      .getByTestId("allow-unpaid-orders-checkbox")
-      .locator("button")
-      .first(),
-    readonly authorizeInsteadOfChargingCheckbox = page
-      .getByTestId("default-transaction-strategy-checkbox")
-      .locator("button")
-      .first(),
+    // "Mark as paid" and the transaction flow strategy are radio groups now,
+    // one test id per option; "allow unpaid orders" is a DetailSettingToggleRow.
+    readonly transactionFlowRadio = page
+      .getByTestId("order-settings-mark-as-paid-TRANSACTION_FLOW")
+      .getByRole("radio"),
+    readonly authorizeInsteadOfChargingRadio = page
+      .getByTestId("default-transaction-strategy-AUTHORIZATION")
+      .getByRole("radio"),
+    readonly allowUnpaidOrdersToggle = page
+      .getByTestId("channel-allow-unpaid-orders")
+      .locator('[role="button"]'),
     readonly slugNameInput = page.getByTestId("slug-name-input"),
     readonly channelCurrencySelect = page.getByTestId("channel-currency-select-input"),
     readonly countrySelect = page.getByTestId("country-select-input"),
+    readonly createChannelDialog = page.getByTestId("create-channel-dialog"),
+    readonly channelOrdersSettings = page.getByTestId("channel-orders-settings"),
   ) {
     super(page);
     this.page = page;
@@ -42,8 +43,8 @@ export class ChannelPage extends BasePage {
     this.deleteChannelDialog = new DeleteDialog(page);
   }
 
-  async clickAuthorizeInsteadOfChargingCheckbox() {
-    await this.authorizeInsteadOfChargingCheckbox.click();
+  async clickAuthorizeInsteadOfChargingRadio() {
+    await this.authorizeInsteadOfChargingRadio.click();
   }
 
   async clickDeleteButtonOnRowContainingChannelName(channelName: string) {
@@ -53,16 +54,25 @@ export class ChannelPage extends BasePage {
       .click();
   }
 
-  async clickAllowUnpaidOrdersCheckbox() {
-    await this.allowUnpaidOrdersCheckbox.click();
+  async clickAllowUnpaidOrdersToggle() {
+    await this.allowUnpaidOrdersToggle.click();
   }
 
-  async clickTransactionFlowCheckbox() {
-    await this.transactionFlowCheckbox.click();
+  async clickTransactionFlowRadio() {
+    await this.transactionFlowRadio.click();
   }
 
   async clickCreateChannelButton() {
     await this.createChannelButton.click();
+  }
+
+  /**
+   * Channels are created in a dialog that confirms with its own submit button
+   * and then lands on the detail page, where the order settings live.
+   */
+  async submitCreateChannelDialog() {
+    await this.createChannelDialog.getByTestId("submit").click();
+    await this.channelOrdersSettings.waitFor({ state: "visible", timeout: 30000 });
   }
 
   async clickSaveButton() {
@@ -81,9 +91,14 @@ export class ChannelPage extends BasePage {
     await this.orderExpirationInput.fill(expirationDays);
   }
 
-  async selectCurrency(currencyName: string) {
+  /**
+   * Option labels now read "<code> <symbol> - <countries>" (see
+   * getCurrencySearchLabel), so match by filtering on the code instead.
+   */
+  async selectCurrency(currencyCode: string) {
     await this.channelCurrencySelect.click();
-    await this.page.getByRole("option", { name: currencyName }).click();
+    await this.channelCurrencySelect.fill(currencyCode);
+    await this.page.getByRole("option").first().click();
   }
 
   async selectCountry(countryName: string) {

@@ -28,7 +28,7 @@ test.beforeEach(async ({ page }) => {
   discountsPage = new DiscountsPage(page);
   vouchersPage = new VouchersPage(page);
   await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+  await home.waitForDashboardToLoad();
 });
 test("TC: SALEOR_6 User should be able to navigate to discount list as a staff member using DISCOUNTS permission #e2e", async () => {
   await mainMenuPage.openDiscounts();

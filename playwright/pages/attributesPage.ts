@@ -6,6 +6,7 @@ import { DeleteAttributesInBulkDialog } from "@pages/dialogs/deleteAttributesInB
 import { DeleteAttributeValueDialog } from "@pages/dialogs/deleteAttributeValueDialog";
 import { EditAttributeValueDialog } from "@pages/dialogs/editAttributeValueDialog";
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AttributesPage extends BasePage {
   readonly addValueDialog: AddValueDialog;
@@ -21,15 +22,18 @@ export class AttributesPage extends BasePage {
   constructor(
     page: Page,
     readonly createAttributeButton = page.getByTestId("create-attribute-button"),
-    readonly valueRequiredCheckbox = page.getByLabel("Value Required"),
+    readonly cogsMenuButton = page.getByTestId("show-more-button"),
+    // DetailSettingToggleRow: the pressable element is a role=button div, the
+    // macaw Toggle next to it is aria-hidden and only mirrors the state.
+    readonly valueRequiredToggle = page
+      .getByTestId("attribute-value-required")
+      .locator('[role="button"]'),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly attributesRows = page.getByTestId("attributes-rows"),
     readonly assignAttributeValueButton = page.getByTestId("assign-value-button"),
     readonly attributeSelect = page.getByTestId("attribute-type-select"),
-    readonly attributeDefaultLabelInput = page
-      .getByTestId("attribute-default-label-input")
-      .locator("input"),
-    readonly attributeCodeInput = page.getByTestId("attribute-code-input").locator("input"),
+    readonly attributeDefaultLabelInput = inputByTestId(page, "attribute-default-label-input"),
+    readonly attributeCodeInput = inputByTestId(page, "attribute-code-input"),
     readonly bulkDeleteAttributesDialog = page.getByTestId("attribute-bulk-delete-dialog"),
     readonly deleteSingleAttributeDialog = page.getByTestId("delete-single-attr-dialog"),
     readonly dialog = page.getByRole("dialog"),
@@ -41,11 +45,15 @@ export class AttributesPage extends BasePage {
     readonly attrValuesSection = page.getByTestId("attribute-values-section"),
     readonly attrEntityTypeSelect = page.getByTestId("attribute-entity-type-select"),
     readonly attributeSelectOption = page.getByTestId("select-option"),
-    readonly attrVisibleInStorefrontSwitch = page.locator(`[name = "visibleInStorefront"]`),
-    readonly metadataSectionAccordionButton = page
-      .getByTestId("metadata-item")
-      .getByTestId("expand"),
+    readonly attrVisibleInStorefrontToggle = page
+      .getByTestId("attribute-visible-in-storefront")
+      .locator('[role="button"]'),
+    // Attribute metadata moved into a TopNav-triggered modal; inside a modal
+    // MetadataCard drops the accordion, so there is nothing to expand.
+    readonly showMetadataButton = page.getByTestId("show-attribute-metadata"),
+    readonly metadataModalSaveButton = page.getByRole("dialog").getByTestId("save"),
     readonly metadataAddFieldButton = page.getByTestId("metadata-item").getByTestId("add-field"),
+    readonly deleteAttributeMenuItem = page.getByTestId("delete-attribute"),
     readonly metadataKeyInput = page.getByTestId("metadata-key-input").first(),
     readonly metadataValueInput = page.getByTestId("metadata-value-input").first(),
   ) {
@@ -109,7 +117,7 @@ export class AttributesPage extends BasePage {
   }
 
   async clickValueRequiredCheckbox() {
-    await this.valueRequiredCheckbox.click();
+    await this.valueRequiredToggle.click();
   }
 
   async clickSaveButton() {
@@ -154,11 +162,21 @@ export class AttributesPage extends BasePage {
   }
 
   async changeAttributeVisibility() {
-    await this.attrVisibleInStorefrontSwitch.click();
+    await this.attrVisibleInStorefrontToggle.click();
   }
 
-  async expandMetadataSection() {
-    await this.metadataSectionAccordionButton.first().click();
+  async openMetadataModal() {
+    await this.showMetadataButton.click();
+    await this.metadataAddFieldButton.first().waitFor({ state: "visible", timeout: 10000 });
+  }
+
+  async saveMetadataModal() {
+    await this.metadataModalSaveButton.click();
+  }
+
+  async clickDeleteAttributeFromMenu() {
+    await this.cogsMenuButton.click();
+    await this.deleteAttributeMenuItem.click();
   }
 
   async addMetadataField() {

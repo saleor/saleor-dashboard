@@ -1,13 +1,12 @@
 import { expect, type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AssignAttributeDialog {
   readonly page: Page;
 
   constructor(
     page: Page,
-    readonly assignAttributesSearchInput = page
-      .getByTestId("attribute-search-input")
-      .locator("input"),
+    readonly assignAttributesSearchInput = inputByTestId(page, "attribute-search-input"),
     readonly attributesList = page.getByTestId("attributes-list"),
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
   ) {

@@ -10,7 +10,6 @@ export class AssignCountriesDialog {
     readonly restOfTheWorldRow = page.getByTestId("rest-of-the-world-row"),
     readonly assignAndSaveButton = page.getByTestId("assign-and-save-button"),
     readonly backButton = page.getByTestId("back-button"),
-    readonly rowCheckBox = page.getByTestId("checkbox"),
   ) {
     this.page = page;
   }
@@ -20,7 +19,8 @@ export class AssignCountriesDialog {
   }
 
   async checkAndSaveSingleCountry(countryName = "Canada") {
-    await this.countryRow.filter({ hasText: countryName }).locator(this.rowCheckBox).click();
+    // The row renders a ControlledCheckbox, which carries no data-test-id.
+    await this.countryRow.filter({ hasText: countryName }).getByRole("checkbox").click();
     await this.assignAndSaveButton.click();
     await this.countryRow.first().waitFor({ state: "hidden" });
   }

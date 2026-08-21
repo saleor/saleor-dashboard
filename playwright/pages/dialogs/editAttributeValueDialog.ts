@@ -1,5 +1,6 @@
 import type { Page } from "@playwright/test";
 import faker from "faker";
+import { inputByTestId } from "utils/locators";
 
 export class EditAttributeValueDialog {
   readonly page: Page;
@@ -8,7 +9,7 @@ export class EditAttributeValueDialog {
     page: Page,
     readonly saveButton = page.getByTestId("submit"),
     readonly cancelButton = page.getByTestId("back"),
-    readonly valueInput = page.getByTestId("value-name").locator("input"),
+    readonly valueInput = inputByTestId(page, "value-name"),
   ) {
     this.page = page;
   }

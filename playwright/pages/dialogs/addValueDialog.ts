@@ -1,11 +1,12 @@
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AddValueDialog {
   readonly page: Page;
 
   constructor(
     page: Page,
-    readonly nameInput = page.getByTestId("value-name").locator("input"),
+    readonly nameInput = inputByTestId(page, "value-name"),
     readonly saveButton = page.getByTestId("submit"),
   ) {
     this.page = page;

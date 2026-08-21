@@ -1,6 +1,7 @@
 import { URL_LIST } from "@data/url";
 import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class TranslationsPage extends BasePage {
   readonly page: Page;
@@ -11,7 +12,7 @@ export class TranslationsPage extends BasePage {
     page: Page,
     readonly translationPl_PL = page.getByTestId("PL_PL"),
     readonly editTranslationNameButton = page.getByTestId("edit-name"),
-    readonly translationInput = page.getByTestId("translation-field").locator("input"),
+    readonly translationInput = inputByTestId(page, "translation-field"),
     readonly translationRichText = page
       .getByTestId("rich-text-editor-translation")
       .locator("[contenteditable]"),
