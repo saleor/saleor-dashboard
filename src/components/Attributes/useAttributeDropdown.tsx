@@ -1,8 +1,10 @@
+import { AddNewValueAdornment } from "@dashboard/components/Combobox/components/AddNewValueAdornment";
+import { isAddNewValueOption } from "@dashboard/components/Combobox/utils";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { type FetchMoreProps } from "@dashboard/types";
 import { type Option } from "@saleor/macaw-ui-next";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -31,7 +33,6 @@ export const useAttributeDropdown = ({
   fetchMore,
 }: UseAttributeDropdownProps) => {
   const intl = useIntl();
-  const mounted = useRef(false);
 
   const fetchOptionsCallback = useCallback(
     (value: string) => {
@@ -52,10 +53,8 @@ export const useAttributeDropdown = ({
   };
 
   const handleFocus = () => {
-    if (!mounted.current) {
-      mounted.current = true;
-      fetchOptions(DEFAULT_INITIAL_SEARCH_DATA.query);
-    }
+    // Refetch on every focus so a reopen after blur still has remote options.
+    fetchOptions(DEFAULT_INITIAL_SEARCH_DATA.query);
   };
 
   const customValueLabel = intl.formatMessage(messages.addNewValue, {
@@ -75,12 +74,13 @@ export const useAttributeDropdown = ({
         {
           label: customValueLabel,
           value: inputValue,
+          startAdornment: <AddNewValueAdornment />,
         },
       ]
     : [];
 
   const transformCustomValue = (option: Option): Option => {
-    if (option.label.includes(customValueLabel)) {
+    if (isAddNewValueOption(option, customValueLabel)) {
       return { label: option.value, value: option.value };
     }
 

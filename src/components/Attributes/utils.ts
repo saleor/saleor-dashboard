@@ -3,6 +3,7 @@ import { type AttributeInput } from "@dashboard/components/Attributes/Attributes
 import { type FileChoiceType } from "@dashboard/components/FileUploadField";
 import { type SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
 import { type AttributeValueFragment } from "@dashboard/graphql";
+import { type FetchMoreProps } from "@dashboard/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
@@ -88,6 +89,28 @@ export function getMultiChoices(values: AttributeValueFragment[]): Option[] {
     label: value.name,
     value: value.slug,
   }));
+}
+
+export function resolveByAttributeId<T>(
+  value: T[] | ((attributeId: string) => T[]) | undefined,
+  attributeId: string,
+): T[] {
+  if (typeof value === "function") {
+    return value(attributeId);
+  }
+
+  return value ?? [];
+}
+
+export function resolveFetchMoreByAttributeId(
+  value: FetchMoreProps | ((attributeId: string) => FetchMoreProps) | undefined,
+  attributeId: string,
+): FetchMoreProps | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  return typeof value === "function" ? value(attributeId) : value;
 }
 
 export function getSingleDisplayValue(

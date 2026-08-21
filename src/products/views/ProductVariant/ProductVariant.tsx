@@ -256,9 +256,9 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     result: searchCollectionsOpts,
   } = useReferenceCollectionSearch(refAttr);
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
@@ -288,12 +288,8 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
+  const attributeValues = getAttributeValues;
 
   if (variant === null) {
     return <NotFoundPage backHref={productUrl(productId)} />;

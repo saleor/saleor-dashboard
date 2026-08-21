@@ -87,9 +87,9 @@ const PageCreate = ({ params }: PageCreateProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const { data: selectedPageType } = usePageTypeQuery({
@@ -99,7 +99,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
     },
     skip: !selectedPageTypeId,
   });
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues = getAttributeValues;
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
   const [pageCreate, pageCreateOpts] = usePageCreateMutation({
     disableErrorHandling: true,
@@ -244,11 +244,7 @@ const PageCreate = ({ params }: PageCreateProps) => {
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
   const errors = getMutationErrors(pageCreateOpts) as PageErrorWithAttributesFragment[];

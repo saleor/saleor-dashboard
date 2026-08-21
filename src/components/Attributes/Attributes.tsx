@@ -21,6 +21,7 @@ import {
   type AttributeRowHandlers,
   type VariantAttributeScope,
 } from "./types";
+import { resolveByAttributeId, resolveFetchMoreByAttributeId } from "./utils";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
@@ -37,11 +38,17 @@ export type AttributeInput = FormsetAtomicData<
   string[],
   AttributeValuesMetadata[]
 >;
-interface AttributesProps extends AttributeRowHandlers {
+export type AttributeValueChoices =
+  | AttributeValueFragment[]
+  | ((attributeId: string) => AttributeValueFragment[]);
+
+export type AttributeValueFetchMore = FetchMoreProps | ((attributeId: string) => FetchMoreProps);
+
+interface AttributesProps extends Omit<AttributeRowHandlers, "fetchMoreAttributeValues"> {
   attributes: AttributeInput[];
-  attributeValues: AttributeValueFragment[];
+  attributeValues: AttributeValueChoices;
   fetchAttributeValues: (query: string, attributeId: string) => void;
-  fetchMoreAttributeValues: FetchMoreProps;
+  fetchMoreAttributeValues: AttributeValueFetchMore;
   onAttributeSelectBlur: () => void;
   disabled: boolean;
   loading: boolean;
@@ -82,12 +89,19 @@ export const Attributes = ({
         {attributes.map(attribute => (
           <React.Fragment key={attribute.id}>
             <AttributeListItem
+              {...props}
               attribute={attribute}
               errors={errors}
-              attributeValues={attributeValues}
+              attributeValues={resolveByAttributeId(attributeValues, attribute.id)}
+              fetchMoreAttributeValues={
+                resolveFetchMoreByAttributeId(props.fetchMoreAttributeValues, attribute.id) ?? {
+                  hasMore: false,
+                  loading: false,
+                  onFetchMore: () => undefined,
+                }
+              }
               onAttributeSelectBlur={onAttributeSelectBlur}
               richTextGetters={richTextGetters}
-              {...props}
             />
           </React.Fragment>
         ))}

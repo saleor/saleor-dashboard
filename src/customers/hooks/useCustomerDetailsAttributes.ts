@@ -25,7 +25,6 @@ import {
 import useFormset, { type FormsetData } from "@dashboard/hooks/useFormset";
 import { type FetchMoreProps } from "@dashboard/types";
 import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import { useCallback, useMemo, useRef, useState } from "react";
 
@@ -89,9 +88,9 @@ export const useCustomerDetailsAttributes = ({
   const [typeAttributesLoading, setTypeAttributesLoading] = useState(false);
   const typeChangeRequestId = useRef(0);
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
@@ -189,13 +188,9 @@ export const useCustomerDetailsAttributes = ({
   return {
     attributeRichTextGetters,
     attributes: displayedAttributes,
-    attributeValues: mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || [],
+    attributeValues: getAttributeValues,
     fetchAttributeValues: searchAttributeValues,
-    fetchMoreAttributeValues: {
-      hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-      loading: searchAttributeValuesOpts.loading,
-      onFetchMore: loadMoreAttributeValues,
-    },
+    fetchMoreAttributeValues: getFetchMoreAttributeValues,
     getSubmitData,
     handleTypeChange,
     isDirty,

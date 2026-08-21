@@ -15,6 +15,8 @@ import AssignAttributeValueDialog, {
 import {
   type AttributeInput,
   Attributes,
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -30,7 +32,6 @@ import { Savebar } from "@dashboard/components/Savebar";
 import {
   type ProductErrorWithAttributesFragment,
   type ProductVariantCreateDataQuery,
-  type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -104,7 +105,7 @@ interface ProductVariantCreatePageProps {
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
   referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: AttributeValueChoices;
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   onVariantClick: (variantId: string) => void;
   onVariantReorder: (move: VariantReorderMove) => void;
@@ -120,7 +121,7 @@ interface ProductVariantCreatePageProps {
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreReferenceCategories?: FetchMoreProps;
   fetchMoreReferenceCollections?: FetchMoreProps;
-  fetchMoreAttributeValues?: FetchMoreProps;
+  fetchMoreAttributeValues?: AttributeValueFetchMore;
   onCloseDialog: () => void;
   onAttributeSelectBlur: () => void;
   fetchMoreWarehouses: () => void;
