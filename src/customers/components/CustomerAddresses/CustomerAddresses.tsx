@@ -1,6 +1,7 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { type CustomerDetailsFragment } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
@@ -90,9 +91,9 @@ const CustomerAddresses = ({
           <Skeleton __height="4rem" />
         </Box>
       ) : !hasAnyAddress ? (
-        <Text>
+        <Placeholder>
           <FormattedMessage id="3d1RXL" defaultMessage="This customer has no addresses yet" />
-        </Text>
+        </Placeholder>
       ) : sameAddress ? (
         <Box className={styles.grid}>
           <AddressBlock

@@ -35,6 +35,20 @@ describe("CustomerAddresses", () => {
     expect(screen.getByTestId("manage-addresses").closest("a")).toBeNull();
   });
 
+  it("shows the dashed empty state when the customer has no addresses", () => {
+    // Arrange / Act
+    renderAddresses({
+      customer: {
+        ...customer,
+        defaultBillingAddress: null,
+        defaultShippingAddress: null,
+      } as CustomerDetailsFragment,
+    });
+
+    // Assert
+    expect(screen.getByText(/no addresses yet/i)).toBeInTheDocument();
+  });
+
   it("links Manage to the address book once the customer is loaded", () => {
     // Arrange / Act
     renderAddresses();
