@@ -112,9 +112,9 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const [updateMetadata] = useUpdateMetadataMutation({});
@@ -304,11 +304,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
     searchReferenceCollectionsOpts,
     loadMoreReferenceCollections,
   );
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
   const loading =
     uploadFileOpts.loading ||
     productCreateOpts.loading ||
@@ -350,7 +346,7 @@ const ProductCreateView = ({ params }: ProductCreateProps) => {
         currentChannels={currentChannels}
         categories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
         collections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
-        attributeValues={mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) ?? []}
+        attributeValues={getAttributeValues}
         loading={loading}
         channelsErrors={channelsErrors}
         errors={errors}

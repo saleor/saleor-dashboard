@@ -4,18 +4,27 @@ import {
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
+import { isAddNewValueOption } from "@dashboard/components/Combobox/utils";
 import {
   type AttributeValueFragment,
   type PageErrorWithAttributesFragment,
   type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 import { DynamicCombobox, type Option } from "@saleor/macaw-ui-next";
-import { useState } from "react";
-import { useIntl } from "react-intl";
+import { useMemo, useState } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
 import { type AttributeInput } from "./Attributes";
 import { type AttributeRowHandlers } from "./types";
 import { useAttributeDropdown } from "./useAttributeDropdown";
+
+const messages = defineMessages({
+  searchValues: {
+    id: "mQib3Y",
+    defaultMessage: "Search values",
+    description: "placeholder for attribute dropdown combobox",
+  },
+});
 
 type DropdownRowProps = Pick<
   AttributeRowHandlers,
@@ -26,6 +35,33 @@ type DropdownRowProps = Pick<
   disabled: boolean;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   onAttributeSelectBlur?: () => void;
+};
+
+const toOptions = (values: Array<Pick<AttributeValueFragment, "name" | "slug">>): Option[] =>
+  values
+    .filter((value): value is typeof value & { slug: string } => value.slug !== null)
+    .map(value => ({
+      value: value.slug,
+      label: value.name ?? value.slug,
+    }));
+
+const mergeOptions = (seed: Option[], remote: Option[]): Option[] => {
+  const byValue = new Map<string, Option>();
+
+  seed.forEach(option => byValue.set(option.value, option));
+  remote.forEach(option => byValue.set(option.value, option));
+
+  return Array.from(byValue.values());
+};
+
+const filterOptions = (options: Option[], query: string): Option[] => {
+  const normalized = query.trim().toLocaleLowerCase();
+
+  if (!normalized) {
+    return options;
+  }
+
+  return options.filter(option => option.label.toLocaleLowerCase().includes(normalized));
 };
 
 export const DropdownRow = ({
@@ -39,6 +75,7 @@ export const DropdownRow = ({
   onAttributeSelectBlur,
 }: DropdownRowProps): JSX.Element => {
   const intl = useIntl();
+  const fieldId = `attribute:${attribute.label}`;
   const [inputValue, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState<Option | null>(
     attribute.value[0]
@@ -63,12 +100,11 @@ export const DropdownRow = ({
     fetchMore: fetchMoreAttributeValues,
   });
 
-  const options: Option[] = attributeValues
-    .filter(value => value.slug !== null)
-    .map(value => ({
-      value: value.slug as string,
-      label: value.name ?? value.slug ?? "",
-    }));
+  const options = useMemo(() => {
+    const merged = mergeOptions(toOptions(attribute.data.values), toOptions(attributeValues));
+
+    return filterOptions(merged, inputValue);
+  }, [attribute.data.values, attributeValues, inputValue]);
 
   const handleOnChange = (option: Option | null) => {
     if (!option) {
@@ -83,13 +119,17 @@ export const DropdownRow = ({
     setSelectedValue(transformedOption);
     onChange(attribute.id, transformedOption.value);
 
-    if (option.label.includes(customValueLabel)) {
+    if (isAddNewValueOption(option, customValueLabel)) {
       setInputValue("");
     }
   };
 
   return (
-    <BasicAttributeRow label={attribute.label} {...getAttributeRowLabelProps(attribute)}>
+    <BasicAttributeRow
+      id={fieldId}
+      label={attribute.label}
+      {...getAttributeRowLabelProps(attribute)}
+    >
       <DynamicCombobox
         size="small"
         disabled={disabled}
@@ -97,9 +137,10 @@ export const DropdownRow = ({
         value={selectedValue}
         error={!!error}
         helperText={getErrorMessage(error, intl)}
-        name={`attribute:${attribute.label}`}
-        id={`attribute:${attribute.label}`}
+        name={fieldId}
+        id={fieldId}
         label=""
+        placeholder={intl.formatMessage(messages.searchValues)}
         onChange={handleOnChange}
         onInputValueChange={value => {
           setInputValue(value);
@@ -108,7 +149,7 @@ export const DropdownRow = ({
         onFocus={handleFocus}
         onBlur={onAttributeSelectBlur}
         onScrollEnd={handleFetchMore}
-        loading={fetchMoreAttributeValues?.hasMore || fetchMoreAttributeValues?.loading}
+        loading={!!fetchMoreAttributeValues?.loading}
       />
     </BasicAttributeRow>
   );

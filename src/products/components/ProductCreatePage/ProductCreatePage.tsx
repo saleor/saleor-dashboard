@@ -14,7 +14,12 @@ import {
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
-import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  Attributes,
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
+} from "@dashboard/components/Attributes";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -28,7 +33,6 @@ import {
   type ProductChannelListingErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductTypeQuery,
-  type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -67,12 +71,12 @@ interface ProductCreatePageProps {
   currentChannels: ChannelData[];
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: AttributeValueChoices;
   loading: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
-  fetchMoreAttributeValues?: FetchMoreProps;
+  fetchMoreAttributeValues?: AttributeValueFetchMore;
   initial?: Partial<ProductCreateFormData>;
   productTypes?: RelayToFlat<SearchProductTypesQuery["search"]>;
   referencePages?: RelayToFlat<SearchPagesQuery["search"]>;

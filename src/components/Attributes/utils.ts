@@ -7,6 +7,7 @@ import {
   type PageErrorWithAttributesFragment,
   type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
+import { type FetchMoreProps } from "@dashboard/types";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
 import { getEntityUrl } from "@dashboard/utils/maps";
@@ -91,11 +92,34 @@ export function getMultiChoices(values: AttributeValueFragment[]): Option[] {
   }));
 }
 
+export function resolveByAttributeId<T>(
+  value: T[] | ((attributeId: string) => T[]) | undefined,
+  attributeId: string,
+): T[] {
+  if (typeof value === "function") {
+    return value(attributeId);
+  }
+
+  return value ?? [];
+}
+
+export function resolveFetchMoreByAttributeId(
+  value: FetchMoreProps | ((attributeId: string) => FetchMoreProps) | undefined,
+  attributeId: string,
+): FetchMoreProps | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  return typeof value === "function" ? value(attributeId) : value;
+}
+
 export function getSingleDisplayValue(
   attribute: AttributeInput,
   attributeValues: AttributeValueFragment[],
 ): string {
   return (
+    attribute.data.selectedValues?.find(value => value.slug === attribute.value[0])?.name ||
     attributeValues.find(value => value.slug === attribute.value[0])?.name ||
     attribute.data.values.find(value => value.slug === attribute.value[0])?.name ||
     attribute.value[0] ||
