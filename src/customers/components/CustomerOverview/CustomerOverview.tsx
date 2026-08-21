@@ -15,6 +15,7 @@ import { Banknote, LogIn, Receipt, ShoppingCart } from "lucide-react";
 import { type ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { RECENT_ORDERS_WINDOW } from "./constants";
 import styles from "./CustomerOverview.module.css";
 import { CustomerOverviewChannelScope } from "./CustomerOverviewChannelScope";
 import { CustomerOverviewMoneyBreakdownTooltip } from "./CustomerOverviewMoneyBreakdownTooltip";
@@ -37,19 +38,20 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
   const { effectiveKpiChannelId, kpiChannels, setKpiChannelId } = useCustomerDetails();
   const loading = !customer;
 
+  const kpiOrders = customer?.kpiOrders;
   const channelOrders = useMemo(() => {
-    if (!effectiveKpiChannelId || customer?.kpiOrders === undefined) {
+    if (!effectiveKpiChannelId || kpiOrders === undefined) {
       return [];
     }
 
-    const orders = mapEdgesToItems(customer.kpiOrders) ?? [];
+    const orders = mapEdgesToItems(kpiOrders) ?? [];
 
     if (orders.length > 0 && orders.some(order => order.channel?.id !== effectiveKpiChannelId)) {
       return [];
     }
 
     return orders;
-  }, [customer?.kpiOrders, effectiveKpiChannelId]);
+  }, [effectiveKpiChannelId, kpiOrders]);
 
   const recentOrders = useMemo(() => selectRecentOrdersForKpis(channelOrders), [channelOrders]);
 
@@ -188,6 +190,55 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
               loading={totalOrdersLoading}
             />
           </Box>
+          <KpiCard
+            dataTestId={
+              metrics ? `kpi-recent-spent-${metrics.currency.toLowerCase()}` : "kpi-recent-spent"
+            }
+            icon={<Banknote size={ICON_SIZE} />}
+            title={
+              <FormattedMessage
+                defaultMessage="Recent total"
+                description="customer overview stat label: sum of recent orders net product sales"
+                id="5Nv7ig"
+              />
+            }
+            tooltip={
+              <FormattedMessage
+                defaultMessage="Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
+                description="customer overview, recent net sales tooltip"
+                id="tQA//+"
+                values={{ windowSize: metrics?.windowSize ?? RECENT_ORDERS_WINDOW }}
+              />
+            }
+            value={metrics ? renderMoneyValue(metrics.netSales) : EMPTY_VALUE}
+            valueTooltip={metrics ? renderNetSalesValueTooltip() : undefined}
+            subtitle={metrics ? renderRecentWindowSubtitle() : undefined}
+            loading={loading}
+          />
+          <KpiCard
+            dataTestId={
+              metrics ? `kpi-recent-aov-${metrics.currency.toLowerCase()}` : "kpi-recent-aov"
+            }
+            icon={<Receipt size={ICON_SIZE} />}
+            title={
+              <FormattedMessage
+                defaultMessage="Avg order value"
+                description="customer overview stat label: average order value of recent orders"
+                id="aTe9zV"
+              />
+            }
+            tooltip={
+              <FormattedMessage
+                defaultMessage="Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
+                description="customer overview, AOV tooltip"
+                id="bIttOt"
+                values={{ windowSize: metrics?.windowSize ?? RECENT_ORDERS_WINDOW }}
+              />
+            }
+            value={metrics ? renderMoneyValue(metrics.aov) : EMPTY_VALUE}
+            subtitle={metrics ? renderRecentWindowSubtitle() : undefined}
+            loading={loading}
+          />
         </RequirePermissions>
 
         <KpiCard
@@ -221,59 +272,6 @@ export const CustomerOverview = ({ customer }: CustomerOverviewProps): JSX.Eleme
           }
           loading={loading}
         />
-
-        {metrics && (
-          <>
-            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-              <KpiCard
-                dataTestId={`kpi-recent-spent-${metrics.currency.toLowerCase()}`}
-                icon={<Banknote size={ICON_SIZE} />}
-                title={
-                  <FormattedMessage
-                    defaultMessage="Recent total"
-                    description="customer overview stat label: sum of recent orders net product sales"
-                    id="5Nv7ig"
-                  />
-                }
-                tooltip={
-                  <FormattedMessage
-                    defaultMessage="Sum of product revenue from this customer's last {windowSize} orders in this channel. Excludes shipping and tax. Discounts are already applied."
-                    description="customer overview, recent net sales tooltip"
-                    id="tQA//+"
-                    values={{ windowSize: metrics.windowSize }}
-                  />
-                }
-                value={renderMoneyValue(metrics.netSales)}
-                valueTooltip={renderNetSalesValueTooltip()}
-                subtitle={renderRecentWindowSubtitle()}
-              />
-            </RequirePermissions>
-
-            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-              <KpiCard
-                dataTestId={`kpi-recent-aov-${metrics.currency.toLowerCase()}`}
-                icon={<Receipt size={ICON_SIZE} />}
-                title={
-                  <FormattedMessage
-                    defaultMessage="Avg order value"
-                    description="customer overview stat label: average order value of recent orders"
-                    id="aTe9zV"
-                  />
-                }
-                tooltip={
-                  <FormattedMessage
-                    defaultMessage="Average product revenue per order in this channel, from the last {windowSize} orders. Excludes shipping and tax."
-                    description="customer overview, AOV tooltip"
-                    id="bIttOt"
-                    values={{ windowSize: metrics.windowSize }}
-                  />
-                }
-                value={renderMoneyValue(metrics.aov)}
-                subtitle={renderRecentWindowSubtitle()}
-              />
-            </RequirePermissions>
-          </>
-        )}
       </div>
     </Box>
   );
