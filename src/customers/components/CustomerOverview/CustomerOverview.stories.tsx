@@ -97,9 +97,9 @@ const withKpiContext = (channelId = "Q2hhbm5lbDox") => ({
   setKpiChannelId: fn(),
 });
 
-const withCustomer = (
-  overrides: Partial<NonNullable<ComponentProps<typeof CustomerOverview>["customer"]>>,
-): NonNullable<ComponentProps<typeof CustomerOverview>["customer"]> => ({
+type OverviewCustomer = NonNullable<ComponentProps<typeof CustomerOverview>["customer"]>;
+
+const withCustomer = (overrides: Partial<OverviewCustomer>): OverviewCustomer => ({
   ...customer,
   ...overrides,
 });
