@@ -10407,6 +10407,50 @@ export function useAppUpdatePermissionsMutation(baseOptions?: ApolloReactHooks.M
 export type AppUpdatePermissionsMutationHookResult = ReturnType<typeof useAppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationResult = Apollo.MutationResult<Types.AppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
+export const UpdateExtensionPreferencesDocument = gql`
+    mutation UpdateExtensionPreferences($input: AccountInput!) {
+  accountUpdate(input: $input) {
+    user {
+      id
+      metadata {
+        key
+        value
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}
+    `;
+export type UpdateExtensionPreferencesMutationFn = Apollo.MutationFunction<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>;
+
+/**
+ * __useUpdateExtensionPreferencesMutation__
+ *
+ * To run a mutation, you first call `useUpdateExtensionPreferencesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateExtensionPreferencesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateExtensionPreferencesMutation, { data, loading, error }] = useUpdateExtensionPreferencesMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateExtensionPreferencesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>(UpdateExtensionPreferencesDocument, options);
+      }
+export type UpdateExtensionPreferencesMutationHookResult = ReturnType<typeof useUpdateExtensionPreferencesMutation>;
+export type UpdateExtensionPreferencesMutationResult = Apollo.MutationResult<Types.UpdateExtensionPreferencesMutation>;
+export type UpdateExtensionPreferencesMutationOptions = Apollo.BaseMutationOptions<Types.UpdateExtensionPreferencesMutation, Types.UpdateExtensionPreferencesMutationVariables>;
 export const InstalledAppsSnapshotDocument = gql`
     query InstalledAppsSnapshot {
   apps(first: 100) {
@@ -10718,6 +10762,7 @@ export const ExtensionListDocument = gql`
         }
         app {
           id
+          identifier
           appUrl
           name
           brand {

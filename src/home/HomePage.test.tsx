@@ -205,6 +205,7 @@ const panelExtension = (id: string, label: string): Extension => ({
   app: {
     __typename: "App",
     id: `app-${id}`,
+    identifier: null,
     appUrl: "https://app.example",
     name: label,
     brand: null,

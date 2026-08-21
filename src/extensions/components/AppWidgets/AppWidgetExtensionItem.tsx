@@ -5,6 +5,7 @@ import { IframePost } from "@dashboard/extensions/components/IframePost/IframePo
 import { appExtensionManifestOptionsSchema } from "@dashboard/extensions/domain/app-extension-manifest-options";
 import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { extensionActions } from "@dashboard/extensions/messages";
+import { InlineExtensionPreferenceControls } from "@dashboard/extensions/preferences/InlineExtensionPreferenceControls";
 import { type ExtensionWithParams } from "@dashboard/extensions/types";
 import { type AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
 import { AppFrame } from "@dashboard/extensions/views/ViewManifestExtension/components/AppFrame/AppFrame";
@@ -13,6 +14,8 @@ import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { ExternalLink } from "lucide-react";
 import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
+
+import styles from "./AppWidgetExtensionItem.module.css";
 
 interface AppWidgetExtensionItemProps {
   extension: ExtensionWithParams;
@@ -37,6 +40,21 @@ export const AppWidgetExtensionItem = ({
   }
 
   const settings = settingsValidation.data;
+
+  const renderWithControls = (children: ReactNode) => (
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      gap={2}
+      className={styles.hoverRow}
+    >
+      <Box>{children}</Box>
+      <Box className={styles.hoverControls}>
+        <InlineExtensionPreferenceControls extension={extension} />
+      </Box>
+    </Box>
+  );
 
   if (extension.targetName !== "WIDGET") {
     const onClick = () => extension.open(params);
@@ -65,10 +83,12 @@ export const AppWidgetExtensionItem = ({
 
     return (
       <Box paddingX={6} data-test-id="app-widget-text">
-        <Link onClick={onClick} title={title}>
-          {extension.label}
-          {suffix}
-        </Link>
+        {renderWithControls(
+          <Link onClick={onClick} title={title}>
+            {extension.label}
+            {suffix}
+          </Link>,
+        )}
       </Box>
     );
   }
@@ -94,31 +114,36 @@ export const AppWidgetExtensionItem = ({
   });
 
   return (
-    <AppWidgetCard extension={extension}>
-      {isIframePost ? (
-        <IframePost
-          autoHeight
-          appId={extension.app.id}
-          accessToken={extension.accessToken}
-          extensionId={extension.id}
-          extensionUrl={extensionUrl}
-          params={params}
-          refetch={extension.refetch}
-        />
-      ) : (
-        <AppFrame
-          target="WIDGET"
-          autoHeight
-          src={appIframeUrl}
-          appToken={extension.accessToken}
-          appId={extension.app.id}
-          dashboardVersion={APP_VERSION}
-          params={params}
-          // Keeps the widget's JWT fresh on a long-open dashboard, which also
-          // keeps the token a co-located `openPopup` popup will use current.
-          refetch={extension.refetch}
-        />
-      )}
-    </AppWidgetCard>
+    <Box className={styles.hoverRow}>
+      <Box display="flex" justifyContent="flex-end" className={styles.hoverControls}>
+        <InlineExtensionPreferenceControls extension={extension} />
+      </Box>
+      <AppWidgetCard extension={extension}>
+        {isIframePost ? (
+          <IframePost
+            autoHeight
+            appId={extension.app.id}
+            accessToken={extension.accessToken}
+            extensionId={extension.id}
+            extensionUrl={extensionUrl}
+            params={params}
+            refetch={extension.refetch}
+          />
+        ) : (
+          <AppFrame
+            target="WIDGET"
+            autoHeight
+            src={appIframeUrl}
+            appToken={extension.accessToken}
+            appId={extension.app.id}
+            dashboardVersion={APP_VERSION}
+            params={params}
+            // Keeps the widget's JWT fresh on a long-open dashboard, which also
+            // keeps the token a co-located `openPopup` popup will use current.
+            refetch={extension.refetch}
+          />
+        )}
+      </AppWidgetCard>
+    </Box>
   );
 };
