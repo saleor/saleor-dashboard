@@ -2814,6 +2814,10 @@
     "context": "tooltip content when line's variant has been deleted",
     "string": "This variant no longer exists. You can still fulfill it."
   },
+  "8vjjrE": {
+    "context": "button, removes a model type from the sidebar",
+    "string": "Unpin from nav"
+  },
   "8wYH6R": {
     "context": "homepage empty state headline promoting Pulse",
     "string": "See how your store is doing"
@@ -5101,6 +5105,10 @@
   "HBrAXs": {
     "context": "channel status",
     "string": "Active"
+  },
+  "HCQlAJ": {
+    "context": "button, adds a model type to the sidebar",
+    "string": "Pin to nav"
   },
   "HEjlAr": {
     "context": "variant pricing channel status description when channel is active",

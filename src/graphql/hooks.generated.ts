@@ -11108,6 +11108,48 @@ export function useAppUpdatePermissionsMutation(baseOptions?: ApolloReactHooks.M
 export type AppUpdatePermissionsMutationHookResult = ReturnType<typeof useAppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationResult = Apollo.MutationResult<Types.AppUpdatePermissionsMutation>;
 export type AppUpdatePermissionsMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdatePermissionsMutation, Types.AppUpdatePermissionsMutationVariables>;
+export const InstalledAppsSnapshotDocument = gql`
+    query InstalledAppsSnapshot {
+  apps(first: 100) {
+    edges {
+      node {
+        id
+        identifier
+        isActive
+        type
+        appUrl
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useInstalledAppsSnapshotQuery__
+ *
+ * To run a query within a React component, call `useInstalledAppsSnapshotQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInstalledAppsSnapshotQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInstalledAppsSnapshotQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useInstalledAppsSnapshotQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.InstalledAppsSnapshotQuery, Types.InstalledAppsSnapshotQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.InstalledAppsSnapshotQuery, Types.InstalledAppsSnapshotQueryVariables>(InstalledAppsSnapshotDocument, options);
+      }
+export function useInstalledAppsSnapshotLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.InstalledAppsSnapshotQuery, Types.InstalledAppsSnapshotQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.InstalledAppsSnapshotQuery, Types.InstalledAppsSnapshotQueryVariables>(InstalledAppsSnapshotDocument, options);
+        }
+export type InstalledAppsSnapshotQueryHookResult = ReturnType<typeof useInstalledAppsSnapshotQuery>;
+export type InstalledAppsSnapshotLazyQueryHookResult = ReturnType<typeof useInstalledAppsSnapshotLazyQuery>;
+export type InstalledAppsSnapshotQueryResult = Apollo.QueryResult<Types.InstalledAppsSnapshotQuery, Types.InstalledAppsSnapshotQueryVariables>;
 export const InstalledAppsDocument = gql`
     query InstalledApps($before: String, $after: String, $first: Int, $last: Int, $filter: AppFilterInput) {
   apps(

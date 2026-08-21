@@ -35,6 +35,11 @@ export const useAppActions = (
   const { handle: handleWidgetResize } = AppActionsHandler.useHandleWidgetResizeAction(frameEl);
   const { handle: handleRefreshEntity } = AppActionsHandler.useHandleRefreshEntityAction();
   const { handle: handleOpenPopup } = AppActionsHandler.useHandleOpenPopupAction(appId, target);
+  const { handle: handleRedirectToApp } = AppActionsHandler.useHandleRedirectToAppAction(
+    appId,
+    frameEl,
+    appOrigin,
+  );
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
    */
@@ -77,6 +82,9 @@ export const useAppActions = (
       }
       case "openPopup": {
         return handleOpenPopup(action);
+      }
+      case "redirectToApp": {
+        return handleRedirectToApp(action);
       }
       default: {
         const actionType = (action as unknown as { type?: string })?.type;

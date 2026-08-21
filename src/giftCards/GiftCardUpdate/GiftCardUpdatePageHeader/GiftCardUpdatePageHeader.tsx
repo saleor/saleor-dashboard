@@ -49,11 +49,7 @@ const GiftCardUpdatePageHeader = () => {
   }, [context, giftCard?.id]);
 
   const menuItems = useMemo((): TopNavMenuItem[] => {
-    const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
-      label: item.label,
-      onSelect: item.onSelect,
-      testId: item.testId,
-    }));
+    const items: TopNavMenuItem[] = [...extensionMenuItems];
 
     const canResendCode = giftCard && !giftCard.isExpired && canManageChannels;
 

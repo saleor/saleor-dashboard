@@ -4868,10 +4868,13 @@ export const defineAttributeErrorFactory: DefineTypeFactoryInterface<
 
 export type OptionalAttributeFilterInput = {
   __typename?: 'AttributeFilterInput';
+  /** Whether the attribute can be displayed in the admin product list. */
   availableInGrid?: AttributeFilterInput['availableInGrid'] | undefined;
   /** Specifies the channel by which the data should be filtered. */
   channel?: AttributeFilterInput['channel'] | undefined;
+  /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: AttributeFilterInput['filterableInDashboard'] | undefined;
+  /** Whether the attribute can be filtered in storefront. */
   filterableInStorefront?: AttributeFilterInput['filterableInStorefront'] | undefined;
   ids?: AttributeFilterInput['ids'] | undefined;
   inCategory?: AttributeFilterInput['inCategory'] | undefined;
@@ -5867,6 +5870,7 @@ export type OptionalAttributeWhereInput = {
   /** A list of conditions of which at least one must be met. */
   OR?: Maybe<OptionalAttributeWhereInput[]> | undefined;
   entityType?: Maybe<OptionalAttributeEntityTypeEnumFilterInput> | undefined;
+  /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: AttributeWhereInput['filterableInDashboard'] | undefined;
   ids?: AttributeWhereInput['ids'] | undefined;
   inCategory?: AttributeWhereInput['inCategory'] | undefined;
@@ -17875,6 +17879,8 @@ export type OptionalMutation = {
   /**
  * Deactivates product variant preorder. It changes all preorder allocation into regular allocation.
  *
+ * DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
+ *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
  */
   productVariantPreorderDeactivate?: Maybe<OptionalProductVariantPreorderDeactivate> | undefined;
@@ -20084,6 +20090,7 @@ export type OptionalOrderFilterInput = {
   giftCardUsed?: OrderFilterInput['giftCardUsed'] | undefined;
   ids?: OrderFilterInput['ids'] | undefined;
   isClickAndCollect?: OrderFilterInput['isClickAndCollect'] | undefined;
+  /** Filter by orders containing a variant that is currently in preorder. */
   isPreorder?: OrderFilterInput['isPreorder'] | undefined;
   metadata?: Maybe<OptionalMetadataFilter[]> | undefined;
   numbers?: OrderFilterInput['numbers'] | undefined;
@@ -24742,7 +24749,11 @@ export const definePluginUpdateInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Represents preorder settings for product variant. */
+/**
+ * Represents preorder settings for product variant.
+ *
+ * DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
+ */
 export type OptionalPreorderData = {
   __typename?: 'PreorderData';
   /** Preorder end date. */
@@ -24772,6 +24783,11 @@ export const definePreorderDataFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
+/**
+ * Preorder settings for a product variant.
+ *
+ * DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
+ */
 export type OptionalPreorderSettingsInput = {
   __typename?: 'PreorderSettingsInput';
   /** The end date for preorder. */
@@ -24791,7 +24807,11 @@ export const definePreorderSettingsInputFactory: DefineTypeFactoryInterface<
   {}
 > = defineTypeFactory;
 
-/** Represents preorder variant data for channel. */
+/**
+ * Represents preorder variant data for channel.
+ *
+ * DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
+ */
 export type OptionalPreorderThreshold = {
   __typename?: 'PreorderThreshold';
   /** Preorder threshold for product variant in this channel. */
@@ -25823,6 +25843,7 @@ export type OptionalProductFilterInput = {
   /** Filter on whether product is a gift card or not. */
   giftCard?: ProductFilterInput['giftCard'] | undefined;
   hasCategory?: ProductFilterInput['hasCategory'] | undefined;
+  /** Filter by product with preordered variants. */
   hasPreorderedVariants?: ProductFilterInput['hasPreorderedVariants'] | undefined;
   ids?: ProductFilterInput['ids'] | undefined;
   /** Filter by availability for purchase. */
@@ -27703,6 +27724,7 @@ export const defineProductVariantDiscountedPriceUpdatedFactory: DefineTypeFactor
 
 export type OptionalProductVariantFilterInput = {
   __typename?: 'ProductVariantFilterInput';
+  /** Filter by variants that are currently in preorder. */
   isPreorder?: ProductVariantFilterInput['isPreorder'] | undefined;
   metadata?: Maybe<OptionalMetadataFilter[]> | undefined;
   search?: ProductVariantFilterInput['search'] | undefined;
@@ -27888,6 +27910,8 @@ export const defineProductVariantOutOfStockInChannelFactory: DefineTypeFactoryIn
 
 /**
  * Deactivates product variant preorder. It changes all preorder allocation into regular allocation.
+ *
+ * DEPRECATED: Preorder is deprecated and will be removed. Model pre-sales with regular stock instead: create the planned quantity in a warehouse, or set `trackInventory` to false to sell without a stock limit.
  *
  * Requires one of the following permissions: MANAGE_PRODUCTS.
  */
