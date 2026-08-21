@@ -2,6 +2,7 @@ import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
 import { type AttributeInput } from "@dashboard/components/Attributes";
 import {
   AttributeInputTypeEnum,
+  type AttributeValueDetailsFragment,
   type AttributeValueInput,
   type CustomerAssignedAttributeFragment,
   type CustomerTypeOnCustomerFragment,
@@ -158,6 +159,80 @@ export const mapAssignedAttribute = (
   }
 };
 
+const toChoiceDetails = (
+  choice: { name?: string | null; slug?: string | null } | null | undefined,
+): AttributeValueDetailsFragment | null => {
+  if (!choice?.slug) {
+    return null;
+  }
+
+  const details: AttributeValueDetailsFragment = {
+    __typename: "AttributeValue",
+    boolean: null,
+    date: null,
+    dateTime: null,
+    file: null,
+    id: choice.slug,
+    name: choice.name ?? choice.slug,
+    plainText: null,
+    reference: null,
+    richText: null,
+    slug: choice.slug,
+    value: null,
+  };
+
+  return details;
+};
+
+const getAssignedSelectedValues = (
+  assigned: CustomerAssignedAttributeFragment | undefined,
+): AttributeValueDetailsFragment[] | undefined => {
+  if (!assigned) {
+    return undefined;
+  }
+
+  switch (assigned.__typename) {
+    case "AssignedSingleChoiceAttribute": {
+      const value = toChoiceDetails(assigned.choiceValue);
+
+      return value ? [value] : undefined;
+    }
+    case "AssignedMultiChoiceAttribute": {
+      const values = assigned.choiceValues
+        .map(toChoiceDetails)
+        .filter((value): value is AttributeValueDetailsFragment => value !== null);
+
+      return values.length > 0 ? values : undefined;
+    }
+    case "AssignedSwatchAttribute": {
+      const value = toChoiceDetails(assigned.swatchValue);
+
+      return value ? [value] : undefined;
+    }
+    default:
+      return undefined;
+  }
+};
+
+const mergeChoicesBySlug = (
+  choices: AttributeValueDetailsFragment[],
+  extra: AttributeValueDetailsFragment[] | undefined,
+): AttributeValueDetailsFragment[] => {
+  if (!extra?.length) {
+    return choices;
+  }
+
+  const bySlug = new Map(choices.map(choice => [choice.slug, choice]));
+
+  extra.forEach(choice => {
+    if (choice.slug && !bySlug.has(choice.slug)) {
+      bySlug.set(choice.slug, choice);
+    }
+  });
+
+  return Array.from(bySlug.values());
+};
+
 export const getAttributeInputFromCustomerType = ({
   assignedAttributes = [],
   customerType,
@@ -179,6 +254,10 @@ export const getAttributeInputFromCustomerType = ({
     // Empty arrays are truthy, so `previous?.value ?? mapped` would hide
     // stored assignments when switching types (or reverting) with a blank field.
     const usePreviousValue = hasFilledAttributeValue(previous?.value);
+    const selectedValues = usePreviousValue
+      ? previous?.data.selectedValues
+      : getAssignedSelectedValues(assigned);
+    const typeChoices = mapEdgesToItems(attribute.choices) || [];
 
     return {
       additionalData: usePreviousValue ? previous?.additionalData : mapped?.additionalData,
@@ -186,9 +265,9 @@ export const getAttributeInputFromCustomerType = ({
         entityType: attribute.entityType ?? undefined,
         inputType: attribute.inputType ?? AttributeInputTypeEnum.DROPDOWN,
         isRequired: attribute.valueRequired,
-        selectedValues: usePreviousValue ? previous?.data.selectedValues : undefined,
+        selectedValues,
         unit: attribute.unit,
-        values: mapEdgesToItems(attribute.choices) || [],
+        values: mergeChoicesBySlug(typeChoices, selectedValues),
       },
       id: attribute.id,
       label: attribute.name,

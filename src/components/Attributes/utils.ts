@@ -95,6 +95,7 @@ export function getSingleDisplayValue(
   attributeValues: AttributeValueFragment[],
 ): string {
   return (
+    attribute.data.selectedValues?.find(value => value.slug === attribute.value[0])?.name ||
     attributeValues.find(value => value.slug === attribute.value[0])?.name ||
     attribute.data.values.find(value => value.slug === attribute.value[0])?.name ||
     attribute.value[0] ||

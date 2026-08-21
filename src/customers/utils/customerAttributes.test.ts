@@ -147,6 +147,30 @@ describe("getAttributeInputFromCustomerType", () => {
 
     // Assert
     expect(input[0].value).toEqual(["gold"]);
+    expect(input[0].data.selectedValues?.[0]).toMatchObject({ name: "Gold", slug: "gold" });
+  });
+
+  it("keeps the assigned choice label when it is not in the type's first page of choices", () => {
+    // Arrange
+    const assignedAttributes = [
+      {
+        __typename: "AssignedSingleChoiceAttribute" as const,
+        attribute: { __typename: "Attribute" as const, id: "attr-1", slug: "loyalty" },
+        choiceValue: {
+          __typename: "AssignedChoiceAttributeValue" as const,
+          name: "Platinum",
+          slug: "platinum",
+        },
+      },
+    ];
+
+    // Act
+    const input = getAttributeInputFromCustomerType({ assignedAttributes, customerType });
+
+    // Assert
+    expect(input[0].value).toEqual(["platinum"]);
+    expect(input[0].data.selectedValues?.[0]?.name).toBe("Platinum");
+    expect(input[0].data.values.some(value => value.slug === "platinum")).toBe(true);
   });
 
   it("builds inputs from a customer payload", () => {
