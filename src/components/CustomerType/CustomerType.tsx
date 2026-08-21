@@ -2,7 +2,7 @@ import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { hasOneOfPermissions } from "@dashboard/components/RequirePermissions";
 import { customerListUrlWithCustomerType } from "@dashboard/customers/urls";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Box, Skeleton, Text, type TextProps, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
 import { UserRound } from "lucide-react";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
@@ -142,33 +142,9 @@ export const ClickableCustomerType = (props: CustomerTypeProps): JSX.Element => 
     customerTypeName: customerType.name,
   });
 
-  if (!customerType.slug) {
-    const unavailableTitle = intl.formatMessage(messages.customerTypeListFilterUnavailable);
-
-    return (
-      <Tooltip>
-        <Tooltip.Trigger>
-          <Box display="inline-flex" alignItems="center" __cursor="help">
-            <CustomerTypeDisplay {...props} title={unavailableTitle} />
-          </Box>
-        </Tooltip.Trigger>
-        <Tooltip.Content>
-          <Tooltip.Arrow />
-          <Box padding={2} __maxWidth="280px">
-            <Text size={2}>{unavailableTitle}</Text>
-          </Box>
-        </Tooltip.Content>
-      </Tooltip>
-    );
-  }
-
   return (
     <RouterLink
-      to={customerListUrlWithCustomerType({
-        id: customerType.id,
-        name: customerType.name,
-        slug: customerType.slug,
-      })}
+      to={customerListUrlWithCustomerType({ id: customerType.id })}
       className={styles.link}
       title={linkLabel}
       aria-label={linkLabel}

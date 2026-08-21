@@ -98,9 +98,9 @@ describe("CustomerDetailsTitle", () => {
     const typeLink = screen.getByText("B2B").closest("a");
 
     expect(typeLink).toBeInTheDocument();
-    expect(typeLink?.getAttribute("href")).toContain("/customers?");
-    expect(typeLink?.getAttribute("href")).toContain("customerType");
-    expect(typeLink?.getAttribute("href")).toContain("b2b");
+    expect(typeLink?.getAttribute("href")).toContain("/customers/");
+    expect(typeLink?.getAttribute("href")).toContain("customerTypes");
+    expect(typeLink?.getAttribute("href")).toContain(encodeURIComponent(customer.customerType.id));
     expect(screen.getByTestId("account-status-active")).toBeInTheDocument();
     expect(screen.queryByTestId("account-status-email-unverified")).not.toBeInTheDocument();
   });
@@ -123,7 +123,7 @@ describe("CustomerDetailsTitle", () => {
     expect(screen.queryByTestId("account-status-active")).not.toBeInTheDocument();
   });
 
-  it("renders customer type without list link when slug is missing", () => {
+  it("links customer type to the customer list tab even without a slug", () => {
     // Arrange & Act
     renderTitle(
       <CustomerDetailsTitle
@@ -138,7 +138,9 @@ describe("CustomerDetailsTitle", () => {
     );
 
     // Assert
-    expect(screen.getByText("B2B")).toBeInTheDocument();
-    expect(screen.getByText("B2B").closest("a")).toBeNull();
+    expect(screen.getByText("B2B").closest("a")).toHaveAttribute(
+      "href",
+      expect.stringContaining("customerTypes"),
+    );
   });
 });

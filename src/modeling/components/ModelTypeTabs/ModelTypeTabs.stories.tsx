@@ -114,6 +114,20 @@ export const NoPageTypes: Story = {
   },
 };
 
+export const GroupingDisabled: Story = {
+  args: {
+    pageTypes: groupedPageTypes,
+    selectedIds: [],
+    grouping: false,
+    counts: {
+      [ALL_MODELS_TAB_ID]: { value: 20, hasMore: true },
+      "pt-article": { value: 2, hasMore: false },
+      "pt-cart": { value: 1, hasMore: false },
+      "pt-checkout": { value: 1, hasMore: false },
+    },
+  },
+};
+
 export const Loading: Story = {
   args: {
     pageTypes: undefined,

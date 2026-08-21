@@ -773,13 +773,6 @@ export const STATIC_GIFT_CARDS_OPTIONS: LeftOperand[] = [
 
 export const STATIC_CUSTOMER_OPTIONS: LeftOperand[] = [
   {
-    value: "customerType",
-    label: "Customer type",
-    type: "customerType",
-    slug: "customerType",
-    maxOccurrences: 1,
-  },
-  {
     value: "dateJoined",
     label: "Join date",
     type: "dateJoined",

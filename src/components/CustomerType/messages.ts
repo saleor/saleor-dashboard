@@ -11,13 +11,6 @@ export const messages = defineMessages({
     defaultMessage: "View customers of {customerTypeName}",
     description: "customer type scope link in customer header, opens filtered customer list",
   },
-  customerTypeListFilterUnavailable: {
-    id: "zFVruN",
-    defaultMessage:
-      "Cannot open a filtered customer list for this type. Use the type card to open customer type settings.",
-    description:
-      "tooltip on customer type label in header when slug is missing and list filter link is unavailable",
-  },
   viewCustomerType: {
     id: "FKBNcP",
     defaultMessage: "View {customerTypeName} type",

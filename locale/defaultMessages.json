@@ -648,6 +648,10 @@
     "context": "Message when all countries are covered",
     "string": "All countries covered"
   },
+  "0QG3GQ": {
+    "context": "empty search results on the customer list",
+    "string": "No customers found for {query}"
+  },
   "0ReyKr": {
     "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
     "string": "Published since {publishedAt}"
@@ -4016,10 +4020,6 @@
   "D77hf0": {
     "context": "configuration section for product types and attributes",
     "string": "Products & catalog"
-  },
-  "D95l71": {
-    "context": "tab name",
-    "string": "All customers"
   },
   "D9Rg+F": {
     "context": "window title",
@@ -10212,6 +10212,10 @@
     "context": "submit button",
     "string": "Add manual capture"
   },
+  "aGBp6V": {
+    "context": "create customer of the selected type",
+    "string": "Create {typeName}"
+  },
   "aHIrs/": {
     "string": "Failed to load filter data. Please refresh page to try again."
   },
@@ -10559,6 +10563,9 @@
   "bVbEZ/": {
     "context": "amount filter label",
     "string": "Amount"
+  },
+  "bVjFta": {
+    "string": "Search customers"
   },
   "bVjqu0": {
     "context": "gift card instrument card, opens set-balance dialog",
@@ -13021,9 +13028,6 @@
   "kdK1YM": {
     "context": "placeholder for SKU prefix input",
     "string": "e.g. SHIRT"
-  },
-  "kdRcqU": {
-    "string": "Search customers..."
   },
   "kfvvnM": {
     "string": "Provided amount cannot exceed charged amount for the selected transaction"
@@ -17243,10 +17247,6 @@
   "zE3ga7": {
     "context": "channel form card title for name, slug, country, currency",
     "string": "General settings"
-  },
-  "zFVruN": {
-    "context": "tooltip on customer type label in header when slug is missing and list filter link is unavailable",
-    "string": "Cannot open a filtered customer list for this type. Use the type card to open customer type settings."
   },
   "zGvkK2": {
     "context": "usage summary when attribute is on both product and variant types",

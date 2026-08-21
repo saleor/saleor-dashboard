@@ -7,7 +7,7 @@ import userEvent from "@testing-library/user-event";
 import { type ComponentProps } from "react";
 import { MemoryRouter } from "react-router-dom";
 
-import CustomerListPage from "./CustomerListPage";
+import { CustomerListPage } from "./CustomerListPage";
 
 jest.mock("@dashboard/auth/hooks/useUserPermissions");
 jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
@@ -21,14 +21,14 @@ jest.mock("@dashboard/extensions/getExtensionsItems", () => ({
   getExtensionItemsForOverviewCreate: () => [],
   getExtensionsItemsForCustomerOverviewActions: () => [],
 }));
-jest.mock("@dashboard/components/AppLayout/ListFilters", () => ({
-  ListFilters: () => null,
-}));
-jest.mock("@dashboard/components/FilterPresetsSelect", () => ({
-  FilterPresetsSelect: () => null,
+jest.mock("@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters", () => ({
+  ExpressionFilters: () => null,
 }));
 jest.mock("../CustomerListDatagrid/CustomerListDatagrid", () => ({
   CustomerListDatagrid: () => null,
+}));
+jest.mock("../CustomerTypeTabs/CustomerTypeTabs", () => ({
+  CustomerTypeTabs: () => null,
 }));
 
 const mockUseUserPermissions = useUserPermissions as jest.Mock;
@@ -47,27 +47,19 @@ const createProps = (
   loading: false,
   disabled: false,
   initialSearch: "",
-  selectedFilterPreset: undefined,
-  filterPresets: [],
-  filterOpts: {
-    joined: { active: false, value: { min: "", max: "" } },
-    numberOfOrders: { active: false, value: { min: "", max: "" } },
-  },
   settings: { rowNumber: 20 },
   sort: { sort: CustomerListUrlSortField.name, asc: true },
-  hasPresetsChanged: () => false,
   onSearchChange: jest.fn(),
-  onFilterChange: jest.fn(),
-  onFilterPresetsAll: jest.fn(),
-  onFilterPresetChange: jest.fn(),
-  onFilterPresetDelete: jest.fn(),
-  onFilterPresetUpdate: jest.fn(),
-  onFilterPresetPresetSave: jest.fn(),
   onSelectCustomerIds: jest.fn(),
   onCustomersDelete: jest.fn(),
   onCreateCustomerType: jest.fn(),
   onSort: jest.fn(),
   onUpdateListSettings: jest.fn(),
+  customerTypes: [],
+  selectedTypeIds: [],
+  activeCustomerTypeName: undefined,
+  tabCounts: {},
+  onTabChange: jest.fn(),
   ...overrides,
 });
 
@@ -129,5 +121,19 @@ describe("CustomerListPage create CTA", () => {
 
     // Assert
     expect(screen.queryByTestId("create-customer")).not.toBeInTheDocument();
+  });
+
+  it("labels the create button with the selected customer type", () => {
+    // Arrange
+    mockUseUserPermissions.mockReturnValue([permission(PermissionEnum.MANAGE_USERS)]);
+
+    // Act
+    renderPage({
+      selectedTypeIds: ["type-1"],
+      activeCustomerTypeName: "B2B",
+    });
+
+    // Assert
+    expect(screen.getByRole("button", { name: /create b2b/i })).toBeInTheDocument();
   });
 });
