@@ -19,10 +19,10 @@ export interface ChannelPaymentApp {
   logoUrl: string | null;
   breakerState: CircuitBreakerStateEnum | null;
   /**
-   * Dismissed problems are excluded so this matches the counts shown on the
-   * Installed extensions list.
+   * Reasons behind the "Attention" state. Dismissed problems are excluded so
+   * this matches the counts shown on the Installed extensions list.
    */
-  hasCriticalProblem: boolean;
+  criticalProblemMessages: string[];
 }
 
 export const useChannelPaymentApps = () => {
@@ -48,8 +48,12 @@ export const useChannelPaymentApps = () => {
       appUrl: app.appUrl,
       logoUrl: app.brand?.logo?.default ?? null,
       breakerState: app.breakerState ?? null,
-      hasCriticalProblem: (app.problems ?? []).some(
-        problem => problem.isCritical && problem.dismissed === null,
+      criticalProblemMessages: Array.from(
+        new Set(
+          (app.problems ?? [])
+            .filter(problem => problem.isCritical && problem.dismissed === null)
+            .map(problem => problem.message),
+        ),
       ),
     }));
   }, [data?.apps]);

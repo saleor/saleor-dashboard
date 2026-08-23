@@ -129,6 +129,7 @@ export const channelPaymentApps = gql`
           breakerState
           problems {
             id
+            message
             isCritical
             dismissed {
               by

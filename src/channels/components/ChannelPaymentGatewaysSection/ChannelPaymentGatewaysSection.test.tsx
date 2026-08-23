@@ -18,7 +18,7 @@ const paymentApp = (overrides: Partial<ChannelPaymentApp> = {}): ChannelPaymentA
   appUrl: "https://stripe.example.com",
   logoUrl: null,
   breakerState: CircuitBreakerStateEnum.CLOSED,
-  hasCriticalProblem: false,
+  criticalProblemMessages: [],
   ...overrides,
 });
 
@@ -68,9 +68,12 @@ describe("ChannelPaymentGatewaysSection", () => {
 
   it("shows an attention pill when the app has a critical problem", () => {
     // Arrange & Act
-    render(<ChannelPaymentGatewaysSection apps={[paymentApp({ hasCriticalProblem: true })]} />, {
-      wrapper: Wrapper,
-    });
+    render(
+      <ChannelPaymentGatewaysSection
+        apps={[paymentApp({ criticalProblemMessages: ["Missing API key"] })]}
+      />,
+      { wrapper: Wrapper },
+    );
 
     // Assert
     expect(screen.getByTestId("payment-gateway-health-stripe-app")).toHaveTextContent("Attention");

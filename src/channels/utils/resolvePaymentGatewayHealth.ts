@@ -4,7 +4,7 @@ export type PaymentGatewayHealth = "paused" | "attention";
 
 export interface PaymentGatewayHealthInput {
   breakerState?: CircuitBreakerStateEnum | null;
-  hasCriticalProblem?: boolean;
+  criticalProblemMessages?: string[];
 }
 
 /**
@@ -19,7 +19,7 @@ export const resolvePaymentGatewayHealth = (
     return "paused";
   }
 
-  if (app.hasCriticalProblem) {
+  if (app.criticalProblemMessages?.length) {
     return "attention";
   }
 

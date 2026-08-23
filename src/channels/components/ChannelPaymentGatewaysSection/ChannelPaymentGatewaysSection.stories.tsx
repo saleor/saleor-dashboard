@@ -17,7 +17,7 @@ const paymentApp = (overrides: Partial<ChannelPaymentApp> = {}): ChannelPaymentA
   appUrl: "https://stripe.example.com",
   logoUrl: null,
   breakerState: CircuitBreakerStateEnum.CLOSED,
-  hasCriticalProblem: false,
+  criticalProblemMessages: [],
   ...overrides,
 });
 
@@ -40,7 +40,10 @@ const mixedHealthApps: ChannelPaymentApp[] = [
     id: "adyen-app",
     name: "Adyen",
     appUrl: "https://adyen.example.com",
-    hasCriticalProblem: true,
+    criticalProblemMessages: [
+      "Missing API key for the live environment.",
+      "Webhook signature could not be verified.",
+    ],
   }),
   paymentApp({
     id: "dummy-app",

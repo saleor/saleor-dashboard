@@ -10,7 +10,7 @@ describe("resolvePaymentGatewayHealth", () => {
     // Arrange
     const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.OPEN,
-      hasCriticalProblem: false,
+      criticalProblemMessages: [],
     };
 
     // Act
@@ -24,7 +24,7 @@ describe("resolvePaymentGatewayHealth", () => {
     // Arrange
     const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.OPEN,
-      hasCriticalProblem: true,
+      criticalProblemMessages: ["Missing API key"],
     };
 
     // Act
@@ -38,7 +38,7 @@ describe("resolvePaymentGatewayHealth", () => {
     // Arrange
     const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.CLOSED,
-      hasCriticalProblem: true,
+      criticalProblemMessages: ["Missing API key"],
     };
 
     // Act
@@ -52,7 +52,7 @@ describe("resolvePaymentGatewayHealth", () => {
     // Arrange
     const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.HALF_OPEN,
-      hasCriticalProblem: false,
+      criticalProblemMessages: [],
     };
 
     // Act
@@ -66,7 +66,7 @@ describe("resolvePaymentGatewayHealth", () => {
     // Arrange
     const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.CLOSED,
-      hasCriticalProblem: false,
+      criticalProblemMessages: [],
     };
 
     // Act

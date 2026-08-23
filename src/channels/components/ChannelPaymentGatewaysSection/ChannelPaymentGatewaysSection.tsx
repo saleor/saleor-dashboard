@@ -6,7 +6,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Pill } from "@dashboard/components/Pill";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { ArrowRight, Package } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -117,27 +117,37 @@ const PaymentGatewayHealthPill = ({ app }: { app: ChannelPaymentApp }) => {
   const intl = useIntl();
   const health = resolvePaymentGatewayHealth(app);
 
-  if (health === "paused") {
-    return (
-      <Pill
-        size="small"
-        color="error"
-        label={intl.formatMessage(messages.healthPaused)}
-        data-test-id={`payment-gateway-health-${app.id}`}
-      />
-    );
+  if (!health) {
+    return null;
   }
 
-  if (health === "attention") {
-    return (
-      <Pill
-        size="small"
-        color="warning"
-        label={intl.formatMessage(messages.healthAttention)}
-        data-test-id={`payment-gateway-health-${app.id}`}
-      />
-    );
-  }
+  const isPaused = health === "paused";
+  // A tripped breaker has no problem entry behind it, so it needs its own copy.
+  const reasons = isPaused
+    ? [intl.formatMessage(messages.healthPausedReason)]
+    : app.criticalProblemMessages;
 
-  return null;
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <Pill
+          size="small"
+          color={isPaused ? "error" : "warning"}
+          label={intl.formatMessage(isPaused ? messages.healthPaused : messages.healthAttention)}
+          data-test-id={`payment-gateway-health-${app.id}`}
+          style={{ cursor: "help" }}
+        />
+      </Tooltip.Trigger>
+      <Tooltip.Content side="top">
+        <Tooltip.Arrow />
+        <Box __maxWidth="20rem" display="flex" flexDirection="column" gap={1}>
+          {reasons.map(reason => (
+            <Text key={reason} size={2}>
+              {reason}
+            </Text>
+          ))}
+        </Box>
+      </Tooltip.Content>
+    </Tooltip>
+  );
 };

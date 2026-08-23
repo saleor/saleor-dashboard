@@ -44,4 +44,10 @@ export const messages = defineMessages({
     defaultMessage: "Attention",
     description: "payment app has a critical problem",
   },
+  healthPausedReason: {
+    id: "8+6kxx",
+    defaultMessage:
+      "Saleor stopped sending requests to this app after repeated failures, so payments through it may not work. It will retry automatically.",
+    description: "payment app circuit breaker is open, tooltip",
+  },
 });

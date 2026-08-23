@@ -2520,6 +2520,10 @@
     "context": "customer detail sidebar, section header",
     "string": "Account status"
   },
+  "8+6kxx": {
+    "context": "payment app circuit breaker is open, tooltip",
+    "string": "Saleor stopped sending requests to this app after repeated failures, so payments through it may not work. It will retry automatically."
+  },
   "8/PQ07": {
     "context": "delete custom app",
     "string": "By deleting this extension, you will delete all the data and webhooks regarding this extension."
