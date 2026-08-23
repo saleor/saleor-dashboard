@@ -43,13 +43,14 @@ export const RuleRewardValue = ({ currencySymbol, error }: RuleRewardPriceProps)
             name={rewardValueType.name}
             ref={rewardValueType.ref}
             onChange={e => {
-              const value = parseInt(e.target.value, 10);
+              const value = parseFloat(e.target.value);
 
               rewardValueType.onChange(Number.isNaN(value) ? null : value);
             }}
             error={!!rewardValueError}
             disabled={disabled || rewardValueType.disabled}
             type="number"
+            step="any"
             size="small"
             label={intl.formatMessage(messages.discountValue)}
             data-test-id="reward-value-input"
