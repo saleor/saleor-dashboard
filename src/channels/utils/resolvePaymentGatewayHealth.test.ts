@@ -1,13 +1,16 @@
 import { CircuitBreakerStateEnum } from "@dashboard/graphql";
 
-import { resolvePaymentGatewayHealth } from "./resolvePaymentGatewayHealth";
+import {
+  type PaymentGatewayHealthInput,
+  resolvePaymentGatewayHealth,
+} from "./resolvePaymentGatewayHealth";
 
 describe("resolvePaymentGatewayHealth", () => {
   it("returns paused when the circuit breaker is open", () => {
     // Arrange
-    const app = {
+    const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.OPEN,
-      problems: [],
+      hasCriticalProblem: false,
     };
 
     // Act
@@ -19,9 +22,9 @@ describe("resolvePaymentGatewayHealth", () => {
 
   it("prefers paused over a critical problem when the breaker is open", () => {
     // Arrange
-    const app = {
+    const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.OPEN,
-      problems: [{ isCritical: true }],
+      hasCriticalProblem: true,
     };
 
     // Act
@@ -31,11 +34,11 @@ describe("resolvePaymentGatewayHealth", () => {
     expect(health).toBe("paused");
   });
 
-  it("returns attention when a problem is critical", () => {
+  it("returns attention when the app has a critical problem", () => {
     // Arrange
-    const app = {
+    const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.CLOSED,
-      problems: [{ isCritical: false }, { isCritical: true }],
+      hasCriticalProblem: true,
     };
 
     // Act
@@ -45,11 +48,11 @@ describe("resolvePaymentGatewayHealth", () => {
     expect(health).toBe("attention");
   });
 
-  it("returns null when the breaker is half-open and problems are not critical", () => {
+  it("returns null when the breaker is half-open and no problem is critical", () => {
     // Arrange
-    const app = {
+    const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.HALF_OPEN,
-      problems: [{ isCritical: false }],
+      hasCriticalProblem: false,
     };
 
     // Act
@@ -61,9 +64,9 @@ describe("resolvePaymentGatewayHealth", () => {
 
   it("returns null when there is no health signal", () => {
     // Arrange
-    const app = {
+    const app: PaymentGatewayHealthInput = {
       breakerState: CircuitBreakerStateEnum.CLOSED,
-      problems: [],
+      hasCriticalProblem: false,
     };
 
     // Act
@@ -73,7 +76,7 @@ describe("resolvePaymentGatewayHealth", () => {
     expect(health).toBeNull();
   });
 
-  it("returns null when problems and breaker state are missing", () => {
+  it("returns null when the health signals are missing", () => {
     // Arrange & Act
     const health = resolvePaymentGatewayHealth({});
 

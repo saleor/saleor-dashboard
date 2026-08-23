@@ -4,12 +4,13 @@ export type PaymentGatewayHealth = "paused" | "attention";
 
 export interface PaymentGatewayHealthInput {
   breakerState?: CircuitBreakerStateEnum | null;
-  problems?: Array<{ isCritical: boolean } | null> | null;
+  hasCriticalProblem?: boolean;
 }
 
 /**
- * App-wide health only — never "not configured". Absence of a signal is `null`,
- * not an unknown/unconfigured state.
+ * App-wide health, not per-channel: Saleor has no signal for "is this gateway
+ * configured for this channel". HALF_OPEN is deliberately silent — the breaker
+ * is already probing recovery, so surfacing it would flap.
  */
 export const resolvePaymentGatewayHealth = (
   app: PaymentGatewayHealthInput,
@@ -18,7 +19,7 @@ export const resolvePaymentGatewayHealth = (
     return "paused";
   }
 
-  if (app.problems?.some(problem => problem?.isCritical)) {
+  if (app.hasCriticalProblem) {
     return "attention";
   }
 

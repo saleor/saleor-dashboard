@@ -10,12 +10,6 @@ import {
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useMemo } from "react";
 
-export interface ChannelPaymentAppProblem {
-  key: string;
-  message: string;
-  isCritical: boolean;
-}
-
 export interface ChannelPaymentApp {
   id: string;
   name: string;
@@ -24,7 +18,11 @@ export interface ChannelPaymentApp {
   appUrl: string | null;
   logoUrl: string | null;
   breakerState: CircuitBreakerStateEnum | null;
-  problems: ChannelPaymentAppProblem[];
+  /**
+   * Dismissed problems are excluded so this matches the counts shown on the
+   * Installed extensions list.
+   */
+  hasCriticalProblem: boolean;
 }
 
 export const useChannelPaymentApps = () => {
@@ -50,11 +48,9 @@ export const useChannelPaymentApps = () => {
       appUrl: app.appUrl,
       logoUrl: app.brand?.logo?.default ?? null,
       breakerState: app.breakerState ?? null,
-      problems: (app.problems ?? []).map(problem => ({
-        key: problem.key,
-        message: problem.message,
-        isCritical: problem.isCritical,
-      })),
+      hasCriticalProblem: (app.problems ?? []).some(
+        problem => problem.isCritical && problem.dismissed === null,
+      ),
     }));
   }, [data?.apps]);
 

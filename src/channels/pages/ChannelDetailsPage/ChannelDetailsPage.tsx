@@ -243,18 +243,19 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   });
   const paymentGatewaysSection = showPaymentGatewaysSection ? (
     <ChannelSection id={channelSectionIds.paymentGateways}>
-      <Box display="flex" flexDirection="column" gap={4}>
-        <ChannelPaymentGatewaysSection
-          apps={paymentApps}
-          loading={paymentAppsLoading}
-          hasMoreApps={hasMorePaymentApps}
-        />
-        {CHANNEL_DETAILS_WIDGETS.length > 0 && channelId ? (
-          <AppWidgets extensions={CHANNEL_DETAILS_WIDGETS} params={{ channelId }} />
-        ) : null}
-      </Box>
+      <ChannelPaymentGatewaysSection
+        apps={paymentApps}
+        loading={paymentAppsLoading}
+        hasMoreApps={hasMorePaymentApps}
+      />
     </ChannelSection>
   ) : null;
+  // Kept outside the payment gateways section: the mount is channel-wide, so it
+  // must not inherit that section's MANAGE_APPS gate or its scroll-spy anchor.
+  const channelWidgetsSection =
+    CHANNEL_DETAILS_WIDGETS.length > 0 && channelId ? (
+      <AppWidgets extensions={CHANNEL_DETAILS_WIDGETS} params={{ channelId }} />
+    ) : null;
   const reviewSections = channel ? (
     <ChannelReviewSections
       taxConfigurationId={channel.taxConfiguration?.id}
@@ -571,6 +572,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                     trailingSection={
                       <>
                         {paymentGatewaysSection}
+                        {channelWidgetsSection}
                         {reviewSections}
                       </>
                     }

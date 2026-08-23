@@ -4,7 +4,7 @@ import { type ExtensionWithParams } from "@dashboard/extensions/types";
 import { AppTypeEnum, CircuitBreakerStateEnum } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { type ComponentType, type ReactElement } from "react";
+import { type ComponentProps, type ComponentType, type ReactElement } from "react";
 import { fn } from "storybook/test";
 
 import { ChannelPaymentGatewaysSection } from "./ChannelPaymentGatewaysSection";
@@ -17,7 +17,7 @@ const paymentApp = (overrides: Partial<ChannelPaymentApp> = {}): ChannelPaymentA
   appUrl: "https://stripe.example.com",
   logoUrl: null,
   breakerState: CircuitBreakerStateEnum.CLOSED,
-  problems: [],
+  hasCriticalProblem: false,
   ...overrides,
 });
 
@@ -40,7 +40,7 @@ const mixedHealthApps: ChannelPaymentApp[] = [
     id: "adyen-app",
     name: "Adyen",
     appUrl: "https://adyen.example.com",
-    problems: [{ key: "adyen.credentials", message: "Missing API key", isCritical: true }],
+    hasCriticalProblem: true,
   }),
   paymentApp({
     id: "dummy-app",
@@ -113,7 +113,7 @@ export const Loading: Story = {
 };
 
 export const WithChannelWidgets: Story = {
-  render: args => (
+  render: (args: ComponentProps<typeof ChannelPaymentGatewaysSection>): ReactElement => (
     <Box display="flex" flexDirection="column" gap={4}>
       <ChannelPaymentGatewaysSection {...args} />
       <AppWidgets extensions={[cachedWidget]} params={{ channelId: "Q2hhbm5lbDox" }} />
