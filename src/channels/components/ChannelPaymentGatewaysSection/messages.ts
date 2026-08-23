@@ -34,4 +34,14 @@ export const messages = defineMessages({
       "Showing the first 100 extensions. Open installed extensions to see payment apps beyond this limit.",
     description: "payment apps list truncated warning",
   },
+  healthPaused: {
+    id: "S0ZOLE",
+    defaultMessage: "Paused",
+    description: "payment app circuit breaker is open",
+  },
+  healthAttention: {
+    id: "hRtrg+",
+    defaultMessage: "Attention",
+    description: "payment app has a critical problem",
+  },
 });

@@ -149,6 +149,7 @@ describe("App Extension Manifest Schema", () => {
         "GIFT_CARD_DETAILS_WIDGETS",
         "CUSTOMER_DETAILS_WIDGETS",
         "COLLECTION_DETAILS_WIDGETS",
+        "CHANNEL_DETAILS_WIDGETS",
       ];
 
       // Act & Assert

@@ -7843,6 +7843,10 @@
     "context": "voucher schedule header status when not started yet",
     "string": "Scheduled"
   },
+  "S0ZOLE": {
+    "context": "payment app circuit breaker is open",
+    "string": "Paused"
+  },
   "S0kwG+": {
     "context": "tooltip explaining why a setting is deprecated",
     "string": "Will be removed in 3.24. Use attribute metadata instead"
@@ -11920,6 +11924,10 @@
   "hQDWIw": {
     "context": "modal header, editable product variant metadata",
     "string": "Product variant metadata"
+  },
+  "hRtrg+": {
+    "context": "payment app has a critical problem",
+    "string": "Attention"
   },
   "hS+ZjH": {
     "context": "delete webhook",

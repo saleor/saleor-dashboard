@@ -126,6 +126,12 @@ export const channelPaymentApps = gql`
               default(format: WEBP, size: 64)
             }
           }
+          breakerState
+          problems {
+            key
+            message
+            isCritical
+          }
         }
       }
     }

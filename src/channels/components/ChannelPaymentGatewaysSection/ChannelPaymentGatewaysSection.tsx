@@ -1,7 +1,9 @@
 import { type ChannelPaymentApp } from "@dashboard/channels/hooks/useChannelPaymentApps";
 import { resolvePaymentAppConfigureUrl } from "@dashboard/channels/utils/resolvePaymentAppConfigureUrl";
+import { resolvePaymentGatewayHealth } from "@dashboard/channels/utils/resolvePaymentGatewayHealth";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
+import { Pill } from "@dashboard/components/Pill";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
@@ -76,10 +78,18 @@ export const ChannelPaymentGatewaysSection = ({
                   <Package size={iconSize.medium} strokeWidth={iconStrokeWidth} />
                 )}
               </Box>
-              <Box flexGrow="1" __minWidth="0">
+              <Box
+                flexGrow="1"
+                __minWidth="0"
+                display="flex"
+                alignItems="center"
+                gap={2}
+                flexWrap="wrap"
+              >
                 <Text size={3} fontWeight="medium">
                   {app.name}
                 </Text>
+                <PaymentGatewayHealthPill app={app} />
               </Box>
               <Button
                 variant="secondary"
@@ -101,4 +111,33 @@ export const ChannelPaymentGatewaysSection = ({
       )}
     </DetailSettingsCard>
   );
+};
+
+const PaymentGatewayHealthPill = ({ app }: { app: ChannelPaymentApp }) => {
+  const intl = useIntl();
+  const health = resolvePaymentGatewayHealth(app);
+
+  if (health === "paused") {
+    return (
+      <Pill
+        size="small"
+        color="error"
+        label={intl.formatMessage(messages.healthPaused)}
+        data-test-id={`payment-gateway-health-${app.id}`}
+      />
+    );
+  }
+
+  if (health === "attention") {
+    return (
+      <Pill
+        size="small"
+        color="warning"
+        label={intl.formatMessage(messages.healthAttention)}
+        data-test-id={`payment-gateway-health-${app.id}`}
+      />
+    );
+  }
+
+  return null;
 };
