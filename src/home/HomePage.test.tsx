@@ -32,6 +32,17 @@ jest.mock("./HomeWidgetsGrid", () => ({
   HomeWidgetsGrid: () => <div data-test-id="home-widgets-grid" />,
 }));
 
+// `mock` prefix required: jest.mock factories may not close over other names.
+const mockGetPreferenceState = jest.fn((_extension: { id: string }): string => "default");
+
+jest.mock("@dashboard/extensions/preferences/useExtensionPreferences", () => ({
+  useExtensionPreferences: () => ({
+    getState: (extension: { id: string }) => mockGetPreferenceState(extension),
+    setState: jest.fn(),
+    isSaving: false,
+  }),
+}));
+
 import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
 
 const useExtensionsWithLoadingStateMock = useExtensionsWithLoadingState as jest.Mock;
@@ -127,6 +138,10 @@ describe("useHomeRouteParams", () => {
 });
 
 describe("HomePage states", () => {
+  beforeEach(() => {
+    mockGetPreferenceState.mockImplementation(() => "default");
+  });
+
   it("renders neither Pulse promo nor tabs while loading", () => {
     // Arrange
     useExtensionsWithLoadingStateMock.mockReturnValue({
@@ -197,6 +212,27 @@ describe("HomePage states", () => {
     // Assert — Pulse becomes the active (leftmost) tab; Onboarding stays mounted
     expect(screen.getByTestId("home-widget-view-onboarding")).toBeInTheDocument();
     expect(screen.getByTestId("home-widget-view-pulse")).toBeInTheDocument();
+  });
+
+  it("does not render a fullscreen widget the user hid", () => {
+    // Arrange
+    const pulse = panelExtension("pulse", "Pulse");
+    const onboarding = panelExtension("onboarding", "Get ready to sell");
+
+    useExtensionsWithLoadingStateMock.mockReturnValue({
+      extensions: { HOMEPAGE_WIDGETS: [pulse, onboarding] },
+      loading: false,
+    });
+    mockGetPreferenceState.mockImplementation(({ id }: { id: string }) =>
+      id === "pulse" ? "hidden" : "default",
+    );
+
+    // Act
+    renderHomePage(homeWidgetUrl("onboarding"));
+
+    // Assert
+    expect(screen.getByTestId("home-widget-view-onboarding")).toBeInTheDocument();
+    expect(screen.queryByTestId("home-widget-view-pulse")).not.toBeInTheDocument();
   });
 });
 

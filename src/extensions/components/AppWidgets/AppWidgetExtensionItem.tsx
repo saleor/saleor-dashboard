@@ -114,40 +114,34 @@ export const AppWidgetExtensionItem = ({
   });
 
   return (
-    <Box className={styles.hoverRow}>
-      <AppWidgetCard
-        extension={extension}
-        headerActions={
-          <Box className={styles.hoverControls}>
-            <InlineExtensionPreferenceControls extension={extension} />
-          </Box>
-        }
-      >
-        {isIframePost ? (
-          <IframePost
-            autoHeight
-            appId={extension.app.id}
-            accessToken={extension.accessToken}
-            extensionId={extension.id}
-            extensionUrl={extensionUrl}
-            params={params}
-            refetch={extension.refetch}
-          />
-        ) : (
-          <AppFrame
-            target="WIDGET"
-            autoHeight
-            src={appIframeUrl}
-            appToken={extension.accessToken}
-            appId={extension.app.id}
-            dashboardVersion={APP_VERSION}
-            params={params}
-            // Keeps the widget's JWT fresh on a long-open dashboard, which also
-            // keeps the token a co-located `openPopup` popup will use current.
-            refetch={extension.refetch}
-          />
-        )}
-      </AppWidgetCard>
-    </Box>
+    <AppWidgetCard
+      extension={extension}
+      headerActions={<InlineExtensionPreferenceControls extension={extension} />}
+    >
+      {isIframePost ? (
+        <IframePost
+          autoHeight
+          appId={extension.app.id}
+          accessToken={extension.accessToken}
+          extensionId={extension.id}
+          extensionUrl={extensionUrl}
+          params={params}
+          refetch={extension.refetch}
+        />
+      ) : (
+        <AppFrame
+          target="WIDGET"
+          autoHeight
+          src={appIframeUrl}
+          appToken={extension.accessToken}
+          appId={extension.app.id}
+          dashboardVersion={APP_VERSION}
+          params={params}
+          // Keeps the widget's JWT fresh on a long-open dashboard, which also
+          // keeps the token a co-located `openPopup` popup will use current.
+          refetch={extension.refetch}
+        />
+      )}
+    </AppWidgetCard>
   );
 };
