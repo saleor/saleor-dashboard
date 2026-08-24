@@ -6,7 +6,8 @@ export const customerList = gql`
     $before: String
     $first: Int
     $last: Int
-    $filter: CustomerFilterInput
+    $where: CustomerWhereInput
+    $search: String
     $sort: UserSortingInput
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
@@ -15,7 +16,8 @@ export const customerList = gql`
       before: $before
       first: $first
       last: $last
-      filter: $filter
+      where: $where
+      search: $search
       sortBy: $sort
     ) {
       edges {
@@ -59,20 +61,20 @@ export const customerDetails = gql`
             id
             created
             number
-            paymentStatus
+            status
             total {
               gross {
                 currency
                 amount
               }
             }
-            subtotal {
-              net {
-                currency
-                amount
-              }
+            channel {
+              id
+              name
+              slug
+              isActive
+              currencyCode
             }
-            chargeStatus
           }
         }
       }
@@ -156,6 +158,14 @@ export const customerAddresses = gql`
   query CustomerAddresses($id: ID!) {
     user(id: $id) {
       ...CustomerAddresses
+    }
+  }
+`;
+
+export const customerTypeAttributesForCustomerQuery = gql`
+  query CustomerTypeAttributesForCustomer($id: ID!) {
+    customerType(id: $id) {
+      ...CustomerTypeOnCustomer
     }
   }
 `;

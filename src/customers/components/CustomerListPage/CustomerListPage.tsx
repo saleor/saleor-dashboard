@@ -1,9 +1,12 @@
-// @ts-strict-ignore
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { ExpressionFilters } from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { DashboardCard } from "@dashboard/components/Card";
+import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListSearchInput } from "@dashboard/components/ListSearchInput/ListSearchInput";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
 import { type Customers } from "@dashboard/customers/types";
 import {
@@ -11,56 +14,61 @@ import {
   type CustomerListUrlSortField,
   customerUrl,
 } from "@dashboard/customers/urls";
+import { rippleCustomerTypes } from "@dashboard/customerTypes/ripples/customerTypes";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
   getExtensionsItemsForCustomerOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import {
-  type FilterPagePropsWithPresets,
-  type PageListProps,
-  type SortPage,
-} from "@dashboard/types";
+import { Ripple } from "@dashboard/ripples/components/Ripple";
+import { type PageListProps, type SearchPageProps, type SortPage } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
-import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagrid";
-import { type CustomerFilterKeys, type CustomerListFilterOpts } from "./filters";
+import { type CustomerTypeTabCount, CustomerTypeTabs } from "../CustomerTypeTabs/CustomerTypeTabs";
 
 interface CustomerListPageProps
   extends PageListProps,
-    FilterPagePropsWithPresets<CustomerFilterKeys, CustomerListFilterOpts>,
+    SearchPageProps,
     SortPage<CustomerListUrlSortField> {
   customers: Customers | undefined;
   selectedCustomerIds: string[];
   loading: boolean;
   onSelectCustomerIds: (rows: number[], clearSelection: () => void) => void;
   onCustomersDelete: () => void;
+  onCreateCustomerType: () => void;
+  customerTypes: Array<{ id: string; name: string }> | undefined;
+  selectedTypeIds: string[];
+  activeCustomerTypeName: string | undefined;
+  tabCounts: Record<string, CustomerTypeTabCount | undefined>;
+  onTabChange: (ids: string[]) => void;
 }
 
-const CustomerListPage = ({
-  selectedFilterPreset,
+export const CustomerListPage = ({
   initialSearch,
-  onFilterPresetsAll,
-  onFilterPresetDelete,
-  onFilterPresetUpdate,
   onSearchChange,
-  onFilterPresetChange,
-  onFilterPresetPresetSave,
-  filterPresets,
   selectedCustomerIds,
-  hasPresetsChanged,
   onCustomersDelete,
+  onCreateCustomerType,
+  customerTypes,
+  selectedTypeIds,
+  activeCustomerTypeName,
+  tabCounts,
+  onTabChange,
   ...customerListProps
-}: CustomerListPageProps) => {
+}: CustomerListPageProps): JSX.Element => {
   const intl = useIntl();
   const navigate = useNavigator();
   const canEditCustomers = useCanEditCustomers();
-  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+  const userPermissions = useUserPermissions();
+  const canCreateCustomerTypes = hasPermissions(userPermissions ?? [], [
+    PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
+  ]);
   const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.CUSTOMER_LIST,
   );
@@ -69,89 +77,101 @@ const CustomerListPage = ({
     selectedCustomerIds,
   );
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(CUSTOMER_OVERVIEW_CREATE);
+  const createCustomerTypeOption = canCreateCustomerTypes
+    ? [
+        {
+          label: intl.formatMessage({
+            id: "qC83EA",
+            defaultMessage: "Create customer type",
+            description: "button",
+          }),
+          testId: "create-customer-type",
+          onSelect: onCreateCustomerType,
+        },
+      ]
+    : [];
+  const showCreateSplitButton =
+    createCustomerTypeOption.length > 0 || extensionCreateButtonItems.length > 0;
+  const createHref =
+    selectedTypeIds.length === 1
+      ? customerAddUrl({ "customer-type-id": selectedTypeIds[0] })
+      : customerAddUrl();
+  const createLabel = activeCustomerTypeName ? (
+    <FormattedMessage
+      id="aGBp6V"
+      defaultMessage="Create {typeName}"
+      description="create customer of the selected type"
+      values={{ typeName: activeCustomerTypeName }}
+    />
+  ) : (
+    <FormattedMessage id="QLVddq" defaultMessage="Create customer" description="button" />
+  );
 
   return (
-    <>
-      <TopNav
-        title={intl.formatMessage(sectionNames.customers)}
-        withoutBorder
-        isAlignToRight={false}
-      >
-        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
-          <Box display="flex">
-            <FilterPresetsSelect
-              presetsChanged={hasPresetsChanged()}
-              onSelect={onFilterPresetChange}
-              onRemove={onFilterPresetDelete}
-              onUpdate={onFilterPresetUpdate}
-              savedPresets={filterPresets}
-              activePreset={selectedFilterPreset}
-              onSelectAll={onFilterPresetsAll}
-              onSave={onFilterPresetPresetSave}
-              isOpen={isFilterPresetOpen}
-              onOpenChange={setFilterPresetOpen}
-              selectAllLabel={intl.formatMessage({
-                id: "D95l71",
-                defaultMessage: "All customers",
-                description: "tab name",
-              })}
-            />
-          </Box>
-          <Box display="flex" alignItems="center" gap={2}>
-            {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
-            {canEditCustomers &&
-              (extensionCreateButtonItems.length > 0 ? (
-                <ButtonGroupWithDropdown
-                  options={extensionCreateButtonItems}
-                  data-test-id="create-customer"
-                  onClick={() => navigate(customerAddUrl)}
-                >
-                  <FormattedMessage
-                    id="QLVddq"
-                    defaultMessage="Create customer"
-                    description="button"
-                  />
-                </ButtonGroupWithDropdown>
-              ) : (
-                <Button data-test-id="create-customer" onClick={() => navigate(customerAddUrl)}>
-                  <FormattedMessage
-                    id="QLVddq"
-                    defaultMessage="Create customer"
-                    description="button"
-                  />
-                </Button>
-              ))}
-          </Box>
-        </Box>
+    <ListPageLayout>
+      <TopNav title={intl.formatMessage(sectionNames.customers)} withoutBorder>
+        {extensionMenuItems.length > 0 && <TopNav.Menu items={extensionMenuItems} />}
+        {canEditCustomers &&
+          (showCreateSplitButton ? (
+            <ButtonGroupWithDropdown
+              pinnedOptions={createCustomerTypeOption}
+              options={extensionCreateButtonItems}
+              testId="create-customer"
+              onClick={() => navigate(createHref)}
+            >
+              {createLabel}
+            </ButtonGroupWithDropdown>
+          ) : (
+            <Button data-test-id="create-customer" onClick={() => navigate(createHref)}>
+              {createLabel}
+            </Button>
+          ))}
       </TopNav>
-      <Box>
-        <ListFilters
-          type="expression-filter"
-          initialSearch={initialSearch}
-          showSearchTooltip
-          searchPlaceholder={intl.formatMessage({
-            id: "kdRcqU",
-            defaultMessage: "Search customers...",
-          })}
-          onSearchChange={onSearchChange}
-          actions={
-            <Box display="flex" gap={4}>
+      <Box display="flex" flexDirection="column" __minWidth={0} __minHeight={0}>
+        <CustomerTypeTabs
+          customerTypes={customerTypes}
+          selectedIds={selectedTypeIds}
+          counts={tabCounts}
+          onTabChange={onTabChange}
+          rightSlot={<Ripple model={rippleCustomerTypes} />}
+        />
+        <DashboardCard>
+          <Box
+            display="grid"
+            __gridTemplateColumns="auto 1fr"
+            gap={4}
+            paddingBottom={2}
+            paddingX={6}
+            paddingTop={4}
+          >
+            <Box display="flex" alignItems="center" gap={4}>
+              <ExpressionFilters />
+              <ListSearchInput
+                initialSearch={initialSearch}
+                placeholder={intl.formatMessage({
+                  id: "bVjFta",
+                  defaultMessage: "Search customers",
+                })}
+                onSearchChange={onSearchChange}
+              />
+            </Box>
+            <Box display="flex" justifyContent="flex-end" alignItems="center">
               {canEditCustomers && selectedCustomerIds.length > 0 && (
                 <BulkDeleteButton onClick={onCustomersDelete}>
                   <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
                 </BulkDeleteButton>
               )}
             </Box>
-          }
-        />
-        <CustomerListDatagrid
-          {...customerListProps}
-          hasRowHover={!isFilterPresetOpen}
-          rowAnchor={customerUrl}
-          onRowClick={id => navigate(customerUrl(id))}
-        />
+          </Box>
+          <CustomerListDatagrid
+            {...customerListProps}
+            searchQuery={initialSearch}
+            rowAnchor={customerUrl}
+            onRowClick={id => navigate(customerUrl(id))}
+          />
+        </DashboardCard>
       </Box>
-    </>
+    </ListPageLayout>
   );
 };
 

@@ -1,20 +1,25 @@
 // @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { type CustomerCreateUrlQueryParams, customerUrl } from "@dashboard/customers/urls";
 import { useCreateCustomerMutation, useCustomerCreateDataQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { parseQs } from "@dashboard/url-utils";
 import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { extractMutationErrors, maybe } from "../../misc";
 import CustomerCreatePage, {
   type CustomerCreatePageSubmitData,
 } from "../components/CustomerCreatePage";
-import { customerUrl } from "../urls";
 
 const CustomerCreate = () => {
   const navigate = useNavigator();
+  const location = useLocation();
   const notify = useNotifier();
   const intl = useIntl();
+  const params = parseQs(location.search.substr(1)) as CustomerCreateUrlQueryParams;
+  const customerTypeId = params["customer-type-id"];
   const { data, loading } = useCustomerCreateDataQuery({
     displayLoader: true,
   });
@@ -43,6 +48,7 @@ const CustomerCreate = () => {
             firstName: formData.customerFirstName,
             lastName: formData.customerLastName,
             note: formData.note,
+            ...(customerTypeId ? { customerType: customerTypeId } : {}),
           },
         },
       }),

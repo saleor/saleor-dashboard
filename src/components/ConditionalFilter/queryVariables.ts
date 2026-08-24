@@ -2,7 +2,7 @@ import {
   type AttributeFilterInput,
   type CategoryFilterInput,
   type CollectionFilterInput,
-  type CustomerFilterInput,
+  type CustomerWhereInput,
   type GiftCardFilterInput,
   type OrderDraftFilterInput,
   type OrderWhereInput,
@@ -21,6 +21,7 @@ import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQuer
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
 import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
 import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
+import { CustomerTypeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/CustomerTypeQueryVarsBuilder";
 import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
 import { FulfillmentStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentStatusQueryVarsBuilder";
 import { FulfillmentWarehouseQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentWarehouseQueryVarsBuilder";
@@ -51,7 +52,7 @@ export const QUERY_API_TYPES = {
   PAGE: QueryApiType.FILTER,
   DRAFT_ORDER: QueryApiType.FILTER,
   GIFT_CARD: QueryApiType.FILTER,
-  CUSTOMER: QueryApiType.FILTER,
+  CUSTOMER: QueryApiType.WHERE,
   COLLECTION: QueryApiType.FILTER,
   PRODUCT_TYPE: QueryApiType.FILTER,
   STAFF_MEMBER: QueryApiType.FILTER,
@@ -205,10 +206,21 @@ export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFi
   return filters;
 };
 
-export const createCustomerQueryVariables = (value: FilterContainer): CustomerFilterInput => {
-  const builder = new FiltersQueryBuilder<CustomerFilterInput>({
+// Saleor rejects a query that carries both `filter` and `where`, so every customer
+// filter has to go through `where` — `customerType` only exists there anyway.
+const customerFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new CustomerTypeQueryVarsBuilder(),
+  new DateTimeRangeQueryVarsBuilder(), // dateJoined uses DateTimeRangeInput
+  new MetadataFilterInputQueryVarsBuilder(), // metadata uses MetadataFilterInput
+  ...FilterQueryVarsBuilderResolver.getDefaultQueryVarsBuilders(),
+]);
+
+export const createCustomerWhereVariables = (value: FilterContainer): CustomerWhereInput => {
+  const builder = new FiltersQueryBuilder<CustomerWhereInput>({
     apiType: QUERY_API_TYPES.CUSTOMER,
     filterContainer: value,
+    useAndWrapper: true,
+    filterDefinitionResolver: customerFilterDefinitionResolver,
   });
   const { filters } = builder.build();
 

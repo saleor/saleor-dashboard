@@ -142,7 +142,7 @@ export const AssignedAttributesCard = ({
           >
             <TableCell>
               {selected > 0 ? (
-                <Text data-test-id="SelectedText" size={2} lineHeight={2}>
+                <Text data-test-id="SelectedText" size={2}>
                   <FormattedMessage
                     id="imYtnq"
                     defaultMessage="Selected {number, plural, one {# item} other {# items}}"
@@ -150,13 +150,13 @@ export const AssignedAttributesCard = ({
                   />
                 </Text>
               ) : (
-                <Text size={2} lineHeight={2} color="default2">
+                <Text size={2} color="default2">
                   <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
                 </Text>
               )}
             </TableCell>
             <TableCell className={columnStyles.colValueRequired}>
-              <Text size={2} lineHeight={2} color="default2">
+              <Text size={2} color="default2">
                 <FormattedMessage {...valueRequiredMessages.column} />
               </Text>
             </TableCell>

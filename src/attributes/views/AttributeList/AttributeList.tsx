@@ -318,7 +318,11 @@ const AttributeList = ({ params }: AttributeListProps) => {
   const defaultAttributeType = useMemo(() => {
     const { type } = filters;
 
-    if (type === AttributeTypeEnum.PRODUCT_TYPE || type === AttributeTypeEnum.PAGE_TYPE) {
+    if (
+      type === AttributeTypeEnum.PRODUCT_TYPE ||
+      type === AttributeTypeEnum.PAGE_TYPE ||
+      type === AttributeTypeEnum.CUSTOMER_TYPE
+    ) {
       return type;
     }
 
