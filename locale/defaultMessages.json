@@ -12141,10 +12141,6 @@
   "hbNxgV": {
     "string": "Are you sure you want to activate {email}?"
   },
-  "hfMvPp": {
-    "context": "clears the model type icon",
-    "string": "Reset"
-  },
   "hg79SY": {
     "context": "Label for collection toggle row when publication is scheduled",
     "string": "Scheduled"
