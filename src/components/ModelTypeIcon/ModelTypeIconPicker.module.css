@@ -1,0 +1,61 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--mu-spacing-1);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mu-spacing-2);
+  border: none;
+  border-radius: var(--mu-border-radius-3);
+  background: transparent;
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  background-color: var(--mu-colors-background-default1Hovered);
+}
+
+.iconButtonSelected {
+  outline: 2px solid var(--mu-colors-border-accent1);
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.swatchSelected {
+  outline: 2px solid var(--mu-colors-border-accent1);
+  outline-offset: 2px;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-border-radius-3);
+  background-color: var(--mu-colors-background-default1);
+  cursor: pointer;
+}
+
+.trigger:hover:not(:disabled) {
+  background-color: var(--mu-colors-background-default1Hovered);
+}
+
+.trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

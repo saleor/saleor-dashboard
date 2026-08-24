@@ -53,6 +53,7 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
     return {
       label: referenceData.label,
       value: referenceData.value,
+      icon: referenceData.icon,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: referenceData.value,
@@ -74,6 +75,7 @@ export function getSingleReferenceDisplayValue(
     return {
       label: reference.label,
       value: reference.value,
+      icon: reference.icon,
       url: getEntityUrl({
         entityType: attribute.data.entityType,
         entityId: reference.value,

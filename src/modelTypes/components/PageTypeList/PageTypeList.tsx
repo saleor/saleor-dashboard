@@ -1,5 +1,7 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
@@ -11,7 +13,7 @@ import { PageTypeListUrlSortField, pageTypePath } from "@dashboard/modelTypes/ur
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
@@ -113,7 +115,14 @@ const PageTypeList = (props: PageTypeListProps) => {
                   />
                 </TableCell>
                 <TableCell className={classes.colName}>
-                  {pageType ? <span data-test-id="name">{pageType.name}</span> : <Skeleton />}
+                  {pageType ? (
+                    <Box display="flex" alignItems="center" gap={2}>
+                      <ModelTypeIcon icon={getModelTypeIcon(pageType.metadata)} />
+                      <span data-test-id="name">{pageType.name}</span>
+                    </Box>
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
               </TableRowLink>
             );

@@ -10,6 +10,11 @@ import {
   CreateAttributeDialog,
 } from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
 import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
+import {
+  buildModelTypeIconMetadataUpdate,
+  isSameModelTypeIcon,
+  readModelTypeIcon,
+} from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -141,8 +146,27 @@ const PageTypeDetails = ({ id, params }: PageTypeDetailsProps) => {
         },
       },
     });
+    const errors = result.data.pageTypeUpdate.errors;
 
-    return result.data.pageTypeUpdate.errors;
+    if (errors.length > 0) {
+      return errors;
+    }
+
+    // `PageTypeUpdateInput` carries no metadata, so the icon rides a second call. `UpdateMetadata`
+    // sets and deletes in one round trip, which is what makes "Reset" work, and it merges by key
+    // so unrelated metadata is untouched.
+    if (!isSameModelTypeIcon(readModelTypeIcon(pageType?.metadata), formData.icon)) {
+      const iconUpdate = await updateMetadata({
+        variables: { id, ...buildModelTypeIconMetadataUpdate(formData.icon) },
+      });
+
+      return [
+        ...(iconUpdate.data?.deleteMetadata?.errors ?? []),
+        ...(iconUpdate.data?.updateMetadata?.errors ?? []),
+      ];
+    }
+
+    return errors;
   };
   const handlePageTypeDelete = () => deletePageType({ variables: { id } });
   const handleAssignAttribute = async () => {

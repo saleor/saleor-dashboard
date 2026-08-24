@@ -10,18 +10,21 @@ export const pageTypes: PageTypeFragment[] = [
     id: "UGFnZVR5cGU6MQ==",
     name: "Blog",
     hasPages: true,
+    metadata: [],
     __typename: "PageType",
   },
   {
     id: "UGFnZVR5cGU6Mw==",
     name: "Landing Page",
     hasPages: true,
+    metadata: [],
     __typename: "PageType",
   },
   {
     id: "UGFnZVR5cGU6Mg==",
     name: "Marketing Page",
     hasPages: false,
+    metadata: [],
     __typename: "PageType",
   },
 ];

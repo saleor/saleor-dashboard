@@ -1,3 +1,4 @@
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { type SidebarMenuItem } from "@dashboard/components/Sidebar/menu/types";
 import { PermissionEnum } from "@dashboard/graphql";
 import { pageListUrlWithPageType } from "@dashboard/modeling/urls";
@@ -10,6 +11,7 @@ const toMenuItem = (pin: ResolvedNavigationPin): SidebarMenuItem => ({
   id: `navigation-pin-${pin.target}-${pin.id}`,
   label: pin.name,
   url: pageListUrlWithPageType({ id: pin.id }),
+  icon: <ModelTypeIcon icon={pin.icon} />,
   // Without this a user who cannot open the model list would get a link that bounces them.
   permissions: [PermissionEnum.MANAGE_PAGES],
   type: "item",

@@ -1,4 +1,7 @@
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { Box, Checkbox, Dropdown, Input, List, Popover, Text } from "@saleor/macaw-ui-next";
 import { Check, ChevronDown, Layers, Pin, PinOff, Settings2 } from "lucide-react";
@@ -39,6 +42,7 @@ const PINNED_TABS_STORAGE_KEY = "modelTypeTabs.pinnedIds";
 export interface ModelTypeTabItem {
   id: string;
   name: string;
+  metadata?: Array<{ key: string; value: string }> | null;
 }
 
 export interface ModelTypeTabsProps {
@@ -333,6 +337,31 @@ export const ModelTypeTabs = ({
     [groupingOptions, pageTypes],
   );
 
+  // Looked up by id rather than threaded through grouping, which only deals in names.
+  const iconsById = useMemo(
+    () =>
+      (pageTypes ?? []).reduce<Record<string, ModelTypeIconValue>>(
+        (acc, pageType) => ({ ...acc, [pageType.id]: getModelTypeIcon(pageType.metadata) }),
+        {},
+      ),
+    [pageTypes],
+  );
+
+  const getStripItemIcon = (item: ModelTypeTabStripItem): ModelTypeIconValue | undefined => {
+    if (item.kind === "type") {
+      return iconsById[item.id];
+    }
+
+    // A group spans several model types, so it only takes an icon once one of them is active.
+    if (item.kind === "group") {
+      const activeSubtype = getActiveSubtypeInGroup(item, selectedIds);
+
+      return activeSubtype ? iconsById[activeSubtype.id] : undefined;
+    }
+
+    return undefined;
+  };
+
   const items: ModelTypeTabStripItem[] = useMemo(() => {
     const all: ModelTypeTabStripItem = {
       kind: "all",
@@ -497,9 +526,15 @@ export const ModelTypeTabs = ({
     const label = getStripItemLabel(item, selectedIds);
     const count = getStripItemCount(item, counts);
 
+    const icon = getStripItemIcon(item);
+
     return (
       <>
-        {item.kind === "group" && <Layers size={14} className={styles.groupIcon} aria-hidden />}
+        {icon ? (
+          <ModelTypeIcon icon={icon} size={14} className={styles.groupIcon} />
+        ) : (
+          item.kind === "group" && <Layers size={14} className={styles.groupIcon} aria-hidden />
+        )}
         <span className={styles.tabLabel} title={label}>
           {label}
         </span>

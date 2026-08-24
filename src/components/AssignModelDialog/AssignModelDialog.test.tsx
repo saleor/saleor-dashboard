@@ -37,21 +37,30 @@ jest.mock("@dashboard/hooks/useModalSearchWithFilters", () => ({
   }),
 }));
 
+const mockPageType = {
+  __typename: "PageType" as const,
+  id: "page-type-1",
+  metadata: [],
+};
+
 const mockPages = [
   {
     __typename: "Page" as const,
     id: "page-1",
     title: "Test Page 1",
+    pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-2",
     title: "Test Page 2",
+    pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-3",
     title: "Test Page 3",
+    pageType: mockPageType,
   },
 ];
 

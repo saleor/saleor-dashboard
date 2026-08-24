@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { toModelTypeOption } from "@dashboard/components/ModelTypeIcon/toModelTypeOption";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   OrderDirection,
@@ -26,7 +27,7 @@ import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
@@ -425,7 +426,9 @@ const PageList = ({ params }: PageListProps) => {
       <PageTypePickerDialog
         confirmButtonState="success"
         open={params.action === "create-page"}
-        pageTypes={mapNodeToChoice(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search))}
+        pageTypes={(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search) ?? []).map(
+          toModelTypeOption,
+        )}
         defaultOption={defaultPickerOption}
         fetchPageTypes={searchDialogPageTypes}
         fetchMorePageTypes={fetchMoreDialogPageTypes}

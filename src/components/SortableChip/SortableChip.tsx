@@ -19,6 +19,7 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
 
 type SortableChipProps = {
   label: ReactNode;
+  startAdornment?: ReactNode;
   onClose?: () => void;
   loading?: boolean;
   url?: string;
@@ -33,7 +34,18 @@ type SortableChipProps = {
  * Draggable component which returns correct handlers from @dnd-kit */
 export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
   (
-    { label, onClose, loading, url, isDragged, isDraggedOverlay, className, style, ...props },
+    {
+      label,
+      startAdornment,
+      onClose,
+      loading,
+      url,
+      isDragged,
+      isDraggedOverlay,
+      className,
+      style,
+      ...props
+    },
     ref,
   ) => {
     const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,6 +91,7 @@ export const SortableChip = React.forwardRef<HTMLDivElement, SortableChipProps>(
               style={{ cursor: isDragged ? "grabbing" : "grab", outline: "none" }}
             />
           </Box>
+          {startAdornment}
           <ChipLabel label={label} url={url} />
           <Box marginLeft={1}>
             <Button

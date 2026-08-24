@@ -11,6 +11,8 @@ import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { type MetadataFormData } from "@dashboard/components/Metadata/types";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { readModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { Savebar } from "@dashboard/components/Savebar";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForPageTypeDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -43,6 +45,8 @@ const emptyPageTypeAttributes: NonNullable<PageTypeDetailsFragment["attributes"]
 export interface PageTypeForm extends MetadataFormData {
   name: string;
   attributes: Option[];
+  /** Null when the model type has no icon and should render the fallback. */
+  icon: ModelTypeIcon | null;
 }
 
 interface PageTypeDetailsPageProps {
@@ -90,6 +94,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
           label: attribute.name,
           value: attribute.id,
         })) || [],
+      icon: readModelTypeIcon(pageType?.metadata),
       metadata: [],
       name: pageType?.name || "",
       privateMetadata: [],
@@ -158,7 +163,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
       disabled={disabled}
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
-      {({ change, data, isSaveDisabled, submit, triggerChange }) => (
+      {({ change, data, isSaveDisabled, set, submit, triggerChange }) => (
         <>
           <FormDirtyStateSync
             enabled={!!pageType}
@@ -172,7 +177,7 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               hrefTitle={intl.formatMessage(topNavDestinationMessages.allModelTypes)}
               title={
                 <PageTypeDetailsTitle
-                  pageType={pageType ? { name: pageType.name } : null}
+                  pageType={pageType ? { name: pageType.name, metadata: pageType.metadata } : null}
                   loading={disabled}
                 />
               }
@@ -203,7 +208,16 @@ const PageTypeDetailsPage = (props: PageTypeDetailsPageProps) => {
               </DetailPageContent>
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
-              <PageTypeDetails data={data} disabled={disabled} errors={errors} onChange={change} />
+              <PageTypeDetails
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                onIconChange={icon => {
+                  set({ icon });
+                  triggerChange();
+                }}
+              />
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />

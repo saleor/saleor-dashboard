@@ -5,6 +5,7 @@ import {
   getSingleReferenceDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
+import { ModelTypeChipIcon } from "@dashboard/components/ChipField/ModelTypeChipIcon";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Pencil, Plus } from "lucide-react";
@@ -39,6 +40,7 @@ export const SingleReferenceField = ({
           <>
             <ChipField
               label={selected.label}
+              startAdornment={<ModelTypeChipIcon icon={selected.icon} />}
               url={selected.url}
               loading={loading}
               onClose={() => onReferencesRemove(attribute.id, [])}

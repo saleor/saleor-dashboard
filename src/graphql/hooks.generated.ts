@@ -2708,8 +2708,11 @@ export const PageTypeFragmentDoc = gql`
   id
   name
   hasPages
+  metadata {
+    ...MetadataItem
+  }
 }
-    `;
+    ${MetadataItemFragmentDoc}`;
 export const PageTypeDetailsFragmentDoc = gql`
     fragment PageTypeDetails on PageType {
   ...PageType
@@ -2731,9 +2734,12 @@ export const PageFragmentDoc = gql`
   pageType {
     id
     name
+    metadata {
+      ...MetadataItem
+    }
   }
 }
-    `;
+    ${MetadataItemFragmentDoc}`;
 export const FileFragmentDoc = gql`
     fragment File on File {
   url
@@ -4003,6 +4009,10 @@ export const PinnedModelTypeFragmentDoc = gql`
     fragment PinnedModelType on PageType {
   id
   name
+  metadata {
+    key
+    value
+  }
 }
     `;
 export const AnnouncementsDocument = gql`
@@ -12663,12 +12673,16 @@ export const PageTypeDocument = gql`
   pageType(id: $id) {
     id
     name
+    metadata {
+      ...MetadataItem
+    }
     attributes {
       ...AttributeDetails
     }
   }
 }
-    ${AttributeDetailsFragmentDoc}`;
+    ${MetadataItemFragmentDoc}
+${AttributeDetailsFragmentDoc}`;
 
 /**
  * __usePageTypeQuery__
@@ -18990,6 +19004,12 @@ export const SearchPagesDocument = gql`
       node {
         id
         title
+        pageType {
+          id
+          metadata {
+            ...MetadataItem
+          }
+        }
       }
     }
     pageInfo {
@@ -18997,7 +19017,8 @@ export const SearchPagesDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${MetadataItemFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchPagesQuery__
@@ -19036,6 +19057,9 @@ export const SearchPageTypesDocument = gql`
       node {
         id
         name
+        metadata {
+          ...MetadataItem
+        }
       }
     }
     pageInfo {
@@ -19043,7 +19067,8 @@ export const SearchPageTypesDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${MetadataItemFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchPageTypesQuery__

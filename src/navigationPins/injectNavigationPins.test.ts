@@ -1,3 +1,4 @@
+import { FALLBACK_MODEL_TYPE_ICON } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { type SidebarMenuItem } from "@dashboard/components/Sidebar/menu/types";
 
 import { injectNavigationPins } from "./injectNavigationPins";
@@ -10,6 +11,7 @@ const pin = (overrides: Partial<ResolvedNavigationPin> = {}): ResolvedNavigation
   target: "products",
   name: "Blog Post",
   scope: "user",
+  icon: FALLBACK_MODEL_TYPE_ICON,
   ...overrides,
 });
 

@@ -10,6 +10,7 @@ import { attributeInputTypeCellRenderer } from "./AttributeInputTypeCell"; // ca
 import { attributeTypeCellRenderer } from "./AttributeTypeCell"; // canvas-only
 import { chevronCellRenderer } from "./ChevronCell";
 import { dropdownCellRenderer } from "./DropdownCell";
+import { modelTypeCellRenderer } from "./ModelTypeCell"; // canvas-only
 import { moneyCellRenderer } from "./Money/MoneyCell";
 import { moneyDiscountedCellRenderer } from "./Money/MoneyDiscountedCell";
 import { numberCellRenderer } from "./NumberCell";
@@ -32,6 +33,7 @@ export function useCustomCellRenderers() {
       statusCellRenderer(themeValues),
       primarySecondaryTextCellRenderer,
       voucherScopeCellRenderer,
+      modelTypeCellRenderer,
       moneyCellRenderer(locale),
       moneyDiscountedCellRenderer(),
       numberCellRenderer(locale),

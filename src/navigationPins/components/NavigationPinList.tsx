@@ -1,3 +1,5 @@
+import { FALLBACK_MODEL_TYPE_ICON } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
@@ -24,7 +26,7 @@ export const NavigationPinList = ({
   onRemove,
 }: NavigationPinListProps) => {
   const intl = useIntl();
-  const names = usePinnedModelTypeNames(pins.map(pin => pin.id));
+  const { names, icons } = usePinnedModelTypeNames(pins.map(pin => pin.id));
 
   if (pins.length === 0) {
     return (
@@ -47,13 +49,16 @@ export const NavigationPinList = ({
             justifyContent="space-between"
             gap={4}
           >
-            <Box display="flex" flexDirection="column">
-              <Text size={3}>{names[pin.id] ?? pin.id}</Text>
-              {target && (
-                <Text size={2} color="default2">
-                  {intl.formatMessage(target.label)}
-                </Text>
-              )}
+            <Box display="flex" alignItems="center" gap={2}>
+              <ModelTypeIcon icon={icons[pin.id] ?? FALLBACK_MODEL_TYPE_ICON} />
+              <Box display="flex" flexDirection="column">
+                <Text size={3}>{names[pin.id] ?? pin.id}</Text>
+                {target && (
+                  <Text size={2} color="default2">
+                    {intl.formatMessage(target.label)}
+                  </Text>
+                )}
+              </Box>
             </Box>
             <Button
               variant="tertiary"
