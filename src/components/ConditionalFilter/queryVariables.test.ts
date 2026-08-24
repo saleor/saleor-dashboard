@@ -12,7 +12,7 @@ import { ExpressionValue } from "./FilterElement/FilterElement";
 import {
   createAttributesQueryVariables,
   createCategoryQueryVariables,
-  createCustomerQueryVariables,
+  createCustomerWhereVariables,
   createDraftOrderQueryVariables,
   createGiftCardQueryVariables,
   createPageQueryVariables,
@@ -722,13 +722,13 @@ describe("ConditionalFilter / queryVariables / createGiftCardQueryVariables", ()
   });
 });
 
-describe("ConditionalFilter / queryVariables / createCustomerQueryVariables", () => {
+describe("ConditionalFilter / queryVariables / createCustomerWhereVariables", () => {
   it("should return empty variables for empty filters", () => {
     // Arrange
     const filters: FilterContainer = [];
     const expectedOutput = {};
     // Act
-    const result = createCustomerQueryVariables(filters);
+    const result = createCustomerWhereVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);
@@ -783,15 +783,94 @@ describe("ConditionalFilter / queryVariables / createCustomerQueryVariables", ()
       ),
     ];
     const expectedOutput = {
-      dateJoined: { gte: "2025-02-01", lte: "2025-02-08" },
-      numberOfOrders: { gte: "1", lte: "100" },
-      metadata: [{ key: "m-key", value: "m-value" }],
+      AND: [
+        { metadata: { key: "m-key", value: { eq: "m-value" } } },
+        { dateJoined: { gte: "2025-02-01T00:00:00.000Z", lte: "2025-02-08T00:00:00.000Z" } },
+        { numberOfOrders: { range: { gte: 1, lte: 100 } } },
+      ],
+      OR: undefined,
     };
     // Act
-    const result = createCustomerQueryVariables(filters);
+    const result = createCustomerWhereVariables(filters);
 
     // Assert
     expect(result).toEqual(expectedOutput);
+  });
+
+  it("should keep customerType alongside the other customer filters", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("customerType", "Customer type", "customerType"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("customerType"),
+          new ConditionSelected(
+            { label: "B2B", value: "id-1", slug: "b2b" },
+            { type: "combobox", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+      "AND",
+      new FilterElement(
+        new ExpressionValue("dateJoined", "Date joined", "dateJoined"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("dateJoined"),
+          new ConditionSelected(
+            ["2025-02-01", "2025-02-08"],
+            { type: "number.range", label: "between", value: "input-2" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+
+    // Act
+    const result = createCustomerWhereVariables(filters);
+
+    // Assert
+    expect(result).toEqual({
+      AND: [
+        { customerType: { eq: "id-1" } },
+        { dateJoined: { gte: "2025-02-01T00:00:00.000Z", lte: "2025-02-08T00:00:00.000Z" } },
+      ],
+      OR: undefined,
+    });
+  });
+
+  it("should put customerType on where using entity IDs", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("customerType", "Customer type", "customerType"),
+        new Condition(
+          ConditionOptions.fromStaticElementName("customerType"),
+          new ConditionSelected(
+            { label: "B2B", value: "id-1", slug: "b2b" },
+            { type: "combobox", label: "is", value: "input-1" },
+            [],
+            false,
+          ),
+          false,
+        ),
+        false,
+      ),
+    ];
+
+    // Act
+    const result = createCustomerWhereVariables(filters);
+
+    // Assert
+    expect(result).toEqual({
+      AND: [{ customerType: { eq: "id-1" } }],
+      OR: undefined,
+    });
   });
 });
 

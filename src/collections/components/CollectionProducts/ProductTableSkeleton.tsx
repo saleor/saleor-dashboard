@@ -88,17 +88,17 @@ export const ProductTableSkeleton = ({
         <GridTable.Cell padding={0} borderWidth={0} />
         <GridTable.Cell padding={0} borderWidth={0} />
         <GridTable.Cell borderWidth={0} padding={0}>
-          <Text size={2} lineHeight={2} color="default2">
+          <Text size={2} color="default2">
             <FormattedMessage id="6AMFki" defaultMessage="Name" description="product name" />
           </Text>
         </GridTable.Cell>
         <GridTable.Cell borderWidth={0} padding={0}>
-          <Text size={2} lineHeight={2} color="default2">
+          <Text size={2} color="default2">
             <FormattedMessage id="k+HcTv" defaultMessage="Type" description="product type" />
           </Text>
         </GridTable.Cell>
         <GridTable.Cell borderWidth={0} padding={0}>
-          <Text size={2} lineHeight={2} color="default2">
+          <Text size={2} color="default2">
             <FormattedMessage
               id="Oe62bR"
               defaultMessage="Availability"

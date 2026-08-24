@@ -35,6 +35,22 @@ describe("coerceHeaderEndActions", () => {
     expect(result.props.size).toBe("medium");
   });
 
+  it("sets macaw Button size through a react-router Link wrapper", () => {
+    // Arrange
+    const input = (
+      <a href="/customers/1/addresses">
+        <Button variant="secondary">Manage</Button>
+      </a>
+    );
+
+    // Act
+    const result = coerceHeaderEndActions(input) as ReactElement<{ children?: unknown }>;
+    const child = result.props.children as ReactElement<{ size?: string }>;
+
+    // Assert
+    expect(child.props.size).toBe(DETAIL_SETTINGS_CARD_HEADER_ACTION_SIZE);
+  });
+
   it("sets ButtonGroupWithDropdown size through a layout wrapper", () => {
     // Arrange
     const input = (

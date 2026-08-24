@@ -3,6 +3,7 @@ import "./index.css";
 
 import { ApolloProvider } from "@apollo/client";
 import { history, Route, Router } from "@dashboard/components/Router";
+import { customerTypesPath } from "@dashboard/customerTypes/urls";
 import { AppExtensionPopupProvider } from "@dashboard/extensions/components/AppExtensionContext/AppExtensionContextProvider";
 import { ExtensionsPaths, extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -75,6 +76,7 @@ const ExtensionsSection = lazy(() =>
 const GiftCardSection = lazy(() => import("./giftCards"));
 const PageSection = lazy(() => import("./modeling"));
 const PageTypesSection = lazy(() => import("./modelTypes"));
+const CustomerTypesSection = lazy(() => import("./customerTypes"));
 const OrdersSection = lazy(() => import("./orders"));
 const OrderSettingsSection = lazy(() => import("./orders/views/OrderSettings"));
 const PermissionGroupSection = lazy(() => import("./permissionGroups"));
@@ -266,6 +268,11 @@ const Routes = () => {
                         component={PageTypesSection}
                       />
                       <SectionRoute
+                        permissions={[PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES]}
+                        path={customerTypesPath}
+                        component={CustomerTypesSection}
+                      />
+                      <SectionRoute
                         exact
                         permissions={[PermissionEnum.MANAGE_ORDERS, PermissionEnum.MANAGE_SETTINGS]}
                         matchPermission="any"
@@ -328,6 +335,7 @@ const Routes = () => {
                         permissions={[
                           PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
                           PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                          PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
                         ]}
                         path={attributeSection}
                         component={AttributeSection}

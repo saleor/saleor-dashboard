@@ -5,6 +5,7 @@ import useRouter from "use-react-router";
 
 import { type InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
 import { type InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
+import { type InitialCustomerAPIState } from "../API/initialState/customers/useInitialCustomerState";
 import { type InitialDiscountAPIState } from "../API/initialState/discounts/useInitialDiscountsState";
 import { type InitialGiftCardsAPIState } from "../API/initialState/giftCards/useInitialGiftCardsState";
 import { type InitialOrderAPIState } from "../API/initialState/orders/useInitialOrderState";
@@ -16,14 +17,12 @@ import { type InitialVoucherAPIState } from "../API/initialState/vouchers/useIni
 import { type FilterContainer, FilterElement } from "../FilterElement";
 import { type FilterValueProvider } from "../FilterValueProvider";
 import { type FilterProviderType, type InitialAPIState } from "../types";
-import {
-  getAttributeListNavigationQueryParams,
-  stripNavigationQueryParams,
-} from "./navigationQueryParams";
+import { getNavigationQueryParams, stripNavigationQueryParams } from "./navigationQueryParams";
 import { TokenArray } from "./TokenArray";
 import {
   type AttributesFetchingParams,
   type CollectionFetchingParams,
+  type CustomerFetchingParams,
   type DiscountFetchingParams,
   type FetchingParams,
   getEmptyFetchingPrams,
@@ -46,8 +45,8 @@ export const useUrlValueProvider = (
   const [value, setValue] = useState<FilterContainer>([]);
   const activeTab = params.get("activeTab");
   const query = params.get("query");
-  const before = params.get("before");
-  const after = params.get("after");
+  const sort = params.get("sort");
+  const asc = params.get("asc");
 
   params.delete("asc");
   params.delete("sort");
@@ -86,6 +85,11 @@ export const useUrlValueProvider = (
           break;
         case "page":
           (initialState as InitialPageAPIState).fetchQueries(fetchingParams as PageFetchingParams);
+          break;
+        case "customer":
+          (initialState as InitialCustomerAPIState).fetchQueries(
+            fetchingParams as CustomerFetchingParams,
+          );
           break;
         case "gift-cards":
           (initialState as InitialGiftCardsAPIState).fetchQueries(
@@ -134,8 +138,7 @@ export const useUrlValueProvider = (
   }, [locationSearch, tokenizedUrl, initialState]);
 
   const persist = (filterValue: FilterContainer) => {
-    const navigationParams =
-      type === "attributes" ? getAttributeListNavigationQueryParams(router.location.search) : {};
+    const navigationParams = getNavigationQueryParams(router.location.search, type);
 
     router.history.replace({
       pathname: router.location.pathname,
@@ -143,8 +146,8 @@ export const useUrlValueProvider = (
         ...prepareStructure(filterValue),
         ...{ activeTab: activeTab || undefined },
         ...{ query: query || undefined },
-        ...{ before: before || undefined },
-        ...{ after: after || undefined },
+        ...{ sort: sort || undefined },
+        ...{ asc: asc || undefined },
         ...navigationParams,
       }),
     });
@@ -152,13 +155,14 @@ export const useUrlValueProvider = (
   };
 
   const clear = () => {
-    const navigationParams =
-      type === "attributes" ? getAttributeListNavigationQueryParams(router.location.search) : {};
+    const navigationParams = getNavigationQueryParams(router.location.search, type);
 
     router.history.replace({
       pathname: router.location.pathname,
       search: stringify({
         ...{ activeTab: activeTab || undefined },
+        ...{ sort: sort || undefined },
+        ...{ asc: asc || undefined },
         ...navigationParams,
       }),
     });

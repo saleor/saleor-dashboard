@@ -16,6 +16,9 @@ import {
   _GetCustomersChoicesDocument,
   type _GetCustomersChoicesQuery,
   type _GetCustomersChoicesQueryVariables,
+  _GetCustomerTypesChoicesDocument,
+  type _GetCustomerTypesChoicesQuery,
+  type _GetCustomerTypesChoicesQueryVariables,
   _GetDynamicLeftOperandsDocument,
   type _GetDynamicLeftOperandsQuery,
   type _GetDynamicLeftOperandsQueryVariables,
@@ -530,6 +533,28 @@ export class PageTypesHandler implements Handler {
     });
 
     return createOptionsFromAPI(data.pageTypes?.edges ?? []);
+  };
+}
+
+export class CustomerTypeHandler implements Handler {
+  constructor(
+    public client: ApolloClient<unknown>,
+    public query: string,
+  ) {}
+
+  fetch = async () => {
+    const { data } = await this.client.query<
+      _GetCustomerTypesChoicesQuery,
+      _GetCustomerTypesChoicesQueryVariables
+    >({
+      query: _GetCustomerTypesChoicesDocument,
+      variables: {
+        first: 5,
+        query: this.query,
+      },
+    });
+
+    return createOptionsFromAPI(data.customerTypes?.edges ?? []);
   };
 }
 

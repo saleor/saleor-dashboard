@@ -18,6 +18,7 @@ import {
   Tags,
   Truck,
   User,
+  UserRound,
   Users,
   Warehouse,
 } from "lucide-react";
@@ -39,6 +40,7 @@ export const TopNavDestinationIcon = {
   collections: createTopNavLucideIcon(Layers),
   configuration: createTopNavLucideIcon(Settings),
   customers: createTopNavLucideIcon(User),
+  customerTypes: createTopNavLucideIcon(UserRound),
   discounts: createTopNavLucideIcon(Percent),
   extensions: createTopNavLucideIcon(Grid2x2Plus),
   giftCards: createTopNavLucideIcon(Gift),

@@ -1,21 +1,46 @@
 // @ts-strict-ignore
+import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
+import { handleUploadMultipleFiles } from "@dashboard/attributes/utils/handlers";
+import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
+import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
+import { useAssignAttributeValueDialogFilterChangeHandlers } from "@dashboard/components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
+import { type AttributeInput } from "@dashboard/components/Attributes";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { useRemoveCustomerMutation, useUpdateCustomerMutation } from "@dashboard/graphql";
+import {
+  useFileUploadMutation,
+  useRemoveCustomerMutation,
+  useUpdateCustomerMutation,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import {
+  useReferenceCategorySearch,
+  useReferenceCollectionSearch,
+  useReferencePageSearch,
+  useReferenceProductSearch,
+} from "@dashboard/searches/useReferenceSearch";
+import { type FetchMoreProps } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { CustomerDeleteDialog } from "../components/CustomerDeleteDialog/CustomerDeleteDialog";
 import CustomerDetailsPage, {
-  type CustomerDetailsPageFormData,
+  type CustomerDetailsPageSubmitData,
 } from "../components/CustomerDetailsPage";
 import { CustomerMetadataDialog } from "../components/CustomerMetadataDialog/CustomerMetadataDialog";
 import { CustomerStatusChangeDialog } from "../components/CustomerStatusChangeDialog/CustomerStatusChangeDialog";
+import { messages as customerTypeMessages } from "../components/CustomerTypeCard/messages";
 import { useCustomerDetails } from "../hooks/useCustomerDetails";
 import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
 import { customerListUrl, customerUrl, type CustomerUrlQueryParams } from "../urls";
+import {
+  getAttributeInputFromCustomer,
+  getCustomerUpdateAttributesInput,
+} from "../utils/customerAttributes";
 
 interface CustomerDetailsViewProps {
   id: string;
@@ -30,6 +55,10 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   const customerDetails = useCustomerDetails();
   const user = customerDetails?.customer?.user;
   const customerDetailsLoading = customerDetails?.loading;
+  // Bumped after a type-change save so the attribute form remounts from the
+  // refetched customer. Assigned values for the new type are hidden until
+  // then, and useFormset will not pick them up on its own.
+  const [attributeFormRevision, setAttributeFormRevision] = useState(0);
 
   const [removeCustomer, removeCustomerOpts] = useRemoveCustomerMutation({
     onCompleted: data => {
@@ -47,6 +76,69 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   });
 
   const [updateCustomer, updateCustomerOpts] = useUpdateCustomerMutation();
+  const [uploadFile] = useFileUploadMutation({});
+  const [openModal, closeModal] = createDialogActionHandlers(
+    navigate,
+    dialogParams => customerUrl(id, dialogParams),
+    params,
+  );
+  const handleAssignAttributeReferenceClick = (attribute: AttributeInput): void =>
+    openModal("assign-attribute-value", { id: attribute.id });
+  const refAttr =
+    params.action === "assign-attribute-value" && params.id
+      ? user?.customerType?.attributes?.find(attribute => attribute.id === params.id)
+      : undefined;
+  const initialConstraints = useMemo(
+    () => getReferenceTypeConstraints(refAttr?.referenceTypes),
+    [refAttr?.referenceTypes],
+  );
+  const {
+    loadMore: loadMoreProducts,
+    search: searchProducts,
+    result: searchProductsOpts,
+  } = useReferenceProductSearch(refAttr);
+  const {
+    loadMore: loadMorePages,
+    search: searchPages,
+    result: searchPagesOpts,
+  } = useReferencePageSearch(refAttr);
+  const {
+    loadMore: loadMoreCollections,
+    search: searchCollections,
+    result: searchCollectionsOpts,
+  } = useReferenceCollectionSearch(refAttr);
+  const {
+    loadMore: loadMoreCategories,
+    search: searchCategories,
+    result: searchCategoriesOpts,
+  } = useReferenceCategorySearch(refAttr);
+  const fetchMoreReferencePages: FetchMoreProps = {
+    hasMore: Boolean(searchPagesOpts.data?.search?.pageInfo?.hasNextPage),
+    loading: searchPagesOpts.loading,
+    onFetchMore: loadMorePages,
+  };
+  const fetchMoreReferenceProducts: FetchMoreProps = {
+    hasMore: Boolean(searchProductsOpts.data?.search?.pageInfo?.hasNextPage),
+    loading: searchProductsOpts.loading,
+    onFetchMore: loadMoreProducts,
+  };
+  const fetchMoreReferenceCategories: FetchMoreProps = {
+    hasMore: Boolean(searchCategoriesOpts.data?.search?.pageInfo?.hasNextPage),
+    loading: searchCategoriesOpts.loading,
+    onFetchMore: loadMoreCategories,
+  };
+  const fetchMoreReferenceCollections: FetchMoreProps = {
+    hasMore: Boolean(searchCollectionsOpts.data?.search?.pageInfo?.hasNextPage),
+    loading: searchCollectionsOpts.loading,
+    onFetchMore: loadMoreCollections,
+  };
+  const onFilterChange = useAssignAttributeValueDialogFilterChangeHandlers({
+    refetchProducts: searchProductsOpts.refetch,
+    refetchPages: searchPagesOpts.refetch,
+    refetchCategories: searchCategoriesOpts.refetch,
+    refetchCollections: searchCollectionsOpts.refetch,
+    referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
+  });
 
   // Each `updateCustomer` call site emits its own toast so the message can
   // describe what the user just did (form save vs. activate vs. deactivate).
@@ -60,11 +152,30 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
     return <NotFoundPage backHref={customerListUrl()} />;
   }
 
-  const handleSubmit = async (data: CustomerDetailsPageFormData) => {
+  const handleSubmit = async (data: CustomerDetailsPageSubmitData) => {
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables }),
+    );
+    const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
+      data.attributesWithNewFileValue,
+      uploadFilesResult,
+    );
+    const typeChanged = Boolean(
+      data.customerTypeId && data.customerTypeId !== user?.customerType?.id,
+    );
+    const attributes = getCustomerUpdateAttributesInput({
+      attributes: data.attributes,
+      prevAttributes: getAttributeInputFromCustomer(user),
+      typeChanged,
+      updatedFileAttributes,
+    });
     const result = await updateCustomer({
       variables: {
         id,
         input: {
+          ...(attributes ? { attributes } : {}),
+          customerType: data.customerTypeId || undefined,
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
@@ -74,9 +185,19 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
     });
 
     if (result.data?.customerUpdate.errors.length === 0) {
-      notifyCustomerUpdate(
-        intl.formatMessage({ id: "PeEood", defaultMessage: "Customer updated" }),
-      );
+      if (typeChanged) {
+        await customerDetails.refetch();
+        setAttributeFormRevision(revision => revision + 1);
+        notify({
+          status: "success",
+          title: intl.formatMessage(customerTypeMessages.typeChanged),
+          text: intl.formatMessage(customerTypeMessages.typeChangedDescription),
+        });
+      } else {
+        notifyCustomerUpdate(
+          intl.formatMessage({ id: "PeEood", defaultMessage: "Customer updated" }),
+        );
+      }
     }
 
     return extractMutationErrors(Promise.resolve(result));
@@ -148,12 +269,28 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
     <>
       <WindowTitle title={user?.email} data-test-id="user-email-title" />
       <CustomerDetailsPage
+        attributeFormRevision={attributeFormRevision}
+        assignReferencesAttributeId={
+          params.action === "assign-attribute-value" ? params.id : undefined
+        }
         customerId={id}
         customer={user}
         disabled={
           customerDetailsLoading || updateCustomerOpts.loading || removeCustomerOpts.loading
         }
         errors={updateCustomerOpts.data?.customerUpdate.errors || []}
+        fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+        fetchMoreReferenceCollections={fetchMoreReferenceCollections}
+        fetchMoreReferencePages={fetchMoreReferencePages}
+        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchReferenceCategories={searchCategories}
+        fetchReferenceCollections={searchCollections}
+        fetchReferencePages={searchPages}
+        fetchReferenceProducts={searchProducts}
+        initialConstraints={initialConstraints}
+        onAssignReferencesClick={handleAssignAttributeReferenceClick}
+        onCloseAssignReferences={closeModal}
+        onFilterChange={onFilterChange}
         saveButtonBar={updateCustomerOpts.status}
         onSubmit={handleSubmit}
         onActivateToggle={handleActivateToggle}
@@ -171,6 +308,10 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             }),
           )
         }
+        referenceCategories={mapEdgesToItems(searchCategoriesOpts?.data?.search) || []}
+        referenceCollections={mapEdgesToItems(searchCollectionsOpts?.data?.search) || []}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
       />
       <CustomerMetadataDialog
         open={params.action === "view-metadata"}
