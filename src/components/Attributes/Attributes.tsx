@@ -5,8 +5,6 @@ import {
   type AttributeValueDetailsFragment,
   type AttributeValueFragment,
   type MeasurementUnitsEnum,
-  type PageErrorWithAttributesFragment,
-  type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
 import { type FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
@@ -18,7 +16,11 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
 import { AttributeListItem } from "./AttributeListItem";
-import { type AttributeRowHandlers, type VariantAttributeScope } from "./types";
+import {
+  type AttributeFieldError,
+  type AttributeRowHandlers,
+  type VariantAttributeScope,
+} from "./types";
 import { resolveByAttributeId, resolveFetchMoreByAttributeId } from "./utils";
 
 export interface AttributeInputData {
@@ -50,9 +52,11 @@ interface AttributesProps extends Omit<AttributeRowHandlers, "fetchMoreAttribute
   onAttributeSelectBlur: () => void;
   disabled: boolean;
   loading: boolean;
-  errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;
+  errors: AttributeFieldError[];
   title?: React.ReactNode;
   richTextGetters: RichTextGetters<string>;
+  /** Skip DashboardCard + accordion so entity-detail pages can wrap in DetailSettingsCard. */
+  unwrapped?: boolean;
 }
 
 const messages = defineMessages({
@@ -75,9 +79,42 @@ export const Attributes = ({
   title,
   onAttributeSelectBlur,
   richTextGetters,
+  unwrapped = false,
   ...props
 }: AttributesProps) => {
   const intl = useIntl();
+  const list =
+    attributes.length > 0 ? (
+      <ul>
+        {attributes.map(attribute => (
+          <React.Fragment key={attribute.id}>
+            <AttributeListItem
+              {...props}
+              attribute={attribute}
+              errors={errors}
+              attributeValues={resolveByAttributeId(attributeValues, attribute.id)}
+              fetchMoreAttributeValues={
+                resolveFetchMoreByAttributeId(props.fetchMoreAttributeValues, attribute.id) ?? {
+                  hasMore: false,
+                  loading: false,
+                  onFetchMore: () => undefined,
+                }
+              }
+              onAttributeSelectBlur={onAttributeSelectBlur}
+              richTextGetters={richTextGetters}
+            />
+          </React.Fragment>
+        ))}
+      </ul>
+    ) : null;
+
+  if (unwrapped) {
+    return (
+      <Box data-test-id="attributes" display="flex" flexDirection="column" gap={1}>
+        {list}
+      </Box>
+    );
+  }
 
   return (
     <DashboardCard paddingTop={6} data-test-id="attributes">
@@ -105,34 +142,7 @@ export const Attributes = ({
                 </Box>
                 <Accordion.TriggerButton dataTestId="expand-icon" />
               </Accordion.Trigger>
-              <Accordion.Content>
-                {attributes.length > 0 && (
-                  <ul>
-                    {attributes.map(attribute => (
-                      <React.Fragment key={attribute.id}>
-                        <AttributeListItem
-                          {...props}
-                          attribute={attribute}
-                          errors={errors}
-                          attributeValues={resolveByAttributeId(attributeValues, attribute.id)}
-                          fetchMoreAttributeValues={
-                            resolveFetchMoreByAttributeId(
-                              props.fetchMoreAttributeValues,
-                              attribute.id,
-                            ) ?? {
-                              hasMore: false,
-                              loading: false,
-                              onFetchMore: () => undefined,
-                            }
-                          }
-                          onAttributeSelectBlur={onAttributeSelectBlur}
-                          richTextGetters={richTextGetters}
-                        />
-                      </React.Fragment>
-                    ))}
-                  </ul>
-                )}
-              </Accordion.Content>
+              <Accordion.Content>{list}</Accordion.Content>
             </Accordion.Item>
           </Accordion>
         </Box>

@@ -21,4 +21,9 @@ export const messages = defineMessages({
     defaultMessage: "Assign on model types for content pages.",
     description: "model attribute class tile description",
   },
+  customerDescription: {
+    id: "9qz+en",
+    defaultMessage: "Assign on customer types — loyalty, B2B details, or account metadata.",
+    description: "customer attribute class tile description",
+  },
 });

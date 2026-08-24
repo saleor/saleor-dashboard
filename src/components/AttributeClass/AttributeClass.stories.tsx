@@ -60,6 +60,12 @@ export const ModelAttribute: Story = {
   },
 };
 
+export const CustomerAttribute: Story = {
+  args: {
+    attributeType: AttributeTypeEnum.CUSTOMER_TYPE,
+  },
+};
+
 export const WithoutIcon: Story = {
   args: {
     hideIcon: true,

@@ -187,7 +187,7 @@ const AttributeValues = ({
     >
       {isSwatch ? (
         <TableCell className={getColumnClassName(classes, isEmbedded, "swatch")}>
-          <Text size={2} lineHeight={2} color="default2">
+          <Text size={2} color="default2">
             <FormattedMessage
               id="NUevU9"
               defaultMessage="Swatch"
@@ -197,7 +197,7 @@ const AttributeValues = ({
         </TableCell>
       ) : null}
       <TableCell className={getColumnClassName(classes, isEmbedded, "admin")}>
-        <Text size={2} lineHeight={2} color="default2">
+        <Text size={2} color="default2">
           <FormattedMessage
             id="3psvRS"
             defaultMessage="Admin"
@@ -215,7 +215,7 @@ const AttributeValues = ({
             height="100%"
             paddingRight={ASSIGNABLE_LIST_TABLE_ACTION_INSET}
           >
-            <Text data-test-id="SelectedText" size={2} lineHeight={2}>
+            <Text data-test-id="SelectedText" size={2}>
               <FormattedMessage
                 id="imYtnq"
                 defaultMessage="Selected {number, plural, one {# item} other {# items}}"
@@ -234,7 +234,7 @@ const AttributeValues = ({
       ) : (
         <>
           <TableCell className={getColumnClassName(classes, isEmbedded, "store")}>
-            <Text size={2} lineHeight={2} color="default2">
+            <Text size={2} color="default2">
               <FormattedMessage
                 id="H60H6L"
                 defaultMessage="Default Store View"

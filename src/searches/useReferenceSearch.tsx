@@ -20,16 +20,28 @@ enum ReferenceWhereKey {
   PageType = "pageType",
 }
 
+/** Enough of an attribute to skip/constrain reference searches. */
+export interface ReferenceSearchAttribute {
+  entityType?: AttributeEntityTypeEnum | null;
+  referenceTypes?: Array<{
+    __typename?: string | null;
+    id: string;
+  } | null> | null;
+}
+
 type AttributeWithReferenceTypes =
   | NonNullable<AttributeDetailsFragment>
-  | NonNullable<VariantAttributeFragment>;
+  | NonNullable<VariantAttributeFragment>
+  | ReferenceSearchAttribute;
 
 const getAllowedReferenceTypeIds = (
   refAttr: AttributeWithReferenceTypes | undefined,
   type: ReferenceType,
 ): string[] => {
   if (refAttr?.referenceTypes?.[0]?.__typename === type) {
-    return (refAttr.referenceTypes ?? []).map(t => t?.id);
+    return (refAttr.referenceTypes ?? [])
+      .map(type => type?.id)
+      .filter((id): id is string => Boolean(id));
   }
 
   return [];

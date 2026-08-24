@@ -1,18 +1,34 @@
-// @ts-strict-ignore
+import {
+  getReferenceAttributeEntityTypeFromAttribute,
+  handleContainerReferenceAssignment,
+  type ReferenceEntitiesSearch,
+} from "@dashboard/attributes/utils/data";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
+import AssignAttributeValueDialog, {
+  type AssignAttributeValueDialogFilterChangeMap,
+} from "@dashboard/components/AssignAttributeValueDialog";
+import { type Products } from "@dashboard/components/AssignProductDialog/types";
+import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
+import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Pill } from "@dashboard/components/Pill";
+import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
+import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";
+import {
+  type CustomerDetailsAttributeSubmitData,
+  useCustomerDetailsAttributes,
+} from "@dashboard/customers/hooks/useCustomerDetailsAttributes";
 import { defaultGraphiQLQuery } from "@dashboard/customers/queries";
 import { customerAddressesUrl, customerListPath } from "@dashboard/customers/urls";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
@@ -27,56 +43,118 @@ import {
 } from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type FormsetData } from "@dashboard/hooks/useFormset";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
+import { commonMessages } from "@dashboard/intl";
 import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
+import { type Container, type FetchMoreProps } from "@dashboard/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Box, Divider, Text } from "@saleor/macaw-ui-next";
-import { defineMessages, FormattedDate, FormattedMessage, useIntl } from "react-intl";
+import { Box, Divider } from "@saleor/macaw-ui-next";
+import { Trash2, UserCheck, UserX } from "lucide-react";
+import {
+  type MutableRefObject,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useIntl } from "react-intl";
 
-import { getUserName } from "../../../misc";
-import { AccountStatusCard } from "../AccountStatusCard/AccountStatusCard";
 import CustomerAddresses from "../CustomerAddresses";
+import { CustomerAttributesCard } from "../CustomerAttributesCard/CustomerAttributesCard";
 import CustomerInfo from "../CustomerInfo";
-import CustomerOrders from "../CustomerOrders";
+import { CustomerOrders } from "../CustomerOrders/CustomerOrders";
 import { CustomerOverview } from "../CustomerOverview/CustomerOverview";
 import { ExternalReferenceCard } from "../ExternalReferenceCard/ExternalReferenceCard";
-
-const messages = defineMessages({
-  openGraphiQL: {
-    id: "oUkVpp",
-    defaultMessage: "Open this customer in GraphiQL",
-  },
-});
+import { CustomerDetailsPageLoading } from "./CustomerDetailsPageLoading";
+import { CustomerSaveCompositionHint } from "./CustomerSaveCompositionHint";
+import { messages } from "./messages";
+import { buildCustomerSaveComposition, hasCustomerSaveComposition } from "./saveComposition";
+import { CustomerDetailsTitle } from "./Title";
 
 export interface CustomerDetailsPageFormData {
   firstName: string;
   lastName: string;
   email: string;
   note: string;
+  customerTypeId: string;
 }
 
+export interface CustomerDetailsPageSubmitData
+  extends CustomerDetailsPageFormData,
+    CustomerDetailsAttributeSubmitData {}
+
 interface CustomerDetailsPageProps {
+  attributeFormRevision?: number;
+  assignReferencesAttributeId?: string;
   customerId: string;
   customer: CustomerDetailsQuery["user"];
   disabled: boolean;
   errors: AccountErrorFragment[];
-  saveButtonBar: ConfirmButtonTransitionState;
-  onSubmit: (data: CustomerDetailsPageFormData) => SubmitPromise<AccountErrorFragment[]>;
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
+  onAssignReferencesClick?: (attribute: AttributeInput) => void;
+  onCloseAssignReferences?: () => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
+  onSubmit: (data: CustomerDetailsPageSubmitData) => SubmitPromise<AccountErrorFragment[]>;
   onDelete: () => void;
   onActivateToggle: () => void;
   onShowMetadata: () => void;
+  referenceCategories?: ReferenceEntitiesSearch["categories"];
+  referenceCollections?: ReferenceEntitiesSearch["collections"];
+  referencePages?: ReferenceEntitiesSearch["pages"];
+  referenceProducts?: ReferenceEntitiesSearch["products"];
+  saveButtonBar: ConfirmButtonTransitionState;
 }
 
+const emptyAttributeSubmitData = async (): Promise<CustomerDetailsAttributeSubmitData> => ({
+  attributes: [],
+  attributesWithNewFileValue: [] as FormsetData<null, File>,
+});
+
+const noopAssignReferences = (_attribute: AttributeInput): void => undefined;
+
 const CustomerDetailsPage = ({
+  attributeFormRevision = 0,
+  assignReferencesAttributeId,
   customerId,
   customer,
   disabled,
   errors,
+  fetchMoreReferenceCategories,
+  fetchMoreReferenceCollections,
+  fetchMoreReferencePages,
+  fetchMoreReferenceProducts,
+  fetchReferenceCategories,
+  fetchReferenceCollections,
+  fetchReferencePages,
+  fetchReferenceProducts,
+  initialConstraints,
+  onAssignReferencesClick,
+  onCloseAssignReferences,
+  onFilterChange,
   saveButtonBar,
   onSubmit,
   onDelete,
   onActivateToggle,
   onShowMetadata,
+  referenceCategories = [],
+  referenceCollections = [],
+  referencePages = [],
+  referenceProducts = [],
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -96,17 +174,21 @@ const CustomerDetailsPage = ({
   const canEditCustomers = useCanEditCustomers();
   const isReadOnly = !canEditCustomers;
   const context = useDevModeContext();
-  const openPlaygroundURL = () => {
+  const openPlaygroundURL = useCallback(() => {
     context.setDevModeContent(defaultGraphiQLQuery);
     context.setVariables(`{ "id": "${customer?.id}" }`);
     context.setDevModeVisibility(true);
-  };
-  const initialForm: CustomerDetailsPageFormData = {
-    email: customer?.email || "",
-    firstName: customer?.firstName || "",
-    lastName: customer?.lastName || "",
-    note: customer?.note || "",
-  };
+  }, [context, customer?.id]);
+  const getSubmitDataRef = useRef(emptyAttributeSubmitData);
+  const [attributesDirty, setAttributesDirty] = useState(false);
+  const formIdentity = `${customer?.id ?? "loading"}:${attributeFormRevision}`;
+  const [formIdentityState, setFormIdentityState] = useState(formIdentity);
+
+  if (formIdentityState !== formIdentity) {
+    setFormIdentityState(formIdentity);
+    setAttributesDirty(false);
+  }
+
   const { CUSTOMER_DETAILS_MORE_ACTIONS, CUSTOMER_DETAILS_WIDGETS } = useExtensions(
     extensionMountPoints.CUSTOMER_DETAILS,
   );
@@ -119,173 +201,454 @@ const CustomerDetailsPage = ({
     path: customerListPath,
   });
 
-  // Account-level actions live in the cogs "More actions" menu so destructive
-  // toggles (activate / deactivate) and Delete are not bundled with the form
-  // save. Delete is also kept in the savebar for discoverability. Hidden in
-  // read-only mode because they all hit the customerUpdate / customerDelete
-  // mutations.
-  const builtInMenuItems =
-    customer && canEditCustomers
-      ? [
-          {
-            label: customer.isActive
-              ? intl.formatMessage({
-                  defaultMessage: "Deactivate user",
-                  description: "customer detail cogs menu, deactivates the customer account",
-                  id: "zP3Rb6",
-                })
-              : intl.formatMessage({
-                  defaultMessage: "Activate user",
-                  description:
-                    "customer detail cogs menu, activates a deactivated customer account",
-                  id: "62Rs/K",
-                }),
-            onSelect: onActivateToggle,
-            testId: customer.isActive ? "deactivate-user" : "activate-user",
-          },
-          {
-            label: intl.formatMessage({
-              defaultMessage: "Delete user",
-              description: "customer detail cogs menu, opens the delete-confirmation dialog",
-              id: "LQg8/p",
-            }),
-            onSelect: onDelete,
-            testId: "delete-user",
-            color: "critical1" as const,
-          },
-        ]
-      : [];
-  const menuItems = [...builtInMenuItems, ...extensionMenuItems];
+  const menuItems = useMemo((): TopNavMenuItem[] => {
+    const items: TopNavMenuItem[] = extensionMenuItems.map(item => ({
+      label: item.label,
+      onSelect: item.onSelect,
+      testId: item.testId,
+    }));
 
-  menuItems.push({
-    label: intl.formatMessage(messages.openGraphiQL),
-    onSelect: openPlaygroundURL,
-    testId: "graphiql-redirect",
-  });
+    if (customer && canEditCustomers) {
+      items.push(
+        customer.isActive
+          ? {
+              label: intl.formatMessage(messages.deactivateUser),
+              onSelect: onActivateToggle,
+              testId: "deactivate-user",
+              icon: <UserX size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+            }
+          : {
+              label: intl.formatMessage(messages.activateUser),
+              onSelect: onActivateToggle,
+              testId: "activate-user",
+              icon: <UserCheck size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+            },
+      );
+    }
 
-  const customerName = getUserName(customer, true);
-  // Mirrors OrderDetailsPage's title layout: name (+ optional Staff pill) on
-  // the left, "Member since" date as a lower-emphasis sibling on the right,
-  // both on the same line. Keeps the page's TopNav consistent with Orders.
-  const titleNode = (
-    <Box display="flex" alignItems="center" gap={2}>
-      <Box display="flex" alignItems="center" gap={2}>
-        <span>{customerName}</span>
-        {customer?.isStaff && customerName && (
-          <Pill
-            color="info"
-            label={intl.formatMessage({
-              defaultMessage: "Staff",
-              description: "badge next to customer name marking this user as staff",
-              id: "Jk8bsM",
-            })}
-            data-test-id="customer-staff-badge"
-          />
-        )}
-      </Box>
-      {customer?.dateJoined && (
-        <Text size={3} fontWeight="regular" color="default2">
-          <FormattedMessage
-            defaultMessage="Member since {date}"
-            description="customer detail page header, when this customer's account was created"
-            id="8FgYfb"
-            values={{
-              date: <FormattedDate value={customer.dateJoined} month="short" year="numeric" />,
-            }}
-          />
-        </Text>
-      )}
-    </Box>
-  );
+    items.push({
+      label: intl.formatMessage(messages.openGraphiQL),
+      onSelect: openPlaygroundURL,
+      testId: "graphiql-redirect",
+      icon: <GraphqlIcon />,
+    });
+
+    if (customer && canEditCustomers) {
+      items.push({
+        label: intl.formatMessage(messages.deleteUser),
+        onSelect: onDelete,
+        testId: "delete-user",
+        color: "critical1",
+        icon: <Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />,
+      });
+    }
+
+    return items;
+  }, [
+    canEditCustomers,
+    customer,
+    extensionMenuItems,
+    intl,
+    onActivateToggle,
+    onDelete,
+    openPlaygroundURL,
+  ]);
+
+  if (!customer) {
+    return (
+      <CustomerDetailsPageLoading
+        canEditCustomers={canEditCustomers}
+        customerBackLink={customerBackLink}
+        customerId={customerId}
+        onShowMetadata={onShowMetadata}
+      />
+    );
+  }
+
+  const initialForm: CustomerDetailsPageFormData = {
+    customerTypeId: customer.customerType?.id || "",
+    email: customer.email || "",
+    firstName: customer.firstName || "",
+    lastName: customer.lastName || "",
+    note: customer.note || "",
+  };
+  const checkIfSaveIsDisabled = (data: CustomerDetailsPageFormData): boolean => {
+    if (disabled || isReadOnly) {
+      return true;
+    }
+
+    return !hasCustomerSaveComposition(
+      buildCustomerSaveComposition({
+        attributesDirty,
+        data,
+        initial: initialForm,
+      }),
+    );
+  };
+  const menuItemsForNav = disabled
+    ? menuItems.map(item => ({ ...item, disabled: true }))
+    : menuItems;
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
-      {({ change, data, isSaveDisabled, submit }) => {
+    <Form
+      key={formIdentity}
+      confirmLeave
+      initial={initialForm}
+      onSubmit={async formData => {
+        const extras = await getSubmitDataRef.current();
+
+        return onSubmit({ ...formData, ...extras });
+      }}
+      disabled={disabled}
+      checkIfSaveIsDisabled={checkIfSaveIsDisabled}
+    >
+      {({ change, data, isSaveDisabled, submit, triggerChange }) => {
+        const saveComposition = buildCustomerSaveComposition({
+          attributesDirty,
+          data,
+          initial: initialForm,
+        });
+
         return (
-          <DetailPageLayout>
-            <TopNav
-              href={customerBackLink}
-              hrefIcon={<TopNavDestinationIcon.customers />}
-              hrefTitle={intl.formatMessage(topNavDestinationMessages.allCustomers)}
-              title={titleNode}
-              actionsGap={3}
+          <>
+            <FormDirtyStateSync
+              enabled
+              isSaveDisabled={isSaveDisabled}
+              triggerChange={triggerChange}
+            />
+            <CustomerTypeAndAttributes
+              key={`${customer.id}:${attributeFormRevision}`}
+              assignReferencesAttributeId={assignReferencesAttributeId}
+              customer={customer}
+              customerTypeId={data.customerTypeId}
+              disabled={disabled || isReadOnly}
+              errors={errors}
+              fetchMoreReferenceCategories={fetchMoreReferenceCategories}
+              fetchMoreReferenceCollections={fetchMoreReferenceCollections}
+              fetchMoreReferencePages={fetchMoreReferencePages}
+              fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+              fetchReferenceCategories={fetchReferenceCategories}
+              fetchReferenceCollections={fetchReferenceCollections}
+              fetchReferencePages={fetchReferencePages}
+              fetchReferenceProducts={fetchReferenceProducts}
+              getSubmitDataRef={getSubmitDataRef}
+              initialConstraints={initialConstraints}
+              onAssignReferencesClick={onAssignReferencesClick}
+              onAttributesDirtyChange={setAttributesDirty}
+              onCloseAssignReferences={onCloseAssignReferences}
+              onFilterChange={onFilterChange}
+              onTypeChange={type => {
+                change({
+                  target: {
+                    name: "customerTypeId",
+                    value: type?.id ?? "",
+                  },
+                });
+              }}
+              referenceCategories={referenceCategories}
+              referenceCollections={referenceCollections}
+              referencePages={referencePages}
+              referenceProducts={referenceProducts}
+              triggerChange={triggerChange}
             >
-              {canEditCustomers && (
-                <TopNav.MetadataButton
-                  onClick={onShowMetadata}
-                  disabled={!customer}
-                  data-test-id="show-customer-metadata"
-                  title={intl.formatMessage({
-                    defaultMessage: "Edit customer metadata",
-                    description: "customer detail page, top-bar metadata button tooltip",
-                    id: "DR3EBs",
-                  })}
-                />
+              {({ attributesCard }) => (
+                <DetailPageLayout>
+                  <TopNav
+                    href={customerBackLink}
+                    hrefIcon={<TopNavDestinationIcon.customers />}
+                    hrefTitle={intl.formatMessage(topNavDestinationMessages.allCustomers)}
+                    title={<CustomerDetailsTitle customer={customer} />}
+                    actionsGap={3}
+                  >
+                    {canEditCustomers && (
+                      <TopNav.MetadataButton
+                        onClick={onShowMetadata}
+                        disabled={disabled}
+                        data-test-id="show-customer-metadata"
+                        title={intl.formatMessage(messages.editCustomerMetadata)}
+                      />
+                    )}
+                    {menuItemsForNav.length > 0 && (
+                      <TopNav.Menu items={menuItemsForNav} dataTestId="menu" />
+                    )}
+                  </TopNav>
+                  <DetailPageLayout.Content>
+                    <DetailPageContent>
+                      <CustomerOverview customer={customer} />
+                      <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+                        <CustomerOrders
+                          orders={mapEdgesToItems(customer.orders)}
+                          viewAllHref={orderListUrlWithCustomerEmail(customer.email)}
+                        />
+                      </RequirePermissions>
+                      {attributesCard}
+                    </DetailPageContent>
+                  </DetailPageLayout.Content>
+                  <DetailPageLayout.RightSidebar paddingTop={6} paddingX={6}>
+                    <Box display="flex" flexDirection="column" gap={4}>
+                      <CustomerInfo
+                        data={data}
+                        disabled={disabled || isReadOnly}
+                        errors={errors}
+                        onChange={change}
+                      />
+                      <CustomerAddresses
+                        customer={customer}
+                        disabled={disabled || isReadOnly}
+                        manageAddressHref={customerAddressesUrl(customerId)}
+                      />
+                      <ExternalReferenceCard customer={customer} />
+                      <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
+                        <CustomerGiftCardsCard />
+                      </RequirePermissions>
+                    </Box>
+                    {CUSTOMER_DETAILS_WIDGETS.length > 0 && customer.id && (
+                      <>
+                        <Divider />
+                        <AppWidgets
+                          extensions={CUSTOMER_DETAILS_WIDGETS}
+                          params={{ customerId: customer.id }}
+                        />
+                      </>
+                    )}
+                  </DetailPageLayout.RightSidebar>
+                  <Savebar>
+                    {canEditCustomers ? (
+                      <>
+                        <Savebar.Spacer />
+                        <CustomerSaveCompositionHint composition={saveComposition} />
+                        <Savebar.CancelButton onClick={() => navigate(customerBackLink)} />
+                        <Savebar.ConfirmButton
+                          transitionState={saveButtonBar}
+                          onClick={submit}
+                          disabled={isSaveDisabled}
+                        />
+                      </>
+                    ) : (
+                      <Savebar.ReadOnlyLabel />
+                    )}
+                  </Savebar>
+                </DetailPageLayout>
               )}
-              {menuItems.length > 0 && <TopNav.Menu items={menuItems} dataTestId="menu" />}
-            </TopNav>
-            <DetailPageLayout.Content paddingBottom={10}>
-              <CustomerOverview customer={customer} />
-              <CardSpacer />
-              <CustomerInfo
-                data={data}
-                disabled={disabled || isReadOnly}
-                errors={errors}
-                onChange={change}
-              />
-              <CardSpacer />
-              <CustomerAddresses
-                customer={customer}
-                disabled={disabled}
-                manageAddressHref={customerAddressesUrl(customerId)}
-              />
-              <CardSpacer />
-              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
-                <CustomerOrders
-                  orders={mapEdgesToItems(customer?.orders)}
-                  viewAllHref={orderListUrlWithCustomerEmail(customer?.email)}
-                />
-              </RequirePermissions>
-            </DetailPageLayout.Content>
-            <DetailPageLayout.RightSidebar>
-              <AccountStatusCard customer={customer} />
-              <CardSpacer />
-              <ExternalReferenceCard customer={customer} />
-              <CardSpacer />
-              <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
-                <CustomerGiftCardsCard />
-              </RequirePermissions>
-              {CUSTOMER_DETAILS_WIDGETS.length > 0 && customer?.id && (
-                <>
-                  <CardSpacer />
-                  <Divider />
-                  <AppWidgets
-                    extensions={CUSTOMER_DETAILS_WIDGETS}
-                    params={{ customerId: customer.id }}
-                  />
-                </>
-              )}
-            </DetailPageLayout.RightSidebar>
-            <Savebar>
-              {canEditCustomers ? (
-                <>
-                  <Savebar.DeleteButton onClick={onDelete} />
-                  <Savebar.Spacer />
-                  <Savebar.CancelButton onClick={() => navigate(customerBackLink)} />
-                  <Savebar.ConfirmButton
-                    transitionState={saveButtonBar}
-                    onClick={submit}
-                    disabled={isSaveDisabled}
-                  />
-                </>
-              ) : (
-                <Savebar.ReadOnlyLabel />
-              )}
-            </Savebar>
-          </DetailPageLayout>
+            </CustomerTypeAndAttributes>
+          </>
         );
       }}
     </Form>
+  );
+};
+
+interface CustomerTypeAndAttributesProps {
+  assignReferencesAttributeId?: string;
+  children: (slots: { attributesCard: ReactNode }) => ReactNode;
+  customer: NonNullable<CustomerDetailsQuery["user"]>;
+  customerTypeId: string;
+  disabled: boolean;
+  errors: AccountErrorFragment[];
+  fetchMoreReferenceCategories?: FetchMoreProps;
+  fetchMoreReferenceCollections?: FetchMoreProps;
+  fetchMoreReferencePages?: FetchMoreProps;
+  fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchReferenceCategories?: (data: string) => void;
+  fetchReferenceCollections?: (data: string) => void;
+  fetchReferencePages?: (data: string) => void;
+  fetchReferenceProducts?: (data: string) => void;
+  getSubmitDataRef: MutableRefObject<() => Promise<CustomerDetailsAttributeSubmitData>>;
+  initialConstraints?: InitialConstraints & InitialPageConstraints;
+  onAssignReferencesClick?: (attribute: AttributeInput) => void;
+  onAttributesDirtyChange: (dirty: boolean) => void;
+  onCloseAssignReferences?: () => void;
+  onFilterChange?: AssignAttributeValueDialogFilterChangeMap;
+  onTypeChange: (type: { id: string; name: string } | null) => void;
+  referenceCategories: ReferenceEntitiesSearch["categories"];
+  referenceCollections: ReferenceEntitiesSearch["collections"];
+  referencePages: ReferenceEntitiesSearch["pages"];
+  referenceProducts: ReferenceEntitiesSearch["products"];
+  triggerChange: () => void;
+}
+
+const CustomerTypeAndAttributes = ({
+  assignReferencesAttributeId,
+  children,
+  customer,
+  customerTypeId,
+  disabled,
+  errors,
+  fetchMoreReferenceCategories,
+  fetchMoreReferenceCollections,
+  fetchMoreReferencePages,
+  fetchMoreReferenceProducts,
+  fetchReferenceCategories,
+  fetchReferenceCollections,
+  fetchReferencePages,
+  fetchReferenceProducts,
+  getSubmitDataRef,
+  initialConstraints,
+  onAssignReferencesClick,
+  onAttributesDirtyChange,
+  onCloseAssignReferences,
+  onFilterChange,
+  onTypeChange,
+  referenceCategories,
+  referenceCollections,
+  referencePages,
+  referenceProducts,
+  triggerChange,
+}: CustomerTypeAndAttributesProps) => {
+  const intl = useIntl();
+  const notify = useNotifier();
+  const attributeForm = useCustomerDetailsAttributes({
+    assignReferencesAttributeId,
+    customer,
+    fetchMoreReferenceCategories,
+    fetchMoreReferenceCollections,
+    fetchMoreReferencePages,
+    fetchMoreReferenceProducts,
+    fetchReferenceCategories,
+    fetchReferenceCollections,
+    fetchReferencePages,
+    fetchReferenceProducts,
+    referenceCategories,
+    referenceCollections,
+    referencePages,
+    referenceProducts,
+    triggerChange,
+  });
+  const [pickedType, setPickedType] = useState<{ id: string; name: string } | null>(null);
+  const formErrors = getFormErrors(["customerType"], errors);
+
+  useEffect(
+    function syncSubmitDataRef() {
+      getSubmitDataRef.current = attributeForm.getSubmitData;
+    },
+    [attributeForm.getSubmitData, getSubmitDataRef],
+  );
+
+  useEffect(
+    function syncAttributesDirty() {
+      onAttributesDirtyChange(attributeForm.isDirty);
+    },
+    [attributeForm.isDirty, onAttributesDirtyChange],
+  );
+
+  const selectedType =
+    pickedType && pickedType.id === customerTypeId
+      ? pickedType
+      : customer.customerType
+        ? { id: customer.customerType.id, name: customer.customerType.name }
+        : null;
+
+  const attributesCard = (
+    <CustomerAttributesCard
+      selectedType={selectedType}
+      savedTypeId={customer.customerType?.id ?? null}
+      disabled={disabled || attributeForm.typeAttributesLoading}
+      error={
+        formErrors.customerType ? getAccountErrorMessage(formErrors.customerType, intl) : undefined
+      }
+      onChange={type => {
+        const previousType = selectedType;
+
+        setPickedType(type);
+        onTypeChange(type);
+        void attributeForm.handleTypeChange(type.id).then(loaded => {
+          if (loaded) {
+            return;
+          }
+
+          setPickedType(previousType);
+          onTypeChange(previousType);
+          notify({
+            status: "error",
+            text: intl.formatMessage(commonMessages.somethingWentWrong),
+          });
+        });
+      }}
+    >
+      {attributeForm.attributes.length > 0 ? (
+        <Attributes
+          unwrapped
+          attributes={attributeForm.attributes}
+          attributeValues={attributeForm.attributeValues}
+          disabled={disabled || attributeForm.typeAttributesLoading}
+          errors={errors}
+          fetchAttributeValues={attributeForm.fetchAttributeValues}
+          fetchMoreAttributeValues={attributeForm.fetchMoreAttributeValues}
+          loading={attributeForm.typeAttributesLoading}
+          onAttributeSelectBlur={attributeForm.handlers.onAttributeSelectBlur}
+          onChange={attributeForm.handlers.onChange}
+          onFileChange={attributeForm.handlers.onFileChange}
+          onMultiChange={attributeForm.handlers.onMultiChange}
+          onReferencesAddClick={onAssignReferencesClick ?? noopAssignReferences}
+          onReferencesRemove={attributeForm.handlers.selectAttributeReference}
+          onReferencesReorder={attributeForm.handlers.onReferencesReorder}
+          richTextGetters={attributeForm.attributeRichTextGetters}
+        />
+      ) : null}
+    </CustomerAttributesCard>
+  );
+  const assignedAttribute = assignReferencesAttributeId
+    ? attributeForm.attributes.find(({ id }) => id === assignReferencesAttributeId)
+    : undefined;
+  const assignedEntityType = assignReferencesAttributeId
+    ? getReferenceAttributeEntityTypeFromAttribute(
+        assignReferencesAttributeId,
+        attributeForm.attributes,
+      )
+    : undefined;
+  const canOpenAssignReferences =
+    Boolean(assignReferencesAttributeId) &&
+    Boolean(assignedAttribute) &&
+    Boolean(assignedEntityType);
+
+  const handleCloseAssignReferences = (): void => {
+    onCloseAssignReferences?.();
+  };
+  const handleAssignReferences = (attributeValues: Container[]): void => {
+    if (!assignReferencesAttributeId) {
+      return;
+    }
+
+    handleContainerReferenceAssignment(
+      assignReferencesAttributeId,
+      attributeValues,
+      attributeForm.attributes,
+      {
+        selectAttributeReference: attributeForm.handlers.selectAttributeReference,
+        selectAttributeReferenceAdditionalData:
+          attributeForm.handlers.selectAttributeReferenceAdditionalData,
+      },
+    );
+    onCloseAssignReferences?.();
+  };
+  const handleFetchMoreReferences = (): void => {
+    attributeForm.handlers.fetchMoreReferences?.onFetchMore();
+  };
+
+  return (
+    <>
+      {children({ attributesCard })}
+      {canOpenAssignReferences && assignedAttribute && assignedEntityType ? (
+        <AssignAttributeValueDialog
+          entityType={assignedEntityType}
+          attribute={assignedAttribute}
+          confirmButtonState="default"
+          products={(referenceProducts ?? []) as Products}
+          pages={referencePages ?? []}
+          collections={referenceCollections ?? []}
+          categories={referenceCategories ?? []}
+          hasMore={attributeForm.handlers.fetchMoreReferences?.hasMore ?? false}
+          open={canOpenAssignReferences}
+          onFetch={attributeForm.handlers.fetchReferences}
+          onFetchMore={handleFetchMoreReferences}
+          loading={attributeForm.handlers.fetchMoreReferences?.loading ?? false}
+          onClose={handleCloseAssignReferences}
+          onFilterChange={onFilterChange}
+          initialConstraints={initialConstraints}
+          onSubmit={handleAssignReferences}
+        />
+      ) : null}
+    </>
   );
 };
 

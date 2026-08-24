@@ -4,10 +4,8 @@
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 720px) {
-  .gridSplit {
-    grid-template-columns: 1fr 1fr;
-  }
+.gridSplit {
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
 }
 
 .addressBlock {

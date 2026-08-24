@@ -51,6 +51,10 @@ export interface PageFetchingParams {
   pageTypes: string[];
 }
 
+export interface CustomerFetchingParams {
+  customerType: string[];
+}
+
 export interface GiftCardsFetchingParams {
   currency: string[];
   products: string[];
@@ -89,6 +93,7 @@ type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type DiscountParamsKeys = keyof DiscountFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
+type CustomerParamsKeys = keyof CustomerFetchingParams;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
 type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
 type StaffMembersParamsKeys = keyof StaffMembersFetchingParams;
@@ -142,6 +147,10 @@ const emptyDiscountFetchingParams: DiscountFetchingParams = {
 
 const emptyPageFetchingParams: PageFetchingParams = {
   pageTypes: [],
+};
+
+const emptyCustomerFetchingParams: CustomerFetchingParams = {
+  customerType: [],
 };
 
 const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
@@ -278,6 +287,18 @@ export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
   return p;
 };
 
+export const toCustomerFetchingParams = (p: CustomerFetchingParams, c: UrlToken) => {
+  const key = c.name as CustomerParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
+  }
+
+  p[key] = unique(p[key].concat(c.value));
+
+  return p;
+};
+
 export const toGiftCardsFetchingParams = (p: GiftCardsFetchingParams, c: UrlToken) => {
   const key = c.name as GiftCardsParamKeys;
 
@@ -356,6 +377,7 @@ export type FetchingParamsType =
   | CollectionFetchingParams
   | GiftCardsFetchingParams
   | PageFetchingParams
+  | CustomerFetchingParams
   | VoucherFetchingParams
   | DiscountFetchingParams
   | ProductTypesFetchingParams
@@ -375,6 +397,8 @@ export const getEmptyFetchingPrams = (type: FilterProviderType) => {
       return emptyDiscountFetchingParams;
     case "page":
       return emptyPageFetchingParams;
+    case "customer":
+      return emptyCustomerFetchingParams;
     case "gift-cards":
       return emptyGiftCardsFetchingParams;
     case "collection":

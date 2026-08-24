@@ -20,6 +20,7 @@ describe("createConfigurationMenu", () => {
       "Content",
       "Shipping & delivery",
       "Orders",
+      "Customers",
       "Users & permissions",
     ]);
     expect(labels).not.toContain("Miscellaneous");
@@ -55,6 +56,18 @@ describe("createConfigurationMenu", () => {
 
     // Assert
     expect(testIds).toEqual(["configuration-menu-channels", "configuration-menu-taxes"]);
+  });
+
+  it("places customer types and attributes under Customers", () => {
+    // Arrange / Act
+    const customers = createConfigurationMenu(intl).find(section => section.label === "Customers");
+    const testIds = customers?.menuItems.map(item => item.testId);
+
+    // Assert
+    expect(testIds).toEqual([
+      "configuration-menu-customer-types",
+      "configuration-menu-customer-attributes",
+    ]);
   });
 
   it("keeps Orders hub reachable with either orders or settings permission", () => {

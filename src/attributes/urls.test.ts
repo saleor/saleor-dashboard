@@ -58,6 +58,16 @@ describe("attributeListUrlWithAttributeType", () => {
     expect(result).toContain("PAGE_TYPE");
     expect(result).toContain("activeTab=2");
   });
+
+  it("should build URL with built-in preset tab index for customer attributes", () => {
+    // Arrange & Act
+    const result = attributeListUrlWithAttributeTypePreset(AttributeTypeEnum.CUSTOMER_TYPE);
+
+    // Assert
+    expect(result).toContain("/attributes?");
+    expect(result).toContain("CUSTOMER_TYPE");
+    expect(result).toContain("activeTab=3");
+  });
 });
 
 describe("getAttributeTypeFromBuiltInPresetTab", () => {
@@ -77,9 +87,17 @@ describe("getAttributeTypeFromBuiltInPresetTab", () => {
     expect(result).toBe(AttributeTypeEnum.PAGE_TYPE);
   });
 
-  it("should return undefined for custom preset tabs", () => {
+  it("should return customer type for built-in preset tab 3", () => {
     // Arrange & Act
     const result = getAttributeTypeFromBuiltInPresetTab(3);
+
+    // Assert
+    expect(result).toBe(AttributeTypeEnum.CUSTOMER_TYPE);
+  });
+
+  it("should return undefined for custom preset tabs", () => {
+    // Arrange & Act
+    const result = getAttributeTypeFromBuiltInPresetTab(4);
 
     // Assert
     expect(result).toBeUndefined();
