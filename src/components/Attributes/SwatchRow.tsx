@@ -42,29 +42,35 @@ export const SwatchRow = ({
 
   const { handleFetchMore, handleFocus, handleInputChange } = useComboboxHandlers({
     fetchOptions: query => fetchAttributeValues(query, attribute.id),
-    alwaysFetchOnFocus: false,
+    alwaysFetchOnFocus: true,
     fetchMore: fetchMoreAttributeValues,
   });
 
-  const options = useMemo(
-    () =>
-      attributeValues.flatMap(attributeValue => {
-        if (!attributeValue.name || !attributeValue.slug) {
-          return [];
-        }
+  const options = useMemo(() => {
+    const bySlug = new Map<string, (typeof attributeValues)[number]>();
 
-        const swatch = getAttributeSwatchData(attributeValue);
+    [...attribute.data.values, ...attributeValues].forEach(attributeValue => {
+      if (attributeValue.slug) {
+        bySlug.set(attributeValue.slug, attributeValue);
+      }
+    });
 
-        return [
-          {
-            label: attributeValue.name,
-            value: attributeValue.slug,
-            startAdornment: swatch ? <DatagridSwatchPreview {...swatch} /> : null,
-          },
-        ];
-      }),
-    [attributeValues],
-  );
+    return Array.from(bySlug.values()).flatMap(attributeValue => {
+      if (!attributeValue.name || !attributeValue.slug) {
+        return [];
+      }
+
+      const swatch = getAttributeSwatchData(attributeValue);
+
+      return [
+        {
+          label: attributeValue.name,
+          value: attributeValue.slug,
+          startAdornment: swatch ? <DatagridSwatchPreview {...swatch} /> : null,
+        },
+      ];
+    });
+  }, [attribute.data.values, attributeValues]);
 
   return (
     <BasicAttributeRow label={attribute.label} {...getAttributeRowLabelProps(attribute)}>
@@ -92,7 +98,7 @@ export const SwatchRow = ({
         onInputValueChange={handleInputChange}
         onFocus={handleFocus}
         onScrollEnd={handleFetchMore}
-        loading={fetchMoreAttributeValues?.hasMore || fetchMoreAttributeValues?.loading}
+        loading={!!fetchMoreAttributeValues?.loading}
       />
     </BasicAttributeRow>
   );

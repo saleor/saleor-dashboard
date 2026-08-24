@@ -1,5 +1,6 @@
 import {
   AttributeInputTypeEnum,
+  type AttributeValueDetailsFragment,
   type AttributeValueFragment,
   ProductErrorCode,
   type ProductErrorWithAttributesFragment,
@@ -64,7 +65,7 @@ const mockAttribute: AttributeInput = {
   value: [],
 };
 
-const mockAttributeValues: AttributeValueFragment[] = [
+const mockAttributeValues: AttributeValueDetailsFragment[] = [
   {
     __typename: "AttributeValue",
     id: "val-1",
@@ -76,6 +77,8 @@ const mockAttributeValues: AttributeValueFragment[] = [
     dateTime: null,
     file: null,
     value: null,
+    plainText: null,
+    richText: null,
   },
   {
     __typename: "AttributeValue",
@@ -88,6 +91,8 @@ const mockAttributeValues: AttributeValueFragment[] = [
     dateTime: null,
     file: null,
     value: null,
+    plainText: null,
+    richText: null,
   },
 ];
 
@@ -200,6 +205,70 @@ describe("DropdownRow", () => {
 
     // Assert
     expect(screen.getByText("Invalid attribute value")).toBeInTheDocument();
+  });
+
+  it("should show type choices when search results are empty", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const attributeWithSeed: AttributeInput = {
+      ...mockAttribute,
+      data: {
+        ...mockAttribute.data,
+        values: mockAttributeValues,
+      },
+    };
+
+    // Act
+    render(
+      <DropdownRow
+        attribute={attributeWithSeed}
+        attributeValues={[]}
+        disabled={false}
+        error={undefined as any}
+        onChange={mockOnChange}
+        fetchAttributeValues={mockFetchAttributeValues}
+        fetchMoreAttributeValues={mockFetchMoreAttributeValues}
+      />,
+    );
+
+    await user.click(screen.getByRole("combobox"));
+
+    // Assert
+    expect(screen.getByText("Red")).toBeInTheDocument();
+    expect(screen.getByText("Blue")).toBeInTheDocument();
+  });
+
+  it("should filter type choices locally while typing", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const attributeWithSeed: AttributeInput = {
+      ...mockAttribute,
+      data: {
+        ...mockAttribute.data,
+        values: mockAttributeValues,
+      },
+    };
+
+    render(
+      <DropdownRow
+        attribute={attributeWithSeed}
+        attributeValues={[]}
+        disabled={false}
+        error={undefined as any}
+        onChange={mockOnChange}
+        fetchAttributeValues={mockFetchAttributeValues}
+        fetchMoreAttributeValues={mockFetchMoreAttributeValues}
+      />,
+    );
+
+    const combobox = screen.getByRole("combobox");
+
+    await user.click(combobox);
+    await user.type(combobox, "bl");
+
+    // Assert
+    expect(screen.getByText("Blue")).toBeInTheDocument();
+    expect(screen.queryByText("Red")).not.toBeInTheDocument();
   });
 
   it("should filter out attribute values with null slug", async () => {

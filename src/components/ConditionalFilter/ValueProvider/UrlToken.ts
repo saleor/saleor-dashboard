@@ -54,6 +54,8 @@ const DISCOUNT_STATICS = ["promotionStatus", "promotionType"];
 
 const PAGE_STATIC = ["pageTypes"];
 
+const CUSTOMER_STATICS = ["customerType"];
+
 const GIFT_CARDS_STATICS = ["currency", "products", "isActive", "tags", "usedBy", "code"];
 
 const COLLECTION_STATICS = ["channel", "published"];
@@ -79,6 +81,7 @@ const STATIC_TO_LOAD = [
   ...VOUCHER_STATICS,
   ...DISCOUNT_STATICS,
   ...PAGE_STATIC,
+  ...CUSTOMER_STATICS,
   ...GIFT_CARDS_STATICS,
   ...COLLECTION_STATICS,
   ...PRODUCT_TYPES_STATICS,

@@ -667,14 +667,11 @@ export type AssignedVariantAttributeFieldPolicy = {
 	attribute?: FieldPolicy<any> | FieldReadFunction<any>,
 	variantSelection?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AttributeKeySpecifier = ('availableInGrid' | 'choices' | 'entityType' | 'externalReference' | 'filterableInDashboard' | 'filterableInStorefront' | 'id' | 'inputType' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productTypes' | 'productVariantTypes' | 'referenceTypes' | 'slug' | 'storefrontSearchPosition' | 'translation' | 'type' | 'unit' | 'valueRequired' | 'visibleInStorefront' | 'withChoices' | AttributeKeySpecifier)[];
+export type AttributeKeySpecifier = ('choices' | 'entityType' | 'externalReference' | 'id' | 'inputType' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'productTypes' | 'productVariantTypes' | 'referenceTypes' | 'slug' | 'translation' | 'type' | 'unit' | 'valueRequired' | 'visibleInStorefront' | 'withChoices' | AttributeKeySpecifier)[];
 export type AttributeFieldPolicy = {
-	availableInGrid?: FieldPolicy<any> | FieldReadFunction<any>,
 	choices?: FieldPolicy<any> | FieldReadFunction<any>,
 	entityType?: FieldPolicy<any> | FieldReadFunction<any>,
 	externalReference?: FieldPolicy<any> | FieldReadFunction<any>,
-	filterableInDashboard?: FieldPolicy<any> | FieldReadFunction<any>,
-	filterableInStorefront?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	inputType?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -688,7 +685,6 @@ export type AttributeFieldPolicy = {
 	productVariantTypes?: FieldPolicy<any> | FieldReadFunction<any>,
 	referenceTypes?: FieldPolicy<any> | FieldReadFunction<any>,
 	slug?: FieldPolicy<any> | FieldReadFunction<any>,
-	storefrontSearchPosition?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	unit?: FieldPolicy<any> | FieldReadFunction<any>,

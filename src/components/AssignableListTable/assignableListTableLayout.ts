@@ -29,10 +29,8 @@ export type AssignableListTableLeadingInset =
   | typeof ASSIGNABLE_LIST_TABLE_LEADING_INSET
   | typeof ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET;
 
-/** Locked table-heading row. Collection products, GridTable, and MUI assignableTable. */
-export const ASSIGNABLE_LIST_TABLE_HEADER_HEIGHT_PX = 40;
-
-/** Drag-handle column. Grip is centered; no extra left inset on the first cell. */
+/** Drag-handle column (40px). Grip is centered; no extra left inset on the first cell.
+ * Table heading is not locked to this — it uses compact Y `spacing-1` like other subheads. */
 export const ASSIGNABLE_LIST_TABLE_DRAG_COLUMN_PX = 40;
 
 /** Checkbox control width (the column is this plus the chosen leading inset). */
@@ -41,7 +39,7 @@ export const ASSIGNABLE_LIST_TABLE_CHECKBOX_CONTROL_PX = 20;
 /** Thumbnail / media rows (collection products, discount products & variants). */
 export const ASSIGNABLE_LIST_TABLE_MEDIA_ROW_HEIGHT = "50px";
 
-/** Cell padding on header and body (`spacing-2`). */
+/** Cell padding on body rows (`spacing-2`). Header Y is `spacing-1`. */
 export const ASSIGNABLE_LIST_TABLE_CELL_PADDING = 2;
 
 /** Pagination band vertical padding. */

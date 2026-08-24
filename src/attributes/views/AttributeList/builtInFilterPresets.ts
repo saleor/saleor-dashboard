@@ -14,6 +14,11 @@ const messages = defineMessages({
     defaultMessage: "Model attributes",
     description: "built-in attribute list filter preset",
   },
+  customerAttributes: {
+    id: "SbbVLS",
+    defaultMessage: "Customer attributes",
+    description: "built-in attribute list filter preset",
+  },
 });
 
 const getAttributeTypeFilterPresetQuery = (attributeType: AttributeTypeEnum): string => {
@@ -31,5 +36,9 @@ export const getBuiltInAttributeFilterPresets = (intl: IntlShape): GetFilterTabs
   {
     name: intl.formatMessage(messages.modelAttributes),
     data: getAttributeTypeFilterPresetQuery(AttributeTypeEnum.PAGE_TYPE),
+  },
+  {
+    name: intl.formatMessage(messages.customerAttributes),
+    data: getAttributeTypeFilterPresetQuery(AttributeTypeEnum.CUSTOMER_TYPE),
   },
 ];

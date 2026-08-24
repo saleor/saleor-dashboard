@@ -14,6 +14,7 @@ const serverErrors: AccountErrorFragment[] = [
     field: "password",
     message: "Password is too short.",
     addressType: null,
+    attributes: null,
   },
 ];
 

@@ -1,14 +1,9 @@
 // @ts-strict-ignore
-import {
-  type PageErrorWithAttributesFragment,
-  type ProductErrorWithAttributesFragment,
-} from "@dashboard/graphql";
-
 import AttributeRow from "./AttributeRow";
-import { type AttributeRowProps } from "./types";
+import { type AttributeFieldError, type AttributeRowProps } from "./types";
 
 type AttributeListItemProps = Omit<AttributeRowProps, "error"> & {
-  errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;
+  errors: AttributeFieldError[];
   onAttributeSelectBlur: () => void;
 };
 

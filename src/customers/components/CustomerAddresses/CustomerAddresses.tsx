@@ -1,10 +1,11 @@
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
+import { Placeholder } from "@dashboard/components/Placeholder";
 import { type CustomerDetailsFragment } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -65,69 +66,76 @@ const CustomerAddresses = ({
   const shipping = customer?.defaultShippingAddress ?? null;
   const sameAddress = billing && shipping && billing.id === shipping.id;
   const hasAnyAddress = billing !== null || shipping !== null;
+  const manageAction = disabled ? (
+    <Button data-test-id="manage-addresses" disabled variant="secondary">
+      <FormattedMessage {...buttonMessages.manage} />
+    </Button>
+  ) : (
+    <Link to={manageAddressHref}>
+      <Button data-test-id="manage-addresses" variant="secondary">
+        <FormattedMessage {...buttonMessages.manage} />
+      </Button>
+    </Link>
+  );
 
   return (
-    <DashboardCard data-test-id="customer-addresses">
-      <DashboardCard.Header>
-        <DashboardCard.Title size={6} fontWeight="medium">
-          <FormattedMessage id="BfJGij" defaultMessage="Address Information" description="header" />
-        </DashboardCard.Title>
-        <DashboardCard.Toolbar>
-          <Link to={manageAddressHref}>
-            <Button data-test-id="manage-addresses" disabled={disabled} variant="secondary">
-              <FormattedMessage {...buttonMessages.manage} />
-            </Button>
-          </Link>
-        </DashboardCard.Toolbar>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        {!hasAnyAddress ? (
-          <Text>
-            <FormattedMessage id="3d1RXL" defaultMessage="This customer has no addresses yet" />
-          </Text>
-        ) : sameAddress ? (
-          <Box className={`${styles.grid}`}>
+    <DetailSettingsCard
+      data-test-id="customer-addresses"
+      title={
+        <FormattedMessage id="BfJGij" defaultMessage="Address Information" description="header" />
+      }
+      headerEnd={manageAction}
+    >
+      {!customer ? (
+        <Box aria-busy="true" data-test-id="customer-addresses-loading">
+          <Skeleton __height="4rem" />
+        </Box>
+      ) : !hasAnyAddress ? (
+        <Placeholder>
+          <FormattedMessage id="3d1RXL" defaultMessage="This customer has no addresses yet" />
+        </Placeholder>
+      ) : sameAddress ? (
+        <Box className={styles.grid}>
+          <AddressBlock
+            label={
+              <FormattedMessage
+                defaultMessage="Default address"
+                description="customer detail, label above the address when default billing and default shipping are the same"
+                id="U+Fl4Z"
+              />
+            }
+            address={billing}
+          />
+        </Box>
+      ) : (
+        <Box className={`${styles.grid} ${styles.gridSplit}`}>
+          {billing && (
             <AddressBlock
               label={
                 <FormattedMessage
-                  defaultMessage="Default address"
-                  description="customer detail, label above the address when default billing and default shipping are the same"
-                  id="U+Fl4Z"
+                  id="biVFKU"
+                  defaultMessage="Billing Address"
+                  description="subsection header"
                 />
               }
               address={billing}
             />
-          </Box>
-        ) : (
-          <Box className={`${styles.grid} ${styles.gridSplit}`}>
-            {billing && (
-              <AddressBlock
-                label={
-                  <FormattedMessage
-                    id="biVFKU"
-                    defaultMessage="Billing Address"
-                    description="subsection header"
-                  />
-                }
-                address={billing}
-              />
-            )}
-            {shipping && (
-              <AddressBlock
-                label={
-                  <FormattedMessage
-                    id="Zd3Eew"
-                    defaultMessage="Shipping Address"
-                    description="subsection header"
-                  />
-                }
-                address={shipping}
-              />
-            )}
-          </Box>
-        )}
-      </DashboardCard.Content>
-    </DashboardCard>
+          )}
+          {shipping && (
+            <AddressBlock
+              label={
+                <FormattedMessage
+                  id="Zd3Eew"
+                  defaultMessage="Shipping Address"
+                  description="subsection header"
+                />
+              }
+              address={shipping}
+            />
+          )}
+        </Box>
+      )}
+    </DetailSettingsCard>
   );
 };
 

@@ -26,6 +26,7 @@ function useAddressValidation<TInput, TOutput>(
     field: "country",
     addressType,
     message: "Country required",
+    attributes: null,
   };
 
   return {

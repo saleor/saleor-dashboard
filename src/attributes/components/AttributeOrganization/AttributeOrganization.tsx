@@ -5,7 +5,7 @@ import { AttributeTypeEnum } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
-import { FileText, type LucideIcon, Tag } from "lucide-react";
+import { FileText, type LucideIcon, Tag, UserRound } from "lucide-react";
 import { type KeyboardEvent, useRef } from "react";
 import { useIntl } from "react-intl";
 
@@ -107,6 +107,13 @@ const AttributeOrganization = ({
       description: intl.formatMessage(messages.modelDescription),
       icon: FileText,
       testId: AttributeTypeEnum.PAGE_TYPE,
+    },
+    {
+      value: AttributeTypeEnum.CUSTOMER_TYPE,
+      title: intl.formatMessage(attributeClassMessages.customerAttribute),
+      description: intl.formatMessage(messages.customerDescription),
+      icon: UserRound,
+      testId: AttributeTypeEnum.CUSTOMER_TYPE,
     },
   ];
 

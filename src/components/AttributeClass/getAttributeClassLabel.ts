@@ -12,6 +12,8 @@ export const getAttributeClassLabel = (
       return intl.formatMessage(messages.modelAttribute);
     case AttributeTypeEnum.PRODUCT_TYPE:
       return intl.formatMessage(messages.productAttribute);
+    case AttributeTypeEnum.CUSTOMER_TYPE:
+      return intl.formatMessage(messages.customerAttribute);
     default:
       return attributeType;
   }

@@ -18,6 +18,8 @@ import AssignAttributeValueDialog, {
 import {
   type AttributeInput,
   Attributes,
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -34,7 +36,6 @@ import {
   type ProductChannelListingErrorFragment,
   type ProductErrorWithAttributesFragment,
   type ProductVariantFragment,
-  type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -125,12 +126,12 @@ interface ProductVariantPageProps {
   referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
   referenceCategories?: RelayToFlat<SearchCategoriesQuery["search"]>;
   referenceCollections?: RelayToFlat<SearchCollectionsQuery["search"]>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: AttributeValueChoices;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreReferenceCategories?: FetchMoreProps;
   fetchMoreReferenceCollections?: FetchMoreProps;
-  fetchMoreAttributeValues?: FetchMoreProps;
+  fetchMoreAttributeValues?: AttributeValueFetchMore;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
   fetchReferenceCategories?: (data: string) => void;

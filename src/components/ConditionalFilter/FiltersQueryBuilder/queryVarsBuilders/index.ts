@@ -4,6 +4,7 @@ export * from "./AttributeTypeQueryVarsBuilder";
 export * from "./BaseMappableQueryVarsBuilder";
 export * from "./CollectionPublishedQueryVarsBuilder";
 export * from "./CustomerNumberOfOrdersQueryVarsBuilder";
+export * from "./CustomerTypeQueryVarsBuilder";
 export * from "./DefaultQueryVarsBuilder";
 export * from "./IntFilterQueryVarsBuilder";
 export * from "./MetadataFilterInputQueryVarsBuilder";

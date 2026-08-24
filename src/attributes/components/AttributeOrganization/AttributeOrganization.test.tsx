@@ -26,6 +26,10 @@ describe("AttributeOrganization", () => {
       "aria-checked",
       "false",
     );
+    expect(screen.getByTestId(AttributeTypeEnum.CUSTOMER_TYPE)).toHaveAttribute(
+      "aria-checked",
+      "false",
+    );
   });
 
   it("selects model attribute class", async () => {

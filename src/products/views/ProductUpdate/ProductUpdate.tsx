@@ -88,9 +88,9 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const { data, loading, refetch } = useProductDetailsQuery({
@@ -401,7 +401,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
   const referenceCategories = mapEdgesToItems(searchReferenceCategoriesOpts?.data?.search) || [];
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues = getAttributeValues;
   const fetchMoreCollections = getSearchFetchMoreProps(searchCollectionsOpts, loadMoreCollections);
   const fetchMoreCategories = getSearchFetchMoreProps(searchCategoriesOpts, loadMoreCategories);
   const fetchMoreReferenceCategories = getSearchFetchMoreProps(
@@ -414,11 +414,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
   );
   const fetchMoreReferencePages = getSearchFetchMoreProps(searchPagesOpts, loadMorePages);
   const fetchMoreReferenceProducts = getSearchFetchMoreProps(searchProductsOpts, loadMoreProducts);
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
   if (product === null) {
