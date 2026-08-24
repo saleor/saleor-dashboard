@@ -13,7 +13,12 @@ import {
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
 } from "@dashboard/components/AssignAttributeValueDialog";
-import { type AttributeInput, Attributes } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  Attributes,
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
+} from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -31,7 +36,6 @@ import {
   type PageDetailsFragment,
   type PageErrorWithAttributesFragment,
   PermissionEnum,
-  type SearchAttributeValuesQuery,
   type SearchCategoriesQuery,
   type SearchCollectionsQuery,
   type SearchPagesQuery,
@@ -72,7 +76,7 @@ interface PageDetailsPageProps {
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   selectedPageType?: PageDetailsFragment["pageType"];
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
+  attributeValues: AttributeValueChoices;
   onRemove: () => void;
   onShowMetadata?: () => void;
   onSubmit: (data: PageSubmitData) => SubmitPromise;
@@ -89,7 +93,7 @@ interface PageDetailsPageProps {
   fetchReferenceCollections?: (data: string) => void;
   fetchMoreReferenceCollections?: FetchMoreProps;
   fetchAttributeValues: (query: string, attributeId: string) => void;
-  fetchMoreAttributeValues?: FetchMoreProps;
+  fetchMoreAttributeValues?: AttributeValueFetchMore;
   onCloseDialog: () => void;
   onSelectPageType?: (pageTypeId: string) => void;
   onAttributeSelectBlur: () => void;

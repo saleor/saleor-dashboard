@@ -226,9 +226,9 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     referenceWhereConstraints: getReferenceWhereConstraints(initialConstraints),
   });
   const {
-    loadMore: loadMoreAttributeValues,
+    getChoices: getAttributeValues,
+    getFetchMore: getFetchMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts,
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const fetchMoreReferencePages = {
@@ -251,12 +251,8 @@ const ProductVariant = ({ productId, params }: ProductVariantCreateProps) => {
     loading: searchCollectionsOpts.loading,
     onFetchMore: loadMoreCollections,
   };
-  const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
-    loading: !!searchAttributeValuesOpts.loading,
-    onFetchMore: loadMoreAttributeValues,
-  };
-  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const fetchMoreAttributeValues = getFetchMoreAttributeValues;
+  const attributeValues = getAttributeValues;
   const disableForm =
     productLoading ||
     uploadFileOpts.loading ||

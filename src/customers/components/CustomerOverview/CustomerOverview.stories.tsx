@@ -1,10 +1,47 @@
+import type { UserContext as UserContextType } from "@dashboard/auth/types";
+import { UserContext } from "@dashboard/auth/useUser";
+import { TimezoneProvider } from "@dashboard/components/Timezone";
 import { customer } from "@dashboard/customers/fixtures";
 import { CustomerDetailsContext } from "@dashboard/customers/providers/CustomerDetailsProvider";
-import { OrderStatus } from "@dashboard/graphql";
+import { OrderStatus, PermissionEnum, type UserFragment } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import type { FC } from "react";
+import type { ComponentProps, FC, ReactNode } from "react";
+import { fn } from "storybook/test";
 
 import { CustomerOverview } from "./CustomerOverview";
+
+const staffUser = (permissions: PermissionEnum[]): UserFragment => ({
+  __typename: "User",
+  id: "user-1",
+  email: "admin@example.com",
+  firstName: "Admin",
+  lastName: "User",
+  isActive: true,
+  isStaff: true,
+  dateJoined: "2024-01-01T00:00:00Z",
+  metadata: [],
+  userPermissions: permissions.map(code => ({
+    __typename: "UserPermission" as const,
+    code,
+    name: code,
+  })),
+  avatar: null,
+  accessibleChannels: [],
+  restrictedAccessToChannels: false,
+});
+
+const staffContext = (permissions: PermissionEnum[]): UserContextType => ({
+  login: undefined,
+  loginByExternalPlugin: undefined,
+  logout: undefined,
+  requestLoginByExternalPlugin: undefined,
+  authenticating: false,
+  isCredentialsLogin: false,
+  authenticated: true,
+  errors: [],
+  refetchUser: undefined,
+  user: staffUser(permissions),
+});
 
 const kpiOrderNode = {
   __typename: "Order" as const,
@@ -56,17 +93,43 @@ const withKpiContext = (channelId = "Q2hhbm5lbDox") => ({
     },
   ],
   loading: false,
-  setKpiChannelId: () => undefined,
+  refetch: async () => undefined,
+  setKpiChannelId: fn(),
 });
+
+type OverviewCustomer = NonNullable<ComponentProps<typeof CustomerOverview>["customer"]>;
+
+const withCustomer = (overrides: Partial<OverviewCustomer>): OverviewCustomer => ({
+  ...customer,
+  ...overrides,
+});
+
+const OverviewProviders = ({
+  children,
+  permissions = [PermissionEnum.MANAGE_ORDERS],
+  kpiContext = withKpiContext(),
+}: {
+  children: ReactNode;
+  permissions?: PermissionEnum[];
+  kpiContext?: ReturnType<typeof withKpiContext>;
+}): JSX.Element => (
+  <UserContext.Provider value={staffContext(permissions)}>
+    <TimezoneProvider value="America/New_York">
+      <CustomerDetailsContext.Provider value={kpiContext}>
+        {children}
+      </CustomerDetailsContext.Provider>
+    </TimezoneProvider>
+  </UserContext.Provider>
+);
 
 const meta: Meta<typeof CustomerOverview> = {
   title: "Customers/CustomerOverview",
   component: CustomerOverview,
   decorators: [
     (Story: FC) => (
-      <CustomerDetailsContext.Provider value={withKpiContext()}>
+      <OverviewProviders>
         <Story />
-      </CustomerDetailsContext.Provider>
+      </OverviewProviders>
     ),
   ],
 };
@@ -87,9 +150,15 @@ export const Loading: Story = {
 };
 
 export const NoOrders: Story = {
+  decorators: [
+    (Story: FC) => (
+      <OverviewProviders kpiContext={{ ...withKpiContext(), kpiChannels: [] }}>
+        <Story />
+      </OverviewProviders>
+    ),
+  ],
   args: {
-    customer: {
-      ...customer,
+    customer: withCustomer({
       orders: {
         __typename: "OrderCountableConnection",
         totalCount: 0,
@@ -107,23 +176,32 @@ export const NoOrders: Story = {
         __typename: "OrderCountableConnection",
         totalCount: 0,
       },
-    },
+    }),
   },
 };
 
 export const NeverLoggedIn: Story = {
   args: {
-    customer: {
-      ...customer,
-      lastLogin: null,
-    },
+    customer: withCustomer({ lastLogin: null }),
+  },
+};
+
+export const WithoutOrderPermissions: Story = {
+  decorators: [
+    (Story: FC) => (
+      <OverviewProviders permissions={[PermissionEnum.MANAGE_USERS]}>
+        <Story />
+      </OverviewProviders>
+    ),
+  ],
+  args: {
+    customer,
   },
 };
 
 export const NetSalesVsCheckoutTotal: Story = {
   args: {
-    customer: {
-      ...customer,
+    customer: withCustomer({
       kpiOrders: {
         __typename: "OrderCountableConnection",
         edges: [
@@ -137,15 +215,15 @@ export const NetSalesVsCheckoutTotal: Story = {
         __typename: "OrderCountableConnection",
         totalCount: 1,
       },
-    },
+    }),
   },
 };
 
 export const MultiChannelOrders: Story = {
   decorators: [
     (Story: FC) => (
-      <CustomerDetailsContext.Provider
-        value={{
+      <OverviewProviders
+        kpiContext={{
           ...withKpiContext("Q2hhbm5lbDox"),
           kpiChannels: [
             {
@@ -166,12 +244,11 @@ export const MultiChannelOrders: Story = {
         }}
       >
         <Story />
-      </CustomerDetailsContext.Provider>
+      </OverviewProviders>
     ),
   ],
   args: {
-    customer: {
-      ...customer,
+    customer: withCustomer({
       kpiOrderChannels: {
         __typename: "OrderCountableConnection",
         edges: [
@@ -212,14 +289,13 @@ export const MultiChannelOrders: Story = {
         __typename: "OrderCountableConnection",
         totalCount: 1,
       },
-    },
+    }),
   },
 };
 
 export const WithRefundsAndShipping: Story = {
   args: {
-    customer: {
-      ...customer,
+    customer: withCustomer({
       kpiOrders: {
         __typename: "OrderCountableConnection",
         edges: [
@@ -240,6 +316,6 @@ export const WithRefundsAndShipping: Story = {
         __typename: "OrderCountableConnection",
         totalCount: 1,
       },
-    },
+    }),
   },
 };

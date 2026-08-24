@@ -1,11 +1,23 @@
+import { type IntFilterInput } from "@dashboard/graphql";
+
 import { type Handler, NoopValuesHandler } from "../../API/Handler";
 import { type FilterElement } from "../../FilterElement";
 import { isItemOption } from "../../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "../utils";
 import { type BothApiQueryVarsBuilder } from "./types";
 
+type LegacyRange = { gte?: string; lte?: string };
+
+/**
+ * `numberOfOrders` has a different shape per API: `CustomerWhereInput` takes an
+ * `IntFilterInput` (`eq` / `oneOf` / `range`), the deprecated `CustomerFilterInput`
+ * takes an `IntRangeInput` (`gte` / `lte`).
+ */
 export class CustomerNumberOfOrdersQueryVarsBuilder
-  implements BothApiQueryVarsBuilder<{ numberOfOrders?: { gte?: string; lte?: string } }>
+  implements
+    BothApiQueryVarsBuilder<{
+      numberOfOrders?: IntFilterInput | LegacyRange;
+    }>
 {
   canHandle(element: FilterElement): boolean {
     return element.value.value === "numberOfOrders";
@@ -16,9 +28,24 @@ export class CustomerNumberOfOrdersQueryVarsBuilder
   }
 
   updateWhereQueryVariables(
-    query: Readonly<{ numberOfOrders?: { gte?: string; lte?: string } }>,
+    query: Readonly<{ numberOfOrders?: IntFilterInput }>,
     element: FilterElement,
-  ): { numberOfOrders?: { gte?: string; lte?: string } } {
+  ): { numberOfOrders?: IntFilterInput } {
+    const parsedValue = QueryVarsBuilderUtils.getIntegerValueFromElement(element);
+    const conditionLabel = element.condition.selected.conditionValue?.label || "";
+    const queryPart = QueryVarsBuilderUtils.buildNumericRangeCondition(parsedValue, conditionLabel);
+
+    if (!queryPart) {
+      return query;
+    }
+
+    return { ...query, numberOfOrders: queryPart as IntFilterInput };
+  }
+
+  updateFilterQueryVariables(
+    query: Readonly<{ numberOfOrders?: LegacyRange }>,
+    element: FilterElement,
+  ): { numberOfOrders?: LegacyRange } {
     const { value: selectedValue } = element.condition.selected;
     const conditionLabel = element.condition.selected.conditionValue?.label;
 
@@ -59,22 +86,5 @@ export class CustomerNumberOfOrdersQueryVarsBuilder
       default:
         return query;
     }
-  }
-
-  updateFilterQueryVariables(
-    query: Readonly<{ numberOfOrders?: { gte?: string; lte?: string } }>,
-    element: FilterElement,
-  ): { numberOfOrders?: { gte?: string; lte?: string } } {
-    const whereQuery = this.updateWhereQueryVariables(query, element);
-
-    return {
-      ...query,
-      numberOfOrders: whereQuery.numberOfOrders
-        ? (QueryVarsBuilderUtils.mapStaticQueryPartToLegacyVariables(whereQuery.numberOfOrders) as {
-            gte?: string;
-            lte?: string;
-          })
-        : undefined,
-    };
   }
 }

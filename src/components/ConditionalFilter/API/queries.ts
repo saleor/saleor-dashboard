@@ -103,6 +103,18 @@ export const initialDynamicOperands = gql`
     }
   }
 
+  query _SearchCustomerTypesOperands($first: Int!, $customerTypesSlugs: [String!]) {
+    customerTypes(first: $first, where: { slug: { oneOf: $customerTypesSlugs } }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
   query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!) {
     attributes(first: $first, filter: { slugs: $attributesSlugs }) {
       edges {
@@ -182,6 +194,18 @@ export const dynamicOperandsQueries = gql`
 
   query _GetPageTypesChoices($first: Int!, $query: String!) {
     pageTypes(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+
+  query _GetCustomerTypesChoices($first: Int!, $query: String!) {
+    customerTypes(first: $first, search: $query) {
       edges {
         node {
           id

@@ -1,10 +1,11 @@
 import { attributeListUrlWithAttributeType } from "@dashboard/attributes/urls";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { hasOneOfPermissions } from "@dashboard/components/RequirePermissions";
 import { AttributeTypeEnum, PermissionEnum } from "@dashboard/graphql";
 import Attributes from "@dashboard/icons/Attributes";
 import { ModelingIcon } from "@dashboard/icons/Modeling";
 import { Box, Skeleton, Text, type TextProps } from "@saleor/macaw-ui-next";
+import { UserRound } from "lucide-react";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -62,6 +63,10 @@ const ICON_SIZE_BY_TEXT_SIZE: Record<AttributeClassTextSize, number> = {
 const AttributeClassIcon = ({ attributeType }: { attributeType: AttributeTypeEnum }) => {
   if (attributeType === AttributeTypeEnum.PAGE_TYPE) {
     return <ModelingIcon />;
+  }
+
+  if (attributeType === AttributeTypeEnum.CUSTOMER_TYPE) {
+    return <UserRound />;
   }
 
   return <Attributes />;
@@ -122,8 +127,10 @@ export const ClickableAttributeClass = (props: AttributeClassProps): JSX.Element
   const { attributeType } = props;
   const intl = useIntl();
   const userPermissions = useUserPermissions();
-  const canViewAttributes = hasPermissions(userPermissions ?? [], [
+  const canViewAttributes = hasOneOfPermissions(userPermissions ?? [], [
     PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+    PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
   ]);
 
   if (!attributeType || !canViewAttributes) {

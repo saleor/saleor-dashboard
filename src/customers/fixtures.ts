@@ -1,9 +1,7 @@
 import {
   type CustomerAddressesQuery,
   type CustomerDetailsQuery,
-  OrderChargeStatusEnum,
   OrderStatus,
-  PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 
 import { type Customers } from "./types";
@@ -949,7 +947,8 @@ export const customerList: Customers = [
     },
   },
 ];
-export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["user"] = {
+export const customer: NonNullable<CustomerDetailsQuery["user"]> &
+  NonNullable<CustomerAddressesQuery["user"]> = {
   __typename: "User",
   addresses: [
     {
@@ -1041,6 +1040,15 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
   lastName: "Cooper",
   metadata: [],
   note: null,
+  customerType: {
+    __typename: "CustomerType",
+    id: "Q3VzdG9tZXJUeXBlOjE=",
+    name: "Default",
+    slug: "default",
+    isDefault: true,
+    attributes: [],
+  },
+  assignedAttributes: [],
   orders: {
     __typename: "OrderCountableConnection",
     totalCount: 1,
@@ -1052,8 +1060,7 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
           created: "2018-05-07T09:37:30.124154+00:00",
           id: "T3JkZXI6MTk=",
           number: "8234",
-          paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
-          chargeStatus: OrderChargeStatusEnum.FULL,
+          status: OrderStatus.FULFILLED,
           total: {
             __typename: "TaxedMoney",
             gross: {
@@ -1062,13 +1069,13 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
               currency: "USD",
             },
           },
-          subtotal: {
-            __typename: "TaxedMoney",
-            net: {
-              __typename: "Money",
-              amount: 1180.0,
-              currency: "USD",
-            },
+          channel: {
+            __typename: "Channel",
+            id: "Q2hhbm5lbDox",
+            name: "United States",
+            slug: "us",
+            isActive: true,
+            currencyCode: "USD",
           },
         },
       },

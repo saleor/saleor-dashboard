@@ -16,6 +16,11 @@ export const messages = defineMessages({
     defaultMessage: "Product Attribute",
     description: "attribute type",
   },
+  customerAttribute: {
+    id: "Snodo/",
+    defaultMessage: "Customer Attribute",
+    description: "attribute type",
+  },
   viewAttributesOfAttributeClass: {
     id: "ij+L2R",
     defaultMessage: "View {attributeClassName} attributes",

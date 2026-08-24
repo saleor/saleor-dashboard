@@ -2,13 +2,14 @@ import {
   type AttributeInput,
   type AttributeRowHandlers,
   Attributes,
+  type AttributeValueChoices,
+  type AttributeValueFetchMore,
 } from "@dashboard/components/Attributes";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
 import {
-  type AttributeValueFragment,
   type PageErrorWithAttributesFragment,
   type ProductErrorWithAttributesFragment,
 } from "@dashboard/graphql";
@@ -18,7 +19,8 @@ import { CircleHelp } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
-interface VariantAttributesSectionProps extends AttributeRowHandlers {
+interface VariantAttributesSectionProps
+  extends Omit<AttributeRowHandlers, "fetchMoreAttributeValues"> {
   title: ReactNode;
   attributes: AttributeInput[];
   /** Total count of all variant attributes (selection + non-selection) */
@@ -26,7 +28,8 @@ interface VariantAttributesSectionProps extends AttributeRowHandlers {
   selectionAttributesExist: boolean;
   /** Whether the product type supports variant attributes */
   hasVariants: boolean;
-  attributeValues: AttributeValueFragment[];
+  attributeValues: AttributeValueChoices;
+  fetchMoreAttributeValues: AttributeValueFetchMore;
   productTypeName: string;
   productTypeUrl: string;
   loading: boolean;

@@ -152,6 +152,8 @@ const getAttributeTypeLabel = (type: AttributeTypeEnum, intl: IntlShape) => {
       return intl.formatMessage(attributeTypesMessages.pageType);
     case AttributeTypeEnum.PRODUCT_TYPE:
       return intl.formatMessage(attributeTypesMessages.productType);
+    case AttributeTypeEnum.CUSTOMER_TYPE:
+      return intl.formatMessage(attributeTypesMessages.customerType);
     default:
       return type;
   }

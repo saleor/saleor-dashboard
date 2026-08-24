@@ -5,6 +5,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListSearchInput } from "@dashboard/components/ListSearchInput/ListSearchInput";
 import { readModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
@@ -29,7 +30,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { rippleGroupedModelTypeTabs } from "../../ripples/groupedModelTypeTabs";
-import { ModelSearchInput } from "../ModelSearchInput/ModelSearchInput";
 import {
   type ModelTypeTabCount,
   type ModelTypeTabItem,
@@ -163,7 +163,7 @@ const PageListPage = ({
             paddingX={6}
             paddingTop={4}
           >
-            <ModelSearchInput
+            <ListSearchInput
               initialSearch={initialSearch}
               placeholder={intl.formatMessage(messages.searchPlaceholder)}
               onSearchChange={onSearchChange}
