@@ -115,10 +115,14 @@ export const AppWidgetExtensionItem = ({
 
   return (
     <Box className={styles.hoverRow}>
-      <Box display="flex" justifyContent="flex-end" className={styles.hoverControls}>
-        <InlineExtensionPreferenceControls extension={extension} />
-      </Box>
-      <AppWidgetCard extension={extension}>
+      <AppWidgetCard
+        extension={extension}
+        headerActions={
+          <Box className={styles.hoverControls}>
+            <InlineExtensionPreferenceControls extension={extension} />
+          </Box>
+        }
+      >
         {isIframePost ? (
           <IframePost
             autoHeight

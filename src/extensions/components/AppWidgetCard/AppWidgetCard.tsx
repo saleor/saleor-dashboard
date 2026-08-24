@@ -18,6 +18,8 @@ interface AppWidgetCardProps {
   extension: AppWidgetCardExtension;
   children: ReactNode;
   contentMinHeight?: number;
+  /** Rendered on the header row, right-aligned next to the app name. */
+  headerActions?: ReactNode;
   "data-test-id"?: string;
 }
 
@@ -25,6 +27,7 @@ export const AppWidgetCard = ({
   extension,
   children,
   contentMinHeight,
+  headerActions,
   "data-test-id": dataTestId,
 }: AppWidgetCardProps) => {
   const navigate = useNavigator();
@@ -69,6 +72,7 @@ export const AppWidgetCard = ({
             </Text>
           </Link>
         </Box>
+        {headerActions ? <DashboardCard.Toolbar>{headerActions}</DashboardCard.Toolbar> : null}
       </DashboardCard.Header>
       <DashboardCard.Content paddingTop={0}>
         <Box
