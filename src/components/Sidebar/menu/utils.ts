@@ -4,6 +4,7 @@ import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { orderDraftListUrl, orderDraftPath, orderListUrl, orderPath } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 
+import { getQueryListFilterValues, isCustomerTypeNavItem } from "./createCustomerTypeMenuItems";
 import { type SidebarMenuItem } from "./types";
 
 const ORDER_RESERVED_PATH_SEGMENTS = ["drafts", "settings"];
@@ -84,12 +85,19 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     return false;
   }
 
-  // Navigation pins all share the /models/ path and differ only by the pageTypes filter, so
-  // path matching alone would light every pin at once.
+  // Filter shortcuts share a list path and differ only by query (pageTypes / customerTypes),
+  // so path matching alone would light every sibling at once.
   if (isMenuItemNavigationPin(menuItem)) {
     return (
       activeUrl === (menuItem.url ?? "").split("?")[0] &&
-      isSamePageTypeFilter(location, menuItem.url ?? "")
+      isSameQueryListFilter(location, menuItem.url ?? "", "pageTypes")
+    );
+  }
+
+  if (isCustomerTypeNavItem(menuItem)) {
+    return (
+      activeUrl === (menuItem.url ?? "").split("?")[0] &&
+      isSameQueryListFilter(location, menuItem.url ?? "", "customerTypes")
     );
   }
 
@@ -140,27 +148,12 @@ const isMenuItemExtension = (menuItem: SidebarMenuItem) => menuItem.id.startsWit
 const isMenuItemNavigationPin = (menuItem: SidebarMenuItem) =>
   menuItem.id.startsWith("navigation-pin-");
 
-/** Collects pageTypes values regardless of how qs indexed them (`pageTypes`, `pageTypes[0]`, …). */
-const getPageTypeFilter = (url: string): string => {
-  const query = url.split("?")[1];
+const queryListFilterSignature = (url: string, filterKey: string): string =>
+  getQueryListFilterValues(url, filterKey).sort().join(",");
 
-  if (!query) {
-    return "";
-  }
-
-  const values: string[] = [];
-
-  new URLSearchParams(query).forEach((value, key) => {
-    if (key === "pageTypes" || key.startsWith("pageTypes[")) {
-      values.push(value);
-    }
-  });
-
-  return values.sort().join(",");
-};
-
-const isSamePageTypeFilter = (location: string, menuItemUrl: string) =>
-  getPageTypeFilter(location) === getPageTypeFilter(menuItemUrl);
+const isSameQueryListFilter = (location: string, menuItemUrl: string, filterKey: string) =>
+  queryListFilterSignature(location, filterKey) ===
+  queryListFilterSignature(menuItemUrl, filterKey);
 
 export const getMenuItemExtension = (
   extensions: Record<
