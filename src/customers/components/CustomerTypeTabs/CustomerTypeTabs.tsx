@@ -7,6 +7,9 @@ import { type ReactNode } from "react";
 
 export const ALL_CUSTOMERS_TAB_ID = ALL_MODELS_TAB_ID;
 
+/** Same localStorage key the customer list tabs use for pinned types. */
+export const CUSTOMER_TYPE_TABS_PIN_STORAGE_KEY = "customerTypeTabs.pinnedIds";
+
 export type CustomerTypeTabCount = ModelTypeTabCount;
 
 interface CustomerTypeTabItem {
@@ -39,7 +42,7 @@ export const CustomerTypeTabs = ({
     counts={counts}
     onTabChange={onTabChange}
     grouping={false}
-    pinStorageKey="customerTypeTabs.pinnedIds"
+    pinStorageKey={CUSTOMER_TYPE_TABS_PIN_STORAGE_KEY}
     testId="customer-type-tabs"
     testIdPrefix="customer-type-tab"
     rightSlot={rightSlot}
