@@ -7604,6 +7604,10 @@
     "context": "dialog title for order line metadata",
     "string": "Order line metadata"
   },
+  "QTuSw/": {
+    "context": "navigator search input placeholder",
+    "string": "Search"
+  },
   "QUyUJy": {
     "string": "Main Product"
   },
@@ -9848,6 +9852,10 @@
   },
   "YjrPCx": {
     "string": "Shipping zone updated"
+  },
+  "Yjs/a4": {
+    "context": "accessible name of the Navigator results listbox",
+    "string": "Navigator results"
   },
   "Yk0avO": {
     "context": "dialog header",
