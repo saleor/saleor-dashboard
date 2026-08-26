@@ -1,3 +1,4 @@
+import { type AttributeListItemFragment } from "@dashboard/attributes/types";
 import { AttributeListUrlSortField, attributeUrl } from "@dashboard/attributes/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
@@ -8,7 +9,6 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { DatagridPagination } from "@dashboard/components/TablePagination";
-import { type AttributeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { type ListProps, type SortPage } from "@dashboard/types";
@@ -21,7 +21,7 @@ import { attributesListStaticColumnsAdapter, createGetCellContent } from "./data
 import { messages } from "./messages";
 
 interface AttributeListDatagridProps extends ListProps, SortPage<AttributeListUrlSortField> {
-  attributes: AttributeFragment[];
+  attributes: AttributeListItemFragment[];
   hidePagination?: boolean;
   showTopBorder?: boolean;
   onSelectAttributesIds: (rowsIndex: number[], clearSelection: () => void) => void;
@@ -71,7 +71,7 @@ export const AttributeListDatagrid = ({
   );
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
-      const rowData: AttributeFragment = attributes[row];
+      const rowData: AttributeListItemFragment = attributes[row];
 
       if (rowData) {
         navigate(attributeUrl(rowData.id), {

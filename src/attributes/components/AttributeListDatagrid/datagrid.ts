@@ -1,3 +1,4 @@
+import { type AttributeListItemFragment } from "@dashboard/attributes/types";
 import { type AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { getAttributeInputTypeLabel } from "@dashboard/attributes/utils/getAttributeInputTypeLabel";
 import { getAttributeClassLabel } from "@dashboard/components/AttributeClass/getAttributeClassLabel";
@@ -6,7 +7,6 @@ import { attributeInputTypeCell } from "@dashboard/components/Datagrid/customCel
 import { attributeTypeCell } from "@dashboard/components/Datagrid/customCells/AttributeTypeCell";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type AttributeFragment } from "@dashboard/graphql";
 import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { translateBoolean } from "@dashboard/intl";
 import { type Sort } from "@dashboard/types";
@@ -71,12 +71,12 @@ export const createGetCellContent =
     columns,
     intl,
   }: {
-    attributes: AttributeFragment[];
+    attributes: AttributeListItemFragment[];
     columns: AvailableColumn[];
     intl: IntlShape;
   }) =>
   ([column, row]: Item): GridCell => {
-    const rowData: AttributeFragment | undefined = attributes[row];
+    const rowData: AttributeListItemFragment | undefined = attributes[row];
     const columnId = columns[column]?.id;
 
     if (!columnId || !rowData) {
@@ -105,7 +105,7 @@ export const createGetCellContent =
       case "visible":
         return readonlyTextCell(translateBoolean(rowData?.visibleInStorefront, intl));
       case "use-in-faceted-search":
-        return readonlyTextCell(translateBoolean(rowData?.filterableInStorefront, intl));
+        return readonlyTextCell(translateBoolean(rowData?.filterableInStorefront ?? false, intl));
       default:
         return readonlyTextCell("");
     }

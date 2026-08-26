@@ -32,10 +32,6 @@ export const attributeFragment = gql`
     slug
     type
     visibleInStorefront
-    # Removed from the API in 3.24, still queried because it is only deprecated in both schemas
-    # today. All UI/mutation usage is already gated behind isMainSchema() — delete this line and
-    # its remaining readers once staging becomes main.
-    filterableInStorefront
     unit
     inputType
   }
@@ -51,8 +47,6 @@ export const attributeAssignedListFragment = gql`
 export const attributeUpdateResultFragment = gql`
   fragment AttributeUpdateResult on Attribute {
     ...Attribute
-    availableInGrid
-    storefrontSearchPosition
     valueRequired
     referenceTypes {
       ... on ProductType {
@@ -97,9 +91,7 @@ export const attributeAssignedTypesFragment = gql`
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
-    availableInGrid
     entityType
-    storefrontSearchPosition
     valueRequired
     referenceTypes {
       ... on ProductType {

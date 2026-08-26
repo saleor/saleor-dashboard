@@ -1,6 +1,10 @@
 import { type AttributeAssignedTypesCardProps } from "@dashboard/attributes/components/AttributeAssignedTypesCard/AttributeAssignedTypesCard";
 import { useAttributeValuesSearch } from "@dashboard/attributes/hooks/useAttributeValuesSearch";
 import {
+  useAttributeDetailsQuery,
+  useAttributeUpdateMutation,
+} from "@dashboard/attributes/schemaAwareOperations";
+import {
   type AttributeValueEditDialogFormData,
   attributeValueFragmentToFormData,
   DEPRECATED_FACETED_NAVIGATION_INPUT,
@@ -13,8 +17,6 @@ import {
   OrderDirection,
   PageTypeSortField,
   useAttributeDeleteMutation,
-  useAttributeDetailsQuery,
-  useAttributeUpdateMutation,
   useAttributeValueBulkDeleteMutation,
   useAttributeValueCreateMutation,
   useAttributeValueDeleteMutation,

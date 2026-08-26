@@ -1,20 +1,20 @@
-import { type AttributeListUrlSortField } from "@dashboard/attributes/urls";
-import { filterAssignedAttributes } from "@dashboard/attributes/utils/filterAssignedAttributes";
 import {
-  type AttributeAssignedListFragment,
-  type AttributeFilterInput,
   usePageTypeAssignedAttributesForListQuery,
   useProductTypeAssignedAttributesForListQuery,
-} from "@dashboard/graphql";
+} from "@dashboard/attributes/schemaAwareOperations";
+import { type AssignedAttributeListItemFragment } from "@dashboard/attributes/types";
+import { type AttributeListUrlSortField } from "@dashboard/attributes/urls";
+import { filterAssignedAttributes } from "@dashboard/attributes/utils/filterAssignedAttributes";
+import { type AttributeFilterInput } from "@dashboard/graphql";
 import { type Sort } from "@dashboard/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export type AssignedAttributeTypeKind = "product" | "model";
 
 const mergeAttributesById = (
-  attributeLists: AttributeAssignedListFragment[][],
-): AttributeAssignedListFragment[] => {
-  const byId = new Map<string, AttributeAssignedListFragment>();
+  attributeLists: AssignedAttributeListItemFragment[][],
+): AssignedAttributeListItemFragment[] => {
+  const byId = new Map<string, AssignedAttributeListItemFragment>();
 
   attributeLists.forEach(attributes => {
     attributes.forEach(attribute => {
@@ -29,7 +29,7 @@ interface TypeAttributesFetcherProps {
   typeId: string;
   onData: (
     typeId: string,
-    attributes: AttributeAssignedListFragment[],
+    attributes: AssignedAttributeListItemFragment[],
     loading: boolean,
     refetch: () => Promise<unknown>,
   ) => void;
@@ -92,7 +92,7 @@ export const useAssignedTypeAttributes = ({
   expressionFilters,
 }: UseAssignedTypeAttributesArgs) => {
   const [attributesByType, setAttributesByType] = useState<
-    Record<string, AttributeAssignedListFragment[]>
+    Record<string, AssignedAttributeListItemFragment[]>
   >({});
   const [loadingByType, setLoadingByType] = useState<Record<string, boolean>>({});
   const refetchByType = useRef<Record<string, () => Promise<unknown>>>({});
@@ -111,7 +111,7 @@ export const useAssignedTypeAttributes = ({
   const handleTypeData = useCallback(
     (
       typeId: string,
-      attributes: AttributeAssignedListFragment[],
+      attributes: AssignedAttributeListItemFragment[],
       loading: boolean,
       refetch: () => Promise<unknown>,
     ) => {

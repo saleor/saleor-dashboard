@@ -25,6 +25,8 @@ const config: IGraphQLConfig = {
     staging: {
       schema: "schema-staging.graphql",
       documents: [
+        // Shared, schema-agnostic fragments the staging documents spread — mirrors codegen-staging.
+        "./src/fragments/*.ts",
         "./src/**/queries.staging.ts",
         "./src/**/mutations.staging.ts",
         "./src/**/fragments/*.staging.ts",

@@ -1,9 +1,12 @@
-import { CodegenConfig } from "@graphql-codegen/cli";
+import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   schema: "./schema-staging.graphql",
   ignoreNoDocuments: true,
   documents: [
+    // Shared, schema-agnostic fragments the staging documents spread. Loading them here also
+    // guards against a shared fragment drifting onto a field the 3.24 schema no longer has.
+    "./src/fragments/*.ts",
     "./src/**/queries.staging.ts",
     "./src/**/mutations.staging.ts",
     "./src/**/fragments/*.staging.ts",

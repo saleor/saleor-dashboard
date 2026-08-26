@@ -12,6 +12,7 @@ export const attributeDetails = gql`
     attribute(id: $id) {
       ...AttributeDetails
       ...AttributeAssignedTypes
+      ...AttributeFacetedNavigation
       ...Metadata
     }
   }
@@ -37,6 +38,7 @@ export const attributeList = gql`
       edges {
         node {
           ...Attribute
+          ...AttributeFacetedNavigation
         }
       }
       pageInfo {
@@ -52,6 +54,7 @@ export const pageTypeAssignedAttributesForList = gql`
       id
       attributes {
         ...AttributeAssignedList
+        ...AttributeFacetedNavigation
       }
     }
   }
@@ -63,9 +66,11 @@ export const productTypeAssignedAttributesForList = gql`
       id
       productAttributes {
         ...AttributeAssignedList
+        ...AttributeFacetedNavigation
       }
       variantAttributes {
         ...AttributeAssignedList
+        ...AttributeFacetedNavigation
       }
     }
   }

@@ -1,14 +1,18 @@
+import { type AssignedAttributeListItemFragment } from "@dashboard/attributes/types";
 import { AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { filterAssignedAttributes } from "@dashboard/attributes/utils/filterAssignedAttributes";
-import { type AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
+import { AttributeTypeEnum } from "@dashboard/graphql";
 
-const createAttribute = (overrides: Partial<AttributeFragment> = {}): AttributeFragment => ({
+const createAttribute = (
+  overrides: Partial<AssignedAttributeListItemFragment> = {},
+): AssignedAttributeListItemFragment => ({
   __typename: "Attribute",
   id: "attr-1",
   name: "Color",
   slug: "color",
   type: AttributeTypeEnum.PAGE_TYPE,
   visibleInStorefront: true,
+  valueRequired: false,
   filterableInStorefront: false,
   unit: null,
   inputType: null,

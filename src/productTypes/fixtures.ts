@@ -15,8 +15,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
-      availableInGrid: false,
-      storefrontSearchPosition: 0,
       metadata: [],
       privateMetadata: [],
       entityType: null,
@@ -24,7 +22,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInStorefront: false,
       name: "Author",
       slug: "author",
       valueRequired: true,
@@ -87,8 +84,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
-      availableInGrid: false,
-      storefrontSearchPosition: 0,
       metadata: [],
       privateMetadata: [],
       entityType: null,
@@ -96,7 +91,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInStorefront: false,
       name: "Box Size",
       slug: "box-size",
       valueRequired: true,
@@ -199,8 +193,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
-      availableInGrid: false,
-      storefrontSearchPosition: 0,
       metadata: [],
       privateMetadata: [],
       entityType: null,
@@ -208,7 +200,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       type: AttributeTypeEnum.PRODUCT_TYPE,
       inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: false,
-      filterableInStorefront: false,
       name: "Brand",
       slug: "brand",
       valueRequired: true,
@@ -251,8 +242,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
-      availableInGrid: false,
-      storefrontSearchPosition: 0,
       metadata: [],
       privateMetadata: [],
       entityType: null,
@@ -260,7 +249,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInStorefront: false,
       name: "Candy Box Size",
       slug: "candy-box-size",
       valueRequired: true,
@@ -343,8 +331,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
-      availableInGrid: false,
-      storefrontSearchPosition: 0,
       metadata: [],
       privateMetadata: [],
       entityType: null,
@@ -352,7 +338,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInStorefront: false,
       name: "Coffee Genre",
       slug: "coffee-genre",
       valueRequired: true,
@@ -415,8 +400,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   {
     node: {
       __typename: "Attribute" as const,
-      availableInGrid: false,
-      storefrontSearchPosition: 0,
       metadata: [],
       privateMetadata: [],
       entityType: null,
@@ -424,7 +407,6 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
       inputType: AttributeInputTypeEnum.DROPDOWN,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: false,
-      filterableInStorefront: false,
       name: "Collar",
       slug: "collar",
       valueRequired: true,
@@ -1062,12 +1044,9 @@ export const attributes: ProductTypeQuery["productType"]["productAttributes"] = 
   },
 ].map(edge => ({
   ...edge.node,
-  availableInGrid: edge.node.availableInGrid ?? false,
-  storefrontSearchPosition: edge.node.storefrontSearchPosition ?? 0,
   metadata: edge.node.metadata ?? [],
   privateMetadata: edge.node.privateMetadata ?? [],
   visibleInStorefront: edge.node.visibleInStorefront ?? false,
-  filterableInStorefront: edge.node.filterableInStorefront ?? false,
 }));
 
 export const productTypeSearch: ProductTypeQuery["productType"] = {
@@ -1205,7 +1184,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
   productAttributes: [
     {
       __typename: "Attribute" as const,
-      filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZTo5",
       name: "Author",
       slug: "author",
@@ -1218,7 +1196,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     },
     {
       __typename: "Attribute" as const,
-      filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMQ==",
       name: "Language",
       slug: "language",
@@ -1231,7 +1208,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
     },
     {
       __typename: "Attribute" as const,
-      filterableInStorefront: false,
       id: "UHJvZHVjdEF0dHJpYnV0ZToxMA==",
       name: "Publisher",
       slug: "publisher",
@@ -1251,14 +1227,12 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
   variantAttributes: [
     {
       ...attributes[1],
-      filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true,
       unit: null,
     },
     {
       ...attributes[6],
-      filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
       visibleInStorefront: true,
       unit: null,
@@ -1269,7 +1243,6 @@ export const productType: ProductTypeDetailsQuery["productType"] = {
       __typename: "AssignedVariantAttribute" as const,
       attribute: {
         __typename: "Attribute" as const,
-        filterableInStorefront: false,
         id: "UHJvZHVjdEF0dHJpYnV0ATo5",
         name: "Author",
         slug: "author",
