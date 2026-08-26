@@ -161,7 +161,12 @@ export const CategorySubcategories = ({
           ) : null}
           <Box className={styles.actions}>
             {hasSubcategories && selectedCategoryIds.length > 0 ? (
-              <BulkDeleteButton onClick={onCategoriesDelete} disabled={disabled}>
+              <BulkDeleteButton
+                count={selectedCategoryIds.length}
+                onClick={onCategoriesDelete}
+                disabled={disabled}
+                size="small"
+              >
                 <FormattedMessage {...messages.deleteSelected} />
               </BulkDeleteButton>
             ) : null}

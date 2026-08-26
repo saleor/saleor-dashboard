@@ -395,6 +395,8 @@ const AttributeDetails = ({ id, params }: AttributeDetailsProps) => {
         toggleAll: valueListActions.toggleAll,
         toolbar: (
           <BulkDeleteButton
+            count={valueListActions.listElements.length}
+            size="small"
             onClick={() => openModal("remove-values", { ids: valueListActions.listElements })}
           >
             <FormattedMessage {...buttonMessages.delete} />
