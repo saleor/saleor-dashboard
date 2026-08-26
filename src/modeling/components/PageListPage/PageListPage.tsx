@@ -2,6 +2,7 @@ import { useUser } from "@dashboard/auth/useUser";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { bulkActionWithCountMessages } from "@dashboard/components/BulkDeleteButton/messages";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -160,12 +161,18 @@ const PageListPage = ({
               {selectedPageIds.length > 0 ? (
                 <Box display="flex" gap={4}>
                   <Button variant="secondary" onClick={onPagesUnpublish}>
-                    <FormattedMessage {...messages.unpublish} />
+                    {intl.formatMessage(bulkActionWithCountMessages.actionWithCount, {
+                      action: intl.formatMessage(messages.unpublish),
+                      count: selectedPageIds.length,
+                    })}
                   </Button>
                   <Button variant="secondary" onClick={onPagesPublish}>
-                    <FormattedMessage {...messages.publish} />
+                    {intl.formatMessage(bulkActionWithCountMessages.actionWithCount, {
+                      action: intl.formatMessage(messages.publish),
+                      count: selectedPageIds.length,
+                    })}
                   </Button>
-                  <BulkDeleteButton onClick={onPagesDelete}>
+                  <BulkDeleteButton count={selectedPageIds.length} onClick={onPagesDelete}>
                     <FormattedMessage {...messages.delete} />
                   </BulkDeleteButton>
                 </Box>

@@ -299,6 +299,10 @@
     "context": "section description",
     "string": "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely."
   },
+  "/2uCva": {
+    "context": "account settings section subtitle",
+    "string": "Pin extensions to the top or hide them across the dashboard."
+  },
   "/4bJkA": {
     "context": "header field value, header",
     "string": "Value"
@@ -3114,6 +3118,10 @@
     "context": "collection label",
     "string": "Visible"
   },
+  "9wjl6Q": {
+    "context": "bulk action button label with selected count",
+    "string": "{action} ({count})"
+  },
   "9xlPgt": {
     "context": "used staff users counter",
     "string": "{count}/{max} members"
@@ -3406,6 +3414,10 @@
   },
   "B8PvdI": {
     "string": "extending Saleor with Webhooks"
+  },
+  "B9OFxo": {
+    "context": "tooltip for unpin action",
+    "string": "Unpin extension"
   },
   "B9jV/6": {
     "context": "edit single translation field",
@@ -8276,6 +8288,10 @@
     "context": "order history message",
     "string": "Payment failed"
   },
+  "TCV876": {
+    "context": "tri-state option: default visibility",
+    "string": "Default"
+  },
   "TD/GhR": {
     "context": "header",
     "string": "Structure Items"
@@ -9092,6 +9108,10 @@
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",
     "string": "Search warehouses"
+  },
+  "WCl+E+": {
+    "context": "tri-state option: pinned",
+    "string": "Pinned"
   },
   "WD+kjr": {
     "context": "page title - extensions",
@@ -10837,6 +10857,10 @@
   "cFVgOo": {
     "context": "Channel label",
     "string": "Channel"
+  },
+  "cGL5Xv": {
+    "context": "tooltip for hide action on a widget extension",
+    "string": "Hide extension"
   },
   "cGrYq9": {
     "context": "accessible name for the Paper mark on the PDP schematic",
@@ -14699,6 +14723,10 @@
   "qNpzxl": {
     "string": "Open this category in GraphiQL"
   },
+  "qO6iZs": {
+    "context": "empty state for extensions visibility list",
+    "string": "No extensions available to manage."
+  },
   "qOXgxv": {
     "context": "gift card history message",
     "string": "Gift card was refunded in order {orderLink}"
@@ -14867,6 +14895,10 @@
   "qrWOxx": {
     "string": "No members found"
   },
+  "qsKsBe": {
+    "context": "tooltip for pin action on a widget extension",
+    "string": "Pin extension"
+  },
   "qsQQm4": {
     "context": "quick pick label for EU member states",
     "string": "European Union ({count})"
@@ -14931,6 +14963,10 @@
   "r1aQ2f": {
     "context": "dialog header",
     "string": "Unassign Attribute from Product Type"
+  },
+  "r2ajD2": {
+    "context": "account settings section title",
+    "string": "Extensions visibility"
   },
   "r2i5Fn": {
     "context": "PageTypeDeleteWarningDialog multiple assigned items description",
@@ -15009,6 +15045,10 @@
   "rNAI8p": {
     "context": "staff notification title",
     "string": "Staff order confirmation"
+  },
+  "rNNHeS": {
+    "context": "tri-state option: hidden",
+    "string": "Hidden"
   },
   "rPAbtu": {
     "context": "order-level validation error without field name in address edit dialog",

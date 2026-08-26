@@ -18,6 +18,8 @@ interface AppWidgetCardProps {
   extension: AppWidgetCardExtension;
   children: ReactNode;
   contentMinHeight?: number;
+  /** Rendered on the header row, right-aligned next to the app name. Revealed on hover/focus. */
+  headerActions?: ReactNode;
   "data-test-id"?: string;
 }
 
@@ -25,6 +27,7 @@ export const AppWidgetCard = ({
   extension,
   children,
   contentMinHeight,
+  headerActions,
   "data-test-id": dataTestId,
 }: AppWidgetCardProps) => {
   const navigate = useNavigator();
@@ -44,7 +47,7 @@ export const AppWidgetCard = ({
   const tooltipTitle = appName && appName !== widgetTitle ? appName : undefined;
 
   return (
-    <DashboardCard gap={0} data-test-id={dataTestId}>
+    <DashboardCard gap={0} className={styles.card} data-test-id={dataTestId}>
       <DashboardCard.Header paddingTop={4} paddingBottom={2}>
         <Box className={styles.headerWrapper}>
           <Link
@@ -69,6 +72,11 @@ export const AppWidgetCard = ({
             </Text>
           </Link>
         </Box>
+        {headerActions ? (
+          <DashboardCard.Toolbar className={styles.headerActions}>
+            {headerActions}
+          </DashboardCard.Toolbar>
+        ) : null}
       </DashboardCard.Header>
       <DashboardCard.Content paddingTop={0}>
         <Box

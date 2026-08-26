@@ -63,7 +63,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
             />
           </Box>
         </Box>
-        <Box display="flex" justifyContent="flex-end">
+        <Box display="flex" justifyContent="flex-end" alignItems="center">
           {actions}
         </Box>
       </Box>

@@ -25,6 +25,7 @@ export class MainMenuPage extends BasePage {
     readonly exploreExtensions = page.getByTestId("menu-item-label-explore-extensions"),
     readonly translations = page.getByTestId("menu-item-label-translations"),
     readonly customers = page.getByTestId("menu-item-label-customers"),
+    readonly customerTypes = page.getByTestId("menu-item-label-customer-types"),
     readonly list = page.getByTestId("menu-list"),
     readonly listItem = page.getByTestId("menu-list-item"),
     readonly products = page.getByTestId("menu-item-label-products"),
@@ -77,6 +78,12 @@ export class MainMenuPage extends BasePage {
 
   async openCustomers() {
     await this.customers.click();
+  }
+
+  async openCustomerTypes() {
+    /* Clicking chevron arrow to expand the section */
+    await this.customers.locator("button").first().click();
+    await this.customerTypes.click();
   }
 
   async openConfiguration() {

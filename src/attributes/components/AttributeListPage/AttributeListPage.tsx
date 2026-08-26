@@ -168,16 +168,22 @@ const AttributeListPage = ({
               defaultMessage: "Search attributes...",
             })}
             actions={
-              <Box display="flex" gap={4}>
+              <Box display="flex" gap={4} alignItems="center">
                 {canUnassignFromType &&
                   onAttributesUnassign &&
                   selectedAttributesIds.length > 0 && (
-                    <BulkUnassignButton onClick={onAttributesUnassign}>
+                    <BulkUnassignButton
+                      count={selectedAttributesIds.length}
+                      onClick={onAttributesUnassign}
+                    >
                       {intl.formatMessage(attributeListPageMessages.unassignAttributes)}
                     </BulkUnassignButton>
                   )}
                 {selectedAttributesIds.length > 0 && (
-                  <BulkDeleteButton onClick={onAttributesDelete}>
+                  <BulkDeleteButton
+                    count={selectedAttributesIds.length}
+                    onClick={onAttributesDelete}
+                  >
                     <FormattedMessage defaultMessage="Delete attributes" id="g0GAdN" />
                   </BulkDeleteButton>
                 )}
