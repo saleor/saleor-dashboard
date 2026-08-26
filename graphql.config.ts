@@ -25,8 +25,8 @@ const config: IGraphQLConfig = {
     staging: {
       schema: ["schema-staging.graphql", "schema-directives.graphql"],
       documents: [
-        // Shared, schema-agnostic fragments the staging documents spread — mirrors codegen-staging.
-        "./src/fragments/*.ts",
+        // Shared fragments are validated against 3.24 by codegen-staging, which can resolve
+        // @lockSchema first; graphql-eslint has no such hook, so it only sees them as main.
         "./src/**/queries.staging.ts",
         "./src/**/mutations.staging.ts",
         "./src/**/fragments/*.staging.ts",

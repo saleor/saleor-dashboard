@@ -1,7 +1,6 @@
-import { type AssignedAttributeListItemFragment } from "@dashboard/attributes/types";
 import { AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { applyAttributeListFilters } from "@dashboard/attributes/utils/applyAttributeListFilters";
-import { type AttributeFilterInput } from "@dashboard/graphql";
+import { type AttributeAssignedListFragment, type AttributeFilterInput } from "@dashboard/graphql";
 import { type Sort } from "@dashboard/types";
 
 const compareStrings = (left: string, right: string, direction: number): number =>
@@ -14,11 +13,11 @@ const compareBooleans = (
 ): number => (Number(left ?? false) - Number(right ?? false)) * direction;
 
 export const filterAssignedAttributes = (
-  attributes: AssignedAttributeListItemFragment[],
+  attributes: AttributeAssignedListFragment[],
   search: string | undefined,
   sort: Sort<AttributeListUrlSortField>,
   filters: AttributeFilterInput = {},
-): AssignedAttributeListItemFragment[] => {
+): AttributeAssignedListFragment[] => {
   const trimmedSearch = search?.trim().toLowerCase() ?? "";
   const direction = sort.asc ? 1 : -1;
 

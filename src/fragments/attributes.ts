@@ -32,6 +32,10 @@ export const attributeFragment = gql`
     slug
     type
     visibleInStorefront
+    # Removed from Attribute in 3.24. @lockSchema keeps it off the wire on staging builds, so the
+    # one document serves both schemas — see src/graphql/lockSchema.ts. Readers are gated behind
+    # isMainSchema(); delete the line and its readers once staging becomes main.
+    filterableInStorefront @lockSchema(schema: "main")
     unit
     inputType
   }
@@ -47,6 +51,9 @@ export const attributeAssignedListFragment = gql`
 export const attributeUpdateResultFragment = gql`
   fragment AttributeUpdateResult on Attribute {
     ...Attribute
+    # Removed from Attribute in 3.24, see the note on filterableInStorefront above
+    availableInGrid @lockSchema(schema: "main")
+    storefrontSearchPosition @lockSchema(schema: "main")
     valueRequired
     referenceTypes {
       ... on ProductType {
@@ -91,7 +98,10 @@ export const attributeAssignedTypesFragment = gql`
 export const attributeDetailsFragment = gql`
   fragment AttributeDetails on Attribute {
     ...Attribute
+    # Removed from Attribute in 3.24, see the note on filterableInStorefront above
+    availableInGrid @lockSchema(schema: "main")
     entityType
+    storefrontSearchPosition @lockSchema(schema: "main")
     valueRequired
     referenceTypes {
       ... on ProductType {

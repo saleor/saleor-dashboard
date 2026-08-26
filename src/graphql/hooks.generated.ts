@@ -15,14 +15,6 @@ export const AnnouncementFragmentDoc = gql`
   extra
 }
     `;
-export const AttributeFacetedNavigationFragmentDoc = gql`
-    fragment AttributeFacetedNavigation on Attribute {
-  id
-  availableInGrid @lockSchema(schema: "main")
-  filterableInStorefront @lockSchema(schema: "main")
-  storefrontSearchPosition @lockSchema(schema: "main")
-}
-    `;
 export const AppManifestFragmentDoc = gql`
     fragment AppManifest on Manifest {
   identifier
@@ -247,6 +239,7 @@ export const AttributeFragmentDoc = gql`
   slug
   type
   visibleInStorefront
+  filterableInStorefront @lockSchema(schema: "main")
   unit
   inputType
 }
@@ -260,6 +253,8 @@ export const AttributeAssignedListFragmentDoc = gql`
 export const AttributeUpdateResultFragmentDoc = gql`
     fragment AttributeUpdateResult on Attribute {
   ...Attribute
+  availableInGrid @lockSchema(schema: "main")
+  storefrontSearchPosition @lockSchema(schema: "main")
   valueRequired
   referenceTypes {
     ... on ProductType {
@@ -2996,7 +2991,9 @@ export const PageFragmentDoc = gql`
 export const AttributeDetailsFragmentDoc = gql`
     fragment AttributeDetails on Attribute {
   ...Attribute
+  availableInGrid @lockSchema(schema: "main")
   entityType
+  storefrontSearchPosition @lockSchema(schema: "main")
   valueRequired
   referenceTypes {
     ... on ProductType {
@@ -4331,7 +4328,6 @@ export const AttributeUpdateDocument = gql`
   attributeUpdate(id: $id, input: $input) {
     attribute {
       ...AttributeUpdateResult
-      ...AttributeFacetedNavigation
     }
     errors {
       ...AttributeError
@@ -4339,7 +4335,6 @@ export const AttributeUpdateDocument = gql`
   }
 }
     ${AttributeUpdateResultFragmentDoc}
-${AttributeFacetedNavigationFragmentDoc}
 ${AttributeErrorFragmentDoc}`;
 export type AttributeUpdateMutationFn = Apollo.MutationFunction<Types.AttributeUpdateMutation, Types.AttributeUpdateMutationVariables>;
 
@@ -4662,13 +4657,11 @@ export const AttributeDetailsDocument = gql`
   attribute(id: $id) {
     ...AttributeDetails
     ...AttributeAssignedTypes
-    ...AttributeFacetedNavigation
     ...Metadata
   }
 }
     ${AttributeDetailsFragmentDoc}
 ${AttributeAssignedTypesFragmentDoc}
-${AttributeFacetedNavigationFragmentDoc}
 ${MetadataFragmentDoc}`;
 
 /**
@@ -4716,7 +4709,6 @@ export const AttributeListDocument = gql`
     edges {
       node {
         ...Attribute
-        ...AttributeFacetedNavigation
       }
     }
     pageInfo {
@@ -4725,7 +4717,6 @@ export const AttributeListDocument = gql`
   }
 }
     ${AttributeFragmentDoc}
-${AttributeFacetedNavigationFragmentDoc}
 ${PageInfoFragmentDoc}`;
 
 /**
@@ -4766,12 +4757,10 @@ export const PageTypeAssignedAttributesForListDocument = gql`
     id
     attributes {
       ...AttributeAssignedList
-      ...AttributeFacetedNavigation
     }
   }
 }
-    ${AttributeAssignedListFragmentDoc}
-${AttributeFacetedNavigationFragmentDoc}`;
+    ${AttributeAssignedListFragmentDoc}`;
 
 /**
  * __usePageTypeAssignedAttributesForListQuery__
@@ -4806,16 +4795,13 @@ export const ProductTypeAssignedAttributesForListDocument = gql`
     id
     productAttributes {
       ...AttributeAssignedList
-      ...AttributeFacetedNavigation
     }
     variantAttributes {
       ...AttributeAssignedList
-      ...AttributeFacetedNavigation
     }
   }
 }
-    ${AttributeAssignedListFragmentDoc}
-${AttributeFacetedNavigationFragmentDoc}`;
+    ${AttributeAssignedListFragmentDoc}`;
 
 /**
  * __useProductTypeAssignedAttributesForListQuery__

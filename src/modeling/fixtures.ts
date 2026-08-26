@@ -88,8 +88,11 @@ export const page: PageDetailsFragment = {
           ],
         },
         __typename: "Attribute",
+        availableInGrid: false,
+        storefrontSearchPosition: 0,
         type: AttributeTypeEnum.PAGE_TYPE,
         visibleInStorefront: false,
+        filterableInStorefront: false,
       },
       values: [
         {
@@ -203,8 +206,11 @@ export const page: PageDetailsFragment = {
           ],
         },
         __typename: "Attribute",
+        availableInGrid: false,
+        storefrontSearchPosition: 0,
         type: AttributeTypeEnum.PAGE_TYPE,
         visibleInStorefront: false,
+        filterableInStorefront: false,
         referenceTypes: [],
       },
       values: [

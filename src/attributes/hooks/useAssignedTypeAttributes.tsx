@@ -1,7 +1,7 @@
-import { type AssignedAttributeListItemFragment } from "@dashboard/attributes/types";
 import { type AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { filterAssignedAttributes } from "@dashboard/attributes/utils/filterAssignedAttributes";
 import {
+  type AttributeAssignedListFragment,
   type AttributeFilterInput,
   usePageTypeAssignedAttributesForListQuery,
   useProductTypeAssignedAttributesForListQuery,
@@ -12,9 +12,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 export type AssignedAttributeTypeKind = "product" | "model";
 
 const mergeAttributesById = (
-  attributeLists: AssignedAttributeListItemFragment[][],
-): AssignedAttributeListItemFragment[] => {
-  const byId = new Map<string, AssignedAttributeListItemFragment>();
+  attributeLists: AttributeAssignedListFragment[][],
+): AttributeAssignedListFragment[] => {
+  const byId = new Map<string, AttributeAssignedListFragment>();
 
   attributeLists.forEach(attributes => {
     attributes.forEach(attribute => {
@@ -29,7 +29,7 @@ interface TypeAttributesFetcherProps {
   typeId: string;
   onData: (
     typeId: string,
-    attributes: AssignedAttributeListItemFragment[],
+    attributes: AttributeAssignedListFragment[],
     loading: boolean,
     refetch: () => Promise<unknown>,
   ) => void;
@@ -92,7 +92,7 @@ export const useAssignedTypeAttributes = ({
   expressionFilters,
 }: UseAssignedTypeAttributesArgs) => {
   const [attributesByType, setAttributesByType] = useState<
-    Record<string, AssignedAttributeListItemFragment[]>
+    Record<string, AttributeAssignedListFragment[]>
   >({});
   const [loadingByType, setLoadingByType] = useState<Record<string, boolean>>({});
   const refetchByType = useRef<Record<string, () => Promise<unknown>>>({});
@@ -111,7 +111,7 @@ export const useAssignedTypeAttributes = ({
   const handleTypeData = useCallback(
     (
       typeId: string,
-      attributes: AssignedAttributeListItemFragment[],
+      attributes: AttributeAssignedListFragment[],
       loading: boolean,
       refetch: () => Promise<unknown>,
     ) => {

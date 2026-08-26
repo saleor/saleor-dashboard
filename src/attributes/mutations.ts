@@ -25,7 +25,6 @@ export const attributeUpdateMutation = gql`
     attributeUpdate(id: $id, input: $input) {
       attribute {
         ...AttributeUpdateResult
-        ...AttributeFacetedNavigation
       }
       errors {
         ...AttributeError
