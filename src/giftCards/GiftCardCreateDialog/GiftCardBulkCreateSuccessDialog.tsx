@@ -1,6 +1,7 @@
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { GiftCardExportDialogContent } from "@dashboard/giftCards/GiftCardExportDialogContent/GiftCardExportDialogContent";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import { type DialogProps } from "@dashboard/types";
 import { Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
@@ -44,19 +45,24 @@ export const GiftCardBulkCreateSuccessDialog = ({
               <BackButton onClick={handleClose}>
                 <FormattedMessage {...messages.successClose} />
               </BackButton>
-              <Button onClick={() => setOpenEmailExport(true)} variant="primary">
-                <FormattedMessage {...messages.successExportToEmail} />
-              </Button>
+              {/* exportGiftCards is removed from the API in 3.24 */}
+              {isMainSchema() && (
+                <Button onClick={() => setOpenEmailExport(true)} variant="primary">
+                  <FormattedMessage {...messages.successExportToEmail} />
+                </Button>
+              )}
             </DashboardModal.Actions>
           </DashboardModal.Content>
         ) : null}
       </DashboardModal>
 
-      <GiftCardExportDialogContent
-        idsToExport={idsToExport}
-        onClose={handleExportDialogClose}
-        open={openEmailExport}
-      />
+      {isMainSchema() && (
+        <GiftCardExportDialogContent
+          idsToExport={idsToExport}
+          onClose={handleExportDialogClose}
+          open={openEmailExport}
+        />
+      )}
     </>
   );
 };

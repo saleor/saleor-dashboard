@@ -3,6 +3,7 @@ import { GiftCardBulkCreateDialog } from "@dashboard/giftCards/GiftCardBulkCreat
 import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { GiftCardExportDialogContent } from "@dashboard/giftCards/GiftCardExportDialogContent/GiftCardExportDialogContent";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
+import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import type * as React from "react";
@@ -74,7 +75,11 @@ const GiftCardListDialogsProvider = ({ children, params }: GiftCardListDialogsPr
         refetchQueries={[GIFT_CARD_LIST_QUERY]}
       />
       <GiftCardListPageDeleteDialog open={isDialogOpen(DELETE)} onClose={onClose} />
-      <GiftCardExportDialogContent open={isDialogOpen(EXPORT)} onClose={onClose} />
+      {/* exportGiftCards is removed from the API in 3.24; guarded here too so a bookmarked
+          ?action=EXPORT cannot open a dialog whose submit the API would reject */}
+      {isMainSchema() && (
+        <GiftCardExportDialogContent open={isDialogOpen(EXPORT)} onClose={onClose} />
+      )}
       <GiftCardBulkCreateDialog open={isDialogOpen(BULK_CREATE)} onClose={onClose} />
     </GiftCardListDialogsContext.Provider>
   );

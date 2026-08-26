@@ -13,8 +13,12 @@ import path from "path";
 import { resolveLockedSchemaFields } from "./lockSchema";
 
 /**
- * `exportGiftCards` was removed from `Mutation` in 3.24 and nothing has migrated the document yet.
- * It is a real gap, not a `@lockSchema` problem — delete this entry once the mutation is handled.
+ * `exportGiftCards` was removed from `Mutation` in 3.24. `@lockSchema` cannot express this: the
+ * mutation is the operation's only root field, so stripping it leaves an empty selection set, and
+ * `$input: ExportGiftCardsInput!` is a variable definition the directive cannot reach.
+ *
+ * Every entry point is gated behind `isMainSchema()`, so the document is unreachable on 3.24 —
+ * but it is still generated, hence this entry. Delete it once the document itself goes.
  */
 const KNOWN_324_GAPS = ["ExportGiftCardsDocument"];
 
