@@ -1,6 +1,7 @@
 import { CompactSelection, type GridSelection } from "@glideapps/glide-data-grid";
 import { ThemeWrapper } from "@test/themeWrapper";
-import { render } from "@testing-library/react";
+import { render, type RenderResult } from "@testing-library/react";
+import { type ReactElement } from "react";
 import { MemoryRouter } from "react-router-dom";
 
 import { Datagrid } from "./Datagrid";
@@ -15,15 +16,19 @@ const selectionOf = (...rows: number[]): GridSelection => ({
   columns: CompactSelection.empty(),
 });
 
+interface DatagridHarnessProps {
+  rows: number;
+  selection: GridSelection;
+  onRowSelectionChange: (rowsId: number[], clearSelection: () => void) => void;
+  onControlledSelectionChange?: (selection: GridSelection | undefined) => void;
+}
+
 const DatagridHarness = ({
   rows,
   selection,
   onRowSelectionChange,
-}: {
-  rows: number;
-  selection: GridSelection;
-  onRowSelectionChange: (rowsId: number[], clearSelection: () => void) => void;
-}) => {
+  onControlledSelectionChange = jest.fn(),
+}: DatagridHarnessProps): ReactElement => {
   const datagrid = useDatagridChangeState();
 
   return (
@@ -38,18 +43,14 @@ const DatagridHarness = ({
         menuItems={() => []}
         selectionActions={() => null}
         controlledSelection={selection}
-        onControlledSelectionChange={jest.fn()}
+        onControlledSelectionChange={onControlledSelectionChange}
         onRowSelectionChange={onRowSelectionChange}
       />
     </DatagridChangeStateContext.Provider>
   );
 };
 
-const renderDatagrid = (props: {
-  rows: number;
-  selection: GridSelection;
-  onRowSelectionChange: (rowsId: number[], clearSelection: () => void) => void;
-}) =>
+const renderDatagrid = (props: DatagridHarnessProps): RenderResult =>
   render(
     <MemoryRouter>
       <ThemeWrapper>
@@ -87,6 +88,24 @@ describe("Datagrid row selection reporting", () => {
 
     // Assert
     expect(onRowSelectionChange).toHaveBeenCalledWith([0, 1, 2], expect.any(Function));
+  });
+
+  it("does not rewrite the grid selection while loading so a refetch can restore it", () => {
+    // Arrange - products report 1 placeholder row while disabled/loading
+    const onRowSelectionChange = jest.fn();
+    const onControlledSelectionChange = jest.fn();
+
+    // Act
+    renderDatagrid({
+      rows: 1,
+      selection: selectionOf(0, 1, 2, 3, 7, 19),
+      onRowSelectionChange,
+      onControlledSelectionChange,
+    });
+
+    // Assert - report is clamped to avoid a crash, selection itself is left intact
+    expect(onRowSelectionChange).toHaveBeenCalledWith([0], expect.any(Function));
+    expect(onControlledSelectionChange).not.toHaveBeenCalled();
   });
 
   it("reports no rows when the list emptied out under a live selection", () => {

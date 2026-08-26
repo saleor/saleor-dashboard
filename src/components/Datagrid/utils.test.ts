@@ -1,4 +1,15 @@
-import { getRowIdsFromSelection, preventRowClickOnSelectionCheckbox } from "./utils";
+import { CompactSelection, type GridSelection } from "@glideapps/glide-data-grid";
+
+import {
+  getRowIdsFromSelection,
+  getVisibleGridSelection,
+  preventRowClickOnSelectionCheckbox,
+} from "./utils";
+
+const selectionOf = (...rows: number[]): GridSelection => ({
+  rows: rows.reduce((acc, row) => acc.add(row), CompactSelection.empty()),
+  columns: CompactSelection.empty(),
+});
 
 describe("preventRowClickOnSelectionCheckbox", () => {
   it("prevents the row click on the selection checkbox column", () => {
@@ -72,8 +83,86 @@ describe("getRowIdsFromSelection", () => {
     expect(ids).toEqual(["first", "third"]);
   });
 
+  it("drops empty ids so bulk actions never receive a blank string", () => {
+    // Arrange
+    const withBlank = [{ id: "first" }, { id: "" }, { id: "third" }];
+
+    // Act
+    const ids = getRowIdsFromSelection([0, 1, 2], withBlank);
+
+    // Assert
+    expect(ids).toEqual(["first", "third"]);
+  });
+
   it("returns no ids for an empty selection", () => {
     // Arrange & Act & Assert
     expect(getRowIdsFromSelection([], items)).toEqual([]);
+  });
+});
+
+describe("getVisibleGridSelection", () => {
+  it("leaves an in-range selection untouched", () => {
+    // Arrange
+    const selection = selectionOf(1, 2);
+
+    // Act
+    const result = getVisibleGridSelection(selection, 5);
+
+    // Assert
+    expect(result.visibleRows).toEqual([1, 2]);
+    expect(result.prunedSelection).toBeUndefined();
+  });
+
+  it("drops indices past the last rendered row", () => {
+    // Arrange
+    const selection = selectionOf(0, 1, 2, 3, 7, 19);
+
+    // Act
+    const result = getVisibleGridSelection(selection, 3);
+
+    // Assert
+    expect(result.visibleRows).toEqual([0, 1, 2]);
+    expect(result.prunedSelection).toBeDefined();
+    expect(Array.from(result.prunedSelection?.rows ?? [])).toEqual([0, 1, 2]);
+  });
+
+  it("returns no visible rows when the list emptied out", () => {
+    // Arrange & Act
+    const result = getVisibleGridSelection(selectionOf(1, 2), 0);
+
+    // Assert
+    expect(result.visibleRows).toEqual([]);
+    expect(Array.from(result.prunedSelection?.rows ?? [])).toEqual([]);
+  });
+
+  it("clears a current cell that sits past the last rendered row", () => {
+    // Arrange
+    const selection: GridSelection = {
+      ...selectionOf(0, 5),
+      current: {
+        cell: [0, 5],
+        range: { x: 0, y: 5, width: 1, height: 1 },
+        rangeStack: [],
+      },
+    };
+
+    // Act
+    const result = getVisibleGridSelection(selection, 3);
+
+    // Assert
+    expect(result.visibleRows).toEqual([0]);
+    expect(result.prunedSelection?.current).toBeUndefined();
+  });
+
+  it("keeps the pruned selection stable when the list later grows", () => {
+    // Arrange - page size was lowered, then raised again
+    const { prunedSelection } = getVisibleGridSelection(selectionOf(0, 1, 2, 3, 7, 19), 3);
+
+    // Act
+    const afterGrow = getVisibleGridSelection(prunedSelection ?? selectionOf(), 20);
+
+    // Assert - dead indices must not come back
+    expect(afterGrow.visibleRows).toEqual([0, 1, 2]);
+    expect(afterGrow.prunedSelection).toBeUndefined();
   });
 });

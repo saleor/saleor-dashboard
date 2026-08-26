@@ -61,7 +61,7 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { type AvailableColumn } from "./types";
-import { preventRowClickOnSelectionCheckbox } from "./utils";
+import { getVisibleGridSelection, preventRowClickOnSelectionCheckbox } from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -321,22 +321,31 @@ export const Datagrid = ({
     );
   const rowsTotal = rows - removed.length + added.length;
 
-  // Allow to listen to which row is selected and notfiy parent component.
-  // Glide tracks the selection by index and keeps it when the rows behind the grid
-  // change, so indices past the last rendered row are dropped rather than reported:
-  // consumers resolve them against their own data and would act on, or crash on,
-  // rows that no longer exist.
-  useEffect(() => {
-    if (onRowSelectionChange && selection) {
-      // Second parameter is callback to clear selection from parent component
-      onRowSelectionChange(
-        Array.from(selection.rows).filter(row => row < rowsTotal),
-        () => {
+  // Glide tracks selection by index and keeps it when the rows behind the grid
+  // change. Report only indices that still exist so consumers cannot crash, and
+  // rewrite the selection itself once loading is over — otherwise a refetch that
+  // briefly reports 1 placeholder row would permanently drop a real selection.
+  useEffect(
+    function pruneAndReportVisibleRowSelection() {
+      if (!selection) {
+        return;
+      }
+
+      const { visibleRows, prunedSelection } = getVisibleGridSelection(selection, rowsTotal);
+
+      if (!loading && prunedSelection) {
+        setSelectionState(prunedSelection);
+      }
+
+      if (onRowSelectionChange) {
+        // Second parameter is callback to clear selection from parent component
+        onRowSelectionChange(visibleRows, () => {
           setSelectionState(undefined);
-        },
-      );
-    }
-  }, [onRowSelectionChange, selection, setSelectionState, rowsTotal]);
+        });
+      }
+    },
+    [loading, onRowSelectionChange, selection, setSelectionState, rowsTotal],
+  );
 
   const hasMenuItem = !!menuItems(0).length;
   const hasColumnGroups = availableColumns.some(col => col.group);
