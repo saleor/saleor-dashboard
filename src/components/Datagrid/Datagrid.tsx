@@ -202,6 +202,7 @@ export const Datagrid = ({
     [themeValues, rowMarkerThemeOverride],
   );
   const editor = useRef<DataEditorRef | null>(null);
+  const editorContainerRef = useRef<HTMLDivElement | null>(null);
   const customRenderers = useCustomCellRenderers();
   const { scrolledToRight } = useScrollRight();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -623,29 +624,54 @@ export const Datagrid = ({
         : null,
     [selection, selectionActions, handleRemoveRows],
   );
-  // Hide the link when scrolling over it so that the scroll/wheel events go through to the Datagrid
-  // Show the link quickly after the last scroll/wheel event
-  const hideLinkAndShowAfterDelay = useCallback(
-    (() => {
-      let timer: ReturnType<typeof setTimeout> | null = null;
+  // The row anchor sits on top of the hovered cell so that the row behaves like a real link
+  // (middle click, right click "open in new tab"). That also means wheel events land on the
+  // anchor instead of the grid, and hiding the anchor mid-gesture does not help: the browser
+  // has already latched the gesture onto the anchor's own scroll chain, which is the page.
+  // So the delta is forwarded to the grid's scroller for whichever axes it can actually scroll,
+  // and the anchor is hidden afterwards - the row under the cursor has changed, so the anchor's
+  // href is stale until the next hover repositions it.
+  const forwardWheelToGrid = useCallback(
+    (event: WheelEvent): void => {
+      const scroller = editorContainerRef.current?.querySelector<HTMLElement>(".dvn-scroller");
 
-      return () => {
-        if (timer) {
-          clearTimeout(timer);
-        }
+      if (!scroller) {
+        return;
+      }
 
-        if (rowAnchorRef.current) {
-          rowAnchorRef.current.style.display = "none";
-        }
+      const deltaX = scroller.scrollWidth > scroller.clientWidth ? event.deltaX : 0;
+      const deltaY = scroller.scrollHeight > scroller.clientHeight ? event.deltaY : 0;
 
-        timer = setTimeout(() => {
-          if (rowAnchorRef.current) {
-            rowAnchorRef.current.style.display = "block";
-          }
-        }, 100);
-      };
-    })(),
+      if (deltaX === 0 && deltaY === 0) {
+        // Nothing for the grid to scroll on this axis - let the page take the gesture.
+        return;
+      }
+
+      scroller.scrollBy({ left: deltaX, top: deltaY, behavior: "auto" });
+      event.preventDefault();
+
+      if (rowAnchorRef.current) {
+        rowAnchorRef.current.style.display = "none";
+      }
+    },
     [rowAnchorRef],
+  );
+
+  // Registered natively because React's onWheel is attached as a passive listener,
+  // where preventDefault would be ignored.
+  useEffect(
+    function forwardRowAnchorWheelToGrid(): (() => void) | undefined {
+      const anchor = rowAnchorRef.current;
+
+      if (!anchor) {
+        return undefined;
+      }
+
+      anchor.addEventListener("wheel", forwardWheelToGrid, { passive: false });
+
+      return () => anchor.removeEventListener("wheel", forwardWheelToGrid);
+    },
+    [forwardWheelToGrid, rowAnchor, rowAnchorRef],
   );
 
   if (loading) {
@@ -678,7 +704,7 @@ export const Datagrid = ({
                 {selection?.rows && selection?.rows.length > 0 && selectionActionsComponent && (
                   <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>
                 )}
-                <div className={classes.editorContainer}>
+                <div className={classes.editorContainer} ref={editorContainerRef}>
                   <Box
                     backgroundColor="default1"
                     borderTopWidth={showTopBorder ? 1 : 0}
@@ -793,10 +819,9 @@ export const Datagrid = ({
         {rowAnchor && (
           <a
             ref={setRowAnchorRef}
-            style={{ position: "absolute", top: "-1000px", left: "-1000px" }}
+            style={{ position: "fixed", display: "block", top: "-1000px", left: "-1000px" }}
             tabIndex={-1}
             aria-hidden={true}
-            onWheelCapture={hideLinkAndShowAfterDelay}
             onClick={rowAnchorHandler}
           />
         )}
