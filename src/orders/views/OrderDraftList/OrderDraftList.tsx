@@ -4,6 +4,7 @@ import { ChannelPickerDialog } from "@dashboard/channels/components/ChannelPicke
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createDraftOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -145,7 +146,7 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => orderDrafts[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, orderDrafts);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {

@@ -277,15 +277,6 @@ export const Datagrid = ({
     };
   }, [clearTooltip, tooltip]);
 
-  // Allow to listen to which row is selected and notfiy parent component
-  useEffect(() => {
-    if (onRowSelectionChange && selection) {
-      // Second parameter is callback to clear selection from parent component
-      onRowSelectionChange(Array.from(selection.rows), () => {
-        setSelectionState(undefined);
-      });
-    }
-  }, [onRowSelectionChange, selection, setSelectionState]);
   useEffect(() => {
     if (recentlyAddedColumn && editor.current) {
       const columnIndex = availableColumns.findIndex(column => column.id === recentlyAddedColumn);
@@ -329,6 +320,24 @@ export const Datagrid = ({
       setCellsDirty(areCellsDirty),
     );
   const rowsTotal = rows - removed.length + added.length;
+
+  // Allow to listen to which row is selected and notfiy parent component.
+  // Glide tracks the selection by index and keeps it when the rows behind the grid
+  // change, so indices past the last rendered row are dropped rather than reported:
+  // consumers resolve them against their own data and would act on, or crash on,
+  // rows that no longer exist.
+  useEffect(() => {
+    if (onRowSelectionChange && selection) {
+      // Second parameter is callback to clear selection from parent component
+      onRowSelectionChange(
+        Array.from(selection.rows).filter(row => row < rowsTotal),
+        () => {
+          setSelectionState(undefined);
+        },
+      );
+    }
+  }, [onRowSelectionChange, selection, setSelectionState, rowsTotal]);
+
   const hasMenuItem = !!menuItems(0).length;
   const hasColumnGroups = availableColumns.some(col => col.group);
   const handleGetCellContent = useCallback(

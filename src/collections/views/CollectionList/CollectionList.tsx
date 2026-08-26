@@ -2,6 +2,7 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createCollectionsQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
@@ -169,7 +170,7 @@ const CollectionList = ({ params }: CollectionListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => collections[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, collections);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
