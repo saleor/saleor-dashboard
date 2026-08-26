@@ -1,8 +1,10 @@
 import { useApolloClient } from "@apollo/client";
+import { AttributeTypeEnum } from "@dashboard/graphql";
 
 import { type FilterContainer } from "../../FilterElement";
+import { customerFilterDefinitionResolver } from "../../queryVariables";
 import { type FilterAPIProvider } from "../FilterAPIProvider";
-import { CustomerTypeHandler } from "../Handler";
+import { AttributesHandler } from "../Handler";
 import { getFilterElement } from "../utils";
 
 export const useCustomerAPIProvider = (): FilterAPIProvider => {
@@ -16,17 +18,20 @@ export const useCustomerAPIProvider = (): FilterAPIProvider => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
-    const rowType = filterElement.rowType();
-
-    if (rowType === "customerType") {
-      return new CustomerTypeHandler(client, inputValue).fetch();
+    if (!filterElement) {
+      return Promise.resolve([]);
     }
 
-    return [];
+    const definition = customerFilterDefinitionResolver.resolve(filterElement);
+    const handler = definition.createOptionFetcher(client, inputValue, filterElement);
+
+    return handler.fetch();
   };
 
-  const fetchAttributeOptions = async () => {
-    return [];
+  const fetchAttributeOptions = async (inputValue: string) => {
+    const handler = new AttributesHandler(client, inputValue, AttributeTypeEnum.CUSTOMER_TYPE);
+
+    return handler.fetch();
   };
 
   return {

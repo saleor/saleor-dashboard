@@ -11127,6 +11127,7 @@ export type AddressValidationRulesQuery = { __typename: 'Query', addressValidati
 export type _GetDynamicLeftOperandsQueryVariables = Exact<{
   first: Scalars['Int']['input'];
   query: Scalars['String']['input'];
+  type: AttributeTypeEnum;
 }>;
 
 

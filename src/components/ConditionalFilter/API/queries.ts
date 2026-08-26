@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
 
 export const initialDynamicLeftOperands = gql`
-  query _GetDynamicLeftOperands($first: Int!, $query: String!) {
+  query _GetDynamicLeftOperands($first: Int!, $query: String!, $type: AttributeTypeEnum!) {
     attributes(
       first: $first
       search: $query
       where: {
-        type: { eq: PRODUCT_TYPE }
+        type: { eq: $type }
         inputType: {
           oneOf: [
             DROPDOWN

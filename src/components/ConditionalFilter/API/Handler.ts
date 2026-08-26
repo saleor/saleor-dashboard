@@ -45,6 +45,7 @@ import {
   type _GetWarehouseChoicesQuery,
   type _GetWarehouseChoicesQueryVariables,
   AttributeInputTypeEnum,
+  AttributeTypeEnum,
   ChannelCurrenciesDocument,
   type ChannelCurrenciesQuery,
   type ChannelCurrenciesQueryVariables,
@@ -439,6 +440,7 @@ export class AttributesHandler implements Handler {
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
+    public type: AttributeTypeEnum = AttributeTypeEnum.PRODUCT_TYPE,
   ) {}
 
   fetch = async (): Promise<LeftOperand[]> => {
@@ -450,6 +452,7 @@ export class AttributesHandler implements Handler {
       variables: {
         first: 5,
         query: this.query,
+        type: this.type,
       },
     });
 

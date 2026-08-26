@@ -6656,11 +6656,11 @@ export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddress
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
 export const _GetDynamicLeftOperandsDocument = gql`
-    query _GetDynamicLeftOperands($first: Int!, $query: String!) {
+    query _GetDynamicLeftOperands($first: Int!, $query: String!, $type: AttributeTypeEnum!) {
   attributes(
     first: $first
     search: $query
-    where: {type: {eq: PRODUCT_TYPE}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE, SINGLE_REFERENCE]}}
+    where: {type: {eq: $type}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE, SINGLE_REFERENCE]}}
   ) {
     edges {
       node {
@@ -6692,6 +6692,7 @@ export const _GetDynamicLeftOperandsDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      type: // value for 'type'
  *   },
  * });
  */
