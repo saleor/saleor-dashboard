@@ -91,21 +91,31 @@ export const createCustomerTypeMenuItems = ({
   allLabel: string;
   pinnedIds?: string[];
   selectedTypeIds?: string[];
-}): SidebarMenuItem[] => [
-  createCustomerTypeNavItem({
+}): SidebarMenuItem[] => {
+  const allItem = createCustomerTypeNavItem({
     id: CUSTOMER_TYPE_NAV_ALL_ID,
     label: allLabel,
     url: customerListUrlWithCustomerType(),
-  }),
-  ...selectCustomerTypesForNav({
-    customerTypes,
-    pinnedIds,
-    selectedTypeIds,
-  }).map(customerType =>
-    createCustomerTypeNavItem({
-      id: `${CUSTOMER_TYPE_NAV_ID_PREFIX}${customerType.id}`,
-      label: customerType.name,
-      url: customerListUrlWithCustomerType(customerType),
-    }),
-  ),
-];
+  });
+
+  // One type is the same list as All — don't echo it. Shortcuts appear once
+  // there is more than one type to choose between.
+  if (customerTypes.length <= 1) {
+    return [allItem];
+  }
+
+  return [
+    allItem,
+    ...selectCustomerTypesForNav({
+      customerTypes,
+      pinnedIds,
+      selectedTypeIds,
+    }).map(customerType =>
+      createCustomerTypeNavItem({
+        id: `${CUSTOMER_TYPE_NAV_ID_PREFIX}${customerType.id}`,
+        label: customerType.name,
+        url: customerListUrlWithCustomerType(customerType),
+      }),
+    ),
+  ];
+};

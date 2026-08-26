@@ -80,6 +80,17 @@ describe("createCustomerTypeMenuItems", () => {
     expect(items).toHaveLength(1 + MAX_CUSTOMER_TYPE_NAV_TYPES);
   });
 
+  it("omits the type shortcut when there is only one type", () => {
+    // Arrange & Act
+    const items = createCustomerTypeMenuItems({
+      customerTypes: [{ id: "type-default", name: "Default" }],
+      allLabel: "All",
+    });
+
+    // Assert
+    expect(items.map(item => item.label)).toEqual(["All"]);
+  });
+
   it("still includes All when there are no types", () => {
     // Arrange & Act
     const items = createCustomerTypeMenuItems({ customerTypes: [], allLabel: "All" });
