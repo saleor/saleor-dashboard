@@ -5,12 +5,10 @@ import { Box } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import * as React from "react";
 
-import { getTools } from "./consts";
+import { tools } from "./consts";
 import { useHasRendered, useUpdateOnRerender } from "./hooks";
 import { ReactEditorJS } from "./ReactEditorJS";
-import { useRichTextImageUploadOverride } from "./RichTextImageUploadContext";
 import useStyles from "./styles";
-import { useUploadRichTextImage } from "./useUploadRichTextImage";
 
 export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
 
@@ -53,10 +51,6 @@ const RichTextEditor = ({
   const [isFocused, setIsFocused] = React.useState(false);
   const [hasValue, setHasValue] = React.useState(false);
   const isTyped = Boolean(hasValue || isFocused);
-  const defaultUploadImage = useUploadRichTextImage();
-  const uploadImageOverride = useRichTextImageUploadOverride();
-  const uploadImage = uploadImageOverride ?? defaultUploadImage;
-  const tools = React.useMemo(() => getTools({ uploadImage }), [uploadImage]);
   const handleInitialize = React.useCallback((editor: EditorCore) => {
     if (onInitialize) {
       onInitialize(editor);
