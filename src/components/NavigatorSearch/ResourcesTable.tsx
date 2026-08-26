@@ -1,6 +1,7 @@
 import { useNavigatorSearchQuery } from "@dashboard/graphql";
 import { ListSkeleton } from "@dashboard/search/resultsTable/ListSkeleton";
 import { prepareResults } from "@dashboard/search/resultsTable/prepareResults";
+import { ResultsAsListboxOptionsContext } from "@dashboard/search/resultsTable/ResultsAsListboxOptionsContext";
 import { ResultsTable } from "@dashboard/search/resultsTable/ResultsTable";
 
 export const ResourcesTable = ({
@@ -27,5 +28,10 @@ export const ResourcesTable = ({
 
   if (results.empty) return null;
 
-  return <ResultsTable data={results} onItemClick={onResourceClick} />;
+  return (
+    // These rows live inside the Navigator's listbox, so they are options.
+    <ResultsAsListboxOptionsContext.Provider value={true}>
+      <ResultsTable data={results} onItemClick={onResourceClick} />
+    </ResultsAsListboxOptionsContext.Provider>
+  );
 };

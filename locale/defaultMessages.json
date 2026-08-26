@@ -299,6 +299,10 @@
     "context": "section description",
     "string": "Controls whether users can authenticate using password-based login. You can allow it for everyone, restrict it to customers only, or disable it entirely."
   },
+  "/2uCva": {
+    "context": "account settings section subtitle",
+    "string": "Pin extensions to the top or hide them across the dashboard."
+  },
   "/4bJkA": {
     "context": "header field value, header",
     "string": "Value"
@@ -3406,6 +3410,10 @@
   },
   "B8PvdI": {
     "string": "extending Saleor with Webhooks"
+  },
+  "B9OFxo": {
+    "context": "tooltip for unpin action",
+    "string": "Unpin extension"
   },
   "B9jV/6": {
     "context": "edit single translation field",
@@ -7596,6 +7604,10 @@
     "context": "dialog title for order line metadata",
     "string": "Order line metadata"
   },
+  "QTuSw/": {
+    "context": "navigator search input placeholder",
+    "string": "Search"
+  },
   "QUyUJy": {
     "string": "Main Product"
   },
@@ -8271,6 +8283,10 @@
   "TCR639": {
     "context": "order history message",
     "string": "Payment failed"
+  },
+  "TCV876": {
+    "context": "tri-state option: default visibility",
+    "string": "Default"
   },
   "TD/GhR": {
     "context": "header",
@@ -9089,6 +9105,10 @@
     "context": "change warehouse dialog search placeholder",
     "string": "Search warehouses"
   },
+  "WCl+E+": {
+    "context": "tri-state option: pinned",
+    "string": "Pinned"
+  },
   "WD+kjr": {
     "context": "page title - extensions",
     "string": "Extensions"
@@ -9832,6 +9852,10 @@
   },
   "YjrPCx": {
     "string": "Shipping zone updated"
+  },
+  "Yjs/a4": {
+    "context": "accessible name of the Navigator results listbox",
+    "string": "Navigator results"
   },
   "Yk0avO": {
     "context": "dialog header",
@@ -10829,6 +10853,10 @@
   "cFVgOo": {
     "context": "Channel label",
     "string": "Channel"
+  },
+  "cGL5Xv": {
+    "context": "tooltip for hide action on a widget extension",
+    "string": "Hide extension"
   },
   "cGrYq9": {
     "context": "accessible name for the Paper mark on the PDP schematic",
@@ -14691,6 +14719,10 @@
   "qNpzxl": {
     "string": "Open this category in GraphiQL"
   },
+  "qO6iZs": {
+    "context": "empty state for extensions visibility list",
+    "string": "No extensions available to manage."
+  },
   "qOXgxv": {
     "context": "gift card history message",
     "string": "Gift card was refunded in order {orderLink}"
@@ -14859,6 +14891,10 @@
   "qrWOxx": {
     "string": "No members found"
   },
+  "qsKsBe": {
+    "context": "tooltip for pin action on a widget extension",
+    "string": "Pin extension"
+  },
   "qsQQm4": {
     "context": "quick pick label for EU member states",
     "string": "European Union ({count})"
@@ -14923,6 +14959,10 @@
   "r1aQ2f": {
     "context": "dialog header",
     "string": "Unassign Attribute from Product Type"
+  },
+  "r2ajD2": {
+    "context": "account settings section title",
+    "string": "Extensions visibility"
   },
   "r2i5Fn": {
     "context": "PageTypeDeleteWarningDialog multiple assigned items description",
@@ -15001,6 +15041,10 @@
   "rNAI8p": {
     "context": "staff notification title",
     "string": "Staff order confirmation"
+  },
+  "rNNHeS": {
+    "context": "tri-state option: hidden",
+    "string": "Hidden"
   },
   "rPAbtu": {
     "context": "order-level validation error without field name in address edit dialog",

@@ -38,6 +38,8 @@ export const SearchActionsList = ({
               type="button"
               className="command-menu-item"
               data-test-id={action.id}
+              role="option"
+              tabIndex={-1}
               onClick={() => {
                 onActionSelected();
                 action.onSelect(context);
@@ -51,8 +53,6 @@ export const SearchActionsList = ({
                 gap={2}
                 paddingX={6}
                 paddingY={1.5}
-                role="option"
-                tabIndex={-1}
               >
                 {action.avatar && (
                   <img src={action.avatar} alt="" width={20} height={20} loading="lazy" />
