@@ -285,10 +285,8 @@ const CategoryList = ({ params }: CategoryListProps): JSX.Element => {
           sort={getSortParams(params)}
           onSort={handleSort}
           disabled={!data}
-          onUpdateListSettings={(...props) => {
-            clearRowSelection();
-            updateListSettings(...props);
-          }}
+          // Keep selection on page-size/column updates; Datagrid drops stale indices.
+          onUpdateListSettings={updateListSettings}
         />
       </CategoryListPageStateProvider>
 

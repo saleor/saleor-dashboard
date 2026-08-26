@@ -90,7 +90,7 @@ const ShippingZonesListPage = ({
           />
         </Box>
         {selectedShippingZonesIds.length > 0 && (
-          <BulkDeleteButton onClick={onRemove}>
+          <BulkDeleteButton count={selectedShippingZonesIds.length} onClick={onRemove}>
             <FormattedMessage {...messages.bulkDelete} />
           </BulkDeleteButton>
         )}

@@ -157,7 +157,7 @@ export const CustomerListPage = ({
             </Box>
             <Box display="flex" justifyContent="flex-end" alignItems="center">
               {canEditCustomers && selectedCustomerIds.length > 0 && (
-                <BulkDeleteButton onClick={onCustomersDelete}>
+                <BulkDeleteButton count={selectedCustomerIds.length} onClick={onCustomersDelete}>
                   <FormattedMessage defaultMessage="Delete customers" id="kFsTMN" />
                 </BulkDeleteButton>
               )}

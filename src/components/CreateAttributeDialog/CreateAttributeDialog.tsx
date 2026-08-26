@@ -253,7 +253,11 @@ export const CreateAttributeDialog = ({
                             toggle: valueListActions.toggle,
                             toggleAll: valueListActions.toggleAll,
                             toolbar: (
-                              <BulkDeleteButton onClick={() => setBulkDeleteOpen(true)}>
+                              <BulkDeleteButton
+                                count={valueListActions.listElements.length}
+                                size="small"
+                                onClick={() => setBulkDeleteOpen(true)}
+                              >
                                 <FormattedMessage {...buttonMessages.delete} />
                               </BulkDeleteButton>
                             ),

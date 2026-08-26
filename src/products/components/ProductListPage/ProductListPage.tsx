@@ -241,9 +241,9 @@ const ProductListPage = (props: ProductListPageProps) => {
               defaultMessage: "Search Products...",
             })}
             actions={
-              <Box display="flex" gap={4}>
+              <Box display="flex" gap={4} alignItems="center">
                 {selectedProductIds.length > 0 && (
-                  <BulkDeleteButton onClick={onProductsDelete}>
+                  <BulkDeleteButton count={selectedProductIds.length} onClick={onProductsDelete}>
                     <FormattedMessage defaultMessage="Delete products" id="uwk5e9" />
                   </BulkDeleteButton>
                 )}

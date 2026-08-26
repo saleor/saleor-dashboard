@@ -203,7 +203,7 @@ export const VoucherCodesTable = ({
           onUpdateListSettings={onSettingsChange}
           beforePagination={
             selectedCodesIds.length > 0 ? (
-              <BulkDeleteButton onClick={onBulkDelete}>
+              <BulkDeleteButton count={selectedCodesIds.length} onClick={onBulkDelete} size="small">
                 <FormattedMessage defaultMessage="Delete codes" id="UJ97Lb" />
               </BulkDeleteButton>
             ) : null

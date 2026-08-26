@@ -3118,6 +3118,10 @@
     "context": "collection label",
     "string": "Visible"
   },
+  "9wjl6Q": {
+    "context": "bulk action button label with selected count",
+    "string": "{action} ({count})"
+  },
   "9xlPgt": {
     "context": "used staff users counter",
     "string": "{count}/{max} members"

@@ -2,6 +2,7 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createVoucherQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -161,7 +162,7 @@ const VoucherList = ({ params }: VoucherListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => vouchers[row]?.id);
+      const rowsIds = getRowIdsFromSelection(rows, vouchers);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
