@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.23.29
+
+### Patch Changes
+
+- [#6860](https://github.com/saleor/saleor-dashboard/pull/6860) [`408bec4`](https://github.com/saleor/saleor-dashboard/commit/408bec4285b5eddf83da056e2ae97f7df85a076f) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Discount rule reward values now keep their decimal part.
+
+  Typing `12.55` into a rule's reward value stored `12` — the field parsed input with `parseInt`, so everything after the decimal point was dropped without any feedback. Fractional rewards below `1`, such as a `0.5%` discount, were also rejected with "Rule reward value is required". Both now work, for fixed-amount and percentage rewards alike.
+
+- [#6701](https://github.com/saleor/saleor-dashboard/pull/6701) [`6e5cfcb`](https://github.com/saleor/saleor-dashboard/commit/6e5cfcb58a4394122d6c7faf2f81bcf0244626b7) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Staff users can now pin or hide individual app widget extensions. Manage visibility inline via hover controls next to each widget, or from the new "Extensions visibility" section on your account page. Preferences are stored per-user and pinned widgets are sorted to the top while hidden ones are not rendered.
+
+- [#6858](https://github.com/saleor/saleor-dashboard/pull/6858) [`a262e9f`](https://github.com/saleor/saleor-dashboard/commit/a262e9fc447f267f9fc372570ce7c73a5b2cd2b7) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Navigator (Ctrl/Cmd + K) is now announced correctly by screen readers.
+
+  The search field used the abstract `role="input"`, declared `aria-expanded` on a role that does not support it, and pointed `aria-activedescendant` at a hardcoded `/orders/` route with no `aria-controls` to make that reference resolvable. Results put `role="option"` on a child of the element that actually received `aria-selected`, and nothing in the popup was a `listbox`. Assistive technology therefore announced neither the field as a combobox, nor the popup as a list, nor which result was highlighted.
+
+  The field is now a `combobox` controlling a labelled `listbox`, `aria-expanded` follows the popup, and every result — action, setting, or resource row — is a single `option` node carrying its own id and `aria-selected`, so arrowing through the Navigator announces the highlighted item. The placeholder is translated too.
+
 ## 3.23.28
 
 ### Patch Changes
