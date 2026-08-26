@@ -21,7 +21,16 @@ import { defineMessages, FormattedMessage, type MessageDescriptor, useIntl } fro
 
 const ActionLinkItem = ({ href, children }: { href: string; children: React.ReactNode }) => {
   return (
-    <Link href={href} data-href={href} id={href} className="command-menu-item">
+    // `role="option"` belongs on the element useActionItems collects, since that
+    // is what receives `aria-selected` and what aria-activedescendant points at.
+    <Link
+      href={href}
+      data-href={href}
+      id={href}
+      className="command-menu-item"
+      role="option"
+      tabIndex={-1}
+    >
       <Box
         className="command-menu-item-content"
         display="flex"
@@ -30,8 +39,6 @@ const ActionLinkItem = ({ href, children }: { href: string; children: React.Reac
         gap={2}
         paddingX={6}
         paddingY={1.5}
-        role="option"
-        tabIndex={-1}
       >
         <Text size={2} fontWeight="medium" color="default1">
           {children}
@@ -41,9 +48,9 @@ const ActionLinkItem = ({ href, children }: { href: string; children: React.Reac
   );
 };
 
-const ActionButtonItem = ({ children }: { children: React.ReactNode }) => {
+const ActionButtonItem = ({ id, children }: { id: string; children: React.ReactNode }) => {
   return (
-    <Box className="command-menu-item" cursor="pointer" role="option" tabIndex={-1}>
+    <Box className="command-menu-item" id={id} cursor="pointer" role="option" tabIndex={-1}>
       <Box
         className="command-menu-item-content"
         display="flex"
@@ -150,7 +157,7 @@ const InviteStaffNavigatorItem = ({
         openInvite();
       }}
     >
-      <ActionButtonItem>
+      <ActionButtonItem id="navigator-option-invite-staff">
         <FormattedMessage {...allMessages.inviteUser} />
       </ActionButtonItem>
     </Box>

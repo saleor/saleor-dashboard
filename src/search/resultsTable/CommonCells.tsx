@@ -1,9 +1,12 @@
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { GridTable } from "@dashboard/components/GridTable";
 import Link from "@dashboard/components/Link";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { FormattedDate } from "react-intl";
+
+import { useResultsAsListboxOptions } from "./ResultsAsListboxOptionsContext";
 
 export const Row = ({
   children,
@@ -16,17 +19,33 @@ export const Row = ({
   className?: string;
   onClick?: () => void;
 }) => {
+  const asListboxOption = useResultsAsListboxOptions();
+  const navigate = useNavigator();
+
+  // As an option the row owns activation, because its cells no longer hold links
+  // (see LinkCell). Outside the listbox the cell links still do the navigating.
+  const handleClick = () => {
+    onClick?.();
+
+    if (asListboxOption) {
+      navigate(href);
+    }
+  };
+
   return (
     <GridTable.Row
       __height="39px"
       backgroundColor={{
         hover: "default1Hovered",
       }}
-      tabIndex={0}
+      role={asListboxOption ? "option" : undefined}
+      // Options are reached with the arrow keys while focus stays in the
+      // combobox, so they must not be in the tab order.
+      tabIndex={asListboxOption ? -1 : 0}
       data-href={href}
       id={href}
       className={className}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </GridTable.Row>
@@ -77,6 +96,19 @@ export const DisplayDate = ({ date }: { date: string }) => {
 };
 
 export const LinkCell = ({ href, children }: { href: string; children?: React.ReactNode }) => {
+  const asListboxOption = useResultsAsListboxOptions();
+
+  // An option's content is presentational: a link nested inside one is dropped by
+  // assistive technology while still trapping focus, so inside the Navigator's
+  // listbox the cells are plain boxes and the row handles activation.
+  if (asListboxOption) {
+    return (
+      <Box display="flex" alignItems="center" height="100%" cursor="pointer" color="accent1">
+        {children}
+      </Box>
+    );
+  }
+
   return (
     <Link
       href={href}
