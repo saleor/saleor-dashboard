@@ -4,9 +4,11 @@ import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
 import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
 import { createFetch, createSaleorClient } from "@dashboard/legacy-sdk";
 import { createUploadLink } from "apollo-upload-client";
+import { type DocumentNode } from "graphql";
 
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import introspectionQueryResultDataStaging from "./fragmentTypesStaging.generated";
+import { resolveLockedSchemaFieldsForBuild } from "./lockSchema";
 import { isStagingSchema } from "./schemaVersion";
 import { type TypedTypePolicies } from "./typePolicies.generated";
 
@@ -46,9 +48,32 @@ const link = attachVariablesLink.concat(
   }) as unknown as ApolloLink, // type mismatch between apollo-upload-client and @apollo/cient
 );
 
+/**
+ * Resolves `@lockSchema` before anything else touches the document.
+ *
+ * This has to happen on the cache rather than in a link: Apollo runs links *after* the cache, so
+ * a link-level transform would leave InMemoryCache normalising against fields the API was never
+ * asked for — every write logs "Missing field ...", every cache-first read misses, and the query
+ * refetches on every mount. `transformDocument` feeds both the cache and the link, so stripping
+ * here keeps the two in sync.
+ *
+ * Apollo Client 3.8 has a first-class `documentTransform` option for this; drop the subclass when
+ * we get there.
+ *
+ * ponytail: covers everything that goes through QueryManager, i.e. every hook and every
+ * mutation. `cache.readQuery`/`writeQuery`/`readFragment`/`writeFragment` call `read`/`write`
+ * directly and would see an unresolved document — no caller does that with a `@lockSchema`
+ * document today. Override `read`/`write` (memoised) if one ever needs to.
+ */
+class SchemaAwareCache extends InMemoryCache {
+  transformDocument(document: DocumentNode): DocumentNode {
+    return super.transformDocument(resolveLockedSchemaFieldsForBuild(document));
+  }
+}
+
 export const apolloClient = new ApolloClient({
   connectToDevTools: process.env.NODE_ENV === "development",
-  cache: new InMemoryCache({
+  cache: new SchemaAwareCache({
     possibleTypes: introspectionData.possibleTypes,
     typePolicies: {
       CountryDisplay: {

@@ -13,7 +13,7 @@ import type { IGraphQLConfig } from "graphql-config";
 const config: IGraphQLConfig = {
   projects: {
     main: {
-      schema: "schema-main.graphql",
+      schema: ["schema-main.graphql", "schema-directives.graphql"],
       documents: [
         "./src/**/queries.ts",
         "./src/**/mutations.ts",
@@ -23,7 +23,7 @@ const config: IGraphQLConfig = {
       ],
     },
     staging: {
-      schema: "schema-staging.graphql",
+      schema: ["schema-staging.graphql", "schema-directives.graphql"],
       documents: [
         // Shared, schema-agnostic fragments the staging documents spread — mirrors codegen-staging.
         "./src/fragments/*.ts",

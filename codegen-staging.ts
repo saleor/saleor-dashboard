@@ -1,7 +1,8 @@
 import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "./schema-staging.graphql",
+  // schema-directives declares @lockSchema, which the API does not know about
+  schema: ["./schema-staging.graphql", "./schema-directives.graphql"],
   ignoreNoDocuments: true,
   documents: [
     // Shared, schema-agnostic fragments the staging documents spread. Loading them here also

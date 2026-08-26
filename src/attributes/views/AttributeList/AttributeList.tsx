@@ -1,6 +1,5 @@
 import { useAssignedTypeAttributes } from "@dashboard/attributes/hooks/useAssignedTypeAttributes";
 import { useAttributeGroupByType } from "@dashboard/attributes/hooks/useAttributeGroupByType";
-import { useAttributeListQuery } from "@dashboard/attributes/schemaAwareOperations";
 import {
   computePageTypeTabCounts,
   computeProductTypeTabCounts,
@@ -24,6 +23,7 @@ import {
   PageTypeSortField,
   ProductTypeSortField,
   useAttributeBulkDeleteMutation,
+  useAttributeListQuery,
   usePageTypeListWithAssignedAttributeCountsQuery,
   useProductTypeListWithAssignedAttributeCountsQuery,
   useUnassignPageAttributeMutation,

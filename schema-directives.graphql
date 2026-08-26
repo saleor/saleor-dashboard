@@ -1,0 +1,15 @@
+"""
+Marks a selection as existing only in the named schema version ("main" or "staging").
+
+The dashboard is built against two Saleor schemas and picks one at build time via
+FF_USE_STAGING_SCHEMA. Fields that exist in only one of them carry this directive, and
+`src/graphql/lockSchema.ts` removes them — from the outgoing document *and* from the
+document the cache normalises against — whenever the build targets the other version.
+The directive itself never reaches the API.
+
+Only declared here so codegen and IDE tooling accept it; the API knows nothing about it.
+
+Do not put it on every field of a fragment: a fragment stripped down to an empty selection
+set prints as invalid GraphQL. Leave at least one unconditional field (`id`) behind.
+"""
+directive @lockSchema(schema: String!) on FIELD

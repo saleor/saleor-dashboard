@@ -1,11 +1,11 @@
-import {
-  usePageTypeAssignedAttributesForListQuery,
-  useProductTypeAssignedAttributesForListQuery,
-} from "@dashboard/attributes/schemaAwareOperations";
 import { type AssignedAttributeListItemFragment } from "@dashboard/attributes/types";
 import { type AttributeListUrlSortField } from "@dashboard/attributes/urls";
 import { filterAssignedAttributes } from "@dashboard/attributes/utils/filterAssignedAttributes";
-import { type AttributeFilterInput } from "@dashboard/graphql";
+import {
+  type AttributeFilterInput,
+  usePageTypeAssignedAttributesForListQuery,
+  useProductTypeAssignedAttributesForListQuery,
+} from "@dashboard/graphql";
 import { type Sort } from "@dashboard/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 

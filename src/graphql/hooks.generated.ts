@@ -17,9 +17,10 @@ export const AnnouncementFragmentDoc = gql`
     `;
 export const AttributeFacetedNavigationFragmentDoc = gql`
     fragment AttributeFacetedNavigation on Attribute {
-  availableInGrid
-  filterableInStorefront
-  storefrontSearchPosition
+  id
+  availableInGrid @lockSchema(schema: "main")
+  filterableInStorefront @lockSchema(schema: "main")
+  storefrontSearchPosition @lockSchema(schema: "main")
 }
     `;
 export const AppManifestFragmentDoc = gql`

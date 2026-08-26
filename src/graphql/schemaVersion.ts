@@ -8,12 +8,12 @@
  * - When FF_USE_STAGING_SCHEMA=false (default): Use main schema with base types/hooks
  */
 
-type SchemaVersion = "main" | "staging";
+export type SchemaVersion = "main" | "staging";
 
 /**
  * Get the current schema version based on the FF_USE_STAGING_SCHEMA feature flag
  */
-const getSchemaVersion = (): SchemaVersion => {
+export const getSchemaVersion = (): SchemaVersion => {
   // Flags is Vite-specific global, it's resolved build time from env variables
   return FLAGS["FF_USE_STAGING_SCHEMA"] === "true" ? "staging" : "main";
 };

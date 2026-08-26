@@ -1,5 +1,8 @@
-import { useAttributeListQuery } from "@dashboard/attributes/schemaAwareOperations";
-import { type AttributeListQuery, type AttributeTypeEnum } from "@dashboard/graphql";
+import {
+  type AttributeListQuery,
+  type AttributeTypeEnum,
+  useAttributeListQuery,
+} from "@dashboard/graphql";
 import { type ModelTypeTabCount } from "@dashboard/modeling/components/ModelTypeTabs/ModelTypeTabs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 

@@ -10347,52 +10347,6 @@ export enum WeightUnitsEnum {
   TONNE = 'TONNE'
 }
 
-export type AttributeUpdateMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-  input: AttributeUpdateInput;
-}>;
-
-
-export type AttributeUpdateMutation = { __typename: 'Mutation', attributeUpdate: { __typename: 'AttributeUpdate', attribute: { __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null } | null, errors: Array<{ __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null }> } | null };
-
-export type AttributeDetailsQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-  firstValues?: InputMaybe<Scalars['Int']['input']>;
-  afterValues?: InputMaybe<Scalars['String']['input']>;
-  lastValues?: InputMaybe<Scalars['Int']['input']>;
-  beforeValues?: InputMaybe<Scalars['String']['input']>;
-  searchValues?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type AttributeDetailsQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', entityType: AttributeEntityTypeEnum | null, valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null, referenceTypes: Array<{ __typename: 'PageType', id: string, name: string } | { __typename: 'ProductType', id: string, name: string }> | null, choices: { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', plainText: string | null, richText: any | null, id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null } }> } | null, productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean } }, productVariantTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null };
-
-export type AttributeListQueryVariables = Exact<{
-  filter?: InputMaybe<AttributeFilterInput>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<AttributeSortingInput>;
-}>;
-
-
-export type AttributeListQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
-
-export type PageTypeAssignedAttributesForListQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type PageTypeAssignedAttributesForListQuery = { __typename: 'Query', pageType: { __typename: 'PageType', id: string, attributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null };
-
-export type ProductTypeAssignedAttributesForListQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type ProductTypeAssignedAttributesForListQuery = { __typename: 'Query', productType: { __typename: 'ProductType', id: string, productAttributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null, variantAttributes: Array<{ __typename: 'Attribute', valueRequired: boolean, id: string, name: string, slug: string, type: AttributeTypeEnum, visibleInStorefront: boolean, unit: MeasurementUnitsEnum | null, inputType: AttributeInputTypeEnum | null }> | null } | null };
-
 export type AddressFragment = { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } };
 
 export type AppManifestFragment = { __typename: 'Manifest', identifier: string, version: string, about: string | null, name: string, appUrl: string | null, tokenTargetUrl: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, homepageUrl: string | null, supportUrl: string | null, extensions: Array<{ __typename: 'AppManifestExtension', targetName: string, mountName: string, url: string, label: string, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> }>, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, brand: { __typename: 'AppManifestBrand', logo: { __typename: 'AppManifestBrandLogo', default: string } } | null };
