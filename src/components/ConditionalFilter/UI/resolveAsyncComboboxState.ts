@@ -55,3 +55,11 @@ export const isSelectedComboboxLabel = (selected: unknown, inputValue: string): 
 
   return selected.label === inputValue;
 };
+
+export const isSelectedMultiselectLabel = (selected: unknown, inputValue: string): boolean => {
+  if (!inputValue || !Array.isArray(selected)) {
+    return false;
+  }
+
+  return selected.some(item => isSelectedComboboxLabel(item, inputValue));
+};

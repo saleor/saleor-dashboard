@@ -27,6 +27,7 @@ import { RangeInputWrapper } from "./RangeInputWrapper";
 import {
   includeSelectedComboboxOptions,
   isSelectedComboboxLabel,
+  isSelectedMultiselectLabel,
   resolveComboboxValue,
 } from "./resolveAsyncComboboxState";
 import { type ConditionalFiltersLayout } from "./Root";
@@ -130,6 +131,10 @@ export const RightOperator = ({
           emitter.changeRightOperator(index, value);
         }}
         onInputValueChange={value => {
+          if (isSelectedMultiselectLabel(selected.value, value)) {
+            return;
+          }
+
           emitter.inputChangeRightOperator(index, value);
         }}
         onScrollEnd={() => {

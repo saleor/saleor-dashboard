@@ -16,7 +16,11 @@ import { FilterElement } from "./FilterElement";
 import { Condition } from "./FilterElement/Condition";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import { type ConditionValue, isItemOption } from "./FilterElement/ConditionValue";
+import {
+  type ConditionValue,
+  isItemOption,
+  isItemOptionArray,
+} from "./FilterElement/ConditionValue";
 import { Constraint } from "./FilterElement/Constraint";
 import { hasEmptyRows } from "./FilterElement/FilterElement";
 import { type LeftOperand } from "./LeftOperandsProvider";
@@ -112,6 +116,13 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
   };
   const updateRightOperator = (position: string, rightOperator: ConditionValue) => {
     updateAt(position, el => el.updateRightOperator(rightOperator));
+
+    if (
+      (isItemOption(rightOperator) || isItemOptionArray(rightOperator)) &&
+      !hasSameChoiceQuery(choiceSession.current, `right:${position}`, "")
+    ) {
+      fetchRightOptionsList(position, "");
+    }
   };
   const updateRightLoadingState = (position: string, loading: boolean) => {
     updateAt(position, el => el.updateRightLoadingState(loading));

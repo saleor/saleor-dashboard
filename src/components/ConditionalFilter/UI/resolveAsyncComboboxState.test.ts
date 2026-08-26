@@ -1,6 +1,7 @@
 import {
   includeSelectedComboboxOptions,
   isSelectedComboboxLabel,
+  isSelectedMultiselectLabel,
   resolveComboboxValue,
 } from "./resolveAsyncComboboxState";
 
@@ -85,5 +86,18 @@ describe("isSelectedComboboxLabel", () => {
     // Arrange & Act & Assert
     expect(isSelectedComboboxLabel(selected, "vip")).toBe(false);
     expect(isSelectedComboboxLabel(selected, "")).toBe(false);
+  });
+});
+
+describe("isSelectedMultiselectLabel", () => {
+  it("ignores a chip label so selecting does not search for the picked value", () => {
+    // Arrange & Act & Assert
+    expect(isSelectedMultiselectLabel([selected, otherOption], "Retail")).toBe(true);
+  });
+
+  it("lets a real search through", () => {
+    // Arrange & Act & Assert
+    expect(isSelectedMultiselectLabel([selected], "vip")).toBe(false);
+    expect(isSelectedMultiselectLabel([selected], "")).toBe(false);
   });
 });
