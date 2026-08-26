@@ -3,8 +3,9 @@ import type { ComponentType } from "react";
 import { fn } from "storybook/test";
 
 import { STORYBOOK_CHROMATIC_PARAMS } from "../../../storybook/chromatic";
-import { getGroupTabId } from "./groupModelTypeTabs";
+import { DEFAULT_MODEL_TYPE_TAB_SEPARATOR, getGroupTabId } from "./groupModelTypeTabs";
 import { ALL_MODELS_TAB_ID, ModelTypeTabs } from "./ModelTypeTabs";
+import { type ModelTypeTabGrouping } from "./useModelTypeTabGrouping";
 
 const samplePageTypes = [
   { id: "pt-1", name: "Article" },
@@ -25,12 +26,32 @@ const groupedPageTypes = [
 
 const storefrontGroupId = getGroupTabId("Storefront");
 
+const enabledGrouping: ModelTypeTabGrouping = {
+  separator: DEFAULT_MODEL_TYPE_TAB_SEPARATOR,
+  setSeparator: fn(),
+  groupingEnabled: true,
+  setGroupingEnabled: fn(),
+  groupingOptions: { separator: DEFAULT_MODEL_TYPE_TAB_SEPARATOR, enabled: true },
+};
+
 const meta: Meta<typeof ModelTypeTabs> = {
   title: "Modeling/ModelTypeTabs",
   component: ModelTypeTabs,
   parameters: STORYBOOK_CHROMATIC_PARAMS,
+  argTypes: {
+    grouping: { control: false },
+    rightSlot: { control: false },
+    pageTypes: { control: false },
+    counts: { control: false },
+  },
   args: {
     onTabChange: fn(),
+    grouping: enabledGrouping,
+  },
+  beforeEach: () => {
+    window.localStorage.removeItem("modelTypeTabs.pinnedIds");
+    window.localStorage.removeItem("modelTypeTabs.separator");
+    window.localStorage.removeItem("modelTypeTabs.grouping");
   },
 };
 
@@ -110,6 +131,20 @@ export const NoPageTypes: Story = {
     selectedIds: [],
     counts: {
       [ALL_MODELS_TAB_ID]: { value: 0, hasMore: false },
+    },
+  },
+};
+
+export const GroupingDisabled: Story = {
+  args: {
+    pageTypes: groupedPageTypes,
+    selectedIds: [],
+    grouping: false,
+    counts: {
+      [ALL_MODELS_TAB_ID]: { value: 20, hasMore: true },
+      "pt-article": { value: 2, hasMore: false },
+      "pt-cart": { value: 1, hasMore: false },
+      "pt-checkout": { value: 1, hasMore: false },
     },
   },
 };

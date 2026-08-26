@@ -6,6 +6,7 @@ import {
   type _SearchCategoriesOperandsQuery,
   type _SearchCollectionsOperandsQuery,
   type _SearchCustomersOperandsQuery,
+  type _SearchCustomerTypesOperandsQuery,
   type _SearchPageTypesOperandsQuery,
   type _SearchProductOperandsQuery,
   type _SearchProductTypesOperandsQuery,
@@ -19,6 +20,7 @@ import { type ItemOption } from "../../FilterElement/ConditionValue";
 import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
 import { type InitialAttributesState } from "./attributes/InitialAttributesState";
 import { type InitialCollectionState } from "./collections/InitialCollectionState";
+import { type InitialCustomerState } from "./customers/InitialCustomerState";
 import { type InitialGiftCardsState } from "./giftCards/InitialGiftCardsState";
 import { type InitialOrderState } from "./orders/InitialOrderState";
 import { type InitialPageState } from "./page/InitialPageState";
@@ -26,6 +28,7 @@ import { type AttributeDTO, type InitialProductState } from "./product/InitialPr
 import {
   type InitialAttributesAPIResponse,
   type InitialCollectionAPIResponse,
+  type InitialCustomerAPIResponse,
   type InitialGiftCardsAPIResponse,
   type InitialOrderAPIResponse,
   type InitialPageAPIResponse,
@@ -81,6 +84,10 @@ const isAttributeQuery = (
 const isPageTypesQuery = (
   query: InitialPageAPIResponse,
 ): query is ApolloQueryResult<_SearchPageTypesOperandsQuery> => "pageTypes" in query.data;
+
+const isCustomerTypesQuery = (
+  query: InitialCustomerAPIResponse,
+): query is ApolloQueryResult<_SearchCustomerTypesOperandsQuery> => "customerTypes" in query.data;
 
 const isCustomerQuery = (
   query: InitialGiftCardsAPIResponse,
@@ -298,6 +305,23 @@ export const createInitialPageState = (data: InitialPageAPIResponse[]) =>
     },
     {
       pageTypes: [],
+    },
+  );
+
+export const createInitialCustomerState = (data: InitialCustomerAPIResponse[]) =>
+  data.reduce<InitialCustomerState>(
+    (acc, query) => {
+      if (isCustomerTypesQuery(query)) {
+        return {
+          ...acc,
+          customerType: createOptionsFromAPI(query.data?.customerTypes?.edges ?? []),
+        };
+      }
+
+      return acc;
+    },
+    {
+      customerType: [],
     },
   );
 

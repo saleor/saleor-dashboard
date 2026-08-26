@@ -516,31 +516,12 @@ export type AttributeChoicesSortingInput = {
   field: AttributeChoicesSortField;
 };
 
-/**
- * Represents an input for create of attribute.
- *
- * NOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.
- */
+/** Represents an input for create of attribute. */
 export type AttributeCreateInput = {
-  /**
-   * Whether the attribute can be displayed in the admin product list.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /** The entity type which can be used as a reference. */
   entityType?: InputMaybe<AttributeEntityTypeEnum>;
   /** External ID of this attribute. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Whether the attribute can be filtered in dashboard.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.
-   */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Whether the attribute can be filtered in storefront.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: InputMaybe<AttributeInputTypeEnum>;
   /** Whether the attribute is for variants only. */
@@ -557,11 +538,6 @@ export type AttributeCreateInput = {
   referenceTypes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * The position of the attribute in the storefront navigation (0 by default).
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  storefrontSearchPosition?: InputMaybe<Scalars['Int']['input']>;
   /** The attribute type. */
   type: AttributeTypeEnum;
   /** The unit of attribute values. */
@@ -600,25 +576,10 @@ export enum AttributeErrorCode {
 
 export type AttributeFilterInput = {
   /**
-   * Whether the attribute can be displayed in the admin product list.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
    * Specifies the channel by which the data should be filtered.
    * @deprecated Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Whether the attribute can be filtered in dashboard.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.
-   */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Whether the attribute can be filtered in storefront.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   inCategory?: InputMaybe<Scalars['ID']['input']>;
   inCollection?: InputMaybe<Scalars['ID']['input']>;
@@ -686,32 +647,12 @@ export type AttributeInputTypeEnumFilterInput = {
 };
 
 export enum AttributeSortField {
-  /**
-   * Sort attributes based on whether they can be displayed or not in a product grid.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  AVAILABLE_IN_GRID = 'AVAILABLE_IN_GRID',
-  /**
-   * Sort attributes by the filterable in dashboard flag
-   * @deprecated This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.
-   */
-  FILTERABLE_IN_DASHBOARD = 'FILTERABLE_IN_DASHBOARD',
-  /**
-   * Sort attributes by the filterable in storefront flag
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  FILTERABLE_IN_STOREFRONT = 'FILTERABLE_IN_STOREFRONT',
   /** Sort attributes by the variant only flag */
   IS_VARIANT_ONLY = 'IS_VARIANT_ONLY',
   /** Sort attributes by name */
   NAME = 'NAME',
   /** Sort attributes by slug */
   SLUG = 'SLUG',
-  /**
-   * Sort attributes by their position in storefront
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  STOREFRONT_SEARCH_POSITION = 'STOREFRONT_SEARCH_POSITION',
   /** Sort attributes by the value required flag */
   VALUE_REQUIRED = 'VALUE_REQUIRED',
   /** Sort attributes by visibility in the storefront */
@@ -745,31 +686,12 @@ export type AttributeTypeEnumFilterInput = {
   oneOf?: InputMaybe<Array<AttributeTypeEnum>>;
 };
 
-/**
- * Represents an input for update of attribute.
- *
- * NOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.
- */
+/** Represents an input for update of attribute. */
 export type AttributeUpdateInput = {
   /** New values to be created for this attribute. */
   addValues?: InputMaybe<Array<AttributeValueUpdateInput>>;
-  /**
-   * Whether the attribute can be displayed in the admin product list.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  availableInGrid?: InputMaybe<Scalars['Boolean']['input']>;
   /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Whether the attribute can be filtered in dashboard.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.
-   */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
-  /**
-   * Whether the attribute can be filtered in storefront.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  filterableInStorefront?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of an attribute displayed in the interface. */
@@ -786,11 +708,6 @@ export type AttributeUpdateInput = {
   removeValues?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * The position of the attribute in the storefront navigation (0 by default).
-   * @deprecated This flag is not used by Saleor. Keep the logic in the storefront or use `Attribute` metadata instead.
-   */
-  storefrontSearchPosition?: InputMaybe<Scalars['Int']['input']>;
   /** The unit of attribute values. */
   unit?: InputMaybe<MeasurementUnitsEnum>;
   /** Whether the attribute requires values to be passed or not. */
@@ -961,11 +878,6 @@ export type AttributeWhereInput = {
   /** A list of conditions of which at least one must be met. */
   OR?: InputMaybe<Array<AttributeWhereInput>>;
   entityType?: InputMaybe<AttributeEntityTypeEnumFilterInput>;
-  /**
-   * Whether the attribute can be filtered in dashboard.
-   * @deprecated This flag is not used by Saleor. Keep the logic in the dashboard or use `Attribute` metadata instead.
-   */
-  filterableInDashboard?: InputMaybe<Scalars['Boolean']['input']>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   inCategory?: InputMaybe<Scalars['ID']['input']>;
   inCollection?: InputMaybe<Scalars['ID']['input']>;

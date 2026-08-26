@@ -32,6 +32,11 @@ export const topNavDestinationMessages = defineMessages({
     id: "s81JoX",
     description: "TopNav destination link tooltip to customers list",
   },
+  allCustomerTypes: {
+    defaultMessage: "All customer types",
+    id: "uLd5xR",
+    description: "TopNav destination link tooltip to customer types list",
+  },
   allDiscounts: {
     defaultMessage: "All discounts",
     id: "pGYCdT",

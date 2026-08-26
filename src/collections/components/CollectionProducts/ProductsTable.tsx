@@ -117,7 +117,7 @@ const ProductsTableBody = ({
             </GridTable.Cell>
             <GridTable.Cell borderWidth={0} padding={0}>
               {selected ? (
-                <Text data-test-id="SelectedText" size={2} lineHeight={2}>
+                <Text data-test-id="SelectedText" size={2}>
                   <FormattedMessage
                     id="qu/hXD"
                     defaultMessage="Selected {number} items"
@@ -127,21 +127,21 @@ const ProductsTableBody = ({
                   />
                 </Text>
               ) : (
-                <Text size={2} lineHeight={2} color="default2">
+                <Text size={2} color="default2">
                   <FormattedMessage id="6AMFki" defaultMessage="Name" description="product name" />
                 </Text>
               )}
             </GridTable.Cell>
             <GridTable.Cell borderWidth={0} padding={0}>
               {!selected && (
-                <Text size={2} lineHeight={2} color="default2">
+                <Text size={2} color="default2">
                   <FormattedMessage id="k+HcTv" defaultMessage="Type" description="product type" />
                 </Text>
               )}
             </GridTable.Cell>
             <GridTable.Cell borderWidth={0} padding={0}>
               {!selected && (
-                <Text size={2} lineHeight={2} color="default2">
+                <Text size={2} color="default2">
                   <FormattedMessage
                     id="Oe62bR"
                     defaultMessage="Availability"

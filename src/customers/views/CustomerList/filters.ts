@@ -1,39 +1,9 @@
 import { type FilterElement } from "@dashboard/components/Filter/types";
-import {
-  CustomerFilterKeys,
-  type CustomerListFilterOpts,
-} from "@dashboard/customers/components/CustomerListPage";
+import { CustomerFilterKeys } from "@dashboard/customers/components/CustomerListPage";
 import { type CustomerFilterInput } from "@dashboard/graphql";
 
-import {
-  createFilterTabUtils,
-  getGteLteVariables,
-  getMinMaxQueryParam,
-} from "../../../utils/filters";
+import { getGteLteVariables, getMinMaxQueryParam } from "../../../utils/filters";
 import { type CustomerListUrlFilters, CustomerListUrlFiltersEnum } from "../../urls";
-
-const CUSTOMER_FILTERS_KEY = "customerFilters";
-
-export function getFilterOpts(params: CustomerListUrlFilters): CustomerListFilterOpts {
-  return {
-    joined: {
-      active: [params.joinedFrom, params.joinedTo].some(field => field !== undefined) ?? false,
-      value: {
-        max: params.joinedTo ?? "",
-        min: params.joinedFrom ?? "",
-      },
-    },
-    numberOfOrders: {
-      active:
-        [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(field => field !== undefined) ??
-        false,
-      value: {
-        max: params.numberOfOrdersTo ?? "",
-        min: params.numberOfOrdersFrom ?? "",
-      },
-    },
-  };
-}
 
 export function getFilterVariables(params: CustomerListUrlFilters): CustomerFilterInput {
   return {
@@ -70,5 +40,3 @@ export function getFilterQueryParam(
       );
   }
 }
-
-export const storageUtils = createFilterTabUtils<string>(CUSTOMER_FILTERS_KEY);
