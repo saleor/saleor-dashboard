@@ -779,6 +779,7 @@ export const Datagrid = ({
           <a
             ref={setRowAnchorRef}
             className={classes.rowAnchor}
+            data-test-id="datagrid-row-anchor"
             tabIndex={-1}
             aria-hidden={true}
             onClick={rowAnchorHandler}
