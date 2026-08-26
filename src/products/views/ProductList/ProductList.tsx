@@ -359,10 +359,8 @@ const ProductList = ({ params }: ProductListProps) => {
         disabled={!data}
         limits={limitOpts.data?.shop.limits}
         products={products}
-        onUpdateListSettings={(...props) => {
-          clearRowSelection();
-          updateListSettings(...props);
-        }}
+        // Keep selection on page-size/column updates; Datagrid drops stale indices.
+        onUpdateListSettings={updateListSettings}
         onAdd={() => openModal("create-product")}
         onCreateProductType={() => openModal("create-product-type")}
         onAll={resetFilters}

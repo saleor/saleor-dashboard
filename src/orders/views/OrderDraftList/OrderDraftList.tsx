@@ -193,10 +193,8 @@ const OrderDraftList = ({ params }: OrderDraftListProps) => {
             ids: selectedRowIds,
           })
         }
-        onUpdateListSettings={(...props) => {
-          clearRowSelection();
-          updateListSettings(...props);
-        }}
+        // Keep selection on page-size/column updates; Datagrid drops stale indices.
+        onUpdateListSettings={updateListSettings}
         selectedOrderDraftIds={selectedRowIds}
         onSelectOrderDraftIds={handleSetSelectedOrderDraftIds}
       />
