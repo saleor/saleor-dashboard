@@ -6,6 +6,7 @@ import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { rippleNewCustomersView } from "@dashboard/customers/ripples/newCustomersView";
 import { customerListUrl } from "@dashboard/customers/urls";
+import { customerTypeListUrl } from "@dashboard/customerTypes/urls";
 import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { SidebarAppAlert } from "@dashboard/extensions/components/AppAlerts/SidebarAppAlert";
 import { useAppsAlert } from "@dashboard/extensions/components/AppAlerts/useAppsAlert";
@@ -51,6 +52,7 @@ import { SidebarIconSlot } from "../../SidebarIconSlot";
 import { createSettingsSubmenuItem } from "../settingsSubmenuItem";
 import { type SidebarMenuItem } from "../types";
 import { mapToExtensionsItems } from "../utils";
+import { useCustomerTypeMenuItems } from "./useCustomerTypeMenuItems";
 
 export function useMenuStructure() {
   const { handleAppsListItemClick, hasProblems } = useAppsAlert();
@@ -59,6 +61,7 @@ export function useMenuStructure() {
   const intl = useIntl();
   const { user } = useUser();
   const navigationPins = useResolvedNavigationPins();
+  const customerTypeMenuItems = useCustomerTypeMenuItems();
 
   const appExtensionsHeaderItem: SidebarMenuItem = {
     id: "extensions",
@@ -211,22 +214,16 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      children: !isEmpty(extensions.NAVIGATION_CUSTOMERS)
-        ? [
-            {
-              label: intl.formatMessage(sectionNames.customers),
-              permissions: [
-                PermissionEnum.MANAGE_USERS,
-                PermissionEnum.MANAGE_ORDERS,
-                PermissionEnum.MANAGE_STAFF,
-              ],
-              id: "customers",
-              url: customerListUrl(),
-              type: "item",
-            },
-            ...mapToExtensionsItems(extensions.NAVIGATION_CUSTOMERS, appExtensionsHeaderItem),
-          ]
-        : undefined,
+      children: [
+        ...customerTypeMenuItems,
+        ...mapToExtensionsItems(extensions.NAVIGATION_CUSTOMERS, appExtensionsHeaderItem),
+        createSettingsSubmenuItem({
+          id: "customer-types",
+          label: intl.formatMessage(sectionNames.customerTypes),
+          url: customerTypeListUrl(),
+          permissions: [PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES],
+        }),
+      ],
       icon: renderIcon(<CustomersIcon />),
       label: intl.formatMessage(sectionNames.customers),
       // Sidebar gating uses any-of matching, so users with only MANAGE_ORDERS
@@ -236,11 +233,12 @@ export function useMenuStructure() {
         PermissionEnum.MANAGE_USERS,
         PermissionEnum.MANAGE_ORDERS,
         PermissionEnum.MANAGE_STAFF,
+        PermissionEnum.MANAGE_CUSTOMER_TYPES_AND_ATTRIBUTES,
       ],
       endAdornment: <Ripple model={rippleNewCustomersView} />,
       id: "customers",
       url: customerListUrl(),
-      type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",
+      type: "itemGroup",
     },
     {
       children: [

@@ -1,5 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import {
   useBulkDeleteShippingZoneMutation,
   useShippingZonesQuery,
@@ -112,7 +113,7 @@ const ShippingZonesList = ({ params }: ShippingZonesListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => shippingZones[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, shippingZones);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {

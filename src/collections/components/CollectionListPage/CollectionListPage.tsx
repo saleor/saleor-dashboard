@@ -152,9 +152,12 @@ const CollectionListPage = ({
               defaultMessage: "Search collections...",
             })}
             actions={
-              <Box display="flex" gap={4}>
+              <Box display="flex" gap={4} alignItems="center">
                 {selectedCollectionIds.length > 0 && (
-                  <BulkDeleteButton onClick={onCollectionsDelete}>
+                  <BulkDeleteButton
+                    count={selectedCollectionIds.length}
+                    onClick={onCollectionsDelete}
+                  >
                     <FormattedMessage defaultMessage="Delete collections" id="FTYkgw" />
                   </BulkDeleteButton>
                 )}

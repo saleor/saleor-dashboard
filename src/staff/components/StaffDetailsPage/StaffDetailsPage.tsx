@@ -14,6 +14,7 @@ import Form, { FormDirtyStateSync } from "@dashboard/components/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import { ExtensionPreferencesSection } from "@dashboard/extensions/preferences/ExtensionPreferencesSection";
 import {
   type SearchPermissionGroupsQuery,
   type StaffErrorFragment,
@@ -299,6 +300,7 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     onImageUpload={onImageUpload}
                     onImageDelete={onImageDelete}
                   />
+                  {canEditPreferences && <ExtensionPreferencesSection />}
                 </DetailPageContent>
               </DetailPageLayout.Content>
 

@@ -94,9 +94,12 @@ const OrderDraftListPage = ({
               defaultMessage: "Search draft orders...",
             })}
             actions={
-              <Box display="flex" gap={4}>
+              <Box display="flex" gap={4} alignItems="center">
                 {selectedOrderDraftIds.length > 0 && (
-                  <BulkDeleteButton onClick={onDraftOrdersDelete}>
+                  <BulkDeleteButton
+                    count={selectedOrderDraftIds.length}
+                    onClick={onDraftOrdersDelete}
+                  >
                     {intl.formatMessage({
                       id: "+b/qJ9",
                       defaultMessage: "Delete draft orders",

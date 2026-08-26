@@ -16,7 +16,6 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { GiftCardBulkCreateSuccessDialog } from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
 import { giftCardCreateMessages as createMessages } from "../GiftCardCreateDialog/messages";
 import {
   getGiftCardCreateOnCompletedMessage,
@@ -39,8 +38,6 @@ export const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const [formErrors, setFormErrors] = useState<GiftCardBulkCreateFormErrors | null>(null);
-  const [issuedIds, setIssuedIds] = useState<string[] | null>(null);
-  const [openIssueSuccessDialog, setOpenIssueSuccessDialog] = useState(false);
   const isSubmittingRef = useRef(false);
 
   const currentDate = useCurrentDate();
@@ -78,8 +75,6 @@ export const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
       setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
 
       if (!errors?.length) {
-        setIssuedIds(data?.giftCardBulkCreate?.giftCards?.map(giftCard => giftCard.id) ?? []);
-        setOpenIssueSuccessDialog(true);
         onClose();
       }
     },
@@ -178,11 +173,6 @@ export const GiftCardBulkCreateDialog = ({ onClose, open }: DialogProps) => {
           </DashboardModal.Content>
         ) : null}
       </DashboardModal>
-      <GiftCardBulkCreateSuccessDialog
-        idsToExport={issuedIds}
-        onClose={() => setOpenIssueSuccessDialog(false)}
-        open={openIssueSuccessDialog}
-      />
     </>
   );
 };

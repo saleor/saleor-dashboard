@@ -1,5 +1,6 @@
 import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
 import { createCustomerWhereVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CreateCustomerTypeDialog } from "@dashboard/customerTypes/components/CreateCustomerTypeDialog/CreateCustomerTypeDialog";
 import { useCreateCustomerType } from "@dashboard/customerTypes/hooks/useCreateCustomerType";
@@ -270,7 +271,7 @@ const CustomerList = ({ params }: CustomerListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => customers[row]?.id).filter(id => id !== undefined);
+      const rowsIds = getRowIdsFromSelection(rows, customers);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {

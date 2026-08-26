@@ -85,4 +85,18 @@ describe("SearchActionsList", () => {
     // Assert
     expect(screen.queryByText("Sync to external catalog")).not.toBeInTheDocument();
   });
+
+  // useActionItems collects `.command-menu-item` nodes and moves `aria-selected`
+  // onto them, and the combobox's aria-activedescendant points at their id — so
+  // the option role has to sit on that same node, not on a child.
+  it("puts the option role, id and class on a single node", () => {
+    // Arrange & Act
+    renderList("avatax");
+
+    // Assert
+    const option = screen.getByRole("option", { name: "Configure tax classes" });
+
+    expect(option).toHaveClass("command-menu-item");
+    expect(option).toHaveAttribute("id", "extension-1");
+  });
 });

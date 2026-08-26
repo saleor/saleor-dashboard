@@ -152,7 +152,7 @@ export const CategoryListPage = ({
               </Button>
             </Box>
             {selectedCategoriesIds.length > 0 && (
-              <BulkDeleteButton onClick={onCategoriesDelete}>
+              <BulkDeleteButton count={selectedCategoriesIds.length} onClick={onCategoriesDelete}>
                 <FormattedMessage {...messages.bulkCategoryDelete} />
               </BulkDeleteButton>
             )}

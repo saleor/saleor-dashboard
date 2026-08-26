@@ -23,13 +23,8 @@ const GiftCardsListHeader = () => {
   const navigate = useNavigator();
   const subtitle = useContextualLink("gift_cards");
 
-  const {
-    openCreateDialog,
-    openBulkCreateDialog,
-    openExportDialog,
-    openSearchDeleteDialog,
-    openSearchSaveDialog,
-  } = useGiftCardListDialogs();
+  const { openCreateDialog, openBulkCreateDialog, openSearchDeleteDialog, openSearchSaveDialog } =
+    useGiftCardListDialogs();
   const {
     hasPresetsChanged,
     selectedPreset,
@@ -98,11 +93,6 @@ const GiftCardsListHeader = () => {
                   label: intl.formatMessage(messages.bulkIssue),
                   testId: "bulkIssueMenuItem",
                   onSelect: openBulkCreateDialog,
-                },
-                {
-                  label: intl.formatMessage(messages.exportCodes),
-                  testId: "exportCodesMenuItem",
-                  onSelect: openExportDialog,
                 },
                 ...extensionMenuItems,
               ]}

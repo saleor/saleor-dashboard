@@ -140,9 +140,9 @@ const VoucherListPage = ({
             defaultMessage: "Search vouchers...",
           })}
           actions={
-            <Box display="flex" gap={4}>
+            <Box display="flex" gap={4} alignItems="center">
               {selectedVouchersIds.length > 0 && (
-                <BulkDeleteButton onClick={onVoucherDelete}>
+                <BulkDeleteButton count={selectedVouchersIds.length} onClick={onVoucherDelete}>
                   <FormattedMessage defaultMessage="Delete vouchers" id="lfXze9" />
                 </BulkDeleteButton>
               )}

@@ -143,6 +143,7 @@ export const extensionList = gql`
           }
           app {
             id
+            identifier
             appUrl
             name
             brand {
