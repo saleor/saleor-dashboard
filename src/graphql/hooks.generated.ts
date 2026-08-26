@@ -11994,7 +11994,7 @@ export type ChannelCurrenciesQueryHookResult = ReturnType<typeof useChannelCurre
 export type ChannelCurrenciesLazyQueryHookResult = ReturnType<typeof useChannelCurrenciesLazyQuery>;
 export type ChannelCurrenciesQueryResult = Apollo.QueryResult<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>;
 export const ExportGiftCardsDocument = gql`
-    mutation ExportGiftCards($input: ExportGiftCardsInput!) {
+    mutation ExportGiftCards($input: ExportGiftCardsInput!) @lockSchema(schema: "main") {
   exportGiftCards(input: $input) {
     errors {
       ...ExportError

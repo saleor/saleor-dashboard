@@ -11,5 +11,12 @@ Only declared here so codegen and IDE tooling accept it; the API knows nothing a
 
 Do not put it on every field of a fragment: a fragment stripped down to an empty selection
 set prints as invalid GraphQL. Leave at least one unconditional field (`id`) behind.
+
+On an *operation* it means the whole root field is gone from the other schema — the field
+form cannot express that (deleting the only root field leaves an empty selection set, and a
+variable definition naming a removed input type is out of the directive's reach). Nothing is
+stripped at runtime, so every entry point must be gated behind `isMainSchema()`/`isStagingSchema()`
+by hand; the marker is what excuses the document from the validation sweep in
+`src/graphql/lockSchema.test.ts`.
 """
-directive @lockSchema(schema: String!) on FIELD
+directive @lockSchema(schema: String!) on FIELD | QUERY | MUTATION | SUBSCRIPTION

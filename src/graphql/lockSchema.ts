@@ -1,4 +1,4 @@
-import { type DirectiveNode, type DocumentNode, visit } from "graphql";
+import { type DirectiveNode, type DocumentNode, Kind, visit } from "graphql";
 
 import { getSchemaVersion, type SchemaVersion } from "./schemaVersion";
 
@@ -9,6 +9,29 @@ const lockedTo = (directive: DirectiveNode): string | undefined => {
 
   return schemaArg?.value.kind === "StringValue" ? schemaArg.value.value : undefined;
 };
+
+const locksOf = (node: { directives?: readonly DirectiveNode[] }): DirectiveNode[] =>
+  node.directives?.filter(directive => directive.name.value === LOCK_SCHEMA_DIRECTIVE) ?? [];
+
+const withoutLocks = <T extends { directives?: readonly DirectiveNode[] }>(
+  node: T,
+  locks: DirectiveNode[],
+): T => ({ ...node, directives: node.directives?.filter(d => !locks.includes(d)) });
+
+/**
+ * True when the whole operation is locked to the other schema version — i.e. its root field does
+ * not exist there at all. Nothing strips it at runtime (an operation cannot be removed from the
+ * document it *is*); callers gate the entry points by hand and the validation sweep skips it.
+ */
+export const isOperationLockedOut = (
+  document: DocumentNode,
+  activeSchema: SchemaVersion,
+): boolean =>
+  document.definitions.some(
+    definition =>
+      definition.kind === Kind.OPERATION_DEFINITION &&
+      locksOf(definition).some(lock => lockedTo(lock) !== activeSchema),
+  );
 
 /**
  * Resolves `@lockSchema` for one schema version: fields locked to the other version are dropped,
@@ -26,11 +49,9 @@ export const resolveLockedSchemaFields = (
   visit(document, {
     Field: {
       enter(node) {
-        const locks = node.directives?.filter(
-          directive => directive.name.value === LOCK_SCHEMA_DIRECTIVE,
-        );
+        const locks = locksOf(node);
 
-        if (!locks?.length) {
+        if (!locks.length) {
           return undefined;
         }
 
@@ -38,10 +59,16 @@ export const resolveLockedSchemaFields = (
           return null;
         }
 
-        return {
-          ...node,
-          directives: node.directives?.filter(directive => !locks.includes(directive)),
-        };
+        return withoutLocks(node, locks);
+      },
+    },
+    // An operation-level lock is a build-time marker only, but the directive still has to come
+    // off — the API knows nothing about `@lockSchema`.
+    OperationDefinition: {
+      enter(node) {
+        const locks = locksOf(node);
+
+        return locks.length ? withoutLocks(node, locks) : undefined;
       },
     },
   });

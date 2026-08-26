@@ -10,17 +10,7 @@ import {
 } from "graphql";
 import path from "path";
 
-import { resolveLockedSchemaFields } from "./lockSchema";
-
-/**
- * `exportGiftCards` was removed from `Mutation` in 3.24. `@lockSchema` cannot express this: the
- * mutation is the operation's only root field, so stripping it leaves an empty selection set, and
- * `$input: ExportGiftCardsInput!` is a variable definition the directive cannot reach.
- *
- * Every entry point is gated behind `isMainSchema()`, so the document is unreachable on 3.24 —
- * but it is still generated, hence this entry. Delete it once the document itself goes.
- */
-const KNOWN_324_GAPS = ["ExportGiftCardsDocument"];
+import { isOperationLockedOut, resolveLockedSchemaFields } from "./lockSchema";
 
 const ATTRIBUTE_DOCUMENT = "AttributeDetailsDocument";
 
@@ -28,10 +18,7 @@ const isDocumentNode = (value: unknown): value is DocumentNode =>
   typeof value === "object" && value !== null && (value as DocumentNode).kind === "Document";
 
 const ALL_DOCUMENTS: Array<[string, DocumentNode]> = Object.entries(generatedDocuments)
-  .filter(
-    ([name, value]) =>
-      name.endsWith("Document") && !KNOWN_324_GAPS.includes(name) && isDocumentNode(value),
-  )
+  .filter(([name, value]) => name.endsWith("Document") && isDocumentNode(value))
   .map(([name, value]) => [name, value as DocumentNode]);
 
 const loadSchema = (file: string): GraphQLSchema =>
@@ -55,11 +42,16 @@ describe("resolveLockedSchemaFields", () => {
     // Arrange
     const schema = loadSchema(file);
 
-    // Act
-    const broken = ALL_DOCUMENTS.map(([name, document]): [string, string[]] => [
-      name,
-      validateAgainst(schema, resolveLockedSchemaFields(document, activeSchema)),
-    ]).filter(([, errors]) => errors.length > 0);
+    // Act — operations whose root field is gone from this schema are excused; they carry an
+    // operation-level `@lockSchema` and their entry points are gated by hand.
+    const broken = ALL_DOCUMENTS.filter(
+      ([, document]) => !isOperationLockedOut(document, activeSchema),
+    )
+      .map(([name, document]): [string, string[]] => [
+        name,
+        validateAgainst(schema, resolveLockedSchemaFields(document, activeSchema)),
+      ])
+      .filter(([, errors]) => errors.length > 0);
 
     // Assert
     expect(Object.fromEntries(broken)).toEqual({});
@@ -89,6 +81,30 @@ describe("resolveLockedSchemaFields", () => {
     expect(resolved).not.toContain("filterableInStorefront");
     expect(resolved).not.toContain("storefrontSearchPosition");
     expect(resolved).not.toContain("@lockSchema");
+  });
+});
+
+describe("operation-level @lockSchema", () => {
+  const EXPORT_GIFT_CARDS = generatedDocuments.ExportGiftCardsDocument;
+
+  it("reports an operation locked to the other schema", () => {
+    // Arrange / Act / Assert
+    expect(isOperationLockedOut(EXPORT_GIFT_CARDS, "staging")).toBe(true);
+    expect(isOperationLockedOut(EXPORT_GIFT_CARDS, "main")).toBe(false);
+    expect(isOperationLockedOut(generatedDocuments[ATTRIBUTE_DOCUMENT], "staging")).toBe(false);
+  });
+
+  it("strips the directive so it never reaches the API", () => {
+    // Arrange / Act / Assert — the operation itself stays; only the entry points are gated
+    expect(print(resolveLockedSchemaFields(EXPORT_GIFT_CARDS, "main"))).not.toContain(
+      "@lockSchema",
+    );
+    expect(
+      validateAgainst(
+        loadSchema("schema-main.graphql"),
+        resolveLockedSchemaFields(EXPORT_GIFT_CARDS, "main"),
+      ),
+    ).toEqual([]);
   });
 });
 
