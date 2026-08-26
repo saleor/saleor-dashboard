@@ -36,6 +36,7 @@ const mockedExtension: ExtensionWithParams = {
   app: {
     __typename: "App",
     id: "app-id",
+    identifier: null,
     appUrl: "https://example.com",
     name: "App name",
     brand: {

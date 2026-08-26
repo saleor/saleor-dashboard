@@ -11,6 +11,7 @@ const buildExtension = (overrides: Partial<ExtensionWithParams> = {}): Extension
   app: {
     __typename: "App",
     id: "app-1",
+    identifier: null,
     appUrl: "https://example.com",
     name: "Example app",
     brand: null,
@@ -34,6 +35,7 @@ const appPageExtension = buildExtension({
   app: {
     __typename: "App",
     id: "product-launch-app",
+    identifier: null,
     appUrl: "https://product-launch.example.com",
     name: "Product launch",
     brand: null,
@@ -47,6 +49,7 @@ const newTabExtension = buildExtension({
   app: {
     __typename: "App",
     id: "product-documentation-app",
+    identifier: null,
     appUrl: "https://product-documentation.example.com",
     name: "Product documentation",
     brand: null,
@@ -60,6 +63,7 @@ const popupExtension = buildExtension({
   app: {
     __typename: "App",
     id: "product-support-app",
+    identifier: null,
     appUrl: "https://product-support.example.com",
     name: "Product support",
     brand: null,
@@ -73,6 +77,7 @@ const cachedWidgetExtension = buildExtension({
   app: {
     __typename: "App",
     id: "product-timestamps-app",
+    identifier: null,
     appUrl: "https://product-timestamps.example.com",
     name: "Product Timestamps",
     brand: null,
@@ -128,6 +133,7 @@ export const WidgetCards: Story = {
         app: {
           __typename: "App",
           id: "product-insights-app",
+          identifier: null,
           appUrl: "https://product-insights.example.com",
           name: "Product Insights",
           brand: null,
