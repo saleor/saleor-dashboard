@@ -2,8 +2,10 @@ import { useApolloClient } from "@apollo/client";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 
 import { type FilterContainer } from "../../FilterElement";
+import { type LeftOperand } from "../../LeftOperandsProvider";
 import { customerFilterDefinitionResolver } from "../../queryVariables";
 import { type FilterAPIProvider } from "../FilterAPIProvider";
+import { emptyChoicesPage, fetchHandlerPage } from "../filterChoicesPage";
 import { AttributesHandler } from "../Handler";
 import { getFilterElement } from "../utils";
 
@@ -14,24 +16,25 @@ export const useCustomerAPIProvider = (): FilterAPIProvider => {
     position: string,
     value: FilterContainer,
     inputValue: string,
+    after?: string | null,
   ) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
     if (!filterElement) {
-      return Promise.resolve([]);
+      return emptyChoicesPage();
     }
 
     const definition = customerFilterDefinitionResolver.resolve(filterElement);
     const handler = definition.createOptionFetcher(client, inputValue, filterElement);
 
-    return handler.fetch();
+    return fetchHandlerPage(handler, after);
   };
 
-  const fetchAttributeOptions = async (inputValue: string) => {
+  const fetchAttributeOptions = async (inputValue: string, after?: string | null) => {
     const handler = new AttributesHandler(client, inputValue, AttributeTypeEnum.CUSTOMER_TYPE);
 
-    return handler.fetch();
+    return fetchHandlerPage<LeftOperand>(handler, after);
   };
 
   return {

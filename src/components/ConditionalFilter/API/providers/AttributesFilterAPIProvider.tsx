@@ -4,6 +4,7 @@ import { type IntlShape, useIntl } from "react-intl";
 
 import { type FilterContainer, type FilterElement } from "../../FilterElement";
 import { type FilterAPIProvider } from "../FilterAPIProvider";
+import { emptyAttributeChoicesPage, fetchHandlerPage } from "../filterChoicesPage";
 import { BooleanValuesHandler, ChannelHandler, EnumValuesHandler, type Handler } from "../Handler";
 
 const getFilterElement = (value: FilterContainer, index: number): FilterElement => {
@@ -67,17 +68,18 @@ export const useAttributesFilterAPIProvider = (): FilterAPIProvider => {
     position: string,
     value: FilterContainer,
     inputValue: string,
+    after?: string | null,
   ) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
     const handler = createAPIHandler(filterElement, client, inputValue, intl);
 
-    return handler.fetch();
+    return fetchHandlerPage(handler, after);
   };
 
   const fetchAttributeOptions = async () => {
-    return [];
+    return emptyAttributeChoicesPage();
   };
 
   return {

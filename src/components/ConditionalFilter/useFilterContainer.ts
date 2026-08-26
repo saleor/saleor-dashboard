@@ -1,28 +1,25 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { errorTracker } from "@dashboard/services/errorTracking";
-import { type MutableRefObject, useRef } from "react";
+import { useRef } from "react";
 
 import { type FilterAPIProvider } from "./API/FilterAPIProvider";
+import {
+  appendUniqueOptions,
+  createChoiceFetchState,
+  hasSameChoiceQuery,
+  isCurrentChoiceGeneration,
+  startAppendChoiceFetch,
+  startReplaceChoiceFetch,
+} from "./API/filterChoicesPage";
 import { useConditionalFilterContext } from "./context";
 import { FilterElement } from "./FilterElement";
 import { Condition } from "./FilterElement/Condition";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import { type ConditionValue } from "./FilterElement/ConditionValue";
+import { type ConditionValue, isItemOption } from "./FilterElement/ConditionValue";
 import { Constraint } from "./FilterElement/Constraint";
 import { hasEmptyRows } from "./FilterElement/FilterElement";
 import { type LeftOperand } from "./LeftOperandsProvider";
-
-const nextFetchGeneration = (
-  generations: MutableRefObject<Record<string, number>>,
-  key: string,
-): number => {
-  const next = (generations.current[key] ?? 0) + 1;
-
-  generations.current[key] = next;
-
-  return next;
-};
 
 const captureFilterFetchError = (error: unknown): void => {
   errorTracker.captureException(error instanceof Error ? error : new Error(String(error)));
@@ -41,7 +38,7 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
       updateBySlug,
     },
   } = useConditionalFilterContext();
-  const optionFetchGeneration = useRef<Record<string, number>>({});
+  const choiceSession = useRef(createChoiceFetchState());
   const addEmpty = () => {
     createAndRemoveEmpty(FilterElement.createEmpty());
   };
@@ -90,15 +87,26 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
       if (newConstraint) el.setConstraint(newConstraint);
     });
   };
+  const applySelectedAttribute = (el: FilterElement, attribute: LeftOperand) => {
+    el.updateSelectedAttribute(attribute);
+
+    const options = ConditionOptions.fromName(attribute.type);
+    const selected = ConditionSelected.fromConditionItem(options.first());
+
+    selected.enableLoading();
+    el.condition = new Condition(options, selected, false);
+  };
   const updateAttribute = (position: string, attribute: LeftOperand) => {
+    const current = getAt(position);
+
+    if (FilterElement.isFilterElement(current)) {
+      applySelectedAttribute(current, attribute);
+    }
+
     updateAt(position, el => {
-      el.updateSelectedAttribute(attribute);
-
-      const options = ConditionOptions.fromName(attribute.type);
-      const selected = ConditionSelected.fromConditionItem(options.first());
-
-      selected.enableLoading();
-      el.condition = new Condition(options, selected, false);
+      if (el.selectedAttribute?.value !== attribute.slug) {
+        applySelectedAttribute(el, attribute);
+      }
     });
     fetchRightOptionsList(position, "");
   };
@@ -111,72 +119,183 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
   const updateCondition = (position: string, conditionValue: any) => {
     updateAt(position, el => el.updateCondition(conditionValue));
   };
-  const _fetchRightOptions = async (position: string, inputValue: string) => {
+  const invalidateChoiceSession = (fetchKey: string, inputValue: string) => {
+    startReplaceChoiceFetch(choiceSession.current, fetchKey, inputValue);
+  };
+  const _fetchRightOptions = async (
+    position: string,
+    inputValue: string,
+    after?: string | null,
+  ) => {
     const fetchKey = `right:${position}`;
-    const generation = nextFetchGeneration(optionFetchGeneration, fetchKey);
+    const session = choiceSession.current;
+    const isAppend = Boolean(after);
+    const generation = isAppend
+      ? startAppendChoiceFetch(session, fetchKey)
+      : startReplaceChoiceFetch(session, fetchKey, inputValue);
+
+    if (generation === null) {
+      return;
+    }
 
     updateRightLoadingState(position, true);
 
     try {
-      const options = await apiProvider.fetchRightOptions(position, value, inputValue);
+      const result = await apiProvider.fetchRightOptions(position, value, inputValue, after);
 
-      if (optionFetchGeneration.current[fetchKey] !== generation) {
+      if (!isCurrentChoiceGeneration(session, fetchKey, generation)) {
         return;
       }
 
+      session.pageInfo[fetchKey] = result.pageInfo;
       updateAt(position, el => {
+        const currentOptions = el.condition.selected.options.filter(isItemOption);
+        const options = isAppend
+          ? appendUniqueOptions(currentOptions, result.options)
+          : result.options;
+
         el.updateRightOptions(options);
         el.updateRightLoadingState(false);
       });
     } catch (error) {
-      if (optionFetchGeneration.current[fetchKey] !== generation) {
+      if (!isCurrentChoiceGeneration(session, fetchKey, generation)) {
         return;
       }
 
       captureFilterFetchError(error);
       updateRightLoadingState(position, false);
+    } finally {
+      if (isAppend && isCurrentChoiceGeneration(session, fetchKey, generation)) {
+        session.fetchMoreInFlight[fetchKey] = false;
+      }
     }
   };
   const fetchRightOptionsList = (position: string, inputValue: string) => {
     void _fetchRightOptions(position, inputValue);
   };
-  const debouncedFetchRightOptions = useDebounce(_fetchRightOptions, 500);
+  const fetchMoreRightOptions = (position: string) => {
+    const fetchKey = `right:${position}`;
+    const page = choiceSession.current.pageInfo[fetchKey];
+
+    if (!page?.endCursor) {
+      return;
+    }
+
+    void _fetchRightOptions(position, choiceSession.current.query[fetchKey] ?? "", page.endCursor);
+  };
+  const debouncedFetchRightOptions = useDebounce((position: string, inputValue: string) => {
+    if (!hasSameChoiceQuery(choiceSession.current, `right:${position}`, inputValue)) {
+      return;
+    }
+
+    void _fetchRightOptions(position, inputValue);
+  }, 500);
   const updateRightOptions = (position: string, inputValue: string) => {
+    const fetchKey = `right:${position}`;
+
+    if (hasSameChoiceQuery(choiceSession.current, fetchKey, inputValue)) {
+      return;
+    }
+
+    if (inputValue === "") {
+      fetchRightOptionsList(position, "");
+
+      return;
+    }
+
+    invalidateChoiceSession(fetchKey, inputValue);
     updateRightLoadingState(position, true);
     debouncedFetchRightOptions(position, inputValue);
   };
 
-  const _fetchAttributesList = async (position: string, inputValue: string) => {
+  const _fetchAttributesList = async (
+    position: string,
+    inputValue: string,
+    after?: string | null,
+  ) => {
     const fetchKey = `attribute:${position}`;
-    const generation = nextFetchGeneration(optionFetchGeneration, fetchKey);
+    const session = choiceSession.current;
+    const isAppend = Boolean(after);
+    const generation = isAppend
+      ? startAppendChoiceFetch(session, fetchKey)
+      : startReplaceChoiceFetch(session, fetchKey, inputValue);
+
+    if (generation === null) {
+      return;
+    }
 
     updateAt(position, el => el.updateAttributeLoadingState(true));
 
     try {
-      const options = await apiProvider.fetchAttributeOptions(inputValue);
+      const result = await apiProvider.fetchAttributeOptions(inputValue, after);
 
-      if (optionFetchGeneration.current[fetchKey] !== generation) {
+      if (!isCurrentChoiceGeneration(session, fetchKey, generation)) {
         return;
       }
 
+      session.pageInfo[fetchKey] = result.pageInfo;
       updateAt(position, el => {
-        el.updateAvailableAttributesList(options as LeftOperand[]);
+        const options = isAppend
+          ? appendUniqueOptions(el.availableAttributesList, result.options)
+          : result.options;
+
+        el.updateAvailableAttributesList(options);
         el.updateAttributeLoadingState(false);
       });
     } catch (error) {
-      if (optionFetchGeneration.current[fetchKey] !== generation) {
+      if (!isCurrentChoiceGeneration(session, fetchKey, generation)) {
         return;
       }
 
       captureFilterFetchError(error);
       updateAt(position, el => el.updateAttributeLoadingState(false));
+    } finally {
+      if (isAppend && isCurrentChoiceGeneration(session, fetchKey, generation)) {
+        session.fetchMoreInFlight[fetchKey] = false;
+      }
     }
   };
   const fetchAvailableAttributesList = (position: string, inputValue: string) => {
     void _fetchAttributesList(position, inputValue);
   };
-  const debouncedFetchAvailableAttributesList = useDebounce(_fetchAttributesList, 500);
+  const fetchMoreAttributeOptions = (position: string) => {
+    const fetchKey = `attribute:${position}`;
+    const page = choiceSession.current.pageInfo[fetchKey];
+
+    if (!page?.endCursor) {
+      return;
+    }
+
+    void _fetchAttributesList(
+      position,
+      choiceSession.current.query[fetchKey] ?? "",
+      page.endCursor,
+    );
+  };
+  const debouncedFetchAvailableAttributesList = useDebounce(
+    (position: string, inputValue: string) => {
+      if (!hasSameChoiceQuery(choiceSession.current, `attribute:${position}`, inputValue)) {
+        return;
+      }
+
+      void _fetchAttributesList(position, inputValue);
+    },
+    500,
+  );
   const updateAvailableAttributesList = (position: string, inputValue: string) => {
+    const fetchKey = `attribute:${position}`;
+
+    if (hasSameChoiceQuery(choiceSession.current, fetchKey, inputValue)) {
+      return;
+    }
+
+    if (inputValue === "") {
+      fetchAvailableAttributesList(position, "");
+
+      return;
+    }
+
+    invalidateChoiceSession(fetchKey, inputValue);
     updateAt(position, el => el.updateAttributeLoadingState(true));
     debouncedFetchAvailableAttributesList(position, inputValue);
   };
@@ -192,7 +311,9 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
     updateCondition,
     updateRightOptions,
     fetchRightOptionsList,
+    fetchMoreRightOptions,
     fetchAvailableAttributesList,
+    fetchMoreAttributeOptions,
     updateAvailableAttributesList,
   };
 };

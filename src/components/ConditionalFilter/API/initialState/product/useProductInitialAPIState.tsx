@@ -31,6 +31,7 @@ import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { type FetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
+import { hydrateChoiceCount } from "../../filterChoicesPage";
 import { createAttributeProductVariantOptionsFromAPI, createOptionsFromAPI } from "../../Handler";
 import {
   createInitialProductStateFromData,
@@ -134,6 +135,7 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
                 attributesSlugs: allAttributeSlugs,
                 choicesIds: regularChoiceIds,
                 first: allAttributeSlugs.length,
+                choicesFirst: hydrateChoiceCount(regularChoiceIds),
               },
             }),
           );

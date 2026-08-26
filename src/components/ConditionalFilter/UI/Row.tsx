@@ -128,6 +128,9 @@ export const RowComponent = ({
           onFocus={() => {
             emitter.focusAttribute(index);
           }}
+          onScrollEnd={() => {
+            emitter.scrollEndAttribute(index);
+          }}
           onBlur={() => {
             emitter.blurAttribute(index);
           }}

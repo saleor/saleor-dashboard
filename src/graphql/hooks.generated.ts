@@ -6656,9 +6656,10 @@ export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddress
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
 export const _GetDynamicLeftOperandsDocument = gql`
-    query _GetDynamicLeftOperands($first: Int!, $query: String!, $type: AttributeTypeEnum!) {
+    query _GetDynamicLeftOperands($first: Int!, $query: String!, $type: AttributeTypeEnum!, $after: String) {
   attributes(
     first: $first
+    after: $after
     search: $query
     where: {type: {eq: $type}, inputType: {oneOf: [DROPDOWN, MULTISELECT, BOOLEAN, NUMERIC, DATE, DATE_TIME, SWATCH, REFERENCE, SINGLE_REFERENCE]}}
   ) {
@@ -6672,6 +6673,10 @@ export const _GetDynamicLeftOperandsDocument = gql`
         __typename
       }
       __typename
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
     __typename
   }
@@ -6693,6 +6698,7 @@ export const _GetDynamicLeftOperandsDocument = gql`
  *      first: // value for 'first'
  *      query: // value for 'query'
  *      type: // value for 'type'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -6992,7 +6998,7 @@ export type _SearchCustomerTypesOperandsQueryHookResult = ReturnType<typeof use_
 export type _SearchCustomerTypesOperandsLazyQueryHookResult = ReturnType<typeof use_SearchCustomerTypesOperandsLazyQuery>;
 export type _SearchCustomerTypesOperandsQueryResult = Apollo.QueryResult<Types._SearchCustomerTypesOperandsQuery, Types._SearchCustomerTypesOperandsQueryVariables>;
 export const _SearchAttributeOperandsDocument = gql`
-    query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!) {
+    query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!, $choicesFirst: Int!) {
   attributes(first: $first, filter: {slugs: $attributesSlugs}) {
     edges {
       node {
@@ -7001,7 +7007,7 @@ export const _SearchAttributeOperandsDocument = gql`
         slug
         inputType
         entityType
-        choices(first: 5, filter: {ids: $choicesIds}) {
+        choices(first: $choicesFirst, filter: {ids: $choicesIds}) {
           edges {
             node {
               slug: id
@@ -7032,6 +7038,7 @@ export const _SearchAttributeOperandsDocument = gql`
  *      attributesSlugs: // value for 'attributesSlugs'
  *      choicesIds: // value for 'choicesIds'
  *      first: // value for 'first'
+ *      choicesFirst: // value for 'choicesFirst'
  *   },
  * });
  */
@@ -7047,9 +7054,9 @@ export type _SearchAttributeOperandsQueryHookResult = ReturnType<typeof use_Sear
 export type _SearchAttributeOperandsLazyQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsLazyQuery>;
 export type _SearchAttributeOperandsQueryResult = Apollo.QueryResult<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>;
 export const _GetAttributeChoicesDocument = gql`
-    query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!) {
+    query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!, $after: String) {
   attribute(slug: $slug) {
-    choices(first: $first, filter: {search: $query}) {
+    choices(first: $first, after: $after, filter: {search: $query}) {
       edges {
         node {
           slug: id
@@ -7057,6 +7064,10 @@ export const _GetAttributeChoicesDocument = gql`
           name
           originalSlug: slug
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -7078,6 +7089,7 @@ export const _GetAttributeChoicesDocument = gql`
  *      slug: // value for 'slug'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7093,14 +7105,18 @@ export type _GetAttributeChoicesQueryHookResult = ReturnType<typeof use_GetAttri
 export type _GetAttributeChoicesLazyQueryHookResult = ReturnType<typeof use_GetAttributeChoicesLazyQuery>;
 export type _GetAttributeChoicesQueryResult = Apollo.QueryResult<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>;
 export const _GetCollectionsChoicesDocument = gql`
-    query _GetCollectionsChoices($first: Int!, $query: String!) {
-  collections(first: $first, filter: {search: $query}) {
+    query _GetCollectionsChoices($first: Int!, $query: String!, $after: String) {
+  collections(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7120,6 +7136,7 @@ export const _GetCollectionsChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7135,14 +7152,18 @@ export type _GetCollectionsChoicesQueryHookResult = ReturnType<typeof use_GetCol
 export type _GetCollectionsChoicesLazyQueryHookResult = ReturnType<typeof use_GetCollectionsChoicesLazyQuery>;
 export type _GetCollectionsChoicesQueryResult = Apollo.QueryResult<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>;
 export const _GetCategoriesChoicesDocument = gql`
-    query _GetCategoriesChoices($first: Int!, $query: String!) {
-  categories(first: $first, filter: {search: $query}) {
+    query _GetCategoriesChoices($first: Int!, $query: String!, $after: String) {
+  categories(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7162,6 +7183,7 @@ export const _GetCategoriesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7177,14 +7199,18 @@ export type _GetCategoriesChoicesQueryHookResult = ReturnType<typeof use_GetCate
 export type _GetCategoriesChoicesLazyQueryHookResult = ReturnType<typeof use_GetCategoriesChoicesLazyQuery>;
 export type _GetCategoriesChoicesQueryResult = Apollo.QueryResult<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>;
 export const _GetProductTypesChoicesDocument = gql`
-    query _GetProductTypesChoices($first: Int!, $query: String!) {
-  productTypes(first: $first, filter: {search: $query}) {
+    query _GetProductTypesChoices($first: Int!, $query: String!, $after: String) {
+  productTypes(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7204,6 +7230,7 @@ export const _GetProductTypesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7219,14 +7246,18 @@ export type _GetProductTypesChoicesQueryHookResult = ReturnType<typeof use_GetPr
 export type _GetProductTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductTypesChoicesLazyQuery>;
 export type _GetProductTypesChoicesQueryResult = Apollo.QueryResult<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>;
 export const _GetPageTypesChoicesDocument = gql`
-    query _GetPageTypesChoices($first: Int!, $query: String!) {
-  pageTypes(first: $first, filter: {search: $query}) {
+    query _GetPageTypesChoices($first: Int!, $query: String!, $after: String) {
+  pageTypes(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7246,6 +7277,7 @@ export const _GetPageTypesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7261,14 +7293,18 @@ export type _GetPageTypesChoicesQueryHookResult = ReturnType<typeof use_GetPageT
 export type _GetPageTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPageTypesChoicesLazyQuery>;
 export type _GetPageTypesChoicesQueryResult = Apollo.QueryResult<Types._GetPageTypesChoicesQuery, Types._GetPageTypesChoicesQueryVariables>;
 export const _GetCustomerTypesChoicesDocument = gql`
-    query _GetCustomerTypesChoices($first: Int!, $query: String!) {
-  customerTypes(first: $first, search: $query) {
+    query _GetCustomerTypesChoices($first: Int!, $query: String!, $after: String) {
+  customerTypes(first: $first, after: $after, search: $query) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7288,6 +7324,7 @@ export const _GetCustomerTypesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7303,8 +7340,8 @@ export type _GetCustomerTypesChoicesQueryHookResult = ReturnType<typeof use_GetC
 export type _GetCustomerTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetCustomerTypesChoicesLazyQuery>;
 export type _GetCustomerTypesChoicesQueryResult = Apollo.QueryResult<Types._GetCustomerTypesChoicesQuery, Types._GetCustomerTypesChoicesQueryVariables>;
 export const _GetPagesChoicesDocument = gql`
-    query _GetPagesChoices($first: Int!, $query: String!) {
-  pages(first: $first, filter: {search: $query}) {
+    query _GetPagesChoices($first: Int!, $query: String!, $after: String) {
+  pages(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
@@ -7312,6 +7349,10 @@ export const _GetPagesChoicesDocument = gql`
         slug
         originalSlug: slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7331,6 +7372,7 @@ export const _GetPagesChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7346,14 +7388,18 @@ export type _GetPagesChoicesQueryHookResult = ReturnType<typeof use_GetPagesChoi
 export type _GetPagesChoicesLazyQueryHookResult = ReturnType<typeof use_GetPagesChoicesLazyQuery>;
 export type _GetPagesChoicesQueryResult = Apollo.QueryResult<Types._GetPagesChoicesQuery, Types._GetPagesChoicesQueryVariables>;
 export const _GetProductChoicesDocument = gql`
-    query _GetProductChoices($first: Int!, $query: String!) {
-  products(first: $first, filter: {search: $query}) {
+    query _GetProductChoices($first: Int!, $query: String!, $after: String) {
+  products(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7373,6 +7419,7 @@ export const _GetProductChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7388,8 +7435,8 @@ export type _GetProductChoicesQueryHookResult = ReturnType<typeof use_GetProduct
 export type _GetProductChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductChoicesLazyQuery>;
 export type _GetProductChoicesQueryResult = Apollo.QueryResult<Types._GetProductChoicesQuery, Types._GetProductChoicesQueryVariables>;
 export const _GetProductVariantChoicesDocument = gql`
-    query _GetProductVariantChoices($first: Int!, $query: String!) {
-  productVariants(first: $first, filter: {search: $query}) {
+    query _GetProductVariantChoices($first: Int!, $query: String!, $after: String) {
+  productVariants(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
@@ -7400,6 +7447,10 @@ export const _GetProductVariantChoicesDocument = gql`
           name
         }
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7419,6 +7470,7 @@ export const _GetProductVariantChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7434,13 +7486,17 @@ export type _GetProductVariantChoicesQueryHookResult = ReturnType<typeof use_Get
 export type _GetProductVariantChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesLazyQuery>;
 export type _GetProductVariantChoicesQueryResult = Apollo.QueryResult<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>;
 export const _GetGiftCardTagsChoicesDocument = gql`
-    query _GetGiftCardTagsChoices($first: Int!, $query: String!) {
-  giftCardTags(first: $first, filter: {search: $query}) {
+    query _GetGiftCardTagsChoices($first: Int!, $query: String!, $after: String) {
+  giftCardTags(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7460,6 +7516,7 @@ export const _GetGiftCardTagsChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7475,8 +7532,8 @@ export type _GetGiftCardTagsChoicesQueryHookResult = ReturnType<typeof use_GetGi
 export type _GetGiftCardTagsChoicesLazyQueryHookResult = ReturnType<typeof use_GetGiftCardTagsChoicesLazyQuery>;
 export type _GetGiftCardTagsChoicesQueryResult = Apollo.QueryResult<Types._GetGiftCardTagsChoicesQuery, Types._GetGiftCardTagsChoicesQueryVariables>;
 export const _GetCustomersChoicesDocument = gql`
-    query _GetCustomersChoices($first: Int!, $query: String!) {
-  customers(first: $first, filter: {search: $query}) {
+    query _GetCustomersChoices($first: Int!, $query: String!, $after: String) {
+  customers(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
@@ -7484,6 +7541,10 @@ export const _GetCustomersChoicesDocument = gql`
         firstName
         lastName
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7503,6 +7564,7 @@ export const _GetCustomersChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -7693,14 +7755,18 @@ export type _SearchProductVariantOperandsQueryHookResult = ReturnType<typeof use
 export type _SearchProductVariantOperandsLazyQueryHookResult = ReturnType<typeof use_SearchProductVariantOperandsLazyQuery>;
 export type _SearchProductVariantOperandsQueryResult = Apollo.QueryResult<Types._SearchProductVariantOperandsQuery, Types._SearchProductVariantOperandsQueryVariables>;
 export const _GetWarehouseChoicesDocument = gql`
-    query _GetWarehouseChoices($first: Int!, $query: String!) {
-  warehouses(first: $first, filter: {search: $query}) {
+    query _GetWarehouseChoices($first: Int!, $query: String!, $after: String) {
+  warehouses(first: $first, after: $after, filter: {search: $query}) {
     edges {
       node {
         id
         name
         slug
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }
@@ -7720,6 +7786,7 @@ export const _GetWarehouseChoicesDocument = gql`
  *   variables: {
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      after: // value for 'after'
  *   },
  * });
  */

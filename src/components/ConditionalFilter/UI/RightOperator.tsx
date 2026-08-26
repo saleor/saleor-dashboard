@@ -132,6 +132,9 @@ export const RightOperator = ({
         onInputValueChange={value => {
           emitter.inputChangeRightOperator(index, value);
         }}
+        onScrollEnd={() => {
+          emitter.scrollEndRightOperator(index);
+        }}
         onFocus={() => {
           emitter.focusRightOperator(index);
         }}
@@ -167,6 +170,9 @@ export const RightOperator = ({
           }
 
           emitter.inputChangeRightOperator(index, inputValue);
+        }}
+        onScrollEnd={() => {
+          emitter.scrollEndRightOperator(index);
         }}
         onFocus={() => {
           emitter.focusRightOperator(index);

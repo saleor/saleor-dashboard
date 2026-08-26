@@ -54,10 +54,17 @@ import { type IntlShape } from "react-intl";
 
 import { type ItemOption } from "../FilterElement/ConditionValue";
 import { type LeftOperand } from "../LeftOperandsProvider";
+import {
+  FILTER_CHOICES_PAGE_SIZE,
+  type FilterChoicesPageInfo,
+  NO_MORE_CHOICES,
+  pageInfoFromConnection,
+} from "./filterChoicesPage";
 import { getLocalizedLabel } from "./intl";
 
 export interface Handler {
-  fetch: () => Promise<ItemOption[]>;
+  fetch: (after?: string | null) => Promise<ItemOption[]>;
+  pageInfo?: FilterChoicesPageInfo;
 }
 
 export const createOptionsFromAPI = (
@@ -122,6 +129,8 @@ export const createAttributeProductVariantOptionsFromAPI = (
   );
 
 export class AttributeChoicesHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public attributeSlug: string,
@@ -129,12 +138,14 @@ export class AttributeChoicesHandler implements Handler {
     public type: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     /**
      * Boolean attributes don't expose `choices` to fetch.
      * Use static true/false options instead.
      */
     if (this.type === AttributeInputTypeEnum.BOOLEAN) {
+      this.pageInfo = NO_MORE_CHOICES;
+
       return createBooleanOptions();
     }
 
@@ -146,32 +157,40 @@ export class AttributeChoicesHandler implements Handler {
       query: _GetAttributeChoicesDocument,
       variables: {
         slug: attributeSlug,
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.attribute?.choices);
 
     return createOptionsFromAPI(data.attribute?.choices?.edges ?? []);
   };
 }
 
 export class CollectionHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetCollectionsChoicesQuery,
       _GetCollectionsChoicesQueryVariables
     >({
       query: _GetCollectionsChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.collections);
 
     return createOptionsFromAPI(data.collections?.edges ?? []);
   };
@@ -205,131 +224,161 @@ export class CurrencyHandler implements Handler {
 }
 
 export class CategoryHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetCategoriesChoicesQuery,
       _GetCategoriesChoicesQueryVariables
     >({
       query: _GetCategoriesChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.categories);
 
     return createOptionsFromAPI(data.categories?.edges ?? []);
   };
 }
 
 export class ProductTypeHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetProductTypesChoicesQuery,
       _GetProductTypesChoicesQueryVariables
     >({
       query: _GetProductTypesChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.productTypes);
 
     return createOptionsFromAPI(data.productTypes?.edges ?? []);
   };
 }
 
 export class ProductsHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetProductChoicesQuery,
       _GetProductChoicesQueryVariables
     >({
       query: _GetProductChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.products);
 
     return createOptionsFromAPI(data.products?.edges ?? []);
   };
 }
 
 export class ProductVariantHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetProductVariantChoicesQuery,
       _GetProductVariantChoicesQueryVariables
     >({
       query: _GetProductVariantChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.productVariants);
 
     return createAttributeProductVariantOptionsFromAPI(data.productVariants?.edges ?? []);
   };
 }
 
 export class PageHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<_GetPagesChoicesQuery, _GetPagesChoicesQueryVariables>(
       {
         query: _GetPagesChoicesDocument,
         variables: {
-          first: 5,
+          first: FILTER_CHOICES_PAGE_SIZE,
+          after,
           query: this.query,
         },
       },
     );
+
+    this.pageInfo = pageInfoFromConnection(data.pages);
 
     return createOptionsFromAPI(data.pages?.edges ?? []);
   };
 }
 
 export class GiftCardTagsHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetGiftCardTagsChoicesQuery,
       _GetGiftCardTagsChoicesQueryVariables
     >({
       query: _GetGiftCardTagsChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.giftCardTags);
 
     return (
       data?.giftCardTags?.edges.map(({ node }) => ({
@@ -342,22 +391,27 @@ export class GiftCardTagsHandler implements Handler {
 }
 
 export class WarehouseHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetWarehouseChoicesQuery,
       _GetWarehouseChoicesQueryVariables
     >({
       query: _GetWarehouseChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.warehouses);
 
     return createOptionsFromAPI(data.warehouses?.edges ?? []);
   };
@@ -389,22 +443,27 @@ export class ChannelHandler implements Handler {
 }
 
 export class CustomerHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetCustomersChoicesQuery,
       _GetCustomersChoicesQueryVariables
     >({
       query: _GetCustomersChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.customers);
 
     return createCustomerOptionsFromAPI(data.customers?.edges ?? []);
   };
@@ -437,24 +496,29 @@ export class LegacyChannelHandler implements Handler {
 }
 
 export class AttributesHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
     public type: AttributeTypeEnum = AttributeTypeEnum.PRODUCT_TYPE,
   ) {}
 
-  fetch = async (): Promise<LeftOperand[]> => {
+  fetch = async (after?: string | null): Promise<LeftOperand[]> => {
     const { data } = await this.client.query<
       _GetDynamicLeftOperandsQuery,
       _GetDynamicLeftOperandsQueryVariables
     >({
       query: _GetDynamicLeftOperandsDocument,
       variables: {
-        first: 20,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
         type: this.type,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.attributes);
 
     return (data.attributes?.edges.map(({ node }) => ({
       label: node.name ?? "",
@@ -518,44 +582,54 @@ export class TextInputValuesHandler implements Handler {
 }
 
 export class PageTypesHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetPageTypesChoicesQuery,
       _GetPageTypesChoicesQueryVariables
     >({
       query: _GetPageTypesChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.pageTypes);
 
     return createOptionsFromAPI(data.pageTypes?.edges ?? []);
   };
 }
 
 export class CustomerTypeHandler implements Handler {
+  public pageInfo: FilterChoicesPageInfo = NO_MORE_CHOICES;
+
   constructor(
     public client: ApolloClient<unknown>,
     public query: string,
   ) {}
 
-  fetch = async () => {
+  fetch = async (after?: string | null) => {
     const { data } = await this.client.query<
       _GetCustomerTypesChoicesQuery,
       _GetCustomerTypesChoicesQueryVariables
     >({
       query: _GetCustomerTypesChoicesDocument,
       variables: {
-        first: 5,
+        first: FILTER_CHOICES_PAGE_SIZE,
+        after,
         query: this.query,
       },
     });
+
+    this.pageInfo = pageInfoFromConnection(data.customerTypes);
 
     return createOptionsFromAPI(data.customerTypes?.edges ?? []);
   };

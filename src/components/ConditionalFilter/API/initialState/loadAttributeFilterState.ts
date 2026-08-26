@@ -21,6 +21,7 @@ import {
   AttributeEntityTypeEnum,
 } from "@dashboard/graphql";
 
+import { hydrateChoiceCount } from "../filterChoicesPage";
 import { createAttributeProductVariantOptionsFromAPI, createOptionsFromAPI } from "../Handler";
 import {
   createAttributeMapFromQuery,
@@ -50,6 +51,7 @@ export const loadAttributeFilterState = async (
       attributesSlugs: allAttributeSlugs,
       choicesIds: regularChoiceIds,
       first: allAttributeSlugs.length,
+      choicesFirst: hydrateChoiceCount(regularChoiceIds),
     },
   });
 
