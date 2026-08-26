@@ -50,10 +50,11 @@ import useDatagridChange, {
 } from "./hooks/useDatagridChange";
 import { useFullScreenMode } from "./hooks/useFullScreenMode";
 import { usePortalClasses } from "./hooks/usePortalClasses";
-import { useRowAnchor } from "./hooks/useRowAnchor";
+import { activateRowAnchor, hideRowAnchorElement, useRowAnchor } from "./hooks/useRowAnchor";
 import { useRowHover } from "./hooks/useRowHover";
 import { useScrollRight } from "./hooks/useScrollRight";
 import { type TooltipSide, useTooltipContainer } from "./hooks/useTooltipContainer";
+import { getForwardedWheelDelta } from "./rowAnchorWheel";
 import useStyles, {
   cellHeight,
   rowActionBarWidth as defaultRowActionBarWidth,
@@ -225,10 +226,29 @@ export const Datagrid = ({
   );
   const [areCellsDirty, setCellsDirty] = useState(true);
 
+  // Wheel lands on the overlay, not the grid. Forward axes the scroller can
+  // move; leave the rest to the page. Always hide afterwards — page or grid
+  // scroll moves the row out from under the cursor, and a parked href is stale.
+  const handleRowAnchorWheel = useCallback((event: WheelEvent) => {
+    const scroller = editorContainerRef.current?.querySelector<HTMLElement>(".dvn-scroller");
+    const delta = scroller ? getForwardedWheelDelta(scroller, event) : null;
+
+    if (scroller && delta) {
+      scroller.scrollBy({ left: delta.left, top: delta.top, behavior: "auto" });
+      event.preventDefault();
+    }
+
+    const anchor = event.currentTarget;
+
+    if (anchor instanceof HTMLAnchorElement) {
+      hideRowAnchorElement(anchor);
+    }
+  }, []);
   const { rowAnchorRef, setRowAnchorRef, setAnchorPosition } = useRowAnchor({
     getRowAnchorUrl: rowAnchor,
     rowMarkers,
     availableColumns,
+    onWheel: handleRowAnchorWheel,
   });
   const rowAnchorHandler = useRowAnchorHandler(navigatorOpts);
 
@@ -431,21 +451,9 @@ export const Datagrid = ({
       }
 
       handleRowHover(args);
-
-      if (rowAnchorRef.current) {
-        /**
-         * Dispatch click event with modifier keys preserved
-         * This allows CMD/CTRL+click to open in new tab
-         */
-        const clickEvent = new MouseEvent("click", {
-          metaKey: args.metaKey,
-          ctrlKey: args.ctrlKey,
-          shiftKey: args.shiftKey,
-          bubbles: true,
-        });
-
-        rowAnchorRef.current.dispatchEvent(clickEvent);
-      }
+      activateRowAnchor(rowAnchorRef.current, {
+        openInNewTab: Boolean(args.metaKey || args.ctrlKey),
+      });
     },
     [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
   );
@@ -624,55 +632,6 @@ export const Datagrid = ({
         : null,
     [selection, selectionActions, handleRemoveRows],
   );
-  // The row anchor sits on top of the hovered cell so that the row behaves like a real link
-  // (middle click, right click "open in new tab"). That also means wheel events land on the
-  // anchor instead of the grid, and hiding the anchor mid-gesture does not help: the browser
-  // has already latched the gesture onto the anchor's own scroll chain, which is the page.
-  // So the delta is forwarded to the grid's scroller for whichever axes it can actually scroll,
-  // and the anchor is hidden afterwards - the row under the cursor has changed, so the anchor's
-  // href is stale until the next hover repositions it.
-  const forwardWheelToGrid = useCallback(
-    (event: WheelEvent): void => {
-      const scroller = editorContainerRef.current?.querySelector<HTMLElement>(".dvn-scroller");
-
-      if (!scroller) {
-        return;
-      }
-
-      const deltaX = scroller.scrollWidth > scroller.clientWidth ? event.deltaX : 0;
-      const deltaY = scroller.scrollHeight > scroller.clientHeight ? event.deltaY : 0;
-
-      if (deltaX === 0 && deltaY === 0) {
-        // Nothing for the grid to scroll on this axis - let the page take the gesture.
-        return;
-      }
-
-      scroller.scrollBy({ left: deltaX, top: deltaY, behavior: "auto" });
-      event.preventDefault();
-
-      if (rowAnchorRef.current) {
-        rowAnchorRef.current.style.display = "none";
-      }
-    },
-    [rowAnchorRef],
-  );
-
-  // Registered natively because React's onWheel is attached as a passive listener,
-  // where preventDefault would be ignored.
-  useEffect(
-    function forwardRowAnchorWheelToGrid(): (() => void) | undefined {
-      const anchor = rowAnchorRef.current;
-
-      if (!anchor) {
-        return undefined;
-      }
-
-      anchor.addEventListener("wheel", forwardWheelToGrid, { passive: false });
-
-      return () => anchor.removeEventListener("wheel", forwardWheelToGrid);
-    },
-    [forwardWheelToGrid, rowAnchor, rowAnchorRef],
-  );
 
   if (loading) {
     return (
@@ -819,7 +778,7 @@ export const Datagrid = ({
         {rowAnchor && (
           <a
             ref={setRowAnchorRef}
-            style={{ position: "fixed", display: "block", top: "-1000px", left: "-1000px" }}
+            className={classes.rowAnchor}
             tabIndex={-1}
             aria-hidden={true}
             onClick={rowAnchorHandler}

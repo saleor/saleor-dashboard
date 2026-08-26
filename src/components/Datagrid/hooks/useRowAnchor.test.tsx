@@ -1,9 +1,7 @@
 import { type GridMouseEventArgs } from "@glideapps/glide-data-grid";
 import { render, renderHook } from "@testing-library/react";
 
-import { useRowAnchor } from "./useRowAnchor";
-
-jest.mock("@dashboard/hooks/useDebounce", () => jest.fn(fn => fn));
+import { activateRowAnchor, useRowAnchor } from "./useRowAnchor";
 
 // jsdom exposes scrollX/scrollY as plain properties, so they are redefined rather than spied on.
 const setPageScroll = (scrollX: number, scrollY: number) => {
@@ -206,6 +204,8 @@ describe("useRowAnchor", () => {
 
     hover({ kind: "out-of-bounds" });
     expect(result.current.rowAnchorRef.current!.style.display).toBe("none");
+    expect(result.current.rowAnchorRef.current!.getAttribute("href")).toBeNull();
+    expect(result.current.rowAnchorRef.current!.dataset.reactRouterPath).toBeUndefined();
 
     // Act & Assert - moving onto the header
     hover({});
@@ -220,5 +220,119 @@ describe("useRowAnchor", () => {
 
     hover({ location: [-1, 0] });
     expect(result.current.rowAnchorRef.current!.style.display).toBe("none");
+  });
+  it("attaches a wheel listener when the anchor mounts so it still binds after loading", () => {
+    // Arrange
+    const onWheel = jest.fn();
+    const { result } = renderHook(() => useRowAnchor({ ...props, onWheel }));
+    const { container } = render(<a href="/products/1" ref={result.current.setRowAnchorRef} />);
+    const anchor = container.querySelector("a");
+
+    // Act
+    anchor?.dispatchEvent(new WheelEvent("wheel", { deltaY: 40, bubbles: true, cancelable: true }));
+
+    // Assert
+    expect(onWheel).toHaveBeenCalledTimes(1);
+  });
+  it("hides the anchor on scroll so a parked href cannot outlive the row", () => {
+    // Arrange
+    const { result } = renderHook(() => useRowAnchor(props));
+
+    render(<a ref={result.current.setRowAnchorRef} />);
+
+    result.current.setAnchorPosition({
+      kind: "cell",
+      location: [1, 0],
+      bounds: { x: 10, y: 20, width: 100, height: 32 },
+      isEdge: false,
+      shiftKey: false,
+      ctrlKey: false,
+      isFillHandle: false,
+      metaKey: false,
+      isTouch: false,
+      localEventX: 81,
+      localEventY: 39,
+      button: 0,
+      scrollEdge: [0, 0],
+    } as GridMouseEventArgs);
+
+    expect(result.current.rowAnchorRef.current!.style.display).toBe("block");
+
+    // Act
+    window.dispatchEvent(new Event("scroll"));
+
+    // Assert
+    expect(result.current.rowAnchorRef.current!.style.display).toBe("none");
+    expect(result.current.rowAnchorRef.current!.getAttribute("href")).toBeNull();
+    expect(result.current.rowAnchorRef.current!.dataset.reactRouterPath).toBeUndefined();
+  });
+});
+
+describe("activateRowAnchor", () => {
+  const originalOpen = window.open;
+
+  afterEach(() => {
+    window.open = originalOpen;
+  });
+
+  it("opens the href in a new tab for a modifier click — dispatchEvent cannot", () => {
+    // Arrange - Glide's canvas click is untrusted, so the browser will not
+    // honour a synthetic cmd-click default on the <a>.
+    const open = jest.fn();
+    const onClick = jest.fn();
+
+    window.open = open;
+
+    const anchor = document.createElement("a");
+
+    anchor.href = "http://localhost/products/1";
+    anchor.addEventListener("click", onClick);
+
+    // Act
+    activateRowAnchor(anchor, { openInNewTab: true });
+
+    // Assert
+    expect(open).toHaveBeenCalledWith(
+      "http://localhost/products/1",
+      "_blank",
+      "noopener,noreferrer",
+    );
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("dispatches a cancelable click when the grid is handling a same-tab activate", () => {
+    // Arrange
+    const open = jest.fn();
+    const onClick = jest.fn();
+
+    window.open = open;
+
+    const anchor = document.createElement("a");
+
+    anchor.href = "http://localhost/products/1";
+    anchor.addEventListener("click", onClick);
+
+    // Act
+    activateRowAnchor(anchor, { openInNewTab: false });
+
+    // Assert
+    expect(open).not.toHaveBeenCalled();
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick.mock.calls[0][0].cancelable).toBe(true);
+  });
+
+  it("does nothing when hide already cleared the href", () => {
+    // Arrange
+    const open = jest.fn();
+
+    window.open = open;
+
+    const anchor = document.createElement("a");
+
+    // Act
+    activateRowAnchor(anchor, { openInNewTab: true });
+
+    // Assert
+    expect(open).not.toHaveBeenCalled();
   });
 });
