@@ -4,6 +4,8 @@ import { type ThemeType } from "@saleor/app-sdk/app-bridge";
 import { Box } from "@saleor/macaw-ui-next";
 import { useRef } from "react";
 
+import { applyExtensionPreferences } from "../../preferences/applyExtensionPreferences";
+import { useExtensionPreferences } from "../../preferences/useExtensionPreferences";
 import { AppWidgetExtensionItem } from "./AppWidgetExtensionItem";
 
 type AppWidgetsProps = {
@@ -24,7 +26,10 @@ const sortExtensions = (extensions: ExtensionWithParams[]): ExtensionWithParams[
 
 export const AppWidgets = ({ extensions, params }: AppWidgetsProps) => {
   const themeRef = useRef<ThemeType>();
-  const sortedExtensions = sortExtensions(extensions);
+  const { getState } = useExtensionPreferences();
+
+  // Base sort first, then filter hidden + float pinned to the top (stable).
+  const sortedExtensions = applyExtensionPreferences(sortExtensions(extensions), getState);
 
   return (
     <Box display="flex" flexDirection="column" gap={6}>

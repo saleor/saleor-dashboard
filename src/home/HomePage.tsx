@@ -1,5 +1,7 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { useExtensionsWithLoadingState } from "@dashboard/extensions/hooks/useExtensions";
+import { applyExtensionPreferences } from "@dashboard/extensions/preferences/applyExtensionPreferences";
+import { useExtensionPreferences } from "@dashboard/extensions/preferences/useExtensionPreferences";
 import { Box } from "@saleor/macaw-ui-next";
 import { useParams, useRouteMatch } from "react-router";
 import { Redirect } from "react-router-dom";
@@ -90,7 +92,13 @@ export const HomePage = () => {
 
   const { extensions: extensionsByMount, loading } = useExtensionsWithLoadingState(HOMEPAGE_MOUNT);
   const extensions = extensionsByMount.HOMEPAGE_WIDGETS;
-  const { fullscreen, widgets } = filterHomeExtensions(extensions, userPermissions);
+  const { getState } = useExtensionPreferences();
+
+  const split = filterHomeExtensions(extensions, userPermissions);
+  // Drop hidden extensions and float pinned ones — for fullscreen that also
+  // decides which tab is leftmost, and therefore the default tab.
+  const fullscreen = applyExtensionPreferences(split.fullscreen, getState);
+  const widgets = applyExtensionPreferences(split.widgets, getState);
 
   if (loading) {
     // No live data yet and no non-empty snapshot: stay blank so the Pulse
