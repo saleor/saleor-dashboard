@@ -8,7 +8,6 @@ import {
   getExtensionsItemsForGiftCardOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button } from "@saleor/macaw-ui-next";
@@ -24,13 +23,8 @@ const GiftCardsListHeader = () => {
   const navigate = useNavigator();
   const subtitle = useContextualLink("gift_cards");
 
-  const {
-    openCreateDialog,
-    openBulkCreateDialog,
-    openExportDialog,
-    openSearchDeleteDialog,
-    openSearchSaveDialog,
-  } = useGiftCardListDialogs();
+  const { openCreateDialog, openBulkCreateDialog, openSearchDeleteDialog, openSearchSaveDialog } =
+    useGiftCardListDialogs();
   const {
     hasPresetsChanged,
     selectedPreset,
@@ -100,16 +94,6 @@ const GiftCardsListHeader = () => {
                   testId: "bulkIssueMenuItem",
                   onSelect: openBulkCreateDialog,
                 },
-                // exportGiftCards is removed from the API in 3.24
-                ...(isMainSchema()
-                  ? [
-                      {
-                        label: intl.formatMessage(messages.exportCodes),
-                        testId: "exportCodesMenuItem",
-                        onSelect: openExportDialog,
-                      },
-                    ]
-                  : []),
                 ...extensionMenuItems,
               ]}
               data-test-id="menu"

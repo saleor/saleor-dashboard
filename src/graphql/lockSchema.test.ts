@@ -85,7 +85,18 @@ describe("resolveLockedSchemaFields", () => {
 });
 
 describe("operation-level @lockSchema", () => {
-  const EXPORT_GIFT_CARDS = generatedDocuments.ExportGiftCardsDocument;
+  // No shipped operation carries an operation-level lock right now — `exportGiftCards` was the
+  // last one and it is gone from the app together with its UI. Kept inline so the behaviour stays
+  // covered for whichever operation 3.24 removes next.
+  const EXPORT_GIFT_CARDS = parse(`
+    mutation ExportGiftCards($input: ExportGiftCardsInput!) @lockSchema(schema: "main") {
+      exportGiftCards(input: $input) {
+        exportFile {
+          id
+        }
+      }
+    }
+  `);
 
   it("reports an operation locked to the other schema", () => {
     // Arrange / Act / Assert

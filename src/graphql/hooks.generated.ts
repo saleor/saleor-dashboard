@@ -11993,44 +11993,6 @@ export function useChannelCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type ChannelCurrenciesQueryHookResult = ReturnType<typeof useChannelCurrenciesQuery>;
 export type ChannelCurrenciesLazyQueryHookResult = ReturnType<typeof useChannelCurrenciesLazyQuery>;
 export type ChannelCurrenciesQueryResult = Apollo.QueryResult<Types.ChannelCurrenciesQuery, Types.ChannelCurrenciesQueryVariables>;
-export const ExportGiftCardsDocument = gql`
-    mutation ExportGiftCards($input: ExportGiftCardsInput!) @lockSchema(schema: "main") {
-  exportGiftCards(input: $input) {
-    errors {
-      ...ExportError
-    }
-    exportFile {
-      id
-    }
-  }
-}
-    ${ExportErrorFragmentDoc}`;
-export type ExportGiftCardsMutationFn = Apollo.MutationFunction<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>;
-
-/**
- * __useExportGiftCardsMutation__
- *
- * To run a mutation, you first call `useExportGiftCardsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useExportGiftCardsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [exportGiftCardsMutation, { data, loading, error }] = useExportGiftCardsMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useExportGiftCardsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>(ExportGiftCardsDocument, options);
-      }
-export type ExportGiftCardsMutationHookResult = ReturnType<typeof useExportGiftCardsMutation>;
-export type ExportGiftCardsMutationResult = Apollo.MutationResult<Types.ExportGiftCardsMutation>;
-export type ExportGiftCardsMutationOptions = Apollo.BaseMutationOptions<Types.ExportGiftCardsMutation, Types.ExportGiftCardsMutationVariables>;
 export const GiftCardSettingsUpdateDocument = gql`
     mutation GiftCardSettingsUpdate($input: GiftCardSettingsUpdateInput!) {
   giftCardSettingsUpdate(input: $input) {
@@ -12679,40 +12641,6 @@ export function useGiftCardListLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type GiftCardListQueryHookResult = ReturnType<typeof useGiftCardListQuery>;
 export type GiftCardListLazyQueryHookResult = ReturnType<typeof useGiftCardListLazyQuery>;
 export type GiftCardListQueryResult = Apollo.QueryResult<Types.GiftCardListQuery, Types.GiftCardListQueryVariables>;
-export const GiftCardTotalCountDocument = gql`
-    query GiftCardTotalCount {
-  giftCards {
-    totalCount
-  }
-}
-    `;
-
-/**
- * __useGiftCardTotalCountQuery__
- *
- * To run a query within a React component, call `useGiftCardTotalCountQuery` and pass it any options that fit your needs.
- * When your component renders, `useGiftCardTotalCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGiftCardTotalCountQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGiftCardTotalCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountDocument, options);
-      }
-export function useGiftCardTotalCountLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>(GiftCardTotalCountDocument, options);
-        }
-export type GiftCardTotalCountQueryHookResult = ReturnType<typeof useGiftCardTotalCountQuery>;
-export type GiftCardTotalCountLazyQueryHookResult = ReturnType<typeof useGiftCardTotalCountLazyQuery>;
-export type GiftCardTotalCountQueryResult = Apollo.QueryResult<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>;
 export const CustomerGiftCardListDocument = gql`
     query CustomerGiftCardList($userId: ID!, $first: Int) {
   user(id: $userId) {

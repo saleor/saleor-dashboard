@@ -760,10 +760,6 @@
   "0nLsyM": {
     "string": "No product types found"
   },
-  "0o9VGr": {
-    "context": "bulk issue gift cards dialog intro",
-    "string": "Set how many gift cards to issue and their value. After creation, you can download the list of codes."
-  },
   "0oo+BT": {
     "context": "section header",
     "string": "Refunded Amount"
@@ -2500,10 +2496,6 @@
     "context": "tooltip for status column in line matrix",
     "string": "Click to view shipments and refunds for this line."
   },
-  "7bueG3": {
-    "context": "export scope section header for gift cards",
-    "string": "Gift cards to include"
-  },
   "7dVB7S": {
     "context": "PDP schematic empty state for non-selection variant attributes",
     "string": "Assign below — leave <em>Variant selection</em> off"
@@ -3820,10 +3812,6 @@
   },
   "CQTTke": {
     "string": "Refund request sent to payment provider"
-  },
-  "CRAfpd": {
-    "context": "gift card export dialog confirm button label",
-    "string": "Export codes"
   },
   "CT5PAn": {
     "context": "CannotDefineChannelsAvailabilityCard title",
@@ -5696,10 +5684,6 @@
   "JIQ7KX": {
     "string": "Total captured"
   },
-  "JJ3PCA": {
-    "context": "export card codes structure item",
-    "string": "Export card codes"
-  },
   "JJLkzh": {
     "string": "Select transaction to refund"
   },
@@ -6775,10 +6759,6 @@
     "context": "bulk publish review spreadsheet paste hint",
     "string": "{hasStock, select, true {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price, cost price, and stock down the list.} other {You can paste from a spreadsheet. Select a field and paste tab-separated rows to fill price and cost price down the list.}}"
   },
-  "NSOHa/": {
-    "context": "gift card export dialog intro",
-    "string": "Choose which gift cards to export and the file format. Only active, unused gift cards are included."
-  },
   "NUBTlN": {
     "string": "Extension doesn't provide a privacy policy."
   },
@@ -7791,6 +7771,10 @@
   "RKHBh0": {
     "string": "What's New"
   },
+  "RKR+yO": {
+    "context": "bulk issue gift cards dialog intro",
+    "string": "Set how many gift cards to issue and their value."
+  },
   "RKd8NI": {
     "context": "warning shown on a line waterfall",
     "string": "A manual line discount coexists with an automatic one. Manual takes precedence."
@@ -8689,10 +8673,6 @@
   "UhqCK5": {
     "context": "help section example in model type tab grouping help tooltip",
     "string": "<em>Help section for Docs</em> with separator \"section for\" appears under a <strong>Help</strong> tab."
-  },
-  "Ui4GxI": {
-    "context": "gift card bulk create success dialog export button",
-    "string": "Export to email"
   },
   "Uj/iBz": {
     "context": "shown while fetching all variants for duplicate detection",
@@ -9707,10 +9687,6 @@
   "YEIFiI": {
     "string": "Add new structure item to begin creating structure"
   },
-  "YEpYMB": {
-    "context": "gift card export csv success alert title",
-    "string": "Exporting CSV"
-  },
   "YEv+6G": {
     "context": "input helper text",
     "string": "Leaving this setting empty will mean that stock won’t be reserved"
@@ -10197,10 +10173,6 @@
   "a5msuh": {
     "string": "Yes"
   },
-  "a6cSKQ": {
-    "context": "export all gift cards scope option",
-    "string": "All gift cards ({number})"
-  },
   "a80vXY": {
     "context": "gift card resend dialog recipient section title",
     "string": "Recipient"
@@ -10509,10 +10481,6 @@
   "bDBiac": {
     "context": "dropdown or column label",
     "string": "Tax class"
-  },
-  "bDHiYK": {
-    "context": "gift card export success alert description",
-    "string": "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address"
   },
   "bFb5U5": {
     "context": "attribute label field in embedded create form",
@@ -13380,10 +13348,6 @@
     "context": "discount value label",
     "string": "Discount value"
   },
-  "lkqgNs": {
-    "context": "export selected gift cards scope option",
-    "string": "Selected gift cards ({number})"
-  },
   "lkuKaM": {
     "context": "mark as paid transaction option label",
     "string": "A Transaction"
@@ -13971,10 +13935,6 @@
   "nzhLC0": {
     "context": "PDP schematic empty state for product details",
     "string": "Assign attributes below"
-  },
-  "nzycaQ": {
-    "context": "gift card export dialog title",
-    "string": "Export gift cards"
   },
   "o+5eA9": {
     "context": "attribute detail sidebar card title for type assignments",
@@ -14670,10 +14630,6 @@
     "context": "gift card provenance, label for channel + order line",
     "string": "Purchase"
   },
-  "qJ6D+G": {
-    "context": "gift card bulk create success dialog content",
-    "string": "Your gift cards are ready. Export the codes to your email to download the list."
-  },
   "qJedl0": {
     "context": "product label",
     "string": "Published"
@@ -14768,10 +14724,6 @@
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
-  },
-  "qU6l9V": {
-    "context": "gift card export dialog intro when exporting preselected cards",
-    "string": "Choose the file format for the selected gift cards. Only active, unused gift cards are included."
   },
   "qUMJtL": {
     "context": "gift card resend dialog channel field label",
@@ -15436,10 +15388,6 @@
   "skklRz": {
     "context": "table header column",
     "string": "Show gross prices in storefront"
-  },
-  "slmhRQ": {
-    "context": "gift card bulk create success dialog title",
-    "string": "Gift cards issued"
   },
   "snUby7": {
     "context": "header",
@@ -16240,10 +16188,6 @@
   "vN3qdA": {
     "context": "button",
     "string": "Undo"
-  },
-  "vNRe6t": {
-    "context": "gift card bulk create success dialog accept button",
-    "string": "Done"
   },
   "vONi+O": {
     "string": "Country"

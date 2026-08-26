@@ -12723,13 +12723,6 @@ export type ChannelCurrenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ChannelCurrenciesQuery = { __typename: 'Query', shop: { __typename: 'Shop', channelCurrencies: Array<string> } };
 
-export type ExportGiftCardsMutationVariables = Exact<{
-  input: ExportGiftCardsInput;
-}>;
-
-
-export type ExportGiftCardsMutation = { __typename: 'Mutation', exportGiftCards: { __typename: 'ExportGiftCards', errors: Array<{ __typename: 'ExportError', code: ExportErrorCode, field: string | null, message: string | null }>, exportFile: { __typename: 'ExportFile', id: string } | null } | null };
-
 export type GiftCardSettingsUpdateMutationVariables = Exact<{
   input: GiftCardSettingsUpdateInput;
 }>;
@@ -12844,11 +12837,6 @@ export type GiftCardListQueryVariables = Exact<{
 
 
 export type GiftCardListQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'GiftCardCountableEdge', node: { __typename: 'GiftCard', id: string, assignedToEmail: string | null, last4CodeChars: string, isActive: boolean, expiryDate: string | null, product: { __typename: 'Product', id: string, name: string } | null, tags: Array<{ __typename: 'GiftCardTag', name: string }>, currentBalance: { __typename: 'Money', amount: number, currency: string } } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
-
-export type GiftCardTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GiftCardTotalCountQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', totalCount: number | null } | null };
 
 export type CustomerGiftCardListQueryVariables = Exact<{
   userId: Scalars['ID']['input'];

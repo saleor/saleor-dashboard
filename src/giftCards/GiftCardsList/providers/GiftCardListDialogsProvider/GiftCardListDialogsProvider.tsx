@@ -1,9 +1,7 @@
 import { GiftCardListPageDeleteDialog } from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import { GiftCardBulkCreateDialog } from "@dashboard/giftCards/GiftCardBulkCreateDialog/GiftCardBulkCreateDialog";
 import { GiftCardCreateDialogContent } from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
-import { GiftCardExportDialogContent } from "@dashboard/giftCards/GiftCardExportDialogContent/GiftCardExportDialogContent";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
-import { isMainSchema } from "@dashboard/graphql/schemaVersion";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import type * as React from "react";
@@ -24,7 +22,6 @@ interface GiftCardListDialogsConsumerProps {
   openSearchSaveDialog: () => void;
   openSearchDeleteDialog: () => void;
   onClose: () => void;
-  openExportDialog: () => void;
   id: string;
 }
 
@@ -43,7 +40,7 @@ export const useGiftCardListDialogs = () => {
 const GiftCardListDialogsProvider = ({ children, params }: GiftCardListDialogsProviderProps) => {
   const navigate = useNavigator();
   const id = params?.id;
-  const { CREATE, DELETE, EXPORT, BULK_CREATE } = GiftCardListActionParamsEnum;
+  const { CREATE, DELETE, BULK_CREATE } = GiftCardListActionParamsEnum;
   const [openDialog, onClose] = createDialogActionHandlers<
     GiftCardListActionParamsEnum,
     GiftCardListUrlQueryParams
@@ -57,7 +54,6 @@ const GiftCardListDialogsProvider = ({ children, params }: GiftCardListDialogsPr
   const openSearchSaveDialog = () => openDialog(GiftCardListActionParamsEnum.SAVE_SEARCH);
   const providerValues: GiftCardListDialogsConsumerProps = {
     openCreateDialog: handleOpenDialog(CREATE),
-    openExportDialog: handleOpenDialog(EXPORT),
     openBulkCreateDialog: handleOpenDialog(BULK_CREATE),
     openDeleteDialog: handleDeleteDialogOpen,
     openSearchSaveDialog,
@@ -75,11 +71,6 @@ const GiftCardListDialogsProvider = ({ children, params }: GiftCardListDialogsPr
         refetchQueries={[GIFT_CARD_LIST_QUERY]}
       />
       <GiftCardListPageDeleteDialog open={isDialogOpen(DELETE)} onClose={onClose} />
-      {/* exportGiftCards is removed from the API in 3.24; guarded here too so a bookmarked
-          ?action=EXPORT cannot open a dialog whose submit the API would reject */}
-      {isMainSchema() && (
-        <GiftCardExportDialogContent open={isDialogOpen(EXPORT)} onClose={onClose} />
-      )}
       <GiftCardBulkCreateDialog open={isDialogOpen(BULK_CREATE)} onClose={onClose} />
     </GiftCardListDialogsContext.Provider>
   );
