@@ -24,7 +24,6 @@ export enum GiftCardListActionParamsEnum {
   SAVE_SEARCH = "save-search",
   DELETE_SEARCH = "delete-search",
   BULK_CREATE = "gift-card-bulk-create",
-  EXPORT = "gift-card-export",
 }
 
 export type GiftCardListUrlQueryParams = Pagination &
