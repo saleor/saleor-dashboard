@@ -40,7 +40,9 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
     updateRightOperator,
     updateCondition,
     updateRightOptions,
+    fetchRightOptionsList,
     updateAttribute,
+    fetchAvailableAttributesList,
     updateAvailableAttributesList,
   } = useFilterContainer(apiProvider);
   const filteredOperands = useFilteredOperands(leftOperandsProvider.operands, value);
@@ -71,8 +73,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
       updateLeftOperator(event.path, leftOperand);
 
       if (leftOperand.value === "attribute") {
-        // Fetch list of attributes after user selects "Attribute" search
-        updateAvailableAttributesList(event.path.split(".")[0], "");
+        fetchAvailableAttributesList(event.path.split(".")[0], "");
       }
     }
 
@@ -85,7 +86,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
     }
 
     if (event.type === "rightOperator.onFocus") {
-      updateRightOptions(event.path.split(".")[0], "");
+      fetchRightOptionsList(event.path.split(".")[0], "");
     }
 
     if (event.type === "rightOperator.onInputValueChange") {
@@ -94,6 +95,10 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
 
     if (event.type === "attribute.onChange") {
       updateAttribute(event.path, event.value as LeftOperand);
+    }
+
+    if (event.type === "attribute.onFocus") {
+      fetchAvailableAttributesList(event.path.split(".")[0], "");
     }
 
     if (event.type === "attribute.onInputValueChange") {

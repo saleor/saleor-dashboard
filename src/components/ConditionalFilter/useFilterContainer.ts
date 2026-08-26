@@ -1,4 +1,6 @@
 import useDebounce from "@dashboard/hooks/useDebounce";
+import { errorTracker } from "@dashboard/services/errorTracking";
+import { type MutableRefObject, useRef } from "react";
 
 import { type FilterAPIProvider } from "./API/FilterAPIProvider";
 import { useConditionalFilterContext } from "./context";
@@ -6,10 +8,25 @@ import { FilterElement } from "./FilterElement";
 import { Condition } from "./FilterElement/Condition";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import { type ConditionValue, type ItemOption } from "./FilterElement/ConditionValue";
+import { type ConditionValue } from "./FilterElement/ConditionValue";
 import { Constraint } from "./FilterElement/Constraint";
 import { hasEmptyRows } from "./FilterElement/FilterElement";
 import { type LeftOperand } from "./LeftOperandsProvider";
+
+const nextFetchGeneration = (
+  generations: MutableRefObject<Record<string, number>>,
+  key: string,
+): number => {
+  const next = (generations.current[key] ?? 0) + 1;
+
+  generations.current[key] = next;
+
+  return next;
+};
+
+const captureFilterFetchError = (error: unknown): void => {
+  errorTracker.captureException(error instanceof Error ? error : new Error(String(error)));
+};
 
 export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
   const {
@@ -24,6 +41,7 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
       updateBySlug,
     },
   } = useConditionalFilterContext();
+  const optionFetchGeneration = useRef<Record<string, number>>({});
   const addEmpty = () => {
     createAndRemoveEmpty(FilterElement.createEmpty());
   };
@@ -82,13 +100,10 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
       selected.enableLoading();
       el.condition = new Condition(options, selected, false);
     });
-    updateRightOptions(position, "");
+    fetchRightOptionsList(position, "");
   };
   const updateRightOperator = (position: string, rightOperator: ConditionValue) => {
     updateAt(position, el => el.updateRightOperator(rightOperator));
-  };
-  const _updateRightOptions = (position: string, options: ItemOption[]) => {
-    updateAt(position, el => el.updateRightOptions(options));
   };
   const updateRightLoadingState = (position: string, loading: boolean) => {
     updateAt(position, el => el.updateRightLoadingState(loading));
@@ -97,26 +112,74 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
     updateAt(position, el => el.updateCondition(conditionValue));
   };
   const _fetchRightOptions = async (position: string, inputValue: string) => {
+    const fetchKey = `right:${position}`;
+    const generation = nextFetchGeneration(optionFetchGeneration, fetchKey);
+
     updateRightLoadingState(position, true);
 
-    const options = await apiProvider.fetchRightOptions(position, value, inputValue);
+    try {
+      const options = await apiProvider.fetchRightOptions(position, value, inputValue);
 
-    updateRightLoadingState(position, false);
-    _updateRightOptions(position, options);
+      if (optionFetchGeneration.current[fetchKey] !== generation) {
+        return;
+      }
+
+      updateAt(position, el => {
+        el.updateRightOptions(options);
+        el.updateRightLoadingState(false);
+      });
+    } catch (error) {
+      if (optionFetchGeneration.current[fetchKey] !== generation) {
+        return;
+      }
+
+      captureFilterFetchError(error);
+      updateRightLoadingState(position, false);
+    }
   };
-  const updateRightOptions = useDebounce(_fetchRightOptions, 500);
+  const fetchRightOptionsList = (position: string, inputValue: string) => {
+    void _fetchRightOptions(position, inputValue);
+  };
+  const debouncedFetchRightOptions = useDebounce(_fetchRightOptions, 500);
+  const updateRightOptions = (position: string, inputValue: string) => {
+    updateRightLoadingState(position, true);
+    debouncedFetchRightOptions(position, inputValue);
+  };
 
   const _fetchAttributesList = async (position: string, inputValue: string) => {
+    const fetchKey = `attribute:${position}`;
+    const generation = nextFetchGeneration(optionFetchGeneration, fetchKey);
+
     updateAt(position, el => el.updateAttributeLoadingState(true));
 
-    const options = await apiProvider.fetchAttributeOptions(inputValue);
+    try {
+      const options = await apiProvider.fetchAttributeOptions(inputValue);
 
-    updateAt(position, el => {
-      el.updateAvailableAttributesList(options as LeftOperand[]);
-      el.updateAttributeLoadingState(false);
-    });
+      if (optionFetchGeneration.current[fetchKey] !== generation) {
+        return;
+      }
+
+      updateAt(position, el => {
+        el.updateAvailableAttributesList(options as LeftOperand[]);
+        el.updateAttributeLoadingState(false);
+      });
+    } catch (error) {
+      if (optionFetchGeneration.current[fetchKey] !== generation) {
+        return;
+      }
+
+      captureFilterFetchError(error);
+      updateAt(position, el => el.updateAttributeLoadingState(false));
+    }
   };
-  const updateAvailableAttributesList = useDebounce(_fetchAttributesList, 500);
+  const fetchAvailableAttributesList = (position: string, inputValue: string) => {
+    void _fetchAttributesList(position, inputValue);
+  };
+  const debouncedFetchAvailableAttributesList = useDebounce(_fetchAttributesList, 500);
+  const updateAvailableAttributesList = (position: string, inputValue: string) => {
+    updateAt(position, el => el.updateAttributeLoadingState(true));
+    debouncedFetchAvailableAttributesList(position, inputValue);
+  };
 
   return {
     value,
@@ -128,6 +191,8 @@ export const useFilterContainer = (apiProvider: FilterAPIProvider) => {
     updateRightOperator,
     updateCondition,
     updateRightOptions,
+    fetchRightOptionsList,
+    fetchAvailableAttributesList,
     updateAvailableAttributesList,
   };
 };

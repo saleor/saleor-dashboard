@@ -8,6 +8,7 @@ export type RightOperatorOption = Option & {
 
 export type LeftOperatorOption = Option & {
   type: string;
+  slug?: string;
 };
 
 type ConditionOption<T extends string> = Option & {

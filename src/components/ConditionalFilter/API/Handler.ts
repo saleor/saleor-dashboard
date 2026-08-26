@@ -450,7 +450,7 @@ export class AttributesHandler implements Handler {
     >({
       query: _GetDynamicLeftOperandsDocument,
       variables: {
-        first: 5,
+        first: 20,
         query: this.query,
         type: this.type,
       },
