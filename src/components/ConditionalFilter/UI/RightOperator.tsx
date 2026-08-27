@@ -56,8 +56,11 @@ interface RightOperatorProps {
   attributeType?: string | null;
 }
 
-const getInlineControlProps = (layout: ConditionalFiltersLayout | undefined) => ({
-  width: "100%" as const,
+const getInlineControlProps = (
+  layout: ConditionalFiltersLayout | undefined,
+  { fillWidth = true }: { fillWidth?: boolean } = {},
+) => ({
+  ...(fillWidth ? { width: "100%" as const } : {}),
   ...(isFlatFilterLayout(layout) ? { backgroundColor: "default1" as const } : {}),
 });
 
@@ -344,9 +347,9 @@ export const RightOperator = ({
 
   if (isDateRange(selected)) {
     return (
-      <RangeInputWrapper inline>
+      <RangeInputWrapper inline compact="date">
         <RangeInput
-          {...inlineControlProps}
+          {...getInlineControlProps(layout, { fillWidth: false })}
           data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
@@ -356,10 +359,6 @@ export const RightOperator = ({
           error={!!error}
           helperText={helperText}
           disabled={disabled}
-          width="100%"
-          flexDirection="row"
-          alignItems="center"
-          gap={1}
         />
       </RangeInputWrapper>
     );
@@ -367,9 +366,9 @@ export const RightOperator = ({
 
   if (isDateTimeRange(selected)) {
     return (
-      <RangeInputWrapper>
+      <RangeInputWrapper inline compact="datetime">
         <RangeInput
-          {...inlineControlProps}
+          {...getInlineControlProps(layout, { fillWidth: false })}
           data-test-id={`right-${index}`}
           value={selected.value}
           onChange={value => {
@@ -379,7 +378,6 @@ export const RightOperator = ({
           error={!!error}
           helperText={helperText}
           disabled={disabled}
-          width="100%"
         />
       </RangeInputWrapper>
     );

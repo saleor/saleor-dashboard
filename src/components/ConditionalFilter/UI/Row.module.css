@@ -45,10 +45,21 @@
   white-space: nowrap;
 }
 
-.row :global(input) {
+.row :global(input:not([type="date"]):not([type="datetime-local"]):not([type="time"])) {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/*
+ * Chrome/WebKit date controls use an inner edit layout that grows to a tall
+ * empty box when overflow is hidden (the "between" fields looked huge).
+ */
+.row :global(input[type="date"]),
+.row :global(input[type="datetime-local"]),
+.row :global(input[type="time"]) {
+  min-width: 0;
+  overflow: visible;
 }
 
 .inlineRow {
@@ -86,6 +97,7 @@
   background: transparent;
   cursor: pointer;
   padding: 0;
+  margin-inline-start: var(--mu-spacing-2);
   line-height: 1;
   color: var(--mu-colors-text-default2);
 }
