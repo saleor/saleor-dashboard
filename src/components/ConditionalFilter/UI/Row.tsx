@@ -9,10 +9,12 @@ import { X } from "lucide-react";
 import { useMemo } from "react";
 
 import { getItemConstraint } from "./constrains";
+import { ConstraintReasonHint } from "./ConstraintReasonHint";
 import { type ErrorLookup } from "./errors";
 import { type FilterEventEmitter } from "./EventEmitter";
 import { getFilterControlId } from "./filterControlId";
 import { isFlatFilterLayout } from "./filterLayout";
+import { getConstraintReasonLabels } from "./getConstraintReasonLabels";
 import { isSelectedComboboxLabel } from "./resolveAsyncComboboxState";
 import {
   resolveAttributeComboboxOptions,
@@ -27,6 +29,7 @@ import { type LeftOperatorOption, type Row } from "./types";
 interface RowProps {
   item: Row;
   index: number;
+  rows: ExperimentalFiltersProps["value"];
   leftOptions: ExperimentalFiltersProps["leftOptions"];
   emitter: FilterEventEmitter;
   error: ErrorLookup[number];
@@ -36,12 +39,14 @@ interface RowProps {
 export const RowComponent = ({
   item,
   index,
+  rows,
   leftOptions,
   emitter,
   error,
   layout = "popover",
-}: RowProps) => {
+}: RowProps): JSX.Element => {
   const constrain = getItemConstraint(item.constraint);
+  const reasonLabels = getConstraintReasonLabels(item, rows);
   const isAttribute = item.isAttribute;
   const attributeList = useMemo(
     () =>
@@ -71,35 +76,40 @@ export const RowComponent = ({
       width="100%"
       __minWidth="0"
     >
-      <DynamicCombobox
-        {...inlineControlProps}
-        id={getFilterControlId("left", index)}
-        data-test-id={`left-${index}`}
-        value={item.value}
-        options={leftOptions}
-        loading={item.loading}
-        onChange={value => {
-          if (!value) return;
+      <Box display="flex" alignItems="center" gap={1.5} width="100%" __minWidth="0">
+        <ConstraintReasonHint fields={reasonLabels} testId={`constraint-reason-${index}`} />
+        <Box flexGrow="1" width="100%" __minWidth="0">
+          <DynamicCombobox
+            {...inlineControlProps}
+            id={getFilterControlId("left", index)}
+            data-test-id={`left-${index}`}
+            value={item.value}
+            options={leftOptions}
+            loading={item.loading}
+            onChange={value => {
+              if (!value) return;
 
-          emitter.changeLeftOperator(
-            index,
-            value,
-            leftOptions.find(option => option.value === value.value)?.type,
-          );
-        }}
-        onInputValueChange={value => {
-          emitter.inputChangeLeftOperator(index, value);
-        }}
-        onFocus={() => {
-          emitter.focusLeftOperator(index);
-        }}
-        onBlur={() => {
-          emitter.blurLeftOperator(index);
-        }}
-        error={error.left.show}
-        helperText={error.left.text}
-        disabled={constrain.disableLeftOperator}
-      />
+              emitter.changeLeftOperator(
+                index,
+                value,
+                leftOptions.find(option => option.value === value.value)?.type,
+              );
+            }}
+            onInputValueChange={value => {
+              emitter.inputChangeLeftOperator(index, value);
+            }}
+            onFocus={() => {
+              emitter.focusLeftOperator(index);
+            }}
+            onBlur={() => {
+              emitter.blurLeftOperator(index);
+            }}
+            error={error.left.show}
+            helperText={error.left.text}
+            disabled={constrain.disableLeftOperator}
+          />
+        </Box>
+      </Box>
 
       {isAttribute && (
         <DynamicCombobox

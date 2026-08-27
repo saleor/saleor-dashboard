@@ -47,9 +47,9 @@ export const conditionalFilterMessages = defineMessages({
     description: "Apply filters from the list filter panel",
   },
   emptyFilters: {
-    defaultMessage: "Add filter to start",
-    id: "B5KI59",
-    description: "Empty filters text",
+    id: "4IVdnm",
+    defaultMessage: "No filters",
+    description: "Empty state when the filter panel or modal has no conditions",
   },
   filterWhereElement: {
     defaultMessage: "Where",

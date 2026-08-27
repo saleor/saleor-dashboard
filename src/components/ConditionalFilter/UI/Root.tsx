@@ -32,7 +32,7 @@ export const Root = ({
     noValueText: "Click button below to start filtering",
   },
   error,
-}: ExperimentalFiltersProps) => {
+}: ExperimentalFiltersProps): JSX.Element => {
   const { emitter } = useEventEmitter({
     onChange,
   });
@@ -46,28 +46,26 @@ export const Root = ({
         error={error}
         layout={layout}
       />
-    ) : null;
+    ) : (
+      <NoValue locale={locale} />
+    );
 
   return (
     <FilterContext.Provider value={{ emitter, actionButtonsDisabled: value.length === 0 }}>
       {layout === "panel" ? (
         <Box display="flex" flexDirection="column" width="100%" __minWidth="0">
-          {rows ? <Box padding={4}>{rows}</Box> : null}
+          <Box padding={4}>{rows}</Box>
           {children}
         </Box>
       ) : layout === "inline" ? (
         <Box display="flex" flexDirection="column" gap={3} width="100%" __minWidth="0">
-          {rows ? (
-            <>
-              {rows}
-              <Divider />
-            </>
-          ) : null}
+          {rows}
+          <Divider />
           {children}
         </Box>
       ) : (
         <Box height="100%" width="100%" display="grid" __gridTemplateRows="1fr" __minWidth="0">
-          {rows ?? <NoValue locale={locale} />}
+          {rows}
           <Divider />
           {children}
         </Box>

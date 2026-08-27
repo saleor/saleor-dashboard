@@ -623,6 +623,10 @@
   "0HBlkO": {
     "string": "Search channels"
   },
+  "0HZg9/": {
+    "context": "tooltip on the add-preset button in list headers",
+    "string": "Save filters and search as preset"
+  },
   "0I+Z8l": {
     "context": "stock exceeded dialog description",
     "string": "{count, plural, one {# item exceeds available stock.} other {# items exceed available stock.}} Go back to adjust quantities, or fulfill anyway to oversell."
@@ -1591,6 +1595,10 @@
   "4ErS/1": {
     "context": "gift card tag field label",
     "string": "Card tag"
+  },
+  "4IVdnm": {
+    "context": "Empty state when the filter panel or modal has no conditions",
+    "string": "No filters"
   },
   "4IawKc": {
     "context": "onboarding step description",
@@ -3184,6 +3192,9 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
+  "AHOQr2": {
+    "string": "Search products..."
+  },
   "AJF7N5": {
     "context": "scope note for model type tab grouping help tooltip",
     "string": "Browser-only display — does not rename, merge, or change your model types or data."
@@ -3392,10 +3403,6 @@
   },
   "B52Em/": {
     "string": "Address line 1"
-  },
-  "B5KI59": {
-    "context": "Empty filters text",
-    "string": "Add filter to start"
   },
   "B77MSl": {
     "context": "empty state for variant attributes on a product type",
@@ -5646,10 +5653,6 @@
     "context": "export scope option disabled when list has no active filters",
     "string": "Apply filters or search on the list to enable this option."
   },
-  "JDvxO6": {
-    "context": "search gift card placeholder",
-    "string": "Search Gift Cards (e.g. by code, email, user name)"
-  },
   "JE0TAx": {
     "context": "section name",
     "string": "Values"
@@ -6466,6 +6469,10 @@
   "MJBAqv": {
     "context": "column title used by/customer",
     "string": "Used by"
+  },
+  "MKCw7u": {
+    "context": "Tooltip on the info icon before a locked Channel or Currency filter listing the filters that require it",
+    "string": "Needed for filtering on {fields}"
   },
   "MKTuIa": {
     "context": "voucher percentage channel input aria label",
@@ -7528,6 +7535,10 @@
   "Q8Qw5B": {
     "string": "Description"
   },
+  "Q8RwBy": {
+    "context": "search gift card placeholder; examples, not an exhaustive list",
+    "string": "Search by code, email, user name, etc..."
+  },
   "Q8wHwJ": {
     "string": "Deleted collection"
   },
@@ -7834,6 +7845,10 @@
   },
   "RaQzn2": {
     "string": "Rule created"
+  },
+  "RalDnV": {
+    "context": "empty state when the list has no saved presets yet",
+    "string": "Saved presets will appear here"
   },
   "RaycYK": {
     "context": "button",
@@ -11378,9 +11393,6 @@
   "eVrDft": {
     "string": "No value"
   },
-  "eW36Jx": {
-    "string": "Saved search queries will appear here"
-  },
   "eWV760": {
     "string": "Attribute with this slug already exists"
   },
@@ -12949,9 +12961,6 @@
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
-  },
-  "kIvvax": {
-    "string": "Search Products..."
   },
   "kJQczl": {
     "context": "sales section name",
@@ -15347,9 +15356,6 @@
   "scHVdW": {
     "context": "button",
     "string": "Assign product"
-  },
-  "scTuDZ": {
-    "string": "Save search as preset"
   },
   "sdA14A": {
     "context": "Status label when object is published in a channel",

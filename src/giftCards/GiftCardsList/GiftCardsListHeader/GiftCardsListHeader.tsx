@@ -1,4 +1,5 @@
-import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
+import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
+import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -10,6 +11,7 @@ import {
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { GIFT_CARD_PRODUCT_DOCS_URL } from "@dashboard/links";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
@@ -21,7 +23,9 @@ import { useGiftCardList } from "../providers/GiftCardListProvider";
 const GiftCardsListHeader = () => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const subtitle = useContextualLink("gift_cards");
+  const giftCardsHelpLabel = intl.formatMessage(contextualLinks.giftCards, {
+    giftCards: intl.formatMessage(contextualLinks.giftCardsDocs),
+  });
 
   const { openCreateDialog, openBulkCreateDialog, openSearchDeleteDialog, openSearchSaveDialog } =
     useGiftCardListDialogs();
@@ -50,71 +54,72 @@ const GiftCardsListHeader = () => {
   const extensionCreateButtonItems = getExtensionItemsForOverviewCreate(GIFT_CARD_OVERVIEW_CREATE);
 
   return (
-    <>
-      <TopNav
-        withoutBorder
-        isAlignToRight={false}
-        title={intl.formatMessage(sectionNames.giftCards)}
-        subtitle={subtitle}
-      >
-        <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
-          <Box display="flex">
-            <FilterPresetsSelect
-              presetsChanged={hasPresetsChanged()}
-              onSelect={onPresetChange}
-              onRemove={(id: number) => {
-                setPresetIdToDelete(id);
-                openSearchDeleteDialog();
-              }}
-              onUpdate={onPresetUpdate}
-              savedPresets={presets.map(preset => preset.name)}
-              activePreset={selectedPreset}
-              onSelectAll={resetFilters}
-              onSave={openSearchSaveDialog}
-              isOpen={isFilterPresetOpen}
-              onOpenChange={setFilterPresetOpen}
-              selectAllLabel={intl.formatMessage({
-                id: "7EDqed",
-                defaultMessage: "All gift cards",
-                description: "tab name",
-              })}
-            />
-          </Box>
-
-          <Box display="flex" alignItems="center" gap={2}>
-            <TopNav.Menu
-              items={[
-                {
-                  label: intl.formatMessage(messages.settings),
-                  testId: "settingsMenuItem",
-                  onSelect: openSettings,
-                },
-                {
-                  label: intl.formatMessage(messages.bulkIssue),
-                  testId: "bulkIssueMenuItem",
-                  onSelect: openBulkCreateDialog,
-                },
-                ...extensionMenuItems,
-              ]}
-              data-test-id="menu"
-            />
-            {extensionCreateButtonItems.length > 0 ? (
-              <ButtonGroupWithDropdown
-                options={extensionCreateButtonItems}
-                data-test-id="issue-card-button"
-                onClick={openCreateDialog}
-              >
-                {intl.formatMessage(messages.issueButtonLabel)}
-              </ButtonGroupWithDropdown>
-            ) : (
-              <Button data-test-id="issue-card-button" onClick={openCreateDialog}>
-                {intl.formatMessage(messages.issueButtonLabel)}
-              </Button>
-            )}
-          </Box>
+    <TopNav withoutBorder isAlignToRight={false} title={intl.formatMessage(sectionNames.giftCards)}>
+      <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
+        <Box display="flex">
+          <FilterPresetsSelect
+            presetsChanged={hasPresetsChanged()}
+            onSelect={onPresetChange}
+            onRemove={(id: number) => {
+              setPresetIdToDelete(id);
+              openSearchDeleteDialog();
+            }}
+            onUpdate={onPresetUpdate}
+            savedPresets={presets.map(preset => preset.name)}
+            activePreset={selectedPreset}
+            onSelectAll={resetFilters}
+            onSave={openSearchSaveDialog}
+            isOpen={isFilterPresetOpen}
+            onOpenChange={setFilterPresetOpen}
+            selectAllLabel={intl.formatMessage({
+              id: "7EDqed",
+              defaultMessage: "All gift cards",
+              description: "tab name",
+            })}
+          />
         </Box>
-      </TopNav>
-    </>
+
+        <Box display="flex" alignItems="center" gap={2}>
+          <Box display="flex" alignItems="center" marginRight={3}>
+            <ContextualHelpIcon
+              href={GIFT_CARD_PRODUCT_DOCS_URL}
+              label={giftCardsHelpLabel}
+              analyticsType="gift_card_product_docs"
+              dataTestId="gift-card-product-docs"
+            />
+          </Box>
+          <TopNav.Menu
+            items={[
+              {
+                label: intl.formatMessage(messages.settings),
+                testId: "settingsMenuItem",
+                onSelect: openSettings,
+              },
+              {
+                label: intl.formatMessage(messages.bulkIssue),
+                testId: "bulkIssueMenuItem",
+                onSelect: openBulkCreateDialog,
+              },
+              ...extensionMenuItems,
+            ]}
+            data-test-id="menu"
+          />
+          {extensionCreateButtonItems.length > 0 ? (
+            <ButtonGroupWithDropdown
+              options={extensionCreateButtonItems}
+              data-test-id="issue-card-button"
+              onClick={openCreateDialog}
+            >
+              {intl.formatMessage(messages.issueButtonLabel)}
+            </ButtonGroupWithDropdown>
+          ) : (
+            <Button data-test-id="issue-card-button" onClick={openCreateDialog}>
+              {intl.formatMessage(messages.issueButtonLabel)}
+            </Button>
+          )}
+        </Box>
+      </Box>
+    </TopNav>
   );
 };
 
