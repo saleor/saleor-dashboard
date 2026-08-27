@@ -6,8 +6,10 @@ import {
   Select,
 } from "@saleor/macaw-ui-next";
 
+import { isVariantReferenceEntity, isVariantReferenceOption } from "../API/variantReferenceOption";
 import BulkSelect from "./BulkSelect";
 import { type FilterEventEmitter } from "./EventEmitter";
+import { getFilterControlId } from "./filterControlId";
 import { MetadataInput } from "./MetadataInput";
 import {
   isBulkSelect,
@@ -32,6 +34,7 @@ import {
 } from "./resolveAsyncComboboxState";
 import { type ConditionalFiltersLayout } from "./Root";
 import { type SelectedOperator } from "./types";
+import { VariantReferenceMultiselect } from "./VariantReferenceMultiselect";
 
 interface RightOperatorProps {
   index: number;
@@ -41,10 +44,13 @@ interface RightOperatorProps {
   helperText: string;
   disabled: boolean;
   layout?: ConditionalFiltersLayout;
+  entityType?: string | null;
 }
 
-const getInlineControlProps = (layout: ConditionalFiltersLayout | undefined) =>
-  layout === "inline" ? { backgroundColor: "default1" as const } : {};
+const getInlineControlProps = (layout: ConditionalFiltersLayout | undefined) => ({
+  width: "100%" as const,
+  ...(layout === "inline" ? { backgroundColor: "default1" as const } : {}),
+});
 
 export const RightOperator = ({
   index,
@@ -54,6 +60,7 @@ export const RightOperator = ({
   disabled,
   helperText,
   layout = "popover",
+  entityType,
 }: RightOperatorProps) => {
   const inlineControlProps = getInlineControlProps(layout);
 
@@ -118,11 +125,31 @@ export const RightOperator = ({
   }
 
   if (isMultiselect(selected)) {
+    const isVariantReference =
+      isVariantReferenceEntity(entityType) ||
+      selected.options.some(isVariantReferenceOption) ||
+      selected.value.some(isVariantReferenceOption);
+
+    if (isVariantReference) {
+      return (
+        <VariantReferenceMultiselect
+          index={index}
+          selected={selected}
+          emitter={emitter}
+          error={error}
+          helperText={helperText}
+          disabled={disabled}
+          layout={layout}
+        />
+      );
+    }
+
     const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
 
     return (
       <DynamicMultiselect
         {...inlineControlProps}
+        id={getFilterControlId("right", index)}
         data-test-id={`right-${index}`}
         value={selected.value}
         options={options}
@@ -160,6 +187,7 @@ export const RightOperator = ({
     return (
       <DynamicCombobox
         {...inlineControlProps}
+        id={getFilterControlId("right", index)}
         data-test-id={`right-${index}`}
         value={value}
         options={options}
@@ -199,6 +227,7 @@ export const RightOperator = ({
     return (
       <Select
         {...inlineControlProps}
+        id={getFilterControlId("right", index)}
         data-test-id={`right-${index}`}
         value={value}
         options={options}

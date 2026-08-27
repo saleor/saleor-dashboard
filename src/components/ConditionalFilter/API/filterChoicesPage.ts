@@ -5,6 +5,9 @@ import { type LeftOperand } from "../LeftOperandsProvider";
 
 export const FILTER_CHOICES_PAGE_SIZE = DEFAULT_INITIAL_SEARCH_DATA.first;
 
+/** Nested variants per product when browsing (empty query). Keep in sync with the handler variable. */
+export const VARIANT_REFERENCE_VARIANTS_PER_PRODUCT = 100;
+
 export interface FilterChoicesPageInfo {
   hasNextPage: boolean;
   endCursor: string | null;

@@ -57,7 +57,7 @@ export const Root = ({
           {children}
         </Box>
       ) : (
-        <Box height="100%" display="grid" __gridTemplateRows="1fr">
+        <Box height="100%" width="100%" display="grid" __gridTemplateRows="1fr" __minWidth="0">
           {value.length > 0 ? (
             <Filters
               value={value}

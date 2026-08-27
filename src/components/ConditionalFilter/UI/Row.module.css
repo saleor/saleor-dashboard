@@ -1,11 +1,73 @@
-.inlineRow {
-  width: 100%;
-  min-width: 0;
-}
-
-.inlineRow > * {
+.row {
   min-width: 0;
   max-width: 100%;
+}
+
+.row > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.valueField {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.valueField > * {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.valueField :global([data-macaw-ui-component="Multiselect"]) {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.row :global([data-test-id^="selected-option-"]) {
+  max-width: min(160px, 100%);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.row :global([data-test-id^="selected-option-"] > *:first-child) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row :global(input) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inlineRow {
+  width: 100%;
+}
+
+/*
+ * DynamicMultiselect portals the menu without data-portal-for and does not
+ * render option adornments, so the only hook is the option node itself.
+ * Currency options opt out — they hide the label and use a custom wrap layout.
+ */
+:global([data-test-id="select-option"]:not(:has([data-currency-option-leading]))) {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+:global([data-test-id="select-option"]:not(:has([data-currency-option-leading])) > span) {
+  min-width: 0;
+  flex: 1 1 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .inlineRemoveButton {

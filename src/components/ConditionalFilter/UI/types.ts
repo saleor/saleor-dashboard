@@ -4,6 +4,10 @@ type DisabledScope = "left" | "right" | "condition";
 
 export type RightOperatorOption = Option & {
   slug: string;
+  productName?: string;
+  variantName?: string;
+  productId?: string;
+  productThumbnailUrl?: string;
 };
 
 export type LeftOperatorOption = Option & {
@@ -41,7 +45,12 @@ export interface Row {
   value: { label: string; value: string; type: string } | null;
   loading?: boolean;
   isAttribute: boolean;
-  selectedAttribute?: { label: string; value: string; type: string } | null;
+  selectedAttribute?: {
+    label: string;
+    value: string;
+    type: string;
+    entityType?: string | null;
+  } | null;
   availableAttributesList?: LeftOperatorOption[];
   attributeLoading?: boolean;
   constraint?: {

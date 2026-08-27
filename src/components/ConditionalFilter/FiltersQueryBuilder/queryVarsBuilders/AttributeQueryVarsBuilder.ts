@@ -21,12 +21,16 @@ import {
   isItemOptionArray,
 } from "../../FilterElement/ConditionValue";
 import { QueryVarsBuilderUtils } from "../utils";
-import { type WhereOnlyQueryVarsBuilder } from "./types";
+import { type BothApiQueryVarsBuilder } from "./types";
 
 type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
+/**
+ * Builds `AttributeInput` for product list (WHERE) and product export (FILTER).
+ * Both ProductWhereInput and ProductFilterInput use the same attributes field.
+ */
 export class AttributeQueryVarsBuilder
-  implements WhereOnlyQueryVarsBuilder<AttributeFilterQueryPart>
+  implements BothApiQueryVarsBuilder<AttributeFilterQueryPart>
 {
   canHandle(element: FilterElement): boolean {
     return element.rowType() === "attribute";
@@ -56,9 +60,24 @@ export class AttributeQueryVarsBuilder
   }
 
   updateWhereQueryVariables(
-    query: Readonly<{ attributes?: AttributeInput[] }>,
+    query: Readonly<AttributeFilterQueryPart>,
     element: FilterElement,
-  ): { attributes?: AttributeInput[] } {
+  ): AttributeFilterQueryPart {
+    return this.appendAttribute(query, element);
+  }
+
+  updateFilterQueryVariables(
+    query: Readonly<AttributeFilterQueryPart>,
+    element: FilterElement,
+  ): AttributeFilterQueryPart {
+    // ProductFilterInput.attributes uses the same AttributeInput as WHERE
+    return this.appendAttribute(query, element);
+  }
+
+  private appendAttribute(
+    query: Readonly<AttributeFilterQueryPart>,
+    element: FilterElement,
+  ): AttributeFilterQueryPart {
     const attribute = this.buildAttributeInput(element);
 
     if (!attribute.slug) {

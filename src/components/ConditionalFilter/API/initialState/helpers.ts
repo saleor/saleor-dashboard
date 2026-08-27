@@ -53,6 +53,22 @@ const convertItemOptionsToAttributeChoices = (
       choice.originalSlug = option.originalSlug;
     }
 
+    if (option.productName != null) {
+      choice.productName = option.productName;
+    }
+
+    if (option.variantName != null) {
+      choice.variantName = option.variantName;
+    }
+
+    if (option.productId != null) {
+      choice.productId = option.productId;
+    }
+
+    if (option.productThumbnailUrl != null) {
+      choice.productThumbnailUrl = option.productThumbnailUrl;
+    }
+
     return choice;
   });
 };

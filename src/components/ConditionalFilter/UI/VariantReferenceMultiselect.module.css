@@ -1,0 +1,102 @@
+.root {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.menu {
+  --variant-ref-thumb: 20px;
+  --variant-ref-thumb-gap: 6px;
+  font-style: normal;
+  width: 100%;
+}
+
+.group + .group {
+  margin-top: var(--mu-spacing-2);
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--variant-ref-thumb-gap);
+  min-width: 0;
+  padding: 2px var(--mu-spacing-2) 0;
+}
+
+.groupLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thumbnail,
+.thumbnailFallback {
+  box-sizing: border-box;
+  width: var(--variant-ref-thumb);
+  height: var(--variant-ref-thumb);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: var(--mu-border-radius-2);
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: var(--mu-colors-background-default2);
+}
+
+.thumbnail {
+  display: block;
+  object-fit: cover;
+}
+
+.thumbnailFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mu-colors-text-defaultDisabled);
+}
+
+.variant,
+.variantSelected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mu-spacing-1);
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px var(--mu-spacing-2) 2px
+    calc(var(--mu-spacing-2) + var(--variant-ref-thumb) + var(--variant-ref-thumb-gap));
+  text-align: left;
+  color: inherit;
+}
+
+.variant:hover,
+.variant[data-highlighted],
+.variantSelected {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.variantLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*
+ * Two-line pills: product, then variant. Beat the row-level nowrap + 160px
+ * cap so the variant line stays visible in the 200px value column.
+ */
+.root[data-variant-reference] :global([data-test-id^="selected-option-"]) {
+  max-width: 100%;
+  height: auto;
+  align-items: flex-start;
+}
+
+.root[data-variant-reference] :global([data-test-id^="selected-option-"] > *:first-child) {
+  min-width: 0;
+  overflow: hidden;
+  white-space: pre;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}

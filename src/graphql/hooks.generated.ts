@@ -7444,7 +7444,11 @@ export const _GetProductVariantChoicesDocument = gql`
         slug: id
         originalSlug: name
         product {
+          id
           name
+          thumbnail(size: 64) {
+            url
+          }
         }
       }
     }
@@ -7485,6 +7489,64 @@ export function use_GetProductVariantChoicesLazyQuery(baseOptions?: ApolloReactH
 export type _GetProductVariantChoicesQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesQuery>;
 export type _GetProductVariantChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesLazyQuery>;
 export type _GetProductVariantChoicesQueryResult = Apollo.QueryResult<Types._GetProductVariantChoicesQuery, Types._GetProductVariantChoicesQueryVariables>;
+export const _GetProductVariantChoicesByProductDocument = gql`
+    query _GetProductVariantChoicesByProduct($first: Int!, $query: String!, $after: String, $variantsFirst: Int!) {
+  products(first: $first, after: $after, filter: {search: $query}) {
+    edges {
+      node {
+        id
+        name
+        thumbnail(size: 64) {
+          url
+        }
+        productVariants(first: $variantsFirst) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetProductVariantChoicesByProductQuery__
+ *
+ * To run a query within a React component, call `use_GetProductVariantChoicesByProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetProductVariantChoicesByProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetProductVariantChoicesByProductQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      query: // value for 'query'
+ *      after: // value for 'after'
+ *      variantsFirst: // value for 'variantsFirst'
+ *   },
+ * });
+ */
+export function use_GetProductVariantChoicesByProductQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>(_GetProductVariantChoicesByProductDocument, options);
+      }
+export function use_GetProductVariantChoicesByProductLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>(_GetProductVariantChoicesByProductDocument, options);
+        }
+export type _GetProductVariantChoicesByProductQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesByProductQuery>;
+export type _GetProductVariantChoicesByProductLazyQueryHookResult = ReturnType<typeof use_GetProductVariantChoicesByProductLazyQuery>;
+export type _GetProductVariantChoicesByProductQueryResult = Apollo.QueryResult<Types._GetProductVariantChoicesByProductQuery, Types._GetProductVariantChoicesByProductQueryVariables>;
 export const _GetGiftCardTagsChoicesDocument = gql`
     query _GetGiftCardTagsChoices($first: Int!, $query: String!, $after: String) {
   giftCardTags(first: $first, after: $after, filter: {search: $query}) {
@@ -7718,7 +7780,11 @@ export const _SearchProductVariantOperandsDocument = gql`
         slug: id
         originalSlug: name
         product {
+          id
           name
+          thumbnail(size: 64) {
+            url
+          }
         }
       }
     }

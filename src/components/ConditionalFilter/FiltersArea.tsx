@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import { type FC, useMemo } from "react";
+import { type FC, useMemo, useState } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { type FilterContainer } from "./FilterElement";
@@ -11,7 +11,7 @@ import { useFilterContainer } from "./useFilterContainer";
 import { useFilteredOperands } from "./useFilteredOperands";
 import { useTranslate } from "./useTranslate";
 import { type ErrorEntry } from "./Validation";
-import { areFilterContainersEqual } from "./ValueProvider/utils";
+import { getFilterContainerKey, hasUnsavedFilterChanges } from "./ValueProvider/utils";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;
@@ -48,15 +48,17 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
     updateAvailableAttributesList,
   } = useFilterContainer(apiProvider);
   const filteredOperands = useFilteredOperands(leftOperandsProvider.operands, value);
-  const containerBaseline = useMemo(
-    () => getEditableFilterContainer(valueProvider.value),
-    [valueProvider.value],
+  const [committedKey, setCommittedKey] = useState(() =>
+    getFilterContainerKey(getEditableFilterContainer(valueProvider.value)),
   );
   const hasUnsavedChanges = useMemo(
-    () => !areFilterContainersEqual(value, containerBaseline),
-    [value, containerBaseline],
+    () => hasUnsavedFilterChanges(getEditableFilterContainer(value), committedKey),
+    [value, committedKey],
   );
   const isConfirmDisabled = hasEmptyRows || !hasUnsavedChanges;
+  const commitCurrentValue = (next: FilterContainer): void => {
+    setCommittedKey(getFilterContainerKey(getEditableFilterContainer(next)));
+  };
   const confirmLabel = layout === "inline" ? translations.applyFilters : translations.saveFilters;
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
@@ -134,14 +136,20 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
         </Filters.AddRowButton>
         <Box display="flex" gap={3}>
           <Filters.ClearButton
-            onClick={onCancel}
+            onClick={() => {
+              onCancel?.();
+              commitCurrentValue([]);
+            }}
             variant="tertiary"
             data-test-id="reset-all-filters-button"
           >
             {translations.clearFilters}
           </Filters.ClearButton>
           <Filters.ConfirmButton
-            onClick={() => onConfirm(value)}
+            onClick={() => {
+              onConfirm(value);
+              commitCurrentValue(value);
+            }}
             disabled={isConfirmDisabled}
             data-test-id="save-filters-button"
           >

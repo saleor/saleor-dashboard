@@ -25,7 +25,13 @@ export const ExpressionFilters = () => {
         </DropdownButton>
       </Popover.Trigger>
       <Popover.Content align="start" onInteractOutside={clearEmpty}>
-        <Box __minHeight="250px" __minWidth="636px" display="grid" __gridTemplateRows="auto 1fr">
+        <Box
+          __minHeight="250px"
+          __minWidth="636px"
+          __maxWidth="calc(100vw - 32px)"
+          display="grid"
+          __gridTemplateRows="auto 1fr"
+        >
           <Popover.Arrow fill="default1" />
           <Box
             paddingTop={3}

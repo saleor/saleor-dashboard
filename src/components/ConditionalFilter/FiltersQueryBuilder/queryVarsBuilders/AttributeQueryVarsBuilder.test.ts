@@ -14,6 +14,7 @@ import { type ConditionItem, ConditionOptions } from "../../FilterElement/Condit
 import { ConditionSelected } from "../../FilterElement/ConditionSelected";
 import { ExpressionValue, FilterElement } from "../../FilterElement/FilterElement";
 import { AttributeQueryVarsBuilder } from "./AttributeQueryVarsBuilder";
+import { supportsFilterApi, supportsWhereApi } from "./types";
 
 describe("AttributeQueryVarsBuilder", () => {
   describe("canHandle", () => {
@@ -536,6 +537,54 @@ describe("AttributeQueryVarsBuilder", () => {
 
       // Assert
       expect(result).toEqual({});
+    });
+  });
+
+  describe("updateFilterQueryVariables", () => {
+    const def = new AttributeQueryVarsBuilder();
+
+    it("supports both WHERE and FILTER APIs", () => {
+      expect(supportsWhereApi(def)).toBe(true);
+      expect(supportsFilterApi(def)).toBe(true);
+    });
+
+    it("should map NUMERIC ranges to valuesRange for product export FILTER API", () => {
+      // Arrange
+      const attributeSlug = "fabric-weight-gsm";
+      const selectedAttribute = new ExpressionValue(
+        attributeSlug,
+        "Fabric weight",
+        AttributeInputTypeEnum.NUMERIC,
+      );
+      const rangeConditionItem: ConditionItem = {
+        type: "number.range",
+        label: "between",
+        value: "input-4",
+      };
+      const selected = ConditionSelected.fromConditionItemAndValue(rangeConditionItem, [
+        "120",
+        "300",
+      ]);
+      const condition = new Condition(
+        ConditionOptions.fromName(AttributeInputTypeEnum.NUMERIC),
+        selected,
+        false,
+      );
+      const element = new FilterElement(
+        new ExpressionValue("attribute", "Attribute", "attribute"),
+        condition,
+        false,
+        undefined,
+        selectedAttribute,
+      );
+
+      // Act
+      const result = def.updateFilterQueryVariables({}, element);
+
+      // Assert
+      expect(result).toEqual({
+        attributes: [{ slug: attributeSlug, valuesRange: { gte: 120, lte: 300 } }],
+      });
     });
   });
 });

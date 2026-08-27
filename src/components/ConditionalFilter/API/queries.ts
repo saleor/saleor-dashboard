@@ -297,7 +297,42 @@ export const dynamicOperandsQueries = gql`
           slug: id
           originalSlug: name
           product {
+            id
             name
+            thumbnail(size: 64) {
+              url
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+
+  query _GetProductVariantChoicesByProduct(
+    $first: Int!
+    $query: String!
+    $after: String
+    $variantsFirst: Int!
+  ) {
+    products(first: $first, after: $after, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          thumbnail(size: 64) {
+            url
+          }
+          productVariants(first: $variantsFirst) {
+            edges {
+              node {
+                id
+                name
+              }
+            }
           }
         }
       }
@@ -388,7 +423,11 @@ export const dynamicOperandsQueries = gql`
           slug: id
           originalSlug: name
           product {
+            id
             name
+            thumbnail(size: 64) {
+              url
+            }
           }
         }
       }

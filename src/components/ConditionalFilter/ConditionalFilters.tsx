@@ -55,6 +55,8 @@ export const ConditionalFilters: FC<ConditionalFiltersProps> = ({
       padding={isInline ? undefined : 3}
       borderBottomLeftRadius={isInline ? undefined : 2}
       borderBottomRightRadius={isInline ? undefined : 2}
+      width="100%"
+      __minWidth="0"
     >
       <FiltersArea
         layout={layout}

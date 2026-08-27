@@ -38,6 +38,9 @@ import {
   _GetProductTypesChoicesDocument,
   type _GetProductTypesChoicesQuery,
   type _GetProductTypesChoicesQueryVariables,
+  _GetProductVariantChoicesByProductDocument,
+  type _GetProductVariantChoicesByProductQuery,
+  type _GetProductVariantChoicesByProductQueryVariables,
   _GetProductVariantChoicesDocument,
   type _GetProductVariantChoicesQuery,
   type _GetProductVariantChoicesQueryVariables,
@@ -59,8 +62,13 @@ import {
   type FilterChoicesPageInfo,
   NO_MORE_CHOICES,
   pageInfoFromConnection,
+  VARIANT_REFERENCE_VARIANTS_PER_PRODUCT,
 } from "./filterChoicesPage";
 import { getLocalizedLabel } from "./intl";
+import {
+  compareVariantReferenceNames,
+  formatVariantReferencePillLabel,
+} from "./variantReferenceOption";
 
 export interface Handler {
   fetch: (after?: string | null) => Promise<ItemOption[]>;
@@ -103,6 +111,38 @@ export const createCustomerOptionsFromAPI = (
   );
 };
 
+type VariantReferenceRow = {
+  variantName: string;
+  productName: string;
+  productId?: string;
+  productThumbnailUrl?: string;
+  value: string;
+  slug: string;
+  originalSlug?: string | null;
+};
+
+const toVariantReferenceOptions = (rows: VariantReferenceRow[]): ItemOption[] => {
+  rows.sort(compareVariantReferenceNames);
+
+  return rows.map(row => {
+    const option: ItemOption = {
+      label: formatVariantReferencePillLabel(row.variantName, row.productName || undefined),
+      value: row.value,
+      slug: row.slug,
+      originalSlug: row.originalSlug,
+      productName: row.productName,
+      variantName: row.variantName,
+      productId: row.productId,
+    };
+
+    if (row.productThumbnailUrl) {
+      option.productThumbnailUrl = row.productThumbnailUrl;
+    }
+
+    return option;
+  });
+};
+
 export const createAttributeProductVariantOptionsFromAPI = (
   data: Array<{
     node: {
@@ -111,21 +151,54 @@ export const createAttributeProductVariantOptionsFromAPI = (
       slug?: string;
       originalSlug?: string | null;
       product?: {
+        id?: string;
         name: string;
+        thumbnail?: { url?: string | null } | null;
       };
     };
   }>,
 ): ItemOption[] =>
-  data.map(
-    ({ node }) =>
-      ({
-        // This label matches value from AttributeValue.name for product variant reference attributes
-        // It's used by Saleor for searching ProductVariants
-        label: node.product ? `${node.product.name}: ${node.name}` : (node.name ?? ""),
-        value: node.id,
-        slug: node.slug,
-        originalSlug: node.originalSlug,
-      }) as ItemOption,
+  toVariantReferenceOptions(
+    data.map(({ node }) => ({
+      variantName: node.name ?? "",
+      productName: node.product?.name ?? "",
+      productId: node.product?.id,
+      productThumbnailUrl: node.product?.thumbnail?.url ?? undefined,
+      value: node.id,
+      slug: node.slug ?? node.id,
+      originalSlug: node.originalSlug,
+    })),
+  );
+
+export const createAttributeProductVariantOptionsFromProductsAPI = (
+  data: Array<{
+    node: {
+      id: string;
+      name: string;
+      thumbnail?: { url?: string | null } | null;
+      productVariants?: {
+        edges: Array<{
+          node: {
+            id: string;
+            name: string | null;
+          };
+        }>;
+      } | null;
+    };
+  }>,
+): ItemOption[] =>
+  toVariantReferenceOptions(
+    data.flatMap(({ node: product }) =>
+      (product.productVariants?.edges ?? []).map(({ node: variant }) => ({
+        variantName: variant.name ?? "",
+        productName: product.name,
+        productId: product.id,
+        productThumbnailUrl: product.thumbnail?.url ?? undefined,
+        value: variant.id,
+        slug: variant.id,
+        originalSlug: variant.name,
+      })),
+    ),
   );
 
 export class AttributeChoicesHandler implements Handler {
@@ -313,21 +386,40 @@ export class ProductVariantHandler implements Handler {
   ) {}
 
   fetch = async (after?: string | null) => {
+    if (this.query.trim()) {
+      const { data } = await this.client.query<
+        _GetProductVariantChoicesQuery,
+        _GetProductVariantChoicesQueryVariables
+      >({
+        query: _GetProductVariantChoicesDocument,
+        variables: {
+          first: FILTER_CHOICES_PAGE_SIZE,
+          after,
+          query: this.query,
+        },
+      });
+
+      this.pageInfo = pageInfoFromConnection(data.productVariants);
+
+      return createAttributeProductVariantOptionsFromAPI(data.productVariants?.edges ?? []);
+    }
+
     const { data } = await this.client.query<
-      _GetProductVariantChoicesQuery,
-      _GetProductVariantChoicesQueryVariables
+      _GetProductVariantChoicesByProductQuery,
+      _GetProductVariantChoicesByProductQueryVariables
     >({
-      query: _GetProductVariantChoicesDocument,
+      query: _GetProductVariantChoicesByProductDocument,
       variables: {
         first: FILTER_CHOICES_PAGE_SIZE,
         after,
         query: this.query,
+        variantsFirst: VARIANT_REFERENCE_VARIANTS_PER_PRODUCT,
       },
     });
 
-    this.pageInfo = pageInfoFromConnection(data.productVariants);
+    this.pageInfo = pageInfoFromConnection(data.products);
 
-    return createAttributeProductVariantOptionsFromAPI(data.productVariants?.edges ?? []);
+    return createAttributeProductVariantOptionsFromProductsAPI(data.products?.edges ?? []);
   };
 }
 

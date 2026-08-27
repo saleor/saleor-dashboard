@@ -24,13 +24,13 @@ export const Filters = ({
   return (
     <Box
       display="grid"
-      __gridTemplateColumns={isInline ? "auto minmax(0, 1fr)" : "repeat(2, auto)"}
+      __gridTemplateColumns="auto minmax(0, 1fr)"
       alignItems="center"
       columnGap={isInline ? 3 : 2}
       rowGap={isInline ? 3 : 3}
       alignSelf="start"
-      width={isInline ? "100%" : undefined}
-      __minWidth={isInline ? "0" : undefined}
+      width="100%"
+      __minWidth="0"
     >
       <Text paddingTop={1.5}>{locale.WHERE}</Text>
       {value.map((item, idx) =>
