@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessibleChannels";
-import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
+import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
+import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -19,6 +20,7 @@ import {
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { type OrderListQuery, type RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import { ORDER_MANAGEMENT_DOCS_URL } from "@dashboard/links";
 import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
 import {
@@ -73,7 +75,9 @@ const OrderListPage = ({
   ...listProps
 }: OrderListPageProps) => {
   const intl = useIntl();
-  const subtitle = useContextualLink("order_list");
+  const orderManagementHelpLabel = intl.formatMessage(contextualLinks.orders, {
+    orderManagement: intl.formatMessage(contextualLinks.orderManagement),
+  });
   const userAccessibleChannels = useUserAccessibleChannels();
   const hasAccessibleChannels = userAccessibleChannels.length > 0;
   const limitsReached = isLimitReached(limits, "orders");
@@ -106,12 +110,7 @@ const OrderListPage = ({
 
   return (
     <ListPageLayout>
-      <TopNav
-        title={intl.formatMessage(sectionNames.orders)}
-        subtitle={subtitle}
-        withoutBorder
-        isAlignToRight={false}
-      >
+      <TopNav title={intl.formatMessage(sectionNames.orders)} withoutBorder isAlignToRight={false}>
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <FilterPresetsSelect
@@ -130,6 +129,14 @@ const OrderListPage = ({
           </Box>
 
           <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" marginRight={3}>
+              <ContextualHelpIcon
+                href={ORDER_MANAGEMENT_DOCS_URL}
+                label={orderManagementHelpLabel}
+                analyticsType="order_management_docs"
+                dataTestId="order-management-docs"
+              />
+            </Box>
             {!!onSettingsOpen && (
               <TopNav.Menu
                 items={[

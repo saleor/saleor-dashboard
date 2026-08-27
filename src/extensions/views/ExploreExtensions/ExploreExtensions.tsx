@@ -1,8 +1,10 @@
-import { TopNav } from "@dashboard/components/AppLayout";
-import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
+import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
+import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { Info } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,7 +18,9 @@ import { useExtensionsFilter } from "./hooks/useExtenstionsFilter";
 export const ExploreExtensions = () => {
   const intl = useIntl();
   const { extensions, loading, error, isFallback } = useExploreExtensions();
-  const subtitle = useContextualLink("extensions");
+  const extensionsHelpLabel = intl.formatMessage(contextualLinks.extensions, {
+    extensions: intl.formatMessage(contextualLinks.extensionsDocs),
+  });
 
   const { handleQueryChange, query, filteredExtensions } = useExtensionsFilter({ extensions });
 
@@ -31,14 +35,23 @@ export const ExploreExtensions = () => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(headerTitles.extensions)}
-        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Text size={6} fontWeight="regular">
             {intl.formatMessage(headerTitles.exploreExtensions)}
           </Text>
         </Box>
-        <ExploreExtensionsActions />
+        <Box display="flex" alignItems="center" gap={2}>
+          <Box display="flex" alignItems="center" marginRight={3}>
+            <ContextualHelpIcon
+              href={EXTENSIONS_DOCS_URL}
+              label={extensionsHelpLabel}
+              analyticsType="extensions_docs"
+              dataTestId="extensions-docs"
+            />
+          </Box>
+          <ExploreExtensionsActions />
+        </Box>
       </TopNav>
       <DashboardCard paddingX={6}>
         {isFallback && (

@@ -1,4 +1,5 @@
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
+import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 
 import { useInstalledExtensionsFilter } from "./hooks/useInstalledExtensionsFilter";
@@ -43,8 +44,8 @@ jest.mock("@dashboard/graphql", () => ({
   ...(jest.requireActual("@dashboard/graphql") as object),
   useAppProblemDismissMutation: jest.fn(() => [jest.fn(), {}]),
 }));
-jest.mock("@dashboard/components/AppLayout/ContextualLinks/useContextualLink", () => ({
-  useContextualLink: () => "Extensions",
+jest.mock("@dashboard/components/ProductAnalytics/useAnalytics", () => ({
+  useAnalytics: () => ({ trackEvent: jest.fn() }),
 }));
 
 jest.mock("@dashboard/featureFlags", () => ({
@@ -90,6 +91,7 @@ describe("InstalledExtensions", () => {
 
     // Assert
     expect(mockMarkOnboardingStepAsCompleted).toHaveBeenCalledWith("view-extensions");
+    expect(screen.getByTestId("extensions-docs")).toHaveAttribute("href", EXTENSIONS_DOCS_URL);
   });
 
   it("displays installed and pending extensions in the list initially", () => {

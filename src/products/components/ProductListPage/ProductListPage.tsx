@@ -248,8 +248,8 @@ const ProductListPage = (props: ProductListPageProps) => {
             onSearchChange={onSearchChange}
             showSearchTooltip
             searchPlaceholder={intl.formatMessage({
-              id: "kIvvax",
-              defaultMessage: "Search Products...",
+              id: "AHOQr2",
+              defaultMessage: "Search products...",
             })}
             actions={
               <Box display="flex" gap={4} alignItems="center">

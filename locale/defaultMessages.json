@@ -3192,6 +3192,9 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
+  "AHOQr2": {
+    "string": "Search products..."
+  },
   "AJF7N5": {
     "context": "scope note for model type tab grouping help tooltip",
     "string": "Browser-only display — does not rename, merge, or change your model types or data."
@@ -5650,10 +5653,6 @@
     "context": "export scope option disabled when list has no active filters",
     "string": "Apply filters or search on the list to enable this option."
   },
-  "JDvxO6": {
-    "context": "search gift card placeholder",
-    "string": "Search Gift Cards (e.g. by code, email, user name)"
-  },
   "JE0TAx": {
     "context": "section name",
     "string": "Values"
@@ -7535,6 +7534,10 @@
   },
   "Q8Qw5B": {
     "string": "Description"
+  },
+  "Q8RwBy": {
+    "context": "search gift card placeholder; examples, not an exhaustive list",
+    "string": "Search by code, email, user name, etc..."
   },
   "Q8wHwJ": {
     "string": "Deleted collection"
@@ -12958,9 +12961,6 @@
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
-  },
-  "kIvvax": {
-    "string": "Search Products..."
   },
   "kJQczl": {
     "context": "sales section name",

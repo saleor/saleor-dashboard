@@ -8,7 +8,7 @@ describe("ListSearchInput", () => {
     render(
       <ListSearchInput
         initialSearch=""
-        placeholder="Search Products..."
+        placeholder="Search products..."
         onSearchChange={jest.fn()}
         showTooltip={false}
       />,
@@ -16,6 +16,6 @@ describe("ListSearchInput", () => {
 
     // Assert
     expect(screen.getByTestId("list-search-field")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Search Products...")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Search products...")).toBeInTheDocument();
   });
 });
