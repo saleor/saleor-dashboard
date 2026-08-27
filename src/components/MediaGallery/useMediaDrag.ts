@@ -1,4 +1,3 @@
-import { type ProductMediaFragment } from "@dashboard/graphql";
 import { type ReorderAction } from "@dashboard/types";
 import {
   type DragEndEvent,
@@ -12,17 +11,15 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-interface UseProductMediaDragProps {
-  media: ProductMediaFragment[];
+import { type GalleryMedia } from "./types";
+
+interface UseMediaDragProps {
+  media: GalleryMedia[];
   onReorder?: ReorderAction;
   disabled?: boolean;
 }
 
-export const useProductMediaDrag = ({
-  media,
-  onReorder,
-  disabled = false,
-}: UseProductMediaDragProps) => {
+export const useMediaDrag = ({ media, onReorder, disabled = false }: UseMediaDragProps) => {
   const [orderedMedia, setOrderedMedia] = useState(media);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const orderedMediaRef = useRef(orderedMedia);

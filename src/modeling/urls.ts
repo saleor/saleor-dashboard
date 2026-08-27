@@ -87,3 +87,8 @@ export const pageUrl = (id: string, params?: PageUrlQueryParams) =>
 export const pageCreatePath = urlJoin(modelingSection, "add");
 export const pageCreateUrl = (params?: PageCreateUrlQueryParams) =>
   pageCreatePath + "?" + stringifyQs(params);
+
+export const pageMediaPath = (pageId: string, mediaId: string) =>
+  urlJoin(modelingSection, pageId, "media", mediaId);
+export const pageMediaUrl = (pageId: string, mediaId: string) =>
+  pageMediaPath(encodeURIComponent(pageId), encodeURIComponent(mediaId));

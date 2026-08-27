@@ -1,7 +1,7 @@
-import { type ProductMediaByIdQuery, ProductMediaType } from "@dashboard/graphql";
+import { ProductMediaByIdDocument } from "@dashboard/graphql";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
-import { ProductMediaMetadataDialog } from "./ProductMediaMetadataDialog";
+import { MediaMetadataDialog } from "./MediaMetadataDialog";
 
 const mockOnSubmit = jest.fn();
 
@@ -13,18 +13,15 @@ jest.mock("@dashboard/components/MetadataDialog/useHandleMetadataSubmit", () => 
   })),
 }));
 
-const mockMedia: NonNullable<NonNullable<ProductMediaByIdQuery["product"]>["mainImage"]> = {
-  __typename: "ProductMedia",
+const mockMedia = {
   id: "media-id",
-  alt: "Alt text",
-  url: "https://example.com/image.jpg",
-  type: ProductMediaType.IMAGE,
-  oembedData: "{}",
-  metadata: [{ __typename: "MetadataItem", key: "media-key", value: "media-value" }],
-  privateMetadata: [{ __typename: "MetadataItem", key: "private-key", value: "private-value" }],
+  metadata: [{ __typename: "MetadataItem" as const, key: "media-key", value: "media-value" }],
+  privateMetadata: [
+    { __typename: "MetadataItem" as const, key: "private-key", value: "private-value" },
+  ],
 };
 
-describe("ProductMediaMetadataDialog", () => {
+describe("MediaMetadataDialog", () => {
   const onCloseMock = jest.fn();
 
   beforeEach(() => {
@@ -33,7 +30,14 @@ describe("ProductMediaMetadataDialog", () => {
 
   it("renders dialog with correct title when open", () => {
     // Arrange & Act
-    render(<ProductMediaMetadataDialog open={true} onClose={onCloseMock} media={mockMedia} />);
+    render(
+      <MediaMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        media={mockMedia}
+        refetchDocument={ProductMediaByIdDocument}
+      />,
+    );
 
     // Assert
     expect(screen.getByText("Media Metadata")).toBeInTheDocument();
@@ -41,7 +45,14 @@ describe("ProductMediaMetadataDialog", () => {
 
   it("does not render when open is false", () => {
     // Arrange & Act
-    render(<ProductMediaMetadataDialog open={false} onClose={onCloseMock} media={mockMedia} />);
+    render(
+      <MediaMetadataDialog
+        open={false}
+        onClose={onCloseMock}
+        media={mockMedia}
+        refetchDocument={ProductMediaByIdDocument}
+      />,
+    );
 
     // Assert
     expect(screen.queryByText("Media Metadata")).not.toBeInTheDocument();
@@ -49,7 +60,14 @@ describe("ProductMediaMetadataDialog", () => {
 
   it("closes when user clicks close button", () => {
     // Arrange
-    render(<ProductMediaMetadataDialog open={true} onClose={onCloseMock} media={mockMedia} />);
+    render(
+      <MediaMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        media={mockMedia}
+        refetchDocument={ProductMediaByIdDocument}
+      />,
+    );
 
     // Act
     fireEvent.click(screen.getByTestId("back"));
@@ -60,7 +78,14 @@ describe("ProductMediaMetadataDialog", () => {
 
   it("displays metadata when section is expanded", () => {
     // Arrange
-    render(<ProductMediaMetadataDialog open={true} onClose={onCloseMock} media={mockMedia} />);
+    render(
+      <MediaMetadataDialog
+        open={true}
+        onClose={onCloseMock}
+        media={mockMedia}
+        refetchDocument={ProductMediaByIdDocument}
+      />,
+    );
 
     const metadataEditors = screen.getAllByTestId("metadata-editor");
     const publicMetadataEditor = metadataEditors.find(
@@ -81,14 +106,11 @@ describe("ProductMediaMetadataDialog", () => {
 
     // Act
     render(
-      <ProductMediaMetadataDialog
+      <MediaMetadataDialog
         open={true}
         onClose={onCloseMock}
-        media={
-          mediaWithoutPrivateMetadata as unknown as NonNullable<
-            NonNullable<ProductMediaByIdQuery["product"]>["mainImage"]
-          >
-        }
+        media={mediaWithoutPrivateMetadata}
+        refetchDocument={ProductMediaByIdDocument}
       />,
     );
 

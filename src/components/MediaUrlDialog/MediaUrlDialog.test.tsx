@@ -2,7 +2,7 @@ import Wrapper from "@test/wrapper";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { ProductExternalMediaDialog } from "./ProductExternalMediaDialog";
+import { MediaUrlDialog } from "./MediaUrlDialog";
 
 const defaultProps = {
   open: true,
@@ -10,7 +10,7 @@ const defaultProps = {
   onSubmit: jest.fn().mockResolvedValue([]),
 };
 
-describe("ProductExternalMediaDialog", () => {
+describe("MediaUrlDialog", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -21,7 +21,7 @@ describe("ProductExternalMediaDialog", () => {
 
     render(
       <Wrapper>
-        <ProductExternalMediaDialog {...defaultProps} />
+        <MediaUrlDialog {...defaultProps} />
       </Wrapper>,
     );
 
@@ -54,7 +54,7 @@ describe("ProductExternalMediaDialog", () => {
 
     render(
       <Wrapper>
-        <ProductExternalMediaDialog {...defaultProps} onSubmit={onSubmit} />
+        <MediaUrlDialog {...defaultProps} onSubmit={onSubmit} />
       </Wrapper>,
     );
 
@@ -74,7 +74,7 @@ describe("ProductExternalMediaDialog", () => {
     const user = userEvent.setup();
     const { rerender } = render(
       <Wrapper>
-        <ProductExternalMediaDialog {...defaultProps} />
+        <MediaUrlDialog {...defaultProps} />
       </Wrapper>,
     );
 
@@ -83,12 +83,12 @@ describe("ProductExternalMediaDialog", () => {
     // Act
     rerender(
       <Wrapper>
-        <ProductExternalMediaDialog {...defaultProps} open={false} />
+        <MediaUrlDialog {...defaultProps} open={false} />
       </Wrapper>,
     );
     rerender(
       <Wrapper>
-        <ProductExternalMediaDialog {...defaultProps} open={true} />
+        <MediaUrlDialog {...defaultProps} open={true} />
       </Wrapper>,
     );
 

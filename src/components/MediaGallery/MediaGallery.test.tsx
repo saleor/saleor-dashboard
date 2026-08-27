@@ -1,28 +1,11 @@
-import { type FetchResult } from "@apollo/client";
-import { type ProductMediaCreateMutation, ProductMediaType } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { MemoryRouter } from "react-router-dom";
 
-import ProductMedia from "./ProductMedia";
-
-const uploadSuccessResult = (mediaId: string): FetchResult<ProductMediaCreateMutation> => ({
-  data: {
-    __typename: "Mutation",
-    productMediaCreate: {
-      __typename: "ProductMediaCreate",
-      media: { __typename: "ProductMedia", id: mediaId },
-      product: {
-        __typename: "Product",
-        id: "product-1",
-        media: [],
-      },
-      errors: [],
-    },
-  },
-});
+import { MediaGallery } from "./MediaGallery";
+import { type GalleryMedia } from "./types";
 
 const TestWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
   <MemoryRouter>
@@ -30,17 +13,16 @@ const TestWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
   </MemoryRouter>
 );
 
-const savedMedia = {
-  __typename: "ProductMedia" as const,
+const savedMedia: GalleryMedia = {
   id: "media-1",
   alt: "Existing",
   sortOrder: 0,
-  type: ProductMediaType.IMAGE,
+  type: "IMAGE",
   url: "https://example.com/existing.png",
   oembedData: "{}",
 };
 
-describe("ProductMedia", () => {
+describe("MediaGallery", () => {
   const createObjectURL = jest.fn(() => "blob:pending-preview");
   const revokeObjectURL = jest.fn();
 
@@ -56,11 +38,32 @@ describe("ProductMedia", () => {
     });
   });
 
+  it("uses the aligned detail-card shell", () => {
+    // Arrange / Act
+    render(
+      <TestWrapper>
+        <MediaGallery
+          media={[savedMedia]}
+          onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
+          onImageUpload={async () => undefined}
+          openMediaUrlModal={() => undefined}
+        />
+      </TestWrapper>,
+    );
+
+    // Assert
+    const gallery = screen.getByTestId("product-media");
+
+    expect(gallery).toHaveClass("card");
+    expect(within(gallery).getByRole("heading", { name: "Media" })).toBeInTheDocument();
+  });
+
   it("shows uploading tiles immediately when files are selected on an empty gallery", async () => {
     // Arrange
-    let resolveUpload: (value: FetchResult<ProductMediaCreateMutation>) => void = () => undefined;
+    let resolveUpload: (value: string | undefined) => void = () => undefined;
     const onImageUpload = jest.fn(
-      (): Promise<FetchResult<ProductMediaCreateMutation>> =>
+      (): Promise<string | undefined> =>
         new Promise(resolve => {
           resolveUpload = resolve;
         }),
@@ -69,7 +72,7 @@ describe("ProductMedia", () => {
 
     const { rerender } = render(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={[]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
@@ -99,7 +102,7 @@ describe("ProductMedia", () => {
 
     // Act — upload finishes with created media id, but saved media has not arrived yet
     await act(async () => {
-      resolveUpload(uploadSuccessResult("media-uploaded"));
+      resolveUpload("media-uploaded");
     });
 
     // Assert — keep the pending tile until media prop updates (no empty flash)
@@ -114,14 +117,13 @@ describe("ProductMedia", () => {
     // Act — Apollo cache delivers the saved media
     rerender(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={[
             {
-              __typename: "ProductMedia",
               id: "media-uploaded",
               alt: "",
               sortOrder: 0,
-              type: ProductMediaType.IMAGE,
+              type: "IMAGE",
               url: "https://example.com/uploaded.png",
               oembedData: "{}",
             },
@@ -157,13 +159,11 @@ describe("ProductMedia", () => {
 
   it("appends uploading tiles next to existing media", async () => {
     // Arrange
-    const onImageUpload = jest.fn(
-      (): Promise<FetchResult<ProductMediaCreateMutation>> => new Promise(() => undefined),
-    );
+    const onImageUpload = jest.fn((): Promise<string | undefined> => new Promise(() => undefined));
 
     render(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={[savedMedia]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
@@ -196,15 +196,12 @@ describe("ProductMedia", () => {
 
     render(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={[savedMedia, secondMedia]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
           onImagesDelete={onImagesDelete}
-          onImageUpload={jest.fn(
-            (): Promise<FetchResult<ProductMediaCreateMutation>> =>
-              Promise.resolve(uploadSuccessResult("unused")),
-          )}
+          onImageUpload={jest.fn((): Promise<string | undefined> => Promise.resolve("unused"))}
           openMediaUrlModal={() => undefined}
         />
       </TestWrapper>,
@@ -225,7 +222,7 @@ describe("ProductMedia", () => {
   it("removes the pending tile when upload fails", async () => {
     // Arrange
     const onImageUpload = jest.fn(
-      (): Promise<FetchResult<ProductMediaCreateMutation>> => Promise.reject(new Error("network")),
+      (): Promise<string | undefined> => Promise.reject(new Error("network")),
     );
     const onImagesUploadComplete = jest.fn();
 
@@ -233,7 +230,7 @@ describe("ProductMedia", () => {
 
     render(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={[]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
@@ -265,11 +262,11 @@ describe("ProductMedia", () => {
 
   it("skips invalid files and uploads only valid images", async () => {
     // Arrange
-    const onImageUpload = jest.fn(() => Promise.resolve(uploadSuccessResult("media-new")));
+    const onImageUpload = jest.fn(() => Promise.resolve("media-new"));
 
     render(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={[savedMedia]}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
@@ -299,7 +296,7 @@ describe("ProductMedia", () => {
     // Act
     const { rerender } = render(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={undefined}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}
@@ -314,7 +311,7 @@ describe("ProductMedia", () => {
     // A regression here does not fail an assertion - it hangs this test.
     rerender(
       <TestWrapper>
-        <ProductMedia
+        <MediaGallery
           media={undefined}
           getImageEditUrl={(id): string => `/media/${id}`}
           onImageDelete={() => () => undefined}

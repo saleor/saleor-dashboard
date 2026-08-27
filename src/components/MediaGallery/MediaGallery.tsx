@@ -1,13 +1,6 @@
-// @ts-strict-ignore
-import { type FetchResult } from "@apollo/client";
-import { DashboardCard } from "@dashboard/components/Card";
+import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { Draggable } from "@dashboard/components/Draggable/Draggable";
 import MediaTile from "@dashboard/components/MediaTile/MediaTile";
-import {
-  type ProductMediaCreateMutation,
-  type ProductMediaFragment,
-  ProductMediaType,
-} from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { type ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
@@ -19,11 +12,12 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import styles from "./MediaGallery.module.css";
+import { MediaGalleryDropzone } from "./MediaGalleryDropzone";
 import { messages } from "./messages";
-import styles from "./ProductMedia.module.css";
-import { ProductMediaGalleryDropzone } from "./ProductMediaGalleryDropzone";
-import { useProductMediaDrag } from "./useProductMediaDrag";
-import { validateProductMediaFiles } from "./validateProductMediaFiles";
+import { type GalleryMedia } from "./types";
+import { useMediaDrag } from "./useMediaDrag";
+import { validateMediaFiles } from "./validateMediaFiles";
 
 const UPLOAD_CONCURRENCY = 3;
 
@@ -38,14 +32,14 @@ function disableSortingStrategy() {
 
 interface MediaListProps {
   className: string;
-  media: ProductMediaFragment[];
-  preview: ProductMediaFragment[];
+  media: GalleryMedia[];
+  preview: GalleryMedia[];
   placeholders: Record<string, string>;
   selectedIds: Set<string>;
   disabled?: boolean;
   onDelete: (id: string) => () => void;
   onSelectionChange: (id: string, selected: boolean) => void;
-  getEditHref: (id: string) => string;
+  getEditHref?: (id: string) => string;
   onPlaceholderUnused: (id: string) => void;
 }
 
@@ -74,7 +68,7 @@ const MediaList = ({
           >
             <MediaTile
               media={mediaObj}
-              editHref={getEditHref(mediaObj.id)}
+              editHref={getEditHref?.(mediaObj.id)}
               onDelete={onDelete(mediaObj.id)}
               selected={selectedIds.has(mediaObj.id)}
               onSelectionChange={selected => onSelectionChange(mediaObj.id, selected)}
@@ -92,17 +86,17 @@ const MediaList = ({
   </div>
 );
 
-interface ProductMediaProps {
-  // Undefined until the product query resolves - the component guards for it throughout.
-  media: ProductMediaFragment[] | undefined;
-  loading?: boolean;
-  getImageEditUrl: (id: string) => string;
+interface MediaGalleryProps {
+  // Undefined until the owner query resolves - the component guards for it throughout.
+  media: GalleryMedia[] | undefined;
+  getImageEditUrl?: (id: string) => string;
   onImageDelete: (id: string) => () => void;
   onImagesDelete: (ids: string[]) => void;
   onImageReorder?: ReorderAction;
-  onImageUpload: (file: File) => Promise<FetchResult<ProductMediaCreateMutation>>;
+  /** Uploads a single file and resolves with the created media id, or rejects on failure. */
+  onImageUpload: (file: File) => Promise<string | undefined>;
   onImagesUploadComplete?: (result: { successCount: number; failureCount: number }) => void;
-  openMediaUrlModal: () => any;
+  openMediaUrlModal: () => void;
 }
 
 let pendingMediaIdCounter = 0;
@@ -113,19 +107,14 @@ const createPendingMediaId = () => {
   return `pending-${Date.now()}-${pendingMediaIdCounter}`;
 };
 
-const createPendingMedia = (file: File, sortOrder: number): ProductMediaFragment => {
-  const clientId = createPendingMediaId();
-
-  return {
-    __typename: "ProductMedia",
-    alt: "",
-    id: clientId,
-    sortOrder,
-    type: ProductMediaType.IMAGE,
-    url: URL.createObjectURL(file),
-    oembedData: null,
-  };
-};
+const createPendingMedia = (file: File, sortOrder: number): GalleryMedia => ({
+  alt: "",
+  id: createPendingMediaId(),
+  sortOrder,
+  type: "IMAGE",
+  url: URL.createObjectURL(file),
+  oembedData: null,
+});
 
 const revokeObjectUrl = (url: string) => {
   if (url.startsWith("blob:")) {
@@ -133,30 +122,28 @@ const revokeObjectUrl = (url: string) => {
   }
 };
 
-const getMediaIdsSignature = (media: ProductMediaFragment[] | undefined) =>
+const getMediaIdsSignature = (media: GalleryMedia[] | undefined) =>
   media === undefined ? null : media.map(item => item.id).join("\0");
 
 // Stable identity for the "not loaded yet" case. An inline `media ?? []` would hand
-// useProductMediaDrag a new array on every render, and its media-sync effect would
+// useMediaDrag a new array on every render, and its media-sync effect would
 // setState on every one of them - an endless render loop while the query is in flight.
-const NO_MEDIA: ProductMediaFragment[] = [];
+const NO_MEDIA: GalleryMedia[] = [];
 
-const ProductMedia = (props: ProductMediaProps) => {
-  const {
-    media,
-    getImageEditUrl,
-    onImageDelete,
-    onImagesDelete,
-    onImageReorder,
-    onImageUpload,
-    onImagesUploadComplete,
-    openMediaUrlModal,
-  } = props;
+export const MediaGallery = ({
+  media,
+  getImageEditUrl,
+  onImageDelete,
+  onImagesDelete,
+  onImageReorder,
+  onImageUpload,
+  onImagesUploadComplete,
+  openMediaUrlModal,
+}: MediaGalleryProps) => {
   const intl = useIntl();
   const notify = useNotifier();
   const imagesUpload = React.useRef<HTMLInputElement>(null);
-  const anchor = React.useRef<HTMLButtonElement>();
-  const [pendingMedia, setPendingMedia] = React.useState<ProductMediaFragment[]>([]);
+  const [pendingMedia, setPendingMedia] = React.useState<GalleryMedia[]>([]);
   const [placeholders, setPlaceholders] = React.useState<Record<string, string>>({});
   /** Maps pending client ids to server media ids once each upload mutation returns. */
   const [pendingHandoffs, setPendingHandoffs] = React.useState<Record<string, string>>({});
@@ -177,7 +164,7 @@ const ProductMedia = (props: ProductMediaProps) => {
     handleDragOver,
     handleDragEnd,
     handleDragCancel,
-  } = useProductMediaDrag({
+  } = useMediaDrag({
     media: media ?? NO_MEDIA,
     onReorder: onImageReorder,
     disabled: isUploading,
@@ -196,7 +183,7 @@ const ProductMedia = (props: ProductMediaProps) => {
   const nextMediaIdsSignature = getMediaIdsSignature(media);
   const currentIds = media?.map(item => item.id) ?? [];
   const mediaIdsChanged =
-    nextMediaIdsSignature !== null && media && nextMediaIdsSignature !== mediaIdsSignature;
+    nextMediaIdsSignature !== null && !!media && nextMediaIdsSignature !== mediaIdsSignature;
 
   if (mediaIdsChanged) {
     setMediaIdsSignature(nextMediaIdsSignature);
@@ -220,7 +207,7 @@ const ProductMedia = (props: ProductMediaProps) => {
       serverId: nextPendingHandoffs[item.id],
     }))
     .filter(
-      (entry): entry is { pending: ProductMediaFragment; serverId: string } =>
+      (entry): entry is { pending: GalleryMedia; serverId: string } =>
         Boolean(entry.serverId) && currentIds.includes(entry.serverId),
     );
 
@@ -240,7 +227,7 @@ const ProductMedia = (props: ProductMediaProps) => {
     pendingStateChanged = true;
   }
 
-  // FIFO fallback for uploads that did not return productMediaCreate.media.id
+  // FIFO fallback for uploads whose mutation did not return the created media id
   if (mediaIdsChanged) {
     const previousSignatureIds =
       mediaIdsSignature === null || mediaIdsSignature === ""
@@ -345,7 +332,7 @@ const ProductMedia = (props: ProductMediaProps) => {
 
   const handleImageUpload = React.useCallback(
     (files: FileList | File[]) => {
-      const { validFiles, rejected } = validateProductMediaFiles(files);
+      const { validFiles, rejected } = validateMediaFiles(files);
 
       if (rejected.length > 0) {
         notify({
@@ -369,10 +356,8 @@ const ProductMedia = (props: ProductMediaProps) => {
 
       return createMultiFileUploadHandler(onImageUpload, {
         concurrency: UPLOAD_CONCURRENCY,
-        onAfterUpload: (index, _files, result) => {
+        onAfterUpload: (index, _files, serverId) => {
           successCount += 1;
-
-          const serverId = result.data?.productMediaCreate?.media?.id;
 
           if (serverId) {
             setPendingHandoffs(prev => ({
@@ -395,157 +380,147 @@ const ProductMedia = (props: ProductMediaProps) => {
 
   const selectedCount = selectedIds.size;
   const hasSelection = selectedCount > 0;
-  const allSelected = (media?.length ?? 0) > 0 && selectedCount === media.length;
+  const allSelected = (media?.length ?? 0) > 0 && selectedCount === media?.length;
   const showGallery = (media?.length ?? 0) > 0 || pendingMedia.length > 0;
 
   return (
-    <DashboardCard data-test-id="product-media">
-      <DashboardCard.Header>
-        <DashboardCard.Title>
-          <FormattedMessage {...messages.media} />
-        </DashboardCard.Title>
-        <DashboardCard.Toolbar>
-          <Box display="flex" gap={2} alignItems="center">
-            {hasSelection ? (
-              <>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={allSelected ? handleClearSelection : handleSelectAll}
-                  data-test-id="product-media-select-all"
-                >
-                  {intl.formatMessage(allSelected ? messages.clearSelection : messages.selectAll)}
-                </Button>
-                <Button
-                  variant="error"
-                  type="button"
-                  onClick={handleDeleteSelected}
-                  disabled={isUploading}
-                  data-test-id="product-media-delete-selected"
-                >
-                  {intl.formatMessage(messages.deleteSelected, { quantity: selectedCount })}
-                </Button>
-              </>
-            ) : null}
-            <Dropdown>
-              <Dropdown.Trigger>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  data-test-id="button-upload-image"
-                  ref={anchor}
-                >
-                  {intl.formatMessage(messages.upload)}
-                </Button>
-              </Dropdown.Trigger>
-              <Dropdown.Content align="end">
-                <List
-                  padding={2}
-                  borderRadius={4}
-                  boxShadow="defaultOverlay"
-                  backgroundColor="default1"
-                >
-                  <Dropdown.Item>
-                    <List.Item
-                      borderRadius={4}
-                      paddingX={1.5}
-                      paddingY={2}
-                      onClick={() => imagesUpload.current.click()}
-                      data-test-id="upload-images"
-                    >
-                      <Text>{intl.formatMessage(messages.uploadImages)}</Text>
-                    </List.Item>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <List.Item
-                      borderRadius={4}
-                      paddingX={1.5}
-                      paddingY={2}
-                      onClick={openMediaUrlModal}
-                      data-test-id="upload-media-url"
-                    >
-                      <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
-                    </List.Item>
-                  </Dropdown.Item>
-                </List>
-              </Dropdown.Content>
-            </Dropdown>
-          </Box>
-        </DashboardCard.Toolbar>
-      </DashboardCard.Header>
-      <DashboardCard.Content>
-        <input
-          className={styles.hiddenInput}
-          data-test-id="product-media-file-input"
-          id="product-media-file-upload"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            if (event.target.files) {
-              handleImageUpload(event.target.files);
-            }
-
-            // Allow selecting the same file again
-            event.target.value = "";
-          }}
-          multiple
-          type="file"
-          ref={imagesUpload}
-          accept="image/*"
-        />
-        <Box position="relative">
-          {media === undefined ? (
-            <Box padding={5}>
-              <Skeleton />
-            </Box>
-          ) : showGallery ? (
-            <ProductMediaGalleryDropzone
-              variant="gallery"
-              disableClick={true}
-              onImageUpload={handleImageUpload}
-            >
-              {({ isDragActive }) => (
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragStart={handleDragStart}
-                  onDragOver={handleDragOver}
-                  onDragEnd={handleDragEnd}
-                  onDragCancel={handleDragCancel}
-                >
-                  <SortableContext items={items} strategy={disableSortingStrategy}>
-                    <MediaList
-                      media={orderedMedia}
-                      preview={pendingMedia}
-                      placeholders={placeholders}
-                      selectedIds={selectedIds}
-                      disabled={isUploading}
-                      className={clsx(styles.mediaList, isDragActive && styles.mediaListDimmed)}
-                      onDelete={onImageDelete}
-                      onSelectionChange={handleSelectionChange}
-                      getEditHref={getImageEditUrl}
-                      onPlaceholderUnused={handlePlaceholderUnused}
-                    />
-                  </SortableContext>
-                  {createPortal(
-                    <DragOverlay dropAnimation={null} style={{ zIndex: 1000 }}>
-                      {activeMedia ? (
-                        <div className={styles.dragOverlayTile}>
-                          <MediaTile media={activeMedia} disableOverlay />
-                        </div>
-                      ) : null}
-                    </DragOverlay>,
-                    document.body,
-                  )}
-                </DndContext>
-              )}
-            </ProductMediaGalleryDropzone>
-          ) : (
-            <ProductMediaGalleryDropzone variant="empty" onImageUpload={handleImageUpload} />
-          )}
+    <DetailSettingsCard
+      title={<FormattedMessage {...messages.media} />}
+      headerEnd={
+        <Box display="flex" gap={2} alignItems="center">
+          {hasSelection ? (
+            <>
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={allSelected ? handleClearSelection : handleSelectAll}
+                data-test-id="product-media-select-all"
+              >
+                {intl.formatMessage(allSelected ? messages.clearSelection : messages.selectAll)}
+              </Button>
+              <Button
+                variant="error"
+                type="button"
+                onClick={handleDeleteSelected}
+                disabled={isUploading}
+                data-test-id="product-media-delete-selected"
+              >
+                {intl.formatMessage(messages.deleteSelected, { quantity: selectedCount })}
+              </Button>
+            </>
+          ) : null}
+          <Dropdown>
+            <Dropdown.Trigger>
+              <Button variant="secondary" type="button" data-test-id="button-upload-image">
+                {intl.formatMessage(messages.upload)}
+              </Button>
+            </Dropdown.Trigger>
+            <Dropdown.Content align="end">
+              <List
+                padding={2}
+                borderRadius={4}
+                boxShadow="defaultOverlay"
+                backgroundColor="default1"
+              >
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={1.5}
+                    paddingY={2}
+                    onClick={() => imagesUpload.current?.click()}
+                    data-test-id="upload-images"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadImages)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={1.5}
+                    paddingY={2}
+                    onClick={openMediaUrlModal}
+                    data-test-id="upload-media-url"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+              </List>
+            </Dropdown.Content>
+          </Dropdown>
         </Box>
-      </DashboardCard.Content>
-    </DashboardCard>
+      }
+      data-test-id="product-media"
+    >
+      <input
+        className={styles.hiddenInput}
+        data-test-id="product-media-file-input"
+        id="product-media-file-upload"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          if (event.target.files) {
+            handleImageUpload(event.target.files);
+          }
+
+          // Allow selecting the same file again
+          event.target.value = "";
+        }}
+        multiple
+        type="file"
+        ref={imagesUpload}
+        accept="image/*"
+      />
+      <Box position="relative">
+        {media === undefined ? (
+          <Box padding={5}>
+            <Skeleton />
+          </Box>
+        ) : showGallery ? (
+          <MediaGalleryDropzone
+            variant="gallery"
+            disableClick={true}
+            onImageUpload={handleImageUpload}
+          >
+            {({ isDragActive }) => (
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDragEnd={handleDragEnd}
+                onDragCancel={handleDragCancel}
+              >
+                <SortableContext items={items} strategy={disableSortingStrategy}>
+                  <MediaList
+                    media={orderedMedia}
+                    preview={pendingMedia}
+                    placeholders={placeholders}
+                    selectedIds={selectedIds}
+                    disabled={isUploading}
+                    className={clsx(styles.mediaList, isDragActive && styles.mediaListDimmed)}
+                    onDelete={onImageDelete}
+                    onSelectionChange={handleSelectionChange}
+                    getEditHref={getImageEditUrl}
+                    onPlaceholderUnused={handlePlaceholderUnused}
+                  />
+                </SortableContext>
+                {createPortal(
+                  <DragOverlay dropAnimation={null} style={{ zIndex: 1000 }}>
+                    {activeMedia ? (
+                      <div className={styles.dragOverlayTile}>
+                        <MediaTile media={activeMedia} disableOverlay />
+                      </div>
+                    ) : null}
+                  </DragOverlay>,
+                  document.body,
+                )}
+              </DndContext>
+            )}
+          </MediaGalleryDropzone>
+        ) : (
+          <MediaGalleryDropzone variant="empty" onImageUpload={handleImageUpload} />
+        )}
+      </Box>
+    </DetailSettingsCard>
   );
 };
 
-ProductMedia.displayName = "ProductMedia";
-export default ProductMedia;
+MediaGallery.displayName = "MediaGallery";

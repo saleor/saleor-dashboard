@@ -51,23 +51,23 @@ const useStyles = makeStyles(
     },
     toolbar: { marginTop: theme.spacing(-0.5) },
   }),
-  { name: "ProductMediaNavigation" },
+  { name: "MediaNavigation" },
 );
 
-interface ProductMediaNavigationProps {
+interface MediaNavigationProps {
   disabled: boolean;
   media?: Array<{
     id: string;
     url: string;
-    alt?: string;
-    type?: string;
-    oembedData?: string;
+    alt?: string | null;
+    type?: string | null;
+    oembedData?: string | null;
   }>;
   highlighted?: string;
   onRowClick: (id: string) => () => void;
 }
 
-const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
+export const MediaNavigation = (props: MediaNavigationProps) => {
   const { highlighted, media, onRowClick } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -79,7 +79,7 @@ const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
       </DashboardCard.Header>
       <DashboardCard.Content>
         {!media ? (
-          <div className={classes.root} data-test-id="product-media-navigation-skeleton">
+          <div className={classes.root} data-test-id="media-navigation-skeleton">
             {Array.from({ length: skeletonThumbnailCount }, (_, index) => (
               <Box
                 key={index}
@@ -119,5 +119,4 @@ const ProductMediaNavigation = (props: ProductMediaNavigationProps) => {
   );
 };
 
-ProductMediaNavigation.displayName = "ProductMediaNavigation";
-export default ProductMediaNavigation;
+MediaNavigation.displayName = "MediaNavigation";

@@ -1,5 +1,6 @@
 import { ConditionalCollectionFilterProvider } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
+import { isStagingSchema } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -13,11 +14,22 @@ import {
   collectionListUrl,
   type CollectionListUrlQueryParams,
   CollectionListUrlSortField,
+  collectionMediaPath,
   collectionPath,
   type CollectionUrlQueryParams,
 } from "./urls";
 import CollectionDetailsView from "./views/CollectionDetails";
 import CollectionListView from "./views/CollectionList/CollectionList";
+import CollectionMediaView from "./views/CollectionMedia";
+
+const CollectionMedia = ({
+  match,
+}: RouteComponentProps<{ collectionId: string; mediaId: string }>) => (
+  <CollectionMediaView
+    collectionId={decodeURIComponent(match.params.collectionId)}
+    mediaId={decodeURIComponent(match.params.mediaId)}
+  />
+);
 
 const CollectionList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
@@ -56,6 +68,13 @@ const Component = () => {
       <Switch>
         <Route exact path={collectionListPath} component={CollectionList} />
         <Route exact path={collectionAddPath} component={CollectionCreateRedirect} />
+        {isStagingSchema() && (
+          <Route
+            exact
+            path={collectionMediaPath(":collectionId", ":mediaId")}
+            component={CollectionMedia}
+          />
+        )}
         <Route path={collectionPath(":id")} component={CollectionDetails} />
       </Switch>
     </>

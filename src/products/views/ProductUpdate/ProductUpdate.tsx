@@ -4,6 +4,7 @@ import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttribu
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MediaDeleteDialog } from "@dashboard/components/MediaDeleteDialog/MediaDeleteDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -23,6 +24,7 @@ import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/uti
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages, errorMessages } from "@dashboard/intl";
+import { mediaMessages } from "@dashboard/media/messages";
 import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -43,7 +45,6 @@ import { useIntl } from "react-intl";
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "../../../components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
 import { getMutationState } from "../../../misc";
 import { ProductDeleteDialog } from "../../components/ProductDeleteDialog/ProductDeleteDialog";
-import { ProductMediaDeleteDialog } from "../../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
 import { ProductMetadataDialog } from "../../components/ProductMetadataDialog/ProductMetadataDialog";
 import { useProductSetupCardDismiss } from "../../components/ProductSetupCard/useProductSetupCardDismiss";
 import ProductUpdatePage from "../../components/ProductUpdatePage/ProductUpdatePage";
@@ -61,7 +62,6 @@ import {
   createImageUploadHandler,
 } from "./handlers";
 import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
-import { productUpdatePageMessages as messages } from "./messages";
 
 interface ProductUpdateProps {
   id: string;
@@ -150,7 +150,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       } else {
         notify({
           status: "success",
-          text: intl.formatMessage(messages.mediaReorderSuccess),
+          text: intl.formatMessage(mediaMessages.mediaReorderSuccess),
         });
       }
     },
@@ -198,7 +198,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
 
       notify({
         status: "success",
-        text: intl.formatMessage(messages.mediaUploadSuccess),
+        text: intl.formatMessage(mediaMessages.mediaUploadSuccess),
       });
     },
     [intl, notify],
@@ -245,7 +245,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
       closeModal();
       notify({
         status: "success",
-        text: intl.formatMessage(messages.mediaDeleteSuccess, {
+        text: intl.formatMessage(mediaMessages.mediaDeleteSuccess, {
           counter: result.count,
         }),
       });
@@ -526,7 +526,7 @@ const ProductUpdate = ({ id, params }: ProductUpdateProps) => {
         name={product?.name ?? ""}
         onConfirm={() => deleteProduct({ variables: { id } })}
       />
-      <ProductMediaDeleteDialog
+      <MediaDeleteDialog
         open={params.action === "remove-media" && mediaIdsToDelete.length > 0}
         onClose={closeModal}
         confirmButtonState={bulkDeleteProductMediaOpts.status}

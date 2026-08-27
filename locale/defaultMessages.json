@@ -1147,6 +1147,10 @@
     "context": "model type a11y label prefix",
     "string": "Model type"
   },
+  "2WuMW8": {
+    "context": "TopNav destination link tooltip to parent model",
+    "string": "Model"
+  },
   "2Xt+sw": {
     "context": "dialog header",
     "string": "Add postal codes"
@@ -4057,6 +4061,10 @@
     "context": "add postal code range, button",
     "string": "Add"
   },
+  "DMGbK7": {
+    "context": "TopNav destination link tooltip to parent collection",
+    "string": "Collection"
+  },
   "DNTxWr": {
     "context": "permission groups section name",
     "string": "Permission Groups"
@@ -6619,6 +6627,10 @@
   },
   "MzXzjL": {
     "string": "Warehouse deleted"
+  },
+  "N+1kc6": {
+    "context": "TopNav destination link tooltip to parent category",
+    "string": "Category"
   },
   "N+Omth": {
     "context": "create attribute from model type, button",

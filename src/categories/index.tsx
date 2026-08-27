@@ -1,4 +1,5 @@
 import { Route } from "@dashboard/components/Router";
+import { isStagingSchema } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -12,12 +13,14 @@ import {
   categoryListUrl,
   type CategoryListUrlQueryParams,
   CategoryListUrlSortField,
+  categoryMediaPath,
   categoryPath,
   categoryUrl,
   type CategoryUrlQueryParams,
 } from "./urls";
 import CategoryDetailsView from "./views/CategoryDetails";
 import CategoryListComponent from "./views/CategoryList/CategoryList";
+import CategoryMediaView from "./views/CategoryMedia";
 
 interface CategoryDetailsRouteParams {
   id: string;
@@ -45,6 +48,13 @@ const CategoryCreateRedirect = ({ match }: RouteComponentProps<CategoryCreateRou
   return <Redirect to={categoryListUrl({ action: "create" })} />;
 };
 
+const CategoryMedia = ({ match }: RouteComponentProps<{ categoryId: string; mediaId: string }>) => (
+  <CategoryMediaView
+    categoryId={decodeURIComponent(match.params.categoryId)}
+    mediaId={decodeURIComponent(match.params.mediaId)}
+  />
+);
+
 const CategoryList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;
   const params: CategoryListUrlQueryParams = {
@@ -64,6 +74,13 @@ const Component = () => {
         <Route exact path={categoryListPath} component={CategoryList} />
         <Route exact path={categoryAddPath()} component={CategoryCreateRedirect} />
         <Route exact path={categoryAddPath(":id")} component={CategoryCreateRedirect} />
+        {isStagingSchema() && (
+          <Route
+            exact
+            path={categoryMediaPath(":categoryId", ":mediaId")}
+            component={CategoryMedia}
+          />
+        )}
         <Route path={categoryPath(":id")} component={CategoryDetails} />
       </Switch>
     </>

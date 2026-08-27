@@ -27,6 +27,8 @@ import { type ConfirmButtonTransitionState } from "@dashboard/components/Confirm
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { MediaGallery } from "@dashboard/components/MediaGallery/MediaGallery";
+import { MediaUrlDialog } from "@dashboard/components/MediaUrlDialog/MediaUrlDialog";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { Savebar } from "@dashboard/components/Savebar";
@@ -58,7 +60,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { maybe } from "@dashboard/misc";
-import { ProductExternalMediaDialog } from "@dashboard/products/components/ProductExternalMediaDialog/ProductExternalMediaDialog";
 import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { mapByChannel } from "@dashboard/products/components/ProductUpdatePage/utils";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
@@ -87,7 +88,6 @@ import { useProductAvailabilityDiagnostics } from "../ProductDoctor/hooks/usePro
 import { useProductDoctorVariants } from "../ProductDoctor/hooks/useProductDoctorVariants";
 import { mapProductToDiagnosticData } from "../ProductDoctor/utils/mapProductToDiagnosticData";
 import { mergeFormDataWithChannelSummaries } from "../ProductDoctor/utils/mergeChannelSummaries";
-import ProductMedia from "../ProductMedia/ProductMedia";
 import {
   getMakeAvailableChannelOpts,
   getProductSetupReadinessFromPage,
@@ -173,7 +173,7 @@ interface ProductUpdatePageProps {
   onDelete: () => any;
   onShowMetadata: () => void;
   onImageReorder?: (event: { oldIndex: number; newIndex: number }) => any;
-  onImageUpload: (file: File) => any;
+  onImageUpload: (file: File) => Promise<string | undefined>;
   onImagesUploadComplete?: (result: { successCount: number; failureCount: number }) => void;
   onMediaUrlUpload: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
   onSeoClick?: () => any;
@@ -712,16 +712,18 @@ const ProductUpdatePage = ({
                     descriptionCache.current = value;
                   }}
                 />
-                <ProductMedia
-                  media={media}
-                  onImageDelete={onImageDelete}
-                  onImagesDelete={onImagesDelete}
-                  onImageReorder={onImageReorder}
-                  onImageUpload={onImageUpload}
-                  onImagesUploadComplete={onImagesUploadComplete}
-                  openMediaUrlModal={() => setMediaUrlModalStatus(true)}
-                  getImageEditUrl={imageId => productImageUrl(productId, imageId)}
-                />
+                <Box paddingX={6} marginTop={4} data-test-id="product-media-container">
+                  <MediaGallery
+                    media={media}
+                    onImageDelete={onImageDelete}
+                    onImagesDelete={onImagesDelete}
+                    onImageReorder={onImageReorder}
+                    onImageUpload={onImageUpload}
+                    onImagesUploadComplete={onImagesUploadComplete}
+                    openMediaUrlModal={() => setMediaUrlModalStatus(true)}
+                    getImageEditUrl={imageId => productImageUrl(productId, imageId)}
+                  />
+                </Box>
                 {data.attributes.length > 0 && (
                   <Attributes
                     attributes={data.attributes}
@@ -901,7 +903,7 @@ const ProductUpdatePage = ({
                 />
               )}
 
-              <ProductExternalMediaDialog
+              <MediaUrlDialog
                 onClose={() => setMediaUrlModalStatus(false)}
                 open={mediaUrlModalStatus}
                 onSubmit={onMediaUrlUpload}

@@ -17,7 +17,7 @@ export type Scalars = {
    * value as specified by
    * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
-  Date: { input: any; output: any; }
+  Date: { input: string; output: string; }
   /**
    * The `DateTime` scalar type represents a DateTime
    * value as specified by
@@ -25,7 +25,7 @@ export type Scalars = {
    */
   DateTime: { input: any; output: any; }
   /** The `Day` scalar type represents number of days by integer value. */
-  Day: { input: any; output: any; }
+  Day: { input: number; output: number; }
   /**
    * Custom Decimal implementation.
    *
@@ -40,9 +40,9 @@ export type Scalars = {
    */
   GenericScalar: { input: any; output: any; }
   /** The `Hour` scalar type represents number of hours by integer value. */
-  Hour: { input: any; output: any; }
-  JSON: { input: any; output: any; }
-  JSONString: { input: any; output: any; }
+  Hour: { input: number; output: number; }
+  JSON: { input: unknown; output: unknown; }
+  JSONString: { input: string; output: string; }
   /**
    * Metadata is a map of key-value pairs, both keys and values are `String`.
    *
@@ -4813,6 +4813,33 @@ export enum MediaChoicesSortField {
   ID = 'ID'
 }
 
+export enum MediaCreateErrorCode {
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  FILE_SIZE_LIMIT_EXCEEDED = 'FILE_SIZE_LIMIT_EXCEEDED',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  INVALID_FILE_TYPE = 'INVALID_FILE_TYPE',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNSUPPORTED_MEDIA_PROVIDER = 'UNSUPPORTED_MEDIA_PROVIDER',
+  UNSUPPORTED_MIME_TYPE = 'UNSUPPORTED_MIME_TYPE'
+}
+
+export type MediaCreateInput = {
+  /** Alt text for the media. */
+  alt?: InputMaybe<Scalars['String']['input']>;
+  /** Represents an image file in a multipart request. */
+  image?: InputMaybe<Scalars['Upload']['input']>;
+  /** Represents an URL to an external media. The URL is fetched once: if it points to an image, the image is downloaded in the background; otherwise it is stored as oEmbed data. */
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum MediaDeleteErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
 export type MediaInput = {
   /** Alt text for a product media. */
   alt?: InputMaybe<Scalars['String']['input']>;
@@ -4822,11 +4849,42 @@ export type MediaInput = {
   mediaUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+export enum MediaOwnerType {
+  CATEGORY = 'CATEGORY',
+  COLLECTION = 'COLLECTION',
+  PAGE = 'PAGE',
+  PRODUCT = 'PRODUCT'
+}
+
+export enum MediaReorderErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  NOT_MEDIA_OWNER = 'NOT_MEDIA_OWNER'
+}
+
 export type MediaSortingInput = {
   /** Specifies the direction in which to sort media. */
   direction: OrderDirection;
   /** Sort media by the selected field. */
   field: MediaChoicesSortField;
+};
+
+export enum MediaType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO'
+}
+
+export enum MediaUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
+export type MediaUpdateInput = {
+  /** Alt text for the media. Maximum 250 characters. */
+  alt?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MenuCreateInput = {
@@ -9386,6 +9444,9 @@ export enum WebhookEventTypeAsyncEnum {
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
   /** Invoice has been sent. */
   INVOICE_SENT = 'INVOICE_SENT',
+  MEDIA_CREATED = 'MEDIA_CREATED',
+  MEDIA_DELETED = 'MEDIA_DELETED',
+  MEDIA_UPDATED = 'MEDIA_UPDATED',
   /** A new menu created. */
   MENU_CREATED = 'MENU_CREATED',
   /** A menu is deleted. */
@@ -9743,6 +9804,9 @@ export enum WebhookEventTypeEnum {
   /** Invoice has been sent. */
   INVOICE_SENT = 'INVOICE_SENT',
   LIST_STORED_PAYMENT_METHODS = 'LIST_STORED_PAYMENT_METHODS',
+  MEDIA_CREATED = 'MEDIA_CREATED',
+  MEDIA_DELETED = 'MEDIA_DELETED',
+  MEDIA_UPDATED = 'MEDIA_UPDATED',
   /** A new menu created. */
   MENU_CREATED = 'MENU_CREATED',
   /** A menu is deleted. */
@@ -10126,6 +10190,9 @@ export enum WebhookSampleEventTypeEnum {
   INVOICE_DELETED = 'INVOICE_DELETED',
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
   INVOICE_SENT = 'INVOICE_SENT',
+  MEDIA_CREATED = 'MEDIA_CREATED',
+  MEDIA_DELETED = 'MEDIA_DELETED',
+  MEDIA_UPDATED = 'MEDIA_UPDATED',
   MENU_CREATED = 'MENU_CREATED',
   MENU_DELETED = 'MENU_DELETED',
   MENU_ITEM_CREATED = 'MENU_ITEM_CREATED',
@@ -10276,3 +10343,67 @@ export enum WeightUnitsEnum {
   OZ = 'OZ',
   TONNE = 'TONNE'
 }
+
+export type CategoryMediaQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CategoryMediaQuery = { __typename: 'Query', category: { __typename: 'Category', id: string, name: string, media: Array<{ __typename: 'CategoryMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> } | null };
+
+export type CollectionMediaQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type CollectionMediaQuery = { __typename: 'Query', collection: { __typename: 'Collection', id: string, name: string, media: Array<{ __typename: 'CollectionMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> } | null };
+
+type Media_CategoryMedia_Fragment = { __typename: 'CategoryMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
+type Media_CollectionMedia_Fragment = { __typename: 'CollectionMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
+type Media_PageMedia_Fragment = { __typename: 'PageMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
+type Media_ProductMedia_Fragment = { __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
+export type MediaFragment = Media_CategoryMedia_Fragment | Media_CollectionMedia_Fragment | Media_PageMedia_Fragment | Media_ProductMedia_Fragment;
+
+export type MediaCreateMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  alt?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['Upload']['input']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type MediaCreateMutation = { __typename: 'Mutation', mediaCreate: { __typename: 'MediaCreate', media: { __typename: 'CategoryMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'CollectionMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'MediaCreateError', field: string | null, message: string | null, code: MediaCreateErrorCode }> } | null };
+
+export type MediaUpdateMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  alt?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type MediaUpdateMutation = { __typename: 'Mutation', mediaUpdate: { __typename: 'MediaUpdate', media: { __typename: 'CategoryMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'CollectionMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | null, errors: Array<{ __typename: 'MediaUpdateError', field: string | null, message: string | null, code: MediaUpdateErrorCode }> } | null };
+
+export type MediaDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type MediaDeleteMutation = { __typename: 'Mutation', mediaDelete: { __typename: 'MediaDelete', media: { __typename: 'CategoryMedia', id: string } | { __typename: 'CollectionMedia', id: string } | { __typename: 'PageMedia', id: string } | { __typename: 'ProductMedia', id: string } | null, errors: Array<{ __typename: 'MediaDeleteError', field: string | null, message: string | null, code: MediaDeleteErrorCode }> } | null };
+
+export type MediaReorderMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  mediaIds: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+}>;
+
+
+export type MediaReorderMutation = { __typename: 'Mutation', mediaReorder: { __typename: 'MediaReorder', media: Array<{ __typename: 'CategoryMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'CollectionMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'PageMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } | { __typename: 'ProductMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> | null, errors: Array<{ __typename: 'MediaReorderError', field: string | null, message: string | null, code: MediaReorderErrorCode }> } | null };
+
+export type ModelMediaQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ModelMediaQuery = { __typename: 'Query', page: { __typename: 'Page', id: string, title: string, media: Array<{ __typename: 'PageMedia', id: string, alt: string, sortOrder: number | null, url: string, mediaType: MediaType, oembedData: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> }> } | null };

@@ -1,43 +1,40 @@
-import { type ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
 import { act, renderHook } from "@testing-library/react";
 
-import { useProductMediaDrag } from "./useProductMediaDrag";
+import { type GalleryMedia } from "./types";
+import { useMediaDrag } from "./useMediaDrag";
 
-const media: ProductMediaFragment[] = [
+const media: GalleryMedia[] = [
   {
-    __typename: "ProductMedia",
     id: "a",
     alt: "",
     sortOrder: 0,
-    type: ProductMediaType.IMAGE,
+    type: "IMAGE",
     url: "https://example.com/a.png",
     oembedData: "{}",
   },
   {
-    __typename: "ProductMedia",
     id: "b",
     alt: "",
     sortOrder: 1,
-    type: ProductMediaType.IMAGE,
+    type: "IMAGE",
     url: "https://example.com/b.png",
     oembedData: "{}",
   },
   {
-    __typename: "ProductMedia",
     id: "c",
     alt: "",
     sortOrder: 2,
-    type: ProductMediaType.IMAGE,
+    type: "IMAGE",
     url: "https://example.com/c.png",
     oembedData: "{}",
   },
 ];
 
-describe("useProductMediaDrag", () => {
+describe("useMediaDrag", () => {
   it("reorders locally on drag over and commits indices on drag end", () => {
     // Arrange
     const onReorder = jest.fn();
-    const { result } = renderHook(() => useProductMediaDrag({ media, onReorder }));
+    const { result } = renderHook(() => useMediaDrag({ media, onReorder }));
 
     // Act — start dragging "a", move over "c"
     act(() => {
@@ -67,7 +64,7 @@ describe("useProductMediaDrag", () => {
 
   it("restores prop order on drag cancel", () => {
     // Arrange
-    const { result } = renderHook(() => useProductMediaDrag({ media }));
+    const { result } = renderHook(() => useMediaDrag({ media }));
 
     act(() => {
       result.current.handleDragStart({
@@ -95,7 +92,7 @@ describe("useProductMediaDrag", () => {
     // Arrange
     const onReorder = jest.fn();
     const { result, rerender } = renderHook(
-      ({ media: nextMedia }) => useProductMediaDrag({ media: nextMedia, onReorder }),
+      ({ media: nextMedia }) => useMediaDrag({ media: nextMedia, onReorder }),
       { initialProps: { media } },
     );
 
@@ -112,14 +109,13 @@ describe("useProductMediaDrag", () => {
     });
 
     // Act — upload completed while dragging
-    const mediaWithUpload: ProductMediaFragment[] = [
+    const mediaWithUpload: GalleryMedia[] = [
       ...media,
       {
-        __typename: "ProductMedia",
         id: "d",
         alt: "",
         sortOrder: 3,
-        type: ProductMediaType.IMAGE,
+        type: "IMAGE",
         url: "https://example.com/d.png",
         oembedData: "{}",
       },
@@ -139,7 +135,7 @@ describe("useProductMediaDrag", () => {
   it("commits indices relative to the live media list", () => {
     // Arrange
     const onReorder = jest.fn();
-    const { result } = renderHook(() => useProductMediaDrag({ media, onReorder }));
+    const { result } = renderHook(() => useMediaDrag({ media, onReorder }));
 
     act(() => {
       result.current.handleDragStart({

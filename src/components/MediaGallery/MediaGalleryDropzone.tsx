@@ -7,10 +7,10 @@ import type * as React from "react";
 import type { DropzoneState } from "react-dropzone";
 import { FormattedMessage, type MessageDescriptor } from "react-intl";
 
+import styles from "./MediaGallery.module.css";
 import { messages } from "./messages";
-import styles from "./ProductMedia.module.css";
 
-interface ProductMediaGalleryDropzoneProps {
+interface MediaGalleryDropzoneProps {
   onImageUpload: (files: FileList | File[]) => void;
   disableClick?: boolean;
   disabled?: boolean;
@@ -22,7 +22,7 @@ interface ProductMediaGalleryDropzoneProps {
   children?: (props: { isDragActive: boolean }) => React.ReactNode;
 }
 
-export const ProductMediaGalleryDropzone = ({
+export const MediaGalleryDropzone = ({
   onImageUpload,
   disableClick = false,
   disabled = false,
@@ -32,7 +32,7 @@ export const ProductMediaGalleryDropzone = ({
   variant,
   galleryClassName,
   children,
-}: ProductMediaGalleryDropzoneProps) => (
+}: MediaGalleryDropzoneProps) => (
   <Dropzone
     multiple={multiple}
     noClick={disableClick || disabled}

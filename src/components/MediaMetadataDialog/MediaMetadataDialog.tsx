@@ -2,18 +2,23 @@ import { MetadataDialog } from "@dashboard/components/MetadataDialog/MetadataDia
 import { useHandleMetadataSubmit } from "@dashboard/components/MetadataDialog/useHandleMetadataSubmit";
 import { useMetadataForm } from "@dashboard/components/MetadataDialog/useMetadataForm";
 import { mapFieldArrayToMetadataInput } from "@dashboard/components/MetadataDialog/validation";
-import { ProductMediaByIdDocument, type ProductMediaByIdQuery } from "@dashboard/graphql";
+import { type MetadataItemFragment } from "@dashboard/graphql";
+import { type DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-type ProductMediaMetadataDialogData = NonNullable<
-  NonNullable<ProductMediaByIdQuery["product"]>["mainImage"]
->;
+interface MediaMetadataDialogData {
+  id: string;
+  metadata: MetadataItemFragment[];
+  privateMetadata?: MetadataItemFragment[] | null;
+}
 
-interface ProductMediaMetadataDialogProps {
+interface MediaMetadataDialogProps {
   open: boolean;
   onClose: () => void;
-  media: ProductMediaMetadataDialogData | undefined | null;
+  media: MediaMetadataDialogData | undefined | null;
+  /** Query re-run after a successful save so the dialog reopens with fresh values. */
+  refetchDocument: DocumentNode;
 }
 
 const messages = defineMessages({
@@ -24,11 +29,12 @@ const messages = defineMessages({
   },
 });
 
-export const ProductMediaMetadataDialog = ({
+export const MediaMetadataDialog = ({
   onClose,
   open,
   media,
-}: ProductMediaMetadataDialogProps) => {
+  refetchDocument,
+}: MediaMetadataDialogProps) => {
   const intl = useIntl();
   const normalizedMedia = media
     ? { ...media, privateMetadata: media.privateMetadata ?? [] }
@@ -36,7 +42,7 @@ export const ProductMediaMetadataDialog = ({
   const { onSubmit, lastSubmittedData, submitInProgress } = useHandleMetadataSubmit({
     initialData: normalizedMedia,
     onClose,
-    refetchDocument: ProductMediaByIdDocument,
+    refetchDocument,
   });
 
   const {
@@ -84,3 +90,5 @@ export const ProductMediaMetadataDialog = ({
     />
   );
 };
+
+MediaMetadataDialog.displayName = "MediaMetadataDialog";

@@ -1,8 +1,8 @@
-type ProductMediaFileValidationReason = "invalidType";
+type MediaFileValidationReason = "invalidType";
 
-interface ProductMediaFileValidationResult {
+interface MediaFileValidationResult {
   validFiles: File[];
-  rejected: Array<{ file: File; reason: ProductMediaFileValidationReason }>;
+  rejected: Array<{ file: File; reason: MediaFileValidationReason }>;
 }
 
 const isImageFile = (file: File): boolean => {
@@ -21,11 +21,9 @@ const isImageFile = (file: File): boolean => {
  * `MAX_IMAGE_FILE_SIZE` (env-configurable; Cloud sandboxes/prod differ),
  * and that limit is not exposed via the Shop API.
  */
-export const validateProductMediaFiles = (
-  files: FileList | File[],
-): ProductMediaFileValidationResult => {
+export const validateMediaFiles = (files: FileList | File[]): MediaFileValidationResult => {
   const validFiles: File[] = [];
-  const rejected: ProductMediaFileValidationResult["rejected"] = [];
+  const rejected: MediaFileValidationResult["rejected"] = [];
 
   Array.from(files).forEach(file => {
     if (!isImageFile(file)) {

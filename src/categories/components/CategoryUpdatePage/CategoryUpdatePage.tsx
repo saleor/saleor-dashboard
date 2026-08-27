@@ -44,6 +44,7 @@ import { Link } from "react-router-dom";
 
 import { type ListProps, type ListViews, type RelayToFlat } from "../../../types";
 import { CategoryDetailsForm } from "../CategoryDetailsForm/CategoryDetailsForm";
+import { CategoryMediaGallery } from "../CategoryMediaGallery/CategoryMediaGallery";
 import { CategoryProducts } from "../CategoryProducts/CategoryProducts";
 import { CategorySubcategories } from "../CategorySubcategories/CategorySubcategories";
 import { CategorySaveCompositionHint } from "./CategorySaveCompositionHint";
@@ -244,6 +245,7 @@ export const CategoryUpdatePage = ({
                 onImageDelete={onImageDelete}
                 onImageUpload={onImageUpload}
               />
+              <CategoryMediaGallery categoryId={categoryId} />
               <CategoryProducts
                 category={category}
                 categoryId={categoryId}

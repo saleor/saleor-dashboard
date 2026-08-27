@@ -7,9 +7,9 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { buttonMessages } from "@dashboard/intl";
 import { FormattedMessage } from "react-intl";
 
-import { productMediaDeleteDialogMessages as messages } from "./messages";
+import { mediaDeleteDialogMessages as messages } from "./messages";
 
-interface ProductMediaDeleteDialogProps {
+interface MediaDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   quantity: number;
   isVideo?: boolean;
@@ -18,14 +18,14 @@ interface ProductMediaDeleteDialogProps {
   onConfirm: () => void;
 }
 
-export const ProductMediaDeleteDialog = ({
+export const MediaDeleteDialog = ({
   confirmButtonState,
   quantity,
   isVideo = false,
   open,
   onClose,
   onConfirm,
-}: ProductMediaDeleteDialogProps) => {
+}: MediaDeleteDialogProps) => {
   const isBulk = quantity > 1;
   const titleMessage = isBulk
     ? messages.deleteMediaTitle
@@ -69,4 +69,4 @@ export const ProductMediaDeleteDialog = ({
   );
 };
 
-ProductMediaDeleteDialog.displayName = "ProductMediaDeleteDialog";
+MediaDeleteDialog.displayName = "MediaDeleteDialog";

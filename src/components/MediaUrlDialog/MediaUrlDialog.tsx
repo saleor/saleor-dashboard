@@ -2,7 +2,6 @@ import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { type ProductErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type DialogProps } from "@dashboard/types";
 import { Input } from "@saleor/macaw-ui-next";
@@ -19,15 +18,12 @@ const initialValues: FormValues = {
   mediaUrl: "",
 };
 
-interface ProductExternalMediaDialogProps extends DialogProps {
-  onSubmit: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
+interface MediaUrlDialogProps extends DialogProps {
+  /** Resolves with the mutation errors; an empty list closes the dialog. */
+  onSubmit: (mediaUrl: string) => SubmitPromise<unknown[]>;
 }
 
-export const ProductExternalMediaDialog = ({
-  open,
-  onClose,
-  onSubmit,
-}: ProductExternalMediaDialogProps): JSX.Element => {
+export const MediaUrlDialog = ({ open, onClose, onSubmit }: MediaUrlDialogProps): JSX.Element => {
   const intl = useIntl();
   const urlInputRef = useRef<HTMLInputElement>(null);
   const isSubmittingRef = useRef(false);
@@ -55,7 +51,7 @@ export const ProductExternalMediaDialog = ({
     onClose();
   };
 
-  const handleSubmit = async (values: FormValues): Promise<ProductErrorFragment[]> => {
+  const handleSubmit = async (values: FormValues): Promise<unknown[]> => {
     const errors = await onSubmit(values.mediaUrl);
 
     if (!errors.length) {
@@ -115,4 +111,4 @@ export const ProductExternalMediaDialog = ({
   );
 };
 
-ProductExternalMediaDialog.displayName = "ProductExternalMediaDialog";
+MediaUrlDialog.displayName = "MediaUrlDialog";

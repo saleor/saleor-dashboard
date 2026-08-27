@@ -107,6 +107,16 @@ export const topNavDestinationMessages = defineMessages({
     id: "lLNHdh",
     description: "TopNav destination link tooltip to configuration",
   },
+  category: {
+    defaultMessage: "Category",
+    id: "N+1kc6",
+    description: "TopNav destination link tooltip to parent category",
+  },
+  collection: {
+    defaultMessage: "Collection",
+    id: "DMGbK7",
+    description: "TopNav destination link tooltip to parent collection",
+  },
   customer: {
     defaultMessage: "Customer",
     id: "T6tO6B",
@@ -121,6 +131,11 @@ export const topNavDestinationMessages = defineMessages({
     defaultMessage: "Home",
     id: "fmYFl3",
     description: "TopNav destination link tooltip to home / sign in",
+  },
+  model: {
+    defaultMessage: "Model",
+    id: "2WuMW8",
+    description: "TopNav destination link tooltip to parent model",
   },
   order: {
     defaultMessage: "Order",

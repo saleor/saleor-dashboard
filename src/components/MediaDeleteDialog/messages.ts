@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-export const productMediaDeleteDialogMessages = defineMessages({
+export const mediaDeleteDialogMessages = defineMessages({
   deleteImageTitle: {
     id: "uCn/rd",
     defaultMessage: "Delete Image",

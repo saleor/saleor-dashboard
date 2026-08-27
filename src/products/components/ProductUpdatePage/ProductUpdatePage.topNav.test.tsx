@@ -1,5 +1,6 @@
 import { type ProductDetailsQuery } from "@dashboard/graphql";
 import { product } from "@dashboard/products/fixtures";
+import { Box } from "@saleor/macaw-ui-next";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -85,9 +86,8 @@ jest.mock("./form", () => ({
 jest.mock("../ProductDetailsForm/ProductDetailsForm", () => ({
   ProductDetailsForm: () => <div data-test-id="product-details-form-mock" />,
 }));
-jest.mock("../ProductMedia/ProductMedia", () => ({
-  __esModule: true,
-  default: () => <div data-test-id="product-media-mock" />,
+jest.mock("@dashboard/components/MediaGallery/MediaGallery", () => ({
+  MediaGallery: () => <div data-test-id="product-media-mock" />,
 }));
 jest.mock("../ProductVariants/ProductVariants", () => ({
   ProductVariants: () => <div data-test-id="product-variants-mock" />,
@@ -216,5 +216,30 @@ describe("ProductUpdatePage top nav", () => {
 
     // Assert
     expect(onDelete).toHaveBeenCalled();
+  });
+});
+
+describe("ProductUpdatePage media layout", () => {
+  it("adds the standard inset and section gap around the media gallery", () => {
+    // Arrange
+    const { getByTestId: getByReferenceTestId } = render(
+      <Wrapper>
+        <Box paddingX={6} marginTop={4} data-test-id="reference-media-container">
+          Reference media
+        </Box>
+      </Wrapper>,
+    );
+    const expectedLayoutClasses = getByReferenceTestId("reference-media-container").className.split(
+      " ",
+    );
+
+    // Act
+    renderPage();
+
+    // Assert
+    const mediaContainer = screen.getByTestId("product-media-container");
+
+    expect(mediaContainer).toHaveClass(...expectedLayoutClasses);
+    expect(mediaContainer).toContainElement(screen.getByTestId("product-media-mock"));
   });
 });

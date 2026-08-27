@@ -1,12 +1,12 @@
-import { validateProductMediaFiles } from "./validateProductMediaFiles";
+import { validateMediaFiles } from "./validateMediaFiles";
 
-describe("validateProductMediaFiles", () => {
+describe("validateMediaFiles", () => {
   it("accepts image files", () => {
     // Arrange
     const file = new File(["bytes"], "photo.png", { type: "image/png" });
 
     // Act
-    const result = validateProductMediaFiles([file]);
+    const result = validateMediaFiles([file]);
 
     // Assert
     expect(result.validFiles).toEqual([file]);
@@ -18,7 +18,7 @@ describe("validateProductMediaFiles", () => {
     const file = new File(["bytes"], "notes.pdf", { type: "application/pdf" });
 
     // Act
-    const result = validateProductMediaFiles([file]);
+    const result = validateMediaFiles([file]);
 
     // Assert
     expect(result.validFiles).toEqual([]);
@@ -31,7 +31,7 @@ describe("validateProductMediaFiles", () => {
     const file = new File([largeContent], "huge.png", { type: "image/png" });
 
     // Act
-    const result = validateProductMediaFiles([file]);
+    const result = validateMediaFiles([file]);
 
     // Assert
     expect(result.validFiles).toEqual([file]);
@@ -43,7 +43,7 @@ describe("validateProductMediaFiles", () => {
     const file = new File(["bytes"], "photo.JPEG", { type: "" });
 
     // Act
-    const result = validateProductMediaFiles([file]);
+    const result = validateMediaFiles([file]);
 
     // Assert
     expect(result.validFiles).toEqual([file]);

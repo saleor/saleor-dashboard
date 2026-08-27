@@ -9,12 +9,11 @@ import {
   type ProductVariantReorderMutationFn,
 } from "@dashboard/graphql";
 import { errorMessages } from "@dashboard/intl";
+import { mediaMessages } from "@dashboard/media/messages";
 import { getMutationErrors } from "@dashboard/misc";
 import { type ReorderEvent } from "@dashboard/types";
 import { arrayMove } from "@dnd-kit/sortable";
 import { type IntlShape } from "react-intl";
-
-import { productUpdatePageMessages } from "../messages";
 
 export function createImageUploadHandler(
   id: string,
@@ -34,7 +33,7 @@ export function createImageUploadHandler(
       throw new Error("Failed to upload product media");
     }
 
-    return result;
+    return result.data.productMediaCreate.media?.id;
   };
 }
 
@@ -59,7 +58,7 @@ export function createImagesUploadCompleteHandler(
     if (failureCount === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage(productUpdatePageMessages.mediaUploadSuccessCount, {
+        text: intl.formatMessage(mediaMessages.mediaUploadSuccessCount, {
           count: successCount,
         }),
       });
@@ -71,7 +70,7 @@ export function createImagesUploadCompleteHandler(
       notify({
         status: "error",
         title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-        text: intl.formatMessage(productUpdatePageMessages.mediaUploadAllFailed, {
+        text: intl.formatMessage(mediaMessages.mediaUploadAllFailed, {
           count: failureCount,
         }),
       });
@@ -81,7 +80,7 @@ export function createImagesUploadCompleteHandler(
 
     notify({
       status: "warning",
-      text: intl.formatMessage(productUpdatePageMessages.mediaUploadPartial, {
+      text: intl.formatMessage(mediaMessages.mediaUploadPartial, {
         success: successCount,
         failed: failureCount,
       }),
