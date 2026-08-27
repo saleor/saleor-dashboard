@@ -93,7 +93,8 @@ const MediaList = ({
 );
 
 interface ProductMediaProps {
-  media: ProductMediaFragment[];
+  // Undefined until the product query resolves - the component guards for it throughout.
+  media: ProductMediaFragment[] | undefined;
   loading?: boolean;
   getImageEditUrl: (id: string) => string;
   onImageDelete: (id: string) => () => void;
@@ -135,6 +136,11 @@ const revokeObjectUrl = (url: string) => {
 const getMediaIdsSignature = (media: ProductMediaFragment[] | undefined) =>
   media === undefined ? null : media.map(item => item.id).join("\0");
 
+// Stable identity for the "not loaded yet" case. An inline `media ?? []` would hand
+// useProductMediaDrag a new array on every render, and its media-sync effect would
+// setState on every one of them - an endless render loop while the query is in flight.
+const NO_MEDIA: ProductMediaFragment[] = [];
+
 const ProductMedia = (props: ProductMediaProps) => {
   const {
     media,
@@ -172,7 +178,7 @@ const ProductMedia = (props: ProductMediaProps) => {
     handleDragEnd,
     handleDragCancel,
   } = useProductMediaDrag({
-    media: media ?? [],
+    media: media ?? NO_MEDIA,
     onReorder: onImageReorder,
     disabled: isUploading,
   });
