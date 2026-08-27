@@ -61,7 +61,6 @@ export const ExploreExtensions = () => {
         )}
         <Box __width="370px">
           <SearchInput
-            size="medium"
             initialSearch={query}
             placeholder={intl.formatMessage(messages.searchPlaceholder)}
             onSearchChange={handleQueryChange}

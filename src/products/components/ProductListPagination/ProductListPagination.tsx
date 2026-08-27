@@ -1,14 +1,15 @@
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination, type ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import { type ProductListColumns } from "@dashboard/config";
 import { type ListProps } from "@dashboard/types";
 import { useIntl } from "react-intl";
 
 import { messages } from "../ProductListDatagrid/messages";
 
-type ProductListPaginationProps = Pick<
-  ListProps<ProductListColumns>,
-  "settings" | "disabled" | "onUpdateListSettings"
->;
+interface ProductListPaginationProps {
+  settings?: ListProps<ProductListColumns>["settings"];
+  disabled: boolean;
+  onUpdateListSettings?: ListSettingsUpdate;
+}
 
 export const ProductListPagination = ({
   settings,

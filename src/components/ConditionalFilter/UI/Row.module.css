@@ -67,21 +67,27 @@
 }
 
 /*
- * DynamicMultiselect portals the menu without data-portal-for and does not
- * render option adornments, so the only hook is the option node itself.
- * Currency options opt out — they hide the label and use a custom wrap layout.
- * Decorative leading spans (color swatches, missing-image thumbs) must not
- * grow — flex: 1 stretches a circle into a long ellipse.
+ * Macaw portals list options; DynamicCombobox/Multiselect set data-portal-for
+ * to the field id (see FILTER_CONTROL_ID_PREFIX). Scope to that prefix so
+ * product/variant Color dropdowns are not restyled.
+ *
+ * Grow only leaf label spans. startAdornment wrappers are spans with children
+ * — flex: 1 on them shoves the name to the far right. Bare color swatches are
+ * empty spans; exclude them by test id. Currency options opt out.
  */
-:global([data-test-id="select-option"]:not(:has([data-currency-option-leading]))) {
+:global(
+  [data-portal-for^="conditional-filter"]
+    [data-test-id="select-option"]:not(:has([data-currency-option-leading]))
+) {
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
 }
 
 :global(
-  [data-test-id="select-option"]:not(:has([data-currency-option-leading]))
-    > span:not([aria-hidden]):not([data-test-id="swatch-preview"])
+  [data-portal-for^="conditional-filter"]
+    [data-test-id="select-option"]:not(:has([data-currency-option-leading]))
+    > span:not([aria-hidden]):not([data-test-id="swatch-preview"]):not(:has(*))
 ) {
   min-width: 0;
   flex: 1 1 0;

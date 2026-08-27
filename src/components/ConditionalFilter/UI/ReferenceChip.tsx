@@ -1,7 +1,7 @@
 import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";
 import { iconStrokeWidth } from "@dashboard/components/icons";
 import { ImageOff } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { type JSX, type ReactNode, useState } from "react";
 
 import {
   resolveVariantReferenceFields,
@@ -100,22 +100,26 @@ export const SwatchAttributeChipLabel = ({
   </span>
 );
 
+/** Macaw `Option.label` is typed as string; filter chips render JSX at runtime. */
+const toDisplayChipLabel = (chip: JSX.Element): RightOperatorOption["label"] =>
+  chip as unknown as RightOperatorOption["label"];
+
 export const toSwatchDisplayChip = (option: RightOperatorOption): RightOperatorOption => ({
   ...option,
-  label: (
+  label: toDisplayChipLabel(
     <SwatchAttributeChipLabel
       name={option.label}
       swatchColor={option.swatchColor}
       swatchFileUrl={option.swatchFileUrl}
-    />
-  ) as RightOperatorOption["label"],
+    />,
+  ),
 });
 
 export const toProductDisplayChip = (option: RightOperatorOption): RightOperatorOption => ({
   ...option,
-  label: (
-    <ProductReferenceChipLabel name={option.label} thumbnailUrl={option.productThumbnailUrl} />
-  ) as RightOperatorOption["label"],
+  label: toDisplayChipLabel(
+    <ProductReferenceChipLabel name={option.label} thumbnailUrl={option.productThumbnailUrl} />,
+  ),
 });
 
 export const toVariantDisplayChip = (option: RightOperatorOption): RightOperatorOption => {
@@ -128,13 +132,13 @@ export const toVariantDisplayChip = (option: RightOperatorOption): RightOperator
 
   return {
     ...pill,
-    label: (
+    label: toDisplayChipLabel(
       <VariantReferenceChipLabel
         productName={fields.productName}
         variantName={fields.variantName}
         productThumbnailUrl={fields.productThumbnailUrl}
-      />
-    ) as RightOperatorOption["label"],
+      />,
+    ),
   };
 };
 

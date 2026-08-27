@@ -33,13 +33,13 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { useAssignVariantDialogProducts } from "./useAssignVariantDialogProducts";
 import {
-  getCompositeLabel,
   handleProductAssign,
   handleVariantAssign,
   hasAllVariantsSelected,
   isVariantSelected,
   isVariantsListTruncated,
   toAssignableProducts,
+  toAssignedVariantContainers,
   type VariantWithProductLabel,
 } from "./utils";
 
@@ -120,14 +120,7 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
   const productsWithAllVariantsSelected = displayedProductChoices.map(product =>
     hasAllVariantsSelected(product.variants, variants, lockedVariantIds),
   );
-  const handleSubmit = () =>
-    onSubmit(
-      variants.map(variant => ({
-        name: getCompositeLabel(variant),
-        id: variant.id,
-        ...variant,
-      })),
-    );
+  const handleSubmit = () => onSubmit(toAssignedVariantContainers(variants));
 
   const handleClose = () => {
     resetQuery();

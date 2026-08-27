@@ -1,3 +1,4 @@
+import { formatVariantReferenceLabel } from "@dashboard/attributes/utils/formatVariantReferenceLabel";
 import { type SearchProductsQuery, type SearchProductVariantFragment } from "@dashboard/graphql";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import {
@@ -95,10 +96,15 @@ export function hasAllVariantsSelected(
   );
 }
 
-export const getCompositeLabel = (variant: VariantWithProductLabel) => {
-  if (!variant.name) {
-    return variant.productName;
-  }
+export const getCompositeLabel = (variant: VariantWithProductLabel): string =>
+  formatVariantReferenceLabel(variant.productName || variant.product?.name || "", variant.name);
 
-  return `${variant.productName}: ${variant.name}`;
-};
+/** Submit payload for the assign dialog. `name` must win over `...variant.name`. */
+export const toAssignedVariantContainers = (
+  variants: VariantWithProductLabel[],
+): Array<VariantWithProductLabel & { name: string }> =>
+  variants.map(variant => ({
+    ...variant,
+    id: variant.id,
+    name: getCompositeLabel(variant),
+  }));
