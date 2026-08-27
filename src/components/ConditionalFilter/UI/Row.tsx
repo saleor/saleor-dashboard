@@ -11,6 +11,8 @@ import { useMemo } from "react";
 import { getItemConstraint } from "./constrains";
 import { type ErrorLookup } from "./errors";
 import { type FilterEventEmitter } from "./EventEmitter";
+import { getFilterControlId } from "./filterControlId";
+import { isFlatFilterLayout } from "./filterLayout";
 import { isSelectedComboboxLabel } from "./resolveAsyncComboboxState";
 import {
   resolveAttributeComboboxOptions,
@@ -19,6 +21,7 @@ import {
 import { RightOperator } from "./RightOperator";
 import { type ConditionalFiltersLayout, type ExperimentalFiltersProps } from "./Root";
 import styles from "./Row.module.css";
+import { getGridTemplateColumns } from "./rowGrid";
 import { type LeftOperatorOption, type Row } from "./types";
 
 interface RowProps {
@@ -29,16 +32,6 @@ interface RowProps {
   error: ErrorLookup[number];
   layout?: ConditionalFiltersLayout;
 }
-
-const getGridTemplateColumns = (layout: ConditionalFiltersLayout, isAttribute: boolean): string => {
-  if (layout === "inline") {
-    return isAttribute
-      ? "minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1fr) auto"
-      : "minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1fr) auto";
-  }
-
-  return isAttribute ? "200px 200px 120px 200px 1fr" : "200px 120px 200px 1fr";
-};
 
 export const RowComponent = ({
   item,
@@ -64,21 +57,23 @@ export const RowComponent = ({
 
     return selected ? enrichAttributeComboboxOption(selected) : null;
   }, [attributeList, item.selectedAttribute]);
-  const inlineControlProps = layout === "inline" ? { backgroundColor: "default1" as const } : {};
+  const isFlat = isFlatFilterLayout(layout);
+  const inlineControlProps = isFlat ? { backgroundColor: "default1" as const } : {};
 
   return (
     <Box
-      className={clsx(layout === "inline" && styles.inlineRow)}
+      className={clsx(styles.row, isFlat && styles.inlineRow)}
       display="grid"
-      gap={layout === "inline" ? 2 : 0.5}
+      gap={isFlat ? 2 : 0.5}
       __gridTemplateColumns={getGridTemplateColumns(layout, isAttribute)}
       placeItems="flex-start"
       alignItems="center"
-      width={layout === "inline" ? "100%" : undefined}
-      __minWidth={layout === "inline" ? "0" : undefined}
+      width="100%"
+      __minWidth="0"
     >
       <DynamicCombobox
         {...inlineControlProps}
+        id={getFilterControlId("left", index)}
         data-test-id={`left-${index}`}
         value={item.value}
         options={leftOptions}
@@ -109,6 +104,7 @@ export const RowComponent = ({
       {isAttribute && (
         <DynamicCombobox
           {...inlineControlProps}
+          id={getFilterControlId("attribute", index)}
           data-test-id={`attribute-value-${index}`}
           value={selectedAttributeValue}
           options={attributeOptions}
@@ -139,6 +135,7 @@ export const RowComponent = ({
 
       <Select
         {...inlineControlProps}
+        id={getFilterControlId("condition", index)}
         data-test-id={`condition-${index}`}
         value={item.condition.selected.conditionValue}
         options={item.condition.options}
@@ -156,17 +153,21 @@ export const RowComponent = ({
         helperText={error.condition.text}
       />
 
-      <RightOperator
-        selected={item.condition?.selected}
-        index={index}
-        emitter={emitter}
-        error={error.right.show}
-        helperText={error.right.text}
-        disabled={constrain.disableRightOperator}
-        layout={layout}
-      />
+      <div className={styles.valueField}>
+        <RightOperator
+          selected={item.condition?.selected}
+          index={index}
+          emitter={emitter}
+          error={error.right.show}
+          helperText={error.right.text}
+          disabled={constrain.disableRightOperator}
+          layout={layout}
+          entityType={item.selectedAttribute?.entityType}
+          attributeType={item.selectedAttribute?.type}
+        />
+      </div>
 
-      {layout === "inline" ? (
+      {isFlat ? (
         <button
           className={styles.inlineRemoveButton}
           data-test-id={`remove-row-${index}`}

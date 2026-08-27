@@ -3,56 +3,74 @@ import {
   ConditionalFilters,
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
+import { CountPill, countPillFromNumber } from "@dashboard/components/CountPill/CountPill";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Box, Button, DropdownButton, Popover, Text } from "@saleor/macaw-ui-next";
-import { X } from "lucide-react";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
+import { ChevronDown, ListFilter } from "lucide-react";
 import { useIntl } from "react-intl";
 
-export const ExpressionFilters = () => {
+import styles from "./ExpressionFilters.module.css";
+
+const EXPRESSION_FILTERS_PANEL_ID = "expression-filters-panel";
+
+export const ExpressionFilters = (): JSX.Element => {
   const { formatMessage } = useIntl();
   const { valueProvider, containerState, filterWindow } = useConditionalFilterContext();
-  const clearEmpty = () => {
-    containerState.clearEmpty();
+  const handleToggle = (): void => {
+    if (filterWindow.isOpen) {
+      containerState.resetToProvider();
+      filterWindow.setOpen(false);
+
+      return;
+    }
+
+    containerState.resetToProvider({ seedEmpty: true });
+    filterWindow.setOpen(true);
   };
 
   return (
-    <Popover open={filterWindow.isOpen} onOpenChange={open => filterWindow.setOpen(open)}>
-      <Popover.Trigger>
-        <DropdownButton data-test-id="filters-button">
-          {formatMessage(conditionalFilterMessages.popoverTrigger, {
-            count: valueProvider.count,
-          })}
-        </DropdownButton>
-      </Popover.Trigger>
-      <Popover.Content align="start" onInteractOutside={clearEmpty}>
-        <Box __minHeight="250px" __minWidth="636px" display="grid" __gridTemplateRows="auto 1fr">
-          <Popover.Arrow fill="default1" />
-          <Box
-            paddingTop={3}
-            paddingX={3}
-            paddingBottom={1.5}
-            display="flex"
-            gap={1}
-            alignItems="center"
-            justifyContent="space-between"
-            backgroundColor="default1"
-            borderTopLeftRadius={2}
-            borderTopRightRadius={2}
-          >
-            <Text>{formatMessage(conditionalFilterMessages.popoverTitle)}</Text>
-            <Box display="flex" alignItems="center" gap={2}>
-              <Popover.Close>
-                <Button
-                  variant="tertiary"
-                  icon={<X size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
-                  onClick={clearEmpty}
-                />
-              </Popover.Close>
-            </Box>
-          </Box>
-          <ConditionalFilters onClose={() => filterWindow.setOpen(false)} />
-        </Box>
-      </Popover.Content>
-    </Popover>
+    <Button
+      data-test-id="filters-button"
+      data-state={filterWindow.isOpen ? "open" : "closed"}
+      aria-expanded={filterWindow.isOpen}
+      aria-controls={EXPRESSION_FILTERS_PANEL_ID}
+      variant="secondary"
+      gap={1.5}
+      icon={<ListFilter size={iconSize.small} strokeWidth={iconStrokeWidth} />}
+      onClick={handleToggle}
+    >
+      <Box as="span" display="inline-flex" alignItems="center" gap={1}>
+        <Text as="span" size={3} fontWeight="regular">
+          {formatMessage(conditionalFilterMessages.popoverTrigger)}
+        </Text>
+        <CountPill count={countPillFromNumber(valueProvider.count)} active />
+      </Box>
+      <ChevronDown
+        className={clsx(styles.chevron, filterWindow.isOpen && styles.chevronOpen)}
+        size={iconSize.small}
+        strokeWidth={iconStrokeWidth}
+        aria-hidden
+      />
+    </Button>
+  );
+};
+
+export const ExpressionFilterPanel = (): JSX.Element | null => {
+  const { containerState, filterWindow } = useConditionalFilterContext();
+
+  if (!filterWindow.isOpen) {
+    return null;
+  }
+
+  const collapse = (): void => {
+    containerState.resetToProvider();
+    filterWindow.setOpen(false);
+  };
+
+  return (
+    <div className={styles.panel} id={EXPRESSION_FILTERS_PANEL_ID} data-test-id="filters-panel">
+      <ConditionalFilters layout="panel" onClose={collapse} />
+    </div>
   );
 };

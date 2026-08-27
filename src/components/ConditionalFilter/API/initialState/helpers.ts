@@ -17,7 +17,12 @@ import {
 import { createBooleanOptions } from "../../constants";
 import { type AttributeInputType } from "../../FilterElement/ConditionOptions";
 import { type ItemOption } from "../../FilterElement/ConditionValue";
-import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
+import {
+  createCustomerOptionsFromAPI,
+  createOptionsFromAPI,
+  createProductOptionsFromAPI,
+} from "../Handler";
+import { createAttributeChoiceOptionsFromAPI } from "../swatchAttributeOption";
 import { type InitialAttributesState } from "./attributes/InitialAttributesState";
 import { type InitialCollectionState } from "./collections/InitialCollectionState";
 import { type InitialCustomerState } from "./customers/InitialCustomerState";
@@ -51,6 +56,30 @@ const convertItemOptionsToAttributeChoices = (
     // Only include originalSlug if it exists and is not null
     if (option.originalSlug != null) {
       choice.originalSlug = option.originalSlug;
+    }
+
+    if (option.productName != null) {
+      choice.productName = option.productName;
+    }
+
+    if (option.variantName != null) {
+      choice.variantName = option.variantName;
+    }
+
+    if (option.productId != null) {
+      choice.productId = option.productId;
+    }
+
+    if (option.productThumbnailUrl != null) {
+      choice.productThumbnailUrl = option.productThumbnailUrl;
+    }
+
+    if (option.swatchColor != null) {
+      choice.swatchColor = option.swatchColor;
+    }
+
+    if (option.swatchFileUrl != null) {
+      choice.swatchFileUrl = option.swatchFileUrl;
     }
 
     return choice;
@@ -95,7 +124,9 @@ export const createAttributeMapFromQuery = (
     const attributeChoices =
       node.inputType === "BOOLEAN"
         ? convertItemOptionsToAttributeChoices(createBooleanOptions())
-        : convertItemOptionsToAttributeChoices(createOptionsFromAPI(node.choices?.edges ?? []));
+        : convertItemOptionsToAttributeChoices(
+            createAttributeChoiceOptionsFromAPI(node.choices?.edges ?? [], node.inputType),
+          );
 
     return {
       ...accAttr,
@@ -352,7 +383,7 @@ export const createInitialGiftCardsState = (
       if (isProductQuery(query)) {
         return {
           ...acc,
-          products: createOptionsFromAPI(query.data?.products?.edges ?? []),
+          products: createProductOptionsFromAPI(query.data?.products?.edges ?? []),
         };
       }
 

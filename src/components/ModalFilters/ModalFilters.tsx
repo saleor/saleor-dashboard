@@ -3,6 +3,7 @@ import {
   ConditionalFilters,
   useConditionalFilterContext,
 } from "@dashboard/components/ConditionalFilter";
+import { CountPill, countPillFromNumber } from "@dashboard/components/CountPill/CountPill";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ModelTypeDisplay } from "@dashboard/components/ModelType/ModelType";
 import { ProductTypeDisplay } from "@dashboard/components/ProductType/ProductType";
@@ -135,9 +136,10 @@ export const ModalFilters: FC = () => {
         data-test-id="modal-filters-button"
         onClick={handleToggle}
       >
-        {formatMessage(conditionalFilterMessages.popoverTrigger, {
-          count: valueProvider.count,
-        })}
+        <Box as="span" display="inline-flex" alignItems="center" gap={1}>
+          {formatMessage(conditionalFilterMessages.popoverTrigger)}
+          <CountPill count={countPillFromNumber(valueProvider.count)} active />
+        </Box>
       </DropdownButton>
 
       {filterWindow.isOpen ? (

@@ -31,6 +31,10 @@ export class Condition {
     return this.options.isEmpty() || this.selected.isEmpty();
   }
 
+  public clone(): Condition {
+    return new Condition(this.options, this.selected.clone(), this.loading);
+  }
+
   public static createEmpty() {
     return new Condition(ConditionOptions.empty(), ConditionSelected.empty(), false);
   }

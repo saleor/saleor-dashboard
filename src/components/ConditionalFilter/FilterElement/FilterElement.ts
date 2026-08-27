@@ -13,7 +13,7 @@ import { Condition } from "./Condition";
 import { type ConditionItem, ConditionOptions, type StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { type ConditionValue, type ItemOption } from "./ConditionValue";
-import { Constraint } from "./Constraint";
+import { Constraint, GLOBAL } from "./Constraint";
 
 export class ExpressionValue {
   constructor(
@@ -25,6 +25,10 @@ export class ExpressionValue {
 
   public setLabel(label: string) {
     this.label = label;
+  }
+
+  public clone(): ExpressionValue {
+    return new ExpressionValue(this.value, this.label, this.type, this.entityType);
   }
 
   public isEmpty() {
@@ -231,6 +235,28 @@ export class FilterElement {
     );
   }
 
+  public clone(): FilterElement {
+    const copy = new FilterElement(
+      this.value.clone(),
+      this.condition.clone(),
+      this.loading,
+      undefined,
+      this.selectedAttribute?.clone() ?? null,
+      this.availableAttributesList.map(operand => ({ ...operand })),
+      this.attributeLoading,
+    );
+
+    copy.constraint = this.constraint
+      ? new Constraint(
+          this.constraint.isGlobal ? GLOBAL : [...this.constraint.dependsOn],
+          this.constraint.disabled ? [...this.constraint.disabled] : undefined,
+          this.constraint.removable,
+        )
+      : undefined;
+
+    return copy;
+  }
+
   public static createEmpty() {
     return new FilterElement(
       ExpressionValue.emptyStatic(),
@@ -299,5 +325,22 @@ export class FilterElement {
 export const hasEmptyRows = (container: FilterContainer) => {
   return container.filter(FilterElement.isFilterElement).some((e: FilterElement) => e.isEmpty());
 };
+
+export const cloneFilterContainer = (container: FilterContainer): FilterContainer =>
+  container.map(item => {
+    if (typeof item === "string") {
+      return item;
+    }
+
+    if (FilterElement.isFilterElement(item)) {
+      return item.clone();
+    }
+
+    if (Array.isArray(item)) {
+      return cloneFilterContainer(item);
+    }
+
+    return item;
+  });
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;

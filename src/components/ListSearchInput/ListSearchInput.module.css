@@ -1,23 +1,33 @@
 .wrapper {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mu-spacing-2);
   width: 360px;
-  padding: 6px 12px;
+  max-width: 100%;
+  height: var(--mu-spacing-8);
+  padding: 0 var(--mu-spacing-2);
   border: 1px solid var(--mu-colors-border-default1);
-  border-radius: 6px;
+  border-radius: var(--mu-border-radius-3);
   background-color: transparent;
+}
+
+.wrapper:focus-within {
+  border-color: var(--mu-colors-border-accent1);
 }
 
 .input {
   flex: 1;
   min-width: 0;
+  height: 100%;
+  padding: 0;
   border: none;
   outline: none;
   background-color: transparent;
   color: var(--mu-colors-text-default1);
   font: inherit;
   font-size: 14px;
+  line-height: 1;
 }
 
 .input::placeholder {

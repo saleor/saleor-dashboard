@@ -23,6 +23,7 @@ jest.mock("@dashboard/extensions/getExtensionsItems", () => ({
 }));
 jest.mock("@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters", () => ({
   ExpressionFilters: () => null,
+  ExpressionFilterPanel: () => null,
 }));
 jest.mock("../CustomerListDatagrid/CustomerListDatagrid", () => ({
   CustomerListDatagrid: () => null,

@@ -11,6 +11,12 @@ export interface AttributeDTO {
     value: string;
     slug: string;
     originalSlug?: string;
+    productName?: string;
+    variantName?: string;
+    productId?: string;
+    productThumbnailUrl?: string;
+    swatchColor?: string;
+    swatchFileUrl?: string;
   }>;
   inputType: AttributeInputType;
   label: string;

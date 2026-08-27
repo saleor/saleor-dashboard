@@ -38,7 +38,7 @@ export const ListSearchInput = ({
         };
 
         return (
-          <div className={styles.wrapper}>
+          <div className={styles.wrapper} data-test-id="list-search-field">
             <Search size={16} color="var(--mu-colors-text-default2)" />
             <input
               type="text"

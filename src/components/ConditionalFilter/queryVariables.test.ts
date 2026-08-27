@@ -16,6 +16,7 @@ import {
   createDraftOrderQueryVariables,
   createGiftCardQueryVariables,
   createPageQueryVariables,
+  createProductExportQueryVariables,
   createProductQueryVariables,
   createProductTypesQueryVariables,
   createStaffMembersQueryVariables,
@@ -172,7 +173,7 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
       ),
     ];
     const expectedOutput = {
-      attributes: [{ slug: "bottle-size", values: ["0-5l"] }],
+      attributes: [{ slug: "bottle-size", value: { slug: { eq: "0-5l" } } }],
       price: { eq: "123" },
     };
     // Act
@@ -334,6 +335,38 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
 
     // Assert
     expect(result).toEqual(expectedOutput);
+  });
+});
+
+describe("ConditionalFilter / queryVariables / createProductExportQueryVariables", () => {
+  it("should map NUMERIC attribute ranges for the product export FILTER API", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("attribute", "Attribute", "attribute"),
+        new Condition(
+          ConditionOptions.fromName(AttributeInputTypeEnum.NUMERIC),
+          ConditionSelected.fromConditionItemAndValue(
+            { type: "number.range", label: "between", value: "input-4" },
+            ["120", "300"],
+          ),
+          false,
+        ),
+        false,
+        undefined,
+        new ExpressionValue("fabric-weight-gsm", "Fabric weight", AttributeInputTypeEnum.NUMERIC),
+      ),
+    ];
+
+    // Act
+    const result = createProductExportQueryVariables(filters);
+
+    // Assert
+    expect(result).toEqual({
+      attributes: [
+        { slug: "fabric-weight-gsm", value: { numeric: { range: { gte: 120, lte: 300 } } } },
+      ],
+    });
   });
 });
 

@@ -136,7 +136,6 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
       <DashboardCard paddingX={6}>
         <Box __width="370px">
           <SearchInput
-            size="medium"
             initialSearch={query}
             placeholder={intl.formatMessage(messages.searchPlaceholder)}
             onSearchChange={newQuery => handleQueryChange(newQuery)}

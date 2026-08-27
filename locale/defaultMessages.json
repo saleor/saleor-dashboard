@@ -2881,10 +2881,6 @@
     "context": "create product dialog description",
     "string": "Add a product. You can set a price, inventory, and availability after creating it."
   },
-  "9B2mOB": {
-    "context": "tile view pagination label",
-    "string": "No. of products"
-  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -3032,6 +3028,10 @@
   "9eC0MZ": {
     "context": "collection",
     "string": "Hidden"
+  },
+  "9exKzi": {
+    "context": "Close the list filter panel without clearing applied filters",
+    "string": "Close"
   },
   "9gb9b4": {
     "context": "address type",
@@ -4491,6 +4491,10 @@
   "FIZvTx": {
     "context": "dialog content",
     "string": "Select method you want to use to change address"
+  },
+  "FK088X": {
+    "context": "Apply filters from the list filter panel",
+    "string": "Apply"
   },
   "FKBNcP": {
     "context": "customer type chip, opens the customer type settings page",
@@ -6512,6 +6516,10 @@
     "context": "new discount label",
     "string": "New discount value"
   },
+  "MU0Zmt": {
+    "context": "product list pagination label",
+    "string": "No. of products"
+  },
   "MUjTkk": {
     "string": "Search customer types..."
   },
@@ -7815,10 +7823,6 @@
   "RXbkle": {
     "context": "copy code button label",
     "string": "Copy code"
-  },
-  "RZDxej": {
-    "context": "Popover trigger text (button)",
-    "string": "Filters {count, plural, =0 {} other {({count})} }"
   },
   "RZZAjR": {
     "context": "setup review row title",
@@ -16935,6 +16939,10 @@
   "xzgaxr": {
     "context": "dialog description when restock warehouse must be selected",
     "string": "Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected."
+  },
+  "xzqW+K": {
+    "context": "Add condition button on the list filter panel",
+    "string": "Add condition"
   },
   "xzzNba": {
     "context": "helper under currency on create",

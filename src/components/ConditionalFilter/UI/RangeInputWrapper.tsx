@@ -1,10 +1,29 @@
 import { Box } from "@saleor/macaw-ui-next";
-import type * as React from "react";
+import clsx from "clsx";
+import { type ReactNode } from "react";
 
-export const RangeInputWrapper = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Box display="flex" gap={0.5} alignItems="center" flexWrap="wrap">
-      {children}
-    </Box>
-  );
-};
+import styles from "./RangeInputWrapper.module.css";
+
+interface RangeInputWrapperProps {
+  children: ReactNode;
+  /** Side-by-side start/end when the value column is wide enough (date between). */
+  inline?: boolean;
+  /** Content-sized cap; datetime is wider than date. */
+  compact?: "date" | "datetime";
+}
+
+export const RangeInputWrapper = ({
+  children,
+  inline = false,
+  compact = "date",
+}: RangeInputWrapperProps): JSX.Element => (
+  <Box
+    className={clsx(styles.root, inline && styles.inline)}
+    data-range-layout={inline ? "inline" : "stack"}
+    data-range-size={inline ? compact : undefined}
+    width={inline ? undefined : "100%"}
+    __minWidth="0"
+  >
+    {children}
+  </Box>
+);

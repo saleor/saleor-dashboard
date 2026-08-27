@@ -1,0 +1,16 @@
+.panel {
+  overflow: hidden;
+  background-color: var(--mu-colors-background-default1);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 8px;
+}
+
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  transform: rotate(0deg);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
