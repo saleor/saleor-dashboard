@@ -13,7 +13,7 @@ import type { IGraphQLConfig } from "graphql-config";
 const config: IGraphQLConfig = {
   projects: {
     main: {
-      schema: "schema-main.graphql",
+      schema: ["schema-main.graphql", "schema-directives.graphql"],
       documents: [
         "./src/**/queries.ts",
         "./src/**/mutations.ts",
@@ -23,8 +23,10 @@ const config: IGraphQLConfig = {
       ],
     },
     staging: {
-      schema: "schema-staging.graphql",
+      schema: ["schema-staging.graphql", "schema-directives.graphql"],
       documents: [
+        // Shared fragments are validated against 3.24 by codegen-staging, which can resolve
+        // @lockSchema first; graphql-eslint has no such hook, so it only sees them as main.
         "./src/**/queries.staging.ts",
         "./src/**/mutations.staging.ts",
         "./src/**/fragments/*.staging.ts",

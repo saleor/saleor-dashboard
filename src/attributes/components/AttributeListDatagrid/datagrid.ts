@@ -105,7 +105,7 @@ export const createGetCellContent =
       case "visible":
         return readonlyTextCell(translateBoolean(rowData?.visibleInStorefront, intl));
       case "use-in-faceted-search":
-        return readonlyTextCell(translateBoolean(rowData?.filterableInStorefront, intl));
+        return readonlyTextCell(translateBoolean(rowData?.filterableInStorefront ?? false, intl));
       default:
         return readonlyTextCell("");
     }

@@ -239,7 +239,7 @@ export const AttributeFragmentDoc = gql`
   slug
   type
   visibleInStorefront
-  filterableInStorefront
+  filterableInStorefront @lockSchema(schema: "main")
   unit
   inputType
 }
@@ -253,8 +253,8 @@ export const AttributeAssignedListFragmentDoc = gql`
 export const AttributeUpdateResultFragmentDoc = gql`
     fragment AttributeUpdateResult on Attribute {
   ...Attribute
-  availableInGrid
-  storefrontSearchPosition
+  availableInGrid @lockSchema(schema: "main")
+  storefrontSearchPosition @lockSchema(schema: "main")
   valueRequired
   referenceTypes {
     ... on ProductType {
@@ -2991,9 +2991,9 @@ export const PageFragmentDoc = gql`
 export const AttributeDetailsFragmentDoc = gql`
     fragment AttributeDetails on Attribute {
   ...Attribute
-  availableInGrid
+  availableInGrid @lockSchema(schema: "main")
   entityType
-  storefrontSearchPosition
+  storefrontSearchPosition @lockSchema(schema: "main")
   valueRequired
   referenceTypes {
     ... on ProductType {
