@@ -1,9 +1,9 @@
 import { Box, Text } from "@saleor/macaw-ui-next";
 
-import { type ExperimentalFiltersProps } from ".";
 import { createErrorLookup, getErrorByRowIndex } from "./errors";
 import { type FilterEventEmitter } from "./EventEmitter";
 import { isFlatFilterLayout } from "./filterLayout";
+import { type ExperimentalFiltersProps } from "./Root";
 import { RowComponent } from "./Row";
 
 type FiltersProps = Pick<ExperimentalFiltersProps, "value" | "leftOptions" | "error" | "layout"> & {
@@ -18,17 +18,18 @@ export const Filters = ({
   locale,
   error,
   layout = "popover",
-}: FiltersProps) => {
+}: FiltersProps): JSX.Element => {
   const errorsByRowIndex = createErrorLookup(error);
   const isInline = isFlatFilterLayout(layout);
+  const columnGap = isInline ? 3 : 2;
 
   return (
     <Box
       display="grid"
       __gridTemplateColumns="auto minmax(0, 1fr)"
-      alignItems="center"
-      columnGap={isInline ? 3 : 2}
-      rowGap={isInline ? 3 : 3}
+      alignItems="start"
+      columnGap={columnGap}
+      rowGap={3}
       alignSelf="start"
       width="100%"
       __minWidth="0"
@@ -45,6 +46,7 @@ export const Filters = ({
           <RowComponent
             item={item}
             index={idx}
+            rows={value}
             key={`filterRow-${idx}`}
             leftOptions={leftOptions}
             emitter={emitter}
