@@ -66,4 +66,29 @@ export class ConditionSelected {
   public setOptions(options: ConditionValue[]) {
     this.options = options;
   }
+
+  public clone(): ConditionSelected {
+    return new ConditionSelected(
+      cloneConditionValue(this.value),
+      this.conditionValue,
+      this.options.map(cloneConditionValue),
+      this.loading,
+    );
+  }
 }
+
+const cloneConditionValue = (value: ConditionValue): ConditionValue => {
+  if (isItemOptionArray(value)) {
+    return value.map(item => ({ ...item }));
+  }
+
+  if (isItemOption(value)) {
+    return { ...value };
+  }
+
+  if (isTuple(value)) {
+    return [value[0], value[1]];
+  }
+
+  return value;
+};

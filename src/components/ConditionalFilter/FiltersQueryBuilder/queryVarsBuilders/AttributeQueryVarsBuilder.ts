@@ -1,5 +1,6 @@
 import { type ApolloClient } from "@apollo/client";
 import {
+  type AssignedAttributeValueInput,
   AttributeEntityTypeEnum,
   type AttributeInput,
   AttributeInputTypeEnum,
@@ -27,7 +28,8 @@ type AttributeFilterQueryPart = { attributes?: AttributeInput[] };
 
 /**
  * Builds `AttributeInput` for product list (WHERE) and product export (FILTER).
- * Both ProductWhereInput and ProductFilterInput use the same attributes field.
+ * Every item uses `value` only — mixing deprecated `values`/`boolean`/`date`
+ * with reference `value` makes Saleor reject the whole `attributes` list.
  */
 export class AttributeQueryVarsBuilder
   implements BothApiQueryVarsBuilder<AttributeFilterQueryPart>
@@ -70,7 +72,6 @@ export class AttributeQueryVarsBuilder
     query: Readonly<AttributeFilterQueryPart>,
     element: FilterElement,
   ): AttributeFilterQueryPart {
-    // ProductFilterInput.attributes uses the same AttributeInput as WHERE
     return this.appendAttribute(query, element);
   }
 
@@ -99,7 +100,7 @@ export class AttributeQueryVarsBuilder
       return { slug: "" };
     }
 
-    const baseAttribute = { slug: attributeSlug };
+    const baseAttribute: AttributeInput = { slug: attributeSlug };
     const { value, conditionValue } = element.condition.selected;
     const inputType = element.selectedAttribute?.type as AttributeInputTypeEnum;
 
@@ -117,11 +118,13 @@ export class AttributeQueryVarsBuilder
     if (inputType === AttributeInputTypeEnum.BOOLEAN) {
       return {
         ...baseAttribute,
-        boolean: QueryVarsBuilderUtils.getBooleanValueFromElement(element),
+        value: { boolean: QueryVarsBuilderUtils.getBooleanValueFromElement(element) },
       };
     }
 
-    return this.buildConditionAttribute(baseAttribute, element, conditionValue.type);
+    const assignedValue = this.buildValueInput(element, inputType, conditionValue.type);
+
+    return assignedValue ? { ...baseAttribute, value: assignedValue } : baseAttribute;
   }
 
   private buildReferenceAttribute(
@@ -155,7 +158,9 @@ export class AttributeQueryVarsBuilder
     return baseAttribute;
   }
 
-  private buildReferenceFilter(referencedObjectIds: string[]) {
+  private buildReferenceFilter(referencedObjectIds: string[]): {
+    referencedIds: { containsAny: string[] };
+  } {
     const filterValue = {
       // Sort list to ensure we don't make the same query with different order of IDs
       containsAny: [...referencedObjectIds].sort((a, b) => a.localeCompare(b)),
@@ -164,97 +169,80 @@ export class AttributeQueryVarsBuilder
     return { referencedIds: filterValue };
   }
 
-  private buildConditionAttribute(
-    baseAttribute: AttributeInput,
+  private buildValueInput(
     element: FilterElement,
-    type: string,
-  ): AttributeInput {
+    inputType: AttributeInputTypeEnum,
+    conditionType: string,
+  ): AssignedAttributeValueInput | undefined {
     const processedValue = QueryVarsBuilderUtils.extractConditionValueFromFilterElement(element);
 
     if (typeof processedValue === "object" && processedValue && "range" in processedValue) {
       const range = processedValue.range as { gte?: string; lte?: string };
 
-      return this.buildRangeCondition(baseAttribute, range, type);
+      return this.buildRangeValue(range, inputType, conditionType);
     }
 
     if (typeof processedValue === "object" && processedValue && "eq" in processedValue) {
-      return { ...baseAttribute, values: [String(processedValue.eq)] };
+      return this.buildEqValue(processedValue.eq, inputType);
     }
 
     if (typeof processedValue === "object" && processedValue && "oneOf" in processedValue) {
-      const values = (processedValue.oneOf as unknown[]).map(v => String(v));
-
-      return { ...baseAttribute, values };
+      return this.buildOneOfValue(processedValue.oneOf as unknown[], inputType);
     }
 
-    return baseAttribute;
+    return undefined;
   }
 
-  private buildRangeCondition(
-    baseAttribute: AttributeInput,
+  private buildEqValue(
+    raw: unknown,
+    inputType: AttributeInputTypeEnum,
+  ): AssignedAttributeValueInput {
+    if (inputType === AttributeInputTypeEnum.NUMERIC) {
+      return { numeric: { eq: Number(raw) } };
+    }
+
+    return { slug: { eq: String(raw) } };
+  }
+
+  private buildOneOfValue(
+    raw: unknown[],
+    inputType: AttributeInputTypeEnum,
+  ): AssignedAttributeValueInput {
+    if (inputType === AttributeInputTypeEnum.NUMERIC) {
+      return { numeric: { oneOf: raw.map(value => Number(value)) } };
+    }
+
+    return { slug: { oneOf: raw.map(value => String(value)) } };
+  }
+
+  private buildRangeValue(
     range: { gte?: string; lte?: string },
-    type: string,
-  ): AttributeInput {
+    inputType: AttributeInputTypeEnum,
+    conditionType: string,
+  ): AssignedAttributeValueInput | undefined {
     const { gte, lte } = range;
+    const isDateTimeType = conditionType === "datetime" || conditionType === "datetime.range";
+    const isDateType = conditionType === "date" || conditionType === "date.range";
 
-    if (gte && lte) {
+    if (isDateTimeType) {
+      return { dateTime: { gte, lte } };
+    }
+
+    if (isDateType || inputType === AttributeInputTypeEnum.DATE) {
+      return { date: { gte, lte } };
+    }
+
+    if (inputType === AttributeInputTypeEnum.NUMERIC) {
       return {
-        ...baseAttribute,
-        ...this.getRangeQueryPart([gte, lte], type, "range"),
+        numeric: {
+          range: {
+            gte: gte === undefined ? undefined : Number(gte),
+            lte: lte === undefined ? undefined : Number(lte),
+          },
+        },
       };
     }
 
-    if (gte) {
-      return {
-        ...baseAttribute,
-        ...this.getRangeQueryPart(gte, type, "gte"),
-      };
-    }
-
-    if (lte) {
-      return {
-        ...baseAttribute,
-        ...this.getRangeQueryPart(lte, type, "lte"),
-      };
-    }
-
-    return baseAttribute;
-  }
-
-  private getRangeQueryPart(
-    value: string | [string, string],
-    type: string,
-    operation: "gte" | "lte" | "range",
-  ) {
-    const isDateTimeType = type === "datetime" || type === "datetime.range";
-    const isDateType = type === "date" || type === "date.range";
-
-    if (operation === "range" && Array.isArray(value)) {
-      const [gte, lte] = value;
-
-      if (isDateTimeType) {
-        return { dateTime: { gte, lte } };
-      }
-
-      if (isDateType) {
-        return { date: { gte, lte } };
-      }
-
-      return { valuesRange: { gte: parseFloat(gte), lte: parseFloat(lte) } };
-    }
-
-    if (typeof value === "string") {
-      if (isDateTimeType) {
-        return { dateTime: { [operation]: value } };
-      }
-
-      if (isDateType) {
-        return { date: { [operation]: value } };
-      }
-
-      return { valuesRange: { [operation]: parseFloat(value) } };
-    }
-
-    return {};
+    return undefined;
   }
 }

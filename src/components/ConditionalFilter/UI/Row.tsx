@@ -163,6 +163,7 @@ export const RowComponent = ({
           disabled={constrain.disableRightOperator}
           layout={layout}
           entityType={item.selectedAttribute?.entityType}
+          attributeType={item.selectedAttribute?.type}
         />
       </div>
 

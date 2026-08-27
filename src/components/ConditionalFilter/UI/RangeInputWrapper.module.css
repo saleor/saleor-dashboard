@@ -1,0 +1,14 @@
+.inline :global([data-macaw-ui-component="RangeInput"]) {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mu-spacing-1);
+  width: 100%;
+}
+
+.inline :global([data-macaw-ui-component="Input"]) {
+  flex: 1 1 140px;
+  min-width: 140px;
+  width: auto;
+}

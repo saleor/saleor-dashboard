@@ -28,17 +28,19 @@ export const ConditionalFilters: FC<ConditionalFiltersProps> = ({
   }, [valueProvider.loading]);
 
   const showLoading = valueProvider.loading && !hasLoadedOnceRef.current;
-  const handleConfirm = (value: FilterContainer) => {
+  const handleConfirm = (value: FilterContainer): boolean => {
     const validator = new Validator(value);
 
-    if (validator.isValid()) {
-      valueProvider.persist(value);
-      onClose();
+    if (!validator.isValid()) {
+      setErrors(validator.getErrors());
 
-      return;
+      return false;
     }
 
-    setErrors(validator.getErrors());
+    valueProvider.persist(value);
+    onClose();
+
+    return true;
   };
   const handleClear = () => {
     valueProvider.clear();
@@ -47,7 +49,6 @@ export const ConditionalFilters: FC<ConditionalFiltersProps> = ({
   };
   const handleCancel = () => {
     containerState.resetToProvider();
-    containerState.clearEmpty();
     onClose();
   };
 

@@ -8,6 +8,8 @@ export interface ItemOption {
   variantName?: string;
   productId?: string;
   productThumbnailUrl?: string;
+  swatchColor?: string;
+  swatchFileUrl?: string;
 }
 
 export type ConditionValue = ItemOption | ItemOption[] | string | string[] | [string, string];

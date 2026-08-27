@@ -74,8 +74,8 @@ describe("ExpressionFilters", () => {
     await user.click(screen.getByTestId("filters-button"));
 
     // Assert
-    expect(createEmpty).toHaveBeenCalled();
-    expect(resetToProvider).not.toHaveBeenCalled();
+    expect(resetToProvider).toHaveBeenCalledWith({ seedEmpty: true });
+    expect(createEmpty).not.toHaveBeenCalled();
     expect(setOpen).toHaveBeenCalledWith(true);
     expect(screen.getByTestId("filters-button")).toHaveAttribute("aria-expanded", "false");
   });
@@ -83,7 +83,7 @@ describe("ExpressionFilters", () => {
   it("does not seed an empty row when applied filters are already in the container", async () => {
     // Arrange
     const user = userEvent.setup();
-    const { setOpen, createEmpty } = setContext({
+    const { setOpen, createEmpty, resetToProvider } = setContext({
       isOpen: false,
       count: 1,
       containerValue: [{ id: "channel" }],
@@ -99,6 +99,7 @@ describe("ExpressionFilters", () => {
     await user.click(screen.getByTestId("filters-button"));
 
     // Assert
+    expect(resetToProvider).toHaveBeenCalledWith({ seedEmpty: true });
     expect(createEmpty).not.toHaveBeenCalled();
     expect(setOpen).toHaveBeenCalledWith(true);
   });
@@ -182,8 +183,8 @@ describe("ExpressionFilters", () => {
     await user.click(screen.getByTestId("filters-button"));
 
     // Assert
-    expect(resetToProvider).toHaveBeenCalled();
-    expect(clearEmpty).toHaveBeenCalled();
+    expect(resetToProvider).toHaveBeenCalledWith();
+    expect(clearEmpty).not.toHaveBeenCalled();
     expect(setOpen).toHaveBeenCalledWith(false);
   });
 });

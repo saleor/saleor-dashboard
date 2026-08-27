@@ -65,6 +65,7 @@ import {
   VARIANT_REFERENCE_VARIANTS_PER_PRODUCT,
 } from "./filterChoicesPage";
 import { getLocalizedLabel } from "./intl";
+import { createAttributeChoiceOptionsFromAPI } from "./swatchAttributeOption";
 import {
   compareVariantReferenceNames,
   formatVariantReferencePillLabel,
@@ -265,7 +266,7 @@ export class AttributeChoicesHandler implements Handler {
 
     this.pageInfo = pageInfoFromConnection(data.attribute?.choices);
 
-    return createOptionsFromAPI(data.attribute?.choices?.edges ?? []);
+    return createAttributeChoiceOptionsFromAPI(data.attribute?.choices?.edges ?? [], this.type);
   };
 }
 

@@ -19,18 +19,13 @@ export const ExpressionFilters = (): JSX.Element => {
   const { valueProvider, containerState, filterWindow } = useConditionalFilterContext();
   const handleToggle = (): void => {
     if (filterWindow.isOpen) {
-      // Same discard as Close: drop drafts, keep applied URL filters.
       containerState.resetToProvider();
-      containerState.clearEmpty();
       filterWindow.setOpen(false);
 
       return;
     }
 
-    if (containerState.value.length === 0) {
-      containerState.createEmpty();
-    }
-
+    containerState.resetToProvider({ seedEmpty: true });
     filterWindow.setOpen(true);
   };
 
@@ -69,7 +64,7 @@ export const ExpressionFilterPanel = (): JSX.Element | null => {
   }
 
   const collapse = (): void => {
-    containerState.clearEmpty();
+    containerState.resetToProvider();
     filterWindow.setOpen(false);
   };
 

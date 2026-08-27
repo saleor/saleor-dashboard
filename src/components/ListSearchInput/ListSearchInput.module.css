@@ -1,12 +1,18 @@
 .wrapper {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 360px;
+  max-width: 100%;
   padding: 6px 12px;
   border: 1px solid var(--mu-colors-border-default1);
   border-radius: 6px;
   background-color: transparent;
+}
+
+.wrapper:focus-within {
+  border-color: var(--mu-colors-border-accent1);
 }
 
 .input {

@@ -14,7 +14,7 @@ import { type ErrorEntry } from "./Validation";
 import { getFilterContainerKey, hasUnsavedFilterChanges } from "./ValueProvider/utils";
 
 interface FiltersAreaProps {
-  onConfirm: (value: FilterContainer) => void;
+  onConfirm: (value: FilterContainer) => boolean | void;
   errors?: ErrorEntry[];
   onClear?: () => void;
   onCancel?: () => void;
@@ -161,8 +161,9 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
           ) : null}
           <Filters.ConfirmButton
             onClick={() => {
-              onConfirm(value);
-              commitCurrentValue(value);
+              if (onConfirm(value) !== false) {
+                commitCurrentValue(value);
+              }
             }}
             disabled={isConfirmDisabled}
             data-test-id="save-filters-button"

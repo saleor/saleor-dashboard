@@ -34,7 +34,11 @@
   overflow: hidden;
 }
 
-.row :global([data-test-id^="selected-option-"] > *:first-child) {
+.row
+  :global(
+    [data-test-id^="selected-option-"]
+      > *:first-child:not([aria-hidden]):not([data-test-id="swatch-preview"])
+  ) {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -55,6 +59,8 @@
  * DynamicMultiselect portals the menu without data-portal-for and does not
  * render option adornments, so the only hook is the option node itself.
  * Currency options opt out — they hide the label and use a custom wrap layout.
+ * Decorative leading spans (color swatches, missing-image thumbs) must not
+ * grow — flex: 1 stretches a circle into a long ellipse.
  */
 :global([data-test-id="select-option"]:not(:has([data-currency-option-leading]))) {
   min-width: 0;
@@ -62,7 +68,10 @@
   white-space: nowrap;
 }
 
-:global([data-test-id="select-option"]:not(:has([data-currency-option-leading])) > span) {
+:global(
+  [data-test-id="select-option"]:not(:has([data-currency-option-leading]))
+    > span:not([aria-hidden]):not([data-test-id="swatch-preview"])
+) {
   min-width: 0;
   flex: 1 1 0;
   overflow: hidden;

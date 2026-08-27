@@ -82,7 +82,7 @@ describe("ConditionalFilters", () => {
     // Assert
     expect(clear).not.toHaveBeenCalled();
     expect(resetToProvider).toHaveBeenCalled();
-    expect(clearEmpty).toHaveBeenCalled();
+    expect(clearEmpty).not.toHaveBeenCalled();
     expect(onClose).toHaveBeenCalled();
   });
 });

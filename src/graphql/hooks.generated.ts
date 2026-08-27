@@ -7014,6 +7014,10 @@ export const _SearchAttributeOperandsDocument = gql`
               id
               name
               originalSlug: slug
+              value
+              file {
+                url
+              }
             }
           }
         }
@@ -7063,6 +7067,10 @@ export const _GetAttributeChoicesDocument = gql`
           id
           name
           originalSlug: slug
+          value
+          file {
+            url
+          }
         }
       }
       pageInfo {

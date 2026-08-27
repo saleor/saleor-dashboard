@@ -15,6 +15,8 @@ export interface AttributeDTO {
     variantName?: string;
     productId?: string;
     productThumbnailUrl?: string;
+    swatchColor?: string;
+    swatchFileUrl?: string;
   }>;
   inputType: AttributeInputType;
   label: string;

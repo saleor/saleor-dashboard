@@ -1,3 +1,4 @@
+import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";
 import { iconStrokeWidth } from "@dashboard/components/icons";
 import { ImageOff } from "lucide-react";
 import { type ReactNode, useState } from "react";
@@ -10,6 +11,7 @@ import styles from "./ReferenceChip.module.css";
 import { type RightOperatorOption } from "./types";
 
 const REFERENCE_THUMBNAIL_ICON_SIZE = 12;
+const SWATCH_CHIP_SIZE = 18;
 
 export const ReferenceThumbnail = ({
   url,
@@ -77,6 +79,37 @@ export const VariantReferenceChipLabel = ({
     <span className={styles.chipVariant}>{variantName}</span>
   </span>
 );
+
+export const SwatchAttributeChipLabel = ({
+  name,
+  swatchColor,
+  swatchFileUrl,
+}: {
+  name: string;
+  swatchColor?: string;
+  swatchFileUrl?: string;
+}): JSX.Element => (
+  <span className={styles.chip} data-test-id="swatch-attribute-chip" title={name}>
+    <SwatchPreview
+      color={swatchColor}
+      imageUrl={swatchFileUrl}
+      size={SWATCH_CHIP_SIZE}
+      shape="circle"
+    />
+    <span className={styles.chipName}>{name}</span>
+  </span>
+);
+
+export const toSwatchDisplayChip = (option: RightOperatorOption): RightOperatorOption => ({
+  ...option,
+  label: (
+    <SwatchAttributeChipLabel
+      name={option.label}
+      swatchColor={option.swatchColor}
+      swatchFileUrl={option.swatchFileUrl}
+    />
+  ) as RightOperatorOption["label"],
+});
 
 export const toProductDisplayChip = (option: RightOperatorOption): RightOperatorOption => ({
   ...option,

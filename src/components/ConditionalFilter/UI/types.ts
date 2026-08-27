@@ -8,6 +8,8 @@ export type RightOperatorOption = Option & {
   variantName?: string;
   productId?: string;
   productThumbnailUrl?: string;
+  swatchColor?: string;
+  swatchFileUrl?: string;
 };
 
 export type LeftOperatorOption = Option & {

@@ -22,6 +22,7 @@ import {
   createOptionsFromAPI,
   createProductOptionsFromAPI,
 } from "../Handler";
+import { createAttributeChoiceOptionsFromAPI } from "../swatchAttributeOption";
 import { type InitialAttributesState } from "./attributes/InitialAttributesState";
 import { type InitialCollectionState } from "./collections/InitialCollectionState";
 import { type InitialCustomerState } from "./customers/InitialCustomerState";
@@ -73,6 +74,14 @@ const convertItemOptionsToAttributeChoices = (
       choice.productThumbnailUrl = option.productThumbnailUrl;
     }
 
+    if (option.swatchColor != null) {
+      choice.swatchColor = option.swatchColor;
+    }
+
+    if (option.swatchFileUrl != null) {
+      choice.swatchFileUrl = option.swatchFileUrl;
+    }
+
     return choice;
   });
 };
@@ -115,7 +124,9 @@ export const createAttributeMapFromQuery = (
     const attributeChoices =
       node.inputType === "BOOLEAN"
         ? convertItemOptionsToAttributeChoices(createBooleanOptions())
-        : convertItemOptionsToAttributeChoices(createOptionsFromAPI(node.choices?.edges ?? []));
+        : convertItemOptionsToAttributeChoices(
+            createAttributeChoiceOptionsFromAPI(node.choices?.edges ?? [], node.inputType),
+          );
 
     return {
       ...accAttr,

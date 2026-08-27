@@ -146,6 +146,10 @@ export const initialDynamicOperands = gql`
                 id
                 name
                 originalSlug: slug
+                value
+                file {
+                  url
+                }
               }
             }
           }
@@ -165,6 +169,10 @@ export const dynamicOperandsQueries = gql`
             id
             name
             originalSlug: slug
+            value
+            file {
+              url
+            }
           }
         }
         pageInfo {

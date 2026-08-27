@@ -173,7 +173,7 @@ describe("ConditionalFilter / queryVariables / createProductQueryVariables", () 
       ),
     ];
     const expectedOutput = {
-      attributes: [{ slug: "bottle-size", values: ["0-5l"] }],
+      attributes: [{ slug: "bottle-size", value: { slug: { eq: "0-5l" } } }],
       price: { eq: "123" },
     };
     // Act
@@ -363,7 +363,9 @@ describe("ConditionalFilter / queryVariables / createProductExportQueryVariables
 
     // Assert
     expect(result).toEqual({
-      attributes: [{ slug: "fabric-weight-gsm", valuesRange: { gte: 120, lte: 300 } }],
+      attributes: [
+        { slug: "fabric-weight-gsm", value: { numeric: { range: { gte: 120, lte: 300 } } } },
+      ],
     });
   });
 });

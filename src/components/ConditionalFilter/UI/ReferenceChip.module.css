@@ -11,7 +11,7 @@
   height: var(--variant-ref-thumb, 18px);
   border: 1px solid var(--mu-colors-border-default1);
   border-radius: 50%;
-  flex-shrink: 0;
+  flex: none;
   overflow: hidden;
   background-color: var(--mu-colors-background-default2);
 }
@@ -36,6 +36,13 @@
   gap: var(--variant-ref-thumb-gap);
   min-width: 0;
   max-width: 100%;
+}
+
+.chip :global([data-test-id="swatch-preview"]) {
+  flex: none;
+  align-self: center;
+  width: 18px;
+  height: 18px;
 }
 
 .chip .thumbnail,

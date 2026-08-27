@@ -6,6 +6,7 @@ import {
   Select,
 } from "@saleor/macaw-ui-next";
 
+import { isSwatchAttributeOption, isSwatchAttributeType } from "../API/swatchAttributeOption";
 import {
   isProductReferenceEntity,
   isVariantReferenceEntity,
@@ -39,6 +40,7 @@ import {
   resolveComboboxValue,
 } from "./resolveAsyncComboboxState";
 import { type ConditionalFiltersLayout } from "./Root";
+import { SwatchAttributeMultiselect } from "./SwatchAttributeMultiselect";
 import { type SelectedOperator } from "./types";
 import { VariantReferenceMultiselect } from "./VariantReferenceMultiselect";
 
@@ -51,6 +53,7 @@ interface RightOperatorProps {
   disabled: boolean;
   layout?: ConditionalFiltersLayout;
   entityType?: string | null;
+  attributeType?: string | null;
 }
 
 const getInlineControlProps = (layout: ConditionalFiltersLayout | undefined) => ({
@@ -67,6 +70,7 @@ export const RightOperator = ({
   helperText,
   layout = "popover",
   entityType,
+  attributeType,
 }: RightOperatorProps) => {
   const inlineControlProps = getInlineControlProps(layout);
 
@@ -153,6 +157,25 @@ export const RightOperator = ({
     if (isProductReferenceEntity(entityType)) {
       return (
         <ProductReferenceMultiselect
+          index={index}
+          selected={selected}
+          emitter={emitter}
+          error={error}
+          helperText={helperText}
+          disabled={disabled}
+          layout={layout}
+        />
+      );
+    }
+
+    const isSwatchAttribute =
+      isSwatchAttributeType(attributeType) ||
+      selected.options.some(isSwatchAttributeOption) ||
+      selected.value.some(isSwatchAttributeOption);
+
+    if (isSwatchAttribute) {
+      return (
+        <SwatchAttributeMultiselect
           index={index}
           selected={selected}
           emitter={emitter}
@@ -321,7 +344,7 @@ export const RightOperator = ({
 
   if (isDateRange(selected)) {
     return (
-      <RangeInputWrapper>
+      <RangeInputWrapper inline>
         <RangeInput
           {...inlineControlProps}
           data-test-id={`right-${index}`}
@@ -334,6 +357,9 @@ export const RightOperator = ({
           helperText={helperText}
           disabled={disabled}
           width="100%"
+          flexDirection="row"
+          alignItems="center"
+          gap={1}
         />
       </RangeInputWrapper>
     );
