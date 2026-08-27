@@ -7122,6 +7122,9 @@
     "context": "gift card history message",
     "string": "Gift card balance was reset from {oldBalance} to {newBalance}"
   },
+  "OsU2Fs": {
+    "string": "Attribute"
+  },
   "OtIOMb": {
     "string": "Shipped"
   },

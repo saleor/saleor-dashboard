@@ -39,7 +39,7 @@ describe("ConditionalFilter / FilterElement / Condition", () => {
         selected: {
           value: { label: "Cat1", value: "cat-1-id", slug: "cat1" },
           conditionValue: { type: "combobox", label: "is", value: "input-1" },
-          options: [],
+          options: [{ label: "Cat1", value: "cat-1-id", slug: "cat1" }],
           loading: false,
         },
         loading: false,
@@ -85,7 +85,14 @@ describe("ConditionalFilter / FilterElement / Condition", () => {
               value: "some-attr-1z",
             },
           ],
-          options: [],
+          options: [
+            {
+              label: "Some attr 1z",
+              originalSlug: "some-attr-1z",
+              slug: "some-attr-1z",
+              value: "some-attr-1z",
+            },
+          ],
           loading: false,
         },
         loading: false,

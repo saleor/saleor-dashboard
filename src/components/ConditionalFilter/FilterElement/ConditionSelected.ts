@@ -1,6 +1,18 @@
 import { getDefaultByControlName } from "../controlsType";
 import { type ConditionItem } from "./ConditionOptions";
-import { type ConditionValue, isItemOptionArray, isTuple } from "./ConditionValue";
+import { type ConditionValue, isItemOption, isItemOptionArray, isTuple } from "./ConditionValue";
+
+const optionsFromSelectedValue = (value: ConditionValue): ConditionValue[] => {
+  if (isItemOption(value)) {
+    return [value];
+  }
+
+  if (isItemOptionArray(value)) {
+    return value;
+  }
+
+  return [];
+};
 
 export class ConditionSelected {
   public constructor(
@@ -32,7 +44,7 @@ export class ConditionSelected {
   }
 
   public static fromConditionItemAndValue(conditionItem: ConditionItem, value: ConditionValue) {
-    return new ConditionSelected(value, conditionItem, [], false);
+    return new ConditionSelected(value, conditionItem, optionsFromSelectedValue(value), false);
   }
 
   public enableLoading() {

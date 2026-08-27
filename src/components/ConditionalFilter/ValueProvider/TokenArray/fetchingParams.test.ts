@@ -105,6 +105,8 @@ describe("TokenArray / fetchingParams / getEmptyFetchingPrams", () => {
     // Assert
     expect(fetchingParams).toEqual({
       customerType: [],
+      attribute: {},
+      attributeReference: {},
     });
   });
 
@@ -173,6 +175,8 @@ describe("TokenArray / fetchingParams / toCustomerFetchingParams", () => {
     // Arrange
     const params = {
       customerType: [],
+      attribute: {},
+      attributeReference: {},
     };
 
     const token = {
@@ -188,6 +192,36 @@ describe("TokenArray / fetchingParams / toCustomerFetchingParams", () => {
     // Assert
     expect(fetchingParams).toEqual({
       customerType: ["b2b"],
+      attribute: {},
+      attributeReference: {},
+    });
+  });
+
+  it("should collect attribute tokens onto attribute, not customerType", () => {
+    // Arrange
+    const params = {
+      customerType: [],
+      attribute: {},
+      attributeReference: {},
+    };
+    const token = {
+      conditionKind: "in",
+      name: "industry",
+      type: TokenType.ATTRIBUTE_DROPDOWN,
+      value: ["choice-1"],
+      isAttribute: () => true,
+    } as UrlToken;
+
+    // Act
+    const fetchingParams = toCustomerFetchingParams(params, token);
+
+    // Assert
+    expect(fetchingParams).toEqual({
+      customerType: [],
+      attribute: {
+        industry: ["choice-1"],
+      },
+      attributeReference: {},
     });
   });
 });

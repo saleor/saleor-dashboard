@@ -24,6 +24,12 @@ import {
   isTextInput,
 } from "./operators";
 import { RangeInputWrapper } from "./RangeInputWrapper";
+import {
+  includeSelectedComboboxOptions,
+  isSelectedComboboxLabel,
+  isSelectedMultiselectLabel,
+  resolveComboboxValue,
+} from "./resolveAsyncComboboxState";
 import { type ConditionalFiltersLayout } from "./Root";
 import { type SelectedOperator } from "./types";
 
@@ -112,18 +118,27 @@ export const RightOperator = ({
   }
 
   if (isMultiselect(selected)) {
+    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
+
     return (
       <DynamicMultiselect
         {...inlineControlProps}
         data-test-id={`right-${index}`}
         value={selected.value}
-        options={selected.options ?? []}
+        options={options}
         loading={selected.loading}
         onChange={value => {
           emitter.changeRightOperator(index, value);
         }}
         onInputValueChange={value => {
+          if (isSelectedMultiselectLabel(selected.value, value)) {
+            return;
+          }
+
           emitter.inputChangeRightOperator(index, value);
+        }}
+        onScrollEnd={() => {
+          emitter.scrollEndRightOperator(index);
         }}
         onFocus={() => {
           emitter.focusRightOperator(index);
@@ -139,19 +154,31 @@ export const RightOperator = ({
   }
 
   if (isCombobox(selected)) {
+    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
+    const value = resolveComboboxValue(options, selected.value);
+
     return (
       <DynamicCombobox
         {...inlineControlProps}
         data-test-id={`right-${index}`}
-        value={selected.value}
-        options={selected.options ?? []}
+        value={value}
+        options={options}
         loading={selected.loading}
-        onChange={value => {
-          if (!value) return;
+        onChange={nextValue => {
+          if (!nextValue) return;
 
-          emitter.changeRightOperator(index, value);
+          emitter.changeRightOperator(index, nextValue);
         }}
-        onInputValueChange={value => emitter.inputChangeRightOperator(index, value)}
+        onInputValueChange={inputValue => {
+          if (isSelectedComboboxLabel(selected.value, inputValue)) {
+            return;
+          }
+
+          emitter.inputChangeRightOperator(index, inputValue);
+        }}
+        onScrollEnd={() => {
+          emitter.scrollEndRightOperator(index);
+        }}
         onFocus={() => {
           emitter.focusRightOperator(index);
         }}
@@ -166,13 +193,16 @@ export const RightOperator = ({
   }
 
   if (isSelect(selected)) {
+    const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
+    const value = resolveComboboxValue(options, selected.value) ?? selected.value;
+
     return (
       <Select
         {...inlineControlProps}
         data-test-id={`right-${index}`}
-        value={selected.value}
-        options={selected.options ?? []}
-        onChange={value => emitter.changeRightOperator(index, value)}
+        value={value}
+        options={options}
+        onChange={nextValue => emitter.changeRightOperator(index, nextValue)}
         onFocus={() => {
           emitter.focusRightOperator(index);
         }}

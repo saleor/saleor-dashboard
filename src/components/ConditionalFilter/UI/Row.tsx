@@ -11,6 +11,11 @@ import { useMemo } from "react";
 import { getItemConstraint } from "./constrains";
 import { type ErrorLookup } from "./errors";
 import { type FilterEventEmitter } from "./EventEmitter";
+import { isSelectedComboboxLabel } from "./resolveAsyncComboboxState";
+import {
+  resolveAttributeComboboxOptions,
+  resolveAttributeComboboxValue,
+} from "./resolveAttributeComboboxState";
 import { RightOperator } from "./RightOperator";
 import { type ConditionalFiltersLayout, type ExperimentalFiltersProps } from "./Root";
 import styles from "./Row.module.css";
@@ -45,14 +50,20 @@ export const RowComponent = ({
 }: RowProps) => {
   const constrain = getItemConstraint(item.constraint);
   const isAttribute = item.isAttribute;
+  const attributeList = useMemo(
+    () =>
+      resolveAttributeComboboxOptions(item.availableAttributesList ?? [], item.selectedAttribute),
+    [item.availableAttributesList, item.selectedAttribute],
+  );
   const attributeOptions = useMemo(
-    () => enrichAttributeComboboxOptions(item.availableAttributesList ?? []),
-    [item.availableAttributesList],
+    () => enrichAttributeComboboxOptions(attributeList),
+    [attributeList],
   );
-  const selectedAttributeValue = useMemo(
-    () => (item.selectedAttribute ? enrichAttributeComboboxOption(item.selectedAttribute) : null),
-    [item.selectedAttribute],
-  );
+  const selectedAttributeValue = useMemo(() => {
+    const selected = resolveAttributeComboboxValue(attributeList, item.selectedAttribute);
+
+    return selected ? enrichAttributeComboboxOption(selected) : null;
+  }, [attributeList, item.selectedAttribute]);
   const inlineControlProps = layout === "inline" ? { backgroundColor: "default1" as const } : {};
 
   return (
@@ -108,10 +119,17 @@ export const RowComponent = ({
             emitter.changeAttribute(index, value as LeftOperatorOption);
           }}
           onInputValueChange={value => {
+            if (isSelectedComboboxLabel(item.selectedAttribute, value)) {
+              return;
+            }
+
             emitter.inputChangeAttribute(index, value);
           }}
           onFocus={() => {
             emitter.focusAttribute(index);
+          }}
+          onScrollEnd={() => {
+            emitter.scrollEndAttribute(index);
           }}
           onBlur={() => {
             emitter.blurAttribute(index);

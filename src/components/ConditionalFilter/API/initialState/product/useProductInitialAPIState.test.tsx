@@ -92,6 +92,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
             attributesSlugs: ["page-ref-attr"],
             choicesIds: [],
             first: 1,
+            choicesFirst: 1,
           }),
         }),
       );
@@ -362,6 +363,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
             attributesSlugs: ["category-ref-attr"],
             choicesIds: [],
             first: 1,
+            choicesFirst: 1,
           }),
         }),
       );
@@ -459,6 +461,7 @@ describe("useProductInitialAPIState - Reference Attributes Logic", () => {
             attributesSlugs: ["collection-ref-attr"],
             choicesIds: [],
             first: 1,
+            choicesFirst: 1,
           }),
         }),
       );

@@ -21,6 +21,7 @@ import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQuer
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
 import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
 import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
+import { AssignedAttributeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AssignedAttributeQueryVarsBuilder";
 import { CustomerTypeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/CustomerTypeQueryVarsBuilder";
 import { DateTimeRangeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/DateTimeRangeQueryVarsBuilder";
 import { FulfillmentStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/FulfillmentStatusQueryVarsBuilder";
@@ -208,7 +209,10 @@ export const createGiftCardQueryVariables = (value: FilterContainer): GiftCardFi
 
 // Saleor rejects a query that carries both `filter` and `where`, so every customer
 // filter has to go through `where` — `customerType` only exists there anyway.
-const customerFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+// AssignedAttributeQueryVarsBuilder must win over the default AttributeQueryVarsBuilder
+// because CustomerWhereInput.attributes is AssignedAttributeWhereInput, not AttributeInput.
+export const customerFilterDefinitionResolver = new FilterQueryVarsBuilderResolver([
+  new AssignedAttributeQueryVarsBuilder(),
   new CustomerTypeQueryVarsBuilder(),
   new DateTimeRangeQueryVarsBuilder(), // dateJoined uses DateTimeRangeInput
   new MetadataFilterInputQueryVarsBuilder(), // metadata uses MetadataFilterInput

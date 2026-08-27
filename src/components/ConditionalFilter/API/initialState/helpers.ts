@@ -78,8 +78,37 @@ const isProductTypeQuery = (
 ): query is ApolloQueryResult<_SearchProductTypesOperandsQuery> => "productTypes" in query.data;
 
 const isAttributeQuery = (
-  query: InitialProductAPIResponse,
-): query is ApolloQueryResult<_SearchAttributeOperandsQuery> => "attributes" in query.data;
+  query: ApolloQueryResult<unknown>,
+): query is ApolloQueryResult<_SearchAttributeOperandsQuery> =>
+  !!query.data &&
+  typeof query.data === "object" &&
+  query.data !== null &&
+  "attributes" in query.data;
+
+export const createAttributeMapFromQuery = (
+  query: ApolloQueryResult<_SearchAttributeOperandsQuery>,
+  existing: Record<string, AttributeDTO> = {},
+): Record<string, AttributeDTO> =>
+  query.data?.attributes?.edges.reduce((accAttr, { node }) => {
+    if (!node.slug || !node.inputType) return accAttr;
+
+    const attributeChoices =
+      node.inputType === "BOOLEAN"
+        ? convertItemOptionsToAttributeChoices(createBooleanOptions())
+        : convertItemOptionsToAttributeChoices(createOptionsFromAPI(node.choices?.edges ?? []));
+
+    return {
+      ...accAttr,
+      [node.slug]: {
+        choices: attributeChoices,
+        slug: node.slug,
+        value: node.id,
+        label: node.name ?? "",
+        inputType: node.inputType as AttributeInputType,
+        entityType: node.entityType ?? undefined,
+      },
+    };
+  }, existing) ?? existing;
 
 const isPageTypesQuery = (
   query: InitialPageAPIResponse,
@@ -148,29 +177,7 @@ export const createInitialProductStateFromData = (
       if (isAttributeQuery(query)) {
         return {
           ...acc,
-          attribute:
-            query.data?.attributes?.edges.reduce((accAttr, { node }) => {
-              if (!node.slug || !node.inputType) return accAttr;
-
-              const attributeChoices =
-                node.inputType === "BOOLEAN"
-                  ? convertItemOptionsToAttributeChoices(createBooleanOptions())
-                  : convertItemOptionsToAttributeChoices(
-                      createOptionsFromAPI(node.choices?.edges ?? []),
-                    );
-
-              return {
-                ...accAttr,
-                [node.slug]: {
-                  choices: attributeChoices,
-                  slug: node.slug,
-                  value: node.id,
-                  label: node.name ?? "",
-                  inputType: node.inputType as AttributeInputType,
-                  entityType: node.entityType ?? undefined,
-                },
-              };
-            }, acc.attribute || {}) ?? acc.attribute,
+          attribute: createAttributeMapFromQuery(query, acc.attribute || {}),
         };
       }
 
@@ -192,10 +199,12 @@ export const createInitialProductStateFromData = (
 };
 
 export type ReferenceAttributeChoices = { slug: string; itemOptions: ItemOption[] };
-export const mergeInitialProductsStateReferenceAttributes = (
-  initialState: InitialProductState,
+export const mergeInitialProductsStateReferenceAttributes = <
+  T extends { attribute: Record<string, AttributeDTO> },
+>(
+  initialState: T,
   referenceChoices: ReferenceAttributeChoices[],
-) => {
+): T => {
   return referenceChoices.reduce((acc, { slug, itemOptions }) => {
     if (acc.attribute[slug]) {
       // Convert choices to ensure type compatibility
@@ -322,6 +331,7 @@ export const createInitialCustomerState = (data: InitialCustomerAPIResponse[]) =
     },
     {
       customerType: [],
+      attribute: {},
     },
   );
 

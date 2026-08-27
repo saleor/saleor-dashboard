@@ -1,4 +1,5 @@
 // TODO: Remove barell file
+export * from "./AssignedAttributeQueryVarsBuilder";
 export * from "./AttributeQueryVarsBuilder";
 export * from "./AttributeTypeQueryVarsBuilder";
 export * from "./BaseMappableQueryVarsBuilder";
