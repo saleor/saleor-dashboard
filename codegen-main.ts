@@ -1,7 +1,8 @@
 import { type CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-  schema: "./schema-main.graphql",
+  // schema-directives declares @lockSchema, which the API does not know about
+  schema: ["./schema-main.graphql", "./schema-directives.graphql"],
   documents: [
     "./src/**/queries.ts",
     "./src/**/mutations.ts",
