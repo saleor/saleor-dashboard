@@ -1,5 +1,54 @@
 # Changelog
 
+## 3.23.30
+
+### Patch Changes
+
+- [#6876](https://github.com/saleor/saleor-dashboard/pull/6876) [`ce6966f`](https://github.com/saleor/saleor-dashboard/commit/ce6966fe981257727e59166b3d8e6d2edaaf74f9) Thanks [@mirekm](https://github.com/mirekm)! - You can now filter customers by attributes.
+
+  On the customer list, open **Conditions** and choose **Attribute**.
+
+- [#6867](https://github.com/saleor/saleor-dashboard/pull/6867) [`e258774`](https://github.com/saleor/saleor-dashboard/commit/e2587747354d060d9ecd21c4b2d739877d9722ff) Thanks [@mirekm](https://github.com/mirekm)! - Customer types are now in the Customers sidebar.
+
+  Open **Customers** to jump to **All**, or to a type such as **B2B** or **Default**. **Customer Types** at the bottom opens the type settings. If you only have one type, the menu stays **All** plus settings — that type is the same list as All. Types you pin on the customer list appear first; only a handful of types are listed so the menu stays short.
+
+- [#6876](https://github.com/saleor/saleor-dashboard/pull/6876) [`ce6966f`](https://github.com/saleor/saleor-dashboard/commit/ce6966fe981257727e59166b3d8e6d2edaaf74f9) Thanks [@mirekm](https://github.com/mirekm)! - Improve filter menus so they show more choices and load on scroll.
+
+- [#6655](https://github.com/saleor/saleor-dashboard/pull/6655) [`7002c5a`](https://github.com/saleor/saleor-dashboard/commit/7002c5a246f38cf316bf15d7b61ceec9882f206d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed the product page freezing while it loads. The media card re-rendered
+  itself in a loop until the product query resolved, which could lock up the tab
+  on slower connections.
+
+- [#6875](https://github.com/saleor/saleor-dashboard/pull/6875) [`070d0e6`](https://github.com/saleor/saleor-dashboard/commit/070d0e62ea0cfda70c5d440fbb0f88368847c5f4) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed the gift card code export from the Dashboard: the "Export card codes" menu item on the
+  gift card list and the export dialog are gone. The feature is deprecated — `exportGiftCards` is
+  removed from the 3.24 API, and on 3.23 it can still be used directly via the API.
+
+  Bulk issuing gift cards no longer opens a follow-up dialog offering to email the codes — the
+  success notification is now the only confirmation, since exporting was that dialog's only action.
+
+- [#6655](https://github.com/saleor/saleor-dashboard/pull/6655) [`7002c5a`](https://github.com/saleor/saleor-dashboard/commit/7002c5a246f38cf316bf15d7b61ceec9882f206d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Rich text fields (product, category and collection descriptions, CMS pages, and
+  rich text attributes) now support images. Pick "Image" from the editor toolbar
+  and paste a link to an externally hosted image, or paste the link straight into
+  the editor.
+
+  Uploading files to Saleor media storage is not supported yet, so dragging,
+  dropping or pasting an image file does nothing.
+
+  Note: storefronts and other API clients that render rich text content need to
+  handle the `image` block to display these images.
+
+- [#6873](https://github.com/saleor/saleor-dashboard/pull/6873) [`e2fe430`](https://github.com/saleor/saleor-dashboard/commit/e2fe430fbc973e1c7663082cbf76d34fe76eb0fd) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Lists no longer crash when rows stay selected while the list shrinks.
+
+  Selecting rows and then lowering "rows per page", bulk-deleting, or refetching fewer records could take the whole view down with "We've encountered an unexpected error". Glide tracks its row selection by index, independently of the data, so the grid reported indices that no longer pointed at a row and the list resolved them straight onto its own data. Products, collections, models, draft orders, shipping zones and gift cards were affected. Attribute and voucher lists did not crash but could put undefined entries into the selection that bulk actions run on.
+
+- [#6871](https://github.com/saleor/saleor-dashboard/pull/6871) [`bc08ccf`](https://github.com/saleor/saleor-dashboard/commit/bc08ccf6de05d7f2062b0c68c178f399eca611e5) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed every attribute request failing against the 3.24 API. The Dashboard kept selecting
+  `availableInGrid`, `filterableInStorefront` and `storefrontSearchPosition`, which 3.24 removes
+  from `Attribute`, so attribute list, details and update all returned validation errors.
+
+  Those three fields are now marked as belonging to the 3.23 schema only and are dropped from the
+  request when the Dashboard is built against 3.24. On 3.23 the storefront faceted navigation
+  settings keep working unchanged. Sorting the attribute list by "Use in faceted search" falls back
+  to sorting by name on 3.24, where that sort field is gone too.
+
 ## 3.23.29
 
 ### Patch Changes
