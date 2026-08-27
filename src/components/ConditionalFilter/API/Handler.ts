@@ -111,7 +111,12 @@ export const createProductOptionsFromAPI = (
       slug: node.slug,
       originalSlug: node.originalSlug,
     };
+    const productName = node.name?.trim();
     const thumbnailUrl = node.thumbnail?.url;
+
+    if (productName) {
+      option.productName = productName;
+    }
 
     if (thumbnailUrl) {
       option.productThumbnailUrl = thumbnailUrl;
