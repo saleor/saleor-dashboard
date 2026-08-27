@@ -2881,10 +2881,6 @@
     "context": "create product dialog description",
     "string": "Add a product. You can set a price, inventory, and availability after creating it."
   },
-  "9B2mOB": {
-    "context": "product list pagination label",
-    "string": "No. of products"
-  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -6519,6 +6515,10 @@
   "MTl5o6": {
     "context": "new discount label",
     "string": "New discount value"
+  },
+  "MU0Zmt": {
+    "context": "product list pagination label",
+    "string": "No. of products"
   },
   "MUjTkk": {
     "string": "Search customer types..."
