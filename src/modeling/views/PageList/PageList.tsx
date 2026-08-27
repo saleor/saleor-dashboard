@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   OrderDirection,
@@ -318,7 +319,7 @@ const PageList = ({ params }: PageListProps) => {
         return;
       }
 
-      const rowsIds = rows.map(row => pages[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, pages);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {

@@ -34,11 +34,11 @@ const GiftCardListSearchAndFilters = () => {
         showSearchTooltip
         searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
         actions={
-          <Box display="flex" gap={4}>
+          <Box display="flex" gap={4} alignItems="center">
             {selectedRowIds.length > 0 && (
               <>
                 <GiftCardListBulkActions />
-                <BulkDeleteButton onClick={openDeleteDialog}>
+                <BulkDeleteButton count={selectedRowIds.length} onClick={openDeleteDialog}>
                   <FormattedMessage defaultMessage="Delete gift cards" id="d68yq7" />
                 </BulkDeleteButton>
               </>

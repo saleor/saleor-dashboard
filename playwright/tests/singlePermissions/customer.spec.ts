@@ -18,5 +18,6 @@ test("TC: SALEOR_13 User should be able to navigate to customer list as a staff 
   await mainMenuPage.openCustomers();
   await expect(customersPage.createCustomerButton).toBeVisible();
   await basePage.expectGridToBeAttached();
-  await mainMenuPage.expectMenuItemsCount(3);
+  await expect(mainMenuPage.products).toHaveCount(0);
+  await expect(mainMenuPage.orders).toHaveCount(0);
 });

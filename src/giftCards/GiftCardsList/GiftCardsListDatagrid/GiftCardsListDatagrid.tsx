@@ -5,6 +5,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import { DatagridPagination, TablePagination } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
@@ -118,7 +119,7 @@ export const GiftCardsListDatagrid = () => {
         return;
       }
 
-      const rowsIds = rows.map(row => giftCards[row].id);
+      const rowsIds = getRowIdsFromSelection(rows, giftCards);
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
