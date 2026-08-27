@@ -844,6 +844,39 @@ describe("ConditionalFilter / queryVariables / createCustomerWhereVariables", ()
     });
   });
 
+  it("should put customer attributes on where as AssignedAttributeWhereInput", () => {
+    // Arrange
+    const filters: FilterContainer = [
+      new FilterElement(
+        new ExpressionValue("attribute", "Attribute", "attribute"),
+        new Condition(
+          ConditionOptions.fromName(AttributeInputTypeEnum.DROPDOWN),
+          ConditionSelected.fromConditionItemAndValue(
+            { type: "multiselect", label: "in", value: "input-2" },
+            { label: "Retail", value: "id-1", slug: "id-1", originalSlug: "retail" },
+          ),
+          false,
+        ),
+        false,
+        undefined,
+        new ExpressionValue("industry", "Industry", AttributeInputTypeEnum.DROPDOWN),
+      ),
+    ];
+
+    // Act
+    const result = createCustomerWhereVariables(filters);
+
+    // Assert
+    expect(result).toEqual({
+      AND: [
+        {
+          attributes: [{ slug: "industry", value: { slug: { eq: "retail" } } }],
+        },
+      ],
+      OR: undefined,
+    });
+  });
+
   it("should put customerType on where using entity IDs", () => {
     // Arrange
     const filters: FilterContainer = [

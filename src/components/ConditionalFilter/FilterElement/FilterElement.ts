@@ -1,7 +1,10 @@
 import { type AttributeEntityTypeEnum } from "@dashboard/graphql";
 import { errorTracker } from "@dashboard/services/errorTracking";
 
-import { type InitialProductStateResponse } from "../API/initialState/product/InitialProductStateResponse";
+import {
+  type AttributeLookup,
+  hasAttributeLookup,
+} from "../API/initialState/product/InitialProductStateResponse";
 import { type RowType, STATIC_OPTIONS } from "../constants";
 import { type LeftOperand } from "../LeftOperandsProvider";
 import { type InitialResponseType } from "../types";
@@ -55,7 +58,7 @@ export class ExpressionValue {
     return new ExpressionValue(token.name, option.label, token.name);
   }
 
-  public static forAttribute(attributeName: string, response: InitialProductStateResponse) {
+  public static forAttribute(attributeName: string, response: AttributeLookup) {
     const attribute = response.attributeByName(attributeName);
 
     if (!attribute) {
@@ -256,7 +259,18 @@ export class FilterElement {
     }
 
     if (token.isAttribute()) {
-      const attribute = (response as InitialProductStateResponse).attributeByName(token.name);
+      if (!hasAttributeLookup(response)) {
+        const error = new Error(
+          `Attribute "${token.name}" not found when creating FilterElement from URL token. This may indicate a deleted attribute or invalid URL parameter.`,
+        );
+
+        console.error(error.message, { token, response });
+        errorTracker.captureException(error);
+
+        return FilterElement.createEmpty();
+      }
+
+      const attribute = response.attributeByName(token.name);
 
       if (!attribute) {
         const error = new Error(
@@ -274,7 +288,7 @@ export class FilterElement {
         Condition.fromUrlToken(token, response),
         false,
         undefined,
-        ExpressionValue.forAttribute(token.name, response as InitialProductStateResponse),
+        ExpressionValue.forAttribute(token.name, response),
       );
     }
 

@@ -8,6 +8,7 @@ export type RightOperatorOption = Option & {
 
 export type LeftOperatorOption = Option & {
   type: string;
+  slug?: string;
 };
 
 type ConditionOption<T extends string> = Option & {
@@ -145,10 +146,12 @@ export interface FilterEvent extends Event {
     | RightOperatorFocusData
     | RightOperatorBlurData
     | RightOperatorInputValueChangeData
+    | RightOperatorScrollEndData
     | AttributeChangeData
     | AttributeFocusData
     | AttributeBlurData
-    | AttributeInputValueChangeData;
+    | AttributeInputValueChangeData
+    | AttributeScrollEndData;
 }
 
 export interface RowAddData {
@@ -234,6 +237,12 @@ export interface RightOperatorInputValueChangeData {
   value: string;
 }
 
+export interface RightOperatorScrollEndData {
+  type: "rightOperator.onScrollEnd";
+  path: `${number}.condition.selected.value`;
+  index: number;
+}
+
 export interface AttributeChangeData {
   type: "attribute.onChange";
   path: `${number}`;
@@ -258,4 +267,10 @@ export interface AttributeInputValueChangeData {
   path: `${number}`;
   index: number;
   value: string;
+}
+
+export interface AttributeScrollEndData {
+  type: "attribute.onScrollEnd";
+  path: `${number}`;
+  index: number;
 }

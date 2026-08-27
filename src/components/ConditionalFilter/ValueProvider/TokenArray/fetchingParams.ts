@@ -53,6 +53,8 @@ export interface PageFetchingParams {
 
 export interface CustomerFetchingParams {
   customerType: string[];
+  attribute: Record<string, string[]>;
+  attributeReference: Record<string, string[]>;
 }
 
 export interface GiftCardsFetchingParams {
@@ -93,7 +95,7 @@ type OrderParamsKeys = keyof OrderFetchingParams;
 type VoucherParamsKeys = keyof VoucherFetchingParams;
 type DiscountParamsKeys = keyof DiscountFetchingParams;
 type PageParamsKeys = keyof PageFetchingParams;
-type CustomerParamsKeys = keyof CustomerFetchingParams;
+type CustomerParamsKeys = keyof Omit<CustomerFetchingParams, "attribute" | "attributeReference">;
 type GiftCardsParamKeys = keyof GiftCardsFetchingParams;
 type ProductTypesParamsKeys = keyof ProductTypesFetchingParams;
 type StaffMembersParamsKeys = keyof StaffMembersFetchingParams;
@@ -151,6 +153,8 @@ const emptyPageFetchingParams: PageFetchingParams = {
 
 const emptyCustomerFetchingParams: CustomerFetchingParams = {
   customerType: [],
+  attribute: {},
+  attributeReference: {},
 };
 
 const emptyGiftCardsFetchingParams: GiftCardsFetchingParams = {
@@ -195,9 +199,15 @@ const includedInParams = (c: UrlToken) =>
   TokenType.ATTRIBUTE_MULTISELECT === c.type ||
   TokenType.ATTRIBUTE_REFERENCE === c.type;
 
-export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
-  const key = c.name as FetchingParamsKeys;
+const isAttributeTokenType = (type: UrlToken["type"]) =>
+  type !== TokenType.STATIC && Object.values(TokenType).includes(type);
 
+const applyAttributeFetchingParams = <
+  T extends { attribute: Record<string, string[]>; attributeReference: Record<string, string[]> },
+>(
+  p: T,
+  c: UrlToken,
+): T | null => {
   if (c.type === TokenType.ATTRIBUTE_REFERENCE) {
     if (!p.attributeReference[c.name]) {
       p.attributeReference[c.name] = [];
@@ -208,24 +218,32 @@ export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
     return p;
   }
 
-  if (!c.isAttribute() && !p[key]) {
-    p[key] = [];
+  if (!isAttributeTokenType(c.type)) {
+    return null;
   }
 
-  if (c.isAttribute() && !p.attribute[c.name]) {
+  if (!p.attribute[c.name]) {
     p.attribute[c.name] = [];
   }
 
-  if (c.isAttribute() && includedInParams(c)) {
+  if (includedInParams(c)) {
     p.attribute[c.name] = unique(p.attribute[c.name].concat(c.value));
-
-    return p;
   }
 
-  if (c.isAttribute() && !includedInParams(c)) {
-    p.attribute[c.name] = [];
+  return p;
+};
 
-    return p;
+export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
+  const attributeParams = applyAttributeFetchingParams(p, c);
+
+  if (attributeParams) {
+    return attributeParams;
+  }
+
+  const key = c.name as FetchingParamsKeys;
+
+  if (!p[key]) {
+    p[key] = [];
   }
 
   p[key] = unique(p[key].concat(c.value));
@@ -288,6 +306,12 @@ export const toPageFetchingParams = (p: PageFetchingParams, c: UrlToken) => {
 };
 
 export const toCustomerFetchingParams = (p: CustomerFetchingParams, c: UrlToken) => {
+  const attributeParams = applyAttributeFetchingParams(p, c);
+
+  if (attributeParams) {
+    return attributeParams;
+  }
+
   const key = c.name as CustomerParamsKeys;
 
   if (!p[key]) {

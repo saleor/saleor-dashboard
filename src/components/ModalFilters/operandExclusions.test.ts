@@ -108,10 +108,13 @@ describe("ModalFilters / operandExclusions", () => {
     it("should hide excluded collections from collection filter options", async () => {
       // Arrange
       const baseProvider = {
-        fetchRightOptions: jest.fn().mockResolvedValue([
-          { label: "Featured", value: "col-featured", slug: "featured" },
-          { label: "Summer", value: "col-summer", slug: "summer" },
-        ]),
+        fetchRightOptions: jest.fn().mockResolvedValue({
+          options: [
+            { label: "Featured", value: "col-featured", slug: "featured" },
+            { label: "Summer", value: "col-summer", slug: "summer" },
+          ],
+          pageInfo: { hasNextPage: false, endCursor: null },
+        }),
         fetchAttributeOptions: jest.fn(),
       };
       const provider = createOperandExclusionApiProvider(baseProvider, {
@@ -120,10 +123,10 @@ describe("ModalFilters / operandExclusions", () => {
       const filterContainer = [createCollectionFilterElement([])];
 
       // Act
-      const options = await provider.fetchRightOptions("0", filterContainer, "feat");
+      const page = await provider.fetchRightOptions("0", filterContainer, "feat");
 
       // Assert
-      expect(options).toEqual([{ label: "Summer", value: "col-summer", slug: "summer" }]);
+      expect(page.options).toEqual([{ label: "Summer", value: "col-summer", slug: "summer" }]);
     });
   });
 
