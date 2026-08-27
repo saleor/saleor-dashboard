@@ -5,7 +5,7 @@ import { useConditionalFilterContext } from "./context";
 import { type FilterContainer } from "./FilterElement";
 import { FiltersArea } from "./FiltersArea";
 import { LoadingFiltersArea } from "./LoadingFiltersArea";
-import { type ConditionalFiltersLayout } from "./UI";
+import { type ConditionalFiltersLayout, isFlatFilterLayout } from "./UI";
 import { type ErrorEntry, Validator } from "./Validation";
 
 interface ConditionalFiltersProps {
@@ -40,13 +40,18 @@ export const ConditionalFilters: FC<ConditionalFiltersProps> = ({
 
     setErrors(validator.getErrors());
   };
-  const handleCancel = () => {
+  const handleClear = () => {
     valueProvider.clear();
     containerState.resetToProvider();
     onClose();
   };
+  const handleCancel = () => {
+    containerState.resetToProvider();
+    containerState.clearEmpty();
+    onClose();
+  };
 
-  const isInline = layout === "inline";
+  const isInline = isFlatFilterLayout(layout);
 
   return showLoading ? (
     <LoadingFiltersArea layout={layout} />
@@ -62,6 +67,7 @@ export const ConditionalFilters: FC<ConditionalFiltersProps> = ({
         layout={layout}
         onConfirm={handleConfirm}
         errors={errors}
+        onClear={handleClear}
         onCancel={handleCancel}
       />
     </Box>

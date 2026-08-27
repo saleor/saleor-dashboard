@@ -16,6 +16,7 @@ import { getFilterContainerKey, hasUnsavedFilterChanges } from "./ValueProvider/
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;
   errors?: ErrorEntry[];
+  onClear?: () => void;
   onCancel?: () => void;
   layout?: ConditionalFiltersLayout;
 }
@@ -24,6 +25,7 @@ const MAX_VALUE_ITEMS = 12;
 
 export const FiltersArea: FC<FiltersAreaProps> = ({
   onConfirm,
+  onClear,
   onCancel,
   errors,
   layout = "popover",
@@ -59,7 +61,13 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
   const commitCurrentValue = (next: FilterContainer): void => {
     setCommittedKey(getFilterContainerKey(getEditableFilterContainer(next)));
   };
-  const confirmLabel = layout === "inline" ? translations.applyFilters : translations.saveFilters;
+  const addLabel = layout === "panel" ? translations.addCondition : translations.addFilter;
+  const confirmLabel =
+    layout === "panel"
+      ? translations.applyPanelFilters
+      : layout === "inline"
+        ? translations.applyFilters
+        : translations.saveFilters;
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
 
@@ -131,13 +139,14 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
         <Filters.AddRowButton
           disabled={value.length > MAX_VALUE_ITEMS}
           data-test-id="add-filter-button"
+          variant={layout === "panel" ? "tertiary" : "secondary"}
         >
-          {translations.addFilter}
+          {addLabel}
         </Filters.AddRowButton>
         <Box display="flex" gap={3}>
           <Filters.ClearButton
             onClick={() => {
-              onCancel?.();
+              onClear?.();
               commitCurrentValue([]);
             }}
             variant="tertiary"
@@ -145,6 +154,11 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
           >
             {translations.clearFilters}
           </Filters.ClearButton>
+          {layout === "panel" ? (
+            <Filters.CloseButton onClick={onCancel} data-test-id="close-filters-button">
+              {translations.closePanel}
+            </Filters.CloseButton>
+          ) : null}
           <Filters.ConfirmButton
             onClick={() => {
               onConfirm(value);

@@ -55,33 +55,33 @@ const keepMenuOpenOnToggle = <Item>(
   return { ...changes, isOpen: true };
 };
 
-interface UseVariantReferenceComboboxProps {
-  items: VariantReferenceListItem[];
+interface UseReferenceComboboxProps<T extends RightOperatorOption> {
+  items: T[];
   controlId: string;
   menuId: string;
-  onToggle: (item: VariantReferenceListItem) => void;
+  onToggle: (item: T) => void;
 }
 
-type VariantReferenceCombobox = Pick<
-  UseComboboxReturnValue<VariantReferenceListItem>,
+type ReferenceCombobox<T extends RightOperatorOption> = Pick<
+  UseComboboxReturnValue<T>,
   "highlightedIndex" | "getMenuProps" | "getItemProps"
 > & {
   handleKeyDownCapture: (event: KeyboardEvent) => void;
 };
 
-export const useVariantReferenceCombobox = ({
+export const useVariantReferenceCombobox = <T extends RightOperatorOption>({
   items,
   controlId,
   menuId,
   onToggle,
-}: UseVariantReferenceComboboxProps): VariantReferenceCombobox => {
+}: UseReferenceComboboxProps<T>): ReferenceCombobox<T> => {
   const { highlightedIndex, getMenuProps, getItemProps, getInputProps, setHighlightedIndex } =
     useCombobox({
       items,
       isOpen: true,
       defaultHighlightedIndex: 0,
       selectedItem: null,
-      itemToString: item => item?.variantName ?? "",
+      itemToString: item => item?.variantName ?? item?.label ?? "",
       menuId,
       inputId: controlId,
       getItemId: index =>

@@ -1,3 +1,4 @@
+import { isFlatFilterLayout } from "./filterLayout";
 import { type ConditionalFiltersLayout } from "./Root";
 
 /**
@@ -9,7 +10,7 @@ export const getGridTemplateColumns = (
   layout: ConditionalFiltersLayout,
   isAttribute: boolean,
 ): string => {
-  if (layout === "inline") {
+  if (isFlatFilterLayout(layout)) {
     return isAttribute
       ? "minmax(140px, 0.7fr) minmax(160px, 0.85fr) minmax(80px, 0.35fr) minmax(200px, 2.2fr) auto"
       : "minmax(140px, 0.75fr) minmax(80px, 0.35fr) minmax(200px, 2.2fr) auto";

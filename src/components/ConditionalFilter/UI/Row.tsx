@@ -12,6 +12,7 @@ import { getItemConstraint } from "./constrains";
 import { type ErrorLookup } from "./errors";
 import { type FilterEventEmitter } from "./EventEmitter";
 import { getFilterControlId } from "./filterControlId";
+import { isFlatFilterLayout } from "./filterLayout";
 import { isSelectedComboboxLabel } from "./resolveAsyncComboboxState";
 import {
   resolveAttributeComboboxOptions,
@@ -56,13 +57,14 @@ export const RowComponent = ({
 
     return selected ? enrichAttributeComboboxOption(selected) : null;
   }, [attributeList, item.selectedAttribute]);
-  const inlineControlProps = layout === "inline" ? { backgroundColor: "default1" as const } : {};
+  const isFlat = isFlatFilterLayout(layout);
+  const inlineControlProps = isFlat ? { backgroundColor: "default1" as const } : {};
 
   return (
     <Box
-      className={clsx(styles.row, layout === "inline" && styles.inlineRow)}
+      className={clsx(styles.row, isFlat && styles.inlineRow)}
       display="grid"
-      gap={layout === "inline" ? 2 : 0.5}
+      gap={isFlat ? 2 : 0.5}
       __gridTemplateColumns={getGridTemplateColumns(layout, isAttribute)}
       placeItems="flex-start"
       alignItems="center"
@@ -164,7 +166,7 @@ export const RowComponent = ({
         />
       </div>
 
-      {layout === "inline" ? (
+      {isFlat ? (
         <button
           className={styles.inlineRemoveButton}
           data-test-id={`remove-row-${index}`}

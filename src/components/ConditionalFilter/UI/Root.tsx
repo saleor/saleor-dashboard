@@ -7,7 +7,7 @@ import { NoValue } from "./NoValue";
 import type { Error, FilterEvent, LeftOperatorOption, Row } from "./types";
 import { useEventEmitter } from "./useEvents";
 
-export type ConditionalFiltersLayout = "popover" | "inline";
+export type ConditionalFiltersLayout = "popover" | "inline" | "panel";
 
 export interface ExperimentalFiltersProps {
   value: Array<Row | string>;
@@ -36,21 +36,30 @@ export const Root = ({
   const { emitter } = useEventEmitter({
     onChange,
   });
+  const rows =
+    value.length > 0 ? (
+      <Filters
+        value={value}
+        leftOptions={leftOptions}
+        emitter={emitter}
+        locale={locale}
+        error={error}
+        layout={layout}
+      />
+    ) : null;
 
   return (
     <FilterContext.Provider value={{ emitter, actionButtonsDisabled: value.length === 0 }}>
-      {layout === "inline" ? (
+      {layout === "panel" ? (
+        <Box display="flex" flexDirection="column" width="100%" __minWidth="0">
+          {rows ? <Box padding={4}>{rows}</Box> : null}
+          {children}
+        </Box>
+      ) : layout === "inline" ? (
         <Box display="flex" flexDirection="column" gap={3} width="100%" __minWidth="0">
-          {value.length > 0 ? (
+          {rows ? (
             <>
-              <Filters
-                value={value}
-                leftOptions={leftOptions}
-                emitter={emitter}
-                locale={locale}
-                error={error}
-                layout={layout}
-              />
+              {rows}
               <Divider />
             </>
           ) : null}
@@ -58,18 +67,7 @@ export const Root = ({
         </Box>
       ) : (
         <Box height="100%" width="100%" display="grid" __gridTemplateRows="1fr" __minWidth="0">
-          {value.length > 0 ? (
-            <Filters
-              value={value}
-              leftOptions={leftOptions}
-              emitter={emitter}
-              locale={locale}
-              error={error}
-              layout={layout}
-            />
-          ) : (
-            <NoValue locale={locale} />
-          )}
+          {rows ?? <NoValue locale={locale} />}
           <Divider />
           {children}
         </Box>

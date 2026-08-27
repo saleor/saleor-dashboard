@@ -6,10 +6,15 @@ import {
   Select,
 } from "@saleor/macaw-ui-next";
 
-import { isVariantReferenceEntity, isVariantReferenceOption } from "../API/variantReferenceOption";
+import {
+  isProductReferenceEntity,
+  isVariantReferenceEntity,
+  isVariantReferenceOption,
+} from "../API/variantReferenceOption";
 import BulkSelect from "./BulkSelect";
 import { type FilterEventEmitter } from "./EventEmitter";
 import { getFilterControlId } from "./filterControlId";
+import { isFlatFilterLayout } from "./filterLayout";
 import { MetadataInput } from "./MetadataInput";
 import {
   isBulkSelect,
@@ -25,6 +30,7 @@ import {
   isSelect,
   isTextInput,
 } from "./operators";
+import { ProductReferenceMultiselect } from "./ProductReferenceMultiselect";
 import { RangeInputWrapper } from "./RangeInputWrapper";
 import {
   includeSelectedComboboxOptions,
@@ -49,7 +55,7 @@ interface RightOperatorProps {
 
 const getInlineControlProps = (layout: ConditionalFiltersLayout | undefined) => ({
   width: "100%" as const,
-  ...(layout === "inline" ? { backgroundColor: "default1" as const } : {}),
+  ...(isFlatFilterLayout(layout) ? { backgroundColor: "default1" as const } : {}),
 });
 
 export const RightOperator = ({
@@ -133,6 +139,20 @@ export const RightOperator = ({
     if (isVariantReference) {
       return (
         <VariantReferenceMultiselect
+          index={index}
+          selected={selected}
+          emitter={emitter}
+          error={error}
+          helperText={helperText}
+          disabled={disabled}
+          layout={layout}
+        />
+      );
+    }
+
+    if (isProductReferenceEntity(entityType)) {
+      return (
+        <ProductReferenceMultiselect
           index={index}
           selected={selected}
           emitter={emitter}

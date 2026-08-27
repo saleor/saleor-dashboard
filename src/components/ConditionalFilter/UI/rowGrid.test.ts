@@ -11,6 +11,12 @@ describe("getGridTemplateColumns", () => {
     expect(standard).toBe("140px 80px 200px auto");
   });
 
+  it("uses the same flexible tracks for the list filter panel as inline", () => {
+    // Arrange & Act & Assert
+    expect(getGridTemplateColumns("panel", false)).toBe(getGridTemplateColumns("inline", false));
+    expect(getGridTemplateColumns("panel", true)).toBe(getGridTemplateColumns("inline", true));
+  });
+
   it("keeps the value column as the widest flex track on the inline layout", () => {
     // Arrange & Act
     const attribute = getGridTemplateColumns("inline", true);

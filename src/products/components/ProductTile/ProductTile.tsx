@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { type ProductListQuery } from "@dashboard/graphql";
 import { type RelayToFlat } from "@dashboard/types";
@@ -46,15 +46,13 @@ export const ProductTile = ({ product, onClick }: ProductTileProps) => (
         borderWidth={1}
         borderStyle="solid"
         borderColor="default1"
-        color="default2"
+        color="defaultDisabled"
       >
-        <Box __width="40%" __height="40%">
-          <Image
-            size="100%"
-            strokeWidth={iconStrokeWidthBySize.large}
-            data-test-id={`placeholder-svg-${product.id}`}
-          />
-        </Box>
+        <Image
+          size={iconSize.large}
+          strokeWidth={iconStrokeWidthBySize.large}
+          data-test-id={`placeholder-svg-${product.id}`}
+        />
       </Box>
     )}
     <Box display="flex" alignItems="center">

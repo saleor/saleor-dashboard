@@ -17,7 +17,11 @@ import {
 import { createBooleanOptions } from "../../constants";
 import { type AttributeInputType } from "../../FilterElement/ConditionOptions";
 import { type ItemOption } from "../../FilterElement/ConditionValue";
-import { createCustomerOptionsFromAPI, createOptionsFromAPI } from "../Handler";
+import {
+  createCustomerOptionsFromAPI,
+  createOptionsFromAPI,
+  createProductOptionsFromAPI,
+} from "../Handler";
 import { type InitialAttributesState } from "./attributes/InitialAttributesState";
 import { type InitialCollectionState } from "./collections/InitialCollectionState";
 import { type InitialCustomerState } from "./customers/InitialCustomerState";
@@ -368,7 +372,7 @@ export const createInitialGiftCardsState = (
       if (isProductQuery(query)) {
         return {
           ...acc,
-          products: createOptionsFromAPI(query.data?.products?.edges ?? []),
+          products: createProductOptionsFromAPI(query.data?.products?.edges ?? []),
         };
       }
 

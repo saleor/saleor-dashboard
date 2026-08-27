@@ -3,12 +3,15 @@ import { AttributeEntityTypeEnum } from "@dashboard/graphql";
 import {
   createAttributeProductVariantOptionsFromAPI,
   createAttributeProductVariantOptionsFromProductsAPI,
+  createProductOptionsFromAPI,
 } from "./Handler";
 import {
   compareVariantReferenceNames,
+  filterProductReferenceOptions,
   filterVariantReferenceOptions,
   formatVariantReferencePillLabel,
   getVariantReferenceGroups,
+  isProductReferenceEntity,
   isVariantReferenceEntity,
   isVariantReferenceOption,
   toVariantReferencePill,
@@ -137,6 +140,22 @@ describe("getVariantReferenceGroups", () => {
   });
 });
 
+describe("filterProductReferenceOptions", () => {
+  it("keeps products whose name matches the query", () => {
+    // Arrange
+    const options = [{ label: "Apple Juice" }, { label: "Alpine Oversized Hoodie" }];
+
+    // Act & Assert
+    expect(filterProductReferenceOptions(options, "apple").map(option => option.label)).toEqual([
+      "Apple Juice",
+    ]);
+    expect(filterProductReferenceOptions(options, "").map(option => option.label)).toEqual([
+      "Apple Juice",
+      "Alpine Oversized Hoodie",
+    ]);
+  });
+});
+
 describe("filterVariantReferenceOptions", () => {
   it("keeps variants when the query matches the product or variant name", () => {
     // Arrange
@@ -204,6 +223,43 @@ describe("isVariantReferenceEntity", () => {
     // Arrange & Act & Assert
     expect(isVariantReferenceEntity(AttributeEntityTypeEnum.PRODUCT_VARIANT)).toBe(true);
     expect(isVariantReferenceEntity(AttributeEntityTypeEnum.PRODUCT)).toBe(false);
+  });
+});
+
+describe("isProductReferenceEntity", () => {
+  it("matches PRODUCT", () => {
+    // Arrange & Act & Assert
+    expect(isProductReferenceEntity(AttributeEntityTypeEnum.PRODUCT)).toBe(true);
+    expect(isProductReferenceEntity(AttributeEntityTypeEnum.PRODUCT_VARIANT)).toBe(false);
+  });
+});
+
+describe("createProductOptionsFromAPI", () => {
+  it("attaches the product thumbnail when present", () => {
+    // Arrange
+    const edges = [
+      {
+        node: {
+          id: "prod-1",
+          name: "Apple Juice",
+          slug: "apple-juice",
+          thumbnail: { url: "https://example.com/apple.png" },
+        },
+      },
+    ];
+
+    // Act
+    const options = createProductOptionsFromAPI(edges);
+
+    // Assert
+    expect(options).toEqual([
+      {
+        label: "Apple Juice",
+        value: "prod-1",
+        slug: "apple-juice",
+        productThumbnailUrl: "https://example.com/apple.png",
+      },
+    ]);
   });
 });
 

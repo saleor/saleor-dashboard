@@ -170,6 +170,32 @@ describe("ConditionalFilter / UI / VariantReferenceMultiselect", () => {
     ]);
   });
 
+  it("renders selected pills as image and size with the product name in the title", () => {
+    // Arrange
+    const emitter = createEmitter();
+    const poloM = selected.options[0];
+
+    render(
+      <VariantReferenceMultiselect
+        index={0}
+        selected={{ ...selected, value: [poloM] }}
+        emitter={emitter}
+        error={false}
+        helperText=""
+        disabled={false}
+      />,
+    );
+
+    // Assert
+    expect(screen.getByTestId("variant-reference-chip")).toHaveAttribute("title", "Darko Polo · M");
+    expect(screen.getByText("M")).toBeInTheDocument();
+    expect(screen.getByText("Darko Polo")).toBeInTheDocument();
+    expect(screen.getByTestId("variant-reference-thumbnail")).toHaveAttribute(
+      "src",
+      "https://example.com/polo.png",
+    );
+  });
+
   it("emits the two-line pill when a variant is selected", () => {
     // Arrange
     const emitter = createEmitter();

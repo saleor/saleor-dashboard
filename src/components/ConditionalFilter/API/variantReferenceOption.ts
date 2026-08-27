@@ -10,6 +10,9 @@ export type VariantReferenceFields = {
 export const isVariantReferenceEntity = (entityType?: string | null): boolean =>
   entityType === AttributeEntityTypeEnum.PRODUCT_VARIANT;
 
+export const isProductReferenceEntity = (entityType?: string | null): boolean =>
+  entityType === AttributeEntityTypeEnum.PRODUCT;
+
 export const normalizeVariantReferenceProductName = (name: string): string =>
   name.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase();
 
@@ -164,6 +167,19 @@ export const toVariantReferencePill = <
     slug: option.slug || option.value,
     label: formatVariantReferencePillLabel(fields.variantName, fields.productName),
   };
+};
+
+export const filterProductReferenceOptions = <T extends { label: string }>(
+  options: T[],
+  query: string,
+): T[] => {
+  const normalized = query.trim().toLowerCase();
+
+  if (!normalized) {
+    return options;
+  }
+
+  return options.filter(option => option.label.toLowerCase().includes(normalized));
 };
 
 export const filterVariantReferenceOptions = <T extends VariantReferenceFields>(

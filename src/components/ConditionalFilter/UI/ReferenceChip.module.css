@@ -1,0 +1,114 @@
+.field {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.thumbnail,
+.thumbnailFallback {
+  box-sizing: border-box;
+  width: var(--variant-ref-thumb, 18px);
+  height: var(--variant-ref-thumb, 18px);
+  border: 1px solid var(--mu-colors-border-default1);
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: var(--mu-colors-background-default2);
+}
+
+.thumbnail {
+  display: block;
+  object-fit: cover;
+}
+
+.thumbnailFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mu-colors-text-defaultDisabled);
+}
+
+.chip {
+  --variant-ref-thumb: 18px;
+  --variant-ref-thumb-gap: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--variant-ref-thumb-gap);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.chip .thumbnail,
+.chip .thumbnailFallback {
+  border-radius: 50%;
+}
+
+.chipName,
+.chipProduct {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 400;
+  color: var(--mu-colors-text-default2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chipName {
+  max-width: 160px;
+}
+
+.chipVariant {
+  flex-shrink: 0;
+  color: var(--mu-colors-text-default1);
+}
+
+.field :global([data-test-id^="selected-option-"]) {
+  max-width: min(240px, 100%);
+  height: auto;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  gap: var(--mu-spacing-2);
+  padding: var(--mu-spacing-0-5) var(--mu-spacing-1-5) var(--mu-spacing-0-5)
+    calc(var(--mu-spacing-0-5) + 1px);
+}
+
+.field :global([data-test-id^="selected-option-"] > *:first-child) {
+  min-width: 0;
+  overflow: visible;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chipProduct {
+    max-width: 0;
+    opacity: 0;
+    margin-inline-end: calc(-1 * var(--variant-ref-thumb-gap));
+    transition:
+      max-width 0.35s ease,
+      opacity 0.3s ease,
+      margin-inline-end 0.35s ease;
+    transition-delay: 0s;
+  }
+
+  .field :global([data-test-id^="selected-option-"] > *:first-child:hover) .chipProduct {
+    max-width: 160px;
+    opacity: 1;
+    margin-inline-end: 0;
+    transition-delay: 0.25s;
+  }
+}
+
+@media (hover: none) {
+  .chipProduct {
+    max-width: 96px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chipProduct {
+    transition: none;
+  }
+}

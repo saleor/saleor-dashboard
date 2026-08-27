@@ -22,7 +22,11 @@ import {
 } from "@dashboard/graphql";
 
 import { hydrateChoiceCount } from "../filterChoicesPage";
-import { createAttributeProductVariantOptionsFromAPI, createOptionsFromAPI } from "../Handler";
+import {
+  createAttributeProductVariantOptionsFromAPI,
+  createOptionsFromAPI,
+  createProductOptionsFromAPI,
+} from "../Handler";
 import {
   createAttributeMapFromQuery,
   mergeInitialProductsStateReferenceAttributes,
@@ -92,7 +96,7 @@ export const loadAttributeFilterState = async (
             })
             .then(result => ({
               slug,
-              itemOptions: createOptionsFromAPI(result.data.products?.edges ?? []),
+              itemOptions: createProductOptionsFromAPI(result.data.products?.edges ?? []),
             })),
         );
         break;

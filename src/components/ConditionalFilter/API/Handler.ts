@@ -92,6 +92,33 @@ export const createOptionsFromAPI = (
     originalSlug: node.originalSlug,
   }));
 
+export const createProductOptionsFromAPI = (
+  data: Array<{
+    node: {
+      name: string | null;
+      id: string;
+      slug: string;
+      originalSlug?: string | null;
+      thumbnail?: { url?: string | null } | null;
+    };
+  }>,
+): ItemOption[] =>
+  data.map(({ node }) => {
+    const option: ItemOption = {
+      label: node.name ?? "",
+      value: node.id,
+      slug: node.slug,
+      originalSlug: node.originalSlug,
+    };
+    const thumbnailUrl = node.thumbnail?.url;
+
+    if (thumbnailUrl) {
+      option.productThumbnailUrl = thumbnailUrl;
+    }
+
+    return option;
+  });
+
 export const createCustomerOptionsFromAPI = (
   data: Array<{
     node: {
@@ -373,7 +400,7 @@ export class ProductsHandler implements Handler {
 
     this.pageInfo = pageInfoFromConnection(data.products);
 
-    return createOptionsFromAPI(data.products?.edges ?? []);
+    return createProductOptionsFromAPI(data.products?.edges ?? []);
   };
 }
 

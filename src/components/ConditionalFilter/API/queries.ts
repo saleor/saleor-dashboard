@@ -279,6 +279,9 @@ export const dynamicOperandsQueries = gql`
           id
           name
           slug
+          thumbnail(size: 64) {
+            url
+          }
         }
       }
       pageInfo {
@@ -409,6 +412,9 @@ export const dynamicOperandsQueries = gql`
           name
           slug
           originalSlug: slug
+          thumbnail(size: 64) {
+            url
+          }
         }
       }
     }

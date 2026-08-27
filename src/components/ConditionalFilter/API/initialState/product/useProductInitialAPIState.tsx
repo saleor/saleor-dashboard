@@ -32,7 +32,11 @@ import { useIntl } from "react-intl";
 
 import { type FetchingParams } from "../../../ValueProvider/TokenArray/fetchingParams";
 import { hydrateChoiceCount } from "../../filterChoicesPage";
-import { createAttributeProductVariantOptionsFromAPI, createOptionsFromAPI } from "../../Handler";
+import {
+  createAttributeProductVariantOptionsFromAPI,
+  createOptionsFromAPI,
+  createProductOptionsFromAPI,
+} from "../../Handler";
 import {
   createInitialProductStateFromData,
   mergeInitialProductsStateReferenceAttributes,
@@ -181,7 +185,7 @@ export const useProductInitialAPIState = (): InitialProductAPIState => {
                   })
                   .then(result => ({
                     slug,
-                    itemOptions: createOptionsFromAPI(result.data.products?.edges ?? []),
+                    itemOptions: createProductOptionsFromAPI(result.data.products?.edges ?? []),
                   })),
               );
               break;

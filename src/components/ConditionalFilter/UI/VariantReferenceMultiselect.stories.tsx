@@ -54,7 +54,7 @@ export default meta;
 type Story = StoryObj<typeof VariantReferenceMultiselect>;
 
 const VariantReferenceMultiselectPlayground = (): JSX.Element => {
-  const [value, setValue] = useState<RightOperatorOption[]>([]);
+  const [value, setValue] = useState<RightOperatorOption[]>([options[0], options[2]]);
   const selected: MultiselectOperator = {
     conditionValue: { type: "multiselect", label: "in", value: "input-2" },
     loading: false,
@@ -74,7 +74,7 @@ const VariantReferenceMultiselectPlayground = (): JSX.Element => {
   );
 
   return (
-    <Box __width="240px">
+    <Box __width="360px">
       <VariantReferenceMultiselect
         index={0}
         selected={selected}

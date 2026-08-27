@@ -4,20 +4,16 @@ import { Check } from "lucide-react";
 import { useCallback, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import {
-  filterVariantReferenceOptions,
-  getVariantReferenceGroups,
-  resolveVariantReferenceFields,
-  toVariantReferencePill,
-} from "../API/variantReferenceOption";
+import { filterProductReferenceOptions } from "../API/variantReferenceOption";
 import { type FilterEventEmitter } from "./EventEmitter";
 import { getFilterControlId } from "./filterControlId";
 import { isFlatFilterLayout } from "./filterLayout";
+import styles from "./ProductReferenceMultiselect.module.css";
 import {
   ReferenceChipField,
   ReferenceThumbnail,
   restoreReferenceOptions,
-  toVariantDisplayChip,
+  toProductDisplayChip,
 } from "./ReferenceChip";
 import {
   includeSelectedComboboxOptions,
@@ -28,11 +24,9 @@ import { type MultiselectOperator, type RightOperatorOption } from "./types";
 import {
   getVariantReferenceOptionId,
   useVariantReferenceCombobox,
-  type VariantReferenceListItem,
 } from "./useVariantReferenceCombobox";
-import styles from "./VariantReferenceMultiselect.module.css";
 
-interface VariantReferenceMultiselectProps {
+interface ProductReferenceMultiselectProps {
   index: number;
   selected: MultiselectOperator;
   emitter: FilterEventEmitter;
@@ -42,7 +36,7 @@ interface VariantReferenceMultiselectProps {
   layout?: ConditionalFiltersLayout;
 }
 
-export const VariantReferenceMultiselect = ({
+export const ProductReferenceMultiselect = ({
   index,
   selected,
   emitter,
@@ -50,23 +44,12 @@ export const VariantReferenceMultiselect = ({
   helperText,
   disabled,
   layout,
-}: VariantReferenceMultiselectProps): JSX.Element => {
+}: ProductReferenceMultiselectProps): JSX.Element => {
   const [query, setQuery] = useState("");
   const options = includeSelectedComboboxOptions(selected.options ?? [], selected.value);
-  const variantOptions = filterVariantReferenceOptions(
-    options.flatMap(option => {
-      const fields = resolveVariantReferenceFields(option);
-
-      return fields ? [fields] : [];
-    }),
-    query,
-  );
-  const groups = getVariantReferenceGroups(variantOptions);
-  const listItems: VariantReferenceListItem[] = groups.flatMap(group => group.variants);
-  const itemIndexByValue = new Map(listItems.map((item, index) => [item.value, index]));
+  const listItems = filterProductReferenceOptions(options, query);
   const selectedIds = new Set(selected.value.map(option => option.value));
-  const pills = selected.value.map(toVariantReferencePill);
-  const displayChips = pills.map(toVariantDisplayChip);
+  const displayChips = selected.value.map(toProductDisplayChip);
   const inlineControlProps = isFlatFilterLayout(layout)
     ? { backgroundColor: "default1" as const }
     : {};
@@ -78,7 +61,7 @@ export const VariantReferenceMultiselect = ({
       const exists = selected.value.some(item => item.value === option.value);
       const next = exists
         ? selected.value.filter(item => item.value !== option.value)
-        : [...selected.value, toVariantReferencePill(option)];
+        : [...selected.value, option];
 
       emitter.changeRightOperator(index, next);
     },
@@ -97,7 +80,7 @@ export const VariantReferenceMultiselect = ({
     <ReferenceChipField>
       <div
         className={styles.root}
-        data-variant-reference=""
+        data-product-reference=""
         onKeyDownCapture={handleKeyDownCapture}
       >
         <DynamicMultiselect
@@ -117,7 +100,7 @@ export const VariantReferenceMultiselect = ({
           onChange={value => {
             emitter.changeRightOperator(
               index,
-              restoreReferenceOptions(value, pills).map(toVariantReferencePill),
+              restoreReferenceOptions(value, [...selected.value, ...options]),
             );
           }}
           onInputValueChange={value => {
@@ -151,66 +134,44 @@ export const VariantReferenceMultiselect = ({
             aria-multiselectable="true"
             aria-labelledby={controlId}
           >
-            {groups.map(group => (
-              <div
-                key={group.productId ?? group.productName}
-                className={styles.group}
-                role="group"
-                aria-label={group.productName}
-              >
-                <div className={styles.groupHeader}>
+            {listItems.map((option, itemIndex) => {
+              const isSelected = selectedIds.has(option.value);
+              const isHighlighted = highlightedIndex === itemIndex;
+              const itemProps = getItemProps({ item: option, index: itemIndex });
+
+              return (
+                <div
+                  key={option.value}
+                  {...itemProps}
+                  role="option"
+                  aria-selected={isSelected}
+                  data-test-id="select-option"
+                  data-highlighted={isHighlighted ? "" : undefined}
+                  className={isSelected ? styles.optionSelected : styles.option}
+                  onMouseDown={event => {
+                    itemProps.onMouseDown?.(event);
+                    event.preventDefault();
+                  }}
+                >
                   <ReferenceThumbnail
-                    url={group.productThumbnailUrl}
-                    testId="variant-reference-thumbnail"
+                    url={option.productThumbnailUrl}
+                    testId="product-reference-thumbnail"
                   />
                   <Text
                     size={3}
-                    color="default2"
-                    className={styles.groupLabel}
-                    title={group.productName}
+                    color="default1"
+                    className={styles.optionLabel}
+                    title={option.label}
                   >
-                    {group.productName}
+                    {option.label}
                   </Text>
+                  {isSelected ? (
+                    <Check size={iconSize.small} strokeWidth={iconStrokeWidth} />
+                  ) : null}
                 </div>
-                {group.variants.map(variant => {
-                  const itemIndex = itemIndexByValue.get(variant.value);
-                  const item = itemIndex === undefined ? variant : listItems[itemIndex];
-                  const isSelected = selectedIds.has(variant.value);
-                  const isHighlighted = itemIndex !== undefined && highlightedIndex === itemIndex;
-                  const itemProps =
-                    itemIndex === undefined
-                      ? {}
-                      : getItemProps({
-                          item,
-                          index: itemIndex,
-                        });
-
-                  return (
-                    <div
-                      key={variant.value}
-                      {...itemProps}
-                      role="option"
-                      aria-selected={isSelected}
-                      data-test-id="select-option"
-                      data-highlighted={isHighlighted ? "" : undefined}
-                      className={isSelected ? styles.variantSelected : styles.variant}
-                      onMouseDown={event => {
-                        itemProps.onMouseDown?.(event);
-                        event.preventDefault();
-                      }}
-                    >
-                      <Text size={3} color="default1" className={styles.variantLabel}>
-                        {variant.variantName}
-                      </Text>
-                      {isSelected ? (
-                        <Check size={iconSize.small} strokeWidth={iconStrokeWidth} />
-                      ) : null}
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-            {groups.length === 0 ? (
+              );
+            })}
+            {listItems.length === 0 ? (
               <Text size={2} color="default2" padding={2}>
                 <FormattedMessage defaultMessage="No options to select" id="xTyg+p" />
               </Text>

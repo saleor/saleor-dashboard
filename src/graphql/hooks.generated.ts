@@ -7395,6 +7395,9 @@ export const _GetProductChoicesDocument = gql`
         id
         name
         slug
+        thumbnail(size: 64) {
+          url
+        }
       }
     }
     pageInfo {
@@ -7736,6 +7739,9 @@ export const _SearchProductOperandsDocument = gql`
         name
         slug
         originalSlug: slug
+        thumbnail(size: 64) {
+          url
+        }
       }
     }
   }
