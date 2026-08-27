@@ -36,7 +36,7 @@ export const ConstraintReasonHint = ({
           borderWidth={0}
           backgroundColor="transparent"
           color="default2"
-          flexShrink={0}
+          flexShrink="0"
           aria-label={label}
           data-test-id={testId}
         >

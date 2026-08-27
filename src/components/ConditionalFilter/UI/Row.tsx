@@ -78,7 +78,7 @@ export const RowComponent = ({
     >
       <Box display="flex" alignItems="center" gap={1.5} width="100%" __minWidth="0">
         <ConstraintReasonHint fields={reasonLabels} testId={`constraint-reason-${index}`} />
-        <Box flexGrow={1} width="100%" __minWidth="0">
+        <Box flexGrow="1" width="100%" __minWidth="0">
           <DynamicCombobox
             {...inlineControlProps}
             id={getFilterControlId("left", index)}

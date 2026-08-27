@@ -34,7 +34,7 @@ const FilterRowChrome = ({ fields }: { fields: string[] }): JSX.Element => (
       <Box paddingX={2} paddingY={1} borderRadius={2} backgroundColor="default2">
         <Text size={3}>is</Text>
       </Box>
-      <Box paddingX={2} paddingY={1} borderRadius={2} backgroundColor="default2" flexGrow={1}>
+      <Box paddingX={2} paddingY={1} borderRadius={2} backgroundColor="default2" flexGrow="1">
         <Text size={3}>10</Text>
       </Box>
     </Box>
@@ -49,7 +49,7 @@ const FilterRowChrome = ({ fields }: { fields: string[] }): JSX.Element => (
       <Box paddingX={2} paddingY={1} borderRadius={2} backgroundColor="default2">
         <Text size={3}>is</Text>
       </Box>
-      <Box paddingX={2} paddingY={1} borderRadius={2} backgroundColor="default2" flexGrow={1}>
+      <Box paddingX={2} paddingY={1} borderRadius={2} backgroundColor="default2" flexGrow="1">
         <Text size={3} color="default2">
           Select channel
         </Text>
