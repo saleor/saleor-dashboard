@@ -3,14 +3,9 @@ import { type AttributeInput, type AttributeInputData } from "@dashboard/compone
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  type AttributeValueDeleteMutation,
-  type AttributeValueDeleteMutationVariables,
   type AttributeValueInput,
   type FileUploadMutation,
   type FileUploadMutationVariables,
-  type PageSelectedAttributeFragment,
-  type ProductFragment,
-  type ProductVariantDetailsQuery,
 } from "@dashboard/graphql";
 import {
   type FormsetAdditionalDataChange,
@@ -25,7 +20,7 @@ import { move, toggle } from "@dashboard/utils/lists";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";
 
-import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
+import { getFileValuesToUploadFromAttributes } from "./data";
 
 export function createAttributeChangeHandler(
   attributesFormData: UseFormsetOutput<AttributeInputData>,
@@ -424,36 +419,3 @@ export const handleUploadMultipleFiles = async (
       }),
     ),
   );
-
-export const handleDeleteMultipleAttributeValues = async (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  attributes:
-    | Array<
-        | PageSelectedAttributeFragment
-        | ProductFragment["attributes"][0]
-        | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
-      >
-    | undefined,
-  deleteAttributeValue: (
-    variables: AttributeValueDeleteMutationVariables,
-  ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
-) => {
-  if (!attributes) {
-    return [];
-  }
-
-  return Promise.all(
-    attributes.map(existingAttribute => {
-      const fileValueUnused = isFileValueUnused(attributesWithNewFileValue, existingAttribute);
-
-      if (fileValueUnused) {
-        return deleteAttributeValue({
-          id: existingAttribute.values[0].id,
-          firstValues: 20,
-        });
-      }
-
-      return undefined;
-    }),
-  );
-};

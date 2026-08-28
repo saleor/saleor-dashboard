@@ -3,15 +3,10 @@ import {
   createAttributeMultiChangeHandler,
   createAttributeReferenceAdditionalDataHandler,
   createAttributeReferenceChangeHandler,
-  handleDeleteMultipleAttributeValues,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
 import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
-import {
-  AttributeInputTypeEnum,
-  type AttributeValueDetailsFragment,
-  type ProductFragment,
-} from "@dashboard/graphql";
+import { AttributeInputTypeEnum, type AttributeValueDetailsFragment } from "@dashboard/graphql";
 import { type FormsetData, type UseFormsetOutput } from "@dashboard/hooks/useFormset";
 
 const multipleValueAttributes: FormsetData<AttributeInputData, string[]> = [
@@ -864,55 +859,6 @@ describe("createAttributeChangeHandler", () => {
     expect(formset.change).toHaveBeenCalledTimes(1);
     expect(formset.change).toHaveBeenCalledWith("attr-1", ["val-1"]);
     expect(trigger).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe("handleDeleteMultipleAttributeValues", () => {
-  it("should return empty array when no attributes", async () => {
-    // Arrange
-    const trigger = jest.fn();
-
-    // Act
-    const result = await handleDeleteMultipleAttributeValues([], undefined, trigger);
-
-    // Assert
-    expect(result).toEqual([]);
-    expect(trigger).toHaveBeenCalledTimes(0);
-  });
-
-  it("should call deleteAttributeValue when new attribute with file match existing one", async () => {
-    // Arrange
-    const deleteAttributeValue = jest.fn(() => Promise.resolve("val-1")) as any;
-    const attributesWithNewFileValue = [
-      {
-        id: "attr-1",
-      },
-    ] as FormsetData<null, File>;
-
-    const attributes = [
-      {
-        attribute: {
-          id: "attr-1",
-          inputType: AttributeInputTypeEnum.FILE,
-        },
-        values: [
-          {
-            id: "val-1",
-          },
-        ],
-      },
-    ] as Array<ProductFragment["attributes"][0]>;
-
-    // Act
-    const result = await handleDeleteMultipleAttributeValues(
-      attributesWithNewFileValue,
-      attributes,
-      deleteAttributeValue,
-    );
-
-    // Assert
-    expect(result).toEqual(["val-1"]);
-    expect(deleteAttributeValue).toHaveBeenCalledTimes(1);
   });
 });
 
