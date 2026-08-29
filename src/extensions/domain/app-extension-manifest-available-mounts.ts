@@ -87,6 +87,8 @@ const PAGE_TYPE_MOUNTS = [
 
 const TRANSLATIONS_MOUNTS = ["TRANSLATIONS_MORE_ACTIONS"] as const;
 
+const CHANNEL_MOUNTS = ["CHANNEL_DETAILS_WIDGETS"] as const;
+
 const HOMEPAGE_MOUNTS = ["HOMEPAGE_WIDGETS"] as const;
 
 // Global mount rendered in the command palette (Cmd+K), not bound to a single page.
@@ -95,6 +97,7 @@ const SEARCH_MOUNTS = ["SEARCH_ACTION"] as const;
 // Create a const array with all mounts to preserve literal types
 const ALL_MOUNTS_ARRAY = [
   ...CATEGORY_MOUNTS,
+  ...CHANNEL_MOUNTS,
   ...COLLECTION_MOUNTS,
   ...CUSTOMER_MOUNTS,
   ...DISCOUNT_MOUNTS,
@@ -125,5 +128,6 @@ export const WIDGET_AVAILABLE_MOUNTS = [
   "GIFT_CARD_DETAILS_WIDGETS",
   "CUSTOMER_DETAILS_WIDGETS",
   "COLLECTION_DETAILS_WIDGETS",
+  "CHANNEL_DETAILS_WIDGETS",
   "HOMEPAGE_WIDGETS",
 ] as const;

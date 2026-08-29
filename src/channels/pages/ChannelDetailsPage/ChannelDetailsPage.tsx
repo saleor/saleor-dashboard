@@ -36,6 +36,9 @@ import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { hasOneOfPermissions, hasPermissions } from "@dashboard/components/RequirePermissions";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
+import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
+import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import {
   type ChannelDetailsFragment,
   type ChannelErrorFragment,
@@ -194,6 +197,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   ]);
   const showRightSidebar = showDeliveryCard || showInventoryCard;
   const channelId = channel?.id;
+  const { CHANNEL_DETAILS_WIDGETS } = useExtensions(extensionMountPoints.CHANNEL_DETAILS);
   const taxConfigurationId = channel?.taxConfiguration?.id;
   const createDefaults = getChannelCreateDefaults();
   const sectionNavItems = useMemo((): ChannelSectionNavItem[] => {
@@ -246,6 +250,12 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
       />
     </ChannelSection>
   ) : null;
+  // Kept outside the payment gateways section: the mount is channel-wide, so it
+  // must not inherit that section's MANAGE_APPS gate or its scroll-spy anchor.
+  const channelWidgetsSection =
+    CHANNEL_DETAILS_WIDGETS.length > 0 && channelId ? (
+      <AppWidgets extensions={CHANNEL_DETAILS_WIDGETS} params={{ channelId }} />
+    ) : null;
   const reviewSections = channel ? (
     <ChannelReviewSections
       taxConfigurationId={channel.taxConfiguration?.id}
@@ -562,6 +572,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                     trailingSection={
                       <>
                         {paymentGatewaysSection}
+                        {channelWidgetsSection}
                         {reviewSections}
                       </>
                     }

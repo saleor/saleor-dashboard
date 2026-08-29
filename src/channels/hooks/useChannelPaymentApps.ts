@@ -1,7 +1,12 @@
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { isChannelPaymentGatewayApp } from "@dashboard/channels/utils/isChannelPaymentGatewayApp";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
-import { type AppTypeEnum, PermissionEnum, useChannelPaymentAppsQuery } from "@dashboard/graphql";
+import {
+  type AppTypeEnum,
+  type CircuitBreakerStateEnum,
+  PermissionEnum,
+  useChannelPaymentAppsQuery,
+} from "@dashboard/graphql";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { useMemo } from "react";
 
@@ -12,6 +17,12 @@ export interface ChannelPaymentApp {
   type: AppTypeEnum | null;
   appUrl: string | null;
   logoUrl: string | null;
+  breakerState: CircuitBreakerStateEnum | null;
+  /**
+   * Reasons behind the "Attention" state. Dismissed problems are excluded so
+   * this matches the counts shown on the Installed extensions list.
+   */
+  criticalProblemMessages: string[];
 }
 
 export const useChannelPaymentApps = () => {
@@ -36,6 +47,14 @@ export const useChannelPaymentApps = () => {
       type: app.type,
       appUrl: app.appUrl,
       logoUrl: app.brand?.logo?.default ?? null,
+      breakerState: app.breakerState ?? null,
+      criticalProblemMessages: Array.from(
+        new Set(
+          (app.problems ?? [])
+            .filter(problem => problem.isCritical && problem.dismissed === null)
+            .map(problem => problem.message),
+        ),
+      ),
     }));
   }, [data?.apps]);
 
