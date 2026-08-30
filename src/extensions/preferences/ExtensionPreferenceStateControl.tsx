@@ -1,8 +1,16 @@
+import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { Eye, EyeOff, Pin } from "lucide-react";
 import { useIntl } from "react-intl";
 
 import { extensionPreferencesMessages as m } from "./messages";
 import { type ResolvedPreferenceState } from "./types";
+import {
+  isWidgetPinned,
+  isWidgetShown,
+  setWidgetShown,
+  toggleWidgetPinned,
+} from "./widgetPreferenceState";
 
 interface ExtensionPreferenceStateControlProps {
   value: ResolvedPreferenceState;
@@ -10,36 +18,55 @@ interface ExtensionPreferenceStateControlProps {
   onChange: (next: ResolvedPreferenceState) => void;
 }
 
-const OPTIONS: ResolvedPreferenceState[] = ["default", "pinned", "hidden"];
-
 export const ExtensionPreferenceStateControl = ({
   value,
   disabled,
   onChange,
-}: ExtensionPreferenceStateControlProps) => {
+}: ExtensionPreferenceStateControlProps): JSX.Element => {
   const intl = useIntl();
-
-  const labels: Record<ResolvedPreferenceState, string> = {
-    default: intl.formatMessage(m.stateDefault),
-    pinned: intl.formatMessage(m.statePinned),
-    hidden: intl.formatMessage(m.stateHidden),
-  };
+  const shown = isWidgetShown(value);
+  const pinned = isWidgetPinned(value);
 
   return (
-    <Box display="flex" gap={1}>
-      {OPTIONS.map(option => (
+    <Box display="flex" alignItems="center" gap={1}>
+      {shown ? (
         <Button
-          key={option}
           type="button"
+          variant="tertiary"
           size="small"
           disabled={disabled}
-          variant={value === option ? "primary" : "secondary"}
-          data-test-id={`extension-state-${option}`}
-          onClick={() => onChange(option)}
+          data-test-id="extension-pin"
+          aria-pressed={pinned}
+          onClick={() => onChange(toggleWidgetPinned(value))}
+          icon={
+            <Pin
+              size={iconSize.small}
+              strokeWidth={iconStrokeWidthBySize.small}
+              fill={pinned ? "currentColor" : "none"}
+            />
+          }
         >
-          {labels[option]}
+          {intl.formatMessage(pinned ? m.pinnedLabel : m.pinLabel)}
         </Button>
-      ))}
+      ) : null}
+      <Button
+        type="button"
+        variant="tertiary"
+        size="small"
+        disabled={disabled}
+        data-test-id="extension-widget-visible"
+        aria-pressed={shown}
+        onClick={() => onChange(setWidgetShown(value, !shown))}
+        icon={
+          shown ? (
+            <Eye size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+          ) : (
+            <EyeOff size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />
+          )
+        }
+      >
+        {intl.formatMessage(shown ? m.visibleLabel : m.hiddenLabel)}
+      </Button>
     </Box>
   );
 };

@@ -70,6 +70,30 @@ describe("useExtensionPreferences", () => {
     );
   });
 
+  it("stacks a second setState on the first optimistic map", async () => {
+    // Arrange
+    const other = { id: "ext2", identifier: "f", app: { id: "app", identifier: "a" } };
+    const { result } = renderHook(() => useExtensionPreferences());
+
+    // Act
+    act(() => {
+      result.current.setState(extension, "hidden");
+      result.current.setState(other, "pinned");
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    // Assert — first write starts immediately; the queued flush sends both keys
+    const lastWrite = mockMutate.mock.calls[mockMutate.mock.calls.length - 1][0];
+    const written = JSON.parse(lastWrite.variables.input.metadata[0].value) as Record<
+      string,
+      string
+    >;
+
+    expect(written).toEqual({ "a:e": "hidden", "a:f": "pinned" });
+  });
+
   it("removes the entry when set to default", () => {
     // Act
     const { result } = renderHook(() => useExtensionPreferences());

@@ -33,19 +33,10 @@ export const StaffPreferences = ({
     <DetailSettingsCard
       data-test-id="staff-preferences"
       title={intl.formatMessage({
-        id: "xlY/T3",
-        defaultMessage: "Interface language",
+        id: "AA0eYf",
+        defaultMessage: "Dashboard language",
         description: "staff details sidebar card title for dashboard locale",
       })}
-      intro={
-        <Text size={3} color="default2">
-          <FormattedMessage
-            id="Z5j3J4"
-            defaultMessage="Choose the language used across the dashboard."
-            description="staff details interface language card intro"
-          />
-        </Text>
-      }
     >
       <Box display="flex" flexDirection="column" gap={4}>
         <Combobox
