@@ -161,9 +161,6 @@ importers:
       history:
         specifier: 4.10.1
         version: 4.10.1
-      is-url:
-        specifier: ^1.2.4
-        version: 1.2.4
       jotai:
         specifier: 2.18.1
         version: 2.18.1(@babel/core@7.29.0)(@babel/template@7.28.6)(@types/react@18.3.23)(react@18.3.1)
@@ -209,9 +206,6 @@ importers:
       react-gtm-module:
         specifier: ^2.0.11
         version: 2.0.11
-      react-helmet:
-        specifier: ^6.1.0
-        version: 6.1.0(react@18.3.1)
       react-hook-form:
         specifier: ^7.66.0
         version: 7.71.1(react@18.3.1)
@@ -254,9 +248,6 @@ importers:
       use-react-router:
         specifier: ^1.0.7
         version: 1.0.7(react-router@5.3.4(react@18.3.1))(react@18.3.1)
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
       zod:
         specifier: ^3.25.76
         version: 3.25.76
@@ -345,9 +336,6 @@ importers:
       "@types/history":
         specifier: "4"
         version: 4.7.11
-      "@types/is-url":
-        specifier: ^1.2.32
-        version: 1.2.32
       "@types/lodash-es":
         specifier: ^4.17.12
         version: 4.17.12
@@ -366,18 +354,12 @@ importers:
       "@types/react-gtm-module":
         specifier: ^2.0.4
         version: 2.0.4
-      "@types/react-helmet":
-        specifier: ^5.0.27
-        version: 5.0.27
       "@types/react-router-dom":
         specifier: ^4.3.5
         version: 4.3.5
       "@types/url-join":
         specifier: ^4.0.3
         version: 4.0.3
-      "@types/uuid":
-        specifier: ^9.0.8
-        version: 9.0.8
       "@types/webappsec-credential-management":
         specifier: ^0.5.1
         version: 0.5.1
@@ -5288,12 +5270,6 @@ packages:
     peerDependencies:
       "@types/react": "*"
 
-  "@types/is-url@1.2.32":
-    resolution:
-      {
-        integrity: sha512-46VLdbWI8Sc+hPexQ6NLNR2YpoDyDZIpASHkJQ2Yr+Kf9Giw6LdCTkwOdsnHKPQeh7xTjTmSnxbE8qpxYuCiHA==,
-      }
-
   "@types/istanbul-lib-coverage@2.0.6":
     resolution:
       {
@@ -5429,12 +5405,6 @@ packages:
         integrity: sha512-5wPMWsUE5AI6O0B0K1/zbs0rFHBKu+7NWXQwDXhqvA12ooLD6W1AYiWZqR4UiOd7ixZDV1H5Ys301zEsqyIfNg==,
       }
 
-  "@types/react-helmet@5.0.27":
-    resolution:
-      {
-        integrity: sha512-vfgoTajBzXobvVr++AeEM/nmTflaQokL0TX8XL74Yj4xsonT0s6FND56NSSyY+RL/f54Xc19N6Wnitfe+T1Efg==,
-      }
-
   "@types/react-router-dom@4.3.5":
     resolution:
       {
@@ -5507,12 +5477,6 @@ packages:
     resolution:
       {
         integrity: sha512-3l1qMm3wqO0iyC5gkADzT95UVW7C/XXcdvUcShOideKF0ddgVRErEQQJXBd2kvQm+aSgqhBGHGB38TgMeT57Ww==,
-      }
-
-  "@types/uuid@9.0.8":
-    resolution:
-      {
-        integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==,
       }
 
   "@types/webappsec-credential-management@0.5.1":
@@ -9349,12 +9313,6 @@ packages:
         integrity: sha512-44pxmxAvnnAOwBg4tHPnkfvgjPwbc5QIsSstNU+YcJ1ovxVzCWpSGosPJOZh/a1tdl81fbgnLc9LLv+x2ywbPQ==,
       }
 
-  is-url@1.2.4:
-    resolution:
-      {
-        integrity: sha512-ITvGim8FhRiYe4IQ5uHSkj7pVaPDrCTkNd3yq3cV7iZAcJdHTUMPMEHcqSOy9xZ9qFenQCvi+2wjH9a1nXqHww==,
-      }
-
   is-weakmap@2.0.2:
     resolution:
       {
@@ -12981,14 +12939,6 @@ packages:
       {
         integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==,
       }
-
-  uuid@9.0.1:
-    resolution:
-      {
-        integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==,
-      }
-    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
-    hasBin: true
 
   v8-compile-cache-lib@3.0.1:
     resolution:
@@ -17334,8 +17284,6 @@ snapshots:
       "@types/react": 18.3.23
       hoist-non-react-statics: 3.3.2
 
-  "@types/is-url@1.2.32": {}
-
   "@types/istanbul-lib-coverage@2.0.6": {}
 
   "@types/istanbul-lib-report@3.0.3":
@@ -17399,10 +17347,6 @@ snapshots:
 
   "@types/react-gtm-module@2.0.4": {}
 
-  "@types/react-helmet@5.0.27":
-    dependencies:
-      "@types/react": 18.3.23
-
   "@types/react-router-dom@4.3.5":
     dependencies:
       "@types/history": 4.7.11
@@ -17453,8 +17397,6 @@ snapshots:
     optional: true
 
   "@types/url-join@4.0.3": {}
-
-  "@types/uuid@9.0.8": {}
 
   "@types/webappsec-credential-management@0.5.1": {}
 
@@ -20144,8 +20086,6 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  is-url@1.2.4: {}
-
   is-weakmap@2.0.2: {}
 
   is-weakref@1.1.1:
@@ -22720,8 +22660,6 @@ snapshots:
     optional: true
 
   util-deprecate@1.0.2: {}
-
-  uuid@9.0.1: {}
 
   v8-compile-cache-lib@3.0.1:
     optional: true

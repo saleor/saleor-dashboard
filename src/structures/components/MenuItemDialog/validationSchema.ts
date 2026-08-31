@@ -1,5 +1,4 @@
 import { commonMessages } from "@dashboard/intl";
-import isUrl from "is-url";
 import { type IntlShape } from "react-intl";
 import { z } from "zod";
 
@@ -25,7 +24,7 @@ export const getValidationSchema = (intl: IntlShape) => {
     })
     .refine(
       data => {
-        return !(data.linkType === "link" && !isUrl(data.linkValue));
+        return !(data.linkType === "link" && !z.string().url().safeParse(data.linkValue).success);
       },
       {
         path: ["linkValue"],
