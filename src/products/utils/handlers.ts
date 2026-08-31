@@ -6,7 +6,6 @@ import {
   type VariantChannelPriceData,
 } from "@dashboard/channels/utils";
 import {
-  type ProductChannelListingAddInput,
   type ProductVariantFragment,
   type VariantMediaAssignMutation,
   type VariantMediaAssignMutationVariables,
@@ -153,31 +152,6 @@ export const getChannelsInput = (channels: VariantChannelPriceData[]) =>
       price: channel.price || "",
     },
   }));
-
-export const getAvailabilityVariables = (
-  channels: ChannelData[],
-): ProductChannelListingAddInput[] =>
-  channels.map(channel => {
-    const {
-      isAvailableForPurchase,
-      availableForPurchaseAt,
-      isPublished,
-      publishedAt,
-      visibleInListings,
-    } = channel;
-    const isAvailable =
-      availableForPurchaseAt && !isAvailableForPurchase ? true : isAvailableForPurchase;
-
-    return {
-      availableForPurchaseAt:
-        isAvailableForPurchase || availableForPurchaseAt === "" ? null : availableForPurchaseAt,
-      channelId: channel.id,
-      isAvailableForPurchase: isAvailable,
-      isPublished,
-      publishedAt,
-      visibleInListings,
-    };
-  });
 
 export const areMediaSelectionsEqual = (left: string[] = [], right: string[] = []): boolean => {
   if (left.length !== right.length) {

@@ -10,7 +10,7 @@ export const preventRowClickOnSelectionCheckbox = (
   location: number,
 ) => !["number", "none"].includes(rowMarkers) && location === -1;
 
-export interface VisibleGridSelection {
+interface VisibleGridSelection {
   visibleRows: number[];
   /** Present only when the selection still holds rows (or a current cell) past `rowsTotal`. */
   prunedSelection?: GridSelection;

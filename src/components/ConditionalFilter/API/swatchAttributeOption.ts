@@ -2,7 +2,7 @@ import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { type ItemOption } from "../FilterElement/ConditionValue";
 
-export type SwatchAttributeFields = {
+type SwatchAttributeFields = {
   swatchColor?: string;
   swatchFileUrl?: string;
 };

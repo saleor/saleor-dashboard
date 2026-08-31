@@ -72,5 +72,4 @@ const TimePeriodField = ({
   );
 };
 
-export { TimePeriodField };
 export default TimePeriodField;

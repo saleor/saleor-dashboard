@@ -16,7 +16,7 @@ import styles from "./ProductTypePdpSchematic.module.css";
 
 const PLACEHOLDER_OPTION_COUNT = 3;
 
-export interface ProductTypePdpSchematicProps {
+interface ProductTypePdpSchematicProps {
   hasVariants: boolean;
   productAttributes:
     | Array<{

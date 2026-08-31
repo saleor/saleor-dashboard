@@ -52,7 +52,7 @@ export const getDropdownStatus = (channels: CollectionChannels[]): DotStatus => 
   return "warning";
 };
 
-export const getChannelAvailabilityColor = (channelData: CollectionChannels): PillColor => {
+const getChannelAvailabilityColor = (channelData: CollectionChannels): PillColor => {
   if (isActive(channelData)) {
     return "success";
   }

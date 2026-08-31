@@ -41,7 +41,7 @@ interface OrderValueProps {
   onChannelsReplace: (channels: ChannelShippingData[]) => void;
 }
 
-export const OrderValue = ({
+const OrderValue = ({
   channels,
   errors,
   disabled,

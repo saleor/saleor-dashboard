@@ -1,4 +1,4 @@
-export interface ComboboxOptionIdentity {
+interface ComboboxOptionIdentity {
   label: string;
   value: string;
   slug?: string | null;
@@ -13,7 +13,7 @@ const isOptionIdentity = (value: unknown): value is ComboboxOptionIdentity =>
   typeof (value as ComboboxOptionIdentity).label === "string" &&
   typeof (value as ComboboxOptionIdentity).value === "string";
 
-export const isSameComboboxOption = (
+const isSameComboboxOption = (
   option: ComboboxOptionIdentity,
   selected: ComboboxOptionIdentity,
 ): boolean =>

@@ -23,7 +23,7 @@ import {
   getAssignableListCheckboxColumnWidth,
 } from "./assignableListTableLayout";
 
-export interface AssignableListColumn {
+interface AssignableListColumn {
   id: string;
   width?: string;
   header: ReactNode;

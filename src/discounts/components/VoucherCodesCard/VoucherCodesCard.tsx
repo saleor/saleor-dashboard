@@ -21,7 +21,7 @@ import { VoucherCodesManualDialog } from "../VoucherCodesManualDialog";
 import { VoucherCodesTable } from "../VoucherCodesTable/VoucherCodesTable";
 import { formatVoucherCodesErrorMessage } from "./voucherCodesErrors";
 
-export interface VoucherCodesCardProps {
+interface VoucherCodesCardProps {
   codes: VoucherCode[];
   loading?: boolean;
   disabled?: boolean;

@@ -1,6 +1,6 @@
 export const THROBBER_VIEWBOX_SIZE = 40;
 
-export const THROBBER_VERTICES = [
+const THROBBER_VERTICES = [
   { x: 12, y: 15 },
   { x: 36, y: 15 },
   { x: 30, y: 25 },

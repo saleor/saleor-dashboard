@@ -18,7 +18,7 @@ function areValuesEqual(a: AttributeValueEditDialogFormData, b: AttributeValueEd
   return a.name === b.name;
 }
 
-export type AttributeCreateValueDialog = "add-value" | "edit-value" | "remove-value" | null;
+type AttributeCreateValueDialog = "add-value" | "edit-value" | "remove-value" | null;
 
 interface UseAttributeCreateValuesOptions {
   onDialogClose?: () => void;

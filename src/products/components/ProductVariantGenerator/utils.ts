@@ -18,7 +18,7 @@ import {
 } from "./types";
 
 // Safety limit to prevent browser freeze on huge combinations
-export const MAX_COMBINATIONS = 1000;
+const MAX_COMBINATIONS = 1000;
 
 export interface CartesianResult<T> {
   combinations: T[][];

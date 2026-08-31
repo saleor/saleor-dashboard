@@ -36,14 +36,11 @@ export const countPendingVariantGridEdits = (state: VariantGridStagedEditsState)
   return state.removedIds.size + updatedIds.length + state.creates.length;
 };
 
-export const countPendingVariantGridCreates = (state: VariantGridStagedEditsState): number =>
-  state.creates.length;
-
 /**
  * Maps a datagrid visual row (post-removal, excluding added rows) to a variant id
  * on the current page.
  */
-export const resolveVariantIdForUpdateRow = ({
+const resolveVariantIdForUpdateRow = ({
   row,
   variants,
   added,
@@ -183,7 +180,7 @@ export const rehydrateVariantGridDatagridOpts = (
   };
 };
 
-export interface VariantGridSubmitPayload {
+interface VariantGridSubmitPayload {
   removedVariantIds: string[];
   updateVariants: ProductDetailsVariantFragment[];
   updateChanges: DatagridChangeOpts;

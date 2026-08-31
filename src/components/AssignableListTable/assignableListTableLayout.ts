@@ -45,10 +45,6 @@ export const ASSIGNABLE_LIST_TABLE_CELL_PADDING = 2;
 /** Pagination band vertical padding. */
 export const ASSIGNABLE_LIST_TABLE_PAGINATION_PADDING_Y = 2;
 
-/** Search band inside `AssignableListCard`. */
-export const ASSIGNABLE_LIST_TABLE_SEARCH_PADDING_Y = 3;
-export const ASSIGNABLE_LIST_TABLE_SEARCH_PADDING_X = 6;
-
 /** Empty-state padding inside a flush card. */
 export const ASSIGNABLE_LIST_TABLE_EMPTY_PADDING = 4;
 

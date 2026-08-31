@@ -40,7 +40,7 @@ export const productTypeListUrl = (params?: ProductTypeListUrlQueryParams) =>
 interface ProductTypeAddUrlKind {
   kind?: ProductTypeKindEnum;
 }
-export type ProductTypeAddUrlQueryParams = ProductTypeAddUrlKind;
+type ProductTypeAddUrlQueryParams = ProductTypeAddUrlKind;
 export const productTypeAddPath = urlJoin(productTypeSection, "add");
 export const productTypeAddUrl = (params?: ProductTypeAddUrlQueryParams) =>
   withQuery(productTypeAddPath, params);

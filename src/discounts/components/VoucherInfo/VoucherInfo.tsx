@@ -16,13 +16,7 @@ interface VoucherInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-export const VoucherInfo = ({
-  data,
-  disabled,
-  loading = false,
-  errors,
-  onChange,
-}: VoucherInfoProps) => {
+const VoucherInfo = ({ data, disabled, loading = false, errors, onChange }: VoucherInfoProps) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name"], errors);
 

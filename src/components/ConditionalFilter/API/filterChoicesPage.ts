@@ -31,7 +31,7 @@ export const emptyChoicesPage = <T = ItemOption>(): FilterChoicesPage<T> => ({
 export const emptyAttributeChoicesPage = (): FilterChoicesPage<LeftOperand> =>
   emptyChoicesPage<LeftOperand>();
 
-export interface ChoiceFetchState {
+interface ChoiceFetchState {
   generations: Record<string, number>;
   pageInfo: Record<string, FilterChoicesPageInfo>;
   query: Record<string, string>;

@@ -3,7 +3,7 @@ import { type ChannelVoucherData } from "@dashboard/channels/utils";
 import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import { DiscountErrorCode, type DiscountErrorFragment, VoucherTypeEnum } from "@dashboard/graphql";
-import { type ChangeEvent, type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
+import { type FormChange, type SubmitPromise } from "@dashboard/hooks/useForm";
 import { type RequireOnlyOne } from "@dashboard/misc";
 import { validatePrice } from "@dashboard/products/utils/validation";
 import { arrayDiff } from "@dashboard/utils/arrays";
@@ -20,30 +20,6 @@ export type ChannelInput = RequireOnlyOne<
   ChannelArgs,
   "discountValue" | "percentageDiscountValue" | "minSpent"
 >;
-
-export function createDiscountTypeChangeHandler(change: FormChange) {
-  return (formData: VoucherDetailsPageFormData, event: ChangeEvent) => {
-    if (formData.type === VoucherTypeEnum.SHIPPING) {
-      // if previously type was shipping
-      change({
-        target: {
-          name: "type",
-          value: VoucherTypeEnum.ENTIRE_ORDER,
-        },
-      });
-    } else if (event.target.value === DiscountTypeEnum.SHIPPING) {
-      // if currently type should be shipping
-      change({
-        target: {
-          name: "type",
-          value: VoucherTypeEnum.ENTIRE_ORDER,
-        },
-      });
-    }
-
-    change(event);
-  };
-}
 
 export function createVoucherScopeChangeHandler(
   change: FormChange,
