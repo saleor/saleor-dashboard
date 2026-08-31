@@ -3,7 +3,7 @@ import { AddNavigationMenuItemDialog } from "@pages/dialogs/addNavigationMenuIte
 import { NavigationDetailsPage } from "@pages/navigationDetailsPage";
 import { NavigationPage } from "@pages/navigationPage";
 import { expect } from "@playwright/test";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
@@ -24,14 +24,14 @@ test("TC: SALEOR_194 Should create a new menu navigation with menu item #navigat
   await navigation.createMenuButton.click();
   await expect(navigation.createMenuDialogTitle).toBeVisible();
 
-  const menuName = faker.random.word();
+  const menuName = faker.lorem.word();
 
   await navigation.addNavigationMenuDialog.typeNewMenuName(menuName);
   await navigation.addNavigationMenuDialog.clickSaveButton();
   await navigationDetailsPage.clickCreateNewMenuItem();
   await expect(navigationDetailsPage.addMenuItemDialog).toBeVisible();
 
-  const menuItemName = faker.random.word();
+  const menuItemName = faker.lorem.word();
 
   await addNavigationMenuItemDialog.typeMenuItemName(menuItemName);
   await addNavigationMenuItemDialog.selectLinkTypeOption("Categories");
@@ -49,7 +49,7 @@ test.skip("TC: SALEOR_198 Should update existing menu #navigation #e2e", async (
 
   const menuItemToBeUpdated = NAVIGATION_ITEMS.navigationMenuToBeUpdated.menuItems[0];
   const menuItemToBeDeleted = NAVIGATION_ITEMS.navigationMenuToBeUpdated.menuItems[1];
-  const newItemName = faker.random.word();
+  const newItemName = faker.lorem.word();
 
   await navigationDetailsPage.clickEditMenuItemButton(menuItemToBeUpdated.name);
   await addNavigationMenuItemDialog.typeMenuItemName(newItemName);
@@ -61,7 +61,7 @@ test.skip("TC: SALEOR_198 Should update existing menu #navigation #e2e", async (
   await navigationDetailsPage.clickCreateNewMenuItem();
   await expect(navigationDetailsPage.addMenuItemDialog).toBeVisible();
 
-  const menuItemName = faker.random.word();
+  const menuItemName = faker.lorem.word();
 
   await addNavigationMenuItemDialog.typeMenuItemName(menuItemName);
   await addNavigationMenuItemDialog.selectLinkTypeOption("Categories");
@@ -75,7 +75,7 @@ test.skip("TC: SALEOR_198 Should update existing menu #navigation #e2e", async (
   await expect(navigationDetailsPage.menuItemList).toContainText(newItemName);
   await expect(navigationDetailsPage.menuItemList).not.toContainText(menuItemToBeDeleted.name);
 
-  const newName = faker.random.word();
+  const newName = faker.lorem.word();
 
   await navigationDetailsPage.fillName(newName);
   await navigationDetailsPage.clickSaveButton();
