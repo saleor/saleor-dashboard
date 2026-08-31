@@ -6,8 +6,8 @@ import {
   type GroupModelTypeTabsOptions,
 } from "./groupModelTypeTabs";
 
-export const MODEL_TYPE_TAB_SEPARATOR_STORAGE_KEY = "modelTypeTabs.separator";
-export const MODEL_TYPE_TAB_GROUPING_STORAGE_KEY = "modelTypeTabs.grouping";
+const MODEL_TYPE_TAB_SEPARATOR_STORAGE_KEY = "modelTypeTabs.separator";
+const MODEL_TYPE_TAB_GROUPING_STORAGE_KEY = "modelTypeTabs.grouping";
 
 export const useModelTypeTabGrouping = () => {
   const [separator, setSeparator] = useLocalStorage<string>(

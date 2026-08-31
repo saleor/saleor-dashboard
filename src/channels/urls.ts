@@ -53,7 +53,6 @@ export const channelCreateUrl = (options?: { from?: string }) =>
 
 /** Legacy create path — redirects to {@link channelCreateUrl}. */
 export const channelAddPath = urlJoin(channelsSection, "add");
-export const channelAddUrl = channelAddPath;
 
 export const channelPath = (id: string) => urlJoin(channelsSection, id);
 

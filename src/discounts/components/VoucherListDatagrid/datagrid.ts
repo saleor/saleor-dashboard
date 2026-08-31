@@ -168,7 +168,7 @@ export const getVoucherListScopeLabel = (voucher: VoucherFragment, intl: IntlSha
   return intl.formatMessage(messages.scopeOrder);
 };
 
-export interface VoucherListNameParts {
+interface VoucherListNameParts {
   primary: string;
   secondary?: string;
 }

@@ -14,7 +14,7 @@ import { createGetCellContent, voucherCodesStaticColumnsAdapter } from "./datagr
 import { messages } from "./messages";
 import { type VoucherCode } from "./types";
 
-export interface VoucherCodesDatagridProps {
+interface VoucherCodesDatagridProps {
   codes: VoucherCode[];
   loading?: boolean;
   disabled?: boolean;

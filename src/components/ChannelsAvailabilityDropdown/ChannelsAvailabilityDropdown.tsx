@@ -13,7 +13,7 @@ interface ChannelsAvailabilityDropdownProps {
   channels: CollectionChannels[] | null;
 }
 
-export const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityDropdownProps) => {
+const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityDropdownProps) => {
   const intl = useIntl();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const anchor = useRef<HTMLDivElement>(null);
@@ -50,4 +50,5 @@ export const ChannelsAvailabilityDropdown = ({ channels }: ChannelsAvailabilityD
     </div>
   );
 };
+
 ChannelsAvailabilityDropdown.displayName = "ChannelsAvailabilityDropdown";

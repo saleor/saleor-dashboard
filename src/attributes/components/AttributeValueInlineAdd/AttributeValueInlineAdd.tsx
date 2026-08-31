@@ -45,7 +45,7 @@ const messages = defineMessages({
   },
 });
 
-export type AttributeValueInlineAddVariant = "tableFooter" | "section";
+type AttributeValueInlineAddVariant = "tableFooter" | "section";
 
 interface AttributeValueInlineAddProps {
   columnSpan: number;

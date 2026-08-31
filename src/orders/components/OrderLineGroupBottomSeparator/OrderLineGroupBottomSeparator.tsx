@@ -1,6 +1,6 @@
 import { Box, type vars } from "@saleor/macaw-ui-next";
 
-export const OrderLineGroupBottomSeparator = (): JSX.Element => (
+const OrderLineGroupBottomSeparator = (): JSX.Element => (
   <Box
     backgroundColor="default1"
     width="100%"

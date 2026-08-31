@@ -1,6 +1,6 @@
 import useLocalStorage from "./useLocalStorage";
 
-export type LastCreatedEntityType = "MODEL";
+type LastCreatedEntityType = "MODEL";
 
 const storageKey = (entityType: LastCreatedEntityType) => `lastCreatedEntityType:${entityType}`;
 

@@ -69,7 +69,7 @@ export function getPageTranslationCompletion(
   );
 }
 
-export function getNameDescriptionTranslationCompletion(
+function getNameDescriptionTranslationCompletion(
   translation: NameDescriptionTranslationFields | null | undefined,
 ): ListCompletion {
   return toListCompletion(

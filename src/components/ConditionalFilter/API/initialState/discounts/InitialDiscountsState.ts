@@ -1,7 +1,7 @@
 import { type ItemOption } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
 import { type UrlToken } from "@dashboard/components/ConditionalFilter/ValueProvider/UrlToken";
 
-export interface InitialDiscountsState {
+interface InitialDiscountsState {
   promotionStatus: ItemOption[];
   promotionType: ItemOption[];
 }

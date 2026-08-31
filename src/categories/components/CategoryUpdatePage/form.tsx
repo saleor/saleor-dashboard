@@ -25,7 +25,7 @@ export interface CategoryUpdateData extends CategoryUpdateFormData {
   description: OutputData | null;
 }
 
-export type UseCategoryUpdateFormResult = CommonUseFormResult<CategoryUpdateData> & {
+type UseCategoryUpdateFormResult = CommonUseFormResult<CategoryUpdateData> & {
   hasUnsavedChanges: boolean;
   isSaveDisabled: boolean;
   richText: RichTextContextValues;
@@ -49,7 +49,7 @@ const getInitialData = (
   slug: category?.slug || "",
 });
 
-export function useCategoryUpdateForm(
+function useCategoryUpdateForm(
   category: CategoryDetailsFragment | undefined | null,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>,
   disabled: boolean,

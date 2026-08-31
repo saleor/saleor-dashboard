@@ -41,7 +41,7 @@ const createSlugTakenError = (): ChannelErrorFragment => ({
   message: null,
 });
 
-export type CreateChannelDialogInitialValues = ChannelCreateFormData & {
+type CreateChannelDialogInitialValues = ChannelCreateFormData & {
   countryDisplayName?: string;
 };
 

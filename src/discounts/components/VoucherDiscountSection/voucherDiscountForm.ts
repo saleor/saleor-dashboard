@@ -8,14 +8,14 @@ export const voucherDiscountScope = {
   shipping: "SHIPPING",
 } as const;
 
-export type VoucherDiscountScope = (typeof voucherDiscountScope)[keyof typeof voucherDiscountScope];
+type VoucherDiscountScope = (typeof voucherDiscountScope)[keyof typeof voucherDiscountScope];
 
 export const voucherDiscountAmountType = {
   percentage: "PERCENTAGE",
   fixed: "FIXED",
 } as const;
 
-export type VoucherDiscountAmountType =
+type VoucherDiscountAmountType =
   (typeof voucherDiscountAmountType)[keyof typeof voucherDiscountAmountType];
 
 export const isShippingVoucher = (

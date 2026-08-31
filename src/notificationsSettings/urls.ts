@@ -7,7 +7,3 @@ export const notificationsStaffEmailsPath = urlJoin(notificationsSettingsSection
 export const notificationsCustomerEmailsPath = urlJoin(notificationsSettingsSection, "customer");
 
 export const notificationsSettingsUrl = (): string => notificationsSettingsPath;
-
-export const notificationsStaffEmailsUrl = (): string => notificationsStaffEmailsPath;
-
-export const notificationsCustomerEmailsUrl = (): string => notificationsCustomerEmailsPath;

@@ -205,7 +205,7 @@ const getRefundedFulfillmentAmount = (
 const getFulfillmentComposedId = (orderNumber: string, fulfillmentOrder: number): string =>
   `${orderNumber}-${fulfillmentOrder}`;
 
-export type FulfillmentWarehouseDisplay = {
+type FulfillmentWarehouseDisplay = {
   sourceWarehouse?: { id: string; name: string };
   restockWarehouse?: { id: string; name: string };
 };

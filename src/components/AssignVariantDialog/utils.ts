@@ -8,7 +8,6 @@ import {
 } from "@dashboard/searches/mapSearchProductsForVariantAssign";
 import { type RelayToFlat } from "@dashboard/types";
 
-export type { AssignableSearchProduct };
 export { isVariantsListTruncated };
 
 export type SearchVariant = SearchProductVariantFragment;

@@ -19,7 +19,7 @@ const initialValues: FormValues = {
   mediaUrl: "",
 };
 
-export interface ProductExternalMediaDialogProps extends DialogProps {
+interface ProductExternalMediaDialogProps extends DialogProps {
   onSubmit: (mediaUrl: string) => SubmitPromise<ProductErrorFragment[]>;
 }
 

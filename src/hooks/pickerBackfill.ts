@@ -14,12 +14,12 @@
  * `planPickerBackfill` and `getPickerBackfillStatus` must be given the same value: if the status
  * says "backfilling" while the plan declines to fetch, the list sits on a spinner forever.
  */
-export const BACKFILL_MIN_ROWS = 15;
+const BACKFILL_MIN_ROWS = 15;
 
 /** Upper bound on extra pages per search, so a fully used-up catalog can't be walked end to end. */
 export const PICKER_BACKFILL_MAX_PAGES = 4;
 
-export type PickerBackfillState = {
+type PickerBackfillState = {
   /** Raw result count the last backfill page was requested at, or -1 when none was. */
   requestedAtRawCount: number;
   requestedPages: number;

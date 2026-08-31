@@ -5,7 +5,7 @@ export type ChannelListSetupKind =
   /** Warehouse (+ shipping when known) assigned — no list copy; Status covers Active/Inactive. */
   | "complete";
 
-export interface ChannelListSetupInput {
+interface ChannelListSetupInput {
   warehouseCount: number;
   /**
    * Zone count for this channel. `undefined` when shipping data was skipped
@@ -14,7 +14,7 @@ export interface ChannelListSetupInput {
   shippingZoneCount?: number;
 }
 
-export interface ChannelListSetupState {
+interface ChannelListSetupState {
   kind: ChannelListSetupKind;
   warehouseCount: number;
   shippingZoneCount?: number;
