@@ -1,5 +1,5 @@
 import { Box } from "@saleor/macaw-ui-next";
-import { type FC, useMemo } from "react";
+import { type FC, useMemo, useState } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { type FilterContainer } from "./FilterElement";
@@ -11,11 +11,12 @@ import { useFilterContainer } from "./useFilterContainer";
 import { useFilteredOperands } from "./useFilteredOperands";
 import { useTranslate } from "./useTranslate";
 import { type ErrorEntry } from "./Validation";
-import { areFilterContainersEqual } from "./ValueProvider/utils";
+import { getFilterContainerKey, hasUnsavedFilterChanges } from "./ValueProvider/utils";
 
 interface FiltersAreaProps {
-  onConfirm: (value: FilterContainer) => void;
+  onConfirm: (value: FilterContainer) => boolean | void;
   errors?: ErrorEntry[];
+  onClear?: () => void;
   onCancel?: () => void;
   layout?: ConditionalFiltersLayout;
 }
@@ -24,6 +25,7 @@ const MAX_VALUE_ITEMS = 12;
 
 export const FiltersArea: FC<FiltersAreaProps> = ({
   onConfirm,
+  onClear,
   onCancel,
   errors,
   layout = "popover",
@@ -40,20 +42,32 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
     updateRightOperator,
     updateCondition,
     updateRightOptions,
+    fetchRightOptionsList,
+    fetchMoreRightOptions,
     updateAttribute,
+    fetchAvailableAttributesList,
+    fetchMoreAttributeOptions,
     updateAvailableAttributesList,
   } = useFilterContainer(apiProvider);
   const filteredOperands = useFilteredOperands(leftOperandsProvider.operands, value);
-  const containerBaseline = useMemo(
-    () => getEditableFilterContainer(valueProvider.value),
-    [valueProvider.value],
+  const [committedKey, setCommittedKey] = useState(() =>
+    getFilterContainerKey(getEditableFilterContainer(valueProvider.value)),
   );
   const hasUnsavedChanges = useMemo(
-    () => !areFilterContainersEqual(value, containerBaseline),
-    [value, containerBaseline],
+    () => hasUnsavedFilterChanges(getEditableFilterContainer(value), committedKey),
+    [value, committedKey],
   );
   const isConfirmDisabled = hasEmptyRows || !hasUnsavedChanges;
-  const confirmLabel = layout === "inline" ? translations.applyFilters : translations.saveFilters;
+  const commitCurrentValue = (next: FilterContainer): void => {
+    setCommittedKey(getFilterContainerKey(getEditableFilterContainer(next)));
+  };
+  const addLabel = layout === "panel" ? translations.addCondition : translations.addFilter;
+  const confirmLabel =
+    layout === "panel"
+      ? translations.applyPanelFilters
+      : layout === "inline"
+        ? translations.applyFilters
+        : translations.saveFilters;
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
 
@@ -71,8 +85,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
       updateLeftOperator(event.path, leftOperand);
 
       if (leftOperand.value === "attribute") {
-        // Fetch list of attributes after user selects "Attribute" search
-        updateAvailableAttributesList(event.path.split(".")[0], "");
+        fetchAvailableAttributesList(event.path.split(".")[0], "");
       }
     }
 
@@ -85,19 +98,31 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
     }
 
     if (event.type === "rightOperator.onFocus") {
-      updateRightOptions(event.path.split(".")[0], "");
+      fetchRightOptionsList(event.path.split(".")[0], "");
     }
 
     if (event.type === "rightOperator.onInputValueChange") {
       updateRightOptions(event.path.split(".")[0], event.value);
     }
 
+    if (event.type === "rightOperator.onScrollEnd") {
+      fetchMoreRightOptions(event.path.split(".")[0]);
+    }
+
     if (event.type === "attribute.onChange") {
       updateAttribute(event.path, event.value as LeftOperand);
     }
 
+    if (event.type === "attribute.onFocus") {
+      fetchAvailableAttributesList(event.path.split(".")[0], "");
+    }
+
     if (event.type === "attribute.onInputValueChange") {
       updateAvailableAttributesList(event.path.split(".")[0], event.value);
+    }
+
+    if (event.type === "attribute.onScrollEnd") {
+      fetchMoreAttributeOptions(event.path.split(".")[0]);
     }
   };
 
@@ -114,19 +139,32 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
         <Filters.AddRowButton
           disabled={value.length > MAX_VALUE_ITEMS}
           data-test-id="add-filter-button"
+          variant={layout === "panel" ? "tertiary" : "secondary"}
         >
-          {translations.addFilter}
+          {addLabel}
         </Filters.AddRowButton>
         <Box display="flex" gap={3}>
           <Filters.ClearButton
-            onClick={onCancel}
+            onClick={() => {
+              onClear?.();
+              commitCurrentValue([]);
+            }}
             variant="tertiary"
             data-test-id="reset-all-filters-button"
           >
             {translations.clearFilters}
           </Filters.ClearButton>
+          {layout === "panel" ? (
+            <Filters.CloseButton onClick={onCancel} data-test-id="close-filters-button">
+              {translations.closePanel}
+            </Filters.CloseButton>
+          ) : null}
           <Filters.ConfirmButton
-            onClick={() => onConfirm(value)}
+            onClick={() => {
+              if (onConfirm(value) !== false) {
+                commitCurrentValue(value);
+              }
+            }}
             disabled={isConfirmDisabled}
             data-test-id="save-filters-button"
           >

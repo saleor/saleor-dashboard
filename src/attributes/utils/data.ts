@@ -29,6 +29,7 @@ import {
 } from "@dashboard/utils/richText/useMultipleRichText";
 
 import { type AttributePageFormData } from "../components/AttributePage";
+import { formatVariantReferenceLabel } from "./formatVariantReferenceLabel";
 import { productVariantCacheManager } from "./productVariantCache";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
@@ -566,7 +567,7 @@ const findProductVariantReference = (
 
     if (variant) {
       return {
-        label: `${product.name} ${variant.name}`,
+        label: formatVariantReferenceLabel(product.name, variant.name),
         value: valueId,
       };
     }
@@ -612,7 +613,9 @@ export const getReferenceAttributeDisplayData = (
                * and whenever the user assigns references in the dialog into useFormset data. */
               const meta = attribute.additionalData?.find(m => m.value === valueId);
 
-              if (meta) {
+              // Skip labels that are just the raw id (common when assign metadata
+              // never resolved). Search / saved values can still supply a name.
+              if (meta?.label && meta.label !== meta.value) {
                 return {
                   label: meta.label,
                   value: meta.value,

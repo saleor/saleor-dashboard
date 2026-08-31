@@ -292,4 +292,44 @@ describe("ProductMedia", () => {
     expect(onImageUpload).toHaveBeenCalledWith(image, 0);
     expect(screen.getByTestId("media-tile-loading")).toBeInTheDocument();
   });
+  it("renders without an update loop while media is still loading", () => {
+    // Arrange
+    const consoleError = jest.spyOn(console, "error").mockImplementation(() => undefined);
+
+    // Act
+    const { rerender } = render(
+      <TestWrapper>
+        <ProductMedia
+          media={undefined}
+          getImageEditUrl={(id): string => `/media/${id}`}
+          onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
+          onImageUpload={jest.fn()}
+          openMediaUrlModal={() => undefined}
+        />
+      </TestWrapper>,
+    );
+
+    // A re-render while media is still undefined is what kicks off the loop.
+    // A regression here does not fail an assertion - it hangs this test.
+    rerender(
+      <TestWrapper>
+        <ProductMedia
+          media={undefined}
+          getImageEditUrl={(id): string => `/media/${id}`}
+          onImageDelete={() => () => undefined}
+          onImagesDelete={() => undefined}
+          onImageUpload={jest.fn()}
+          openMediaUrlModal={() => undefined}
+        />
+      </TestWrapper>,
+    );
+
+    // Assert
+    expect(
+      consoleError.mock.calls.some(call => String(call[0]).includes("Maximum update depth")),
+    ).toBe(false);
+
+    consoleError.mockRestore();
+  });
 });

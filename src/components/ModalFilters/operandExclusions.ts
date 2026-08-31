@@ -124,15 +124,18 @@ export const createOperandExclusionApiProvider = (
 
   return {
     ...base,
-    fetchRightOptions: async (position, value, inputValue) => {
-      const options = await base.fetchRightOptions(position, value, inputValue);
+    fetchRightOptions: async (position, value, inputValue, after) => {
+      const page = await base.fetchRightOptions(position, value, inputValue, after);
       const filterElement = getFilterElement(value, parseInt(position, 10));
 
       if (filterElement?.value.value !== "collection") {
-        return options;
+        return page;
       }
 
-      return filterItemOptions(options, excludedIds);
+      return {
+        ...page,
+        options: filterItemOptions(page.options, excludedIds),
+      };
     },
   };
 };

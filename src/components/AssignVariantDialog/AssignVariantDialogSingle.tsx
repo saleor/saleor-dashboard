@@ -30,7 +30,11 @@ import { AssignVariantLoadMoreRow } from "./AssignVariantLoadMoreRow";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 import { useAssignVariantDialogProducts } from "./useAssignVariantDialogProducts";
-import { getCompositeLabel, toAssignableProducts, type VariantWithProductLabel } from "./utils";
+import {
+  toAssignableProducts,
+  toAssignedVariantContainers,
+  type VariantWithProductLabel,
+} from "./utils";
 
 interface AssignVariantDialogSingleProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -135,13 +139,7 @@ export const AssignVariantDialogSingle = (props: AssignVariantDialogSingleProps)
           productName: variant.product.name,
         };
 
-        onSubmit([
-          {
-            ...variantWithLabel,
-            name: getCompositeLabel(variantWithLabel),
-            id: variant.id,
-          },
-        ]);
+        onSubmit(toAssignedVariantContainers([variantWithLabel]));
 
         return;
       }

@@ -2,7 +2,7 @@ import { type AttributeFilterInput } from "@dashboard/graphql";
 
 interface AttributeListFilterableFields {
   visibleInStorefront: boolean;
-  filterableInStorefront: boolean;
+  filterableInStorefront?: boolean;
   valueRequired?: boolean;
 }
 
@@ -20,6 +20,7 @@ export const applyAttributeListFilters = <T extends AttributeListFilterableField
 
     if (
       filters.filterableInStorefront != null &&
+      attribute.filterableInStorefront != null &&
       attribute.filterableInStorefront !== filters.filterableInStorefront
     ) {
       return false;

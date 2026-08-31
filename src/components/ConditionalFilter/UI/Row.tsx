@@ -9,95 +9,112 @@ import { X } from "lucide-react";
 import { useMemo } from "react";
 
 import { getItemConstraint } from "./constrains";
+import { ConstraintReasonHint } from "./ConstraintReasonHint";
 import { type ErrorLookup } from "./errors";
 import { type FilterEventEmitter } from "./EventEmitter";
+import { getFilterControlId } from "./filterControlId";
+import { isFlatFilterLayout } from "./filterLayout";
+import { getConstraintReasonLabels } from "./getConstraintReasonLabels";
+import { isSelectedComboboxLabel } from "./resolveAsyncComboboxState";
+import {
+  resolveAttributeComboboxOptions,
+  resolveAttributeComboboxValue,
+} from "./resolveAttributeComboboxState";
 import { RightOperator } from "./RightOperator";
 import { type ConditionalFiltersLayout, type ExperimentalFiltersProps } from "./Root";
 import styles from "./Row.module.css";
+import { getGridTemplateColumns } from "./rowGrid";
 import { type LeftOperatorOption, type Row } from "./types";
 
 interface RowProps {
   item: Row;
   index: number;
+  rows: ExperimentalFiltersProps["value"];
   leftOptions: ExperimentalFiltersProps["leftOptions"];
   emitter: FilterEventEmitter;
   error: ErrorLookup[number];
   layout?: ConditionalFiltersLayout;
 }
 
-const getGridTemplateColumns = (layout: ConditionalFiltersLayout, isAttribute: boolean): string => {
-  if (layout === "inline") {
-    return isAttribute
-      ? "minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1fr) auto"
-      : "minmax(0, 1.15fr) minmax(0, 0.9fr) minmax(0, 1fr) auto";
-  }
-
-  return isAttribute ? "200px 200px 120px 200px 1fr" : "200px 120px 200px 1fr";
-};
-
 export const RowComponent = ({
   item,
   index,
+  rows,
   leftOptions,
   emitter,
   error,
   layout = "popover",
-}: RowProps) => {
+}: RowProps): JSX.Element => {
   const constrain = getItemConstraint(item.constraint);
+  const reasonLabels = getConstraintReasonLabels(item, rows);
   const isAttribute = item.isAttribute;
+  const attributeList = useMemo(
+    () =>
+      resolveAttributeComboboxOptions(item.availableAttributesList ?? [], item.selectedAttribute),
+    [item.availableAttributesList, item.selectedAttribute],
+  );
   const attributeOptions = useMemo(
-    () => enrichAttributeComboboxOptions(item.availableAttributesList ?? []),
-    [item.availableAttributesList],
+    () => enrichAttributeComboboxOptions(attributeList),
+    [attributeList],
   );
-  const selectedAttributeValue = useMemo(
-    () => (item.selectedAttribute ? enrichAttributeComboboxOption(item.selectedAttribute) : null),
-    [item.selectedAttribute],
-  );
-  const inlineControlProps = layout === "inline" ? { backgroundColor: "default1" as const } : {};
+  const selectedAttributeValue = useMemo(() => {
+    const selected = resolveAttributeComboboxValue(attributeList, item.selectedAttribute);
+
+    return selected ? enrichAttributeComboboxOption(selected) : null;
+  }, [attributeList, item.selectedAttribute]);
+  const isFlat = isFlatFilterLayout(layout);
+  const inlineControlProps = isFlat ? { backgroundColor: "default1" as const } : {};
 
   return (
     <Box
-      className={clsx(layout === "inline" && styles.inlineRow)}
+      className={clsx(styles.row, isFlat && styles.inlineRow)}
       display="grid"
-      gap={layout === "inline" ? 2 : 0.5}
+      gap={isFlat ? 2 : 0.5}
       __gridTemplateColumns={getGridTemplateColumns(layout, isAttribute)}
       placeItems="flex-start"
       alignItems="center"
-      width={layout === "inline" ? "100%" : undefined}
-      __minWidth={layout === "inline" ? "0" : undefined}
+      width="100%"
+      __minWidth="0"
     >
-      <DynamicCombobox
-        {...inlineControlProps}
-        data-test-id={`left-${index}`}
-        value={item.value}
-        options={leftOptions}
-        loading={item.loading}
-        onChange={value => {
-          if (!value) return;
+      <Box display="flex" alignItems="center" gap={1.5} width="100%" __minWidth="0">
+        <ConstraintReasonHint fields={reasonLabels} testId={`constraint-reason-${index}`} />
+        <Box flexGrow="1" width="100%" __minWidth="0">
+          <DynamicCombobox
+            {...inlineControlProps}
+            id={getFilterControlId("left", index)}
+            data-test-id={`left-${index}`}
+            value={item.value}
+            options={leftOptions}
+            loading={item.loading}
+            onChange={value => {
+              if (!value) return;
 
-          emitter.changeLeftOperator(
-            index,
-            value,
-            leftOptions.find(option => option.value === value.value)?.type,
-          );
-        }}
-        onInputValueChange={value => {
-          emitter.inputChangeLeftOperator(index, value);
-        }}
-        onFocus={() => {
-          emitter.focusLeftOperator(index);
-        }}
-        onBlur={() => {
-          emitter.blurLeftOperator(index);
-        }}
-        error={error.left.show}
-        helperText={error.left.text}
-        disabled={constrain.disableLeftOperator}
-      />
+              emitter.changeLeftOperator(
+                index,
+                value,
+                leftOptions.find(option => option.value === value.value)?.type,
+              );
+            }}
+            onInputValueChange={value => {
+              emitter.inputChangeLeftOperator(index, value);
+            }}
+            onFocus={() => {
+              emitter.focusLeftOperator(index);
+            }}
+            onBlur={() => {
+              emitter.blurLeftOperator(index);
+            }}
+            error={error.left.show}
+            helperText={error.left.text}
+            disabled={constrain.disableLeftOperator}
+          />
+        </Box>
+      </Box>
 
       {isAttribute && (
         <DynamicCombobox
           {...inlineControlProps}
+          id={getFilterControlId("attribute", index)}
           data-test-id={`attribute-value-${index}`}
           value={selectedAttributeValue}
           options={attributeOptions}
@@ -108,10 +125,17 @@ export const RowComponent = ({
             emitter.changeAttribute(index, value as LeftOperatorOption);
           }}
           onInputValueChange={value => {
+            if (isSelectedComboboxLabel(item.selectedAttribute, value)) {
+              return;
+            }
+
             emitter.inputChangeAttribute(index, value);
           }}
           onFocus={() => {
             emitter.focusAttribute(index);
+          }}
+          onScrollEnd={() => {
+            emitter.scrollEndAttribute(index);
           }}
           onBlur={() => {
             emitter.blurAttribute(index);
@@ -121,6 +145,7 @@ export const RowComponent = ({
 
       <Select
         {...inlineControlProps}
+        id={getFilterControlId("condition", index)}
         data-test-id={`condition-${index}`}
         value={item.condition.selected.conditionValue}
         options={item.condition.options}
@@ -138,17 +163,21 @@ export const RowComponent = ({
         helperText={error.condition.text}
       />
 
-      <RightOperator
-        selected={item.condition?.selected}
-        index={index}
-        emitter={emitter}
-        error={error.right.show}
-        helperText={error.right.text}
-        disabled={constrain.disableRightOperator}
-        layout={layout}
-      />
+      <div className={styles.valueField}>
+        <RightOperator
+          selected={item.condition?.selected}
+          index={index}
+          emitter={emitter}
+          error={error.right.show}
+          helperText={error.right.text}
+          disabled={constrain.disableRightOperator}
+          layout={layout}
+          entityType={item.selectedAttribute?.entityType}
+          attributeType={item.selectedAttribute?.type}
+        />
+      </div>
 
-      {layout === "inline" ? (
+      {isFlat ? (
         <button
           className={styles.inlineRemoveButton}
           data-test-id={`remove-row-${index}`}

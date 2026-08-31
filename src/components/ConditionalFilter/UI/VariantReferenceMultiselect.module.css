@@ -1,0 +1,62 @@
+.root {
+  --variant-ref-thumb: 20px;
+  --variant-ref-thumb-gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+}
+
+.menu {
+  --variant-ref-thumb: 20px;
+  --variant-ref-thumb-gap: 6px;
+  font-style: normal;
+  width: 100%;
+}
+
+.group + .group {
+  margin-top: var(--mu-spacing-2);
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--variant-ref-thumb-gap);
+  min-width: 0;
+  padding: var(--mu-spacing-1-5) var(--mu-spacing-2);
+}
+
+.groupLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.variant,
+.variantSelected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mu-spacing-1);
+  width: 100%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--mu-spacing-1-5) var(--mu-spacing-2) var(--mu-spacing-1-5)
+    calc(var(--mu-spacing-2) + var(--variant-ref-thumb) + var(--variant-ref-thumb-gap));
+  text-align: left;
+  color: inherit;
+}
+
+.variant:hover,
+.variant[data-highlighted],
+.variantSelected {
+  background-color: var(--mu-colors-background-default2);
+}
+
+.variantLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

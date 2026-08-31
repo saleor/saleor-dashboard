@@ -41,6 +41,10 @@ export const leftOperatorsMessages = defineMessages({
     id: "Eq3GFh",
     defaultMessage: "Is giftcard",
   },
+  Attribute: {
+    id: "OsU2Fs",
+    defaultMessage: "Attribute",
+  },
 });
 
 export const metadataInputMessages = defineMessages({

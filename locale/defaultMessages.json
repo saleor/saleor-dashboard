@@ -623,6 +623,10 @@
   "0HBlkO": {
     "string": "Search channels"
   },
+  "0HZg9/": {
+    "context": "tooltip on the add-preset button in list headers",
+    "string": "Save filters and search as preset"
+  },
   "0I+Z8l": {
     "context": "stock exceeded dialog description",
     "string": "{count, plural, one {# item exceeds available stock.} other {# items exceed available stock.}} Go back to adjust quantities, or fulfill anyway to oversell."
@@ -1591,6 +1595,10 @@
   "4ErS/1": {
     "context": "gift card tag field label",
     "string": "Card tag"
+  },
+  "4IVdnm": {
+    "context": "Empty state when the filter panel or modal has no conditions",
+    "string": "No filters"
   },
   "4IawKc": {
     "context": "onboarding step description",
@@ -2881,10 +2889,6 @@
     "context": "create product dialog description",
     "string": "Add a product. You can set a price, inventory, and availability after creating it."
   },
-  "9B2mOB": {
-    "context": "tile view pagination label",
-    "string": "No. of products"
-  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -3032,6 +3036,10 @@
   "9eC0MZ": {
     "context": "collection",
     "string": "Hidden"
+  },
+  "9exKzi": {
+    "context": "Close the list filter panel without clearing applied filters",
+    "string": "Close"
   },
   "9gb9b4": {
     "context": "address type",
@@ -3183,6 +3191,9 @@
   "AHK0K9": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+  },
+  "AHOQr2": {
+    "string": "Search products..."
   },
   "AJF7N5": {
     "context": "scope note for model type tab grouping help tooltip",
@@ -3392,10 +3403,6 @@
   },
   "B52Em/": {
     "string": "Address line 1"
-  },
-  "B5KI59": {
-    "context": "Empty filters text",
-    "string": "Add filter to start"
   },
   "B77MSl": {
     "context": "empty state for variant attributes on a product type",
@@ -4491,6 +4498,10 @@
   "FIZvTx": {
     "context": "dialog content",
     "string": "Select method you want to use to change address"
+  },
+  "FK088X": {
+    "context": "Apply filters from the list filter panel",
+    "string": "Apply"
   },
   "FKBNcP": {
     "context": "customer type chip, opens the customer type settings page",
@@ -5642,10 +5653,6 @@
     "context": "export scope option disabled when list has no active filters",
     "string": "Apply filters or search on the list to enable this option."
   },
-  "JDvxO6": {
-    "context": "search gift card placeholder",
-    "string": "Search Gift Cards (e.g. by code, email, user name)"
-  },
   "JE0TAx": {
     "context": "section name",
     "string": "Values"
@@ -6463,6 +6470,10 @@
     "context": "column title used by/customer",
     "string": "Used by"
   },
+  "MKCw7u": {
+    "context": "Tooltip on the info icon before a locked Channel or Currency filter listing the filters that require it",
+    "string": "Needed for filtering on {fields}"
+  },
   "MKTuIa": {
     "context": "voucher percentage channel input aria label",
     "string": "Percentage for {channelName}"
@@ -6511,6 +6522,10 @@
   "MTl5o6": {
     "context": "new discount label",
     "string": "New discount value"
+  },
+  "MU0Zmt": {
+    "context": "product list pagination label",
+    "string": "No. of products"
   },
   "MUjTkk": {
     "string": "Search customer types..."
@@ -7122,6 +7137,9 @@
     "context": "gift card history message",
     "string": "Gift card balance was reset from {oldBalance} to {newBalance}"
   },
+  "OsU2Fs": {
+    "string": "Attribute"
+  },
   "OtIOMb": {
     "string": "Shipped"
   },
@@ -7517,6 +7535,10 @@
   "Q8Qw5B": {
     "string": "Description"
   },
+  "Q8RwBy": {
+    "context": "search gift card placeholder; examples, not an exhaustive list",
+    "string": "Search by code, email, user name, etc..."
+  },
   "Q8wHwJ": {
     "string": "Deleted collection"
   },
@@ -7813,10 +7835,6 @@
     "context": "copy code button label",
     "string": "Copy code"
   },
-  "RZDxej": {
-    "context": "Popover trigger text (button)",
-    "string": "Filters {count, plural, =0 {} other {({count})} }"
-  },
   "RZZAjR": {
     "context": "setup review row title",
     "string": "Taxes"
@@ -7827,6 +7845,10 @@
   },
   "RaQzn2": {
     "string": "Rule created"
+  },
+  "RalDnV": {
+    "context": "empty state when the list has no saved presets yet",
+    "string": "Saved presets will appear here"
   },
   "RaycYK": {
     "context": "button",
@@ -11371,9 +11393,6 @@
   "eVrDft": {
     "string": "No value"
   },
-  "eW36Jx": {
-    "string": "Saved search queries will appear here"
-  },
   "eWV760": {
     "string": "Attribute with this slug already exists"
   },
@@ -12942,9 +12961,6 @@
   "kIcyUo": {
     "context": "column header",
     "string": "Slug"
-  },
-  "kIvvax": {
-    "string": "Search Products..."
   },
   "kJQczl": {
     "context": "sales section name",
@@ -15341,9 +15357,6 @@
     "context": "button",
     "string": "Assign product"
   },
-  "scTuDZ": {
-    "string": "Save search as preset"
-  },
   "sdA14A": {
     "context": "Status label when object is published in a channel",
     "string": "Published"
@@ -16932,6 +16945,10 @@
   "xzgaxr": {
     "context": "dialog description when restock warehouse must be selected",
     "string": "Canceling a fulfillment will restock products at the selected warehouse. The warehouse this fulfillment shipped from is pre-selected."
+  },
+  "xzqW+K": {
+    "context": "Add condition button on the list filter panel",
+    "string": "Add condition"
   },
   "xzzNba": {
     "context": "helper under currency on create",

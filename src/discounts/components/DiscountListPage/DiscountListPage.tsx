@@ -1,4 +1,7 @@
-import { ExpressionFilters } from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
+import {
+  ExpressionFilterPanel,
+  ExpressionFilters,
+} from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
 import { LegacyFiltersPresetsAlert } from "@dashboard/components/AppLayout/ListFilters/components/LegacyFiltersPresetsAlert";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -126,9 +129,9 @@ const DiscountListPage = ({
 
       <DashboardCard>
         <LegacyFiltersPresetsAlert />
-        <Box display="grid" __gridTemplateColumns="auto 1fr" gap={4} paddingBottom={2} paddingX={6}>
+        <Box display="flex" flexDirection="column" gap={3} paddingBottom={2} paddingX={6}>
           <Box display="flex" alignItems="center" gap={4}>
-            <ExpressionFilters data-test-id="filters-button" />
+            <ExpressionFilters />
             <Box __width="320px">
               <SearchInput
                 initialSearch={initialSearch}
@@ -141,6 +144,7 @@ const DiscountListPage = ({
               />
             </Box>
           </Box>
+          <ExpressionFilterPanel />
         </Box>
 
         <DiscountListDatagrid {...listProps} onRowClick={handleRowClick} />

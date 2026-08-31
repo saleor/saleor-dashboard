@@ -26,6 +26,7 @@ export const DatagridSwatchPreview = ({
   placement = "option",
 }: DatagridSwatchPreviewProps): JSX.Element => (
   <span
+    aria-hidden
     className={clsx(styles.adornment, placement === "input" && styles.adornmentInput)}
     style={{ width: size }}
   >

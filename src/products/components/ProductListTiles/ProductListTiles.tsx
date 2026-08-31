@@ -1,14 +1,15 @@
 // @ts-strict-ignore
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { type ProductListColumns } from "@dashboard/config";
 import { type ProductListQuery } from "@dashboard/graphql";
 import { type ListProps, type RelayToFlat } from "@dashboard/types";
-import { Box, Text, vars } from "@saleor/macaw-ui-next";
+import { Box, vars } from "@saleor/macaw-ui-next";
 import { useCallback } from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../ProductListDatagrid/messages";
+import { ProductListPagination } from "../ProductListPagination/ProductListPagination";
 import { ProductTile } from "../ProductTile/ProductTile";
 
 interface ProductListTilesProps extends ListProps<ProductListColumns> {
@@ -41,8 +42,8 @@ export const ProductListTiles = ({
           display="grid"
           gridTemplateColumns={{ mobile: 3, tablet: 5, desktop: 6 }}
           gap={6}
-          padding={6}
-          __paddingTop={`calc(${vars.spacing[9]} - ${vars.spacing[5]}`}
+          paddingX={6}
+          __paddingTop={`calc(${vars.spacing[9]} - ${vars.spacing[5]})`}
           data-test-id="tile-view"
         >
           {products.map(product => (
@@ -57,8 +58,10 @@ export const ProductListTiles = ({
     }
 
     return (
-      <Box padding={6} textAlign="center">
-        <Text size={3}>{intl.formatMessage(messages.emptyText)}</Text>
+      <Box paddingX={6} paddingBottom={6}>
+        <Placeholder>
+          <span data-test-id="empty-data-grid-text">{intl.formatMessage(messages.emptyText)}</span>
+        </Placeholder>
       </Box>
     );
   }, [intl, loading, onTileClick, products]);
@@ -66,17 +69,9 @@ export const ProductListTiles = ({
   return (
     <>
       {renderContent()}
-      <DatagridPagination
-        component="div"
+      <ProductListPagination
         settings={settings}
         disabled={disabled}
-        labels={{
-          noOfRows: intl.formatMessage({
-            id: "9B2mOB",
-            defaultMessage: "No. of products",
-            description: "tile view pagination label",
-          }),
-        }}
         onUpdateListSettings={onUpdateListSettings}
       />
     </>

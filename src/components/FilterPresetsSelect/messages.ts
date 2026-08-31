@@ -10,11 +10,13 @@ export const messages = defineMessages({
     id: "3PVGWj",
   },
   savePreset: {
-    defaultMessage: "Save search as preset",
-    id: "scTuDZ",
+    id: "0HZg9/",
+    defaultMessage: "Save filters and search as preset",
+    description: "tooltip on the add-preset button in list headers",
   },
   noPresets: {
-    defaultMessage: "Saved search queries will appear here",
-    id: "eW36Jx",
+    id: "RalDnV",
+    defaultMessage: "Saved presets will appear here",
+    description: "empty state when the list has no saved presets yet",
   },
 });

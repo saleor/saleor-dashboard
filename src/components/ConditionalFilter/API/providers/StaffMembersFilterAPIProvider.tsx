@@ -2,6 +2,11 @@ import { StaffMemberStatus } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 
 import { type FilterAPIProvider } from "../../API/FilterAPIProvider";
+import {
+  emptyAttributeChoicesPage,
+  emptyChoicesPage,
+  fetchHandlerPage,
+} from "../../API/filterChoicesPage";
 import { EnumValuesHandler } from "../../API/Handler";
 import { type FilterContainer, type FilterElement } from "../../FilterElement";
 
@@ -18,25 +23,33 @@ const getFilterElement = (value: FilterContainer, index: number): FilterElement 
 export const useStaffMembersFilterAPIProvider = (): FilterAPIProvider => {
   const intl = useIntl();
 
-  const fetchRightOptions = async (position: string, value: FilterContainer) => {
+  const fetchRightOptions = async (
+    position: string,
+    value: FilterContainer,
+    _inputValue?: string,
+    after?: string | null,
+  ) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
     const rowType = filterElement.rowType();
 
     if (!rowType) {
-      return [];
+      return emptyChoicesPage();
     }
 
     if (rowType === "staffMemberStatus") {
-      return new EnumValuesHandler(StaffMemberStatus, "staffMemberStatus", intl).fetch();
+      return fetchHandlerPage(
+        new EnumValuesHandler(StaffMemberStatus, "staffMemberStatus", intl),
+        after,
+      );
     }
 
-    return [];
+    return emptyChoicesPage();
   };
 
   const fetchAttributeOptions = async () => {
-    return [];
+    return emptyAttributeChoicesPage();
   };
 
   return {

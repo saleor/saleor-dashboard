@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import { type LazyQueryResult } from "@apollo/client/react";
-import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
+import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
+import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
@@ -28,6 +29,7 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { PRODUCT_CONFIGURATION_DOCS_URL } from "@dashboard/links";
 import {
   type ChannelProps,
   type PageListProps,
@@ -111,7 +113,9 @@ const ProductListPage = (props: ProductListPageProps) => {
     ...listProps
   } = props;
   const intl = useIntl();
-  const subtitle = useContextualLink("product_list");
+  const productConfigurationsHelpLabel = intl.formatMessage(contextualLinks.products, {
+    productConfigurations: intl.formatMessage(contextualLinks.productConfigurations),
+  });
   const location = useLocation();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -145,7 +149,6 @@ const ProductListPage = (props: ProductListPageProps) => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.products)}
-        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
@@ -183,6 +186,14 @@ const ProductListPage = (props: ProductListPageProps) => {
                 )}
               </Text>
             )}
+            <Box display="flex" alignItems="center" marginRight={3}>
+              <ContextualHelpIcon
+                href={PRODUCT_CONFIGURATION_DOCS_URL}
+                label={productConfigurationsHelpLabel}
+                analyticsType="product_configuration_docs"
+                dataTestId="product-configurations-docs"
+              />
+            </Box>
             <TopNav.Menu
               dataTestId="menu"
               items={[
@@ -237,8 +248,8 @@ const ProductListPage = (props: ProductListPageProps) => {
             onSearchChange={onSearchChange}
             showSearchTooltip
             searchPlaceholder={intl.formatMessage({
-              id: "kIvvax",
-              defaultMessage: "Search Products...",
+              id: "AHOQr2",
+              defaultMessage: "Search products...",
             })}
             actions={
               <Box display="flex" gap={4} alignItems="center">
