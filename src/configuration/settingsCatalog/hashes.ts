@@ -43,7 +43,7 @@ export const settingsHashes = {
   notificationsMessages: "staff-messages",
 } as const;
 
-export type SettingsHash = (typeof settingsHashes)[keyof typeof settingsHashes];
+type SettingsHash = (typeof settingsHashes)[keyof typeof settingsHashes];
 
 export const settingsHref = (path: string, hash?: SettingsHash | string): string =>
   hash ? `${path}#${hash}` : path;

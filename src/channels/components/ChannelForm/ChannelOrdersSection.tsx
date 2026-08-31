@@ -10,7 +10,7 @@ import { messages } from "./messages";
 import { createOrderStatusPills } from "./orderStatusPills";
 
 /** Default minutes when enabling expire-abandoned-orders. */
-export const DEFAULT_EXPIRE_ORDERS_AFTER_MINUTES = 60;
+const DEFAULT_EXPIRE_ORDERS_AFTER_MINUTES = 60;
 
 interface ChannelOrdersSectionProps {
   data: FormData;

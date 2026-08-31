@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 import styles from "./ConfigurationSettingsSearch.module.css";
 
-export const CONFIGURATION_SETTINGS_LISTBOX_ID = "configuration-settings-search-listbox";
+const CONFIGURATION_SETTINGS_LISTBOX_ID = "configuration-settings-search-listbox";
 
 const KindBadge = ({ kind }: { kind: ResolvedSettingsCatalogEntry["kind"] }): JSX.Element => {
   switch (kind) {

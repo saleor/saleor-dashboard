@@ -1,1 +1,1 @@
-export { fieldNames, TranslationsAttributesPage } from "./TranslationsAttributesPage";
+export { fieldNames } from "./TranslationsAttributesPage";

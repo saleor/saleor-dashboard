@@ -404,7 +404,7 @@ export const getLineAvailableQuantityInWarehouse = (
   return 0;
 };
 
-export const getLineAllocationWithHighestQuantity = (
+const getLineAllocationWithHighestQuantity = (
   line: OrderFulfillLineFragment,
 ): NonNullable<OrderFulfillLineFragment["allocations"]>[number] | undefined | null =>
   line.allocations?.reduce(

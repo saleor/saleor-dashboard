@@ -12,11 +12,17 @@ import { readModelTypeNamesSnapshot, writeModelTypeNamesSnapshot } from "../snap
 /** One alias per pinned id; a deleted model type resolves to `null` without failing the query. */
 type PinnedModelTypesResult = Record<string, PinnedModelTypeFragment | null>;
 
+export interface PinnedModelTypeNamesResult {
+  names: Record<string, string>;
+  /** Live query has settled (or there is nothing to fetch). Distinguishes loading from missing. */
+  hasResolved: boolean;
+}
+
 /**
  * Resolves pinned model type ids to their names. Ids that no longer resolve are simply absent
  * from the result, which is how deleted model types drop out of the sidebar — no orphan sweep.
  */
-export const usePinnedModelTypeNames = (ids: readonly string[]): Record<string, string> => {
+export const usePinnedModelTypeNames = (ids: readonly string[]): PinnedModelTypeNamesResult => {
   const key = [...new Set(ids)].sort().join(",");
   // Memoised on the id set: a fresh document object every render would defeat Apollo's dedup.
   const uniqueIds = useMemo(() => (key === "" ? [] : key.split(",")), [key]);
@@ -51,5 +57,8 @@ export const usePinnedModelTypeNames = (ids: readonly string[]): Record<string, 
     }
   }, [liveNames]);
 
-  return liveNames ?? snapshot ?? {};
+  return {
+    names: liveNames ?? snapshot ?? {},
+    hasResolved: uniqueIds.length === 0 || liveNames !== null,
+  };
 };

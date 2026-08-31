@@ -12,8 +12,6 @@ import styles from "./AppWidgetCard.module.css";
 import { type AppWidgetCardExtension } from "./appWidgetCardExtension";
 import { resolveWidgetTitle } from "./resolveWidgetTitle";
 
-export type { AppWidgetCardExtension };
-
 interface AppWidgetCardProps {
   extension: AppWidgetCardExtension;
   children: ReactNode;

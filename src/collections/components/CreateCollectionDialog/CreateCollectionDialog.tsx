@@ -15,7 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export interface CreateCollectionFormData {
+interface CreateCollectionFormData {
   name: string;
   description: string;
 }

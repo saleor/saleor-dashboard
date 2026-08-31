@@ -13,7 +13,7 @@ import { ChevronDown } from "lucide-react";
 
 import styles from "./ButtonGroupWithDropdown.module.css";
 
-export interface ButtonGroupDropdownOption {
+interface ButtonGroupDropdownOption {
   label: string;
   testId?: string;
   onSelect: <T extends object>(params: T) => void;

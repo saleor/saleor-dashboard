@@ -22,7 +22,7 @@ interface AttributeInputTypeCellProps {
   readonly hasUnit: boolean;
 }
 
-export type AttributeInputTypeCell = CustomCell<AttributeInputTypeCellProps>;
+type AttributeInputTypeCell = CustomCell<AttributeInputTypeCellProps>;
 
 const getIconDataUri = (
   inputType: AttributeInputTypeEnum,

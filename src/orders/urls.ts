@@ -232,7 +232,7 @@ export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
 
 export const orderDraftPath = (id: string) => urlJoin(orderDraftListPath, id);
 
-export const orderDetailsPath = (id: string, status?: OrderStatus | null) => {
+const orderDetailsPath = (id: string, status?: OrderStatus | null) => {
   if (status === OrderStatus.DRAFT) {
     return orderDraftPath(id);
   }

@@ -24,7 +24,7 @@ const maxSlugLength = 255;
 const maxTitleLength = 70;
 const maxDescriptionLength = 300;
 
-export const seoCompletionMessages = defineMessages({
+const seoCompletionMessages = defineMessages({
   sectionTitle: {
     id: "TOA3CD",
     defaultMessage: "SEO",

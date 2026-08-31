@@ -2,7 +2,7 @@ import { AddRowButton, ClearButton, CloseButton, ConfirmButton, Footer } from ".
 import { Root } from "./Root";
 
 export { isFlatFilterLayout } from "./filterLayout";
-export type { ConditionalFiltersLayout, ExperimentalFiltersProps } from "./Root";
+export type { ConditionalFiltersLayout } from "./Root";
 export type { FilterEvent, Row } from "./types";
 
 export const Filters = Object.assign(Root, {

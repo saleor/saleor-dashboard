@@ -36,7 +36,7 @@ interface ChannelLike {
   isActive?: boolean;
 }
 
-export interface GiftCardProvenanceCardViewProps {
+interface GiftCardProvenanceCardViewProps {
   giftCard: ExtendedGiftCard<GiftCardDetails> | undefined;
   loading?: boolean;
   /** Resolved channel for `boughtInChannel` slug, when available. */

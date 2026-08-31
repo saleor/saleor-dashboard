@@ -9,7 +9,7 @@ import { type AvailabilityIssue } from "./types";
  * advisories stay inside the channel body. The shared header treatment is a
  * UX choice, not a claim that warnings block anything.
  */
-export type HeaderIssueType = "error" | "warning";
+type HeaderIssueType = "error" | "warning";
 
 export interface IssueBadgeProps {
   count: number;

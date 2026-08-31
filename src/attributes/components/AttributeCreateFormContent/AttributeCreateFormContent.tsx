@@ -29,7 +29,7 @@ import { FormattedMessage } from "react-intl";
 
 import { messages } from "./messages";
 
-export type AttributeCreateFormStep = 1 | 2;
+type AttributeCreateFormStep = 1 | 2;
 
 interface AttributeCreateFormContentProps
   extends Pick<

@@ -64,7 +64,7 @@ export type NonSelectionAttributeValues = Record<string, string[]>; // attribute
  * - SINGLE_REFERENCE: Requires entity reference picker
  * - RICH_TEXT: Requires rich text editor
  */
-export const GENERATOR_SUPPORTED_INPUT_TYPES = new Set([
+const GENERATOR_SUPPORTED_INPUT_TYPES = new Set([
   AttributeInputTypeEnum.DROPDOWN,
   AttributeInputTypeEnum.SWATCH,
   AttributeInputTypeEnum.BOOLEAN,

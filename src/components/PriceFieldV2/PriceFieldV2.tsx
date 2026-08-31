@@ -11,8 +11,7 @@ import { getPriceFieldDisplayValue } from "./utils";
  * Currency-aware typing + blur padding; pair with spreadsheet paste helpers for row lists.
  * See saleor-dashboard-styles skill → "Price inputs (PriceFieldV2)".
  */
-export interface PriceFieldV2Props
-  extends Omit<InputProps, "onChange" | "value" | "type" | "inputMode"> {
+interface PriceFieldV2Props extends Omit<InputProps, "onChange" | "value" | "type" | "inputMode"> {
   /** Currency code (e.g. USD) — used for adornment and decimal precision. */
   currencySymbol: string;
   value: string;

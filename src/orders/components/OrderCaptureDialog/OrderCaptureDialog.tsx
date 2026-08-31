@@ -38,7 +38,7 @@ const isTransactionError = (
   return error.__typename === "TransactionRequestActionError";
 };
 
-export type CaptureAmountOption = "orderTotal" | "custom";
+type CaptureAmountOption = "orderTotal" | "custom";
 
 export interface OrderCaptureDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;

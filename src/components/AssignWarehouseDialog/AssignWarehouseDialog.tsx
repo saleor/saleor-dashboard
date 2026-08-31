@@ -11,7 +11,7 @@ import { messages } from "./messages";
 
 const EMPTY_SEARCH_FILTERS = {};
 
-export interface AssignWarehouseDialogProps
+interface AssignWarehouseDialogProps
   extends FetchMoreProps,
     DialogProps,
     Pick<AssignContainerDialogProps, "excludeContainer" | "backfillResetKey"> {

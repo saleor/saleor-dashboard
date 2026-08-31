@@ -38,7 +38,7 @@ export interface GiftCardUpdateFormConsumerData extends GiftCardUpdateFormErrors
   isSaveDisabled: boolean;
 }
 
-export interface GiftCardUpdateFormErrors {
+interface GiftCardUpdateFormErrors {
   formErrors: Record<"tags" | "expiryDate", GiftCardErrorFragment | undefined>;
 }
 

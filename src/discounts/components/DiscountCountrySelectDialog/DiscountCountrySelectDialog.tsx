@@ -32,7 +32,7 @@ import {
 } from "./DiscountCountrySelectDialogCountriesList";
 import { discountCountrySelectDialogMessages } from "./messages";
 
-export interface DiscountCountrySelectFormData {
+interface DiscountCountrySelectFormData {
   allCountries: boolean;
   countries: string[];
   query: string;
