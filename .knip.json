@@ -42,6 +42,7 @@
     "playwright/**",
     "**/*.generated.ts",
     "apollo.config.js",
+    "graphql-lint.config.js",
     "codegen*",
     "src/graphql/staging/index.ts"
   ],
