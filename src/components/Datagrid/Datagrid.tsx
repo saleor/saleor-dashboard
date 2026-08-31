@@ -49,6 +49,7 @@ import useDatagridChange, {
   type OnDatagridChange,
 } from "./hooks/useDatagridChange";
 import { useFullScreenMode } from "./hooks/useFullScreenMode";
+import { usePointerDragClickGuard } from "./hooks/usePointerDragClickGuard";
 import { usePortalClasses } from "./hooks/usePortalClasses";
 import { activateRowAnchor, hideRowAnchorElement, useRowAnchor } from "./hooks/useRowAnchor";
 import { useRowHover } from "./hooks/useRowHover";
@@ -251,6 +252,19 @@ export const Datagrid = ({
     onWheel: handleRowAnchorWheel,
   });
   const rowAnchorHandler = useRowAnchorHandler(navigatorOpts);
+  const hideActiveRowAnchor = useCallback((): void => {
+    if (rowAnchorRef.current) {
+      hideRowAnchorElement(rowAnchorRef.current);
+    }
+  }, [rowAnchorRef]);
+  const {
+    onClickCapture,
+    onPointerCancelCapture,
+    onPointerDownCapture,
+    onPointerMoveCapture,
+    onPointerUpCapture,
+    shouldSuppressClick,
+  } = usePointerDragClickGuard(hideActiveRowAnchor);
 
   const { handleRowHover, hoverRow } = useRowHover({
     hasRowHover,
@@ -429,6 +443,10 @@ export const Datagrid = ({
 
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {
+      if (shouldSuppressClick()) {
+        return;
+      }
+
       if (preventRowClickOnSelectionCheckbox(rowMarkers, item[0])) {
         return;
       }
@@ -455,7 +473,7 @@ export const Datagrid = ({
         openInNewTab: Boolean(args.metaKey || args.ctrlKey),
       });
     },
-    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef],
+    [rowMarkers, onRowClick, handleRowHover, rowAnchorRef, shouldSuppressClick, availableColumns],
   );
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
@@ -643,7 +661,14 @@ export const Datagrid = ({
 
   return (
     <FullScreenContainer open={isOpen} className={fullScreenClasses.fullScreenContainer}>
-      <PreventHistoryBack __height={isOpen ? "100%" : "auto"}>
+      <PreventHistoryBack
+        __height={isOpen ? "100%" : "auto"}
+        onClickCapture={onClickCapture}
+        onPointerCancelCapture={onPointerCancelCapture}
+        onPointerDownCapture={onPointerDownCapture}
+        onPointerMoveCapture={onPointerMoveCapture}
+        onPointerUpCapture={onPointerUpCapture}
+      >
         <DashboardCard position="relative" __height={isOpen ? "100%" : "auto"} gap={0}>
           {renderHeader?.({
             toggleFullscreen: toggle,
