@@ -4,7 +4,7 @@ import { DeleteRuleDialog } from "@dialogs/deleteRuleDialog";
 import { BasePage } from "@pages/basePage";
 import { PromotionRuleDialog } from "@pages/dialogs/promotionRuleDialog";
 import type { Page } from "@playwright/test";
-import { date } from "faker";
+import { faker } from "@faker-js/faker";
 
 export class DiscountsPage extends BasePage {
   deleteDiscountDialog: DeleteDiscountDialog;
@@ -66,7 +66,7 @@ export class DiscountsPage extends BasePage {
   }
 
   async typeStartDate() {
-    await this.startDateInput.fill(date.recent().toISOString().split("T")[0]);
+    await this.startDateInput.fill(faker.date.recent().toISOString().split("T")[0]);
   }
 
   async typeStartHour() {
@@ -78,7 +78,7 @@ export class DiscountsPage extends BasePage {
   }
 
   async typeEndDate() {
-    await this.endDateInput.fill(date.future().toISOString().split("T")[0]);
+    await this.endDateInput.fill(faker.date.future().toISOString().split("T")[0]);
   }
 
   async typeEndHour() {

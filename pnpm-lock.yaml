@@ -110,9 +110,6 @@ importers:
       "@sentry/vite-plugin":
         specifier: ^2.23.1
         version: 2.23.1
-      "@types/faker":
-        specifier: ^5.5.9
-        version: 5.5.9
       "@uiw/react-color-hue":
         specifier: 0.0.34
         version: 0.0.34(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -149,9 +146,6 @@ importers:
       editorjs-inline-tool:
         specifier: ^0.4.0
         version: 0.4.0(@editorjs/editorjs@2.30.7)
-      faker:
-        specifier: ^5.5.3
-        version: 5.5.3
       fast-array-diff:
         specifier: ^0.2.0
         version: 0.2.0
@@ -282,6 +276,9 @@ importers:
       "@eslint/js":
         specifier: ^9.39.1
         version: 9.39.2
+      "@faker-js/faker":
+        specifier: ^10.5.0
+        version: 10.5.0
       "@formatjs/cli":
         specifier: ^4.8.4
         version: 4.8.4
@@ -1916,6 +1913,13 @@ packages:
         integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==,
       }
     engines: { node: ^18.18.0 || ^20.9.0 || >=21.1.0 }
+
+  "@faker-js/faker@10.5.0":
+    resolution:
+      {
+        integrity: sha512-bsxD8WLS5lIj7aaoCx1YJkktqYj5vlBUE6HWzu2Q51ksrGJ0H737ECCKlFU7Yf8Br45z9t99frBp/J7kzbMPAg==,
+      }
+    engines: { node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: ">=10" }
 
   "@fastify/busboy@3.2.0":
     resolution:
@@ -5258,12 +5262,6 @@ packages:
         integrity: sha512-4sd7uDB0OVZmwH2wD6w7Qlpr2P5Pn8C9IGwnaq9aiiBDD3Lou7CwFjjkJTDYCDsEvk9zxAtmv9TaMg1lt/YJfA==,
       }
 
-  "@types/faker@5.5.9":
-    resolution:
-      {
-        integrity: sha512-uCx6mP3UY5SIO14XlspxsGjgaemrxpssJI0Ol+GfhxtcKpv9pgRZYsS4eeKeHVLje6Qtc8lGszuBI461+gVZBA==,
-      }
-
   "@types/fs-extra@9.0.13":
     resolution:
       {
@@ -8082,12 +8080,6 @@ packages:
         integrity: sha512-FuoE1qtbJ4bBVvv94CC7s0oTnKUGvQs+Rjf1L2SJFfS+HTVVjhPFtehPdQ0JiGPqVNfSSZvL5yzHHQq2Z4WNhQ==,
       }
     engines: { node: ^12.20 || >= 14.13 }
-
-  faker@5.5.3:
-    resolution:
-      {
-        integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==,
-      }
 
   fast-array-diff@0.2.0:
     resolution:
@@ -14563,6 +14555,8 @@ snapshots:
       "@eslint/core": 0.17.0
       levn: 0.4.1
 
+  "@faker-js/faker@10.5.0": {}
+
   "@fastify/busboy@3.2.0": {}
 
   "@floating-ui/core@0.7.3": {}
@@ -17324,8 +17318,6 @@ snapshots:
 
   "@types/extract-files@13.0.2": {}
 
-  "@types/faker@5.5.9": {}
-
   "@types/fs-extra@9.0.13":
     dependencies:
       "@types/node": 20.19.32
@@ -19365,8 +19357,6 @@ snapshots:
   extendable-error@0.1.7: {}
 
   extract-files@11.0.0: {}
-
-  faker@5.5.3: {}
 
   fast-array-diff@0.2.0: {}
 

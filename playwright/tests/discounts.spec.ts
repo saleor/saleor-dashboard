@@ -1,7 +1,7 @@
 import { CATEGORIES, CHANNELS, COLLECTIONS, DISCOUNTS, PRODUCTS } from "@data/e2eTestData";
 import { DiscountsPage } from "@pages/discountsPage";
 import { expect } from "@playwright/test";
-import faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
