@@ -57,8 +57,8 @@ const ResetPasswordPage = (props: ResetPasswordPageProps) => {
           )}
           <Paragraph size={2} color="default2" fontWeight="bold">
             <FormattedMessage
-              id="h7yWcT"
-              defaultMessage="Enter your email. If it matches an account, we’ll send you a reset link within a few minutes."
+              id="xnrSs5"
+              defaultMessage="Enter your email. If it matches an account, we’ll send you a reset link shortly."
             />
           </Paragraph>
 
