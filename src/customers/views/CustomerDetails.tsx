@@ -267,7 +267,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
 
   return (
     <>
-      <WindowTitle title={user?.email} data-test-id="user-email-title" />
+      <WindowTitle title={user?.email} />
       <CustomerDetailsPage
         attributeFormRevision={attributeFormRevision}
         assignReferencesAttributeId={

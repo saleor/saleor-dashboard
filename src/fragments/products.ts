@@ -366,7 +366,9 @@ export const searchProduct = gql`
     thumbnail {
       url
     }
-    channelListings {
+    # Product.channelListings needs MANAGE_PRODUCTS. Staff who only manage discounts use the
+    # assign pickers too, so gate it rather than making the whole search fail for them.
+    channelListings @include(if: $PERMISSION_MANAGE_PRODUCTS) {
       ...ChannelListingProductWithoutPricing
     }
     collections {

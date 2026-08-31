@@ -15,11 +15,7 @@ import { Savebar } from "@dashboard/components/Savebar";
 import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { type ExtensionWithParams } from "@dashboard/extensions/types";
-import {
-  type DiscountErrorFragment,
-  PermissionEnum,
-  type SearchProductFragment,
-} from "@dashboard/graphql";
+import { type DiscountErrorFragment, PermissionEnum } from "@dashboard/graphql";
 import { type UseFormResult } from "@dashboard/hooks/useForm";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
@@ -360,7 +356,7 @@ export const VoucherDetailsPageFormContent = ({
                 onTabClick={onTabClick}
                 categories={mapEdgesToItems(voucher?.categories)}
                 collections={mapEdgesToItems(voucher?.collections)}
-                products={mapEdgesToItems(voucher?.products) as unknown as SearchProductFragment[]}
+                products={mapEdgesToItems(voucher?.products) ?? []}
                 variants={voucher?.variants}
                 onCategoryAssign={onCategoryAssign}
                 onCategoryUnassign={onCategoryUnassign}

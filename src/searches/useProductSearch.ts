@@ -19,6 +19,10 @@ export const searchProducts = gql`
     $channel: String
     $where: ProductWhereInput
     $includeVariants: Boolean = false
+    # makeQuery injects the caller's real permissions; the default only keeps this variable out
+    # of the hook's caller-facing types (makeSearch does not strip PERMISSION_* like makeQuery)
+    # and fails safe by omitting the gated field.
+    $PERMISSION_MANAGE_PRODUCTS: Boolean = false
   ) {
     search: products(
       after: $after

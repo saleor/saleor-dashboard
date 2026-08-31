@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Saleor Dashboard is a GraphQL-powered, single-page React application built with TypeScript that serves as the admin interface for the Saleor e-commerce platform. It uses modern web technologies including React 17, @saleor/macaw-ui-next, Apollo Client, and Vite for bundling.
+Saleor Dashboard is a GraphQL-powered, single-page React application built with TypeScript that serves as the admin interface for the Saleor e-commerce platform. It is built on React, @saleor/macaw-ui-next, Apollo Client and Vite. Check `package.json` to resolve installed package versions and `package.json` `engines` for the required Node/pnpm versions.
 
 ## Development Commands
 
@@ -16,10 +16,12 @@ Saleor Dashboard is a GraphQL-powered, single-page React application built with 
 
 Before completing changes make sure you run these commands:
 
-- `pnpm run lint` - Run ESLint with auto-fix on src/ and playwright/ directories
+- `pnpm run lint` - Runs every `lint:*` script (ESLint with auto-fix, Prettier write, changeset check). Use `pnpm run lint:eslint` to run ESLint alone.
 - `pnpm run test:quiet <file_path>` - Run specific test file with console output suppressed
-- `pnpm run check-types` - Run TypeScript type checking
+- `pnpm run check-types` - Runs every `check-types:*` script (src + `tsc-strict`, playwright, scripts)
 - `pnpm run knip` - Check for unused files/dependencies/exports
+
+See `package.json` `scripts` for the full, current list.
 
 - ALWAYS run linter with autoformatter after you change the code, BEFORE you try to manually fix linter errors
 
@@ -35,12 +37,14 @@ Before completing changes make sure you run these commands:
 - Console output is suppressed in quiet command
 - Tests automatically run from the `src/` directory (configured in jest.config.js)
 - When writing new fixtures (e.g. any objects used as test inputs) try to figure out their types and explicitly declare them:
-  `cont fixture: FixtureType = {...}`
+  `const fixture: FixtureType = {...}`
 
 ### GraphQL & Code Generation
 
-- `pnpm run generate` - Generate GraphQL types and hooks, after making changes in queries/mutations or updating schema
-- `pnpm run fetch-schema` - Download GraphQL schema from Saleor repository
+The dashboard generates against two schemas: **main** (pinned Saleor version, see `config.saleor.schemaVersion` in `package.json`) and **staging** (Saleor `main` branch), selected at runtime by the `FF_USE_STAGING_SCHEMA` feature flag. See `docs/multi-schema.md`.
+
+- `pnpm run generate` - Generate GraphQL types and hooks for both schemas, after making changes in queries/mutations or updating schema
+- `pnpm run fetch-schema` - Download both main and staging schemas from the Saleor repository
 - `pnpm run fetch-local-schema` - Fetch schema from local Saleor instance
 
 ### Internationalization
@@ -54,7 +58,7 @@ Before completing changes make sure you run these commands:
 The codebase follows a feature-based architecture with shared components:
 
 - **Feature Modules**: Each business domain (products, orders, customers, etc.) has its own directory containing:
-  - `index.tsx` - Main feature export
+  - `index.tsx` - Route definitions for the section (a router component, not a barrel export)
   - `views/` - Page components and view logic
   - `components/` - Feature-specific components
   - `mutations.ts` - GraphQL mutations
@@ -68,23 +72,23 @@ The codebase follows a feature-based architecture with shared components:
 
 ### Key Technologies
 
-- **React 17** with TypeScript (strict mode disabled for old views using typescript-strict-plugin, new ones should use strict mode)
-- **Apollo Client 3.4** for GraphQL state management
+Check `package.json` to resolve installed package versions.
+
+- **React** with TypeScript (strict mode disabled for old views using typescript-strict-plugin, new ones should use strict mode)
+- **Apollo Client** for GraphQL state management
 - **Vite** for build tooling and development server
 - **React Hook Form** for form management
-- **React Router v5** for navigation
+- **React Router** (v5 API: `Switch`, `RouteComponentProps`) for navigation
 - **React Intl** for internationalization
+- **Jotai** for shared client state
+- **Zod** for schema validation
 - **@saleor/macaw-ui-next** for UI components and design system
+- **@material-ui/core** (v4) + `makeStyles` — legacy, still present in many older views; do not add new usages
 
 ### TypeScript Configuration
 
-- Base URL mapping with path aliases:
-  - `@dashboard/*` → `src/*`
-  - `@assets/*` → `assets/*`
-  - `@locale/*` → `locale/*`
-  - `@test/*` → `testUtils/*`
-- Strict mode disabled but typescript-strict-plugin provides gradual strictness adoption
-- ES2020 target with DOM libraries
+- Path aliases are declared in `tsconfig.json` `compilerOptions.paths` (`@dashboard/*`, `@assets/*`, `@locale/*`, `@test/*`, `@storybookUtils/*`) — read that file rather than relying on this list
+- Strict mode disabled but typescript-strict-plugin provides gradual strictness adoption; `pnpm run check-strict-null-errors` reports remaining strict-null violations
 
 ### Build Configuration
 
@@ -96,10 +100,10 @@ The codebase follows a feature-based architecture with shared components:
 
 ### Testing Setup
 
-- Jest with SWC transformer for fast test execution
+- Jest with SWC transformer for fast test execution; config in `jest.config.js` (roots, module name mapping, setup files)
 - Testing Library for React component testing
-- Playwright for E2E testing
-- Canvas mock and localStorage mock for browser APIs
+- Playwright for E2E testing — see `docs/running-tests.md` for required env vars
+- Storybook stories run under Vitest (`pnpm run test-storybook`)
 - JSDOM test environment
 
 ## Development Workflow
@@ -122,7 +126,7 @@ The codebase follows a feature-based architecture with shared components:
 ### Code Standards
 
 - Use existing UI components from `/components/` directory
-- Follow Material-UI theming patterns
+- Style with `@saleor/macaw-ui-next` tokens and CSS Modules (see Styling below) — do not follow the legacy Material-UI theming patterns still present in older views
 - Utilize Apollo Client hooks for GraphQL operations
 - Implement proper form validation with React Hook Form
 - Add internationalization support for user-facing text
@@ -158,10 +162,7 @@ Add // Arrange // Act // Assert comments in tests to clarify test structure
 These files should be regenerated after resolving source conflicts:
 
 - `pnpm-lock.yaml` - Run `pnpm install` after resolving `package.json`
-- `src/graphql/hooks.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
-- `src/graphql/typePolicies.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
-- `src/graphql/fragmentTypes.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
-- `src/graphql/types.generated.ts` - Run `pnpm run generate` after resolving GraphQL files
+- `src/graphql/*.generated.ts` (main and `*Staging.generated.ts` variants) - Run `pnpm run generate` after resolving GraphQL files
 
 ### Package Version Conflicts
 
@@ -171,7 +172,7 @@ Always use the latest version when resolving package version conflicts between b
 
 This frontend connects to a Saleor GraphQL backend:
 
-- Default backend URL: http://localhost:8000/graphql/
+- Default local backend URL: http://localhost:8000/graphql/ (`API_URL`, see `.env.template`)
 - Configure via environment variables (see `docs/configuration.md`)
 - Default development credentials for local Saleor instance: `admin@example.com` / `admin`
 - Use `pnpm run fetch-local-schema` to sync GraphQL schema from local backend
@@ -349,4 +350,4 @@ Not applicable — no agent-driven issue tracker is configured.
 
 ### Domain docs
 
-Single-context: one `CONTEXT.md` + `docs/adr/` at the repo root (created lazily by `/domain-modeling`). See `docs/agents/domain.md`.
+Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. Read them before exploring an area they cover. See `docs/agents/domain.md`.

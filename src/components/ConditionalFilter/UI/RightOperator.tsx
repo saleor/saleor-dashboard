@@ -9,6 +9,8 @@ import {
 import { isSwatchAttributeOption, isSwatchAttributeType } from "../API/swatchAttributeOption";
 import {
   isProductReferenceEntity,
+  isProductReferenceOption,
+  isStaticProductFilter,
   isVariantReferenceEntity,
   isVariantReferenceOption,
 } from "../API/variantReferenceOption";
@@ -54,6 +56,7 @@ interface RightOperatorProps {
   layout?: ConditionalFiltersLayout;
   entityType?: string | null;
   attributeType?: string | null;
+  leftType?: string | null;
 }
 
 const getInlineControlProps = (
@@ -74,6 +77,7 @@ export const RightOperator = ({
   layout = "popover",
   entityType,
   attributeType,
+  leftType,
 }: RightOperatorProps) => {
   const inlineControlProps = getInlineControlProps(layout);
 
@@ -157,7 +161,13 @@ export const RightOperator = ({
       );
     }
 
-    if (isProductReferenceEntity(entityType)) {
+    const isProductReference =
+      isProductReferenceEntity(entityType) ||
+      isStaticProductFilter(leftType) ||
+      selected.options.some(isProductReferenceOption) ||
+      selected.value.some(isProductReferenceOption);
+
+    if (isProductReference) {
       return (
         <ProductReferenceMultiselect
           index={index}

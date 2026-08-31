@@ -1,15 +1,10 @@
 import { type ApolloClient, ApolloError } from "@apollo/client";
 import { type INotificationCallback } from "@dashboard/components/notifications";
 import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
+import { saleorAuth } from "@dashboard/graphql/client";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
-import {
-  type GetExternalAccessTokenData,
-  type LoginData,
-  useAuth,
-  useAuthState,
-} from "@dashboard/legacy-sdk";
 import {
   checkIfCredentialsExist,
   isSupported as isCredentialsManagementAPISupported,
@@ -22,9 +17,12 @@ import { useEffect, useRef, useState } from "react";
 import { type IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
+import { useAuthState } from "../authState";
 import { parseAuthError } from "../errors";
 import {
   type ExternalLoginInput,
+  type GetExternalAccessTokenData,
+  type LoginData,
   type RequestExternalLoginInput,
   type RequestExternalLogoutInput,
   type UserContext,
@@ -40,9 +38,9 @@ interface UseAuthProviderOpts {
 type AuthErrorCodes = `${AccountErrorCode}`;
 
 export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderOpts): UserContext {
-  const { login, getExternalAuthUrl, getExternalAccessToken, logout } = useAuth();
+  const { login, getExternalAuthUrl, getExternalAccessToken, logout } = saleorAuth;
   const navigate = useNavigator();
-  const { authenticated, authenticating, user } = useAuthState();
+  const { authenticated, authenticating, isStaff } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage("requestedExternalPluginId", null);
   const [isCredentialsLogin, setIsCredentialsLogin] = useState(false);
   const [errors, setErrors] = useState<UserContextError[]>([]);
@@ -102,13 +100,9 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       navigator.credentials.preventSilentAccess();
     }
 
-    // Forget last logged in user data.
-    // On next login, user details query will be refetched due to cache-and-network fetch policy.
-    apolloClient.clearStore();
-
     const errors = result?.errors || [];
     const externalLogoutUrl = result
-      ? JSON.parse(result.data?.externalLogout?.logoutData || null)?.logoutUrl
+      ? JSON.parse(result.data?.externalLogout?.logoutData || "null")?.logoutUrl
       : "";
 
     if (!errors.length) {
@@ -131,7 +125,6 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
       const result = await login({
         email,
         password,
-        includeDetails: false,
       });
 
       const errorList = result.data?.tokenCreate?.errors?.map(
@@ -254,7 +247,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     logout: handleLogout,
     authenticating: authenticating && !errors.length,
     isCredentialsLogin,
-    authenticated: authenticated && !!user?.isStaff && !errors.length,
+    authenticated: authenticated && isStaff && !errors.length,
     user: userDetails.data?.me,
     refetchUser: userDetails.refetch,
     errors,

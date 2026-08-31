@@ -632,6 +632,11 @@ export const localAppErrorMessages = defineMessages({
 });
 
 export const appMessages = defineMessages({
+  failedToResolveAppIdentifier: {
+    defaultMessage: "Couldn’t open this extension. Try again.",
+    id: "3orvWR",
+    description: "error when resolving an app manifest identifier from the URL fails",
+  },
   failedToFetchAppSettings: {
     id: "S1u2pa",
     defaultMessage: "Failed to fetch extension settings",

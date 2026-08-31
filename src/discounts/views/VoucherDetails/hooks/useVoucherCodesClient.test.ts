@@ -2,7 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 
 import { useVoucherCodesClient } from "./useVoucherCodesClient";
 
-jest.mock("uuid", () => ({ v4: () => "68276b31-3b41-4004-acd6-bad8c36d524f" }));
+jest.spyOn(crypto, "randomUUID").mockReturnValue("68276b31-3b41-4004-acd6-bad8c36d524f");
 describe("useVoucherCodesClient", () => {
   it("should add voucher code manually", () => {
     // Arrange

@@ -21,6 +21,7 @@ export class BasePage {
     readonly saveButton = page.locator(LOCATORS.saveButton),
     readonly infoBanner = page.locator(LOCATORS.infoBanner),
     readonly dataGridLoader = page.locator(LOCATORS.dataGridLoader),
+    readonly datagridRowAnchor = page.getByTestId("datagrid-row-anchor"),
     readonly previousPagePaginationButton = page.getByTestId("button-pagination-back"),
     readonly rowNumberButton = page.getByTestId("PaginationRowNumberSelect"),
     readonly rowNumberOption = page.getByTestId("rowNumberOption"),
@@ -238,6 +239,24 @@ export class BasePage {
     if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
 
     await this.page.mouse.click(bounds.center.x, bounds.center.y);
+  }
+
+  async hoverGridCell(col: number, row: number, nthChild = 0) {
+    const bounds = await this.findGridCellBounds(col, row, nthChild);
+
+    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
+
+    await this.page.mouse.move(bounds.center.x, bounds.center.y);
+
+    return bounds;
+  }
+
+  async middleClickGridCell(col: number, row: number, nthChild = 0) {
+    const bounds = await this.findGridCellBounds(col, row, nthChild);
+
+    if (!bounds) throw new Error(`Unable to find cell, col: ${col}, row: ${row}`);
+
+    await this.page.mouse.click(bounds.center.x, bounds.center.y, { button: "middle" });
   }
 
   async findRowIndexBasedOnText(searchTextArray: string[]) {

@@ -12,7 +12,6 @@ import {
   type VariantAttributeFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
-import { type ProductType } from "@dashboard/legacy-sdk/apollo/types";
 import { type RelayToFlat } from "@dashboard/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
@@ -4160,7 +4159,7 @@ export const variantSiblings = (placeholderImage: string) => [
   },
 ];
 
-export const productTypesList: Array<Pick<ProductType, "id" | "name" | "hasVariants">> = [
+export const productTypesList: Array<{ id: string; name: string; hasVariants: boolean }> = [
   {
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6Nw==",
