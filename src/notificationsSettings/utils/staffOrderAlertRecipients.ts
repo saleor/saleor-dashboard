@@ -8,7 +8,7 @@ export interface StaffOrderAlertRecipient {
   isStaffActive: boolean | null;
 }
 
-export interface StaffOrderAlertRecipientUser {
+interface StaffOrderAlertRecipientUser {
   id?: string | null;
   email?: string | null;
   firstName?: string | null;
@@ -16,7 +16,7 @@ export interface StaffOrderAlertRecipientUser {
   isActive?: boolean | null;
 }
 
-export interface StaffOrderAlertRecipientNode {
+interface StaffOrderAlertRecipientNode {
   id: string;
   email?: string | null;
   active?: boolean | null;
