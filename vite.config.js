@@ -104,7 +104,7 @@ export default defineConfig(({ command, mode }) => {
     copyNoopSW(),
   ];
 
-  if (!isDev) {
+  if (!isDev && SENTRY_AUTH_TOKEN) {
     console.log("Enabling service worker...");
 
     plugins.push(
