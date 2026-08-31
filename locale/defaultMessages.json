@@ -5531,9 +5531,6 @@
   "IoDlcd": {
     "string": "Slug"
   },
-  "IpOugE": {
-    "string": "Show metadata"
-  },
   "IqFUJl": {
     "string": "Rate name"
   },
@@ -6631,9 +6628,6 @@
   "N6lfS/": {
     "context": "header",
     "string": "Authorization Field Delete"
-  },
-  "N6s/fl": {
-    "string": "Edit order line metadata"
   },
   "N76zUg": {
     "context": "page header",
@@ -13443,9 +13437,6 @@
   "mMEpFC": {
     "context": "customer overview, refunded row label in value tooltip",
     "string": "Refunded"
-  },
-  "mMOskm": {
-    "string": "Open product detail"
   },
   "mN/S07": {
     "context": "attribute entity type helper on full attribute form",
