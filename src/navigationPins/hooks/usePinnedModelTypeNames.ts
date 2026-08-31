@@ -12,7 +12,7 @@ import { readModelTypeNamesSnapshot, writeModelTypeNamesSnapshot } from "../snap
 /** One alias per pinned id; a deleted model type resolves to `null` without failing the query. */
 type PinnedModelTypesResult = Record<string, PinnedModelTypeFragment | null>;
 
-export interface PinnedModelTypeNamesResult {
+interface PinnedModelTypeNamesResult {
   names: Record<string, string>;
   /** Live query has settled (or there is nothing to fetch). Distinguishes loading from missing. */
   hasResolved: boolean;
