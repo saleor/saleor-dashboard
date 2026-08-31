@@ -1,7 +1,8 @@
 import { useApolloClient } from "@apollo/client";
+import { useAuthState } from "@dashboard/auth/authState";
 import { useUserDetailsQuery } from "@dashboard/graphql";
+import { saleorAuth } from "@dashboard/graphql/client";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
-import { useAuth, useAuthState } from "@dashboard/legacy-sdk";
 import { act, renderHook } from "@testing-library/react";
 import { useIntl } from "react-intl";
 
@@ -38,8 +39,15 @@ afterAll(() => {
     value: originalWindowNavigator,
   });
 });
-jest.mock("@dashboard/legacy-sdk", () => ({
-  useAuth: jest.fn(() => ({
+jest.mock("@dashboard/auth/authState", () => ({
+  useAuthState: jest.fn(() => ({
+    authenticated: false,
+    authenticating: false,
+    isStaff: false,
+  })),
+}));
+jest.mock("@dashboard/graphql/client", () => ({
+  saleorAuth: {
     login: jest.fn(() => ({
       data: {
         tokenCreate: {
@@ -56,8 +64,9 @@ jest.mock("@dashboard/legacy-sdk", () => ({
       },
     })),
     logout: jest.fn(),
-  })),
-  useAuthState: jest.fn(() => undefined),
+    getExternalAuthUrl: jest.fn(),
+    getExternalAccessToken: jest.fn(),
+  },
 }));
 jest.mock("@apollo/client", () => ({
   useApolloClient: jest.fn(() => ({
@@ -100,9 +109,7 @@ describe("AuthProvider", () => {
     (useAuthState as jest.Mock).mockImplementation(() => ({
       authenticated: true,
       authenticating: false,
-      user: {
-        isStaff: true,
-      },
+      isStaff: true,
     }));
     (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
       data: {
@@ -132,6 +139,7 @@ describe("AuthProvider", () => {
     (useAuthState as jest.Mock).mockImplementation(() => ({
       authenticated: false,
       authenticating: false,
+      isStaff: false,
     }));
     (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
       data: {
@@ -155,6 +163,7 @@ describe("AuthProvider", () => {
     (useAuthState as jest.Mock).mockImplementation(() => ({
       authenticated: false,
       authenticating: false,
+      isStaff: false,
     }));
     (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
       data: {
@@ -180,18 +189,15 @@ describe("AuthProvider", () => {
     const notify = useNotifier();
     const apolloClient = useApolloClient();
 
-    (useAuth as jest.Mock).mockImplementation(() => ({
-      login: jest.fn(() => ({
-        data: {
-          tokenCreate: {
-            errors: [],
-            user: {
-              userPermissions: [],
-            },
+    (saleorAuth.login as jest.Mock).mockImplementation(() => ({
+      data: {
+        tokenCreate: {
+          errors: [],
+          user: {
+            userPermissions: [],
           },
         },
-      })),
-      logout: jest.fn(),
+      },
     }));
 
     // Act
@@ -213,6 +219,7 @@ describe("AuthProvider", () => {
     (useAuthState as jest.Mock).mockImplementation(() => ({
       authenticated: false,
       authenticating: false,
+      isStaff: false,
     }));
 
     let resolveLogin: (value: any) => void;
@@ -223,10 +230,7 @@ describe("AuthProvider", () => {
         }),
     );
 
-    (useAuth as jest.Mock).mockImplementation(() => ({
-      login: loginMock,
-      logout: jest.fn(),
-    }));
+    (saleorAuth.login as jest.Mock).mockImplementation(loginMock);
 
     const { result } = renderHook(() => useAuthProvider({ intl, notify, apolloClient }));
 

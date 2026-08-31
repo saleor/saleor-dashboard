@@ -1,6 +1,13 @@
-import { ApolloClient } from "@apollo/client";
+import { type AuthSDK } from "@dashboard/auth/authSdk";
+import { type OperationDefinitionNode } from "graphql";
 
-import { createApolloClient, createFetch } from "./client";
+import { createFetch, registerAuthClient } from "./authFetch";
+import {
+  ExternalRefreshDocument,
+  ExternalRefreshWithUserDocument,
+  RefreshTokenDocument,
+  RefreshTokenWithUserDocument,
+} from "./hooks.generated";
 
 const mockRefreshToken = jest.fn().mockResolvedValue({
   data: { tokenRefresh: { token: "new-token" } },
@@ -10,7 +17,8 @@ const mockRefreshExternalToken = jest.fn().mockResolvedValue({
 });
 const mockLogout = jest.fn();
 
-jest.mock("../core/storage", () => ({
+jest.mock("@dashboard/auth/tokenStorage", () => ({
+  isInternalToken: (owner: string) => owner === "saleor",
   storage: {
     getAccessToken: jest.fn(),
     getRefreshToken: jest.fn(),
@@ -22,21 +30,13 @@ jest.mock("../core/storage", () => ({
   },
 }));
 
-jest.mock("../core/auth", () => ({
-  auth: jest.fn(() => ({
-    refreshToken: mockRefreshToken,
-    refreshExternalToken: mockRefreshExternalToken,
-    logout: mockLogout,
-  })),
-}));
-
 jest.mock("jwt-decode", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const { storage } = require("../core/storage");
+const { storage } = require("@dashboard/auth/tokenStorage");
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const jwtDecode = require("jwt-decode").default;
 
@@ -66,29 +66,16 @@ afterAll(() => {
   global.fetch = originalFetch;
 });
 
-describe("createApolloClient", () => {
-  it("returns an ApolloClient instance", () => {
-    // Arrange
-    const apiUrl = "http://localhost:8000/graphql/";
-
-    // Act
-    const client = createApolloClient(apiUrl, false);
-
-    // Assert
-    expect(client).toBeInstanceOf(ApolloClient);
-  });
-});
-
 describe("createFetch", () => {
   it("throws when client is not initialized", async () => {
     // Arrange
-    // Use jest.isolateModules to get a fresh module where client is undefined
+    // Use jest.isolateModules to get a fresh module where no auth client is registered
     const { createFetch: isolatedCreateFetch } = await new Promise<{
       createFetch: typeof createFetch;
     }>(resolve => {
       jest.isolateModules(() => {
         // eslint-disable-next-line @typescript-eslint/no-require-imports
-        const mod = require("./client");
+        const mod = require("./authFetch");
 
         resolve(mod);
       });
@@ -98,13 +85,17 @@ describe("createFetch", () => {
 
     // Act & Assert
     await expect(fetchFn("http://localhost:8000/graphql/")).rejects.toThrow(
-      "Could not find Saleor's client instance. Did you forget to call createSaleorClient()?",
+      "Could not find Saleor's auth client. Did you forget to call initAuth()?",
     );
   });
 
   describe("after client initialization", () => {
     beforeEach(() => {
-      createApolloClient("http://localhost:8000/graphql/", false);
+      registerAuthClient({
+        refreshToken: mockRefreshToken,
+        refreshExternalToken: mockRefreshExternalToken,
+        logout: mockLogout,
+      } as unknown as AuthSDK);
     });
 
     it("passes through refreshToken operations without modification", async () => {
@@ -114,7 +105,7 @@ describe("createFetch", () => {
 
       mockFetch.mockResolvedValue(expectedResponse);
 
-      const body = JSON.stringify({ operationName: "refreshToken" });
+      const body = JSON.stringify({ operationName: "RefreshToken" });
 
       // Act
       const response = await fetchFn("http://localhost:8000/graphql/", {
@@ -130,6 +121,36 @@ describe("createFetch", () => {
       expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 
+    // Guards the hardcoded operation-name list in createFetch against a rename in
+    // src/auth/mutations.ts: a miss there makes a refresh request try to refresh itself.
+    it.each(
+      [
+        RefreshTokenDocument,
+        RefreshTokenWithUserDocument,
+        ExternalRefreshDocument,
+        ExternalRefreshWithUserDocument,
+      ].map(document => (document.definitions[0] as OperationDefinitionNode).name!.value),
+    )("passes through the %s operation without modification", async operationName => {
+      // Arrange
+      const fetchFn = createFetch();
+      const expectedResponse = createMockResponse({ data: {} });
+
+      mockFetch.mockResolvedValue(expectedResponse);
+      storage.getAccessToken.mockReturnValue("some-token");
+
+      const body = JSON.stringify({ operationName });
+
+      // Act
+      const response = await fetchFn("http://localhost:8000/graphql/", { body });
+
+      // Assert — no auth header added, no refresh triggered, single passthrough call
+      expect(response).toBe(expectedResponse);
+      expect(mockFetch).toHaveBeenCalledWith("http://localhost:8000/graphql/", { body });
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(mockRefreshToken).not.toHaveBeenCalled();
+      expect(mockRefreshExternalToken).not.toHaveBeenCalled();
+    });
+
     it("passes through externalRefresh operations without modification", async () => {
       // Arrange
       const fetchFn = createFetch();
@@ -137,7 +158,7 @@ describe("createFetch", () => {
 
       mockFetch.mockResolvedValue(expectedResponse);
 
-      const body = JSON.stringify({ operationName: "externalRefresh" });
+      const body = JSON.stringify({ operationName: "ExternalRefresh" });
 
       // Act
       const response = await fetchFn("http://localhost:8000/graphql/", {
