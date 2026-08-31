@@ -13,8 +13,6 @@ const config: CodegenConfig = {
     "!./src/**/mutations.staging.ts",
     "!./src/**/fragments/*.staging.ts",
     "!./src/searches/*.staging.ts",
-    // legacy SDK has its own internal GraphQL operations
-    "!./src/legacy-sdk/**",
   ],
   generates: {
     "./src/graphql/fragmentTypes.generated.ts": {

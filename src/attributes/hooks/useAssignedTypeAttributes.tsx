@@ -9,7 +9,7 @@ import {
 import { type Sort } from "@dashboard/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-export type AssignedAttributeTypeKind = "product" | "model";
+type AssignedAttributeTypeKind = "product" | "model";
 
 const mergeAttributesById = (
   attributeLists: AttributeAssignedListFragment[][],

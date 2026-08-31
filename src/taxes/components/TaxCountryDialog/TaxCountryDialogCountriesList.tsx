@@ -2,7 +2,7 @@ import listStyles from "@dashboard/components/ChannelsAvailabilityDialogChannels
 import { FormControlLabel, Radio } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 
-export interface TaxCountryPickerItem {
+interface TaxCountryPickerItem {
   id: string;
   name: string;
 }

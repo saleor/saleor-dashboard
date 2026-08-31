@@ -27,7 +27,7 @@ const createRequiredError = (
   attributes,
 });
 
-export const isAttributeValueEmpty = (attribute: AttributeInput): boolean => {
+const isAttributeValueEmpty = (attribute: AttributeInput): boolean => {
   const values = attribute.value ?? [];
 
   if (values.length === 0) {

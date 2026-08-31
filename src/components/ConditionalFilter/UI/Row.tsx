@@ -174,6 +174,7 @@ export const RowComponent = ({
           layout={layout}
           entityType={item.selectedAttribute?.entityType}
           attributeType={item.selectedAttribute?.type}
+          leftType={item.value?.type}
         />
       </div>
 

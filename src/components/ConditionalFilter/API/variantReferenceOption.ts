@@ -13,7 +13,9 @@ export const isVariantReferenceEntity = (entityType?: string | null): boolean =>
 export const isProductReferenceEntity = (entityType?: string | null): boolean =>
   entityType === AttributeEntityTypeEnum.PRODUCT;
 
-export const normalizeVariantReferenceProductName = (name: string): string =>
+export const isStaticProductFilter = (leftType?: string | null): boolean => leftType === "products";
+
+const normalizeVariantReferenceProductName = (name: string): string =>
   name.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase();
 
 export const resolveVariantReferenceFields = <
@@ -69,6 +71,20 @@ export const isVariantReferenceOption = <
   option: T,
 ): option is T & VariantReferenceFields => resolveVariantReferenceFields(option) !== null;
 
+export const isProductReferenceOption = <
+  T extends {
+    productName?: string;
+    variantName?: string;
+    productThumbnailUrl?: string;
+    label?: string;
+    productId?: string;
+  },
+>(
+  option: T,
+): boolean =>
+  !isVariantReferenceOption(option) &&
+  Boolean(option.productThumbnailUrl?.trim() || option.productName?.trim());
+
 /** Product on the first line, variant on the second — selected pills. */
 export const formatVariantReferencePillLabel = (
   variantName: string,
@@ -97,10 +113,10 @@ export const compareVariantReferenceNames = (
   return a.variantName.localeCompare(b.variantName, undefined, { sensitivity: "base" });
 };
 
-export const getVariantReferenceGroupKey = (option: VariantReferenceFields): string =>
+const getVariantReferenceGroupKey = (option: VariantReferenceFields): string =>
   option.productId || normalizeVariantReferenceProductName(option.productName);
 
-export type VariantReferenceGroup<T extends VariantReferenceFields> = {
+type VariantReferenceGroup<T extends VariantReferenceFields> = {
   productName: string;
   productId?: string;
   productThumbnailUrl?: string;

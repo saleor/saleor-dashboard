@@ -36,12 +36,12 @@ export { ALL_MODELS_TAB_ID } from "./groupModelTypeTabs";
 
 const PINNED_TABS_STORAGE_KEY = "modelTypeTabs.pinnedIds";
 
-export interface ModelTypeTabItem {
+interface ModelTypeTabItem {
   id: string;
   name: string;
 }
 
-export interface ModelTypeTabsProps {
+interface ModelTypeTabsProps {
   pageTypes: ModelTypeTabItem[] | undefined;
   selectedIds: string[];
   counts: Record<string, ModelTypeTabCount | undefined>;

@@ -52,7 +52,7 @@ const initialForm: ExportProductsInput = {
   ...exportSettingsInitialFormData,
 };
 
-export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
+interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
   attributes: RelayToFlat<SearchAttributesQuery["search"]>;
   channels: ChannelFragment[];
   confirmButtonState: ConfirmButtonTransitionState;

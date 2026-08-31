@@ -7,12 +7,12 @@ import {
 
 export type SkeletonCellVariant = "default" | "narrow";
 
-export interface SkeletonCellProps {
+interface SkeletonCellProps {
   readonly kind: "skeleton-cell";
   readonly variant: SkeletonCellVariant;
 }
 
-export type SkeletonCell = CustomCell<SkeletonCellProps>;
+type SkeletonCell = CustomCell<SkeletonCellProps>;
 
 const SKELETON_HEIGHT = 12;
 const SKELETON_RADIUS = 4;

@@ -7,7 +7,7 @@
 
 const STACK_OFFSET_VAR = "--stack-offset";
 
-export const syncSonnerToastStack = (toaster: Element, gapPx: number): void => {
+const syncSonnerToastStack = (toaster: Element, gapPx: number): void => {
   const toasts = Array.from(
     toaster.querySelectorAll<HTMLElement>("[data-sonner-toast]:not([data-removed='true'])"),
   );

@@ -9,10 +9,6 @@ import getAttributeErrorMessage from "@dashboard/utils/errors/attribute";
 import getProductErrorMessage from "@dashboard/utils/errors/product";
 import { type IntlShape } from "react-intl";
 
-export type ProductSubmitError =
-  | ProductErrorWithAttributesFragment
-  | ProductChannelListingErrorFragment;
-
 type ProductSplittableSubmitError = {
   __typename?: string;
 };

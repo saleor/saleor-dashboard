@@ -1,4 +1,4 @@
-import { type PromotionRuleDetailsFragment, type SaleDetailsQuery } from "@dashboard/graphql";
+import { type PromotionRuleDetailsFragment } from "@dashboard/graphql";
 import { sortAlphabetically } from "@dashboard/utils/sort";
 
 import { type Rule } from "./models";
@@ -6,7 +6,7 @@ import { type Rule } from "./models";
 export type PromotionStatus = "scheduled" | "active" | "finished";
 
 export function getAssignedVariantIds(
-  variants: NonNullable<SaleDetailsQuery["sale"]>["variants"] | null | undefined,
+  variants: { edges: Array<{ node: { id: string } }> } | null | undefined,
 ): string[] {
   return variants?.edges.map(variant => variant.node.id) ?? [];
 }

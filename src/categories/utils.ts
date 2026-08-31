@@ -9,7 +9,7 @@ export const getProductsFromSearchResults = (searchResults: SearchProductsQuery 
   return mapEdgesToItems(searchResults.search)?.filter(suggestedProduct => suggestedProduct.id);
 };
 
-export interface ProductCategory {
+interface ProductCategory {
   category?: { id: string } | null;
 }
 

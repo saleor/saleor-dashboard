@@ -1,11 +1,10 @@
-// DON'T TOUCH THIS
-// These are separate clients and do not share configs between themselves
 import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
+import { initAuth } from "@dashboard/auth/initAuth";
 import { ENABLED_SERVICE_NAME_HEADER, getApiUrl } from "@dashboard/config";
-import { createFetch, createSaleorClient } from "@dashboard/legacy-sdk";
 import { createUploadLink } from "apollo-upload-client";
 import { type DocumentNode } from "graphql";
 
+import { createFetch } from "./authFetch";
 import introspectionQueryResultData from "./fragmentTypes.generated";
 import introspectionQueryResultDataStaging from "./fragmentTypesStaging.generated";
 import { resolveLockedSchemaFieldsForBuild } from "./lockSchema";
@@ -113,12 +112,24 @@ export const apolloClient = new ApolloClient({
       App: {
         keyFields: false,
       },
+      User: {
+        // `User.addresses` is a plain list; without this Apollo logs an "overwriting array"
+        // warning every time the customer detail view refetches.
+        fields: {
+          addresses: {
+            merge: false,
+          },
+        },
+      },
     } as TypedTypePolicies,
   }),
   link,
 });
 
-export const saleorClient = createSaleorClient({
-  apiUrl: getApiUrl(),
-  channel: "",
-});
+/**
+ * Auth runs on the same client and the same cache as everything else. It used to have its own,
+ * whose `User: { keyFields: [] }` policy treated "the user" as a singleton — a storefront
+ * assumption the Dashboard cannot share, since it reads `User` by id in staff lists, customer
+ * lists and permission groups. Session flags live in `src/auth/authState.ts` instead.
+ */
+export const saleorAuth = initAuth(apolloClient);

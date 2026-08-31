@@ -6,7 +6,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import styles from "./AssignListCard.module.css";
 
-export interface AssignListCardItem {
+interface AssignListCardItem {
   id: string;
   name: string;
   href?: string;
@@ -15,7 +15,7 @@ export interface AssignListCardItem {
   description?: ReactNode;
 }
 
-export interface AssignListCardEmptyState {
+interface AssignListCardEmptyState {
   icon: ReactNode;
   title: ReactNode;
   description: ReactNode;

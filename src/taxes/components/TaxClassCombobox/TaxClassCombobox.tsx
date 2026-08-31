@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { type MessageDescriptor, useIntl } from "react-intl";
 
 /** Sentinel value for the explicit empty option in the tax class list. */
-export const TAX_CLASS_NONE_VALUE = "";
+const TAX_CLASS_NONE_VALUE = "";
 
 interface TaxClassComboboxProps {
   value: string;

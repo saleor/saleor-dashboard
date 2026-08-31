@@ -2,7 +2,7 @@ import { type PluginErrorFragment } from "@dashboard/graphql";
 
 import { isSmtpFieldName } from "./emailNotificationConfig";
 
-export interface SmtpPluginErrorState {
+interface SmtpPluginErrorState {
   /** Per-field messages from the API (or client), keyed by configuration name. */
   fieldErrors: Record<string, string>;
   /**

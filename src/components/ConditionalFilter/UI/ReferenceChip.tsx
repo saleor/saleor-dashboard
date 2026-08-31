@@ -60,7 +60,7 @@ export const ProductReferenceChipLabel = ({
   </span>
 );
 
-export const VariantReferenceChipLabel = ({
+const VariantReferenceChipLabel = ({
   productName,
   variantName,
   productThumbnailUrl,

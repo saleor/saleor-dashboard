@@ -8,7 +8,7 @@ type CachedSearchProductVariant = NonNullable<
 >[number]["node"];
 
 /** Cache available variants in product in order to build fast labels based on selected values in the form */
-export class ProductVariantCacheManagerSingleton {
+class ProductVariantCacheManagerSingleton {
   private static instance: ProductVariantCacheManagerSingleton;
 
   private cache: WeakMap<CachedSearchProduct, Map<string, CachedSearchProductVariant>>;

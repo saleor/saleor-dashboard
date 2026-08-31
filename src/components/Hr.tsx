@@ -3,7 +3,7 @@ import { Box } from "@saleor/macaw-ui-next";
 /**
  * @deprecated use `Divider` component from `@saleor/macaw-ui-next`
  */
-export const Hr = ({ className }: { className?: string }) => (
+const Hr = ({ className }: { className?: string }) => (
   <Box
     as="hr"
     className={className}

@@ -50,7 +50,7 @@ interface LineMatrixStatusCellProps {
   readonly muted?: boolean;
 }
 
-export type LineMatrixStatusCell = CustomCell<LineMatrixStatusCellProps>;
+type LineMatrixStatusCell = CustomCell<LineMatrixStatusCellProps>;
 
 export const lineMatrixStatusCell = (
   rollupStatus: OrderLineRollupStatus,

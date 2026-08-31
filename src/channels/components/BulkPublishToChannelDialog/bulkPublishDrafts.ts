@@ -53,7 +53,7 @@ export const isValidBulkPublishPrice = (price: string): boolean => {
 export const hasBulkPublishPrice = (price: string): boolean => price.trim() !== "";
 
 /** Empty means "leave the current price alone", so only a filled-in price has to parse. */
-export const isValidBulkPublishPriceInput = (price: string): boolean =>
+const isValidBulkPublishPriceInput = (price: string): boolean =>
   !hasBulkPublishPrice(price) || isValidBulkPublishPrice(price);
 
 export const isValidBulkPublishCostPrice = (costPrice: string): boolean => {

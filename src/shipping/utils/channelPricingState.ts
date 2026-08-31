@@ -44,7 +44,7 @@ export function hasMissingChannelPrices(channels: ChannelShippingData[]): boolea
   return channels.some(channel => isMissingPriceValue(channel.price));
 }
 
-export function getComparableChannelListings(channels: ChannelShippingData[]) {
+function getComparableChannelListings(channels: ChannelShippingData[]) {
   return [...channels]
     .sort((leftChannel, rightChannel) => leftChannel.name.localeCompare(rightChannel.name))
     .map(channel => ({
