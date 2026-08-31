@@ -1,19 +1,15 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { type ReactNode } from "react";
 import { IntlProvider } from "react-intl";
 
 import { StaffPasswordResetDialog } from "./StaffPasswordResetDialog";
 
-const TestWrapper = ({ children }: React.PropsWithChildren<{}>) => (
-  // todo do we need intlProvider if we mock react-intl?
+const TestWrapper = ({ children }: { children: ReactNode }): JSX.Element => (
   <IntlProvider defaultLocale="en" locale="en">
-    {/* @ts-expect-error legacy types */}
-    <LegacyThemeProvider>
-      <ThemeProvider>{children}</ThemeProvider>
-    </LegacyThemeProvider>
+    <ThemeProvider>{children}</ThemeProvider>
   </IntlProvider>
 );
 
@@ -23,6 +19,7 @@ const defaultProps = {
 };
 
 const mockResetPassword = jest.fn();
+const currentEmail = "test@example.com";
 
 jest.mock("@dashboard/graphql", () => ({
   useRequestPasswordResetMutation: jest.fn(() => [mockResetPassword, { status: "default" }]),
@@ -36,8 +33,16 @@ jest.mock("@dashboard/auth/utils", () => ({
   getNewPasswordResetRedirectUrl: jest.fn(() => "http://localhost/reset"),
 }));
 
+jest.mock("@dashboard/auth/useUser", () => ({
+  useUser: (): { user: { email: string } } => ({ user: { email: currentEmail } }),
+}));
+
 describe("StaffPasswordResetDialog", () => {
-  it("renders the dialog with input field", () => {
+  beforeEach(() => {
+    mockResetPassword.mockClear();
+  });
+
+  it("keeps Reset disabled until the email matches the signed-in account", () => {
     // Arrange & Act
     render(
       <TestWrapper>
@@ -45,13 +50,23 @@ describe("StaffPasswordResetDialog", () => {
       </TestWrapper>,
     );
 
+    const submitButton = screen.getByTestId("submit");
+    const emailInput = screen.getByTestId("email");
+
     // Assert
     expect(screen.getByRole("dialog")).toBeInTheDocument();
-    expect(screen.getByTestId("email")).toBeInTheDocument();
-    expect(screen.getByTestId("submit")).toBeInTheDocument();
+    expect(submitButton).toBeDisabled();
+
+    // Act
+    fireEvent.change(emailInput, {
+      target: { value: "other@example.com" },
+    });
+
+    // Assert
+    expect(submitButton).toBeDisabled();
   });
 
-  it("submits form with email when submit button is clicked", () => {
+  it("submits the account email when the typed value matches", () => {
     // Arrange
     render(
       <TestWrapper>
@@ -64,11 +79,21 @@ describe("StaffPasswordResetDialog", () => {
 
     // Act
     fireEvent.change(emailInput, {
-      target: { value: "test@example.com" },
+      target: { value: "Test@Example.com" },
     });
+
+    // Assert
+    expect(submitButton).toBeEnabled();
+
+    // Act
     fireEvent.click(submitButton);
 
-    // Assert - form submission is handled by GraphQL mutation
-    expect((emailInput as HTMLInputElement).value).toBe("test@example.com");
+    // Assert
+    expect(mockResetPassword).toHaveBeenCalledWith({
+      variables: {
+        email: currentEmail,
+        redirectUrl: "http://localhost/reset",
+      },
+    });
   });
 });

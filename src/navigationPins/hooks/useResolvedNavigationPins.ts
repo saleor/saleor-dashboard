@@ -18,7 +18,7 @@ export const useResolvedNavigationPins = (): ResolvedNavigationPin[] => {
     [organizationPins, userPins],
   );
 
-  const names = usePinnedModelTypeNames(ordered.map(pin => pin.id));
+  const { names } = usePinnedModelTypeNames(ordered.map(pin => pin.id));
 
   return useMemo(() => {
     const seen = new Set<string>();

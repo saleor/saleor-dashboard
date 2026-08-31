@@ -295,6 +295,7 @@ export const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     disabled={disabled}
                     canEditAvatar={canEditAvatar}
                     canEditEmail={canEditEmail}
+                    isCurrentUser={canEditPreferences}
                     staffMember={staffMember}
                     onChange={change}
                     onImageUpload={onImageUpload}
