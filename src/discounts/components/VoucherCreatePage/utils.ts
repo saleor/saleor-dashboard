@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
 import { type FormData } from "./types";
 
@@ -12,7 +10,7 @@ export const generateDraftVoucherCode = (code: string) => {
 
 export const generateMultipleVoucherCodes = (quantity: string, prefix?: string) => {
   return Array.from({ length: Number(quantity) }).map(() =>
-    generateDraftVoucherCode(prefix ? `${prefix}-${uuidv4()}` : uuidv4()),
+    generateDraftVoucherCode(prefix ? `${prefix}-${crypto.randomUUID()}` : crypto.randomUUID()),
   );
 };
 
