@@ -117,19 +117,27 @@ const VoucherCreateView = ({ params }: VoucherCreateProps) => {
     useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
   const [collectionSearchVariables, setCollectionSearchVariables] =
     useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
+  // Assign-picker searches only feed their dialog, so keep them off until it opens.
+  // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
+  // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission
+  // errors just for opening the create page.
   const categoriesSearch = useCategoryWithTotalProductsSearch({
+    skip: params.action !== "assign-category",
     variables: categorySearchVariables,
   });
   const collectionsSearch = useCollectionWithTotalProductsSearch({
+    skip: params.action !== "assign-collection",
     variables: collectionSearchVariables,
   });
   // Products already on the voucher are dropped client-side, so a page of 20 can arrive empty
   // on a large catalog. Ask for more per request so the picker stays useful without leaning on
   // backfill for every page.
   const productsSearch = useProductSearch({
+    skip: params.action !== "assign-product",
     variables: productSearchVariables,
   });
   const variantsSearch = useProductSearch({
+    skip: params.action !== "assign-variant",
     variables: variantSearchVariables,
   });
 

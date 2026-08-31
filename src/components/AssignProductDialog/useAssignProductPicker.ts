@@ -1,11 +1,12 @@
 // @ts-strict-ignore
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { type ProductWhereInput } from "@dashboard/graphql";
+import { PermissionEnum, type ProductWhereInput } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -85,7 +86,11 @@ export const useAssignProductPicker = ({
   pruneUnavailableSelection = false,
   onMaxSelectionReached,
 }: UseAssignProductPickerProps) => {
-  const hasChannelRestriction = Boolean(selectedChannels?.length);
+  // Product.channelListings is behind MANAGE_PRODUCTS, so without it we cannot tell whether a
+  // product is in the voucher's channels. Drop the availability feature rather than guess:
+  // no filtering, no disabled rows, no "unavailable" hint.
+  const canManageProducts = useHasPermission()(PermissionEnum.MANAGE_PRODUCTS);
+  const hasChannelRestriction = Boolean(selectedChannels?.length) && canManageProducts;
 
   const products = useMemo(
     () =>
@@ -272,9 +277,13 @@ export const useAssignProductPicker = ({
         return false;
       }
 
+      if (!canManageProducts) {
+        return true;
+      }
+
       return isProductAvailableInVoucherChannels(product.channelListings, selectedChannels);
     },
-    [excludeProduct, selectedChannels],
+    [canManageProducts, excludeProduct, selectedChannels],
   );
 
   useEffect(
@@ -384,7 +393,7 @@ export const useAssignProductPicker = ({
     loading,
     onFetchMore,
     onQueryChange,
-    productUnavailableText,
+    productUnavailableText: canManageProducts ? productUnavailableText : undefined,
     productsDict,
     query,
     resumeBackfill: backfill.resumeBackfill,

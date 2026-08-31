@@ -8,12 +8,13 @@ import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { type ProductWhereInput } from "@dashboard/graphql";
+import { PermissionEnum, type ProductWhereInput } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
 import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
@@ -75,6 +76,7 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
   const [selectedProductId, setSelectedProductId] = useState("");
   const [initialSelection, setInitialSelection] = useState("");
   const { combinedFilters, clearFilters } = useModalProductFilterContext();
+  const canManageProducts = useHasPermission()(PermissionEnum.MANAGE_PRODUCTS);
   const selectedIdRef = useRef(selectedId);
 
   selectedIdRef.current = selectedId;
@@ -199,10 +201,14 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
                       }
 
                       const isSelected = selectedProductId === product.id;
-                      const isProductAvailable = isProductAvailableInVoucherChannels(
-                        product.channelListings ?? [],
-                        selectedChannels,
-                      );
+                      // Without MANAGE_PRODUCTS the search omits channelListings, so availability
+                      // is unknowable — hide the restriction instead of disabling every row.
+                      const isProductAvailable =
+                        !canManageProducts ||
+                        isProductAvailableInVoucherChannels(
+                          product.channelListings ?? [],
+                          selectedChannels,
+                        );
 
                       return (
                         <TableRowLink
