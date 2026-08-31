@@ -3489,10 +3489,6 @@
   "BWpuKl": {
     "string": "Update"
   },
-  "BXKn/d": {
-    "context": "charge status",
-    "string": "Overcharged"
-  },
   "BXkF8Z": {
     "context": "header",
     "string": "Activity"
@@ -16993,10 +16989,6 @@
   },
   "yi1HSj": {
     "string": "({numberOfCharacters} of {maxCharacters} characters)"
-  },
-  "yivxZJ": {
-    "context": "order payment",
-    "string": "Paid with Gift Card: ({link})"
   },
   "yjN2GA": {
     "context": "bulk translation save error summary",
