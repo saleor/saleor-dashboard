@@ -48,6 +48,7 @@ import {
   type CategoryFilterInput,
   type CollectionFilterInput,
   DiscountValueTypeEnum,
+  PermissionEnum,
   type ProductWhereInput,
   type SearchCategoriesWithTotalProductsQueryVariables,
   type SearchCollectionsWithTotalProductsQueryVariables,
@@ -73,6 +74,7 @@ import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
 import { buttonMessages, sectionNames } from "@dashboard/intl";
+import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { useCategoryWithTotalProductsSearch } from "@dashboard/searches/useCategorySearch";
 import { useCollectionWithTotalProductsSearch } from "@dashboard/searches/useCollectionSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -105,6 +107,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
+  const hasPermission = useHasPermission();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
   const intl = useIntl();
   const {
@@ -143,11 +146,20 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     useState<SearchCategoriesWithTotalProductsQueryVariables>(categorySearchInitialVariables);
   const [collectionSearchVariables, setCollectionSearchVariables] =
     useState<SearchCollectionsWithTotalProductsQueryVariables>(collectionSearchInitialVariables);
+  // Assign-picker searches only feed their dialog, so keep them off until it opens.
+  // SearchProducts pulls Product/ProductVariant.channelListings, which Core gates behind
+  // MANAGE_PRODUCTS — running it on mount buried MANAGE_DISCOUNTS-only staff in permission
+  // errors just for opening a voucher.
+  const isCategoryPickerOpen = params.action === "assign-category";
+  const isCollectionPickerOpen = params.action === "assign-collection";
+  const isProductPickerOpen = params.action === "assign-product";
+  const isVariantPickerOpen = params.action === "assign-variant";
   const {
     loadMore: loadMoreCategories,
     search: searchCategories,
     result: searchCategoriesOpts,
   } = useCategoryWithTotalProductsSearch({
+    skip: !isCategoryPickerOpen,
     variables: categorySearchVariables,
   });
   const {
@@ -155,12 +167,15 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
     search: searchCollections,
     result: searchCollectionsOpts,
   } = useCollectionWithTotalProductsSearch({
+    skip: !isCollectionPickerOpen,
     variables: collectionSearchVariables,
   });
   const { loadMore: loadMoreProducts, result: searchProductsOpts } = useProductSearch({
+    skip: !isProductPickerOpen,
     variables: productSearchVariables,
   });
   const { loadMore: loadMoreVariants, result: searchVariantsOpts } = useProductSearch({
+    skip: !isVariantPickerOpen,
     variables: variantSearchVariables,
   });
 
@@ -287,10 +302,7 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
 
   useRegisterEntityRefresh(refetch);
 
-  const isAssignPickerOpen =
-    params.action === "assign-product" ||
-    params.action === "assign-category" ||
-    params.action === "assign-collection";
+  const isAssignPickerOpen = isProductPickerOpen || isCategoryPickerOpen || isCollectionPickerOpen;
   const {
     isProductAssigned: isProductAssignedOnServer,
     isCategoryAssigned: isCategoryAssignedOnServer,
@@ -460,6 +472,9 @@ const VoucherDetails = ({ id, params }: VoucherDetailsProps) => {
   const catalogueQueryVariables = {
     ...paginationState,
     ...catalogueQueryInclude,
+    // Queries get this injected by makeQuery; mutations do not, so pass it explicitly or the
+    // catalogue fragment they echo back would fail validation.
+    PERMISSION_MANAGE_PRODUCTS: hasPermission(PermissionEnum.MANAGE_PRODUCTS),
   };
   const updateHandler = createUpdateHandler(
     data?.voucher,

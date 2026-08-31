@@ -209,7 +209,7 @@ export const voucherCatalogueFragment = gql`
           thumbnail {
             url
           }
-          channelListings {
+          channelListings @include(if: $PERMISSION_MANAGE_PRODUCTS) {
             ...ChannelListingProductWithoutPricing
           }
         }
@@ -264,10 +264,6 @@ export const voucherCatalogueFragment = gql`
             productType {
               id
               name
-              __typename
-            }
-            channelListings {
-              ...ChannelListingProductWithoutPricing
               __typename
             }
             __typename
