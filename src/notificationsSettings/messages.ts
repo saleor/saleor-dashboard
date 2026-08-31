@@ -7,9 +7,9 @@ export const notificationsMessages = defineMessages({
     description: "notifications settings hub title",
   },
   hubDescription: {
-    id: "aXb6gP",
+    id: "NQaMkx",
     defaultMessage:
-      "Staff Dashboard emails are configured here. Customer (shopper) emails use the SMTP app — a separate setup.",
+      "Staff Dashboard emails and who gets new-order alerts are configured here. Customer (shopper) emails use the SMTP app — a separate setup.",
     description: "notifications settings hub description",
   },
   staffEmailsTitle: {
@@ -24,9 +24,9 @@ export const notificationsMessages = defineMessages({
     description: "staff emails hub card description",
   },
   staffEmailsPageDescription: {
-    id: "s6+A2i",
+    id: "dByesK",
     defaultMessage:
-      "Choose default delivery or your own SMTP, then adjust which staff messages go out and how they read. This is not the SMTP app used for shopper emails.",
+      "Choose how staff mail is sent, who gets new-order alerts, and how each message reads. This is not the SMTP app used for shopper emails.",
     description: "staff emails page intro",
   },
   customerEmailsTitle: {
@@ -115,6 +115,104 @@ export const notificationsMessages = defineMessages({
     defaultMessage:
       "Choose Saleor default, a custom subject and body, or don’t send for each message.",
     description: "hint when message templates are editable",
+  },
+  orderAlertsTitle: {
+    id: "npWcXm",
+    defaultMessage: "New order alerts",
+    description: "staff order confirmation recipients section title",
+  },
+  orderAlertsDescription: {
+    id: "VWW8dR",
+    defaultMessage:
+      "Active staff members listed here get an email when a customer completes checkout. Draft orders you complete in the Dashboard are not included.",
+    description: "staff order confirmation recipients section description",
+  },
+  orderAlertsEmailsDisabled: {
+    id: "CUGRtv",
+    defaultMessage:
+      "Staff emails are turned off. These people will not be notified until you enable them above.",
+    description: "warning when staff email plugin is inactive",
+  },
+  orderAlertsEmptyTitle: {
+    id: "kAbS/r",
+    defaultMessage: "No one is subscribed",
+    description: "empty state title for staff order alert recipients",
+  },
+  orderAlertsEmptyDescription: {
+    id: "iqvjTX",
+    defaultMessage: "Staff will not be emailed when a customer places an order.",
+    description: "empty state description for staff order alert recipients",
+  },
+  orderAlertsAssign: {
+    id: "LrMfvz",
+    defaultMessage: "Assign staff",
+    description: "button to add staff order alert recipients",
+  },
+  orderAlertsUnlinkedHint: {
+    id: "3k1Hiz",
+    defaultMessage:
+      "Not linked to an active staff member, so Saleor will not send new-order emails to this address.",
+    description: "hint for email-only staff notification recipients",
+  },
+  orderAlertsInactiveHint: {
+    id: "ZOFvAC",
+    defaultMessage: "This staff member is inactive, so they will not receive new-order emails.",
+    description: "hint when assigned staff user is deactivated",
+  },
+  orderAlertsMutedHint: {
+    id: "4H9bIs",
+    defaultMessage: "This recipient is muted, so they will not receive new-order emails.",
+    description: "hint when a stored recipient has active=false",
+  },
+  orderAlertsAssignNeedsStaff: {
+    id: "jbda4N",
+    defaultMessage: "You need permission to manage staff to add people to this list.",
+    description: "hint when user can view recipients but not assign staff",
+  },
+  recipientAdded: {
+    id: "oi9xgK",
+    defaultMessage: "Recipient added",
+    description: "toast after assigning one staff order alert recipient",
+  },
+  recipientsAdded: {
+    id: "td6upx",
+    defaultMessage: "Recipients added",
+    description: "toast after assigning multiple staff order alert recipients",
+  },
+  recipientRemoved: {
+    id: "X+dg8b",
+    defaultMessage: "Recipient removed",
+    description: "toast after removing a staff order alert recipient",
+  },
+  couldNotAddRecipient: {
+    id: "HY1sEu",
+    defaultMessage: "Couldn’t add recipient. Try again.",
+    description: "error toast when creating a staff notification recipient fails",
+  },
+  couldNotRemoveRecipient: {
+    id: "6GLJUd",
+    defaultMessage: "Couldn’t remove recipient. Try again.",
+    description: "error toast when deleting a staff notification recipient fails",
+  },
+  someRecipientsFailed: {
+    id: "iM5nh1",
+    defaultMessage: "Some staff couldn’t be added. Try again.",
+    description: "warning when assigning staff order alert recipients partially fails",
+  },
+  recipientAlreadyExists: {
+    id: "dzfHno",
+    defaultMessage: "This person is already subscribed.",
+    description: "error when assigning a duplicate staff notification recipient",
+  },
+  skippedInactiveStaff: {
+    id: "I8hHsh",
+    defaultMessage: "Inactive staff were skipped. Only active staff receive new-order emails.",
+    description: "warning when assign includes inactive staff members",
+  },
+  orderAlertsCatalogDescription: {
+    id: "rnADHu",
+    defaultMessage: "Choose which staff members get an email when a customer places an order",
+    description: "settings catalog description for new order alerts",
   },
   deliveryWhyTitle: {
     id: "k12W/5",
@@ -450,8 +548,9 @@ export const staffNotificationCopy = defineMessages({
     description: "staff notification title",
   },
   "staff-order-confirmationDesc": {
-    id: "WXcmOW",
-    defaultMessage: "Sent to staff when a new order is placed.",
+    id: "0R1EEd",
+    defaultMessage:
+      "Sent to people in {alertsLink} when a customer completes checkout. Draft orders completed in the Dashboard are not included.",
     description: "staff notification description",
   },
   "csv-export-success": {
