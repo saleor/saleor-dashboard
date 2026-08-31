@@ -1,7 +1,7 @@
 import { type UniqueIdentifier } from "@dnd-kit/core";
 import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
 
-export const getRowSortableId = (element: ReactElement): UniqueIdentifier | null => {
+const getRowSortableId = (element: ReactElement): UniqueIdentifier | null => {
   const props = element.props as { id?: UniqueIdentifier; index?: number };
 
   if (props.id != null) {

@@ -27,7 +27,7 @@ export const getDetailContentScrollParent = (element: HTMLElement | null): HTMLE
   return null;
 };
 
-export type DetailContentScrollAlign = "start" | "end";
+type DetailContentScrollAlign = "start" | "end";
 
 const END_SCROLL_SETTLE_MS = 500;
 

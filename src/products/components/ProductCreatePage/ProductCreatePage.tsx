@@ -437,4 +437,3 @@ const ProductCreatePage = ({
 };
 
 ProductCreatePage.displayName = "ProductCreatePage";
-export default ProductCreatePage;

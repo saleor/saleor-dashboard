@@ -41,8 +41,6 @@ const messages = defineMessages({
   },
 });
 
-export { isImageFileChoice } from "./isImageFileChoice";
-
 export const FileUploadField = ({
   loading,
   disabled,

@@ -55,7 +55,7 @@ export const mergePageReferenceWhereConstraints = (
 };
 
 /** Apollo can briefly surface unconstrained `previousData` while a constrained refetch runs. */
-export const productsIncludeDisallowedReferenceTypes = <T extends ProductWithType>(
+const productsIncludeDisallowedReferenceTypes = <T extends ProductWithType>(
   products: T[] | null | undefined,
   productTypeIds: string[] | undefined,
 ): boolean => {

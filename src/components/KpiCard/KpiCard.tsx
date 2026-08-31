@@ -5,7 +5,7 @@ import { type KeyboardEvent, type ReactNode, type SyntheticEvent } from "react";
 
 import styles from "./KpiCard.module.css";
 
-export interface KpiDelta {
+interface KpiDelta {
   value: ReactNode;
   trend: "up" | "down" | "neutral";
 }

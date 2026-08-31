@@ -52,7 +52,7 @@ export const AppExtensionPopupProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-export interface OpenPopupByIdentifierResult {
+interface OpenPopupByIdentifierResult {
   ok: boolean;
   /** Failure description, set when `ok` is false. */
   reason?: string;

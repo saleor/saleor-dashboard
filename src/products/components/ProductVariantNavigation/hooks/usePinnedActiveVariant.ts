@@ -1,7 +1,7 @@
 import { type ProductVariantSibling } from "@dashboard/products/hooks/useProductVariantSiblings";
 import { type RefObject, useLayoutEffect, useMemo, useState } from "react";
 
-export type PinnedActiveReason = "not-loaded" | "out-of-viewport";
+type PinnedActiveReason = "not-loaded" | "out-of-viewport";
 
 interface UsePinnedActiveVariantProps {
   currentId?: string;

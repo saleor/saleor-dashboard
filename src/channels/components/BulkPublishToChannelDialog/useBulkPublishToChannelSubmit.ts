@@ -137,7 +137,7 @@ const buildVariantBulkUpdateInputs = ({
     })
     .filter((input): input is ProductVariantBulkUpdateInput => input !== undefined);
 
-export type BulkPublishSubmitResult = {
+type BulkPublishSubmitResult = {
   failedProductIds: string[];
 };
 

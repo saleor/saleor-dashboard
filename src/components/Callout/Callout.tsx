@@ -4,7 +4,7 @@ import { type ReactNode } from "react";
 
 import styles from "./Callout.module.css";
 
-export type CalloutType = "info" | "warning" | "error";
+type CalloutType = "info" | "warning" | "error";
 
 interface CalloutVariant {
   Icon: LucideIcon;

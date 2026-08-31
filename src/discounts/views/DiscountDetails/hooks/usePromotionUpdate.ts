@@ -1,7 +1,6 @@
 import {
   PromotionDetailsDocument,
   type PromotionDetailsFragment,
-  type PromotionUpdateMutation,
   type PromotionUpdateMutationVariables,
   usePromotionUpdateMutation,
 } from "@dashboard/graphql";
@@ -81,5 +80,3 @@ export const usePromotionUpdate = (id: string) => {
     promotionUpdateOpts,
   };
 };
-
-export type { PromotionUpdateMutation, PromotionUpdateMutationVariables };

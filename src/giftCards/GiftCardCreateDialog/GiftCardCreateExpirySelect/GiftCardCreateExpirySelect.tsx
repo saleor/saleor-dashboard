@@ -118,5 +118,4 @@ const GiftCardCreateExpirySelect = ({
   );
 };
 
-export { GiftCardCreateExpirySelect };
 export default GiftCardCreateExpirySelect;
