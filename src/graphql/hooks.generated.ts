@@ -1026,7 +1026,7 @@ export const VoucherCatalogueFragmentDoc = gql`
         thumbnail {
           url
         }
-        channelListings {
+        channelListings @include(if: $PERMISSION_MANAGE_PRODUCTS) {
           ...ChannelListingProductWithoutPricing
         }
       }
@@ -1078,10 +1078,6 @@ export const VoucherCatalogueFragmentDoc = gql`
           productType {
             id
             name
-            __typename
-          }
-          channelListings {
-            ...ChannelListingProductWithoutPricing
             __typename
           }
           __typename
@@ -3567,7 +3563,7 @@ export const SearchProductFragmentDoc = gql`
   thumbnail {
     url
   }
-  channelListings {
+  channelListings @include(if: $PERMISSION_MANAGE_PRODUCTS) {
     ...ChannelListingProductWithoutPricing
   }
   collections {
@@ -9458,7 +9454,7 @@ export type VoucherUpdateMutationHookResult = ReturnType<typeof useVoucherUpdate
 export type VoucherUpdateMutationResult = Apollo.MutationResult<Types.VoucherUpdateMutation>;
 export type VoucherUpdateMutationOptions = Apollo.BaseMutationOptions<Types.VoucherUpdateMutation, Types.VoucherUpdateMutationVariables>;
 export const VoucherCataloguesAddDocument = gql`
-    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    mutation VoucherCataloguesAdd($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!, $PERMISSION_MANAGE_PRODUCTS: Boolean!) {
   voucherCataloguesAdd(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -9497,6 +9493,7 @@ export type VoucherCataloguesAddMutationFn = Apollo.MutationFunction<Types.Vouch
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */
@@ -9508,7 +9505,7 @@ export type VoucherCataloguesAddMutationHookResult = ReturnType<typeof useVouche
 export type VoucherCataloguesAddMutationResult = Apollo.MutationResult<Types.VoucherCataloguesAddMutation>;
 export type VoucherCataloguesAddMutationOptions = Apollo.BaseMutationOptions<Types.VoucherCataloguesAddMutation, Types.VoucherCataloguesAddMutationVariables>;
 export const VoucherCataloguesRemoveDocument = gql`
-    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    mutation VoucherCataloguesRemove($input: CatalogueInput!, $id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!, $PERMISSION_MANAGE_PRODUCTS: Boolean!) {
   voucherCataloguesRemove(id: $id, input: $input) {
     errors {
       ...DiscountError
@@ -9547,6 +9544,7 @@ export type VoucherCataloguesRemoveMutationFn = Apollo.MutationFunction<Types.Vo
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */
@@ -10183,7 +10181,7 @@ export type VoucherDetailsQueryHookResult = ReturnType<typeof useVoucherDetailsQ
 export type VoucherDetailsLazyQueryHookResult = ReturnType<typeof useVoucherDetailsLazyQuery>;
 export type VoucherDetailsQueryResult = Apollo.QueryResult<Types.VoucherDetailsQuery, Types.VoucherDetailsQueryVariables>;
 export const VoucherCatalogueDocument = gql`
-    query VoucherCatalogue($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!) {
+    query VoucherCatalogue($id: ID!, $after: String, $before: String, $first: Int, $last: Int, $includeProducts: Boolean!, $includeCollections: Boolean!, $includeCategories: Boolean!, $includeVariants: Boolean!, $PERMISSION_MANAGE_PRODUCTS: Boolean!) {
   voucher(id: $id) {
     id
     ...VoucherCatalogue
@@ -10212,6 +10210,7 @@ export const VoucherCatalogueDocument = gql`
  *      includeCollections: // value for 'includeCollections'
  *      includeCategories: // value for 'includeCategories'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */
@@ -19992,7 +19991,7 @@ export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchP
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
 export const SearchProductsDocument = gql`
-    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput, $includeVariants: Boolean = false) {
+    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String, $where: ProductWhereInput, $includeVariants: Boolean = false, $PERMISSION_MANAGE_PRODUCTS: Boolean = false) {
   search: products(
     after: $after
     first: $first
@@ -20044,6 +20043,7 @@ ${PageInfoFragmentDoc}`;
  *      channel: // value for 'channel'
  *      where: // value for 'where'
  *      includeVariants: // value for 'includeVariants'
+ *      PERMISSION_MANAGE_PRODUCTS: // value for 'PERMISSION_MANAGE_PRODUCTS'
  *   },
  * });
  */
