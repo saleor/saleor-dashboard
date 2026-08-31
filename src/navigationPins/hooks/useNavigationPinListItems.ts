@@ -1,4 +1,3 @@
-import { type AssignListCardItem } from "@dashboard/components/AssignListCard/AssignListCard";
 import { pageListUrlWithPageType } from "@dashboard/modeling/urls";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -9,8 +8,15 @@ import { getNavigationPinItemId } from "../pinListItem";
 import { type NavigationPin } from "../types";
 import { usePinnedModelTypeNames } from "./usePinnedModelTypeNames";
 
-export interface NavigationPinListItemsResult {
-  items: AssignListCardItem[];
+interface NavigationPinListItem {
+  id: string;
+  name: string;
+  href?: string;
+  description: string;
+}
+
+interface NavigationPinListItemsResult {
+  items: NavigationPinListItem[];
   /** Live names have settled (or there is nothing to fetch). */
   hasResolved: boolean;
 }
