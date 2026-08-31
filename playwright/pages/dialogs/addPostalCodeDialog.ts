@@ -1,4 +1,5 @@
 import { type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AddPostalCodeDialog {
   readonly page: Page;
@@ -6,10 +7,8 @@ export class AddPostalCodeDialog {
   constructor(
     page: Page,
 
-    readonly zipCodeStartsWithInput = page
-      .getByTestId("zip-code-starts-with-input")
-      .locator("input"),
-    readonly zipCodeEndsWithInput = page.getByTestId("zip-code-ends-with-input").locator("input"),
+    readonly zipCodeStartsWithInput = inputByTestId(page, "zip-code-starts-with-input"),
+    readonly zipCodeEndsWithInput = inputByTestId(page, "zip-code-ends-with-input"),
     readonly backButton = page.getByTestId("back"),
     readonly addButton = page.getByTestId("submit"),
   ) {

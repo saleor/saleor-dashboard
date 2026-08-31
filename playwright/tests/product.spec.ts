@@ -91,7 +91,8 @@ test("TC: SALEOR_44 As an admin I should be able to delete a several products @b
   await productPage.checkListRowsBasedOnContainingText(PRODUCTS.productsToBeBulkDeleted.names);
 
   await productPage.clickBulkDeleteGridRowsButton();
-  await productPage.clickBulkDeleteButton();
+  // One confirmation only: clickBulkDeleteGridRowsButton opens the dialog and
+  // the dialog's own submit confirms it.
   await productPage.deleteProductDialog.clickDeleteButton();
   await productPage.expectSuccessBanner();
   await productPage.gotoProductListPage();

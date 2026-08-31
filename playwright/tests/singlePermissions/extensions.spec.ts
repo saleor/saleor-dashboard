@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 
 test("TC: SALEOR_10 User should be able to navigate to extensions list as a staff member using APP permission #e2e", async () => {
   await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+  await home.waitForDashboardToLoad();
   await mainMenuPage.openExtensions();
   await extensionsPage.installedExtensionsList.waitFor({
     state: "visible",
@@ -33,7 +33,7 @@ test("TC: SALEOR_10 User should be able to navigate to extensions list as a staf
 
 test("TC: SALEOR_131 User with MANAGE_APPS permission can install apps but not plugins on explore extensions page #e2e", async () => {
   await home.goto();
-  await home.welcomeMessage.waitFor({ state: "visible", timeout: 30000 });
+  await home.waitForDashboardToLoad();
   await mainMenuPage.openExploreExtensions();
   await extensionsPage.waitForContentLoad();
 

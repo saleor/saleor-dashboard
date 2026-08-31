@@ -39,16 +39,16 @@ for (const attr of attributeClasses) {
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
       await expect(attributesPage.attributesRows).toHaveCount(1);
-      await attributesPage.valueRequiredCheckbox.waitFor({
+      await attributesPage.valueRequiredToggle.waitFor({
         state: "visible",
         timeout: 10000,
       });
-      await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
-        "data-state",
-        "on",
+      await expect(attributesPage.valueRequiredToggle).toBeEnabled();
+      await expect(attributesPage.attrVisibleInStorefrontToggle).toHaveAttribute(
+        "aria-pressed",
+        "true",
       );
-      await expect(attributesPage.valueRequiredCheckbox).toBeChecked();
+      await expect(attributesPage.valueRequiredToggle).toHaveAttribute("aria-pressed", "true");
     });
   }
 }
@@ -77,16 +77,16 @@ for (const attr of attributeClasses) {
       await attributesPage.changeAttributeVisibility();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
-      await attributesPage.valueRequiredCheckbox.waitFor({
+      await attributesPage.valueRequiredToggle.waitFor({
         state: "visible",
         timeout: 10000,
       });
-      await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
-        "data-state",
-        "off",
+      await expect(attributesPage.valueRequiredToggle).toBeEnabled();
+      await expect(attributesPage.attrVisibleInStorefrontToggle).toHaveAttribute(
+        "aria-pressed",
+        "false",
       );
-      await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
+      await expect(attributesPage.valueRequiredToggle).toHaveAttribute("aria-pressed", "false");
     });
   }
 }
@@ -113,16 +113,16 @@ for (const attr of attributeClasses) {
       await attributesPage.clickValueRequiredCheckbox();
       await attributesPage.clickSaveButton();
       await attributesPage.expectSuccessBanner();
-      await attributesPage.valueRequiredCheckbox.waitFor({
+      await attributesPage.valueRequiredToggle.waitFor({
         state: "visible",
         timeout: 10000,
       });
-      await expect(attributesPage.valueRequiredCheckbox).toBeEnabled();
-      await expect(attributesPage.attrVisibleInStorefrontSwitch).toHaveAttribute(
-        "data-state",
-        "on",
+      await expect(attributesPage.valueRequiredToggle).toBeEnabled();
+      await expect(attributesPage.attrVisibleInStorefrontToggle).toHaveAttribute(
+        "aria-pressed",
+        "true",
       );
-      await expect(attributesPage.valueRequiredCheckbox).not.toBeChecked();
+      await expect(attributesPage.valueRequiredToggle).toHaveAttribute("aria-pressed", "false");
     });
   }
 }
@@ -175,24 +175,25 @@ for (const attr of ATTRIBUTES.attributesToBeUpdated) {
     await attributesPage.gotoExistingAttributePage(attr.id, attr.name);
 
     await attributesPage.attributeDefaultLabelInput.fill(`updated ${attr.name}`);
-
-    await attributesPage.expandMetadataSection();
-    await attributesPage.metadataAddFieldButton.click();
-
-    await attributesPage.fillMetadataFields("new key", "new value");
-    //Clicking tab only to change focus from the input, allowing to save metadata
-    await attributesPage.page.keyboard.press("Tab");
-
     await attributesPage.clickSaveButton();
+    await attributesPage.expectSuccessBanner();
+    await attributesPage.expectElementIsHidden(attributesPage.successBanner);
+
+    // Metadata is edited and saved in its own modal, separately from the form
+    await attributesPage.openMetadataModal();
+    await attributesPage.addMetadataField();
+    await attributesPage.fillMetadataFields("new key", "new value");
+    await attributesPage.saveMetadataModal();
     await attributesPage.expectSuccessBanner();
     await attributesPage.expectElementIsHidden(attributesPage.successBanner);
 
     await expect(attributesPage.attributeSelect).toBeVisible();
     await expect(attributesPage.attributeSelect).toHaveAttribute("aria-disabled", "true");
-    await expect(attributesPage.metadataKeyInput).toBeVisible();
+    await expect(attributesPage.attributeDefaultLabelInput).toHaveValue(`updated ${attr.name}`);
+
+    await attributesPage.openMetadataModal();
     await expect(attributesPage.metadataKeyInput).toHaveValue("new key");
     await expect(attributesPage.metadataValueInput).toHaveValue("new value");
-    await expect(attributesPage.attributeDefaultLabelInput).toHaveValue(`updated ${attr.name}`);
   });
 }
 
@@ -209,7 +210,7 @@ const attributesToBeDeleted = [productAttribute, contentAttribute];
 for (const attribute of attributesToBeDeleted) {
   test(`TC: SALEOR_129 Delete a single ${attribute.name} #e2e #attributes`, async () => {
     await attributesPage.gotoExistingAttributePage(attribute.id, attribute.name);
-    await attributesPage.clickDeleteButton();
+    await attributesPage.clickDeleteAttributeFromMenu();
     await attributesPage.dialog.waitFor({
       state: "visible",
       timeout: 10000,

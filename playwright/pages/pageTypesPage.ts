@@ -3,6 +3,7 @@ import { BasePage } from "@pages/basePage";
 import { AssignAttributeDialog } from "@pages/dialogs/assignAttributeDialog";
 import { DeleteDialog } from "@pages/dialogs/deleteDialog";
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class PageTypesPage extends BasePage {
   readonly page: Page;
@@ -25,6 +26,7 @@ export class PageTypesPage extends BasePage {
     readonly assignAttributesButton = page.getByTestId("assign-attributes"),
     readonly pageAttributes = page.getByTestId("page-attributes"),
     readonly confirmRemovalButton = page.getByTestId("confirm-delete"),
+    readonly modelTypeSelect = inputByTestId(page, "page-types-autocomplete-select"),
   ) {
     super(page);
     this.page = page;

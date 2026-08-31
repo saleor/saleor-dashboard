@@ -1,13 +1,14 @@
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class InviteStaffMembersDialog {
   readonly page: Page;
 
   constructor(
     page: Page,
-    readonly firstNameInput = page.getByTestId("first-name-input").locator("input"),
-    readonly lastNameInput = page.getByTestId("last-name-input").locator("input"),
-    readonly emailInput = page.getByTestId("email-input").locator("input"),
+    readonly firstNameInput = inputByTestId(page, "first-name-input"),
+    readonly lastNameInput = inputByTestId(page, "last-name-input"),
+    readonly emailInput = inputByTestId(page, "email-input"),
     readonly sendInviteButton = page.getByTestId("submit"),
     readonly inviteStaffMemberDialogForm = page.getByTestId("invite-staff-member-dialog-form"),
   ) {

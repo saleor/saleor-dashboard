@@ -21,9 +21,9 @@ test("TC: SALEOR_97 Create basic channel #e2e #channels", async () => {
   await channelPage.clickCreateChannelButton();
   await channelPage.typeChannelName();
   await channelPage.typeSlugName(slugName);
-  await channelPage.selectCurrency("AFN - Afghanistan");
+  await channelPage.selectCurrency("AFN");
   await channelPage.selectCountry("Afghanistan");
-  await channelPage.clickSaveButton();
+  await channelPage.submitCreateChannelDialog();
   await channelPage.expectSuccessBanner();
 });
 
@@ -35,32 +35,36 @@ test("TC: SALEOR_208 Create channel with all settings #e2e #channels", async () 
   await channelPage.clickCreateChannelButton();
   await channelPage.typeChannelName();
   await channelPage.typeSlugName(slugName);
-  await channelPage.selectCurrency("AFN - Afghanistan");
+  await channelPage.selectCurrency("AFN");
   await channelPage.selectCountry("Afghanistan");
-  // Checking before save because checkboxes used to not work properly
-  await expect(channelPage.transactionFlowCheckbox).toBeChecked();
-  await channelPage.clickAllowUnpaidOrdersCheckbox();
-  await expect(channelPage.allowUnpaidOrdersCheckbox).toBeChecked();
-  await channelPage.clickAuthorizeInsteadOfChargingCheckbox();
-  await expect(channelPage.authorizeInsteadOfChargingCheckbox).toBeChecked();
+  // The dialog only collects identity; order settings live on the detail page
+  // the dialog redirects to.
+  await channelPage.submitCreateChannelDialog();
+
+  await expect(channelPage.transactionFlowRadio).toBeChecked();
+  await channelPage.clickAllowUnpaidOrdersToggle();
+  await expect(channelPage.allowUnpaidOrdersToggle).toHaveAttribute("aria-pressed", "true");
+  await channelPage.clickAuthorizeInsteadOfChargingRadio();
+  await expect(channelPage.authorizeInsteadOfChargingRadio).toBeChecked();
   await channelPage.clickSaveButton();
   await channelPage.expectSuccessBanner();
 
   // Checking again after save because state wasn't saved properly
-  await channelPage.page.waitForURL((url: URL) => !url.pathname.includes("add"));
-  await expect(channelPage.transactionFlowCheckbox).toBeChecked();
-  await expect(channelPage.authorizeInsteadOfChargingCheckbox).toBeChecked();
-  await expect(channelPage.allowUnpaidOrdersCheckbox).toBeChecked();
+  await channelPage.page.reload();
+  await channelPage.channelOrdersSettings.waitFor({ state: "visible", timeout: 30000 });
+  await expect(channelPage.transactionFlowRadio).toBeChecked();
+  await expect(channelPage.authorizeInsteadOfChargingRadio).toBeChecked();
+  await expect(channelPage.allowUnpaidOrdersToggle).toHaveAttribute("aria-pressed", "true");
 });
 
 test("TC: SALEOR_98 Edit channel - transaction flow, allow unpaid, authorize, prio high stock #e2e #channels", async () => {
   await channelPage.gotoChannelDetails(CHANNELS.channelToBeEditedSettings.id);
-  await channelPage.clickTransactionFlowCheckbox();
-  await channelPage.clickAllowUnpaidOrdersCheckbox();
-  await channelPage.clickAuthorizeInsteadOfChargingCheckbox();
-  await expect(channelPage.transactionFlowCheckbox).toBeChecked();
-  await expect(channelPage.authorizeInsteadOfChargingCheckbox).toBeChecked();
-  await expect(channelPage.allowUnpaidOrdersCheckbox).toBeChecked();
+  await channelPage.clickTransactionFlowRadio();
+  await channelPage.clickAllowUnpaidOrdersToggle();
+  await channelPage.clickAuthorizeInsteadOfChargingRadio();
+  await expect(channelPage.transactionFlowRadio).toBeChecked();
+  await expect(channelPage.authorizeInsteadOfChargingRadio).toBeChecked();
+  await expect(channelPage.allowUnpaidOrdersToggle).toHaveAttribute("aria-pressed", "true");
   await channelPage.rightSideDetailsPage.clickAllocationHighStockButton();
   await channelPage.clickSaveButton();
   await channelPage.expectSuccessBanner();

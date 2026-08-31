@@ -5,6 +5,7 @@ import { IssueGiftCardDialog } from "@dialogs/issueGiftCardDialog";
 import { AddressForm } from "@forms/addressForm";
 import { BasePage } from "@pages/basePage";
 import { type Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class CustomersPage extends BasePage {
   readonly addressForm: AddressForm;
@@ -18,15 +19,15 @@ export class CustomersPage extends BasePage {
   constructor(
     page: Page,
     readonly createCustomerButton = page.getByTestId("create-customer"),
-    readonly customerFirstNameInput = page.getByTestId("customer-first-name").locator("input"),
-    readonly customerLastNameInput = page.getByTestId("customer-last-name").locator("input"),
-    readonly customerEmailInput = page.getByTestId("customer-email").locator("input"),
+    readonly customerFirstNameInput = inputByTestId(page, "customer-first-name"),
+    readonly customerLastNameInput = inputByTestId(page, "customer-last-name"),
+    readonly customerEmailInput = inputByTestId(page, "customer-email"),
     readonly customerNoteInput = page.getByTestId("customer-note").locator("textarea[name='note']"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly issueNewGiftCardButton = page.getByTestId("issue-new-gift-card"),
     readonly emailPageTitleText = page.getByTestId("user-email-title"),
-    readonly cogsMenuButton = page.getByTestId("menu").getByTestId("show-more-button"),
+    readonly cogsMenuButton = page.getByTestId("show-more-button"),
     readonly activateUserMenuItem = page.getByTestId("activate-user"),
     readonly deactivateUserMenuItem = page.getByTestId("deactivate-user"),
     readonly accountStatusActivePill = page.getByTestId("account-status-active"),

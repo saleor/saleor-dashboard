@@ -4,6 +4,7 @@ import { BasePage } from "@pages/basePage";
 import type { Page } from "@playwright/test";
 
 import { RightSideDetailsPage } from "./pageElements/rightSideDetailsSection";
+import { inputByTestId } from "utils/locators";
 
 export class WarehousePage extends BasePage {
   readonly page: Page;
@@ -20,18 +21,14 @@ export class WarehousePage extends BasePage {
     readonly deleteWarehouseButton = page.getByTestId("delete-button"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly warehousesList = page.getByTestId("warehouses-list"),
-    readonly warehouseNameInput = page.getByTestId("warehouse-name-input").locator("input"),
-    readonly warehouseEmailInput = page.getByTestId("company-email-input").locator("input"),
-    readonly companyNameInput = page.getByTestId("company-name-input").locator("input"),
-    readonly companyAddressLine1Input = page
-      .getByTestId("company-address-line-1-input")
-      .locator("input"),
-    readonly companyAddressLine2Input = page
-      .getByTestId("company-address-line-2-input")
-      .locator("input"),
-    readonly companyCityInput = page.getByTestId("company-city-input").locator("input"),
-    readonly companyZipInput = page.getByTestId("company-zip-input").locator("input"),
-    readonly companyPhoneInput = page.getByTestId("company-phone-input").locator("input"),
+    readonly warehouseNameInput = inputByTestId(page, "warehouse-name-input"),
+    readonly warehouseEmailInput = inputByTestId(page, "company-email-input"),
+    readonly companyNameInput = inputByTestId(page, "company-name-input"),
+    readonly companyAddressLine1Input = inputByTestId(page, "company-address-line-1-input"),
+    readonly companyAddressLine2Input = inputByTestId(page, "company-address-line-2-input"),
+    readonly companyCityInput = inputByTestId(page, "company-city-input"),
+    readonly companyZipInput = inputByTestId(page, "company-zip-input"),
+    readonly companyPhoneInput = inputByTestId(page, "company-phone-input"),
     readonly companyCountrySelect = page.getByTestId("address-edit-country-select-field"),
     readonly companyCountryOptions = page.getByTestId("select-option"),
   ) {

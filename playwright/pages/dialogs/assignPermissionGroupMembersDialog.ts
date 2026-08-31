@@ -1,11 +1,12 @@
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class AssignPermissionGroupMembersDialog {
   readonly page: Page;
 
   constructor(
     page: Page,
-    readonly searchMembersInput = page.getByTestId("search-members-input").locator("input"),
+    readonly searchMembersInput = inputByTestId(page, "search-members-input"),
     readonly userRow = page.getByTestId("user-row"),
     readonly assignButton = page.getByTestId("submit"),
     readonly searchResults = page.getByTestId("search-results"),

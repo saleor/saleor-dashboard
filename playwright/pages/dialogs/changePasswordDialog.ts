@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { inputByTestId } from "utils/locators";
 
 export class ChangePasswordDialog {
   readonly page: Page;
@@ -6,8 +7,8 @@ export class ChangePasswordDialog {
   constructor(
     page: Page,
     readonly saveButton = page.getByTestId("submit"),
-    readonly newPasswordInput = page.getByTestId("new-password-input").locator("input"),
-    readonly oldPasswordInput = page.getByTestId("old-password-input").locator("input"),
+    readonly newPasswordInput = inputByTestId(page, "new-password-input"),
+    readonly oldPasswordInput = inputByTestId(page, "old-password-input"),
   ) {
     this.page = page;
   }

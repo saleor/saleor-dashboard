@@ -16,7 +16,9 @@ export class DiscountsPage extends BasePage {
   constructor(
     page: Page,
     readonly createDiscountButton = page.getByTestId("create-discount"),
-    readonly discountForm = page.getByTestId("discount-form"),
+    // Two elements carry this id: the <form> and the DetailPageLayout root
+    // (DiscountDetailsPage passes testId="discount-form"). Scope to the form.
+    readonly discountForm = page.locator('form[data-test-id="discount-form"]'),
     readonly discountNameInput = page.getByTestId("discount-name-input"),
     readonly discountTypeSelect = page.getByTestId("discount-type-select"),
     readonly activeDatesSection = page.getByTestId("active-dates-section"),
