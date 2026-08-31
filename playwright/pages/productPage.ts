@@ -7,11 +7,11 @@ import { ExportProductsDialog } from "@pages/dialogs/exportProductsDialog";
 import { MetadataSeoPage } from "@pages/pageElements/metadataSeoPage";
 import { RightSideDetailsPage } from "@pages/pageElements/rightSideDetailsSection";
 import { type Page } from "@playwright/test";
-import * as faker from "faker";
+import { faker } from "@faker-js/faker";
 import path from "path";
 
-const productName = `e2e-productName-${faker.datatype.number()}`;
-const productDescription = `e2e-productDescription-${faker.datatype.number()}`;
+const productName = `e2e-productName-${faker.number.int(99999)}`;
+const productDescription = `e2e-productDescription-${faker.number.int(99999)}`;
 
 export class ProductPage extends BasePage {
   readonly metadataSeoPage: MetadataSeoPage;
