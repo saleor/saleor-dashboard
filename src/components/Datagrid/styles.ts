@@ -173,6 +173,15 @@ const useStyles = makeStyles<{
         position: "relative",
         height: "100%",
       },
+      rowAnchor: {
+        position: "fixed",
+        display: "block",
+        top: -1000,
+        left: -1000,
+        // Vertical pans must reach the page; the wheel listener forwards axes
+        // the grid can actually scroll.
+        touchAction: "pan-y",
+      },
       rowActionBarShadow: {
         height: "100%",
         width: 1,

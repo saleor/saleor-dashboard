@@ -287,3 +287,43 @@ test("TC: SALEOR_62 As an admin I should be able to bulk delete existing variant
     "Message about how to add new variant should be visible in place of list of variants",
   ).toBeVisible();
 });
+test("Product list row overlay is a real link — middle click and hide on wheel @basic-regression #e2e #product", async () => {
+  await productPage.gotoProductListPage();
+
+  const cell = await productPage.hoverGridCell(0, 0);
+
+  await expect(productPage.datagridRowAnchor).toHaveAttribute("href", /\/products\//);
+
+  const overlay = await productPage.datagridRowAnchor.boundingBox();
+  const href = await productPage.datagridRowAnchor.getAttribute("href");
+
+  expect(overlay, "Row overlay should be on screen over the hovered cell").toBeTruthy();
+  expect(href).toBeTruthy();
+
+  if (!overlay || !href) {
+    return;
+  }
+
+  expect(cell.center.x).toBeGreaterThanOrEqual(overlay.x);
+  expect(cell.center.x).toBeLessThanOrEqual(overlay.x + overlay.width);
+  expect(cell.center.y).toBeGreaterThanOrEqual(overlay.y);
+  expect(cell.center.y).toBeLessThanOrEqual(overlay.y + overlay.height);
+
+  // Small delta: enough to fire wheel on the overlay, not enough to scroll the row away.
+  await productPage.page.mouse.move(overlay.x + overlay.width / 2, overlay.y + overlay.height / 2);
+  await productPage.page.mouse.wheel(0, 40);
+  await expect(productPage.datagridRowAnchor).not.toHaveAttribute("href");
+
+  await productPage.hoverGridCell(0, 0);
+  await expect(productPage.datagridRowAnchor).toHaveAttribute("href", href);
+
+  const popupPromise = productPage.page.waitForEvent("popup");
+
+  await productPage.middleClickGridCell(0, 0);
+
+  const popup = await popupPromise;
+  const expectedPath = new URL(href, popup.url()).pathname;
+
+  await popup.waitForURL(/\/products\//);
+  expect(popup.url(), "New tab should open the hovered product").toContain(expectedPath);
+});

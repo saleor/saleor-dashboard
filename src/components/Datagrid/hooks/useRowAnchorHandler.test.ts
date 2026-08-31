@@ -77,4 +77,26 @@ describe("useRowAnchorHandler", () => {
     expect(event.preventDefault).not.toHaveBeenCalled();
     expect(navigate).not.toHaveBeenCalled();
   });
+
+  it("should not prevent default on middle click so the browser can open a new tab", () => {
+    // Arrange
+    const navigate = jest.fn();
+
+    (useNavigator as jest.Mock).mockReturnValue(navigate);
+
+    const handler = renderHook(() => useRowAnchorHandler()).result.current;
+    const event = {
+      preventDefault: jest.fn(),
+      button: 1,
+      metaKey: false,
+      ctrlKey: false,
+    };
+
+    // Act
+    handler(event as never);
+
+    // Assert
+    expect(event.preventDefault).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  });
 });
