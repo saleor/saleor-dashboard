@@ -43,8 +43,7 @@
     "**/*.generated.ts",
     "apollo.config.js",
     "codegen*",
-    "src/graphql/staging/index.ts",
-    "src/legacy-sdk/apollo/types.ts"
+    "src/graphql/staging/index.ts"
   ],
   "ignoreDependencies": [
     "react-responsive-carousel",

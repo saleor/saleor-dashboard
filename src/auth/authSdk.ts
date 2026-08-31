@@ -1,50 +1,37 @@
+import { type ApolloClient, type NormalizedCacheObject } from "@apollo/client";
 import {
-  CHANGE_USER_PASSWORD,
-  EXTERNAL_AUTHENTICATION_URL,
-  EXTERNAL_LOGOUT,
-  EXTERNAL_REFRESH,
-  EXTERNAL_REFRESH_WITH_USER,
-  EXTERNAL_VERIFY_TOKEN,
-  LOGIN,
-  LOGIN_WITHOUT_DETAILS,
-  OBTAIN_EXTERNAL_ACCESS_TOKEN,
-  REFRESH_TOKEN,
-  REFRESH_TOKEN_WITH_USER,
-  SET_PASSWORD,
-  VERIFY_TOKEN,
-} from "../apollo/mutations";
-import { USER, USER_WITHOUT_DETAILS } from "../apollo/queries";
-import {
+  ExternalAuthenticationUrlDocument as EXTERNAL_AUTHENTICATION_URL,
   type ExternalAuthenticationUrlMutation,
   type ExternalAuthenticationUrlMutationVariables,
+  ExternalLogoutDocument as EXTERNAL_LOGOUT,
   type ExternalLogoutMutation,
   type ExternalLogoutMutationVariables,
+  ExternalObtainAccessTokensDocument as OBTAIN_EXTERNAL_ACCESS_TOKEN,
   type ExternalObtainAccessTokensMutation,
   type ExternalObtainAccessTokensMutationVariables,
+  ExternalRefreshDocument as EXTERNAL_REFRESH,
   type ExternalRefreshMutation,
   type ExternalRefreshMutationVariables,
+  ExternalRefreshWithUserDocument as EXTERNAL_REFRESH_WITH_USER,
   type ExternalRefreshWithUserMutation,
   type ExternalRefreshWithUserMutationVariables,
-  type ExternalVerifyMutation,
-  type ExternalVerifyMutationVariables,
+  LoginDocument as LOGIN,
   type LoginMutation,
   type LoginMutationVariables,
-  type PasswordChangeMutation,
-  type PasswordChangeMutationVariables,
+  RefreshTokenDocument as REFRESH_TOKEN,
   type RefreshTokenMutation,
   type RefreshTokenMutationVariables,
+  RefreshTokenWithUserDocument as REFRESH_TOKEN_WITH_USER,
   type RefreshTokenWithUserMutation,
   type RefreshTokenWithUserMutationVariables,
+  SetPasswordDocument as SET_PASSWORD,
   type SetPasswordMutation,
   type SetPasswordMutationVariables,
-  type VerifyTokenMutation,
-  type VerifyTokenMutationVariables,
-} from "../apollo/types";
-import { hasNonEmptyPermissions } from "./helpers";
-import { storage } from "./storage";
+} from "@dashboard/graphql";
+
+import { resetAuthState, setAuthState } from "./authState";
+import { storage } from "./tokenStorage";
 import {
-  type ChangePasswordOpts,
-  type ChangePasswordResult,
   type GetExternalAccessTokenOpts,
   type GetExternalAccessTokenResult,
   type GetExternalAuthUrlOpts,
@@ -55,26 +42,15 @@ import {
   type LogoutResult,
   type RefreshExternalTokenResult,
   type RefreshTokenResult,
-  type SaleorClientInternals,
   type SetPasswordOpts,
   type SetPasswordResult,
-  type VerifyExternalTokenResult,
-  type VerifyTokenResult,
 } from "./types";
 
 export interface AuthSDK {
   /**
-   * Change the password of the logged in user.
-   *
-   * @param opts - Object with password and new password.
-   * @returns Errors if the password change has failed.
-   */
-  changePassword: (opts: ChangePasswordOpts) => Promise<ChangePasswordResult>;
-  /**
    * Authenticates user with email and password.
    *
-   * @param opts - Object with user's email, password and a boolean includeDetails - whether to fetch user details.
-   * Default for includeDetails is true.
+   * @param opts - Object with user's email and password.
    * @returns Promise resolved with CreateToken type data.
    */
   login: (opts: LoginOpts) => Promise<LoginResult>;
@@ -102,12 +78,6 @@ export interface AuthSDK {
    */
   setPassword: (opts: SetPasswordOpts) => Promise<SetPasswordResult>;
   /**
-   * Verify JWT token. Reads the token from storage.
-   *
-   * @returns User assigned to token and the information if the token is valid or not.
-   */
-  verifyToken: () => Promise<VerifyTokenResult>;
-  /**
    * Executing externalAuthenticationUrl mutation will prepare special URL which will redirect user to requested
    * page after successful authentication. After redirection state and code fields will be added to the URL.
    *
@@ -134,28 +104,18 @@ export interface AuthSDK {
    * @returns Token refresh data and errors
    */
   refreshExternalToken: (includeUser?: boolean) => Promise<RefreshExternalTokenResult>;
-  /**
-   * The mutation will verify the authentication token.
-   *
-   * @returns Token verification data and errors
-   */
-  verifyExternalToken: () => Promise<VerifyExternalTokenResult>;
 }
 
-export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK => {
-  const login: AuthSDK["login"] = ({ includeDetails = true, ...opts }) => {
-    const query = includeDetails ? USER : USER_WITHOUT_DETAILS;
-    const loginMutation = includeDetails ? LOGIN : LOGIN_WITHOUT_DETAILS;
-
-    client.writeQuery({
-      query,
-      data: {
-        authenticating: true,
-      },
-    });
+export const auth = ({
+  apolloClient: client,
+}: {
+  apolloClient: ApolloClient<NormalizedCacheObject>;
+}): AuthSDK => {
+  const login: AuthSDK["login"] = opts => {
+    setAuthState({ authenticating: true });
 
     return client.mutate<LoginMutation, LoginMutationVariables>({
-      mutation: loginMutation,
+      mutation: LOGIN,
       variables: {
         ...opts,
       },
@@ -165,13 +125,13 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
             accessToken: data.tokenCreate.token,
             refreshToken: data.tokenCreate.refreshToken,
           });
-        } else {
-          client.writeQuery({
-            query,
-            data: {
-              authenticating: false,
-            },
+          setAuthState({
+            authenticated: true,
+            authenticating: false,
+            isStaff: !!data.tokenCreate.user?.isStaff,
           });
+        } else {
+          setAuthState({ authenticating: false });
         }
       },
     });
@@ -181,15 +141,12 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
     const authPluginId = storage.getAuthPluginId();
 
     storage.clear();
+    resetAuthState();
 
-    client.writeQuery({
-      query: USER,
-      data: {
-        authenticating: false,
-      },
-    });
-
-    client.resetStore();
+    // `clearStore`, not `resetStore`: now that auth shares the app's single client, `resetStore`
+    // would refetch every active Dashboard query the instant the token is gone, and each one
+    // would 401.
+    client.clearStore();
 
     if (authPluginId && opts?.input) {
       const result = await client.mutate<ExternalLogoutMutation, ExternalLogoutMutationVariables>({
@@ -222,6 +179,11 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
         update: (_, { data }) => {
           if (data?.tokenRefresh?.token) {
             storage.setAccessToken(data.tokenRefresh.token);
+            setAuthState({
+              authenticated: true,
+              authenticating: false,
+              isStaff: !!data.tokenRefresh.user?.isStaff,
+            });
           } else {
             logout();
           }
@@ -244,34 +206,6 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
     });
   };
 
-  const verifyToken: AuthSDK["verifyToken"] = async () => {
-    const token = storage.getAccessToken();
-
-    if (!token) {
-      throw Error("Token not present");
-    }
-
-    const result = await client.mutate<VerifyTokenMutation, VerifyTokenMutationVariables>({
-      mutation: VERIFY_TOKEN,
-      variables: { token },
-    });
-
-    if (!result.data?.tokenVerify?.isValid) {
-      logout();
-    }
-
-    return result;
-  };
-
-  const changePassword: AuthSDK["changePassword"] = async opts => {
-    const result = await client.mutate<PasswordChangeMutation, PasswordChangeMutationVariables>({
-      mutation: CHANGE_USER_PASSWORD,
-      variables: { ...opts },
-    });
-
-    return result;
-  };
-
   const setPassword: AuthSDK["setPassword"] = opts => {
     return client.mutate<SetPasswordMutation, SetPasswordMutationVariables>({
       mutation: SET_PASSWORD,
@@ -281,6 +215,11 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
           storage.setTokens({
             accessToken: data.setPassword.token,
             refreshToken: data.setPassword.refreshToken,
+          });
+          setAuthState({
+            authenticated: true,
+            authenticating: false,
+            isStaff: !!data.setPassword.user?.isStaff,
           });
         }
       },
@@ -300,12 +239,7 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
   };
 
   const getExternalAccessToken: AuthSDK["getExternalAccessToken"] = opts => {
-    client.writeQuery({
-      query: USER,
-      data: {
-        authenticating: true,
-      },
-    });
+    setAuthState({ authenticating: true });
 
     return client.mutate<
       ExternalObtainAccessTokensMutation,
@@ -316,23 +250,23 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
         ...opts,
       },
       update: (_, { data }) => {
-        storage.setAuthPluginId(opts.pluginId);
+        storage.setAuthPluginId(opts.pluginId ?? null);
 
         if (
           data?.externalObtainAccessTokens?.token &&
-          hasNonEmptyPermissions(data?.externalObtainAccessTokens?.user?.userPermissions)
+          !!data.externalObtainAccessTokens.user?.userPermissions?.length
         ) {
           storage.setTokens({
             accessToken: data.externalObtainAccessTokens.token,
             refreshToken: data.externalObtainAccessTokens.refreshToken,
           });
-        } else {
-          client.writeQuery({
-            query: USER,
-            data: {
-              authenticating: false,
-            },
+          setAuthState({
+            authenticated: true,
+            authenticating: false,
+            isStaff: !!data.externalObtainAccessTokens.user?.isStaff,
           });
+        } else {
+          setAuthState({ authenticating: false });
         }
       },
     });
@@ -364,6 +298,11 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
               accessToken: data.externalRefresh.token,
               refreshToken: data.externalRefresh.refreshToken,
             });
+            setAuthState({
+              authenticated: true,
+              authenticating: false,
+              isStaff: !!data.externalRefresh.user?.isStaff,
+            });
           } else {
             logout();
           }
@@ -392,33 +331,7 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
     });
   };
 
-  const verifyExternalToken: AuthSDK["verifyExternalToken"] = async () => {
-    const refreshToken = storage.getRefreshToken();
-    const authPluginId = storage.getAuthPluginId();
-
-    if (!refreshToken) {
-      throw Error("refreshToken not present");
-    }
-
-    const result = await client.mutate<ExternalVerifyMutation, ExternalVerifyMutationVariables>({
-      mutation: EXTERNAL_VERIFY_TOKEN,
-      variables: {
-        pluginId: authPluginId,
-        input: JSON.stringify({
-          refreshToken,
-        }),
-      },
-    });
-
-    if (!result.data?.externalVerify?.isValid) {
-      storage.clear();
-    }
-
-    return result;
-  };
-
   return {
-    changePassword,
     getExternalAccessToken,
     getExternalAuthUrl,
     login,
@@ -426,7 +339,5 @@ export const auth = ({ apolloClient: client }: SaleorClientInternals): AuthSDK =
     refreshExternalToken,
     refreshToken,
     setPassword,
-    verifyExternalToken,
-    verifyToken,
   };
 };

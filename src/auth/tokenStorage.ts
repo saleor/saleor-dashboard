@@ -1,5 +1,27 @@
-import { LOCAL_STORAGE_EXISTS } from "../constants";
-import { SALEOR_AUTH_PLUGIN_ID, SALEOR_REFRESH_TOKEN } from "./constants";
+const LOCAL_STORAGE_EXISTS = typeof window !== "undefined" && !!window.localStorage;
+
+/**
+ * Public contract: Playwright seeds `_saleorRefreshToken` directly (playwright/utils/auth.ts,
+ * playwright/tests/auth.setup.ts) and `src/auth/hooks/useCloud.ts` reads `_saleorAuthPluginId`
+ * by hand. Do not rename either key.
+ */
+export const SALEOR_AUTH_PLUGIN_ID = "_saleorAuthPluginId";
+export const SALEOR_REFRESH_TOKEN = "_saleorRefreshToken";
+
+export type JWTToken = {
+  iat: number;
+  iss: string;
+  owner: string;
+  exp: number;
+  token: string;
+  email: string;
+  type: string;
+  user_id: string;
+  is_staff: boolean;
+};
+
+/** Tokens minted by Saleor itself refresh differently to ones minted by an external auth plugin. */
+export const isInternalToken = (owner: string): boolean => owner === "saleor";
 
 export let storage: {
   setAuthPluginId: (method: string | null) => void;

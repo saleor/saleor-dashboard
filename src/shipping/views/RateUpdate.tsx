@@ -31,7 +31,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { sectionNames } from "@dashboard/intl";
-import { type ShippingMethodPostalCodeRule } from "@dashboard/legacy-sdk/apollo/types";
 import { getById, getByUnmatchingId, getMutationState } from "@dashboard/misc";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import { DeleteShippingRateDialog } from "@dashboard/shipping/components/DeleteShippingRateDialog";
@@ -386,7 +385,9 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
     });
     closeModal();
   };
-  const onPostalCodeUnassign = (code: ShippingMethodPostalCodeRule) => {
+  const onPostalCodeUnassign = (
+    code: NonNullable<ShippingMethodTypeFragment["postalCodeRules"]>[number],
+  ) => {
     if (code.id !== undefined) {
       dispatch({
         codesToDelete: [...state.codesToDelete!, code.id],

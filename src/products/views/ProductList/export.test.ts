@@ -1,5 +1,5 @@
 import { ExportScope, FileTypesEnum, ProductFieldEnum } from "@dashboard/graphql";
-import { type ExportInfoInput } from "@dashboard/legacy-sdk/apollo/types";
+import { type ExportInfoInput } from "@dashboard/graphql";
 
 import { ProductsExportParameters } from "./export";
 import { getFilterVariables } from "./filters";

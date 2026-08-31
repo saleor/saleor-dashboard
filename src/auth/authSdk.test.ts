@@ -1,23 +1,20 @@
 import {
-  CHANGE_USER_PASSWORD,
-  EXTERNAL_AUTHENTICATION_URL,
-  EXTERNAL_LOGOUT,
-  EXTERNAL_REFRESH,
-  EXTERNAL_REFRESH_WITH_USER,
-  EXTERNAL_VERIFY_TOKEN,
-  LOGIN,
-  LOGIN_WITHOUT_DETAILS,
-  OBTAIN_EXTERNAL_ACCESS_TOKEN,
-  REFRESH_TOKEN,
-  REFRESH_TOKEN_WITH_USER,
-  SET_PASSWORD,
-  VERIFY_TOKEN,
-} from "../apollo/mutations";
-import { USER, USER_WITHOUT_DETAILS } from "../apollo/queries";
-import { auth, type AuthSDK } from "./auth";
-import { storage } from "./storage";
+  ExternalAuthenticationUrlDocument as EXTERNAL_AUTHENTICATION_URL,
+  ExternalLogoutDocument as EXTERNAL_LOGOUT,
+  ExternalObtainAccessTokensDocument as OBTAIN_EXTERNAL_ACCESS_TOKEN,
+  ExternalRefreshDocument as EXTERNAL_REFRESH,
+  ExternalRefreshWithUserDocument as EXTERNAL_REFRESH_WITH_USER,
+  LoginDocument as LOGIN,
+  RefreshTokenDocument as REFRESH_TOKEN,
+  RefreshTokenWithUserDocument as REFRESH_TOKEN_WITH_USER,
+  SetPasswordDocument as SET_PASSWORD,
+} from "@dashboard/graphql";
 
-jest.mock("./storage", () => ({
+import { auth, type AuthSDK } from "./authSdk";
+import { authStateVar, resetAuthState } from "./authState";
+import { storage } from "./tokenStorage";
+
+jest.mock("./tokenStorage", () => ({
   storage: {
     setTokens: jest.fn(),
     setAccessToken: jest.fn(),
@@ -33,9 +30,7 @@ const mockedStorage = storage as jest.Mocked<typeof storage>;
 
 const createMockClient = () => ({
   mutate: jest.fn(),
-  writeQuery: jest.fn(),
-  resetStore: jest.fn(),
-  readQuery: jest.fn(),
+  clearStore: jest.fn(),
 });
 
 type MockClient = ReturnType<typeof createMockClient>;
@@ -46,19 +41,20 @@ describe("auth", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    resetAuthState();
     client = createMockClient();
     sdk = auth({ apolloClient: client as any });
   });
 
   describe("login", () => {
-    it("should write authenticating=true to cache and call LOGIN mutation with details by default", async () => {
+    it("should mark the session as authenticating and call the LOGIN mutation", async () => {
       // Arrange
       const mutationResult = {
         data: {
           tokenCreate: {
             token: "access-token",
             refreshToken: "refresh-token",
-            user: { id: "1" },
+            user: { id: "1", isStaff: true },
             errors: [],
           },
         },
@@ -70,37 +66,11 @@ describe("auth", () => {
       await sdk.login({ email: "test@example.com", password: "password123" });
 
       // Assert
-      expect(client.writeQuery).toHaveBeenCalledWith({
-        query: USER,
-        data: { authenticating: true },
-      });
+      expect(authStateVar().authenticating).toBe(true);
       expect(client.mutate).toHaveBeenCalledWith(
         expect.objectContaining({
           mutation: LOGIN,
           variables: { email: "test@example.com", password: "password123" },
-        }),
-      );
-    });
-
-    it("should use LOGIN_WITHOUT_DETAILS when includeDetails is false", async () => {
-      // Arrange
-      client.mutate.mockResolvedValue({ data: { tokenCreate: { errors: [] } } });
-
-      // Act
-      await sdk.login({
-        email: "test@example.com",
-        password: "password123",
-        includeDetails: false,
-      });
-
-      // Assert
-      expect(client.writeQuery).toHaveBeenCalledWith({
-        query: USER_WITHOUT_DETAILS,
-        data: { authenticating: true },
-      });
-      expect(client.mutate).toHaveBeenCalledWith(
-        expect.objectContaining({
-          mutation: LOGIN_WITHOUT_DETAILS,
         }),
       );
     });
@@ -112,7 +82,7 @@ describe("auth", () => {
           tokenCreate: {
             token: "access-token",
             refreshToken: "refresh-token",
-            user: { id: "1" },
+            user: { id: "1", isStaff: true },
             errors: [],
           },
         };
@@ -130,9 +100,14 @@ describe("auth", () => {
         accessToken: "access-token",
         refreshToken: "refresh-token",
       });
+      expect(authStateVar()).toEqual({
+        authenticated: true,
+        authenticating: false,
+        isStaff: true,
+      });
     });
 
-    it("should write authenticating=false via update callback when login fails (no token)", async () => {
+    it("should stop authenticating via update callback when login fails (no token)", async () => {
       // Arrange
       client.mutate.mockImplementation(async (opts: any) => {
         const data = {
@@ -153,17 +128,16 @@ describe("auth", () => {
 
       // Assert
       expect(mockedStorage.setTokens).not.toHaveBeenCalled();
-      // writeQuery called twice: once for authenticating=true, once for authenticating=false in update
-      expect(client.writeQuery).toHaveBeenCalledTimes(2);
-      expect(client.writeQuery).toHaveBeenLastCalledWith({
-        query: USER,
-        data: { authenticating: false },
+      expect(authStateVar()).toEqual({
+        authenticated: false,
+        authenticating: false,
+        isStaff: false,
       });
     });
   });
 
   describe("logout", () => {
-    it("should clear storage, write authenticating=false, and reset store", async () => {
+    it("should clear storage, reset the session state, and clear the store", async () => {
       // Arrange
       mockedStorage.getAuthPluginId.mockReturnValue(null);
 
@@ -172,11 +146,12 @@ describe("auth", () => {
 
       // Assert
       expect(mockedStorage.clear).toHaveBeenCalled();
-      expect(client.writeQuery).toHaveBeenCalledWith({
-        query: USER,
-        data: { authenticating: false },
+      expect(authStateVar()).toEqual({
+        authenticated: false,
+        authenticating: false,
+        isStaff: false,
       });
-      expect(client.resetStore).toHaveBeenCalled();
+      expect(client.clearStore).toHaveBeenCalled();
       expect(result).toBeNull();
     });
 
@@ -304,7 +279,7 @@ describe("auth", () => {
       // Assert
       // logout clears storage and resets store
       expect(mockedStorage.clear).toHaveBeenCalled();
-      expect(client.resetStore).toHaveBeenCalled();
+      expect(client.clearStore).toHaveBeenCalled();
     });
 
     it("should set access token via update callback on success with includeUser=true", async () => {
@@ -325,89 +300,6 @@ describe("auth", () => {
 
       // Assert
       expect(mockedStorage.setAccessToken).toHaveBeenCalledWith("new-token-with-user");
-    });
-  });
-
-  describe("verifyToken", () => {
-    it("should throw if no access token is present in storage", async () => {
-      // Arrange
-      mockedStorage.getAccessToken.mockReturnValue(null);
-
-      // Act & Assert
-      await expect(sdk.verifyToken()).rejects.toThrow("Token not present");
-    });
-
-    it("should call VERIFY_TOKEN mutation with the stored token", async () => {
-      // Arrange
-      mockedStorage.getAccessToken.mockReturnValue("my-access-token");
-      mockedStorage.getAuthPluginId.mockReturnValue(null);
-      client.mutate.mockResolvedValue({
-        data: { tokenVerify: { isValid: true, user: { id: "1" }, errors: [] } },
-      });
-
-      // Act
-      await sdk.verifyToken();
-
-      // Assert
-      expect(client.mutate).toHaveBeenCalledWith({
-        mutation: VERIFY_TOKEN,
-        variables: { token: "my-access-token" },
-      });
-    });
-
-    it("should call logout when token is not valid", async () => {
-      // Arrange
-      mockedStorage.getAccessToken.mockReturnValue("my-access-token");
-      mockedStorage.getAuthPluginId.mockReturnValue(null);
-      client.mutate.mockResolvedValue({
-        data: { tokenVerify: { isValid: false, user: null, errors: [] } },
-      });
-
-      // Act
-      await sdk.verifyToken();
-
-      // Assert
-      expect(mockedStorage.clear).toHaveBeenCalled();
-      expect(client.resetStore).toHaveBeenCalled();
-    });
-
-    it("should not call logout when token is valid", async () => {
-      // Arrange
-      mockedStorage.getAccessToken.mockReturnValue("my-access-token");
-      client.mutate.mockResolvedValue({
-        data: { tokenVerify: { isValid: true, user: { id: "1" }, errors: [] } },
-      });
-
-      // Act
-      await sdk.verifyToken();
-
-      // Assert
-      expect(mockedStorage.clear).not.toHaveBeenCalled();
-      expect(client.resetStore).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("changePassword", () => {
-    it("should call CHANGE_USER_PASSWORD mutation with correct variables", async () => {
-      // Arrange
-      const mutationResult = {
-        data: { passwordChange: { errors: [] } },
-      };
-
-      client.mutate.mockResolvedValue(mutationResult);
-
-      // Act
-      const result = await sdk.changePassword({
-        newPassword: "newPass123",
-        oldPassword: "oldPass123",
-      });
-
-      // Assert
-      expect(client.mutate).toHaveBeenCalledWith({
-        mutation: CHANGE_USER_PASSWORD,
-        variables: { newPassword: "newPass123", oldPassword: "oldPass123" },
-      });
-      expect(result).toEqual(mutationResult);
     });
   });
 
@@ -530,7 +422,7 @@ describe("auth", () => {
   });
 
   describe("getExternalAccessToken", () => {
-    it("should write authenticating=true and call OBTAIN_EXTERNAL_ACCESS_TOKEN mutation", async () => {
+    it("should mark the session as authenticating and call OBTAIN_EXTERNAL_ACCESS_TOKEN", async () => {
       // Arrange
       client.mutate.mockResolvedValue({
         data: { externalObtainAccessTokens: { token: "tok", errors: [] } },
@@ -543,10 +435,7 @@ describe("auth", () => {
       });
 
       // Assert
-      expect(client.writeQuery).toHaveBeenCalledWith({
-        query: USER,
-        data: { authenticating: true },
-      });
+      expect(authStateVar().authenticating).toBe(true);
       expect(client.mutate).toHaveBeenCalledWith(
         expect.objectContaining({
           mutation: OBTAIN_EXTERNAL_ACCESS_TOKEN,
@@ -591,7 +480,7 @@ describe("auth", () => {
       });
     });
 
-    it("should write authenticating=false via update callback when user has no permissions", async () => {
+    it("should stop authenticating via update callback when user has no permissions", async () => {
       // Arrange
       client.mutate.mockImplementation(async (opts: any) => {
         const data = {
@@ -617,13 +506,11 @@ describe("auth", () => {
       // Assert
       expect(mockedStorage.setAuthPluginId).toHaveBeenCalledWith("my-plugin");
       expect(mockedStorage.setTokens).not.toHaveBeenCalled();
-      expect(client.writeQuery).toHaveBeenLastCalledWith({
-        query: USER,
-        data: { authenticating: false },
-      });
+      expect(authStateVar().authenticating).toBe(false);
+      expect(authStateVar().authenticated).toBe(false);
     });
 
-    it("should write authenticating=false via update callback when no token returned", async () => {
+    it("should stop authenticating via update callback when no token returned", async () => {
       // Arrange
       client.mutate.mockImplementation(async (opts: any) => {
         const data = {
@@ -648,10 +535,8 @@ describe("auth", () => {
 
       // Assert
       expect(mockedStorage.setTokens).not.toHaveBeenCalled();
-      expect(client.writeQuery).toHaveBeenLastCalledWith({
-        query: USER,
-        data: { authenticating: false },
-      });
+      expect(authStateVar().authenticating).toBe(false);
+      expect(authStateVar().authenticated).toBe(false);
     });
   });
 
@@ -751,7 +636,7 @@ describe("auth", () => {
 
       // Assert
       expect(mockedStorage.clear).toHaveBeenCalled();
-      expect(client.resetStore).toHaveBeenCalled();
+      expect(client.clearStore).toHaveBeenCalled();
     });
 
     it("should store tokens via update callback on success with includeUser=true", async () => {
@@ -781,67 +666,6 @@ describe("auth", () => {
         accessToken: "new-access-with-user",
         refreshToken: "new-refresh-with-user",
       });
-    });
-  });
-
-  describe("verifyExternalToken", () => {
-    it("should throw if no refresh token is present in storage", async () => {
-      // Arrange
-      mockedStorage.getRefreshToken.mockReturnValue(null);
-
-      // Act & Assert
-      await expect(sdk.verifyExternalToken()).rejects.toThrow("refreshToken not present");
-    });
-
-    it("should call EXTERNAL_VERIFY_TOKEN mutation with correct variables", async () => {
-      // Arrange
-      mockedStorage.getRefreshToken.mockReturnValue("ext-refresh-token");
-      mockedStorage.getAuthPluginId.mockReturnValue("my-plugin");
-      client.mutate.mockResolvedValue({
-        data: { externalVerify: { isValid: true, verifyData: "{}", errors: [] } },
-      });
-
-      // Act
-      await sdk.verifyExternalToken();
-
-      // Assert
-      expect(client.mutate).toHaveBeenCalledWith({
-        mutation: EXTERNAL_VERIFY_TOKEN,
-        variables: {
-          pluginId: "my-plugin",
-          input: JSON.stringify({ refreshToken: "ext-refresh-token" }),
-        },
-      });
-    });
-
-    it("should call storage.clear when external token is not valid", async () => {
-      // Arrange
-      mockedStorage.getRefreshToken.mockReturnValue("ext-refresh-token");
-      mockedStorage.getAuthPluginId.mockReturnValue("my-plugin");
-      client.mutate.mockResolvedValue({
-        data: { externalVerify: { isValid: false, verifyData: null, errors: [] } },
-      });
-
-      // Act
-      await sdk.verifyExternalToken();
-
-      // Assert
-      expect(mockedStorage.clear).toHaveBeenCalled();
-    });
-
-    it("should not call storage.clear when external token is valid", async () => {
-      // Arrange
-      mockedStorage.getRefreshToken.mockReturnValue("ext-refresh-token");
-      mockedStorage.getAuthPluginId.mockReturnValue("my-plugin");
-      client.mutate.mockResolvedValue({
-        data: { externalVerify: { isValid: true, verifyData: "{}", errors: [] } },
-      });
-
-      // Act
-      await sdk.verifyExternalToken();
-
-      // Assert
-      expect(mockedStorage.clear).not.toHaveBeenCalled();
     });
   });
 });
