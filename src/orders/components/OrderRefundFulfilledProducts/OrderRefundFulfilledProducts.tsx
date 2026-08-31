@@ -2,12 +2,12 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { QuantityInput } from "@dashboard/components/QuantityInput";
+import { Table, TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type OrderRefundDataQuery } from "@dashboard/graphql";
 import { type FormsetChange } from "@dashboard/hooks/useFormset";
 import { renderCollection } from "@dashboard/misc";
-import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -2,11 +2,11 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type AppUpdateMutation } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";

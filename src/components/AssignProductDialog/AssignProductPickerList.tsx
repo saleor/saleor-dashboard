@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { maybe, renderCollection } from "@dashboard/misc";
-import { TableBody, TableCell } from "@material-ui/core";
 import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 

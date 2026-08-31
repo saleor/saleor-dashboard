@@ -1,6 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -10,7 +11,6 @@ import { type WebhookFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Button, Chip, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Trash2 } from "lucide-react";

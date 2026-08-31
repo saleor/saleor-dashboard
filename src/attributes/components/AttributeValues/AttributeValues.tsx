@@ -10,6 +10,7 @@ import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SearchInput } from "@dashboard/components/SearchInput/SearchInput";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
+import { TableCell } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import { stopTableRowLinkNavigation } from "@dashboard/components/TableRowLink/stopTableRowLinkNavigation";
@@ -28,7 +29,6 @@ import {
   type RelayToFlat,
   type ReorderAction,
 } from "@dashboard/types";
-import { TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Button, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

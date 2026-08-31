@@ -9,6 +9,7 @@ import {
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
@@ -24,7 +25,7 @@ import {
   type RelayToFlat,
   type SearchPageProps,
 } from "@dashboard/types";
-import { Checkbox, TableBody, TableCell, TextField } from "@material-ui/core";
+import { Checkbox, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";

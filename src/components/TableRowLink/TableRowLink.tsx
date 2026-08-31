@@ -1,16 +1,14 @@
+import { TableRow, type TableRowProps } from "@dashboard/components/Table/Table";
 import { isExternalURL } from "@dashboard/utils/urls";
-import { TableRow, type TableRowTypeMap } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import type * as React from "react";
 import { forwardRef } from "react";
 import { Link, type LinkProps } from "react-router-dom";
 
-type MaterialTableRowPropsType = TableRowTypeMap["props"];
-
 type LocationDescriptor = LinkProps["to"];
 
-export interface TableRowLinkProps extends MaterialTableRowPropsType {
+export interface TableRowLinkProps extends Omit<TableRowProps, "onClick"> {
   children: React.ReactNode;
   href?: string | LocationDescriptor;
   className?: string;

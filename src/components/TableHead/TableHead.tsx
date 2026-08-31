@@ -1,7 +1,10 @@
 // @ts-strict-ignore
+import {
+  TableCell,
+  TableHead as BaseTableHead,
+  type TableSectionProps as BaseTableHeadProps,
+} from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { TableCell, TableHead as MuiTableHead } from "@material-ui/core";
-import { type TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox as MacawCheckbox, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -12,7 +15,7 @@ import { type Node } from "../../types";
 import Checkbox from "../Checkbox";
 import styles from "./TableHead.module.css";
 
-interface TableHeadProps extends MuiTableHeadProps {
+interface TableHeadProps extends BaseTableHeadProps {
   colSpan: number;
   disabled: boolean;
   dragRows?: boolean;
@@ -90,13 +93,13 @@ const TableHead = (props: TableHeadProps) => {
     selected,
     toggleAll,
     toolbar,
-    ...muiTableHeadProps
+    ...baseTableHeadProps
   } = props;
   const classes = useStyles(props);
   const selectAllChecked = getSelectAllChecked(items, selected);
 
   return (
-    <MuiTableHead {...muiTableHeadProps}>
+    <BaseTableHead {...baseTableHeadProps}>
       <TableRowLink>
         {dragRows && (items === undefined || items.length > 0) && (
           <TableCell
@@ -163,7 +166,7 @@ const TableHead = (props: TableHeadProps) => {
           children
         )}
       </TableRowLink>
-    </MuiTableHead>
+    </BaseTableHead>
   );
 };
 

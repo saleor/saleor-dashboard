@@ -11,6 +11,7 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   type FulfillOrderMutation,
@@ -39,7 +40,6 @@ import {
   getToFulfillOrderLines,
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { Box, Checkbox, Input, Skeleton, Text, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";

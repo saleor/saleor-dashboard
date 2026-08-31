@@ -5,12 +5,13 @@ import {
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody } from "@dashboard/components/Table/Table";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
-import { TableBody, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { type ChangeEvent, type ReactNode, useMemo } from "react";
 import { useIntl } from "react-intl";
 

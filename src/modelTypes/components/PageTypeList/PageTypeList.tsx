@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -9,7 +10,6 @@ import { type PageTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { PageTypeListUrlSortField, pageTypePath } from "@dashboard/modelTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import type * as React from "react";
