@@ -349,14 +349,7 @@ export default tseslint.config(
       "@graphql-eslint/require-selections": "warn", // this is useful for Apollo caching
     },
   },
-  {
-    // Legacy SDK uses Apollo Client local-only fields (@client directive) not in the schema
-    files: ["src/legacy-sdk/**/*.graphql"],
-    rules: {
-      "@graphql-eslint/fields-on-correct-type": "off",
-      "@graphql-eslint/known-directives": "off",
-    },
-  }, // Disable any rules that conflict with Prettier
+  // Disable any rules that conflict with Prettier
   prettierConfig,
   storybook.configs["flat/recommended"],
 );

@@ -43,18 +43,15 @@
     "**/*.generated.ts",
     "apollo.config.js",
     "codegen*",
-    "src/graphql/staging/index.ts",
-    "src/legacy-sdk/apollo/types.ts"
+    "src/graphql/staging/index.ts"
   ],
   "ignoreDependencies": [
-    "keycode",
-    "tslib",
+    "react-responsive-carousel",
     "@types/lodash-es",
     "@types/webappsec-credential-management",
     "core-js",
     "moment",
     "history",
-    "react-transition-group",
     "@sentry/cli",
     "@react-editor-js/core",
     "playwright-ctrf-json-reporter",

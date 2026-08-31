@@ -12,6 +12,8 @@ import {
   formatVariantReferencePillLabel,
   getVariantReferenceGroups,
   isProductReferenceEntity,
+  isProductReferenceOption,
+  isStaticProductFilter,
   isVariantReferenceEntity,
   isVariantReferenceOption,
   toVariantReferencePill,
@@ -234,6 +236,35 @@ describe("isProductReferenceEntity", () => {
   });
 });
 
+describe("isStaticProductFilter", () => {
+  it("matches the gift-card Products field", () => {
+    // Arrange & Act & Assert
+    expect(isStaticProductFilter("products")).toBe(true);
+    expect(isStaticProductFilter("tags")).toBe(false);
+  });
+});
+
+describe("isProductReferenceOption", () => {
+  it("matches product options and skips variant options", () => {
+    // Arrange & Act & Assert
+    expect(
+      isProductReferenceOption({
+        productName: "Apple Juice",
+        productThumbnailUrl: "https://example.com/apple.png",
+      }),
+    ).toBe(true);
+    expect(isProductReferenceOption({ productName: "Apple Juice" })).toBe(true);
+    expect(isProductReferenceOption({ productName: "" })).toBe(false);
+    expect(
+      isProductReferenceOption({
+        productName: "Apple Juice",
+        variantName: "1l",
+        productThumbnailUrl: "https://example.com/apple.png",
+      }),
+    ).toBe(false);
+  });
+});
+
 describe("createProductOptionsFromAPI", () => {
   it("attaches the product thumbnail when present", () => {
     // Arrange
@@ -257,6 +288,7 @@ describe("createProductOptionsFromAPI", () => {
         label: "Apple Juice",
         value: "prod-1",
         slug: "apple-juice",
+        productName: "Apple Juice",
         productThumbnailUrl: "https://example.com/apple.png",
       },
     ]);

@@ -176,9 +176,6 @@ importers:
       jwt-decode:
         specifier: ^3.1.2
         version: 3.1.2
-      keycode:
-        specifier: ^2.2.1
-        version: 2.2.1
       lodash:
         specifier: 4.18.1
         version: 4.18.1
@@ -251,18 +248,12 @@ importers:
       react-sortable-hoc:
         specifier: ^1.11.0
         version: 1.11.0(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-transition-group:
-        specifier: 4.4.5
-        version: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       slugify:
         specifier: ^1.6.6
         version: 1.6.6
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      tslib:
-        specifier: ^2.8.1
-        version: 2.8.1
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
@@ -9992,12 +9983,6 @@ packages:
     resolution:
       {
         integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==,
-      }
-
-  keycode@2.2.1:
-    resolution:
-      {
-        integrity: sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg==,
       }
 
   keyv@4.5.4:
@@ -20823,8 +20808,6 @@ snapshots:
       object.values: 1.2.1
 
   jwt-decode@3.1.2: {}
-
-  keycode@2.2.1: {}
 
   keyv@4.5.4:
     dependencies:
