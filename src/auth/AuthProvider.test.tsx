@@ -93,12 +93,6 @@ jest.mock("@dashboard/hooks/useLocalStorage", () => ({
 jest.mock("@dashboard/auth", () => ({
   useUser: jest.fn(),
 }));
-jest.mock("use-react-router", () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
-    location: {},
-  })),
-}));
 describe("AuthProvider", () => {
   it("Staff user will be logged in if has valid credentials", async () => {
     // Arrange

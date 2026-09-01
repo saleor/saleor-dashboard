@@ -1,11 +1,7 @@
-import useRouter from "use-react-router";
+import { useParams } from "react-router";
 
 export const useCollectionId = () => {
-  const {
-    match: {
-      params: { id: collectionId },
-    },
-  } = useRouter<{ id: string }>();
+  const { id: collectionId } = useParams<{ id: string }>();
 
   return decodeURIComponent(collectionId);
 };

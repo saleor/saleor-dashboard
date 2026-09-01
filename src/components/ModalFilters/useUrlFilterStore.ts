@@ -2,7 +2,7 @@ import { parseQs } from "@dashboard/url-utils";
 import * as Sentry from "@sentry/react";
 import { stringify } from "qs";
 import { useCallback, useMemo } from "react";
-import useRouter from "use-react-router";
+import { useHistory, useLocation } from "react-router";
 
 const isFilterKey = (key: string): boolean => /^\d+$/.test(key);
 
@@ -63,22 +63,22 @@ export const useUrlFilterStore = (): {
   updateFilters: (filterParams: Record<string, unknown>) => void;
   clearFilters: () => void;
 } => {
-  const router = useRouter();
-  const locationSearch = router.location.search;
+  const history = useHistory();
+  const { search: locationSearch } = useLocation();
 
   const state = useMemo(() => parseUrlSearch(locationSearch), [locationSearch]);
 
   // Read the live location from the history object instead of the per-render
-  // router.location snapshot. These callbacks can run from stale closures
+  // useLocation() snapshot. These callbacks can run from stale closures
   // (e.g. unmount cleanup after the modal-closing navigation); replacing the
   // URL based on a stale snapshot would resurrect removed params such as
   // `action`, reopening the dialog that was just closed.
   const updateFilters = useCallback(
     (newFilterParams: Record<string, unknown>): void => {
-      const { location } = router.history;
+      const { location } = history;
       const currentState = parseUrlSearch(location.search);
 
-      router.history.replace({
+      history.replace({
         pathname: location.pathname,
         search: stringify({
           ...currentState.preservedParams,
@@ -86,22 +86,22 @@ export const useUrlFilterStore = (): {
         }),
       });
     },
-    [router],
+    [history],
   );
 
   const clearFilters = useCallback((): void => {
-    const { location } = router.history;
+    const { location } = history;
     const currentState = parseUrlSearch(location.search);
 
     if (Object.keys(currentState.filterParams).length === 0) {
       return;
     }
 
-    router.history.replace({
+    history.replace({
       pathname: location.pathname,
       search: stringify(currentState.preservedParams),
     });
-  }, [router]);
+  }, [history]);
 
   return {
     state,

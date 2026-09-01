@@ -5,7 +5,6 @@ import { stringifyQs } from "@dashboard/utils/urls";
 import { type Action, type Location } from "history";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
-import useRouter from "use-react-router";
 
 import { type ExitFormDialogData, type FormData, type FormsData } from "./types";
 
@@ -80,7 +79,6 @@ const defaultValues = {
 /** @deprecated Use react-hook-form instead */
 export function useExitFormDialogProvider() {
   const history = useHistory();
-  const { history: routerHistory } = useRouter();
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
   const [description, setDescription] = useState<ReactNode | null>(null);
   const isSubmitDisabled = useRef(false);
@@ -345,7 +343,7 @@ export function useExitFormDialogProvider() {
     if (wasDialogOnlyClose) {
       clearDirtyDialogCloseForms();
       setCurrentLocation(next);
-      routerHistory.push(next.pathname + next.search);
+      history.push(next.pathname + next.search);
       setShowDialog(false);
       setDefaultNavAction();
       setDescription(null);
@@ -361,7 +359,7 @@ export function useExitFormDialogProvider() {
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
     if (next !== null) {
-      routerHistory.push(next.pathname + next.search);
+      history.push(next.pathname + next.search);
     }
 
     setStateDefaultValues();

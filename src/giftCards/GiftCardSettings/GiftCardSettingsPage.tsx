@@ -21,7 +21,7 @@ import { parseQs } from "@dashboard/url-utils";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { type ReactNode } from "react";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
-import useRouter from "use-react-router";
+import { useLocation } from "react-router";
 
 import { giftCardListUrl, type GiftCardSettingsUrlQueryParams } from "../urls";
 import { GiftCardExpirySettingsCard } from "./GiftCardExpirySettingsCard/GiftCardExpirySettingsCard";
@@ -55,9 +55,7 @@ export const GiftCardSettingsPage = (): JSX.Element => {
   const intl = useIntl();
   const navigate = useNavigator();
   const notify = useNotifier();
-  const {
-    location: { search },
-  } = useRouter();
+  const { search } = useLocation();
   const exit = getGiftCardSettingsExit(search, intl);
   const { data, loading } = useGiftCardSettingsQuery();
   const settingsData = data?.giftCardSettings;

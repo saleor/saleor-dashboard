@@ -139,7 +139,6 @@
     "slugify": "^1.6.6",
     "sonner": "^2.0.7",
     "url-join": "^4.0.1",
-    "use-react-router": "^1.0.7",
     "zod": "^3.25.76",
     "zod-validation-error": "3.5.3"
   },
