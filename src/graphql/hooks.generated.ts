@@ -14093,6 +14093,128 @@ export function useShopNavigationPinsLazyQuery(baseOptions?: ApolloReactHooks.La
 export type ShopNavigationPinsQueryHookResult = ReturnType<typeof useShopNavigationPinsQuery>;
 export type ShopNavigationPinsLazyQueryHookResult = ReturnType<typeof useShopNavigationPinsLazyQuery>;
 export type ShopNavigationPinsQueryResult = Apollo.QueryResult<Types.ShopNavigationPinsQuery, Types.ShopNavigationPinsQueryVariables>;
+export const StaffNotificationRecipientCreateDocument = gql`
+    mutation StaffNotificationRecipientCreate($input: StaffNotificationRecipientInput!) {
+  staffNotificationRecipientCreate(input: $input) {
+    errors {
+      ...ShopError
+    }
+    staffNotificationRecipient {
+      id
+      email
+      active
+    }
+  }
+}
+    ${ShopErrorFragmentDoc}`;
+export type StaffNotificationRecipientCreateMutationFn = Apollo.MutationFunction<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>;
+
+/**
+ * __useStaffNotificationRecipientCreateMutation__
+ *
+ * To run a mutation, you first call `useStaffNotificationRecipientCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStaffNotificationRecipientCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [staffNotificationRecipientCreateMutation, { data, loading, error }] = useStaffNotificationRecipientCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useStaffNotificationRecipientCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>(StaffNotificationRecipientCreateDocument, options);
+      }
+export type StaffNotificationRecipientCreateMutationHookResult = ReturnType<typeof useStaffNotificationRecipientCreateMutation>;
+export type StaffNotificationRecipientCreateMutationResult = Apollo.MutationResult<Types.StaffNotificationRecipientCreateMutation>;
+export type StaffNotificationRecipientCreateMutationOptions = Apollo.BaseMutationOptions<Types.StaffNotificationRecipientCreateMutation, Types.StaffNotificationRecipientCreateMutationVariables>;
+export const StaffNotificationRecipientDeleteDocument = gql`
+    mutation StaffNotificationRecipientDelete($id: ID!) {
+  staffNotificationRecipientDelete(id: $id) {
+    errors {
+      ...ShopError
+    }
+  }
+}
+    ${ShopErrorFragmentDoc}`;
+export type StaffNotificationRecipientDeleteMutationFn = Apollo.MutationFunction<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>;
+
+/**
+ * __useStaffNotificationRecipientDeleteMutation__
+ *
+ * To run a mutation, you first call `useStaffNotificationRecipientDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStaffNotificationRecipientDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [staffNotificationRecipientDeleteMutation, { data, loading, error }] = useStaffNotificationRecipientDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useStaffNotificationRecipientDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>(StaffNotificationRecipientDeleteDocument, options);
+      }
+export type StaffNotificationRecipientDeleteMutationHookResult = ReturnType<typeof useStaffNotificationRecipientDeleteMutation>;
+export type StaffNotificationRecipientDeleteMutationResult = Apollo.MutationResult<Types.StaffNotificationRecipientDeleteMutation>;
+export type StaffNotificationRecipientDeleteMutationOptions = Apollo.BaseMutationOptions<Types.StaffNotificationRecipientDeleteMutation, Types.StaffNotificationRecipientDeleteMutationVariables>;
+export const StaffNotificationRecipientsDocument = gql`
+    query StaffNotificationRecipients($canManageStaff: Boolean!) {
+  shop {
+    id
+    staffNotificationRecipients {
+      id
+      email
+      active
+      user @include(if: $canManageStaff) {
+        id
+        email
+        firstName
+        lastName
+        isActive
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useStaffNotificationRecipientsQuery__
+ *
+ * To run a query within a React component, call `useStaffNotificationRecipientsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useStaffNotificationRecipientsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useStaffNotificationRecipientsQuery({
+ *   variables: {
+ *      canManageStaff: // value for 'canManageStaff'
+ *   },
+ * });
+ */
+export function useStaffNotificationRecipientsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>(StaffNotificationRecipientsDocument, options);
+      }
+export function useStaffNotificationRecipientsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>(StaffNotificationRecipientsDocument, options);
+        }
+export type StaffNotificationRecipientsQueryHookResult = ReturnType<typeof useStaffNotificationRecipientsQuery>;
+export type StaffNotificationRecipientsLazyQueryHookResult = ReturnType<typeof useStaffNotificationRecipientsLazyQuery>;
+export type StaffNotificationRecipientsQueryResult = Apollo.QueryResult<Types.StaffNotificationRecipientsQuery, Types.StaffNotificationRecipientsQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {

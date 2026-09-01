@@ -89,8 +89,9 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
           description: intl.formatMessage({
-            id: "uK4ys2",
-            defaultMessage: "Staff and customer email messages, and how they are delivered",
+            id: "1zZG0I",
+            defaultMessage:
+              "Staff and customer email messages, who gets new-order alerts, and how they are delivered",
             description: "configuration menu item description for notifications",
           }),
           icon: <ConfigurationNotificationsIcon />,
