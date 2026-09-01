@@ -1,4 +1,3 @@
-import { RequirementsPicker } from "@dashboard/discounts/types";
 import {
   type ChannelDetailsFragment,
   type ChannelFragment,
@@ -11,7 +10,6 @@ import {
   VoucherTypeEnum,
 } from "@dashboard/graphql";
 import { type RequireOnlyOne } from "@dashboard/misc";
-import { validatePrice } from "@dashboard/products/utils/validation";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import uniqBy from "lodash/uniqBy";
 
@@ -135,21 +133,6 @@ export const createChannelsDataWithDiscountPrice = (
   return [];
 };
 
-const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
-  data?.map(channel => ({
-    availableForPurchaseAt: undefined,
-    costPrice: "",
-    currency: channel.currencyCode,
-    id: channel.id,
-    isAvailableForPurchase: false,
-    variantsIds: [],
-    isPublished: false,
-    name: channel.name,
-    price: "",
-    publishedAt: null,
-    visibleInListings: false,
-  })) || [];
-
 const createShippingChannels = (
   data?: NonNullable<ShippingZoneQuery["shippingZone"]>["channels"],
 ): ChannelShippingData[] =>
@@ -229,11 +212,6 @@ const createChannelsDataFromVoucher = (voucherData?: VoucherDetailsFragment) => 
   );
 };
 
-export const createSortedChannelsData = (data?: ChannelFragment[]) =>
-  createChannelsData(data)?.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name),
-  );
-
 export const createSortedShippingChannels = (
   data?: NonNullable<ShippingZoneQuery["shippingZone"]>["channels"],
 ) =>
@@ -261,28 +239,3 @@ export const getChannelsCurrencyChoices = (
         ),
       )
     : [];
-
-export const validateVoucherPrice = (
-  requirementsPicker: RequirementsPicker,
-  channel: ChannelVoucherData,
-) =>
-  validatePrice(channel.discountValue) ||
-  (requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent));
-
-type BareChannel = { id: string };
-type BareChannelListing = { channel: BareChannel };
-
-const channelsToIds = (channels: BareChannel[]) => channels.map(({ id }) => id);
-const channelListingsToChannels = (listings: BareChannelListing[]) =>
-  listings.map(ch => ch.channel);
-
-export const isAvailableInChannel = ({
-  availableChannels,
-  channelListings,
-}: {
-  availableChannels: BareChannel[];
-  channelListings: BareChannelListing[];
-}) =>
-  channelsToIds(availableChannels).some(id =>
-    channelsToIds(channelListingsToChannels(channelListings)).includes(id),
-  );

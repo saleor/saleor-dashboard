@@ -14,13 +14,13 @@ import { type ExportSettingsInput } from "./types";
 
 export type ExportItemsQuantity = Record<"all" | "filter", number>;
 
-export interface ExportScopeLabels {
+interface ExportScopeLabels {
   allItems: string;
   filteredItems: string;
   selectedItems: string;
 }
 
-export const exportDialogScopeMessages = defineMessages({
+const exportDialogScopeMessages = defineMessages({
   filteredItems: {
     id: "F2fOM7",
     defaultMessage: "List view filters ({number})",

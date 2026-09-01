@@ -23,7 +23,7 @@ interface VoucherScopeCellProps {
   readonly label: string;
 }
 
-export type VoucherScopeCell = CustomCell<VoucherScopeCellProps>;
+type VoucherScopeCell = CustomCell<VoucherScopeCellProps>;
 
 const getIconDataUri = (scopeKind: VoucherScopeIconKind, color: string): string =>
   `data:image/svg+xml;charset=utf-8,${encodeURIComponent(

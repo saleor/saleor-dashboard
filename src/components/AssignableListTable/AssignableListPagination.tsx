@@ -21,7 +21,7 @@ const ROW_NUMBER_OPTIONS = [
   { label: "100", value: "100" },
 ];
 
-export type AssignableListPaginationInset = "card" | "nested" | "drag";
+type AssignableListPaginationInset = "card" | "nested" | "drag";
 
 const INSET: Record<AssignableListPaginationInset, number | string> = {
   card: ASSIGNABLE_LIST_TABLE_CARD_LEADING_INSET,

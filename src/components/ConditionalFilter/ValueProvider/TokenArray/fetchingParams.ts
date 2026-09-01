@@ -383,18 +383,6 @@ export const toAttributesFetchingParams = (p: AttributesFetchingParams, c: UrlTo
   return p;
 };
 
-export const toCategoryFetchingParams = (p: CategoryFetchingParams, c: UrlToken) => {
-  const key = c.name as keyof CategoryFetchingParams;
-
-  if (!p[key]) {
-    p[key] = [];
-  }
-
-  p[key] = unique(p[key].concat(c.value));
-
-  return p;
-};
-
 export type FetchingParamsType =
   | OrderFetchingParams
   | FetchingParams

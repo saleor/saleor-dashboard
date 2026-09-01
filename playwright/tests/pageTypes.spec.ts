@@ -2,12 +2,12 @@ import { ATTRIBUTES } from "@data/e2eTestData";
 import { URL_LIST } from "@data/url";
 import { PageTypesPage } from "@pages/pageTypesPage";
 import { expect, type Page } from "@playwright/test";
-import * as faker from "faker";
+import { faker } from "@faker-js/faker";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
 
-const pageTypeName = `e2e-page-type-${faker.datatype.number()}`;
+const pageTypeName = `e2e-page-type-${faker.number.int(99999)}`;
 
 const createPageType = async (
   page: Page,
@@ -40,8 +40,8 @@ test("TC: SALEOR_187 As an admin user I can create page type #e2e #page-type", a
 });
 test("TC: SALEOR_188 As an admin user I can update page type#e2e #page-type", async ({ page }) => {
   const pageTypePage = new PageTypesPage(page);
-  const originalPageTypeName = `e2e-page-type-to-update-${faker.datatype.number()}`;
-  const updatedPageTypeName = `updated-e2e-page-type-${faker.datatype.number()}`;
+  const originalPageTypeName = `e2e-page-type-to-update-${faker.number.int(99999)}`;
+  const updatedPageTypeName = `updated-e2e-page-type-${faker.number.int(99999)}`;
   const attributeName = ATTRIBUTES.attributeToBeAssignedToPageType.name;
   const pageTypeId = await createPageType(page, pageTypePage, originalPageTypeName);
 
@@ -58,8 +58,8 @@ test("TC: SALEOR_189 As an admin user I can delete page type with assigned conte
   page,
 }) => {
   const pageTypePage = new PageTypesPage(page);
-  const pageTypeName = `e2e-page-type-to-remove-${faker.datatype.number()}`;
-  const modelName = `e2e-model-to-remove-${faker.datatype.number()}`;
+  const pageTypeName = `e2e-page-type-to-remove-${faker.number.int(99999)}`;
+  const modelName = `e2e-model-to-remove-${faker.number.int(99999)}`;
   const pageTypeId = await createPageType(page, pageTypePage, pageTypeName);
 
   await page.goto(`${URL_LIST.addPageType}${encodeURIComponent(pageTypeId)}`);
@@ -86,8 +86,8 @@ test("TC: SALEOR_190 As an admin user I can delete several page types#e2e #page-
 }) => {
   const pageTypePage = new PageTypesPage(page);
   const pageTypeNames = [
-    `e2e-page-type-to-bulk-delete-1-${faker.datatype.number()}`,
-    `e2e-page-type-to-bulk-delete-2-${faker.datatype.number()}`,
+    `e2e-page-type-to-bulk-delete-1-${faker.number.int(99999)}`,
+    `e2e-page-type-to-bulk-delete-2-${faker.number.int(99999)}`,
   ];
   const rowsToBeDeleted: string[] = [];
 

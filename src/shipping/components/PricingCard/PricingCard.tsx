@@ -37,7 +37,7 @@ interface PricingCardProps {
   onChannelsReplace: (channels: ChannelShippingData[]) => void;
 }
 
-export const PricingCard = ({
+const PricingCard = ({
   channels,
   disabled,
   errors,

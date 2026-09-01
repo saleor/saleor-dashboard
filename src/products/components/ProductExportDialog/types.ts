@@ -5,11 +5,6 @@ export interface ExportSettingsInput {
   fileType: FileTypesEnum;
 }
 
-export interface ExportSettingsFormData {
-  fileType: FileTypesEnum;
-  scope: ExportScope;
-}
-
 export const exportSettingsInitialFormData = {
   fileType: FileTypesEnum.CSV,
   scope: ExportScope.ALL,

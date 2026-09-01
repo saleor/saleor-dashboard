@@ -18,8 +18,13 @@ export const WithItems: Story = {
     subtitle: "2 assigned",
     intro: "Shipping zones supplied through this channel.",
     items: [
-      { id: "1", name: "EU Standard", href: "/shipping/zones/1" },
-      { id: "2", name: "Iberia Express", href: "/shipping/zones/2" },
+      { id: "1", name: "EU Standard", href: "/shipping/zones/1", description: "Europe" },
+      {
+        id: "2",
+        name: "Iberia Express",
+        href: "/shipping/zones/2",
+        description: "Spain & Portugal",
+      },
     ],
     emptyState: {
       icon: <Truck size={16} />,

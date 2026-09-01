@@ -10,6 +10,12 @@
   border-radius: 8px;
 }
 
+/* Parent already applies the sidebar inset (e.g. account settings stack). */
+.cardFlush {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .header {
   display: flex;
   align-items: baseline;
@@ -95,6 +101,11 @@
   background-color: var(--mu-colors-background-default1);
 }
 
+/* Card edge (or footer top border) is the last separator — don't double it. */
+.row:last-child {
+  border-bottom: none;
+}
+
 /* Keep layout stable; reveal on hover or delete-control focus. Always show on touch. */
 .rowDelete {
   opacity: 0;
@@ -138,6 +149,12 @@
   background-color: var(--mu-colors-background-default1);
 }
 
+.rowCopy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
 .rowName {
   min-width: 0;
   color: inherit;
@@ -151,8 +168,9 @@
 .listFooter {
   display: flex;
   justify-content: flex-end;
-  /* Match .intro / row content inset. */
+  /* Match .intro / row content inset. Top border is the only list|footer rule. */
   padding: var(--mu-spacing-3) var(--mu-spacing-4) var(--mu-spacing-4);
+  border-top: 1px solid var(--mu-colors-border-default1);
 }
 
 .listFooterAction {

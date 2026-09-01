@@ -7,7 +7,7 @@ import { type ReactNode, useEffect, useRef } from "react";
 
 import styles from "./RippleVideoAnnouncement.module.css";
 
-export interface RippleVideoAnnouncementAction {
+interface RippleVideoAnnouncementAction {
   label: ReactNode;
   href: string;
   external?: boolean;

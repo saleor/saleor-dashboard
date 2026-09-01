@@ -5,8 +5,6 @@ export const USER_EMAIL_PLUGIN_ID = "mirumee.notifications.user_email";
 /** Official SMTP app — customer (shopper) transactional emails. */
 export const SMTP_APP_IDENTIFIER = "saleor.app.smtp";
 
-export const EMAIL_NOTIFICATION_PLUGIN_IDS = [ADMIN_EMAIL_PLUGIN_ID, USER_EMAIL_PLUGIN_ID] as const;
-
 export const DEFAULT_EMAIL_TEMPLATE_VALUE = "DEFAULT";
 
 export const SMTP_CONFIG_FIELD_NAMES = [
@@ -19,8 +17,6 @@ export const SMTP_CONFIG_FIELD_NAMES = [
   "use_tls",
   "use_ssl",
 ] as const;
-
-export type SmtpConfigFieldName = (typeof SMTP_CONFIG_FIELD_NAMES)[number];
 
 export type TemplateMode = "default" | "custom" | "off";
 

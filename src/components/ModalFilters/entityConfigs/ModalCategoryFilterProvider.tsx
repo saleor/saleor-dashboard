@@ -14,7 +14,7 @@ interface ModalCategoryFilterContextValue extends ModalFilterResult<CategoryFilt
 
 const ModalCategoryFilterContext = createContext<ModalCategoryFilterContextValue | null>(null);
 
-export interface ModalCategoryFilterProviderProps {
+interface ModalCategoryFilterProviderProps {
   children: ReactNode;
   excludedFilters?: string[];
 }

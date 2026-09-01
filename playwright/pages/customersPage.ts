@@ -25,7 +25,6 @@ export class CustomersPage extends BasePage {
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly deleteButton = page.getByTestId("button-bar-delete"),
     readonly issueNewGiftCardButton = page.getByTestId("issue-new-gift-card"),
-    readonly emailPageTitleText = page.getByTestId("user-email-title"),
     readonly cogsMenuButton = page.getByTestId("menu").getByTestId("show-more-button"),
     readonly activateUserMenuItem = page.getByTestId("activate-user"),
     readonly deactivateUserMenuItem = page.getByTestId("deactivate-user"),
