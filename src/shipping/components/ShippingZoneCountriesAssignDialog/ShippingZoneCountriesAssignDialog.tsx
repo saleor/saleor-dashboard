@@ -28,7 +28,7 @@ import {
 } from "./ShippingZoneCountriesAssignDialogCountriesList";
 import { ShippingZoneCountriesAssignDialogQuickPicks } from "./ShippingZoneCountriesAssignDialogQuickPicks";
 
-export interface ShippingZoneCountriesAssignFormData {
+interface ShippingZoneCountriesAssignFormData {
   countries: string[];
   query: string;
 }

@@ -10,7 +10,7 @@ import {
   type VoucherTabItemsCount,
 } from "../VoucherDetailsPage/VoucherDetailsPage";
 
-export interface VoucherSetupReadinessInput {
+interface VoucherSetupReadinessInput {
   voucher: VoucherDetailsPageVoucher | null | undefined;
   formData: Pick<
     VoucherDetailsPageFormData,

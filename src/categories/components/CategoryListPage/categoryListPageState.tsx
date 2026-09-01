@@ -20,8 +20,7 @@ export interface CategoryListPageState {
 
 const categoryListPageStateNotInitialized = Symbol("categoryListPageStateNotInitialized");
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const categoryListPageStateAtom = atom<
+const categoryListPageStateAtom = atom<
   CategoryListPageState | typeof categoryListPageStateNotInitialized
 >(categoryListPageStateNotInitialized);
 

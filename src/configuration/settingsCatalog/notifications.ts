@@ -13,13 +13,18 @@ import { type SettingsCatalogEntry } from "./types";
 
 const keywords = defineMessages({
   staffEmails: {
-    id: "KGhnca",
-    defaultMessage: "staff emails invites password smtp",
+    id: "A0WxFL",
+    defaultMessage: "staff emails invites password smtp recipients order alerts",
     description: "settings search alias",
   },
   customerEmails: {
     id: "o0ZEIX",
     defaultMessage: "customer emails order confirmation smtp",
+    description: "settings search alias",
+  },
+  orderAlerts: {
+    id: "ehuvEV",
+    defaultMessage: "staffNotificationRecipients recipients order alerts who gets notified",
     description: "settings search alias",
   },
 });
@@ -60,6 +65,19 @@ export const notificationsCatalogEntries: SettingsCatalogEntry[] = [
     permissions: [PermissionEnum.MANAGE_PLUGINS],
     ownership: "shop",
     keywords: [keywords.staffEmails],
+  },
+  {
+    id: "notifications.staffOrderAlerts",
+    kind: "setting",
+    title: notificationsMessages.orderAlertsTitle,
+    description: notificationsMessages.orderAlertsCatalogDescription,
+    breadcrumbs: [...hubBreadcrumb, notificationsMessages.orderAlertsTitle],
+    href: settingsHref(notificationsStaffEmailsPath, settingsHashes.notificationsOrderAlerts),
+    hash: settingsHashes.notificationsOrderAlerts,
+    permissions: [PermissionEnum.MANAGE_SETTINGS, PermissionEnum.MANAGE_PLUGINS],
+    requireAllPermissions: true,
+    ownership: "shop",
+    keywords: [keywords.orderAlerts, keywords.staffEmails],
   },
   {
     id: "notifications.staffMessages",

@@ -21,7 +21,7 @@ export interface ProductTypeChoice extends Option {
   hasVariants: boolean;
 }
 
-export interface CreateProductFormData {
+interface CreateProductFormData {
   name: string;
   productTypeId: string;
   hasVariants: boolean;

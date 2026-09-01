@@ -22,7 +22,7 @@ type BaseOrderCardTitleProps = {
   hasToolbarMenu?: boolean;
 };
 
-export type OrderCardTitleProps = BaseOrderCardTitleProps & {
+type OrderCardTitleProps = BaseOrderCardTitleProps & {
   createdDate?: string;
   trackingNumber?: string;
   warehouseName?: string;

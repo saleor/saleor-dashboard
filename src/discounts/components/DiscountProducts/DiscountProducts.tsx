@@ -24,7 +24,7 @@ import { messages } from "./messages";
  * narrower product. `channelListings` is absent (not empty) when the viewer lacks
  * MANAGE_PRODUCTS, since it is behind `@include(if: $PERMISSION_MANAGE_PRODUCTS)`.
  */
-export type DiscountProductRow = {
+type DiscountProductRow = {
   id: string;
   name: string;
   thumbnail?: { url: string } | null;

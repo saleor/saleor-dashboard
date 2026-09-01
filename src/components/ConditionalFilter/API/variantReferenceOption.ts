@@ -15,7 +15,7 @@ export const isProductReferenceEntity = (entityType?: string | null): boolean =>
 
 export const isStaticProductFilter = (leftType?: string | null): boolean => leftType === "products";
 
-export const normalizeVariantReferenceProductName = (name: string): string =>
+const normalizeVariantReferenceProductName = (name: string): string =>
   name.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase();
 
 export const resolveVariantReferenceFields = <
@@ -113,10 +113,10 @@ export const compareVariantReferenceNames = (
   return a.variantName.localeCompare(b.variantName, undefined, { sensitivity: "base" });
 };
 
-export const getVariantReferenceGroupKey = (option: VariantReferenceFields): string =>
+const getVariantReferenceGroupKey = (option: VariantReferenceFields): string =>
   option.productId || normalizeVariantReferenceProductName(option.productName);
 
-export type VariantReferenceGroup<T extends VariantReferenceFields> = {
+type VariantReferenceGroup<T extends VariantReferenceFields> = {
   productName: string;
   productId?: string;
   productThumbnailUrl?: string;

@@ -54,8 +54,8 @@ const embeddedMessages = defineMessages({
   },
 });
 
-export type AttributeValuesAddMode = "dialog" | "inline";
-export type AttributeValuesVariant = "card" | "embedded";
+type AttributeValuesAddMode = "dialog" | "inline";
+type AttributeValuesVariant = "card" | "embedded";
 
 interface AttributeValuesProps
   extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,

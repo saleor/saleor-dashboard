@@ -15,7 +15,7 @@ export type GiftCardResendRecipientInput = {
   events: ReadonlyArray<GiftCardResendRecipientEvent>;
 };
 
-export type GiftCardResendDefaultRecipient = {
+type GiftCardResendDefaultRecipient = {
   email: string | null;
   name: string | null;
 };

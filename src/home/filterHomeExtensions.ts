@@ -4,7 +4,7 @@ import { isUrlAbsolute } from "@dashboard/extensions/isUrlAbsolute";
 import { type Extension } from "@dashboard/extensions/types";
 import { type UserPermissionFragment } from "@dashboard/graphql";
 
-export interface HomeExtensionsSplit {
+interface HomeExtensionsSplit {
   fullscreen: Extension[];
   widgets: Extension[];
 }

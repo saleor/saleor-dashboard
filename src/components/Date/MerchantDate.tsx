@@ -9,7 +9,7 @@ import { merchantDateMessages } from "./MerchantDate.messages";
 // The kinds we plan to surface in merchant-facing UI. To add a new one, append
 // the value to this union and a matching entry to `kindMessages` below; the
 // type system will then force translators to provide a full bundle.
-export type MerchantDateKind = "created" | "placed";
+type MerchantDateKind = "created" | "placed";
 
 interface MerchantDateMessageBundle {
   justNow: MessageDescriptor;
@@ -92,7 +92,7 @@ const previousCalendarDayKey = ({ day, month, year }: CalendarDateParts): string
   });
 };
 
-export interface MerchantDateResult {
+interface MerchantDateResult {
   label: string;
   tooltip: string;
 }

@@ -8,12 +8,12 @@ export interface CountPillValue {
   hasMore: boolean;
 }
 
-export interface CountPillProps {
+interface CountPillProps {
   count: CountPillValue | undefined;
   active?: boolean;
 }
 
-export const getCountLabel = (count: CountPillValue | undefined): string | null => {
+const getCountLabel = (count: CountPillValue | undefined): string | null => {
   if (!count) {
     return null;
   }

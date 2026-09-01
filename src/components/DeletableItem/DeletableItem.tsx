@@ -6,9 +6,16 @@ interface DeletableItemProps {
   onDelete: (id: string) => void;
   id: string;
   disabled?: boolean;
+  /** Tooltip and accessible name for the icon-only control. */
+  label?: string;
 }
 
-const DeletableItem = ({ onDelete, id, disabled = false }: DeletableItemProps) => {
+const DeletableItem = ({
+  onDelete,
+  id,
+  disabled = false,
+  label,
+}: DeletableItemProps): JSX.Element => {
   const handleDelete = () => {
     if (!disabled) {
       onDelete(id);
@@ -22,6 +29,8 @@ const DeletableItem = ({ onDelete, id, disabled = false }: DeletableItemProps) =
       icon={<Trash2 size={iconSize.small} strokeWidth={iconStrokeWidthBySize.small} />}
       onClick={handleDelete}
       disabled={disabled}
+      title={label}
+      aria-label={label}
     />
   );
 };

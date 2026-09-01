@@ -78,7 +78,7 @@ import { messages } from "./messages";
 import { buildCustomerSaveComposition, hasCustomerSaveComposition } from "./saveComposition";
 import { CustomerDetailsTitle } from "./Title";
 
-export interface CustomerDetailsPageFormData {
+interface CustomerDetailsPageFormData {
   firstName: string;
   lastName: string;
   email: string;

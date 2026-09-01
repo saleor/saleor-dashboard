@@ -16,7 +16,7 @@ import {
 
 const CLOCK_TOLERANCE_MS = 2000;
 
-export type ProductSetupSeoStatus = ProductSetupReadinessInput["seoStatus"];
+type ProductSetupSeoStatus = ProductSetupReadinessInput["seoStatus"];
 
 /** Aligns with SeoForm complete/incomplete — Partial when only some fields are set. */
 export const getProductSetupSeoStatus = ({

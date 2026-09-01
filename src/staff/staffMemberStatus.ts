@@ -5,7 +5,7 @@ import { type IntlShape } from "react-intl";
 
 import { staffMemberStatusMessages } from "./staffMemberStatusMessages";
 
-export interface StaffMemberStatusDisplay {
+interface StaffMemberStatusDisplay {
   label: string;
   /** Status-dot tone for detail titles and status cells. */
   dot: DotStatus;

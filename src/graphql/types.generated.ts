@@ -13132,6 +13132,27 @@ export type ShopNavigationPinsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ShopNavigationPinsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> } };
 
+export type StaffNotificationRecipientCreateMutationVariables = Exact<{
+  input: StaffNotificationRecipientInput;
+}>;
+
+
+export type StaffNotificationRecipientCreateMutation = { __typename: 'Mutation', staffNotificationRecipientCreate: { __typename: 'StaffNotificationRecipientCreate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, staffNotificationRecipient: { __typename: 'StaffNotificationRecipient', id: string, email: string | null, active: boolean | null } | null } | null };
+
+export type StaffNotificationRecipientDeleteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type StaffNotificationRecipientDeleteMutation = { __typename: 'Mutation', staffNotificationRecipientDelete: { __typename: 'StaffNotificationRecipientDelete', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }> } | null };
+
+export type StaffNotificationRecipientsQueryVariables = Exact<{
+  canManageStaff: Scalars['Boolean']['input'];
+}>;
+
+
+export type StaffNotificationRecipientsQuery = { __typename: 'Query', shop: { __typename: 'Shop', id: string, staffNotificationRecipients: Array<{ __typename: 'StaffNotificationRecipient', id: string, email: string | null, active: boolean | null, user?: { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isActive: boolean } | null }> | null } };
+
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
