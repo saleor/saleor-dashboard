@@ -1,5 +1,6 @@
 import { ChangingPasswordWarning } from "@dashboard/auth/components/ChangingPasswordWarning";
 import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
+import { useUser } from "@dashboard/auth/useUser";
 import { getNewPasswordResetRedirectUrl } from "@dashboard/auth/utils";
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
@@ -7,19 +8,31 @@ import { DashboardModal } from "@dashboard/components/Modal";
 import { useRequestPasswordResetMutation } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier";
 import { type DialogProps } from "@dashboard/types";
-import { Box, Input, Paragraph } from "@saleor/macaw-ui-next";
-import React from "react";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
+import commonErrorMessages from "@dashboard/utils/errors/common";
+import { Box, Input } from "@saleor/macaw-ui-next";
+import { type FormEvent, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose }) => {
+const FORM_ID = "staff-password-reset";
+
+const normalizeEmail = (value: string): string => value.trim().toLowerCase();
+
+export const StaffPasswordResetDialog = ({ open, onClose }: DialogProps): JSX.Element => {
   const intl = useIntl();
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = useState("");
   const notify = useNotifier();
+  const { user } = useUser();
   const { hasUserLoggedViaExternalMethod } = useLastLoginMethod();
+  const currentEmail = user?.email ?? "";
+  const canSubmit =
+    currentEmail.length > 0 && normalizeEmail(email) === normalizeEmail(currentEmail);
 
   const [resetPassword, { status }] = useRequestPasswordResetMutation({
     onCompleted: data => {
-      if (data?.requestPasswordReset?.errors.length === 0) {
+      const errors = data?.requestPasswordReset?.errors ?? [];
+
+      if (errors.length === 0) {
         onClose();
         notify({
           status: "success",
@@ -28,25 +41,64 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
             id: "E+nSVG",
           }),
         });
-
         setEmail("");
-      } else {
-        notify({
-          status: "error",
-          text: data.requestPasswordReset?.errors.join(", "),
-          title: intl.formatMessage({
-            defaultMessage: "Password reset failed",
-            id: "ZLcjD2",
-          }),
-        });
+
+        return;
       }
+
+      const text =
+        errors
+          .map(error => getAccountErrorMessage(error, intl) ?? error.message)
+          .filter((message): message is string => Boolean(message))
+          .join(", ") || intl.formatMessage(commonErrorMessages.unknownError);
+
+      notify({
+        status: "error",
+        text,
+        title: intl.formatMessage({
+          defaultMessage: "Password reset failed",
+          id: "ZLcjD2",
+        }),
+      });
     },
   });
 
+  const isSubmitting = status === "loading";
+
+  const handleClose = (): void => {
+    if (isSubmitting) {
+      return;
+    }
+
+    onClose();
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    if (!canSubmit || isSubmitting) {
+      return;
+    }
+
+    resetPassword({
+      variables: {
+        email: currentEmail,
+        redirectUrl: getNewPasswordResetRedirectUrl(),
+      },
+    });
+  };
+
   return (
-    <DashboardModal onChange={onClose} open={open}>
+    <DashboardModal onChange={handleClose} open={open}>
       <DashboardModal.Content size="sm">
-        <DashboardModal.Header>
+        <DashboardModal.Header
+          subtitle={
+            <FormattedMessage
+              id="rghexf"
+              defaultMessage="Enter your current email to confirm. We’ll send a reset link shortly."
+            />
+          }
+        >
           <FormattedMessage
             id="Fzky6q"
             defaultMessage="Reset password"
@@ -54,52 +106,43 @@ export const StaffPasswordResetDialog: React.FC<DialogProps> = ({ open, onClose 
           />
         </DashboardModal.Header>
 
-        <Box
-          as="form"
-          onSubmit={event => {
-            event.preventDefault();
-            resetPassword({
-              variables: {
-                email,
-                redirectUrl: getNewPasswordResetRedirectUrl(),
-              },
-            });
-          }}
-          display={"grid"}
-          gap={4}
-        >
-          <Paragraph color="default2" size={2} fontWeight="bold">
-            {intl.formatMessage({
-              defaultMessage:
-                "Enter your email. If it matches an account, we’ll send you a reset link within a few minutes.",
-              id: "h7yWcT",
-            })}
-          </Paragraph>
-          {hasUserLoggedViaExternalMethod && <ChangingPasswordWarning />}
-          <Input
-            name="email"
-            type="email"
-            label={intl.formatMessage({
-              defaultMessage: "Email address",
-              id: "hJZwTS",
-            })}
-            autoFocus
-            required
-            data-test-id="email"
-            value={email}
-            onChange={event => setEmail(event.target.value)}
-          />
+        <DashboardModal.Body>
+          <DashboardModal.Inset>
+            <Box as="form" id={FORM_ID} display="grid" gap={4} onSubmit={handleSubmit}>
+              {hasUserLoggedViaExternalMethod ? <ChangingPasswordWarning /> : null}
+              <Input
+                name="email"
+                type="email"
+                label={intl.formatMessage({
+                  defaultMessage: "Email address",
+                  id: "hJZwTS",
+                })}
+                autoFocus
+                required
+                disabled={isSubmitting}
+                data-test-id="email"
+                value={email}
+                onChange={event => setEmail(event.target.value)}
+              />
+            </Box>
+          </DashboardModal.Inset>
+        </DashboardModal.Body>
 
-          <DashboardModal.Actions>
-            <BackButton onClick={onClose} />
-            <ConfirmButton data-test-id="submit" transitionState={status} type="submit">
-              {intl.formatMessage({
-                defaultMessage: "Reset",
-                id: "jm/spn",
-              })}
-            </ConfirmButton>
-          </DashboardModal.Actions>
-        </Box>
+        <DashboardModal.Actions>
+          <BackButton disabled={isSubmitting} onClick={handleClose} />
+          <ConfirmButton
+            data-test-id="submit"
+            disabled={isSubmitting || !canSubmit}
+            form={FORM_ID}
+            transitionState={status}
+            type="submit"
+          >
+            {intl.formatMessage({
+              defaultMessage: "Reset",
+              id: "jm/spn",
+            })}
+          </ConfirmButton>
+        </DashboardModal.Actions>
       </DashboardModal.Content>
     </DashboardModal>
   );

@@ -77,14 +77,44 @@ export const navigationPinMessages = defineMessages({
     description: "account settings card header",
   },
   userPinsDescription: {
-    id: "eBSWv6",
-    defaultMessage: "Model types you pinned to your sidebar.",
+    id: "ht7hns",
+    defaultMessage: "Shortcuts to model types in your sidebar. Pin more from the models list.",
     description: "account settings card subtitle",
   },
-  userPinsEmpty: {
-    id: "C7PYI9",
-    defaultMessage: "You have not pinned any model types yet.",
-    description: "empty state",
+  userPinsCount: {
+    id: "oLOOwI",
+    defaultMessage: "{count} pinned",
+    description: "account settings card header count",
+  },
+  userPinsNone: {
+    id: "G8vJ+G",
+    defaultMessage: "None pinned",
+    description: "account settings card header when the list is empty",
+  },
+  userPinsEmptyTitle: {
+    id: "tFy7p7",
+    defaultMessage: "No pinned model types",
+    description: "account settings empty state title",
+  },
+  userPinsEmptyDescription: {
+    id: "z2m5wn",
+    defaultMessage: "Open a model type and choose Pin to nav to add a shortcut.",
+    description: "account settings empty state description",
+  },
+  viewModels: {
+    id: "6mdMYB",
+    defaultMessage: "View models",
+    description: "account settings empty state action, opens the models list",
+  },
+  missingTypeName: {
+    id: "eQi59D",
+    defaultMessage: "Unavailable model type",
+    description: "list row name when the pinned type no longer exists",
+  },
+  missingTypeDescription: {
+    id: "TrMEpI",
+    defaultMessage: "No longer exists · {section}",
+    description: "list row description when the pinned type no longer exists",
   },
   pinnedSuccess: {
     id: "XXZxyz",

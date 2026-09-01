@@ -40,6 +40,7 @@ export const settingsHashes = {
   notificationsStaff: "staff-emails",
   notificationsCustomer: "customer-emails",
   notificationsDelivery: "email-delivery",
+  notificationsOrderAlerts: "new-order-alerts",
   notificationsMessages: "staff-messages",
 } as const;
 
