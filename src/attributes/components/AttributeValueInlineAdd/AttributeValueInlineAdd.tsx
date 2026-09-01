@@ -60,6 +60,10 @@ interface AttributeValueInlineAddProps {
 
 const emptyForm: AttributeValueEditDialogFormData = { name: "" };
 
+// Stable identity: ColorPicker keys an effect on `errors`, and a fresh literal here
+// re-fires it on every render, which loops through its onColorChange -> setForm.
+const noFieldErrors = {};
+
 export const AttributeValueInlineAdd = ({
   columnSpan,
   disabled,
@@ -181,7 +185,7 @@ export const AttributeValueInlineAdd = ({
       <AttributeSwatchField
         clearErrors={() => undefined}
         data={form}
-        errors={{}}
+        errors={noFieldErrors}
         hidePreview
         set={updates => setForm(current => ({ ...current, ...updates }))}
         setError={() => undefined}
