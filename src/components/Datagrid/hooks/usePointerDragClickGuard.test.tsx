@@ -128,4 +128,43 @@ describe("usePointerDragClickGuard", () => {
     expect(onDrag).toHaveBeenCalledTimes(1);
     expect(onClick).not.toHaveBeenCalled();
   });
+
+  it("suppresses both Glide cell activation and the following native click", () => {
+    // Arrange
+    const onCellClick = jest.fn();
+    const onClick = jest.fn();
+    const target = render(
+      <GuardHarness onCellClick={onCellClick} onClick={onClick} onDrag={jest.fn()} />,
+    ).getByTestId("drag-target");
+
+    // Act
+    dispatchPointerEvent(target, "pointerdown", { pointerId: 1, clientX: 20, clientY: 30 });
+    dispatchPointerEvent(target, "pointermove", { pointerId: 1, clientX: 20, clientY: 37 });
+    dispatchPointerEvent(target, "pointerup", { pointerId: 1, clientX: 20, clientY: 37 });
+    fireEvent.click(target);
+
+    // Assert
+    expect(onCellClick).not.toHaveBeenCalled();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("allows a tap after a completed drag gesture", () => {
+    // Arrange
+    const onClick = jest.fn();
+    const target = render(<GuardHarness onClick={onClick} onDrag={jest.fn()} />).getByTestId(
+      "drag-target",
+    );
+
+    // Act
+    dispatchPointerEvent(target, "pointerdown", { pointerId: 1, clientX: 20, clientY: 30 });
+    dispatchPointerEvent(target, "pointermove", { pointerId: 1, clientX: 20, clientY: 37 });
+    dispatchPointerEvent(target, "pointerup", { pointerId: 1, clientX: 20, clientY: 37 });
+    fireEvent.click(target);
+    dispatchPointerEvent(target, "pointerdown", { pointerId: 2, clientX: 20, clientY: 30 });
+    dispatchPointerEvent(target, "pointerup", { pointerId: 2, clientX: 20, clientY: 30 });
+    fireEvent.click(target);
+
+    // Assert
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
 });

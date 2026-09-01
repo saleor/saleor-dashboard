@@ -83,15 +83,10 @@ export const usePointerDragClickGuard = (onDrag?: () => void): PointerDragClickG
     [markAsDragged],
   );
 
-  const shouldSuppressClick = useCallback((): boolean => {
-    if (!draggedRef.current) {
-      return false;
-    }
-
-    draggedRef.current = false;
-
-    return true;
-  }, []);
+  // Peek only. Glide onCellClicked (pointerup) and the native row-anchor click
+  // can both fire for one gesture; consuming the flag would let the second through.
+  // The next pointerdown clears draggedRef.
+  const shouldSuppressClick = useCallback((): boolean => draggedRef.current, []);
 
   const onClickCapture = useCallback<MouseEventHandler<HTMLElement>>(
     event => {
