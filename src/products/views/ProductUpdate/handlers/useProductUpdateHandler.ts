@@ -1,12 +1,6 @@
 // @ts-strict-ignore
-import {
-  mergeAttributeValueDeleteErrors,
-  mergeFileUploadErrors,
-} from "@dashboard/attributes/utils/data";
-import {
-  handleDeleteMultipleAttributeValues,
-  handleUploadMultipleFiles,
-} from "@dashboard/attributes/utils/handlers";
+import { mergeFileUploadErrors } from "@dashboard/attributes/utils/data";
+import { handleUploadMultipleFiles } from "@dashboard/attributes/utils/handlers";
 import {
   type AttributeErrorFragment,
   ErrorPolicyEnum,
@@ -17,7 +11,6 @@ import {
   type ProductFragment,
   type ProductVariantBulkCreateInput,
   type UploadErrorFragment,
-  useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductChannelListingUpdateMutation,
   useProductUpdateMutation,
@@ -96,7 +89,6 @@ export function useProductUpdateHandler(
   const [uploadFile] = useFileUploadMutation();
   const [updateProduct] = useProductUpdateMutation();
   const [updateChannels] = useProductChannelListingUpdateMutation();
-  const [deleteAttributeValue] = useAttributeValueDeleteMutation();
   const clearSaveSteps = () => setSaveSteps([]);
   const sendMutations = async (
     data: ProductUpdateSubmitData,
@@ -113,15 +105,7 @@ export function useProductUpdateHandler(
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
     );
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      product?.attributes,
-      variables => deleteAttributeValue({ variables }),
-    );
-    const fileErrors = [
-      ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-    ];
+    const fileErrors = mergeFileUploadErrors(uploadFilesResult);
 
     if (hasFileAttributeWork) {
       steps = setProductSaveStepStatus(steps, "files", fileErrors.length > 0 ? "error" : "success");
