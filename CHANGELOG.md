@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.23.32
+
+### Patch Changes
+
+- [#6886](https://github.com/saleor/saleor-dashboard/pull/6886) [`9cf70fb`](https://github.com/saleor/saleor-dashboard/commit/9cf70fbbc3bf88fed2e5de8cc3c64854f7c80f46) Thanks [@mirekm](https://github.com/mirekm)! - Account Settings is now a personal workspace: edit your profile, manage sidebar pins and extension widgets, and reset your password from there.
+
+- [#6885](https://github.com/saleor/saleor-dashboard/pull/6885) [`ab25a8d`](https://github.com/saleor/saleor-dashboard/commit/ab25a8d2549550ea36687e328728b2766fbad8c0) Thanks [@wcislo-saleor](https://github.com/wcislo-saleor)! - Fixed replacing or clearing a file attribute value failing with a permission
+  error for users without attribute-management permissions. The dashboard no
+  longer calls `attributeValueDelete` before saving products, variants, and
+  models — Saleor 3.23.30 and above clean up the detached file value as part of the
+  update itself, and on older versions the update still succeeds.
+
+- [#6911](https://github.com/saleor/saleor-dashboard/pull/6911) [`44acb02`](https://github.com/saleor/saleor-dashboard/commit/44acb02504202519d88babf161b404ffd6a77751) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Pinned fullscreen home widgets now appear as their own rows under the sidebar Home section, so you can open one directly instead of going to Home first and picking its tab.
+
+- [#6902](https://github.com/saleor/saleor-dashboard/pull/6902) [`1730bc6`](https://github.com/saleor/saleor-dashboard/commit/1730bc6b359cbcfcd79602451cf1a5f06da87330) Thanks [@mirekm](https://github.com/mirekm)! - Staff emails now has a **New order alerts** list. Merchants can choose which staff members get an email when a customer completes checkout.
+
+  Find it under Configuration → Notifications → Staff emails. Assign or remove people there; the list saves immediately and is separate from the SMTP save bar. Draft orders completed in the Dashboard are not included.
+
+- [#6905](https://github.com/saleor/saleor-dashboard/pull/6905) [`3760736`](https://github.com/saleor/saleor-dashboard/commit/37607369104aa2621144eb68c76a01f9cff85d93) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed the browser freezing when adding a value inline to a swatch attribute. The inline add row
+  handed its colour picker a fresh empty error object on every render, and the picker keys an
+  effect on that object — so each render wrote the colour back into the form, which triggered
+  another render, in an unbounded loop. The error object is now stable.
+
 ## 3.23.31
 
 ### Patch Changes
