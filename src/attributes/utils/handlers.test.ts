@@ -629,8 +629,14 @@ describe("Sending only changed attributes", () => {
         ],
       });
 
-      // Files are deleted by using AttributeValueDetele mutation
-      expect(result).toEqual([]);
+      // `file: null` detaches the value; core deletes the orphaned row itself
+      expect(result).toEqual([
+        {
+          id: ATTR_ID,
+          contentType: undefined,
+          file: null,
+        },
+      ]);
     });
     it("adds new image (null -> img)", () => {
       const attribute = createFileAttribute("bob.jpg");
@@ -700,7 +706,7 @@ describe("Sending only changed attributes", () => {
         {
           id: ATTR_ID,
           contentType: undefined,
-          file: undefined,
+          file: null,
         },
       ]);
     });

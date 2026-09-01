@@ -292,9 +292,9 @@ export const prepareAttributesInput = ({
     if (inputType === AttributeInputTypeEnum.FILE) {
       const fileInput = getFileInput(attr, updatedFileAttributes);
 
-      if (fileInput.file || attr.data.isRequired) {
-        attrInput.push(fileInput);
-      }
+      // A cleared file must still be sent as `file: null` — an attribute
+      // omitted from the update input is left untouched server-side.
+      attrInput.push({ ...fileInput, file: fileInput.file ?? null });
 
       return attrInput;
     }
