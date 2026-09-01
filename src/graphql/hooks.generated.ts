@@ -308,18 +308,6 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
-export const AuthUserFragmentDoc = gql`
-    fragment AuthUser on User {
-  id
-  email
-  firstName
-  lastName
-  isStaff
-  userPermissions {
-    ...UserPermission
-  }
-}
-    ${UserPermissionFragmentDoc}`;
 export const ChannelFragmentDoc = gql`
     fragment Channel on Channel {
   id
@@ -5002,12 +4990,12 @@ export const LoginDocument = gql`
       ...AccountError
     }
     user {
-      ...AuthUser
+      ...User
     }
   }
 }
     ${AccountErrorFragmentDoc}
-${AuthUserFragmentDoc}`;
+${UserFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<Types.LoginMutation, Types.LoginMutationVariables>;
 
 /**
@@ -5076,14 +5064,14 @@ export const RefreshTokenWithUserDocument = gql`
   tokenRefresh(refreshToken: $refreshToken) {
     token
     user {
-      ...AuthUser
+      ...User
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${AuthUserFragmentDoc}
+    ${UserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type RefreshTokenWithUserMutationFn = Apollo.MutationFunction<Types.RefreshTokenWithUserMutation, Types.RefreshTokenWithUserMutationVariables>;
 
@@ -5154,14 +5142,14 @@ export const ExternalObtainAccessTokensDocument = gql`
     token
     refreshToken
     user {
-      ...AuthUser
+      ...User
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${AuthUserFragmentDoc}
+    ${UserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type ExternalObtainAccessTokensMutationFn = Apollo.MutationFunction<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>;
 
@@ -5234,14 +5222,14 @@ export const ExternalRefreshWithUserDocument = gql`
     token
     refreshToken
     user {
-      ...AuthUser
+      ...User
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${AuthUserFragmentDoc}
+    ${UserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type ExternalRefreshWithUserMutationFn = Apollo.MutationFunction<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>;
 
@@ -5316,12 +5304,12 @@ export const SetPasswordDocument = gql`
     token
     refreshToken
     user {
-      ...AuthUser
+      ...User
     }
   }
 }
     ${AccountErrorFragmentDoc}
-${AuthUserFragmentDoc}`;
+${UserFragmentDoc}`;
 export type SetPasswordMutationFn = Apollo.MutationFunction<Types.SetPasswordMutation, Types.SetPasswordMutationVariables>;
 
 /**

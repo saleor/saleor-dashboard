@@ -19,7 +19,7 @@ export const login = gql`
         ...AccountError
       }
       user {
-        ...AuthUser
+        ...User
       }
     }
   }
@@ -43,7 +43,7 @@ export const refreshTokenWithUser = gql`
     tokenRefresh(refreshToken: $refreshToken) {
       token
       user {
-        ...AuthUser
+        ...User
       }
       errors {
         ...AccountError
@@ -75,7 +75,7 @@ export const externalObtainAccessTokens = gql`
       token
       refreshToken
       user {
-        ...AuthUser
+        ...User
       }
       errors {
         ...AccountError
@@ -108,7 +108,7 @@ export const externalRefreshWithUser = gql`
       token
       refreshToken
       user {
-        ...AuthUser
+        ...User
       }
       errors {
         ...AccountError
@@ -140,7 +140,7 @@ export const setPassword = gql`
       token
       refreshToken
       user {
-        ...AuthUser
+        ...User
       }
     }
   }

@@ -33,6 +33,9 @@ const createMockClient = () => ({
   clearStore: jest.fn(),
 });
 
+// `update` callbacks seed `ROOT_QUERY.me`; only `writeQuery` is exercised.
+const mockCache: any = { writeQuery: jest.fn() };
+
 type MockClient = ReturnType<typeof createMockClient>;
 
 describe("auth", () => {
@@ -87,7 +90,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -118,7 +121,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -249,7 +252,7 @@ describe("auth", () => {
       client.mutate.mockImplementation(async (opts: any) => {
         const data = { tokenRefresh: { token: "new-access-token", errors: [] } };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -268,7 +271,7 @@ describe("auth", () => {
       client.mutate.mockImplementation(async (opts: any) => {
         const data = { tokenRefresh: { token: null, errors: [{ message: "expired" }] } };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -290,7 +293,7 @@ describe("auth", () => {
           tokenRefresh: { token: "new-token-with-user", user: { id: "1" }, errors: [] },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -342,7 +345,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -372,7 +375,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -461,7 +464,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -492,7 +495,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -522,7 +525,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -604,7 +607,7 @@ describe("auth", () => {
           externalRefresh: { token: "new-ext-access", refreshToken: "new-ext-refresh", errors: [] },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -626,7 +629,7 @@ describe("auth", () => {
       client.mutate.mockImplementation(async (opts: any) => {
         const data = { externalRefresh: { token: null, refreshToken: null, errors: [] } };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
@@ -653,7 +656,7 @@ describe("auth", () => {
           },
         };
 
-        opts.update(null, { data });
+        opts.update(mockCache, { data });
 
         return { data };
       });
