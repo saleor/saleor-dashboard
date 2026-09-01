@@ -9,6 +9,11 @@
  * Selectors are kept at single-class specificity (0,1,0) on purpose: consumer
  * modules such as ResponsiveTable.module.css target `.table td` (0,1,1) and
  * must keep winning without needing `!important`.
+ *
+ * Exception: row hover/selected use macaw-ui-next tokens instead of the legacy
+ * values (light hover 0.04 black, selected 0.08 accent). The legacy hover was
+ * MUI's `palette.action.hover` default anyway - macaw's own override passed an
+ * object to `background`, so the declaration never made it into the CSS.
  */
 
 .table {
@@ -16,6 +21,9 @@
   border-collapse: collapse;
   border-spacing: 0;
   table-layout: auto;
+  /* macaw MuiTable.root set font-feature-settings: "tnum"; keeps numeric
+   * columns aligned. */
+  font-variant-numeric: tabular-nums;
 }
 
 .row {
