@@ -25,9 +25,9 @@ import {
   type RelayToFlat,
   type SearchPageProps,
 } from "@dashboard/types";
-import { Checkbox, TextField } from "@material-ui/core";
+import { Checkbox } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -136,18 +136,15 @@ const AssignMembersDialog = ({
       <DashboardModal.Content size="sm">
         <DashboardModal.PickerHeader
           toolbar={
-            <TextField
+            <Input
               data-test-id="search-members-input"
               name="query"
               value={query}
               onChange={onQueryChange}
               label={intl.formatMessage(messages.searchInputLabel)}
               placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
-              fullWidth
-              InputProps={{
-                autoComplete: "off",
-                endAdornment: loading && <SaleorThrobber size={16} />,
-              }}
+              autoComplete="off"
+              endAdornment={loading && <SaleorThrobber size={16} />}
               disabled={disabled}
             />
           }

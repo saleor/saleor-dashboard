@@ -50,9 +50,6 @@ export const useStyles = makeStyles(
         paddingBottom: 0,
         paddingTop: 0,
       },
-      input: {
-        padding: theme.spacing(1.5, 2),
-      },
       table: {
         marginTop: theme.spacing(2),
         tableLayout: "fixed",

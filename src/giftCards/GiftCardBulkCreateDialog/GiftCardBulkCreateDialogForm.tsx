@@ -8,8 +8,7 @@ import {
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
-import { TextField } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -121,11 +120,11 @@ export const GiftCardBulkCreateDialogFields = ({
           <FormattedMessage {...messages.cardsToIssueSection} />
         </ModalSectionHeader>
 
-        <TextField
+        <Input
           error={!!formErrors?.count}
+          aria-invalid={!!formErrors?.count}
           name="cardsAmount"
           onChange={change}
-          fullWidth
           label={intl.formatMessage(createMessages.giftCardsAmountLabel)}
           value={cardsAmount}
           helperText={getGiftCardErrorMessage(formErrors?.count, intl)}
