@@ -17,7 +17,7 @@ import { orderListUrl, type OrderSettingsUrlQueryParams } from "@dashboard/order
 import { parseQs } from "@dashboard/url-utils";
 import { type ReactNode } from "react";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
-import useRouter from "use-react-router";
+import { useLocation } from "react-router";
 
 import { OrderChannelSettingsMatrix } from "../OrderChannelSettingsMatrix/OrderChannelSettingsMatrix";
 import { OrderCheckoutStockSettings } from "../OrderCheckoutStockSettings/OrderCheckoutStockSettings";
@@ -73,9 +73,7 @@ const OrderSettingsPage = ({
 }: OrderSettingsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const {
-    location: { search },
-  } = useRouter();
+  const { search } = useLocation();
   const exit = getOrdersSettingsExit(search, intl);
 
   return (
