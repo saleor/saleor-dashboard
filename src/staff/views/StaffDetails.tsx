@@ -74,7 +74,7 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
     fetchPolicy: isUserSameAsViewer ? "no-cache" : "cache-first",
   });
   const { deleteResult, deleteStaffMember, updateStaffMember, updateStaffMemberOpts } =
-    useStaffUserOperations();
+    useStaffUserOperations({ isOwnAccount: isUserSameAsViewer });
   // Separate from form save so Activate/Deactivate does not drive the Savebar
   // or paint status errors onto name/email/permission fields.
   const [updateStaffStatus, updateStaffStatusOpts] = useStaffMemberUpdateMutation({
@@ -187,8 +187,12 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
     return <NotFoundPage backHref={staffListUrl()} />;
   }
 
-  const handleStaffUpdate = (formData: StaffDetailsFormData) =>
-    extractMutationErrors(
+  // Email is on staffUpdate only. accountUpdate (own-profile) cannot change it.
+  // MANAGE_STAFF can update any staff email, including their own.
+  const canEditEmail = hasManageStaffPermission;
+  const saveViaStaffUpdate = !isUserSameAsViewer || canEditEmail;
+  const handleStaffUpdate = async (formData: StaffDetailsFormData) => {
+    const errors = await extractMutationErrors(
       updateStaffMember({
         variables: {
           id,
@@ -196,13 +200,26 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
             email: formData.email,
             firstName: formData.firstName,
             lastName: formData.lastName,
-            ...(hasManageStaffPermission ? groupsDiff(data?.user, formData) : {}),
+            // Own account hides permission groups — never send a groupsDiff from this page.
+            ...(!isUserSameAsViewer && hasManageStaffPermission
+              ? groupsDiff(data?.user, formData)
+              : {}),
           },
         },
+        // StaffMemberDetails does not include userPermissions. A cache write on
+        // `me` can empty the sidebar until refetchUser lands.
+        ...(isUserSameAsViewer ? { fetchPolicy: "no-cache" as const } : {}),
       }),
     );
-  const handleUserUpdate = (formData: StaffDetailsFormData) =>
-    extractMutationErrors(
+
+    if (!errors.length && isUserSameAsViewer) {
+      await Promise.all([refetch(), user.refetchUser?.()]);
+    }
+
+    return errors;
+  };
+  const handleUserUpdate = async (formData: StaffDetailsFormData) => {
+    const errors = await extractMutationErrors(
       updateUserAccount({
         variables: {
           input: {
@@ -212,6 +229,15 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
         },
       }),
     );
+
+    // accountUpdate does not return name fields; refresh `me` so the form
+    // and sidebar identity match what was saved.
+    if (!errors.length) {
+      await user.refetchUser?.();
+    }
+
+    return errors;
+  };
   const handleToggleStaffStatus = () =>
     extractMutationErrors(
       updateStaffStatus({
@@ -238,9 +264,14 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
     });
   };
 
-  const formErrors = isUserSameAsViewer
-    ? []
-    : updateStaffMemberOpts?.data?.staffUpdate?.errors || [];
+  const formErrors = saveViaStaffUpdate
+    ? updateStaffMemberOpts?.data?.staffUpdate?.errors || []
+    : (updateUserAccountOpts?.data?.accountUpdate?.errors ?? []).map(error => ({
+        __typename: "StaffError" as const,
+        code: error.code,
+        field: error.field,
+        message: error.message,
+      }));
 
   return (
     <>
@@ -249,7 +280,7 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
         errors={formErrors}
         canEditAvatar={isUserSameAsViewer}
         canEditPreferences={isUserSameAsViewer}
-        canEditEmail={!isUserSameAsViewer}
+        canEditEmail={canEditEmail}
         canEditStatus={!isUserSameAsViewer}
         canRemove={!isUserSameAsViewer}
         canViewCustomerProfile={canViewCustomerProfile}
@@ -265,7 +296,7 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
             : undefined
         }
         onShowMetadata={canEditMetadata ? () => openModal("view-metadata") : undefined}
-        onSubmit={isUserSameAsViewer ? handleUserUpdate : handleStaffUpdate}
+        onSubmit={saveViaStaffUpdate ? handleStaffUpdate : handleUserUpdate}
         onImageUpload={file =>
           updateUserAvatar({
             variables: {
@@ -278,7 +309,7 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
         availablePermissionGroups={mapEdgesToItems(searchPermissionGroupsOpts?.data?.search)}
         staffMember={staffMember}
         saveButtonBarState={
-          isUserSameAsViewer ? updateUserAccountOpts.status : updateStaffMemberOpts.status
+          saveViaStaffUpdate ? updateStaffMemberOpts.status : updateUserAccountOpts.status
         }
         fetchMorePermissionGroups={{
           hasMore: searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
@@ -406,7 +437,10 @@ export const StaffDetailsView: React.FC<StaffDetailsViewProps> = ({ id, params }
           }}
         />
       </ActionDialog>
-      <StaffPasswordResetDialog open={params.action === "reset-password"} onClose={closeModal} />
+      <StaffPasswordResetDialog
+        open={isUserSameAsViewer && params.action === "reset-password"}
+        onClose={closeModal}
+      />
     </>
   );
 };

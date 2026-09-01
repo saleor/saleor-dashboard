@@ -8,6 +8,8 @@ interface SettingsSectionProps {
   title: ReactNode;
   description?: ReactNode;
   ownership?: SettingsOwnership;
+  /** Top-right header action (Assign, etc.). Use `size="small"` buttons. */
+  headerEnd?: ReactNode;
   children: ReactNode;
   id?: string;
   "data-test-id"?: string;
@@ -21,6 +23,7 @@ export const SettingsSection = ({
   title,
   description,
   ownership,
+  headerEnd,
   children,
   id,
   "data-test-id": dataTestId,
@@ -40,18 +43,26 @@ export const SettingsSection = ({
     >
       <Box
         className={styles.header}
-        paddingX={6}
+        paddingLeft={6}
+        paddingRight={headerEnd ? 4 : 6}
         paddingTop={5}
         paddingBottom={4}
         display="flex"
         flexDirection="column"
         gap={2}
       >
-        <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-          <Text size={5} fontWeight="bold" as="h2">
-            {title}
-          </Text>
-          {ownership ? <SettingsOwnershipChip ownership={ownership} /> : null}
+        <Box display="flex" alignItems="center" justifyContent="space-between" gap={4}>
+          <Box display="flex" alignItems="center" gap={2} flexWrap="wrap" minWidth={0}>
+            <Text size={5} fontWeight="bold" as="h2">
+              {title}
+            </Text>
+            {ownership ? <SettingsOwnershipChip ownership={ownership} /> : null}
+          </Box>
+          {headerEnd ? (
+            <Box className={styles.headerEnd} data-test-id="settings-section-header-end">
+              {headerEnd}
+            </Box>
+          ) : null}
         </Box>
         {description ? (
           <Text size={2} color="default2" className={styles.description}>

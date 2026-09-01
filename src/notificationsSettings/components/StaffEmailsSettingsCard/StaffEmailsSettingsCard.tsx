@@ -15,7 +15,10 @@ import {
   notificationsMessages,
   staffNotificationCopy,
 } from "@dashboard/notificationsSettings/messages";
-import { notificationsCustomerEmailsPath } from "@dashboard/notificationsSettings/urls";
+import {
+  notificationsCustomerEmailsPath,
+  notificationsStaffEmailsPath,
+} from "@dashboard/notificationsSettings/urls";
 import {
   type EmailNotificationsFormState,
   ensureSmtpFieldDefaults,
@@ -321,7 +324,24 @@ export const StaffMessagesSettingsCard = ({
               key={definition.id}
               id={definition.id}
               title={intl.formatMessage(getStaffCopy(definition.id, ""))}
-              description={intl.formatMessage(getStaffCopy(definition.id, "Desc"))}
+              description={
+                definition.id === "staff-order-confirmation" ? (
+                  <FormattedMessage
+                    {...staffNotificationCopy["staff-order-confirmationDesc"]}
+                    values={{
+                      alertsLink: (
+                        <MicrocopyLink
+                          to={`${notificationsStaffEmailsPath}#${settingsHashes.notificationsOrderAlerts}`}
+                        >
+                          <FormattedMessage {...notificationsMessages.orderAlertsTitle} />
+                        </MicrocopyLink>
+                      ),
+                    }}
+                  />
+                ) : (
+                  intl.formatMessage(getStaffCopy(definition.id, "Desc"))
+                )
+              }
               icon={getNotificationIcon(definition.id)}
               values={values}
               defaultSubject={definition.defaultSubject}
@@ -359,7 +379,7 @@ const getNotificationIcon = (id: string): ReactNode => {
 interface NotificationEmailEditorProps {
   id: string;
   title: string;
-  description: string;
+  description: ReactNode;
   icon: ReactNode;
   values: NotificationFormValues;
   defaultSubject: string;

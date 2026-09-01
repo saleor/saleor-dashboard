@@ -1,0 +1,53 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mu-spacing-3);
+  padding: var(--mu-spacing-1) 0;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowCopy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rowName {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.rowName:hover {
+  text-decoration: underline;
+}
+
+.rowDelete {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.rowDelete svg {
+  color: var(--mu-colors-text-default1);
+}
+
+.row:hover .rowDelete,
+.rowDelete:focus-within {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .rowDelete {
+    opacity: 1;
+  }
+}

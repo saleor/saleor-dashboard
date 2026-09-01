@@ -1,5 +1,6 @@
 import DeletableItem from "@dashboard/components/DeletableItem";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { type ReactNode } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -10,6 +11,8 @@ interface AssignListCardItem {
   name: string;
   href?: string;
   icon?: ReactNode;
+  /** Secondary line under the name (section, status, email). */
+  description?: ReactNode;
 }
 
 interface AssignListCardEmptyState {
@@ -26,7 +29,16 @@ interface AssignListCardProps {
   emptyState: AssignListCardEmptyState;
   footerAction?: ReactNode;
   onRemoveItem: (id: string) => void;
+  /** Tooltip / aria-label on the row trash control. */
+  removeLabel?: string;
   disabled?: boolean;
+  /** Names are still resolving — skeleton rows instead of empty/list. */
+  loading?: boolean;
+  /**
+   * `sidebar` (default) insets the card to match channel ops cards.
+   * `flush` when the parent already applies that inset (account settings stack).
+   */
+  inset?: "sidebar" | "flush";
   "data-test-id"?: string;
   rowTestId?: string;
   rowLinkTestId?: (id: string) => string;
@@ -40,15 +52,21 @@ export const AssignListCard = ({
   emptyState,
   footerAction,
   onRemoveItem,
+  removeLabel,
   disabled = false,
+  loading = false,
+  inset = "sidebar",
   "data-test-id": dataTestId,
   rowTestId = "assign-list-row",
-  rowLinkTestId = id => `${id}-link`,
-}: AssignListCardProps) => {
+  rowLinkTestId = (id: string): string => `${id}-link`,
+}: AssignListCardProps): JSX.Element => {
   const hasItems = items.length > 0;
 
   return (
-    <Box className={styles.card} data-test-id={dataTestId}>
+    <Box
+      className={clsx(styles.card, inset === "flush" && styles.cardFlush)}
+      data-test-id={dataTestId}
+    >
       <Box className={styles.header}>
         <Text size={5} fontWeight="bold" as="h2">
           {title}
@@ -64,7 +82,20 @@ export const AssignListCard = ({
         </Text>
       </Box>
 
-      {!hasItems ? (
+      {loading ? (
+        <Box
+          className={styles.list}
+          aria-busy="true"
+          data-test-id={dataTestId ? `${dataTestId}-loading` : undefined}
+        >
+          <Box className={styles.row}>
+            <Skeleton __height="1.25rem" __width="40%" />
+          </Box>
+          <Box className={styles.row}>
+            <Skeleton __height="1.25rem" __width="55%" />
+          </Box>
+        </Box>
+      ) : !hasItems ? (
         <Box className={styles.emptyState}>
           <Box className={styles.emptyLeading}>
             <Box className={styles.emptyIcon} aria-hidden>
@@ -92,26 +123,36 @@ export const AssignListCard = ({
                       {item.icon}
                     </Box>
                   ) : null}
-                  {item.href ? (
-                    <RouterLink
-                      to={item.href}
-                      className={styles.rowName}
-                      data-test-id={rowLinkTestId(item.id)}
-                    >
+                  <Box className={styles.rowCopy}>
+                    {item.href ? (
+                      <RouterLink
+                        to={item.href}
+                        className={styles.rowName}
+                        data-test-id={rowLinkTestId(item.id)}
+                      >
+                        <Text size={3} fontWeight="medium">
+                          {item.name}
+                        </Text>
+                      </RouterLink>
+                    ) : (
                       <Text size={3} fontWeight="medium">
                         {item.name}
                       </Text>
-                    </RouterLink>
-                  ) : (
-                    <Box className={styles.rowName}>
-                      <Text size={3} fontWeight="medium">
-                        {item.name}
+                    )}
+                    {item.description ? (
+                      <Text size={2} color="default2">
+                        {item.description}
                       </Text>
-                    </Box>
-                  )}
+                    ) : null}
+                  </Box>
                 </Box>
                 <div className={styles.rowDelete}>
-                  <DeletableItem id={item.id} onDelete={onRemoveItem} disabled={disabled} />
+                  <DeletableItem
+                    id={item.id}
+                    onDelete={onRemoveItem}
+                    disabled={disabled}
+                    label={removeLabel}
+                  />
                 </div>
               </div>
             ))}
