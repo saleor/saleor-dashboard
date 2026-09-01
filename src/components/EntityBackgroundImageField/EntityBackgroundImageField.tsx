@@ -1,10 +1,10 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { MediaGalleryDropzone } from "@dashboard/components/MediaGallery/MediaGalleryDropzone";
+import { messages as mediaGalleryMessages } from "@dashboard/components/MediaGallery/messages";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { Skeleton } from "@dashboard/components/Skeleton/Skeleton";
 import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { buttonMessages } from "@dashboard/intl";
-import { messages as productMediaMessages } from "@dashboard/products/components/ProductMedia/messages";
-import { ProductMediaGalleryDropzone } from "@dashboard/products/components/ProductMedia/ProductMediaGalleryDropzone";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Trash2 } from "lucide-react";
@@ -166,22 +166,22 @@ export const EntityBackgroundImageField = ({
         {image === undefined && !hasPendingUpload ? (
           <Skeleton __height="120px" __width="100%" borderRadius={2} />
         ) : showEmptyDropzone ? (
-          <ProductMediaGalleryDropzone
+          <MediaGalleryDropzone
             variant="empty"
             multiple={false}
             disabled={isDropzoneDisabled}
-            uploadHintMessage={productMediaMessages.uploadHint}
-            uploadHintDropMessage={productMediaMessages.uploadHintDrop}
+            uploadHintMessage={mediaGalleryMessages.uploadHint}
+            uploadHintDropMessage={mediaGalleryMessages.uploadHintDrop}
             onImageUpload={handleSingleImageUpload(onImageUpload)}
           />
         ) : showGallery ? (
-          <ProductMediaGalleryDropzone
+          <MediaGalleryDropzone
             variant="gallery"
             multiple={false}
             disabled={isDropzoneDisabled}
             galleryClassName={styles.gallery}
-            uploadHintMessage={productMediaMessages.uploadHint}
-            uploadHintDropMessage={productMediaMessages.uploadHintDrop}
+            uploadHintMessage={mediaGalleryMessages.uploadHint}
+            uploadHintDropMessage={mediaGalleryMessages.uploadHintDrop}
             onImageUpload={handleSingleImageUpload(onImageUpload)}
           >
             {({ isDragActive }) => (
@@ -198,7 +198,7 @@ export const EntityBackgroundImageField = ({
                 onUploadPreviewLoaded={onUploadPreviewLoaded}
               />
             )}
-          </ProductMediaGalleryDropzone>
+          </MediaGalleryDropzone>
         ) : null}
 
         {image !== undefined || hasPendingUpload ? (

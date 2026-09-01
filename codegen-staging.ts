@@ -27,6 +27,13 @@ const config: CodegenConfig = {
     "./src/graphql/typesStaging.generated.ts": {
       plugins: ["typescript", "typescript-operations"],
       config: {
+        scalars: {
+          Day: "number",
+          Hour: "number",
+          Date: "string",
+          JSON: "unknown",
+          JSONString: "string",
+        },
         nonOptionalTypename: true,
         avoidOptionals: {
           field: true,

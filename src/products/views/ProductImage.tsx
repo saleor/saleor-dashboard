@@ -1,6 +1,14 @@
 // @ts-strict-ignore
+import {
+  TopNavDestinationIcon,
+  topNavDestinationMessages,
+} from "@dashboard/components/AppLayout/TopNav";
+import { MediaDeleteDialog } from "@dashboard/components/MediaDeleteDialog/MediaDeleteDialog";
+import { MediaDetailPage } from "@dashboard/components/MediaDetailPage/MediaDetailPage";
+import { MediaMetadataDialog } from "@dashboard/components/MediaMetadataDialog/MediaMetadataDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import {
+  ProductMediaByIdDocument,
   ProductMediaType,
   useProductMediaByIdQuery,
   useProductMediaDeleteMutation,
@@ -8,12 +16,11 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
+import { mediaMessages } from "@dashboard/media/messages";
+import { rippleProductMediaMetadata } from "@dashboard/products/ripples/productMediaMetadata";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { useIntl } from "react-intl";
 
-import { ProductMediaDeleteDialog } from "../components/ProductMediaDeleteDialog/ProductMediaDeleteDialog";
-import { ProductMediaMetadataDialog } from "../components/ProductMediaMetadataDialog/ProductMediaMetadataDialog";
-import ProductMediaPage from "../components/ProductMediaPage/ProductMediaPage";
 import {
   productImageUrl,
   type ProductImageUrlDialog,
@@ -49,10 +56,7 @@ const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
       if (data.productMediaUpdate.errors.length === 0) {
         notify({
           status: "success",
-          text: intl.formatMessage({
-            id: "uOC/uQ",
-            defaultMessage: "Image updated",
-          }),
+          text: intl.formatMessage(mediaMessages.mediaUpdateSuccess),
         });
       }
     },
@@ -68,23 +72,28 @@ const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
 
   const handleDelete = () => deleteImage({ variables: { id: mediaId } });
   const handleImageClick = (id: string) => () => navigate(productImageUrl(productId, id));
-  const handleUpdate = (formData: { alt: string }) => {
-    updateImage({
+  const handleUpdate = async (formData: { alt: string }) => {
+    const result = await updateImage({
       variables: {
         alt: formData.alt,
         id: mediaId,
       },
     });
+
+    return result.data?.productMediaUpdate.errors ?? [];
   };
   const mediaObj = data?.product?.mainImage;
   const isVideo = mediaObj?.type === ProductMediaType.VIDEO;
 
   return (
     <>
-      <ProductMediaPage
-        productId={productId}
+      <MediaDetailPage
+        ownerUrl={productUrl(productId)}
+        ownerIcon={<TopNavDestinationIcon.products />}
+        ownerListLabel={intl.formatMessage(topNavDestinationMessages.product)}
+        metadataRipple={rippleProductMediaMetadata}
         disabled={loading}
-        product={data?.product?.name}
+        ownerName={data?.product?.name}
         mediaObj={mediaObj || null}
         media={data?.product?.media}
         onDelete={() =>
@@ -99,12 +108,13 @@ const ProductImage = ({ mediaId, productId, params }: ProductMediaProps) => {
         onSubmit={handleUpdate}
         saveButtonBarState={updateResult.status}
       />
-      <ProductMediaMetadataDialog
+      <MediaMetadataDialog
         open={params.action === "view-metadata" && !!mediaObj}
         onClose={closeModal}
         media={mediaObj}
+        refetchDocument={ProductMediaByIdDocument}
       />
-      <ProductMediaDeleteDialog
+      <MediaDeleteDialog
         onClose={() => navigate(productImageUrl(productId, mediaId), { replace: true })}
         onConfirm={handleDelete}
         open={params.action === "remove"}

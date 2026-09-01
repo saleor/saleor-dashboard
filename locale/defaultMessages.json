@@ -1147,6 +1147,10 @@
     "context": "model type a11y label prefix",
     "string": "Model type"
   },
+  "2WuMW8": {
+    "context": "TopNav destination link tooltip to parent model",
+    "string": "Model"
+  },
   "2Xt+sw": {
     "context": "dialog header",
     "string": "Add postal codes"
@@ -1738,10 +1742,6 @@
     "context": "product stock, section header",
     "string": "Inventory"
   },
-  "4sYqlg": {
-    "context": "error message when bulk variant creation fails completely",
-    "string": "All variants failed to create"
-  },
   "4y3Smi": {
     "string": "Removing permissions may cause extension to break."
   },
@@ -2254,10 +2254,6 @@
   "6i0KPD": {
     "context": "Save composition segment for collection channel listings",
     "string": "channel availability"
-  },
-  "6iw4VR": {
-    "context": "delete variant dialog title",
-    "string": "Delete Product Variants"
   },
   "6j4TUi": {
     "string": "Product type updated"
@@ -4056,6 +4052,10 @@
   "DM/Ha1": {
     "context": "add postal code range, button",
     "string": "Add"
+  },
+  "DMGbK7": {
+    "context": "TopNav destination link tooltip to parent collection",
+    "string": "Collection"
   },
   "DNTxWr": {
     "context": "permission groups section name",
@@ -6619,6 +6619,10 @@
   },
   "MzXzjL": {
     "string": "Warehouse deleted"
+  },
+  "N+1kc6": {
+    "context": "TopNav destination link tooltip to parent category",
+    "string": "Category"
   },
   "N+Omth": {
     "context": "create attribute from model type, button",
@@ -10494,10 +10498,6 @@
   "bRJD/v": {
     "context": "button",
     "string": "Create permission group"
-  },
-  "bRQeJp": {
-    "context": "success message when all variants are created",
-    "string": "{count, plural, one {# variant created successfully} other {# variants created successfully}}"
   },
   "bRXgSC": {
     "context": "capture button with amount",
@@ -15704,10 +15704,6 @@
     "context": "setup task title",
     "string": "Add a stock location"
   },
-  "u6rPuc": {
-    "context": "warning message when some variants failed to create",
-    "string": "{success, plural, one {# variant} other {# variants}} created, {failed, plural, one {# failed} other {# failed}}"
-  },
   "u7ShY+": {
     "context": "pill status for overcaptured outcome",
     "string": "Overcaptured"
@@ -15895,10 +15891,6 @@
   "ujFo4A": {
     "context": "voucher start date",
     "string": "Started"
-  },
-  "ukdRUv": {
-    "context": "delete variant dialog subtitle",
-    "string": "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}"
   },
   "ukjCvM": {
     "context": "empty state prompt",

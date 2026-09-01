@@ -103,8 +103,8 @@ interface MediaTileBaseProps {
   media: {
     alt: string | null;
     url: string;
-    type?: string;
-    oembedData?: string;
+    type?: string | null;
+    oembedData?: string | null;
   };
   disableOverlay?: boolean;
   loading?: boolean;

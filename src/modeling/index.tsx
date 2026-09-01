@@ -1,4 +1,5 @@
 import { Route } from "@dashboard/components/Router";
+import { isStagingSchema } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -13,9 +14,11 @@ import {
   pageListPath,
   type PageListUrlQueryParams,
   PageListUrlSortField,
+  pageMediaPath,
   pagePath,
   type PageUrlQueryParams,
 } from "./urls";
+import ModelMediaView from "./views/ModelMedia";
 import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
 import PageListComponent from "./views/PageList/PageList";
@@ -40,6 +43,13 @@ const PageCreate = ({ match }: RouteComponentProps<{ id: string }>) => {
 
   return <PageCreateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
+const ModelMedia = ({ match }: RouteComponentProps<{ modelId: string; mediaId: string }>) => (
+  <ModelMediaView
+    modelId={decodeURIComponent(match.params.modelId)}
+    mediaId={decodeURIComponent(match.params.mediaId)}
+  />
+);
+
 const PageDetails = ({ match }: RouteComponentProps<{ id: string }>) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageUrlQueryParams = qs;
@@ -55,6 +65,9 @@ const Component = () => {
       <Switch>
         <Route exact path={pageListPath} component={PageList} />
         <Route exact path={pageCreatePath} component={PageCreate} />
+        {isStagingSchema() && (
+          <Route exact path={pageMediaPath(":modelId", ":mediaId")} component={ModelMedia} />
+        )}
         <Route path={pagePath(":id")} component={PageDetails} />
       </Switch>
     </>

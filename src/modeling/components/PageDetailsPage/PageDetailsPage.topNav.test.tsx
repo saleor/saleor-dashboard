@@ -108,6 +108,9 @@ jest.mock("./form", () => ({
       attributeRichTextGetters: {},
     }),
 }));
+jest.mock("../ModelMediaGallery/ModelMediaGallery", () => ({
+  ModelMediaGallery: () => <div data-test-id="model-media-gallery-mock" />,
+}));
 jest.mock("../PageInfo/PageInfo", () => ({
   __esModule: true,
   default: () => <div data-test-id="page-info-mock" />,

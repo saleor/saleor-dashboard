@@ -42,6 +42,7 @@ import { useIntl } from "react-intl";
 import { type ChannelProps, type PageListProps } from "../../../types";
 import { CollectionChannelAvailabilityCard } from "../CollectionChannelAvailabilityCard/CollectionChannelAvailabilityCard";
 import { CollectionDetails } from "../CollectionDetails/CollectionDetails";
+import { CollectionMediaGallery } from "../CollectionMediaGallery/CollectionMediaGallery";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import { CollectionSaveCompositionHint } from "./CollectionSaveCompositionHint";
 import CollectionUpdateForm, { type CollectionUpdateData } from "./form";
@@ -205,6 +206,7 @@ const CollectionDetailsPage = ({
                   onImageDelete={onImageDelete}
                   onImageUpload={onImageUpload}
                 />
+                {collection ? <CollectionMediaGallery collectionId={collection.id} /> : null}
                 {/*
                   Product assign/unassign and image upload/delete stay live while the form
                   is dirty — they persist immediately and are not part of Save.

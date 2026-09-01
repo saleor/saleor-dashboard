@@ -58,6 +58,7 @@ import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
+import { ModelMediaGallery } from "../ModelMediaGallery/ModelMediaGallery";
 import PageInfo from "../PageInfo/PageInfo";
 import { PageOrganizeContent } from "../PageOrganizeContent/PageOrganizeContent";
 import PageForm, { type PageData, type PageSubmitData, type PageUpdateHandlers } from "./form";
@@ -265,6 +266,12 @@ const PageDetailsPage = ({
             <DetailPageLayout.Content>
               <PageInfo data={data} disabled={loading} errors={errors} onChange={change} />
               <CardSpacer />
+              {page ? (
+                <>
+                  <ModelMediaGallery modelId={page.id} />
+                  <CardSpacer />
+                </>
+              ) : null}
               <SeoForm
                 errors={errors}
                 allowEmptySlug={!pageExists}

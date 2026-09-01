@@ -51,3 +51,8 @@ export const collectionUrl = (id: string, params?: CollectionUrlQueryParams) =>
 
 /** Legacy full-page create path; redirects to list `?action=create`. */
 export const collectionAddPath = urlJoin(collectionSectionUrl, "add");
+
+export const collectionMediaPath = (collectionId: string, mediaId: string) =>
+  urlJoin(collectionSectionUrl, collectionId, "media", mediaId);
+export const collectionMediaUrl = (collectionId: string, mediaId: string) =>
+  collectionMediaPath(encodeURIComponent(collectionId), encodeURIComponent(mediaId));
