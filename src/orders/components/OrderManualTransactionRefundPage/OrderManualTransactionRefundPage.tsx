@@ -3,9 +3,9 @@ import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
-} from "@dashboard/components/AppLayout";
+} from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import Link from "@dashboard/components/Link";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum, type TransactionItemFragment } from "@dashboard/graphql";
@@ -20,9 +20,9 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderManualTransactionRefundAmount } from "./components/OrderManualTransactionRefundAmount";
-import { OrderManualTransactionRefundForm } from "./components/OrderManualTransactionRefundForm";
-import { OrderManualTransactionRefundTiles } from "./components/OrderManualTransactionRefundTiles";
+import { OrderManualTransactionRefundAmount } from "./components/OrderManualTransactionRefundAmount/OrderManualTransactionRefundAmount";
+import { OrderManualTransactionRefundForm } from "./components/OrderManualTransactionRefundForm/OrderManualTransactionRefundForm";
+import { OrderManualTransactionRefundTiles } from "./components/OrderManualTransactionRefundTiles/OrderManualTransactionRefundTiles";
 import { OrderManualTransactionRefundWarning } from "./components/OrderManualTransactionRefundWarning/OrderManualTransactionRefundWarning";
 import { messages } from "./messages";
 

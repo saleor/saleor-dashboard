@@ -1,10 +1,10 @@
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createStaffMembersQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import { useStaffListQuery } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
@@ -21,7 +21,7 @@ import { getSortParams } from "@dashboard/utils/sort";
 import { useEffect, useMemo } from "react";
 
 import { StaffAddMemberDialog } from "../../components/StaffAddMemberDialog/StaffAddMemberDialog";
-import StaffListPage from "../../components/StaffListPage";
+import StaffListPage from "../../components/StaffListPage/StaffListPage";
 import { useStaffInvite } from "../../hooks/useStaffInvite";
 import {
   staffListUrl,

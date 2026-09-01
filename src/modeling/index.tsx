@@ -18,7 +18,7 @@ import {
 } from "./urls";
 import PageCreateComponent from "./views/PageCreate";
 import PageDetailsComponent from "./views/PageDetails";
-import PageListComponent from "./views/PageList";
+import PageListComponent from "./views/PageList/PageList";
 
 const PageList = ({ location }: RouteComponentProps) => {
   const qs = parseQs(location.search.substr(1)) as any;

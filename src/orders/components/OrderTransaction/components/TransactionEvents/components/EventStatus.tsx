@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { type TransactionEventStatus } from "@dashboard/orders/types";
 import { useIntl } from "react-intl";
 

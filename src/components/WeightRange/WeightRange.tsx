@@ -1,6 +1,6 @@
 import { FormattedMessage } from "react-intl";
 
-import { type Weight } from "../Weight";
+import { type Weight } from "../Weight/Weight";
 
 interface WeightRangeProps {
   from?: Weight;

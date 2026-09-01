@@ -1,4 +1,4 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { TextField } from "@material-ui/core";
 import { useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { getAbsoluteApiUrl } from "@dashboard/config";
-import { type FlagList } from "@dashboard/featureFlags";
+import { type FlagList } from "@dashboard/featureFlags/availableFlags";
 import { type Dialog, type SingleAction } from "@dashboard/types";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";

@@ -1,4 +1,4 @@
-import { IconButton } from "@dashboard/components/IconButton";
+import { IconButton } from "@dashboard/components/IconButton/IconButton";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { parseOembedData } from "@dashboard/products/utils/parseOembedData";
@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { Pencil, Trash2 } from "lucide-react";
 import type * as React from "react";
 
-import { SaleorThrobber } from "../Throbber";
+import { SaleorThrobber } from "../Throbber/SaleorThrobber";
 
 const useStyles = makeStyles(
   theme => ({

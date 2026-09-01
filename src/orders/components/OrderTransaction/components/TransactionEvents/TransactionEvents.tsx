@@ -4,7 +4,7 @@ import { type TransactionFakeEvent } from "@dashboard/orders/types";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { EventItem } from "./components";
+import { EventItem } from "./components/EventItem";
 import { messages } from "./messages";
 import styles from "./TransactionEvents.module.css";
 

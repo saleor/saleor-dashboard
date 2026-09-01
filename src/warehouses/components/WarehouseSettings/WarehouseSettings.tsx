@@ -1,6 +1,6 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
+import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField/RadioGroupField";
 import {
   WarehouseClickAndCollectOptionEnum,
   type WarehouseWithShippingFragment,
@@ -16,7 +16,7 @@ import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import { type ReactNode, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { type WarehouseDetailsPageFormData } from "../WarehouseDetailsPage";
+import { type WarehouseDetailsPageFormData } from "../WarehouseDetailsPage/WarehouseDetailsPage";
 import messages from "./messages";
 
 const WarehouseRadioSubtitle = ({ children }: { children: ReactNode }) => (

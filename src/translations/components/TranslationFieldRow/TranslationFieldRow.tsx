@@ -1,5 +1,5 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { Pill } from "@dashboard/components/Pill";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { isFieldTranslationComplete } from "@dashboard/translations/progress";

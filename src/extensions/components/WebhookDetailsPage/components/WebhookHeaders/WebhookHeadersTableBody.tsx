@@ -1,9 +1,9 @@
 // @ts-strict-ignore
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
+import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists/lists";
 import { TextField } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";

@@ -1,6 +1,6 @@
 import { GiftCardListPage } from "./GiftCardListPage";
-import GiftCardListDialogsProvider from "./providers/GiftCardListDialogsProvider";
-import { GiftCardsListProvider } from "./providers/GiftCardListProvider";
+import GiftCardListDialogsProvider from "./providers/GiftCardListDialogsProvider/GiftCardListDialogsProvider";
+import { GiftCardsListProvider } from "./providers/GiftCardListProvider/GiftCardListProvider";
 import { type GiftCardListUrlQueryParams } from "./types";
 
 interface GiftCardsListProps {

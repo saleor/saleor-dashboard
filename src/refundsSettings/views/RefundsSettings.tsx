@@ -8,7 +8,7 @@ import {
   useReturnSettingsQuery,
   useReturnSettingsUpdateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationState } from "@dashboard/misc";
 import {

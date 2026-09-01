@@ -1,4 +1,4 @@
-import DeletableItem from "@dashboard/components/DeletableItem";
+import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { type ReactNode } from "react";

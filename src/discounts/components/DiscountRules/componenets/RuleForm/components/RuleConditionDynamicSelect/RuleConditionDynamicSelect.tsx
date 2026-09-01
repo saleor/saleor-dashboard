@@ -1,7 +1,8 @@
-import { Multiselect } from "@dashboard/components/Combobox";
+import { Multiselect } from "@dashboard/components/Combobox/components/Multiselect";
 import { useCondtionValues } from "@dashboard/discounts/components/DiscountRules/componenets/RuleForm/components/RuleConditionValues/hooks/useCondtionValues";
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { type Condition, type Rule } from "@dashboard/discounts/models";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { type Condition } from "@dashboard/discounts/models/Condition";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { type Option } from "@saleor/macaw-ui-next";
 import { useController, useFormContext } from "react-hook-form";
 import { FormattedMessage } from "react-intl";

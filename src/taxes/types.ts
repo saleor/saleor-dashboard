@@ -1,4 +1,4 @@
-import { type MetadataFormData } from "@dashboard/components/Metadata";
+import { type MetadataFormData } from "@dashboard/components/Metadata/types";
 import { type TaxClassRateInput } from "@dashboard/graphql";
 import { type FormsetData } from "@dashboard/hooks/useFormset";
 

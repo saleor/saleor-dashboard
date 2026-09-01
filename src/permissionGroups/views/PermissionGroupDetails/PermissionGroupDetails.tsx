@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { Button } from "@dashboard/components/Button";
+import { Button } from "@dashboard/components/Button/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type PermissionGroupDetailsQuery,
@@ -11,12 +11,12 @@ import {
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import { MembersErrorDialog } from "@dashboard/permissionGroups/components/MembersErrorDialog";
-import { PermissionGroupDeleteDialog } from "@dashboard/permissionGroups/components/PermissionGroupDeleteDialog";
+import { MembersErrorDialog } from "@dashboard/permissionGroups/components/MembersErrorDialog/MembersErrorDialog";
+import { PermissionGroupDeleteDialog } from "@dashboard/permissionGroups/components/PermissionGroupDeleteDialog/PermissionGroupDeleteDialog";
 import useStaffMemberSearch from "@dashboard/searches/useStaffMemberSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -25,12 +25,12 @@ import { getSortParams } from "@dashboard/utils/sort";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import AssignMembersDialog from "../../components/AssignMembersDialog";
+import AssignMembersDialog from "../../components/AssignMembersDialog/AssignMembersDialog";
 import {
   PermissionGroupDetailsPage,
   type PermissionGroupDetailsPageFormData,
-} from "../../components/PermissionGroupDetailsPage";
-import { UnassignMembersDialog } from "../../components/UnassignMembersDialog";
+} from "../../components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
+import { UnassignMembersDialog } from "../../components/UnassignMembersDialog/UnassignMembersDialog";
 import {
   permissionGroupDetailsUrl,
   type PermissionGroupDetailsUrlDialog,

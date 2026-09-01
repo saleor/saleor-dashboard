@@ -2,18 +2,18 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Money from "@dashboard/components/Money";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { type ProductWhereInput, type SearchProductsQuery } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
@@ -22,11 +22,11 @@ import { TextField } from "@material-ui/core";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type AssignContainerDialogProps } from "../AssignContainerDialog";
+import { type AssignContainerDialogProps } from "../AssignContainerDialog/AssignContainerDialog";
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "../BackButton";
-import Checkbox from "../Checkbox";
+import Checkbox from "../Checkbox/Checkbox";
 import { useModalProductFilterContext } from "../ModalFilters/entityConfigs/ModalProductFilterProvider";
 import { ModalFilters } from "../ModalFilters/ModalFilters";
 import { AssignVariantLoadMoreRow } from "./AssignVariantLoadMoreRow";

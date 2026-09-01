@@ -2,7 +2,7 @@ import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
-} from "@dashboard/components/AppLayout";
+} from "@dashboard/components/AppLayout/TopNav";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled/ExternalLinkUnstyled";
 import { messages } from "@dashboard/extensions/messages";
 import { MANIFEST_FORMAT_DOCS_URL } from "@dashboard/links";

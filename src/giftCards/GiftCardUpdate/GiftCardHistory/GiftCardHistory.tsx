@@ -1,12 +1,12 @@
-import Form from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
 import { groupEventsByDate } from "@dashboard/components/Timeline/groupEventsByDate";
 import { Timeline, TimelineAddNote } from "@dashboard/components/Timeline/Timeline";
 import { TimelineDateGroupHeader } from "@dashboard/components/Timeline/TimelineDateGroupHeader";
 import { TimelineNote } from "@dashboard/components/Timeline/TimelineNote";
 import { toActor } from "@dashboard/components/Timeline/utils";
-import { useGiftCardDetails } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider";
+import { useGiftCardDetails } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/GiftCardDetailsProvider";
 import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { HistoryComponentLoader } from "@dashboard/orders/components/OrderHistory/HistoryComponentLoader";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";

@@ -1,7 +1,7 @@
 import AssignContainerDialog, {
   type AssignContainerDialogProps,
 } from "@dashboard/components/AssignContainerDialog/AssignContainerDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type WarehouseFragment } from "@dashboard/graphql";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";

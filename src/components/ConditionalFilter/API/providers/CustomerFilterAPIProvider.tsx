@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import { AttributeTypeEnum } from "@dashboard/graphql";
 
-import { type FilterContainer } from "../../FilterElement";
+import { type FilterContainer } from "../../FilterElement/FilterElement";
 import { type LeftOperand } from "../../LeftOperandsProvider";
 import { customerFilterDefinitionResolver } from "../../queryVariables";
 import { type FilterAPIProvider } from "../FilterAPIProvider";

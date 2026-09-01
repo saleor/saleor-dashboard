@@ -2,7 +2,7 @@ import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHead
 import {
   NewRadioGroupField as RadioGroupField,
   type RadioGroupFieldChoice,
-} from "@dashboard/components/RadioGroupField";
+} from "@dashboard/components/RadioGroupField/RadioGroupField";
 import { type ExportErrorFragment, ExportScope, FileTypesEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
 import { getFormErrors } from "@dashboard/utils/errors";

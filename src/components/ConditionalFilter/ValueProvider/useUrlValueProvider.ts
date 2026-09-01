@@ -14,7 +14,11 @@ import { type InitialProductAPIState } from "../API/initialState/product/useProd
 import { type InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
 import { type InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { type InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
-import { cloneFilterContainer, type FilterContainer, FilterElement } from "../FilterElement";
+import {
+  cloneFilterContainer,
+  type FilterContainer,
+  FilterElement,
+} from "../FilterElement/FilterElement";
 import { type FilterValueProvider } from "../FilterValueProvider";
 import { type FilterProviderType, type InitialAPIState } from "../types";
 import { getNavigationQueryParams, stripNavigationQueryParams } from "./navigationQueryParams";

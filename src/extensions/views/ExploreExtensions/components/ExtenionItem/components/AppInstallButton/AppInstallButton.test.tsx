@@ -6,7 +6,7 @@ import { AppInstallButton } from "./AppInstallButton";
 
 jest.mock("@dashboard/hooks/useHasManagedAppsPermission");
 
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn(() => ({ enabled: true })),
 }));
 

@@ -5,14 +5,14 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { UserAvatar } from "@dashboard/components/UserAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
+import { UserAvatar } from "@dashboard/components/UserAvatar/UserAvatar";
 import { type SearchStaffMembersQuery } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";

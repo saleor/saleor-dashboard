@@ -1,4 +1,4 @@
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type CustomCell, type CustomRenderer, GridCellKind } from "@glideapps/glide-data-grid";
 
 import {

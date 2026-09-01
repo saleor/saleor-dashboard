@@ -2,9 +2,9 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { commonMessages } from "@dashboard/intl";
 import { type DialogProps, type MinMax } from "@dashboard/types";
 import { Box, Input } from "@saleor/macaw-ui-next";

@@ -1,4 +1,4 @@
-import { Select } from "@dashboard/components/Select";
+import { Select } from "@dashboard/components/Select/Select";
 import { type OrderDetailsFragment } from "@dashboard/graphql";
 import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import useLocale from "@dashboard/hooks/useLocale";

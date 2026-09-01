@@ -1,4 +1,4 @@
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { ConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/context";
 import { DashboardModal } from "@dashboard/components/Modal";
 import Wrapper from "@test/wrapper";

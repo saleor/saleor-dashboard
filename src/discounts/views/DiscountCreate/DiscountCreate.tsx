@@ -1,10 +1,10 @@
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DiscountCreatePage } from "@dashboard/discounts/components/DiscountCreatePage";
+import { DiscountCreatePage } from "@dashboard/discounts/components/DiscountCreatePage/DiscountCreatePage";
 import { discountListUrl, discountUrl } from "@dashboard/discounts/discountsUrls";
 import { usePromotionCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors } from "@dashboard/misc";
 import { useIntl } from "react-intl";

@@ -10,12 +10,12 @@ import {
   useOrderSettingsQuery,
   useOrderSettingsUpdateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationState } from "@dashboard/misc";
-import OrderSettingsPage from "@dashboard/orders/components/OrderSettingsPage";
 import { getOrderSettingsFormData } from "@dashboard/orders/components/OrderSettingsPage/formData";
 import { orderSettingsPageMessages } from "@dashboard/orders/components/OrderSettingsPage/messages";
+import OrderSettingsPage from "@dashboard/orders/components/OrderSettingsPage/OrderSettingsPage";
 import { submitOrderSettingsForm } from "@dashboard/orders/components/OrderSettingsPage/submitOrderSettingsForm";
 import { type OrderSettingsFormData } from "@dashboard/orders/components/OrderSettingsPage/types";
 import { useCallback, useMemo, useState } from "react";

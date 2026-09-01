@@ -1,9 +1,9 @@
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { ProductErrorCode, type ProductErrorWithAttributesFragment } from "@dashboard/graphql";
 import { type IntlShape } from "react-intl";
 import { z } from "zod";
 
-import { type ProductCreateData } from "../components/ProductCreatePage";
+import { type ProductCreateData } from "../components/ProductCreatePage/form";
 import { type ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
 import { type ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
 

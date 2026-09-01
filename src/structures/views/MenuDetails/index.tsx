@@ -11,7 +11,7 @@ import {
   useMenuUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { pageUrl } from "@dashboard/modeling/urls";
 import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
 import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
@@ -21,7 +21,9 @@ import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
 import { extractMutationErrors, maybe } from "../../../misc";
 import { MenuDeleteDialog } from "../../components/MenuDeleteDialog/MenuDeleteDialog";
-import MenuDetailsPage, { type MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
+import MenuDetailsPage, {
+  type MenuDetailsSubmitData,
+} from "../../components/MenuDetailsPage/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
 import { MenuItemDialog } from "../../components/MenuItemDialog/MenuItemDialog";
 import {

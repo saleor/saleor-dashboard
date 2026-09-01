@@ -3,7 +3,7 @@ import {
   DetailSettingNestedField,
   DetailSettingToggleRow,
 } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
-import { Grid } from "@dashboard/components/Grid";
+import { Grid } from "@dashboard/components/Grid/Grid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import { DiscountErrorCode, type DiscountErrorFragment } from "@dashboard/graphql";
@@ -15,7 +15,7 @@ import { Lock } from "lucide-react";
 import { type ChangeEvent, type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage/VoucherDetailsPage";
 import messages from "./messages";
 import styles from "./VoucherLimits.module.css";
 

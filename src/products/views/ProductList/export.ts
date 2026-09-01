@@ -1,4 +1,4 @@
-import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { type FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import { hasActiveListFilters } from "@dashboard/components/ConditionalFilter/hasActiveListFilters";
 import { createProductExportQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import {

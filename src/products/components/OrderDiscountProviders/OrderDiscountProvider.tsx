@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import {
   type MoneyFragment,
   OrderDetailsDocument,
@@ -9,7 +9,7 @@ import {
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { type OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountModal/types";
 import type * as React from "react";

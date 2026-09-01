@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { useGlobalSearchQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { useHotkeys } from "react-hotkeys-hook";

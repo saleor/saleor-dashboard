@@ -25,7 +25,7 @@ jest.mock("@dashboard/graphql", () => ({
   useRequestPasswordResetMutation: jest.fn(() => [mockResetPassword, { status: "default" }]),
 }));
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn(() => jest.fn()),
 }));
 

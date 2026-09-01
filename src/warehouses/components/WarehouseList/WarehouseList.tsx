@@ -1,10 +1,10 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type WarehouseWithShippingFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { renderCollection } from "@dashboard/misc";

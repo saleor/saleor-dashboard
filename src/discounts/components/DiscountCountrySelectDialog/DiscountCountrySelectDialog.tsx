@@ -10,18 +10,18 @@ import listStyles from "@dashboard/components/ChannelsAvailabilityDialogChannels
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type CountryWithCodeFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import {
   COUNTRY_PRESET_CODES,
   type CountryPresetCode,
 } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog/countryPresets";
 import { togglePresetSelection } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog/presetSelection";
 import { ShippingZoneCountriesAssignDialogQuickPicks } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialogQuickPicks";
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { Box } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

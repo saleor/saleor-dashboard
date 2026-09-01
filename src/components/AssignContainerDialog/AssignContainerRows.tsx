@@ -2,8 +2,8 @@ import { TableCell } from "@dashboard/components/Table/Table";
 import { type Container } from "@dashboard/types";
 import { Radio } from "@material-ui/core";
 
-import Checkbox from "../Checkbox";
-import TableRowLink from "../TableRowLink";
+import Checkbox from "../Checkbox/Checkbox";
+import TableRowLink from "../TableRowLink/TableRowLink";
 
 interface SingleSelectionRowsProps {
   containers: Container[];

@@ -1,4 +1,4 @@
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { OrderAuthorizeStatusEnum } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 

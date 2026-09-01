@@ -14,19 +14,19 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog, {
   type AssignAttributeValueDialogFilterChangeMap,
-} from "@dashboard/components/AssignAttributeValueDialog";
+} from "@dashboard/components/AssignAttributeValueDialog/AssignAttributeValueDialog";
 import {
   type AttributeInput,
   Attributes,
   type AttributeValueChoices,
   type AttributeValueFetchMore,
-  VariantAttributeScope,
-} from "@dashboard/components/Attributes";
+} from "@dashboard/components/Attributes/Attributes";
+import { VariantAttributeScope } from "@dashboard/components/Attributes/types";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Grid from "@dashboard/components/Grid";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Grid from "@dashboard/components/Grid/Grid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import Link from "@dashboard/components/Link";
 import { type InitialPageConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalPageFilterProvider";
 import { type InitialConstraints } from "@dashboard/components/ModalFilters/entityConfigs/ModalProductFilterProvider";
@@ -58,18 +58,18 @@ import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { ProductShipping } from "../ProductShipping";
-import { ProductStocks } from "../ProductStocks";
+import { ProductShipping } from "../ProductShipping/ProductShipping";
+import { ProductStocks } from "../ProductStocks/ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import { ProductVariantMediaSelectDialog } from "../ProductVariantImageSelectDialog/ProductVariantMediaSelectDialog";
-import ProductVariantMedia from "../ProductVariantMedia";
-import ProductVariantName from "../ProductVariantName";
-import ProductVariantNavigation from "../ProductVariantNavigation";
+import ProductVariantMedia from "../ProductVariantMedia/ProductVariantMedia";
+import ProductVariantName from "../ProductVariantName/ProductVariantName";
 import { type VariantReorderMove } from "../ProductVariantNavigation/hooks/useVariantDrag";
-import { ProductVariantPrice } from "../ProductVariantPrice";
-import ProductVariantSetDefault from "../ProductVariantSetDefault";
+import { ProductVariantNavigation } from "../ProductVariantNavigation/ProductVariantNavigation";
+import { ProductVariantPrice } from "../ProductVariantPrice/ProductVariantPrice";
+import ProductVariantSetDefault from "../ProductVariantSetDefault/ProductVariantSetDefault";
 import {
   type ProductVariantUpdateData,
   ProductVariantUpdateForm,

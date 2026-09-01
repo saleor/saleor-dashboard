@@ -1,4 +1,4 @@
-import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown/ButtonWithDropdown";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { Box, Checkbox, Dropdown, Input, List, Popover, Text } from "@saleor/macaw-ui-next";
 import { Check, ChevronDown, Layers, Pin, PinOff, Settings2 } from "lucide-react";

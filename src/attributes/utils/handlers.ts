@@ -1,5 +1,8 @@
 import { type FetchResult } from "@apollo/client";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -16,7 +19,7 @@ import {
 } from "@dashboard/hooks/useFormset";
 import { type AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { type FetchMoreProps, type ReorderEvent } from "@dashboard/types";
-import { move, toggle } from "@dashboard/utils/lists";
+import { move, toggle } from "@dashboard/utils/lists/lists";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";
 

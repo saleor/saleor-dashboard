@@ -1,21 +1,20 @@
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { ExpressionFilterPanel, ExpressionFilters } from "./ExpressionFilters";
 
-jest.mock("@dashboard/components/ConditionalFilter", () => {
-  const actual = jest.requireActual("@dashboard/components/ConditionalFilter");
-
-  return {
-    ...actual,
-    useConditionalFilterContext: jest.fn(),
-    ConditionalFilters: ({ layout }: { layout: string }): JSX.Element => (
-      <div data-test-id="conditional-filters">{layout}</div>
-    ),
-  };
-});
+jest.mock("@dashboard/components/ConditionalFilter/context/consumer", () => ({
+  ...(jest.requireActual("@dashboard/components/ConditionalFilter/context/consumer") as object),
+  useConditionalFilterContext: jest.fn(),
+}));
+jest.mock("@dashboard/components/ConditionalFilter/ConditionalFilters", () => ({
+  ...(jest.requireActual("@dashboard/components/ConditionalFilter/ConditionalFilters") as object),
+  ConditionalFilters: ({ layout }: { layout: string }): JSX.Element => (
+    <div data-test-id="conditional-filters">{layout}</div>
+  ),
+}));
 
 const mockUseConditionalFilterContext = useConditionalFilterContext as jest.Mock;
 

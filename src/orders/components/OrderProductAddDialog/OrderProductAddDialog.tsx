@@ -3,22 +3,22 @@ import { AssignPickerBackfillExhaustedRow } from "@dashboard/components/AssignPi
 import { AssignPickerListEmptyStateRow } from "@dashboard/components/AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "@dashboard/components/AssignPickerListLoading/AssignPickerListLoading";
 import BackButton from "@dashboard/components/BackButton";
-import Checkbox from "@dashboard/components/Checkbox";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { type AddressInput, type OrderErrorFragment } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";

@@ -1,19 +1,19 @@
 // @ts-strict-ignore
 import { ModalSectionHeader } from "@dashboard/components/Modal/ModalSectionHeader";
-import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
+import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput/GiftCardTagInput";
 import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
   useGiftCardSettingsQuery,
 } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { TextField } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui-next";
 import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateExpirySelect";
+import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateExpirySelect/GiftCardCreateExpirySelect";
 import { GiftCardCreateMoneyInput } from "../GiftCardCreateDialog/GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as createMessages } from "../GiftCardCreateDialog/messages";

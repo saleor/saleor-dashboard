@@ -1,15 +1,15 @@
 // @ts-strict-ignore
-import Accordion, { type AccordionProps } from "@dashboard/components/Accordion";
+import Accordion, { type AccordionProps } from "@dashboard/components/Accordion/Accordion";
 import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySearchField";
 import { ChannelsAvailabilitySelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySelectAll";
 import { useChannelsSelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/useChannelsSelectAll";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
-import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList";
-import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper";
-import Checkbox from "@dashboard/components/Checkbox";
-import Chip from "@dashboard/components/Chip";
+import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList/ChannelsAvailabilityDialogChannelsList";
+import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper/ChannelsAvailabilityDialogWrapper";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
+import Chip from "@dashboard/components/Chip/Chip";
 import Hr from "@dashboard/components/Hr";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import {
   type ChannelFragment,
   type ExportProductsInput,
@@ -19,7 +19,7 @@ import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { sectionNames } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { Button, FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";

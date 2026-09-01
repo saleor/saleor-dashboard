@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { OrderErrorCode, type OrderErrorFragment } from "@dashboard/graphql";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";

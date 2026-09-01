@@ -1,7 +1,7 @@
 import Money from "@dashboard/components/Money";
 import { Table, TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";

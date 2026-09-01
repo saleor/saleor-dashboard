@@ -11,8 +11,8 @@ import {
   ProductTypeHandler,
 } from "../../API/Handler";
 import { type STATIC_CONDITIONS } from "../../constants";
-import { type FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { type BothApiQueryVarsBuilder, type FilterQuery } from "./types";
 

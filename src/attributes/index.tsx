@@ -1,4 +1,4 @@
-import { ConditionalAttributesFilterProvider } from "@dashboard/components/ConditionalFilter";
+import { ConditionalAttributesFilterProvider } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
@@ -16,9 +16,9 @@ import {
   attributePath,
   type AttributeUrlQueryParams,
 } from "./urls";
-import AttributeCreateComponent from "./views/AttributeCreate";
-import AttributeDetailsComponent from "./views/AttributeDetails";
-import AttributeListComponent from "./views/AttributeList";
+import AttributeCreateComponent from "./views/AttributeCreate/AttributeCreate";
+import AttributeDetailsComponent from "./views/AttributeDetails/AttributeDetails";
+import AttributeListComponent from "./views/AttributeList/AttributeList";
 
 const AttributeList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as Record<string, string | undefined>;

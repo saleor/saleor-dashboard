@@ -12,11 +12,11 @@ import {
   getFilterQueryParam,
   storageUtils,
 } from "@dashboard/attributes/views/AttributeList/filters";
-import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog/BulkAttributeUnassignDialog";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createAttributesQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
-import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog";
+import { DeleteFilterTabDialog } from "@dashboard/components/DeleteFilterTabDialog/DeleteFilterTabDialog";
 import { SaveFilterTabDialog } from "@dashboard/components/SaveFilterTabDialog/SaveFilterTabDialog";
 import {
   AttributeTypeEnum,
@@ -30,10 +30,10 @@ import {
   useUnassignPageAttributeMutation,
   useUnassignProductAttributeMutation,
 } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -56,8 +56,8 @@ import isEqual from "lodash/isEqual";
 import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { AttributeBulkDeleteDialog } from "../../components/AttributeBulkDeleteDialog";
-import AttributeListPage from "../../components/AttributeListPage";
+import { AttributeBulkDeleteDialog } from "../../components/AttributeBulkDeleteDialog/AttributeBulkDeleteDialog";
+import AttributeListPage from "../../components/AttributeListPage/AttributeListPage";
 import { attributeListPageMessages } from "../../components/AttributeListPage/messages";
 import {
   attributeListUrl,

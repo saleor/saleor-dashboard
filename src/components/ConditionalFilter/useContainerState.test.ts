@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 
-import { Condition, FilterElement } from "./FilterElement";
+import { Condition } from "./FilterElement/Condition";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
-import { ExpressionValue } from "./FilterElement/FilterElement";
+import { ExpressionValue, FilterElement } from "./FilterElement/FilterElement";
 import { type FilterValueProvider } from "./FilterValueProvider";
 import { useContainerState } from "./useContainerState";
 

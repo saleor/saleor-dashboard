@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { Table, TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type MetadataInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { Box, Button, Input, Text, Textarea, vars } from "@saleor/macaw-ui-next";

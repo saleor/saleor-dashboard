@@ -11,8 +11,7 @@ import {
   startAppendChoiceFetch,
   startReplaceChoiceFetch,
 } from "./API/filterChoicesPage";
-import { useConditionalFilterContext } from "./context";
-import { FilterElement } from "./FilterElement";
+import { useConditionalFilterContext } from "./context/consumer";
 import { Condition } from "./FilterElement/Condition";
 import { ConditionOptions } from "./FilterElement/ConditionOptions";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
@@ -22,7 +21,7 @@ import {
   isItemOptionArray,
 } from "./FilterElement/ConditionValue";
 import { Constraint } from "./FilterElement/Constraint";
-import { hasEmptyRows } from "./FilterElement/FilterElement";
+import { FilterElement, hasEmptyRows } from "./FilterElement/FilterElement";
 import { type LeftOperand } from "./LeftOperandsProvider";
 
 const captureFilterFetchError = (error: unknown): void => {

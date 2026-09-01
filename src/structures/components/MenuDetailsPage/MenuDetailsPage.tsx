@@ -3,11 +3,11 @@ import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
-} from "@dashboard/components/AppLayout";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/AppLayout/TopNav";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import Form from "@dashboard/components/Form/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { getExtensionsItemsForMenuDetails } from "@dashboard/extensions/getExtensionsItems";
@@ -21,8 +21,9 @@ import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type MenuItemType } from "../MenuItemDialog/types";
-import MenuItems, { type TreeOperation } from "../MenuItems";
-import MenuProperties from "../MenuProperties";
+import MenuItems from "../MenuItems/MenuItems";
+import { type TreeOperation } from "../MenuItems/tree";
+import MenuProperties from "../MenuProperties/MenuProperties";
 import { computeRelativeTree } from "./tree";
 
 export interface MenuDetailsFormData {

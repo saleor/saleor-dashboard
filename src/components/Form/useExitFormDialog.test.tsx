@@ -8,7 +8,7 @@ import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
 import { isDialogOnlyQueryChange, useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
-jest.mock("../../hooks/useNotifier", () => ({
+jest.mock("../../hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => jest.fn(),
 }));
 

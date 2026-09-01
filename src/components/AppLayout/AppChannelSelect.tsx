@@ -1,4 +1,4 @@
-import { Select } from "@dashboard/components/Select";
+import { Select } from "@dashboard/components/Select/Select";
 import { type ChannelFragment } from "@dashboard/graphql";
 import { type ChannelProps } from "@dashboard/types";
 import { mapNodeToChoice } from "@dashboard/utils/maps";

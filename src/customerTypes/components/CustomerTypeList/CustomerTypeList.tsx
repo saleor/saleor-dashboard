@@ -1,9 +1,9 @@
-import { Pill } from "@dashboard/components/Pill";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { Pill } from "@dashboard/components/Pill/Pill";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { CustomerTypeListUrlSortField, customerTypePath } from "@dashboard/customerTypes/urls";
 import { type CustomerTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";

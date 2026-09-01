@@ -1,4 +1,4 @@
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 

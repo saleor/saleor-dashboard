@@ -1,6 +1,6 @@
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
 import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
-import Form from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
@@ -14,7 +14,7 @@ import {
 } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import { parseQs } from "@dashboard/url-utils";

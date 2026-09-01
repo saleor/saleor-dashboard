@@ -1,5 +1,5 @@
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";

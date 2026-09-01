@@ -16,8 +16,8 @@ import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc"
 import { type OutputData } from "@editorjs/editorjs";
 import { type IntlShape } from "react-intl";
 
-import { fieldNames } from "./components/TranslationsAttributesPage";
 import { transtionsAttributesPageFieldsMessages as messages } from "./components/TranslationsAttributesPage/messages";
+import { fieldNames } from "./components/TranslationsAttributesPage/TranslationsAttributesPage";
 
 export const getParsedTranslationInputData = ({
   fieldName,

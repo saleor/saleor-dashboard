@@ -1,10 +1,10 @@
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import Grid from "@dashboard/components/Grid";
-import { Select } from "@dashboard/components/Select";
+import Grid from "@dashboard/components/Grid/Grid";
+import { Select } from "@dashboard/components/Select/Select";
 import { type TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { LegacyFlowWarning } from "@dashboard/taxes/components";
+import { LegacyFlowWarning } from "@dashboard/taxes/components/LegacyFlowWarning";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import {
   Card,

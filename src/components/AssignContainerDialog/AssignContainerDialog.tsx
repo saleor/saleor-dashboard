@@ -1,12 +1,12 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody } from "@dashboard/components/Table/Table";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
 import { usePickerBackfill } from "@dashboard/hooks/usePickerBackfill";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";

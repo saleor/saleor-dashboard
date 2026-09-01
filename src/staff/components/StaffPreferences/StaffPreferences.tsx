@@ -1,5 +1,5 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { Locale, localeNames } from "@dashboard/components/Locale";
+import { Locale, localeNames } from "@dashboard/components/Locale/Locale";
 import { capitalize } from "@dashboard/misc";
 import { Box, Combobox, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";

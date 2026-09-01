@@ -1,10 +1,11 @@
-import { Condition, FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { Condition } from "@dashboard/components/ConditionalFilter/FilterElement/Condition";
 import {
   type ConditionItem,
   ConditionOptions,
 } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionOptions";
 import { ConditionSelected } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionSelected";
 import { type ConditionValue } from "@dashboard/components/ConditionalFilter/FilterElement/ConditionValue";
+import { FilterElement } from "@dashboard/components/ConditionalFilter/FilterElement/FilterElement";
 import {
   ExpressionValue,
   type FilterContainer,

@@ -19,7 +19,7 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => jest.fn());
 
 const mockNotify = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: () => mockNotify,
 }));
 

@@ -2,7 +2,7 @@
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { render, screen } from "@testing-library/react";
 
-import { TimezoneProvider } from "../Timezone";
+import { TimezoneProvider } from "../Timezone/Timezone";
 import { Date } from "./Date";
 
 const testDate = "2018-04-07";

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
-import RadioSwitchField from "@dashboard/components/RadioSwitchField";
+import RadioSwitchField from "@dashboard/components/RadioSwitchField/RadioSwitchField";
 import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";

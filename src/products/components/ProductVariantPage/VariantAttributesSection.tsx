@@ -1,10 +1,10 @@
 import {
   type AttributeInput,
-  type AttributeRowHandlers,
   Attributes,
   type AttributeValueChoices,
   type AttributeValueFetchMore,
-} from "@dashboard/components/Attributes";
+} from "@dashboard/components/Attributes/Attributes";
+import { type AttributeRowHandlers } from "@dashboard/components/Attributes/types";
 import { DashboardCard } from "@dashboard/components/Card";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";

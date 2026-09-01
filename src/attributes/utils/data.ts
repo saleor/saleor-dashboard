@@ -1,5 +1,8 @@
 import { type FetchResult } from "@apollo/client";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -26,7 +29,7 @@ import {
   type RichTextGetters,
 } from "@dashboard/utils/richText/useMultipleRichText";
 
-import { type AttributePageFormData } from "../components/AttributePage";
+import { type AttributePageFormData } from "../components/AttributePage/AttributePage";
 import { formatVariantReferenceLabel } from "./formatVariantReferenceLabel";
 import { productVariantCacheManager } from "./productVariantCache";
 

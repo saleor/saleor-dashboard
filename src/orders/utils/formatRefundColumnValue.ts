@@ -1,4 +1,4 @@
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { formatMoney } from "@dashboard/components/Money";
 
 export const formatRefundColumnValue = (

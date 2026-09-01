@@ -5,14 +5,14 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Grid from "@dashboard/components/Grid";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Grid from "@dashboard/components/Grid/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
   type CountryCode,
@@ -22,16 +22,16 @@ import {
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { parseQuery } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils";
-import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui-next";
 import { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import TaxInput from "../../components/TaxInput";
+import TaxInput from "../../components/TaxInput/TaxInput";
 import TaxCountriesForm from "./form";
-import { TaxCountriesMenu } from "./TaxCountriesMenu";
+import { TaxCountriesMenu } from "./TaxCountriesMenu/TaxCountriesMenu";
 
 interface TaxCountriesPageProps {
   countryTaxesData: TaxCountryConfigurationFragment[] | undefined;

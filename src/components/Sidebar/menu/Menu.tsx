@@ -1,6 +1,6 @@
 import { Box, List } from "@saleor/macaw-ui-next";
 
-import { Shortcusts } from "../shortcuts";
+import { Shortcusts } from "../shortcuts/Shortcuts";
 import { useMenuStructure } from "./hooks/useMenuStructure";
 import { MenuItem } from "./Item";
 

@@ -3,15 +3,15 @@ import { useUserAccessibleChannels } from "@dashboard/auth/hooks/useUserAccessib
 import { ContextualHelpIcon } from "@dashboard/components/AppLayout/ContextualLinks/ContextualHelpIcon";
 import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks/messages";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createOrderQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {
   getExtensionItemsForOverviewCreate,
@@ -41,7 +41,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
-import { OrderListDatagrid } from "../OrderListDatagrid";
+import { OrderListDatagrid } from "../OrderListDatagrid/OrderListDatagrid";
 
 interface OrderListPageProps
   extends PageListProps,

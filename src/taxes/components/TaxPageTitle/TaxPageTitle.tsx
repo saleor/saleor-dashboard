@@ -1,4 +1,4 @@
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer/HorizontalSpacer";
 import { sectionNames } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { FormattedMessage } from "react-intl";

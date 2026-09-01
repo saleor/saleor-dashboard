@@ -1,4 +1,4 @@
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
 import { createCustomerWhereVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { getRowIdsFromSelection } from "@dashboard/components/Datagrid/utils";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -14,7 +14,7 @@ import {
 } from "@dashboard/graphql";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -34,7 +34,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { CustomerBulkDeleteDialog } from "../../components/CustomerBulkDeleteDialog/CustomerBulkDeleteDialog";
-import CustomerListPage from "../../components/CustomerListPage";
+import CustomerListPage from "../../components/CustomerListPage/CustomerListPage";
 import {
   ALL_CUSTOMERS_TAB_ID,
   type CustomerTypeTabCount,

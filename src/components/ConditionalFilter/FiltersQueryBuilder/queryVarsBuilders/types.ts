@@ -1,7 +1,7 @@
 import { type ApolloClient } from "@apollo/client";
 
 import { type Handler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 
 export type FilterQuery = Record<string, unknown>;
 

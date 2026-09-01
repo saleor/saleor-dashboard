@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { type ProductListColumns } from "@dashboard/config";
 import { type ProductListQuery } from "@dashboard/graphql";
 import { type ListProps, type RelayToFlat } from "@dashboard/types";

@@ -7,7 +7,7 @@ import {
   type AddressTypeEnum,
 } from "@dashboard/graphql";
 import { transformFormToAddressInput } from "@dashboard/misc";
-import { add, remove } from "@dashboard/utils/lists";
+import { add, remove } from "@dashboard/utils/lists/lists";
 import { useState } from "react";
 
 interface UseAddressValidation<TInput, TOutput> {

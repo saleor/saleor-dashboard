@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import PriceField from "@dashboard/components/PriceField";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import PriceField from "@dashboard/components/PriceField/PriceField";
 import {
   type OrderDetailsFragment,
   TransactionActionEnum,
@@ -12,7 +12,7 @@ import * as React from "react";
 import { useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderTransaction from "../../OrderTransaction";
+import OrderTransaction from "../../OrderTransaction/OrderTransaction";
 import { refundPageMessages } from "../messages";
 import { useOrderSendRefund } from "./useOrderSendRefund";
 

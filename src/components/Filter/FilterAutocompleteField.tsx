@@ -1,11 +1,11 @@
 // @ts-strict-ignore
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { FormControlLabel, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { type Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import Checkbox from "../Checkbox";
+import Checkbox from "../Checkbox/Checkbox";
 import Hr from "../Hr";
 import Link from "../Link";
 import { type FieldType, type FilterFieldBaseProps } from "./types";

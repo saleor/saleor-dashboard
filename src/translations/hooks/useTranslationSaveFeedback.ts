@@ -1,4 +1,4 @@
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import {
   type BulkTranslationSubmitResult,
   fieldErrorsToRecord,

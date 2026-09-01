@@ -1,13 +1,13 @@
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { type Rule } from "@dashboard/discounts/models";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { PromotionTypeEnum, RewardTypeEnum } from "@dashboard/graphql";
 import { Box, type BoxProps } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { useFormContext } from "react-hook-form";
 
-import { RuleRewardGifts } from "../RuleRewardGifts";
+import { RuleRewardGifts } from "../RuleRewardGifts/RuleRewardGifts";
 import { RuleRewardTypeSelect } from "../RuleRewardTypeSelect/RuleRewardTypeSelect";
-import { RuleRewardValue } from "../RuleRewardValue";
+import { RuleRewardValue } from "../RuleRewardValue/RuleRewardValue";
 
 interface RuleRewardProps {
   currencySymbol: string | null;

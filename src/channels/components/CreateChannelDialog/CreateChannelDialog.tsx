@@ -9,8 +9,8 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {

@@ -1,12 +1,12 @@
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters/ListFilters";
 import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type ProductTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";

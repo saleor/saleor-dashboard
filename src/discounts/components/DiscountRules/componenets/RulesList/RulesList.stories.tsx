@@ -1,5 +1,5 @@
-import { DiscountRulesContextProvider } from "@dashboard/discounts/components/DiscountRules/context";
-import { type Rule } from "@dashboard/discounts/models";
+import { DiscountRulesContextProvider } from "@dashboard/discounts/components/DiscountRules/context/provider";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import {
   AllocationStrategyEnum,
   type ChannelFragment,

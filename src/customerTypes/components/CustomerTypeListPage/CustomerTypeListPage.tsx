@@ -3,8 +3,8 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { CustomerTypeList } from "@dashboard/customerTypes/components/CustomerTypeList/CustomerTypeList";
 import { type CustomerTypeListUrlSortField } from "@dashboard/customerTypes/urls";

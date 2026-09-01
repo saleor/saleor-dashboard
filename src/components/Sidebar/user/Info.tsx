@@ -1,6 +1,6 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { savebarHeight } from "@dashboard/components/AppLayout/consts";
-import { UserAvatar } from "@dashboard/components/UserAvatar";
+import { UserAvatar } from "@dashboard/components/UserAvatar/UserAvatar";
 import { getUserInitials, getUserName } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui-next";
 

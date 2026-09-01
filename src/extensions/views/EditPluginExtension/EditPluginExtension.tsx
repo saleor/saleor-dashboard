@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ExtensionsUrls,
@@ -13,7 +13,7 @@ import {
   usePluginUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { extractMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";

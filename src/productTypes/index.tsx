@@ -1,4 +1,4 @@
-import { ConditionalProductTypesFilterProvider } from "@dashboard/components/ConditionalFilter";
+import { ConditionalProductTypesFilterProvider } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
@@ -17,7 +17,7 @@ import {
   productTypePath,
   type ProductTypeUrlQueryParams,
 } from "./urls";
-import ProductTypeListComponent from "./views/ProductTypeList";
+import ProductTypeListComponent from "./views/ProductTypeList/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
 const ProductTypeList = () => {

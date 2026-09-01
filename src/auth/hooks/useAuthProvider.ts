@@ -1,5 +1,5 @@
 import { type ApolloClient, ApolloError } from "@apollo/client";
-import { type INotificationCallback } from "@dashboard/components/notifications";
+import { type INotificationCallback } from "@dashboard/components/notifications/NotificationContext";
 import { AccountErrorCode, useUserDetailsQuery } from "@dashboard/graphql";
 import { saleorAuth } from "@dashboard/graphql/client";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";

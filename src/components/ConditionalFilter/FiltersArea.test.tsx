@@ -2,11 +2,11 @@ import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
 import { type ReactNode } from "react";
 
-import { useConditionalFilterContext } from "./context";
+import { useConditionalFilterContext } from "./context/consumer";
 import { FiltersArea } from "./FiltersArea";
 import { useFilterContainer } from "./useFilterContainer";
 
-jest.mock("./context", () => ({
+jest.mock("./context/consumer", () => ({
   useConditionalFilterContext: jest.fn(),
 }));
 

@@ -1,5 +1,5 @@
 import { type ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { AllocationStrategyEnum, type StockSettingsInput } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";

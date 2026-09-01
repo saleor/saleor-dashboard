@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Select } from "@dashboard/components/Select";
+import { Select } from "@dashboard/components/Select/Select";
 import { type TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
-import { LegacyFlowWarning } from "@dashboard/taxes/components";
+import { LegacyFlowWarning } from "@dashboard/taxes/components/LegacyFlowWarning";
 import { Divider } from "@material-ui/core";
 import { ListItem, ListItemCell } from "@saleor/macaw-ui";
 import { Box, Button, type Option } from "@saleor/macaw-ui-next";

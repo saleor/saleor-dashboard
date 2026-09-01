@@ -1,7 +1,7 @@
-import AddressFormatter from "@dashboard/components/AddressFormatter";
+import AddressFormatter from "@dashboard/components/AddressFormatter/AddressFormatter";
 import { formatAddressForClipboard } from "@dashboard/components/AddressFormatter/formatForClipboard";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { type CustomerDetailsFragment } from "@dashboard/graphql";
 import { useClipboard } from "@dashboard/hooks/useClipboard";
 import { buttonMessages } from "@dashboard/intl";

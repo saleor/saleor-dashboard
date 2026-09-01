@@ -4,8 +4,9 @@ import { type InitialPageStateResponse } from "../../ConditionalFilter/API/initi
 import { useInitialPageState } from "../../ConditionalFilter/API/initialState/page/useInitialPageState";
 import { usePageAPIProvider } from "../../ConditionalFilter/API/providers/PageFilterAPIProvider";
 import { STATIC_PAGE_OPTIONS } from "../../ConditionalFilter/constants";
-import { type FilterContainer } from "../../ConditionalFilter/FilterElement";
-import { FiltersQueryBuilder, QueryApiType } from "../../ConditionalFilter/FiltersQueryBuilder";
+import { type FilterContainer } from "../../ConditionalFilter/FilterElement/FilterElement";
+import { FiltersQueryBuilder } from "../../ConditionalFilter/FiltersQueryBuilder/FiltersQueryBuilder";
+import { QueryApiType } from "../../ConditionalFilter/FiltersQueryBuilder/types";
 import { type PageFetchingParams } from "../../ConditionalFilter/ValueProvider/TokenArray/fetchingParams";
 import { type ModalFilterConfig } from "../types";
 

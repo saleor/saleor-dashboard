@@ -1195,10 +1195,6 @@
     "context": "Product save pipeline step label",
     "string": "Variant updates"
   },
-  "2i81/P": {
-    "context": "section header button",
-    "string": "Manage"
-  },
   "2jHGjL": {
     "context": "message row status: only subject differs from Saleor default",
     "string": "Custom subject"
@@ -1791,10 +1787,6 @@
   },
   "5A5tMT": {
     "string": "Fixed amount"
-  },
-  "5A6/2C": {
-    "context": "section header",
-    "string": "Availability"
   },
   "5FSIZp": {
     "string": "Create new attribute"
@@ -2780,10 +2772,6 @@
   "8pVWve": {
     "string": "This field cannot be blank"
   },
-  "8qL/tV": {
-    "context": "CannotDefineChannelsAvailabilityCard subtitle",
-    "string": "You will be able to define availability of product after creating variants."
-  },
   "8r8XBO": {
     "context": "shipping method channel picker dialog title without method name",
     "string": "Choose channels for this shipping method"
@@ -3192,10 +3180,6 @@
   "ACZg1z": {
     "context": "create collection dialog description",
     "string": "Add a collection. You can edit channels, SEO, media, and metadata after creating it."
-  },
-  "AD1PlC": {
-    "context": "channels availability text",
-    "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
   },
   "ADvpV/": {
     "context": "Product can be purchased by customers",
@@ -3829,10 +3813,6 @@
   "CQTTke": {
     "string": "Refund request sent to payment provider"
   },
-  "CT5PAn": {
-    "context": "CannotDefineChannelsAvailabilityCard title",
-    "string": "Availability"
-  },
   "CTASiY": {
     "context": "gift card resend dialog email field label",
     "string": "Email address"
@@ -3913,10 +3893,6 @@
   "ClI6NL": {
     "context": "dialog header",
     "string": "Pin to navigation"
-  },
-  "ClKKID": {
-    "context": "channel publication status",
-    "string": "Not published"
   },
   "ClUKur": {
     "context": "tooltip for subtotal amount",
@@ -7175,10 +7151,6 @@
     "context": "order history message",
     "string": "Order was fully paid"
   },
-  "P/oGtb": {
-    "context": "product availability",
-    "string": "Available for purchase"
-  },
   "P/yK/7": {
     "context": "dialog title",
     "string": "Remove products from category"
@@ -9658,10 +9630,6 @@
   "Y7UlMR": {
     "context": "app extensions subsection",
     "string": "Apps"
-  },
-  "Y9lv8z": {
-    "context": "product unavailability",
-    "string": "Unavailable for purchase"
   },
   "YBqLHs": {
     "context": "expiry date label",
@@ -13016,10 +12984,6 @@
     "context": "table header column",
     "string": "Charge taxes"
   },
-  "kYYbrv": {
-    "context": "channel publication date",
-    "string": "Published since {date}"
-  },
   "kak5vT": {
     "context": "order refund amount",
     "string": "Selected Products Value"
@@ -14638,10 +14602,6 @@
     "context": "gift card provenance, label for channel + order line",
     "string": "Purchase"
   },
-  "qJedl0": {
-    "context": "product label",
-    "string": "Published"
-  },
   "qK4it1": {
     "context": "gift card instrument card, caption under spend progress meter",
     "string": "{spent} spent of {initial} initial value"
@@ -15323,10 +15283,6 @@
   "sZpp65": {
     "context": "bulk publish review step description",
     "string": "Set prices in {currency} for each product. Cost price and stock are optional. Values apply to all variants of that product."
-  },
-  "saKXY3": {
-    "context": "product label",
-    "string": "Not published"
   },
   "scHVdW": {
     "context": "button",
@@ -17116,10 +17072,6 @@
   "ypW4Mi": {
     "context": "button refreshing page",
     "string": "Refresh page"
-  },
-  "ys0jH2": {
-    "context": "channel publication status",
-    "string": "Published"
   },
   "ysIDsl": {
     "context": "message row status: only email body is customized",

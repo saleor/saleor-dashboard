@@ -1,17 +1,17 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { PermissionEnum, type ProductWhereInput } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";

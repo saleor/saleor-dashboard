@@ -17,7 +17,7 @@ import { variantsWithProductDataMock } from "./componenets/RuleForm/components/R
 import { DiscountRules } from "./DiscountRules";
 import { catalogComplexRules, catalogRules, channels, orderRules } from "./mocksData";
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn((): (() => void) => {
     return (): void => undefined;
   }),

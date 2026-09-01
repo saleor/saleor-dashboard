@@ -1,7 +1,7 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Money from "@dashboard/components/Money";
-import { UserAvatar } from "@dashboard/components/UserAvatar";
+import { UserAvatar } from "@dashboard/components/UserAvatar/UserAvatar";
 import { OrderGrantedRefundStatusEnum } from "@dashboard/graphql";
 import { getUserInitials, getUserName, type User } from "@dashboard/misc";
 import { refundGridMessages } from "@dashboard/orders/components/OrderDetailsRefundTable/messages";
@@ -18,7 +18,7 @@ import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { EventTime } from "../OrderTransaction/components/TransactionEvents/components";
+import { EventTime } from "../OrderTransaction/components/TransactionEvents/components/EventTime";
 import { OrderTransactionRefundStatusPill } from "../OrderTransactionRefundPage/components/OrderTransactionRefundStatusPill/OrderTransactionRefundStatusPill";
 import { ReasonDisplay } from "../ReasonDisplay/ReasonDisplay";
 import { REFUND_TABLE_COLUMN_COUNT } from "./consts";

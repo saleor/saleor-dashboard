@@ -4,7 +4,7 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import {
@@ -23,7 +23,7 @@ import {
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ShippingZoneListDatagrid } from "../ShippingZonesListDatagrid";
+import { ShippingZoneListDatagrid } from "../ShippingZonesListDatagrid/ShippingZonesListDatagrid";
 import { messages } from "./messages";
 
 interface ShippingZonesListPageProps extends PageListProps, SearchPageProps, UserPermissionProps {

@@ -1,8 +1,8 @@
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { ProductErrorCode, type ProductErrorWithAttributesFragment } from "@dashboard/graphql";
 import { useIntl } from "react-intl";
 
-import { type ProductCreateData } from "../components/ProductCreatePage";
+import { type ProductCreateData } from "../components/ProductCreatePage/form";
 import {
   expandRequiredAttributeErrors,
   type ProductVariantType,

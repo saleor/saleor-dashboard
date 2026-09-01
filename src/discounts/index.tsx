@@ -1,7 +1,7 @@
 import {
   ConditionalDiscountFilterProvider,
   ConditionalVoucherFilterProvider,
-} from "@dashboard/components/ConditionalFilter";
+} from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
@@ -23,12 +23,12 @@ import {
   voucherPath,
   type VoucherUrlQueryParams,
 } from "./urls";
-import { DiscountCreate } from "./views/DiscountCreate";
-import { DiscountDetails } from "./views/DiscountDetails";
-import { DiscountList } from "./views/DiscountList";
-import VoucherCreateViewComponent from "./views/VoucherCreate";
-import VoucherDetailsViewComponent from "./views/VoucherDetails";
-import VoucherListViewComponent from "./views/VoucherList";
+import { DiscountCreate } from "./views/DiscountCreate/DiscountCreate";
+import { DiscountDetails } from "./views/DiscountDetails/DiscountDetails";
+import { DiscountList } from "./views/DiscountList/DiscountList";
+import VoucherCreateViewComponent from "./views/VoucherCreate/VoucherCreate";
+import VoucherDetailsViewComponent from "./views/VoucherDetails/VoucherDetails";
+import VoucherListViewComponent from "./views/VoucherList/VoucherList";
 
 const SaleListView = () => {
   const qs = parseQs(location.search.substr(1)) as any;

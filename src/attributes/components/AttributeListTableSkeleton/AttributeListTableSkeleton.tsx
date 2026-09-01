@@ -1,4 +1,4 @@
-import { tableStyles } from "@dashboard/components/ResponsiveTable";
+import { tableStyles } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableCell, TableRow } from "@dashboard/components/Table/Table";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 
