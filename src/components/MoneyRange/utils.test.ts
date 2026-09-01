@@ -2,7 +2,7 @@
 import { type IMoney } from "@dashboard/utils/intl";
 import { type IntlShape } from "react-intl";
 
-import { Locale } from "../Locale";
+import { Locale } from "../Locale/Locale";
 import { getMoneyRange } from "./utils";
 
 const intl = {

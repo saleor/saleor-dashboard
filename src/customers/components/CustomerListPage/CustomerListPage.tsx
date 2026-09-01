@@ -4,10 +4,10 @@ import {
   ExpressionFilters,
 } from "@dashboard/components/AppLayout/ListFilters/components/ExpressionFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { ListSearchInput } from "@dashboard/components/ListSearchInput/ListSearchInput";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { useCanEditCustomers } from "@dashboard/customers/hooks/useCanEditCustomers";

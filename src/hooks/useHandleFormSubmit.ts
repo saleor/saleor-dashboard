@@ -1,5 +1,6 @@
-import { type FormId, useExitFormDialog } from "@dashboard/components/Form";
-import { NotificationContext } from "@dashboard/components/notifications";
+import { type FormId } from "@dashboard/components/Form/types";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { NotificationContext } from "@dashboard/components/notifications/NotificationContext";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { useContext } from "react";
 

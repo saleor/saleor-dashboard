@@ -4,16 +4,16 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Grid from "@dashboard/components/Grid";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata } from "@dashboard/components/Metadata";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Grid from "@dashboard/components/Grid/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { Savebar } from "@dashboard/components/Savebar";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import { TablePagination } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
+import { TablePagination } from "@dashboard/components/TablePagination/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type TaxClassFragment } from "@dashboard/graphql";
 import { useClientPagination } from "@dashboard/hooks/useClientPagination/useClientPagination";
@@ -21,7 +21,7 @@ import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getById } from "@dashboard/misc";
 import { parseQuery } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils";
-import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { type TaxClassesPageFormData } from "@dashboard/taxes/types";
 import { useAutofocus } from "@dashboard/taxes/utils/useAutofocus";
@@ -33,10 +33,10 @@ import { Box } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import TaxInput from "../../components/TaxInput";
+import TaxInput from "../../components/TaxInput/TaxInput";
 import TaxClassesForm from "./form";
 import { useStyles } from "./styles";
-import { TaxClassesMenu } from "./TaxClassesMenu";
+import { TaxClassesMenu } from "./TaxClassesMenu/TaxClassesMenu";
 
 interface TaxClassesPageProps {
   taxClasses: TaxClassFragment[] | undefined;

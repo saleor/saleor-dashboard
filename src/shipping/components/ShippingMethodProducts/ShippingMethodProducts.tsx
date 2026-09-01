@@ -1,14 +1,14 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import Checkbox from "@dashboard/components/Checkbox";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableHead from "@dashboard/components/TableHead";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableHead from "@dashboard/components/TableHead/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type ShippingZoneQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";

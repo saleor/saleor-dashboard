@@ -1,4 +1,4 @@
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { type OrderStatus } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
 import { useIntl } from "react-intl";

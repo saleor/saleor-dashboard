@@ -1,7 +1,7 @@
 import { useLastLoginMethod } from "@dashboard/auth/hooks/useLastLoginMethod";
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
 import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
-import Form from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { getAppMountUri } from "@dashboard/config";
 import { type AccountErrorCode } from "@dashboard/graphql";

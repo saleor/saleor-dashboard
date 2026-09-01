@@ -6,9 +6,9 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import Grid from "@dashboard/components/Grid/Grid";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ProductMediaType } from "@dashboard/graphql";
@@ -21,7 +21,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Skeleton, Text, vars } from "@saleor/macaw-ui-next";
 import { defineMessages, type IntlShape, useIntl } from "react-intl";
 
-import ProductMediaNavigation from "../ProductMediaNavigation";
+import ProductMediaNavigation from "../ProductMediaNavigation/ProductMediaNavigation";
 
 const messages = defineMessages({
   editMedia: {

@@ -1,6 +1,6 @@
 import BackButton from "@dashboard/components/BackButton";
 import { ButtonWithLoader } from "@dashboard/components/ButtonWithLoader/ButtonWithLoader";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { TransactionActionEnum } from "@dashboard/graphql";
 import { FormattedMessage, useIntl } from "react-intl";

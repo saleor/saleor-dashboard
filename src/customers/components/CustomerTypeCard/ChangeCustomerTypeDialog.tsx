@@ -1,5 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { FormattedMessage } from "react-intl";
 

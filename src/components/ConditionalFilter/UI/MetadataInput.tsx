@@ -2,7 +2,7 @@ import { Box, Input } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { useConditionalFilterContext } from "../context";
+import { useConditionalFilterContext } from "../context/consumer";
 import { QueryApiType } from "../FiltersQueryBuilder/types";
 import { metadataInputMessages } from "../intl";
 import { type FilterEventEmitter } from "./EventEmitter";

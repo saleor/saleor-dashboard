@@ -3,7 +3,7 @@ import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/Det
 import { DetailSettingToggleRow } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { InsetSegmentedControl } from "@dashboard/components/InsetSegmentedControl/InsetSegmentedControl";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import {
   type ChannelInput,
   createDiscountAmountTypeChangeHandler,
@@ -18,7 +18,7 @@ import { ShoppingBag, Tag, Truck } from "lucide-react";
 import { type ChangeEvent, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage/VoucherDetailsPage";
 import { scrollToVoucherSection } from "../VoucherSectionNav/useVoucherSectionScrollSpy";
 import { voucherSectionIds } from "../VoucherSectionNav/voucherSectionIds";
 import { voucherDiscountSectionMessages as messages } from "./messages";

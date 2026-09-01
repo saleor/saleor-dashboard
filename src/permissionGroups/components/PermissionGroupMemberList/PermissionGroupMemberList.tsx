@@ -1,14 +1,14 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import Checkbox from "@dashboard/components/Checkbox";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { UserAvatar } from "@dashboard/components/UserAvatar";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead/TableHead";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { UserAvatar } from "@dashboard/components/UserAvatar/UserAvatar";
 import { type PermissionGroupMemberFragment } from "@dashboard/graphql";
 import { commonStatusMessages } from "@dashboard/intl";
 import { getUserInitials, getUserName, renderCollection, stopPropagation } from "@dashboard/misc";

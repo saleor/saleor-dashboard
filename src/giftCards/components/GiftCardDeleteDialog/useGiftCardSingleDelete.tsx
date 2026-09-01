@@ -2,7 +2,7 @@
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import { type DeleteGiftCardMutation, useDeleteGiftCardMutation } from "@dashboard/graphql";
 import { type MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { useIntl } from "react-intl";
 
 import { giftCardDeleteDialogMessages as messages } from "./messages";

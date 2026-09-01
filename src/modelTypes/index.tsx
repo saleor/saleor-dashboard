@@ -17,7 +17,7 @@ import {
   type PageTypeUrlQueryParams,
 } from "./urls";
 import PageTypeDetailsComponent from "./views/PageTypeDetails";
-import PageTypeListComponent from "./views/PageTypeList";
+import PageTypeListComponent from "./views/PageTypeList/PageTypeList";
 
 const PageTypeList = ({ location }: RouteComponentProps<{}>) => {
   const qs = parseQs(location.search.substr(1)) as any;

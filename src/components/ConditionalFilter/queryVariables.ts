@@ -15,9 +15,9 @@ import {
   type VoucherFilterInput,
 } from "@dashboard/graphql";
 
-import { type FilterContainer } from "./FilterElement";
-import { FiltersQueryBuilder, QueryApiType } from "./FiltersQueryBuilder";
+import { type FilterContainer } from "./FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FiltersQueryBuilder/FilterQueryVarsBuilderResolver";
+import { FiltersQueryBuilder } from "./FiltersQueryBuilder/FiltersQueryBuilder";
 import { AddressFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/AddressFieldQueryVarsBuilder";
 import { ArrayMetadataQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayMetadataQueryVarsBuilder";
 import { ArrayNestedFieldQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/ArrayNestedFieldQueryVarsBuilder";
@@ -38,6 +38,7 @@ import { ProductExportFieldMapper } from "./FiltersQueryBuilder/queryVarsBuilder
 import { PromotionStatusQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PromotionStatusQueryVarsBuilder";
 import { PromotionTypeQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/PromotionTypeQueryVarsBuilder";
 import { SlugChannelQueryVarsBuilder } from "./FiltersQueryBuilder/queryVarsBuilders/SlugChannelQueryVarsBuilder";
+import { QueryApiType } from "./FiltersQueryBuilder/types";
 
 type ProductQueryVars = ProductWhereInput & { channel?: string };
 type VoucherQueryVars = VoucherFilterInput & { channel?: string };

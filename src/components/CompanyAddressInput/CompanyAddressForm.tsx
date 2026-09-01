@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import FormSpacer from "@dashboard/components/FormSpacer";
-import Grid from "@dashboard/components/Grid";
+import Grid from "@dashboard/components/Grid/Grid";
 import { type AddressTypeInput } from "@dashboard/customers/types";
 import {
   type AccountErrorFragment,

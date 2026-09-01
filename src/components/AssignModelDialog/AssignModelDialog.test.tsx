@@ -24,7 +24,7 @@ jest.mock("../ModalFilters/ModalFilters", () => ({
   ModalFilters: () => <div data-testid="modal-filters">Modal Filters</div>,
 }));
 
-jest.mock("@dashboard/hooks/useModalDialogOpen", () => ({
+jest.mock("@dashboard/hooks/useModalDialogOpen/useModalDialogOpen", () => ({
   __esModule: true,
   default: jest.fn(),
 }));

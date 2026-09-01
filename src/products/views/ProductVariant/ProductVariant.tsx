@@ -13,8 +13,8 @@ import {
 import { createVariantChannels } from "@dashboard/channels/utils";
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
-import { type AttributeInput } from "@dashboard/components/Attributes";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -29,7 +29,7 @@ import {
   useVariantUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useOnSetDefaultVariant from "@dashboard/hooks/useOnSetDefaultVariant";
 import useShop from "@dashboard/hooks/useShop";
 import { weight } from "@dashboard/misc";

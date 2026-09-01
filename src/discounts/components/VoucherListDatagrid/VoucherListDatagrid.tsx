@@ -5,7 +5,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { VoucherListUrlSortField, voucherUrl } from "@dashboard/discounts/urls";
 import { canBeSorted } from "@dashboard/discounts/views/VoucherList/sort";

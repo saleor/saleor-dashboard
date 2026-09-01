@@ -1,11 +1,11 @@
 import { useUser } from "@dashboard/auth/useUser";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton/BulkDeleteButton";
 import { bulkActionWithCountMessages } from "@dashboard/components/BulkDeleteButton/messages";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { ListSearchInput } from "@dashboard/components/ListSearchInput/ListSearchInput";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import {

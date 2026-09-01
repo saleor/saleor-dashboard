@@ -1,7 +1,7 @@
-import RichTextEditor from "@dashboard/components/RichTextEditor";
+import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
-import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context";
-import { type Rule } from "@dashboard/discounts/models";
+import { useDiscountRulesContext } from "@dashboard/discounts/components/DiscountRules/context/consumer";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { commonMessages } from "@dashboard/intl";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { useController } from "react-hook-form";

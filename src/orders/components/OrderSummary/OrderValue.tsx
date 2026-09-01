@@ -1,4 +1,4 @@
-import { ButtonLink } from "@dashboard/components/ButtonLink";
+import { ButtonLink } from "@dashboard/components/ButtonLink/ButtonLink";
 import { voucherUrl } from "@dashboard/discounts/urls";
 import {
   DiscountValueTypeEnum,

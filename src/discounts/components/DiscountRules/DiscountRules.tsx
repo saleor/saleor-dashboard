@@ -1,6 +1,6 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import { type ChannelFragment, type PromotionTypeEnum } from "@dashboard/graphql";
 import { type CommonError } from "@dashboard/utils/errors/common";
@@ -8,12 +8,12 @@ import { Box, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { AddButton } from "./componenets/AddButton";
+import { AddButton } from "./componenets/AddButton/AddButton";
 import { RuleDeleteModal } from "./componenets/RuleDeleteModal/RuleDeleteModal";
-import { RuleForm } from "./componenets/RuleForm";
-import { RuleFormModal } from "./componenets/RuleFormModal";
-import { RulesList } from "./componenets/RulesList";
-import { DiscountRulesContextProvider } from "./context";
+import { RuleForm } from "./componenets/RuleForm/RuleForm";
+import { RuleFormModal } from "./componenets/RuleFormModal/RuleFormModal";
+import { RulesList } from "./componenets/RulesList/RulesList";
+import { DiscountRulesContextProvider } from "./context/provider";
 import { useGraphQLPlayground } from "./hooks/useGraphQLPlayground";
 import { messages } from "./messages";
 

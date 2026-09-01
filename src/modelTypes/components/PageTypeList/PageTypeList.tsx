@@ -1,11 +1,11 @@
 // @ts-strict-ignore
-import Checkbox from "@dashboard/components/Checkbox";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableHead from "@dashboard/components/TableHead";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type PageTypeFragment } from "@dashboard/graphql";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { PageTypeListUrlSortField, pageTypePath } from "@dashboard/modelTypes/urls";

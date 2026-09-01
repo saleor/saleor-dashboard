@@ -1,6 +1,6 @@
-import { createFilterStructure } from "@dashboard/attributes/components/AttributeListPage";
+import { createFilterStructure } from "@dashboard/attributes/components/AttributeListPage/filters";
 import { type AttributeListUrlFilters } from "@dashboard/attributes/urls";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";

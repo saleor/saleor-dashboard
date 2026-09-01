@@ -5,16 +5,16 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import AssignCategoriesDialog from "@dashboard/components/AssignCategoryDialog/AssignCategoryDialog";
-import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog";
-import AssignProductDialog from "@dashboard/components/AssignProductDialog";
+import AssignCollectionDialog from "@dashboard/components/AssignCollectionDialog/AssignCollectionDialog";
+import AssignProductDialog from "@dashboard/components/AssignProductDialog/AssignProductDialog";
 import AssignVariantDialog from "@dashboard/components/AssignVariantDialog/AssignVariantDialog";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { CountryList } from "@dashboard/components/CountryList";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { CountryList } from "@dashboard/components/CountryList/CountryList";
 import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { VOUCHER_CATALOGUE_PAGINATE_BY } from "@dashboard/config";
-import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog";
+import DiscountCountrySelectDialog from "@dashboard/discounts/components/DiscountCountrySelectDialog/DiscountCountrySelectDialog";
 import { VoucherCatalogueSection } from "@dashboard/discounts/components/VoucherCatalogueSection/VoucherCatalogueSection";
 import { VoucherChannelAvailabilityCard } from "@dashboard/discounts/components/VoucherChannelAvailabilityCard/VoucherChannelAvailabilityCard";
 import { VoucherCodesCard } from "@dashboard/discounts/components/VoucherCodesCard/VoucherCodesCard";
@@ -72,9 +72,9 @@ import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { RequirementsPicker } from "../../types";
-import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
-import VoucherInfo from "../VoucherInfo";
-import VoucherLimits from "../VoucherLimits";
+import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog/VoucherCodesGenerateDialog";
+import VoucherInfo from "../VoucherInfo/VoucherInfo";
+import VoucherLimits from "../VoucherLimits/VoucherLimits";
 import { VoucherRequirements } from "../VoucherRequirements/VoucherRequirements";
 import { initialForm } from "./const";
 import { useActiveTab } from "./hooks/useActiveTab";

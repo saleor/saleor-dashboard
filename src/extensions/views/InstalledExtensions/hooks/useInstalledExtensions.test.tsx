@@ -101,7 +101,7 @@ jest.mock("@dashboard/graphql", () => ({
 }));
 
 // TODO: Remove this mock when the feature flag is removed
-jest.mock("@dashboard/featureFlags", () => ({
+jest.mock("@dashboard/featureFlags/useFlag", () => ({
   useFlag: jest.fn(() => ({
     enabled: true,
   })),

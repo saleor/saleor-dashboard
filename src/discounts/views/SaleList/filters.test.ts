@@ -1,8 +1,8 @@
-import { createFilterStructure } from "@dashboard/discounts/components/SaleListPage";
+import { createFilterStructure } from "@dashboard/discounts/components/SaleListPage/filters";
 import { type SaleListUrlFilters } from "@dashboard/discounts/urls";
 import { date } from "@dashboard/fixtures";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { getFilterQueryParams } from "@dashboard/utils/filters/filters";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { testIntlInstance } from "@test/intl";

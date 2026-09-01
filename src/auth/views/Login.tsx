@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import urlJoin from "url-join";
 
-import LoginPage from "../components/LoginPage";
+import LoginPage from "../components/LoginPage/LoginPage";
 import { type LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";

@@ -1,15 +1,18 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
-import Checkbox from "@dashboard/components/Checkbox";
-import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
+import IconButtonTableCell from "@dashboard/components/IconButtonTableCell/IconButtonTableCell";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
+import {
+  ResponsiveTable,
+  tableStyles,
+} from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableHead from "@dashboard/components/TableHead";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination/TablePaginationWithContext";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type MenuFragment } from "@dashboard/graphql";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { MenuListUrlSortField, menuUrl } from "@dashboard/structures/urls";

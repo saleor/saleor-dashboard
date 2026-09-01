@@ -1,4 +1,4 @@
-import { createFilterTabUtils } from "../../../utils/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import { type CustomerTypeListUrlFilters } from "../../urls";
 
 const CUSTOMER_TYPE_FILTERS_KEY = "customerTypeFilters";

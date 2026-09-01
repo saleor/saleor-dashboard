@@ -6,7 +6,10 @@ import {
   handleDeleteMultipleAttributeValues,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
-import { type AttributeInput, type AttributeInputData } from "@dashboard/components/Attributes";
+import {
+  type AttributeInput,
+  type AttributeInputData,
+} from "@dashboard/components/Attributes/Attributes";
 import {
   AttributeInputTypeEnum,
   type AttributeValueDetailsFragment,

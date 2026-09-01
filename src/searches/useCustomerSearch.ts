@@ -5,7 +5,7 @@ import {
   type SearchCustomersQuery,
   type SearchCustomersQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 
 export const searchCustomers = gql`
   query SearchCustomers($after: String, $first: Int!, $query: String!) {

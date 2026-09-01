@@ -8,12 +8,12 @@ import {
 } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { type WithFormId } from "@dashboard/components/Form";
+import { type WithFormId } from "@dashboard/components/Form/types";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -31,11 +31,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { useStateUpdate } from "@dashboard/hooks/useStateUpdate";
 import { GraphqlIcon } from "@dashboard/icons/GraphqlIcon";
 import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
-import OrderValue from "@dashboard/shipping/components/OrderValue";
-import OrderWeight from "@dashboard/shipping/components/OrderWeight";
-import PricingCard from "@dashboard/shipping/components/PricingCard";
-import ShippingMethodProducts from "@dashboard/shipping/components/ShippingMethodProducts";
-import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
+import OrderValue from "@dashboard/shipping/components/OrderValue/OrderValue";
+import OrderWeight from "@dashboard/shipping/components/OrderWeight/OrderWeight";
+import PricingCard from "@dashboard/shipping/components/PricingCard/PricingCard";
+import ShippingMethodProducts from "@dashboard/shipping/components/ShippingMethodProducts/ShippingMethodProducts";
+import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo/ShippingRateInfo";
 import { useShippingRateChannels } from "@dashboard/shipping/hooks/useShippingRateChannels";
 import { useShippingRateEditChanges } from "@dashboard/shipping/hooks/useShippingRateEditChanges";
 import { shippingMethodGraphiQLQuery } from "@dashboard/shipping/queries";
@@ -52,7 +52,7 @@ import { useIntl } from "react-intl";
 
 import { ShippingMethodChannelAvailabilityCard } from "../ShippingMethodChannelAvailabilityCard/ShippingMethodChannelAvailabilityCard";
 import { ShippingMethodTaxes } from "../ShippingMethodTaxes/ShippingMethodTaxes";
-import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
+import ShippingZonePostalCodes from "../ShippingZonePostalCodes/ShippingZonePostalCodes";
 import { messages } from "./messages";
 import { ShippingMethodDetailsTitle } from "./Title";
 import { type ShippingZoneRateUpdateFormData } from "./types";

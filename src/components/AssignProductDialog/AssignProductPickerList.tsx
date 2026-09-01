@@ -1,9 +1,9 @@
 // @ts-strict-ignore
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import { AssignPickerBackfillExhaustedRow } from "../AssignPickerBackfillExhausted/AssignPickerBackfillExhausted";
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
 import { AssignPickerListLoadingRow } from "../AssignPickerListLoading/AssignPickerListLoading";
-import Checkbox from "../Checkbox";
+import Checkbox from "../Checkbox/Checkbox";
 import { AssignProductPickerSelectAll } from "./AssignProductPickerSelectAll";
 import { messages } from "./messages";
 import { useStyles } from "./styles";

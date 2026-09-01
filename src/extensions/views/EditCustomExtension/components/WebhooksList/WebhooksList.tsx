@@ -1,10 +1,10 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import TableButtonWrapper from "@dashboard/components/TableButtonWrapper";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableButtonWrapper from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellHeader from "@dashboard/components/TableCellHeader/TableCellHeader";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
 import { isUnnamed } from "@dashboard/extensions/utils";
 import { type WebhookFragment } from "@dashboard/graphql";

@@ -1,5 +1,5 @@
 import { ProductAvailabilityStatusLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductAvailabilityStatusLabel";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { getStaffMemberStatusDisplay } from "@dashboard/staff/staffMemberStatus";
 import { Box } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";

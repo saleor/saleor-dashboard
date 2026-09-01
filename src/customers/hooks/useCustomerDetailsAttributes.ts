@@ -16,7 +16,7 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
 } from "@dashboard/attributes/utils/handlers";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type CustomerDetailsQuery,

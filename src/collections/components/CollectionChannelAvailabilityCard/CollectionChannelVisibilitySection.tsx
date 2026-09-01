@@ -1,7 +1,7 @@
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { SCHEDULED_COLOR, SUCCESS_ICON_COLOR } from "@dashboard/colors";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
-import { StopPropagation } from "@dashboard/components/StopPropagation";
+import { StopPropagation } from "@dashboard/components/StopPropagation/StopPropagation";
 import { type CollectionChannelListingErrorFragment } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { isFutureDate } from "@dashboard/utils/date/isFutureDate";

@@ -1,4 +1,4 @@
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { type PromotionTypeEnum } from "@dashboard/graphql";
 import { RichTextContext } from "@dashboard/utils/richText/context";

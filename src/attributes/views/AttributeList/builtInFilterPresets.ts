@@ -1,6 +1,6 @@
 import { attributeListUrlWithAttributeType } from "@dashboard/attributes/urls";
 import { AttributeTypeEnum } from "@dashboard/graphql";
-import { type GetFilterTabsOutput } from "@dashboard/utils/filters";
+import { type GetFilterTabsOutput } from "@dashboard/utils/filters/storage";
 import { defineMessages, type IntlShape } from "react-intl";
 
 const messages = defineMessages({

@@ -1,6 +1,6 @@
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
 import { topNavDestinationMessages } from "@dashboard/components/AppLayout/TopNav/destinationMessages";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
@@ -21,7 +21,7 @@ import { useLocation } from "react-router";
 
 import { OrderChannelSettingsMatrix } from "../OrderChannelSettingsMatrix/OrderChannelSettingsMatrix";
 import { OrderCheckoutStockSettings } from "../OrderCheckoutStockSettings/OrderCheckoutStockSettings";
-import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
+import OrderFulfillmentSettings from "../OrderFulfillmentSettings/OrderFulfillmentSettings";
 import { OrderReturnsRefundsSettingsCard } from "../OrderReturnsRefundsSettingsCard/OrderReturnsRefundsSettingsCard";
 import OrderSettingsForm from "./form";
 import { type OrderSettingsFormData } from "./types";

@@ -6,7 +6,7 @@ import {
   type ProductFragment,
   type WarehouseFragment,
 } from "@dashboard/graphql";
-import { useClientPagination } from "@dashboard/hooks/useClientPagination";
+import { useClientPagination } from "@dashboard/hooks/useClientPagination/useClientPagination";
 import { useState } from "react";
 import { type IntlShape } from "react-intl";
 

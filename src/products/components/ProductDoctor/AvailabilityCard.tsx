@@ -5,7 +5,7 @@ import {
 } from "@dashboard/components/ChannelAvailability/messages";
 import { type ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import {
   type ChannelFragment,
   type ProductChannelListingAddInput,

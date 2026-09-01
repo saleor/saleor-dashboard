@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import FormSpacer from "@dashboard/components/FormSpacer";
-import RichTextEditor from "@dashboard/components/RichTextEditor";
+import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { type PageErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";

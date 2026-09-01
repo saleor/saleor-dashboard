@@ -1,17 +1,17 @@
 // @ts-strict-ignore
 import { AssignedAttributesBulkDeleteButton } from "@dashboard/attributes/components/AssignedAttributesCard/AssignedAttributesBulkDeleteButton";
-import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
-import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
-import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog";
+import { type AttributePageFormData } from "@dashboard/attributes/components/AttributePage/AttributePage";
+import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog/AssignAttributeDialog";
+import { AttributeUnassignDialog } from "@dashboard/components/AttributeUnassignDialog/AttributeUnassignDialog";
 import { usePendingAttributeUnassign } from "@dashboard/components/AttributeUnassignDialog/usePendingAttributeUnassign";
-import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@dashboard/components/BulkAttributeUnassignDialog/BulkAttributeUnassignDialog";
 import {
   type AttributeCreateSubmitData,
   CreateAttributeDialog,
 } from "@dashboard/components/CreateAttributeDialog/CreateAttributeDialog";
 import { messages as createAttributeMessages } from "@dashboard/components/CreateAttributeDialog/messages";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
-import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
+import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -34,9 +34,9 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useListSelectedItems } from "@dashboard/hooks/useListSelectedItems";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getStringOrPlaceholder, maybe } from "@dashboard/misc";
-import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
+import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete/useProductTypeDelete";
 import useProductTypeOperations from "@dashboard/productTypes/hooks/useProductTypeOperations";
 import { useProductTypeVariantSelection } from "@dashboard/productTypes/hooks/useProductTypeVariantSelection";
 import useAvailableProductAttributeSearch from "@dashboard/searches/useAvailableProductAttributeSearch";
@@ -51,7 +51,7 @@ import { useIntl } from "react-intl";
 
 import ProductTypeDetailsPage, {
   type ProductTypeForm,
-} from "../../components/ProductTypeDetailsPage";
+} from "../../components/ProductTypeDetailsPage/ProductTypeDetailsPage";
 import { ProductTypeMetadataDialog } from "../../components/ProductTypeMetadataDialog/ProductTypeMetadataDialog";
 import { executeProductTypeAttributeCreate } from "../../handlers/productTypeAttributeCreateHandler";
 import {

@@ -2,7 +2,7 @@ import { channelUrl } from "@dashboard/channels/urls";
 import { ChannelSearchInput } from "@dashboard/components/ChannelAvailability/ChannelSearchInput";
 import { channelAvailabilityMessages } from "@dashboard/components/ChannelAvailability/messages";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { SettingsSection } from "@dashboard/components/Settings/SettingsSection";
 import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { type OrderSettingsChannelsQuery, OrderStatus } from "@dashboard/graphql";

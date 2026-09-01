@@ -2,10 +2,10 @@ import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
-} from "@dashboard/components/AppLayout";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/AppLayout/TopNav";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { discountListUrl } from "@dashboard/discounts/discountsUrls";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
@@ -19,10 +19,10 @@ import { getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { Box } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { DiscountCreateForm } from "../DiscountCreateForm";
-import { DiscountDatesWithController } from "../DiscountDates";
-import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
-import { DiscountRules, type DiscountRulesErrors } from "../DiscountRules";
+import { DiscountCreateForm } from "../DiscountCreateForm/DiscountCreateForm";
+import { DiscountDatesWithController } from "../DiscountDates/DiscountDatesWithController";
+import { DiscountGeneralInfo } from "../DiscountGeneralInfo/DiscountGeneralInfo";
+import { DiscountRules, type DiscountRulesErrors } from "../DiscountRules/DiscountRules";
 
 interface DiscountCreatePageProps {
   channels: ChannelFragment[];

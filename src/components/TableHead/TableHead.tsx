@@ -4,7 +4,7 @@ import {
   TableHead as BaseTableHead,
   type TableSectionProps as BaseTableHeadProps,
 } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, Checkbox as MacawCheckbox, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
@@ -12,7 +12,7 @@ import type * as React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { type Node } from "../../types";
-import Checkbox from "../Checkbox";
+import Checkbox from "../Checkbox/Checkbox";
 import styles from "./TableHead.module.css";
 
 interface TableHeadProps extends BaseTableHeadProps {

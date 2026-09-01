@@ -7,7 +7,7 @@ import { TextField } from "@material-ui/core";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { type MenuDetailsFormData } from "../MenuDetailsPage";
+import { type MenuDetailsFormData } from "../MenuDetailsPage/MenuDetailsPage";
 
 interface MenuPropertiesProps {
   data: MenuDetailsFormData;

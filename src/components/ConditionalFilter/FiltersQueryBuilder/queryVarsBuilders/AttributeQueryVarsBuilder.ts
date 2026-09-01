@@ -15,12 +15,12 @@ import {
   ProductsHandler,
   ProductVariantHandler,
 } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
 import {
   type ConditionValue,
   isItemOption,
   isItemOptionArray,
 } from "../../FilterElement/ConditionValue";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { type BothApiQueryVarsBuilder } from "./types";
 

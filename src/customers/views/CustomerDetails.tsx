@@ -4,8 +4,8 @@ import { handleUploadMultipleFiles } from "@dashboard/attributes/utils/handlers"
 import { getReferenceTypeConstraints } from "@dashboard/components/AssignAttributeValueDialog/getReferenceTypeConstraints";
 import { getReferenceWhereConstraints } from "@dashboard/components/AssignAttributeValueDialog/mergeReferenceTypeWhereConstraints";
 import { useAssignAttributeValueDialogFilterChangeHandlers } from "@dashboard/components/AssignAttributeValueDialog/useAssignAttributeValueDialogFilterChangeHandlers";
-import { type AttributeInput } from "@dashboard/components/Attributes";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useFileUploadMutation,
@@ -13,7 +13,7 @@ import {
   useUpdateCustomerMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import {
   useReferenceCategorySearch,
@@ -30,7 +30,7 @@ import { useIntl } from "react-intl";
 import { CustomerDeleteDialog } from "../components/CustomerDeleteDialog/CustomerDeleteDialog";
 import CustomerDetailsPage, {
   type CustomerDetailsPageSubmitData,
-} from "../components/CustomerDetailsPage";
+} from "../components/CustomerDetailsPage/CustomerDetailsPage";
 import { CustomerMetadataDialog } from "../components/CustomerMetadataDialog/CustomerMetadataDialog";
 import { CustomerStatusChangeDialog } from "../components/CustomerStatusChangeDialog/CustomerStatusChangeDialog";
 import { messages as customerTypeMessages } from "../components/CustomerTypeCard/messages";

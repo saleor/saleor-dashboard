@@ -5,7 +5,7 @@ import {
   AssignableListTable,
 } from "@dashboard/components/AssignableListTable/AssignableListTable";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown";
+import { ProductChannelsAvailability } from "@dashboard/components/ChannelsAvailabilityDropdown/ProductChannelsAvailability";
 import { type ProductChannelListing } from "@dashboard/components/ChannelsAvailabilityDropdown/productUtils";
 import { EmptyImage } from "@dashboard/components/EmptyImage";
 import { PAGINATE_BY } from "@dashboard/config";

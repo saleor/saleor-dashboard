@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 
-import { RuleListContainer } from "../RuleListContainer";
-import { RuleWrapper } from "../RuleWrapper";
+import { RuleListContainer } from "../RuleListContainer/RuleListContainer";
+import { RuleWrapper } from "../RuleWrapper/RuleWrapper";
 
 export const RuleListLoading = () => {
   return (

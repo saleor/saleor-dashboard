@@ -1,1 +1,0 @@
-export { fieldNames } from "./TranslationsAttributesPage";

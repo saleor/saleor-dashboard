@@ -3,7 +3,7 @@ import { Switch } from "@saleor/macaw-ui-next";
 import { Grid3x3, List } from "lucide-react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { type ProductListViewType } from "../ProductListPage";
+import { type ProductListViewType } from "../ProductListPage/ProductListPage";
 import styles from "./ProductListViewSwitch.module.css";
 
 interface ProductListViewSwitchProps {

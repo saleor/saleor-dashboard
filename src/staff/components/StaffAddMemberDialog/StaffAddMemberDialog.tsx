@@ -1,14 +1,14 @@
-import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
+import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups/AccountPermissionGroups";
 import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type SearchPermissionGroupsQuery, type StaffErrorFragment } from "@dashboard/graphql";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
 import { commonMessages } from "@dashboard/intl";
 import { type FetchMoreProps, type RelayToFlat, type SearchPageProps } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";

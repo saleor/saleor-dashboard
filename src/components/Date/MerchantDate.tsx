@@ -2,8 +2,8 @@ import { useCurrentDate } from "@dashboard/hooks/useCurrentDate";
 import { Text, Tooltip } from "@saleor/macaw-ui-next";
 import { type IntlShape, type MessageDescriptor, useIntl } from "react-intl";
 
-import { LocaleConsumer } from "../Locale";
-import { TimezoneConsumer } from "../Timezone";
+import { LocaleConsumer } from "../Locale/Locale";
+import { TimezoneConsumer } from "../Timezone/Timezone";
 import { merchantDateMessages } from "./MerchantDate.messages";
 
 // The kinds we plan to surface in merchant-facing UI. To add a new one, append

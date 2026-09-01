@@ -25,7 +25,7 @@ import {
   useProductVariantBulkDeleteMutation,
   useProductVariantBulkUpdateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { type ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 import { dedupeBulkCreateInputs } from "@dashboard/products/hooks/variantGridStagedEdits";
 import {

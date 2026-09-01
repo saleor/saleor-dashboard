@@ -1,6 +1,6 @@
 import { TableCell } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import {
   type AssignableSearchProduct,
   isVariantsListTruncated,

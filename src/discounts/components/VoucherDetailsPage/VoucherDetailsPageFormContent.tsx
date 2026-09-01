@@ -6,11 +6,11 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { type TopNavMenuItem } from "@dashboard/components/AppLayout/TopNav/Menu";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { CountryList } from "@dashboard/components/CountryList";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { CountryList } from "@dashboard/components/CountryList/CountryList";
 import { DetailPageSectionLayout } from "@dashboard/components/DetailPageSectionLayout/DetailPageSectionLayout";
-import { FormDirtyStateSync } from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { FormDirtyStateSync } from "@dashboard/components/Form/FormDirtyStateSync";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { createChannelsChangeHandler } from "@dashboard/discounts/handlers";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
@@ -32,12 +32,12 @@ import { VoucherCatalogueSection } from "../VoucherCatalogueSection/VoucherCatal
 import { VoucherChannelAvailabilityCard } from "../VoucherChannelAvailabilityCard/VoucherChannelAvailabilityCard";
 import { VoucherCodesCard } from "../VoucherCodesCard/VoucherCodesCard";
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
-import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
+import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog/VoucherCodesGenerateDialog";
 import { formatVoucherCountriesErrorMessage } from "../VoucherCountriesErrors/voucherCountriesErrors";
 import { VoucherDetailsTitle } from "../VoucherDetailsTitle/VoucherDetailsTitle";
 import { VoucherDiscountSection } from "../VoucherDiscountSection/VoucherDiscountSection";
-import VoucherInfo from "../VoucherInfo";
-import VoucherLimits from "../VoucherLimits";
+import VoucherInfo from "../VoucherInfo/VoucherInfo";
+import VoucherLimits from "../VoucherLimits/VoucherLimits";
 import { VoucherRedemptionsCard } from "../VoucherRedemptionsCard/VoucherRedemptionsCard";
 import { VoucherRequirements } from "../VoucherRequirements/VoucherRequirements";
 import { VoucherScheduleCard } from "../VoucherScheduleCard/VoucherScheduleCard";

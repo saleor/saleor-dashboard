@@ -14,7 +14,7 @@ jest.mock("@sentry/react", () => ({
 
 const mockNotifier = jest.fn();
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: (): jest.Mock => mockNotifier,
 }));
 

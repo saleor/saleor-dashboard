@@ -1,7 +1,7 @@
 import { type PromotionRuleDetailsFragment } from "@dashboard/graphql";
 import { sortAlphabetically } from "@dashboard/utils/sort";
 
-import { type Rule } from "./models";
+import { type Rule } from "./models/Rule";
 
 export type PromotionStatus = "scheduled" | "active" | "finished";
 

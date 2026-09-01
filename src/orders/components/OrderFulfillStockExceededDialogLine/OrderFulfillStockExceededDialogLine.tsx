@@ -1,7 +1,7 @@
 // @ts-strict-ignore
 import { TableCell } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type FulfillmentFragment, type OrderFulfillLineFragment } from "@dashboard/graphql";
 import {
   getAttributesCaption,

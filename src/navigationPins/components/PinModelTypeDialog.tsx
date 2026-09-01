@@ -2,7 +2,7 @@ import { useUser } from "@dashboard/auth/useUser";
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { PermissionEnum } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { Box, Button, Select, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useState } from "react";

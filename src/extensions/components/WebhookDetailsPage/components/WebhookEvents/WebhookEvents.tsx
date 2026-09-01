@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import Grid from "@dashboard/components/Grid";
+import Grid from "@dashboard/components/Grid/Grid";
 import Hr from "@dashboard/components/Hr";
 import { Link } from "@dashboard/components/Link";
 import { type WebhookEventTypeAsyncEnum, type WebhookEventTypeSyncEnum } from "@dashboard/graphql";

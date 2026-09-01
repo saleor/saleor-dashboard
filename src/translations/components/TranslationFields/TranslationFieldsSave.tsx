@@ -1,7 +1,7 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { FormattedMessage } from "react-intl";

@@ -1,4 +1,4 @@
-import { type FilterContainer } from "../FilterElement";
+import { type FilterContainer } from "../FilterElement/FilterElement";
 import { type LeftOperand } from "../LeftOperandsProvider";
 import { type FilterChoicesPage } from "./filterChoicesPage";
 

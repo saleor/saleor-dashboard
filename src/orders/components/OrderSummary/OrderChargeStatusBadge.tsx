@@ -1,4 +1,4 @@
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { OrderChargeStatusEnum } from "@dashboard/graphql";
 import { BanknoteIcon } from "lucide-react";
 import { useIntl } from "react-intl";

@@ -6,7 +6,7 @@ import {
   useStaffNotificationRecipientDeleteMutation,
   useStaffNotificationRecipientsQuery,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { notificationsMessages } from "@dashboard/notificationsSettings/messages";
 import {
   assignedStaffUserIds,

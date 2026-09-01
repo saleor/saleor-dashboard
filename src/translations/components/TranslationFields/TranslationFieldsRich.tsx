@@ -1,6 +1,6 @@
 // @ts-strict-ignore
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import RichTextEditor from "@dashboard/components/RichTextEditor";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
 import RichTextEditorContent from "@dashboard/components/RichTextEditor/RichTextEditorContent";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
 import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";

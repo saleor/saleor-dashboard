@@ -3,8 +3,8 @@ import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import { QuantityInput } from "@dashboard/components/QuantityInput";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import {
   type OrderDetailsFragment,
   type OrderErrorFragment,

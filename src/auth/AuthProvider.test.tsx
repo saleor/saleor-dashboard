@@ -2,7 +2,7 @@ import { useApolloClient } from "@apollo/client";
 import { useAuthState } from "@dashboard/auth/authState";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import { saleorAuth } from "@dashboard/graphql/client";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { act, renderHook } from "@testing-library/react";
 import { useIntl } from "react-intl";
 
@@ -79,7 +79,7 @@ jest.mock("@dashboard/graphql", () => ({
     data: undefined,
   })),
 }));
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+jest.mock("@dashboard/hooks/useNotifier/useNotifier", () => ({
   useNotifier: jest.fn(() => () => undefined),
 }));
 jest.mock("@dashboard/hooks/useNavigator", () => ({

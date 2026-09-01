@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { DetailGroupBox } from "@dashboard/components/DetailGroupBox/DetailGroupBox";
-import { Pill } from "@dashboard/components/Pill";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { Title2 } from "@dashboard/components/Title2/Title2";
 import {
   type CollectionErrorFragment,

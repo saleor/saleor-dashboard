@@ -1,15 +1,15 @@
 // @ts-strict-ignore
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useOrderDetailsGrantRefundEditQuery,
   useOrderGrantRefundEditMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
-import OrderGrantRefundPage from "@dashboard/orders/components/OrderGrantRefundPage";
 import { type OrderGrantRefundFormData } from "@dashboard/orders/components/OrderGrantRefundPage/form";
+import OrderGrantRefundPage from "@dashboard/orders/components/OrderGrantRefundPage/OrderGrantRefundPage";
 import { orderUrl } from "@dashboard/orders/urls";
 import { useIntl } from "react-intl";
 

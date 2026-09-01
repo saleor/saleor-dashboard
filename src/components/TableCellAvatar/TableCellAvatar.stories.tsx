@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentType } from "react";
 
 import { ResponsiveTable } from "../ResponsiveTable/ResponsiveTable";
-import TableRowLink from "../TableRowLink";
+import TableRowLink from "../TableRowLink/TableRowLink";
 import TableCellAvatar from "./TableCellAvatar";
 
 const meta: Meta<typeof TableCellAvatar> = {

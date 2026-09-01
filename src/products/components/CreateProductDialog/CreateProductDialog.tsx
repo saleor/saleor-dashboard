@@ -2,13 +2,13 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type ProductErrorWithAttributesFragment } from "@dashboard/graphql";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
 import { Box, Button, DynamicCombobox, Input, type Option, Text } from "@saleor/macaw-ui-next";

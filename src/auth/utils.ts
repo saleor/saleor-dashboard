@@ -2,7 +2,7 @@ import { type ApolloError, type ServerError } from "@apollo/client/core";
 import {
   type INotification,
   type INotificationCallback,
-} from "@dashboard/components/notifications";
+} from "@dashboard/components/notifications/NotificationContext";
 import { commonMessages } from "@dashboard/intl";
 import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";

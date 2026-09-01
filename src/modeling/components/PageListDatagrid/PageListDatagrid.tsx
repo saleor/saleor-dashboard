@@ -6,7 +6,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { DatagridPagination } from "@dashboard/components/TablePagination";
+import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { type Page, type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField } from "@dashboard/modeling/urls";
 import { type ListProps, type SortPage } from "@dashboard/types";

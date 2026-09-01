@@ -1,7 +1,7 @@
-import { Condition, FilterElement } from "../FilterElement";
-import { ExpressionValue } from "../FilterElement/FilterElement";
+import { Condition } from "../FilterElement/Condition";
+import { ExpressionValue, FilterElement } from "../FilterElement/FilterElement";
 import { FilterQueryVarsBuilderResolver } from "./FilterQueryVarsBuilderResolver";
-import { AttributeQueryVarsBuilder } from "./queryVarsBuilders";
+import { AttributeQueryVarsBuilder } from "./queryVarsBuilders/AttributeQueryVarsBuilder";
 import { DefaultQueryVarsBuilder } from "./queryVarsBuilders/DefaultQueryVarsBuilder";
 import { StaticBooleanQueryVarsBuilder } from "./queryVarsBuilders/StaticBooleanQueryVarsBuilder";
 import { StaticQueryVarsBuilder } from "./queryVarsBuilders/StaticQueryVarsBuilder";

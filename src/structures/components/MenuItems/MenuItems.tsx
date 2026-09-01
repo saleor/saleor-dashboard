@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type MenuItemType } from "../MenuItemDialog/types";
-import { MenuItemsSortableTree } from "../MenuItemsSortableTree";
+import { MenuItemsSortableTree } from "../MenuItemsSortableTree/MenuItemsSortableTree";
 import { getNodeData } from "../MenuItemsSortableTree/utils";
 import { getDiff, type TreeOperation } from "./tree";
 

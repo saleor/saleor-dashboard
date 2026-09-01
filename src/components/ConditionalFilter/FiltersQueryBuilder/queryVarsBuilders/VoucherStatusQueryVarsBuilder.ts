@@ -1,8 +1,8 @@
 import { type DiscountStatusEnum, type VoucherFilterInput } from "@dashboard/graphql";
 
 import { type Handler, NoopValuesHandler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
 import { isItemOption, isItemOptionArray } from "../../FilterElement/ConditionValue";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { type FilterOnlyQueryVarsBuilder } from "./types";
 
 /**

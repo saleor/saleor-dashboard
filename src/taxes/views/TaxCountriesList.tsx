@@ -8,7 +8,7 @@ import {
   useTaxCountryConfigurationUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -16,7 +16,7 @@ import { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { TaxCountryDialog } from "../components/TaxCountryDialog/TaxCountryDialog";
-import TaxCountriesPage from "../pages/TaxCountriesPage";
+import TaxCountriesPage from "../pages/TaxCountriesPage/TaxCountriesPage";
 import {
   taxCountriesListUrl,
   type TaxesUrlDialog,

@@ -8,7 +8,7 @@ import {
 import { type IntlShape } from "react-intl";
 
 import { type UseNavigatorResult } from "../../../hooks/useNavigator";
-import { type UseNotifierResult } from "../../../hooks/useNotifier";
+import { type UseNotifierResult } from "../../../hooks/useNotifier/useNotifier";
 import { menuListUrl, menuUrl } from "../../urls";
 
 export function handleItemCreate(

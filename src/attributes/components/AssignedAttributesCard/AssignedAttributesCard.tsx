@@ -7,15 +7,19 @@ import { attributeUrl } from "@dashboard/attributes/urls";
 import { AssignableListCard } from "@dashboard/components/AssignableListTable/AssignableListCard";
 import { ASSIGNABLE_LIST_TABLE_ACTION_INSET } from "@dashboard/components/AssignableListTable/assignableListTableLayout";
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
-import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown";
+import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDropdown/ButtonGroupWithDropdown";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { Link } from "@dashboard/components/Link";
-import { Placeholder } from "@dashboard/components/Placeholder";
-import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
-import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
+import {
+  ResponsiveTable,
+  tableStyles,
+} from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { SortableTableBody } from "@dashboard/components/SortableTable/SortableTableBody";
+import { SortableTableRow } from "@dashboard/components/SortableTable/SortableTableRow";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableHead from "@dashboard/components/TableHead";
+import TableHead from "@dashboard/components/TableHead/TableHead";
 import { TableRowLinkCheckbox } from "@dashboard/components/TableRowLink/TableRowLinkCheckbox";
 import { type AttributeInputTypeEnum } from "@dashboard/graphql";
 import { useOptimisticListReorder } from "@dashboard/hooks/useOptimisticListReorder";

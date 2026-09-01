@@ -1,16 +1,16 @@
 import { bulkActionWithCountMessages } from "@dashboard/components/BulkDeleteButton/messages";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import { type INotification } from "@dashboard/components/notifications";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import {
   useGiftCardBulkActivateMutation,
   useGiftCardBulkDeactivateMutation,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as messages } from "../messages";
-import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "../queries";
 
 export const GiftCardListBulkActions = () => {

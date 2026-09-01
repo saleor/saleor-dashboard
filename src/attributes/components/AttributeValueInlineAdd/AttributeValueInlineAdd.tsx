@@ -1,4 +1,4 @@
-import AttributeSwatchField from "@dashboard/attributes/components/AttributeSwatchField";
+import AttributeSwatchField from "@dashboard/attributes/components/AttributeSwatchField/AttributeSwatchField";
 import { AttributeValuePasteProposal } from "@dashboard/attributes/components/AttributeValuePasteProposal/AttributeValuePasteProposal";
 import { attributeValuePasteMessages } from "@dashboard/attributes/components/AttributeValuePasteProposal/messages";
 import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";

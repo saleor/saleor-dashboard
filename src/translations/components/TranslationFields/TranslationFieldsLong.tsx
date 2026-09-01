@@ -1,5 +1,5 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
 import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { createCmdEnterSubmitHandler } from "@dashboard/utils/cmdEnterSubmit";

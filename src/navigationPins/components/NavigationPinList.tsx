@@ -1,5 +1,5 @@
-import DeletableItem from "@dashboard/components/DeletableItem";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";

@@ -2,12 +2,12 @@ import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
-} from "@dashboard/components/AppLayout";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/AppLayout/TopNav";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DetailPageContent } from "@dashboard/components/DetailPageContent/DetailPageContent";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { type Rule } from "@dashboard/discounts/models";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { promotionGraphiQLQuery } from "@dashboard/discounts/queries";
 import { type DiscoutFormData } from "@dashboard/discounts/types";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -25,11 +25,11 @@ import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/uti
 import { Box } from "@saleor/macaw-ui-next";
 import { defineMessages, useIntl } from "react-intl";
 
-import { DiscountDatesWithController } from "../DiscountDates";
-import { DiscountDetailsForm } from "../DiscountDetailsForm";
-import { DiscountGeneralInfo } from "../DiscountGeneralInfo";
-import { DiscountRules } from "../DiscountRules";
-import { DiscountSavebar } from "../DiscountSavebar";
+import { DiscountDatesWithController } from "../DiscountDates/DiscountDatesWithController";
+import { DiscountDetailsForm } from "../DiscountDetailsForm/DiscountDetailsForm";
+import { DiscountGeneralInfo } from "../DiscountGeneralInfo/DiscountGeneralInfo";
+import { DiscountRules } from "../DiscountRules/DiscountRules";
+import { DiscountSavebar } from "../DiscountSavebar/DiscountSavebar";
 import { DiscountDetailsTitle } from "./Title";
 
 const messages = defineMessages({

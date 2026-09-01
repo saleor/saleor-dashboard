@@ -1,4 +1,4 @@
-import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
+import { ExternalLinkNext } from "@dashboard/components/ExternalLink/ExternalLink";
 import { Box, type BoxProps, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -1,6 +1,6 @@
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type SearchProductVariantFragment } from "@dashboard/graphql";
 import { type AssignableSearchProduct } from "@dashboard/searches/mapSearchProductsForVariantAssign";
 import type { Meta, StoryObj } from "@storybook/react-vite";

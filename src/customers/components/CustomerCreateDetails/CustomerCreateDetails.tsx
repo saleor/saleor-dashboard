@@ -9,7 +9,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import type * as React from "react";
 import { useIntl } from "react-intl";
 
-import { type CustomerCreatePageFormData } from "../CustomerCreatePage";
+import { type CustomerCreatePageFormData } from "../CustomerCreatePage/CustomerCreatePage";
 
 const useStyles = makeStyles(
   theme => ({

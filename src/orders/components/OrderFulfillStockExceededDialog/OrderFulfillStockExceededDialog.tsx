@@ -3,11 +3,11 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type FulfillmentFragment, type OrderFulfillLineFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import {

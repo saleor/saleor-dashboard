@@ -1,10 +1,10 @@
 // @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { Date } from "@dashboard/components/Date/Date";
-import { Placeholder } from "@dashboard/components/Placeholder";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
 import { TableBody, TableCell } from "@dashboard/components/Table/Table";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";

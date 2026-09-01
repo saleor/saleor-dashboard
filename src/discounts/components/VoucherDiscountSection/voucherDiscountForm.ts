@@ -1,4 +1,4 @@
-import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { VoucherTypeEnum } from "@dashboard/graphql";
 

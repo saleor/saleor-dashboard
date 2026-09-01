@@ -7,11 +7,11 @@ import {
   useOrderFulfillSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getMutationErrors } from "@dashboard/misc";
 import OrderFulfillPage, {
   type OrderFulfillSubmitData,
-} from "@dashboard/orders/components/OrderFulfillPage";
+} from "@dashboard/orders/components/OrderFulfillPage/OrderFulfillPage";
 import {
   orderFulfillUrl,
   type OrderFulfillUrlDialog,

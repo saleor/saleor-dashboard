@@ -1,4 +1,4 @@
-import { ConditionalProductFilterProvider } from "@dashboard/components/ConditionalFilter/context";
+import { ConditionalProductFilterProvider } from "@dashboard/components/ConditionalFilter/context/provider";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { parseQs } from "@dashboard/url-utils";
@@ -26,9 +26,9 @@ import {
   productVariantLegacyEditPath,
 } from "./urls";
 import ProductImageComponent from "./views/ProductImage";
-import ProductListComponent from "./views/ProductList";
-import ProductUpdateComponent from "./views/ProductUpdate";
-import ProductVariantComponent from "./views/ProductVariant";
+import ProductListComponent from "./views/ProductList/ProductList";
+import ProductUpdateComponent from "./views/ProductUpdate/ProductUpdate";
+import ProductVariantComponent from "./views/ProductVariant/ProductVariant";
 import ProductVariantCreateComponent from "./views/ProductVariantCreate";
 
 interface MatchParams {
