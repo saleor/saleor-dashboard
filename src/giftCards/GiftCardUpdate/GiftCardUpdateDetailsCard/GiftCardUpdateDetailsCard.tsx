@@ -1,6 +1,6 @@
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
-import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
-import { GiftCardUpdateExpirySelect } from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
+import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput/GiftCardTagInput";
+import { GiftCardUpdateExpirySelect } from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect/GiftCardUpdateExpirySelect";
 import { Box, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

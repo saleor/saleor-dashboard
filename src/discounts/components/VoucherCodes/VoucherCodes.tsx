@@ -1,10 +1,10 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type UseListSettings } from "@dashboard/hooks/useListSettings";
 import { type LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 
 import { VoucherCodesCard } from "../VoucherCodesCard/VoucherCodesCard";
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
-import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog";
+import { type GenerateMultipleVoucherCodeFormData } from "../VoucherCodesGenerateDialog/VoucherCodesGenerateDialog";
 
 /** @deprecated Prefer `VoucherCodesCard` — kept for existing tests. */
 export interface VoucherCodesProps {

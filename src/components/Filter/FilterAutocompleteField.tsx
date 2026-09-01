@@ -1,11 +1,11 @@
 // @ts-strict-ignore
-import { toggle } from "@dashboard/utils/lists";
-import { FormControlLabel, TextField } from "@material-ui/core";
+import { toggle } from "@dashboard/utils/lists/lists";
+import { FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { type Option, Text } from "@saleor/macaw-ui-next";
+import { Input, type Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
-import Checkbox from "../Checkbox";
+import Checkbox from "../Checkbox/Checkbox";
 import Hr from "../Hr";
 import Link from "../Link";
 import { type FieldType, type FilterFieldBaseProps } from "./types";
@@ -24,9 +24,6 @@ const useStyles = makeStyles(
     hr: {
       backgroundColor: theme.palette.primary.light,
       margin: theme.spacing(1, 0),
-    },
-    input: {
-      padding: "12px 0 9px 12px",
     },
     inputContainer: {
       marginBottom: theme.spacing(1),
@@ -97,16 +94,10 @@ const FilterAutocompleteField = ({
   return (
     <div {...rest}>
       {filter?.onSearchChange && (
-        <TextField
+        <Input
           data-test-id="filter-field-autocomplete-input"
           className={classes.inputContainer}
-          fullWidth
           name={filter.name + "_autocomplete"}
-          InputProps={{
-            classes: {
-              input: classes.input,
-            },
-          }}
           onChange={event => filter.onSearchChange(event.target.value)}
         />
       )}

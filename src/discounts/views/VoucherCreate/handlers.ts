@@ -1,6 +1,6 @@
 import { type FetchResult } from "@apollo/client";
 import { type FormData } from "@dashboard/discounts/components/VoucherCreatePage/types";
-import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage/VoucherDetailsPage";
 import { clearInactiveVoucherDiscountDrafts } from "@dashboard/discounts/data";
 import { getChannelsVariables } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";

@@ -1,5 +1,5 @@
 import { type AppDetailsUrlMountQueryParams, ExtensionsUrls } from "@dashboard/extensions/urls";
-import { type FlagList } from "@dashboard/featureFlags";
+import { type FlagList } from "@dashboard/featureFlags/availableFlags";
 import { type ThemeType } from "@saleor/app-sdk/app-bridge";
 import { useTheme } from "@saleor/macaw-ui";
 import isEqualWith from "lodash/isEqualWith";

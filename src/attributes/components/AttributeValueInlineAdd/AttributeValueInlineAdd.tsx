@@ -1,4 +1,4 @@
-import AttributeSwatchField from "@dashboard/attributes/components/AttributeSwatchField";
+import AttributeSwatchField from "@dashboard/attributes/components/AttributeSwatchField/AttributeSwatchField";
 import { AttributeValuePasteProposal } from "@dashboard/attributes/components/AttributeValuePasteProposal/AttributeValuePasteProposal";
 import { attributeValuePasteMessages } from "@dashboard/attributes/components/AttributeValuePasteProposal/messages";
 import { SwatchPreview } from "@dashboard/attributes/components/SwatchPreview/SwatchPreview";
@@ -6,9 +6,9 @@ import { getAttributeValueErrorMessage } from "@dashboard/attributes/errors";
 import { useAttributeValuePaste } from "@dashboard/attributes/hooks/useAttributeValuePaste";
 import { type AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { tableStyles } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableCell, TableFooter, TableRow } from "@dashboard/components/Table/Table";
 import { type AttributeErrorFragment, AttributeInputTypeEnum } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Plus } from "lucide-react";
@@ -59,6 +59,10 @@ interface AttributeValueInlineAddProps {
 }
 
 const emptyForm: AttributeValueEditDialogFormData = { name: "" };
+
+// Stable identity: ColorPicker keys an effect on `errors`, and a fresh literal here
+// re-fires it on every render, which loops through its onColorChange -> setForm.
+const noFieldErrors = {};
 
 export const AttributeValueInlineAdd = ({
   columnSpan,
@@ -181,7 +185,7 @@ export const AttributeValueInlineAdd = ({
       <AttributeSwatchField
         clearErrors={() => undefined}
         data={form}
-        errors={{}}
+        errors={noFieldErrors}
         hidePreview
         set={updates => setForm(current => ({ ...current, ...updates }))}
         setError={() => undefined}

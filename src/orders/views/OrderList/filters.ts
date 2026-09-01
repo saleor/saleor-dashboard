@@ -7,13 +7,13 @@ import {
   type FilterElementRegular,
 } from "../../../components/Filter/types";
 import {
-  createFilterTabUtils,
   getKeyValueQueryParam,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
   getMultipleValueQueryParam,
   getSingleValueQueryParam,
-} from "../../../utils/filters";
+} from "../../../utils/filters/filters";
+import { createFilterTabUtils } from "../../../utils/filters/storage";
 import {
   OrderListFitersWithKeyValueValues,
   type OrderListUrlFilters,

@@ -2,7 +2,7 @@ import { CategoryBulkDeleteDialog } from "@dashboard/categories/components/Categ
 import { CategoryDeleteImageDialog } from "@dashboard/categories/components/CategoryDeleteImageDialog/CategoryDeleteImageDialog";
 import { CategoryMetadataDialog } from "@dashboard/categories/components/CategoryMetadataDialog/CategoryMetadataDialog";
 import { useEntityBackgroundImageUpload } from "@dashboard/components/EntityBackgroundImageField/useEntityBackgroundImageUpload";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { useRegisterEntityRefresh } from "@dashboard/extensions/entity-refresh";
 import {
@@ -21,7 +21,7 @@ import {
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { type PaginatorContextValues } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages, errorMessages } from "@dashboard/intl";

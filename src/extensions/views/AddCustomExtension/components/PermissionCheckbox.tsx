@@ -1,4 +1,4 @@
-import { HookFormCheckbox } from "@dashboard/components/HookFormCheckbox";
+import { HookFormCheckbox } from "@dashboard/components/HookFormCheckbox/HookFormCheckbox";
 import { messages } from "@dashboard/extensions/messages";
 import { type PermissionEnum } from "@dashboard/graphql";
 import { Box, Text, Tooltip } from "@saleor/macaw-ui-next";

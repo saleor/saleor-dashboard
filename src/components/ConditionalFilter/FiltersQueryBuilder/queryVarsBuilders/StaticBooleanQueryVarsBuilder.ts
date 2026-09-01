@@ -1,7 +1,7 @@
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { BooleanValuesHandler, type Handler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { type BothApiQueryVarsBuilder, type FilterQuery } from "./types";
 

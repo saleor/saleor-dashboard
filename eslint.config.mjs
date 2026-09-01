@@ -94,6 +94,9 @@ export default tseslint.config(
       "react-hooks/config": "warn", // Config violations
       "react-hooks/gating": "warn", // Conditional rendering violations
 
+      // Cyclomatic complexity: warn-only while we bring existing offenders down
+      complexity: ["warn", 20],
+
       // Migration in progress:
       // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
       "@typescript-eslint/no-non-null-assertion": "warn",

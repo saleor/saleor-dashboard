@@ -20,7 +20,7 @@ import {
   type IChannelPriceArgs,
   type VariantChannelPriceData,
 } from "@dashboard/channels/utils";
-import { type AttributeInput } from "@dashboard/components/Attributes";
+import { type AttributeInput } from "@dashboard/components/Attributes/Attributes";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import {
   type ProductErrorWithAttributesFragment,
@@ -55,13 +55,13 @@ import {
 import { scrollToVariantAttributeErrors } from "@dashboard/products/utils/scrollToVariantAttributeErrors";
 import { validateProductVariant } from "@dashboard/products/utils/validation";
 import { type FetchMoreProps, type RelayToFlat, type ReorderEvent } from "@dashboard/types";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
 import type * as React from "react";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { type ProductStockInput, type ProductStockPasteRow } from "../ProductStocks";
+import { type ProductStockInput, type ProductStockPasteRow } from "../ProductStocks/ProductStocks";
 import {
   concatChannelsBySelection,
   extractChannelPricesFromVariantChannel,

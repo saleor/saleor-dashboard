@@ -2,7 +2,7 @@ import { type ApolloClient, useApolloClient } from "@apollo/client";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
 import { type IntlShape, useIntl } from "react-intl";
 
-import { type FilterContainer, type FilterElement } from "../../FilterElement";
+import { type FilterContainer, type FilterElement } from "../../FilterElement/FilterElement";
 import { type FilterAPIProvider } from "../FilterAPIProvider";
 import { emptyAttributeChoicesPage, fetchHandlerPage } from "../filterChoicesPage";
 import { ChannelHandler, EnumValuesHandler, type Handler } from "../Handler";

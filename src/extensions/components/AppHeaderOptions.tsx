@@ -1,6 +1,6 @@
 import activateIcon from "@assets/images/activate-icon.svg";
 import deleteIcon from "@assets/images/delete.svg";
-import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip";
+import { ButtonWithTooltip } from "@dashboard/components/ButtonWithTooltip/ButtonWithTooltip";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import { buttonMessages } from "@dashboard/intl";
 import { Box } from "@saleor/macaw-ui-next";

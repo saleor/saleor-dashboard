@@ -656,6 +656,10 @@
     "context": "empty search results on the customer list",
     "string": "No customers found for {query}"
   },
+  "0R1EEd": {
+    "context": "staff notification description",
+    "string": "Sent to people in {alertsLink} when a customer completes checkout. Draft orders completed in the Dashboard are not included."
+  },
   "0UeJGl": {
     "context": "issue gift card dialog intro",
     "string": "Set the gift card value and optional delivery details."
@@ -1008,6 +1012,10 @@
     "context": "hint linking to model types settings",
     "string": "Assign this attribute from a {link}."
   },
+  "1zZG0I": {
+    "context": "configuration menu item description for notifications",
+    "string": "Staff and customer email messages, who gets new-order alerts, and how they are delivered"
+  },
   "1zuQ2P": {
     "context": "unassign country",
     "string": "Are you sure you want to remove {countryName} from this shipping zone?"
@@ -1186,10 +1194,6 @@
   "2hWKKd": {
     "context": "Product save pipeline step label",
     "string": "Variant updates"
-  },
-  "2i81/P": {
-    "context": "section header button",
-    "string": "Manage"
   },
   "2jHGjL": {
     "context": "message row status: only subject differs from Saleor default",
@@ -1456,6 +1460,10 @@
     "context": "promotion status filter scheduled",
     "string": "Scheduled"
   },
+  "3k1Hiz": {
+    "context": "hint for email-only staff notification recipients",
+    "string": "Not linked to an active staff member, so Saleor will not send new-order emails to this address."
+  },
   "3kJE8G": {
     "string": "Something went wrong. Try again."
   },
@@ -1587,6 +1595,10 @@
   "4ErS/1": {
     "context": "gift card tag field label",
     "string": "Card tag"
+  },
+  "4H9bIs": {
+    "context": "hint when a stored recipient has active=false",
+    "string": "This recipient is muted, so they will not receive new-order emails."
   },
   "4IVdnm": {
     "context": "Empty state when the filter panel or modal has no conditions",
@@ -1775,10 +1787,6 @@
   },
   "5A5tMT": {
     "string": "Fixed amount"
-  },
-  "5A6/2C": {
-    "context": "section header",
-    "string": "Availability"
   },
   "5FSIZp": {
     "string": "Create new attribute"
@@ -2081,6 +2089,10 @@
   "6DJVl5": {
     "context": "canceled fulfillment, original source warehouse info",
     "string": "Shipped from {warehouseName}"
+  },
+  "6GLJUd": {
+    "context": "error toast when deleting a staff notification recipient fails",
+    "string": "Couldn’t remove recipient. Try again."
   },
   "6GTAm2": {
     "context": "order history message",
@@ -2760,10 +2772,6 @@
   "8pVWve": {
     "string": "This field cannot be blank"
   },
-  "8qL/tV": {
-    "context": "CannotDefineChannelsAvailabilityCard subtitle",
-    "string": "You will be able to define availability of product after creating variants."
-  },
   "8r8XBO": {
     "context": "shipping method channel picker dialog title without method name",
     "string": "Choose channels for this shipping method"
@@ -3126,6 +3134,10 @@
     "context": "plain text attribute value was truncated",
     "string": "Attribute value too long and truncated at {length} characters."
   },
+  "A0WxFL": {
+    "context": "settings search alias",
+    "string": "staff emails invites password smtp recipients order alerts"
+  },
   "A1KX3d": {
     "context": "simple product create pricing empty state",
     "string": "Add channels in the Channels section to set prices"
@@ -3168,10 +3180,6 @@
   "ACZg1z": {
     "context": "create collection dialog description",
     "string": "Add a collection. You can edit channels, SEO, media, and metadata after creating it."
-  },
-  "AD1PlC": {
-    "context": "channels availability text",
-    "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
   },
   "ADvpV/": {
     "context": "Product can be purchased by customers",
@@ -3805,13 +3813,13 @@
   "CQTTke": {
     "string": "Refund request sent to payment provider"
   },
-  "CT5PAn": {
-    "context": "CannotDefineChannelsAvailabilityCard title",
-    "string": "Availability"
-  },
   "CTASiY": {
     "context": "gift card resend dialog email field label",
     "string": "Email address"
+  },
+  "CUGRtv": {
+    "context": "warning when staff email plugin is inactive",
+    "string": "Staff emails are turned off. These people will not be notified until you enable them above."
   },
   "CVEnEY": {
     "context": "gift card tag multiselect placeholder",
@@ -3885,10 +3893,6 @@
   "ClI6NL": {
     "context": "dialog header",
     "string": "Pin to navigation"
-  },
-  "ClKKID": {
-    "context": "channel publication status",
-    "string": "Not published"
   },
   "ClUKur": {
     "context": "tooltip for subtotal amount",
@@ -5185,6 +5189,10 @@
     "context": "channel delivery card header count",
     "string": "{count} assigned"
   },
+  "HY1sEu": {
+    "context": "error toast when creating a staff notification recipient fails",
+    "string": "Couldn’t add recipient. Try again."
+  },
   "HYHLsB": {
     "context": "product field",
     "string": "Export Variant ID"
@@ -5352,6 +5360,10 @@
   "I81b5g": {
     "context": "setup checklist review section subtitle",
     "string": "Optional campaign controls"
+  },
+  "I8hHsh": {
+    "context": "warning when assign includes inactive staff members",
+    "string": "Inactive staff were skipped. Only active staff receive new-order emails."
   },
   "IAmnQ/": {
     "context": "SMTP sender address field",
@@ -5883,10 +5895,6 @@
   "KFv8hX": {
     "string": "An attribute already exists."
   },
-  "KGhnca": {
-    "context": "settings search alias",
-    "string": "staff emails invites password smtp"
-  },
   "KHI/qv": {
     "string": "You don't have permission to manage products"
   },
@@ -6303,6 +6311,10 @@
   "LqIHgW": {
     "context": "channel details link title and a11y label",
     "string": "View {channelName}"
+  },
+  "LrMfvz": {
+    "context": "button to add staff order alert recipients",
+    "string": "Assign staff"
   },
   "Lrp9WW": {
     "string": "Discount of {value} on the purchase of {conditions} through the {channel}"
@@ -6727,6 +6739,10 @@
     "context": "webhook input label",
     "string": "Secret Key"
   },
+  "NQaMkx": {
+    "context": "notifications settings hub description",
+    "string": "Staff Dashboard emails and who gets new-order alerts are configured here. Customer (shopper) emails use the SMTP app — a separate setup."
+  },
   "NQgbYA": {
     "string": "Account Settings"
   },
@@ -7134,10 +7150,6 @@
   "P/EDn1": {
     "context": "order history message",
     "string": "Order was fully paid"
-  },
-  "P/oGtb": {
-    "context": "product availability",
-    "string": "Available for purchase"
   },
   "P/yK/7": {
     "context": "dialog title",
@@ -8867,6 +8879,10 @@
     "context": "fulfill button label",
     "string": "Fulfill anyway"
   },
+  "VWW8dR": {
+    "context": "staff order confirmation recipients section description",
+    "string": "Active staff members listed here get an email when a customer completes checkout. Draft orders you complete in the Dashboard are not included."
+  },
   "VWuT7A": {
     "context": "setup review row description when no payment apps",
     "string": "Install a payment app so customers can pay at checkout."
@@ -9138,10 +9154,6 @@
     "context": "dialog title",
     "string": "Delete attribute value"
   },
-  "WXcmOW": {
-    "context": "staff notification description",
-    "string": "Sent to staff when a new order is placed."
-  },
   "WY3IXU": {
     "string": "This code already exists"
   },
@@ -9237,6 +9249,10 @@
   },
   "WzA5Ll": {
     "string": "Cannot remove user from last group"
+  },
+  "X+dg8b": {
+    "context": "toast after removing a staff order alert recipient",
+    "string": "Recipient removed"
   },
   "X1NCdA": {
     "context": "shipping method not available label",
@@ -9615,10 +9631,6 @@
     "context": "app extensions subsection",
     "string": "Apps"
   },
-  "Y9lv8z": {
-    "context": "product unavailability",
-    "string": "Unavailable for purchase"
-  },
   "YBqLHs": {
     "context": "expiry date label",
     "string": "Exact date"
@@ -9965,6 +9977,10 @@
     "context": "attribute type",
     "string": "Model Attribute"
   },
+  "ZOFvAC": {
+    "context": "hint when assigned staff user is deactivated",
+    "string": "This staff member is inactive, so they will not receive new-order emails."
+  },
   "ZOamBQ": {
     "context": "charge status overcharged",
     "string": "Overcharged"
@@ -10248,10 +10264,6 @@
   },
   "aWzvoq": {
     "string": "{counter,plural,one{Are you sure you want to delete this structure?} other{Are you sure you want to delete {displayQuantity} structures?}}"
-  },
-  "aXb6gP": {
-    "context": "notifications settings hub description",
-    "string": "Staff Dashboard emails are configured here. Customer (shopper) emails use the SMTP app — a separate setup."
   },
   "aXytBR": {
     "string": "A required field is missing in the extension's manifest. {docsLink} ({errorCode})"
@@ -11039,6 +11051,10 @@
     "context": "attribute values list: no attribute values found",
     "string": "No values found"
   },
+  "dByesK": {
+    "context": "staff emails page intro",
+    "string": "Choose how staff mail is sent, who gets new-order alerts, and how each message reads. This is not the SMTP app used for shopper emails."
+  },
   "dDCLFW": {
     "context": "alert message",
     "string": "Not available for sale this channel"
@@ -11182,6 +11198,10 @@
   "dxCVWI": {
     "context": "error message",
     "string": "Cannot request an invoice for draft order"
+  },
+  "dzfHno": {
+    "context": "error when assigning a duplicate staff notification recipient",
+    "string": "This person is already subscribed."
   },
   "e+L+q3": {
     "string": "Remember this will also delete all products assigned to this category."
@@ -11339,6 +11359,10 @@
   "efbank": {
     "context": "bulk publish progress error when product fetch misses a row",
     "string": "Could not load product data."
+  },
+  "ehuvEV": {
+    "context": "settings search alias",
+    "string": "staffNotificationRecipients recipients order alerts who gets notified"
   },
   "eiRboK": {
     "context": "collection channel status description when hidden",
@@ -12269,6 +12293,10 @@
     "context": "product type a11y label prefix",
     "string": "Product type"
   },
+  "iM5nh1": {
+    "context": "warning when assigning staff order alert recipients partially fails",
+    "string": "Some staff couldn’t be added. Try again."
+  },
   "iMZEfi": {
     "context": "model detail page menu, opens model type configuration",
     "string": "Model type settings"
@@ -12422,6 +12450,10 @@
   "iqftjN": {
     "context": "channel catalog not in channel stat label",
     "string": "Not in channel"
+  },
+  "iqvjTX": {
+    "context": "empty state description for staff order alert recipients",
+    "string": "Staff will not be emailed when a customer places an order."
   },
   "isM94c": {
     "context": "create service token, button",
@@ -12634,6 +12666,10 @@
     "context": "voucher scope tile title",
     "string": "Free shipping"
   },
+  "jbda4N": {
+    "context": "hint when user can view recipients but not assign staff",
+    "string": "You need permission to manage staff to add people to this list."
+  },
   "jd/LWa": {
     "string": "Voucher applies to all countries"
   },
@@ -12825,6 +12861,10 @@
     "context": "empty metadata text",
     "string": "Empty"
   },
+  "kAbS/r": {
+    "context": "empty state title for staff order alert recipients",
+    "string": "No one is subscribed"
+  },
   "kB9lYq": {
     "context": "gift card history message",
     "string": "Gift card balance was adjusted from {oldBalance} to {newBalance}"
@@ -12943,10 +12983,6 @@
   "kXqn6A": {
     "context": "table header column",
     "string": "Charge taxes"
-  },
-  "kYYbrv": {
-    "context": "channel publication date",
-    "string": "Published since {date}"
   },
   "kak5vT": {
     "context": "order refund amount",
@@ -13816,6 +13852,10 @@
   "no3Ygn": {
     "string": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
   },
+  "npWcXm": {
+    "context": "staff order confirmation recipients section title",
+    "string": "New order alerts"
+  },
   "nplO5w": {
     "context": "channel availability badge",
     "string": "Inactive"
@@ -14093,6 +14133,10 @@
   },
   "ofewGR": {
     "string": "Go to orders"
+  },
+  "oi9xgK": {
+    "context": "toast after assigning one staff order alert recipient",
+    "string": "Recipient added"
   },
   "oiuwOl": {
     "context": "button",
@@ -14558,10 +14602,6 @@
     "context": "gift card provenance, label for channel + order line",
     "string": "Purchase"
   },
-  "qJedl0": {
-    "context": "product label",
-    "string": "Published"
-  },
   "qK4it1": {
     "context": "gift card instrument card, caption under spend progress meter",
     "string": "{spent} spent of {initial} initial value"
@@ -15014,6 +15054,10 @@
     "context": "expires in label",
     "string": "Expires in"
   },
+  "rnADHu": {
+    "context": "settings catalog description for new order alerts",
+    "string": "Choose which staff members get an email when a customer places an order"
+  },
   "roQH8c": {
     "context": "Description when product is not visible in listings",
     "string": "Customers can still access it via direct link."
@@ -15095,10 +15139,6 @@
   "s5Huhi": {
     "context": "settings search result kind badge",
     "string": "Setting"
-  },
-  "s6+A2i": {
-    "context": "staff emails page intro",
-    "string": "Choose default delivery or your own SMTP, then adjust which staff messages go out and how they read. This is not the SMTP app used for shopper emails."
   },
   "s699+F": {
     "context": "voucher channel status when schedule has not started",
@@ -15243,10 +15283,6 @@
   "sZpp65": {
     "context": "bulk publish review step description",
     "string": "Set prices in {currency} for each product. Cost price and stock are optional. Values apply to all variants of that product."
-  },
-  "saKXY3": {
-    "context": "product label",
-    "string": "Not published"
   },
   "scHVdW": {
     "context": "button",
@@ -15501,6 +15537,10 @@
     "context": "matrix section description on editable orders hub",
     "string": "Edit per-channel values here or open a channel for checkout, payment, and other channel settings."
   },
+  "td6upx": {
+    "context": "toast after assigning multiple staff order alert recipients",
+    "string": "Recipients added"
+  },
   "tdhr3t": {
     "context": "channel catalog warehouse hint when shop has no warehouses",
     "string": "Create a warehouse before you can set stock when adding products. You can still publish products and set prices."
@@ -15716,10 +15756,6 @@
   "uIYU0D": {
     "context": "section header",
     "string": "Extension permissions"
-  },
-  "uK4ys2": {
-    "context": "configuration menu item description for notifications",
-    "string": "Staff and customer email messages, and how they are delivered"
   },
   "uKuQFH": {
     "context": "delete customer type dialog title",
@@ -17036,10 +17072,6 @@
   "ypW4Mi": {
     "context": "button refreshing page",
     "string": "Refresh page"
-  },
-  "ys0jH2": {
-    "context": "channel publication status",
-    "string": "Published"
   },
   "ysIDsl": {
     "context": "message row status: only email body is customized",

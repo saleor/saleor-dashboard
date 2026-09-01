@@ -4,7 +4,7 @@ import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { pageListUrl } from "@dashboard/modeling/urls";
 import { Button } from "@saleor/macaw-ui-next";

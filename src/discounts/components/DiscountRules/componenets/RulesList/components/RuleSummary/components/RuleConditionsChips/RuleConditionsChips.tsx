@@ -1,11 +1,11 @@
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { Box, Chip, Text, Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { type ConditionChipOption, getConditionEntityUrl, mapConditionToOption } from "../../utils";
-import { RuleSummaryChips } from "../RuleSummaryChips";
+import { RuleSummaryChips } from "../RuleSummaryChips/RuleSummaryChips";
 import styles from "./RuleConditionsChips.module.css";
 import { useEnrichConditions } from "./useEnrichConditions";
 

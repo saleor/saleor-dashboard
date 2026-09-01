@@ -3,7 +3,7 @@ import { AttributeInputTypeEnum, AttributeTypeEnum } from "@dashboard/graphql";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { type AttributePageFormData } from "../AttributePage";
+import { type AttributePageFormData } from "../AttributePage/AttributePage";
 import AttributeProperties from "./AttributeProperties";
 
 const meta: Meta<typeof AttributeProperties> = {

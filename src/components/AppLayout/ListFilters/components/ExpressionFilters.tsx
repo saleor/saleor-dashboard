@@ -1,8 +1,6 @@
-import {
-  conditionalFilterMessages,
-  ConditionalFilters,
-  useConditionalFilterContext,
-} from "@dashboard/components/ConditionalFilter";
+import { ConditionalFilters } from "@dashboard/components/ConditionalFilter/ConditionalFilters";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context/consumer";
+import { conditionalFilterMessages } from "@dashboard/components/ConditionalFilter/messages";
 import { CountPill, countPillFromNumber } from "@dashboard/components/CountPill/CountPill";
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";

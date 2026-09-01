@@ -2,8 +2,8 @@
 import { type FetchResult } from "@apollo/client";
 import { DashboardCard } from "@dashboard/components/Card";
 import { CopyableText } from "@dashboard/components/CopyableText/CopyableText";
-import Form from "@dashboard/components/Form";
-import { Pill } from "@dashboard/components/Pill";
+import Form from "@dashboard/components/Form/Form";
+import { Pill } from "@dashboard/components/Pill/Pill";
 import { groupEventsByDate } from "@dashboard/components/Timeline/groupEventsByDate";
 import { Timeline, TimelineAddNote } from "@dashboard/components/Timeline/Timeline";
 import { TimelineDateGroupHeader } from "@dashboard/components/Timeline/TimelineDateGroupHeader";

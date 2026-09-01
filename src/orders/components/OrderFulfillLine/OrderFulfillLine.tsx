@@ -1,7 +1,8 @@
 // @ts-strict-ignore
 import { QuantityInput } from "@dashboard/components/QuantityInput";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { TableCell } from "@dashboard/components/Table/Table";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type OrderFulfillLineFragment } from "@dashboard/graphql";
 import { type FormsetChange, type FormsetData } from "@dashboard/hooks/useFormset";
 import {
@@ -10,7 +11,6 @@ import {
   getWarehouseStock,
   type OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
-import { TableCell } from "@material-ui/core";
 import { WarningIcon } from "@saleor/macaw-ui";
 import { Box, Input, Skeleton, Tooltip } from "@saleor/macaw-ui-next";
 import clsx from "clsx";

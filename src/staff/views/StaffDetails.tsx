@@ -1,8 +1,8 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth/useUser";
 import { getNewPasswordResetRedirectUrl } from "@dashboard/auth/utils";
-import ActionDialog from "@dashboard/components/ActionDialog";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -14,7 +14,7 @@ import {
   useStaffMemberUpdateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
 import { isStaffInvitePending } from "@dashboard/staff/staffMemberStatus";
@@ -27,7 +27,8 @@ import {
 } from "../components/StaffDetailsPage/StaffDetailsPage";
 import { StaffMetadataDialog } from "../components/StaffMetadataDialog/StaffMetadataDialog";
 import { StaffPasswordResetDialog } from "../components/StaffPasswordResetDialog/StaffPasswordResetDialog";
-import { useProfileOperations, useStaffUserOperations } from "../hooks";
+import { useProfileOperations } from "../hooks/useProfileOperations";
+import { useStaffUserOperations } from "../hooks/useStaffUserOperations";
 import {
   staffListUrl,
   staffMemberDetailsUrl,

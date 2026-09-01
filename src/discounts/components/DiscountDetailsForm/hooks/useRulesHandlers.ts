@@ -1,4 +1,5 @@
-import { mapAPIRuleToForm, type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
+import { mapAPIRuleToForm } from "@dashboard/discounts/models/transformRule";
 import { sortRules } from "@dashboard/discounts/utils";
 import {
   type PromotionDetailsFragment,

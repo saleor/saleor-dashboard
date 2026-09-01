@@ -1,5 +1,5 @@
-import { SaleorThrobber } from "@dashboard/components/Throbber";
-import { TableCell, TableRow } from "@material-ui/core";
+import { TableCell, TableRow } from "@dashboard/components/Table/Table";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { Box } from "@saleor/macaw-ui-next";
 
 import styles from "./AssignPickerListPlaceholder.module.css";

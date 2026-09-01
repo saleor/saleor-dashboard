@@ -5,8 +5,8 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import {
   type OrderDetailsFragment,
   type OrderErrorFragment,
@@ -26,10 +26,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { calculateCanRefundShipping } from "../OrderGrantRefundPage/utils";
-import { TransactionSubmitCard } from "./components";
 import { OrderReturnReasonCard } from "./components/OrderReturnReasonCard/OrderReturnReasonCard";
-import { PaymentSubmitCard } from "./components/PaymentSubmitCard";
+import { PaymentSubmitCard } from "./components/PaymentSubmitCard/PaymentSubmitCard";
 import { getReturnProductsAmountValues } from "./components/PaymentSubmitCard/utils";
+import { TransactionSubmitCard } from "./components/TransactionSubmitCard/TransactionSubmitCard";
 import OrderRefundForm, { type OrderRefundSubmitData } from "./form";
 import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";

@@ -1,5 +1,5 @@
+import { Table } from "@dashboard/components/Table/Table";
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { Table } from "@material-ui/core";
 import { Box, SearchInput, Text } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { X } from "lucide-react";

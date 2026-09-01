@@ -2,7 +2,7 @@ import { scrollToDetailSection } from "@dashboard/components/Layouts/Detail/scro
 import { IS_CLOUD_INSTANCE, PAIRED_ERROR_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { settingsHashes } from "@dashboard/configuration/settingsCatalog/hashes";
 import { usePluginQuery, usePluginUpdateMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import { DisableStaffEmailsDialog } from "@dashboard/notificationsSettings/components/DisableStaffEmailsDialog/DisableStaffEmailsDialog";
 import { EmailNotificationsPage } from "@dashboard/notificationsSettings/components/EmailNotificationsPage/EmailNotificationsPage";

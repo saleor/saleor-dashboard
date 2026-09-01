@@ -9,7 +9,7 @@ import { FileText, type LucideIcon, Tag, UserRound } from "lucide-react";
 import { type KeyboardEvent, useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { type AttributePageFormData } from "../AttributePage";
+import { type AttributePageFormData } from "../AttributePage/AttributePage";
 import styles from "./AttributeOrganization.module.css";
 import { messages } from "./messages";
 

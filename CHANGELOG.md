@@ -1,5 +1,45 @@
 # Changelog
 
+## 3.23.31
+
+### Patch Changes
+
+- [#6888](https://github.com/saleor/saleor-dashboard/pull/6888) [`ae4e4d2`](https://github.com/saleor/saleor-dashboard/commit/ae4e4d2c1ea1c0b3285c14af26be1973ac2f9031) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Extension URLs now accept an app's manifest identifier in place of its ID, so links can be shared between environments. `/extensions/app/saleor.app.adyen` resolves to the installed app and swaps itself for the ID form (`/extensions/app/QXBwOjE=`), keeping any deep path, query string and hash. Existing ID-based URLs are unchanged. If no installed app matches the identifier, the user lands on Explore Extensions.
+
+- [#6868](https://github.com/saleor/saleor-dashboard/pull/6868) [`a7e18d5`](https://github.com/saleor/saleor-dashboard/commit/a7e18d581822acac48e02eface45e3bc8e8a65a4) Thanks [@ebrahim2355](https://github.com/ebrahim2355)! - Rows in list views behave like real links again — middle click and right-click "Open link in new tab" work on product, order, and other datagrid rows.
+
+- [#6883](https://github.com/saleor/saleor-dashboard/pull/6883) [`b6662d2`](https://github.com/saleor/saleor-dashboard/commit/b6662d2d273ada0cf00393e88d12a0393c462f4f) Thanks [@mirekm](https://github.com/mirekm)! - Clarify list filters and search.
+
+  Auto-added Channel and Currency rows now show why they are required. Empty filter panels say “No filters”. List pages put docs behind a help icon instead of a subtitle.
+
+- [#6884](https://github.com/saleor/saleor-dashboard/pull/6884) [`008207d`](https://github.com/saleor/saleor-dashboard/commit/008207d8a81bb82f73f998299189a9342d50f17f) Thanks [@mirekm](https://github.com/mirekm)! - Product pickers in list filters show thumbnails.
+
+  Gift card Products, and any other product filter, use the same thumbnail list as product reference attributes.
+
+- [#6889](https://github.com/saleor/saleor-dashboard/pull/6889) [`b1206c4`](https://github.com/saleor/saleor-dashboard/commit/b1206c491b86644b45c51aa7ea3023bce940d6e3) Thanks [@lkostrowski](https://github.com/lkostrowski)! - The vendored `@saleor/sdk` copy that lived in `src/legacy-sdk` has been merged into the Dashboard
+  itself. Authentication now runs on the Dashboard's own Apollo client, GraphQL documents and
+  generated types instead of a second, separately generated copy of the schema.
+
+  This is an internal refactor with no change to how you log in, but two bugs went away with it:
+  a token refresh triggered while another refresh was already in flight could refresh itself in a
+  loop, and logging out refetched every open query against the token that had just been cleared,
+  producing a burst of authorization errors on the way to the login screen.
+
+- [#6889](https://github.com/saleor/saleor-dashboard/pull/6889) [`b1206c4`](https://github.com/saleor/saleor-dashboard/commit/b1206c491b86644b45c51aa7ea3023bce940d6e3) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed SSO login hanging on a loading screen when running the Dashboard from a local development
+  build. The OAuth callback was exchanging its single-use authorization code twice, and the losing
+  request came back without a user — which reported "no permissions", logged the session out, and
+  then blocked the successful login that arrived moments later.
+
+  The code is now exchanged once per callback. Deployed builds were never affected.
+
+- [#6893](https://github.com/saleor/saleor-dashboard/pull/6893) [`f301871`](https://github.com/saleor/saleor-dashboard/commit/f301871abf91d17594666b1e7513a3c7e06c35f8) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Vouchers no longer demand the MANAGE_PRODUCTS permission. Staff who could only manage discounts were met with a stack of "you need one of the following permissions: MANAGE_PRODUCTS" errors as soon as a voucher opened.
+
+  Two things caused it. The voucher page ran the assign-product and assign-variant picker searches on page load, with every picker closed — those searches now wait until their dialog is opened. And product channel availability, which does require MANAGE_PRODUCTS, was requested unconditionally — it is now requested only when the signed-in user can actually read it.
+
+  Staff without MANAGE_PRODUCTS see the Eligible products list without its Availability column, and the assign-product picker no longer filters by voucher channels, since it cannot know which channels a product is in. Nothing changes for staff who do have the permission.
+
+  Opening a voucher is also lighter: four catalog searches no longer fire on every page load.
+
 ## 3.23.30
 
 ### Patch Changes

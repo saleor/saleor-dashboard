@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
+import { Button } from "@dashboard/components/Button/Button";
 import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
@@ -9,7 +9,7 @@ import {
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
@@ -27,7 +27,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { MenuBulkDeleteDialog } from "../../components/MenuBulkDeleteDialog/MenuBulkDeleteDialog";
 import { MenuCreateDialog } from "../../components/MenuCreateDialog/MenuCreateDialog";
 import { MenuDeleteDialog } from "../../components/MenuDeleteDialog/MenuDeleteDialog";
-import MenuListPage from "../../components/MenuListPage";
+import MenuListPage from "../../components/MenuListPage/MenuListPage";
 import { menuListUrl, type MenuListUrlQueryParams, menuUrl } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 

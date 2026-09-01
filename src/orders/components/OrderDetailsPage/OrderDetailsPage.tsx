@@ -6,12 +6,12 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
-import Form from "@dashboard/components/Form";
+import Form from "@dashboard/components/Form/Form";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { type MetadataIdSchema } from "@dashboard/components/Metadata";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
+import { type MetadataIdSchema } from "@dashboard/components/Metadata/types";
 import { Savebar } from "@dashboard/components/Savebar";
 import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
@@ -40,14 +40,14 @@ import { useCallback, useContext, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
-import OrderCustomer from "../OrderCustomer";
-import OrderCustomerNote from "../OrderCustomerNote";
+import OrderCustomer from "../OrderCustomer/OrderCustomer";
+import OrderCustomerNote from "../OrderCustomerNote/OrderCustomerNote";
 import { OrderDetailsItemsSection } from "../OrderDetailsItemsSection/OrderDetailsItemsSection";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { type FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { OrderFulfillmentCard } from "../OrderFulfillmentCard/OrderFulfillmentCard";
-import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory";
-import OrderInvoiceList from "../OrderInvoiceList";
+import { type FormData as HistoryFormData, OrderHistory } from "../OrderHistory/OrderHistory";
+import OrderInvoiceList from "../OrderInvoiceList/OrderInvoiceList";
 import { LinePriceWaterfallModal } from "../OrderLinePriceBreakdown/components/LinePriceWaterfallModal";
 import { useOrderLinePriceWaterfall } from "../OrderLinePriceBreakdown/hooks/useOrderLinePriceWaterfall";
 import { OrderSummary } from "../OrderSummary/OrderSummary";

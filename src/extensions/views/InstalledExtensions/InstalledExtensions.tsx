@@ -3,7 +3,7 @@ import { contextualLinks } from "@dashboard/components/AppLayout/ContextualLinks
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import { headerTitles, messages } from "@dashboard/extensions/messages";
 import {
   type ExtensionsListUrlDialog,
@@ -14,10 +14,10 @@ import { useInstalledExtensionsFilter } from "@dashboard/extensions/views/Instal
 import { useAppAllProblemsLazyQuery, useAppProblemDismissMutation } from "@dashboard/graphql";
 import { useHasManagedAppsPermission } from "@dashboard/hooks/useHasManagedAppsPermission";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { EXTENSIONS_DOCS_URL } from "@dashboard/links";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
+import { useOnboarding } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 import { Box, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect } from "react";
 import { useIntl } from "react-intl";

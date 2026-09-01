@@ -3,10 +3,10 @@ import userEvent from "@testing-library/user-event";
 import { type ComponentProps } from "react";
 
 import { ConditionalFilters } from "./ConditionalFilters";
-import { useConditionalFilterContext } from "./context";
+import { useConditionalFilterContext } from "./context/consumer";
 import { type FiltersArea } from "./FiltersArea";
 
-jest.mock("./context", () => ({
+jest.mock("./context/consumer", () => ({
   useConditionalFilterContext: jest.fn(),
 }));
 

@@ -1,7 +1,7 @@
 // @ts-strict-ignore
-import ActionDialog from "@dashboard/components/ActionDialog";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import NotFoundPage from "@dashboard/components/NotFoundPage/NotFoundPage";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
 import {
   ShippingMethodTypeEnum,
@@ -14,14 +14,14 @@ import {
 } from "@dashboard/graphql";
 import { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors, getById, getStringOrPlaceholder } from "@dashboard/misc";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
-import { DeleteShippingRateDialog } from "@dashboard/shipping/components/DeleteShippingRateDialog";
-import { ShippingZoneCountriesAssignDialog } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog";
+import { DeleteShippingRateDialog } from "@dashboard/shipping/components/DeleteShippingRateDialog/DeleteShippingRateDialog";
+import { ShippingZoneCountriesAssignDialog } from "@dashboard/shipping/components/ShippingZoneCountriesAssignDialog/ShippingZoneCountriesAssignDialog";
 import { ShippingZoneMetadataDialog } from "@dashboard/shipping/components/ShippingZoneMetadataDialog/ShippingZoneMetadataDialog";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapCountriesToCountriesCodes, mapEdgesToItems } from "@dashboard/utils/maps";
 import { diff } from "fast-array-diff";

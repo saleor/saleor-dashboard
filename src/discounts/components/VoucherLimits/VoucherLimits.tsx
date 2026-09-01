@@ -3,19 +3,18 @@ import {
   DetailSettingNestedField,
   DetailSettingToggleRow,
 } from "@dashboard/components/DetailSettingToggleRow/DetailSettingToggleRow";
-import { Grid } from "@dashboard/components/Grid";
+import { Grid } from "@dashboard/components/Grid/Grid";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { voucherFeedbackMessages } from "@dashboard/discounts/voucherFeedbackMessages";
 import { DiscountErrorCode, type DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { TextField } from "@material-ui/core";
-import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { Lock } from "lucide-react";
 import { type ChangeEvent, type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { type VoucherDetailsPageFormData } from "../VoucherDetailsPage/VoucherDetailsPage";
 import messages from "./messages";
 import styles from "./VoucherLimits.module.css";
 
@@ -148,36 +147,33 @@ export const VoucherLimits = ({
             {data.hasUsageLimit ? (
               <DetailSettingNestedField>
                 {isNewVoucher ? (
-                  <TextField
+                  <Input
                     data-test-id="usage-limit"
                     disabled={disabled || usageSettingsLocked}
                     error={!!formErrors.usageLimit || hasInvalidUsageLimit}
+                    aria-invalid={!!formErrors.usageLimit || hasInvalidUsageLimit}
                     helperText={usageLimitHelperText}
                     label={intl.formatMessage(messages.usageLimit)}
                     name={"usageLimit" as keyof VoucherDetailsPageFormData}
                     value={data.usageLimit}
                     onChange={onChange}
                     type="number"
-                    fullWidth
-                    inputProps={{
-                      min: 1,
-                    }}
+                    min={1}
                   />
                 ) : (
                   <Grid variant="uniform">
-                    <TextField
+                    <Input
                       data-test-id="usage-limit"
                       disabled={disabled || usageSettingsLocked}
                       error={!!formErrors.usageLimit || hasInvalidUsageLimit}
+                      aria-invalid={!!formErrors.usageLimit || hasInvalidUsageLimit}
                       helperText={usageLimitHelperText}
                       label={intl.formatMessage(messages.usageLimit)}
                       name={"usageLimit" as keyof VoucherDetailsPageFormData}
                       value={data.usageLimit}
                       onChange={onChange}
                       type="number"
-                      inputProps={{
-                        min: 1,
-                      }}
+                      min={1}
                     />
                     <div className={styles.usesLeftLabelWrapper}>
                       <Text size={2} fontWeight="light">

@@ -1,5 +1,5 @@
 import { type VoucherCode } from "@dashboard/discounts/components/VoucherCodesDatagrid/types";
-import { type GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/components/VoucherCodesGenerateDialog";
+import { type GenerateMultipleVoucherCodeFormData } from "@dashboard/discounts/components/VoucherCodesGenerateDialog/VoucherCodesGenerateDialog";
 import { useVoucherCodesPagination } from "@dashboard/discounts/components/VoucherCreatePage/hooks/useVoucherCodesPagination";
 import {
   generateMultipleVoucherCodes,

@@ -1,7 +1,7 @@
 import { type ApolloClient } from "@apollo/client";
 
 import { type Handler, WarehouseHandler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { QueryVarsBuilderUtils } from "../utils";
 import { type WhereOnlyQueryVarsBuilder } from "./types";
 

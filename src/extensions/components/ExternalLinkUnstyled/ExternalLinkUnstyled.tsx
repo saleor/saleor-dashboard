@@ -1,4 +1,4 @@
-import { ExternalLinkNext } from "@dashboard/components/ExternalLink";
+import { ExternalLinkNext } from "@dashboard/components/ExternalLink/ExternalLink";
 import { type TextProps } from "@saleor/macaw-ui-next";
 import { type HTMLAttributes } from "react";
 

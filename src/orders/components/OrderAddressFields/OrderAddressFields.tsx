@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import {
   type AddressFragment,
   type CustomerAddressesQuery,
@@ -11,7 +11,7 @@ import { transformAddressToForm } from "@dashboard/misc";
 
 import OrderCustomerAddressesEditDialog, {
   type OrderCustomerAddressesEditDialogProps,
-} from "../OrderCustomerAddressesEditDialog";
+} from "../OrderCustomerAddressesEditDialog/OrderCustomerAddressesEditDialog";
 import {
   AddressEditDialogVariant,
   type OrderCustomerAddressesEditDialogOutput,

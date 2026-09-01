@@ -1,5 +1,5 @@
 import { TopNavDestinationIcon } from "@dashboard/components/AppLayout/TopNav/destinationIcons";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { Savebar } from "@dashboard/components/Savebar";
 import { SettingsHubLayout } from "@dashboard/components/Settings/SettingsHubLayout";
 import { SettingsPageContent } from "@dashboard/components/Settings/SettingsPageContent";
@@ -18,6 +18,7 @@ import {
   StaffEmailsSettingsCard,
   StaffMessagesSettingsCard,
 } from "../StaffEmailsSettingsCard/StaffEmailsSettingsCard";
+import { StaffOrderAlertRecipientsSection } from "../StaffOrderAlertRecipientsCard/StaffOrderAlertRecipientsSection";
 
 interface EmailNotificationsPageProps {
   formState: EmailNotificationsFormState | null;
@@ -61,41 +62,41 @@ export const EmailNotificationsPage = ({
       backHrefIcon={<TopNavDestinationIcon.configuration />}
       backHrefTitle={intl.formatMessage(notificationsMessages.hubTitle)}
     >
+      <SettingsPageContent
+        description={intl.formatMessage(notificationsMessages.staffEmailsPageDescription)}
+      >
+        {formState ? (
+          <StaffEmailsSettingsCard
+            formState={formState}
+            deliveryMode={deliveryMode}
+            disabled={disabled}
+            smtpFieldErrors={smtpFieldErrors}
+            smtpConnectionError={smtpConnectionError}
+            onActiveChange={onActiveChange}
+            onDeliveryModeChange={onDeliveryModeChange}
+            onSmtpFieldChange={onSmtpFieldChange}
+          />
+        ) : null}
+        <StaffOrderAlertRecipientsSection
+          staffEmailsEnabled={formState ? formState.active : null}
+        />
+        {formState?.active ? (
+          <StaffMessagesSettingsCard
+            formState={formState}
+            definitions={definitions}
+            deliveryMode={deliveryMode}
+            disabled={disabled}
+            onNotificationChange={onNotificationChange}
+          />
+        ) : null}
+      </SettingsPageContent>
       <form
         id={formId}
         onSubmit={event => {
           event.preventDefault();
           onSubmit();
         }}
-        style={{ width: "100%", display: "block" }}
       >
-        <SettingsPageContent
-          description={intl.formatMessage(notificationsMessages.staffEmailsPageDescription)}
-        >
-          {formState ? (
-            <>
-              <StaffEmailsSettingsCard
-                formState={formState}
-                deliveryMode={deliveryMode}
-                disabled={disabled}
-                smtpFieldErrors={smtpFieldErrors}
-                smtpConnectionError={smtpConnectionError}
-                onActiveChange={onActiveChange}
-                onDeliveryModeChange={onDeliveryModeChange}
-                onSmtpFieldChange={onSmtpFieldChange}
-              />
-              {formState.active ? (
-                <StaffMessagesSettingsCard
-                  formState={formState}
-                  definitions={definitions}
-                  deliveryMode={deliveryMode}
-                  disabled={disabled}
-                  onNotificationChange={onNotificationChange}
-                />
-              ) : null}
-            </>
-          ) : null}
-        </SettingsPageContent>
         <Savebar>
           <Savebar.Spacer />
           <Savebar.CancelButton onClick={() => navigate(notificationsSettingsPath)} />

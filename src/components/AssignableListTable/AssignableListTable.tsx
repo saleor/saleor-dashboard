@@ -1,7 +1,7 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import Link from "@dashboard/components/Link";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { buttonMessages } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
 import { Box, Button, Checkbox, Skeleton, Text } from "@saleor/macaw-ui-next";

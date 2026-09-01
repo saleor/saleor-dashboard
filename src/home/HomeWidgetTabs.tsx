@@ -1,4 +1,5 @@
-import { Tab, TabContainer } from "@dashboard/components/Tab";
+import { Tab } from "@dashboard/components/Tab/Tab";
+import { TabContainer } from "@dashboard/components/Tab/TabContainer";
 import { InlineExtensionPreferenceControls } from "@dashboard/extensions/preferences/InlineExtensionPreferenceControls";
 import { type Extension } from "@dashboard/extensions/types";
 import { SaleorLogo } from "@dashboard/extensions/views/InstallCustomExtension/components/InstallSectionData/InstallExtensionManifestData/SaleorLogo";

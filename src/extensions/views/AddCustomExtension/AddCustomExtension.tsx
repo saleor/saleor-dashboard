@@ -2,10 +2,11 @@ import {
   TopNav,
   TopNavDestinationIcon,
   topNavDestinationMessages,
-} from "@dashboard/components/AppLayout";
-import { Callout, calloutTitleMessages } from "@dashboard/components/Callout";
-import { HookFormInput } from "@dashboard/components/HookFormInput";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+} from "@dashboard/components/AppLayout/TopNav";
+import { Callout } from "@dashboard/components/Callout/Callout";
+import { calloutTitleMessages } from "@dashboard/components/Callout/messages";
+import { HookFormInput } from "@dashboard/components/HookFormInput/HookFormInput";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { ExternalLinkUnstyled } from "@dashboard/extensions/components/ExternalLinkUnstyled/ExternalLinkUnstyled";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";

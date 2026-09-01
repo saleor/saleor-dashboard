@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import CollectionWithDividers from "@dashboard/components/CollectionWithDividers/CollectionWithDividers";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { makeStyles, Paper } from "@material-ui/core";
 import { Accordion, AccordionSummary } from "@saleor/macaw-ui";

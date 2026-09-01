@@ -12,6 +12,7 @@ import { SidebarAppAlert } from "@dashboard/extensions/components/AppAlerts/Side
 import { useAppsAlert } from "@dashboard/extensions/components/AppAlerts/useAppsAlert";
 import { extensionMountPoints } from "@dashboard/extensions/extensionMountPoints";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
+import { useExtensionPreferences } from "@dashboard/extensions/preferences/useExtensionPreferences";
 import {
   extensionsAppSection,
   extensionsCustomSection,
@@ -20,6 +21,8 @@ import {
 } from "@dashboard/extensions/urls";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
+import { HOMEPAGE_WIDGETS_MOUNT } from "@dashboard/home/filterHomeExtensions";
+import { getPinnedHomeWidgetMenuItems } from "@dashboard/home/pinnedHomeWidgetMenuItems";
 import { rippleHomeWidgets } from "@dashboard/home/ripples/homeWidgets";
 import { ConfigurationIcon } from "@dashboard/icons/Configuration";
 import { CustomersIcon } from "@dashboard/icons/Customers";
@@ -61,6 +64,13 @@ export function useMenuStructure() {
   const intl = useIntl();
   const { user } = useUser();
   const navigationPins = useResolvedNavigationPins();
+  const homeExtensions = useExtensions(HOMEPAGE_WIDGETS_MOUNT).HOMEPAGE_WIDGETS;
+  const { getState } = useExtensionPreferences();
+  const pinnedHomeWidgets = getPinnedHomeWidgetMenuItems(
+    homeExtensions,
+    user?.userPermissions ?? [],
+    getState,
+  );
   const customerTypeMenuItems = useCustomerTypeMenuItems();
 
   const appExtensionsHeaderItem: SidebarMenuItem = {
@@ -116,7 +126,10 @@ export function useMenuStructure() {
       label: intl.formatMessage(sectionNames.home),
       id: "home",
       url: "/home",
-      type: "item",
+      type: pinnedHomeWidgets.length > 0 ? "itemGroup" : "item",
+      children: pinnedHomeWidgets.length > 0 ? pinnedHomeWidgets : undefined,
+      // A pinned widget hidden behind a collapsed group defeats the point of pinning.
+      defaultExpanded: true,
       endAdornment: <Ripple model={rippleHomeWidgets} />,
     },
     {

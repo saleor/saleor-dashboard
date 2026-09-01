@@ -13,15 +13,15 @@ import {
   getReferenceDisplayValue,
   getTruncatedTextValue,
 } from "@dashboard/components/Attributes/utils";
-import FileUploadField from "@dashboard/components/FileUploadField";
-import RichTextEditor from "@dashboard/components/RichTextEditor";
-import SortableChipsField from "@dashboard/components/SortableChipsField";
+import FileUploadField from "@dashboard/components/FileUploadField/FileUploadField";
+import RichTextEditor from "@dashboard/components/RichTextEditor/RichTextEditor";
+import SortableChipsField from "@dashboard/components/SortableChipsField/SortableChipsField";
 import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { Box, Input, Select, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
-import { Multiselect } from "../Combobox";
-import { DateTimeField } from "../DateTimeField";
+import { Multiselect } from "../Combobox/components/Multiselect";
+import { DateTimeField } from "../DateTimeField/DateTimeField";
 import { DropdownRow } from "./DropdownRow";
 import { SingleReferenceField } from "./SingleReferenceField";
 import { type AttributeRowProps } from "./types";

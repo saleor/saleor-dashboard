@@ -16,9 +16,6 @@ export const useCommonStyles = makeStyles(
     arrow: {
       marginRight: theme.spacing(2),
     },
-    input: {
-      padding: "12px 0 9px 12px",
-    },
     inputRange: {
       alignItems: "center",
       display: "flex",

@@ -1,5 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { Skeleton, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 

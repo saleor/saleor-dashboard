@@ -2,7 +2,7 @@ import { type ApolloClient } from "@apollo/client";
 import { type AssignedAttributeWhereInput } from "@dashboard/graphql";
 
 import { type Handler } from "../../API/Handler";
-import { type FilterElement } from "../../FilterElement";
+import { type FilterElement } from "../../FilterElement/FilterElement";
 import { AttributeQueryVarsBuilder } from "./AttributeQueryVarsBuilder";
 import { type WhereOnlyQueryVarsBuilder } from "./types";
 

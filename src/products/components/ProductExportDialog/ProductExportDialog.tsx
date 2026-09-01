@@ -3,7 +3,7 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import {
   type ChannelFragment,
@@ -13,13 +13,13 @@ import {
   type WarehouseFragment,
 } from "@dashboard/graphql";
 import useForm, { type FormChange } from "@dashboard/hooks/useForm";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import useWizard from "@dashboard/hooks/useWizard";
 import { buttonMessages } from "@dashboard/intl";
 import { type DialogProps, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
 import getExportErrorMessage from "@dashboard/utils/errors/export";
-import { toggle } from "@dashboard/utils/lists";
+import { toggle } from "@dashboard/utils/lists/lists";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box, Button, type Option, Text } from "@saleor/macaw-ui-next";
 import { useMemo, useRef, useState } from "react";

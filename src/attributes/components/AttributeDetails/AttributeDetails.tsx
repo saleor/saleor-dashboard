@@ -5,7 +5,7 @@ import { AttributeInputTypeOptionLabel } from "@dashboard/components/AttributeIn
 import { isAttributeInputTypeEnum } from "@dashboard/components/AttributeInputTypeIcon/isAttributeInputTypeEnum";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { FixedAtCreationField } from "@dashboard/components/FixedAtCreationField/FixedAtCreationField";
-import { Select } from "@dashboard/components/Select";
+import { Select } from "@dashboard/components/Select/Select";
 import {
   AttributeEntityTypeEnum,
   type AttributeErrorFragment,
@@ -21,7 +21,7 @@ import { defineMessages, useIntl } from "react-intl";
 import slugify from "slugify";
 
 import { getAttributeSlugErrorMessage } from "../../errors";
-import { type AttributePageFormData } from "../AttributePage";
+import { type AttributePageFormData } from "../AttributePage/AttributePage";
 import styles from "./AttributeDetails.module.css";
 import { messages } from "./messages";
 

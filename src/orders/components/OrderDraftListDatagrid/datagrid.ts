@@ -1,6 +1,6 @@
 import { moneyCell, readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { type OrderDraft } from "@dashboard/orders/types";
 import { type Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";

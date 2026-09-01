@@ -1,4 +1,4 @@
-import { type Rule } from "@dashboard/discounts/models";
+import { type Rule } from "@dashboard/discounts/models/Rule";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { ThemeProvider } from "@saleor/macaw-ui-next";
 import { render, screen } from "@testing-library/react";
@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { DiscountRulesContextProvider } from "../../../../context";
+import { DiscountRulesContextProvider } from "../../../../context/provider";
 import { RuleRewardValue } from "./RuleRewardValue";
 
 const defaultValues = {

@@ -13,14 +13,14 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { useLastCreatedEntityTypeStorage } from "@dashboard/hooks/useLastCreatedEntityTypeStorage";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog";
+import PageTypePickerDialog from "@dashboard/modeling/components/PageTypePickerDialog/PageTypePickerDialog";
 import { CreateModelTypeDialog } from "@dashboard/modelTypes/components/CreateModelTypeDialog/CreateModelTypeDialog";
 import { useCreateModelType } from "@dashboard/modelTypes/hooks/useCreateModelType";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";

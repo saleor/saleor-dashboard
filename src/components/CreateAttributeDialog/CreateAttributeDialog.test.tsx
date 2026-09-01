@@ -19,7 +19,7 @@ jest.mock("react-intl", () => ({
   defineMessages: (messages: Record<string, unknown>) => messages,
 }));
 
-jest.mock("@dashboard/hooks/useModalDialogOpen", () => ({
+jest.mock("@dashboard/hooks/useModalDialogOpen/useModalDialogOpen", () => ({
   __esModule: true,
   default: jest.fn(),
 }));

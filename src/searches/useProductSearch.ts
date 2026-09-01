@@ -5,7 +5,7 @@ import {
   type SearchProductsQuery,
   type SearchProductsQueryVariables,
 } from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch/makeTopLevelSearch";
 
 /**
  * Variants page size when includeVariants is true. Keep in sync with

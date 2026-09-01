@@ -1,7 +1,7 @@
 import { parse, type ParsedQs } from "qs";
 
 import { InitialProductStateResponse } from "../../API/initialState/product/InitialProductStateResponse";
-import { type FilterContainer, FilterElement } from "../../FilterElement";
+import { type FilterContainer, FilterElement } from "../../FilterElement/FilterElement";
 import { type FilterProviderType, type InitialResponseType } from "../../types";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {

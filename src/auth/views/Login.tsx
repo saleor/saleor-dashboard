@@ -5,10 +5,10 @@ import {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
+import { useLocation } from "react-router";
 import urlJoin from "url-join";
-import useRouter from "use-react-router";
 
-import LoginPage from "../components/LoginPage";
+import LoginPage from "../components/LoginPage/LoginPage";
 import { type LoginFormData } from "../components/LoginPage/types";
 import { useAuthParameters } from "../hooks/useAuthParameters";
 import { useLastLoginMethod } from "../hooks/useLastLoginMethod";
@@ -33,7 +33,7 @@ let exchangedAuthCode: string | null = null;
 
 const LoginView = ({ params }: LoginViewProps) => {
   const navigate = useNavigator();
-  const { location } = useRouter();
+  const location = useLocation();
   const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =
     useUser();
   const {

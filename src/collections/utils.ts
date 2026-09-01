@@ -1,6 +1,6 @@
 import { type ChannelCollectionData } from "@dashboard/channels/utils";
 import { type SearchProductsQuery } from "@dashboard/graphql";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { arrayDiff } from "@dashboard/utils/arrays/arrays";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 type CollectionChannelListingFields = Pick<ChannelCollectionData, "isPublished" | "publishedAt">;

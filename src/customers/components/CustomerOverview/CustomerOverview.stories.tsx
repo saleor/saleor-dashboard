@@ -1,6 +1,6 @@
 import type { UserContext as UserContextType } from "@dashboard/auth/types";
 import { UserContext } from "@dashboard/auth/useUser";
-import { TimezoneProvider } from "@dashboard/components/Timezone";
+import { TimezoneProvider } from "@dashboard/components/Timezone/Timezone";
 import { customer } from "@dashboard/customers/fixtures";
 import { CustomerDetailsContext } from "@dashboard/customers/providers/CustomerDetailsProvider";
 import { OrderStatus, PermissionEnum, type UserFragment } from "@dashboard/graphql";

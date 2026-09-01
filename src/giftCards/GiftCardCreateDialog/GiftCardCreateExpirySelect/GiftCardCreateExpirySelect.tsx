@@ -1,5 +1,5 @@
-import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField";
-import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField";
+import { NewRadioGroupField as RadioGroupField } from "@dashboard/components/RadioGroupField/RadioGroupField";
+import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField/TimePeriodField";
 import {
   type GiftCardBulkCreateFormErrors,
   type GiftCardCreateCommonFormData,

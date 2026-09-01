@@ -8,7 +8,7 @@ import { CSS } from "@dnd-kit/utilities";
 import clsx from "clsx";
 import { type CSSProperties } from "react";
 
-import TableRowLink, { type TableRowLinkProps } from "../TableRowLink";
+import TableRowLink, { type TableRowLinkProps } from "../TableRowLink/TableRowLink";
 import { SortableHandle } from "./SortableHandle";
 import styles from "./SortableTableRow.module.css";
 import { useSortableContext } from "./sortableTableState";

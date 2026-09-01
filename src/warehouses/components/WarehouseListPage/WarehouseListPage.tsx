@@ -4,8 +4,8 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListPageLayout } from "@dashboard/components/Layouts";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect/FilterPresetsSelect";
+import { ListPageLayout } from "@dashboard/components/Layouts/List/Root";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration/urls";
 import { type RefreshLimitsQuery, type WarehouseWithShippingFragment } from "@dashboard/graphql";
@@ -23,7 +23,7 @@ import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import WarehouseList from "../WarehouseList";
+import WarehouseList from "../WarehouseList/WarehouseList";
 
 interface WarehouseListPageProps
   extends PageListProps,

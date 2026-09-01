@@ -1,7 +1,7 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { type INotification } from "@dashboard/components/notifications";
+import ActionDialog from "@dashboard/components/ActionDialog/ActionDialog";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import { useGiftCardAssignUserMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { getFullName } from "@dashboard/misc";
 import { type DialogProps } from "@dashboard/types";
 import commonErrorMessages from "@dashboard/utils/errors/common";

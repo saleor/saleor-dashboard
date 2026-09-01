@@ -2,7 +2,7 @@ import { Button } from "@saleor/macaw-ui-next";
 import { Plus } from "lucide-react";
 import { useIntl } from "react-intl";
 
-import { useDiscountRulesContext } from "../../context";
+import { useDiscountRulesContext } from "../../context/consumer";
 import { messages } from "../../messages";
 
 interface AddButtonProps {

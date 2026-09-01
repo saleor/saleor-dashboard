@@ -4,7 +4,7 @@ import {
   useRefundSettingsQuery,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import OrderTransactionRefundPage, {
   type OrderTransactionRefundError,
   type OrderTransactionRefundPageFormData,

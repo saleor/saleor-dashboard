@@ -1,6 +1,6 @@
-import { type INotification } from "@dashboard/components/notifications";
+import { type INotification } from "@dashboard/components/notifications/NotificationContext";
 import { useGiftCardUnassignUserMutation } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import commonErrorMessages from "@dashboard/utils/errors/common";
 import { useIntl } from "react-intl";
 

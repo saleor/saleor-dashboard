@@ -1,23 +1,24 @@
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { PermissionEnum, type ProductWhereInput } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFilters";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
-import { Radio, TableBody, TableCell, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Radio } from "@material-ui/core";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -158,18 +159,15 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
         <DashboardModal.PickerHeader
           toolbar={
             <>
-              <TextField
+              <Input
                 data-test-id="product-search-input"
                 name="query"
                 value={query}
                 onChange={onQueryChange}
                 label={intl.formatMessage(messages.assignProductDialogSearch)}
                 placeholder={intl.formatMessage(messages.assignProductDialogContent)}
-                fullWidth
-                InputProps={{
-                  autoComplete: "off",
-                  endAdornment: loading && !showListLoading ? <SaleorThrobber size={16} /> : null,
-                }}
+                autoComplete="off"
+                endAdornment={loading && !showListLoading ? <SaleorThrobber size={16} /> : null}
               />
 
               <ModalFilters />

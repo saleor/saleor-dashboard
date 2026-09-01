@@ -1,4 +1,4 @@
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type ProductWhereInput } from "@dashboard/graphql";
 import { type Container, type DialogProps, type FetchMoreProps } from "@dashboard/types";
 

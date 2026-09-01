@@ -1,4 +1,4 @@
-import DeletableItem from "@dashboard/components/DeletableItem";
+import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
 import { Text } from "@saleor/macaw-ui-next";
 import { type ReactNode } from "react";
 // Legacy shared with AssignmentList — migrate together to @dnd-kit.

@@ -1,6 +1,6 @@
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { useState } from "react";
 import { useIntl } from "react-intl";

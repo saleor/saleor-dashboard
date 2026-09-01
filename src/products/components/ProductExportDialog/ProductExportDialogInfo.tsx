@@ -1,15 +1,15 @@
 // @ts-strict-ignore
-import Accordion, { type AccordionProps } from "@dashboard/components/Accordion";
+import Accordion, { type AccordionProps } from "@dashboard/components/Accordion/Accordion";
 import { ChannelsAvailabilitySearchField } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySearchField";
 import { ChannelsAvailabilitySelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilitySelectAll";
 import { useChannelsSelectAll } from "@dashboard/components/ChannelsAvailabilityDialog/useChannelsSelectAll";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
-import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList";
-import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper";
-import Checkbox from "@dashboard/components/Checkbox";
-import Chip from "@dashboard/components/Chip";
+import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/ChannelsAvailabilityDialogChannelsList/ChannelsAvailabilityDialogChannelsList";
+import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper/ChannelsAvailabilityDialogWrapper";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
+import Chip from "@dashboard/components/Chip/Chip";
 import Hr from "@dashboard/components/Hr";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import {
   type ChannelFragment,
   type ExportProductsInput,
@@ -19,10 +19,10 @@ import { type ChangeEvent, type FormChange } from "@dashboard/hooks/useForm";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { sectionNames } from "@dashboard/intl";
 import { type FetchMoreProps } from "@dashboard/types";
-import { toggle } from "@dashboard/utils/lists";
-import { Button, FormControlLabel, TextField } from "@material-ui/core";
+import { toggle } from "@dashboard/utils/lists/lists";
+import { Button, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -398,7 +398,7 @@ const ProductExportDialogInfo = ({
         }
         data-test-id="attributes"
       >
-        <TextField
+        <Input
           data-test-id="attribute-search-input"
           name="query"
           value={query}
@@ -412,11 +412,8 @@ const ProductExportDialogInfo = ({
             defaultMessage: "Search by attribute name",
             description: "input helper text, search attributes",
           })}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <SaleorThrobber size={16} />,
-          }}
+          autoComplete="off"
+          endAdornment={loading && <SaleorThrobber size={16} />}
         />
         <Hr className={classes.hr} />
         {attributes.map(attribute => (

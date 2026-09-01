@@ -38,7 +38,7 @@ jest.mock("../CustomerOverview/CustomerOverview", () => ({
 jest.mock("../CustomerOrders/CustomerOrders", () => ({
   CustomerOrders: () => <div data-test-id="customer-orders-mock" />,
 }));
-jest.mock("../CustomerAddresses", () => ({
+jest.mock("../CustomerAddresses/CustomerAddresses", () => ({
   __esModule: true,
   default: () => <div data-test-id="customer-addresses-mock" />,
 }));

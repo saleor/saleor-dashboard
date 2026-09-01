@@ -1,5 +1,5 @@
 import { type FetchResult, type MutationResult } from "@apollo/client";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { type UserPermissionFragment } from "@dashboard/graphql";
 
 import { type FilterElement, type IFilter } from "./components/Filter/types";

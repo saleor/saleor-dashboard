@@ -11,7 +11,7 @@ import {
   useWarehouseCreateMutation,
   type WarehouseErrorFragment,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
 import { useIntl } from "react-intl";

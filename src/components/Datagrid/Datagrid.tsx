@@ -34,9 +34,9 @@ import {
 } from "react";
 
 import { DashboardCard } from "../Card";
-import { type CardMenuItem } from "../CardMenu";
-import { Placeholder } from "../Placeholder";
-import { SaleorThrobber } from "../Throbber";
+import { type CardMenuItem } from "../CardMenu/CardMenu";
+import { Placeholder } from "../Placeholder/Placeholder";
+import { SaleorThrobber } from "../Throbber/SaleorThrobber";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { PreventHistoryBack } from "./components/PreventHistoryBack";
 import { RowActions } from "./components/RowActions";

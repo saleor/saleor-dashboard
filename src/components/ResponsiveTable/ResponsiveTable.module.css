@@ -43,7 +43,8 @@
   border-bottom: 1px solid var(--mu-colors-border-default1);
 }
 
-/* !important overrides MUI TableCell defaults */
+/* `!important` is no longer strictly needed (Table.module.css cells are single-class)
+ * but is kept so the `.assignableTable` overrides below keep winning. */
 .table th {
   vertical-align: middle;
   padding: 0 8px !important;
@@ -219,10 +220,4 @@
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0;
-}
-
-@media (min-width: 960px) {
-  .table {
-    table-layout: fixed;
-  }
 }

@@ -13,7 +13,10 @@ import { DiscountCategories } from "../DiscountCategories/DiscountCategories";
 import { DiscountCollections } from "../DiscountCollections/DiscountCollections";
 import { DiscountProducts } from "../DiscountProducts/DiscountProducts";
 import { DiscountVariants } from "../DiscountVariants/DiscountVariants";
-import { VoucherDetailsPageTab, type VoucherTabItemsCount } from "../VoucherDetailsPage";
+import {
+  VoucherDetailsPageTab,
+  type VoucherTabItemsCount,
+} from "../VoucherDetailsPage/VoucherDetailsPage";
 import { voucherCatalogueMessages as messages } from "./messages";
 import { formatVoucherCatalogueErrorMessage } from "./voucherCatalogueErrors";
 import styles from "./VoucherCatalogueSection.module.css";

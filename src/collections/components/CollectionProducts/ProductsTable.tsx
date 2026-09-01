@@ -1,6 +1,6 @@
 import { GridTable } from "@dashboard/components/GridTable";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { type PaginationState } from "@dashboard/hooks/useLocalPaginator";
 import { renderCollection } from "@dashboard/misc";
 import { type Node } from "@dashboard/types";

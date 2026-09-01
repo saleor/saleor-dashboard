@@ -5,7 +5,7 @@ import {
   useChannelReorderWarehousesMutation,
   type WarehouseFragment,
 } from "@dashboard/graphql";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { useIntl } from "react-intl";

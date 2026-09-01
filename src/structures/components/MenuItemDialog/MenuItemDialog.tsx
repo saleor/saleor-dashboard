@@ -3,11 +3,11 @@ import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { type MenuErrorFragment } from "@dashboard/graphql";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";
 import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
 import getMenuErrorMessage from "@dashboard/utils/errors/menu";

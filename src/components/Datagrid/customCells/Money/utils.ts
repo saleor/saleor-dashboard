@@ -1,4 +1,4 @@
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import { getMiddleCenterBias, type Rectangle, type Theme } from "@glideapps/glide-data-grid";
 

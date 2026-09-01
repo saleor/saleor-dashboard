@@ -1,6 +1,6 @@
 import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
+import { Locale } from "@dashboard/components/Locale/Locale";
 import { DiscountValueTypeEnum, type VoucherFragment, VoucherTypeEnum } from "@dashboard/graphql";
 import { createIntl } from "react-intl";
 

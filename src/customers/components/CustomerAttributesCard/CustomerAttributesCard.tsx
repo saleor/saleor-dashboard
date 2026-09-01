@@ -6,7 +6,7 @@ import {
 } from "@dashboard/components/CustomerType/CustomerType";
 import { DetailSettingsCard } from "@dashboard/components/DetailSettingsCard/DetailSettingsCard";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
-import { Placeholder } from "@dashboard/components/Placeholder";
+import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { hasPermissions } from "@dashboard/components/RequirePermissions";
 import { PAGINATE_BY } from "@dashboard/config";
 import { customerTypeUrl } from "@dashboard/customerTypes/urls";

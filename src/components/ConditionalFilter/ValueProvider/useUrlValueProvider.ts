@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { stringify } from "qs";
 import { useEffect, useMemo, useState } from "react";
-import useRouter from "use-react-router";
+import { useHistory, useLocation } from "react-router";
 
 import { type InitialAttributesAPIState } from "../API/initialState/attributes/useInitialAttributesState";
 import { type InitialCollectionAPIState } from "../API/initialState/collections/useInitialCollectionsState";
@@ -14,7 +14,11 @@ import { type InitialProductAPIState } from "../API/initialState/product/useProd
 import { type InitialProductTypesAPIState } from "../API/initialState/productTypes/useInitialProdutTypesState";
 import { type InitialStaffMembersAPIState } from "../API/initialState/staffMembers/useInitialStaffMemebersState";
 import { type InitialVoucherAPIState } from "../API/initialState/vouchers/useInitialVouchersState";
-import { cloneFilterContainer, type FilterContainer, FilterElement } from "../FilterElement";
+import {
+  cloneFilterContainer,
+  type FilterContainer,
+  FilterElement,
+} from "../FilterElement/FilterElement";
 import { type FilterValueProvider } from "../FilterValueProvider";
 import { type FilterProviderType, type InitialAPIState } from "../types";
 import { getNavigationQueryParams, stripNavigationQueryParams } from "./navigationQueryParams";
@@ -40,7 +44,8 @@ export const useUrlValueProvider = (
   type: FilterProviderType,
   initialState?: InitialAPIState,
 ): FilterValueProvider => {
-  const router = useRouter();
+  const history = useHistory();
+  const location = useLocation();
   const params = new URLSearchParams(locationSearch);
   const [value, setValue] = useState<FilterContainer>([]);
   const activeTab = params.get("activeTab");
@@ -138,10 +143,10 @@ export const useUrlValueProvider = (
   }, [locationSearch, tokenizedUrl, initialState]);
 
   const persist = (filterValue: FilterContainer) => {
-    const navigationParams = getNavigationQueryParams(router.location.search, type);
+    const navigationParams = getNavigationQueryParams(location.search, type);
 
-    router.history.replace({
-      pathname: router.location.pathname,
+    history.replace({
+      pathname: location.pathname,
       search: stringify({
         ...prepareStructure(filterValue),
         ...{ activeTab: activeTab || undefined },
@@ -155,10 +160,10 @@ export const useUrlValueProvider = (
   };
 
   const clear = () => {
-    const navigationParams = getNavigationQueryParams(router.location.search, type);
+    const navigationParams = getNavigationQueryParams(location.search, type);
 
-    router.history.replace({
-      pathname: router.location.pathname,
+    history.replace({
+      pathname: location.pathname,
       search: stringify({
         ...{ activeTab: activeTab || undefined },
         ...{ sort: sort || undefined },

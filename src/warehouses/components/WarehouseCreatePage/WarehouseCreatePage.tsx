@@ -6,10 +6,10 @@ import {
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import { DetailPageLayout } from "@dashboard/components/Layouts";
+import CompanyAddressInput from "@dashboard/components/CompanyAddressInput/CompanyAddressInput";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
 import { Savebar } from "@dashboard/components/Savebar";
 import { type AddressTypeInput } from "@dashboard/customers/types";
 import { type CountryWithCodeFragment, type WarehouseErrorFragment } from "@dashboard/graphql";
@@ -22,7 +22,7 @@ import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { warehouseListUrl } from "@dashboard/warehouses/urls";
 import { useIntl } from "react-intl";
 
-import WarehouseInfo from "../WarehouseInfo";
+import WarehouseInfo from "../WarehouseInfo/WarehouseInfo";
 
 export interface WarehouseCreatePageFormData extends AddressTypeInput {
   name: string;

@@ -1,26 +1,26 @@
 // @ts-strict-ignore
 import { AttributeNameWithTypeIcon } from "@dashboard/components/AttributeInputTypeIcon/AttributeNameWithTypeIcon";
-import Checkbox from "@dashboard/components/Checkbox";
+import Checkbox from "@dashboard/components/Checkbox/Checkbox";
 import {
   ConfirmButton,
   type ConfirmButtonTransitionState,
-} from "@dashboard/components/ConfirmButton";
-import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
+} from "@dashboard/components/ConfirmButton/ConfirmButton";
+import { InfiniteScroll } from "@dashboard/components/InfiniteScroll/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
-import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleorThrobber } from "@dashboard/components/Throbber";
+import { ResponsiveTable } from "@dashboard/components/ResponsiveTable/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
+import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
+import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import { type AvailableAttributeFragment } from "@dashboard/graphql";
 import { useAssignPickerListDisplayState } from "@dashboard/hooks/useAssignPickerListDisplayState";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen/useModalDialogOpen";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type FetchMoreProps } from "@dashboard/types";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
@@ -100,18 +100,15 @@ const AssignAttributeDialog = ({
       <DashboardModal.Content size="sm">
         <DashboardModal.PickerHeader
           toolbar={
-            <TextField
+            <Input
               data-test-id="attribute-search-input"
               name="query"
               value={query}
               onChange={onQueryChange}
               label={intl.formatMessage(messages.searchInputLabel)}
               placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
-              fullWidth
-              InputProps={{
-                autoComplete: "off",
-                endAdornment: loading && <SaleorThrobber size={16} />,
-              }}
+              autoComplete="off"
+              endAdornment={loading && <SaleorThrobber size={16} />}
             />
           }
         >

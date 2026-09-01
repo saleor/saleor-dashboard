@@ -15,7 +15,7 @@ import { orderSettingsPath } from "@dashboard/orders/urls";
 import { refundsSettingsPath } from "@dashboard/refundsSettings/urls";
 import { StaffInviteProvider } from "@dashboard/staff/components/StaffInviteProvider/StaffInviteProvider";
 import { structuresListPath } from "@dashboard/structures/urls";
-import { ThemeProvider } from "@dashboard/theme";
+import { ThemeProvider } from "@dashboard/theme/provider";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
@@ -31,23 +31,26 @@ import { RootRoutes } from "./auth/components/RootRoutes";
 import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
 import { channelsSection } from "./channels/urls";
-import AppLayout from "./components/AppLayout";
 import useAppChannel, { AppChannelProvider } from "./components/AppLayout/AppChannelContext";
+import AppLayout from "./components/AppLayout/AppLayout";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
-import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { legacyRedirects } from "./components/LegacyRedirects";
-import { LocaleProvider } from "./components/Locale";
+import { LocaleProvider } from "./components/Locale/Locale";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
-import { NotificationProvider, NotificationsToaster } from "./components/notifications";
+import {
+  NotificationProvider,
+  NotificationsToaster,
+} from "./components/notifications/NotificationProvider";
 import { ProductAnalytics } from "./components/ProductAnalytics";
 import { SavebarRefProvider } from "./components/Savebar/SavebarRefContext";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { GTM_ID } from "./config";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
-import AppStateProvider from "./containers/AppState";
-import BackgroundTasksProvider from "./containers/BackgroundTasks";
+import AppStateProvider from "./containers/AppState/AppState";
+import BackgroundTasksProvider from "./containers/BackgroundTasks/BackgroundTasksProvider";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient } from "./graphql/client";
@@ -57,7 +60,7 @@ import { NotFound } from "./NotFound";
 import { errorTracker } from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
-import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardingContext";
+import { OnboardingProvider } from "./welcomePage/WelcomePageOnboarding/onboardingContext/OnboardingContext";
 
 // Lazy-loaded page sections for code splitting
 const AttributeSection = lazy(() => import("./attributes"));

@@ -18,7 +18,7 @@ import {
 import { type ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/ThumbnailCell";
 import { type GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { type AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { type Locale } from "@dashboard/components/Locale";
+import { type Locale } from "@dashboard/components/Locale/Locale";
 import {
   AttributeTypeEnum,
   type AvailableColumnAttributesQuery,
