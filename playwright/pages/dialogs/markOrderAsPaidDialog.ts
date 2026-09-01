@@ -3,9 +3,7 @@ import type { Page } from "@playwright/test";
 export class MarkOrderAsPaidDialog {
   constructor(
     page: Page,
-    readonly transactionReferenceInput = page
-      .getByTestId("transaction-reference-input")
-      .locator("input"),
+    readonly transactionReferenceInput = page.getByTestId("transaction-reference-input"),
     readonly confirmButton = page.getByTestId("submit"),
   ) {}
 

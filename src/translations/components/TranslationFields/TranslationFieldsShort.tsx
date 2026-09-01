@@ -6,8 +6,7 @@ import {
   createCmdEnterSubmitHandler,
   preventPlainEnterSubmit,
 } from "@dashboard/utils/cmdEnterSubmit";
-import { TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import { type KeyboardEventHandler, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -60,9 +59,8 @@ const TranslationFieldsShort = ({
         return (
           <div>
             <Box position="relative">
-              <TextField
+              <Input
                 disabled={disabled}
-                fullWidth
                 label={intl.formatMessage({
                   id: "/vCXIP",
                   defaultMessage: "Translation",

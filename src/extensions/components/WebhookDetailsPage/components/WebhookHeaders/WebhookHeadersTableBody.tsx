@@ -4,8 +4,8 @@ import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink/TableRowLink";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists/lists";
-import { TextField } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
+import { Input } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import { Trash2 } from "lucide-react";
 import { type ChangeEvent } from "react";
@@ -27,7 +27,7 @@ interface WebhookHeadersTableBodyProps {
 export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTableBodyProps) => {
   const classes = useStyles();
   const intl = useIntl();
-  const updateWebhookItem = (target: EventTarget & HTMLTextAreaElement) => {
+  const updateWebhookItem = (target: EventTarget & HTMLInputElement) => {
     const { name, value } = target;
     const [field, index] = name.split(nameSeparator);
     const item: Header = headers[index];
@@ -44,7 +44,7 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
       index: parseInt(index, 10),
     };
   };
-  const change = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+  const change = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { item, index } = updateWebhookItem(target);
 
     onChange({
@@ -60,35 +60,20 @@ export const WebhookHeadersTableBody = ({ onChange, headers }: WebhookHeadersTab
       {headers.map((field, fieldIndex) => (
         <TableRowLink data-test-id="field" key={fieldIndex}>
           <TableCell className={clsx(classes.colName, classes.tableCell)}>
-            <TextField
-              InputProps={{
-                classes: {
-                  input: classes.input,
-                },
-              }}
-              inputProps={{
-                "aria-label": `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
-              }}
+            <Input
+              aria-label={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
               name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
-              fullWidth
               onChange={change}
               value={field.name}
               error={field.error}
+              aria-invalid={field.error}
               helperText={(field.error && intl.formatMessage(messages.headerNameError)) || " "}
             />
           </TableCell>
           <TableCell className={clsx(classes.colValue, classes.tableCell)}>
-            <TextField
-              InputProps={{
-                classes: {
-                  input: classes.input,
-                },
-              }}
-              inputProps={{
-                "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
-              }}
+            <Input
+              aria-label={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
               name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
-              fullWidth
               onChange={change}
               value={field.value}
               helperText={" "}

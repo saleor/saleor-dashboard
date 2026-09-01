@@ -27,9 +27,9 @@ import { type TaxClassesPageFormData } from "@dashboard/taxes/types";
 import { useAutofocus } from "@dashboard/taxes/utils/useAutofocus";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getTaxesErrorMessage from "@dashboard/utils/errors/taxes";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Input } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -138,17 +138,15 @@ const TaxClassesPage = (props: TaxClassesPageProps) => {
                       <Card>
                         <CardTitle title={intl.formatMessage(taxesMessages.generalInformation)} />
                         <CardContent>
-                          <TextField
+                          <Input
                             value={data?.name}
                             onChange={change}
                             name="name"
                             data-test-id="class-name-input"
-                            variant="outlined"
                             placeholder={intl.formatMessage(taxesMessages.taxRateName)}
-                            fullWidth
-                            inputProps={{ className: classes.namePadding }}
-                            inputRef={nameInputRef}
+                            ref={nameInputRef}
                             error={!!formErrors.name}
+                            aria-invalid={!!formErrors.name}
                             helperText={getTaxesErrorMessage(formErrors.name, intl)}
                           />
                         </CardContent>

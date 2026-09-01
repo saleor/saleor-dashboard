@@ -19,9 +19,8 @@ import useSearchQuery from "@dashboard/hooks/useSearchQuery";
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type FetchMoreProps } from "@dashboard/types";
-import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AssignPickerListEmptyStateRow } from "../AssignPickerListEmptyState/AssignPickerListEmptyState";
@@ -101,18 +100,15 @@ const AssignAttributeDialog = ({
       <DashboardModal.Content size="sm">
         <DashboardModal.PickerHeader
           toolbar={
-            <TextField
+            <Input
               data-test-id="attribute-search-input"
               name="query"
               value={query}
               onChange={onQueryChange}
               label={intl.formatMessage(messages.searchInputLabel)}
               placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
-              fullWidth
-              InputProps={{
-                autoComplete: "off",
-                endAdornment: loading && <SaleorThrobber size={16} />,
-              }}
+              autoComplete="off"
+              endAdornment={loading && <SaleorThrobber size={16} />}
             />
           }
         >

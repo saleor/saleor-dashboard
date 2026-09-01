@@ -17,8 +17,8 @@ import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { useHasPermission } from "@dashboard/search/useHasPermission";
 import { type Container, type FetchMoreProps } from "@dashboard/types";
-import { Radio, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Radio } from "@material-ui/core";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -159,18 +159,15 @@ export const AssignProductDialogSingle = (props: AssignProductDialogSingleProps)
         <DashboardModal.PickerHeader
           toolbar={
             <>
-              <TextField
+              <Input
                 data-test-id="product-search-input"
                 name="query"
                 value={query}
                 onChange={onQueryChange}
                 label={intl.formatMessage(messages.assignProductDialogSearch)}
                 placeholder={intl.formatMessage(messages.assignProductDialogContent)}
-                fullWidth
-                InputProps={{
-                  autoComplete: "off",
-                  endAdornment: loading && !showListLoading ? <SaleorThrobber size={16} /> : null,
-                }}
+                autoComplete="off"
+                endAdornment={loading && !showListLoading ? <SaleorThrobber size={16} /> : null}
               />
 
               <ModalFilters />

@@ -9,8 +9,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { type OutputData } from "@editorjs/editorjs";
-import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Input } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -81,10 +81,10 @@ const ShippingRateInfo = (props: ShippingRateInfoProps) => {
         </DashboardCard.Title>
       </DashboardCard.Header>
       <DashboardCard.Content>
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.name}
-          fullWidth
+          aria-invalid={!!formErrors.name}
           helperText={getShippingErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage(messages.name)}
           name="name"
@@ -112,36 +112,28 @@ const ShippingRateInfo = (props: ShippingRateInfoProps) => {
         )}
         <CardSpacer />
         <div className={classes.deliveryTimeFields}>
-          <TextField
+          <Input
             data-test-id="min-delivery-time-input"
             disabled={disabled}
             error={!!formErrors.minDays}
-            fullWidth
+            aria-invalid={!!formErrors.minDays}
             helperText={getShippingErrorMessage(formErrors.minDays, intl)}
             label={intl.formatMessage(messages.minDays)}
             type="number"
-            inputProps={{
-              min: 0,
-              type: "number",
-            }}
-            InputProps={{ inputProps: { min: 0 } }}
+            min={0}
             name="minDays"
             value={data.minDays}
             onChange={onChange}
           />
-          <TextField
+          <Input
             data-test-id="max-delivery-time-input"
             disabled={disabled}
             error={!!formErrors.maxDays}
-            fullWidth
+            aria-invalid={!!formErrors.maxDays}
             helperText={getShippingErrorMessage(formErrors.maxDays, intl)}
             label={intl.formatMessage(messages.maxDays)}
             type="number"
-            inputProps={{
-              min: 0,
-              type: "number",
-            }}
-            InputProps={{ inputProps: { min: 0 } }}
+            min={0}
             name="maxDays"
             value={data.maxDays}
             onChange={onChange}

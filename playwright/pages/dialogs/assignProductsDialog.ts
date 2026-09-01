@@ -8,7 +8,7 @@ export class AssignProductsDialog extends BasePage {
     readonly backButton = page.getByTestId("back"),
     readonly assignButton = page.getByTestId("submit"),
     readonly assignAndSaveButton = page.getByTestId("submit"),
-    readonly searchInput = page.getByTestId("product-search-input").locator("input"),
+    readonly searchInput = page.getByTestId("product-search-input"),
   ) {
     super(page);
   }
