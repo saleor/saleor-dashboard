@@ -5,9 +5,7 @@ import {
 } from "@dashboard/components/Attributes/Attributes";
 import {
   AttributeEntityTypeEnum,
-  type AttributeErrorFragment,
   AttributeInputTypeEnum,
-  type AttributeValueDeleteMutation,
   type AttributeValueFragment,
   type AttributeValueInput,
   type FileUploadMutation,
@@ -210,28 +208,6 @@ export function getSelectedAttributeValues(
   }
 }
 
-export const isFileValueUnused = (
-  attributesWithNewFileValue: FormsetData<null, File>,
-  existingAttribute:
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | SelectedVariantAttributeFragment,
-) => {
-  if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
-    return false;
-  }
-
-  if (existingAttribute.values.length === 0) {
-    return false;
-  }
-
-  const modifiedAttribute = attributesWithNewFileValue.find(
-    dataAttribute => dataAttribute.id === existingAttribute.attribute.id,
-  );
-
-  return !!modifiedAttribute;
-};
-
 export const mergeFileUploadErrors = (
   uploadFilesResult: Array<FetchResult<FileUploadMutation>>,
 ): UploadErrorFragment[] =>
@@ -244,19 +220,6 @@ export const mergeFileUploadErrors = (
 
     return errors;
   }, [] as UploadErrorFragment[]);
-
-export const mergeAttributeValueDeleteErrors = (
-  deleteAttributeValuesResult: Array<FetchResult<AttributeValueDeleteMutation>>,
-): AttributeErrorFragment[] =>
-  deleteAttributeValuesResult.reduce((errors, deleteValueResult) => {
-    const deleteErrors = deleteValueResult?.data?.attributeValueDelete?.errors;
-
-    if (deleteErrors) {
-      return [...errors, ...deleteErrors];
-    }
-
-    return errors;
-  }, [] as AttributeErrorFragment[]);
 
 export const mergeChoicesWithValues = (
   attribute:

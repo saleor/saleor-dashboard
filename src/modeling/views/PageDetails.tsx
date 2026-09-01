@@ -1,11 +1,9 @@
 // @ts-strict-ignore
 import {
   getAttributesAfterFileAttributesUpdate,
-  mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
 } from "@dashboard/attributes/utils/data";
 import {
-  handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
@@ -22,7 +20,6 @@ import {
   type PageErrorFragment,
   type PageInput,
   type UploadErrorFragment,
-  useAttributeValueDeleteMutation,
   useFileUploadMutation,
   usePageDetailsQuery,
   usePageRemoveMutation,
@@ -100,7 +97,6 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
   const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({
     disableErrorHandling: true,
   });
-  const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
       if (data.pageDelete.errors.length === 0) {
@@ -121,11 +117,6 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
     );
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      pageDetails?.data?.page?.attributes,
-      variables => deleteAttributeValue({ variables }),
-    );
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
       uploadFilesResult,
@@ -141,7 +132,6 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     errors = [
       ...errors,
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
       ...updateResult.data.pageUpdate.errors,
     ];
 
@@ -218,12 +208,7 @@ const PageDetails = ({ id, params }: PageDetailsProps) => {
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
       <PageDetailsPage
-        loading={
-          pageDetails.loading ||
-          pageUpdateOpts.loading ||
-          uploadFileOpts.loading ||
-          deleteAttributeValueOpts.loading
-        }
+        loading={pageDetails.loading || pageUpdateOpts.loading || uploadFileOpts.loading}
         errors={pageUpdateOpts.data?.pageUpdate.errors || []}
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}

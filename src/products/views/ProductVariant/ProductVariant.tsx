@@ -2,11 +2,9 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import {
   getAttributesAfterFileAttributesUpdate,
-  mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
 } from "@dashboard/attributes/utils/data";
 import {
-  handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
 } from "@dashboard/attributes/utils/handlers";
@@ -19,7 +17,6 @@ import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   type ProductErrorWithAttributesFragment,
-  useAttributeValueDeleteMutation,
   useFileUploadMutation,
   useProductVariantDetailsQuery,
   useProductVariantReorderMutation,
@@ -130,7 +127,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
       setErrors(data.productVariantUpdate.errors);
     },
   });
-  const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
 
   const variant = data?.productVariant;
@@ -161,17 +157,11 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
     updateVariantOpts.loading ||
     assignMediaOpts.loading ||
     unassignMediaOpts.loading ||
-    reorderProductVariantsOpts.loading ||
-    deleteAttributeValueOpts.loading;
+    reorderProductVariantsOpts.loading;
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
     const uploadFilesResult = await handleUploadMultipleFiles(
       data.attributesWithNewFileValue,
       variables => uploadFile({ variables }),
-    );
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      variant?.nonSelectionAttributes,
-      variables => deleteAttributeValue({ variables }),
     );
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
@@ -206,7 +196,6 @@ const ProductVariant = ({ variantId, params }: ProductUpdateProps) => {
 
     return [
       ...mergeFileUploadErrors(uploadFilesResult),
-      ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
       ...(result.data?.productVariantStocksCreate.errors ?? []),
       ...(result.data?.productVariantStocksDelete.errors ?? []),
       ...(result.data?.productVariantStocksUpdate.errors ?? []),
