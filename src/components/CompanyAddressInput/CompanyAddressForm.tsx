@@ -12,9 +12,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getShopErrorMessage from "@dashboard/utils/errors/shop";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
-import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Combobox, type Option } from "@saleor/macaw-ui-next";
+import { Combobox, Input, type Option } from "@saleor/macaw-ui-next";
 import { type IntlShape, useIntl } from "react-intl";
 
 import { useAddressValidation } from "../AddressEdit/useAddressValidation";
@@ -70,10 +69,11 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
 
   return (
     <div className={classes.root} data-test-id="company-info">
-      <TextField
+      <Input
         disabled={disabled}
         data-test-id="company-name-input"
         error={!!formErrors.companyName}
+        aria-invalid={!!formErrors.companyName}
         helperText={getErrorMessage(formErrors.companyName, intl)}
         label={intl.formatMessage({
           id: "9YazHG",
@@ -82,16 +82,14 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
         name={"companyName" as keyof AddressTypeInput}
         onChange={onChange}
         value={data.companyName}
-        fullWidth
-        InputProps={{
-          autoComplete: "organization",
-          spellCheck: false,
-        }}
+        autoComplete="organization"
+        spellCheck={false}
       />
       <FormSpacer />
-      <TextField
+      <Input
         disabled={disabled}
         error={!!formErrors.streetAddress1}
+        aria-invalid={!!formErrors.streetAddress1}
         data-test-id="company-address-line-1-input"
         helperText={getErrorMessage(formErrors.streetAddress1, intl)}
         label={intl.formatMessage({
@@ -101,16 +99,14 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
         name={"streetAddress1" as keyof AddressTypeInput}
         onChange={onChange}
         value={data.streetAddress1}
-        fullWidth
-        InputProps={{
-          autoComplete: "address-line1",
-          spellCheck: false,
-        }}
+        autoComplete="address-line1"
+        spellCheck={false}
       />
       <FormSpacer />
-      <TextField
+      <Input
         disabled={disabled}
         error={!!formErrors.streetAddress2}
+        aria-invalid={!!formErrors.streetAddress2}
         data-test-id="company-address-line-2-input"
         helperText={getErrorMessage(formErrors.streetAddress2, intl)}
         label={intl.formatMessage({
@@ -120,17 +116,15 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
         name={"streetAddress2" as keyof AddressTypeInput}
         onChange={onChange}
         value={data.streetAddress2}
-        fullWidth
-        InputProps={{
-          autoComplete: "address-line2",
-          spellCheck: false,
-        }}
+        autoComplete="address-line2"
+        spellCheck={false}
       />
       <FormSpacer />
       <Grid>
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.city}
+          aria-invalid={!!formErrors.city}
           data-test-id="company-city-input"
           helperText={getErrorMessage(formErrors.city, intl)}
           label={intl.formatMessage({
@@ -140,15 +134,13 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
           name={"city" as keyof AddressTypeInput}
           onChange={onChange}
           value={data.city}
-          fullWidth
-          InputProps={{
-            autoComplete: "address-level2",
-            spellCheck: false,
-          }}
+          autoComplete="address-level2"
+          spellCheck={false}
         />
-        <TextField
+        <Input
           disabled={disabled}
           error={!!formErrors.postalCode}
+          aria-invalid={!!formErrors.postalCode}
           data-test-id="company-zip-input"
           helperText={getErrorMessage(formErrors.postalCode, intl)}
           label={intl.formatMessage({
@@ -158,11 +150,8 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
           name={"postalCode" as keyof AddressTypeInput}
           onChange={onChange}
           value={data.postalCode}
-          fullWidth
-          InputProps={{
-            autoComplete: "postal-code",
-            spellCheck: false,
-          }}
+          autoComplete="postal-code"
+          spellCheck={false}
         />
       </Grid>
       <FormSpacer />
@@ -226,11 +215,11 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
         )}
       </Grid>
       <FormSpacer />
-      <TextField
+      <Input
         disabled={disabled}
         error={!!formErrors.phone}
+        aria-invalid={!!formErrors.phone}
         data-test-id="company-phone-input"
-        fullWidth
         helperText={getErrorMessage(formErrors.phone, intl)}
         label={intl.formatMessage({
           id: "O95R3Z",
@@ -239,10 +228,8 @@ export const CompanyAddressForm = (props: CompanyAddressFormProps) => {
         name={"phone" as keyof AddressTypeInput}
         value={data.phone}
         onChange={onChange}
-        InputProps={{
-          autoComplete: "tel",
-          spellCheck: false,
-        }}
+        autoComplete="tel"
+        spellCheck={false}
       />
     </div>
   );

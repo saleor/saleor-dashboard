@@ -8,8 +8,7 @@ import { type OrderErrorFragment } from "@dashboard/graphql";
 import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors/useModalDialogErrors";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Input, Text } from "@saleor/macaw-ui-next";
 import type * as React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -61,10 +60,10 @@ export const OrderMarkAsPaidDialog = ({
         <DashboardModal.Body>
           <DashboardModal.Inset>
             <Box display="flex" flexDirection="column" gap={4}>
-              <TextField
+              <Input
                 error={!!formErrors.transactionReference}
+                aria-invalid={!!formErrors.transactionReference}
                 helperText={getOrderErrorMessage(formErrors.transactionReference, intl)}
-                fullWidth
                 name="transactionReference"
                 label={intl.formatMessage(messages.transactionReference)}
                 value={transactionReference}

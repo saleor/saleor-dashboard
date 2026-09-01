@@ -18,8 +18,8 @@ import { renderCollection } from "@dashboard/misc";
 import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/data";
 import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { Radio, TextField } from "@material-ui/core";
-import { Text } from "@saleor/macaw-ui-next";
+import { Radio } from "@material-ui/core";
+import { Input, Text } from "@saleor/macaw-ui-next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -147,18 +147,15 @@ export const OrderChangeWarehouseDialog = ({
             />
           }
           toolbar={
-            <TextField
+            <Input
               data-test-id="warehouse-search-input"
               name="query"
               value={query}
               onChange={onQueryChange}
               label={intl.formatMessage(messages.searchFieldPlaceholder)}
               placeholder={intl.formatMessage(messages.searchFieldPlaceholder)}
-              fullWidth
-              InputProps={{
-                autoComplete: "off",
-                endAdornment: loading && <SaleorThrobber size={16} />,
-              }}
+              autoComplete="off"
+              endAdornment={loading && <SaleorThrobber size={16} />}
             />
           }
         >

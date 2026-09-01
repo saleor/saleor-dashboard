@@ -31,8 +31,7 @@ import {
 } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import { type FetchMoreProps } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { TextField } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -167,17 +166,14 @@ export const OrderProductAddDialog = ({
           description={<FormattedMessage {...messages.subtitle} />}
           toolbar={
             <Box data-test-id="search-query">
-              <TextField
+              <Input
                 name="query"
                 value={query}
                 onChange={onQueryChange}
                 label={intl.formatMessage(messages.search)}
                 placeholder={intl.formatMessage(messages.searchPlaceholder)}
-                fullWidth
-                InputProps={{
-                  autoComplete: "off",
-                  endAdornment: loading && <SaleorThrobber size={16} />,
-                }}
+                autoComplete="off"
+                endAdornment={loading && <SaleorThrobber size={16} />}
               />
             </Box>
           }

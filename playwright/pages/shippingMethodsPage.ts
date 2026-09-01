@@ -19,9 +19,7 @@ export class ShippingMethodsPage extends BasePage {
     readonly addWeightRateButton = page.getByTestId("add-weight-rate"),
     readonly createShippingZoneButton = page.getByTestId("add-shipping-zone"),
     readonly shippingZoneNameInput = page.getByTestId("shipping-zone-name"),
-    readonly shippingZoneDescriptionField = page
-      .getByTestId("shipping-zone-description")
-      .locator("textarea"),
+    readonly shippingZoneDescriptionField = page.getByTestId("shipping-zone-description"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
     readonly shippingZoneName = page.getByTestId("page-header"),
     readonly deleteShippingRateButton = page.getByTestId("button-bar-delete"),

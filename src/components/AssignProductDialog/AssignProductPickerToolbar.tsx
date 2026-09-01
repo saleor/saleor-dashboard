@@ -1,5 +1,5 @@
 import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
-import { TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { ModalFilters } from "../ModalFilters/ModalFilters";
@@ -16,18 +16,15 @@ export const AssignProductPickerToolbar = ({ picker }: AssignProductPickerToolba
 
   return (
     <>
-      <TextField
+      <Input
         data-test-id="product-search-input"
         name="query"
         value={query}
         onChange={onQueryChange}
         label={intl.formatMessage(messages.assignProductDialogSearch)}
         placeholder={intl.formatMessage(messages.assignProductDialogContent)}
-        fullWidth
-        InputProps={{
-          autoComplete: "off",
-          endAdornment: loading && !showListLoading ? <SaleorThrobber size={16} /> : null,
-        }}
+        autoComplete="off"
+        endAdornment={loading && !showListLoading ? <SaleorThrobber size={16} /> : null}
       />
 
       <ModalFilters />

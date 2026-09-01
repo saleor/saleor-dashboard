@@ -2,10 +2,9 @@
 import { FilterDateTimeField } from "@dashboard/components/Filter/FilterContent/FilterDateTimeField";
 import { FilterNumericField } from "@dashboard/components/Filter/FilterContent/FilterNumericField";
 import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterContent/FilterSingleSelectField";
-import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/utils";
-import { FormControlLabel, Radio, TextField } from "@material-ui/core";
+import { FormControlLabel, Radio } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { type Option, Skeleton } from "@saleor/macaw-ui-next";
+import { Input, type Option, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import type * as React from "react";
 
@@ -61,7 +60,6 @@ export const FilterContentBody = <K extends string = string>({
   initialAutocompleteDisplayValues,
 }: FilterContentBodyProps<K>) => {
   const classes = useStyles({});
-  const commonClasses = useCommonStyles({});
 
   if (!filter) {
     return <Skeleton />;
@@ -71,11 +69,9 @@ export const FilterContentBody = <K extends string = string>({
     <div className={classes.filterSettings}>
       {children}
       {isFilterType(filter, FieldType.text) && (
-        <TextField
+        <Input
           data-test-id={filterTestingContext + filter.name}
-          fullWidth
           name={filter.name}
-          InputProps={{ classes: { input: commonClasses.input } }}
           value={filter.value[0]}
           onChange={event =>
             onFilterPropertyChange<FieldType.text>({

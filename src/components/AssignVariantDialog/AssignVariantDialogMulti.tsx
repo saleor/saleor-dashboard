@@ -18,7 +18,7 @@ import { useModalSearchWithFilters } from "@dashboard/hooks/useModalSearchWithFi
 import { useStalePickerList } from "@dashboard/hooks/useStalePickerList";
 import { maybe, renderCollection } from "@dashboard/misc";
 import { type Container, type FetchMoreProps, type RelayToFlat } from "@dashboard/types";
-import { TextField } from "@material-ui/core";
+import { Input } from "@saleor/macaw-ui-next";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -164,17 +164,14 @@ export const AssignVariantDialogMulti = (props: AssignVariantDialogMultiProps) =
         <DashboardModal.PickerHeader
           toolbar={
             <>
-              <TextField
+              <Input
                 name="query"
                 value={query}
                 onChange={onQueryChange}
                 label={intl.formatMessage(messages.assignVariantDialogSearch)}
                 placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
-                fullWidth
-                InputProps={{
-                  autoComplete: "off",
-                  endAdornment: loading && <SaleorThrobber size={16} />,
-                }}
+                autoComplete="off"
+                endAdornment={loading && <SaleorThrobber size={16} />}
               />
 
               <ModalFilters />

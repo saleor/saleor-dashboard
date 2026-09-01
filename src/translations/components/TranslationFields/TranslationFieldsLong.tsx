@@ -3,8 +3,7 @@ import Form from "@dashboard/components/Form/Form";
 import { SendFormKeyboardShortcutHint } from "@dashboard/components/SendFormKeyboardShortcutHint/SendFormKeyboardShortcutHint";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";
 import { createCmdEnterSubmitHandler } from "@dashboard/utils/cmdEnterSubmit";
-import { TextField } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Text, Textarea } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -52,10 +51,8 @@ const TranslationFieldsLong = ({
         return (
           <div>
             <Box position="relative">
-              <TextField
+              <Textarea
                 disabled={disabled}
-                fullWidth
-                multiline
                 label={intl.formatMessage({
                   id: "/vCXIP",
                   defaultMessage: "Translation",
