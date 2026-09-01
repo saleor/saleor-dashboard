@@ -4,8 +4,8 @@ import Wrapper from "@test/wrapper";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode } from "react";
+import { useLocation } from "react-router";
 import { MemoryRouter } from "react-router-dom";
-import useRouter from "use-react-router";
 
 import { MediaDetailPage } from "./MediaDetailPage";
 
@@ -41,7 +41,7 @@ const MockExitFormDialogProvider = ({ children }: { children: ReactNode }) => {
 };
 
 const LocationPath = () => {
-  const { location } = useRouter();
+  const location = useLocation();
 
   return <div data-test-id="location-path">{location.pathname}</div>;
 };
