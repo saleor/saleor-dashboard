@@ -1,0 +1,103 @@
+/*
+ * Native replacements for @material-ui/core table primitives.
+ *
+ * Values reproduce the effective cascade the MUI versions rendered with:
+ * MUI v4 defaults + @saleor/macaw-ui legacy overrides + src/themeOverrides.ts.
+ * Root font-size is 50.782% (src/index.css), so macaw's 1.6rem = 13px and
+ * 1.4rem = 11.4px.
+ *
+ * Selectors are kept at single-class specificity (0,1,0) on purpose: consumer
+ * modules such as ResponsiveTable.module.css target `.table td` (0,1,1) and
+ * must keep winning without needing `!important`.
+ *
+ * Exception: row hover/selected use macaw-ui-next tokens instead of the legacy
+ * values (light hover 0.04 black, selected 0.08 accent). The legacy hover was
+ * MUI's `palette.action.hover` default anyway - macaw's own override passed an
+ * object to `background`, so the declaration never made it into the CSS.
+ */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: auto;
+  /* macaw MuiTable.root set font-feature-settings: "tnum"; keeps numeric
+   * columns aligned. */
+  font-variant-numeric: tabular-nums;
+}
+
+.row {
+  /* Anchors absolutely-positioned overlays inside cells (macaw MuiTableRow.root). */
+  position: relative;
+  color: inherit;
+  vertical-align: middle;
+  outline: 0;
+}
+
+.rowHover:hover {
+  background-color: var(--mu-colors-background-default1-hovered);
+  transition: background-color 200ms;
+}
+
+/* Both selectors so a selected row keeps its tint while hovered, as MUI did. */
+.rowSelected,
+.rowSelected:hover {
+  background-color: var(--mu-colors-background-accent1-hovered);
+}
+
+.cell {
+  height: 56px;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--mu-colors-border-default1);
+  color: var(--mu-colors-text-default1);
+  font-size: 1.6rem;
+  line-height: 1.56;
+  text-align: left;
+  vertical-align: inherit;
+}
+
+.cellHead {
+  color: var(--mu-colors-text-default2);
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
+/* MUI shrank footer text to 0.75rem, which the 50.782% root makes ~6px; footer
+ * cells only ever hold macaw controls, so they keep body sizing instead. */
+.cellFooter {
+  color: var(--mu-colors-text-default2);
+}
+
+/* macaw MuiTableCell.paddingCheckbox */
+.cellPaddingCheckbox {
+  width: 52px;
+  padding: 0;
+}
+
+.cellPaddingCheckbox:first-child {
+  width: 72px;
+  padding: 0 18px;
+}
+
+.cellPaddingCheckbox:last-child {
+  padding-right: 20px;
+}
+
+.cellPaddingNone,
+.cellPaddingNone:first-child,
+.cellPaddingNone:last-child {
+  padding: 0;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.alignJustify {
+  text-align: justify;
+}

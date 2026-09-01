@@ -1,6 +1,6 @@
 import { DragHandle } from "@dashboard/components/DragHandle/DragHandle";
+import { TableCell } from "@dashboard/components/Table/Table";
 import { type DraggableAttributes, type DraggableSyntheticListeners } from "@dnd-kit/core";
-import { TableCell } from "@material-ui/core";
 import clsx from "clsx";
 import { type MouseEvent, type PointerEvent } from "react";
 

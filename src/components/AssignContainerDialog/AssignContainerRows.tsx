@@ -1,5 +1,6 @@
+import { TableCell } from "@dashboard/components/Table/Table";
 import { type Container } from "@dashboard/types";
-import { Radio, TableCell } from "@material-ui/core";
+import { Radio } from "@material-ui/core";
 
 import Checkbox from "../Checkbox";
 import TableRowLink from "../TableRowLink";

@@ -1,5 +1,6 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
@@ -11,7 +12,6 @@ import { type ListProps, type SortPage } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { WarehouseListUrlSortField, warehousePath } from "@dashboard/warehouses/urls";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
