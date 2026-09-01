@@ -14,6 +14,7 @@ import { Link } from "@dashboard/components/Link";
 import { Placeholder } from "@dashboard/components/Placeholder";
 import { ResponsiveTable, tableStyles } from "@dashboard/components/ResponsiveTable";
 import { SortableTableBody, SortableTableRow } from "@dashboard/components/SortableTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableHead from "@dashboard/components/TableHead";
 import { TableRowLinkCheckbox } from "@dashboard/components/TableRowLink/TableRowLinkCheckbox";
@@ -22,7 +23,6 @@ import { useOptimisticListReorder } from "@dashboard/hooks/useOptimisticListReor
 import { buttonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { type ListActions, type ReorderAction } from "@dashboard/types";
-import { TableBody, TableCell } from "@material-ui/core";
 import { Box, Button, Skeleton, Text, Toggle, Tooltip } from "@saleor/macaw-ui-next";
 import capitalize from "lodash/capitalize";
 import { Trash2 } from "lucide-react";

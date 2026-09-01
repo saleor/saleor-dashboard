@@ -11,6 +11,7 @@ import {
 import { InfiniteScroll } from "@dashboard/components/InfiniteScroll";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell } from "@dashboard/components/Table/Table";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { SaleorThrobber } from "@dashboard/components/Throbber";
@@ -30,7 +31,7 @@ import {
 } from "@dashboard/searches/mapSearchOrderVariantsForAdd";
 import { type FetchMoreProps } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { TableBody, TableCell, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

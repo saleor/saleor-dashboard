@@ -1,5 +1,6 @@
 import { Pill } from "@dashboard/components/Pill";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -9,7 +10,6 @@ import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import { renderCollection } from "@dashboard/misc";
 import { type ListProps, type SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Skeleton } from "@saleor/macaw-ui-next";
 import type * as React from "react";

@@ -8,6 +8,11 @@
   background-color: var(--mu-colors-background-default1);
 }
 
+.headerEnd {
+  flex-shrink: 0;
+  align-self: center;
+}
+
 .description {
   max-width: 46rem;
   line-height: 1.45;

@@ -1,4 +1,4 @@
-import { TableBody } from "@material-ui/core";
+import { TableBody } from "@dashboard/components/Table/Table";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Trash2 } from "lucide-react";
 import { type ComponentType } from "react";

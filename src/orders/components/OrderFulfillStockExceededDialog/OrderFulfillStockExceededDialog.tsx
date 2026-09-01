@@ -6,6 +6,7 @@ import {
 } from "@dashboard/components/ConfirmButton";
 import { DashboardModal } from "@dashboard/components/Modal";
 import { ResponsiveTable } from "@dashboard/components/ResponsiveTable";
+import { TableBody, TableCell, TableHead } from "@dashboard/components/Table/Table";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { type FulfillmentFragment, type OrderFulfillLineFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
@@ -15,7 +16,6 @@ import {
   getOrderLineAvailableQuantity,
   type OrderFulfillStockFormsetData,
 } from "@dashboard/orders/utils/data";
-import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
