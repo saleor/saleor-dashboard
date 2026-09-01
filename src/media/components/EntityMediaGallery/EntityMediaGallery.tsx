@@ -1,7 +1,7 @@
 import { MediaDeleteDialog } from "@dashboard/components/MediaDeleteDialog/MediaDeleteDialog";
 import { MediaGallery } from "@dashboard/components/MediaGallery/MediaGallery";
 import { MediaUrlDialog } from "@dashboard/components/MediaUrlDialog/MediaUrlDialog";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { mediaMessages } from "@dashboard/media/messages";
 import { type ReorderEvent } from "@dashboard/types";

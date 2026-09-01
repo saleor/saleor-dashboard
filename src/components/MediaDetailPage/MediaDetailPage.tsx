@@ -1,9 +1,9 @@
 import { savebarHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
-import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
+import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
+import Form from "@dashboard/components/Form/Form";
+import Grid from "@dashboard/components/Grid/Grid";
 import { MediaWithFallback } from "@dashboard/components/MediaWithFallback/MediaWithFallback";
 import { Savebar } from "@dashboard/components/Savebar";
 import { type SubmitPromise } from "@dashboard/hooks/useForm";

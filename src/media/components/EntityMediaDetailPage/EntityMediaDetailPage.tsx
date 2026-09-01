@@ -3,7 +3,7 @@ import { MediaDetailPage } from "@dashboard/components/MediaDetailPage/MediaDeta
 import { MediaMetadataDialog } from "@dashboard/components/MediaMetadataDialog/MediaMetadataDialog";
 import { useMediaUpdateMutation } from "@dashboard/graphql/staging";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { useNotifier } from "@dashboard/hooks/useNotifier";
+import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { mediaMessages } from "@dashboard/media/messages";
 import { type DocumentNode } from "graphql";
