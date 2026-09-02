@@ -24,9 +24,8 @@ import { TaxCountryDialog } from "@dashboard/taxes/components/TaxCountryDialog/T
 import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle/TaxPageTitle";
 import { taxesMessages } from "@dashboard/taxes/messages";
 import { isLastElement } from "@dashboard/taxes/utils/utils";
-import { Divider } from "@material-ui/core";
 import { List, ListHeader, ListItem, ListItemCell, PageTab, PageTabs } from "@saleor/macaw-ui";
-import { Box, Button, Skeleton } from "@saleor/macaw-ui-next";
+import { Box, Button, Divider, Skeleton } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getSelectedTaxStrategy, getTaxAppId, getTaxCalculationStrategy } from "./helpers";

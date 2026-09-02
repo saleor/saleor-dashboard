@@ -1,6 +1,5 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import Grid from "@dashboard/components/Grid/Grid";
-import Hr from "@dashboard/components/Hr";
 import { Link } from "@dashboard/components/Link";
 import { type WebhookEventTypeAsyncEnum, type WebhookEventTypeSyncEnum } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
@@ -14,7 +13,7 @@ import {
   ListItemCell,
   useListWidths,
 } from "@saleor/macaw-ui";
-import { Box, Checkbox, Chip, Switch, Text, Tooltip } from "@saleor/macaw-ui-next";
+import { Box, Checkbox, Chip, Divider, Switch, Text, Tooltip } from "@saleor/macaw-ui-next";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -98,7 +97,7 @@ export const WebhookEvents = ({
             )}
           </Text>
         </DashboardCard.Content>
-        <Hr />
+        <Divider />
         <Grid variant="uniform">
           <div className={classes.objectsWrapper}>
             <List gridTemplate={["1fr 50px"]}>
@@ -222,7 +221,7 @@ export const WebhookEvents = ({
             </List>
           </div>
         </Grid>
-        <Hr />
+        <Divider />
       </DashboardCard>
     </>
   );

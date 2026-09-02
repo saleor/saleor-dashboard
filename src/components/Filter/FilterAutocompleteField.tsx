@@ -2,11 +2,10 @@
 import { toggle } from "@dashboard/utils/lists/lists";
 import { FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Input, type Option, Text } from "@saleor/macaw-ui-next";
+import { Divider, Input, type Option, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox/Checkbox";
-import Hr from "../Hr";
 import Link from "../Link";
 import { type FieldType, type FilterFieldBaseProps } from "./types";
 
@@ -116,7 +115,7 @@ const FilterAutocompleteField = ({
           />
         </div>
       ))}
-      {displayHr && <Hr className={classes.hr} />}
+      {displayHr && <Divider className={classes.hr} />}
       {displayNoResults && (
         <Text
           data-test-id="filter-field-autocomplete-no-results"

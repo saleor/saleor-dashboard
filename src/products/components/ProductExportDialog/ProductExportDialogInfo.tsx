@@ -8,7 +8,6 @@ import ChannelsAvailabilityDialogChannelsList from "@dashboard/components/Channe
 import ChannelsAvailabilityDialogContentWrapper from "@dashboard/components/ChannelsAvailabilityDialogWrapper/ChannelsAvailabilityDialogWrapper";
 import Checkbox from "@dashboard/components/Checkbox/Checkbox";
 import Chip from "@dashboard/components/Chip/Chip";
-import Hr from "@dashboard/components/Hr";
 import { SaleorThrobber } from "@dashboard/components/Throbber/SaleorThrobber";
 import {
   type ChannelFragment,
@@ -22,7 +21,7 @@ import { type FetchMoreProps } from "@dashboard/types";
 import { toggle } from "@dashboard/utils/lists/lists";
 import { Button, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Input, type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
+import { Box, Divider, Input, type Option as MacawOptionType, Text } from "@saleor/macaw-ui-next";
 import { type PropsWithChildren } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -415,7 +414,7 @@ const ProductExportDialogInfo = ({
           autoComplete="off"
           endAdornment={loading && <SaleorThrobber size={16} />}
         />
-        <Hr className={classes.hr} />
+        <Divider className={classes.hr} />
         {attributes.map(attribute => (
           <Option
             checked={data.exportInfo.attributes.includes(attribute.value)}
@@ -537,7 +536,7 @@ const ProductExportDialogInfo = ({
             </Option>
           ))}
         </div>
-        <Hr className={classes.hrWarehouses} />
+        <Divider className={classes.hrWarehouses} />
         <Text>
           <FormattedMessage id="ZRz3hM" defaultMessage="Export Product Stock Quantity to CSV" />
         </Text>
@@ -556,7 +555,7 @@ const ProductExportDialogInfo = ({
             />
           </Option>
         </div>
-        <Hr className={classes.hrWarehouses} />
+        <Divider className={classes.hrWarehouses} />
         <Text className={classes.warehousesLabel} fontSize={3}>
           <FormattedMessage
             id="WQMTKI"
