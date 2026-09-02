@@ -16,7 +16,6 @@ const GiftCardListSearchAndFilters = (): JSX.Element => {
 
   return (
     <ListFilters
-      type="expression-filter"
       initialSearch={params?.query || ""}
       onSearchChange={handleSearchChange}
       showSearchTooltip

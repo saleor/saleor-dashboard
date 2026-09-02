@@ -1,9 +1,6 @@
 import { type PermissionEnum } from "@dashboard/graphql";
 import { type FetchMoreProps, type KeyValue, type SearchPageProps } from "@dashboard/types";
 import { type Option } from "@saleor/macaw-ui-next";
-import { type MessageDescriptor } from "react-intl";
-
-import { type FilterDispatchFunction } from "./useFilter";
 
 export enum FieldType {
   autocomplete = "autocomplete",
@@ -38,10 +35,6 @@ interface UnknownFilterElementData {
   type: KeyValueFilterElementData["type"] | RegularFilterElementData["type"];
 }
 
-export type IFilterElementMutableDataGeneric<T extends FieldType> = T extends FieldType.keyValue
-  ? KeyValueFilterElementData & FilterElementCommonData
-  : RegularFilterElementData & FilterElementCommonData;
-
 type FilterElementCommon<K extends string = string> = {
   autocomplete?: boolean;
   displayValues?: Option[];
@@ -72,33 +65,6 @@ export type FilterElementGeneric<
   ? FilterElementKeyValue<K> & { type: T }
   : FilterElementRegular<K> & { type: T };
 
-export const isFilterDateType = <K extends string = string>(
-  filter: FilterElement<K>,
-): filter is FilterElementGeneric<K, FieldType.date | FieldType.dateTime> =>
-  filter.type === FieldType.date || filter.type === FieldType.dateTime;
-
-export const isFilterNumericType = <K extends string = string>(
-  filter: FilterElement<K>,
-): filter is FilterElementGeneric<K, FieldType.number | FieldType.price> =>
-  filter.type === FieldType.number || filter.type === FieldType.price;
-
-export const isFilterType = <T extends FieldType, K extends string = string>(
-  filter: FilterElement<K>,
-  type: T,
-): filter is FilterElementGeneric<K, T> => filter.type === type;
-
-export interface FilterFieldBaseProps<
-  K extends string = string,
-  T extends FieldType | unknown = unknown,
-> {
-  filter: T extends FieldType ? FilterElementGeneric<K, T> : FilterElement<K>;
-  onFilterPropertyChange: FilterDispatchFunction<K>;
-}
-
-export type FilterErrors = string[];
-
-export type FilterErrorMessages<T extends string> = Record<T, MessageDescriptor>;
-
 export type IFilter<
   K extends string = string,
   T extends FieldType | unknown = unknown,
@@ -107,11 +73,6 @@ export type IFilter<
   : T extends FieldType.keyValue
     ? Array<FilterElementKeyValue<K>>
     : Array<FilterElementRegular<K>>;
-
-export enum FilterType {
-  MULTIPLE = "MULTIPLE",
-  SINGULAR = "SINGULAR",
-}
 
 export enum ValidationErrorCode {
   VALUE_REQUIRED = "VALUE_REQUIRED",

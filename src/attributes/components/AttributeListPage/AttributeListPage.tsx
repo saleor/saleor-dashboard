@@ -159,8 +159,7 @@ const AttributeListPage = ({
       </TopNav>
       <Box display="flex" flexDirection="column" __minWidth={0} __minHeight={0}>
         <Box paddingTop={4}>
-          <ListFilters<AttributeFilterKeys>
-            type="expression-filter"
+          <ListFilters
             initialSearch={initialSearch}
             onSearchChange={onSearchChange}
             searchPlaceholder={intl.formatMessage({

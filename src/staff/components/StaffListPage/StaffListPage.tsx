@@ -140,8 +140,7 @@ const StaffListPage = ({
         </LimitReachedAlert>
       )}
       <DashboardCard>
-        <ListFilters<StaffFilterKeys>
-          type="expression-filter"
+        <ListFilters
           initialSearch={initialSearch}
           onSearchChange={onSearchChange}
           searchPlaceholder={intl.formatMessage({
