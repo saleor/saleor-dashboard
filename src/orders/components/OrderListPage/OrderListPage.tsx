@@ -223,7 +223,6 @@ const OrderListPage = ({
 
       <DashboardCard>
         <ListFilters
-          type="expression-filter"
           initialSearch={initialSearch}
           onSearchChange={onSearchChange}
           showSearchTooltip

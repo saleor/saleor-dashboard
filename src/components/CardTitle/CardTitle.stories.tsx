@@ -1,9 +1,8 @@
-import { Box } from "@saleor/macaw-ui-next";
+import { Box, Button } from "@saleor/macaw-ui-next";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentType } from "react";
 import { fn } from "storybook/test";
 
-import { Button } from "../Button/Button";
 import { CardTitle } from "./CardTitle";
 
 const meta: Meta<typeof CardTitle> = {

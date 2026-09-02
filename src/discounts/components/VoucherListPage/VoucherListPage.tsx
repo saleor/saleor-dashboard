@@ -132,7 +132,6 @@ const VoucherListPage = ({
       </TopNav>
       <DashboardCard>
         <ListFilters
-          type="expression-filter"
           initialSearch={initialSearch}
           onSearchChange={onSearchChange}
           searchPlaceholder={intl.formatMessage({

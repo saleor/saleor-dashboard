@@ -5,8 +5,7 @@ import { Ripple } from "@dashboard/ripples/components/Ripple";
 import { isFieldTranslationComplete } from "@dashboard/translations/progress";
 import { type TranslationField, TranslationFieldType } from "@dashboard/translations/types";
 import { type OutputData } from "@editorjs/editorjs";
-import { Button } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui-next";
+import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsLong from "../TranslationFields/TranslationFieldsLong";
@@ -261,7 +260,7 @@ export const TranslationFieldRow = ({
             </Box>
           </Box>
           {showPerFieldActions && !isEditing && (
-            <Button data-test-id={`edit-${field.name}`} onClick={onEdit}>
+            <Button variant="secondary" data-test-id={`edit-${field.name}`} onClick={onEdit}>
               <FormattedMessage {...translationDetailMessages.editField} />
             </Button>
           )}
