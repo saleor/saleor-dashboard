@@ -211,6 +211,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   name
   type
   appUrl
+  created
   problems {
     __typename
     key

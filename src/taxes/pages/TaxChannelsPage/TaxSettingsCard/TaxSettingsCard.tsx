@@ -1,4 +1,4 @@
-import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Grid from "@dashboard/components/Grid/Grid";
 import { Select } from "@dashboard/components/Select/Select";
@@ -6,15 +6,7 @@ import { type TaxConfigurationUpdateInput } from "@dashboard/graphql";
 import { type FormChange } from "@dashboard/hooks/useForm";
 import { LegacyFlowWarning } from "@dashboard/taxes/components/LegacyFlowWarning";
 import { taxesMessages } from "@dashboard/taxes/messages";
-import {
-  Card,
-  CardContent,
-  Divider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@material-ui/core";
+import { Divider, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { type Option } from "@saleor/macaw-ui-next";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,9 +30,13 @@ const TaxSettingsCard = ({
   const classes = useStyles();
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(taxesMessages.defaultSettings)} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Header>
+        <DashboardCard.Title>
+          {intl.formatMessage(taxesMessages.defaultSettings)}
+        </DashboardCard.Title>
+      </DashboardCard.Header>
+      <DashboardCard.Content>
         <Typography className={classes.supportHeader}>
           <FormattedMessage {...taxesMessages.chargeTaxesHeader} />
         </Typography>
@@ -70,9 +66,9 @@ const TaxSettingsCard = ({
             />
           </div>
         </div>
-      </CardContent>
+      </DashboardCard.Content>
       <Divider />
-      <CardContent data-test-id="entered-rendered-prices-section">
+      <DashboardCard.Content data-test-id="entered-rendered-prices-section">
         <Grid variant="uniform">
           <RadioGroup
             value={values.pricesEnteredWithTax}
@@ -113,8 +109,8 @@ const TaxSettingsCard = ({
             />
           </div>
         </Grid>
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

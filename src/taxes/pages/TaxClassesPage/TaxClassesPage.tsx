@@ -3,7 +3,7 @@ import {
   TopNavDestinationIcon,
   topNavDestinationMessages,
 } from "@dashboard/components/AppLayout/TopNav";
-import { CardTitle } from "@dashboard/components/CardTitle/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { type ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import Grid from "@dashboard/components/Grid/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts/Detail";
@@ -27,7 +27,6 @@ import { type TaxClassesPageFormData } from "@dashboard/taxes/types";
 import { useAutofocus } from "@dashboard/taxes/utils/useAutofocus";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getTaxesErrorMessage from "@dashboard/utils/errors/taxes";
-import { Card, CardContent } from "@material-ui/core";
 import { PageTab, PageTabs } from "@saleor/macaw-ui";
 import { Box, Input } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo, useState } from "react";
@@ -135,9 +134,13 @@ const TaxClassesPage = (props: TaxClassesPageProps) => {
                   />
                   {currentTaxClass && (
                     <div>
-                      <Card>
-                        <CardTitle title={intl.formatMessage(taxesMessages.generalInformation)} />
-                        <CardContent>
+                      <DashboardCard>
+                        <DashboardCard.Header>
+                          <DashboardCard.Title>
+                            {intl.formatMessage(taxesMessages.generalInformation)}
+                          </DashboardCard.Title>
+                        </DashboardCard.Header>
+                        <DashboardCard.Content>
                           <Input
                             value={data?.name}
                             onChange={change}
@@ -149,22 +152,26 @@ const TaxClassesPage = (props: TaxClassesPageProps) => {
                             aria-invalid={!!formErrors.name}
                             helperText={getTaxesErrorMessage(formErrors.name, intl)}
                           />
-                        </CardContent>
-                      </Card>
+                        </DashboardCard.Content>
+                      </DashboardCard>
                       <VerticalSpacer spacing={3} />
-                      <Card>
-                        <CardTitle title={intl.formatMessage(taxesMessages.taxClassRates)} />
+                      <DashboardCard>
+                        <DashboardCard.Header>
+                          <DashboardCard.Title>
+                            {intl.formatMessage(taxesMessages.taxClassRates)}
+                          </DashboardCard.Title>
+                        </DashboardCard.Header>
                         {currentTaxClass?.countries.length === 0 ? (
-                          <CardContent className={classes.supportText}>
+                          <DashboardCard.Content className={classes.supportText}>
                             <FormattedMessage
                               {...taxesMessages.noRatesInTaxClass}
                               values={{
                                 tab: <b>{intl.formatMessage(taxesMessages.countriesSection)}</b>,
                               }}
                             />
-                          </CardContent>
+                          </DashboardCard.Content>
                         ) : (
-                          <CardContent>
+                          <DashboardCard.Content>
                             <ResponsiveTable
                               search={{
                                 placeholder: intl.formatMessage(taxesMessages.searchTaxCountries),
@@ -209,9 +216,9 @@ const TaxClassesPage = (props: TaxClassesPageProps) => {
                                 ))}
                               </TableBody>
                             </ResponsiveTable>
-                          </CardContent>
+                          </DashboardCard.Content>
                         )}
-                      </Card>
+                      </DashboardCard>
                       <VerticalSpacer spacing={3} />
                       <Metadata data={data} onChange={handlers.changeMetadata} />
                     </div>
