@@ -5628,6 +5628,10 @@
     "context": "export scope option disabled when list has no active filters",
     "string": "Apply filters or search on the list to enable this option."
   },
+  "JBglRB": {
+    "context": "badge on recently installed extension",
+    "string": "New"
+  },
   "JE0TAx": {
     "context": "section name",
     "string": "Values"

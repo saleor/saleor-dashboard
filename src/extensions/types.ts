@@ -70,6 +70,8 @@ export type InstalledExtension = {
   isActive?: boolean | null;
   activeProblemCount: number;
   criticalProblemCount: number;
+  /** Installed within the last 48 hours - renders a "New" badge in the list. */
+  isNew?: boolean;
 };
 
 export interface Extension {

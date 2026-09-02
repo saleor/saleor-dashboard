@@ -39,6 +39,9 @@ export const usePendingInstallation = ({
   // Don't display loading when user doesn't have permissions
   // we don't fetch installations in that case
   const [initialLoading, setInitialLoading] = useState(hasManagedAppsPermission);
+  // Name of the extension that finished installing in this session - the list uses it
+  // to highlight the row, which sorting can push into the middle of the table.
+  const [justInstalledName, setJustInstalledName] = useState<string | null>(null);
   const { data, loading, refetch } = useAppsInstallationsQuery({
     displayLoader: true,
     skip: !hasManagedAppsPermission,
@@ -57,7 +60,10 @@ export const usePendingInstallation = ({
       appInProgressLoading: loading,
       appsInProgressRefetch: refetch,
       appsRefetch: refetchExtensions,
-      installedAppNotify: installedNotify,
+      installedAppNotify: (name: string) => {
+        installedNotify(name);
+        setJustInstalledName(name);
+      },
       removeInProgressAppNotify,
       onInstallSuccess: () => {
         refetchExtensions();
@@ -93,6 +99,7 @@ export const usePendingInstallation = ({
 
   return {
     pendingInstallations,
+    justInstalledName,
     pendingInstallationsLoading: initialLoading,
     handleRemoveInProgress,
     deleteInProgressAppStatus: deleteInProgressAppOpts.status,
