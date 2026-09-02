@@ -73,11 +73,3 @@ export type IFilter<
   : T extends FieldType.keyValue
     ? Array<FilterElementKeyValue<K>>
     : Array<FilterElementRegular<K>>;
-
-export enum ValidationErrorCode {
-  VALUE_REQUIRED = "VALUE_REQUIRED",
-  DEPENDENCIES_MISSING = "DEPENDENCIES_MISSING",
-  UNKNOWN_ERROR = "UNKNOWN_ERROR",
-}
-
-export type InvalidFilters<T extends string> = Record<T, string[]>;

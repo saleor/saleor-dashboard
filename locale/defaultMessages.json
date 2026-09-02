@@ -1308,10 +1308,6 @@
     "context": "price or ordered products",
     "string": "Price"
   },
-  "34F7Jk": {
-    "context": "filter range separator",
-    "string": "and"
-  },
   "34QbG4": {
     "context": "hint under returns and refunds card on order settings",
     "string": "Choose model types used as refund and return reason references."
@@ -5238,10 +5234,6 @@
   "HlEpii": {
     "string": "Search Engine Title"
   },
-  "HnVtSS": {
-    "context": "search",
-    "string": "No results"
-  },
   "HnZCl7": {
     "context": "search input placeholder",
     "string": "Search tax countries"
@@ -5295,10 +5287,6 @@
   "I+1KzL": {
     "context": "tab name",
     "string": "All attributes"
-  },
-  "I+UwqI": {
-    "context": "is filter range or value",
-    "string": "equal to"
   },
   "I+XcO2": {
     "context": "voucher save composition segment for staged country assignments",
@@ -5414,10 +5402,6 @@
   "IKvOK+": {
     "context": "Amount error message",
     "string": "Amount must be bigger than 0"
-  },
-  "ILgbKN": {
-    "context": "key-value field button add more key-value pairs",
-    "string": "Add more"
   },
   "ILhY5I": {
     "context": "voucher save composition segment for start/end availability window",
@@ -7255,10 +7239,6 @@
   "PKjitS": {
     "string": "{count, plural, one {Warehouse assigned} other {# warehouses assigned}}"
   },
-  "PLCwT/": {
-    "context": "search results",
-    "string": "Show more"
-  },
   "PLX6FH": {
     "context": "sum of all manual refunds for transaction",
     "string": "Manual refund"
@@ -7358,10 +7338,6 @@
   "PmLFgv": {
     "context": "Button to remove all staged generator creates",
     "string": "Clear all"
-  },
-  "Pnj+JH": {
-    "context": "key-value field input",
-    "string": "Value"
   },
   "Pp/7T7": {
     "string": "{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
@@ -7510,10 +7486,6 @@
   "QBgj2A": {
     "context": "link label in usage empty state",
     "string": "model type"
-  },
-  "QBxN6z": {
-    "context": "is filter range or value",
-    "string": "between"
   },
   "QDxJib": {
     "string": "Fulfill"
@@ -8606,10 +8578,6 @@
   "US3IPU": {
     "string": "Search Engine Description"
   },
-  "USS3Q7": {
-    "context": "filters error messages unknown error",
-    "string": "Unknown error occurred"
-  },
   "UVDfTs": {
     "context": "discount type shipping",
     "string": "Shipping"
@@ -9515,10 +9483,6 @@
   "XkQXIn": {
     "context": "PDP schematic full-bleed legend section header",
     "string": "Where attributes show"
-  },
-  "XkX56I": {
-    "context": "filters error messages value required",
-    "string": "Choose a value"
   },
   "XkqRxe": {
     "context": "Save composition segment for a pending customer type change",
@@ -11395,10 +11359,6 @@
   "epXIss": {
     "context": "customer types section name",
     "string": "Customer Types"
-  },
-  "erC44f": {
-    "context": "filters error messages dependencies missing",
-    "string": "Filter requires other filters: {dependencies}"
   },
   "erZXUi": {
     "context": "channel order setting label",
@@ -14529,10 +14489,6 @@
     "context": "no countries found in assign countries dialog",
     "string": "No countries found"
   },
-  "q1shey": {
-    "context": "key-value field input",
-    "string": "Key"
-  },
   "q3IT3J": {
     "context": "extensions list has been removed",
     "string": "Extension removed"
@@ -17269,9 +17225,6 @@
   },
   "zSDfq0": {
     "string": "Use flat tax rate"
-  },
-  "zSOvI0": {
-    "string": "Filters"
   },
   "zT1CvH": {
     "string": "Learn more about {extendingSaleor}"
