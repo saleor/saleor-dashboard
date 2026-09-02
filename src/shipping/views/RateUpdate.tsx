@@ -6,7 +6,6 @@ import {
   sortChannelShippingDataByName,
 } from "@dashboard/channels/utils";
 import { AssignProductDialog } from "@dashboard/components/AssignProductDialog/AssignProductDialog";
-import { Button } from "@dashboard/components/Button/Button";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
@@ -66,6 +65,7 @@ import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMor
 import { type MinMax } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Button } from "@saleor/macaw-ui-next";
 import { useCallback, useMemo, useReducer, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -521,7 +521,7 @@ const RateUpdate = ({ id, rateId, params }: RateUpdateProps) => {
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <Button onClick={() => openModal("unassign-product")}>
+          <Button variant="tertiary" onClick={() => openModal("unassign-product")}>
             <FormattedMessage
               id="YdeHZX"
               defaultMessage="Unassign"

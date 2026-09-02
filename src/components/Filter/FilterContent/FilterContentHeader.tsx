@@ -1,7 +1,6 @@
-import { Button } from "@dashboard/components/Button/Button";
 import { buttonMessages } from "@dashboard/intl";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Text, vars } from "@saleor/macaw-ui-next";
+import { Button, Text, vars } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(

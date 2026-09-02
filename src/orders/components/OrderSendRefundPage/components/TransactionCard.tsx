@@ -6,8 +6,8 @@ import {
   TransactionActionEnum,
   type TransactionItemFragment,
 } from "@dashboard/graphql";
-import { Button, makeStyles } from "@saleor/macaw-ui";
-import { Text } from "@saleor/macaw-ui-next";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import * as React from "react";
 import { useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";

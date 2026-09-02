@@ -1,7 +1,7 @@
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
 import { type KeyValue } from "@dashboard/types";
-import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
-import { Input } from "@saleor/macaw-ui-next";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Button, Input } from "@saleor/macaw-ui-next";
 import { Trash2 } from "lucide-react";
 import { useIntl } from "react-intl";
 
@@ -121,7 +121,7 @@ export const FilterKeyValueField = <K extends string = string>({
       </div>
       <Button
         className={classes.addButton}
-        color="primary"
+        variant="tertiary"
         onClick={() => {
           onFilterPropertyChange({
             payload: {

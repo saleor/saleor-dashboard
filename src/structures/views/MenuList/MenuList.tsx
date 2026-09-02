@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button/Button";
 import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
@@ -21,6 +20,7 @@ import { ListViews } from "@dashboard/types";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
+import { Button } from "@saleor/macaw-ui-next";
 import { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -139,6 +139,7 @@ const MenuList = ({ params }: MenuListProps) => {
         toggleAll={toggleAll}
         toolbar={
           <Button
+            variant="tertiary"
             onClick={() =>
               navigate(
                 menuListUrl({
