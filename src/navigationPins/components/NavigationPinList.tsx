@@ -1,4 +1,5 @@
 import DeletableItem from "@dashboard/components/DeletableItem/DeletableItem";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { Placeholder } from "@dashboard/components/Placeholder/Placeholder";
 import { Box, Skeleton, Text } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
@@ -50,6 +51,7 @@ export const NavigationPinList = ({
     <Box className={styles.list} data-test-id="navigation-pin-list">
       {items.map(item => (
         <Box key={item.id} className={styles.row} data-test-id="navigation-pin-row">
+          <ModelTypeIcon icon={item.icon} />
           <Box className={styles.rowCopy}>
             {item.href ? (
               <RouterLink to={item.href} className={styles.rowName}>

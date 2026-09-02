@@ -1,3 +1,4 @@
+import { FALLBACK_MODEL_TYPE_ICON } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { useMemo } from "react";
 
 import { type NavigationPin, type PinScope, type ResolvedNavigationPin } from "../types";
@@ -18,7 +19,7 @@ export const useResolvedNavigationPins = (): ResolvedNavigationPin[] => {
     [organizationPins, userPins],
   );
 
-  const { names } = usePinnedModelTypeNames(ordered.map(pin => pin.id));
+  const { names, icons } = usePinnedModelTypeNames(ordered.map(pin => pin.id));
 
   return useMemo(() => {
     const seen = new Set<string>();
@@ -34,7 +35,7 @@ export const useResolvedNavigationPins = (): ResolvedNavigationPin[] => {
 
       seen.add(key);
 
-      return [...acc, { ...pin, name }];
+      return [...acc, { ...pin, name, icon: icons[pin.id] ?? FALLBACK_MODEL_TYPE_ICON }];
     }, []);
-  }, [ordered, names]);
+  }, [ordered, names, icons]);
 };

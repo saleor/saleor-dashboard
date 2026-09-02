@@ -1,3 +1,5 @@
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { FALLBACK_MODEL_TYPE_ICON } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import { pageListUrlWithPageType } from "@dashboard/modeling/urls";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -13,6 +15,7 @@ interface NavigationPinListItem {
   name: string;
   href?: string;
   description: string;
+  icon: ModelTypeIcon;
 }
 
 interface NavigationPinListItemsResult {
@@ -29,7 +32,7 @@ export const useNavigationPinListItems = (
   pins: readonly NavigationPin[],
 ): NavigationPinListItemsResult => {
   const intl = useIntl();
-  const { names, hasResolved } = usePinnedModelTypeNames(pins.map(pin => pin.id));
+  const { names, icons, hasResolved } = usePinnedModelTypeNames(pins.map(pin => pin.id));
 
   const items = useMemo(
     () =>
@@ -46,9 +49,10 @@ export const useNavigationPinListItems = (
           description: isMissing
             ? intl.formatMessage(messages.missingTypeDescription, { section })
             : section,
+          icon: icons[pin.id] ?? FALLBACK_MODEL_TYPE_ICON,
         };
       }),
-    [hasResolved, intl, names, pins],
+    [hasResolved, icons, intl, names, pins],
   );
 
   return { items, hasResolved };

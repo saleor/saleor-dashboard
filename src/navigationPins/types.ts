@@ -1,3 +1,5 @@
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+
 /**
  * A navigation pin is a sidebar shortcut that opens the model list filtered to a single
  * model type. See CONTEXT.md for the domain vocabulary.
@@ -16,4 +18,5 @@ export type PinScope = "user" | "organization";
 export interface ResolvedNavigationPin extends NavigationPin {
   name: string;
   scope: PinScope;
+  icon: ModelTypeIcon;
 }

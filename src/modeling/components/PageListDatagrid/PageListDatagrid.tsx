@@ -6,6 +6,8 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
+import { usePreloadedLucideIcons } from "@dashboard/components/ModelTypeIcon/usePreloadedLucideIcons";
 import { DatagridPagination } from "@dashboard/components/TablePagination/DatagridPagination";
 import { type Page, type Pages } from "@dashboard/modeling/types";
 import { type PageListUrlSortField } from "@dashboard/modeling/urls";
@@ -64,6 +66,13 @@ export const PageListDatagrid = ({
       onSave: onColumnChange,
     });
   const { theme: currentTheme } = useTheme();
+  // The grid paints before icons resolve, so it repaints once they land rather than blocking
+  // the whole list on a set of tiny lazy imports.
+  const iconNames = useMemo(
+    () => (pages ?? []).map(page => getModelTypeIcon(page.pageType?.metadata).name),
+    [pages],
+  );
+  const iconsVersion = usePreloadedLucideIcons(iconNames);
   const getCellContent = useCallback(
     createGetCellContent({
       pages,
@@ -71,7 +80,7 @@ export const PageListDatagrid = ({
       intl,
       currentTheme,
     }),
-    [pages, visibleColumns],
+    [pages, visibleColumns, currentTheme, iconsVersion],
   );
   const handleRowClick = useCallback(
     ([_, row]: Item) => {

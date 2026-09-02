@@ -1,6 +1,8 @@
 import { useUser } from "@dashboard/auth/useUser";
 import BackButton from "@dashboard/components/BackButton";
 import { DashboardModal } from "@dashboard/components/Modal";
+import { type ModelTypeIcon as ModelTypeIconValue } from "@dashboard/components/ModelTypeIcon/constants";
+import { ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/ModelTypeIcon";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useNotifier } from "@dashboard/hooks/useNotifier/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -20,6 +22,7 @@ interface PinModelTypeDialogProps {
   onClose: () => void;
   modelTypeId: string;
   modelTypeName: string;
+  modelTypeIcon?: ModelTypeIconValue;
 }
 
 export const PinModelTypeDialog = ({
@@ -27,6 +30,7 @@ export const PinModelTypeDialog = ({
   onClose,
   modelTypeId,
   modelTypeName,
+  modelTypeIcon,
 }: PinModelTypeDialogProps) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -81,9 +85,12 @@ export const PinModelTypeDialog = ({
         <DashboardModal.Body>
           <DashboardModal.Inset>
             <Box display="flex" flexDirection="column" gap={4}>
-              <Text size={3} color="default2">
-                {intl.formatMessage(messages.pinDialogDescription, { name: modelTypeName })}
-              </Text>
+              <Box display="flex" alignItems="center" gap={2}>
+                {modelTypeIcon && <ModelTypeIcon icon={modelTypeIcon} />}
+                <Text size={3} color="default2">
+                  {intl.formatMessage(messages.pinDialogDescription, { name: modelTypeName })}
+                </Text>
+              </Box>
               {canManageOrganizationPins && (
                 <Select
                   label={intl.formatMessage(messages.scopeLabel)}
