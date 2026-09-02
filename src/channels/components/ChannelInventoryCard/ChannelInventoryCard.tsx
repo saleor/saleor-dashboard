@@ -3,13 +3,28 @@ import { ButtonGroupWithDropdown } from "@dashboard/components/ButtonGroupWithDr
 import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { AllocationStrategyEnum, type StockSettingsInput } from "@dashboard/graphql";
 import { type ChangeEvent } from "@dashboard/hooks/useForm";
+import { useSuppressClickAfterDrag } from "@dashboard/hooks/useSuppressClickAfterDrag";
 import { type ReorderAction } from "@dashboard/types";
+import {
+  closestCenter,
+  DndContext,
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { Box, Button, RadioGroup, Text } from "@saleor/macaw-ui-next";
 import { Warehouse } from "lucide-react";
 import { type ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import SortableContainer from "../AssignmentList/SortableContainer";
 import styles from "./ChannelInventoryCard.module.css";
 import { ChannelInventoryWarehouseRow } from "./ChannelInventoryWarehouseRow";
 import { messages } from "./messages";
@@ -41,17 +56,38 @@ export const ChannelInventoryCard = ({
   onAllocationStrategyChange,
 }: ChannelInventoryCardProps): ReactNode => {
   const intl = useIntl();
+  // Dropping over another row's delete control would otherwise fire its click.
+  const suppressClickAfterDrag = useSuppressClickAfterDrag();
   const hasWarehouses = warehouses.length > 0;
   const hasUnassigned = availableWarehousesCount > warehouses.length;
   const allocationValue = allocationStrategy ?? AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER;
 
-  const handleSortStart = (): void => {
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
+
+  const handleDragStart = (): void => {
     document.body.classList.add(styles.grabbing);
   };
 
-  const handleSortEnd = (event: Parameters<ReorderAction>[0]): void => {
+  const handleDragEnd = ({ active, over }: DragEndEvent): void => {
     document.body.classList.remove(styles.grabbing);
-    reorderWarehouses(event);
+    suppressClickAfterDrag();
+
+    if (!over || active.id === over.id) {
+      return;
+    }
+
+    reorderWarehouses({
+      oldIndex: warehouses.findIndex(warehouse => warehouse.id === active.id),
+      newIndex: warehouses.findIndex(warehouse => warehouse.id === over.id),
+    });
+  };
+
+  const handleDragCancel = (): void => {
+    document.body.classList.remove(styles.grabbing);
+    suppressClickAfterDrag();
   };
 
   const assignAction = (() => {
@@ -148,30 +184,32 @@ export const ChannelInventoryCard = ({
         </Box>
       ) : (
         <>
-          {/* @ts-expect-error legacy sortable types */}
-          <SortableContainer
-            axis="y"
-            lockAxis="y"
-            useDragHandle
-            shouldCancelStart={() => disabled}
-            onSortStart={handleSortStart}
-            onSortEnd={handleSortEnd}
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            modifiers={[restrictToVerticalAxis]}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDragCancel={handleDragCancel}
           >
-            <div className={disabled ? `${styles.list} ${styles.listDisabled}` : styles.list}>
-              {warehouses.map((warehouse, index) => (
-                <ChannelInventoryWarehouseRow
-                  key={warehouse.id}
-                  index={index}
-                  // @ts-expect-error legacy sortable types
-                  id={warehouse.id}
-                  name={warehouse.name}
-                  position={index + 1}
-                  onDelete={removeWarehouse}
-                  disabled={disabled}
-                />
-              ))}
-            </div>
-          </SortableContainer>
+            <SortableContext
+              items={warehouses.map(warehouse => warehouse.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className={disabled ? `${styles.list} ${styles.listDisabled}` : styles.list}>
+                {warehouses.map((warehouse, index) => (
+                  <ChannelInventoryWarehouseRow
+                    key={warehouse.id}
+                    id={warehouse.id}
+                    name={warehouse.name}
+                    position={index + 1}
+                    onDelete={removeWarehouse}
+                    disabled={disabled}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
           <Box className={styles.listFooter}>
             <Text size={2} color="default2">
               <FormattedMessage {...messages.reorderHint} />
