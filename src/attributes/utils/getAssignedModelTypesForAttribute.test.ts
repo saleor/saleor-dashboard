@@ -18,6 +18,7 @@ describe("getAssignedModelTypesForAttribute", () => {
               id: "type-1",
               name: "Blog",
               hasPages: true,
+              metadata: [],
               attributes: [
                 { __typename: "Attribute", id: "attr-1" },
                 { __typename: "Attribute", id: "attr-2" },
@@ -31,6 +32,7 @@ describe("getAssignedModelTypesForAttribute", () => {
               id: "type-2",
               name: "Landing",
               hasPages: false,
+              metadata: [],
               attributes: [{ __typename: "Attribute", id: "attr-3" }],
             },
           },

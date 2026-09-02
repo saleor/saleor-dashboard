@@ -73,8 +73,12 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
     client: apolloClient,
     skip: !authenticated,
     // Don't change this to 'network-only' - update of intl provider's
-    // state will cause an error
-    fetchPolicy: "cache-and-network",
+    // state will cause an error.
+    // `cache-first` (not `cache-and-network`): every path that flips `authenticated` runs an auth
+    // mutation that seeds `me` with the full `User` fragment, so the boot-time network round trip
+    // here would only re-fetch what just arrived. Views that mutate the current user call
+    // `refetchUser` explicitly.
+    fetchPolicy: "cache-first",
   });
   const handleLoginError = (error: ApolloError) => {
     const parsedErrors = parseAuthError(error);

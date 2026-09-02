@@ -3,7 +3,8 @@ import {
   type ConfirmButtonTransitionState,
 } from "@dashboard/components/ConfirmButton/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 interface TranslationFieldsSaveProps {
@@ -43,7 +44,7 @@ const TranslationFieldsSave = (props: TranslationFieldsSaveProps) => {
       >
         <FormattedMessage {...buttonMessages.save} />
       </ConfirmButton>
-      <Button onClick={onDiscard} type="submit">
+      <Button variant="secondary" onClick={onDiscard} type="submit">
         <FormattedMessage id="vTN5DZ" defaultMessage="Discard" description="button" />
       </Button>
     </div>

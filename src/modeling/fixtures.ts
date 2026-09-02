@@ -246,6 +246,7 @@ export const page: PageDetailsFragment = {
     __typename: "PageType",
     id: "UGFnZVR5cGU6MQ==",
     name: "Blog",
+    metadata: [],
     attributes: [
       {
         id: "QXR0cmlidXRlOjI3",

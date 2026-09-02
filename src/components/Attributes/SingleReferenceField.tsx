@@ -5,7 +5,9 @@ import {
   getSingleReferenceDisplayValue,
 } from "@dashboard/components/Attributes/utils";
 import { ChipField } from "@dashboard/components/ChipField/ChipField";
+import { ModelTypeChipIcon } from "@dashboard/components/ChipField/ModelTypeChipIcon";
 import { iconSize, iconStrokeWidthBySize } from "@dashboard/components/icons";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
 import { Box, Button, Text } from "@saleor/macaw-ui-next";
 import { Pencil, Plus } from "lucide-react";
 import { useIntl } from "react-intl";
@@ -14,6 +16,8 @@ import { type AttributeRowProps } from "./types";
 
 interface SingleReferenceFieldProps {
   attribute: AttributeRowProps["attribute"];
+  /** Model type icons for the referenced models, keyed by model id. */
+  referenceIcons?: Map<string, ModelTypeIcon>;
   disabled?: boolean;
   loading?: boolean;
   error?: AttributeRowProps["error"];
@@ -23,6 +27,7 @@ interface SingleReferenceFieldProps {
 
 export const SingleReferenceField = ({
   attribute,
+  referenceIcons,
   disabled,
   loading,
   error,
@@ -30,7 +35,7 @@ export const SingleReferenceField = ({
   onReferencesRemove,
 }: SingleReferenceFieldProps) => {
   const intl = useIntl();
-  const selected = getSingleReferenceDisplayValue(attribute);
+  const selected = getSingleReferenceDisplayValue(attribute, referenceIcons);
 
   return (
     <BasicAttributeRow label={attribute.label} {...getAttributeRowLabelProps(attribute)}>
@@ -39,6 +44,7 @@ export const SingleReferenceField = ({
           <>
             <ChipField
               label={selected.label}
+              startAdornment={<ModelTypeChipIcon icon={selected.icon} />}
               url={selected.url}
               loading={loading}
               onClose={() => onReferencesRemove(attribute.id, [])}

@@ -6,11 +6,14 @@ import { messages, problemMessages } from "@dashboard/extensions/messages";
 import { type InstalledExtension } from "@dashboard/extensions/types";
 import { LoadingSkeleton } from "@dashboard/extensions/views/InstalledExtensions/components/LoadinSkeleton";
 import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui-next";
+import clsx from "clsx";
 import { CircleAlert } from "lucide-react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProblemsBadge } from "../AppProblems/ProblemsBadge/ProblemsBadge";
 import { ProblemsList } from "../AppProblems/ProblemsList/ProblemsList";
+import { NewExtensionBadge } from "../NewExtensionBadge/NewExtensionBadge";
+import styles from "./InstalledExtensionsList.module.css";
 import { useExtensionProblems } from "./useExtensionProblems";
 
 interface InstalledExtensionsListProps {
@@ -21,6 +24,8 @@ interface InstalledExtensionsListProps {
   hasManagedAppsPermission?: boolean;
   onClearProblem?: (problemId: string) => void;
   onFetchAllProblems?: (appId: string) => void;
+  /** Name of the extension installed during this session - gets a one-off highlight. */
+  justInstalledName?: string | null;
 }
 
 const ExtensionName = ({
@@ -64,6 +69,7 @@ interface ExtensionRowProps {
   hasManagedAppsPermission?: boolean;
   onClearProblem?: (problemId: string) => void;
   onFetchAllProblems?: (appId: string) => void;
+  justInstalled?: boolean;
 }
 
 const ExtensionRow = ({
@@ -71,6 +77,7 @@ const ExtensionRow = ({
   hasManagedAppsPermission,
   onClearProblem,
   onFetchAllProblems,
+  justInstalled,
 }: ExtensionRowProps) => {
   const intl = useIntl();
   const problems = extension.problems ?? [];
@@ -93,16 +100,17 @@ const ExtensionRow = ({
             display="flex"
             alignItems="center"
             __padding="5px 20px"
-            className={
-              extension.href
-                ? sprinkles({
-                    backgroundColor: {
-                      default: "default1",
-                      hover: "default2",
-                    },
-                  })
-                : undefined
-            }
+            data-test-id={justInstalled ? "just-installed-extension-row" : undefined}
+            className={clsx(
+              extension.href &&
+                sprinkles({
+                  backgroundColor: {
+                    default: "default1",
+                    hover: "default2",
+                  },
+                }),
+              justInstalled && styles.justInstalled,
+            )}
           >
             <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
               <ExtensionName href={extension.href} name={extension.name}>
@@ -118,6 +126,7 @@ const ExtensionRow = ({
                   {extension.name}
                 </Text>
               </ExtensionName>
+              {extension.isNew && <NewExtensionBadge />}
               {hasActiveProblems && (
                 <ProblemsBadge
                   totalCount={totalCount}
@@ -189,6 +198,7 @@ export const InstalledExtensionsList = ({
   hasManagedAppsPermission,
   onClearProblem,
   onFetchAllProblems,
+  justInstalledName,
 }: InstalledExtensionsListProps) => {
   const intl = useIntl();
 
@@ -232,6 +242,7 @@ export const InstalledExtensionsList = ({
               hasManagedAppsPermission={hasManagedAppsPermission}
               onClearProblem={onClearProblem}
               onFetchAllProblems={onFetchAllProblems}
+              justInstalled={!!justInstalledName && extension.name === justInstalledName}
             />
           ))}
         </GridTable.Body>

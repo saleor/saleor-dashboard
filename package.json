@@ -135,7 +135,6 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
-    "react-sortable-hoc": "^1.11.0",
     "slugify": "^1.6.6",
     "sonner": "^2.0.7",
     "url-join": "^4.0.1",

@@ -189,6 +189,19 @@ export default defineConfig(({ command, mode }) => {
         output: {
           sourcemap,
           manualChunks: id => {
+            /*
+              Model type icons are picked by name at runtime, so every Lucide icon is reachable
+              through `dynamicIconImports`. That keeps all ~1900 icon modules alive, and the
+              blanket "vendor" rule below would then inline them into the main bundle (+750kB
+              minified). An explicit chunk per icon keeps them out of it: only the icons a page
+              actually renders get fetched, each about 700 bytes.
+            */
+            const lucideIcon = id.match(/lucide-react\/dist\/esm\/icons\/([a-z0-9-]+)\.js$/);
+
+            if (lucideIcon && lucideIcon[1] !== "index") {
+              return `lucide-icon-${lucideIcon[1]}`;
+            }
+
             if (id.includes("node_modules")) {
               return "vendor";
             }

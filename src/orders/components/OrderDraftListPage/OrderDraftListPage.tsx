@@ -85,7 +85,6 @@ const OrderDraftListPage = ({
           justifyContent="space-between"
         >
           <ListFilters
-            type="expression-filter"
             initialSearch={initialSearch}
             onSearchChange={onSearchChange}
             showSearchTooltip

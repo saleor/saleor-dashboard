@@ -8,7 +8,7 @@
     "duplicates": "off",
     "classMembers": "error",
     "nsTypes": "error",
-    "unresolved": "warn",
+    "unresolved": "error",
     "nsExports": "error",
     "unlisted": "error",
     "binaries": "off",

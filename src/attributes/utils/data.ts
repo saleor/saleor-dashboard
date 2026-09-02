@@ -3,6 +3,8 @@ import {
   type AttributeInput,
   type AttributeInputData,
 } from "@dashboard/components/Attributes/Attributes";
+import { type ModelTypeIcon } from "@dashboard/components/ModelTypeIcon/constants";
+import { getModelTypeIcon } from "@dashboard/components/ModelTypeIcon/getModelTypeIcon";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -70,6 +72,8 @@ export const ENTITY_TYPES_WITH_TYPES_RESTRICTION = [
 export interface AttributeReference {
   label: string;
   value: string;
+  /** Model references only — the icon configured on the referenced model's type. */
+  icon?: ModelTypeIcon;
 }
 
 export interface AttributeValueEditDialogFormData {
@@ -461,6 +465,7 @@ const findPageReference = (
     return {
       label: page.title,
       value: valueId,
+      icon: getModelTypeIcon(page.pageType?.metadata),
     };
   }
 

@@ -110,6 +110,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
     deleteInProgressAppStatus,
     pendingInstallationsLoading,
     handleRemoveInProgress,
+    justInstalledName,
   } = usePendingInstallation({
     searchQuery: query,
     onCloseModal: closeModal,
@@ -161,6 +162,7 @@ export const InstalledExtensions = ({ params }: InstalledExtensionsProps) => {
           hasManagedAppsPermission={hasManagedAppsPermission}
           onClearProblem={handleClearProblem}
           onFetchAllProblems={handleFetchAllProblems}
+          justInstalledName={justInstalledName}
         />
 
         <DeleteFailedInstallationDialog

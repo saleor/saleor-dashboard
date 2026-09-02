@@ -25,6 +25,7 @@ import { DateTimeField } from "../DateTimeField/DateTimeField";
 import { DropdownRow } from "./DropdownRow";
 import { SingleReferenceField } from "./SingleReferenceField";
 import { type AttributeRowProps } from "./types";
+import { useModelReferenceIcons } from "./useModelReferenceIcons";
 
 const AttributeRow = ({
   attribute,
@@ -45,12 +46,14 @@ const AttributeRow = ({
 }: AttributeRowProps): JSX.Element => {
   const intl = useIntl();
   const labelProps = getAttributeRowLabelProps(attribute);
+  const referenceIcons = useModelReferenceIcons(attribute);
 
   switch (attribute.data.inputType) {
     case AttributeInputTypeEnum.SINGLE_REFERENCE:
       return (
         <SingleReferenceField
           attribute={attribute}
+          referenceIcons={referenceIcons}
           disabled={disabled}
           loading={loading}
           error={error}
@@ -62,7 +65,7 @@ const AttributeRow = ({
       return (
         <BasicAttributeRow label={attribute.label} {...labelProps}>
           <SortableChipsField
-            values={getReferenceDisplayValue(attribute)}
+            values={getReferenceDisplayValue(attribute, referenceIcons)}
             onValueDelete={value =>
               onReferencesRemove(
                 attribute.id,

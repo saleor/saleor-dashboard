@@ -38,7 +38,7 @@ export const useProductMediaDrag = ({
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        // Match previous react-sortable-hoc `distance={20}` so clicks still work
+        // Small drag threshold so a click on the tile still opens it
         distance: 20,
       },
     }),

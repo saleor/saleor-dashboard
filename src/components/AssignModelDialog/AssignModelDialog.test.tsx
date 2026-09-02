@@ -1,8 +1,12 @@
-import { render, screen, within } from "@testing-library/react";
+import { ThemeProvider } from "@saleor/macaw-ui-next";
+import { render as rtlRender, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type React from "react";
 
 import AssignModelDialog from "./AssignModelDialog";
+
+// Rows carry the model type's icon, which resolves its colour from the macaw theme.
+const render = (ui: React.ReactElement) => rtlRender(ui, { wrapper: ThemeProvider });
 
 jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => <>{defaultMessage}</>,
@@ -37,21 +41,30 @@ jest.mock("@dashboard/hooks/useModalSearchWithFilters", () => ({
   }),
 }));
 
+const mockPageType = {
+  __typename: "PageType" as const,
+  id: "page-type-1",
+  metadata: [],
+};
+
 const mockPages = [
   {
     __typename: "Page" as const,
     id: "page-1",
     title: "Test Page 1",
+    pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-2",
     title: "Test Page 2",
+    pageType: mockPageType,
   },
   {
     __typename: "Page" as const,
     id: "page-3",
     title: "Test Page 3",
+    pageType: mockPageType,
   },
 ];
 

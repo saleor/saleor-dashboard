@@ -19,7 +19,7 @@ export const login = gql`
         ...AccountError
       }
       user {
-        ...AuthUser
+        ...User
       }
     }
   }
@@ -75,7 +75,7 @@ export const externalObtainAccessTokens = gql`
       token
       refreshToken
       user {
-        ...AuthUser
+        ...User
       }
       errors {
         ...AccountError
@@ -108,7 +108,7 @@ export const externalRefreshWithUser = gql`
       token
       refreshToken
       user {
-        ...AuthUser
+        ...User
       }
       errors {
         ...AccountError

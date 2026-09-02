@@ -103,7 +103,6 @@ const ProductTypeListPage = ({
 
       <DashboardCard gap={0}>
         <ListFilters
-          type="expression-filter"
           initialSearch={initialSearch}
           onSearchChange={onSearchChange}
           searchPlaceholder={intl.formatMessage({

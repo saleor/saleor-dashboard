@@ -18,13 +18,14 @@ const ChipLabel = ({ url, label }: { url?: string; label: ReactNode }) => {
 
 type ChipFieldProps = {
   label: ReactNode;
+  startAdornment?: ReactNode;
   onClose?: () => void;
   loading?: boolean;
   url?: string;
 } & BoxProps;
 
 export const ChipField = forwardRef<HTMLDivElement, ChipFieldProps>(
-  ({ label, onClose, loading, url, className, style, ...props }, ref) => {
+  ({ label, startAdornment, onClose, loading, url, className, style, ...props }, ref) => {
     const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
 
@@ -50,7 +51,8 @@ export const ChipField = forwardRef<HTMLDivElement, ChipFieldProps>(
         opacity={"1"}
         {...props}
       >
-        <Box display="flex" alignItems="center" paddingLeft={2}>
+        <Box display="flex" alignItems="center" gap={1.5} paddingLeft={2}>
+          {startAdornment}
           <ChipLabel label={label} url={url} />
           <Box marginLeft={1}>
             <Button

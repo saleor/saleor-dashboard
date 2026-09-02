@@ -211,6 +211,7 @@ export const InstalledAppDetailsFragmentDoc = gql`
   name
   type
   appUrl
+  created
   problems {
     __typename
     key
@@ -2970,8 +2971,11 @@ export const PageTypeFragmentDoc = gql`
   id
   name
   hasPages
+  metadata {
+    ...MetadataItem
+  }
 }
-    `;
+    ${MetadataItemFragmentDoc}`;
 export const PageTypeDetailsFragmentDoc = gql`
     fragment PageTypeDetails on PageType {
   ...PageType
@@ -2993,9 +2997,12 @@ export const PageFragmentDoc = gql`
   pageType {
     id
     name
+    metadata {
+      ...MetadataItem
+    }
   }
 }
-    `;
+    ${MetadataItemFragmentDoc}`;
 export const AttributeDetailsFragmentDoc = gql`
     fragment AttributeDetails on Attribute {
   ...Attribute
@@ -4223,6 +4230,10 @@ export const PinnedModelTypeFragmentDoc = gql`
     fragment PinnedModelType on PageType {
   id
   name
+  metadata {
+    key
+    value
+  }
 }
     `;
 export const AnnouncementsDocument = gql`
@@ -5002,12 +5013,12 @@ export const LoginDocument = gql`
       ...AccountError
     }
     user {
-      ...AuthUser
+      ...User
     }
   }
 }
     ${AccountErrorFragmentDoc}
-${AuthUserFragmentDoc}`;
+${UserFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<Types.LoginMutation, Types.LoginMutationVariables>;
 
 /**
@@ -5154,14 +5165,14 @@ export const ExternalObtainAccessTokensDocument = gql`
     token
     refreshToken
     user {
-      ...AuthUser
+      ...User
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${AuthUserFragmentDoc}
+    ${UserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type ExternalObtainAccessTokensMutationFn = Apollo.MutationFunction<Types.ExternalObtainAccessTokensMutation, Types.ExternalObtainAccessTokensMutationVariables>;
 
@@ -5234,14 +5245,14 @@ export const ExternalRefreshWithUserDocument = gql`
     token
     refreshToken
     user {
-      ...AuthUser
+      ...User
     }
     errors {
       ...AccountError
     }
   }
 }
-    ${AuthUserFragmentDoc}
+    ${UserFragmentDoc}
 ${AccountErrorFragmentDoc}`;
 export type ExternalRefreshWithUserMutationFn = Apollo.MutationFunction<Types.ExternalRefreshWithUserMutation, Types.ExternalRefreshWithUserMutationVariables>;
 
@@ -13853,12 +13864,16 @@ export const PageTypeDocument = gql`
   pageType(id: $id) {
     id
     name
+    metadata {
+      ...MetadataItem
+    }
     attributes {
       ...AttributeDetails
     }
   }
 }
-    ${AttributeDetailsFragmentDoc}`;
+    ${MetadataItemFragmentDoc}
+${AttributeDetailsFragmentDoc}`;
 
 /**
  * __usePageTypeQuery__
@@ -20351,6 +20366,12 @@ export const SearchPagesDocument = gql`
       node {
         id
         title
+        pageType {
+          id
+          metadata {
+            ...MetadataItem
+          }
+        }
       }
     }
     pageInfo {
@@ -20358,7 +20379,8 @@ export const SearchPagesDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${MetadataItemFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchPagesQuery__
@@ -20397,6 +20419,9 @@ export const SearchPageTypesDocument = gql`
       node {
         id
         name
+        metadata {
+          ...MetadataItem
+        }
       }
     }
     pageInfo {
@@ -20404,7 +20429,8 @@ export const SearchPageTypesDocument = gql`
     }
   }
 }
-    ${PageInfoFragmentDoc}`;
+    ${MetadataItemFragmentDoc}
+${PageInfoFragmentDoc}`;
 
 /**
  * __useSearchPageTypesQuery__
